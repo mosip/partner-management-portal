@@ -66,7 +66,7 @@ function ViewPolicyRequestDetails() {
                                 <p className="font-[600] text-suva-gray text-sm">
                                     {t("viewPolicyRequest.partnerType")}
                                 </p>
-                                <p className="font-[600] text-vulcan text-md">
+                                <p className="font-[600] text-vulcan text-base">
                                     {policyRequestDetails.partnerType}
                                 </p>
                             </div>
@@ -74,7 +74,7 @@ function ViewPolicyRequestDetails() {
                                 <p className="font-[600] text-suva-gray text-sm">
                                     {t("viewPolicyRequest.organisation")}
                                 </p>
-                                <p className="font-[600] text-vulcan text-md">
+                                <p className="font-[600] text-vulcan text-base">
                                     {policyRequestDetails.orgName}
                                 </p>
                             </div>
@@ -85,7 +85,7 @@ function ViewPolicyRequestDetails() {
                                 <p className="font-[600] text-suva-gray text-sm">
                                     {t("viewPolicyRequest.policyId")}
                                 </p>
-                                <p className="font-[600] text-vulcan text-md">
+                                <p className="font-[600] text-vulcan text-base">
                                     {policyRequestDetails.policyId}
                                 </p>
                             </div>
@@ -93,7 +93,7 @@ function ViewPolicyRequestDetails() {
                                 <p className="font-[600] text-suva-gray text-sm">
                                     {t("viewPolicyRequest.policyName")}
                                 </p>
-                                <p className="font-[600] text-vulcan text-md">
+                                <p className="font-[600] text-vulcan text-base">
                                     {policyRequestDetails.policyName}
                                 </p>
                             </div>
@@ -103,7 +103,7 @@ function ViewPolicyRequestDetails() {
                                 <p className="font-[600] text-suva-gray text-sm">
                                     {t("viewPolicyRequest.policyGroup")}
                                 </p>
-                                <p className="font-[600] text-vulcan text-md">
+                                <p className="font-[600] text-vulcan text-base">
                                     {policyRequestDetails.policyGroupName}
                                 </p>
                             </div>
@@ -111,7 +111,7 @@ function ViewPolicyRequestDetails() {
                                 <p className="font-[600] text-suva-gray text-sm">
                                     {t("viewPolicyRequest.partnerStatus")}
                                 </p>
-                                <p className={`flex w-fit py-1 px-3 text-sm rounded-md my-1 font-semibold ${bgOfStatus(policyRequestDetails.partnerStatus)} text-md`}>
+                                <p className={`flex w-fit py-1 px-3 text-sm rounded-md my-1 font-semibold ${bgOfStatus(policyRequestDetails.partnerStatus)} text-base`}>
                                     <img src={dotImg} alt="" /> 
                                     <span className={`${isLoginLanguageRTL ? 'pr-2' : 'pl-2'}`}>{getStatusCode(policyRequestDetails.partnerStatus, t)}</span>
                                 </p>
@@ -134,7 +134,7 @@ function ViewPolicyRequestDetails() {
                                             {t("viewPolicyDetails.adminComments")}
                                         </h4>
                                         <div className="flex items-center justify-start mt-4">
-                                            <div className={`${bgOfStatus(policyRequestDetails.status)} flex w-fit py-1.5 px-3 text-xs rounded-md`}>
+                                            <div className={`${bgOfStatus(policyRequestDetails.status)} flex w-fit py-1.5 px-3 text-sm rounded-md`}>
                                                 {getStatusCode(policyRequestDetails.status, t)}
                                             </div>
                                             <div>
@@ -168,12 +168,12 @@ function ViewPolicyRequestDetails() {
                                             </span>
                                             <hr className="h-px w-full bg-gray-200 border-0 my-4" />
                                             <div className="flex items-center justify-start">
-                                                <div className="font-semibold text-xs text-dark-blue">
+                                                <div className="font-semibold text-sm text-dark-blue">
                                                     {t("viewPolicyDetails.createdOn") + ' ' +
                                                         formatDate(policyRequestDetails.createdDateTime, "date")}
                                                 </div>
                                                 <div className="mx-3 text-gray-300">|</div>
-                                                <div className="font-semibold text-xs text-dark-blue">
+                                                <div className="font-semibold text-sm text-dark-blue">
                                                     {formatDate(policyRequestDetails.createdDateTime, "time")}
                                                 </div>
                                             </div>

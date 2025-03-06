@@ -24,8 +24,6 @@ public class FtmPage extends BasePage {
 	@FindBy(id = "add_ftm")
 	private WebElement addFtmButton;
 	
-	
-	
 	@FindBy(xpath = "//*[contains(text(), 'Partner ID')]")
 	private WebElement partnerIdCoulumeHeader;
 	
@@ -35,7 +33,7 @@ public class FtmPage extends BasePage {
 	@FindBy(xpath = "//*[contains(text(), 'Model')]")
 	private WebElement modelCoulumeHeader;
 	
-	@FindBy(xpath = "//*[contains(text(), 'Created Date')]")
+	@FindBy(xpath = "//*[contains(text(), 'Creation Date')]")
 	private WebElement createdDateCoulumeHeader;
 	
 	@FindBy(xpath = "//*[contains(text(), 'Cert Time of Upload')]")
@@ -43,7 +41,6 @@ public class FtmPage extends BasePage {
 	
 	@FindBy(xpath = "//*[contains(text(), 'Cert Expiry Date & Time')]")
 	private WebElement certExpiryCoulumeHeader;
-	
 	
 	@FindBy(xpath = "//*[contains(text(), 'Cert Expiry Status')]")
 	private WebElement certExpiryStatusCoulumeHeader;
@@ -54,7 +51,8 @@ public class FtmPage extends BasePage {
 	@FindBy(xpath = "//*[contains(text(), 'Action')]")
 	private WebElement actionCoulumeHeader;
 	
-	
+	@FindBy(xpath = "//*[contains(text(), 'FTM ID')]")
+	private WebElement ftmIdCoulumeHeader;
 	
 	@FindBy(id = "add_ftm_partner_id")
 	private WebElement addFtmPartnerId;
@@ -215,12 +213,10 @@ public class FtmPage extends BasePage {
 	@FindBy(xpath = "//*[@class='text-sm text-[#666666] py-3']")
 	private WebElement pleaseReviewTheFtmChipPopupSubHeader;
 	
-	
-	
-	@FindBy(xpath = "(//*[contains(text(), 'Approve')])[3]")
+	@FindBy(id = "approve_btn")
 	private WebElement approveButton;
 	
-	@FindBy(xpath = "(//*[contains(text(), 'Reject')])[3]")
+	@FindBy(id = "reject_btn")
 	private WebElement rejectButton;
 	
 	@FindBy(xpath = "//*[contains(text(), 'Approve')]")
@@ -301,17 +297,52 @@ public class FtmPage extends BasePage {
 	@FindBy(xpath = "//*[contains(text(), 'Deactivated')]")
 	private WebElement DeactivatedText;
 	
-	
 	@FindBy(id = "certificate_upload_close_btn")
 	private WebElement certificateUploadCloseButton;
+	
+	@FindBy(id = "list_of_ftm_chip")
+	private WebElement listOfFtmChip;
+	
+	@FindBy(xpath = "//*[contains(text(), 'List of FTM Chip details')]")
+	private WebElement listofFtmChipDetails;
+	
+	@FindBy(id = "partner_id_filter")
+	private WebElement partneridFilter;
+	
+	@FindBy(id = "org_name_filter")
+	private WebElement orgNameFilter;
+	
+	@FindBy(id = "ftm_id_filter")
+	private WebElement ftmIdFilter;
+	
+	@FindBy(id = "make_filter")
+	private WebElement makeFilter;
+	
+	@FindBy(id = "model_filter")
+	private WebElement modelFilter;
+	
+	@FindBy(id = "status_filter")
+	private WebElement statusFilter;
+	
+	@FindBy(id = "status_filter_option3")
+	private WebElement statusFilterOption3;
+	
+	@FindBy(xpath = "//*[contains(text(), 'No Results Found')]")
+	private WebElement noResultsFound;
 	
 	
 	public FtmPage(WebDriver driver) {
 		super(driver);
 	}
 
-	public void clickOnAddFtmButton() {
+	public void clickOnAddFtmButtonWioutRecord() {
+		 if(isElementDisplayed(addFtmPartnerId)) {
+			 clickOnElement(addFtmPartnerId);
+		 }
+		 if(isElementDisplayed(addFtmButton)) {
 		 clickOnElement(addFtmButton);
+		 }
+		
 	}
 	
 	public void clickOnAddFtmPartnerId() {
@@ -692,4 +723,80 @@ public class FtmPage extends BasePage {
 		 clickOnElement(certificateUploadCloseButton);
 	}
 	
+	public boolean isListOfFtmChipDisplayed() {
+		return isElementDisplayed(listOfFtmChip);
+	}
+	
+	public boolean isTitleBackIconDisplayed() {
+		return isElementDisplayed(titleBackIcon);
+	}
+	
+	public boolean isListofFtmChipDetailsDisplayed() {
+		return isElementDisplayed(listofFtmChipDetails);
+	}
+	
+	public boolean isFilterButtonDisplayed() {
+		return isElementDisplayed(filterButton);
+	}
+	
+	public boolean isPartneridFilterDisplayed() {
+		return isElementDisplayed(partneridFilter);
+	}
+	
+	public boolean isOrgNameFilterDisplayed() {
+		return isElementDisplayed(orgNameFilter);
+	}
+	
+	public boolean isFtmIdFilterDisplayed() {
+		return isElementDisplayed(ftmIdFilter);
+	}
+	
+	public boolean isMakeFilterDisplayed() {
+		return isElementDisplayed(makeFilter);
+	}
+	
+	public boolean isModelFilterDisplayed() {
+		return isElementDisplayed(modelFilter);
+	}
+	
+	public boolean isStatusFilterDisplayed() {
+		return isElementDisplayed(statusFilter);
+	}
+	
+	public void SelectValueFromStatusFilter() {
+		 clickOnElement(statusFilter);
+		 clickOnElement(statusFilterOption3);
+	}
+	
+	public void enterOrgNameFilterBox(String value) {
+		 enter(orgNameFilter,value);
+	}
+	
+	public void enterMakeFilterBox(String value) {
+		 enter(makeFilter,value);
+	}
+	
+	public void enterModelFilterBox(String value) {
+		 enter(modelFilter,value);
+	}
+	
+	public void ClickOnFilterResetButton() {
+		 clickOnElement(filterResetButton);
+	}
+	
+	public boolean isNoResultsFoundDisplayed() {
+		return isElementDisplayed(noResultsFound);
+	}
+	
+	public boolean isFtmIdCoulumeHeaderDisplayed() {
+		return isElementDisplayed(ftmIdCoulumeHeader);
+	}
+	
+	public void clickOnApprovedButton() {
+		 clickOnElement(Approved);
+	}
+	
+	public void clickOnStatusFilter() {
+		 clickOnElement(statusFilter);
+	}
 }

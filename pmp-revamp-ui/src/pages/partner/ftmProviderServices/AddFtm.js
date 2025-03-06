@@ -270,13 +270,13 @@ function AddFtm() {
                         <div className="flex flex-col w-[48%] max-[450px]:w-full">
                           <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('addDevices.make')}<span className="text-crimson-red mx-1">*</span></label>
                           <input value={make} onChange={(e) => onChangeMake(e.target.value)} maxLength={36}
-                            className="h-11 px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
+                            className="h-11 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                             placeholder={t('addFtm.enterMake')} id="add_ftm_make"/>
                         </div>
                         <div className="flex flex-col w-[48%] max-[450px]:w-full">
                           <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('addDevices.model')}<span className="text-crimson-red mx-1">*</span></label>
                           <input value={model} onChange={(e) => onChangeModel(e.target.value)} maxLength={36}
-                            className="h-11 px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
+                            className="h-11 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                             placeholder={t('addFtm.enterModel')} id="add_ftm_model"/>
                         </div>
                       </div>

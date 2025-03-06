@@ -26,6 +26,7 @@ public class GlobalConstants {
 	public static final String isUploadPartnerCertificatePopUpDisplayed = "Verify if upload partner certificate pop up is displayed";
 	public static final String isSuccessMessageDisplayed = "Verify if Partner certificate for Authentication Partner is uploaded successfully.";
 	public static final String isDeviceProviderSucessMessageDisplayed = "Verify if Partner certificate for device provider is uploaded successfully.";
+	public static final String isSucessMessageDisplayed = "Verify if Partner certificate for Authentication Partner is uploaded successfully.";
 	public static final String isPoliciesTitleDisplayed = "Verify if policies title is displayed";
 	public static final String isPoliciesPageDisplayed = "Verify if policies page is displayed after click on policies title";
 	public static final String isPartnerIdDropdownDisplayed = "Verify if partner id dropdown is displayed.";
@@ -229,6 +230,9 @@ public class GlobalConstants {
 	public static final String isApiKeyDetailsApiKeyLabelContextDisplayed = "Verify if api key details api key label context displayed";
 	public static final String isViewApiKeyBackButtonDisplayed = "Verify if view api key button displayed";
 	public static final String isBackiconDisplayed = "Verify if back icon displayed";
+	public static final String isListOfFtmChipTextDisplayed = "Verify if list of ftm chip requested text displayed";
+	public static final String isMakeTextBoxDisplayed = "Verify if make box message displayed";
+	public static final String isModelTextBoxDisplayed = "Verify if model id box message displayed";
 	public static final String isConfirmationPopupDisplayed = "Verify if confirmation popup displayed";
 	public static final String isConfirmationPopupDetailedMessageDisplayed = "Verify if confirmation popup detailed message displayed";
 	public static final String isApproveRejectButtonDisplayed = "Verify if approve reject button displayed";

@@ -104,7 +104,7 @@ function ViewTrustDetails() {
                                     <p className="font-[600] text-suva-gray text-sm">
                                         {t("trustList.issuedTo")}
                                     </p>
-                                    <p className="font-[600] text-vulcan text-md break-all">
+                                    <p className="font-[600] text-vulcan text-base break-all">
                                         {viewCertDetails.issuedTo}
                                     </p>
                                 </div>
@@ -112,7 +112,7 @@ function ViewTrustDetails() {
                                     <p className="font-[600] text-suva-gray text-sm">
                                         {t("trustList.issuedBy")}
                                     </p>
-                                    <p className="font-[600] text-vulcan text-md break-all">
+                                    <p className="font-[600] text-vulcan text-base break-all">
                                         {viewCertDetails.issuedBy}
                                     </p>
                                 </div>
@@ -122,7 +122,7 @@ function ViewTrustDetails() {
                                     <p className="font-[600] text-suva-gray text-sm">
                                         {t("viewCertificateDetails.certThumbprint")}
                                     </p>
-                                    <p className="font-[600] text-vulcan text-md break-all">
+                                    <p className="font-[600] text-vulcan text-base break-all">
                                         {viewCertDetails.certThumbprint}
                                     </p>
                                 </div>
@@ -157,17 +157,17 @@ function ViewTrustDetails() {
                                     <div className="flex items-center p-5 bg-white rounded-lg">
                                         <div className="flex-col space-y-1">
                                             <p id="trust_certificate_partner_type_label" className="font-semibold text-sm text-dim-gray">{t('trustList.partnerDomain')}</p>
-                                            <p id="trust_certificate_partner_type_context" className="font-semibold text-md text-charcoal-gray">{viewCertDetails.partnerDomain}</p>
+                                            <p id="trust_certificate_partner_type_context" className="font-bold text-base text-charcoal-gray">{viewCertDetails.partnerDomain}</p>
                                         </div>
                                         <div className={`flex-col ${isLoginLanguageRTL ? "mr-[10%]" : "ml-[10%]"} space-y-1`}>
                                             <p id="trust_certificate_label_upload_date_time" className="font-semibold text-sm text-dim-gray">{t('trustList.validFrom')}</p>
-                                            <p id="trust_certificate_context_upload_date_time" className="font-semibold text-md text-charcoal-gray">
+                                            <p id="trust_certificate_context_upload_date_time" className="font-semibold text-base text-charcoal-gray">
                                                 {formatDate(viewCertDetails.validFromDate, 'dateTime')}
                                             </p>
                                         </div>
                                         <div className={`flex-col ${isLoginLanguageRTL ? "mr-[5%]" : "ml-[5%]"} space-y-1`}>
                                             <p id="trust_certificate_label_expiry_date_time" className={`text-sm font-semibold text-dim-gray`}>{t('viewCertificateDetails.validTo')}</p>
-                                            <p id="trust_certificate_context_expiry_date_time" className={`text-md ${!viewCertDetails.status ? 'text-crimson-red font-bold' : 'text-charcoal-gray font-semibold'}`}>
+                                            <p id="trust_certificate_context_expiry_date_time" className={`text-base ${!viewCertDetails.status ? 'text-crimson-red font-bold' : 'text-charcoal-gray font-semibold'}`}>
                                                 {formatDate(viewCertDetails.validTillDate, 'dateTime')}
                                             </p>
                                         </div>

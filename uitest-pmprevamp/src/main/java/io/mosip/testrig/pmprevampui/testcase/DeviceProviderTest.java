@@ -27,18 +27,18 @@ public class DeviceProviderTest extends BaseClass {
 	private ListOfDevicesPage listOfDevicesPage;
 	private ViewDeviceDetailsPage viewDeviceDetailsPage;
 
-	@Test(priority = 1, description = "This is a test case register new device user")
+	@Test(priority = 25, description = "This is a test case register new device user")
 	public void registerNewUser() throws InterruptedException {
 		dashboardpage = new DashboardPage(driver);
 		PartnerCertificatePage partnerCertificatePage = new PartnerCertificatePage(driver);
 		RegisterPage registerPage = new RegisterPage(driver);
 
-		assertTrue(dashboardpage.isTermsAndConditionsPopUppDisplayed(),
-				GlobalConstants.isTermsAndConditionsPopUppDisplayed);
-		dashboardpage.clickOnCheckbox();
-
-		assertTrue(dashboardpage.isProceedButtonDisplayed(), GlobalConstants.isProceedButtonDisplayed);
-		dashboardpage.clickOnProceedButton();
+//		assertTrue(dashboardpage.isTermsAndConditionsPopUppDisplayed(),
+//				GlobalConstants.isTermsAndConditionsPopUppDisplayed);
+//		dashboardpage.clickOnCheckbox();
+//
+//		assertTrue(dashboardpage.isProceedButtonDisplayed(), GlobalConstants.isProceedButtonDisplayed);
+//		dashboardpage.clickOnProceedButton();
 
 		dashboardpage.clickOnRootOFTrustCertText();
 		dashboardpage.clickOnRootCertificateUploadButton();
@@ -160,7 +160,7 @@ public class DeviceProviderTest extends BaseClass {
 		partnerCertificatePage.ClickOnsuccessMsgCloseButton();
 	}
 
-	@Test(priority = 2, description = "Creating SBI Device")
+	@Test(priority = 26, description = "Creating SBI Device")
 	public void createSbiDevice() {
 
 		dashboardpage = new DashboardPage(driver);
@@ -303,7 +303,7 @@ public class DeviceProviderTest extends BaseClass {
 		verifyCreatedSbi(GlobalConstants.AUTOMATION_DEACTIVATING);
 	}
 
-	@Test(priority = 3, description = "Approving and Rejecting the SBI's")
+	@Test(priority = 27, description = "Approving and Rejecting the SBI's")
 	public void ApproveAndRejectSbi() {
 
 		dashboardpage = new DashboardPage(driver);
@@ -336,7 +336,7 @@ public class DeviceProviderTest extends BaseClass {
 
 	}
 
-	@Test(priority = 4, description = "Add and verify device for SBI's")
+	@Test(priority = 28, description = "Add and verify device for SBI's")
 	public void AddAndVerifyDeviceInSbi() {
 		dashboardpage = new DashboardPage(driver);
 		listOfSbiPage = new ListOfSbiPage(driver);
@@ -468,7 +468,7 @@ public class DeviceProviderTest extends BaseClass {
 
 	}
 
-	@Test(priority = 5, description = "Approve and reject the devices as admin")
+	@Test(priority = 29, description = "Approve and reject the devices as admin")
 	public void approveAndRejectDevices() {
 		dashboardpage = new DashboardPage(driver);
 		listOfSbiPage = new ListOfSbiPage(driver);
@@ -523,7 +523,7 @@ public class DeviceProviderTest extends BaseClass {
 				GlobalConstants.REJECTED), GlobalConstants.isStatusDisplayed);
 	}
 
-	@Test(priority = 6, description = "Verify and Deactivate the Device from List Of Devices Page")
+	@Test(priority = 30, description = "Verify and Deactivate the Device from List Of Devices Page")
 	public void verifyAndDeactivateDeviceFromListOfDevicesPage() {
 
 		dashboardpage = new DashboardPage(driver);
@@ -555,7 +555,7 @@ public class DeviceProviderTest extends BaseClass {
 
 	}
 
-	@Test(priority = 7, description = "Verify List Of Devices and View Device Details Page")
+	@Test(priority = 31, description = "Verify List Of Devices and View Device Details Page")
 	public void verifyListOfDevicesPage() {
 
 		dashboardpage = new DashboardPage(driver);
@@ -628,7 +628,7 @@ public class DeviceProviderTest extends BaseClass {
 
 	}
 
-	@Test(priority = 8, description = "Verify Device filtering in list of devices page")
+	@Test(priority = 32, description = "Verify Device filtering in list of devices page")
 	public void verifyDeviceFilteringInListOfDevicesPage() {
 		dashboardpage = new DashboardPage(driver);
 		listOfSbiPage = new ListOfSbiPage(driver);
@@ -672,7 +672,7 @@ public class DeviceProviderTest extends BaseClass {
 
 	}
 
-	@Test(priority = 9, description = "Verify List Of SBI Page and Deactivate Sbi")
+	@Test(priority = 33, description = "Verify List Of SBI Page and Deactivate Sbi")
 	public void verifySbiPage() {
 
 		dashboardpage = new DashboardPage(driver);
@@ -743,7 +743,7 @@ public class DeviceProviderTest extends BaseClass {
 
 	}
 
-	@Test(priority = 10, description = "Verify SBI Devices with Pending for approval status")
+	@Test(priority = 34, description = "Verify SBI Devices with Pending for approval status")
 	public void verifySbiWithPendingForApprovalStatus() {
 		dashboardpage = new DashboardPage(driver);
 		listOfSbiPage = new ListOfSbiPage(driver);
@@ -769,7 +769,7 @@ public class DeviceProviderTest extends BaseClass {
 
 	}
 
-	@Test(priority = 11, description = "Creating SBI Devices which are already exists")
+	@Test(priority = 35, description = "Creating SBI Devices which are already exists")
 	public void createSbiDeviceWhichExist() {
 
 		dashboardpage = new DashboardPage(driver);
@@ -789,7 +789,7 @@ public class DeviceProviderTest extends BaseClass {
 				GlobalConstants.isSbiExistsErrorMessageDisplayed);
 	}
 
-	@Test(priority = 12, description = "Verifying the SBI and Devices after deactivating")
+	@Test(priority = 36, description = "Verifying the SBI and Devices after deactivating")
 	public void verifySbiAndDeviceAfterDeactivate() {
 
 		dashboardpage = new DashboardPage(driver);

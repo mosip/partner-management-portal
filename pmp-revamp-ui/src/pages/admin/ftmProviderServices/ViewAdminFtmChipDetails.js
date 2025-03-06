@@ -165,7 +165,7 @@ function ViewAdminFtmChipDetails() {
                                             <p className="font-[600] text-suva-gray text-sm">
                                                 {t("sbiList.partnerId")}
                                             </p>
-                                            <p className="font-[600] text-vulcan text-md">
+                                            <p className="font-[600] text-vulcan text-base">
                                                 {ftmDetails.partnerId}
                                             </p>
                                         </div>
@@ -173,7 +173,7 @@ function ViewAdminFtmChipDetails() {
                                             <p className="font-[600] text-suva-gray text-sm">
                                                 {t("viewPolicyRequest.partnerType")}
                                             </p>
-                                            <p className="font-[600] text-vulcan text-md">
+                                            <p className="font-[600] text-vulcan text-base">
                                                 {t("viewFtmChipDetails.ftmChipProvider")}
                                             </p>
                                         </div>
@@ -181,7 +181,7 @@ function ViewAdminFtmChipDetails() {
                                             <p className="font-[600] text-suva-gray text-sm">
                                                 {t("sbiList.orgName")}
                                             </p>
-                                            <p className="font-[600] text-vulcan text-md">
+                                            <p className="font-[600] text-vulcan text-base">
                                                 {ftmDetails.orgName}
                                             </p>
                                         </div>
@@ -191,7 +191,7 @@ function ViewAdminFtmChipDetails() {
                                             <p className="font-[600] text-suva-gray text-sm">
                                                 {t("ftmList.make")}
                                             </p>
-                                            <p className="font-[600] text-vulcan text-md">
+                                            <p className="font-[600] text-vulcan text-base">
                                                 {ftmDetails.make}
                                             </p>
                                         </div>
@@ -199,7 +199,7 @@ function ViewAdminFtmChipDetails() {
                                             <p className="font-[600] text-suva-gray text-sm">
                                                 {t("ftmList.model")}
                                             </p>
-                                            <p className="font-[600] text-vulcan text-md">
+                                            <p className="font-[600] text-vulcan text-base">
                                                 {ftmDetails.model}
                                             </p>
                                         </div>
@@ -234,17 +234,17 @@ function ViewAdminFtmChipDetails() {
                                             <div className="flex items-center p-5 bg-white rounded-lg">
                                                 <div className="flex-col space-y-1">
                                                     <p id="ftm_chip_details_partner_type_label" className="font-semibold text-sm text-dim-gray">{t('partnerCertificatesList.partnerType')}</p>
-                                                    <p id="ftm_chip_details_partner_type_context" className="font-bold text-md text-charcoal-gray">{t('viewFtmChipDetails.ftmChipProvider')}</p>
+                                                    <p id="ftm_chip_details_partner_type_context" className="font-bold text-base text-charcoal-gray">{t('viewFtmChipDetails.ftmChipProvider')}</p>
                                                 </div>
                                                 <div className={`flex-col ${isLoginLanguageRTL ? "mr-[10%]" : "ml-[10%]"} space-y-1`}>
                                                     <p id="ftm_chip_details_label_upload_date_time" className="font-semibold text-sm text-dim-gray">{t('partnerCertificatesList.timeOfUpload')}</p>
-                                                    <p id="ftm_chip_details_context_upload_date_time" className="font-semibold text-md text-charcoal-gray">
+                                                    <p id="ftm_chip_details_context_upload_date_time" className="font-semibold text-base text-charcoal-gray">
                                                         {formatDate(certificateDetails.mosipSignedCertUploadDateTime, 'dateTime')}
                                                     </p>
                                                 </div>
                                                 <div className={`flex-col ${isLoginLanguageRTL ? "mr-[5%]" : "ml-[5%]"} space-y-1`}>
                                                     <p id="ftm_chip_details_label_expiry_date_time" className={`text-sm font-semibold text-dim-gray font-semibold'}`}>{t('partnerCertificatesList.expiryDate')}</p>
-                                                    <p id="ftm_chip_details_context_expiry_date_time" className={`text-md ${certificateDetails.isCaSignedCertificateExpired ? 'text-crimson-red font-bold' : 'text-charcoal-gray font-semibold'}`}>
+                                                    <p id="ftm_chip_details_context_expiry_date_time" className={`text-base ${certificateDetails.isCaSignedCertificateExpired ? 'text-crimson-red font-bold' : 'text-charcoal-gray font-semibold'}`}>
                                                         {formatDate(certificateDetails.caSignedCertExpiryDateTime, 'dateTime')}
                                                     </p>
                                                 </div>

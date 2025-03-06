@@ -50,6 +50,9 @@ import RootTrustList from './pages/admin/certificates/RootTrustList.js';
 import IntermediateTrustList from './pages/admin/certificates/IntermediateTrustList.js';
 import ViewTrustDetails from './pages/admin/certificates/ViewTrustDetails.js';
 import AllDevicesList from './pages/admin/deviceProviderServices/AllDevicesList.js';
+import ViewRootTrustNotifications from './pages/admin/notifications/ViewRootTrustNotifications.js';
+import ViewIntermediateTrustNotifications from './pages/admin/notifications/ViewIntermediateTrustNotifications.js';
+import ViewPartnerNotifications from './pages/admin/notifications/ViewPartnerNotifications.js';
 
 function AppRoutes() {
 
@@ -273,6 +276,18 @@ function AppRoutes() {
         {
           path: 'admin/device-provider-services/view-device-details',
           element: <GuardedRoute><MainLayout><ViewAdminDeviceDetails /></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'view-root-certificate-notifications',
+          element: <GuardedRoute><MainLayout><ViewRootTrustNotifications /></MainLayout></GuardedRoute>,
+        },
+        {
+          path: 'view-intermediate-certificate-notifications',
+          element: <GuardedRoute><MainLayout><ViewIntermediateTrustNotifications /></MainLayout></GuardedRoute>,
+        },
+        {
+          path: 'view-partner-notifications',
+          element: <GuardedRoute><MainLayout><ViewPartnerNotifications /></MainLayout></GuardedRoute>,
         },
         {
           path: 'runtimeError',

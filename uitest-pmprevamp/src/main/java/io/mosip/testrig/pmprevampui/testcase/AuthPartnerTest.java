@@ -166,6 +166,10 @@ public class AuthPartnerTest extends BaseClass {
 		assertTrue(partnerCertificatePage.isSuccessMessageDisplayed(), GlobalConstants.isSuccessMessageDisplayed);
 		partnerCertificatePage.clickOnRemoveCertificateButton();
 
+		assertTrue(partnerCertificatePage.isSuccessMessageDisplayed(), GlobalConstants.isSuccessMessageDisplayed);
+		partnerCertificatePage.clickOncertificateUploadCloseButton();
+		
+		partnerCertificatePage.clickOnPartnerCertificateReuploadButton();
 		partnerCertificatePage.uploadCertificateInvalidCert();
 		assertTrue(partnerCertificatePage.isInvalidFormatErrorPopupDisplayed(),
 				GlobalConstants.isInvalidCertFormatePopupDisplayed);
@@ -219,6 +223,7 @@ public class AuthPartnerTest extends BaseClass {
 		authpolicypage.clickOnCreatePolicyFormSubmitButton();
 		authpolicypage.clickOnGoBackButton();
 		authpolicypage.clickOnFilterButton();
+
 		authpolicypage.enterPolicyNameInFilter("authpolicy01");
 		authpolicypage.clickOnApplyFilterButton();
 		authpolicypage.clickOnPoliciesListViewElipsisButton();
@@ -235,7 +240,9 @@ public class AuthPartnerTest extends BaseClass {
 		authpolicypage.clickOnCreatePolicyFormSubmitButton();
 		authpolicypage.clickOnGoBackButton();
 		authpolicypage.clickOnFilterButton();
+
 		authpolicypage.enterPolicyNameInFilter("authpolicy02");
+
 		authpolicypage.clickOnApplyFilterButton();
 		authpolicypage.clickOnPoliciesListViewElipsisButton();
 		authpolicypage.clickOnPolicyPublishButton();
@@ -251,6 +258,7 @@ public class AuthPartnerTest extends BaseClass {
 		authpolicypage.clickOnCreatePolicyFormSubmitButton();
 		authpolicypage.clickOnGoBackButton();
 		authpolicypage.clickOnFilterButton();
+
 		authpolicypage.enterPolicyNameInFilter("pending auth");
 		authpolicypage.clickOnApplyFilterButton();
 		authpolicypage.clickOnPoliciesListViewElipsisButton();
@@ -267,6 +275,7 @@ public class AuthPartnerTest extends BaseClass {
 		authpolicypage.clickOnCreatePolicyFormSubmitButton();
 		authpolicypage.clickOnGoBackButton();
 		authpolicypage.clickOnFilterButton();
+
 		authpolicypage.enterPolicyNameInFilter("deactivate auth");
 		authpolicypage.clickOnApplyFilterButton();
 		authpolicypage.clickOnPoliciesListViewElipsisButton();

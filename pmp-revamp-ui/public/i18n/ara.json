@@ -945,6 +945,32 @@
         "title": "هل أنت متأكد أنك تريد إلغاء تفعيل مفتاح API",
         "description": "عند الضغط على 'تأكيد'، سيتم إلغاء تفعيل مفتاح API ولن يكون قابلاً للاستخدام للمصادقة"
     },
+    "notificationPopup": {
+        "notification": "إشعار",
+        "rootCertExpiry": "انتهاء صلاحية شهادة الجذر CA",
+        "intermediateCertExpiry": "انتهاء صلاحية شهادة CA المتوسطة",
+        "rootCertExpiryDescription": "ستنتهي صلاحية شهادة الجذر CA [{{certificateId}}] للنطاق {{partnerDomain}} في {{expiryDateTime}}. قم بالتجديد الآن لتجنب الانقطاعات.",
+        "intermediateCertExpiryDescription": "ستنتهي صلاحية شهادة CAA المتوسطة [{{certificateId}}] للنطاق {{partnerDomain}} في {{expiryDateTime}}. قم بالتجديد الآن لتجنب الانقطاعات.",
+        "dismiss": "رفض",
+        "viewAllNotification": "عرض جميع الإشعارات",
+        "expiringItems": "العناصر منتهية الصلاحية",
+        "partnerCertificates": " - {{partnerCertCount}} شهادة شريك",
+        "ftmCertificates": " - {{ftmCertCount}} شهادات FTM",
+        "sbiDevices": " - {{sbiCount}} أجهزة SBI",
+        "apiKeys": " - {{apiKeyCount}} مفاتيح API",
+        "to": " ل ",
+        "noNotification": "لا يوجد إشعارات حتى الآن",
+        "noNotificationDescr": "ليس لديك أي إشعارات في الوقت الحالي."
+    },
+    "notificationsTab": {
+        "rootCaCertificate": "شهادة CA الجذرية",
+        "intermediateCaCertificate": "شهادة CA متوسطة",
+        "partner": "شريك"
+    },
+    "viewAllNotifications": {
+        "listOfNotifications": "قائمة الإشعارات",
+        "searchDescription": "ابحث عن أي إشعار باستخدام معرف الشهادة وتاريخ انتهاء الصلاحية وعنوان / وصف الإشعار وتاريخ ووقت إنشاء الإشعار وما إلى ذلك."
+    },
     "serverError": {
         "PMS_COR_001": "معلمة الإدخال مفقودة",
         "PMS_PRT_002": " مجموعة السياسة غير موجود",
@@ -1209,9 +1235,11 @@
         "PMS_FTM_ERROR_005": "تفاصيل FTM غير موجودة.",
         "PMS_FTM_ERROR_006": "FTM ليس مرتبطًا بالمستخدم.",
         "PMS_FTM_ERROR_007": "تم إلغاء تنشيط FTM المحدد بالفعل",
-        "PMS_FTM_ERROR_008": "يجب أن يكون FTM المحدد معلقًا أو معتمدًا",
-        "PMS_FTM_ERROR_009": "غير قادر على تنزيل شهادة FTM الأصلية",
+        "PMS_FTM_ERROR_008": "لا يمكن تنزيل الشهادة لـ FTM المرفوضة",
+        "PMS_FTM_ERROR_009": "لا يمكن تنزيل الشهادة لـ FTM المعطل",
         "PMS_FTM_ERROR_010": "FTM المحدد ليس في حالة معتمدة",
+        "PMS_FTM_ERROR_011": "لم يتم تحميل الشهادة لـ FTM المحدد",
+        "PMS_FTM_ERROR_012": "غير قادر على تنزيل شهادة FTM الأصلية",
         "PMS_PV_001": "فشل في قراءة المخطط",
         "PMS_PV_002": "فشل التحقق من صحة كائن السياسة",
         "PMS_PV_003": "فشل تحليل كائن السياسة أو تحويله.",

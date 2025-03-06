@@ -7,7 +7,9 @@ import profileIcon from '../profile_icon.png';
 import hamburgerIcon from '../svg/hamburger_icon.svg';
 import orgIcon from '../svg/org_icon.svg';
 import side_menu_title from '../../src/side_menu_title.svg';
-import profileDropDown from '.././svg/profileDropDown.svg'
+import profileDropDown from '.././svg/profileDropDown.svg';
+import bellIcon from '.././svg/bell_icon.svg';
+import NotificationPopup from '../pages/common/NotificationPopup.js';
 
 function HeaderNav({ open, setOpen }) {
     const navigate = useNavigate('');
@@ -15,6 +17,7 @@ function HeaderNav({ open, setOpen }) {
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const dropdownRef = useRef(null);
+    const [openNotification, setOpenNotification] = useState(false);
 
     useEffect(() => {
         handleMouseClickForDropdown(dropdownRef, () => setIsDropdownOpen(false));
@@ -34,6 +37,10 @@ function HeaderNav({ open, setOpen }) {
         navigate('/partnermanagement/user-profile')
         setIsDropdownOpen(false)
     };
+
+    const openNotificationPopup = () => {
+        setOpenNotification(!openNotification);
+    }
 
     return (
         <nav className="sticky top-0 z-50 bg-white flex justify-between w-full h-14 font-inter 
@@ -68,7 +75,17 @@ function HeaderNav({ open, setOpen }) {
                     &nbsp;
                 </div>
             </div>
-            <div className={`flex items-center relative justify-between gap-x-12 ${isLoginLanguageRTL ? "left-3" : "right-3"}`}>
+            <div className={`flex items-center relative justify-between gap-x-4 ${isLoginLanguageRTL ? "left-3" : "right-3"}`}>
+                <div className="flex items-center cursor-pointer">
+                    <div role='button' className="p-2 m-1 bg-blue-50" onClick={() => openNotificationPopup()}>
+                        <img id='bellIcon' src={bellIcon} alt="" className="w-5 h-5" />
+                    </div>
+                    { openNotification && (
+                        <NotificationPopup
+                            closeNotification={() => setOpenNotification(false)}
+                        />
+                    )}
+                </div>
                 <div className="flex items-center">
                     <div className="p-2 m-1 bg-blue-50">
                         <img id='orgIcon' src={orgIcon} alt="" className="w-5 h-5" />

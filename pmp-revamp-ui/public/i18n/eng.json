@@ -940,6 +940,32 @@
         "title": "Are you sure you want to Deactivate API Key",
         "description": "On clicking ‘Confirm’, the API Key will be deactivated and can no longer be used for authentication"
     },
+    "notificationPopup": {
+        "notification": "Notification",
+        "rootCertExpiry": "Root CA Certificate Expiration",
+        "intermediateCertExpiry": "Intermediate CA Certificate Expiration",
+        "rootCertExpiryDescription": "Root CA Certificate [{{certificateId}}] for the {{partnerDomain}} domain will expire on {{expiryDateTime}}. Renew now to prevent disruptions.",
+        "intermediateCertExpiryDescription": "Intermediate CA Certificatee [{{certificateId}}] for the {{partnerDomain}} domain will expire on {{expiryDateTime}}. Renew now to prevent disruptions.",
+        "dismiss": "Dismiss",
+        "viewAllNotification": "View all notifications",
+        "expiringItems": "Expiring Items",
+        "partnerCertificates": " - {{partnerCertCount}} Partner Certificates",
+        "ftmCertificates": " - {{ftmCertCount}} FTM Certificates",
+        "sbiDevices": " - {{sbiCount}} SBI Devices",
+        "apiKeys": " - {{apiKeyCount}} API Keys",
+        "to": " to ",
+        "noNotification": "No Notifications Yet",
+        "noNotificationDescr": "You have no notifications at the moment."
+    },
+    "notificationsTab": {
+        "rootCaCertificate": "Root CA Certificate",
+        "intermediateCaCertificate": "Intermediate CA Certificate",
+        "partner": "Partner"
+    },
+    "viewAllNotifications": {
+        "listOfNotifications": "List of Notifications",
+        "searchDescription": "Search any notification using certificate ID, expiry date, notification title / description, date and time of notification generation etc."
+    },
     "serverError": {
         "PMS_COR_001": "Missing Input Parameter",
         "PMS_PRT_002": " Policy group does not exist",
@@ -1204,9 +1230,11 @@
         "PMS_FTM_ERROR_005": "FTM Details do not exists.",
         "PMS_FTM_ERROR_006": "FTM is not associated with user.",
         "PMS_FTM_ERROR_007": "The selected FTM is already deactivated",
-        "PMS_FTM_ERROR_008": "The selected FTM must be pending_approval or approved",
-        "PMS_FTM_ERROR_009": "Unable to download original FTM certificate",
+        "PMS_FTM_ERROR_008": "Cannot download the certificate for a rejected FTM",
+        "PMS_FTM_ERROR_009": "Cannot download the certificate for a deactivated FTM",
         "PMS_FTM_ERROR_010": "The selected FTM is not in an approved status.",
+        "PMS_FTM_ERROR_011": "The certificate has not been uploaded for the given FTM",
+        "PMS_FTM_ERROR_012": "Unable to download original FTM certificate",
         "PMS_PV_001": "Failed to read schema.",
         "PMS_PV_002": "Policy object validation failed.",
         "PMS_PV_003": "Failed to parse or convert policy object.",

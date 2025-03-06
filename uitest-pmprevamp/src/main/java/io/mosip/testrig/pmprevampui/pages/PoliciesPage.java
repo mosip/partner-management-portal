@@ -465,7 +465,7 @@ public class PoliciesPage extends BasePage {
 	public void clickOnpoliciesAuthPolicyTab() {
 		clickOnElement(policiesAuthPolicyTab);
 	}
-	
+
 	public boolean isFilterButtonButtonEnabled() {
 		return isElementEnabled(filterButton);
     }

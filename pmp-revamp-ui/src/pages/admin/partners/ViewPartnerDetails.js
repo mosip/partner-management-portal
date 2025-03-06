@@ -195,7 +195,7 @@ function ViewPartnerDetails() {
                                             <p className="font-[600] text-suva-gray text-sm">
                                                 {t("viewOidcClientDetails.partnerType")}
                                             </p>
-                                            <p className="font-[600] text-vulcan text-md">
+                                            <p className="font-[600] text-vulcan text-base">
                                                 {getPartnerTypeDescription(partnerDetails.partnerType, t)}
                                             </p>
                                         </div>
@@ -203,7 +203,7 @@ function ViewPartnerDetails() {
                                             <p className="font-[600] text-suva-gray text-sm">
                                                 {t("viewPartnerDetails.organisationName")}
                                             </p>
-                                            <p className="font-[600] text-vulcan text-md">
+                                            <p className="font-[600] text-vulcan text-base">
                                                 {partnerDetails.organizationName}
                                             </p>
                                         </div>
@@ -211,7 +211,7 @@ function ViewPartnerDetails() {
                                             <p className="font-[600] text-suva-gray text-sm">
                                                 {t("viewPartnerDetails.firstName")}
                                             </p>
-                                            <p className="font-[600] text-vulcan text-md">
+                                            <p className="font-[600] text-vulcan text-base">
                                                 {partnerDetails.firstName ?? "-"}
                                             </p>
                                         </div>
@@ -219,7 +219,7 @@ function ViewPartnerDetails() {
                                             <p className="font-[600] text-suva-gray text-sm">
                                                 {t("viewPartnerDetails.lastName")}
                                             </p>
-                                            <p className="font-[600] text-vulcan text-md">
+                                            <p className="font-[600] text-vulcan text-base">
                                                 {partnerDetails.lastName ?? "-"}
                                             </p>
                                         </div>
@@ -227,7 +227,7 @@ function ViewPartnerDetails() {
                                             <p className="font-[600] text-suva-gray text-sm">
                                                 {t("userProfile.phoneNumber")}
                                             </p>
-                                            <p className="font-[600] text-vulcan text-md">
+                                            <p className="font-[600] text-vulcan text-base">
                                                 {partnerDetails.contactNumber ? partnerDetails.contactNumber : '-'}
                                             </p>
                                         </div>
@@ -235,7 +235,7 @@ function ViewPartnerDetails() {
                                             <p className="font-[600] text-suva-gray text-sm">
                                                 {t("userProfile.emailAddress")}
                                             </p>
-                                            <p className="font-[600] text-vulcan text-md">
+                                            <p className="font-[600] text-vulcan text-base">
                                                 {partnerDetails.emailId}
                                             </p>
                                         </div>
@@ -243,7 +243,7 @@ function ViewPartnerDetails() {
                                             <p className="font-[600] text-suva-gray text-sm">
                                                 {t("viewOidcClientDetails.policyGroup")}
                                             </p>
-                                            <p className="font-[600] text-vulcan text-md">
+                                            <p className="font-[600] text-vulcan text-base">
                                                 {partnerDetails.policyGroupName ? partnerDetails.policyGroupName : '-'}
                                             </p>
                                         </div>
@@ -279,15 +279,15 @@ function ViewPartnerDetails() {
                                             <div className="flex items-center p-5 bg-white rounded-lg">
                                                 <div className="flex-col space-y-1">
                                                     <p className="font-semibold text-sm text-dim-gray">{t('partnerCertificatesList.partnerType')}</p>
-                                                    <p className="font-bold text-md text-charcoal-gray">{partnerDetails.partnerType}</p>
+                                                    <p className="font-bold text-base text-charcoal-gray">{partnerDetails.partnerType}</p>
                                                 </div>
                                                 <div className={`flex-col ${isLoginLanguageRTL ? "mr-[5%]" : "ml-[5%]"} space-y-1`}>
                                                     <p className="font-semibold text-sm text-dim-gray">{t('viewPartnerDetails.expiryDate')}</p>
-                                                    <p className="font-semibold text-md text-charcoal-gray">{formatDate(partnerDetails.certificateExpiryDateTime, "dateTime")}</p>
+                                                    <p className="font-semibold text-base text-charcoal-gray">{formatDate(partnerDetails.certificateExpiryDateTime, "dateTime")}</p>
                                                 </div>
                                                 <div className={`flex-col ${isLoginLanguageRTL ? "mr-[10%]" : "ml-[10%]"} space-y-1`}>
                                                     <p className="font-semibold text-sm text-dim-gray">{t('partnerCertificatesList.timeOfUpload')}</p>
-                                                    <p className="font-semibold text-md text-charcoal-gray">{formatDate(partnerDetails.certificateUploadDateTime, "dateTime")}</p>
+                                                    <p className="font-semibold text-base text-charcoal-gray">{formatDate(partnerDetails.certificateUploadDateTime, "dateTime")}</p>
                                                 </div>
                                             </div>
                                         </div>

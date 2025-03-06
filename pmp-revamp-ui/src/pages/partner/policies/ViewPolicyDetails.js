@@ -50,12 +50,12 @@ function ViewPolicyDetails() {
                             >
                                 {getStatusCode(policyDetails.status, t)}
                             </div>
-                            <div className={`font-semibold ${isLoginLanguageRTL ? "mr-3" : "ml-3"} text-xs text-dark-blue`}>
+                            <div className={`font-semibold ${isLoginLanguageRTL ? "mr-3" : "ml-3"} text-sm text-dark-blue`}>
                                 {t("viewPolicyDetails.createdOn") + ' ' +
                                     formatDate(policyDetails.createdDateTime, "date")}
                             </div>
                             <div className="mx-3 text-gray-300">|</div>
-                            <div className="font-semibold text-xs text-dark-blue">
+                            <div className="font-semibold text-sm text-dark-blue">
                                 {formatDate(policyDetails.createdDateTime, "time")}
                             </div>
                         </div>
@@ -64,18 +64,18 @@ function ViewPolicyDetails() {
                     <div className={`${isLoginLanguageRTL ? "pr-8 ml-8" : "pl-8 mr-8"} pt-6 mb-4`}>
                         <div className="flex flex-wrap">
                             <div className={`w-[49%] mb-4 ${isLoginLanguageRTL ? "ml-[1%]" : "mr-[1%]"}`}>
-                                <p id='policy_details_partner_id_label' className="font-semibold text-suva-gray text-xs">
+                                <p id='policy_details_partner_id_label' className="font-semibold text-suva-gray text-sm">
                                     {t("viewPolicyDetails.partnerId")}
                                 </p>
-                                <p id='policy_details_partner_id_context' className="font-semibold text-vulcan text-sm">
+                                <p id='policy_details_partner_id_context' className="font-semibold text-vulcan text-base">
                                     {policyDetails.partnerId}
                                 </p>
                             </div>
                             <div className="mb-5 w-[50%]">
-                                <p id='policy_details_partner_type_label' className="font-semibold text-suva-gray text-xs">
+                                <p id='policy_details_partner_type_label' className="font-semibold text-suva-gray text-sm">
                                     {t("viewPolicyDetails.partnerType")}
                                 </p>
-                                <p id='policy_details_partner_type_context' className="font-semibold text-vulcan text-sm">
+                                <p id='policy_details_partner_type_context' className="font-semibold text-vulcan text-base">
                                     {getPartnerTypeDescription(policyDetails.partnerType, t)}
                                 </p>
                             </div>
@@ -83,34 +83,34 @@ function ViewPolicyDetails() {
                         <hr className="h-px w-full bg-gray-200 border-0" />
                         <div className="flex flex-wrap pt-4">
                             <div className={`w-[49%] ${isLoginLanguageRTL ? "ml-[1%]" : "mr-[1%]"}`}>
-                                <p id='policy_details_policy_group_name_label' className="font-semibold text-suva-gray text-xs">
+                                <p id='policy_details_policy_group_name_label' className="font-semibold text-suva-gray text-sm">
                                     {t("viewPolicyDetails.policyGroupName")}
                                 </p>
-                                <p id='policy_details_policy_group_name_context' className="font-semibold text-vulcan text-sm">
+                                <p id='policy_details_policy_group_name_context' className="font-semibold text-vulcan text-base">
                                     {policyDetails.policyGroupName}
                                 </p>
                             </div>
                             <div className="w-[50%]">
-                                <p id='policy_details_policy_name_label' className="font-semibold text-suva-gray text-xs">
+                                <p id='policy_details_policy_name_label' className="font-semibold text-suva-gray text-sm">
                                     {t("viewPolicyDetails.policyName")}
                                 </p>
-                                <p id='policy_details_policy_name_context' className="font-semibold text-vulcan text-sm">
+                                <p id='policy_details_policy_name_context' className="font-semibold text-vulcan text-base">
                                     {policyDetails.policyName}
                                 </p>
                             </div>
                             <div className={`w-[49%] my-5 ${isLoginLanguageRTL ? "ml-[1%]" : "mr-[1%]"}`}>
-                                <p id='policy_details_policy_group_description_label' className="font-semibold text-suva-gray text-xs">
+                                <p id='policy_details_policy_group_description_label' className="font-semibold text-suva-gray text-sm">
                                     {t("viewPolicyDetails.policyGroupDescription")}
                                 </p>
-                                <p id='policy_details_policy_group_description_context' className="font-semibold text-vulcan text-sm">
+                                <p id='policy_details_policy_group_description_context' className="font-semibold text-vulcan text-base">
                                     {policyDetails.policyGroupDescription}
                                 </p>
                             </div>
                             <div className="w-[50%]  my-5">
-                                <p id='policy_details_policy_name_description_label' className="font-semibold text-suva-gray text-xs">
+                                <p id='policy_details_policy_name_description_label' className="font-semibold text-suva-gray text-sm">
                                     {t("viewPolicyDetails.policyNameDescription")}
                                 </p>
-                                <p id='policy_details_policy_name_description_context' className="font-semibold text-vulcan text-sm">
+                                <p id='policy_details_policy_name_description_context' className="font-semibold text-vulcan text-base">
                                     {policyDetails.policyDescription}
                                 </p>
                             </div>
@@ -132,7 +132,7 @@ function ViewPolicyDetails() {
                                             {t("viewPolicyDetails.adminComments")}
                                         </h4>
                                         <div className="flex items-center justify-start mt-4 w-[79rem]">
-                                            <div className={`${bgOfStatus(policyDetails.status)}flex w-fit py-1.5 px-3 text-xs rounded-md`}>
+                                            <div className={`${bgOfStatus(policyDetails.status)}flex w-fit py-1.5 px-3 text-sm rounded-md`}>
                                                 {getStatusCode(policyDetails.status, t)}
                                             </div>
                                             <div>
@@ -166,12 +166,12 @@ function ViewPolicyDetails() {
                                             </span>
                                             <hr className="h-px w-full bg-gray-200 border-0 my-4" />
                                             <div className="flex items-center justify-start">
-                                                <div className="font-semibold text-xs text-dark-blue">
+                                                <div className="font-semibold text-sm text-dark-blue">
                                                     {t("viewPolicyDetails.createdOn") + ' ' +
                                                         formatDate(policyDetails.createdDateTime, "date")}
                                                 </div>
                                                 <div className="mx-3 text-gray-300">|</div>
-                                                <div className="font-semibold text-xs text-dark-blue">
+                                                <div className="font-semibold text-sm text-dark-blue">
                                                     {formatDate(policyDetails.createdDateTime, "time")}
                                                 </div>
                                             </div>

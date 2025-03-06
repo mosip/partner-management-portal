@@ -162,7 +162,7 @@ function CreatePolicyGroup() {
                                                     <div className="flex flex-col w-[48%] max-[450px]:w-full">
                                                         <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('createPolicyGroup.policyGroupName')}<span className="text-crimson-red mx-1">*</span></label>
                                                         <input value={policyGroupName} onChange={(e) => onChangePolicyGroupName(e.target.value)} maxLength={128}
-                                                            className="h-12 px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
+                                                            className="h-12 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                                                             placeholder={t('createPolicyGroup.enterNameforPolicyGroup')} id="policy_group_name"
                                                         />
                                                     </div>
@@ -173,7 +173,7 @@ function CreatePolicyGroup() {
                                                     <div className="flex flex-col w-full max-[450px]:w-full">
                                                         <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('createPolicyGroup.policyGroupDescription')}<span className="text-crimson-red mx-1">*</span></label>
                                                         <textarea value={policyGroupDesc} onChange={(e) => onChangePolicyGroupDesc(e.target.value)} maxLength={256}
-                                                            className="h-14 px-2 py-3 border border-[#707070] rounded-md text-md text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
+                                                            className="h-14 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                                                             placeholder={t('createPolicyGroup.enterPolicyGroupDescription')} id="policy_group_description"
                                                         />
                                                     </div>

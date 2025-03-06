@@ -7,7 +7,7 @@ import org.openqa.selenium.support.FindBy;
 import io.mosip.testrig.pmprevampui.utility.TestRunner;
 
 public class AuthPolicyPage extends BasePage {
-		
+
 	@FindBy(id = "create_auth_policy_btn")
 	private WebElement createAuthPolicyButton;
 	

@@ -36,6 +36,7 @@ jobs:
             SERVICE_NAME: 'pmp-ui'
             NPM_BUILD: true
             BUILD_ARTIFACT: 'pmp-ui'
+            SQUASH_LAYERS: '10'
       fail-fast: false
     name: ${{ matrix.SERVICE_NAME }}
     uses: mosip/kattu/.github/workflows/docker-build.yml@master
@@ -44,6 +45,7 @@ jobs:
       SERVICE_NAME: ${{ matrix.SERVICE_NAME }}
       NPM_BUILD: ${{ matrix.NPM_BUILD }}
       BUILD_ARTIFACT: ${{ matrix.BUILD_ARTIFACT }}
+      SQUASH_LAYERS: ${{ matrix.SQUASH_LAYERS }}
     secrets:
       DEV_NAMESPACE_DOCKER_HUB: ${{ secrets.DEV_NAMESPACE_DOCKER_HUB }}
       ACTOR_DOCKER_HUB: ${{ secrets.ACTOR_DOCKER_HUB }}
@@ -67,12 +69,14 @@ jobs:
         include:
           - SERVICE_LOCATION: 'pmp-revamp-ui'
             SERVICE_NAME: 'pmp-revamp-ui'
+            SQUASH_LAYERS: '14'
       fail-fast: false
     name: ${{ matrix.SERVICE_NAME }}
     uses: mosip/kattu/.github/workflows/docker-build.yml@master
     with:
       SERVICE_LOCATION: ${{ matrix.SERVICE_LOCATION }}
       SERVICE_NAME: ${{ matrix.SERVICE_NAME }}
+      SQUASH_LAYERS: ${{ matrix.SQUASH_LAYERS }}
     secrets:
       DEV_NAMESPACE_DOCKER_HUB: ${{ secrets.DEV_NAMESPACE_DOCKER_HUB }}
       ACTOR_DOCKER_HUB: ${{ secrets.ACTOR_DOCKER_HUB }}
@@ -170,7 +174,7 @@ jobs:
   sonar_analysis:
     needs: build-uitest-pmp-local
     if: "${{  github.event_name != 'pull_request' }}"
-    uses: mosip/kattu/.github/workflows/maven-sonar-analysis.yml@master
+    uses: mosip/kattu/.github/workflows/maven-sonar-analysis.yml@master-java21
     with:
       SERVICE_LOCATION: uitest-pmp
     secrets:

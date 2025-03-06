@@ -84,7 +84,7 @@ function ViewAdminDeviceDetails() {
                                     <p className="font-[600] text-suva-gray text-sm">
                                         {t("sbiList.partnerId")}
                                     </p>
-                                    <p className="font-[600] text-vulcan text-md">
+                                    <p className="font-[600] text-vulcan text-base">
                                         {deviceDetails.partnerId}
                                     </p>
                                 </div>
@@ -92,7 +92,7 @@ function ViewAdminDeviceDetails() {
                                     <p className="font-[600] text-suva-gray text-sm">
                                         {t("viewPolicyRequest.partnerType")}
                                     </p>
-                                    <p className="font-[600] text-vulcan text-md">
+                                    <p className="font-[600] text-vulcan text-base">
                                         {t("partnerTypes.deviceProvider")}
                                     </p>
                                 </div>
@@ -100,7 +100,7 @@ function ViewAdminDeviceDetails() {
                                     <p className="font-[600] text-suva-gray text-sm">
                                         {t("sbiList.orgName")}
                                     </p>
-                                    <p className="font-[600] text-vulcan text-md">
+                                    <p className="font-[600] text-vulcan text-base">
                                         {deviceDetails.orgName}
                                     </p>
                                 </div>
@@ -108,7 +108,7 @@ function ViewAdminDeviceDetails() {
                                     <p className="font-[600] text-suva-gray text-sm">
                                         {t("sbiList.sbiId")}
                                     </p>
-                                    <p className="font-[600] text-vulcan text-md">
+                                    <p className="font-[600] text-vulcan text-base">
                                         {deviceDetails.sbiId}
                                     </p>
                                 </div>
@@ -118,7 +118,7 @@ function ViewAdminDeviceDetails() {
                                     <p className="font-[600] text-suva-gray text-sm">
                                         {t("devicesList.deviceType")}
                                     </p>
-                                    <p className="font-[600] text-vulcan text-md">
+                                    <p className="font-[600] text-vulcan text-base">
                                         {deviceDetails.deviceType}
                                     </p>
                                 </div>
@@ -126,7 +126,7 @@ function ViewAdminDeviceDetails() {
                                     <p className="font-[600] text-suva-gray text-sm">
                                         {t("devicesList.deviceSubType")}
                                     </p>
-                                    <p className="font-[600] text-vulcan text-md">
+                                    <p className="font-[600] text-vulcan text-base">
                                         {deviceDetails.deviceSubType}
                                     </p>
                                 </div>
@@ -134,7 +134,7 @@ function ViewAdminDeviceDetails() {
                                 <p className="font-[600] text-suva-gray text-sm">
                                         {t("devicesList.make")}
                                     </p>
-                                    <p className="font-[600] text-vulcan text-md">
+                                    <p className="font-[600] text-vulcan text-base">
                                         {deviceDetails.make}
                                     </p>
                                 </div>
@@ -142,7 +142,7 @@ function ViewAdminDeviceDetails() {
                                     <p className="font-[600] text-suva-gray text-sm">
                                         {t("devicesList.model")}
                                     </p>
-                                    <p className="font-[600] text-vulcan text-md">
+                                    <p className="font-[600] text-vulcan text-base">
                                         {deviceDetails.model}
                                     </p>
                                 </div>

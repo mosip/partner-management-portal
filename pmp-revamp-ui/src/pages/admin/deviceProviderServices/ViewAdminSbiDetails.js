@@ -82,7 +82,7 @@ function ViewAdminSbiDetails() {
                                     <p className="font-[600] text-suva-gray text-sm">
                                         {t("viewPolicyRequest.partnerId")}
                                     </p>
-                                    <p className="font-[600] text-vulcan text-md">
+                                    <p className="font-[600] text-vulcan text-base">
                                         {sbiDetails.partnerId}
                                     </p>
                                 </div>
@@ -90,7 +90,7 @@ function ViewAdminSbiDetails() {
                                     <p className="font-[600] text-suva-gray text-sm">
                                         {t("viewPolicyRequest.partnerType")}
                                     </p>
-                                    <p className="font-[600] text-vulcan text-md">
+                                    <p className="font-[600] text-vulcan text-base">
                                         {t("partnerTypes.deviceProvider")}
                                     </p>
                                 </div>
@@ -98,7 +98,7 @@ function ViewAdminSbiDetails() {
                                     <p className="font-[600] text-suva-gray text-sm">
                                         {t("viewSbiDetails.organisation")}
                                     </p>
-                                    <p className="font-[600] text-vulcan text-md">
+                                    <p className="font-[600] text-vulcan text-base">
                                         {sbiDetails.orgName}
                                     </p>
                                 </div>
@@ -106,7 +106,7 @@ function ViewAdminSbiDetails() {
                                     <p className="font-[600] text-suva-gray text-sm">
                                         {t("sbiList.linkedDevices")}
                                     </p>
-                                    <button className={`font-[600] text-vulcan text-md ${sbiDetails.countOfAssociatedDevices > 0 && 'text-tory-blue cursor-pointer'}`} onClick={() => showLinkedDevices()}>
+                                    <button className={`font-[600] text-vulcan text-base ${sbiDetails.countOfAssociatedDevices > 0 && 'text-tory-blue cursor-pointer'}`} onClick={() => showLinkedDevices()}>
                                         {sbiDetails.countOfAssociatedDevices}
                                     </button>
                                 </div>
@@ -114,7 +114,7 @@ function ViewAdminSbiDetails() {
                                     <p className="font-[600] text-suva-gray text-sm">
                                         {t("viewSbiDetails.sbiCreatedDate")}
                                     </p>
-                                    <p className="font-[600] text-vulcan text-md">
+                                    <p className="font-[600] text-vulcan text-base">
                                         {formatDate(sbiDetails.sbiCreatedDateTime, "date")}
                                     </p>
                                 </div>
@@ -122,7 +122,7 @@ function ViewAdminSbiDetails() {
                                     <p className={`font-[600] text-suva-gray text-sm`}>
                                         {t("viewSbiDetails.sbiExpiryDate")}
                                     </p>
-                                    <p className={`${(sbiDetails.sbiExpiryStatus === 'expired') ? 'text-crimson-red' : 'text-vulcan'} font-[600] text-md`}>
+                                    <p className={`${(sbiDetails.sbiExpiryStatus === 'expired') ? 'text-crimson-red' : 'text-vulcan'} font-[600] text-base`}>
                                         {formatDate(sbiDetails.sbiExpiryDateTime, "date")}
                                     </p>
                                 </div>
@@ -130,7 +130,7 @@ function ViewAdminSbiDetails() {
                                     <p className="font-[600] text-suva-gray text-sm">
                                         {t("sbiList.sbiVersion")}
                                     </p>
-                                    <p className="font-[600] text-vulcan text-md">
+                                    <p className="font-[600] text-vulcan text-base">
                                         {sbiDetails.sbiVersion}
                                     </p>
                                 </div>

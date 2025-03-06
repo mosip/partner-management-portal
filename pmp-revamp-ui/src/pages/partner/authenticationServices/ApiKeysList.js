@@ -236,7 +236,7 @@ function ApiKeysList() {
                                                 <tr>
                                                     {tableHeaders.map((header, index) => {
                                                         return (
-                                                            <th key={index} className={`py-4 px-2 text-xs text-[#6F6E6E] w-[17%]`}>
+                                                            <th key={index} className={`py-4 px-2 text-sm font-semibold text-[#6F6E6E] w-[17%]`}>
                                                                 <div id={`${header.headerNameKey}_header`} className={`flex gap-x-1 items-center font-semibold ${header.id === "action" && 'justify-center'}`}>
                                                                     {t(header.headerNameKey)}
                                                                     {(header.id !== "action") && (header.id !== "apiKeyReqID") && (
@@ -272,13 +272,13 @@ function ApiKeysList() {
                                                                     </div>
                                                                 </td>
 
-                                                                <td className="px-2 mx-2 cursor-default">
-                                                                    <div className="flex items-center justify-center relative" ref={setSubmenuRef(submenuRef, index)}>
+                                                                <td className="text-center cursor-default">
+                                                                    <div ref={setSubmenuRef(submenuRef, index)}>
                                                                         <button id={'api_list_action' + (index + 1)} onClick={() => setViewApiKeyId(index === viewApiKeyId ? null : index)} className={`font-semibold mb-0.5 cursor-pointer text-[#1447B2]`}>
                                                                             <p> ... </p>
                                                                         </button>
                                                                         {viewApiKeyId === index && (
-                                                                            <div className={`absolute w-[7rem] ${currentArray.length - 1 === index ? '-bottom-2' : currentArray.length - 2 === index ? '-bottom-2' : 'top-5'} z-50 bg-white text-xs text-start font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-[0.7rem] text-right" : "right-[0.7rem] text-left"}`}>
+                                                                            <div className={`absolute w-[7rem] z-50 bg-white text-xs text-start font-semibold rounded-lg shadow-md border ${isLoginLanguageRTL ? "left-[3.5rem] text-right" : "right-[3.5rem] text-left"}`}>
                                                                                 <div role='button' id='api_key_view' onClick={() => onClickView(apiKey)} className={`flex justify-between py-2 w-full px-2 ${isLoginLanguageRTL ? "text-right" : "text-left"} cursor-pointer text-[#3E3E3E] hover:bg-gray-100`}>
                                                                                     <p> {t('oidcClientsList.view')} </p>
                                                                                     <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
