@@ -81,9 +81,11 @@ function HeaderNav({ open, setOpen }) {
                         <img id='bellIcon' src={bellIcon} alt="" className="w-5 h-5" />
                     </div>
                     { openNotification && (
-                        <NotificationPopup
-                            closeNotification={() => setOpenNotification(false)}
-                        />
+                        <div className={`fixed inset-0 bg-black bg-opacity-0 z-40`}>
+                            <NotificationPopup
+                                closeNotification={() => setOpenNotification(false)}
+                            />
+                        </div>
                     )}
                 </div>
                 <div className="flex items-center">
