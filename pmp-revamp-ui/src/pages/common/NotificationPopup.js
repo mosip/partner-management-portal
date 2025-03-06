@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import xClose from '../../svg/x_close.svg';
 import { formatDate, getNoticationTitle, getNotificationDescription, isLangRTL } from "../../utils/AppUtils";
@@ -11,6 +11,7 @@ function NotificationPopup({ closeNotification }) {
     const { t } = useTranslation();
     const navigate = useNavigate('');
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const [isSmallScreen, setIsSmallScreen] = useState(window.innerHeight < 620);
     const [notifications, setNotifications] = useState([
         {
             "notificationId": "1",
@@ -119,6 +120,23 @@ function NotificationPopup({ closeNotification }) {
         }
     ]);
 
+    useEffect(() => {
+        const updateScreenSize = () => {
+            setIsSmallScreen(window.innerHeight < 620);
+        };
+
+        window.addEventListener('resize', updateScreenSize);
+        return () => window.removeEventListener('resize', updateScreenSize);
+    }, []);
+
+    useEffect(() => {
+            document.body.style.overflow = "hidden";
+    
+            return () => {
+                document.body.style.overflow = "auto";
+            };
+    }, []);
+
     const dismissNotification = (id) => {
         setNotifications(notifications.filter(notification => notification.notificationId !== id));
     };
@@ -129,7 +147,7 @@ function NotificationPopup({ closeNotification }) {
     }
 
     return (
-        <div className={`absolute top-[3.75rem] ${isLoginLanguageRTL ? 'max-850:left-4 left-[15rem]' : 'max-850:right-4 right-[15rem]'} bg-white w-[27rem] max-520:w-full rounded-lg shadow-lg border border-gray-200 z-50`}>
+        <div className={`absolute top-[3.75rem] ${isLoginLanguageRTL ? 'max-850:left-4 left-[15rem]' : 'max-850:right-4 right-[15rem]'} bg-white w-[25rem] max-520:w-full rounded-lg shadow-lg border border-gray-200 z-50`}>
             <div className="flex justify-between items-center p-4 border-b border-gray-200">
                 <h2 className="text-lg font-bold text-gray-800">{t('notificationPopup.notification')}</h2>
                 <img src={xClose} alt='' id='xIcon' onClick={closeNotification} />
@@ -137,10 +155,10 @@ function NotificationPopup({ closeNotification }) {
             {notifications.length > 0 ? (
                 <>
                     <p className={`text-sm text-[#6F6E6E] font-medium ${isLoginLanguageRTL ? 'mr-4' : 'ml-4'} my-2`}>latest</p>
-                    <div className="max-h-96 overflow-y-auto">
+                    <div className={`${isSmallScreen ? 'max-h-64' : 'max-h-96'} overflow-y-auto`}>
                         {notifications.map(notification => (
-                            <div key={notification.notificationId} className="flex justify-between items-start p-4 border-b border-gray-200">
-                                <img src={featuredIcon} alt='' id='featuredIcon' className="mx-2" />
+                            <div key={notification.notificationId} className="flex justify-between items-start p-2 border-b border-gray-200">
+                                <img src={featuredIcon} alt='' id='featuredIcon' className={`${isLoginLanguageRTL ? 'ml-3' : 'mr-3'} mt-1`} />
                                 <div>
                                     <div className="flex justify-between space-x-2">
                                         <p className={`text-sm font-semibold text-gray-900 ${isLoginLanguageRTL ? 'text-right': 'text-left'}`}>{getNoticationTitle(notification, t)}</p>

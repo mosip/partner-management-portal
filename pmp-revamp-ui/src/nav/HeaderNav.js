@@ -18,11 +18,9 @@ function HeaderNav({ open, setOpen }) {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const dropdownRef = useRef(null);
     const [openNotification, setOpenNotification] = useState(false);
-    const notificationRef = useRef(null);
 
     useEffect(() => {
         handleMouseClickForDropdown(dropdownRef, () => setIsDropdownOpen(false));
-        handleMouseClickForDropdown(notificationRef, () => setOpenNotification(false));
     }, [dropdownRef]);
 
     useEffect(() => {
@@ -83,11 +81,9 @@ function HeaderNav({ open, setOpen }) {
                         <img id='bellIcon' src={bellIcon} alt="" className="w-5 h-5" />
                     </div>
                     { openNotification && (
-                        <div ref={notificationRef}>
-                            <NotificationPopup
-                                closeNotification={() => setOpenNotification(false)}
-                            />
-                        </div>
+                        <NotificationPopup
+                            closeNotification={() => setOpenNotification(false)}
+                        />
                     )}
                 </div>
                 <div className="flex items-center">

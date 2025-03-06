@@ -202,7 +202,7 @@ function ViewNotifications({ notificationType }) {
                                 <div className="p-6">
                                     {notificationsList.map((notification) => (
                                         <div key={notification.notificationId} className="flex items-start w-full bg-white p-4 rounded-lg shadow mb-3 border-b border-[#D0D5DD]">
-                                            <img src={featuredIcon} alt='' id='featuredIcon' className="mr-3 mt-2" />
+                                            <img src={featuredIcon} alt='' id='featuredIcon' className={`${isLoginLanguageRTL ? 'ml-3' : 'mr-3'} mt-2`} />
                                             <div className="mt-0.5 w-full">
                                                 <div className="flex justify-between">
                                                     <p className="font-semibold text-base text-[#101828]">{getNoticationTitle(notification, t)}</p>
