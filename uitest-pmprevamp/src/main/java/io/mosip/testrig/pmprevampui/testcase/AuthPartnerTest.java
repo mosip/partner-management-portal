@@ -31,7 +31,6 @@ public class AuthPartnerTest extends BaseClass {
 
 		DashboardPage dashboardpage = new DashboardPage(driver);
 		PartnerCertificatePage partnerCertificatePage = new PartnerCertificatePage(driver);
-		RegisterPage registerPage = new RegisterPage(driver);
 
 		assertTrue(dashboardpage.isTermsAndConditionsPopUppDisplayed(),
 				GlobalConstants.isTermsAndConditionsPopUppDisplayed);
@@ -220,7 +219,7 @@ public class AuthPartnerTest extends BaseClass {
 		authpolicypage.clickOnCreatePolicyFormSubmitButton();
 		authpolicypage.clickOnGoBackButton();
 		authpolicypage.clickOnFilterButton();
-		authpolicypage.enterPendingPolicyNameInFilter("authpolicy01");
+		authpolicypage.enterPolicyNameInFilter("authpolicy01");
 		authpolicypage.clickOnApplyFilterButton();
 		authpolicypage.clickOnPoliciesListViewElipsisButton();
 		authpolicypage.clickOnPolicyPublishButton();
@@ -236,7 +235,7 @@ public class AuthPartnerTest extends BaseClass {
 		authpolicypage.clickOnCreatePolicyFormSubmitButton();
 		authpolicypage.clickOnGoBackButton();
 		authpolicypage.clickOnFilterButton();
-		authpolicypage.enterPendingPolicyNameInFilter("authpolicy02");
+		authpolicypage.enterPolicyNameInFilter("authpolicy02");
 		authpolicypage.clickOnApplyFilterButton();
 		authpolicypage.clickOnPoliciesListViewElipsisButton();
 		authpolicypage.clickOnPolicyPublishButton();
@@ -252,7 +251,7 @@ public class AuthPartnerTest extends BaseClass {
 		authpolicypage.clickOnCreatePolicyFormSubmitButton();
 		authpolicypage.clickOnGoBackButton();
 		authpolicypage.clickOnFilterButton();
-		authpolicypage.enterPendingPolicyNameInFilter("pending auth");
+		authpolicypage.enterPolicyNameInFilter("pending auth");
 		authpolicypage.clickOnApplyFilterButton();
 		authpolicypage.clickOnPoliciesListViewElipsisButton();
 		authpolicypage.clickOnPolicyPublishButton();
@@ -268,7 +267,7 @@ public class AuthPartnerTest extends BaseClass {
 		authpolicypage.clickOnCreatePolicyFormSubmitButton();
 		authpolicypage.clickOnGoBackButton();
 		authpolicypage.clickOnFilterButton();
-		authpolicypage.enterPendingPolicyNameInFilter("deactivate auth");
+		authpolicypage.enterPolicyNameInFilter("deactivate auth");
 		authpolicypage.clickOnApplyFilterButton();
 		authpolicypage.clickOnPoliciesListViewElipsisButton();
 		authpolicypage.clickOnPolicyPublishButton();
@@ -406,7 +405,6 @@ public class AuthPartnerTest extends BaseClass {
 	public void createOidecClient() {
 
 		DashboardPage dashboardpage = new DashboardPage(driver);
-		RegisterPage registerPage = new RegisterPage(driver);
 		PartnerPolicyMappingPage PartnerPolicyMappingPage = new PartnerPolicyMappingPage(driver);
 
 		dashboardpage.clickOnPartnerPolicyMappingTab();
@@ -900,9 +898,6 @@ public class AuthPartnerTest extends BaseClass {
 
 		policiesPage.selectPartnerIdDropdown();
 		policiesPage.enterAuthPolicyNameDropdown("authpolicy02");
-//		dashboardpage.clickOnHamburgerOpen();
-//		assertTrue(dashboardpage.isHumburgerOptionsExpandable(),GlobalConstants.isHumburgerOptionsExpandable);
-//		dashboardpage.clickOnHamburgerClose();
 		policiesPage.enterComments(data);
 		policiesPage.clickSubmitButton();
 		policiesPage.clickOnGoBackButton();
@@ -1001,8 +996,6 @@ public class AuthPartnerTest extends BaseClass {
 	public void CreateOidcClientWithoutUploadingCertificates() {
 
 		DashboardPage dashboardpage = new DashboardPage(driver);
-		ApiKeyPage apiKeyPage = new ApiKeyPage(driver);
-		BasePage basePage = new BasePage(driver);
 		dashboardpage.clickOnProfileDropdown();
 		assertTrue(dashboardpage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
 
@@ -1154,7 +1147,7 @@ public class AuthPartnerTest extends BaseClass {
 				GlobalConstants.isInvalidRedirectUriErrorDisplayed);
 	}
 
-	@Test(priority = 16, description = "edit OIDC client")
+	@Test(priority = 15, description = "edit OIDC client")
 	public void editOIDCClient() {
 		DashboardPage dashboardpage = new DashboardPage(driver);
 		dashboardpage.clickOnProfileDropdown();
@@ -1189,7 +1182,7 @@ public class AuthPartnerTest extends BaseClass {
 
 	}
 
-	@Test(priority = 17, description = "Deactivate OIDC client")
+	@Test(priority = 16, description = "Deactivate OIDC client")
 	public void deactivateOIDCClient() {
 		DashboardPage dashboardpage = new DashboardPage(driver);
 		dashboardpage.clickOnProfileDropdown();
@@ -1228,7 +1221,7 @@ public class AuthPartnerTest extends BaseClass {
 
 	}
 
-	@Test(priority = 15, description = "User Profile")
+	@Test(priority = 17, description = "User Profile")
 	public void userProfile() {
 		DashboardPage dashboardpage = new DashboardPage(driver);
 		ProfilePage profilepage = new ProfilePage(driver);

@@ -13,6 +13,7 @@
 			<class name="io.mosip.testrig.pmprevampui.testcase.DeviceProviderTest" />
 			<class name="io.mosip.testrig.pmprevampui.testcase.FTMDeviceTest" />
 			<class name="io.mosip.testrig.pmprevampui.testcase.PartnerManagerPoliciesTest" />
+			
 		</classes>
 		
 	</test>

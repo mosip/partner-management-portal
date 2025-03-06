@@ -83,10 +83,6 @@ public class PoliciesPage extends BasePage {
 	@FindBy(id = "policy_group_filter_option1")
 	private WebElement policyGroupFilterOption1;
 	
-	
-	
-	
-	
 	@FindBy(id = "policy_status_filter")
 	private WebElement policyStatusFilter;
 
@@ -95,8 +91,6 @@ public class PoliciesPage extends BasePage {
 
 	@FindBy(id = "policy_partner_id_filter_option1")
 	private WebElement policyPartnerIdFilterOption1;
-
-	
 
 	@FindBy(xpath = "//*[@aria-label='Next page']")
 	private WebElement nextPage;
@@ -472,7 +466,6 @@ public class PoliciesPage extends BasePage {
 		clickOnElement(policiesAuthPolicyTab);
 	}
 	
-
 	public boolean isFilterButtonButtonEnabled() {
 		return isElementEnabled(filterButton);
     }
@@ -651,5 +644,9 @@ public class PoliciesPage extends BasePage {
 	
 	public void clickOnGoBackButton() {
 		clickOnElement(goBackButton);
+	}
+	
+	public boolean isPoliciesAuthPolicyTabDisplayed() {
+		return isElementDisplayed(policiesAuthPolicyTab);
 	}
 }
