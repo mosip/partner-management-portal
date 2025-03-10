@@ -880,3 +880,30 @@ export const getWeeklySummaryDate = (notification) => {
     date.setDate(date.getDate() + 7);
     return date.toString();
 };
+
+export const fetchNotificationsList = async (url, HttpService, setDataList, setTotalRecords, setErrorCode, setErrorMsg, t) => {
+    try {
+        const response = await HttpService.get(url);
+        if (response) {
+            const responseData = response.data;
+            if (responseData && responseData.response) {
+                const resData = responseData.response.data;
+                const parsedData = resData.map((notification) => ({
+                    ...notification,
+                    notificationDetails: JSON.parse(notification.notificationDetails),
+                  }));
+                setTotalRecords(responseData.response.totalResults);
+                setDataList(parsedData);
+            } else {
+                handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+            }
+        } else {
+            setErrorMsg(t('notificationPopup.errorInNotifcations'));
+        }
+    } catch (err) {
+        console.error('Error fetching data:', err);
+        if (err.response?.status && err.response.status !== 401) {
+            setErrorMsg(err.toString());
+        }
+    }
+};

@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getUserProfile } from "../../../services/UserProfileService.js";
-import { formatDate, getNoticationTitle, getNotificationDescription, isLangRTL, setPageNumberAndPageSize } from "../../../utils/AppUtils.js";
+import { fetchNotificationsList, formatDate, getNoticationTitle, getNotificationDescription, getPartnerManagerUrl, isLangRTL, resetPageNumber, setPageNumberAndPageSize } from "../../../utils/AppUtils.js";
 import LoadingIcon from "../../common/LoadingIcon.js";
 import ErrorMessage from "../../common/ErrorMessage.js";
 import Title from "../../common/Title.js";
@@ -10,6 +10,7 @@ import searchIcon from "../../../svg/search_icon.svg";
 import featuredIcon from "../../../svg/featured_icon.svg";
 import noNotificationIcon from "../../../svg/frame.svg";
 import Pagination from "../../common/Pagination.js";
+import { HttpService } from "../../../services/HttpService.js";
 
 function ViewNotifications({ notificationType }) {
     const { t } = useTranslation();
@@ -18,128 +19,34 @@ function ViewNotifications({ notificationType }) {
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [searchQuery, setSearchQuery] = useState("");
-    const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(8);
+    const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(4);
     const [firstIndex, setFirstIndex] = useState(0);
     const [pageNo, setPageNo] = useState(0);
-    const [pageSize, setPageSize] = useState(8);
+    const [pageSize, setPageSize] = useState(4);
     const [fetchData, setFetchData] = useState(false);
-    const [notificationsList, setNotificationsList] = useState([
-        {
-            "notificationId": "1",
-            "notificationType": "ROOT_CERT_EXPIRY",
-            "notificationStatus": "ACTIVE",
-            "notificationPartnerId": "",
-            "createdDateTime": "2025-03-04T05:33:23.685+00:00",
-            "notificationDetails": {
-                "certificateDetails": [
-                    {
-                        "certificateId": "123456789",
-                        "issuedBy": "",
-                        "issuedTo": "",
-                        "partnerId": "",
-                        "partnerDomain": "AUTH",
-                        "expiryDateTime": "2025-03-04T05:33:23.685+00:00",
-                        "expiryPeriod": "",
-                        "certificateType": "root"
-                    }
-                ],
-                "sbiDetails": null,
-                "apiKeyDetails": null
-            }
-        },
-        {
-            "notificationId": "2",
-            "notificationType": "ROOT_CERT_EXPIRY",
-            "notificationStatus": "ACTIVE",
-            "notificationPartnerId": "",
-            "createdDateTime": "2025-03-04T05:33:23.685+00:00",
-            "notificationDetails": {
-                "certificateDetails": [
-                    {
-                        "certificateId": "123456789",
-                        "issuedBy": "",
-                        "issuedTo": "",
-                        "partnerId": "",
-                        "partnerDomain": "AUTH",
-                        "expiryDateTime": "2025-03-04T05:33:23.685+00:00",
-                        "expiryPeriod": "",
-                        "certificateType": "root"
-                    }
-                ],
-                "sbiDetails": null,
-                "apiKeyDetails": null
-            }
-        },
-        {
-            "notificationId": "3",
-            "notificationType": "ROOT_CERT_EXPIRY",
-            "notificationStatus": "ACTIVE",
-            "notificationPartnerId": "",
-            "createdDateTime": "2025-03-04T05:33:23.685+00:00",
-            "notificationDetails": {
-                "certificateDetails": [
-                    {
-                        "certificateId": "123456789",
-                        "issuedBy": "",
-                        "issuedTo": "",
-                        "partnerId": "",
-                        "partnerDomain": "AUTH",
-                        "expiryDateTime": "2025-03-04T05:33:23.685+00:00",
-                        "expiryPeriod": "",
-                        "certificateType": "root"
-                    }
-                ],
-                "sbiDetails": null,
-                "apiKeyDetails": null
-            }
-        },
-        {
-            "notificationId": "4",
-            "notificationType": "ROOT_CERT_EXPIRY",
-            "notificationStatus": "ACTIVE",
-            "notificationPartnerId": "",
-            "createdDateTime": "2025-03-04T05:33:23.685+00:00",
-            "notificationDetails": {
-                "certificateDetails": [
-                    {
-                        "certificateId": "123456789",
-                        "issuedBy": "",
-                        "issuedTo": "",
-                        "partnerId": "",
-                        "partnerDomain": "AUTH",
-                        "expiryDateTime": "2025-03-04T05:33:23.685+00:00",
-                        "expiryPeriod": "",
-                        "certificateType": "root"
-                    }
-                ],
-                "sbiDetails": null,
-                "apiKeyDetails": null
-            }
-        },
-        {
-            "notificationId": "5",
-            "notificationType": "ROOT_CERT_EXPIRY",
-            "notificationStatus": "ACTIVE",
-            "notificationPartnerId": "",
-            "createdDateTime": "2025-03-04T05:33:23.685+00:00",
-            "notificationDetails": {
-                "certificateDetails": [
-                    {
-                        "certificateId": "123456789",
-                        "issuedBy": "",
-                        "issuedTo": "",
-                        "partnerId": "",
-                        "partnerDomain": "AUTH",
-                        "expiryDateTime": "2025-03-04T05:33:23.685+00:00",
-                        "expiryPeriod": "",
-                        "certificateType": "root"
-                    }
-                ],
-                "sbiDetails": null,
-                "apiKeyDetails": null
-            }
-        }
-    ]);
+    const [totalRecords, setTotalRecords] = useState(0);
+    const [resetPageNo, setResetPageNo] = useState(false);
+    const [notificationsList, setNotificationsList] = useState([]);
+
+    const fetchNotifications = async () => {
+        const queryParams = new URLSearchParams();
+        queryParams.append('pageSize', pageSize);
+        const effectivePageNo = resetPageNumber(totalRecords, pageNo, pageSize, resetPageNo);
+        queryParams.append('pageNo', effectivePageNo);
+        setResetPageNo(false);
+
+        queryParams.append('notificationStatus', 'ACTIVE');
+        queryParams.append('notificationType', notificationType);
+
+        const url = `${getPartnerManagerUrl('/notifications', process.env.NODE_ENV)}?${queryParams.toString()}`;
+        setDataLoaded(false)
+        fetchNotificationsList(url, HttpService, setNotificationsList, setTotalRecords, setErrorCode, setErrorMsg, t);
+        setDataLoaded(true);
+    }
+
+    useEffect(() => {
+        fetchNotifications();
+    }, [pageNo, pageSize]);
 
     const getPaginationValues = (recordsPerPage, pageIndex) => {
         setPageNumberAndPageSize(recordsPerPage, pageIndex, pageNo, setPageNo, pageSize, setPageSize, setFetchData);
@@ -176,7 +83,7 @@ function ViewNotifications({ notificationType }) {
                     <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
                         <div className="flex max-640:flex-col items-center justify-between w-full px-2 py-3">
                             <div id='list_of_notifications_title' className={`${isLoginLanguageRTL ? 'pr-[1.3rem] max-640:pr-0' : 'pl-[1.3rem] max-640:pl-0'} font-semibold text-dark-blue text-base`}>
-                                <p>{t('viewAllNotifications.listOfNotifications') + ' (' + notificationsList.length + ")"}</p>
+                                <p>{t('viewAllNotifications.listOfNotifications') + ' (' + totalRecords + ")"}</p>
                             </div>
                             <div>
                                 <div className="flex h-10 w-96 max-640:w-full px-2 py-3 border border-[#C6C6C6] rounded-md text-sm text-[#B9B9B9] bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto no-scrollbar">
@@ -217,12 +124,13 @@ function ViewNotifications({ notificationType }) {
                                 </div>
                                 <hr className="h-0.5 bg-gray-200 border-0" />
                                 <Pagination
-                                    dataListLength={notificationsList.length}
+                                    dataListLength={totalRecords}
                                     selectedRecordsPerPage={selectedRecordsPerPage}
                                     setSelectedRecordsPerPage={setSelectedRecordsPerPage}
                                     setFirstIndex={setFirstIndex}
                                     isServerSideFilter={true}
                                     getPaginationValues={getPaginationValues}
+                                    isViewNotificationPage={true}
                                 />
                             </>
                         )}

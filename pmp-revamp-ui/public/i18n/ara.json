@@ -960,7 +960,8 @@
         "apiKeys": " - {{apiKeyCount}} مفاتيح API",
         "to": " ل ",
         "noNotification": "لا يوجد إشعارات حتى الآن",
-        "noNotificationDescr": "ليس لديك أي إشعارات في الوقت الحالي."
+        "noNotificationDescr": "ليس لديك أي إشعارات في الوقت الحالي.",
+        "errorInNotifcations": "خطأ أثناء جلب الإشعارات"
     },
     "notificationsTab": {
         "rootCaCertificate": "شهادة CA الجذرية",

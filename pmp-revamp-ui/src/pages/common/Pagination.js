@@ -6,7 +6,7 @@ import { isLangRTL, handleMouseClickForDropdown, onPressEnterKey } from '../../u
 import { AiFillLeftCircle, AiFillRightCircle } from "react-icons/ai"; // icons form react-icons
 import { IconContext } from "react-icons"; // for customizing icons
 
-function Pagination({ dataListLength, selectedRecordsPerPage, setSelectedRecordsPerPage, setFirstIndex, isServerSideFilter = false, getPaginationValues }) {
+function Pagination({ dataListLength, selectedRecordsPerPage, setSelectedRecordsPerPage, setFirstIndex, isServerSideFilter = false, getPaginationValues, isViewNotificationPage }) {
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
     const [isItemsPerPageOpen, setIsItemsPerPageOpen] = useState(false);
@@ -19,10 +19,14 @@ function Pagination({ dataListLength, selectedRecordsPerPage, setSelectedRecords
     }, [itemsCountSelectionRef]);
 
     useEffect(() => {
-        let itemsPerPage = localStorage.getItem('itemsPerPage');
-        if (itemsPerPage) {
-            itemsPerPage = Number(itemsPerPage);
-            setItemsPerPageOptions([itemsPerPage, itemsPerPage * 2, itemsPerPage * 3, itemsPerPage * 4]);
+        if (isViewNotificationPage) {
+            setItemsPerPageOptions([4, 8, 12, 16]);
+        } else {
+            let itemsPerPage = localStorage.getItem('itemsPerPage');
+            if (itemsPerPage) {
+                itemsPerPage = Number(itemsPerPage);
+                setItemsPerPageOptions([itemsPerPage, itemsPerPage * 2, itemsPerPage * 3, itemsPerPage * 4]);
+            }
         }
     }, []);
 

@@ -955,7 +955,8 @@
         "apiKeys": " - {{apiKeyCount}} API Keys",
         "to": " to ",
         "noNotification": "No Notifications Yet",
-        "noNotificationDescr": "You have no notifications at the moment."
+        "noNotificationDescr": "You have no notifications at the moment.",
+        "errorInNotifcations": "Error while fetching notifications"
     },
     "notificationsTab": {
         "rootCaCertificate": "Root CA Certificate",
