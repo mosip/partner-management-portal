@@ -3,5 +3,11 @@ modules:
     enabled: true
     image:
       registry: docker.io
-      repository: mosipqa/pmptest
-      tag: develop
+      repository: mosipid/uitest-pmp
+      tag: v1.2.2.0
+
+  - name: admin-ui
+    enabled: false
+
+  - name: resident-ui
+    enabled: false
