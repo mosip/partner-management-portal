@@ -29,7 +29,7 @@
 	</developers>
 
 	<properties>
-		<guava.version>31.1-jre</guava.version>
+		<guava.version>32.0.0-jre</guava.version>
 		<testng.version>7.10.1</testng.version>
 		<commons.beanutils.version>1.9.2</commons.beanutils.version>
 		<!-- automationtests version -->
