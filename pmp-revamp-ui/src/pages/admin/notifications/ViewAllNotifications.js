@@ -35,13 +35,10 @@ function ViewNotifications({ notificationType }) {
         queryParams.append('pageNo', effectivePageNo);
         setResetPageNo(false);
 
-        queryParams.append('notificationStatus', 'ACTIVE');
         queryParams.append('notificationType', notificationType);
 
         const url = `${getPartnerManagerUrl('/notifications', process.env.NODE_ENV)}?${queryParams.toString()}`;
-        setDataLoaded(false)
-        fetchNotificationsList(url, HttpService, setNotificationsList, setTotalRecords, setErrorCode, setErrorMsg, t);
-        setDataLoaded(true);
+        fetchNotificationsList(url, HttpService, setNotificationsList, setTotalRecords, setDataLoaded, setErrorCode, setErrorMsg, t);
     }
 
     useEffect(() => {

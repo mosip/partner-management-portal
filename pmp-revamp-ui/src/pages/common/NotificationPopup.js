@@ -26,11 +26,8 @@ function NotificationPopup({ closeNotification }) {
         const queryParams = new URLSearchParams();
         queryParams.append('pageSize', 4);
         queryParams.append('pageNo', 0);
-        queryParams.append('notificationStatus', 'ACTIVE');
         const url = `${getPartnerManagerUrl('/notifications', process.env.NODE_ENV)}?${queryParams.toString()}`;
-        setDataLoaded(false)
-        fetchNotificationsList(url, HttpService, setNotifications, setTotalRecords, setErrorCode, setErrorMsg, t);
-        setDataLoaded(true);
+        fetchNotificationsList(url, HttpService, setNotifications, setTotalRecords, setDataLoaded, setErrorCode, setErrorMsg, t);
     }
 
     useEffect(() => {
