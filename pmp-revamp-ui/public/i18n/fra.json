@@ -960,7 +960,8 @@
         "apiKeys": " - {{apiKeyCount}} Clés API",
         "to": " Taha ",
         "noNotification": "Nous n'allons pas parler",
-        "noNotificationDescr": "Vous n'avez aucune notification pour le moment."
+        "noNotificationDescr": "Vous n'avez aucune notification pour le moment.",
+        "errorInNotifcations": "Erreur lors de la récupération des notifications"
     },
     "notificationsTab": {
         "rootCaCertificate": "Certificat racine CA",
