@@ -35,7 +35,7 @@ function ViewNotifications({ notificationType }) {
         const effectivePageNo = resetPageNumber(totalRecords, pageNo, pageSize, resetPageNo);
         queryParams.append('pageNo', effectivePageNo);
         setResetPageNo(false);
-
+        queryParams.append('notificationStatus', 'active');
         queryParams.append('notificationType', notificationType);
 
         const url = `${getPartnerManagerUrl('/notifications', process.env.NODE_ENV)}?${queryParams.toString()}`;
@@ -101,12 +101,12 @@ function ViewNotifications({ notificationType }) {
                         </div>
                     </div>
                     <NotificationsTab
-                        activeRootCA={notificationType === 'ROOT_CERT_EXPIRY' ? true : false}
-                        rootCaPath={'/partnermanagement/view-root-certificate-notifications'}
-                        activeIntermediateCA={notificationType === 'INTERMEDIATE_CERT_EXPIRY' ? true : false}
-                        intermediateCaPath={'/partnermanagement/view-intermediate-certificate-notifications'}
-                        activePartner={notificationType === 'WEEKLY_SUMMARY' ? true : false}
-                        partnerCertPath={'/partnermanagement/view-partner-notifications'}
+                        activeRootCA={notificationType === 'root' ? true : false}
+                        rootCaPath={'/partnermanagement/admin/view-root-certificate-notifications'}
+                        activeIntermediateCA={notificationType === 'intermediate' ? true : false}
+                        intermediateCaPath={'/partnermanagement/admin/view-intermediate-certificate-notifications'}
+                        activePartner={notificationType === 'weekly' ? true : false}
+                        partnerCertPath={'/partnermanagement/admin/view-partner-notifications'}
                     />
                     <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
                         <div className="flex max-640:flex-col items-center justify-between w-full px-2 py-3">

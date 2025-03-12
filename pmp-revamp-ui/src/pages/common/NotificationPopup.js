@@ -25,6 +25,7 @@ function NotificationPopup({ closeNotification }) {
         const queryParams = new URLSearchParams();
         queryParams.append('pageSize', 4);
         queryParams.append('pageNo', 0);
+        queryParams.append('notificationStatus', 'active');
         const url = `${getPartnerManagerUrl('/notifications', process.env.NODE_ENV)}?${queryParams.toString()}`;
         try {
             setDataLoaded(false);
@@ -76,8 +77,10 @@ function NotificationPopup({ closeNotification }) {
     };
 
     const viewAllNotifications = () => {
-        closeNotification();
-        navigate('/partnermanagement/view-root-certificate-notifications');
+        if (getUserProfile().roles.includes('PARTNER_ADMIN')) {
+            closeNotification();
+            navigate('/partnermanagement/admin/view-root-certificate-notifications');
+        }
     };
 
     const styles = {
