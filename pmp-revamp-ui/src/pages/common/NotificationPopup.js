@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import xClose from '../../svg/x_close.svg';
-import { fetchNotificationsList, formatDate, getNoticationTitle, getNotificationDescription, getPartnerManagerUrl, isLangRTL, onPressEnterKey } from "../../utils/AppUtils";
+import { formatDate, getNoticationTitle, getNotificationDescription, getPartnerManagerUrl, handleServiceErrors, isLangRTL, onPressEnterKey } from "../../utils/AppUtils";
 import featuredIcon from "../../svg/featured_icon.svg";
 import noNotificationIcon from "../../svg/frame.svg";
 import { getUserProfile } from "../../services/UserProfileService";
@@ -20,14 +20,34 @@ function NotificationPopup({ closeNotification }) {
     const [isSmallScreen, setIsSmallScreen] = useState(window.innerHeight < 620);
     const [notifications, setNotifications] = useState([]);
     const [dataLoaded, setDataLoaded] = useState(true);
-    const [totalRecords, setTotalRecords] = useState(0);
 
     const fetchNotifications = async () => {
         const queryParams = new URLSearchParams();
         queryParams.append('pageSize', 4);
         queryParams.append('pageNo', 0);
         const url = `${getPartnerManagerUrl('/notifications', process.env.NODE_ENV)}?${queryParams.toString()}`;
-        fetchNotificationsList(url, HttpService, setNotifications, setTotalRecords, setDataLoaded, setErrorCode, setErrorMsg, t);
+        try {
+            setDataLoaded(false);
+            const response = await HttpService.get(url);
+            if (response) {
+                const responseData = response.data;
+                if (responseData && responseData.response) {
+                    const resData = responseData.response.data;
+                    setNotifications(resData);
+                } else {
+                    handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+                }
+            } else {
+                setErrorMsg(t('notificationPopup.errorInNotifcations'));
+            }
+            setDataLoaded(true);
+        } catch (err) {
+            console.error('Error fetching data:', err);
+            if (err.response?.status && err.response.status !== 401) {
+                setErrorMsg(err.toString());
+            }
+            setDataLoaded(true);
+        }
     }
 
     useEffect(() => {
@@ -83,9 +103,9 @@ function NotificationPopup({ closeNotification }) {
                     )}
                     {dataLoaded && (
                         <div>
-                            <div className="flex justify-between items-center p-4 border-b border-gray-200">
+                            <div className="flex justify-between items-center p-4 border-b border-gray-200 cursor-default">
                                 <h2 className="text-lg font-bold text-gray-800">{t('notificationPopup.notification')}</h2>
-                                <img src={xClose} alt='' id='xIcon' onClick={closeNotification} />
+                                <img src={xClose} alt='' id='xIcon' onClick={closeNotification} className="cursor-pointer" />
                             </div>
                             {errorMsg && (
                                 <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customStyle={errorcustomStyle}/>
@@ -118,16 +138,16 @@ function NotificationPopup({ closeNotification }) {
                                     </div>
                                 </>
                                 ) : (
-                                    <>
+                                    <div className="cursor-default">
                                         <div className="flex flex-col items-center py-16 px-2 border-b border-gray-200">
                                             <img src={noNotificationIcon} alt='' id='noNotificationIcon' />
                                             <p className="text-sm text-gray-500">{t('notificationPopup.noNotification')}</p>
                                             <p className="text-sm text-gray-500">{t('notificationPopup.noNotificationDescr')}</p>
                                         </div>
-                                        <button className="p-3 text-center text-gray-300 text-sm font-medium w-full">
+                                        <button className="p-3 text-center text-gray-300 text-sm font-medium w-full cursor-default">
                                             {t('notificationPopup.viewAllNotification')}
                                         </button>
-                                    </>
+                                    </div>
                                 )
                             }
                         </div>

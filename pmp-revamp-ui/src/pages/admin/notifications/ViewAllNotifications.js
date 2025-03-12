@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getUserProfile } from "../../../services/UserProfileService.js";
-import { fetchNotificationsList, formatDate, getNoticationTitle, getNotificationDescription, getPartnerManagerUrl, isLangRTL, resetPageNumber, setPageNumberAndPageSize } from "../../../utils/AppUtils.js";
+import { formatDate, getNoticationTitle, getNotificationDescription, getPartnerManagerUrl, handleServiceErrors, isLangRTL, resetPageNumber, setPageNumberAndPageSize } from "../../../utils/AppUtils.js";
 import LoadingIcon from "../../common/LoadingIcon.js";
 import ErrorMessage from "../../common/ErrorMessage.js";
 import Title from "../../common/Title.js";
@@ -27,6 +27,7 @@ function ViewNotifications({ notificationType }) {
     const [totalRecords, setTotalRecords] = useState(0);
     const [resetPageNo, setResetPageNo] = useState(false);
     const [notificationsList, setNotificationsList] = useState([]);
+    const [notificationDataLoaded, setNotificationDataLoaded] = useState(true);
 
     const fetchNotifications = async () => {
         const queryParams = new URLSearchParams();
@@ -38,7 +39,32 @@ function ViewNotifications({ notificationType }) {
         queryParams.append('notificationType', notificationType);
 
         const url = `${getPartnerManagerUrl('/notifications', process.env.NODE_ENV)}?${queryParams.toString()}`;
-        fetchNotificationsList(url, HttpService, setNotificationsList, setTotalRecords, setDataLoaded, setErrorCode, setErrorMsg, t);
+        try {
+            fetchData ? setNotificationDataLoaded(false) : setDataLoaded(false);
+            const response = await HttpService.get(url);
+            if (response) {
+                const responseData = response.data;
+                if (responseData && responseData.response) {
+                    const resData = responseData.response.data;
+                    setTotalRecords(responseData.response.totalResults);
+                    setNotificationsList(resData);
+                } else {
+                    handleServiceErrors
+                    (responseData, setErrorCode, setErrorMsg);
+                }
+            } else {
+                setErrorMsg(t('notificationPopup.errorInNotifcations'));
+            }
+            fetchData ? setNotificationDataLoaded(true) : setDataLoaded(true);
+            setFetchData(false);
+        } catch (err) {
+            console.error('Error fetching data:', err);
+            if (err.response?.status && err.response.status !== 401) {
+                setErrorMsg(err.toString());
+            }
+            fetchData ? setNotificationDataLoaded(true) : setDataLoaded(true);
+            setFetchData(false);
+        }
     }
 
     useEffect(() => {
@@ -53,6 +79,11 @@ function ViewNotifications({ notificationType }) {
     const cancelErrorMsg = () => {
         setErrorMsg("");
     };
+
+    const styles = {
+        loadingDiv: "!py-[20%]",
+        outerDiv: "!bg-opacity-35"
+    }
 
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter overflow-x-scroll`}>
@@ -95,42 +126,48 @@ function ViewNotifications({ notificationType }) {
                             </div>
                         </div>
                         <hr className="h-0.5 bg-gray-200 border-0" />
-                        {notificationsList.length === 0 ? (
-                            <div className="flex flex-col items-center py-20 px-2 border-b border-gray-200">
-                                <img src={noNotificationIcon} alt='' id='noNotificationIcon' />
-                                <p className="text-sm text-gray-500">{t('notificationPopup.noNotification')}</p>
-                                <p className="text-sm text-gray-500">{t('notificationPopup.noNotificationDescr')}</p>
-                            </div>
-                            ) : (
+                        {!notificationDataLoaded ? (
+                            <LoadingIcon styleSet={styles} />
+                        ) : (
                             <>
-                                <div className="p-6">
-                                    {notificationsList.map((notification) => (
-                                        <div key={notification.notificationId} className="flex items-start w-full bg-white p-4 rounded-lg shadow mb-3 border-b border-[#D0D5DD]">
-                                            <img src={featuredIcon} alt='' id='featuredIcon' className={`${isLoginLanguageRTL ? 'ml-3' : 'mr-3'} mt-2`} />
-                                            <div className="mt-0.5 w-full">
-                                                <div className="flex justify-between">
-                                                    <p className="font-semibold text-base text-[#101828]">{getNoticationTitle(notification, t)}</p>
-                                                    <p className={`text-xs text-[#CBCDD0] ${isLoginLanguageRTL ? 'text-left': 'text-right'}`}>{formatDate(notification.createdDateTime, 'dateTime')}</p>
-                                                </div>
-                                                <p className="text-[#475467] text-sm">{getNotificationDescription(notification, t)}</p>
-                                                <hr className="h-0.5 my-4 bg-[#BCC5E5] border" />
-                                                <button className="text-[#475467]">{t('notificationPopup.dismiss')}</button>
-                                            </div>
-                                        </div>
-                                    ))}
+                            {notificationsList.length === 0 ? (
+                                <div className="flex flex-col items-center py-20 px-2 border-b border-gray-200">
+                                    <img src={noNotificationIcon} alt='' id='noNotificationIcon' />
+                                    <p className="text-sm text-gray-500">{t('notificationPopup.noNotification')}</p>
+                                    <p className="text-sm text-gray-500">{t('notificationPopup.noNotificationDescr')}</p>
                                 </div>
-                                <hr className="h-0.5 bg-gray-200 border-0" />
-                                <Pagination
-                                    dataListLength={totalRecords}
-                                    selectedRecordsPerPage={selectedRecordsPerPage}
-                                    setSelectedRecordsPerPage={setSelectedRecordsPerPage}
-                                    setFirstIndex={setFirstIndex}
-                                    isServerSideFilter={true}
-                                    getPaginationValues={getPaginationValues}
-                                    isViewNotificationPage={true}
-                                />
-                            </>
-                        )}
+                                ) : (
+                                <>
+                                    <div className="p-6">
+                                        {notificationsList.map((notification) => (
+                                            <div key={notification.notificationId} className="flex items-start w-full bg-white p-4 rounded-lg shadow mb-3 border-b border-[#D0D5DD]">
+                                                <img src={featuredIcon} alt='' id='featuredIcon' className={`${isLoginLanguageRTL ? 'ml-3' : 'mr-3'} mt-2`} />
+                                                <div className="mt-0.5 w-full">
+                                                    <div className="flex justify-between">
+                                                        <p className="font-semibold text-base text-[#101828]">{getNoticationTitle(notification, t)}</p>
+                                                        <p className={`text-xs text-[#CBCDD0] ${isLoginLanguageRTL ? 'text-left': 'text-right'}`}>{formatDate(notification.createdDateTime, 'dateTime')}</p>
+                                                    </div>
+                                                    <p className="text-[#475467] text-sm">{getNotificationDescription(notification, t)}</p>
+                                                    <hr className="h-0.5 my-4 bg-[#BCC5E5] border" />
+                                                    <button className="text-[#475467]">{t('notificationPopup.dismiss')}</button>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <hr className="h-0.5 bg-gray-200 border-0" />
+                                </>
+                            )}
+                        </>
+                    )}
+                    <Pagination
+                        dataListLength={totalRecords}
+                        selectedRecordsPerPage={selectedRecordsPerPage}
+                        setSelectedRecordsPerPage={setSelectedRecordsPerPage}
+                        setFirstIndex={setFirstIndex}
+                        isServerSideFilter={true}
+                        getPaginationValues={getPaginationValues}
+                        isViewNotificationPage={true}
+                    />
                     </div>
                 </>
             )}
