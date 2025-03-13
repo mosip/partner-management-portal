@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import xClose from '../../svg/x_close.svg';
-import { formatDate, getNoticationTitle, getNotificationDescription, getPartnerManagerUrl, handleServiceErrors, isLangRTL, onPressEnterKey } from "../../utils/AppUtils";
+import { createRequest, formatDate, getNoticationTitle, getNotificationDescription, getPartnerManagerUrl, handleServiceErrors, isLangRTL, onPressEnterKey } from "../../utils/AppUtils";
 import featuredIcon from "../../svg/featured_icon.svg";
 import noNotificationIcon from "../../svg/frame.svg";
 import { getUserProfile } from "../../services/UserProfileService";
@@ -11,30 +11,35 @@ import { HttpService } from "../../services/HttpService";
 import LoadingIcon from "./LoadingIcon";
 import ErrorMessage from "./ErrorMessage";
 
-function NotificationPopup({ closeNotification }) {
+function NotificationPopup({ closeNotification, notificationsList }) {
     const { t } = useTranslation();
     const navigate = useNavigate('');
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [isSmallScreen, setIsSmallScreen] = useState(window.innerHeight < 620);
-    const [notifications, setNotifications] = useState([]);
     const [dataLoaded, setDataLoaded] = useState(true);
 
-    const fetchNotifications = async () => {
-        const queryParams = new URLSearchParams();
-        queryParams.append('pageSize', 4);
-        queryParams.append('pageNo', 0);
-        queryParams.append('notificationStatus', 'active');
-        const url = `${getPartnerManagerUrl('/notifications', process.env.NODE_ENV)}?${queryParams.toString()}`;
+    useEffect(() => {
+        updateNotificationSeenTimestamp();
+    }, []);
+
+    const updateNotificationSeenTimestamp = async () => {
+        const request = createRequest({
+            notificationsSeen: true,
+        }, "mosip.pms.users.notifications.seen.timestamp.put", true);
         try {
             setDataLoaded(false);
-            const response = await HttpService.get(url);
+            const response = await HttpService.put(getPartnerManagerUrl(`/users/notifications-seen-timestamp`, process.env.NODE_ENV), request, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
             if (response) {
                 const responseData = response.data;
                 if (responseData && responseData.response) {
-                    const resData = responseData.response.data;
-                    setNotifications(resData);
+                    setDataLoaded(true);
+                    return;
                 } else {
                     handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                 }
@@ -50,10 +55,6 @@ function NotificationPopup({ closeNotification }) {
             setDataLoaded(true);
         }
     }
-
-    useEffect(() => {
-        fetchNotifications();
-    }, []);
 
     useEffect(() => {
         const updateScreenSize = () => {
@@ -73,7 +74,7 @@ function NotificationPopup({ closeNotification }) {
     }, []);
 
     const dismissNotification = (id) => {
-        setNotifications(notifications.filter(notification => notification.notificationId !== id));
+        notificationsList = (notificationsList.filter(notification => notification.notificationId !== id));
     };
 
     const viewAllNotifications = () => {
@@ -113,11 +114,11 @@ function NotificationPopup({ closeNotification }) {
                             {errorMsg && (
                                 <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customStyle={errorcustomStyle}/>
                             )}
-                            {notifications.length > 0 ? (
+                            {notificationsList.length > 0 ? (
                                 <>
                                     <p className={`text-sm text-[#6F6E6E] font-medium ${isLoginLanguageRTL ? 'mr-4' : 'ml-4'} my-2`}>latest</p>
                                     <div className={`${isSmallScreen ? 'max-h-64' : 'max-h-96'} overflow-y-auto`}>
-                                        {notifications.map(notification => (
+                                        {notificationsList.map(notification => (
                                             <div key={notification.notificationId} className="flex justify-between items-start p-2 border-b border-gray-200">
                                                 <img src={featuredIcon} alt='' id='featuredIcon' className={`${isLoginLanguageRTL ? 'ml-3' : 'mr-3'} mt-1`} />
                                                 <div>
