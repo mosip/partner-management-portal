@@ -127,7 +127,7 @@ function NotificationPopup({ closeNotification, notificationsList }) {
     }
 
     return (
-        <div className={`absolute top-[3.75rem] ${isLoginLanguageRTL ? 'max-850:left-4 left-[15rem]' : 'max-850:right-4 right-[15rem]'} bg-white w-[25rem] max-520:w-[286px] rounded-lg shadow-lg border border-gray-200 z-50`}>
+        <div className={`absolute top-[3.75rem] ${isLoginLanguageRTL ? 'max-850:left-4 left-[15rem]' : 'max-850:right-4 right-[15rem]'} bg-white w-[28rem] max-520:w-[286px] rounded-lg shadow-lg border border-gray-200 z-50`}>
             <FocusTrap focusTrapOptions={{ initialFocus: false, allowOutsideClick: true }}>
                 <div>
                     {!dataLoaded && (
@@ -135,7 +135,7 @@ function NotificationPopup({ closeNotification, notificationsList }) {
                     )}
                     {dataLoaded && (
                         <div>
-                            <div className="flex justify-between items-center p-4 border-b border-gray-200 cursor-default">
+                            <div className="flex justify-between items-center px-4 py-3 border-b border-gray-200 cursor-default">
                                 <h2 className="text-lg font-bold text-gray-800">{t('notificationPopup.notification')}</h2>
                                 <img src={xClose} alt='' id='xIcon' onClick={closeNotification} className="cursor-pointer" />
                             </div>
@@ -147,12 +147,12 @@ function NotificationPopup({ closeNotification, notificationsList }) {
                                     <p className={`text-sm text-[#6F6E6E] font-medium ${isLoginLanguageRTL ? 'mr-4' : 'ml-4'} my-2`}>latest</p>
                                     <div className={`${isSmallScreen ? 'max-h-64' : 'max-h-96'} overflow-y-auto`}>
                                         {notifications.map(notification => (
-                                            <div key={notification.notificationId} className="flex justify-between items-start p-2 border-b border-gray-200">
+                                            <div key={notification.notificationId} className="flex justify-between items-start p-2 border-b border-gray-200 mb-2">
                                                 <img src={featuredIcon} alt='' id='featuredIcon' className={`${isLoginLanguageRTL ? 'ml-3' : 'mr-3'} mt-1`} />
                                                 <div>
                                                     <div className="flex justify-between space-x-2">
                                                         <p className={`text-sm font-semibold text-gray-900 ${isLoginLanguageRTL ? 'text-right': 'text-left'}`}>{getNoticationTitle(notification, t)}</p>
-                                                        <p className={`text-xs text-[#CBCDD0] ${isLoginLanguageRTL ? 'text-left': 'text-right'}`}>{formatDate(notification.createdDateTime, 'dateTime')}</p>
+                                                        <p className={`text-xs text-[#CBCDD0] w-36 ${isLoginLanguageRTL ? 'text-left': 'text-right'}`}>{formatDate(notification.createdDateTime, 'dateTime')}</p>
                                                     </div>
                                                     <p className="text-sm text-[#344054] mt-1 whitespace-pre-line">{getNotificationPanelDescription(notification, t)}</p>
                                                     <button 
