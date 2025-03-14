@@ -19,7 +19,7 @@ on:
       - 1.2.*
 
 jobs:
-  build-maven-pmp-ui:
+  build-npm-pmp-ui:
     uses: mosip/kattu/.github/workflows/npm-build.yml@develop
     with:
       SERVICE_LOCATION: pmp-ui
