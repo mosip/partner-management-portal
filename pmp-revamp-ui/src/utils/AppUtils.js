@@ -857,6 +857,16 @@ export const getWeeklySummaryDescription = (notification, t) => {
 
 export const getNotificationDescription = (notification, t) => {
     if (notification.notificationType === 'ROOT_CERT_EXPIRY') {
+        return t('notificationsTab.rootCertExpiryDescription', { certificateId: notification.notificationDetails.certificateDetails[0].certificateId, issuedTo:notification.notificationDetails.certificateDetails[0].issuedTo, issuedBy:notification.notificationDetails.certificateDetails[0].issuedBy, partnerDomain: notification.notificationDetails.certificateDetails[0].partnerDomain, expiryDateTime: formatDate(notification.notificationDetails.certificateDetails[0].expiryDateTime, 'dateInWords') });
+    } else if (notification.notificationType === 'INTERMEDIATE_CERT_EXPIRY') {
+        return t('notificationsTab.intermediateCertExpiryDescription', { certificateId: notification.notificationDetails.certificateDetails[0].certificateId, issuedTo:notification.notificationDetails.certificateDetails[0].issuedTo, issuedBy:notification.notificationDetails.certificateDetails[0].issuedBy, partnerDomain: notification.notificationDetails.certificateDetails[0].partnerDomain, expiryDateTime: formatDate(notification.notificationDetails.certificateDetails[0].expiryDateTime, 'dateInWords') });
+    } else if (notification.notificationType === 'WEEKLY_SUMMARY') {
+        return getWeeklySummaryDescription (notification, t);
+    }
+};
+
+export const getNotificationPanelDescription = (notification, t) => {
+    if (notification.notificationType === 'ROOT_CERT_EXPIRY') {
         return t('notificationPopup.rootCertExpiryDescription', { certificateId: notification.notificationDetails.certificateDetails[0].certificateId, partnerDomain: notification.notificationDetails.certificateDetails[0].partnerDomain, expiryDateTime: formatDate(notification.notificationDetails.certificateDetails[0].expiryDateTime, 'dateInWords') });
     } else if (notification.notificationType === 'INTERMEDIATE_CERT_EXPIRY') {
         return t('notificationPopup.intermediateCertExpiryDescription', { certificateId: notification.notificationDetails.certificateDetails[0].certificateId, partnerDomain: notification.notificationDetails.certificateDetails[0].partnerDomain, expiryDateTime: formatDate(notification.notificationDetails.certificateDetails[0].expiryDateTime, 'dateInWords') });
@@ -879,4 +889,37 @@ export const getWeeklySummaryDate = (notification) => {
     const date = new Date(notification.createdDateTime);
     date.setDate(date.getDate() + 7);
     return date.toString();
+};
+
+export const dismissNotificationById = async (HttpService, id, setNotifications, fetchWithArg, fetchNotifications, setErrorCode, setErrorMsg, t) => {
+    const request = createRequest({
+        notificationStatus: "DISMISSED",
+    }, "mosip.pms.dismiss.notification.patch", true);
+
+    try {
+        const response = await HttpService.patch(getPartnerManagerUrl(`/notifications/${id}`, process.env.NODE_ENV), request, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (response) {
+            const responseData = response.data;
+            if (responseData && responseData.response) {
+                setNotifications((prevNotifications) =>
+                    prevNotifications.filter((notif) => notif.notificationId !== id)
+                );
+                await fetchNotifications(fetchWithArg ? true : undefined);
+            } else {
+                handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+            }
+        } else {
+            setErrorMsg(t('notificationPopup.errorInDismiss'));
+        }
+    } catch (err) {
+        console.error('Error fetching data:', err);
+        if (err.response?.status && err.response.status !== 401) {
+            setErrorMsg(err.toString());
+        }
+    }
 };

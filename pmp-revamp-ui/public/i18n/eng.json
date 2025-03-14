@@ -941,11 +941,11 @@
         "description": "On clicking ‘Confirm’, the API Key will be deactivated and can no longer be used for authentication"
     },
     "notificationPopup": {
-        "notification": "Notification",
+        "notification": "Notifications",
         "rootCertExpiry": "Root CA Certificate Expiration",
         "intermediateCertExpiry": "Intermediate CA Certificate Expiration",
         "rootCertExpiryDescription": "Root CA Certificate [{{certificateId}}] for the {{partnerDomain}} domain will expire on {{expiryDateTime}}. Renew now to prevent disruptions.",
-        "intermediateCertExpiryDescription": "Intermediate CA Certificatee [{{certificateId}}] for the {{partnerDomain}} domain will expire on {{expiryDateTime}}. Renew now to prevent disruptions.",
+        "intermediateCertExpiryDescription": "Intermediate CA Certificate [{{certificateId}}] for the {{partnerDomain}} domain will expire on {{expiryDateTime}}. Renew now to prevent disruptions.",
         "dismiss": "Dismiss",
         "viewAllNotification": "View all notifications",
         "expiringItems": "Expiring Items",
@@ -956,12 +956,16 @@
         "to": " to ",
         "noNotification": "No Notifications Yet",
         "noNotificationDescr": "You have no notifications at the moment.",
-        "errorInNotifcations": "Error while fetching notifications"
+        "errorInNotifcations": "Error while fetching notifications",
+        "errorWhileUpdatingNotificationSeenTime": "Error while updating notifications seen date and time.",
+        "errorInDismiss": "Error while dismissing notifcation"
     },
     "notificationsTab": {
         "rootCaCertificate": "Root CA Certificate",
         "intermediateCaCertificate": "Intermediate CA Certificate",
-        "partner": "Partner"
+        "partner": "Partner",
+        "rootCertExpiryDescription": "Root CA Certificate [{{certificateId}}], issued to [{{issuedTo}}] by [{{issuedBy}}], for the {{partnerDomain}} domain will expire on {{expiryDateTime}}. Renew now to prevent disruptions.",
+        "intermediateCertExpiryDescription": "Intermediate CA Certificate [{{certificateId}}], issued to [{{issuedTo}}] by [{{issuedBy}}], for the {{partnerDomain}} domain will expire on {{expiryDateTime}}. Renew now to prevent disruptions."
     },
     "viewAllNotifications": {
         "listOfNotifications": "List of Notifications",
@@ -1247,6 +1251,18 @@
         "KER-PCM-018": "Invalid Certificate Type",
         "KER-PMS-019": "CA Certificate not found for the given ID.",
         "KER-PMS-020": "Uploading future-dated certificates is not allowed.",
-        "KER-CRY-003": "Invalid certificate: Possible file corruption, tampering, or unsupported format. Ensure it is properly Base64-encoded and try again."
+        "KER-CRY-003": "Invalid certificate: Possible file corruption, tampering, or unsupported format. Ensure it is properly Base64-encoded and try again.",
+        "PMS_NOTIFICATION_ERROR_001": "Error while updating notifications seen date time.",
+        "PMS_NOTIFICATION_ERROR_002": "Invalid notification seen. Expected: true.",
+        "PMS_NOTIFICATION_ERROR_003": "User details does not exist for the user.",
+        "PMS_NOTIFICATION_ERROR_004": "Error while fetching notifications seen date time.",
+        "PMS_NOTIFICATION_ERROR_005": "Error while fetching notifications.",
+        "PMS_NOTIFICATION_ERROR_006": "Partner Admin will only get notifications for root/intermediate certificate expiry and the weekly summary.",
+        "PMS_NOTIFICATION_ERROR_007": "Error parsing notification details JSON.",
+        "PMS_NOTIFICATION_ERROR_008": "Notification does not exist.",
+        "PMS_NOTIFICATION_ERROR_009": "Notification has already been dismissed.",
+        "PMS_NOTIFICATION_ERROR_010": "Error while dismissing the notification.",
+        "PMS_NOTIFICATION_ERROR_011": "The notification does not belong to the partner.",
+        "PMS_NOTIFICATION_ERROR_012": "Invalid notification status. Expected: DISMISSED."
     }
 }

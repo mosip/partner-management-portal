@@ -36,11 +36,13 @@ function HeaderNav({ open, setOpen }) {
     useEffect(() => {
         async function fetchNotificationsData() {
             const notificationsSeenTimestamp = await fetchNotificationsSeenTimestamp();
+            const notifications = await fetchNotificationsList();
             console.log("last seen time : ", notificationsSeenTimestamp);
-            if(notificationsSeenTimestamp === null) {
+            if(notificationsSeenTimestamp === null && notifications.length === 0) {
+                setShowLatestNotificationIcon(false);
+            } else if(notificationsSeenTimestamp === null && notifications.length > 0) {
                 setShowLatestNotificationIcon(true);
             } else {
-                const notifications = await fetchNotificationsList();
                 if(notifications.length === 0) {
                     setShowLatestNotificationIcon(false);
                 } else {
