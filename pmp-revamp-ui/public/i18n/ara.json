@@ -946,11 +946,11 @@
         "description": "عند الضغط على 'تأكيد'، سيتم إلغاء تفعيل مفتاح API ولن يكون قابلاً للاستخدام للمصادقة"
     },
     "notificationPopup": {
-        "notification": "إشعار",
+        "notification": "إشعارات",
         "rootCertExpiry": "انتهاء صلاحية شهادة الجذر CA",
         "intermediateCertExpiry": "انتهاء صلاحية شهادة CA المتوسطة",
-        "rootCertExpiryDescription": "ستنتهي صلاحية شهادة الجذر CA [{{certificateId}}] للنطاق {{partnerDomain}} في {{expiryDateTime}}. قم بالتجديد الآن لتجنب الانقطاعات.",
-        "intermediateCertExpiryDescription": "ستنتهي صلاحية شهادة CAA المتوسطة [{{certificateId}}] للنطاق {{partnerDomain}} في {{expiryDateTime}}. قم بالتجديد الآن لتجنب الانقطاعات.",
+        "rootCertExpiryDescription": "ستنتهي صلاحية شهادة CA الجذرية [{{certificateId}}] للنطاق {{partnerDomain}} في {{expiryDateTime}}. جددها الآن لتجنب أي انقطاعات.",
+        "intermediateCertExpiryDescription": "ستنتهي صلاحية شهادة CA المتوسطة [{{certificateId}}] للنطاق {{partnerDomain}} في {{expiryDateTime}}. جددها الآن لتجنب أي انقطاعات.",
         "dismiss": "رفض",
         "viewAllNotification": "عرض جميع الإشعارات",
         "expiringItems": "العناصر منتهية الصلاحية",
@@ -961,12 +961,16 @@
         "to": " ل ",
         "noNotification": "لا يوجد إشعارات حتى الآن",
         "noNotificationDescr": "ليس لديك أي إشعارات في الوقت الحالي.",
-        "errorInNotifcations": "خطأ أثناء جلب الإشعارات"
+        "errorInNotifcations": "خطأ أثناء جلب الإشعارات",
+        "errorWhileUpdatingNotificationSeenTime": "حدث خطأ أثناء تحديث الإشعارات التي تظهر التاريخ والوقت.",
+        "errorInDismiss": "خطأ أثناء رفض الإشعار"
     },
     "notificationsTab": {
         "rootCaCertificate": "شهادة CA الجذرية",
         "intermediateCaCertificate": "شهادة CA متوسطة",
-        "partner": "شريك"
+        "partner": "شريك",
+        "rootCertExpiryDescription": "شهادة CA الجذرية [{{certificateId}}]، الصادرة إلى [{{issuedTo}}] بواسطة [{{issuedBy}}]، للنطاق {{partnerDomain}}، ستنتهي صلاحيتها في {{expiryDateTime}}. جددها الآن لتجنب أي انقطاعات.",
+        "intermediateCertExpiryDescription": "شهادة CA المتوسطة [{{certificateId}}]، الصادرة إلى [{{issuedTo}}] من قِبل [{{issuedBy}}]، للنطاق {{partnerDomain}}، ستنتهي صلاحيتها في {{expiryDateTime}}. جددها الآن لتجنب أي انقطاعات."
     },
     "viewAllNotifications": {
         "listOfNotifications": "قائمة الإشعارات",
@@ -1252,6 +1256,18 @@
         "KER-PCM-018": "نوع الشهادة غير صالح",
         "KER-PMS-019": "لم يتم العثور على شهادة CA للمعرف المحدد.",
         "KER-PMS-020": "لا يُسمح بتحميل شهادات مؤرخة في المستقبل.",
-        "KER-CRY-003": "شهادة غير صالحة: من المحتمل تلف الملف أو التلاعب به أو التنسيق غير المدعوم. تأكد من ترميز Base64 بشكل صحيح وحاول مرة أخرى."
+        "KER-CRY-003": "شهادة غير صالحة: من المحتمل تلف الملف أو التلاعب به أو التنسيق غير المدعوم. تأكد من ترميز Base64 بشكل صحيح وحاول مرة أخرى.",
+        "PMS_NOTIFICATION_ERROR_001": "حدث خطأ أثناء تحديث تاريخ ووقت ظهور الإشعارات.",
+        "PMS_NOTIFICATION_ERROR_002": "ظهر إشعار غير صالح. القيمة المتوقعة: صحيح.",
+        "PMS_NOTIFICATION_ERROR_003": "تفاصيل المستخدم غير موجودة.",
+        "PMS_NOTIFICATION_ERROR_004": "حدث خطأ أثناء جلب تاريخ ووقت ظهور الإشعارات.",
+        "PMS_NOTIFICATION_ERROR_005": "حدث خطأ أثناء جلب الإشعارات.",
+        "PMS_NOTIFICATION_ERROR_006": "سيتلقى مسؤول الشريك إشعارات انتهاء صلاحية شهادة الجذر/الوسيطة والملخص الأسبوعي فقط.",
+        "PMS_NOTIFICATION_ERROR_007": "حدث خطأ في تحليل تفاصيل الإشعارات بتنسيق JSON.",
+        "PMS_NOTIFICATION_ERROR_008": "الإشعار غير موجود.",
+        "PMS_NOTIFICATION_ERROR_009": "تم رفض الإشعار مسبقًا.",
+        "PMS_NOTIFICATION_ERROR_010": "حدث خطأ أثناء رفض الإشعار.",
+        "PMS_NOTIFICATION_ERROR_011": "الإشعار غير تابع للشريك.",
+        "PMS_NOTIFICATION_ERROR_012": "حالة الإشعار غير صالحة. المتوقع: تم رفضه."
     }
 }

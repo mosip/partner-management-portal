@@ -946,11 +946,11 @@
         "description": "En cliquant sur 'Confirmer', la clé API sera désactivée et ne pourra plus être utilisée pour l'authentification"
     },
     "notificationPopup": {
-        "notification": "Notification",
+        "notification": "Notifications",
         "rootCertExpiry": "Expiration du certificat CA racine",
         "intermediateCertExpiry": "Expiration du certificat CA intermédiaire",
-        "rootCertExpiryDescription": "Le certificat CA racine [{{certificateId}}] pour le domaine {{partnerDomain}} expirera le {{expiryDateTime}}. Renouvelez-le maintenant pour éviter toute interruption.",
-        "intermediateCertExpiryDescription": "Le certificat CAA intermédiaire [{{certificateId}}] pour le domaine {{partnerDomain}} expirera le {{expiryDateTime}}. Renouvelez-le maintenant pour éviter les interruptions.",
+        "rootCertExpiryDescription": "Le certificat CA racine [{{certificateId}}] du domaine {{partnerDomain}} expirera le {{expiryDateTime}}. Renouvelez-le dès maintenant pour éviter toute interruption.",
+        "intermediateCertExpiryDescription": "Le certificat CA intermédiaire [{{certificateId}}] pour le domaine {{partnerDomain}} expirera le {{expiryDateTime}}. Renouvelez-le dès maintenant pour éviter toute interruption.",
         "dismiss": "Rejeter",
         "viewAllNotification": "Afficher toutes les notifications",
         "expiringItems": "Articles expirés",
@@ -961,12 +961,16 @@
         "to": " Taha ",
         "noNotification": "Nous n'allons pas parler",
         "noNotificationDescr": "Vous n'avez aucune notification pour le moment.",
-        "errorInNotifcations": "Erreur lors de la récupération des notifications"
+        "errorInNotifcations": "Erreur lors de la récupération des notifications",
+        "errorWhileUpdatingNotificationSeenTime": "Erreur lors de la mise à jour des notifications vues date et heure.",
+        "errorInDismiss": "Erreur lors de la suppression de la notification"
     },
     "notificationsTab": {
         "rootCaCertificate": "Certificat racine CA",
         "intermediateCaCertificate": "Certificat CA intermédiaire",
-        "partner": "Partenaire"
+        "partner": "Partenaire",
+        "rootCertExpiryDescription": "Le certificat CA racine [{{certificateId}}], délivré à [{{issuedTo}}] par [{{issuedBy}}], pour le domaine {{partnerDomain}}, expirera le {{expiryDateTime}}. Renouvelez-le dès maintenant pour éviter toute interruption.",
+        "intermediateCertExpiryDescription": "Le certificat CA intermédiaire [{{certificateId}}] pour le domaine {{partnerDomain}} expirera le {{expiryDateTime}}. Renouvelez-le maintenant pour éviter les interruptions."
     },
     "viewAllNotifications": {
         "listOfNotifications": "Liste des notifications",
@@ -1252,6 +1256,18 @@
         "KER-PCM-018": "Type de certificat non valide",
         "KER-PMS-019": "Aucun certificat CA n'a été trouvé pour l'ID donné.",
         "KER-PMS-020": "Le téléchargement de certificats périmés n'est pas autorisé.",
-        "KER-CRY-003": "Certificat invalide : corruption de fichier possible, falsification ou format non pris en charge. Assurez-vous qu’il est correctement codé en Base64 et réessayez."
+        "KER-CRY-003": "Certificat invalide : corruption de fichier possible, falsification ou format non pris en charge. Assurez-vous qu’il est correctement codé en Base64 et réessayez.",
+        "PMS_NOTIFICATION_ERROR_001": "Erreur lors de la mise à jour des notifications date et heure.",
+        "PMS_NOTIFICATION_ERROR_002": "Notification non valide. Valeur attendue : true.",
+        "PMS_NOTIFICATION_ERROR_003": "Les informations utilisateur n'existent pas pour cet utilisateur.",
+        "PMS_NOTIFICATION_ERROR_004": "Erreur lors de la récupération des notifications date et heure.",
+        "PMS_NOTIFICATION_ERROR_005": "Erreur lors de la récupération des notifications.",
+        "PMS_NOTIFICATION_ERROR_006": "L'administrateur partenaire ne recevra que les notifications d'expiration du certificat racine/intermédiaire et le résumé hebdomadaire.",
+        "PMS_NOTIFICATION_ERROR_007": "Erreur lors de l'analyse des informations de notification au format JSON.",
+        "PMS_NOTIFICATION_ERROR_008": "La notification ne s'affiche pas. existe.",
+        "PMS_NOTIFICATION_ERROR_009": "La notification a déjà été rejetée.",
+        "PMS_NOTIFICATION_ERROR_010": "Erreur lors du rejet de la notification.",
+        "PMS_NOTIFICATION_ERROR_011": "La notification n'appartient pas au partenaire.",
+        "PMS_NOTIFICATION_ERROR_012": "Statut de notification non valide. Attendu : REJETÉ."
     }
 }

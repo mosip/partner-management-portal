@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getUserProfile } from "../../../services/UserProfileService.js";
-import { formatDate, getNoticationTitle, getNotificationDescription, getPartnerManagerUrl, handleServiceErrors, isLangRTL, resetPageNumber, setPageNumberAndPageSize } from "../../../utils/AppUtils.js";
+import { dismissNotificationById, formatDate, getNoticationTitle, getNotificationDescription, getPartnerManagerUrl, handleServiceErrors, isLangRTL, resetPageNumber, setPageNumberAndPageSize } from "../../../utils/AppUtils.js";
 import LoadingIcon from "../../common/LoadingIcon.js";
 import ErrorMessage from "../../common/ErrorMessage.js";
 import Title from "../../common/Title.js";
@@ -29,7 +29,7 @@ function ViewNotifications({ notificationType }) {
     const [notificationsList, setNotificationsList] = useState([]);
     const [notificationDataLoaded, setNotificationDataLoaded] = useState(true);
 
-    const fetchNotifications = async () => {
+    const fetchNotifications = async (noDateLoaded) => {
         const queryParams = new URLSearchParams();
         queryParams.append('pageSize', pageSize);
         const effectivePageNo = resetPageNumber(totalRecords, pageNo, pageSize, resetPageNo);
@@ -40,7 +40,9 @@ function ViewNotifications({ notificationType }) {
 
         const url = `${getPartnerManagerUrl('/notifications', process.env.NODE_ENV)}?${queryParams.toString()}`;
         try {
-            fetchData ? setNotificationDataLoaded(false) : setDataLoaded(false);
+            if (!noDateLoaded) {
+                fetchData ? setNotificationDataLoaded(false) : setDataLoaded(false);
+            }
             const response = await HttpService.get(url);
             if (response) {
                 const responseData = response.data;
@@ -55,15 +57,19 @@ function ViewNotifications({ notificationType }) {
             } else {
                 setErrorMsg(t('notificationPopup.errorInNotifcations'));
             }
-            fetchData ? setNotificationDataLoaded(true) : setDataLoaded(true);
-            setFetchData(false);
+            if (!noDateLoaded) {
+                fetchData ? setNotificationDataLoaded(true) : setDataLoaded(true);
+                setFetchData(false);
+            }
         } catch (err) {
             console.error('Error fetching data:', err);
             if (err.response?.status && err.response.status !== 401) {
                 setErrorMsg(err.toString());
             }
-            fetchData ? setNotificationDataLoaded(true) : setDataLoaded(true);
-            setFetchData(false);
+            if (!noDateLoaded) {
+                fetchData ? setNotificationDataLoaded(true) : setDataLoaded(true);
+                setFetchData(false);
+            }
         }
     }
 
@@ -74,6 +80,10 @@ function ViewNotifications({ notificationType }) {
     const getPaginationValues = (recordsPerPage, pageIndex) => {
         setPageNumberAndPageSize(recordsPerPage, pageIndex, pageNo, setPageNo, pageSize, setPageSize, setFetchData);
     };
+
+    const dismissNotification = async (id) => {
+        dismissNotificationById(HttpService, id, setNotificationsList, true, fetchNotifications, setErrorCode, setErrorMsg, t); 
+    }
 
 
     const cancelErrorMsg = () => {
@@ -149,7 +159,7 @@ function ViewNotifications({ notificationType }) {
                                                     </div>
                                                     <p className="text-[#475467] text-sm">{getNotificationDescription(notification, t)}</p>
                                                     <hr className="h-0.5 my-4 bg-[#BCC5E5] border" />
-                                                    <button className="text-[#475467]">{t('notificationPopup.dismiss')}</button>
+                                                    <button onClick={() => dismissNotification(notification.notificationId)} className="text-[#475467]">{t('notificationPopup.dismiss')}</button>
                                                 </div>
                                             </div>
                                         ))}

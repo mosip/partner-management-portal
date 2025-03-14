@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import xClose from '../../svg/x_close.svg';
-import { createRequest, formatDate, getNoticationTitle, getNotificationDescription, getPartnerManagerUrl, handleServiceErrors, isLangRTL, onPressEnterKey } from "../../utils/AppUtils";
+import { createRequest, dismissNotificationById, formatDate, getNoticationTitle, getNotificationPanelDescription, getPartnerManagerUrl, handleServiceErrors, isLangRTL, onPressEnterKey } from "../../utils/AppUtils";
 import featuredIcon from "../../svg/featured_icon.svg";
 import noNotificationIcon from "../../svg/frame.svg";
 import { getUserProfile } from "../../services/UserProfileService";
@@ -19,6 +19,7 @@ function NotificationPopup({ closeNotification, notificationsList }) {
     const [errorMsg, setErrorMsg] = useState("");
     const [isSmallScreen, setIsSmallScreen] = useState(window.innerHeight < 620);
     const [dataLoaded, setDataLoaded] = useState(true);
+    const [notifications, setNotifications] = useState(notificationsList);
 
     useEffect(() => {
         updateNotificationSeenTimestamp();
@@ -44,7 +45,7 @@ function NotificationPopup({ closeNotification, notificationsList }) {
                     handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                 }
             } else {
-                setErrorMsg(t('notificationPopup.errorInNotifcations'));
+                setErrorMsg(t('notificationPopup.errorWhileUpdatingNotificationSeenTime'));
             }
             setDataLoaded(true);
         } catch (err) {
@@ -73,9 +74,36 @@ function NotificationPopup({ closeNotification, notificationsList }) {
             };
     }, []);
 
-    const dismissNotification = (id) => {
-        notificationsList = (notificationsList.filter(notification => notification.notificationId !== id));
-    };
+    const dismissNotification = async (id) => {
+        dismissNotificationById(HttpService, id, setNotifications, false, fetchNotificationsList, setErrorCode, setErrorMsg, t); 
+    }
+
+    const fetchNotificationsList = async () => {
+        const queryParams = new URLSearchParams();
+        queryParams.append('pageSize', 4);
+        queryParams.append('pageNo', 0);
+        queryParams.append('notificationStatus', 'active');
+        const url = `${getPartnerManagerUrl('/notifications', process.env.NODE_ENV)}?${queryParams.toString()}`;
+        try {
+            const response = await HttpService.get(url);
+            if (response) {
+                const responseData = response.data;
+                if (responseData && responseData.response) {
+                    const resData = responseData.response.data;
+                    setNotifications(resData);
+                } else {
+                    handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+                }
+            } else {
+                setErrorMsg(t('notificationPopup.errorInNotifcations'));
+            }
+        } catch (err) {
+            console.error('Error fetching data:', err);
+            if (err.response?.status && err.response.status !== 401) {
+                setErrorMsg(err.toString());
+            }
+        }
+    }
 
     const viewAllNotifications = () => {
         if (getUserProfile().roles.includes('PARTNER_ADMIN')) {
@@ -114,11 +142,11 @@ function NotificationPopup({ closeNotification, notificationsList }) {
                             {errorMsg && (
                                 <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customStyle={errorcustomStyle}/>
                             )}
-                            {notificationsList.length > 0 ? (
+                            {notifications.length > 0 ? (
                                 <>
                                     <p className={`text-sm text-[#6F6E6E] font-medium ${isLoginLanguageRTL ? 'mr-4' : 'ml-4'} my-2`}>latest</p>
                                     <div className={`${isSmallScreen ? 'max-h-64' : 'max-h-96'} overflow-y-auto`}>
-                                        {notificationsList.map(notification => (
+                                        {notifications.map(notification => (
                                             <div key={notification.notificationId} className="flex justify-between items-start p-2 border-b border-gray-200">
                                                 <img src={featuredIcon} alt='' id='featuredIcon' className={`${isLoginLanguageRTL ? 'ml-3' : 'mr-3'} mt-1`} />
                                                 <div>
@@ -126,7 +154,7 @@ function NotificationPopup({ closeNotification, notificationsList }) {
                                                         <p className={`text-sm font-semibold text-gray-900 ${isLoginLanguageRTL ? 'text-right': 'text-left'}`}>{getNoticationTitle(notification, t)}</p>
                                                         <p className={`text-xs text-[#CBCDD0] ${isLoginLanguageRTL ? 'text-left': 'text-right'}`}>{formatDate(notification.createdDateTime, 'dateTime')}</p>
                                                     </div>
-                                                    <p className="text-sm text-[#344054] mt-1 whitespace-pre-line">{getNotificationDescription(notification, t)}</p>
+                                                    <p className="text-sm text-[#344054] mt-1 whitespace-pre-line">{getNotificationPanelDescription(notification, t)}</p>
                                                     <button 
                                                         className="text-[#475467] text-sm mt-2"
                                                         onClick={() => dismissNotification(notification.notificationId)}
