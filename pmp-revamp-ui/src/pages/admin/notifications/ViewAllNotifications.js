@@ -159,7 +159,7 @@ function ViewNotifications({ notificationType }) {
                                                     </div>
                                                     <p className="text-[#475467] text-sm">{getNotificationDescription(notification, t)}</p>
                                                     <hr className="h-0.5 my-4 bg-[#BCC5E5] border" />
-                                                    <button onClick={() => dismissNotification(notification.notificationId)} className="text-[#475467]">{t('notificationPopup.dismiss')}</button>
+                                                    <button onClick={() => dismissNotification(notification.notificationId)} className="text-[#475467] font-semibold text-sm">{t('notificationPopup.dismiss')}</button>
                                                 </div>
                                             </div>
                                         ))}

@@ -70,7 +70,8 @@
         "partnerPolicyMappingRequestCountDesc": "{{partnerPolicyMappingRequestCount}} Policy requests are currently pending",
         "sbiAndDevicePendingApprovalRequestCountDesc": "{{sbiPendingApprovalRequestCount}} SBI and {{devicePendingApprovalRequestCount}} Device requests are currently pending",
         "ftmPendingApprovalRequestCountDesc": "{{ftmPendingApprovalRequestCount}} FTM Chip requests are currently pending",
-        "requestCountFetchError": "An Unexpected error occured while fetching request count"
+        "requestCountFetchError": "An Unexpected error occured while fetching request count",
+        "trustCertExpiryCountDesc": "{{rootCertExpiryCount}} Root CA Certificates | {{intermediateCertExpiryCount}} Intermediate CA Certificates are expiring soon"
     },
     "header": {
         "userProfile": "User Profile",
@@ -1263,6 +1264,8 @@
         "PMS_NOTIFICATION_ERROR_009": "Notification has already been dismissed.",
         "PMS_NOTIFICATION_ERROR_010": "Error while dismissing the notification.",
         "PMS_NOTIFICATION_ERROR_011": "The notification does not belong to the partner.",
-        "PMS_NOTIFICATION_ERROR_012": "Invalid notification status. Expected: DISMISSED."
+        "PMS_NOTIFICATION_ERROR_012": "Invalid notification status. Expected: DISMISSED.",
+        "PMS_NOTIFICATION_ERROR_013": "Error encountered while retrieving the count of expiring certificates.",
+        "PMS_NOTIFICATION_ERROR_014": "Partner Admin will only get the count of expiring root and intermediate certificates."
     }
 }

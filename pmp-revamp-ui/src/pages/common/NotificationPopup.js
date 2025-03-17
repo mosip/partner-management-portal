@@ -144,7 +144,7 @@ function NotificationPopup({ closeNotification, notificationsList }) {
                             )}
                             {notifications.length > 0 ? (
                                 <>
-                                    <p className={`text-sm text-[#6F6E6E] font-medium ${isLoginLanguageRTL ? 'mr-4' : 'ml-4'} my-2`}>latest</p>
+                                    <p className={`text-sm text-[#6F6E6E] font-medium ${isLoginLanguageRTL ? 'mr-4' : 'ml-4'} my-2`}>{t('notificationPopup.latest')}</p>
                                     <div className={`${isSmallScreen ? 'max-h-64' : 'max-h-96'} overflow-y-auto`}>
                                         {notifications.map(notification => (
                                             <div key={notification.notificationId} className="flex justify-between items-start p-2 border-b border-gray-200 mb-2">
@@ -156,7 +156,7 @@ function NotificationPopup({ closeNotification, notificationsList }) {
                                                     </div>
                                                     <p className="text-sm text-[#344054] mt-1 whitespace-pre-line">{getNotificationPanelDescription(notification, t)}</p>
                                                     <button 
-                                                        className="text-[#475467] text-sm mt-2"
+                                                        className="text-[#475467] font-semibold text-sm mt-2"
                                                         onClick={() => dismissNotification(notification.notificationId)}
                                                     >
                                                         {t('notificationPopup.dismiss')}

@@ -37,6 +37,8 @@ function Dashboard() {
   const [sbiPendingApprovalRequestCount, setSbiPendingApprovalRequestCount] = useState();
   const [devicePendingApprovalRequestCount, setDevicePendingApprovalRequestCount] = useState();
   const [ftmPendingApprovalRequestCount, setFtmPendingApprovalRequestCount] = useState();
+  const [rootCertExpiryCount, setRootCertExpiryCount] = useState();
+  const [intermediateCertExpiryCount, setIntermediateCertExpiryCount] = useState();
   let isSelectPolicyPopupVisible = false;
   let isUserConsentGiven = false;
 
@@ -160,6 +162,35 @@ function Dashboard() {
   }
 
   useEffect(() => {
+    const fetchTrustCertExpiryCount = async (certType) => {
+      const queryParams = new URLSearchParams();
+      queryParams.append('period', 30);
+      queryParams.append('type', certType);
+      const url = `${getPartnerManagerUrl('/expiring-certs-count', process.env.NODE_ENV)}?${queryParams.toString()}`;
+      try {
+        const response = await HttpService.get(url);
+        if (response) {
+          const responseData = response.data;
+          if (responseData && responseData.response) {
+            if (certType === "root") {
+              setRootCertExpiryCount(responseData.response.count);
+            } else if (certType === "intermediate") {
+              setIntermediateCertExpiryCount(responseData.response.count);
+            }
+          } else {
+            handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+          }
+        } else {
+          setErrorMsg(t('dashboard.requestCountFetchError'));
+        }
+      } catch (err) {
+        if (err.response?.status && err.response.status !== 401) {
+          setErrorMsg(t('dashboard.requestCountFetchError'));
+        }
+        console.error("Error fetching data:", err);
+      }
+    };
+
     const fetchPartnerPolicyMappingRequestCount = async () => {
       const queryParams = new URLSearchParams();
       queryParams.append('status', 'InProgress');
@@ -268,6 +299,8 @@ function Dashboard() {
 
     if (isPartnerAdmin) {
       setTimeout(() => {
+        fetchTrustCertExpiryCount('root');
+        fetchTrustCertExpiryCount('intermediate');
         fetchPartnerPolicyMappingRequestCount();
         fetchPendingApprovalSbiCount();
         fetchPendingApprovalDevicesCount();
@@ -325,15 +358,15 @@ function Dashboard() {
     setErrorMsg("");
   };
 
-  const CountWithHover = ({ count, descriptionKey, descriptionParams }) => (
-    <div className="absolute flex items-center -top-3 -right-3 min-w-fit w-10 h-8 bg-[#FEF1C6] rounded-md text-[#6D1C00] text-sm shadow-md">
+  const CountWithHover = ({ count, descriptionKey, descriptionParams, isExpiryHover }) => (
+    <div className={`absolute flex items-center -top-3 -right-3 min-w-fit w-10 h-8 ${isExpiryHover ? 'bg-[#FAD6D1]' : 'bg-[#FEF1C6]'} rounded-md text-[#6D1C00] text-sm shadow-md`}>
       <div className="relative group flex items-center justify-center w-full" tabIndex="0">
         <span className="font-medium p-2 rounded">
           {count ?? <LoadingCount />}
         </span>
 
         {count !== null && count !== undefined && (
-          <div className="absolute hidden group-focus:block group-hover:block bg-[#FEF1C6] text-xs font-semibold p-2 w-40 mt-1 z-10 top-9 right-0 rounded-md shadow-md">
+          <div className={`absolute hidden group-focus:block group-hover:block ${isExpiryHover ? 'bg-[#FAD6D1]' : 'bg-[#FEF1C6]'} text-xs font-semibold p-2 w-40 mt-1 z-10 top-9 right-0 rounded-md shadow-md`}>
             {t(descriptionKey, descriptionParams)}
           </div>
         )}
@@ -434,7 +467,7 @@ function Dashboard() {
             )}
             {isPartnerAdmin && (
               <>
-                <div role='button' onClick={rootTrustCertificateList} className="w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, rootTrustCertificateList)}>
+                <div role='button' onClick={rootTrustCertificateList} className="relative w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, rootTrustCertificateList)}>
                   <div className="flex justify-center mb-5">
                     <img id='admin_partner_certificate_list_icon' src={partnerCertificateIcon} alt="" className="w-8 h-8" />
                   </div>
@@ -446,6 +479,19 @@ function Dashboard() {
                       {t('dashboard.certificateTrustStoreDesc')}
                     </p>
                   </div>
+                  <CountWithHover
+                    count={
+                      rootCertExpiryCount !== null &&
+                      rootCertExpiryCount !== undefined &&
+                      intermediateCertExpiryCount !== null &&
+                      intermediateCertExpiryCount !== undefined
+                        ? rootCertExpiryCount + intermediateCertExpiryCount
+                        : null
+                    }
+                    descriptionKey="dashboard.trustCertExpiryCountDesc"
+                    descriptionParams={{ rootCertExpiryCount, intermediateCertExpiryCount }}
+                    isExpiryHover = {true}
+                  />
                 </div>
 
                 <div role='button' onClick={partnersList} className="w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, partnersList)}>
