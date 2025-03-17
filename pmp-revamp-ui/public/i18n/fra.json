@@ -70,7 +70,8 @@
         "partnerPolicyMappingRequestCountDesc": "{{partnerPolicyMappingRequestCount}} demandes de politique sont actuellement en attente",
         "sbiAndDevicePendingApprovalRequestCountDesc": "{{sbiPendingApprovalRequestCount}} demandes SBI et {{devicePendingApprovalRequestCount}} demandes d'appareil sont actuellement en attente",
         "ftmPendingApprovalRequestCountDesc": "{{ftmPendingApprovalRequestCount}} demandes de puce FTM sont actuellement en attente",
-        "requestCountFetchError": "Une erreur inattendue s'est produite lors de la récupération du nombre de requêtes"
+        "requestCountFetchError": "Une erreur inattendue s'est produite lors de la récupération du nombre de requêtes",
+        "trustCertExpiryCountDesc": "{{rootCertExpiryCount}} Certificats CA racine | {{intermediateCertExpiryCount}} Les certificats CA intermédiaires expirent bientôt"
     },
     "header": {
         "userProfile": "Profil de l'utilisateur",
@@ -1268,6 +1269,8 @@
         "PMS_NOTIFICATION_ERROR_009": "La notification a déjà été rejetée.",
         "PMS_NOTIFICATION_ERROR_010": "Erreur lors du rejet de la notification.",
         "PMS_NOTIFICATION_ERROR_011": "La notification n'appartient pas au partenaire.",
-        "PMS_NOTIFICATION_ERROR_012": "Statut de notification non valide. Attendu : REJETÉ."
+        "PMS_NOTIFICATION_ERROR_012": "Statut de notification non valide. Attendu : REJETÉ.",
+        "PMS_NOTIFICATION_ERROR_013": "Erreur rencontrée lors de la récupération du nombre de certificats expirant.",
+        "PMS_NOTIFICATION_ERROR_014": "L'administrateur partenaire obtiendra uniquement le nombre de certificats racine et intermédiaires expirant."
     }
 }

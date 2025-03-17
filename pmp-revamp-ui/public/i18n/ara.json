@@ -70,7 +70,8 @@
         "partnerPolicyMappingRequestCountDesc": "يوجد حاليًا {{partnerPolicyMappingRequestCount}} طلبات سياسة قيد الانتظار",
         "sbiAndDevicePendingApprovalRequestCountDesc": "يوجد حاليًا {{sbiPendingApprovalRequestCount}} طلبات SBI و {{devicePendingApprovalRequestCount}} طلبات جهاز قيد الانتظار",
         "ftmPendingApprovalRequestCountDesc": "يوجد حاليًا {{ftmPendingApprovalRequestCount}} طلبات شريحة FTM قيد الانتظار",
-        "requestCountFetchError": "حدث خطأ غير متوقع أثناء جلب عدد الطلبات"
+        "requestCountFetchError": "حدث خطأ غير متوقع أثناء جلب عدد الطلبات",
+        "trustCertExpiryCountDesc": "{{rootCertExpiryCount}} شهادة CA الجذرية | {{intermediateCertExpiryCount}} شهادة CA متوسطة تنتهي صلاحيتها قريبًا"
     },
     "header": {
         "userProfile": "ملف تعريفي للمستخدم",
@@ -1268,6 +1269,8 @@
         "PMS_NOTIFICATION_ERROR_009": "تم رفض الإشعار مسبقًا.",
         "PMS_NOTIFICATION_ERROR_010": "حدث خطأ أثناء رفض الإشعار.",
         "PMS_NOTIFICATION_ERROR_011": "الإشعار غير تابع للشريك.",
-        "PMS_NOTIFICATION_ERROR_012": "حالة الإشعار غير صالحة. المتوقع: تم رفضه."
+        "PMS_NOTIFICATION_ERROR_012": "حالة الإشعار غير صالحة. المتوقع: تم رفضه.",
+        "PMS_NOTIFICATION_ERROR_013": "تم مواجهة خطأ أثناء استرداد عدد الشهادات منتهية الصلاحية.",
+        "PMS_NOTIFICATION_ERROR_014": "سيحصل مسؤول الشريك فقط على عدد الشهادات الجذرية والوسيطة منتهية الصلاحية."
     }
 }
