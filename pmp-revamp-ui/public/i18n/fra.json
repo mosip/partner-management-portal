@@ -947,6 +947,7 @@
         "description": "En cliquant sur 'Confirmer', la clé API sera désactivée et ne pourra plus être utilisée pour l'authentification"
     },
     "notificationPopup": {
+        "latest": "Dernier",
         "notification": "Notifications",
         "rootCertExpiry": "Expiration du certificat CA racine",
         "intermediateCertExpiry": "Expiration du certificat CA intermédiaire",
@@ -975,7 +976,17 @@
     },
     "viewAllNotifications": {
         "listOfNotifications": "Liste des notifications",
-        "searchDescription": "Recherchez n'importe quelle notification à l'aide de l'ID du certificat, de la date d'expiration, du titre/de la description de la notification, de la date et de l'heure de génération de la notification, etc."
+        "searchDescription": "Recherchez n'importe quelle notification à l'aide de l'ID du certificat, de la date d'expiration, du titre/de la description de la notification, de la date et de l'heure de génération de la notification, etc.",
+        "certificateId": "Id du certificat",
+        "partnerDomain": "Domaine partenaire",
+        "issuedTo": "Délivré à",
+        "issuedBy": "Délivré par",
+        "validFrom": "Valable à partir de",
+        "validTo": "Valable jusqu'aue",
+        "searchCertificateId": "Rechercher l'ID du certificat",
+        "selectPartnerDomain": "Sélectionner le domaine du partenaire",
+        "searchIssuedTo": "Rechercher émis à",
+        "searchIssuedBy": "Rechercher émis par"
     },
     "serverError": {
         "PMS_COR_001": "Paramètre d'entrée manquant",
