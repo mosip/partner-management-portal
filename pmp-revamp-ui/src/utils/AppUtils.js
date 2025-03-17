@@ -1,3 +1,4 @@
+import { Trans } from "react-i18next";
 import { HttpService } from "../services/HttpService";
 import { getLoginRedirectUrl } from "../services/LoginRedirectService";
 
@@ -857,9 +858,33 @@ export const getWeeklySummaryDescription = (notification, t) => {
 
 export const getNotificationDescription = (notification, t) => {
     if (notification.notificationType === 'ROOT_CERT_EXPIRY') {
-        return t('notificationsTab.rootCertExpiryDescription', { certificateId: notification.notificationDetails.certificateDetails[0].certificateId, issuedTo:notification.notificationDetails.certificateDetails[0].issuedTo, issuedBy:notification.notificationDetails.certificateDetails[0].issuedBy, partnerDomain: notification.notificationDetails.certificateDetails[0].partnerDomain, expiryDateTime: formatDate(notification.notificationDetails.certificateDetails[0].expiryDateTime, 'dateInWords') });
+        return (
+            <Trans 
+                i18nKey="notificationsTab.rootCertExpiryDescription"
+                values={{
+                    certificateId: notification.notificationDetails.certificateDetails[0].certificateId,
+                    issuedTo:notification.notificationDetails.certificateDetails[0].issuedTo,
+                    issuedBy:notification.notificationDetails.certificateDetails[0].issuedBy,
+                    partnerDomain: notification.notificationDetails.certificateDetails[0].partnerDomain,
+                    expiryDateTime: formatDate(notification.notificationDetails.certificateDetails[0].expiryDateTime, 'dateInWords')
+                }}
+                components={{ span: <span className="font-semibold" /> }}
+            />
+        );
     } else if (notification.notificationType === 'INTERMEDIATE_CERT_EXPIRY') {
-        return t('notificationsTab.intermediateCertExpiryDescription', { certificateId: notification.notificationDetails.certificateDetails[0].certificateId, issuedTo:notification.notificationDetails.certificateDetails[0].issuedTo, issuedBy:notification.notificationDetails.certificateDetails[0].issuedBy, partnerDomain: notification.notificationDetails.certificateDetails[0].partnerDomain, expiryDateTime: formatDate(notification.notificationDetails.certificateDetails[0].expiryDateTime, 'dateInWords') });
+        return (
+            <Trans 
+                i18nKey="notificationsTab.intermediateCertExpiryDescription"
+                values={{
+                    certificateId: notification.notificationDetails.certificateDetails[0].certificateId,
+                    issuedTo:notification.notificationDetails.certificateDetails[0].issuedTo,
+                    issuedBy:notification.notificationDetails.certificateDetails[0].issuedBy,
+                    partnerDomain: notification.notificationDetails.certificateDetails[0].partnerDomain,
+                    expiryDateTime: formatDate(notification.notificationDetails.certificateDetails[0].expiryDateTime, 'dateInWords')
+                }}
+                components={{ span: <span className="font-semibold" /> }}
+            />
+        );
     } else if (notification.notificationType === 'WEEKLY_SUMMARY') {
         return getWeeklySummaryDescription (notification, t);
     }
@@ -867,9 +892,29 @@ export const getNotificationDescription = (notification, t) => {
 
 export const getNotificationPanelDescription = (notification, t) => {
     if (notification.notificationType === 'ROOT_CERT_EXPIRY') {
-        return t('notificationPopup.rootCertExpiryDescription', { certificateId: notification.notificationDetails.certificateDetails[0].certificateId, partnerDomain: notification.notificationDetails.certificateDetails[0].partnerDomain, expiryDateTime: formatDate(notification.notificationDetails.certificateDetails[0].expiryDateTime, 'dateInWords') });
+        return (
+            <Trans 
+                i18nKey="notificationPopup.rootCertExpiryDescription"
+                values={{
+                    certificateId: notification.notificationDetails.certificateDetails[0].certificateId,
+                    partnerDomain: notification.notificationDetails.certificateDetails[0].partnerDomain,
+                    expiryDateTime: formatDate(notification.notificationDetails.certificateDetails[0].expiryDateTime, 'dateInWords')
+                }}
+                components={{ span: <span className="font-semibold" /> }}
+            />
+        );
     } else if (notification.notificationType === 'INTERMEDIATE_CERT_EXPIRY') {
-        return t('notificationPopup.intermediateCertExpiryDescription', { certificateId: notification.notificationDetails.certificateDetails[0].certificateId, partnerDomain: notification.notificationDetails.certificateDetails[0].partnerDomain, expiryDateTime: formatDate(notification.notificationDetails.certificateDetails[0].expiryDateTime, 'dateInWords') });
+        return (
+            <Trans 
+                i18nKey="notificationPopup.intermediateCertExpiryDescription"
+                values={{
+                    certificateId: notification.notificationDetails.certificateDetails[0].certificateId,
+                    partnerDomain: notification.notificationDetails.certificateDetails[0].partnerDomain,
+                    expiryDateTime: formatDate(notification.notificationDetails.certificateDetails[0].expiryDateTime, 'dateInWords')
+                }}
+                components={{ span: <span className="font-semibold" /> }}
+            />
+        );
     } else if (notification.notificationType === 'WEEKLY_SUMMARY') {
         return getWeeklySummaryDescription (notification, t);
     }
