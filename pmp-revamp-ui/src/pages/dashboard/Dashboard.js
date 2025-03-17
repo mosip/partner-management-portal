@@ -164,7 +164,7 @@ function Dashboard() {
   useEffect(() => {
     const fetchTrustCertExpiryCount = async (certType) => {
       const queryParams = new URLSearchParams();
-      queryParams.append('period', 3);
+      queryParams.append('period', 30);
       queryParams.append('type', certType);
       const url = `${getPartnerManagerUrl('/expiring-certs-count', process.env.NODE_ENV)}?${queryParams.toString()}`;
       try {
