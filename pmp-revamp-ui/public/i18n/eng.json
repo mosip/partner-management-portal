@@ -942,6 +942,7 @@
         "description": "On clicking ‘Confirm’, the API Key will be deactivated and can no longer be used for authentication"
     },
     "notificationPopup": {
+        "latest": "Latest",
         "notification": "Notifications",
         "rootCertExpiry": "Root CA Certificate Expiration",
         "intermediateCertExpiry": "Intermediate CA Certificate Expiration",
@@ -970,7 +971,17 @@
     },
     "viewAllNotifications": {
         "listOfNotifications": "List of Notifications",
-        "searchDescription": "Search any notification using certificate ID, expiry date, notification title / description, date and time of notification generation etc."
+        "searchDescription": "Search any notification using certificate ID, expiry date, notification title / description, date and time of notification generation etc.",
+        "certificateId": "Certificate ID",
+        "partnerDomain": "Partner Domain",
+        "issuedTo": "Issued To",
+        "issuedBy": "Issued By",
+        "validFrom": "Valid From",
+        "validTo": "Valid To",
+        "searchCertificateId": "Search Certificate ID",
+        "selectPartnerDomain": "Select Partner Domain",
+        "searchIssuedTo": "Search Issued To",
+        "searchIssuedBy": "Search Issued By"
     },
     "serverError": {
         "PMS_COR_001": "Missing Input Parameter",

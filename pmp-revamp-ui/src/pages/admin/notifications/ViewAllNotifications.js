@@ -1,16 +1,18 @@
 import { useEffect, useState } from "react";
 import { getUserProfile } from "../../../services/UserProfileService.js";
-import { dismissNotificationById, formatDate, getNoticationTitle, getNotificationDescription, getPartnerManagerUrl, handleServiceErrors, isLangRTL, resetPageNumber, setPageNumberAndPageSize } from "../../../utils/AppUtils.js";
+import { dismissNotificationById, formatDate, getNoticationTitle, getNotificationDescription, getPartnerManagerUrl, handleServiceErrors,
+     isLangRTL, resetPageNumber, setPageNumberAndPageSize, onResetFilter, onClickApplyFilter } from "../../../utils/AppUtils.js";
 import LoadingIcon from "../../common/LoadingIcon.js";
 import ErrorMessage from "../../common/ErrorMessage.js";
 import Title from "../../common/Title.js";
 import NotificationsTab from "./NotificationsTab.js";
 import { useTranslation } from "react-i18next";
-import searchIcon from "../../../svg/search_icon.svg";
 import featuredIcon from "../../../svg/featured_icon.svg";
 import noNotificationIcon from "../../../svg/frame.svg";
 import Pagination from "../../common/Pagination.js";
 import { HttpService } from "../../../services/HttpService.js";
+import FilterButtons from "../../common/FilterButtons"
+import ViewAllNotificationsFilter from "./ViewAllNotificationsFilter.js";
 
 function ViewNotifications({ notificationType }) {
     const { t } = useTranslation();
@@ -18,7 +20,6 @@ function ViewNotifications({ notificationType }) {
     const [dataLoaded, setDataLoaded] = useState(true);
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
-    const [searchQuery, setSearchQuery] = useState("");
     const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(4);
     const [firstIndex, setFirstIndex] = useState(0);
     const [pageNo, setPageNo] = useState(0);
@@ -28,6 +29,16 @@ function ViewNotifications({ notificationType }) {
     const [resetPageNo, setResetPageNo] = useState(false);
     const [notificationsList, setNotificationsList] = useState([]);
     const [notificationDataLoaded, setNotificationDataLoaded] = useState(true);
+    const [filter, setFilter] = useState(false);
+    const [isFilterApplied, setIsFilterApplied] = useState(false);
+    const [isApplyFilterClicked, setIsApplyFilterClicked] = useState(false);
+    const [filterAttributes, setFilterAttributes] = useState({
+        certificateId: null,
+        partnerDomain: null,
+        issuedTo: null,
+        issuedBy: null
+    });
+
 
     const fetchNotifications = async (noDateLoaded) => {
         const queryParams = new URLSearchParams();
@@ -37,6 +48,11 @@ function ViewNotifications({ notificationType }) {
         setResetPageNo(false);
         queryParams.append('notificationStatus', 'active');
         queryParams.append('notificationType', notificationType);
+
+        if (filterAttributes.certificateId) queryParams.append('certificateId', filterAttributes.certificateId);
+        if (filterAttributes.partnerDomain) queryParams.append('partnerDomain', filterAttributes.partnerDomain);
+        if (filterAttributes.issuedTo) queryParams.append('issuedTo', filterAttributes.issuedTo);
+        if (filterAttributes.issuedBy) queryParams.append('issuedBy', filterAttributes.issuedBy);    
 
         const url = `${getPartnerManagerUrl('/notifications', process.env.NODE_ENV)}?${queryParams.toString()}`;
         try {
@@ -77,6 +93,13 @@ function ViewNotifications({ notificationType }) {
         fetchNotifications();
     }, [pageNo, pageSize]);
 
+    useEffect(() => {
+        if (isApplyFilterClicked) {
+          fetchNotifications();
+          setIsApplyFilterClicked(false);
+        }
+      }, [isApplyFilterClicked]);
+
     const getPaginationValues = (recordsPerPage, pageIndex) => {
         setPageNumberAndPageSize(recordsPerPage, pageIndex, pageNo, setPageNo, pageSize, setPageSize, setFetchData);
     };
@@ -84,7 +107,6 @@ function ViewNotifications({ notificationType }) {
     const dismissNotification = async (id) => {
         dismissNotificationById(HttpService, id, setNotificationsList, true, fetchNotifications, setErrorCode, setErrorMsg, t); 
     }
-
 
     const cancelErrorMsg = () => {
         setErrorMsg("");
@@ -94,6 +116,10 @@ function ViewNotifications({ notificationType }) {
         loadingDiv: "!py-[20%]",
         outerDiv: "!bg-opacity-35"
     }
+
+    const onApplyFilter = (filters) => {
+        onClickApplyFilter(filters, setIsFilterApplied, setResetPageNo, setFetchData, setFilterAttributes, setIsApplyFilterClicked);
+    };
 
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter overflow-x-scroll`}>
@@ -119,23 +145,21 @@ function ViewNotifications({ notificationType }) {
                         partnerCertPath={'/partnermanagement/admin/view-partner-notifications'}
                     />
                     <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
-                        <div className="flex max-640:flex-col items-center justify-between w-full px-2 py-3">
-                            <div id='list_of_notifications_title' className={`${isLoginLanguageRTL ? 'pr-[1.3rem] max-640:pr-0' : 'pl-[1.3rem] max-640:pl-0'} font-semibold text-dark-blue text-base`}>
-                                <p>{t('viewAllNotifications.listOfNotifications') + ' (' + totalRecords + ")"}</p>
-                            </div>
-                            <div>
-                                <div className="flex h-10 w-96 max-640:w-full px-2 py-3 border border-[#C6C6C6] rounded-md text-sm text-[#B9B9B9] bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto no-scrollbar">
-                                    <img src={searchIcon} id="search_icon" alt="" className="w-5 h-5 shrink-0" />
-                                    <input 
-                                        placeholder={t('viewAllNotifications.searchDescription')} 
-                                        className="px-2 py-1 w-full min-w-0 flex-grow outline-none overflow-x-auto whitespace-nowrap no-scrollbar focus:ring-0 focus:border-transparent"
-                                        value={searchQuery}
-                                        onChange={(e) => setSearchQuery(e.target.value)}
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                        <hr className="h-0.5 bg-gray-200 border-0" />
+                        <FilterButtons
+                            listTitle="viewAllNotifications.listOfNotifications"
+                            dataListLength={totalRecords}
+                            filter={filter}
+                            onResetFilter={onResetFilter}
+                            setFilter={setFilter}
+                        />
+                        <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
+                        {filter && (
+                            <ViewAllNotificationsFilter
+                                onApplyFilter={onApplyFilter}
+                                setErrorCode={setErrorCode}
+                                setErrorMsg={setErrorMsg}
+                            />
+                        )}
                         {!notificationDataLoaded ? (
                             <LoadingIcon styleSet={styles} />
                         ) : (

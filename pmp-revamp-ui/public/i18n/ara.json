@@ -947,6 +947,7 @@
         "description": "عند الضغط على 'تأكيد'، سيتم إلغاء تفعيل مفتاح API ولن يكون قابلاً للاستخدام للمصادقة"
     },
     "notificationPopup": {
+        "latest": "أحدث",
         "notification": "إشعارات",
         "rootCertExpiry": "انتهاء صلاحية شهادة الجذر CA",
         "intermediateCertExpiry": "انتهاء صلاحية شهادة CA المتوسطة",
@@ -975,7 +976,17 @@
     },
     "viewAllNotifications": {
         "listOfNotifications": "قائمة الإشعارات",
-        "searchDescription": "ابحث عن أي إشعار باستخدام معرف الشهادة وتاريخ انتهاء الصلاحية وعنوان / وصف الإشعار وتاريخ ووقت إنشاء الإشعار وما إلى ذلك."
+        "searchDescription": "ابحث عن أي إشعار باستخدام معرف الشهادة وتاريخ انتهاء الصلاحية وعنوان / وصف الإشعار وتاريخ ووقت إنشاء الإشعار وما إلى ذلك.",
+        "certificateId": "معرف الشهادة",
+        "partnerDomain": "مجال الشريك",
+        "issuedTo": "صدر ل",
+        "issuedBy": "صادرة عن",
+        "validFrom": "صالح من",
+        "validTo": "صالح ل",
+        "searchCertificateId": "معرف شهادة البحث",
+        "selectPartnerDomain": "تحديد نطاق الشريك",
+        "searchIssuedTo": "البحث عن الجهة الصادرة",
+        "searchIssuedBy": "البحث عن الجهة الصادرة"
     },
     "serverError": {
         "PMS_COR_001": "معلمة الإدخال مفقودة",
