@@ -946,8 +946,8 @@
         "notification": "Notifications",
         "rootCertExpiry": "Root CA Certificate Expiration",
         "intermediateCertExpiry": "Intermediate CA Certificate Expiration",
-        "rootCertExpiryDescription": "Root CA Certificate [{{certificateId}}] for the {{partnerDomain}} domain will expire on {{expiryDateTime}}. Renew now to prevent disruptions.",
-        "intermediateCertExpiryDescription": "Intermediate CA Certificate [{{certificateId}}] for the {{partnerDomain}} domain will expire on {{expiryDateTime}}. Renew now to prevent disruptions.",
+        "rootCertExpiryDescription": "Root CA Certificate <span class='font-semibold'>{{certificateId}}</span> for the <span class='font-semibold'>{{partnerDomain}}</span> domain is set to expire on  <span class='font-semibold'>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions.",
+        "intermediateCertExpiryDescription": "Intermediate CA Certificate <span class='font-semibold'>{{certificateId}}</span> for the <span class='font-semibold'>{{partnerDomain}}</span> domain is set to expire on <span class='font-semibold'>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions.",
         "dismiss": "Dismiss",
         "viewAllNotification": "View all notifications",
         "expiringItems": "Expiring Items",
@@ -966,8 +966,8 @@
         "rootCaCertificate": "Root CA Certificate",
         "intermediateCaCertificate": "Intermediate CA Certificate",
         "partner": "Partner",
-        "rootCertExpiryDescription": "Root CA Certificate [{{certificateId}}], issued to [{{issuedTo}}] by [{{issuedBy}}], for the {{partnerDomain}} domain will expire on {{expiryDateTime}}. Renew now to prevent disruptions.",
-        "intermediateCertExpiryDescription": "Intermediate CA Certificate [{{certificateId}}], issued to [{{issuedTo}}] by [{{issuedBy}}], for the {{partnerDomain}} domain will expire on {{expiryDateTime}}. Renew now to prevent disruptions."
+        "rootCertExpiryDescription": "Root CA Certificate <span class='font-semibold'>{{certificateId}}</span> issued to <span class='font-semibold'>{{issuedTo}}</span> by <span class='font-semibold'>{{issuedBy}}</span> for the <span class='font-semibold'>{{partnerDomain}}</span> domain is set to expire on <span class='font-semibold'>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions.",
+        "intermediateCertExpiryDescription": "Intermediate CA Certificate <span class='font-semibold'>{{certificateId}}</span> issued to <span class='font-semibold'>{{issuedTo}}</span> by <span class='font-semibold'>{{issuedBy}}</span> for the <span class='font-semibold'>{{partnerDomain}}</span> domain is set to expire on <span class='font-semibold'>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions."
     },
     "viewAllNotifications": {
         "listOfNotifications": "List of Notifications",

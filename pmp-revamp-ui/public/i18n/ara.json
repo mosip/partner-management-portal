@@ -951,8 +951,8 @@
         "notification": "إشعارات",
         "rootCertExpiry": "انتهاء صلاحية شهادة الجذر CA",
         "intermediateCertExpiry": "انتهاء صلاحية شهادة CA المتوسطة",
-        "rootCertExpiryDescription": "ستنتهي صلاحية شهادة CA الجذرية [{{certificateId}}] للنطاق {{partnerDomain}} في {{expiryDateTime}}. جددها الآن لتجنب أي انقطاعات.",
-        "intermediateCertExpiryDescription": "ستنتهي صلاحية شهادة CA المتوسطة [{{certificateId}}] للنطاق {{partnerDomain}} في {{expiryDateTime}}. جددها الآن لتجنب أي انقطاعات.",
+        "rootCertExpiryDescription": "شهادة CA الجذرية <span class='font-semibold'>{{certificateId}}</span> للنطاق <span class='font-semibold'>{{partnerDomain}}</span> من المقرر أن تنتهي صلاحيتها في <span class='font-semibold'>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات.",
+        "intermediateCertExpiryDescription": "شهادة CA المتوسطة <span class='font-semibold'>{{certificateId}}</span> للنطاق <span class='font-semibold'>{{partnerDomain}}</span> من المقرر أن تنتهي صلاحيتها في <span class='font-semibold'>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات.",
         "dismiss": "رفض",
         "viewAllNotification": "عرض جميع الإشعارات",
         "expiringItems": "العناصر منتهية الصلاحية",
@@ -971,8 +971,8 @@
         "rootCaCertificate": "شهادة CA الجذرية",
         "intermediateCaCertificate": "شهادة CA متوسطة",
         "partner": "شريك",
-        "rootCertExpiryDescription": "شهادة CA الجذرية [{{certificateId}}]، الصادرة إلى [{{issuedTo}}] بواسطة [{{issuedBy}}]، للنطاق {{partnerDomain}}، ستنتهي صلاحيتها في {{expiryDateTime}}. جددها الآن لتجنب أي انقطاعات.",
-        "intermediateCertExpiryDescription": "شهادة CA المتوسطة [{{certificateId}}]، الصادرة إلى [{{issuedTo}}] من قِبل [{{issuedBy}}]، للنطاق {{partnerDomain}}، ستنتهي صلاحيتها في {{expiryDateTime}}. جددها الآن لتجنب أي انقطاعات."
+        "rootCertExpiryDescription": "شهادة CA الجذرية <span class='font-semibold'>{{certificateId}}</span> الصادرة لـ <span class='font-semibold'>{{issuedTo}}</span> بواسطة <span class='font-semibold'>{{issuedBy}}</span> للنطاق <span class='font-semibold'>{{partnerDomain}}</span> من المقرر أن تنتهي صلاحيتها في <span class='font-semibold'>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات.",
+        "intermediateCertExpiryDescription": "شهادة CA المتوسطة <span class='font-semibold'>{{certificateId}}</span> الصادرة لـ <span class='font-semibold'>{{issuedTo}}</span> من قِبل <span class='font-semibold'>{{issuedBy}}</span> لنطاق <span class='font-semibold'>{{partnerDomain}}</span> من المقرر أن تنتهي صلاحيتها في <span class='font-semibold'>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات."
     },
     "viewAllNotifications": {
         "listOfNotifications": "قائمة الإشعارات",

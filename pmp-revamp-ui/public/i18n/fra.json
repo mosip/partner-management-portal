@@ -951,8 +951,8 @@
         "notification": "Notifications",
         "rootCertExpiry": "Expiration du certificat CA racine",
         "intermediateCertExpiry": "Expiration du certificat CA intermédiaire",
-        "rootCertExpiryDescription": "Le certificat CA racine [{{certificateId}}] du domaine {{partnerDomain}} expirera le {{expiryDateTime}}. Renouvelez-le dès maintenant pour éviter toute interruption.",
-        "intermediateCertExpiryDescription": "Le certificat CA intermédiaire [{{certificateId}}] pour le domaine {{partnerDomain}} expirera le {{expiryDateTime}}. Renouvelez-le dès maintenant pour éviter toute interruption.",
+        "rootCertExpiryDescription": "Le certificat CA racine <span class='font-semibold'>{{certificateId}}</span> du domaine <span class='font-semibold'>{{partnerDomain}}</span> expirera le <span class='font-semibold'>{{expiryDateTime}}</span>. Renouvelez-le dès maintenant pour éviter toute interruption.",
+        "intermediateCertExpiryDescription": "Le certificat CA intermédiaire <span class='font-semibold'>{{certificateId}}</span> du domaine <span class='font-semibold'>{{partnerDomain}}</span> expirera le <span class='font-semibold'>{{expiryDateTime}}</span>. Renouvelez-le dès maintenant pour éviter toute interruption.",
         "dismiss": "Rejeter",
         "viewAllNotification": "Afficher toutes les notifications",
         "expiringItems": "Articles expirés",
@@ -971,8 +971,8 @@
         "rootCaCertificate": "Certificat racine CA",
         "intermediateCaCertificate": "Certificat CA intermédiaire",
         "partner": "Partenaire",
-        "rootCertExpiryDescription": "Le certificat CA racine [{{certificateId}}], délivré à [{{issuedTo}}] par [{{issuedBy}}], pour le domaine {{partnerDomain}}, expirera le {{expiryDateTime}}. Renouvelez-le dès maintenant pour éviter toute interruption.",
-        "intermediateCertExpiryDescription": "Le certificat CA intermédiaire [{{certificateId}}] pour le domaine {{partnerDomain}} expirera le {{expiryDateTime}}. Renouvelez-le maintenant pour éviter les interruptions."
+        "rootCertExpiryDescription": "Le certificat CA racine <span class='font-semibold'>{{certificateId}}</span> délivré à <span class='font-semibold'>{{issuedTo}}</span> par <span class='font-semibold'>{{issuedBy}}</span> pour le domaine <span class='font-semibold'>{{partnerDomain}}</span> expirera le <span class='font-semibold'>{{expiryDateTime}}</span>. Renouvelez-le dès maintenant pour éviter toute interruption.",
+        "intermediateCertExpiryDescription": "Le certificat CA intermédiaire <span class='font-semibold'>{{certificateId}}</span> délivré à <span class='font-semibold'>{{issuedTo}}</span> par <span class='font-semibold'>{{issuedBy}}</span> pour le domaine <span class='font-semibold'>{{partnerDomain}}</span> expirera le <span class='font-semibold'>{{expiryDateTime}}</span>. Renouvelez-le dès maintenant pour éviter toute interruption."
     },
     "viewAllNotifications": {
         "listOfNotifications": "Liste des notifications",
