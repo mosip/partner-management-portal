@@ -278,15 +278,15 @@ function AppRoutes() {
           element: <GuardedRoute><MainLayout><ViewAdminDeviceDetails /></MainLayout></GuardedRoute>
         },
         {
-          path: 'view-root-certificate-notifications',
+          path: 'admin/view-root-certificate-notifications',
           element: <GuardedRoute><MainLayout><ViewRootTrustNotifications /></MainLayout></GuardedRoute>,
         },
         {
-          path: 'view-intermediate-certificate-notifications',
+          path: 'admin/view-intermediate-certificate-notifications',
           element: <GuardedRoute><MainLayout><ViewIntermediateTrustNotifications /></MainLayout></GuardedRoute>,
         },
         {
-          path: 'view-partner-notifications',
+          path: 'admin/view-partner-notifications',
           element: <GuardedRoute><MainLayout><ViewPartnerNotifications /></MainLayout></GuardedRoute>,
         },
         {

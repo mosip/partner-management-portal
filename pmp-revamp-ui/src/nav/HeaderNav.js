@@ -2,14 +2,16 @@ import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../services/UserProfileService.js';
-import { isLangRTL, onPressEnterKey, handleMouseClickForDropdown, logout } from '../utils/AppUtils.js';
+import { isLangRTL, onPressEnterKey, handleMouseClickForDropdown, logout, getPartnerManagerUrl } from '../utils/AppUtils.js';
 import profileIcon from '../profile_icon.png';
 import hamburgerIcon from '../svg/hamburger_icon.svg';
 import orgIcon from '../svg/org_icon.svg';
 import side_menu_title from '../../src/side_menu_title.svg';
 import profileDropDown from '.././svg/profileDropDown.svg';
 import bellIcon from '.././svg/bell_icon.svg';
+import notificationRedIcon from '.././svg/notifications_red_icon.svg';
 import NotificationPopup from '../pages/common/NotificationPopup.js';
+import { HttpService } from '../services/HttpService.js';
 
 function HeaderNav({ open, setOpen }) {
     const navigate = useNavigate('');
@@ -18,6 +20,8 @@ function HeaderNav({ open, setOpen }) {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const dropdownRef = useRef(null);
     const [openNotification, setOpenNotification] = useState(false);
+    const [showLatestNotificationIcon, setShowLatestNotificationIcon] = useState(false);
+    const [notificationsList, setNotificationsList] = useState([]);
 
     useEffect(() => {
         handleMouseClickForDropdown(dropdownRef, () => setIsDropdownOpen(false));
@@ -28,6 +32,80 @@ function HeaderNav({ open, setOpen }) {
             document.documentElement.style.setProperty('--dropdown-width', `${dropdownRef.current.offsetWidth}px`);
         }
     }, [isDropdownOpen, getUserProfile().userName]);
+
+    useEffect(() => {
+        async function fetchNotificationsData() {
+            const notificationsSeenTimestamp = await fetchNotificationsSeenTimestamp();
+            const notifications = await fetchNotificationsList();
+            console.log("last seen time : ", notificationsSeenTimestamp);
+            if(notificationsSeenTimestamp === null && notifications.length === 0) {
+                setShowLatestNotificationIcon(false);
+            } else if(notificationsSeenTimestamp === null && notifications.length > 0) {
+                setShowLatestNotificationIcon(true);
+            } else {
+                if(notifications.length === 0) {
+                    setShowLatestNotificationIcon(false);
+                } else {
+                    const latestNotificationCrdtimes = notifications[0].createdDateTime;
+                    console.log("latest notification created time : ", latestNotificationCrdtimes);
+                    const lastSeenDate = new Date(notificationsSeenTimestamp);
+                    const latestNotificationDate = new Date(latestNotificationCrdtimes);
+                    if(latestNotificationDate > lastSeenDate) {
+                        setShowLatestNotificationIcon(true);
+                    } else {
+                        setShowLatestNotificationIcon(false);
+                    }
+                }
+            }
+        }
+        fetchNotificationsData();
+    }, []);
+
+    const fetchNotificationsList = async () => {
+        const queryParams = new URLSearchParams();
+        queryParams.append('pageSize', 4);
+        queryParams.append('pageNo', 0);
+        queryParams.append('notificationStatus', 'active');
+        const url = `${getPartnerManagerUrl('/notifications', process.env.NODE_ENV)}?${queryParams.toString()}`;
+        try {
+            const response = await HttpService.get(url);
+            if (response) {
+                const responseData = response.data;
+                if (responseData && responseData.response) {
+                    const resData = responseData.response.data;
+                    setNotificationsList(resData);
+                    return resData;
+                } else {
+                    return [];
+                }
+            } else {
+                return [];
+            }
+        } catch (err) {
+            console.error('Error fetching data:', err);
+            return [];
+        }
+    }
+
+    const fetchNotificationsSeenTimestamp = async () => {
+        try {
+          const response = await HttpService.get(getPartnerManagerUrl(`/users/notifications-seen-timestamp`, process.env.NODE_ENV));
+          if (response) {
+            const responseData = response.data;
+            if (responseData && responseData.response) {
+              const resData = responseData.response;
+              return resData.notificationsSeenDtimes;
+            } else {
+              return null;
+            }
+          } else {
+            return null;
+          }
+        } catch (err) {
+          console.log("Error: ", err);
+          return null;
+        }
+    };
 
     const openDropdown = () => {
         setIsDropdownOpen(!isDropdownOpen);
@@ -40,6 +118,11 @@ function HeaderNav({ open, setOpen }) {
 
     const openNotificationPopup = () => {
         setOpenNotification(!openNotification);
+    }
+
+    const closeNotificationPanel = () => {
+        setOpenNotification(false);
+        setShowLatestNotificationIcon(false);
     }
 
     return (
@@ -77,13 +160,16 @@ function HeaderNav({ open, setOpen }) {
             </div>
             <div className={`flex items-center relative justify-between gap-x-4 ${isLoginLanguageRTL ? "left-3" : "right-3"}`}>
                 <div className="flex items-center cursor-pointer">
-                    <div role='button' className="p-2 m-1 bg-blue-50" onClick={() => openNotificationPopup()}>
-                        <img id='bellIcon' src={bellIcon} alt="" className="w-5 h-5" />
-                    </div>
+                    <button id='bellIcon' className={`${!showLatestNotificationIcon && 'p-2 m-1 bg-blue-50'}`} onClick={() => openNotificationPopup()}>
+                        <img src={showLatestNotificationIcon ? notificationRedIcon : bellIcon} alt="" className={`${!showLatestNotificationIcon ? 'w-5 h-5' : 'w-9'}`} />
+                    </button>
                     { openNotification && (
-                        <NotificationPopup
-                            closeNotification={() => setOpenNotification(false)}
-                        />
+                        <div className={`fixed inset-0 bg-black bg-opacity-0 z-40 cursor-default`}>
+                            <NotificationPopup
+                                closeNotification={closeNotificationPanel}
+                                notificationsList={notificationsList}
+                            />
+                        </div>
                     )}
                 </div>
                 <div className="flex items-center">
