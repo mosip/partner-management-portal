@@ -203,19 +203,19 @@ function ViewNotifications({ notificationType }) {
                                                     ))}
                                                 </div>
                                                 <hr className="h-0.5 bg-gray-200 border-0" />
-                                                <Pagination
-                                                    dataListLength={totalRecords}
-                                                    selectedRecordsPerPage={selectedRecordsPerPage}
-                                                    setSelectedRecordsPerPage={setSelectedRecordsPerPage}
-                                                    setFirstIndex={setFirstIndex}
-                                                    isServerSideFilter={true}
-                                                    getPaginationValues={getPaginationValues}
-                                                    isViewNotificationPage={true}
-                                                />
                                             </>
                                         )}
                                     </>
                                 )}
+                                <Pagination
+                                    dataListLength={totalRecords}
+                                    selectedRecordsPerPage={selectedRecordsPerPage}
+                                    setSelectedRecordsPerPage={setSelectedRecordsPerPage}
+                                    setFirstIndex={setFirstIndex}
+                                    isServerSideFilter={true}
+                                    getPaginationValues={getPaginationValues}
+                                    isViewNotificationPage={true}
+                                />
                             </div>
                         </>
                     )}
