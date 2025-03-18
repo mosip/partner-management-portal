@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import Information from './fields/Information';
 import { format } from 'date-fns';
 
-function CalendarInput({ isFilter, showCalendar, addInfoIcon, infoKey, infoKey1, setShowCalender, placeholderText, label, onChange, styleSet, selectedDateStr, containsAsterisk, id}) {
+function CalendarInput({ isUsedAsFilter, showCalendar, addInfoIcon, infoKey, infoKey1, setShowCalender, placeholderText, label, onChange, styleSet, selectedDateStr, containsAsterisk, id}) {
   const { t } = useTranslation();
   const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
 
@@ -25,15 +25,17 @@ function CalendarInput({ isFilter, showCalendar, addInfoIcon, infoKey, infoKey1,
   const onDateChange = (newDate) => {
     let newDateStr = "";
   
-    if (newDate) {
-      newDateStr = isFilter
-        ? format(newDate, 'yyyy-MM-dd')
-        : newDate.toISOString();
-    } 
-    
+    if (isUsedAsFilter) {
+      // Filter case: format as yyyy-MM-dd, empty if no date selected
+      newDateStr = newDate ? format(newDate, 'yyyy-MM-dd') : "";
+    } else {
+      // Default case:ISO string, For Add SBI
+      newDateStr = newDate.toISOString();
+    }
+  
     console.log(`onDateChange ${newDateStr}`);
-    setShowCalender((prev) => !prev); 
-    onChange(newDateStr); 
+    setShowCalender(false);
+    onChange(newDateStr);
   };
   
   return (
@@ -47,13 +49,13 @@ function CalendarInput({ isFilter, showCalendar, addInfoIcon, infoKey, infoKey1,
       <div id="datePicker" className="w-full">
         <DatePicker
           id={id}
-          selected={selectedDateStr === "" ? (isFilter ? null : new Date()) : new Date(selectedDateStr)}
+          selected={selectedDateStr === "" ? (isUsedAsFilter ? null : new Date()) : new Date(selectedDateStr)}
           onChange={(date) => onDateChange(date)}
           placeholderText={placeholderText}
           dateFormat="MM/dd/yyyy"
           className={`${styleSet?.datePicker || ''} w-full px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar`}
           wrapperClassName="w-full"
-          isClearable={isFilter? true : false}
+          isClearable={isUsedAsFilter? true : false}
         />
       </div>
     </div>

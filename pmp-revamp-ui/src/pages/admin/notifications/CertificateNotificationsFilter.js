@@ -7,7 +7,7 @@ import TextInputComponent from '../../common/fields/TextInputComponent.js';
 import { getUserProfile } from '../../../services/UserProfileService.js';
 import CalendarInput from '../../common/CalendarInput.js';
 
-function ViewAllNotificationsFilter({ onApplyFilter }) {
+function CertificateNotificationsFilter({ onApplyFilter }) {
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
     const [partnerDomainData, setPartnerDomainData] = useState([]);
@@ -109,7 +109,7 @@ function ViewAllNotificationsFilter({ onApplyFilter }) {
                     onChange={handleExpiryDateChange}
                     selectedDateStr={filters.expiryDate}
                     setNullOnEmpty={true}
-                    isFilter={true}
+                    isUsedAsFilter={true}
                     styleSet={calenderStyleSet}
                     placeholderText={t('viewAllNotifications.selectExpiryDate')}
                     id='view_notifications_expiry_date_calender'
@@ -131,4 +131,4 @@ function ViewAllNotificationsFilter({ onApplyFilter }) {
     );
 }
 
-export default ViewAllNotificationsFilter;
+export default CertificateNotificationsFilter;
