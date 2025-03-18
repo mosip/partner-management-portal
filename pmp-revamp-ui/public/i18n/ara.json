@@ -963,6 +963,7 @@
         "to": " ل ",
         "noNotification": "لا يوجد إشعارات حتى الآن",
         "noNotificationDescr": "ليس لديك أي إشعارات في الوقت الحالي.",
+        "filterNoNotificationTitle": "لم يتم العثور على إشعارات",
         "errorInNotifcations": "خطأ أثناء جلب الإشعارات",
         "errorWhileUpdatingNotificationSeenTime": "حدث خطأ أثناء تحديث الإشعارات التي تظهر التاريخ والوقت.",
         "errorInDismiss": "خطأ أثناء رفض الإشعار"
@@ -986,7 +987,9 @@
         "searchCertificateId": "معرف شهادة البحث",
         "selectPartnerDomain": "تحديد نطاق الشريك",
         "searchIssuedTo": "البحث عن الجهة الصادرة",
-        "searchIssuedBy": "البحث عن الجهة الصادرة"
+        "searchIssuedBy": "البحث عن الجهة الصادرة",
+        "selectExpiryDate": "بحث تاريخ الانتهاء",
+        "expiryDate": "تاريخ الانتهاء"
     },
     "serverError": {
         "PMS_COR_001": "معلمة الإدخال مفقودة",

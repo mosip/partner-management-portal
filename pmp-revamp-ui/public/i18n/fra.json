@@ -963,6 +963,7 @@
         "to": " Taha ",
         "noNotification": "Nous n'allons pas parler",
         "noNotificationDescr": "Vous n'avez aucune notification pour le moment.",
+        "filterNoNotificationTitle": "Aucune notification trouvée",
         "errorInNotifcations": "Erreur lors de la récupération des notifications",
         "errorWhileUpdatingNotificationSeenTime": "Erreur lors de la mise à jour des notifications vues date et heure.",
         "errorInDismiss": "Erreur lors de la suppression de la notification"
@@ -986,7 +987,9 @@
         "searchCertificateId": "Rechercher l'ID du certificat",
         "selectPartnerDomain": "Sélectionner le domaine du partenaire",
         "searchIssuedTo": "Rechercher émis à",
-        "searchIssuedBy": "Rechercher émis par"
+        "searchIssuedBy": "Rechercher émis par",
+        "selectExpiryDate": "Rechercher la date d'expiration",
+        "expiryDate": "Date d'expiration"
     },
     "serverError": {
         "PMS_COR_001": "Paramètre d'entrée manquant",
