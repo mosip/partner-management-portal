@@ -958,6 +958,7 @@
         "to": " to ",
         "noNotification": "No Notifications Yet",
         "noNotificationDescr": "You have no notifications at the moment.",
+        "filterNoNotificationTitle": "No Notifications Found",
         "errorInNotifcations": "Error while fetching notifications",
         "errorWhileUpdatingNotificationSeenTime": "Error while updating notifications seen date and time.",
         "errorInDismiss": "Error while dismissing notifcation"
@@ -981,7 +982,9 @@
         "searchCertificateId": "Search Certificate ID",
         "selectPartnerDomain": "Select Partner Domain",
         "searchIssuedTo": "Search Issued To",
-        "searchIssuedBy": "Search Issued By"
+        "searchIssuedBy": "Search Issued By",
+        "selectExpiryDate": "Search Expiry Date",
+        "expiryDate": "Expiry Date"
     },
     "serverError": {
         "PMS_COR_001": "Missing Input Parameter",

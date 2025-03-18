@@ -5,11 +5,13 @@ import { useTranslation } from 'react-i18next';
 import { createDropdownData, isLangRTL } from '../../../utils/AppUtils.js';
 import TextInputComponent from '../../common/fields/TextInputComponent.js';
 import { getUserProfile } from '../../../services/UserProfileService.js';
+import NotificationsCalendarInput from '../../common/NotificationsCalenderInput.js';
 
 function ViewAllNotificationsFilter({ onApplyFilter }) {
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
     const [partnerDomainData, setPartnerDomainData] = useState([]);
+    const [isExpiryCalenderOpen, setIsExpiryCalenderOpen] = useState(false);
     const [partnerDomainDropdownData, setPartnerDomainDropdownData] = useState([
         { partnerDomain: 'AUTH' },
         { partnerDomain: 'DEVICE' },
@@ -20,6 +22,7 @@ function ViewAllNotificationsFilter({ onApplyFilter }) {
         partnerDomain: "",
         issuedTo: "",
         issuedBy: "",
+        expiryDate: ""
     });
 
     useEffect(() => {
@@ -88,6 +91,16 @@ function ViewAllNotificationsFilter({ onApplyFilter }) {
                     placeHolderKey='viewAllNotifications.searchIssuedBy'
                     styleSet={styleSet}
                     id='cert_issued_by_domain_filter'
+                />
+                <NotificationsCalendarInput
+                    fieldName='expiryDate'
+                    label={t('viewAllNotifications.expiryDate')}
+                    showCalendar={isExpiryCalenderOpen}
+                    setShowCalender={setIsExpiryCalenderOpen}
+                    onChange={onFilterChangeEvent}
+                    selectedDateStr={filters.expiryDate}
+                    placeholderText={t('viewAllNotifications.selectExpiryDate')}
+                    id='view_notifications_expiry_date_calender'
                 />
                 <div className={`mt-6 mr-6 ${isLoginLanguageRTL ? "mr-auto" : "ml-auto"}`}>
                     <button
