@@ -23,18 +23,20 @@ function CalendarInput({ isUsedAsFilter, showCalendar, addInfoIcon, infoKey, inf
   };
 
   const onDateChange = (newDate) => {
-    let newDateStr = "";
+    let formattedDate = "";
   
     if (newDate) {
-      newDateStr = isUsedAsFilter
-        ? format(newDate, 'yyyy-MM-dd')
-        : newDate.toISOString();
-    } 
-    
-    console.log(`onDateChange ${newDateStr}`);
+      if (isUsedAsFilter) {
+        formattedDate = format(newDate, 'yyyy-MM-dd');
+      } else {
+        formattedDate = newDate.toISOString();
+      }
+    }
+  
+    console.log(`onDateChange ${formattedDate}`);
+    onChange(formattedDate);
     setShowCalender(false);
-    onChange(newDateStr); 
-  };
+  };  
   
   return (
     <div className={`flex flex-col ${styleSet?.outerDiv || ''} overflow-x-auto`}>
