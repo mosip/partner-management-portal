@@ -282,6 +282,7 @@ function AddSbi() {
                                                 containsAsterisk
                                                 id="sbi_created_date_calender"
                                                 styleSet={calenderStyleSet}
+                                                isUsedAsFilter={false}
                                             />
                                             <CalendarInput
                                                 label={t('addSbis.sbiExpiryDate')}
@@ -295,6 +296,7 @@ function AddSbi() {
                                                 containsAsterisk
                                                 id='sbi_expiry_date_calender'
                                                 styleSet={calenderStyleSet}
+                                                isUsedAsFilter={false}
                                             />
                                         </div>
                                     </div>

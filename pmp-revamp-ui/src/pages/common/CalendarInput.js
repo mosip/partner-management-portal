@@ -25,17 +25,15 @@ function CalendarInput({ isUsedAsFilter, showCalendar, addInfoIcon, infoKey, inf
   const onDateChange = (newDate) => {
     let newDateStr = "";
   
-    if (isUsedAsFilter) {
-      // Filter case: format as yyyy-MM-dd, empty if no date selected
-      newDateStr = newDate ? format(newDate, 'yyyy-MM-dd') : "";
-    } else {
-      // Default case:ISO string, For Add SBI
-      newDateStr = newDate.toISOString();
-    }
-  
+    if (newDate) {
+      newDateStr = isUsedAsFilter
+        ? format(newDate, 'yyyy-MM-dd')
+        : newDate.toISOString();
+    } 
+    
     console.log(`onDateChange ${newDateStr}`);
     setShowCalender(false);
-    onChange(newDateStr);
+    onChange(newDateStr); 
   };
   
   return (

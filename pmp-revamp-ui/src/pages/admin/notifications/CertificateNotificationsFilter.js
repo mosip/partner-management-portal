@@ -108,7 +108,6 @@ function CertificateNotificationsFilter({ onApplyFilter }) {
                     setShowCalender={setIsExpiryCalenderOpen}
                     onChange={handleExpiryDateChange}
                     selectedDateStr={filters.expiryDate}
-                    setNullOnEmpty={true}
                     isUsedAsFilter={true}
                     styleSet={calenderStyleSet}
                     placeholderText={t('viewAllNotifications.selectExpiryDate')}
