@@ -14,7 +14,7 @@ import noNotificationIcon from "../../../svg/frame.svg";
 import Pagination from "../../common/Pagination.js";
 import { HttpService } from "../../../services/HttpService.js";
 import FilterButtons from "../../common/FilterButtons"
-import ViewAllNotificationsFilter from "./ViewAllNotificationsFilter.js";
+import CertificateNotificationsFilter from "./CertificateNotificationsFilter.js";
 
 function ViewNotifications({ notificationType }) {
     const { t } = useTranslation();
@@ -169,7 +169,7 @@ function ViewNotifications({ notificationType }) {
                                 />
                                 <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
                                 {filter && (
-                                    <ViewAllNotificationsFilter
+                                    <CertificateNotificationsFilter
                                         onApplyFilter={onApplyFilter}
                                         setErrorCode={setErrorCode}
                                         setErrorMsg={setErrorMsg}

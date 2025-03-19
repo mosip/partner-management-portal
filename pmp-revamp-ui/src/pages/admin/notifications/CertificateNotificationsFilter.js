@@ -5,9 +5,9 @@ import { useTranslation } from 'react-i18next';
 import { createDropdownData, isLangRTL } from '../../../utils/AppUtils.js';
 import TextInputComponent from '../../common/fields/TextInputComponent.js';
 import { getUserProfile } from '../../../services/UserProfileService.js';
-import NotificationsCalendarInput from '../../common/NotificationsCalenderInput.js';
+import CalendarInput from '../../common/CalendarInput.js';
 
-function ViewAllNotificationsFilter({ onApplyFilter }) {
+function CertificateNotificationsFilter({ onApplyFilter }) {
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
     const [partnerDomainData, setPartnerDomainData] = useState([]);
@@ -41,6 +41,10 @@ function ViewAllNotificationsFilter({ onApplyFilter }) {
         }));
     };
 
+    const handleExpiryDateChange = (newDateStr) => {
+        onFilterChangeEvent("expiryDate", newDateStr);
+    };
+      
     const areFiltersEmpty = () => {
         return Object.values(filters).every(value => value === "");
     };
@@ -53,6 +57,11 @@ function ViewAllNotificationsFilter({ onApplyFilter }) {
         inputField: "min-w-64",
         inputLabel: "mb-2",
         outerDiv: "ml-4"
+    };
+
+    const calenderStyleSet = {
+        datePicker: "h-9 p-1",
+        outerDiv: "ml-4 min-w-64"
     };
 
     return (
@@ -92,13 +101,15 @@ function ViewAllNotificationsFilter({ onApplyFilter }) {
                     styleSet={styleSet}
                     id='cert_issued_by_domain_filter'
                 />
-                <NotificationsCalendarInput
+                <CalendarInput
                     fieldName='expiryDate'
                     label={t('viewAllNotifications.expiryDate')}
                     showCalendar={isExpiryCalenderOpen}
                     setShowCalender={setIsExpiryCalenderOpen}
-                    onChange={onFilterChangeEvent}
+                    onChange={handleExpiryDateChange}
                     selectedDateStr={filters.expiryDate}
+                    isUsedAsFilter={true}
+                    styleSet={calenderStyleSet}
                     placeholderText={t('viewAllNotifications.selectExpiryDate')}
                     id='view_notifications_expiry_date_calender'
                 />
@@ -119,4 +130,4 @@ function ViewAllNotificationsFilter({ onApplyFilter }) {
     );
 }
 
-export default ViewAllNotificationsFilter;
+export default CertificateNotificationsFilter;
