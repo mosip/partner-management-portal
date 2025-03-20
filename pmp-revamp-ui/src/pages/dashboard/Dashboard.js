@@ -299,10 +299,11 @@ function Dashboard() {
         console.error("Error fetching data:", err);
       }
     };
-
-    setTimeout(() => {
+    if (!isPartnerAdmin) {
       fetchTrustCertExpiryCount('partner');
-  
+    }
+    
+    setTimeout(() => {
       if (isPartnerAdmin) {
         fetchTrustCertExpiryCount('root');
         fetchTrustCertExpiryCount('intermediate');
@@ -408,17 +409,14 @@ function Dashboard() {
                     {t('dashboard.partnerCertificateDesc')}
                   </p>
                 </div>
-                <CountWithHover
-                    count={
-                      partnerCertExpiryCount !== null &&
-                      partnerCertExpiryCount !== undefined
-                        ? partnerCertExpiryCount
-                        : null
-                    }
+                {partnerCertExpiryCount > 0 && (
+                  <CountWithHover
+                    count={partnerCertExpiryCount}
                     descriptionKey="dashboard.partnerCertExpiryCountDesc"
                     descriptionParams={{ partnerCertExpiryCount }}
-                    isExpiryHover = {true}
+                    isExpiryHover={true}
                   />
+                )}
               </div>
             }
             {!isPartnerAdmin && !isPolicyManager && showPolicies && (
@@ -481,7 +479,7 @@ function Dashboard() {
                 </div>
               </div>
             )}
-            {isPartnerAdmin && (
+             {isPartnerAdmin && (
               <>
                 <div role='button' onClick={rootTrustCertificateList} className="relative w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, rootTrustCertificateList)}>
                   <div className="flex justify-center mb-5">
