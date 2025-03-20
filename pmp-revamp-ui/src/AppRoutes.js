@@ -53,6 +53,10 @@ import AllDevicesList from './pages/admin/deviceProviderServices/AllDevicesList.
 import ViewRootTrustNotifications from './pages/admin/notifications/ViewRootTrustNotifications.js';
 import ViewIntermediateTrustNotifications from './pages/admin/notifications/ViewIntermediateTrustNotifications.js';
 import ViewPartnerNotifications from './pages/admin/notifications/ViewPartnerNotifications.js';
+import ViewPartnerCertificateNotifications from './pages/partner/notifications/ViewPartnerCertificateNotifications.js';
+import ViewApiKeyNotifications from './pages/partner/notifications/ViewApiKeyNotifications.js';
+import ViewFtmCertificateNotifications from './pages/partner/notifications/ViewFtmCertificateNotifications.js';
+import ViewSbiNotifications from './pages/partner/notifications/ViewSbiNotifications.js';
 
 function AppRoutes() {
 
@@ -288,6 +292,22 @@ function AppRoutes() {
         {
           path: 'admin/view-partner-notifications',
           element: <GuardedRoute><MainLayout><ViewPartnerNotifications /></MainLayout></GuardedRoute>,
+        },
+        {
+          path: 'view-partner-certificate-notifications',
+          element: <GuardedRoute><MainLayout><ViewPartnerCertificateNotifications /></MainLayout></GuardedRoute>,
+        },
+        {
+          path: 'view-api-key-notifications',
+          element: <GuardedRoute><MainLayout><ViewApiKeyNotifications /></MainLayout></GuardedRoute>,
+        },
+        {
+          path: 'view-ftm-chip-certificate-notifications',
+          element: <GuardedRoute><MainLayout><ViewFtmCertificateNotifications /></MainLayout></GuardedRoute>,
+        },
+        {
+          path: 'view-sbi-notifications',
+          element: <GuardedRoute><MainLayout><ViewSbiNotifications /></MainLayout></GuardedRoute>,
         },
         {
           path: 'runtimeError',

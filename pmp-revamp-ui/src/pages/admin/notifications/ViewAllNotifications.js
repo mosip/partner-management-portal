@@ -7,7 +7,7 @@ import {
 import LoadingIcon from "../../common/LoadingIcon.js";
 import ErrorMessage from "../../common/ErrorMessage.js";
 import Title from "../../common/Title.js";
-import NotificationsTab from "./NotificationsTab.js";
+import AdminNotificationsTab from "./AdminNotificationsTab.js";
 import { useTranslation } from "react-i18next";
 import featuredIcon from "../../../svg/featured_icon.svg";
 import noNotificationIcon from "../../../svg/frame.svg";
@@ -15,8 +15,9 @@ import Pagination from "../../common/Pagination.js";
 import { HttpService } from "../../../services/HttpService.js";
 import FilterButtons from "../../common/FilterButtons"
 import CertificateNotificationsFilter from "./CertificateNotificationsFilter.js";
+import PartnerNotificationsTab from "../../partner/notifications/PartnerNotificationsTab.js";
 
-function ViewNotifications({ notificationType }) {
+function ViewAllNotifications({ notificationType }) {
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
     const [dataLoaded, setDataLoaded] = useState(true);
@@ -140,14 +141,22 @@ function ViewNotifications({ notificationType }) {
                             <Title title='notificationPopup.notification' backLink='/partnermanagement' />
                         </div>
                     </div>
-                    <NotificationsTab
-                        activeRootCA={notificationType === 'root' ? true : false}
-                        rootCaPath={'/partnermanagement/admin/view-root-certificate-notifications'}
-                        activeIntermediateCA={notificationType === 'intermediate' ? true : false}
-                        intermediateCaPath={'/partnermanagement/admin/view-intermediate-certificate-notifications'}
-                        activePartner={notificationType === 'weekly' ? true : false}
-                        partnerCertPath={'/partnermanagement/admin/view-partner-notifications'}
-                    />
+                    {(notificationType === "root" || notificationType === "intermediate" || notificationType === "weekly") ? (
+                        <AdminNotificationsTab
+                            activeRootCA={notificationType === 'root' ? true : false}
+                            rootCaPath={'/partnermanagement/admin/view-root-certificate-notifications'}
+                            activeIntermediateCA={notificationType === 'intermediate' ? true : false}
+                            intermediateCaPath={'/partnermanagement/admin/view-intermediate-certificate-notifications'}
+                            activePartner={notificationType === 'weekly' ? true : false}
+                            partnerCertPath={'/partnermanagement/admin/view-partner-notifications'}
+                        />
+                    ) : (
+                        <PartnerNotificationsTab
+                            partnerType={getUserProfile().partnerType}
+                            activeTab={notificationType}
+                        />
+                    )}
+                    
                     {!isFilterApplied && notificationsList.length === 0 ? (
                         <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
 
@@ -224,4 +233,4 @@ function ViewNotifications({ notificationType }) {
         </div>
     );
 }
-export default ViewNotifications;
+export default ViewAllNotifications;
