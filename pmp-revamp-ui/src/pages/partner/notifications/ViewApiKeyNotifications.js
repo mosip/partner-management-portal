@@ -5,7 +5,6 @@ function ViewApiKeyNotifications() {
     return (
         <ViewAllNotifications
             notificationType='apikey'
-            partnerType= {getUserProfile().partnerType}
         />
     );
 

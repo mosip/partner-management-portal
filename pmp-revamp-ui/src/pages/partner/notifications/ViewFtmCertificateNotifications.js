@@ -5,7 +5,6 @@ function ViewFtmCertificateNotifications() {
     return (
         <ViewAllNotifications
             notificationType='ftm'
-            partnerType= {getUserProfile().partnerType}
         />
     );
 }

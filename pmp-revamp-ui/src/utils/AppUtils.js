@@ -47,9 +47,6 @@ export const getPartnerTypeDescription = (partnerType, t) => {
         "INTERNAL_PARTNER": 'partnerTypes.internalPartner',
         "MANUAL_ADJUDICATION": 'partnerTypes.manualAdjudication',
         "PARTNER_ADMIN": 'partnerTypes.partnerAdmin',
-        "AUTH": "partnerTypes.authPartner",
-        "DEVICE": 'partnerTypes.deviceProvider',
-        "FTM": 'partnerTypes.ftmProvider',
     };
 
     if (partnerType) {

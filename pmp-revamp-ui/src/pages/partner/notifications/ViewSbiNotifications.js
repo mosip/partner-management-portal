@@ -5,7 +5,6 @@ function ViewSbiNotifications() {
     return (
         <ViewAllNotifications
             notificationType='sbi'
-            partnerType= {getUserProfile().partnerType}
         />
     );
 }

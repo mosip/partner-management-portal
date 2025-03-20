@@ -7,7 +7,6 @@ function ViewPartnerCertificateNotifications() {
     return (
         <ViewAllNotifications
             notificationType='partner'
-            partnerType= {getUserProfile().partnerType}
         />
 
     );

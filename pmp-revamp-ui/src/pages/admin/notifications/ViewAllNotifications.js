@@ -16,6 +16,7 @@ import { HttpService } from "../../../services/HttpService.js";
 import FilterButtons from "../../common/FilterButtons"
 import CertificateNotificationsFilter from "./CertificateNotificationsFilter.js";
 import PartnerNotificationsTab from "../../partner/notifications/PartnerNotificationsTab.js";
+import PartnerCertificateNotificationsFilter from "../../partner/notifications/PartnerCertificateNotificationsFilter.js";
 
 function ViewAllNotifications({ notificationType }) {
     const { t } = useTranslation();
@@ -178,11 +179,13 @@ function ViewAllNotifications({ notificationType }) {
                                 />
                                 <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
                                 {filter && (
-                                    <CertificateNotificationsFilter
-                                        onApplyFilter={onApplyFilter}
-                                        setErrorCode={setErrorCode}
-                                        setErrorMsg={setErrorMsg}
-                                    />
+                                    <>
+                                        {(notificationType === "root" || notificationType === "intermediate" || notificationType === "weekly") ? (
+                                            <CertificateNotificationsFilter onApplyFilter={onApplyFilter} />
+                                        ) : (
+                                            <PartnerCertificateNotificationsFilter onApplyFilter={onApplyFilter} />
+                                        )}
+                                    </>
                                 )}
                                 {!notificationDataLoaded ? (
                                     <LoadingIcon styleSet={styles} />
