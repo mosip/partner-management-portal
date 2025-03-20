@@ -952,8 +952,10 @@
         "notification": "Notifications",
         "rootCertExpiry": "Expiration du certificat CA racine",
         "intermediateCertExpiry": "Expiration du certificat CA intermédiaire",
+        "partnerCertExpiry": "Expiration du certificat de partenaire",
         "rootCertExpiryDescription": "Le certificat CA racine <span class='font-semibold'>{{certificateId}}</span> du domaine <span class='font-semibold'>{{partnerDomain}}</span> expirera le <span class='font-semibold'>{{expiryDateTime}}</span>. Renouvelez-le dès maintenant pour éviter toute interruption.",
         "intermediateCertExpiryDescription": "Le certificat CA intermédiaire <span class='font-semibold'>{{certificateId}}</span> du domaine <span class='font-semibold'>{{partnerDomain}}</span> expirera le <span class='font-semibold'>{{expiryDateTime}}</span>. Renouvelez-le dès maintenant pour éviter toute interruption.",
+        "partnerCertExpiryDescription": "Le certificat partenaire du domaine <span class='font-semibold'>{{partnerDomain}}</span> expirera le <span class='font-semibold'>{{expiryDateTime}}</span>. Renouvelez-le dès maintenant pour éviter toute interruption.",
         "dismiss": "Rejeter",
         "viewAllNotification": "Afficher toutes les notifications",
         "expiringItems": "Articles expirés",
@@ -975,6 +977,13 @@
         "partner": "Partenaire",
         "rootCertExpiryDescription": "Le certificat CA racine <span class='font-semibold'>{{certificateId}}</span> délivré à <span class='font-semibold'>{{issuedTo}}</span> par <span class='font-semibold'>{{issuedBy}}</span> pour le domaine <span class='font-semibold'>{{partnerDomain}}</span> expirera le <span class='font-semibold'>{{expiryDateTime}}</span>. Renouvelez-le dès maintenant pour éviter toute interruption.",
         "intermediateCertExpiryDescription": "Le certificat CA intermédiaire <span class='font-semibold'>{{certificateId}}</span> délivré à <span class='font-semibold'>{{issuedTo}}</span> par <span class='font-semibold'>{{issuedBy}}</span> pour le domaine <span class='font-semibold'>{{partnerDomain}}</span> expirera le <span class='font-semibold'>{{expiryDateTime}}</span>. Renouvelez-le dès maintenant pour éviter toute interruption."
+    },
+    "partnerNotificationsTab": {
+        "partnerCertificate":"Certificat de partenaire",
+        "apikey": "Clé API",
+        "ftmCertificate": "Certificat de puce FTM",
+        "sbi": "SBI",
+        "partnerCertExpiryDescription":"Le certificat partenaire délivré à <span class='font-semibold'>{{issuedTo}}</span> par <span class='font-semibold'>{{issuedBy}}</span> pour le domaine <span class='font-semibold'>{{partnerDomain}}</span> expirera le <span class='font-semibold'>{{expiryDateTime}}</span>. Renouvelez-le dès maintenant pour éviter toute interruption."
     },
     "viewAllNotifications": {
         "listOfNotifications": "Liste des notifications",

@@ -885,6 +885,19 @@ export const getNotificationDescription = (notification, t) => {
                 components={{ span: <span className="font-semibold" /> }}
             />
         );
+    } else if (notification.notificationType === 'PARTNER_CERT_EXPIRY') {
+        return (
+            <Trans 
+                i18nKey="partnerNotificationsTab.partnerCertExpiryDescription"
+                values={{
+                    issuedTo:notification.notificationDetails.certificateDetails[0].issuedTo,
+                    issuedBy:notification.notificationDetails.certificateDetails[0].issuedBy,
+                    partnerDomain: notification.notificationDetails.certificateDetails[0].partnerDomain,
+                    expiryDateTime: formatDate(notification.notificationDetails.certificateDetails[0].expiryDateTime, 'dateInWords')
+                }}
+                components={{ span: <span className="font-semibold" /> }}
+            />
+        );
     } else if (notification.notificationType === 'WEEKLY_SUMMARY') {
         return getWeeklySummaryDescription (notification, t);
     }
@@ -915,6 +928,17 @@ export const getNotificationPanelDescription = (notification, t) => {
                 components={{ span: <span className="font-semibold" /> }}
             />
         );
+    } else if (notification.notificationType === 'PARTNER_CERT_EXPIRY') {
+        return (
+            <Trans 
+                i18nKey="notificationPopup.partnerCertExpiryDescription"
+                values={{
+                    partnerDomain: notification.notificationDetails.certificateDetails[0].partnerDomain,
+                    expiryDateTime: formatDate(notification.notificationDetails.certificateDetails[0].expiryDateTime, 'dateInWords')
+                }}
+                components={{ span: <span className="font-semibold" /> }}
+            />
+        );
     } else if (notification.notificationType === 'WEEKLY_SUMMARY') {
         return getWeeklySummaryDescription (notification, t);
     }
@@ -925,6 +949,8 @@ export const getNoticationTitle = (notification, t) => {
         return t('notificationPopup.rootCertExpiry');
     } else if (notification.notificationType === 'INTERMEDIATE_CERT_EXPIRY') {
         return t('notificationPopup.intermediateCertExpiry');
+    } else if (notification.notificationType === 'PARTNER_CERT_EXPIRY') {
+        return t('notificationPopup.partnerCertExpiry');
     } else if (notification.notificationType === 'WEEKLY_SUMMARY') {
         return t('notificationPopup.expiringItems') + ": " + formatDate(notification.createdDateTime, 'dateMonthInWords') + t('notificationPopup.to') + formatDate(getWeeklySummaryDate(notification), 'dateMonthInWords');
     }

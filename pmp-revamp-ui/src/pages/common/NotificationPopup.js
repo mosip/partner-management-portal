@@ -106,9 +106,11 @@ function NotificationPopup({ closeNotification, notificationsList }) {
     }
 
     const viewAllNotifications = () => {
+        closeNotification();
         if (getUserProfile().roles.includes('PARTNER_ADMIN')) {
-            closeNotification();
             navigate('/partnermanagement/admin/view-root-certificate-notifications');
+        } else {
+            navigate('/partnermanagement/view-partner-certificate-notifications');
         }
     };
 
