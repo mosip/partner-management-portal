@@ -302,17 +302,17 @@ function Dashboard() {
     if (!isPartnerAdmin) {
       fetchTrustCertExpiryCount('partner');
     }
+    if (isPartnerAdmin) {
+      fetchTrustCertExpiryCount('root');
+      fetchTrustCertExpiryCount('intermediate');
     
-    setTimeout(() => {
-      if (isPartnerAdmin) {
-        fetchTrustCertExpiryCount('root');
-        fetchTrustCertExpiryCount('intermediate');
+      setTimeout(() => {
         fetchPartnerPolicyMappingRequestCount();
         fetchPendingApprovalSbiCount();
         fetchPendingApprovalDevicesCount();
         fetchPendingApprovalFtmCount();
-      }
-    }, 3000);
+      }, 3000);
+    }
 
   }, [isPartnerAdmin]);
 
@@ -493,21 +493,19 @@ function Dashboard() {
                       {t('dashboard.certificateTrustStoreDesc')}
                     </p>
                   </div>
-                  <CountWithHover
-                    count={
-                      rootCertExpiryCount !== null &&
-                      rootCertExpiryCount !== undefined &&
-                      intermediateCertExpiryCount !== null &&
-                      intermediateCertExpiryCount !== undefined
-                        ? rootCertExpiryCount + intermediateCertExpiryCount
-                        : null
-                    }
-                    descriptionKey="dashboard.trustCertExpiryCountDesc"
-                    descriptionParams={{ rootCertExpiryCount, intermediateCertExpiryCount }}
-                    isExpiryHover = {true}
-                  />
+                  {rootCertExpiryCount != null && rootCertExpiryCount > 0 &&
+                    intermediateCertExpiryCount != null && intermediateCertExpiryCount > 0 && (
+                      <CountWithHover
+                        count={rootCertExpiryCount + intermediateCertExpiryCount}
+                        descriptionKey="dashboard.trustCertExpiryCountDesc"
+                        descriptionParams={{
+                          rootCertExpiryCount,
+                          intermediateCertExpiryCount,
+                        }}
+                        isExpiryHover
+                      />
+                    )}
                 </div>
-
                 <div role='button' onClick={partnersList} className="w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, partnersList)}>
                   <div className="flex justify-center mb-5">
                     <img id='partner_admin_icon' src={partner_admin_icon} alt="" className="w-8 h-8" />
