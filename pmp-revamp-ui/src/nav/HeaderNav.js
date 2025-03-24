@@ -58,7 +58,28 @@ function HeaderNav({ open, setOpen }) {
                 }
             }
         }
+
+        // Fetch refresh time from localStorage before setting interval
+        let refreshTime = 300; // Default to 5 min
+        const config = localStorage.getItem("appConfig");
+
+        try {
+            if (config) {
+                const configData = JSON.parse(config);
+                if (configData?.refreshNotificationsTime) {
+                    refreshTime = configData.refreshNotificationsTime;
+                }
+            }
+        } catch (error) {
+            console.error("Error fetching refresh notification time:", error);
+        }
+
         fetchNotificationsData();
+        // Set up an interval to call the function every 5 minutes
+        const intervalId = setInterval(fetchNotificationsData, 1000*refreshTime);
+
+        // Cleanup function to clear the interval when component unmounts
+        return () => clearInterval(intervalId);
     }, []);
 
     const fetchNotificationsList = async () => {
