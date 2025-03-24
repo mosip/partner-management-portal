@@ -67,7 +67,7 @@ function HeaderNav({ open, setOpen }) {
             if (config) {
                 const configData = JSON.parse(config);
                 if (configData?.refreshNotificationsTime) {
-                    refreshTime = configData.refreshNotificationsTime;
+                    refreshTime = Number(configData.refreshNotificationsTime);
                 }
             }
         } catch (error) {
