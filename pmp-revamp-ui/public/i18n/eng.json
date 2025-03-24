@@ -948,9 +948,9 @@
         "rootCertExpiry": "Root CA Certificate Expiration",
         "intermediateCertExpiry": "Intermediate CA Certificate Expiration",
         "partnerCertExpiry": "Partner Certificate Expiration",
-        "rootCertExpiryDescription": "Root CA Certificate <span class='font-semibold'>{{certificateId}}</span> for the <span class='font-semibold'>{{partnerDomain}}</span> domain is set to expire on  <span class='font-semibold'>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions.",
-        "intermediateCertExpiryDescription": "Intermediate CA Certificate <span class='font-semibold'>{{certificateId}}</span> for the <span class='font-semibold'>{{partnerDomain}}</span> domain is set to expire on <span class='font-semibold'>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions.",
-        "partnerCertExpiryDescription": "Partner Certificate for <span class='font-semibold'>{{partnerDomain}}</span> domain is set to expire on <span class='font-semibold'>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions.",
+        "rootCertExpiryDescription": "Root CA Certificate <span className='font-semibold'>{{certificateId}}</span> for the <span className='font-semibold'>{{partnerDomain}}</span> domain is set to expire on  <span className='font-semibold'>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions.",
+        "intermediateCertExpiryDescription": "Intermediate CA Certificate <span className='font-semibold'>{{certificateId}}</span> for the <span className='font-semibold'>{{partnerDomain}}</span> domain is set to expire on <span className='font-semibold'>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions.",
+        "partnerCertExpiryDescription": "Partner Certificate for <span className='font-semibold'>{{partnerDomain}}</span> domain is set to expire on <span className='font-semibold'>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions.",
         "dismiss": "Dismiss",
         "viewAllNotification": "View all notifications",
         "expiringItems": "Expiring Items",
@@ -970,15 +970,15 @@
         "rootCaCertificate": "Root CA Certificate",
         "intermediateCaCertificate": "Intermediate CA Certificate",
         "partner": "Partner",
-        "rootCertExpiryDescription": "Root CA Certificate <span class='font-semibold'>{{certificateId}}</span> issued to <span class='font-semibold'>{{issuedTo}}</span> by <span class='font-semibold'>{{issuedBy}}</span> for the <span class='font-semibold'>{{partnerDomain}}</span> domain is set to expire on <span class='font-semibold'>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions.",
-        "intermediateCertExpiryDescription": "Intermediate CA Certificate <span class='font-semibold'>{{certificateId}}</span> issued to <span class='font-semibold'>{{issuedTo}}</span> by <span class='font-semibold'>{{issuedBy}}</span> for the <span class='font-semibold'>{{partnerDomain}}</span> domain is set to expire on <span class='font-semibold'>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions."
+        "rootCertExpiryDescription": "Root CA Certificate <span className='font-semibold'>{{certificateId}}</span> issued to <span className='font-semibold'>{{issuedTo}}</span> by <span className='font-semibold'>{{issuedBy}}</span> for the <span className='font-semibold'>{{partnerDomain}}</span> domain is set to expire on <span className='font-semibold'>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions.",
+        "intermediateCertExpiryDescription": "Intermediate CA Certificate <span className='font-semibold'>{{certificateId}}</span> issued to <span className='font-semibold'>{{issuedTo}}</span> by <span className='font-semibold'>{{issuedBy}}</span> for the <span className='font-semibold'>{{partnerDomain}}</span> domain is set to expire on <span className='font-semibold'>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions."
     },
     "partnerNotificationsTab": {
         "partnerCertificate":"Partner Certificate",
         "apikey": "API Key",
         "ftmCertificate": "FTM Chip Certificate",
         "sbi": "SBI",
-        "partnerCertExpiryDescription":"Partner Certificate issued to <span class='font-semibold'>{{issuedTo}}</span> by <span class='font-semibold'>{{issuedBy}}</span> for the <span class='font-semibold'>{{partnerDomain}}</span> domain is set to expire on <span class='font-semibold'>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions."
+        "partnerCertExpiryDescription":"Partner Certificate issued to <span className='font-semibold'>{{issuedTo}}</span> by <span className='font-semibold'>{{issuedBy}}</span> for the <span className='font-semibold'>{{partnerDomain}}</span> domain is set to expire on <span className='font-semibold'>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions."
     },
     "viewAllNotifications": {
         "listOfNotifications": "List of Notifications",

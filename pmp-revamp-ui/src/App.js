@@ -1,13 +1,17 @@
 import './App.css';
 import AppRoutes from './AppRoutes';
 import { loadAppConfig } from './services/ConfigService.js';
+import store from './store';
+import { Provider } from 'react-redux';
 
 await loadAppConfig();
 
 function App() {
 
   return (
-    <AppRoutes></AppRoutes>
+    <Provider store={store}>
+      <AppRoutes></AppRoutes>
+    </Provider>
   );
 }
 

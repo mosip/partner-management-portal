@@ -10,8 +10,9 @@ import FocusTrap from "focus-trap-react";
 import { HttpService } from "../../services/HttpService";
 import LoadingIcon from "./LoadingIcon";
 import ErrorMessage from "./ErrorMessage";
+import { useSelector } from "react-redux";
 
-function NotificationPopup({ closeNotification, notificationsList }) {
+function NotificationPopup({ closeNotification }) {
     const { t } = useTranslation();
     const navigate = useNavigate('');
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
@@ -19,7 +20,7 @@ function NotificationPopup({ closeNotification, notificationsList }) {
     const [errorMsg, setErrorMsg] = useState("");
     const [isSmallScreen, setIsSmallScreen] = useState(window.innerHeight < 620);
     const [dataLoaded, setDataLoaded] = useState(true);
-    const [notifications, setNotifications] = useState(notificationsList);
+    const [notifications, setNotifications] = useState(useSelector((state) => state.notifications.notifications));
 
     useEffect(() => {
         updateNotificationSeenTimestamp();
