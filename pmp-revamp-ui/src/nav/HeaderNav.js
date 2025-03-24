@@ -60,7 +60,7 @@ function HeaderNav({ open, setOpen }) {
         }
 
         // Fetch refresh time from localStorage before setting interval
-        let refreshTime = 300; // Default to 5 min
+        let refreshTime = 300; // Default to 5 min(300seconds)
         const config = localStorage.getItem("appConfig");
 
         try {
