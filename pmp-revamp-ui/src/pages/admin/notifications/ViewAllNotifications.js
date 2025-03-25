@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { getUserProfile } from "../../../services/UserProfileService.js";
 import {
-    dismissNotificationById, formatDate, getNoticationTitle, getNotificationDescription, getPartnerManagerUrl, handleServiceErrors,
-    isLangRTL, resetPageNumber, setPageNumberAndPageSize, onResetFilter, onClickApplyFilter
+    formatDate, getNoticationTitle, getNotificationDescription, getPartnerManagerUrl, handleServiceErrors,
+    isLangRTL, resetPageNumber, setPageNumberAndPageSize, onResetFilter, onClickApplyFilter,
+    createRequest,
+    fetchNotificationsList
 } from "../../../utils/AppUtils.js";
 import LoadingIcon from "../../common/LoadingIcon.js";
 import ErrorMessage from "../../common/ErrorMessage.js";
@@ -17,6 +19,7 @@ import FilterButtons from "../../common/FilterButtons"
 import CertificateNotificationsFilter from "./CertificateNotificationsFilter.js";
 import PartnerNotificationsTab from "../../partner/notifications/PartnerNotificationsTab.js";
 import PartnerCertificateNotificationsFilter from "../../partner/notifications/PartnerCertificateNotificationsFilter.js";
+import { useDispatch } from "react-redux";
 
 function ViewAllNotifications({ notificationType }) {
     const { t } = useTranslation();
@@ -43,7 +46,7 @@ function ViewAllNotifications({ notificationType }) {
         issuedBy: null,
         expiryDate: null,
     });
-
+    const dispatch = useDispatch();
 
     const fetchNotifications = async (noDateLoaded) => {
         const queryParams = new URLSearchParams();
@@ -111,7 +114,37 @@ function ViewAllNotifications({ notificationType }) {
     };
 
     const dismissNotification = async (id) => {
-        dismissNotificationById(HttpService, id, setNotificationsList, true, fetchNotifications, setErrorCode, setErrorMsg, t);
+        const request = createRequest({
+            notificationStatus: "DISMISSED",
+        }, "mosip.pms.dismiss.notification.patch", true);
+    
+        try {
+            const response = await HttpService.patch(getPartnerManagerUrl(`/notifications/${id}`, process.env.NODE_ENV), request, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+    
+            if (response) {
+                const responseData = response.data;
+                if (responseData && responseData.response) {
+                    setNotificationsList((prevNotifications) =>
+                        prevNotifications.filter((notif) => notif.notificationId !== id)
+                    );
+                    await fetchNotifications(true);
+                    const notifications = await fetchNotificationsList(dispatch);
+                } else {
+                    handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+                }
+            } else {
+                setErrorMsg(t('notificationPopup.errorInDismiss'));
+            }
+        } catch (err) {
+            console.error('Error fetching data:', err);
+            if (err.response?.status && err.response.status !== 401) {
+                setErrorMsg(err.toString());
+            }
+        }
     }
 
     const cancelErrorMsg = () => {

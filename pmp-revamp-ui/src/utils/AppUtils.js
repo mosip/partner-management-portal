@@ -1,6 +1,7 @@
 import { Trans } from "react-i18next";
 import { HttpService } from "../services/HttpService";
 import { getLoginRedirectUrl } from "../services/LoginRedirectService";
+import { updateHeaderNotifications } from "../notificationsSlice";
 
 export const formatDate = (dateString, format) => {
     if (!dateString) return '-';
@@ -992,5 +993,31 @@ export const dismissNotificationById = async (HttpService, id, setNotifications,
         if (err.response?.status && err.response.status !== 401) {
             setErrorMsg(err.toString());
         }
+    }
+};
+
+export const fetchNotificationsList = async (dispatch) => {
+    const queryParams = new URLSearchParams();
+    queryParams.append('pageSize', 4);
+    queryParams.append('pageNo', 0);
+    queryParams.append('notificationStatus', 'active');
+    const url = `${getPartnerManagerUrl('/notifications', process.env.NODE_ENV)}?${queryParams.toString()}`;
+    try {
+        const response = await HttpService.get(url);
+        if (response) {
+            const responseData = response.data;
+            if (responseData && responseData.response) {
+                const resData = responseData.response.data;
+                dispatch(updateHeaderNotifications(resData));
+                return resData;
+            } else {
+                return [];
+            }
+        } else {
+            return [];
+        }
+    } catch (err) {
+        console.error('Error fetching data:', err);
+        return [];
     }
 };

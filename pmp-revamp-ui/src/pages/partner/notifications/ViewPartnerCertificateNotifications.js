@@ -1,4 +1,3 @@
-import { getUserProfile } from "../../../services/UserProfileService";
 import ViewAllNotifications from "../../admin/notifications/ViewAllNotifications";
 
 function ViewPartnerCertificateNotifications() {

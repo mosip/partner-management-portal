@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../services/UserProfileService.js';
-import { isLangRTL, onPressEnterKey, handleMouseClickForDropdown, logout, getPartnerManagerUrl } from '../utils/AppUtils.js';
+import { isLangRTL, onPressEnterKey, handleMouseClickForDropdown, logout, getPartnerManagerUrl, fetchNotificationsList } from '../utils/AppUtils.js';
 import profileIcon from '../profile_icon.png';
 import hamburgerIcon from '../svg/hamburger_icon.svg';
 import orgIcon from '../svg/org_icon.svg';
@@ -12,6 +12,7 @@ import bellIcon from '.././svg/bell_icon.svg';
 import notificationRedIcon from '.././svg/notifications_red_icon.svg';
 import NotificationPopup from '../pages/common/NotificationPopup.js';
 import { HttpService } from '../services/HttpService.js';
+import { useDispatch } from 'react-redux';
 
 function HeaderNav({ open, setOpen }) {
     const navigate = useNavigate('');
@@ -21,7 +22,7 @@ function HeaderNav({ open, setOpen }) {
     const dropdownRef = useRef(null);
     const [openNotification, setOpenNotification] = useState(false);
     const [showLatestNotificationIcon, setShowLatestNotificationIcon] = useState(false);
-    const [notificationsList, setNotificationsList] = useState([]);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         handleMouseClickForDropdown(dropdownRef, () => setIsDropdownOpen(false));
@@ -36,7 +37,7 @@ function HeaderNav({ open, setOpen }) {
     useEffect(() => {
         async function fetchNotificationsData() {
             const notificationsSeenTimestamp = await fetchNotificationsSeenTimestamp();
-            const notifications = await fetchNotificationsList();
+            const notifications = await fetchNotificationsList(dispatch);
             console.log("last seen time : ", notificationsSeenTimestamp);
             if(notificationsSeenTimestamp === null && notifications.length === 0) {
                 setShowLatestNotificationIcon(false);
@@ -81,32 +82,6 @@ function HeaderNav({ open, setOpen }) {
         // Cleanup function to clear the interval when component unmounts
         return () => clearInterval(intervalId);
     }, []);
-
-    const fetchNotificationsList = async () => {
-        const queryParams = new URLSearchParams();
-        queryParams.append('pageSize', 4);
-        queryParams.append('pageNo', 0);
-        queryParams.append('notificationStatus', 'active');
-        const url = `${getPartnerManagerUrl('/notifications', process.env.NODE_ENV)}?${queryParams.toString()}`;
-        try {
-            const response = await HttpService.get(url);
-            if (response) {
-                const responseData = response.data;
-                if (responseData && responseData.response) {
-                    const resData = responseData.response.data;
-                    setNotificationsList(resData);
-                    return resData;
-                } else {
-                    return [];
-                }
-            } else {
-                return [];
-            }
-        } catch (err) {
-            console.error('Error fetching data:', err);
-            return [];
-        }
-    }
 
     const fetchNotificationsSeenTimestamp = async () => {
         try {
@@ -188,7 +163,6 @@ function HeaderNav({ open, setOpen }) {
                         <div className={`fixed inset-0 bg-black bg-opacity-0 z-40 cursor-default`}>
                             <NotificationPopup
                                 closeNotification={closeNotificationPanel}
-                                notificationsList={notificationsList}
                             />
                         </div>
                     )}
