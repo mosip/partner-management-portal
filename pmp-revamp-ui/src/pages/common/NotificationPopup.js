@@ -157,7 +157,7 @@ function NotificationPopup({ closeNotification }) {
                                                         <p className={`text-sm font-semibold text-gray-900 ${isLoginLanguageRTL ? 'text-right': 'text-left'}`}>{getNoticationTitle(notification, t)}</p>
                                                         <p className={`text-xs text-[#CBCDD0] w-36 ${isLoginLanguageRTL ? 'text-left': 'text-right'}`}>{formatDate(notification.createdDateTime, 'dateTime')}</p>
                                                     </div>
-                                                    <p className="text-sm text-[#344054] mt-1 whitespace-pre-line">{getNotificationPanelDescription(notification, t)}</p>
+                                                    <div className="text-sm text-[#344054] mt-1 whitespace-pre-line">{getNotificationPanelDescription(notification, isLoginLanguageRTL, t)}</div>
                                                     <button 
                                                         className="text-[#475467] font-semibold text-sm mt-2"
                                                         onClick={() => dismissNotification(notification.notificationId)}

@@ -841,31 +841,38 @@ export const setSubmenuRef = (refArray, index) => (el) => {
     if (el) refArray.current[index] = el;
 };
 
-export const getWeeklySummaryDescription = (notification, t) => {
+export const getWeeklySummaryDescription = (notification, isLoginLanguageRTL, t) => {
     const { certificateDetails = [], sbiDetails = [], apiKeyDetails = [] } = notification.notificationDetails;
-    const partnerCertCount = certificateDetails.filter((cert) => cert.certificateType === "partner").length;
-    const ftmCertCount = certificateDetails.filter((cert) => cert.certificateType === "ftm").length;
+    const partnerCertCount = certificateDetails.filter(cert => cert.certificateType === "partner").length;
+    const ftmCertCount = certificateDetails.filter(cert => cert.certificateType === "ftm").length;
     const sbiCount = sbiDetails.length;
     const apiKeyCount = apiKeyDetails.length;
-    
-    const description = [
-        partnerCertCount > 0 && t('notificationPopup.partnerCertificates', {partnerCertCount: partnerCertCount}),
-        ftmCertCount > 0 && t('notificationPopup.ftmCertificates', {ftmCertCount: ftmCertCount}),
-        sbiCount > 0 && t('notificationPopup.sbiDevices', {sbiCount: sbiCount}),
-        apiKeyCount > 0 && t('notificationPopup.apiKeys', {apiKeyCount: apiKeyCount}),
-    ].filter(Boolean) .join("\n");
-    return description;
-}
 
-export const getNotificationDescription = (notification, t) => {
+    const descriptionItems = [
+        partnerCertCount > 0 && t('notificationPopup.partnerCertificates', { partnerCertCount }),
+        ftmCertCount > 0 && t('notificationPopup.ftmCertificates', { ftmCertCount }),
+        apiKeyCount > 0 && t('notificationPopup.apiKeys', { apiKeyCount }),
+        sbiCount > 0 && t('notificationPopup.sbiDevices', { sbiCount }),
+    ].filter(Boolean);
+
+    return descriptionItems.length ? (
+        <ul className={`list-disc ${isLoginLanguageRTL ? 'mr-6' : 'ml-6'}`}>
+            {descriptionItems.map((item, index) => (
+                <li key={index}>{item}</li>
+            ))}
+        </ul>
+    ) : null;
+};
+
+export const getNotificationDescription = (notification, isLoginLanguageRTL, t) => {
     if (notification.notificationType === 'ROOT_CERT_EXPIRY') {
         return (
             <Trans 
                 i18nKey="notificationsTab.rootCertExpiryDescription"
                 values={{
                     certificateId: notification.notificationDetails.certificateDetails[0].certificateId,
-                    issuedTo:notification.notificationDetails.certificateDetails[0].issuedTo,
-                    issuedBy:notification.notificationDetails.certificateDetails[0].issuedBy,
+                    issuedTo: notification.notificationDetails.certificateDetails[0].issuedTo,
+                    issuedBy: notification.notificationDetails.certificateDetails[0].issuedBy,
                     partnerDomain: notification.notificationDetails.certificateDetails[0].partnerDomain,
                     expiryDateTime: formatDate(notification.notificationDetails.certificateDetails[0].expiryDateTime, 'dateInWords')
                 }}
@@ -878,8 +885,8 @@ export const getNotificationDescription = (notification, t) => {
                 i18nKey="notificationsTab.intermediateCertExpiryDescription"
                 values={{
                     certificateId: notification.notificationDetails.certificateDetails[0].certificateId,
-                    issuedTo:notification.notificationDetails.certificateDetails[0].issuedTo,
-                    issuedBy:notification.notificationDetails.certificateDetails[0].issuedBy,
+                    issuedTo: notification.notificationDetails.certificateDetails[0].issuedTo,
+                    issuedBy: notification.notificationDetails.certificateDetails[0].issuedBy,
                     partnerDomain: notification.notificationDetails.certificateDetails[0].partnerDomain,
                     expiryDateTime: formatDate(notification.notificationDetails.certificateDetails[0].expiryDateTime, 'dateInWords')
                 }}
@@ -891,8 +898,8 @@ export const getNotificationDescription = (notification, t) => {
             <Trans 
                 i18nKey="partnerNotificationsTab.partnerCertExpiryDescription"
                 values={{
-                    issuedTo:notification.notificationDetails.certificateDetails[0].issuedTo,
-                    issuedBy:notification.notificationDetails.certificateDetails[0].issuedBy,
+                    issuedTo: notification.notificationDetails.certificateDetails[0].issuedTo,
+                    issuedBy: notification.notificationDetails.certificateDetails[0].issuedBy,
                     partnerDomain: notification.notificationDetails.certificateDetails[0].partnerDomain,
                     expiryDateTime: formatDate(notification.notificationDetails.certificateDetails[0].expiryDateTime, 'dateInWords')
                 }}
@@ -900,11 +907,11 @@ export const getNotificationDescription = (notification, t) => {
             />
         );
     } else if (notification.notificationType === 'WEEKLY_SUMMARY') {
-        return getWeeklySummaryDescription (notification, t);
+        return getWeeklySummaryDescription(notification, isLoginLanguageRTL, t);
     }
 };
 
-export const getNotificationPanelDescription = (notification, t) => {
+export const getNotificationPanelDescription = (notification, isLoginLanguageRTL, t) => {
     if (notification.notificationType === 'ROOT_CERT_EXPIRY') {
         return (
             <Trans 
@@ -941,7 +948,7 @@ export const getNotificationPanelDescription = (notification, t) => {
             />
         );
     } else if (notification.notificationType === 'WEEKLY_SUMMARY') {
-        return getWeeklySummaryDescription (notification, t);
+        return getWeeklySummaryDescription (notification, isLoginLanguageRTL, t);
     }
 };
 
@@ -953,7 +960,7 @@ export const getNoticationTitle = (notification, t) => {
     } else if (notification.notificationType === 'PARTNER_CERT_EXPIRY') {
         return t('notificationPopup.partnerCertExpiry');
     } else if (notification.notificationType === 'WEEKLY_SUMMARY') {
-        return t('notificationPopup.expiringItems') + ": " + formatDate(notification.createdDateTime, 'dateMonthInWords') + t('notificationPopup.to') + formatDate(getWeeklySummaryDate(notification), 'dateMonthInWords');
+        return t('notificationPopup.expiringItems') + " (" + formatDate(notification.createdDateTime, 'dateInWords') + t('notificationPopup.to') + formatDate(getWeeklySummaryDate(notification), 'dateInWords') + ")";
     }
 };
 

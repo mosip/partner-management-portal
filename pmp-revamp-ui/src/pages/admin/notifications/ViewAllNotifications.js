@@ -240,7 +240,7 @@ function ViewAllNotifications({ notificationType }) {
                                                                     <p className="font-semibold text-base text-[#101828]">{getNoticationTitle(notification, t)}</p>
                                                                     <p className={`text-xs text-[#CBCDD0] ${isLoginLanguageRTL ? 'text-left' : 'text-right'}`}>{formatDate(notification.createdDateTime, 'dateTime')}</p>
                                                                 </div>
-                                                                <p className="text-[#475467] text-sm">{getNotificationDescription(notification, t)}</p>
+                                                                <div className="text-[#475467] text-sm">{getNotificationDescription(notification, isLoginLanguageRTL, t)}</div>
                                                                 <hr className="h-0.5 my-4 bg-[#BCC5E5] border" />
                                                                 <button onClick={() => dismissNotification(notification.notificationId)} className="text-[#475467] font-semibold text-sm">{t('notificationPopup.dismiss')}</button>
                                                             </div>
