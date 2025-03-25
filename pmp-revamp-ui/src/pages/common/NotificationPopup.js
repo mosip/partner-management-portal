@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import xClose from '../../svg/x_close.svg';
-import { createRequest, dismissNotificationById, formatDate, getNoticationTitle, getNotificationPanelDescription, getPartnerManagerUrl, handleServiceErrors, isLangRTL, onPressEnterKey } from "../../utils/AppUtils";
+import { createRequest, dismissNotificationById, formatDate, getNoticationTitle, getNotificationPanelDescription, getPartnerManagerUrl, handleEscapeKey, handleServiceErrors, isLangRTL, onPressEnterKey } from "../../utils/AppUtils";
 import featuredIcon from "../../svg/featured_icon.svg";
 import noNotificationIcon from "../../svg/frame.svg";
 import { getUserProfile } from "../../services/UserProfileService";
@@ -10,7 +10,8 @@ import FocusTrap from "focus-trap-react";
 import { HttpService } from "../../services/HttpService";
 import LoadingIcon from "./LoadingIcon";
 import ErrorMessage from "./ErrorMessage";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { updateHeaderNotifications } from "../../notificationsSlice";
 
 function NotificationPopup({ closeNotification }) {
     const { t } = useTranslation();
@@ -20,6 +21,7 @@ function NotificationPopup({ closeNotification }) {
     const [errorMsg, setErrorMsg] = useState("");
     const [isSmallScreen, setIsSmallScreen] = useState(window.innerHeight < 620);
     const [dataLoaded, setDataLoaded] = useState(true);
+    const dispatch = useDispatch();
     const [notifications, setNotifications] = useState(useSelector((state) => state.headerNotifications.headerNotifications));
 
     useEffect(() => {
@@ -76,7 +78,7 @@ function NotificationPopup({ closeNotification }) {
     }, []);
 
     const dismissNotification = async (id) => {
-        dismissNotificationById(HttpService, id, setNotifications, false, fetchNotificationsList, setErrorCode, setErrorMsg, t); 
+        dismissNotificationById(HttpService, id, setNotifications, fetchNotificationsList, setErrorCode, setErrorMsg, t); 
     }
 
     const fetchNotificationsList = async () => {
@@ -92,6 +94,7 @@ function NotificationPopup({ closeNotification }) {
                 if (responseData && responseData.response) {
                     const resData = responseData.response.data;
                     setNotifications(resData);
+                    dispatch(updateHeaderNotifications(resData));
                 } else {
                     handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                 }
@@ -109,9 +112,9 @@ function NotificationPopup({ closeNotification }) {
     const viewAllNotifications = () => {
         closeNotification();
         if (getUserProfile().roles.includes('PARTNER_ADMIN')) {
-            navigate('/partnermanagement/admin/view-root-certificate-notifications');
+            navigate('/partnermanagement/admin/notifications/view-root-certificate-expiry');
         } else {
-            navigate('/partnermanagement/view-partner-certificate-notifications');
+            navigate('/partnermanagement/notifications/view-partner-certificate-expiry');
         }
     };
 
@@ -129,6 +132,11 @@ function NotificationPopup({ closeNotification }) {
         cancelIcon: "!top-[5.25rem]"
     }
 
+    useEffect(() => {
+        const removeListener = handleEscapeKey(() => closeNotification());
+        return removeListener;
+    }, []);
+
     return (
         <div className={`absolute top-[3.75rem] ${isLoginLanguageRTL ? 'max-850:left-4 left-[15rem]' : 'max-850:right-4 right-[15rem]'} bg-white w-[28rem] max-520:w-[286px] rounded-lg shadow-lg border border-gray-200 z-50`}>
             <FocusTrap focusTrapOptions={{ initialFocus: false, allowOutsideClick: true }}>
@@ -140,7 +148,7 @@ function NotificationPopup({ closeNotification }) {
                         <div>
                             <div className="flex justify-between items-center px-4 py-3 border-b border-gray-200 cursor-default">
                                 <h2 className="text-lg font-bold text-gray-800">{t('notificationPopup.notification')}</h2>
-                                <img src={xClose} alt='' id='xIcon' onClick={closeNotification} className="cursor-pointer" />
+                                <img src={xClose} alt='' id='xIcon' onClick={closeNotification} className="cursor-pointer" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, closeNotification)}/>
                             </div>
                             {errorMsg && (
                                 <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customStyle={errorcustomStyle}/>
