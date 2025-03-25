@@ -20,7 +20,7 @@ function NotificationPopup({ closeNotification }) {
     const [errorMsg, setErrorMsg] = useState("");
     const [isSmallScreen, setIsSmallScreen] = useState(window.innerHeight < 620);
     const [dataLoaded, setDataLoaded] = useState(true);
-    const [notifications, setNotifications] = useState(useSelector((state) => state.notifications.notifications));
+    const [notifications, setNotifications] = useState(useSelector((state) => state.headerNotifications.headerNotifications));
 
     useEffect(() => {
         updateNotificationSeenTimestamp();

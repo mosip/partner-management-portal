@@ -2,17 +2,17 @@ import { createSlice } from "@reduxjs/toolkit";
 
 
 const notificationsSlice = createSlice({
-    name: "notifications",
+    name: "headerNotifications",
     initialState: {
-        notifications: []
+        headerNotifications: []
     },
     reducers: {
-        fetchNotificationFromHeader: (state, action) => {
-            state.notifications = action.payload;
+        updateHeaderNotifications: (state, action) => {
+            state.headerNotifications = action.payload;
         },
     },
 });
 
-export const {fetchNotificationFromHeader} = notificationsSlice.actions;
+export const {updateHeaderNotifications} = notificationsSlice.actions;
 
 export default notificationsSlice.reducer;

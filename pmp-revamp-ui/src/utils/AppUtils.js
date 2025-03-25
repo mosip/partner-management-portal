@@ -1,7 +1,7 @@
 import { Trans } from "react-i18next";
 import { HttpService } from "../services/HttpService";
 import { getLoginRedirectUrl } from "../services/LoginRedirectService";
-import { fetchNotificationFromHeader } from "../notificationsSlice";
+import { updateHeaderNotifications } from "../notificationsSlice";
 
 export const formatDate = (dateString, format) => {
     if (!dateString) return '-';
@@ -1008,7 +1008,7 @@ export const fetchNotificationsList = async (dispatch) => {
             const responseData = response.data;
             if (responseData && responseData.response) {
                 const resData = responseData.response.data;
-                dispatch(fetchNotificationFromHeader(resData));
+                dispatch(updateHeaderNotifications(resData));
                 return resData;
             } else {
                 return [];
