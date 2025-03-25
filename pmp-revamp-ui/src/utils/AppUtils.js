@@ -842,11 +842,16 @@ export const setSubmenuRef = (refArray, index) => (el) => {
 };
 
 export const getWeeklySummaryDescription = (notification, isLoginLanguageRTL, t) => {
-    const { certificateDetails = [], sbiDetails = [], apiKeyDetails = [] } = notification.notificationDetails;
-    const partnerCertCount = certificateDetails.filter(cert => cert.certificateType === "partner").length;
-    const ftmCertCount = certificateDetails.filter(cert => cert.certificateType === "ftm").length;
-    const sbiCount = sbiDetails.length;
-    const apiKeyCount = apiKeyDetails.length;
+    const { certificateDetails = [], sbiDetails = [], apiKeyDetails = [] } = notification.notificationDetails || {};
+
+    const certificateList = Array.isArray(certificateDetails) ? certificateDetails : [];
+    const sbiList = Array.isArray(sbiDetails) ? sbiDetails : [];
+    const apiKeyList = Array.isArray(apiKeyDetails) ? apiKeyDetails : [];
+
+    const partnerCertCount = certificateList.filter(cert => cert.certificateType === "partner").length;
+    const ftmCertCount = certificateList.filter(cert => cert.certificateType === "ftm").length;
+    const sbiCount = sbiList.length;
+    const apiKeyCount = apiKeyList.length;
 
     const descriptionItems = [
         partnerCertCount > 0 && t('notificationPopup.partnerCertificates', { partnerCertCount }),
@@ -970,7 +975,7 @@ export const getWeeklySummaryDate = (notification) => {
     return date.toString();
 };
 
-export const dismissNotificationById = async (HttpService, id, setNotifications, fetchWithArg, fetchNotifications, setErrorCode, setErrorMsg, t) => {
+export const dismissNotificationById = async (HttpService, id, setNotifications, fetchNotifications, setErrorCode, setErrorMsg, t) => {
     const request = createRequest({
         notificationStatus: "DISMISSED",
     }, "mosip.pms.dismiss.notification.patch", true);
@@ -988,7 +993,7 @@ export const dismissNotificationById = async (HttpService, id, setNotifications,
                 setNotifications((prevNotifications) =>
                     prevNotifications.filter((notif) => notif.notificationId !== id)
                 );
-                await fetchNotifications(fetchWithArg ? true : undefined);
+                await fetchNotifications();
             } else {
                 handleServiceErrors(responseData, setErrorCode, setErrorMsg);
             }

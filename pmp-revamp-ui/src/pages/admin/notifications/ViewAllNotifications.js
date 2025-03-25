@@ -178,11 +178,11 @@ function ViewAllNotifications({ notificationType }) {
                     {(notificationType === "root" || notificationType === "intermediate" || notificationType === "weekly") ? (
                         <AdminNotificationsTab
                             activeRootCA={notificationType === 'root' ? true : false}
-                            rootCaPath={'/partnermanagement/admin/view-root-certificate-notifications'}
+                            rootCaPath={'/partnermanagement/admin/notifications/view-root-certificate-expiry'}
                             activeIntermediateCA={notificationType === 'intermediate' ? true : false}
-                            intermediateCaPath={'/partnermanagement/admin/view-intermediate-certificate-notifications'}
+                            intermediateCaPath={'/partnermanagement/admin/notifications/view-intermediate-certificate-expiry'}
                             activePartner={notificationType === 'weekly' ? true : false}
-                            partnerCertPath={'/partnermanagement/admin/view-partner-notifications'}
+                            partnerCertPath={'/partnermanagement/admin/notifications/view-partner-created-items-expiry'}
                         />
                     ) : (
                         <PartnerNotificationsTab

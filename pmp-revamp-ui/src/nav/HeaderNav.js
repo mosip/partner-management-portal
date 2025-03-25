@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../services/UserProfileService.js';
 import { isLangRTL, onPressEnterKey, handleMouseClickForDropdown, logout, getPartnerManagerUrl, fetchNotificationsList } from '../utils/AppUtils.js';
 import profileIcon from '../profile_icon.png';
@@ -17,6 +17,7 @@ import { useDispatch } from 'react-redux';
 function HeaderNav({ open, setOpen }) {
     const navigate = useNavigate('');
     const { t } = useTranslation();
+    const location = useLocation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const dropdownRef = useRef(null);
@@ -117,8 +118,12 @@ function HeaderNav({ open, setOpen }) {
     }
 
     const closeNotificationPanel = () => {
-        setOpenNotification(false);
-        setShowLatestNotificationIcon(false);
+        if (location.pathname.includes('notifications')) {
+            window.location.reload()
+        } else {
+            setOpenNotification(false);
+            setShowLatestNotificationIcon(false);
+        }
     }
 
     return (

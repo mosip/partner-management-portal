@@ -9,19 +9,19 @@ function PartnerNotificationsTab({ partnerType, activeTab }) {
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
 
     const changeToPartnerCert = () => {
-        navigate('/partnermanagement/view-partner-certificate-notifications');
+        navigate('/partnermanagement/notifications/view-partner-certificate-expiry');
     };
 
     const changeToFtmCert = () => {
-        navigate('/partnermanagement/view-ftm-chip-certificate-notifications')
+        navigate('/partnermanagement/notifications/view-ftm-chip-certificate-expiry')
     };
 
     const changeToApiKey = () => {
-        navigate('/partnermanagement/view-api-key-notifications')
+        navigate('/partnermanagement/notifications/view-api-key-expiry')
     };
 
     const changeToSbi = () => {
-        navigate('/partnermanagement/view-sbi-notifications')
+        navigate('/partnermanagement/notifications/view-sbi-expiry')
     };
 
     return (
