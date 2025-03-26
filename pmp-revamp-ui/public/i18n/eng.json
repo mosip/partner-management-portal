@@ -953,7 +953,7 @@
         "partnerCertExpiryDescription": "Partner Certificate for <span className='font-semibold'>{{partnerDomain}}</span> domain is set to expire on <span className='font-semibold'>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions.",
         "dismiss": "Dismiss",
         "viewAllNotification": "View all notifications",
-        "expiringItems": "Partner-Created Expiring Items",
+        "expiringItems": "Weekly summary of Partner-Created Expiring Items",
         "partnerCertificates": "{{partnerCertCount}} Partner Certificates",
         "ftmCertificates": "{{ftmCertCount}} FTM Chip Certificates",
         "sbiDevices": "{{sbiCount}} SBIs",
@@ -969,7 +969,7 @@
     "notificationsTab": {
         "rootCaCertificate": "Root CA Certificate",
         "intermediateCaCertificate": "Intermediate CA Certificate",
-        "partner": "Partner",
+        "partner": "Weekly Summary - Partner",
         "rootCertExpiryDescription": "Root CA Certificate <span className='font-semibold'>{{certificateId}}</span> issued to <span className='font-semibold'>{{issuedTo}}</span> by <span className='font-semibold'>{{issuedBy}}</span> for the <span className='font-semibold'>{{partnerDomain}}</span> domain is set to expire on <span className='font-semibold'>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions.",
         "intermediateCertExpiryDescription": "Intermediate CA Certificate <span className='font-semibold'>{{certificateId}}</span> issued to <span className='font-semibold'>{{issuedTo}}</span> by <span className='font-semibold'>{{issuedBy}}</span> for the <span className='font-semibold'>{{partnerDomain}}</span> domain is set to expire on <span className='font-semibold'>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions."
     },
@@ -994,7 +994,11 @@
         "searchIssuedTo": "Search Issued To",
         "searchIssuedBy": "Search Issued By",
         "selectExpiryDate": "Search Expiry Date",
-        "expiryDate": "Expiry Date"
+        "expiryDate": "Expiry Date",
+        "createdFromDate": "Created From Date",
+        "createdToDate": "Created To Date",
+        "selectCreatedFromDate": "Search Created From Date",
+        "selectCreatedToDate": "Search Created To Date"
     },
     "serverError": {
         "PMS_COR_001": "Missing Input Parameter",

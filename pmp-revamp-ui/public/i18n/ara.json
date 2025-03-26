@@ -958,7 +958,7 @@
         "partnerCertExpiryDescription": "من المقرر أن تنتهي صلاحية شهادة الشريك لنطاق <span className='font-semibold'>{{partnerDomain}}</span> في <span className='font-semibold'>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات.",
         "dismiss": "رفض",
         "viewAllNotification": "عرض جميع الإشعارات",
-        "expiringItems": "العناصر منتهية الصلاحية التي أنشأها الشريك",
+        "expiringItems": "ملخص أسبوعي للعناصر منتهية الصلاحية التي أنشأها الشريك",
         "partnerCertificates": "{{partnerCertCount}} شهادة شريك",
         "ftmCertificates": "{{ftmCertCount}} شهادات FTM",
         "sbiDevices": "{{sbiCount}} أجهزة SBI",
@@ -974,7 +974,7 @@
     "notificationsTab": {
         "rootCaCertificate": "شهادة CA الجذرية",
         "intermediateCaCertificate": "شهادة CA متوسطة",
-        "partner": "شريك",
+        "partner": "الملخص الأسبوعي - الشريك",
         "rootCertExpiryDescription": "شهادة CA الجذرية <span className='font-semibold'>{{certificateId}}</span> الصادرة لـ <span className='font-semibold'>{{issuedTo}}</span> بواسطة <span className='font-semibold'>{{issuedBy}}</span> للنطاق <span className='font-semibold'>{{partnerDomain}}</span> من المقرر أن تنتهي صلاحيتها في <span className='font-semibold'>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات.",
         "intermediateCertExpiryDescription": "شهادة CA المتوسطة <span className='font-semibold'>{{certificateId}}</span> الصادرة لـ <span className='font-semibold'>{{issuedTo}}</span> من قِبل <span className='font-semibold'>{{issuedBy}}</span> لنطاق <span className='font-semibold'>{{partnerDomain}}</span> من المقرر أن تنتهي صلاحيتها في <span className='font-semibold'>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات."
     },
@@ -999,7 +999,11 @@
         "searchIssuedTo": "البحث عن الجهة الصادرة",
         "searchIssuedBy": "البحث عن الجهة الصادرة",
         "selectExpiryDate": "بحث تاريخ الانتهاء",
-        "expiryDate": "تاريخ الانتهاء"
+        "expiryDate": "تاريخ الانتهاء",
+        "createdFromDate": "تم الإنشاء من التاريخ",
+        "createdToDate": "تم إنشاؤه حتى الآن",
+        "selectCreatedFromDate": "تاريخ إنشاء البحث",
+        "selectCreatedToDate": "البحث تم إنشاؤه حتى الآن"
     },
     "serverError": {
         "PMS_COR_001": "معلمة الإدخال مفقودة",
