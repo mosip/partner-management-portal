@@ -20,6 +20,7 @@ import CertificateNotificationsFilter from "./CertificateNotificationsFilter.js"
 import PartnerNotificationsTab from "../../partner/notifications/PartnerNotificationsTab.js";
 import PartnerCertificateNotificationsFilter from "../../partner/notifications/PartnerCertificateNotificationsFilter.js";
 import { useDispatch } from "react-redux";
+import WeeklyNotificationsFilter from "./WeeklyNotificationsFilter.js";
 
 function ViewAllNotifications({ notificationType }) {
     const { t } = useTranslation();
@@ -45,6 +46,8 @@ function ViewAllNotifications({ notificationType }) {
         issuedTo: null,
         issuedBy: null,
         expiryDate: null,
+        createdFromDate: null,
+        createdToDate: null
     });
     const dispatch = useDispatch();
 
@@ -62,6 +65,8 @@ function ViewAllNotifications({ notificationType }) {
         if (filterAttributes.issuedTo) queryParams.append('issuedTo', filterAttributes.issuedTo);
         if (filterAttributes.issuedBy) queryParams.append('issuedBy', filterAttributes.issuedBy);
         if (filterAttributes.expiryDate) queryParams.append('expiryDate', filterAttributes.expiryDate);
+        if (filterAttributes.createdFromDate) queryParams.append('createdFromDate', filterAttributes.createdFromDate);
+        if (filterAttributes.createdToDate) queryParams.append('createdToDate', filterAttributes.createdToDate);
 
         const url = `${getPartnerManagerUrl('/notifications', process.env.NODE_ENV)}?${queryParams.toString()}`;
         try {
@@ -213,11 +218,16 @@ function ViewAllNotifications({ notificationType }) {
                                 <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
                                 {filter && (
                                     <>
-                                        {(notificationType === "root" || notificationType === "intermediate" || notificationType === "weekly") ? (
+                                        {(notificationType === "root" || notificationType === "intermediate") && (
                                             <CertificateNotificationsFilter onApplyFilter={onApplyFilter} />
-                                        ) : (
+                                        )}
+                                        {(notificationType === "weekly") && (
+                                            <WeeklyNotificationsFilter onApplyFilter={onApplyFilter} />
+                                        )}
+                                        {(notificationType === "partner") && (
                                             <PartnerCertificateNotificationsFilter onApplyFilter={onApplyFilter} />
                                         )}
+                                        
                                     </>
                                 )}
                                 {!notificationDataLoaded ? (
