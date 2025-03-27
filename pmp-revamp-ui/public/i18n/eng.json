@@ -72,7 +72,7 @@
         "ftmPendingApprovalRequestCountDesc": "{{ftmPendingApprovalRequestCount}} FTM Chip requests are currently pending",
         "requestCountFetchError": "An Unexpected error occured while fetching request count",
         "trustCertExpiryCountDesc": "{{rootCertExpiryCount}} Root CA Certificates | {{intermediateCertExpiryCount}} Intermediate CA Certificates are expiring soon",
-        "partnerCertExpiryCountDesc": "{{partnerCertExpiryCount}} partner certificates will expire soon."
+        "partnerCertExpiryCountDesc": "{{partnerCertExpiryCount}} Partner Certificates are expiring soon"
     },
     "header": {
         "userProfile": "User Profile",
@@ -953,7 +953,7 @@
         "partnerCertExpiryDescription": "Partner Certificate for <span className='font-semibold'>{{partnerDomain}}</span> domain is set to expire on <span className='font-semibold'>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions.",
         "dismiss": "Dismiss",
         "viewAllNotification": "View all notifications",
-        "expiringItems": "Weekly summary of Partner-Created Expiring Items",
+        "expiringItems": "Weekly Summary of Partner-Created Expiring Items",
         "partnerCertificates": "{{partnerCertCount}} Partner Certificates",
         "ftmCertificates": "{{ftmCertCount}} FTM Chip Certificates",
         "sbiDevices": "{{sbiCount}} SBIs",
@@ -995,10 +995,10 @@
         "searchIssuedBy": "Search Issued By",
         "selectExpiryDate": "Search Expiry Date",
         "expiryDate": "Expiry Date",
-        "createdFromDate": "Created From Date",
-        "createdToDate": "Created To Date",
-        "selectCreatedFromDate": "Search Created From Date",
-        "selectCreatedToDate": "Search Created To Date"
+        "createdFromDate": "Notification Creation Date From",
+        "createdToDate": "Notification Creation Date To",
+        "selectCreatedFromDate": "Search Creation Date From",
+        "selectCreatedToDate": "Search Creation Date To"
     },
     "serverError": {
         "PMS_COR_001": "Missing Input Parameter",

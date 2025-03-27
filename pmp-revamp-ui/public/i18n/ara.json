@@ -72,7 +72,7 @@
         "ftmPendingApprovalRequestCountDesc": "يوجد حاليًا {{ftmPendingApprovalRequestCount}} طلبات شريحة FTM قيد الانتظار",
         "requestCountFetchError": "حدث خطأ غير متوقع أثناء جلب عدد الطلبات",
         "trustCertExpiryCountDesc": "{{rootCertExpiryCount}} شهادة CA الجذرية | {{intermediateCertExpiryCount}} شهادة CA متوسطة تنتهي صلاحيتها قريبًا",
-        "partnerCertExpiryCountDesc": "ستنتهي صلاحية {{partnerCertExpiryCount}} من شهادات الشريك قريبًا."
+        "partnerCertExpiryCountDesc": "{{partnerCertExpiryCount}} شهادات الشركاء تنتهي صلاحيتها قريبًا"
     },
     "header": {
         "userProfile": "ملف تعريفي للمستخدم",
@@ -1000,10 +1000,10 @@
         "searchIssuedBy": "البحث عن الجهة الصادرة",
         "selectExpiryDate": "بحث تاريخ الانتهاء",
         "expiryDate": "تاريخ الانتهاء",
-        "createdFromDate": "تم الإنشاء من التاريخ",
-        "createdToDate": "تم إنشاؤه حتى الآن",
-        "selectCreatedFromDate": "تاريخ إنشاء البحث",
-        "selectCreatedToDate": "البحث تم إنشاؤه حتى الآن"
+        "createdFromDate": "تاريخ إنشاء الإشعار من",
+        "createdToDate": "تاريخ إنشاء الإشعار إلى",
+        "selectCreatedFromDate": "تاريخ إنشاء البحث من",
+        "selectCreatedToDate": "تاريخ إنشاء البحث إلى"
     },
     "serverError": {
         "PMS_COR_001": "معلمة الإدخال مفقودة",
