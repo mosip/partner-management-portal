@@ -191,7 +191,6 @@ function ViewAllNotifications({ notificationType }) {
                         />
                     ) : (
                         <PartnerNotificationsTab
-                            partnerType={getUserProfile().partnerType}
                             activeTab={notificationType}
                         />
                     )}
@@ -248,7 +247,7 @@ function ViewAllNotifications({ notificationType }) {
                                                             <div className="mt-0.5 w-full">
                                                                 <div className="flex justify-between">
                                                                     <p className="font-semibold text-base text-[#101828]">{getNoticationTitle(notification, t)}</p>
-                                                                    <p className={`text-xs text-[#CBCDD0] ${isLoginLanguageRTL ? 'text-left' : 'text-right'}`}>{formatDate(notification.createdDateTime, 'dateTime')}</p>
+                                                                    <p className={`text-xs text-[#344054] ${isLoginLanguageRTL ? 'text-left' : 'text-right'}`}>{formatDate(notification.createdDateTime, 'dateTime')}</p>
                                                                 </div>
                                                                 <div className="text-[#475467] text-sm">{getNotificationDescription(notification, isLoginLanguageRTL, t)}</div>
                                                                 <hr className="h-0.5 my-4 bg-[#BCC5E5] border" />

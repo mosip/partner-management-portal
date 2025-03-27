@@ -72,7 +72,7 @@
         "ftmPendingApprovalRequestCountDesc": "{{ftmPendingApprovalRequestCount}} demandes de puce FTM sont actuellement en attente",
         "requestCountFetchError": "Une erreur inattendue s'est produite lors de la récupération du nombre de requêtes",
         "trustCertExpiryCountDesc": "{{rootCertExpiryCount}} Certificats CA racine | {{intermediateCertExpiryCount}} Les certificats CA intermédiaires expirent bientôt",
-        "partnerCertExpiryCountDesc": "{{partnerCertExpiryCount}} certificats partenaires expireront bientôt."
+        "partnerCertExpiryCountDesc": "{{partnerCertExpiryCount}} Les certificats partenaires expirent bientôt"
     },
     "header": {
         "userProfile": "Profil de l'utilisateur",
@@ -1000,10 +1000,10 @@
         "searchIssuedBy": "Rechercher émis par",
         "selectExpiryDate": "Rechercher la date d'expiration",
         "expiryDate": "Date d'expiration",
-        "createdFromDate": "Date de création",
-        "createdToDate": "Créé à ce jour",
-        "selectCreatedFromDate": "Recherche créée à partir de la date",
-        "selectCreatedToDate": "Recherche créée à ce jour"
+        "createdFromDate": "Date de création de la notification à partir de",
+        "createdToDate": "Date de création de la notification à",
+        "selectCreatedFromDate": "Date de création de la recherche à partir de",
+        "selectCreatedToDate": "Date de création de la recherche à"
     },
     "serverError": {
         "PMS_COR_001": "Paramètre d'entrée manquant",

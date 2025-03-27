@@ -75,15 +75,13 @@ function CertificateNotificationsFilter({ onApplyFilter }) {
                     styleSet={styleSet}
                     id="cert_id_filter"
                 />
-                <DropdownComponent
-                    fieldName="partnerDomain"
-                    dropdownDataList={partnerDomainData}
-                    onDropDownChangeEvent={onFilterChangeEvent}
-                    fieldNameKey="viewAllNotifications.partnerDomain"
-                    placeHolderKey="viewAllNotifications.selectPartnerDomain"
-                    styleSet={styles}
-                    isPlaceHolderPresent={true}
-                    id="cert_partner_domain_filter"
+                <TextInputComponent
+                    fieldName='issuedBy'
+                    onTextChange={onFilterChangeEvent}
+                    fieldNameKey='viewAllNotifications.issuedBy'
+                    placeHolderKey='viewAllNotifications.searchIssuedBy'
+                    styleSet={styleSet}
+                    id='cert_issued_by_domain_filter'
                 />
                 <TextInputComponent
                     fieldName='issuedTo'
@@ -93,13 +91,15 @@ function CertificateNotificationsFilter({ onApplyFilter }) {
                     styleSet={styleSet}
                     id='cert_issued_to_filter'
                 />
-                <TextInputComponent
-                    fieldName='issuedBy'
-                    onTextChange={onFilterChangeEvent}
-                    fieldNameKey='viewAllNotifications.issuedBy'
-                    placeHolderKey='viewAllNotifications.searchIssuedBy'
-                    styleSet={styleSet}
-                    id='cert_issued_by_domain_filter'
+                <DropdownComponent
+                    fieldName="partnerDomain"
+                    dropdownDataList={partnerDomainData}
+                    onDropDownChangeEvent={onFilterChangeEvent}
+                    fieldNameKey="viewAllNotifications.partnerDomain"
+                    placeHolderKey="viewAllNotifications.selectPartnerDomain"
+                    styleSet={styles}
+                    isPlaceHolderPresent={true}
+                    id="cert_partner_domain_filter"
                 />
                 <CalendarInput
                     fieldName='expiryDate'
