@@ -24,6 +24,7 @@ function HeaderNav({ open, setOpen }) {
     const [openNotification, setOpenNotification] = useState(false);
     const [showLatestNotificationIcon, setShowLatestNotificationIcon] = useState(false);
     const dispatch = useDispatch();
+    const [dropdownWidth, setDropdownWidth] = useState(0);
 
     useEffect(() => {
         handleMouseClickForDropdown(dropdownRef, () => setIsDropdownOpen(false));
@@ -32,6 +33,7 @@ function HeaderNav({ open, setOpen }) {
     useEffect(() => {
         if (dropdownRef.current) {
             document.documentElement.style.setProperty('--dropdown-width', `${dropdownRef.current.offsetWidth}px`);
+            setDropdownWidth(dropdownRef.current.offsetWidth);
         }
     }, [isDropdownOpen, getUserProfile().userName]);
 
@@ -187,7 +189,7 @@ function HeaderNav({ open, setOpen }) {
                     <img id="profileDropDown" src={profileDropDown} alt="" className={`h-2 mt-[1%] cursor-pointer ${isLoginLanguageRTL ? "mr-2 ml-2" : "ml-2 mr-2"} ${isDropdownOpen ? "rotate-180 duration-500" : "duration-500"}`} />
 
                     {isDropdownOpen && (
-                        <div className={`absolute top-[3.1rem] ${isLoginLanguageRTL ? "origin-top-left" : "origin-top-right"} z-10 w-dynamic rounded-md bg-white py-1 shadow-md ring-1 ring-gray-50 focus:outline-none`}>
+                        <div className={`absolute top-[3.1rem] ${isLoginLanguageRTL ? "origin-top-left" : "origin-top-right"} z-10 rounded-md bg-white py-1 shadow-md ring-1 ring-gray-50 focus:outline-none ${dropdownWidth < 100 ? 'w-min right-0' : 'w-dynamic'}`}>
                             <button id='header_user_profile_info_btn' onClick={moveToMyProfile} className={`block w-full px-4 py-2 text-xs text-gray-900 ${isLoginLanguageRTL ? "text-right" : "text-left"} hover:bg-gray-100`} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, moveToMyProfile)}>
                                 {t('header.userProfile')}
                             </button>
