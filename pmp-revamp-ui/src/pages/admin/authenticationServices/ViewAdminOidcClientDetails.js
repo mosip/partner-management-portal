@@ -166,10 +166,10 @@ function ViewAdminOidcClientDetails() {
                                             </p>
                                         </div>
                                         <div className="mb-3 max-[600px]:w-[100%] w-[49%]">
-                                            <p id='oidc_client_details_partner_type_label' className="font-[600] text-suva-gray text-sm">
+                                            <p id='oidc_client_details_org_name_label' className="font-[600] text-suva-gray text-sm">
                                                 {t("viewAdminOidcClientDetails.organisation")}
                                             </p>
-                                            <p id='oidc_client_details_auth_partner_context' className="font-[600] text-vulcan text-base">
+                                            <p id='oidc_client_details_org_name_context' className="font-[600] text-vulcan text-base">
                                                 {selectedClientData.orgName}
                                             </p>
                                         </div>
