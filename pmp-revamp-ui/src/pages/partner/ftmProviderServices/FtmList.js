@@ -221,6 +221,11 @@ function FtmList() {
       setSelectedFtm({});
       setShowActiveIndexDeactivatePopup(null);
       // Update the specific row in the state with the new status
+      setFtmList((prevList) =>
+        prevList.map(ftm =>
+          ftm.ftmId === selectedFtm.ftmId ? { ...ftm, status: "deactivated", isActive: false } : ftm
+        )
+      );
       setFilteredFtmList((prevList) =>
         prevList.map(ftm =>
           ftm.ftmId === selectedFtm.ftmId ? { ...ftm, status: "deactivated", isActive: false } : ftm

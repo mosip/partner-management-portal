@@ -201,6 +201,11 @@ function DevicesList() {
             setSelectedDevice({});
             setShowActiveIndexDeactivatePopup(null);
             // Update the specific row in the state with the new status
+            setDevicesList((prevList) =>
+                prevList.map(device =>
+                    device.deviceId === selectedDevice.deviceId ? { ...device, status: "deactivated", isActive: false } : device
+                )
+            );
             setFilteredDevicesList((prevList) =>
                 prevList.map(device =>
                     device.deviceId === selectedDevice.deviceId ? { ...device, status: "deactivated", isActive: false } : device
