@@ -30,11 +30,11 @@ function NotificationPopup({ closeNotification }) {
 
     const updateNotificationSeenTimestamp = async () => {
         const request = createRequest({
-            notificationsSeen: true,
+            notificationsSeenDtimes: new Date().toISOString(),
         }, "mosip.pms.users.notifications.seen.timestamp.put", true);
         try {
             setDataLoaded(false);
-            const response = await HttpService.put(getPartnerManagerUrl(`/users/notifications-seen-timestamp`, process.env.NODE_ENV), request, {
+            const response = await HttpService.put(getPartnerManagerUrl(`/users/${getUserProfile().userName}/notifications-seen-timestamp`, process.env.NODE_ENV), request, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
