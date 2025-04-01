@@ -1282,7 +1282,7 @@
         "KER-PMS-020": "Uploading future-dated certificates is not allowed.",
         "KER-CRY-003": "Invalid certificate: Possible file corruption, tampering, or unsupported format. Ensure it is properly Base64-encoded and try again.",
         "PMS_NOTIFICATION_ERROR_001": "Error while updating notifications seen date time.",
-        "PMS_NOTIFICATION_ERROR_002": "Invalid notification seen. Expected: true.",
+        "PMS_NOTIFICATION_ERROR_002": "Invalid notification seen timestamp.",
         "PMS_NOTIFICATION_ERROR_003": "User details does not exist for the user.",
         "PMS_NOTIFICATION_ERROR_004": "Error while fetching notifications seen date time.",
         "PMS_NOTIFICATION_ERROR_005": "Error while fetching notifications.",
