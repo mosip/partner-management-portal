@@ -1287,7 +1287,7 @@
         "KER-PMS-020": "Le téléchargement de certificats périmés n'est pas autorisé.",
         "KER-CRY-003": "Certificat invalide : corruption de fichier possible, falsification ou format non pris en charge. Assurez-vous qu’il est correctement codé en Base64 et réessayez.",
         "PMS_NOTIFICATION_ERROR_001": "Erreur lors de la mise à jour des notifications date et heure.",
-        "PMS_NOTIFICATION_ERROR_002": "Notification non valide. Valeur attendue : true.",
+        "PMS_NOTIFICATION_ERROR_002": "Horodatage de notification non valide vu.",
         "PMS_NOTIFICATION_ERROR_003": "Les informations utilisateur n'existent pas pour cet utilisateur.",
         "PMS_NOTIFICATION_ERROR_004": "Erreur lors de la récupération des notifications date et heure.",
         "PMS_NOTIFICATION_ERROR_005": "Erreur lors de la récupération des notifications.",
