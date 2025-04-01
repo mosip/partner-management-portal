@@ -245,11 +245,11 @@ function ViewAllNotifications({ notificationType }) {
                                                         <div key={notification.notificationId} className="flex items-start w-full bg-white p-4 rounded-lg shadow mb-3 border-b border-[#D0D5DD]">
                                                             <img src={featuredIcon} alt='' id='featuredIcon' className={`${isLoginLanguageRTL ? 'ml-3' : 'mr-3'} mt-2`} />
                                                             <div className="mt-0.5 w-full">
-                                                                <div className="flex justify-between">
+                                                                <div className="flex justify-between flex-wrap">
                                                                     <p className="font-semibold text-base text-[#101828]">{getNoticationTitle(notification, t)}</p>
                                                                     <p className={`text-xs text-gray-500 ${isLoginLanguageRTL ? 'text-left' : 'text-right'}`}>{formatDate(notification.createdDateTime, 'dateTime')}</p>
                                                                 </div>
-                                                                <div className="text-[#475467] text-sm">{getNotificationDescription(notification, isLoginLanguageRTL, t)}</div>
+                                                                <div className="text-[#475467] text-sm break-all">{getNotificationDescription(notification, isLoginLanguageRTL, t)}</div>
                                                                 <hr className="h-0.5 my-4 bg-[#BCC5E5] border" />
                                                                 <button onClick={() => dismissNotification(notification.notificationId)} className="text-[#475467] font-semibold text-sm">{t('notificationPopup.dismiss')}</button>
                                                             </div>
