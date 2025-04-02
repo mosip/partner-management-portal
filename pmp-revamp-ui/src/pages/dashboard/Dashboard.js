@@ -167,6 +167,8 @@ function Dashboard() {
       const queryParams = new URLSearchParams();
       queryParams.append('expiryPeriod', 30);
       queryParams.append('caCertificateType', certType);
+      queryParams.append('pageSize', '2');
+      queryParams.append('pageNo', '0');
 
       const url = `${getPartnerManagerUrl('/trust-chain-certificates', process.env.NODE_ENV)}?${queryParams.toString()}`;
       try {
@@ -193,17 +195,16 @@ function Dashboard() {
       }
     };
 
-    const fetchPartnerCertExpiryCount = async (certType) => {
+    const fetchPartnerCertExpiryCount = async () => {
       const queryParams = new URLSearchParams();
-      queryParams.append('period', 30);
-      queryParams.append('type', certType);
-      const url = `${getPartnerManagerUrl('/expiring-certs-count', process.env.NODE_ENV)}?${queryParams.toString()}`;
+      queryParams.append('expiryPeriod', 30);
+      const url = `${getPartnerManagerUrl('/partners/partner-certificates-details', process.env.NODE_ENV)}?${queryParams.toString()}`;
       try {
         const response = await HttpService.get(url);
         if (response) {
           const responseData = response.data;
           if (responseData && responseData.response) {
-              setPartnerCertExpiryCount(responseData.response.count)
+              setPartnerCertExpiryCount(responseData.response.length)
           } else {
             handleServiceErrors(responseData, setErrorCode, setErrorMsg);
           }
@@ -324,7 +325,7 @@ function Dashboard() {
       }
     };
     if (!isPartnerAdmin) {
-      fetchPartnerCertExpiryCount('partner');
+      fetchPartnerCertExpiryCount();
     }
     if (isPartnerAdmin) {
       fetchTrustCertExpiryCount('ROOT');
