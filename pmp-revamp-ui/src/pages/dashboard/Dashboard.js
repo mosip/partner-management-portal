@@ -165,6 +165,36 @@ function Dashboard() {
   useEffect(() => {
     const fetchTrustCertExpiryCount = async (certType) => {
       const queryParams = new URLSearchParams();
+      queryParams.append('expiryPeriod', 30);
+      queryParams.append('caCertificateType', certType);
+
+      const url = `${getPartnerManagerUrl('/trust-chain-certificates', process.env.NODE_ENV)}?${queryParams.toString()}`;
+      try {
+        const response = await HttpService.get(url);
+        if (response) {
+          const responseData = response.data;
+          if (responseData && responseData.response) {
+            if (certType === "ROOT") {
+              setRootCertExpiryCount(responseData.response.totalResults);
+            } else if (certType === "INTERMEDIATE") {
+              setIntermediateCertExpiryCount(responseData.response.totalResults);
+            }
+          } else {
+            handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+          }
+        } else {
+          setErrorMsg(t('dashboard.requestCountFetchError'));
+        }
+      } catch (err) {
+        if (err.response?.status && err.response.status !== 401) {
+          setErrorMsg(t('dashboard.requestCountFetchError'));
+        }
+        console.error("Error fetching data:", err);
+      }
+    };
+
+    const fetchPartnerCertExpiryCount = async (certType) => {
+      const queryParams = new URLSearchParams();
       queryParams.append('period', 30);
       queryParams.append('type', certType);
       const url = `${getPartnerManagerUrl('/expiring-certs-count', process.env.NODE_ENV)}?${queryParams.toString()}`;
@@ -173,13 +203,7 @@ function Dashboard() {
         if (response) {
           const responseData = response.data;
           if (responseData && responseData.response) {
-            if (certType === "root") {
-              setRootCertExpiryCount(responseData.response.count);
-            } else if (certType === "intermediate") {
-              setIntermediateCertExpiryCount(responseData.response.count);
-            } else if (certType === "partner") {
               setPartnerCertExpiryCount(responseData.response.count)
-            }
           } else {
             handleServiceErrors(responseData, setErrorCode, setErrorMsg);
           }
@@ -300,11 +324,11 @@ function Dashboard() {
       }
     };
     if (!isPartnerAdmin) {
-      fetchTrustCertExpiryCount('partner');
+      fetchPartnerCertExpiryCount('partner');
     }
     if (isPartnerAdmin) {
-      fetchTrustCertExpiryCount('root');
-      fetchTrustCertExpiryCount('intermediate');
+      fetchTrustCertExpiryCount('ROOT');
+      fetchTrustCertExpiryCount('INTERMEDIATE');
     
       setTimeout(() => {
         fetchPartnerPolicyMappingRequestCount();

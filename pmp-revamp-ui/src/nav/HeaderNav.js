@@ -162,8 +162,8 @@ function HeaderNav({ open, setOpen }) {
                 </div>
             </div>
             <div className={`flex items-center relative justify-between gap-x-4 ${isLoginLanguageRTL ? "left-3" : "right-3"}`}>
-                <div className="flex items-center cursor-pointer">
-                    <button id='bellIcon' className={`${!showLatestNotificationIcon && 'p-2 m-1 bg-blue-50'}`} onClick={() => openNotificationPopup()}>
+                <div className="flex items-center">
+                    <button id='bellIcon' className={`${!showLatestNotificationIcon && 'p-2 m-1 bg-blue-50'} cursor-pointer rounded-md`} onClick={() => openNotificationPopup()}>
                         <img src={showLatestNotificationIcon ? notificationRedIcon : bellIcon} alt="" className={`${!showLatestNotificationIcon ? 'w-5 h-5' : 'w-9'}`} />
                     </button>
                     { openNotification && (
