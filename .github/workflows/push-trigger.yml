@@ -19,39 +19,6 @@ on:
       - 1.2.*
 
 jobs:
-  build-maven-pmp-ui:
-    uses: mosip/kattu/.github/workflows/npm-build.yml@develop
-    with:
-      SERVICE_LOCATION: pmp-ui
-      BUILD_ARTIFACT: pmp-ui
-    secrets:
-      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
-
-  build-dockers-pmp-ui:
-    needs: build-maven-pmp-ui
-    strategy:
-      matrix:
-        include:
-          - SERVICE_LOCATION: 'pmp-ui'
-            SERVICE_NAME: 'pmp-ui'
-            NPM_BUILD: true
-            BUILD_ARTIFACT: 'pmp-ui'
-            SQUASH_LAYERS: '10'
-      fail-fast: false
-    name: ${{ matrix.SERVICE_NAME }}
-    uses: mosip/kattu/.github/workflows/docker-build.yml@master
-    with:
-      SERVICE_LOCATION: ${{ matrix.SERVICE_LOCATION }}
-      SERVICE_NAME: ${{ matrix.SERVICE_NAME }}
-      NPM_BUILD: ${{ matrix.NPM_BUILD }}
-      BUILD_ARTIFACT: ${{ matrix.BUILD_ARTIFACT }}
-      SQUASH_LAYERS: ${{ matrix.SQUASH_LAYERS }}
-    secrets:
-      DEV_NAMESPACE_DOCKER_HUB: ${{ secrets.DEV_NAMESPACE_DOCKER_HUB }}
-      ACTOR_DOCKER_HUB: ${{ secrets.ACTOR_DOCKER_HUB }}
-      RELEASE_DOCKER_HUB: ${{ secrets.RELEASE_DOCKER_HUB }}
-      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
-      
   build-dockers-pmp-revamp-ui:
     strategy:
       matrix:
