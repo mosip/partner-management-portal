@@ -10,7 +10,7 @@ import LoadingIcon from "../../common/LoadingIcon.js";
 import ErrorMessage from "../../common/ErrorMessage.js";
 import Title from "../../common/Title.js";
 import AdminNotificationsTab from "./AdminNotificationsTab.js";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import featuredIcon from "../../../svg/featured_icon.svg";
 import noNotificationIcon from "../../../svg/frame.svg";
 import Pagination from "../../common/Pagination.js";
@@ -50,6 +50,10 @@ function ViewAllNotifications({ notificationType }) {
         createdToDate: null
     });
     const dispatch = useDispatch();
+    const [showExpiringItems, setShowExpiringItems] = useState(false);
+    const [activeTab, setActiveTab] = useState('');
+    const [weeklyNotificationList, setWeeklyNotificationList] = useState([]);
+    const [notificationCreatedDateTime, setNotificationCreatedDateTime] = useState("");
 
     const fetchNotifications = async (noDateLoaded) => {
         const queryParams = new URLSearchParams();
@@ -165,6 +169,47 @@ function ViewAllNotifications({ notificationType }) {
         onClickApplyFilter(filters, setIsFilterApplied, setResetPageNo, setFetchData, setFilterAttributes, setIsApplyFilterClicked);
     };
 
+    const viewExpiringItems = (notification) => {
+        setShowExpiringItems(true);
+        setActiveTab('partner');
+        setNotificationCreatedDateTime(notification.createdDateTime);
+        const certificateList = Array.isArray(notification.notificationDetails.certificateDetails) ? notification.notificationDetails.certificateDetails : [];
+        const partnerCertList = certificateList.filter(cert => cert.certificateType === "partner");
+        setWeeklyNotificationList(partnerCertList);
+    };
+
+    const backToWeeklySummary = () => {
+        setShowExpiringItems(false);
+    };
+
+    const changeToPartnerCert = () => {
+        setActiveTab('partner')
+    }
+
+    const getWeeklyNoticationTitle = (notification, type) => {
+        if (type === 'partner') {
+            return t('viewAllNotifications.partnerCertExpiryTitle', {partnerId: notification.partnerId});
+        }
+    }
+
+    const getWeeklyNoticationDescription = (notification, type) => {
+        if (type === 'partner') {
+            return (
+                <Trans 
+                    i18nKey="viewAllNotifications.partnerCertExpiryDescription"
+                    values={{
+                        certificateId: notification.certificateId,
+                        issuedTo: notification.issuedTo,
+                        issuedBy: notification.issuedBy,
+                        partnerDomain: notification.partnerDomain,
+                        expiryDateTime: formatDate(notification.expiryDateTime, 'dateInWords')
+                    }}
+                    components={{ span: <span className="font-semibold" /> }}
+                />
+            );
+        }
+    };
+
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter overflow-x-scroll`}>
             {!dataLoaded && (
@@ -209,10 +254,14 @@ function ViewAllNotifications({ notificationType }) {
                             <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
                                 <FilterButtons
                                     listTitle="viewAllNotifications.listOfNotifications"
+                                    showTitleWithoutCount={showExpiringItems ? true : false}
                                     dataListLength={totalRecords}
                                     filter={filter}
                                     onResetFilter={onResetFilter}
                                     setFilter={setFilter}
+                                    addBackArrow={showExpiringItems ? true : false}
+                                    goBack={showExpiringItems && backToWeeklySummary}
+                                    removeFiler={showExpiringItems ? true : false}
                                 />
                                 <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
                                 {filter && (
@@ -240,36 +289,72 @@ function ViewAllNotifications({ notificationType }) {
                                             </div>
                                         ) : (
                                             <>
-                                                <div className="p-6">
-                                                    {notificationsList.map((notification) => (
-                                                        <div key={notification.notificationId} className="flex items-start w-full bg-white p-4 rounded-lg shadow mb-3 border-b border-[#D0D5DD]">
-                                                            <img src={featuredIcon} alt='' id='featuredIcon' className={`${isLoginLanguageRTL ? 'ml-3' : 'mr-3'} mt-2`} />
-                                                            <div className="mt-0.5 w-full">
-                                                                <div className="flex justify-between flex-wrap">
-                                                                    <p className="font-semibold text-base text-[#101828]">{getNoticationTitle(notification, t)}</p>
-                                                                    <p className={`text-xs text-gray-500 ${isLoginLanguageRTL ? 'text-left' : 'text-right'}`}>{formatDate(notification.createdDateTime, 'dateTime')}</p>
+                                                {!showExpiringItems ? (
+                                                    <div className="p-6">
+                                                        {notificationsList.map((notification) => (
+                                                            <div key={notification.notificationId} className="flex items-start w-full bg-white p-4 rounded-lg shadow mb-3 border-b border-[#D0D5DD]">
+                                                                <img src={featuredIcon} alt='' id='featuredIcon' className={`${isLoginLanguageRTL ? 'ml-3' : 'mr-3'} mt-2`} />
+                                                                <div className="mt-0.5 w-full">
+                                                                    <div className="flex justify-between flex-wrap">
+                                                                        <p className="font-semibold text-base text-[#101828]">{getNoticationTitle(notification, t)}</p>
+                                                                        <p className={`text-xs text-gray-500 ${isLoginLanguageRTL ? 'text-left' : 'text-right'}`}>{formatDate(notification.createdDateTime, 'dateTime')}</p>
+                                                                    </div>
+                                                                    <div className="text-[#475467] text-sm break-all">{getNotificationDescription(notification, isLoginLanguageRTL, t)}</div>
+                                                                    <hr className="h-0.5 my-4 bg-[#BCC5E5] border" />
+                                                                    <div className={`flex space-x-4 ${isLoginLanguageRTL && 'space-x-reverse'}`}>
+                                                                        <button onClick={() => dismissNotification(notification.notificationId)} className="text-[#475467] font-semibold text-sm">{t('notificationPopup.dismiss')}</button>
+                                                                        {(notificationType === "weekly") && (
+                                                                            <button onClick={() => viewExpiringItems(notification)} className="text-tory-blue font-semibold text-sm">{t('viewAllNotifications.viewExpiringItems')}</button>
+                                                                        )}
+                                                                    </div>
                                                                 </div>
-                                                                <div className="text-[#475467] text-sm break-all">{getNotificationDescription(notification, isLoginLanguageRTL, t)}</div>
-                                                                <hr className="h-0.5 my-4 bg-[#BCC5E5] border" />
-                                                                <button onClick={() => dismissNotification(notification.notificationId)} className="text-[#475467] font-semibold text-sm">{t('notificationPopup.dismiss')}</button>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                ) : (
+                                                    <div>
+                                                        <div className='flex text-xs bg-[#FCFCFC] font-bold space-x-16 items-start px-8 border-b-2'>
+                                                            <div id='partner_cert_tab' className={`flex-col justify-center text-center`}>
+                                                                <button onClick={changeToPartnerCert} className={`${activeTab === "partner" ? "text-[#1447b2]" : "text-[#031640]"} py-3 cursor-pointer text-base`}>
+                                                                    <h6> {t('partnerNotificationsTab.partnerCertificate')} </h6>
+                                                                </button>
+
+                                                                <div className={`h-1 w-full ${activeTab === "partner" ? "bg-tory-blue" : "bg-transparent"}  rounded-t-md`}></div>
                                                             </div>
                                                         </div>
-                                                    ))}
-                                                </div>
+                                                        {/* <hr className="h-0.5 bg-gray-200 border-0" /> */}
+                                                        <div className="p-4">
+                                                            {weeklyNotificationList.map((notification, index) => (
+                                                                <div key={index} className="flex items-start w-full bg-white p-4 rounded-lg shadow mb-3 border-b border-[#D0D5DD]">
+                                                                    <img src={featuredIcon} alt='' id='featuredIcon' className={`${isLoginLanguageRTL ? 'ml-3' : 'mr-3'} mt-2`} />
+                                                                    <div className="mt-0.5 w-full">
+                                                                        <div className="flex justify-between flex-wrap">
+                                                                            <p className="font-semibold text-base text-[#101828]">{getWeeklyNoticationTitle(notification, activeTab)}</p>
+                                                                            <p className={`text-xs text-gray-500 ${isLoginLanguageRTL ? 'text-left' : 'text-right'}`}>{formatDate(notificationCreatedDateTime, 'dateTime')}</p>
+                                                                        </div>
+                                                                        <div className="text-[#475467] text-sm break-all">{getWeeklyNoticationDescription(notification, activeTab)}</div>
+                                                                    </div>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                )}
                                                 <hr className="h-0.5 bg-gray-200 border-0" />
                                             </>
                                         )}
                                     </>
                                 )}
-                                <Pagination
-                                    dataListLength={totalRecords}
-                                    selectedRecordsPerPage={selectedRecordsPerPage}
-                                    setSelectedRecordsPerPage={setSelectedRecordsPerPage}
-                                    setFirstIndex={setFirstIndex}
-                                    isServerSideFilter={true}
-                                    getPaginationValues={getPaginationValues}
-                                    isViewNotificationPage={true}
-                                />
+                                {!showExpiringItems && (
+                                    <Pagination
+                                        dataListLength={totalRecords}
+                                        selectedRecordsPerPage={selectedRecordsPerPage}
+                                        setSelectedRecordsPerPage={setSelectedRecordsPerPage}
+                                        setFirstIndex={setFirstIndex}
+                                        isServerSideFilter={true}
+                                        getPaginationValues={getPaginationValues}
+                                        isViewNotificationPage={true}
+                                    />
+                                )}
                             </div>
                         </>
                     )}

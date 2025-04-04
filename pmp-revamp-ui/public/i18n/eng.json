@@ -998,7 +998,10 @@
         "createdFromDate": "Notification Creation Date From",
         "createdToDate": "Notification Creation Date To",
         "selectCreatedFromDate": "Search Creation Date From",
-        "selectCreatedToDate": "Search Creation Date To"
+        "selectCreatedToDate": "Search Creation Date To",
+        "viewExpiringItems": "View Expiring Items",
+        "partnerCertExpiryTitle": "Partner certificate is expiring for {{partnerId}}",
+        "partnerCertExpiryDescription": "Partner Certificate <span className='font-semibold'>{{certificateId}}</span> issued to <span className='font-semibold'>{{issuedTo}}</span> by <span className='font-semibold'>{{issuedBy}}</span> for the <span className='font-semibold'>{{partnerDomain}}</span> domain is set to expire on <span className='font-semibold'>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions."
     },
     "serverError": {
         "PMS_COR_001": "Missing Input Parameter",

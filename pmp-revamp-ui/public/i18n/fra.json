@@ -1003,7 +1003,10 @@
         "createdFromDate": "Date de création de la notification à partir de",
         "createdToDate": "Date de création de la notification à",
         "selectCreatedFromDate": "Date de création de la recherche à partir de",
-        "selectCreatedToDate": "Date de création de la recherche à"
+        "selectCreatedToDate": "Date de création de la recherche à",
+        "viewExpiringItems": "Afficher les articles expirés",
+        "partnerCertExpiryTitle": "Le certificat du partenaire expire pour {{partnerId}}",
+        "partnerCertExpiryDescription": "Le certificat partenaire <span className='font-semibold'>{{certificateId}}</span> délivré à <span className='font-semibold'>{{issuedTo}}</span> par <span className='font-semibold'>{{issuedBy}}</span> pour le domaine <span className='font-semibold'>{{partnerDomain}}</span> expirera le <span className='font-semibold'>{{expiryDateTime}}</span>. Renouvelez-le dès maintenant pour éviter toute interruption."
     },
     "serverError": {
         "PMS_COR_001": "Paramètre d'entrée manquant",

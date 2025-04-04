@@ -1003,7 +1003,10 @@
         "createdFromDate": "تاريخ إنشاء الإشعار من",
         "createdToDate": "تاريخ إنشاء الإشعار إلى",
         "selectCreatedFromDate": "تاريخ إنشاء البحث من",
-        "selectCreatedToDate": "تاريخ إنشاء البحث إلى"
+        "selectCreatedToDate": "تاريخ إنشاء البحث إلى",
+        "viewExpiringItems": "عرض العناصر منتهية الصلاحية",
+        "partnerCertExpiryTitle": "شهادة الشريك على وشك الانتهاء لـ {{partnerId}}",
+        "partnerCertExpiryDescription": "شهادة الشريك <span className='font-semibold'>{{certificateId}}</span> الصادرة لـ <span className='font-semibold'>{{issuedTo}}</span> بواسطة <span className='font-semibold'>{{issuedBy}}</span> للنطاق <span className='font-semibold'>{{partnerDomain}}</span> من المقرر أن تنتهي صلاحيتها في <span className='font-semibold'>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات."
     },
     "serverError": {
         "PMS_COR_001": "معلمة الإدخال مفقودة",
