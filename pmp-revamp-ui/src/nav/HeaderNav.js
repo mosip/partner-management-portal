@@ -88,7 +88,7 @@ function HeaderNav({ open, setOpen }) {
 
     const fetchNotificationsSeenTimestamp = async () => {
         try {
-          const response = await HttpService.get(getPartnerManagerUrl(`/users/notifications-seen-timestamp`, process.env.NODE_ENV));
+          const response = await HttpService.get(getPartnerManagerUrl(`/users/${getUserProfile().userName}/notifications-seen-timestamp`, process.env.NODE_ENV));
           if (response) {
             const responseData = response.data;
             if (responseData && responseData.response) {
