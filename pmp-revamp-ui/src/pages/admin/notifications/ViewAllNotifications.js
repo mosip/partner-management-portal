@@ -180,6 +180,7 @@ function ViewAllNotifications({ notificationType }) {
 
     const backToWeeklySummary = () => {
         setShowExpiringItems(false);
+        setSelectedRecordsPerPage(4);
     };
 
     const changeToPartnerCert = () => {
