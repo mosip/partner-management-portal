@@ -12,6 +12,14 @@ export const formatDate = (dateString, format) => {
     switch (format) {
         case 'dateTime':
             return date.toLocaleString();
+        case 'dateTimeWithoutSeconds':
+            return date.toLocaleString(undefined, {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+            });
         case 'date':
             return date.toLocaleDateString();
         case 'time':

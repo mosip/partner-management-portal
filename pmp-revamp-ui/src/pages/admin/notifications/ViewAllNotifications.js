@@ -298,7 +298,7 @@ function ViewAllNotifications({ notificationType }) {
                                                                 <div className="mt-0.5 w-full">
                                                                     <div className="flex justify-between flex-wrap">
                                                                         <p className="font-semibold text-base text-[#101828]">{getNoticationTitle(notification, t)}</p>
-                                                                        <p className={`text-xs text-gray-500 ${isLoginLanguageRTL ? 'text-left' : 'text-right'}`}>{formatDate(notification.createdDateTime, 'dateTime')}</p>
+                                                                        <p className={`text-xs text-gray-500 ${isLoginLanguageRTL ? 'text-left' : 'text-right'}`}>{formatDate(notification.createdDateTime, 'dateTimeWithoutSeconds')}</p>
                                                                     </div>
                                                                     <div className="text-[#475467] text-sm break-all">{getNotificationDescription(notification, isLoginLanguageRTL, t)}</div>
                                                                     <hr className="h-0.5 my-4 bg-[#BCC5E5] border" />
@@ -331,7 +331,7 @@ function ViewAllNotifications({ notificationType }) {
                                                                     <div className="mt-0.5 w-full">
                                                                         <div className="flex justify-between flex-wrap">
                                                                             <p className="font-semibold text-base text-[#101828]">{getWeeklyNoticationTitle(notification, activeTab)}</p>
-                                                                            <p className={`text-xs text-gray-500 ${isLoginLanguageRTL ? 'text-left' : 'text-right'}`}>{formatDate(notificationCreatedDateTime, 'dateTime')}</p>
+                                                                            <p className={`text-xs text-gray-500 ${isLoginLanguageRTL ? 'text-left' : 'text-right'}`}>{formatDate(notificationCreatedDateTime, 'dateTimeWithoutSeconds')}</p>
                                                                         </div>
                                                                         <div className="text-[#475467] text-sm break-all">{getWeeklyNoticationDescription(notification, activeTab)}</div>
                                                                     </div>
