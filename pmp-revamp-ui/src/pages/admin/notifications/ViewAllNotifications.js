@@ -305,7 +305,7 @@ function ViewAllNotifications({ notificationType }) {
                                                                     <div className={`flex space-x-4 ${isLoginLanguageRTL && 'space-x-reverse'}`}>
                                                                         <button onClick={() => dismissNotification(notification.notificationId)} className="text-tory-blue font-semibold text-sm px-4 py-[6px] rounded-md bg-[#F7F9FF]">{t('notificationPopup.dismiss')}</button>
                                                                         {(notificationType === "weekly") && (
-                                                                            <button onClick={() => viewExpiringItems(notification)} className="text-tory-blue font-semibold text-sm">{t('viewAllNotifications.viewExpiringItems')}</button>
+                                                                            <button onClick={() => viewExpiringItems(notification)} className="text-tory-blue font-semibold text-sm px-4 py-[6px] rounded-md bg-[#F7F9FF]">{t('viewAllNotifications.viewExpiringItems')}</button>
                                                                         )}
                                                                     </div>
                                                                 </div>
