@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import FocusTrap from "focus-trap-react";
 import { HttpService } from "../../services/HttpService";
 import LoadingIcon from "./LoadingIcon";
+import vectorIcon from "../../svg/vector.svg";
 import ErrorMessage from "./ErrorMessage";
 import { useDispatch, useSelector } from "react-redux";
 import { updateHeaderNotifications } from "../../notificationsSlice";
@@ -167,7 +168,7 @@ function NotificationPopup({ closeNotification }) {
                                                     </div>
                                                     <div className="text-sm text-[#344054] mt-1 whitespace-pre-line">{getNotificationPanelDescription(notification, isLoginLanguageRTL, t)}</div>
                                                     <button 
-                                                        className="text-[#475467] font-semibold text-sm mt-2"
+                                                        className="text-tory-blue font-semibold text-sm mt-2 px-4 py-[6px] rounded-md bg-[#F7F9FF]"
                                                         onClick={() => dismissNotification(notification.notificationId)}
                                                     >
                                                         {t('notificationPopup.dismiss')}
@@ -176,8 +177,10 @@ function NotificationPopup({ closeNotification }) {
                                             </div>
                                         ))}
                                     </div>
-                                    <div role="button" className="p-3 text-center text-tory-blue text-sm font-medium cursor-pointer" onClick={viewAllNotifications} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, viewAllNotifications)}>
-                                        {t('notificationPopup.viewAllNotification')}
+                                    <div role="button" className="flex p-3 justify-center items-center text-tory-blue text-sm font-medium cursor-pointer" onClick={viewAllNotifications} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, viewAllNotifications)}>
+                                        <p>{t('notificationPopup.viewAllNotification')}</p>
+                                        <img src={vectorIcon} alt="" className={`${isLoginLanguageRTL ? 'pr-2' : 'pl-2'}`}/>
+                                        <img src={vectorIcon} alt="" />
                                     </div>
                                 </>
                                 ) : (
