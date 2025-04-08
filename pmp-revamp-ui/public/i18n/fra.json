@@ -71,7 +71,7 @@
         "sbiAndDevicePendingApprovalRequestCountDesc": "{{sbiPendingApprovalRequestCount}} demandes SBI et {{devicePendingApprovalRequestCount}} demandes d'appareil sont actuellement en attente",
         "ftmPendingApprovalRequestCountDesc": "{{ftmPendingApprovalRequestCount}} demandes de puce FTM sont actuellement en attente",
         "requestCountFetchError": "Une erreur inattendue s'est produite lors de la récupération du nombre de requêtes",
-        "trustCertExpiryCountDesc": "{{rootCertExpiryCount}} Certificats CA racine | {{intermediateCertExpiryCount}} Les certificats CA intermédiaires expirent bientôt",
+        "trustCertExpiryCountDesc": "Les certificats d'autorité de certification racine {{rootCertExpiryCount}} et les certificats d'autorité de certification intermédiaire {{intermediateCertExpiryCount}} expireront bientôt",
         "partnerCertExpiryCountDesc": "{{partnerCertExpiryCount}} Les certificats partenaires expirent bientôt"
     },
     "header": {

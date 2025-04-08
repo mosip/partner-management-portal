@@ -71,7 +71,7 @@
         "sbiAndDevicePendingApprovalRequestCountDesc": "يوجد حاليًا {{sbiPendingApprovalRequestCount}} طلبات SBI و {{devicePendingApprovalRequestCount}} طلبات جهاز قيد الانتظار",
         "ftmPendingApprovalRequestCountDesc": "يوجد حاليًا {{ftmPendingApprovalRequestCount}} طلبات شريحة FTM قيد الانتظار",
         "requestCountFetchError": "حدث خطأ غير متوقع أثناء جلب عدد الطلبات",
-        "trustCertExpiryCountDesc": "{{rootCertExpiryCount}} شهادة CA الجذرية | {{intermediateCertExpiryCount}} شهادة CA متوسطة تنتهي صلاحيتها قريبًا",
+        "trustCertExpiryCountDesc": "ستنتهي صلاحية شهادات CA الجذرية {{rootCertExpiryCount}} وشهادات CA الوسيطة {{intermediateCertExpiryCount}} قريبًا",
         "partnerCertExpiryCountDesc": "{{partnerCertExpiryCount}} شهادات الشركاء تنتهي صلاحيتها قريبًا"
     },
     "header": {
