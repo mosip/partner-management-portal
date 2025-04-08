@@ -71,7 +71,7 @@
         "sbiAndDevicePendingApprovalRequestCountDesc": "{{sbiPendingApprovalRequestCount}} demandes SBI et {{devicePendingApprovalRequestCount}} demandes d'appareil sont actuellement en attente",
         "ftmPendingApprovalRequestCountDesc": "{{ftmPendingApprovalRequestCount}} demandes de puce FTM sont actuellement en attente",
         "requestCountFetchError": "Une erreur inattendue s'est produite lors de la récupération du nombre de requêtes",
-        "trustCertExpiryCountDesc": "{{rootCertExpiryCount}} Certificats CA racine | {{intermediateCertExpiryCount}} Les certificats CA intermédiaires expirent bientôt",
+        "trustCertExpiryCountDesc": "Les certificats d'autorité de certification racine {{rootCertExpiryCount}} et les certificats d'autorité de certification intermédiaire {{intermediateCertExpiryCount}} expireront bientôt",
         "partnerCertExpiryCountDesc": "{{partnerCertExpiryCount}} Les certificats partenaires expirent bientôt"
     },
     "header": {
@@ -1255,8 +1255,8 @@
         "PMS_DEVICE_ERROR_025": "Cet appareil ne peut pas être rejeté car aucun SBI ne lui est associé.",
         "PMS_DEVICE_ERROR_026": "Le statut de la demande doit être Désactiver",
         "PMS_DEVICE_ERROR_027": "Le statut de la demande doit être approuvé ou rejeté",
-        "PMS_DEVICE_ERROR_028": "Impossible d'ajouter un périphérique car le SBI associé est déjà rejeté.",
-        "PMS_DEVICE_ERROR_029": "Impossible d'ajouter un appareil car le SBI associé est déjà désactivé.",
+        "PMS_DEVICE_ERROR_028": "Le SBI associé est déjà rejeté.",
+        "PMS_DEVICE_ERROR_029": "Le SBI associé est déjà désactivé.",
         "PMS_SF_ERROR_001": "Erreur lors de la récupération de la liste des appareils pour SBI.",
         "PMS_SBI_ERROR_001": "Impossible de récupérer les détails SBI.",
         "PMS_REQUEST_ERROR_001": "Requête invalide.",

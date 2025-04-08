@@ -71,7 +71,7 @@
         "sbiAndDevicePendingApprovalRequestCountDesc": "يوجد حاليًا {{sbiPendingApprovalRequestCount}} طلبات SBI و {{devicePendingApprovalRequestCount}} طلبات جهاز قيد الانتظار",
         "ftmPendingApprovalRequestCountDesc": "يوجد حاليًا {{ftmPendingApprovalRequestCount}} طلبات شريحة FTM قيد الانتظار",
         "requestCountFetchError": "حدث خطأ غير متوقع أثناء جلب عدد الطلبات",
-        "trustCertExpiryCountDesc": "{{rootCertExpiryCount}} شهادة CA الجذرية | {{intermediateCertExpiryCount}} شهادة CA متوسطة تنتهي صلاحيتها قريبًا",
+        "trustCertExpiryCountDesc": "ستنتهي صلاحية شهادات CA الجذرية {{rootCertExpiryCount}} وشهادات CA الوسيطة {{intermediateCertExpiryCount}} قريبًا",
         "partnerCertExpiryCountDesc": "{{partnerCertExpiryCount}} شهادات الشركاء تنتهي صلاحيتها قريبًا"
     },
     "header": {
@@ -1255,8 +1255,8 @@
         "PMS_DEVICE_ERROR_025": "لا يمكن رفض هذا الجهاز لأنه لا يوجد لديه أي SBI مرتبط به.",
         "PMS_DEVICE_ERROR_026": "يجب أن تكون حالة الطلب إلغاء التنشيط",
         "PMS_DEVICE_ERROR_027": "يجب أن تكون حالة الطلب إما معتمدة أو مرفوضة",
-        "PMS_DEVICE_ERROR_028": "غير قادر على إضافة الجهاز لأنه تم رفض SBI المرتبط بالفعل.",
-        "PMS_DEVICE_ERROR_029": "غير قادر على إضافة الجهاز لأنه تم إلغاء تنشيط SBI المرتبط به بالفعل.",
+        "PMS_DEVICE_ERROR_028": "تم رفض SBI المرتبط بالفعل.",
+        "PMS_DEVICE_ERROR_029": "تم إلغاء تنشيط SBI المرتبط بالفعل.",
         "PMS_SF_ERROR_001": "حدث خطأ أثناء جلب قائمة الأجهزة لـ SBI.",
         "PMS_SBI_ERROR_001": "غير قادر على جلب تفاصيل الهيئة الفرعية للتنفيذ.",
         "PMS_REQUEST_ERROR_001": "طلب غير صالح.",

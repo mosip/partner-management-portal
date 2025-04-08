@@ -397,7 +397,7 @@ function Dashboard() {
         </span>
 
         {count !== null && count !== undefined && (
-          <div className={`absolute hidden group-focus:block group-hover:block ${isExpiryHover ? 'bg-[#FAD6D1]' : 'bg-[#FEF1C6]'} text-xs font-semibold p-2 w-40 mt-1 z-10 top-9 right-0 rounded-md shadow-md`}>
+          <div className={`absolute hidden group-focus:block group-hover:block ${isExpiryHover ? 'bg-[#FAD6D1]' : 'bg-[#FEF1C6]'} text-xs text-center font-semibold p-2 w-40 mt-1 z-10 top-9 right-0 rounded-md shadow-md`}>
             {t(descriptionKey, descriptionParams)}
           </div>
         )}
@@ -518,18 +518,22 @@ function Dashboard() {
                       {t('dashboard.certificateTrustStoreDesc')}
                     </p>
                   </div>
-                  {rootCertExpiryCount != null && rootCertExpiryCount > 0 &&
-                    intermediateCertExpiryCount != null && intermediateCertExpiryCount > 0 && (
-                      <CountWithHover
-                        count={rootCertExpiryCount + intermediateCertExpiryCount}
-                        descriptionKey="dashboard.trustCertExpiryCountDesc"
-                        descriptionParams={{
-                          rootCertExpiryCount,
-                          intermediateCertExpiryCount,
-                        }}
-                        isExpiryHover
-                      />
-                    )}
+                  <CountWithHover
+                    count={
+                      rootCertExpiryCount !== null &&
+                      rootCertExpiryCount !== undefined &&
+                      intermediateCertExpiryCount !== null &&
+                      intermediateCertExpiryCount !== undefined
+                        ? `${rootCertExpiryCount} | ${intermediateCertExpiryCount}`
+                        : null
+                    }
+                    descriptionKey="dashboard.trustCertExpiryCountDesc"
+                    descriptionParams={{
+                      rootCertExpiryCount,
+                      intermediateCertExpiryCount
+                    }}
+                    isExpiryHover
+                  />
                 </div>
                 <div role='button' onClick={partnersList} className="w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, partnersList)}>
                   <div className="flex justify-center mb-5">
