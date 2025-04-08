@@ -205,7 +205,8 @@ function UploadCertificate({ closePopup, popupData, request }) {
 
     const successcustomStyle = {
         outerDiv: "!flex !justify-center !inset-0",
-        innerDiv: "!flex !justify-between !items-center !rounded-none !md:w-[25rem] !w-full !min-h-[3.2rem] !h-fit !px-4 !py-[10px]"
+        innerDiv: "!flex !justify-between !items-center !rounded-none !md:w-[25rem] !w-full !min-h-[3.2rem] !h-fit !px-4 !py-[10px]",
+        cancelIcon: "!mt-3 !top-1"
     }
 
     return (
