@@ -71,7 +71,7 @@
         "sbiAndDevicePendingApprovalRequestCountDesc": "{{sbiPendingApprovalRequestCount}} SBI and {{devicePendingApprovalRequestCount}} Device requests are currently pending",
         "ftmPendingApprovalRequestCountDesc": "{{ftmPendingApprovalRequestCount}} FTM Chip requests are currently pending",
         "requestCountFetchError": "An Unexpected error occured while fetching request count",
-        "trustCertExpiryCountDesc": "{{rootCertExpiryCount}} Root CA Certificates | {{intermediateCertExpiryCount}} Intermediate CA Certificates are expiring soon",
+        "trustCertExpiryCountDesc": "{{rootCertExpiryCount}} Root CA Certificates and {{intermediateCertExpiryCount}} Intermediate CA Certificates are expiring soon",
         "partnerCertExpiryCountDesc": "{{partnerCertExpiryCount}} Partner Certificates are expiring soon"
     },
     "header": {
@@ -1250,8 +1250,8 @@
         "PMS_DEVICE_ERROR_025": "This device cannot be rejected as it does not have any SBI associated to it.",
         "PMS_DEVICE_ERROR_026": "Request status should be De-Activate",
         "PMS_DEVICE_ERROR_027": "Request status should be either approved or rejected",
-        "PMS_DEVICE_ERROR_028": "Unable to add device because the associated SBI is already rejected.",
-        "PMS_DEVICE_ERROR_029": "Unable to add device because the associated SBI is already deactivated.",
+        "PMS_DEVICE_ERROR_028": "The associated SBI is already rejected.",
+        "PMS_DEVICE_ERROR_029": "The associated SBI is already deactivated.",
         "PMS_SF_ERROR_001": "Error while fetching devices list for SBI.",
         "PMS_SBI_ERROR_001": "Unable to fetch SBI details.",
         "PMS_REQUEST_ERROR_001": "Invalid request.",
