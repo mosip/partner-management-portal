@@ -612,4 +612,5 @@ public class PolicyGroupPage extends BasePage{
 	public void clickOnSomethingWentWrongHomeBtn() {
 		clickOnElement(somethingWentWrongHomeBtn);
 	}
+
 }

@@ -414,6 +414,10 @@ public class GlobalConstants {
 	public static final String isSaveAsDraftButtonEnabled = "Verify if save as draft displayed";
 	public static final String isPolicyDataUploadedSuccessMessageDisplayed = "Verify if policy data uploaded success message displayed";
 	public static final String isPublishButtonDisplayed = "Verify if publish button displayed";
+	public static final String isDatasharePublishButtonDisplayed = "Verify if datashare publish button displayed";
+	public static final String isDatashareDeactivateButtonDisplayed = "Verify if datashare deactivate button displayed";
+	public static final String isDatashareCloneButtonDisplayed = "Verify if datashare clone button displayed";
+	public static final String isDatashareViewButtonDisplayed = "Verify if datashare view button displayed";
 	public static final String isPublishPolicyButtonDisplayed = "Verify if publish policy button displayed";
 	public static final String isPublishPolicyCancelButtonDisplayed = "Verify if publish policy cancel button displayed";
 	public static final String isPublishPolicyInfoMessageisplayed = "Verify if publish policy info message displayed";
@@ -595,7 +599,7 @@ public class GlobalConstants {
 	public static final String isKeycloakPageDisplayed = "Verify if keycloak page displayed";
 	public static final String isPublishButtonEnabled = "Verify if publish button enabled";
 	public static final String isPolicyGroupDropdownEnabled = "Verify if policy group dropdown enabled";
-	
+
 	
 	public static final String APPID = "appId";
 	public static final String PASSWORD = "password";

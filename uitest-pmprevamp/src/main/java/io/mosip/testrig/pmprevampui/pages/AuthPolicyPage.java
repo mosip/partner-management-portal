@@ -463,7 +463,10 @@ public class AuthPolicyPage extends BasePage {
 	
 	@FindBy(id = "confirmation_home_btn")
 	private WebElement editSuccessHomeButton;
-
+	
+	@FindBy(id = "sub_title_home_btn")
+	private WebElement subTitleHomeButton;
+	
 	public AuthPolicyPage(WebDriver driver) {
 		super(driver);
 	}
@@ -590,7 +593,7 @@ public class AuthPolicyPage extends BasePage {
 	public boolean isPolicyGroupPlaceHolderDisplayed() {
 		return isElementDisplayed(policyGroupPlaceholder);
 	}
-	
+
 	public void selectPolicyGroup(String policyGroupValue) {
 		clickOnElement(policyGroupDropdown);
 		enter(policyGroupDropdownSearchInput,policyGroupValue);
@@ -987,7 +990,7 @@ public class AuthPolicyPage extends BasePage {
 	public void clickOnExpandIcon() {
 		clickOnElement(expandForPage);
 	}
-	
+
 	public boolean isPolicyPublishButtonDisplayed() {
 		return isElementDisplayed(policyPublishButton);
 	}

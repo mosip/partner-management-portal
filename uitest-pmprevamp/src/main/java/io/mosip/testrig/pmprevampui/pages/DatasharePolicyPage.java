@@ -11,6 +11,9 @@ public class DatasharePolicyPage extends BasePage {
 	@FindBy(id = "create_auth_policy_btn")
 	private WebElement createDatasharePolicyButton;
 	
+	@FindBy(id = "sub_title_home_btn")
+	private WebElement subTitleHomeButton;
+
 	@FindBy(id = "sub_title_btn")
 	private WebElement subTitleButton;
 	
@@ -217,11 +220,32 @@ public class DatasharePolicyPage extends BasePage {
 	
 	@FindBy(id = "policy_deactivate_btn")
 	private WebElement deactivateButton;
+
+	private WebElement viewDatasharePolicyPageTitle;
+	
+	@FindBy(id = "auth_Policy_view_back_btn")
+	private WebElement datashareViewBackButton;
+	
+	@FindBy(id = "policies_list_view1")
+	private WebElement datashareActionButton;
+	
+	@FindBy(id = "policy_publish_btn")
+	private WebElement datasharePublishButton;
+	
+	@FindBy(id = "policy_details_view_btn")
+	private WebElement datashareViewButton;
+	
+	@FindBy(id = "policy_replicate_btn")
+	private WebElement datashareCloneButton;
+	
+	@FindBy(id = "policy_deactivate_btn")
+	private WebElement datashareDeactivateButton;
 	
 	@FindBy(xpath = "//h3[text()='Publish Policy']")
 	private WebElement publishConfirmationPopup;
 	
 	@FindBy(xpath = "//p[contains(text(), 'By clicking ‘Publish,’ the policy - ')]")
+
 	private WebElement publishPolicyInfoMessage;
 	
 	@FindBy(id = "publish_policy_cancel")
@@ -280,6 +304,9 @@ public class DatasharePolicyPage extends BasePage {
 	
 	@FindBy(xpath = "//p[text()='No Results Found']")
 	private WebElement noResultFound;
+
+	@FindBy(id = "sub_title_btn")
+	private WebElement subtitleButton;
 	
 	@FindBy(id = "sub_title_home_btn")
 	private WebElement homeButton;
@@ -413,6 +440,10 @@ public class DatasharePolicyPage extends BasePage {
 		clickOnElement(createDatasharePolicyButton);
 	}
 	
+	public boolean isSubTitleHomeDisplayed() {
+		return isElementDisplayed(subTitleHomeButton);
+	}
+	
 	public boolean isSubTitleDisplayed() {
 		return isElementDisplayed(subTitleButton);
 	}
@@ -449,15 +480,10 @@ public class DatasharePolicyPage extends BasePage {
 		return isElementDisplayed(policyGroupDescription);
 	}
 	
-	public void selectPolicyGroupDropdown(String value) {
+	public void selectPolicyGroup(String value) {
 		clickOnElement(policyGroupDropdown);
 		enter(policyGroupDropdownSearchInput,value);
 		clickOnElement(policyGroupDropdownOption1);
-	}
-	
-	public void enterDeactivatedPolicyGroup(String value) {
-		clickOnElement(policyGroupDropdown);
-		enter(policyGroupDropdownSearchInput,value);
 	}
 	
 	public boolean isPolicyNameTextLabelDisplayed() {
@@ -566,6 +592,126 @@ public class DatasharePolicyPage extends BasePage {
 	
 	public void clickOnClearForm() {
 		clickOnElement(clearForm);
+	}
+	
+	public void clickOnDatashareViewBackButton() {
+		clickOnElement(datashareViewBackButton);
+	}
+	
+	public void clickOnDatashareActionButton() {
+		clickOnElement(datashareActionButton);
+	}
+	
+	public void clickOnDatasharePublishButton() {
+		clickOnElement(datasharePublishButton);
+	}
+	
+	public boolean isDatasharePublishButtonDisplayed() {
+		return isElementDisplayed(datasharePublishButton);
+	}
+	
+	public boolean isDatashareViewButtonDisplayed() {
+		return isElementDisplayed(datashareViewButton);
+	}
+	
+	public boolean isDatashareCloneButtonDisplayed() {
+		return isElementDisplayed(datashareCloneButton);
+	}
+	
+	public boolean isDatashareDeactivateButtonDisplayed() {
+		return isElementDisplayed(datashareDeactivateButton);
+	}
+	
+	public void clickOnDatashareDeactivateButton() {
+		clickOnElement(datashareDeactivateButton);
+	}
+	
+	public void clickOnFilterButton() {
+		clickOnElement(filterButton);
+	}
+	
+	public boolean isFilterResetButtonEnabled() {
+		return isElementEnabled(filterResetButton);
+	}
+	
+	public void clickOnFilterResetButton() {
+		clickOnElement(filterResetButton);
+	}
+	
+	public void clickOnPolicyGroupFilter(String value) {
+		enter(policyGroupFilter,value);
+	}
+	
+	public void clickOnPolicyNameFilter(String value) {
+		enter(policyNameFilter,value);
+	}
+	
+	public void selectDeactivateStatusFilter() {
+		clickOnElement(policyStatusFilter);
+		clickOnElement(deactivateStatusButton);
+	}
+	
+	public void clickOnApplyFilterButton() {
+		clickOnElement(applyFilterButton);
+	}
+	
+	public boolean isPolicyStatusActivateDisplayed() {
+		return isElementDisplayed(activateStatus);
+	}
+	
+	public boolean isPolicyStatusDeactivateDisplayed() {
+		return isElementDisplayed(deactivateStatus);
+	}
+	
+	public void clickOnDeactivatedPolicy() {
+		clickOnElement(datasharePolicy1);
+	}
+	
+	public boolean isApplyFilterButtonEnabled() {
+		return isElementEnabled(applyFilterButton);
+	}
+	
+	public boolean isNoResultsFoundMessageDisplayed() {
+		return isElementDisplayed(noResultFound);
+	}
+	
+	public void clickOnPolicyIdAscIcon() {
+		clickOnElement(policyIdAscIcon);
+	}
+	
+	public void clickOnPolicyIdDescIcon() {
+		clickOnElement(policyIdDescIcon);
+	}
+	
+	public void clickOnPolicyNameAscIcon() {
+		clickOnElement(policyNameAscIcon);
+	}
+	
+	public void clickOnPolicyNameDescIcon() {
+		clickOnElement(policyNameDescIcon);
+	}
+	
+	public void clickOnPolicyDescriptionAscIcon() {
+		clickOnElement(policyDescriptionAscIcon);
+	}
+	
+	public void clickOnPolicyDescriptionDescIcon() {
+		clickOnElement(policyDescriptionDescIcon);
+	}
+	
+	public void clickOnDatashareViewButton() {
+		clickOnElement(datashareViewButton);
+	}
+	
+	public void selectPolicyGroupDropdown(String value) {
+		clickOnElement(policyGroupDropdown);
+		enter(policyGroupDropdownSearchInput,value);
+		clickOnElement(policyGroupDropdownOption1);
+	}
+	
+	public void enterDeactivatedPolicyGroup(String value) {
+		clickOnElement(policyGroupDropdown);
+		enter(policyGroupDropdownSearchInput,value);
 	}
 	
 	public boolean isCancelFormDisplayed() {
@@ -768,78 +914,7 @@ public class DatasharePolicyPage extends BasePage {
 		clickOnElement(deactivateButton);
 	}
 	
-	public void clickOnFilterButton() {
-		clickOnElement(filterButton);
-	}
-	
-	public boolean isFilterResetButtonEnabled() {
-		return isElementEnabled(filterResetButton);
-	}
-	
-	public void clickOnFilterResetButton() {
-		clickOnElement(filterResetButton);
-	}
-	
-	public void clickOnPolicyGroupFilter(String value) {
-		enter(policyGroupFilter,value);
-	}
-	
-	public void enterPolicyNameInFilter(String value) {
-		enter(policyNameFilter,value);
-	}
-	
-	public void selectDeactivateStatusFilter() {
-		clickOnElement(policyStatusFilter);
-		clickOnElement(deactivateStatusButton);
-	}
-	
-	public void clickOnApplyFilterButton() {
-		clickOnElement(applyFilterButton);
-	}
-	
-	public boolean isPolicyStatusActivateDisplayed() {
-		return isElementDisplayed(activateStatus);
-	}
-	
-	public boolean isPolicyStatusDeactivateDisplayed() {
-		return isElementDisplayed(deactivateStatus);
-	}
-	
-	public void clickOnDeactivatedPolicy() {
-		clickOnElement(datasharePolicy1);
-	}
-	
-	public boolean isApplyFilterButtonEnabled() {
-		return isElementEnabled(applyFilterButton);
-	}
-	
-	public boolean isNoResultsFoundMessageDisplayed() {
-		return isElementDisplayed(noResultFound);
-	}
-	
-	public void clickOnPolicyIdAscIcon() {
-		clickOnElement(policyIdAscIcon);
-	}
-	
-	public void clickOnPolicyIdDescIcon() {
-		clickOnElement(policyIdDescIcon);
-	}
-	
-	public void clickOnPolicyNameAscIcon() {
-		clickOnElement(policyNameAscIcon);
-	}
-	
-	public void clickOnPolicyNameDescIcon() {
-		clickOnElement(policyNameDescIcon);
-	}
-	
-	public void clickOnPolicyDescriptionAscIcon() {
-		clickOnElement(policyDescriptionAscIcon);
-	}
-	
-	public void clickOnPolicyDescriptionDescIcon() {
-		clickOnElement(policyDescriptionDescIcon);
-	}
+
 	
 	public void clickOnPolicyGroupNameAscIcon() {
 		clickOnElement(policyGroupNameAscIcon);
@@ -1132,5 +1207,4 @@ public class DatasharePolicyPage extends BasePage {
 	public void clickOnHomeButton() {
 		clickOnElement(homeButton);
 	}
-	
 }
