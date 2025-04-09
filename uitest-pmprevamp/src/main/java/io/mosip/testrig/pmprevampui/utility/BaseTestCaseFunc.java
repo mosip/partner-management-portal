@@ -225,7 +225,7 @@ public class BaseTestCaseFunc {
 		JSONObject request = new JSONObject();
 		request.put("address", "Bangalore");
 		request.put("contactNumber", "8553967572");
-		request.put("emailId", "automationpmpui-revampui001317281@automationlabs.com");
+		request.put("emailId", "automationpmpui-revamp"+ BaseClass.data +"@automationlabs.com");
 		request.put("organizationName","AABBCC");
 		request.put("partnerId","pmpui-revamp");
 		request.put("partnerType","Auth_Partner");

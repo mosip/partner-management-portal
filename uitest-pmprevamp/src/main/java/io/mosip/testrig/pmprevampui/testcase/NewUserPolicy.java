@@ -112,7 +112,7 @@ public class NewUserPolicy extends BaseClass {
 		dashboardpage = registerPage.clickSubmitButton();
 
 		assertTrue(dashboardpage.isSelectPolicyGroupPopUpDisplayed(), GlobalConstants.isSelectPolicyGroupPopUpDisplayed);
-		dashboardpage.selectSelectPolicyGroupDropdown("0"+ data+"n");
+		dashboardpage.selectPolicyGroupDropdown("0"+ data+"n");
 
 		assertTrue(dashboardpage.isSubmitButtonSelectPolicyGroupPopUpDisplayed(), GlobalConstants.isSubmitButtonDisplayed);
 		dashboardpage.clickOnSubmitButton();

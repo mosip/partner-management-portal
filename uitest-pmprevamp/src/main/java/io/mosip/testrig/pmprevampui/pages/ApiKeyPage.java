@@ -198,10 +198,10 @@ public class ApiKeyPage extends BasePage {
 	@FindBy(id = "generate_api_key_btn")
 	private WebElement apiKeyListPageGenerateApiKeyBtn;
 	
-	@FindBy(xpath = "//*[contains(text(), 'Select Partner ID')]")
+	@FindBy(xpath = "//span[contains(text(), 'Select Partner ID')]")
 	private WebElement partnerIdHelpText;
 	
-	@FindBy(xpath = "//*[contains(text(), 'Select policy for which API Key is required')]")
+	@FindBy(xpath = "//span[contains(text(), 'Select policy for which API Key is required')]")
 	private WebElement policyNameHelpText;
 
 	@FindBy(id = "generate_clear_form")
@@ -210,7 +210,7 @@ public class ApiKeyPage extends BasePage {
 	@FindBy(id = "generate_cancel_btn")
 	private WebElement cancelButton;
 	
-	@FindBy(xpath = "//*[contains(text(), 'Entered API Key name already exists. Provide a unique API Key name and submit.')]")
+	@FindBy(xpath = "//p[contains(text(), 'Entered API Key name already exists. Provide a unique API Key name and submit.')]")
 	private WebElement duplicateApiKeyNameErrorMessage;
 	
 	@FindBy(id = "error_close_btn")
@@ -219,10 +219,10 @@ public class ApiKeyPage extends BasePage {
 	@FindBy(id = "confirmation_home_btn")
 	private WebElement confirmationHomeButton;
 	
-	@FindBy(xpath = "//*[contains(text(), 'Do you want to Deactivate API Key')]")
+	@FindBy(xpath = "//p[contains(text(), 'Do you want to Deactivate API Key')]")
 	private WebElement apiKeyDeactivateConfirmationText;
 	
-	@FindBy(xpath = "//*[contains(text(), 'On clicking Confirm, you will not be able to use the API Key for authentication anymore.')]")
+	@FindBy(xpath = "//p[contains(text(), 'On clicking Confirm, you will not be able to use the API Key for authentication anymore.')]")
 	private WebElement apiKeyDeactivationInfoText;
 	
 	@FindBy(id = "deactivate_cancel_btn")
@@ -237,13 +237,13 @@ public class ApiKeyPage extends BasePage {
 	@FindBy(id = "sub_title_home_btn")
 	private WebElement breadcomb;
 	
-	@FindBy(xpath = "//*[contains(text(), 'Deactivated')]")
+	@FindBy(xpath = "//div[contains(text(), 'Deactivated')]")
 	private WebElement apiKeyStatus;
 	
-	@FindBy(xpath = "//*[contains(text(), 'No Data Available.')]")
+	@FindBy(xpath = "//p[contains(text(), 'No Data Available.')]")
 	private WebElement noDataInApiKeyFilterDropdown;
 	
-	@FindBy(xpath = "//*[contains(text(), 'Items per page')]")
+	@FindBy(xpath = "//h6[contains(text(), 'Items per page')]")
 	private WebElement itemsPerPagePrefix;
 	
 	@FindBy(id = "pagination_select_record_per_page")
@@ -261,15 +261,15 @@ public class ApiKeyPage extends BasePage {
 	@FindBy(id = "api_key_name_filter_search_input")
 	private WebElement apiKeySearchTextBox;
 	
-	@FindBy(xpath = "//*[contains(text(), 'Select Status')]")
+	@FindBy(xpath = "//button[contains(text(), 'Select Status')]")
 	private WebElement clearStatus;
 	
 	public ApiKeyPage(WebDriver driver) {
 		super(driver);
 	}
 
-	public void enterNameOfApiKeyTextBox(String value) {
-		enter(enterNameOfApiKeyTextBox, value);
+	public void enterNameOfApiKeyTextBox(String apiKeyTextBoxValue) {
+		enter(enterNameOfApiKeyTextBox, apiKeyTextBoxValue);
 	}
 
 	public void selectPartnerIdDropdown() {
@@ -293,6 +293,11 @@ public class ApiKeyPage extends BasePage {
 		clickOnElement(policyNameDropdown);
 		enter(generatePolicyNameSearchInputBox,value);
 		clickOnElement(generatePolicyNameOption1);
+	}
+	
+	public void enterDeactivePolicyNameInDropdown(String value) {
+		clickOnElement(policyNameDropdown);
+		enter(generatePolicyNameSearchInputBox,value);
 	}
 
 	public boolean isGenerateAPIKeyDisplayed() {
@@ -411,7 +416,7 @@ public class ApiKeyPage extends BasePage {
 		return isElementDisplayed(status_asc_icon);
 	}
 
-	public boolean isFilterButtonButtonEnabled() {
+	public boolean isFilterButtonEnabled() {
 		return isElementEnabled(filterButton);
 	}
 
@@ -516,7 +521,7 @@ public class ApiKeyPage extends BasePage {
 		clickOnElement(viewApiKeyBackButton);
 	}
 	
-	public boolean isnoDataAvailableTextDisplayed() {
+	public boolean isNoDataAvailableTextDisplayed() {
 		return isElementDisplayed(noDataAvailableText);
 	}
 	

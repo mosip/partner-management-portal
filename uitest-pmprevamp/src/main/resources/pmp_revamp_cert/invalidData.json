@@ -1,0 +1,59 @@
+{
+    [  
+    {
+      "attributeName": "city",
+      "source": [
+        {
+          "attribute": "city"
+        }
+      ],
+      "encrypted": true
+    },
+    {
+      "attributeName": "postalCode",
+      "source": [
+        {
+          "attribute": "postalCode"
+        }
+      ],
+      "encrypted": true
+    },
+    {
+      "attributeName": "zone",
+      "source": [
+        {
+          "attribute": "zone"
+        }
+      ],
+      "encrypted": true
+    },
+    {
+      "attributeName": "preferredLang",
+      "source": [
+        {
+          "attribute": "preferredLang"
+        }
+      ],
+      "encrypted": false
+    },
+    {
+      "attributeName": "individualBiometrics",
+      "group": "CBEFF",
+      "source": [
+        {
+          "attribute": "individualBiometrics"
+        }
+      ],
+      "encrypted": true,
+      "format": "extraction"
+    }
+  ],
+  "dataSharePolicies": {
+    "typeOfShare": "Data Share",
+    "validForInMinutes": "30",
+    "transactionsAllowed": "2",
+    "encryptionType": "Partner Based",
+    "shareDomain": "datashare.datashare",
+    "source": "ID Repository"
+  }
+}

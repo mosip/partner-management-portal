@@ -21,7 +21,7 @@ public class DashboardPage extends BasePage {
 	@FindBy(xpath = "//div[@class='relative w-full']/button")
 	private WebElement selectPolicyGroupDropdown;
 
-	@FindBy(xpath = "//*[text()='No Data Available.']")
+	@FindBy(xpath = "//p[text()='No Data Available.']")
 	private WebElement noDataAvailableText;
 
 	@FindBy(id = "select_policy_group_dropdown_search_input")
@@ -78,25 +78,25 @@ public class DashboardPage extends BasePage {
 	@FindBy(id = "select_policy_group_dropdown_option1")
 	private WebElement selectPolicyGrouDropdownOption1;
 
-	@FindBy(xpath = "//*[text()='Certificate Trust Store']")
+	@FindBy(xpath = "//h5[text()='Certificate Trust Store']")
 	private WebElement RootOFTrustCertText;
 
 	@FindBy(id = "rootTrustList.uploadRootCaTrust")
 	private WebElement rootCertificateUploadButton;
 
-	@FindBy(xpath = "//*[text()='Policies']")
+	@FindBy(xpath = "//h5[text()='Policies']")
 	private WebElement policyButton;
 
-	@FindBy(xpath = "//*[text()='Partner - Policy Linking']")
+	@FindBy(xpath = "//h5[text()='Partner - Policy Linking']")
 	private WebElement PartnerPolicyMappingTab;
 
-	@FindBy(xpath = "//*[text()='SBI - Device']")
+	@FindBy(xpath = "//h5[text()='SBI - Device']")
 	private WebElement sbiDevicesButton;
 
 	@FindBy(id = "dashboard_partner_certificate_list_header")
 	private WebElement dashboardPartnerCertificateListHeader;
 
-	@FindBy(xpath = "//*[text()='FTM Chip']")
+	@FindBy(xpath = "//h5[text()='FTM Chip']")
 	private WebElement FTMChipTab;
 
 	@FindBy(id = "admin_partner_certificate_list_icon")
@@ -128,6 +128,9 @@ public class DashboardPage extends BasePage {
 	
 	@FindBy(id = "footer_contact_us_link")
 	private WebElement contactusLink;
+	
+	@FindBy(xpath = "//h5[text()='Authentication Services']")
+	private WebElement authenticationServices;
 
 	public DashboardPage(WebDriver driver) {
 		super(driver);
@@ -154,21 +157,21 @@ public class DashboardPage extends BasePage {
 		return isElementDisplayed(submitButton);
 	}
 
-	public void selectSelectPolicyGroupDropdown(String value) {
+	public void selectPolicyGroupDropdown(String policyGroupValue) {
 		clickOnElement(selectPolicyGroupDropdown);
 		if (!isElementDisplayed(SearchBox)) {
 			clickOnElement(selectPolicyGroupDropdown);
 		}
-		enter(SearchBox, value);
-		String val = "'" + value + "'";
+		enter(SearchBox, policyGroupValue);
+		String val = "'" + policyGroupValue + "'";
 //		click(By.xpath("//*[contains(text(),"+val+")]"));
 		clickOnElement(selectPolicyGrouDropdownOption1);
 	}
 
-	public void selectSelectPolicyGroupDropdownForInvalid(String value) {
+	public void selectPolicyGroupDropdownForInvalid(String policyGroupValue) {
 		clickOnElement(selectPolicyGroupDropdown);
-		enter(SearchBox, value);
-		String val = "'" + value + "'";
+		enter(SearchBox, policyGroupValue);
+		String val = "'" + policyGroupValue + "'";
 //		clickOnElement(value);
 	}
 
@@ -350,11 +353,19 @@ public class DashboardPage extends BasePage {
 	}
 	
 	public void clickOnContactusLink() {
-		clickOnElement(contactusLink);
-		
+		clickOnElement(contactusLink);	
 	}
+	
 	public boolean isSideNavigationHomeIconDisplayed() {
 		return isElementEnabled(homeOptionOfHamburger);
+	}
 	
+	public boolean isAuthenticationServicesDisplayed() {
+		return isElementDisplayed(authenticationServices);
+	}
+	
+	public OidcClientPage clickOnAuthenticationServices() {
+		clickOnElement(authenticationServices);
+		return new OidcClientPage(driver);
 	}
 }

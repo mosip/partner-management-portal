@@ -111,7 +111,7 @@ public class RegisterNewUser extends BaseClass {
 		dashboardpage = registerPage.clickSubmitButton();
 
 		assertTrue(dashboardpage.isSelectPolicyGroupPopUpDisplayed(), GlobalConstants.isSelectPolicyGroupPopUpDisplayed);
-		dashboardpage.selectSelectPolicyGroupDropdown("0"+ data);
+		dashboardpage.selectPolicyGroupDropdown("0"+ data);
 
 		assertTrue(dashboardpage.isSubmitButtonSelectPolicyGroupPopUpDisplayed(), GlobalConstants.isSubmitButtonDisplayed);
 		dashboardpage.clickOnSubmitButton();

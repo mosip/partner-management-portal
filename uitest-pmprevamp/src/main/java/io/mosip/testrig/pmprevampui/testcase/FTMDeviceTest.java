@@ -120,7 +120,7 @@ public class FTMDeviceTest extends BaseClass {
 		
 		ftmPage.EnterInAddFtmMakeBox(data);
 		ftmPage.EnterInAddFtmModelBox(data);
-		BasePage.NavigateBack();
+		BasePage.navigateBack();
 		
 		ftmPage.clickOnBlockMesssageProceed();
 		assertTrue(partnerCertificatePage.isPartnerCertificatePageDisplayed(), GlobalConstants.isPartnerCertificatePageDisplayed);
@@ -280,7 +280,7 @@ public class FTMDeviceTest extends BaseClass {
 		
 		loginpage.enterUserName("pmpui-ftm");
 		loginpage.enterPassword(password);
-		loginpage.ClickOnLoginButton();
+		loginpage.clickOnLoginButton();
 		
 		partnerCertificatePage.isDashboardFtmChipProviderCardDisplayed();
 		partnerCertificatePage.clickOnFtmChipProviderCard();
@@ -348,7 +348,7 @@ public class FTMDeviceTest extends BaseClass {
 		
 		loginpage.enterUserName(userid);
 		loginpage.enterPassword(password);
-		loginpage.ClickOnLoginButton();
+		loginpage.clickOnLoginButton();
 		dashboardpage.clickOnFTMChipTab();
 		ftmPage.clickOnFilterButton();
 		assertTrue(ftmPage.isListOfFtmChipDisplayed(), GlobalConstants.isListOfFtmChipTextDisplayed);
@@ -403,7 +403,7 @@ public class FTMDeviceTest extends BaseClass {
 		
 		loginpage.enterUserName("pmpui-ftm");
 		loginpage.enterPassword(password);
-		loginpage.ClickOnLoginButton();
+		loginpage.clickOnLoginButton();
 		
 		dashboardpage.clickOnDashboardFtmChipproviderCardHeader();
 		assertTrue(ftmPage.isApprovedTextDisplayed(), GlobalConstants.isApproveTextDisplayed);
@@ -456,7 +456,7 @@ public class FTMDeviceTest extends BaseClass {
 		
 		loginpage.enterUserName("pmpui-ftm");
 		loginpage.enterPassword(password);
-		loginpage.ClickOnLoginButton();
+		loginpage.clickOnLoginButton();
 		
 		partnerCertificatePage.isDashboardFtmChipProviderCardDisplayed();
 		partnerCertificatePage.clickOnFtmChipProviderCard();
@@ -494,7 +494,7 @@ public class FTMDeviceTest extends BaseClass {
 		
 		loginpage.enterUserName(userid);
 		loginpage.enterPassword(password);
-		loginpage.ClickOnLoginButton();
+		loginpage.clickOnLoginButton();
 		dashboardpage.clickOnFTMChipTab();
 		ftmPage.clickOnFilterButton();
 		assertTrue(ftmPage.isFilterResetButtonDisplayed(), GlobalConstants.isResetFiletrButtonDisplayed);
@@ -535,7 +535,7 @@ public class FTMDeviceTest extends BaseClass {
 		
 		loginpage.enterUserName("pmpui-ftm");
 		loginpage.enterPassword(password);
-		loginpage.ClickOnLoginButton();
+		loginpage.clickOnLoginButton();
 		
 		dashboardpage.clickOnDashboardFtmChipproviderCardHeader();
 		assertTrue(ftmPage.isRejectedTextDisplayed(), GlobalConstants.isRejectedTextDisplayed);
@@ -566,7 +566,7 @@ public class FTMDeviceTest extends BaseClass {
 		
 		loginpage.enterUserName("pmpui-ftm");
 		loginpage.enterPassword(password);
-		loginpage.ClickOnLoginButton();
+		loginpage.clickOnLoginButton();
 		
 		partnerCertificatePage.isDashboardFtmChipProviderCardDisplayed();
 		partnerCertificatePage.clickOnFtmChipProviderCard();
@@ -604,7 +604,7 @@ public class FTMDeviceTest extends BaseClass {
 		
 		loginpage.enterUserName(userid);
 		loginpage.enterPassword(password);
-		loginpage.ClickOnLoginButton();
+		loginpage.clickOnLoginButton();
 		dashboardpage.clickOnFTMChipTab();
 		ftmPage.clickOnFilterButton();
 		assertTrue(ftmPage.isFilterResetButtonDisplayed(), GlobalConstants.isResetFiletrButtonDisplayed);
@@ -627,8 +627,8 @@ public class FTMDeviceTest extends BaseClass {
 		ftmPage.clickOnApplyFilterButton();
 		assertTrue(ftmPage.isDeactivatedTextDisplayed(), GlobalConstants.isDeactivatedTextDisplayed);
 		
-		BasePage.NavigateBack();
-		BasePage.NavigateForword();
+		BasePage.navigateBack();
+		BasePage.navigateForword();
 		assertTrue(ftmPage.isDeactivatedTextDisplayed(), GlobalConstants.isDeactivatedTextDisplayed);
 		
 		dashboardpage.clickOnProfileDropdown();
@@ -638,7 +638,7 @@ public class FTMDeviceTest extends BaseClass {
 		
 		loginpage.enterUserName("pmpui-ftm");
 		loginpage.enterPassword(password);
-		loginpage.ClickOnLoginButton();
+		loginpage.clickOnLoginButton();
 		
 		dashboardpage.clickOnDashboardFtmChipproviderCardHeader();
 		assertTrue(ftmPage.isDeactivatedTextDisplayed(), GlobalConstants.isDeactivatedTextDisplayed);
@@ -678,7 +678,7 @@ public class FTMDeviceTest extends BaseClass {
 		
 		loginpage.enterUserName("pmpui-ftm");
 		loginpage.enterPassword(password);
-		loginpage.ClickOnLoginButton();
+		loginpage.clickOnLoginButton();
 		
 		partnerCertificatePage.isDashboardFtmChipProviderCardDisplayed();
 		partnerCertificatePage.clickOnFtmChipProviderCard();
@@ -714,7 +714,7 @@ public class FTMDeviceTest extends BaseClass {
 		
 		loginpage.enterUserName("pmpui-revamp");
 		loginpage.enterPassword(password);
-		loginpage.ClickOnLoginButton();
+		loginpage.clickOnLoginButton();
 		dashboardpage.clickOnFTMChipTab();
 		
 		ftmPage.clickOnFtmListActionMenuEllipsisButton();
