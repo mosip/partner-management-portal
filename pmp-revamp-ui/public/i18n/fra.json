@@ -71,7 +71,8 @@
         "sbiAndDevicePendingApprovalRequestCountDesc": "{{sbiPendingApprovalRequestCount}} demandes SBI et {{devicePendingApprovalRequestCount}} demandes d'appareil sont actuellement en attente",
         "ftmPendingApprovalRequestCountDesc": "{{ftmPendingApprovalRequestCount}} demandes de puce FTM sont actuellement en attente",
         "requestCountFetchError": "Une erreur inattendue s'est produite lors de la récupération du nombre de requêtes",
-        "trustCertExpiryCountDesc": "{{rootCertExpiryCount}} Certificats CA racine | {{intermediateCertExpiryCount}} Les certificats CA intermédiaires expirent bientôt"
+        "trustCertExpiryCountDesc": "Les certificats d'autorité de certification racine {{rootCertExpiryCount}} et les certificats d'autorité de certification intermédiaire {{intermediateCertExpiryCount}} expireront bientôt",
+        "partnerCertExpiryCountDesc": "{{partnerCertExpiryCount}} Les certificats partenaires expirent bientôt"
     },
     "header": {
         "userProfile": "Profil de l'utilisateur",
@@ -951,18 +952,21 @@
         "notification": "Notifications",
         "rootCertExpiry": "Expiration du certificat CA racine",
         "intermediateCertExpiry": "Expiration du certificat CA intermédiaire",
-        "rootCertExpiryDescription": "Le certificat CA racine [{{certificateId}}] du domaine {{partnerDomain}} expirera le {{expiryDateTime}}. Renouvelez-le dès maintenant pour éviter toute interruption.",
-        "intermediateCertExpiryDescription": "Le certificat CA intermédiaire [{{certificateId}}] pour le domaine {{partnerDomain}} expirera le {{expiryDateTime}}. Renouvelez-le dès maintenant pour éviter toute interruption.",
+        "partnerCertExpiry": "Expiration du certificat de partenaire",
+        "rootCertExpiryDescription": "Le certificat CA racine <span className='font-semibold'>{{certificateId}}</span> du domaine <span className='font-semibold'>{{partnerDomain}}</span> expirera le <span className='font-semibold'>{{expiryDateTime}}</span>. Renouvelez-le dès maintenant pour éviter toute interruption.",
+        "intermediateCertExpiryDescription": "Le certificat CA intermédiaire <span className='font-semibold'>{{certificateId}}</span> du domaine <span className='font-semibold'>{{partnerDomain}}</span> expirera le <span className='font-semibold'>{{expiryDateTime}}</span>. Renouvelez-le dès maintenant pour éviter toute interruption.",
+        "partnerCertExpiryDescription": "Le certificat partenaire du domaine <span className='font-semibold'>{{partnerDomain}}</span> expirera le <span className='font-semibold'>{{expiryDateTime}}</span>. Renouvelez-le dès maintenant pour éviter toute interruption.",
         "dismiss": "Rejeter",
         "viewAllNotification": "Afficher toutes les notifications",
-        "expiringItems": "Articles expirés",
-        "partnerCertificates": " - {{partnerCertCount}} Certificats partenaires",
-        "ftmCertificates": " - {{ftmCertCount}} Certificats FTM",
-        "sbiDevices": " - {{sbiCount}} Appareils SBI",
-        "apiKeys": " - {{apiKeyCount}} Clés API",
+        "expiringItems": "Résumé hebdomadaire des articles expirés créés par les partenaires",
+        "partnerCertificates": "{{partnerCertCount}} Certificats partenaires",
+        "ftmCertificates": "{{ftmCertCount}} Certificats FTM",
+        "sbiDevices": "{{sbiCount}} Appareils SBI",
+        "apiKeys": "{{apiKeyCount}} Clés API",
         "to": " Taha ",
         "noNotification": "Nous n'allons pas parler",
         "noNotificationDescr": "Vous n'avez aucune notification pour le moment.",
+        "filterNoNotificationTitle": "Aucune notification trouvée",
         "errorInNotifcations": "Erreur lors de la récupération des notifications",
         "errorWhileUpdatingNotificationSeenTime": "Erreur lors de la mise à jour des notifications vues date et heure.",
         "errorInDismiss": "Erreur lors de la suppression de la notification"
@@ -970,9 +974,16 @@
     "notificationsTab": {
         "rootCaCertificate": "Certificat racine CA",
         "intermediateCaCertificate": "Certificat CA intermédiaire",
-        "partner": "Partenaire",
-        "rootCertExpiryDescription": "Le certificat CA racine [{{certificateId}}], délivré à [{{issuedTo}}] par [{{issuedBy}}], pour le domaine {{partnerDomain}}, expirera le {{expiryDateTime}}. Renouvelez-le dès maintenant pour éviter toute interruption.",
-        "intermediateCertExpiryDescription": "Le certificat CA intermédiaire [{{certificateId}}] pour le domaine {{partnerDomain}} expirera le {{expiryDateTime}}. Renouvelez-le maintenant pour éviter les interruptions."
+        "partner": "Résumé hebdomadaire - Partenaire",
+        "rootCertExpiryDescription": "Le certificat CA racine <span className='font-semibold'>{{certificateId}}</span> délivré à <span className='font-semibold'>{{issuedTo}}</span> par <span className='font-semibold'>{{issuedBy}}</span> pour le domaine <span className='font-semibold'>{{partnerDomain}}</span> expirera le <span className='font-semibold'>{{expiryDateTime}}</span>. Renouvelez-le dès maintenant pour éviter toute interruption.",
+        "intermediateCertExpiryDescription": "Le certificat CA intermédiaire <span className='font-semibold'>{{certificateId}}</span> délivré à <span className='font-semibold'>{{issuedTo}}</span> par <span className='font-semibold'>{{issuedBy}}</span> pour le domaine <span className='font-semibold'>{{partnerDomain}}</span> expirera le <span className='font-semibold'>{{expiryDateTime}}</span>. Renouvelez-le dès maintenant pour éviter toute interruption."
+    },
+    "partnerNotificationsTab": {
+        "partnerCertificate":"Certificat de partenaire",
+        "apikey": "Clé API",
+        "ftmCertificate": "Certificat de puce FTM",
+        "sbi": "SBI",
+        "partnerCertExpiryDescription":"Le certificat partenaire délivré à <span className='font-semibold'>{{issuedTo}}</span> par <span className='font-semibold'>{{issuedBy}}</span> pour le domaine <span className='font-semibold'>{{partnerDomain}}</span> expirera le <span className='font-semibold'>{{expiryDateTime}}</span>. Renouvelez-le dès maintenant pour éviter toute interruption."
     },
     "viewAllNotifications": {
         "listOfNotifications": "Liste des notifications",
@@ -986,7 +997,16 @@
         "searchCertificateId": "Rechercher l'ID du certificat",
         "selectPartnerDomain": "Sélectionner le domaine du partenaire",
         "searchIssuedTo": "Rechercher émis à",
-        "searchIssuedBy": "Rechercher émis par"
+        "searchIssuedBy": "Rechercher émis par",
+        "selectExpiryDate": "Rechercher la date d'expiration du certificat",
+        "expiryDate": "Date d'expiration du certificat",
+        "createdFromDate": "Date de création de la notification à partir de",
+        "createdToDate": "Date de création de la notification à",
+        "selectCreatedFromDate": "Date de création de la recherche à partir de",
+        "selectCreatedToDate": "Date de création de la recherche à",
+        "viewExpiringItems": "Afficher les articles expirés",
+        "partnerCertExpiryTitle": "Le certificat du partenaire expire pour {{partnerId}}",
+        "partnerCertExpiryDescription": "Le certificat partenaire <span className='font-semibold'>{{certificateId}}</span> délivré à <span className='font-semibold'>{{issuedTo}}</span> par <span className='font-semibold'>{{issuedBy}}</span> pour le domaine <span className='font-semibold'>{{partnerDomain}}</span> expirera le <span className='font-semibold'>{{expiryDateTime}}</span>. Renouvelez-le dès maintenant pour éviter toute interruption."
     },
     "serverError": {
         "PMS_COR_001": "Paramètre d'entrée manquant",
@@ -1235,8 +1255,8 @@
         "PMS_DEVICE_ERROR_025": "Cet appareil ne peut pas être rejeté car aucun SBI ne lui est associé.",
         "PMS_DEVICE_ERROR_026": "Le statut de la demande doit être Désactiver",
         "PMS_DEVICE_ERROR_027": "Le statut de la demande doit être approuvé ou rejeté",
-        "PMS_DEVICE_ERROR_028": "Impossible d'ajouter un périphérique car le SBI associé est déjà rejeté.",
-        "PMS_DEVICE_ERROR_029": "Impossible d'ajouter un appareil car le SBI associé est déjà désactivé.",
+        "PMS_DEVICE_ERROR_028": "Le SBI associé est déjà rejeté.",
+        "PMS_DEVICE_ERROR_029": "Le SBI associé est déjà désactivé.",
         "PMS_SF_ERROR_001": "Erreur lors de la récupération de la liste des appareils pour SBI.",
         "PMS_SBI_ERROR_001": "Impossible de récupérer les détails SBI.",
         "PMS_REQUEST_ERROR_001": "Requête invalide.",
@@ -1270,7 +1290,7 @@
         "KER-PMS-020": "Le téléchargement de certificats périmés n'est pas autorisé.",
         "KER-CRY-003": "Certificat invalide : corruption de fichier possible, falsification ou format non pris en charge. Assurez-vous qu’il est correctement codé en Base64 et réessayez.",
         "PMS_NOTIFICATION_ERROR_001": "Erreur lors de la mise à jour des notifications date et heure.",
-        "PMS_NOTIFICATION_ERROR_002": "Notification non valide. Valeur attendue : true.",
+        "PMS_NOTIFICATION_ERROR_002": "Horodatage de notification non valide vu.",
         "PMS_NOTIFICATION_ERROR_003": "Les informations utilisateur n'existent pas pour cet utilisateur.",
         "PMS_NOTIFICATION_ERROR_004": "Erreur lors de la récupération des notifications date et heure.",
         "PMS_NOTIFICATION_ERROR_005": "Erreur lors de la récupération des notifications.",

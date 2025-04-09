@@ -201,6 +201,11 @@ function DevicesList() {
             setSelectedDevice({});
             setShowActiveIndexDeactivatePopup(null);
             // Update the specific row in the state with the new status
+            setDevicesList((prevList) =>
+                prevList.map(device =>
+                    device.deviceId === selectedDevice.deviceId ? { ...device, status: "deactivated", isActive: false } : device
+                )
+            );
             setFilteredDevicesList((prevList) =>
                 prevList.map(device =>
                     device.deviceId === selectedDevice.deviceId ? { ...device, status: "deactivated", isActive: false } : device
@@ -290,7 +295,7 @@ function DevicesList() {
                                                             {tableHeaders.map((header, index) => {
                                                                 return (
                                                                     <th key={index} className={`py-4 px-2 text-sm font-semibold text-[#6F6E6E] w-[17%]`}>
-                                                                        <div id={`${header.headerNameKey}_header`} className={`flex items-center gap-x-1 font-semibold ${header.id === "action" && 'justify-center'}`}>
+                                                                        <div id={`${header.headerNameKey}_header`} className={`flex items-center gap-x-1 text-left font-semibold ${header.id === "action" && 'justify-center'}`}>
                                                                             {t(header.headerNameKey)}
                                                                             {(header.id !== "action") && (
                                                                                 <SortingIcon

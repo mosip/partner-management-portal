@@ -15,3 +15,29 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.react-datepicker__close-icon {
+  background-color: white !important;
+  border-radius: 0.375rem;
+  width: 1.5rem !important;
+  height: 2rem !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  padding: 0 !important;
+  font-weight: bold;
+  cursor: pointer;
+  top: 0.125rem !important;
+  right: 0.125rem !important;
+}
+
+.react-datepicker__close-icon::after {
+  background-color: #ffffff !important;
+  color: #020202 !important;
+  font-size: 1rem !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  content: 'x';
+  font-weight: 700 !important;
+}

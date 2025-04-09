@@ -222,6 +222,11 @@ function OidcClientsList() {
             setShowActiveIndexDeactivatePopup(null);
             setSelectedOidcClient({});
             // Update the specific row in the state with the new status
+            setOidcClientsList((prevList) =>
+                prevList.map(client =>
+                    client.clientId === selectedClient.clientId ? { ...client, status: "INACTIVE" } : client
+                )
+            );
             setFilteredOidcClientsList((prevList) =>
                 prevList.map(client =>
                     client.clientId === selectedClient.clientId ? { ...client, status: "INACTIVE" } : client

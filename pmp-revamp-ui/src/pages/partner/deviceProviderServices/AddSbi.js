@@ -136,6 +136,11 @@ function AddSbi() {
         selectionBox: "!top-10"
     };
 
+    const calenderStyleSet = {
+        datePicker: "h-10",
+        outerDiv: "w-[48%]"
+    };
+
     const clickOnSubmit = async () => {
         setIsSubmitClicked(true);
         setErrorCode("");
@@ -276,6 +281,8 @@ function AddSbi() {
                                                 infoKey='addSbis.dateFormatInfoKey'
                                                 containsAsterisk
                                                 id="sbi_created_date_calender"
+                                                styleSet={calenderStyleSet}
+                                                isUsedAsFilter={false}
                                             />
                                             <CalendarInput
                                                 label={t('addSbis.sbiExpiryDate')}
@@ -288,6 +295,8 @@ function AddSbi() {
                                                 infoKey1='addSbis.dateFormatInfoKey'
                                                 containsAsterisk
                                                 id='sbi_expiry_date_calender'
+                                                styleSet={calenderStyleSet}
+                                                isUsedAsFilter={false}
                                             />
                                         </div>
                                     </div>

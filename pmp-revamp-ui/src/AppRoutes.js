@@ -53,6 +53,10 @@ import AllDevicesList from './pages/admin/deviceProviderServices/AllDevicesList.
 import ViewRootTrustNotifications from './pages/admin/notifications/ViewRootTrustNotifications.js';
 import ViewIntermediateTrustNotifications from './pages/admin/notifications/ViewIntermediateTrustNotifications.js';
 import ViewPartnerNotifications from './pages/admin/notifications/ViewPartnerNotifications.js';
+import ViewPartnerCertificateNotifications from './pages/partner/notifications/ViewPartnerCertificateNotifications.js';
+import ViewApiKeyNotifications from './pages/partner/notifications/ViewApiKeyNotifications.js';
+import ViewFtmCertificateNotifications from './pages/partner/notifications/ViewFtmCertificateNotifications.js';
+import ViewSbiNotifications from './pages/partner/notifications/ViewSbiNotifications.js';
 
 function AppRoutes() {
 
@@ -278,16 +282,32 @@ function AppRoutes() {
           element: <GuardedRoute><MainLayout><ViewAdminDeviceDetails /></MainLayout></GuardedRoute>
         },
         {
-          path: 'admin/view-root-certificate-notifications',
+          path: 'admin/notifications/view-root-certificate-expiry',
           element: <GuardedRoute><MainLayout><ViewRootTrustNotifications /></MainLayout></GuardedRoute>,
         },
         {
-          path: 'admin/view-intermediate-certificate-notifications',
+          path: 'admin/notifications/view-intermediate-certificate-expiry',
           element: <GuardedRoute><MainLayout><ViewIntermediateTrustNotifications /></MainLayout></GuardedRoute>,
         },
         {
-          path: 'admin/view-partner-notifications',
+          path: 'admin/notifications/view-partner-created-items-expiry',
           element: <GuardedRoute><MainLayout><ViewPartnerNotifications /></MainLayout></GuardedRoute>,
+        },
+        {
+          path: 'notifications/view-partner-certificate-expiry',
+          element: <GuardedRoute><MainLayout><ViewPartnerCertificateNotifications /></MainLayout></GuardedRoute>,
+        },
+        {
+          path: 'notifications/view-api-key-expiry',
+          element: <GuardedRoute><MainLayout><ViewApiKeyNotifications /></MainLayout></GuardedRoute>,
+        },
+        {
+          path: 'notifications/view-ftm-chip-certificate-expiry',
+          element: <GuardedRoute><MainLayout><ViewFtmCertificateNotifications /></MainLayout></GuardedRoute>,
+        },
+        {
+          path: 'notifications/view-sbi-expiry',
+          element: <GuardedRoute><MainLayout><ViewSbiNotifications /></MainLayout></GuardedRoute>,
         },
         {
           path: 'runtimeError',

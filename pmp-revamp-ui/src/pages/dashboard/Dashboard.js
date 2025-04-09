@@ -39,6 +39,7 @@ function Dashboard() {
   const [ftmPendingApprovalRequestCount, setFtmPendingApprovalRequestCount] = useState();
   const [rootCertExpiryCount, setRootCertExpiryCount] = useState();
   const [intermediateCertExpiryCount, setIntermediateCertExpiryCount] = useState();
+  const [partnerCertExpiryCount, setPartnerCertExpiryCount] = useState();
   let isSelectPolicyPopupVisible = false;
   let isUserConsentGiven = false;
 
@@ -164,19 +165,46 @@ function Dashboard() {
   useEffect(() => {
     const fetchTrustCertExpiryCount = async (certType) => {
       const queryParams = new URLSearchParams();
-      queryParams.append('period', 30);
-      queryParams.append('type', certType);
-      const url = `${getPartnerManagerUrl('/expiring-certs-count', process.env.NODE_ENV)}?${queryParams.toString()}`;
+      queryParams.append('expiryPeriod', 30);
+      queryParams.append('caCertificateType', certType);
+      queryParams.append('pageSize', '2');
+      queryParams.append('pageNo', '0');
+
+      const url = `${getPartnerManagerUrl('/trust-chain-certificates', process.env.NODE_ENV)}?${queryParams.toString()}`;
       try {
         const response = await HttpService.get(url);
         if (response) {
           const responseData = response.data;
           if (responseData && responseData.response) {
-            if (certType === "root") {
-              setRootCertExpiryCount(responseData.response.count);
-            } else if (certType === "intermediate") {
-              setIntermediateCertExpiryCount(responseData.response.count);
+            if (certType === "ROOT") {
+              setRootCertExpiryCount(responseData.response.totalResults);
+            } else if (certType === "INTERMEDIATE") {
+              setIntermediateCertExpiryCount(responseData.response.totalResults);
             }
+          } else {
+            handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+          }
+        } else {
+          setErrorMsg(t('dashboard.requestCountFetchError'));
+        }
+      } catch (err) {
+        if (err.response?.status && err.response.status !== 401) {
+          setErrorMsg(t('dashboard.requestCountFetchError'));
+        }
+        console.error("Error fetching data:", err);
+      }
+    };
+
+    const fetchPartnerCertExpiryCount = async () => {
+      const queryParams = new URLSearchParams();
+      queryParams.append('expiryPeriod', 30);
+      const url = `${getPartnerManagerUrl('/partners/partner-certificates-details', process.env.NODE_ENV)}?${queryParams.toString()}`;
+      try {
+        const response = await HttpService.get(url);
+        if (response) {
+          const responseData = response.data;
+          if (responseData && responseData.response) {
+              setPartnerCertExpiryCount(responseData.response.length)
           } else {
             handleServiceErrors(responseData, setErrorCode, setErrorMsg);
           }
@@ -296,11 +324,14 @@ function Dashboard() {
         console.error("Error fetching data:", err);
       }
     };
-
+    if (!isPartnerAdmin) {
+      fetchPartnerCertExpiryCount();
+    }
     if (isPartnerAdmin) {
+      fetchTrustCertExpiryCount('ROOT');
+      fetchTrustCertExpiryCount('INTERMEDIATE');
+    
       setTimeout(() => {
-        fetchTrustCertExpiryCount('root');
-        fetchTrustCertExpiryCount('intermediate');
         fetchPartnerPolicyMappingRequestCount();
         fetchPendingApprovalSbiCount();
         fetchPendingApprovalDevicesCount();
@@ -359,14 +390,14 @@ function Dashboard() {
   };
 
   const CountWithHover = ({ count, descriptionKey, descriptionParams, isExpiryHover }) => (
-    <div className={`absolute flex items-center -top-3 -right-3 min-w-fit w-10 h-8 ${isExpiryHover ? 'bg-[#FAD6D1]' : 'bg-[#FEF1C6]'} rounded-md text-[#6D1C00] text-sm shadow-md`}>
+    <div onClick={(e) => e.stopPropagation()} className={`absolute flex items-center -top-3 -right-3 min-w-fit w-10 h-8 ${isExpiryHover ? 'bg-[#FAD6D1]' : 'bg-[#FEF1C6]'} rounded-md text-[#6D1C00] text-sm shadow-md`}>
       <div className="relative group flex items-center justify-center w-full" tabIndex="0">
         <span className="font-medium p-2 rounded">
           {count ?? <LoadingCount />}
         </span>
 
         {count !== null && count !== undefined && (
-          <div className={`absolute hidden group-focus:block group-hover:block ${isExpiryHover ? 'bg-[#FAD6D1]' : 'bg-[#FEF1C6]'} text-xs font-semibold p-2 w-40 mt-1 z-10 top-9 right-0 rounded-md shadow-md`}>
+          <div className={`absolute hidden group-focus:block group-hover:block ${isExpiryHover ? 'bg-[#FAD6D1]' : 'bg-[#FEF1C6]'} text-xs text-center font-semibold p-2 w-40 mt-1 z-10 top-9 right-0 rounded-md shadow-md`}>
             {t(descriptionKey, descriptionParams)}
           </div>
         )}
@@ -391,7 +422,7 @@ function Dashboard() {
           </div>
           <div className="flex mt-2 ml-[1.8rem] flex-wrap break-words">
             {!isPartnerAdmin && !isPolicyManager &&
-              < div role='button' id='dashboard_partner_certificate_list_card' onClick={() => partnerCertificatesList()} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => partnerCertificatesList())}>
+              < div role='button' id='dashboard_partner_certificate_list_card' onClick={() => partnerCertificatesList()} className="relative w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => partnerCertificatesList())}>
                 <div className="flex justify-center mb-5">
                   <img id='dashboard_partner_certificated_list_icon' src={partnerCertificateIcon} alt="" className="w-8 h-8" />
                 </div>
@@ -403,10 +434,18 @@ function Dashboard() {
                     {t('dashboard.partnerCertificateDesc')}
                   </p>
                 </div>
+                {partnerCertExpiryCount > 0 && (
+                  <CountWithHover
+                    count={partnerCertExpiryCount}
+                    descriptionKey="dashboard.partnerCertExpiryCountDesc"
+                    descriptionParams={{ partnerCertExpiryCount }}
+                    isExpiryHover={true}
+                  />
+                )}
               </div>
             }
             {!isPartnerAdmin && !isPolicyManager && showPolicies && (
-              <div role='button' id='dashboard_policies_card' onClick={() => policies()} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => policies())}>
+              <div role='button' id='dashboard_policies_card' onClick={() => policies()} className="w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => policies())}>
                 <div className="flex justify-center mb-5">
                   <img id='dashboard_policies_card_icon' src={policiesIcon} alt="" className="w-8 h-8" />
                 </div>
@@ -421,7 +460,7 @@ function Dashboard() {
               </div>
             )}
             {!isPartnerAdmin && !isPolicyManager && showAuthenticationServices && (
-              <div role='button' id='dashboard_authentication_clients_list_card' onClick={() => moveToOidcClientsList(navigate)} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => moveToOidcClientsList(navigate))}>
+              <div role='button' id='dashboard_authentication_clients_list_card' onClick={() => moveToOidcClientsList(navigate)} className="w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => moveToOidcClientsList(navigate))}>
                 <div className="flex justify-center mb-5">
                   <img id='dashboard_authentication_clients_list_icon' src={authServiceIcon} alt="" className="w-8 h-8" />
                 </div>
@@ -436,7 +475,7 @@ function Dashboard() {
               </div>
             )}
             {!isPartnerAdmin && !isPolicyManager && showDeviceProviderServices && (
-              <div role='button' id='dashboard_device_provider_service_card' onClick={deviceProviderServices} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, deviceProviderServices)}>
+              <div role='button' id='dashboard_device_provider_service_card' onClick={deviceProviderServices} className="w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, deviceProviderServices)}>
                 <div className="flex justify-center mb-5">
                   <img id='dashboard_device_provider_service_icon' src={deviceProviderServicesIcon} alt="" className="w-8 h-8" />
                 </div>
@@ -451,7 +490,7 @@ function Dashboard() {
               </div>
             )}
             {!isPartnerAdmin && !isPolicyManager && showFtmServices && (
-              <div role='button' id='dashboard_ftm_chip_provider_card' onClick={ftmChipProviderServices} className="w-[23.5%] min-h-[50%] p-6 mr-3 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, ftmChipProviderServices)}>
+              <div role='button' id='dashboard_ftm_chip_provider_card' onClick={ftmChipProviderServices} className="w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, ftmChipProviderServices)}>
                 <div className="flex justify-center mb-5">
                   <img id='dashboard_ftm_chip_provider_icon' src={ftmServicesIcon} alt="" className="w-8 h-8" />
                 </div>
@@ -465,7 +504,7 @@ function Dashboard() {
                 </div>
               </div>
             )}
-            {isPartnerAdmin && (
+             {isPartnerAdmin && (
               <>
                 <div role='button' onClick={rootTrustCertificateList} className="relative w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, rootTrustCertificateList)}>
                   <div className="flex justify-center mb-5">
@@ -485,15 +524,17 @@ function Dashboard() {
                       rootCertExpiryCount !== undefined &&
                       intermediateCertExpiryCount !== null &&
                       intermediateCertExpiryCount !== undefined
-                        ? rootCertExpiryCount + intermediateCertExpiryCount
+                        ? `${rootCertExpiryCount} | ${intermediateCertExpiryCount}`
                         : null
                     }
                     descriptionKey="dashboard.trustCertExpiryCountDesc"
-                    descriptionParams={{ rootCertExpiryCount, intermediateCertExpiryCount }}
-                    isExpiryHover = {true}
+                    descriptionParams={{
+                      rootCertExpiryCount,
+                      intermediateCertExpiryCount
+                    }}
+                    isExpiryHover
                   />
                 </div>
-
                 <div role='button' onClick={partnersList} className="w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, partnersList)}>
                   <div className="flex justify-center mb-5">
                     <img id='partner_admin_icon' src={partner_admin_icon} alt="" className="w-8 h-8" />

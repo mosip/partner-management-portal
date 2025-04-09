@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../services/UserProfileService.js';
-import { isLangRTL, onPressEnterKey, handleMouseClickForDropdown, logout, getPartnerManagerUrl } from '../utils/AppUtils.js';
+import { isLangRTL, onPressEnterKey, handleMouseClickForDropdown, logout, getPartnerManagerUrl, fetchNotificationsList } from '../utils/AppUtils.js';
 import profileIcon from '../profile_icon.png';
 import hamburgerIcon from '../svg/hamburger_icon.svg';
 import orgIcon from '../svg/org_icon.svg';
@@ -12,16 +12,19 @@ import bellIcon from '.././svg/bell_icon.svg';
 import notificationRedIcon from '.././svg/notifications_red_icon.svg';
 import NotificationPopup from '../pages/common/NotificationPopup.js';
 import { HttpService } from '../services/HttpService.js';
+import { useDispatch } from 'react-redux';
 
 function HeaderNav({ open, setOpen }) {
     const navigate = useNavigate('');
     const { t } = useTranslation();
+    const location = useLocation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const dropdownRef = useRef(null);
     const [openNotification, setOpenNotification] = useState(false);
     const [showLatestNotificationIcon, setShowLatestNotificationIcon] = useState(false);
-    const [notificationsList, setNotificationsList] = useState([]);
+    const dispatch = useDispatch();
+    const [dropdownWidth, setDropdownWidth] = useState(0);
 
     useEffect(() => {
         handleMouseClickForDropdown(dropdownRef, () => setIsDropdownOpen(false));
@@ -30,13 +33,14 @@ function HeaderNav({ open, setOpen }) {
     useEffect(() => {
         if (dropdownRef.current) {
             document.documentElement.style.setProperty('--dropdown-width', `${dropdownRef.current.offsetWidth}px`);
+            setDropdownWidth(dropdownRef.current.offsetWidth);
         }
     }, [isDropdownOpen, getUserProfile().userName]);
 
     useEffect(() => {
         async function fetchNotificationsData() {
             const notificationsSeenTimestamp = await fetchNotificationsSeenTimestamp();
-            const notifications = await fetchNotificationsList();
+            const notifications = await fetchNotificationsList(dispatch);
             console.log("last seen time : ", notificationsSeenTimestamp);
             if(notificationsSeenTimestamp === null && notifications.length === 0) {
                 setShowLatestNotificationIcon(false);
@@ -58,38 +62,33 @@ function HeaderNav({ open, setOpen }) {
                 }
             }
         }
-        fetchNotificationsData();
-    }, []);
 
-    const fetchNotificationsList = async () => {
-        const queryParams = new URLSearchParams();
-        queryParams.append('pageSize', 4);
-        queryParams.append('pageNo', 0);
-        queryParams.append('notificationStatus', 'active');
-        const url = `${getPartnerManagerUrl('/notifications', process.env.NODE_ENV)}?${queryParams.toString()}`;
+        // Fetch refresh time from localStorage before setting interval
+        let refreshTime = 300; // Default to 5 min(300seconds)
+        const config = localStorage.getItem("appConfig");
+
         try {
-            const response = await HttpService.get(url);
-            if (response) {
-                const responseData = response.data;
-                if (responseData && responseData.response) {
-                    const resData = responseData.response.data;
-                    setNotificationsList(resData);
-                    return resData;
-                } else {
-                    return [];
+            if (config) {
+                const configData = JSON.parse(config);
+                if (configData?.refreshNotificationsTime) {
+                    refreshTime = Number(configData.refreshNotificationsTime);
                 }
-            } else {
-                return [];
             }
-        } catch (err) {
-            console.error('Error fetching data:', err);
-            return [];
+        } catch (error) {
+            console.error("Error fetching refresh notification time:", error);
         }
-    }
+
+        fetchNotificationsData();
+        // Set up an interval to call the function every 5 minutes
+        const intervalId = setInterval(fetchNotificationsData, 1000*refreshTime);
+
+        // Cleanup function to clear the interval when component unmounts
+        return () => clearInterval(intervalId);
+    }, []);
 
     const fetchNotificationsSeenTimestamp = async () => {
         try {
-          const response = await HttpService.get(getPartnerManagerUrl(`/users/notifications-seen-timestamp`, process.env.NODE_ENV));
+          const response = await HttpService.get(getPartnerManagerUrl(`/users/${getUserProfile().userName}/notifications-seen-timestamp`, process.env.NODE_ENV));
           if (response) {
             const responseData = response.data;
             if (responseData && responseData.response) {
@@ -121,8 +120,12 @@ function HeaderNav({ open, setOpen }) {
     }
 
     const closeNotificationPanel = () => {
-        setOpenNotification(false);
-        setShowLatestNotificationIcon(false);
+        if (location.pathname.includes('notifications')) {
+            window.location.reload()
+        } else {
+            setOpenNotification(false);
+            setShowLatestNotificationIcon(false);
+        }
     }
 
     return (
@@ -159,15 +162,14 @@ function HeaderNav({ open, setOpen }) {
                 </div>
             </div>
             <div className={`flex items-center relative justify-between gap-x-4 ${isLoginLanguageRTL ? "left-3" : "right-3"}`}>
-                <div className="flex items-center cursor-pointer">
-                    <button id='bellIcon' className={`${!showLatestNotificationIcon && 'p-2 m-1 bg-blue-50'}`} onClick={() => openNotificationPopup()}>
+                <div className="flex items-center">
+                    <button id='bellIcon' className={`${!showLatestNotificationIcon && 'p-2 m-1 bg-blue-50'} cursor-pointer rounded-md`} onClick={() => openNotificationPopup()}>
                         <img src={showLatestNotificationIcon ? notificationRedIcon : bellIcon} alt="" className={`${!showLatestNotificationIcon ? 'w-5 h-5' : 'w-9'}`} />
                     </button>
                     { openNotification && (
                         <div className={`fixed inset-0 bg-black bg-opacity-0 z-40 cursor-default`}>
                             <NotificationPopup
                                 closeNotification={closeNotificationPanel}
-                                notificationsList={notificationsList}
                             />
                         </div>
                     )}
@@ -187,7 +189,7 @@ function HeaderNav({ open, setOpen }) {
                     <img id="profileDropDown" src={profileDropDown} alt="" className={`h-2 mt-[1%] cursor-pointer ${isLoginLanguageRTL ? "mr-2 ml-2" : "ml-2 mr-2"} ${isDropdownOpen ? "rotate-180 duration-500" : "duration-500"}`} />
 
                     {isDropdownOpen && (
-                        <div className={`absolute top-[3.1rem] ${isLoginLanguageRTL ? "origin-top-left" : "origin-top-right"} z-10 w-dynamic rounded-md bg-white py-1 shadow-md ring-1 ring-gray-50 focus:outline-none`}>
+                        <div className={`absolute top-[3.1rem] ${isLoginLanguageRTL ? "origin-top-left" : "origin-top-right"} z-10 rounded-md bg-white py-1 shadow-md ring-1 ring-gray-50 focus:outline-none ${dropdownWidth < 100 ? 'w-min right-0' : 'w-dynamic'}`}>
                             <button id='header_user_profile_info_btn' onClick={moveToMyProfile} className={`block w-full px-4 py-2 text-xs text-gray-900 ${isLoginLanguageRTL ? "text-right" : "text-left"} hover:bg-gray-100`} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, moveToMyProfile)}>
                                 {t('header.userProfile')}
                             </button>

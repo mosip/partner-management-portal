@@ -71,7 +71,8 @@
         "sbiAndDevicePendingApprovalRequestCountDesc": "{{sbiPendingApprovalRequestCount}} SBI and {{devicePendingApprovalRequestCount}} Device requests are currently pending",
         "ftmPendingApprovalRequestCountDesc": "{{ftmPendingApprovalRequestCount}} FTM Chip requests are currently pending",
         "requestCountFetchError": "An Unexpected error occured while fetching request count",
-        "trustCertExpiryCountDesc": "{{rootCertExpiryCount}} Root CA Certificates | {{intermediateCertExpiryCount}} Intermediate CA Certificates are expiring soon"
+        "trustCertExpiryCountDesc": "{{rootCertExpiryCount}} Root CA Certificates and {{intermediateCertExpiryCount}} Intermediate CA Certificates are expiring soon",
+        "partnerCertExpiryCountDesc": "{{partnerCertExpiryCount}} Partner Certificates are expiring soon"
     },
     "header": {
         "userProfile": "User Profile",
@@ -946,18 +947,21 @@
         "notification": "Notifications",
         "rootCertExpiry": "Root CA Certificate Expiration",
         "intermediateCertExpiry": "Intermediate CA Certificate Expiration",
-        "rootCertExpiryDescription": "Root CA Certificate [{{certificateId}}] for the {{partnerDomain}} domain will expire on {{expiryDateTime}}. Renew now to prevent disruptions.",
-        "intermediateCertExpiryDescription": "Intermediate CA Certificate [{{certificateId}}] for the {{partnerDomain}} domain will expire on {{expiryDateTime}}. Renew now to prevent disruptions.",
+        "partnerCertExpiry": "Partner Certificate Expiration",
+        "rootCertExpiryDescription": "Root CA Certificate <span className='font-semibold'>{{certificateId}}</span> for the <span className='font-semibold'>{{partnerDomain}}</span> domain is set to expire on  <span className='font-semibold'>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions.",
+        "intermediateCertExpiryDescription": "Intermediate CA Certificate <span className='font-semibold'>{{certificateId}}</span> for the <span className='font-semibold'>{{partnerDomain}}</span> domain is set to expire on <span className='font-semibold'>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions.",
+        "partnerCertExpiryDescription": "Partner Certificate for <span className='font-semibold'>{{partnerDomain}}</span> domain is set to expire on <span className='font-semibold'>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions.",
         "dismiss": "Dismiss",
         "viewAllNotification": "View all notifications",
-        "expiringItems": "Expiring Items",
-        "partnerCertificates": " - {{partnerCertCount}} Partner Certificates",
-        "ftmCertificates": " - {{ftmCertCount}} FTM Certificates",
-        "sbiDevices": " - {{sbiCount}} SBI Devices",
-        "apiKeys": " - {{apiKeyCount}} API Keys",
+        "expiringItems": "Weekly Summary of Partner-Created Expiring Items",
+        "partnerCertificates": "{{partnerCertCount}} Partner Certificates",
+        "ftmCertificates": "{{ftmCertCount}} FTM Chip Certificates",
+        "sbiDevices": "{{sbiCount}} SBIs",
+        "apiKeys": "{{apiKeyCount}} API Keys",
         "to": " to ",
         "noNotification": "No Notifications Yet",
         "noNotificationDescr": "You have no notifications at the moment.",
+        "filterNoNotificationTitle": "No Notifications Found",
         "errorInNotifcations": "Error while fetching notifications",
         "errorWhileUpdatingNotificationSeenTime": "Error while updating notifications seen date and time.",
         "errorInDismiss": "Error while dismissing notifcation"
@@ -965,9 +969,16 @@
     "notificationsTab": {
         "rootCaCertificate": "Root CA Certificate",
         "intermediateCaCertificate": "Intermediate CA Certificate",
-        "partner": "Partner",
-        "rootCertExpiryDescription": "Root CA Certificate [{{certificateId}}], issued to [{{issuedTo}}] by [{{issuedBy}}], for the {{partnerDomain}} domain will expire on {{expiryDateTime}}. Renew now to prevent disruptions.",
-        "intermediateCertExpiryDescription": "Intermediate CA Certificate [{{certificateId}}], issued to [{{issuedTo}}] by [{{issuedBy}}], for the {{partnerDomain}} domain will expire on {{expiryDateTime}}. Renew now to prevent disruptions."
+        "partner": "Weekly Summary - Partner",
+        "rootCertExpiryDescription": "Root CA Certificate <span className='font-semibold'>{{certificateId}}</span> issued to <span className='font-semibold'>{{issuedTo}}</span> by <span className='font-semibold'>{{issuedBy}}</span> for the <span className='font-semibold'>{{partnerDomain}}</span> domain is set to expire on <span className='font-semibold'>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions.",
+        "intermediateCertExpiryDescription": "Intermediate CA Certificate <span className='font-semibold'>{{certificateId}}</span> issued to <span className='font-semibold'>{{issuedTo}}</span> by <span className='font-semibold'>{{issuedBy}}</span> for the <span className='font-semibold'>{{partnerDomain}}</span> domain is set to expire on <span className='font-semibold'>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions."
+    },
+    "partnerNotificationsTab": {
+        "partnerCertificate":"Partner Certificate",
+        "apikey": "API Key",
+        "ftmCertificate": "FTM Chip Certificate",
+        "sbi": "SBI",
+        "partnerCertExpiryDescription":"Partner Certificate issued to <span className='font-semibold'>{{issuedTo}}</span> by <span className='font-semibold'>{{issuedBy}}</span> for the <span className='font-semibold'>{{partnerDomain}}</span> domain is set to expire on <span className='font-semibold'>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions."
     },
     "viewAllNotifications": {
         "listOfNotifications": "List of Notifications",
@@ -981,7 +992,16 @@
         "searchCertificateId": "Search Certificate ID",
         "selectPartnerDomain": "Select Partner Domain",
         "searchIssuedTo": "Search Issued To",
-        "searchIssuedBy": "Search Issued By"
+        "searchIssuedBy": "Search Issued By",
+        "selectExpiryDate": "Search Certificate Expiry Date",
+        "expiryDate": "Certificate Expiry Date",
+        "createdFromDate": "Notification Creation Date From",
+        "createdToDate": "Notification Creation Date To",
+        "selectCreatedFromDate": "Search Creation Date From",
+        "selectCreatedToDate": "Search Creation Date To",
+        "viewExpiringItems": "View Expiring Items",
+        "partnerCertExpiryTitle": "Partner certificate is expiring for {{partnerId}}",
+        "partnerCertExpiryDescription": "Partner Certificate <span className='font-semibold'>{{certificateId}}</span> issued to <span className='font-semibold'>{{issuedTo}}</span> by <span className='font-semibold'>{{issuedBy}}</span> for the <span className='font-semibold'>{{partnerDomain}}</span> domain is set to expire on <span className='font-semibold'>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions."
     },
     "serverError": {
         "PMS_COR_001": "Missing Input Parameter",
@@ -1230,8 +1250,8 @@
         "PMS_DEVICE_ERROR_025": "This device cannot be rejected as it does not have any SBI associated to it.",
         "PMS_DEVICE_ERROR_026": "Request status should be De-Activate",
         "PMS_DEVICE_ERROR_027": "Request status should be either approved or rejected",
-        "PMS_DEVICE_ERROR_028": "Unable to add device because the associated SBI is already rejected.",
-        "PMS_DEVICE_ERROR_029": "Unable to add device because the associated SBI is already deactivated.",
+        "PMS_DEVICE_ERROR_028": "The associated SBI is already rejected.",
+        "PMS_DEVICE_ERROR_029": "The associated SBI is already deactivated.",
         "PMS_SF_ERROR_001": "Error while fetching devices list for SBI.",
         "PMS_SBI_ERROR_001": "Unable to fetch SBI details.",
         "PMS_REQUEST_ERROR_001": "Invalid request.",
@@ -1265,7 +1285,7 @@
         "KER-PMS-020": "Uploading future-dated certificates is not allowed.",
         "KER-CRY-003": "Invalid certificate: Possible file corruption, tampering, or unsupported format. Ensure it is properly Base64-encoded and try again.",
         "PMS_NOTIFICATION_ERROR_001": "Error while updating notifications seen date time.",
-        "PMS_NOTIFICATION_ERROR_002": "Invalid notification seen. Expected: true.",
+        "PMS_NOTIFICATION_ERROR_002": "Invalid notification seen timestamp.",
         "PMS_NOTIFICATION_ERROR_003": "User details does not exist for the user.",
         "PMS_NOTIFICATION_ERROR_004": "Error while fetching notifications seen date time.",
         "PMS_NOTIFICATION_ERROR_005": "Error while fetching notifications.",

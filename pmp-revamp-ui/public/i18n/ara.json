@@ -71,7 +71,8 @@
         "sbiAndDevicePendingApprovalRequestCountDesc": "يوجد حاليًا {{sbiPendingApprovalRequestCount}} طلبات SBI و {{devicePendingApprovalRequestCount}} طلبات جهاز قيد الانتظار",
         "ftmPendingApprovalRequestCountDesc": "يوجد حاليًا {{ftmPendingApprovalRequestCount}} طلبات شريحة FTM قيد الانتظار",
         "requestCountFetchError": "حدث خطأ غير متوقع أثناء جلب عدد الطلبات",
-        "trustCertExpiryCountDesc": "{{rootCertExpiryCount}} شهادة CA الجذرية | {{intermediateCertExpiryCount}} شهادة CA متوسطة تنتهي صلاحيتها قريبًا"
+        "trustCertExpiryCountDesc": "ستنتهي صلاحية شهادات CA الجذرية {{rootCertExpiryCount}} وشهادات CA الوسيطة {{intermediateCertExpiryCount}} قريبًا",
+        "partnerCertExpiryCountDesc": "{{partnerCertExpiryCount}} شهادات الشركاء تنتهي صلاحيتها قريبًا"
     },
     "header": {
         "userProfile": "ملف تعريفي للمستخدم",
@@ -951,18 +952,21 @@
         "notification": "إشعارات",
         "rootCertExpiry": "انتهاء صلاحية شهادة الجذر CA",
         "intermediateCertExpiry": "انتهاء صلاحية شهادة CA المتوسطة",
-        "rootCertExpiryDescription": "ستنتهي صلاحية شهادة CA الجذرية [{{certificateId}}] للنطاق {{partnerDomain}} في {{expiryDateTime}}. جددها الآن لتجنب أي انقطاعات.",
-        "intermediateCertExpiryDescription": "ستنتهي صلاحية شهادة CA المتوسطة [{{certificateId}}] للنطاق {{partnerDomain}} في {{expiryDateTime}}. جددها الآن لتجنب أي انقطاعات.",
+        "partnerCertExpiry": "انتهاء صلاحية شهادة الشريك",
+        "rootCertExpiryDescription": "شهادة CA الجذرية <span className='font-semibold'>{{certificateId}}</span> للنطاق <span className='font-semibold'>{{partnerDomain}}</span> من المقرر أن تنتهي صلاحيتها في <span className='font-semibold'>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات.",
+        "intermediateCertExpiryDescription": "شهادة CA المتوسطة <span className='font-semibold'>{{certificateId}}</span> للنطاق <span className='font-semibold'>{{partnerDomain}}</span> من المقرر أن تنتهي صلاحيتها في <span className='font-semibold'>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات.",
+        "partnerCertExpiryDescription": "من المقرر أن تنتهي صلاحية شهادة الشريك لنطاق <span className='font-semibold'>{{partnerDomain}}</span> في <span className='font-semibold'>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات.",
         "dismiss": "رفض",
         "viewAllNotification": "عرض جميع الإشعارات",
-        "expiringItems": "العناصر منتهية الصلاحية",
-        "partnerCertificates": " - {{partnerCertCount}} شهادة شريك",
-        "ftmCertificates": " - {{ftmCertCount}} شهادات FTM",
-        "sbiDevices": " - {{sbiCount}} أجهزة SBI",
-        "apiKeys": " - {{apiKeyCount}} مفاتيح API",
+        "expiringItems": "ملخص أسبوعي للعناصر منتهية الصلاحية التي أنشأها الشريك",
+        "partnerCertificates": "{{partnerCertCount}} شهادة شريك",
+        "ftmCertificates": "{{ftmCertCount}} شهادات FTM",
+        "sbiDevices": "{{sbiCount}} أجهزة SBI",
+        "apiKeys": "{{apiKeyCount}} مفاتيح API",
         "to": " ل ",
         "noNotification": "لا يوجد إشعارات حتى الآن",
         "noNotificationDescr": "ليس لديك أي إشعارات في الوقت الحالي.",
+        "filterNoNotificationTitle": "لم يتم العثور على إشعارات",
         "errorInNotifcations": "خطأ أثناء جلب الإشعارات",
         "errorWhileUpdatingNotificationSeenTime": "حدث خطأ أثناء تحديث الإشعارات التي تظهر التاريخ والوقت.",
         "errorInDismiss": "خطأ أثناء رفض الإشعار"
@@ -970,9 +974,16 @@
     "notificationsTab": {
         "rootCaCertificate": "شهادة CA الجذرية",
         "intermediateCaCertificate": "شهادة CA متوسطة",
-        "partner": "شريك",
-        "rootCertExpiryDescription": "شهادة CA الجذرية [{{certificateId}}]، الصادرة إلى [{{issuedTo}}] بواسطة [{{issuedBy}}]، للنطاق {{partnerDomain}}، ستنتهي صلاحيتها في {{expiryDateTime}}. جددها الآن لتجنب أي انقطاعات.",
-        "intermediateCertExpiryDescription": "شهادة CA المتوسطة [{{certificateId}}]، الصادرة إلى [{{issuedTo}}] من قِبل [{{issuedBy}}]، للنطاق {{partnerDomain}}، ستنتهي صلاحيتها في {{expiryDateTime}}. جددها الآن لتجنب أي انقطاعات."
+        "partner": "الملخص الأسبوعي - الشريك",
+        "rootCertExpiryDescription": "شهادة CA الجذرية <span className='font-semibold'>{{certificateId}}</span> الصادرة لـ <span className='font-semibold'>{{issuedTo}}</span> بواسطة <span className='font-semibold'>{{issuedBy}}</span> للنطاق <span className='font-semibold'>{{partnerDomain}}</span> من المقرر أن تنتهي صلاحيتها في <span className='font-semibold'>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات.",
+        "intermediateCertExpiryDescription": "شهادة CA المتوسطة <span className='font-semibold'>{{certificateId}}</span> الصادرة لـ <span className='font-semibold'>{{issuedTo}}</span> من قِبل <span className='font-semibold'>{{issuedBy}}</span> لنطاق <span className='font-semibold'>{{partnerDomain}}</span> من المقرر أن تنتهي صلاحيتها في <span className='font-semibold'>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات."
+    },
+    "partnerNotificationsTab": {
+        "partnerCertificate":"شهادة الشريك",
+        "apikey": "مفتاح API",
+        "ftmCertificate": "شهادة شريحة FTM",
+        "sbi": "SBI",
+        "partnerCertExpiryDescription":"شهادة الشريك الصادرة لـ <span className='font-semibold'>{{issuedTo}}</span> بواسطة <span className='font-semibold'>{{issuedBy}}</span> للنطاق <span className='font-semibold'>{{partnerDomain}}</span> من المقرر أن تنتهي صلاحيتها في <span className='font-semibold'>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات."
     },
     "viewAllNotifications": {
         "listOfNotifications": "قائمة الإشعارات",
@@ -986,7 +997,16 @@
         "searchCertificateId": "معرف شهادة البحث",
         "selectPartnerDomain": "تحديد نطاق الشريك",
         "searchIssuedTo": "البحث عن الجهة الصادرة",
-        "searchIssuedBy": "البحث عن الجهة الصادرة"
+        "searchIssuedBy": "البحث عن الجهة الصادرة",
+        "selectExpiryDate": "بحث تاريخ انتهاء صلاحية الشهادة",
+        "expiryDate": "تاريخ انتهاء صلاحية الشهادة",
+        "createdFromDate": "تاريخ إنشاء الإشعار من",
+        "createdToDate": "تاريخ إنشاء الإشعار إلى",
+        "selectCreatedFromDate": "تاريخ إنشاء البحث من",
+        "selectCreatedToDate": "تاريخ إنشاء البحث إلى",
+        "viewExpiringItems": "عرض العناصر منتهية الصلاحية",
+        "partnerCertExpiryTitle": "شهادة الشريك على وشك الانتهاء لـ {{partnerId}}",
+        "partnerCertExpiryDescription": "شهادة الشريك <span className='font-semibold'>{{certificateId}}</span> الصادرة لـ <span className='font-semibold'>{{issuedTo}}</span> بواسطة <span className='font-semibold'>{{issuedBy}}</span> للنطاق <span className='font-semibold'>{{partnerDomain}}</span> من المقرر أن تنتهي صلاحيتها في <span className='font-semibold'>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات."
     },
     "serverError": {
         "PMS_COR_001": "معلمة الإدخال مفقودة",
@@ -1235,8 +1255,8 @@
         "PMS_DEVICE_ERROR_025": "لا يمكن رفض هذا الجهاز لأنه لا يوجد لديه أي SBI مرتبط به.",
         "PMS_DEVICE_ERROR_026": "يجب أن تكون حالة الطلب إلغاء التنشيط",
         "PMS_DEVICE_ERROR_027": "يجب أن تكون حالة الطلب إما معتمدة أو مرفوضة",
-        "PMS_DEVICE_ERROR_028": "غير قادر على إضافة الجهاز لأنه تم رفض SBI المرتبط بالفعل.",
-        "PMS_DEVICE_ERROR_029": "غير قادر على إضافة الجهاز لأنه تم إلغاء تنشيط SBI المرتبط به بالفعل.",
+        "PMS_DEVICE_ERROR_028": "تم رفض SBI المرتبط بالفعل.",
+        "PMS_DEVICE_ERROR_029": "تم إلغاء تنشيط SBI المرتبط بالفعل.",
         "PMS_SF_ERROR_001": "حدث خطأ أثناء جلب قائمة الأجهزة لـ SBI.",
         "PMS_SBI_ERROR_001": "غير قادر على جلب تفاصيل الهيئة الفرعية للتنفيذ.",
         "PMS_REQUEST_ERROR_001": "طلب غير صالح.",
@@ -1270,7 +1290,7 @@
         "KER-PMS-020": "لا يُسمح بتحميل شهادات مؤرخة في المستقبل.",
         "KER-CRY-003": "شهادة غير صالحة: من المحتمل تلف الملف أو التلاعب به أو التنسيق غير المدعوم. تأكد من ترميز Base64 بشكل صحيح وحاول مرة أخرى.",
         "PMS_NOTIFICATION_ERROR_001": "حدث خطأ أثناء تحديث تاريخ ووقت ظهور الإشعارات.",
-        "PMS_NOTIFICATION_ERROR_002": "ظهر إشعار غير صالح. القيمة المتوقعة: صحيح.",
+        "PMS_NOTIFICATION_ERROR_002": "تم رؤية طابع زمني للإشعار غير صالح.",
         "PMS_NOTIFICATION_ERROR_003": "تفاصيل المستخدم غير موجودة.",
         "PMS_NOTIFICATION_ERROR_004": "حدث خطأ أثناء جلب تاريخ ووقت ظهور الإشعارات.",
         "PMS_NOTIFICATION_ERROR_005": "حدث خطأ أثناء جلب الإشعارات.",
