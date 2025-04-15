@@ -55,7 +55,7 @@ function WeeklyNotificationsFilter({ onApplyFilter }) {
                         id='created_from_date_calender'
                     />
                 </div>
-                <div className={`${isLoginLanguageRTL ? 'min-736:mr-9 mr-4' : 'min-736:ml-9 ml-4'}`}>
+                <div className={`${isLoginLanguageRTL ? 'mr-4' : 'ml-4'}`}>
                     <CalendarInput
                         fieldName='createdToDate'
                         label={t('viewAllNotifications.createdToDate')}
