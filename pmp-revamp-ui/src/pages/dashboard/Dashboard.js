@@ -437,7 +437,7 @@ function Dashboard() {
                 {partnerCertExpiryCount > 0 && (
                   <CountWithHover
                     count={partnerCertExpiryCount}
-                    descriptionKey="dashboard.partnerCertExpiryCountDesc"
+                    descriptionKey={partnerCertExpiryCount > 1 ? "dashboard.partnerCertExpiryCountDesc1" : "dashboard.partnerCertExpiryCountDesc2"}
                     descriptionParams={{ partnerCertExpiryCount }}
                     isExpiryHover={true}
                   />

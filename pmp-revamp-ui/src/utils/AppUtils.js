@@ -280,20 +280,37 @@ export const toggleSortAscOrder = (sortItem, isDateCol, filteredList, setFiltere
 
 export const validateUrl = (index, value, length, urlArr, t) => {
     const urlPattern = /^(http|https):\/\/[^ "]+$/;
-    if (value === "") {
-        return "";
-    } else if (value.length > length) {
-        return t('commons.urlTooLong', { length: length });
-    } else if (!urlPattern.test(value.trim())) {
-        return t('commons.invalidUrl');
-    } else if (urlArr.some((url, i) => url === value && i !== index)) {
-        return t('commons.duplicateUrl');
-    } else if (/^\s+$/.test(value)) {
-        return t('commons.invalidUrl'); // Show error for input with only spaces
-    } else {
+
+    const validateSingleUrl = (val, i) => {
+        if (val === "") {
+            return "";
+        } else if (val.length > length) {
+            return t('commons.urlTooLong', { length: length });
+        } else if (!urlPattern.test(val.trim())) {
+            return t('commons.invalidUrl');
+        } else if (urlArr.some((url, idx) => url === val && idx !== i)) {
+            return t('commons.duplicateUrl');
+        } else if (/^\s+$/.test(val)) {
+            return t('commons.invalidUrl');
+        } else {
+            return "";
+        }
+    };
+
+    // Handle when value is an array
+    if (Array.isArray(value)) {
+        for (let i = 0; i < value.length; i++) {
+            const error = validateSingleUrl(value[i], i);
+            if (error) {
+                return error;
+            }
+        }
         return "";
     }
-}
+
+    // Fallback for single string input
+    return validateSingleUrl(value, index);
+};
 
 export const bgOfStatus = (status) => {
     if (status) {

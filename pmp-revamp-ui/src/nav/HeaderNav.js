@@ -25,6 +25,7 @@ function HeaderNav({ open, setOpen }) {
     const [showLatestNotificationIcon, setShowLatestNotificationIcon] = useState(false);
     const dispatch = useDispatch();
     const [dropdownWidth, setDropdownWidth] = useState(0);
+    const [lastNotificationSeenTimestamp, setLastNotificationSeenTimestamp] = useState(null);
 
     useEffect(() => {
         handleMouseClickForDropdown(dropdownRef, () => setIsDropdownOpen(false));
@@ -93,6 +94,7 @@ function HeaderNav({ open, setOpen }) {
             const responseData = response.data;
             if (responseData && responseData.response) {
               const resData = responseData.response;
+              setLastNotificationSeenTimestamp(resData.notificationsSeenDtimes);
               return resData.notificationsSeenDtimes;
             } else {
               return null;
@@ -119,7 +121,8 @@ function HeaderNav({ open, setOpen }) {
         setOpenNotification(!openNotification);
     }
 
-    const closeNotificationPanel = () => {
+    const closeNotificationPanel = (lastSeenDtimes) => {
+        setLastNotificationSeenTimestamp(lastSeenDtimes);
         if (location.pathname.includes('notifications')) {
             window.location.reload()
         } else {
@@ -170,6 +173,7 @@ function HeaderNav({ open, setOpen }) {
                         <div className={`fixed inset-0 bg-black bg-opacity-0 z-40 cursor-default`}>
                             <NotificationPopup
                                 closeNotification={closeNotificationPanel}
+                                lastNotiticationSeenTimestamp={lastNotificationSeenTimestamp}
                             />
                         </div>
                     )}

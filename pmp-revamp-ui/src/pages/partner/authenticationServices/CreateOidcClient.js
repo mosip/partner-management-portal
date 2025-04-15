@@ -227,7 +227,7 @@ function CreateOidcClient() {
   const onChangeRedirectUrl = (index, value) => {
     const newRedirectUrls = [...redirectUrls];
     newRedirectUrls[index] = value;
-    setInvalidRedirectUrl(validateUrl(index, value, 2048, newRedirectUrls, t));
+    setInvalidRedirectUrl(validateUrl(index, newRedirectUrls, 2048, newRedirectUrls, t));
     setRedirectUrls(newRedirectUrls);
   };
 

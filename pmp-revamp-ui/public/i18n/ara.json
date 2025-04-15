@@ -72,7 +72,8 @@
         "ftmPendingApprovalRequestCountDesc": "يوجد حاليًا {{ftmPendingApprovalRequestCount}} طلبات شريحة FTM قيد الانتظار",
         "requestCountFetchError": "حدث خطأ غير متوقع أثناء جلب عدد الطلبات",
         "trustCertExpiryCountDesc": "ستنتهي صلاحية شهادات CA الجذرية {{rootCertExpiryCount}} وشهادات CA الوسيطة {{intermediateCertExpiryCount}} قريبًا",
-        "partnerCertExpiryCountDesc": "{{partnerCertExpiryCount}} شهادات الشركاء تنتهي صلاحيتها قريبًا"
+        "partnerCertExpiryCountDesc1": "{{partnerCertExpiryCount}} شهادات الشركاء تنتهي صلاحيتها قريبًا",
+        "partnerCertExpiryCountDesc2": "{{partnerCertExpiryCount}} شهادة الشريك تنتهي صلاحيتها قريبًا"
     },
     "header": {
         "userProfile": "ملف تعريفي للمستخدم",
@@ -1302,6 +1303,9 @@
         "PMS_NOTIFICATION_ERROR_011": "الإشعار غير تابع للشريك.",
         "PMS_NOTIFICATION_ERROR_012": "حالة الإشعار غير صالحة. المتوقع: تم رفضه.",
         "PMS_NOTIFICATION_ERROR_013": "تم مواجهة خطأ أثناء استرداد عدد الشهادات منتهية الصلاحية.",
-        "PMS_NOTIFICATION_ERROR_014": "سيحصل مسؤول الشريك فقط على عدد الشهادات الجذرية والوسيطة منتهية الصلاحية."
+        "PMS_NOTIFICATION_ERROR_014": "سيحصل مسؤول الشريك فقط على عدد الشهادات الجذرية والوسيطة منتهية الصلاحية.",
+        "PMS_NOTIFICATION_ERROR_015": "يجب تحديد نوع الإشعار للتصفية",
+        "PMS_NOTIFICATION_ERROR_016": "الرجاء إدخال تاريخ صالح",
+        "PMS_NOTIFICATION_ERROR_017": "التصفية حسب createFromDate / createToDate متاحة فقط عند تحديد أسبوعي كنوع الإشعار"
     }
 }
