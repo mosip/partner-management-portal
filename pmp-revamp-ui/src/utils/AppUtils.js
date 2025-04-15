@@ -1050,3 +1050,11 @@ export const fetchNotificationsList = async (dispatch) => {
         return [];
     }
 };
+
+export const getOuterDivWidth = (text) => {
+    if (text.length > 30) {
+        return 'min-w-[21rem]';
+    } else {
+        return 'min-w-64';
+    }
+};
