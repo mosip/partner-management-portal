@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import DropdownComponent from '../../common/fields/DropdownComponent.js';
 import { useTranslation } from 'react-i18next';
-import { createDropdownData, isLangRTL } from '../../../utils/AppUtils.js';
+import { createDropdownData, getOuterDivWidth, isLangRTL } from '../../../utils/AppUtils.js';
 import TextInputComponent from '../../common/fields/TextInputComponent.js';
 import { getUserProfile } from '../../../services/UserProfileService.js';
 import CalendarInput from '../../common/CalendarInput.js';
@@ -61,7 +61,7 @@ function CertificateNotificationsFilter({ onApplyFilter }) {
 
     const calenderStyleSet = {
         datePicker: "h-9 p-1",
-        outerDiv: "ml-4 min-w-64"
+        outerDiv: `ml-4 ${getOuterDivWidth(t('viewAllNotifications.selectExpiryDate'))}`
     };
 
     return (
