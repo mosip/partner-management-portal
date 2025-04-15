@@ -22,13 +22,13 @@ public class PartnerPolicyMappingPage extends BasePage {
 	@FindBy(id = "partner_list_view1")
 	private WebElement partnerListViewElipsisButton;
 	
-	@FindBy(xpath = "//*[contains(text(), 'Approve / Reject')]")
+	@FindBy(xpath = "//p[contains(text(), 'Approve / Reject')]")
 	private WebElement approveOrRejectButton;
 	
-	@FindBy(xpath = "//*[contains(text(), 'Do you want to Approve/Reject the Policy')]")
+	@FindBy(xpath = "//p[contains(text(), 'Do you want to Approve/Reject the Policy')]")
 	private WebElement confirmationPopup;
 	
-	@FindBy(xpath = "//*[contains(text(), 'Please review the policy details carefully before taking appropriate action.')]")
+	@FindBy(xpath = "//p[contains(text(), 'Please review the policy details carefully before taking appropriate action.')]")
 	private WebElement confirmationPopupDetailedMessage;
 	
 	@FindBy(id = "approve_btn")
@@ -39,6 +39,12 @@ public class PartnerPolicyMappingPage extends BasePage {
 	
 	@FindBy(id = "policy_name_filter")
 	private WebElement policyNameFilter;
+	
+	@FindBy(xpath = "//p[contains(text(), 'Home')]")
+	private WebElement homeButton;
+	
+	@FindBy(id = "title_back_icon")
+	private WebElement titleBackIcon;
 	
 	public PartnerPolicyMappingPage(WebDriver driver) {
 		super(driver);
@@ -102,5 +108,13 @@ public class PartnerPolicyMappingPage extends BasePage {
 	
 	public void clickOnRejectButton() {
 		clickOnElement(rejectButton);
+	}
+	
+	public void clickOnHomeButton() {
+		clickOnElement(homeButton);
+	}
+	
+	public void clickOntitleBackIcon() {
+		clickOnElement(titleBackIcon);
 	}
 }

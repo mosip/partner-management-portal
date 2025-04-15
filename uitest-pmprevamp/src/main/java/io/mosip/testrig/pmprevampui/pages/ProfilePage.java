@@ -71,8 +71,7 @@ public class ProfilePage extends BasePage {
 	private WebElement titleBackIcon;
 	
 	public ProfilePage(WebDriver driver) {
-		super(driver);
-		
+		super(driver);	
 	}
 	
 	public void clickOnUserProfileButton() {

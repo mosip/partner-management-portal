@@ -835,7 +835,7 @@ public class DeviceProviderTest extends BaseClass {
 
 		loginpage.enterUserName("pmpui-device");
 		loginpage.enterPassword(password);
-		loginpage.ClickOnLoginButton();
+		loginpage.clickOnLoginButton();
 
 		assertTrue(dashboardpage.isWelcomeMessageDisplayed(), GlobalConstants.isWelcomeMessageDisplayed);
 	}

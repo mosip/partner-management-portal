@@ -35,7 +35,7 @@ public class PoliciesPage extends BasePage {
 	@FindBy(id = "request_policies_form_submit_btn")
 	private WebElement submitButton;
 
-	@FindBy(xpath = "//*[text()='Policy Submitted Successfully!']")
+	@FindBy(xpath = "//h1[text()='Policy Submitted Successfully!']")
 	private WebElement policySubmittedSuccessfully;
 
 	@FindBy(xpath = "//p[text()='No Data Available.']")
@@ -53,7 +53,7 @@ public class PoliciesPage extends BasePage {
 	@FindBy(id = "list_of_policies")
 	private WebElement ListOfPolicyRequested;
 
-	@FindBy(xpath = "//*[text()='Pending For Approval']")
+	@FindBy(xpath = "//div[text()='Pending For Approval']")
 	private WebElement PendingForApproval;
 
 	@FindBy(id = "policy_list_view1")
@@ -83,10 +83,6 @@ public class PoliciesPage extends BasePage {
 	@FindBy(id = "policy_group_filter_option1")
 	private WebElement policyGroupFilterOption1;
 	
-	
-	
-	
-	
 	@FindBy(id = "policy_status_filter")
 	private WebElement policyStatusFilter;
 
@@ -96,15 +92,13 @@ public class PoliciesPage extends BasePage {
 	@FindBy(id = "policy_partner_id_filter_option1")
 	private WebElement policyPartnerIdFilterOption1;
 
-	
-
-	@FindBy(xpath = "//*[@aria-label='Next page']")
+	@FindBy(xpath = "//a[@aria-label='Next page']")
 	private WebElement nextPage;
 
-	@FindBy(xpath = "//*[@aria-label='Previous page']")
+	@FindBy(xpath = "//a[@aria-label='Previous page']")
 	private WebElement previousPage;
 
-	@FindBy(xpath = "//*[text()='Partner ID']")
+	@FindBy(xpath = "//div[text()='Partner ID']")
 	private WebElement PartnerIdText;
 
 	@FindBy(id = "policy_list_item1")
@@ -119,7 +113,7 @@ public class PoliciesPage extends BasePage {
 	@FindBy(id = "title_back_icon")
 	private WebElement titleBackIcon;
 
-	@FindBy(xpath = "//*[text()='View Policy Details']")
+	@FindBy(xpath = "//h1[text()='View Policy Details']")
 	private WebElement ViewPolicyDetailsText;
 
 	@FindBy(id = "partnerId_desc_icon")
@@ -230,7 +224,7 @@ public class PoliciesPage extends BasePage {
 	@FindBy(xpath = "//span[text()='authpolicy01']")
 	private WebElement policyName;
 	
-	@FindBy(xpath = "//p[text()='auth policy 01']")
+	@FindBy(xpath = "//p[text()='authpolicy 01']")
 	private WebElement policyDescription;
 	
 	@FindBy(xpath = "//p[text()='This policy is already pending for approval against your partner ID.']")
@@ -468,10 +462,9 @@ public class PoliciesPage extends BasePage {
 		clickOnElement(policyListItem1);
 	}
 
-	public void clickOnpoliciesAuthPolicyTab() {
+	public void clickOnAuthPolicyTab() {
 		clickOnElement(policiesAuthPolicyTab);
 	}
-	
 
 	public boolean isFilterButtonButtonEnabled() {
 		return isElementEnabled(filterButton);
@@ -553,12 +546,6 @@ public class PoliciesPage extends BasePage {
 		enter(policyNameFilter,value);
 	}
 	
-	public void enterPendingPolicyNameDropdown(String value) {
-		clickOnElement(policyNameDropdown);
-		enter(searchBoxForPolicyName,value);
-		clickOnElement(requestPolicyNameOption);
-	}
-	
 	public void enterInvalidPolicyNameDropdown(String value) {
 		clickOnElement(policyNameDropdown);
 		enter(searchBoxForPolicyName,value);
@@ -619,9 +606,9 @@ public class PoliciesPage extends BasePage {
 		return isElementDisplayed(policyDescription);
 	}
 	
-	public void enterAuthPolicyNameDropdown(String value) {
+	public void enterAuthPolicyNameDropdown(String authPolicyName) {
 		clickOnElement(policyNameDropdown);
-		enter(searchBoxForPolicyName,value);
+		enter(searchBoxForPolicyName,authPolicyName);
 		clickOnElement(requestPolicyNameOption);
 	}
 	
@@ -651,5 +638,13 @@ public class PoliciesPage extends BasePage {
 	
 	public void clickOnGoBackButton() {
 		clickOnElement(goBackButton);
+	}
+	
+	public boolean isPoliciesAuthPolicyTabDisplayed() {
+		return isElementDisplayed(policiesAuthPolicyTab);
+	}
+	
+	public void clickOnPoliciesPolicyGroupTab() {
+		clickOnElement(policiesPolicyGroupTab);
 	}
 }

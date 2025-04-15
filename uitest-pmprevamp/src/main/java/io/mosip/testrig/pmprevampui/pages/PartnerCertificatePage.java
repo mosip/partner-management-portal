@@ -27,13 +27,13 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(xpath = "//*[text()='Partner certificate for Device Provider is uploaded successfully.']")
 	private WebElement deviceProviderSuccessMessage;
 	
-	@FindBy(xpath = "//*[contains(text(), 'successfully')]")
+	@FindBy(xpath = "//p[contains(text(), 'FTM Chip Certificate is uploaded successfully')]")
 	private WebElement successMessageForFtmCert;
 	
 	@FindBy(id = "fileInput")
 	private WebElement uploadFile;
 
-	@FindBy(xpath = "//*[text()='Close']")
+	@FindBy(id = "certificate_upload_close_btn")
 	private WebElement closeButton;
 	
 	@FindBy(id = "success_msg_close_icon")
@@ -66,7 +66,7 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(id = "upload_file_FILL0_wght200_GRAD0_opsz24")
 	private WebElement partnerCertOvelay;
 
-	@FindBy(xpath = "//*[contains(text(), \"The certificate uploaded is not in the correct format.\")]")
+	@FindBy(xpath = "//p[contains(text(), \"The certificate uploaded is not in the correct format.\")]")
 	private WebElement InvalidFormatErrorPopup;
 
 	@FindBy(id = "sub_title_home_btn")
@@ -101,6 +101,7 @@ public class PartnerCertificatePage extends BasePage {
 	
 	@FindBy(id = "partnerDomain_selector_dropdown_option2")
 	private WebElement partnerDomainSelectorDropdownOptionFtm;
+	
 	@FindBy(id = "partnerDomain_selector_dropdown_option3")
 	private WebElement deviceInPartnerDomainSelectorDropdown3;
 	
@@ -122,29 +123,28 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(id = "partnerDomain_selector_dropdown_option3")
 	private WebElement deviceInPartnerDomainSelectorDropdown;
 	
-	@FindBy(xpath = "//*[text()='Root CA/Intermediate CA Certificates not found.']")
+	@FindBy(xpath = "//p[text()='Root CA/Intermediate CA Certificates not found.']")
 	private WebElement noRootCert;
 	
-	@FindBy(xpath = "//*[text()='Self Signed Certificate not allowed as partner.']")
+	@FindBy(xpath = "//p[text()='Self Signed Certificate not allowed as partner.']")
 	private WebElement errorCodeForSelfSignedCer;
 	
 	@FindBy(id = "sub_title_btn")
 	private WebElement subTitelButton;
 	
-	
-	@FindBy(xpath = "//*[contains(text(), \"Upload Trust Certificate\")]")
+	@FindBy(xpath = "//h1[contains(text(), \"Upload Trust Certificate\")]")
 	private WebElement uploadTrustCertificateText;
 	
-	@FindBy(xpath = "//*[text()='Please select the partner domain and upload Root CA / Intermediate CA Certificate.']")
+	@FindBy(xpath = "//p[text()='Please select the partner domain and upload Root CA / Intermediate CA Certificate.']")
 	private WebElement partnerPageSubTitleText;
 	
-	@FindBy(xpath = "//*[text()='Please tap to select the Root CA / Intermediate CA Certificate']")
+	@FindBy(xpath = "//h5[text()='Please tap to select the Root CA / Intermediate CA Certificate']")
 	private WebElement uploadBoxHeader;
 	
 	@FindBy(id = "upload_trust_certificate_cancel_btn")
 	private WebElement adminCertUploadCancelButton;
 	
-	@FindBy(xpath = "//*[text()='Trust Certificate for FTM is uploaded successfully!']")
+	@FindBy(xpath = "//h1[text()='Trust Certificate for FTM is uploaded successfully!']")
 	private WebElement  ftmCertUploadSuccessMessage;
 	
 	@FindBy(id = "certificate_list_view1")
@@ -152,8 +152,7 @@ public class PartnerCertificatePage extends BasePage {
 	
 	@FindBy(id = "root_certificate_details_view_btn")
 	private WebElement rootCertificateDetailsViewButton;
-	
-	
+		
 	@FindBy(id = "file_upload_blue")
 	private WebElement fileIcon;
 	
@@ -186,7 +185,6 @@ public class PartnerCertificatePage extends BasePage {
 	
 	@FindBy(id = "certificate_list_view_btn")
 	private WebElement certificateListViewButton;
-	
 	
 	public PartnerCertificatePage(WebDriver driver) {
 		super(driver);
@@ -346,7 +344,7 @@ public class PartnerCertificatePage extends BasePage {
 		if(isElementDisplayed(certificateUploadCloseButton)) {
 		 clickOnElement(certificateUploadCloseButton);
 		}
-		}
+	}
 	
 	public boolean VerifyTheStatusWithAsendingOrder() {
 	 WebElement first= driver.findElement(By.xpath("//*[@id='ftm_list_item1']//*[contains(text(), 'Approved')]"));
@@ -487,6 +485,5 @@ public class PartnerCertificatePage extends BasePage {
 	public void clickOnTitleBackButton() {
 		 clickOnElement(titleBackButton);
 	}
-	
 	
 }

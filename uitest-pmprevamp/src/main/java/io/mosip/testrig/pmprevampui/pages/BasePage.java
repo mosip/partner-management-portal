@@ -255,7 +255,7 @@ public class BasePage {
 		}
 	}
 	
-	private void waitForElementToBeVisible(WebElement element) {
+	protected void waitForElementToBeVisible(WebElement element) {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(40));
 		wait.until(ExpectedConditions.visibilityOf(element));
 	}
@@ -325,11 +325,11 @@ public class BasePage {
 		driver.navigate().refresh();
 	}
 	
-	public static void NavigateBack() {
+	public static void navigateBack() {
 		driver.navigate().back();
 	}
 	
-	public static void NavigateForword() {
+	public static void navigateForword() {
 		driver.navigate().forward();
 	}
 
@@ -353,6 +353,23 @@ public class BasePage {
 		Alert alert = driver.switchTo().alert();
 		String alertText = alert.getText();
 		return alertText;
+	}
+	
+	protected void clearTextBox(WebElement element) {
+	    this.waitForElementToBeVisible(element);
+	    element.clear();
+	}
+	
+	public void scrollToEndPage() {
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
+
+	}
+	
+	public void scrollToStartPage() {
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("window.scrollTo(0, 0);");
+
 	}
 
 }
