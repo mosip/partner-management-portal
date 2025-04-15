@@ -72,7 +72,8 @@
         "ftmPendingApprovalRequestCountDesc": "{{ftmPendingApprovalRequestCount}} FTM Chip requests are currently pending",
         "requestCountFetchError": "An Unexpected error occured while fetching request count",
         "trustCertExpiryCountDesc": "{{rootCertExpiryCount}} Root CA Certificates and {{intermediateCertExpiryCount}} Intermediate CA Certificates are expiring soon",
-        "partnerCertExpiryCountDesc": "{{partnerCertExpiryCount}} Partner Certificates are expiring soon"
+        "partnerCertExpiryCountDesc1": "{{partnerCertExpiryCount}} Partner Certificates are expiring soon",
+        "partnerCertExpiryCountDesc2": "{{partnerCertExpiryCount}} Partner Certificate is expiring soon"
     },
     "header": {
         "userProfile": "User Profile",
@@ -1297,6 +1298,9 @@
         "PMS_NOTIFICATION_ERROR_011": "The notification does not belong to the partner.",
         "PMS_NOTIFICATION_ERROR_012": "Invalid notification status. Expected: DISMISSED.",
         "PMS_NOTIFICATION_ERROR_013": "Error encountered while retrieving the count of expiring certificates.",
-        "PMS_NOTIFICATION_ERROR_014": "Partner Admin will only get the count of expiring root and intermediate certificates."
+        "PMS_NOTIFICATION_ERROR_014": "Partner Admin will only get the count of expiring root and intermediate certificates.",
+        "PMS_NOTIFICATION_ERROR_015": "Notification type must be selected for filtering",
+        "PMS_NOTIFICATION_ERROR_016": "Please enter a valid date",
+        "PMS_NOTIFICATION_ERROR_017": "Filtering by createdFromDate / createdToDate is only available when 'weekly' is selected as the notificationType"
     }
 }
