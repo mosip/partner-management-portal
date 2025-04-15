@@ -205,7 +205,7 @@ function ViewAllNotifications({ notificationType }) {
                         partnerDomain: notification.partnerDomain,
                         expiryDateTime: formatDate(notification.expiryDateTime, 'dateInWords')
                     }}
-                    components={{ span: <span className="font-semibold" /> }}
+                    components={{ span: <span className={`font-semibold ${isLoginLanguageRTL && 'whitespace-nowrap'}`} /> }}
                 />
             );
         }
