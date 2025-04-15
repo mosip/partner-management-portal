@@ -954,9 +954,9 @@
         "rootCertExpiry": "انتهاء صلاحية شهادة الجذر CA",
         "intermediateCertExpiry": "انتهاء صلاحية شهادة CA المتوسطة",
         "partnerCertExpiry": "انتهاء صلاحية شهادة الشريك",
-        "rootCertExpiryDescription": "شهادة CA الجذرية <span className='font-semibold'>{{certificateId}}</span> للنطاق <span className='font-semibold'>{{partnerDomain}}</span> من المقرر أن تنتهي صلاحيتها في <span className='font-semibold'>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات.",
-        "intermediateCertExpiryDescription": "شهادة CA المتوسطة <span className='font-semibold'>{{certificateId}}</span> للنطاق <span className='font-semibold'>{{partnerDomain}}</span> من المقرر أن تنتهي صلاحيتها في <span className='font-semibold'>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات.",
-        "partnerCertExpiryDescription": "من المقرر أن تنتهي صلاحية شهادة الشريك لنطاق <span className='font-semibold'>{{partnerDomain}}</span> في <span className='font-semibold'>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات.",
+        "rootCertExpiryDescription": "شهادة CA الجذرية <span>{{certificateId}}</span> للنطاق <span>{{partnerDomain}}</span> من المقرر أن تنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات.",
+        "intermediateCertExpiryDescription": "شهادة CA المتوسطة <span>{{certificateId}}</span> للنطاق <span>{{partnerDomain}}</span> من المقرر أن تنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات.",
+        "partnerCertExpiryDescription": "من المقرر أن تنتهي صلاحية شهادة الشريك لنطاق <span>{{partnerDomain}}</span> في <span>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات.",
         "dismiss": "رفض",
         "viewAllNotification": "عرض جميع الإشعارات",
         "expiringItems": "ملخص أسبوعي للعناصر منتهية الصلاحية التي أنشأها الشريك",
@@ -976,15 +976,15 @@
         "rootCaCertificate": "شهادة CA الجذرية",
         "intermediateCaCertificate": "شهادة CA متوسطة",
         "partner": "الملخص الأسبوعي - الشريك",
-        "rootCertExpiryDescription": "شهادة CA الجذرية <span className='font-semibold'>{{certificateId}}</span> الصادرة لـ <span className='font-semibold'>{{issuedTo}}</span> بواسطة <span className='font-semibold'>{{issuedBy}}</span> للنطاق <span className='font-semibold'>{{partnerDomain}}</span> من المقرر أن تنتهي صلاحيتها في <span className='font-semibold'>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات.",
-        "intermediateCertExpiryDescription": "شهادة CA المتوسطة <span className='font-semibold'>{{certificateId}}</span> الصادرة لـ <span className='font-semibold'>{{issuedTo}}</span> من قِبل <span className='font-semibold'>{{issuedBy}}</span> لنطاق <span className='font-semibold'>{{partnerDomain}}</span> من المقرر أن تنتهي صلاحيتها في <span className='font-semibold'>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات."
+        "rootCertExpiryDescription": "شهادة CA الجذرية <span>{{certificateId}}</span> الصادرة لـ <span>{{issuedTo}}</span> بواسطة <span>{{issuedBy}}</span> للنطاق <span>{{partnerDomain}}</span> من المقرر أن تنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات.",
+        "intermediateCertExpiryDescription": "شهادة CA المتوسطة <span>{{certificateId}}</span> الصادرة لـ <span>{{issuedTo}}</span> من قِبل <span>{{issuedBy}}</span> لنطاق <span>{{partnerDomain}}</span> من المقرر أن تنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات."
     },
     "partnerNotificationsTab": {
         "partnerCertificate":"شهادة الشريك",
         "apikey": "مفتاح API",
         "ftmCertificate": "شهادة شريحة FTM",
         "sbi": "SBI",
-        "partnerCertExpiryDescription":"شهادة الشريك الصادرة لـ <span className='font-semibold'>{{issuedTo}}</span> بواسطة <span className='font-semibold'>{{issuedBy}}</span> للنطاق <span className='font-semibold'>{{partnerDomain}}</span> من المقرر أن تنتهي صلاحيتها في <span className='font-semibold'>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات."
+        "partnerCertExpiryDescription":"شهادة الشريك الصادرة لـ <span>{{issuedTo}}</span> بواسطة <span>{{issuedBy}}</span> للنطاق <span>{{partnerDomain}}</span> من المقرر أن تنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات."
     },
     "viewAllNotifications": {
         "listOfNotifications": "قائمة الإشعارات",
@@ -1007,7 +1007,7 @@
         "selectCreatedToDate": "تاريخ إنشاء البحث إلى",
         "viewExpiringItems": "عرض العناصر منتهية الصلاحية",
         "partnerCertExpiryTitle": "شهادة الشريك على وشك الانتهاء لـ {{partnerId}}",
-        "partnerCertExpiryDescription": "شهادة الشريك <span className='font-semibold'>{{certificateId}}</span> الصادرة لـ <span className='font-semibold'>{{issuedTo}}</span> بواسطة <span className='font-semibold'>{{issuedBy}}</span> للنطاق <span className='font-semibold'>{{partnerDomain}}</span> من المقرر أن تنتهي صلاحيتها في <span className='font-semibold'>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات."
+        "partnerCertExpiryDescription": "شهادة الشريك <span>{{certificateId}}</span> الصادرة لـ <span>{{issuedTo}}</span> بواسطة <span>{{issuedBy}}</span> للنطاق <span>{{partnerDomain}}</span> من المقرر أن تنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات."
     },
     "serverError": {
         "PMS_COR_001": "معلمة الإدخال مفقودة",

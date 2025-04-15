@@ -898,7 +898,7 @@ export const getNotificationDescription = (notification, isLoginLanguageRTL, t) 
                     partnerDomain: notification.notificationDetails.certificateDetails[0].partnerDomain,
                     expiryDateTime: formatDate(notification.notificationDetails.certificateDetails[0].expiryDateTime, 'dateInWords')
                 }}
-                components={{ span: <span className="font-semibold" /> }}
+                components={{ span: <span className={`font-semibold ${isLoginLanguageRTL && 'whitespace-nowrap'}`} /> }}
             />
         );
     } else if (notification.notificationType === 'INTERMEDIATE_CERT_EXPIRY') {
@@ -912,7 +912,7 @@ export const getNotificationDescription = (notification, isLoginLanguageRTL, t) 
                     partnerDomain: notification.notificationDetails.certificateDetails[0].partnerDomain,
                     expiryDateTime: formatDate(notification.notificationDetails.certificateDetails[0].expiryDateTime, 'dateInWords')
                 }}
-                components={{ span: <span className="font-semibold" /> }}
+                components={{ span: <span className={`font-semibold ${isLoginLanguageRTL && 'whitespace-nowrap'}`} /> }}
             />
         );
     } else if (notification.notificationType === 'PARTNER_CERT_EXPIRY') {
@@ -925,7 +925,7 @@ export const getNotificationDescription = (notification, isLoginLanguageRTL, t) 
                     partnerDomain: notification.notificationDetails.certificateDetails[0].partnerDomain,
                     expiryDateTime: formatDate(notification.notificationDetails.certificateDetails[0].expiryDateTime, 'dateInWords')
                 }}
-                components={{ span: <span className="font-semibold" /> }}
+                components={{ span: <span className={`font-semibold ${isLoginLanguageRTL && 'whitespace-nowrap'}`} /> }}
             />
         );
     } else if (notification.notificationType === 'WEEKLY_SUMMARY') {
@@ -943,7 +943,7 @@ export const getNotificationPanelDescription = (notification, isLoginLanguageRTL
                     partnerDomain: notification.notificationDetails.certificateDetails[0].partnerDomain,
                     expiryDateTime: formatDate(notification.notificationDetails.certificateDetails[0].expiryDateTime, 'dateInWords')
                 }}
-                components={{ span: <span className="font-semibold" /> }}
+                components={{ span: <span className={`font-semibold ${isLoginLanguageRTL && 'whitespace-nowrap'}`} /> }}
             />
         );
     } else if (notification.notificationType === 'INTERMEDIATE_CERT_EXPIRY') {
@@ -955,7 +955,7 @@ export const getNotificationPanelDescription = (notification, isLoginLanguageRTL
                     partnerDomain: notification.notificationDetails.certificateDetails[0].partnerDomain,
                     expiryDateTime: formatDate(notification.notificationDetails.certificateDetails[0].expiryDateTime, 'dateInWords')
                 }}
-                components={{ span: <span className="font-semibold" /> }}
+                components={{ span: <span className={`font-semibold ${isLoginLanguageRTL && 'whitespace-nowrap'}`} /> }}
             />
         );
     } else if (notification.notificationType === 'PARTNER_CERT_EXPIRY') {
@@ -966,7 +966,7 @@ export const getNotificationPanelDescription = (notification, isLoginLanguageRTL
                     partnerDomain: notification.notificationDetails.certificateDetails[0].partnerDomain,
                     expiryDateTime: formatDate(notification.notificationDetails.certificateDetails[0].expiryDateTime, 'dateInWords')
                 }}
-                components={{ span: <span className="font-semibold" /> }}
+                components={{ span: <span className={`font-semibold ${isLoginLanguageRTL && 'whitespace-nowrap'}`} /> }}
             />
         );
     } else if (notification.notificationType === 'WEEKLY_SUMMARY') {

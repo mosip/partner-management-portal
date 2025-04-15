@@ -949,9 +949,9 @@
         "rootCertExpiry": "Root CA Certificate Expiration",
         "intermediateCertExpiry": "Intermediate CA Certificate Expiration",
         "partnerCertExpiry": "Partner Certificate Expiration",
-        "rootCertExpiryDescription": "Root CA Certificate <span className='font-semibold'>{{certificateId}}</span> for the <span className='font-semibold'>{{partnerDomain}}</span> domain is set to expire on  <span className='font-semibold'>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions.",
-        "intermediateCertExpiryDescription": "Intermediate CA Certificate <span className='font-semibold'>{{certificateId}}</span> for the <span className='font-semibold'>{{partnerDomain}}</span> domain is set to expire on <span className='font-semibold'>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions.",
-        "partnerCertExpiryDescription": "Partner Certificate for <span className='font-semibold'>{{partnerDomain}}</span> domain is set to expire on <span className='font-semibold'>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions.",
+        "rootCertExpiryDescription": "Root CA Certificate <span>{{certificateId}}</span> for the <span>{{partnerDomain}}</span> domain is set to expire on  <span>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions.",
+        "intermediateCertExpiryDescription": "Intermediate CA Certificate <span>{{certificateId}}</span> for the <span>{{partnerDomain}}</span> domain is set to expire on <span>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions.",
+        "partnerCertExpiryDescription": "Partner Certificate for <span>{{partnerDomain}}</span> domain is set to expire on <span>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions.",
         "dismiss": "Dismiss",
         "viewAllNotification": "View all notifications",
         "expiringItems": "Weekly Summary of Partner-Created Expiring Items",
@@ -971,15 +971,15 @@
         "rootCaCertificate": "Root CA Certificate",
         "intermediateCaCertificate": "Intermediate CA Certificate",
         "partner": "Weekly Summary - Partner",
-        "rootCertExpiryDescription": "Root CA Certificate <span className='font-semibold'>{{certificateId}}</span> issued to <span className='font-semibold'>{{issuedTo}}</span> by <span className='font-semibold'>{{issuedBy}}</span> for the <span className='font-semibold'>{{partnerDomain}}</span> domain is set to expire on <span className='font-semibold'>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions.",
-        "intermediateCertExpiryDescription": "Intermediate CA Certificate <span className='font-semibold'>{{certificateId}}</span> issued to <span className='font-semibold'>{{issuedTo}}</span> by <span className='font-semibold'>{{issuedBy}}</span> for the <span className='font-semibold'>{{partnerDomain}}</span> domain is set to expire on <span className='font-semibold'>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions."
+        "rootCertExpiryDescription": "Root CA Certificate <span>{{certificateId}}</span> issued to <span>{{issuedTo}}</span> by <span>{{issuedBy}}</span> for the <span>{{partnerDomain}}</span> domain is set to expire on <span>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions.",
+        "intermediateCertExpiryDescription": "Intermediate CA Certificate <span>{{certificateId}}</span> issued to <span>{{issuedTo}}</span> by <span>{{issuedBy}}</span> for the <span>{{partnerDomain}}</span> domain is set to expire on <span>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions."
     },
     "partnerNotificationsTab": {
         "partnerCertificate":"Partner Certificate",
         "apikey": "API Key",
         "ftmCertificate": "FTM Chip Certificate",
         "sbi": "SBI",
-        "partnerCertExpiryDescription":"Partner Certificate issued to <span className='font-semibold'>{{issuedTo}}</span> by <span className='font-semibold'>{{issuedBy}}</span> for the <span className='font-semibold'>{{partnerDomain}}</span> domain is set to expire on <span className='font-semibold'>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions."
+        "partnerCertExpiryDescription":"Partner Certificate issued to <span>{{issuedTo}}</span> by <span>{{issuedBy}}</span> for the <span>{{partnerDomain}}</span> domain is set to expire on <span>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions."
     },
     "viewAllNotifications": {
         "listOfNotifications": "List of Notifications",
@@ -1002,7 +1002,7 @@
         "selectCreatedToDate": "Search Creation Date To",
         "viewExpiringItems": "View Expiring Items",
         "partnerCertExpiryTitle": "Partner certificate is expiring for {{partnerId}}",
-        "partnerCertExpiryDescription": "Partner Certificate <span className='font-semibold'>{{certificateId}}</span> issued to <span className='font-semibold'>{{issuedTo}}</span> by <span className='font-semibold'>{{issuedBy}}</span> for the <span className='font-semibold'>{{partnerDomain}}</span> domain is set to expire on <span className='font-semibold'>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions."
+        "partnerCertExpiryDescription": "Partner Certificate <span>{{certificateId}}</span> issued to <span>{{issuedTo}}</span> by <span>{{issuedBy}}</span> for the <span>{{partnerDomain}}</span> domain is set to expire on <span>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions."
     },
     "serverError": {
         "PMS_COR_001": "Missing Input Parameter",
