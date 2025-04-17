@@ -10,7 +10,8 @@ import side_menu_title from '../../src/side_menu_title.svg';
 import profileDropDown from '.././svg/profileDropDown.svg';
 import NotificationPopup from '../pages/common/NotificationPopup.js';
 import { HttpService } from '../services/HttpService.js';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useStore } from 'react-redux';
+import { updateDismissClicked, updateLastSeenDtimes } from '../notificationsSlice.js';
 
 function HeaderNav({ open, setOpen }) {
     const navigate = useNavigate('');
@@ -19,15 +20,17 @@ function HeaderNav({ open, setOpen }) {
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const dropdownRef = useRef(null);
+    const notificationRef = useRef(null);
     const [openNotification, setOpenNotification] = useState(false);
     const [showLatestNotificationIcon, setShowLatestNotificationIcon] = useState(false);
     const dispatch = useDispatch();
+    const store = useStore();
     const [dropdownWidth, setDropdownWidth] = useState(0);
-    const [lastNotificationSeenTimestamp, setLastNotificationSeenTimestamp] = useState(null);
 
     useEffect(() => {
         handleMouseClickForDropdown(dropdownRef, () => setIsDropdownOpen(false));
-    }, [dropdownRef]);
+        handleMouseClickForDropdown(notificationRef, () => closeNotificationPanel());
+    }, [dropdownRef, notificationRef]);
 
     useEffect(() => {
         if (dropdownRef.current) {
@@ -92,7 +95,7 @@ function HeaderNav({ open, setOpen }) {
             const responseData = response.data;
             if (responseData && responseData.response) {
               const resData = responseData.response;
-              setLastNotificationSeenTimestamp(resData.notificationsSeenDtimes);
+              dispatch(updateLastSeenDtimes(resData.notificationsSeenDtimes));
               return resData.notificationsSeenDtimes;
             } else {
               return null;
@@ -116,17 +119,25 @@ function HeaderNav({ open, setOpen }) {
     };
 
     const openNotificationPopup = () => {
-        setOpenNotification(!openNotification);
+        if (openNotification) {
+            closeNotificationPanel();
+        } else {
+            setOpenNotification(true);
+        }
     }
 
-    const closeNotificationPanel = (lastSeenDtimes) => {
-        setLastNotificationSeenTimestamp(lastSeenDtimes);
-        if (location.pathname.includes('notifications')) {
+    const closeNotificationPanel = () => {
+        const dismissClicked = store.getState().headerNotifications.dismissClicked;
+        const notificationSeenDtimes = store.getState().headerNotifications.notificationSeenDtimes;
+        console.log(notificationSeenDtimes);
+        dispatch(updateLastSeenDtimes(notificationSeenDtimes));
+        if (location.pathname.includes('notifications') && dismissClicked) {
             window.location.reload()
         } else {
             setOpenNotification(false);
             setShowLatestNotificationIcon(false);
         }
+        dispatch(updateDismissClicked(false));
     }
 
     return (
@@ -163,7 +174,7 @@ function HeaderNav({ open, setOpen }) {
                 </div>
             </div>
             <div className={`flex items-center relative justify-between gap-x-4 ${isLoginLanguageRTL ? "left-3" : "right-3"}`}>
-                <div className="flex items-center">
+                <div className="flex items-center" ref={notificationRef}>
                     {!showLatestNotificationIcon ? (
                         <button className='p-1.5 bg-blue-50 cursor-pointer' onClick={openNotificationPopup}>
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -183,10 +194,9 @@ function HeaderNav({ open, setOpen }) {
                         </button>
                     )}
                     { openNotification && (
-                        <div className={`fixed inset-0 bg-black bg-opacity-0 z-40 cursor-default`}>
+                        <div className={`inset-0 bg-black bg-opacity-0 z-40 cursor-default`}>
                             <NotificationPopup
                                 closeNotification={closeNotificationPanel}
-                                lastNotiticationSeenTimestamp={lastNotificationSeenTimestamp}
                             />
                         </div>
                     )}

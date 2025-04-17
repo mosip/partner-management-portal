@@ -12,9 +12,9 @@ import LoadingIcon from "./LoadingIcon";
 import vectorIcon from "../../svg/vector.svg";
 import ErrorMessage from "./ErrorMessage";
 import { useDispatch, useSelector } from "react-redux";
-import { updateHeaderNotifications } from "../../notificationsSlice";
+import { updateDismissClicked, updateHeaderNotifications, updateNotificationSeenDtimes } from "../../notificationsSlice";
 
-function NotificationPopup({ closeNotification, lastNotiticationSeenTimestamp }) {
+function NotificationPopup({ closeNotification }) {
     const { t } = useTranslation();
     const navigate = useNavigate('');
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
@@ -24,7 +24,7 @@ function NotificationPopup({ closeNotification, lastNotiticationSeenTimestamp })
     const [dataLoaded, setDataLoaded] = useState(true);
     const dispatch = useDispatch();
     const [notifications, setNotifications] = useState(useSelector((state) => state.headerNotifications.headerNotifications));
-    const [lastSeenDtimes, setLastSeenDtimes] = useState(null);
+    const lastNotiticationSeenTimestamp = useSelector((state) => state.headerNotifications.lastSeenDtimes);
 
     useEffect(() => {
         updateNotificationSeenTimestamp();
@@ -45,7 +45,7 @@ function NotificationPopup({ closeNotification, lastNotiticationSeenTimestamp })
                 const responseData = response.data;
                 if (responseData && responseData.response) {
                     setDataLoaded(true);
-                    setLastSeenDtimes(responseData.response.notificationsSeenDtimes);
+                    dispatch(updateNotificationSeenDtimes(responseData.response.notificationsSeenDtimes));
                     return;
                 } else {
                     handleServiceErrors(responseData, setErrorCode, setErrorMsg);
@@ -82,6 +82,7 @@ function NotificationPopup({ closeNotification, lastNotiticationSeenTimestamp })
 
     const dismissNotification = async (id) => {
         dismissNotificationById(HttpService, id, setNotifications, fetchNotificationsList, setErrorCode, setErrorMsg, t); 
+        dispatch(updateDismissClicked(true));
     }
 
     const fetchNotificationsList = async () => {
@@ -113,7 +114,7 @@ function NotificationPopup({ closeNotification, lastNotiticationSeenTimestamp })
     }
 
     const viewAllNotifications = () => {
-        closeNotification(lastSeenDtimes);
+        closeNotification();
         if (getUserProfile().roles.includes('PARTNER_ADMIN')) {
             navigate('/partnermanagement/admin/notifications/view-root-certificate-expiry');
         } else {
@@ -136,7 +137,7 @@ function NotificationPopup({ closeNotification, lastNotiticationSeenTimestamp })
     }
 
     useEffect(() => {
-        const removeListener = handleEscapeKey(() => closeNotification(lastSeenDtimes));
+        const removeListener = handleEscapeKey(() => closeNotification());
         return removeListener;
     }, []);
 
@@ -166,7 +167,7 @@ function NotificationPopup({ closeNotification, lastNotiticationSeenTimestamp })
                         <div>
                             <div className="flex justify-between items-center px-4 py-3 border-b border-gray-200 cursor-default">
                                 <h2 className="text-lg font-bold text-gray-800">{t('notificationPopup.notification')}</h2>
-                                <img src={xClose} alt='' id='xIcon' onClick={() => closeNotification(lastSeenDtimes)} className="cursor-pointer" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, closeNotification)}/>
+                                <img src={xClose} alt='' id='xIcon' onClick={() => closeNotification()} className="cursor-pointer" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, closeNotification)}/>
                             </div>
                             {errorMsg && (
                                 <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customStyle={errorcustomStyle}/>
