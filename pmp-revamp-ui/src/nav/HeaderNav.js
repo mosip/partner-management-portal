@@ -127,17 +127,20 @@ function HeaderNav({ open, setOpen }) {
     }
 
     const closeNotificationPanel = () => {
-        const dismissClicked = store.getState().headerNotifications.dismissClicked;
-        const notificationSeenDtimes = store.getState().headerNotifications.notificationSeenDtimes;
-        console.log(notificationSeenDtimes);
-        dispatch(updateLastSeenDtimes(notificationSeenDtimes));
+        const dismissClicked = store.getState().headerNotifications.dismissClicked; 
         if (location.pathname.includes('notifications') && dismissClicked) {
             window.location.reload()
         } else {
             setOpenNotification(false);
             setShowLatestNotificationIcon(false);
         }
-        dispatch(updateDismissClicked(false));
+        const notificationSeenDtimes = store.getState().headerNotifications.notificationSeenDtimes;
+        if (notificationSeenDtimes !== null) {
+            dispatch(updateLastSeenDtimes(notificationSeenDtimes));
+        }
+        if(dismissClicked) {
+            dispatch(updateDismissClicked(false));
+        }
     }
 
     return (
