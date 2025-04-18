@@ -164,36 +164,55 @@ function Dashboard() {
 
   useEffect(() => {
     const fetchTrustCertExpiryCount = async (certType) => {
-      const queryParams = new URLSearchParams();
-      queryParams.append('expiryPeriod', 30);
-      queryParams.append('caCertificateType', certType);
-      queryParams.append('pageSize', '2');
-      queryParams.append('pageNo', '0');
-
-      const url = `${getPartnerManagerUrl('/trust-chain-certificates', process.env.NODE_ENV)}?${queryParams.toString()}`;
+      const pageSize = 100;
+      let pageNo = 0;
+      let totalResults = 0;
+      let filteredCerts = [];
+    
       try {
-        const response = await HttpService.get(url);
-        if (response) {
-          const responseData = response.data;
+        while (true) {
+          const queryParams = new URLSearchParams();
+          queryParams.append('expiryPeriod', 30);
+          queryParams.append('caCertificateType', certType);
+          queryParams.append('pageSize', pageSize);
+          queryParams.append('pageNo', pageNo);
+    
+          const url = `${getPartnerManagerUrl('/trust-chain-certificates', process.env.NODE_ENV)}?${queryParams.toString()}`;
+    
+          const response = await HttpService.get(url);
+          const responseData = response?.data;
+    
           if (responseData && responseData.response) {
-            if (certType === "ROOT") {
-              setRootCertExpiryCount(responseData.response.totalResults);
-            } else if (certType === "INTERMEDIATE") {
-              setIntermediateCertExpiryCount(responseData.response.totalResults);
-            }
+            const { data, totalResults: total } = responseData.response;
+            totalResults = total;
+
+            const validCerts = data.filter(cert => cert.status === true);
+            filteredCerts = [...filteredCerts, ...validCerts];
+    
+            const totalPages = Math.ceil(totalResults / pageSize);
+            pageNo++;
+    
+            if (pageNo >= totalPages) break;
           } else {
             handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+            break;
           }
-        } else {
-          setErrorMsg(t('dashboard.requestCountFetchError'));
         }
+    
+        // After loop completes, set final count
+        if (certType === "ROOT") {
+          setRootCertExpiryCount(filteredCerts.length);
+        } else if (certType === "INTERMEDIATE") {
+          setIntermediateCertExpiryCount(filteredCerts.length)
+        }
+    
       } catch (err) {
         if (err.response?.status && err.response.status !== 401) {
           setErrorMsg(t('dashboard.requestCountFetchError'));
         }
         console.error("Error fetching data:", err);
       }
-    };
+    };    
 
     const fetchPartnerCertExpiryCount = async () => {
       const queryParams = new URLSearchParams();
