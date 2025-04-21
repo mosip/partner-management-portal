@@ -1007,7 +1007,9 @@
         "selectCreatedToDate": "تاريخ إنشاء البحث إلى",
         "viewExpiringItems": "عرض العناصر منتهية الصلاحية",
         "partnerCertExpiryTitle": "شهادة الشريك على وشك الانتهاء لـ {{partnerId}}",
-        "partnerCertExpiryDescription": "شهادة الشريك <span>{{certificateId}}</span> الصادرة لـ <span>{{issuedTo}}</span> بواسطة <span>{{issuedBy}}</span> للنطاق <span>{{partnerDomain}}</span> من المقرر أن تنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات."
+        "partnerCertExpiryDescription": "شهادة الشريك <span>{{certificateId}}</span> الصادرة لـ <span>{{issuedTo}}</span> بواسطة <span>{{issuedBy}}</span> للنطاق <span>{{partnerDomain}}</span> من المقرر أن تنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات.",
+        "weeklyPartnerCertExpiryTitle": "شهادة الشريك على وشك الانتهاء لمعرف الشريك: {{partnerId}}",
+        "weeklyPartnerCertExpiryDescription": "شهادة الشريك <span>{{certificateId}}</span> الصادرة لـ <span>{{issuedTo}}</span> بواسطة <span>{{issuedBy}}</span> لـ <span>{{partnerId}}</span> من المقرر أن تنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات."
     },
     "serverError": {
         "PMS_COR_001": "معلمة الإدخال مفقودة",
