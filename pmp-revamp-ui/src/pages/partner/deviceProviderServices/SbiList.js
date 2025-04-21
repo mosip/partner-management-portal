@@ -23,7 +23,7 @@ import disableDeactivateIcon from "../../../svg/disable_deactivate_icon.svg";
 function SbiList() {
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [dataLoaded, setDataLoaded] = useState(false);
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");

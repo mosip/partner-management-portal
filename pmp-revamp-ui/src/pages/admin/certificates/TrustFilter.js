@@ -8,7 +8,7 @@ import { getUserProfile } from '../../../services/UserProfileService.js';
 
 function TrustFilter({ onApplyFilter }) {
     const { t } = useTranslation();
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [partnerDomainData, setPartnerDomainData] = useState([]);
     const [partnerDomainDropdownData, setPartnerDomainDropdownData] = useState([
         { partnerDomain: 'AUTH' },

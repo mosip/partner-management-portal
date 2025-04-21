@@ -10,7 +10,7 @@ import FocusTrap from "focus-trap-react";
 
 function DeactivatePopup({ onClickConfirm, closePopUp, popupData, request, headerMsg, descriptionMsg, headerKeyName }) {
     const { t } = useTranslation();
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [dataLoaded, setDataLoaded] = useState(true);

@@ -9,7 +9,7 @@ function DropdownWithSearchComponent({ fieldName, dropdownDataList, onDropDownCh
     placeHolderKey, searchKey, selectedDropdownValue, styleSet, addInfoIcon, infoKey, disabled, selectPolicyPopup, isPlaceHolderPresent, id }) {
 
     const { t } = useTranslation();
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
 
     const [selectedDropdownEntry, setSelectedDropdownEntry] = useState("");
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);

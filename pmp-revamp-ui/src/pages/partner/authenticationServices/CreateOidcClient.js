@@ -221,7 +221,7 @@ function CreateOidcClient() {
 
 
   const navigate = useNavigate();
-  const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+  const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
 
   // Below code related to adding & deleting of Redirect URLs
   const onChangeRedirectUrl = (index, value) => {

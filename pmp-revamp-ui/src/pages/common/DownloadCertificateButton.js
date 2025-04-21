@@ -11,7 +11,7 @@ import downloadIcon from '../../svg/download_icon.svg';
 function DownloadCertificateButton({ setShowDropDown, showDropDown, onClickFirstOption, onClickSecondOption, requiredData, downloadDropdownRef, disableBtn, disabledBtnHoverMsg, styleSet, id }) {
 
     const { t } = useTranslation();
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
 
     return (
         <div ref={downloadDropdownRef} className={`flex-col`}>

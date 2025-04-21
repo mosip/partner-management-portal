@@ -6,7 +6,7 @@ import CalendarInput from "../../common/CalendarInput";
 
 function WeeklyNotificationsFilter({ onApplyFilter }) {
     const { t } = useTranslation();
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [isExpiryCalenderOpen, setIsExpiryCalenderOpen] = useState(false);
     const [filters, setFilters] = useState({
         createdFromDate: "",

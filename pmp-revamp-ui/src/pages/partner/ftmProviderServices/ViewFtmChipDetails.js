@@ -17,7 +17,7 @@ import { HttpService } from "../../../services/HttpService";
 function ViewFtmChipDetails() {
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [ftmDetails, setFtmDetails] = useState(true);
     const [unexpectedError, setUnexpectedError] = useState(false);
     const [showPopup, setShowPopup] = useState(false);

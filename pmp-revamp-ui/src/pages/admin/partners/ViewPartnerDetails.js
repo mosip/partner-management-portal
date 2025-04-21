@@ -20,7 +20,7 @@ import LoadingIcon from '../../common/LoadingIcon';
 function ViewPartnerDetails() {
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [dataLoaded, setDataLoaded] = useState(false);
     const [downloadBtnId, setDownloadBtnId] = useState(false);
     const [unexpectedError, setUnexpectedError] = useState(false);

@@ -6,7 +6,7 @@ import Title from '../pages/common/Title';
 
 function UserProfile() {
     const { t } = useTranslation();
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const userData = getUserProfile();
 
     return (

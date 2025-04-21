@@ -17,7 +17,7 @@ import LoadingIcon from '../../common/LoadingIcon';
 function ViewAdminFtmChipDetails() {
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [ftmDetails, setFtmDetails] = useState({});
     const [certificateDetails, setCertificateDetails] = useState({});
     const [unexpectedError, setUnexpectedError] = useState(false);

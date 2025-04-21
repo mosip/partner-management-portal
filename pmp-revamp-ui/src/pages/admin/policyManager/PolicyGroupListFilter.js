@@ -7,7 +7,7 @@ import { getUserProfile } from '../../../services/UserProfileService';
 
 function PolicyGroupListFilter({ onApplyFilter }) {
     const { t } = useTranslation();
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [status, setStatus] = useState([]);
     const [statusDropdownData, setStatusDropdownData] = useState([
       { status: 'active' },

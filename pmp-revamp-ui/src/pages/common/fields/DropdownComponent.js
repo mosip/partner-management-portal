@@ -10,7 +10,7 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
     placeHolderKey, selectedDropdownValue, styleSet, addInfoIcon, infoKey, disabled, isPlaceHolderPresent, changeDropdownBackground, id}) {
 
     const { t } = useTranslation();
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
 
     const [selectedDropdownEntry, setSelectedDropdownEntry] = useState("");
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);

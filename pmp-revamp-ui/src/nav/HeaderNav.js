@@ -17,7 +17,7 @@ function HeaderNav({ open, setOpen }) {
     const navigate = useNavigate('');
     const { t } = useTranslation();
     const location = useLocation();
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const dropdownRef = useRef(null);
     const notificationRef = useRef(null);

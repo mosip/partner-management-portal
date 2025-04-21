@@ -6,7 +6,7 @@ import { isLangRTL, onPressEnterKey } from '../../../utils/AppUtils';
 
 function PoliciesTab() {
     const { t } = useTranslation();
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const activeTab = localStorage.getItem('activeTab') ? localStorage.getItem('activeTab') : 'policyGroup';
     const navigate = useNavigate();
 

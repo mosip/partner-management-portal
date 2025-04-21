@@ -32,7 +32,7 @@ function TrustList({ trustListType, uploadTrustBtnName, subTitle, downloadBtnNam
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [expandFilter, setExpandFilter] = useState(false);
-  const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+  const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
   const [errorCode, setErrorCode] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");

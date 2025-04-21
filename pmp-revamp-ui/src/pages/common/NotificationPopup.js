@@ -17,7 +17,7 @@ import { updateDismissClicked, updateHeaderNotifications, updateNotificationSeen
 function NotificationPopup({ closeNotification }) {
     const { t } = useTranslation();
     const navigate = useNavigate('');
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [isSmallScreen, setIsSmallScreen] = useState(window.innerHeight < 620);

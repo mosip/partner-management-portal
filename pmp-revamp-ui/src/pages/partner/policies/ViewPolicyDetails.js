@@ -10,7 +10,7 @@ import Title from "../../common/Title";
 
 function ViewPolicyDetails() {
     const { t } = useTranslation();
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const navigate = useNavigate();
     const [policyDetails, setPolicyDetails] = useState([]);
 

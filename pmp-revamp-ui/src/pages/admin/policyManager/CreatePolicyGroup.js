@@ -14,7 +14,7 @@ function CreatePolicyGroup() {
 
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [dataLoaded, setDataLoaded] = useState(true);
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");

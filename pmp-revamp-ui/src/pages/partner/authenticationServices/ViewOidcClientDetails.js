@@ -15,7 +15,7 @@ import LoadingIcon from "../../common/LoadingIcon";
 function ViewOidcClientDetails() {
     const { t } = useTranslation();
     const [copied, setCopied] = useState(false);
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [unexpectedError, setUnexpectedError] = useState(false);
     const [dataLoaded, setDataLoaded] = useState(false);
     const [errorCode, setErrorCode] = useState("");

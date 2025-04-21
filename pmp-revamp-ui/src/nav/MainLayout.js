@@ -70,17 +70,17 @@ function MainLayout({ children }) {
     }
 
     useEffect(() => {
-        const langCode = getUserProfile() ? getUserProfile().langCode: null;
-        if (langCode != null) {
-            if (langCode === "ara") {
+        const locale = getUserProfile() ? getUserProfile().locale: null;
+        if (locale != null) {
+            if (locale === "ara") {
                 document.body.dir = 'rtl';
-                i18n.changeLanguage(langCode);
+                i18n.changeLanguage(locale);
             }
             else {
                 document.body.dir = 'ltr';
-                i18n.changeLanguage(langCode);
+                i18n.changeLanguage(locale);
             }
-            i18n.changeLanguage(langCode);
+            i18n.changeLanguage(locale);
         }
 
         const initializeItemsPerPage = async () => {

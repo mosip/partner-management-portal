@@ -8,7 +8,7 @@ import { getUserProfile } from '../../../services/UserProfileService.js';
 function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg, removeSbiFields}) {
     const { t } = useTranslation();
     const [status, setStatus] = useState([]);
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [deviceTypeDropdownData, setDeviceTypeDropdownData] = useState([]);
     const [deviceSubTypeDropdownData, setDeviceSubTypeDropdownData] = useState([]);
     const [statusDropdownData, setStatusDropdownData] = useState([

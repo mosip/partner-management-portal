@@ -8,7 +8,7 @@ import Title from '../../common/Title';
 
 function ViewAdminSbiDetails() {
     const { t } = useTranslation();
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const navigate = useNavigate();
     const [unexpectedError, setUnexpectedError] = useState(false);
     const [sbiDetails, setSbiDetails] = useState({});

@@ -9,7 +9,7 @@ import somethingWentWrongIcon from '../../../svg/something_went_wrong_icon.svg';
 function ViewPolicyGroupDetails() {
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [unexpectedError, setUnexpectedError] = useState(false);
     const [policyGroupDetails, setPolicyGroupDetails] = useState('');
 
