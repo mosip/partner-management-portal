@@ -189,7 +189,7 @@ function ViewAllNotifications({ notificationType }) {
 
     const getWeeklyNoticationTitle = (notification, type) => {
         if (type === 'partner') {
-            return t('viewAllNotifications.partnerCertExpiryTitle', {partnerId: notification.partnerId});
+            return t('viewAllNotifications.weeklyPartnerCertExpiryTitle', {partnerId: notification.partnerId});
         }
     }
 
@@ -197,12 +197,12 @@ function ViewAllNotifications({ notificationType }) {
         if (type === 'partner') {
             return (
                 <Trans 
-                    i18nKey="viewAllNotifications.partnerCertExpiryDescription"
+                    i18nKey="viewAllNotifications.weeklyPartnerCertExpiryDescription"
                     values={{
                         certificateId: notification.certificateId,
                         issuedTo: notification.issuedTo,
                         issuedBy: notification.issuedBy,
-                        partnerDomain: notification.partnerDomain,
+                        partnerId: notification.partnerId,
                         expiryDateTime: formatDate(notification.expiryDateTime, 'dateInWords')
                     }}
                     components={{ span: <span className={`font-semibold ${isLoginLanguageRTL && 'whitespace-nowrap'}`} /> }}
