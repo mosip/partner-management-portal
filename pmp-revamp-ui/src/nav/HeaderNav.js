@@ -29,8 +29,11 @@ function HeaderNav({ open, setOpen }) {
 
     useEffect(() => {
         handleMouseClickForDropdown(dropdownRef, () => setIsDropdownOpen(false));
-        handleMouseClickForDropdown(notificationRef, () => closeNotificationPanel());
-    }, [dropdownRef, notificationRef]);
+        // Only attach handler to close notification if it's open
+        if (openNotification) {
+            handleMouseClickForDropdown(notificationRef, () => closeNotificationPanel());
+        }
+    }, [dropdownRef, notificationRef, openNotification]);
 
     useEffect(() => {
         if (dropdownRef.current) {
