@@ -4,7 +4,7 @@ import { isLangRTL } from '../../utils/AppUtils';
 
 function SuccessMessage({ successMsg, clickOnCancel, customStyle, successParam }) {
 
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
 
     return (
         <div className={`${customStyle ? customStyle.outerDiv : `flex justify-end max-w-7xl my-3 absolute ${isLoginLanguageRTL ? "left-0.5" : "right-0.5"}`}`}>

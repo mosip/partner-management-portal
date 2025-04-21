@@ -11,7 +11,7 @@ function PolicyRequestsListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) 
 
   const [partnerType, setPartnerType] = useState([]);
   const [status, setStatus] = useState([]);
-  const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+  const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
   const [statusDropdownData, setStatusDropdownData] = useState([
     { status: 'approved' },
     { status: 'rejected' },

@@ -7,7 +7,7 @@ import { getUserProfile } from "../../services/UserProfileService";
 function ErrorMessage({ errorCode, errorMessage, clickOnCancel, customStyle }) {
     const { t } = useTranslation();
     const [errorMsg, setErrorMsg] = useState();
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
 
     useEffect(() => {
         setErrorMsg(getErrorMessage(errorCode, t, errorMessage));

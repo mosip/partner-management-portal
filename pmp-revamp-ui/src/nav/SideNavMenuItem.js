@@ -3,7 +3,7 @@ import { isLangRTL } from "../utils/AppUtils";
 
 export const SideNavMenuItem = ({ title, id, isExpanded, activeIcon }) => {
 
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
 
     return (
         <div className="flex items-center gap-x-2 mt-2 font-inter">

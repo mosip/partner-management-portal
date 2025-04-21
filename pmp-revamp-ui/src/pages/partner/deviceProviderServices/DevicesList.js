@@ -26,7 +26,7 @@ import deactivateIcon from "../../../svg/deactivate_icon.svg";
 function DevicesList() {
     const navigate = useNavigate('');
     const { t } = useTranslation();
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [unexpectedError, setUnexpectedError] = useState(false);

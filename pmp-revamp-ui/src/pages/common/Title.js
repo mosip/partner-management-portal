@@ -7,7 +7,7 @@ import backArrow from '../../svg/back_arrow.svg';
 function Title({ title, subTitle, subTitle2, backLink, backLink2, status, version }) {
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
 
     const goBack = () => {
         if (backLink2) {

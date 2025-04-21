@@ -12,7 +12,7 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
   const [partnerType, setPartnerType] = useState([]);
   const [status, setStatus] = useState([]);
   const [certUploadStatus, setCertUploadStatus] = useState([]);
-  const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+  const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
   const [certUploadStatusDropdownData, setCertUploadStatusDropdownData] = useState([
     { certificateUploadStatus: 'uploaded' },
     { certificateUploadStatus: 'not_uploaded' }

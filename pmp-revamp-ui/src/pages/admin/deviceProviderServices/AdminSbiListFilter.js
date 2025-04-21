@@ -7,7 +7,7 @@ import { isLangRTL, createDropdownData } from "../../../utils/AppUtils";
 
 function AdminSbiListFilter( {onApplyFilter} ) {
     const { t } = useTranslation();
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [status, setStatus] = useState([]);
     const [sbiExpiryStatus, setSbiExpiryStatus] = useState([]);
     const [statusDropdownData, setStatusDropdownData] = useState([

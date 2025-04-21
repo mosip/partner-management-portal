@@ -6,7 +6,7 @@ import { getUserProfile } from "../../../services/UserProfileService";
 function AdminNotificationsTab({ activeRootCA, rootCaPath, activeIntermediateCA, intermediateCaPath, activePartner, partnerCertPath }) {
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
 
     const changeToRootCA = () => {
         navigate(rootCaPath)

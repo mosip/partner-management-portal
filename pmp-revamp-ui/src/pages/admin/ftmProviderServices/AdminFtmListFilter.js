@@ -8,7 +8,7 @@ import { getUserProfile } from '../../../services/UserProfileService';
 function AdminFtmListFilter ({ onApplyFilter }) {
     const { t } = useTranslation();
     const [status, setStatus] = useState([]);
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [statusDropdownData, setStatusDropdownData] = useState([
         { status: 'approved' },
         { status: 'rejected' },

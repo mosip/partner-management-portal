@@ -16,7 +16,7 @@ import DownloadCertificateButton from "../../common/DownloadCertificateButton";
 
 function PartnerCertificatesList() {
     const { t } = useTranslation();
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [downloadBtnId, setDownloadBtnId] = useState(-1);
     const [showActiveIndexUploadCertifcatePopup, setShowActiveIndexUploadCertifcatePopup] = useState(null);
     const [selectedPartnerData, setSelectedPartnerData] = useState(null);

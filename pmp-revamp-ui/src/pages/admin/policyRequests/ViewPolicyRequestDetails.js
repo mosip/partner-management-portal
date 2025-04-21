@@ -10,7 +10,7 @@ import dotImg from "../../../svg/dot.svg";
 
 function ViewPolicyRequestDetails() {
     const { t } = useTranslation();
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const navigate = useNavigate();
     const [policyRequestDetails, setPolicyRequestDetails] = useState({});
 

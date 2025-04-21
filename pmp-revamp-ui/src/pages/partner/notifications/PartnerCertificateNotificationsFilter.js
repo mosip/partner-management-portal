@@ -9,7 +9,7 @@ import CalendarInput from '../../common/CalendarInput.js';
 
 function PartnerCertificateNotificationsFilter({ onApplyFilter }) {
     const { t } = useTranslation();
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [partnerDomainData, setPartnerDomainData] = useState([]);
     const [isExpiryCalenderOpen, setIsExpiryCalenderOpen] = useState(false);
     const [partnerDomainDropdownData, setPartnerDomainDropdownData] = useState([

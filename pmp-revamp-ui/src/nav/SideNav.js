@@ -9,7 +9,7 @@ function SideNav({ open, policyRequiredPartnerTypes, partnerType }) {
     const location = useLocation();
     const navigate = useNavigate();
     const [activeIcon, setActiveIcon] = useState("");
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     let selectedPath = location.pathname;
     const { t } = useTranslation();
     const [enablePoliciesMenu, setEnablePoliciesMenu] = useState(false);

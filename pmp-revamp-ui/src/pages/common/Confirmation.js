@@ -9,7 +9,7 @@ function Confirmation({ confirmationData, onClickFunction }) {
 
     const navigate = useNavigate();
     const { t } = useTranslation();
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [style, setStyle] = useState(confirmationData.styleSet);
 
     return (

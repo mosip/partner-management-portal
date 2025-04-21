@@ -6,7 +6,7 @@ import { getUserProfile } from '../../../services/UserProfileService';
 function TextInputComponent({ fieldName, fieldNameKey, placeHolderKey, textBoxValue, onTextChange, styleSet, id, maxLength, disableField }) {
     const { t } = useTranslation();
     const [inputValue, setInputValue] = useState("");
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
 
     const handleInputChange = (event) => {
         const newValue = event.target.value;

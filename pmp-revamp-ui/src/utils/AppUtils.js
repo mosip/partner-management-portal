@@ -164,8 +164,8 @@ export const handleServiceErrors = (responseData, setErrorCode, setErrorMsg) => 
     }
 }
 
-export const isLangRTL = (langCode) => {
-    if (langCode === 'ara') {
+export const isLangRTL = (locale) => {
+    if (locale === 'ara') {
         return true;
     }
     else {

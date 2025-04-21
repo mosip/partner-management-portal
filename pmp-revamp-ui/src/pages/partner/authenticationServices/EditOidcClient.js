@@ -20,7 +20,7 @@ import somethingWentWrongIcon from '../../../svg/something_went_wrong_icon.svg';
 
 function EditOidcClient() {
     const { t } = useTranslation();
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const navigate = useNavigate();
     const [dataLoaded, setDataLoaded] = useState(true);
     const [errorCode, setErrorCode] = useState("");
