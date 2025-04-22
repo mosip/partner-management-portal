@@ -1058,3 +1058,18 @@ export const getOuterDivWidth = (text) => {
         return 'min-w-64';
     }
 };
+
+export const validateInputRegex = (input, setInputError, t) => {
+    if (input === '' || validateInput(input)) {
+        setInputError("");
+    } else {
+        setInputError(t('commons.inputError'));
+    }
+};
+
+export const validateInput = (input) => {
+    // Only allow letters (any language), digits, spaces, and .,@#&()- characters
+    const allowedPattern = /^[\p{L}\p{N}\s.,@#&()\-\\]+$/u;
+
+    return allowedPattern.test(input);
+}

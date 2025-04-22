@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useBlocker } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { createRequest, getPolicyManagerUrl, handleServiceErrors, isLangRTL, onPressEnterKey, trimAndReplace } from '../../../utils/AppUtils';
+import { createRequest, getPolicyManagerUrl, handleServiceErrors, isLangRTL, onPressEnterKey, trimAndReplace, validateInputRegex } from '../../../utils/AppUtils';
 import { getUserProfile } from '../../../services/UserProfileService';
 import BlockerPrompt from "../../common/BlockerPrompt";
 import Title from '../../common/Title';
@@ -24,6 +24,8 @@ function CreatePolicyGroup() {
     const [validationError, setValidationError] = useState("");
     const [createPolicySuccess, setCreatePolicySuccess] = useState(false);
     const [confirmationData, setConfirmationData] = useState({});
+    const [invalidPolicyGroupName, setInvalidPolicyGroupName] = useState("");
+    const [invalidPolicyGroupDesc, setInvalidPolicyGroupDesc] = useState("");
 
     const blocker = useBlocker(
         ({ currentLocation, nextLocation }) => {
@@ -63,18 +65,22 @@ function CreatePolicyGroup() {
         setPolicyGroupName("");
         setPolicyGroupDesc("");
         setValidationError("");
+        setInvalidPolicyGroupDesc("");
+        setInvalidPolicyGroupName("");
     };
 
     const isFormValid = () => {
-        return policyGroupName && policyGroupDesc && !validationError;
+        return policyGroupName && policyGroupDesc && !validationError && !invalidPolicyGroupName && !invalidPolicyGroupDesc;
     };
 
     const onChangePolicyGroupName = (value) => {
         setPolicyGroupName(value);
+        validateInputRegex(value, setInvalidPolicyGroupName, t)
     };
 
     const onChangePolicyGroupDesc = (value) => {
         setPolicyGroupDesc(value);
+        validateInputRegex(value, setInvalidPolicyGroupDesc, t)
     };
 
     const clickOnCancel = () => {
@@ -165,6 +171,7 @@ function CreatePolicyGroup() {
                                                             className="h-12 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                                                             placeholder={t('createPolicyGroup.enterNameforPolicyGroup')} id="policy_group_name"
                                                         />
+                                                        {invalidPolicyGroupName && <span className="text-sm text-crimson-red font-semibold">{invalidPolicyGroupName}</span>}
                                                     </div>
                                                 </div>
                                             </div>
@@ -176,6 +183,7 @@ function CreatePolicyGroup() {
                                                             className="h-14 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                                                             placeholder={t('createPolicyGroup.enterPolicyGroupDescription')} id="policy_group_description"
                                                         />
+                                                        {invalidPolicyGroupDesc && <span className="text-sm text-crimson-red font-semibold">{invalidPolicyGroupDesc}</span>}
                                                     </div>
                                                 </div>
                                             </div>

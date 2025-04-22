@@ -32,7 +32,8 @@
         "close": "Close",
         "unexpectedError": "We have encountered an unexpected error",
         "undoChanges": "Undo Changes",
-        "clear": "Clear"
+        "clear": "Clear",
+        "inputError": "Special characters are not allowed."
     },
     "dashboard": {
         "welcomeMsg": "Welcome {{firstName}} {{lastName}}",
