@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import DropdownComponent from "../../common/fields/DropdownComponent.js";
 import TextInputComponent from "../../common/fields/TextInputComponent.js";
 import { useTranslation } from "react-i18next";
-import { isLangRTL, createDropdownData, createRequest, getPartnerManagerUrl, handleServiceErrors } from "../../../utils/AppUtils.js";
+import { isLangRTL, createDropdownData, createRequest, getPartnerManagerUrl, handleServiceErrors, validateInputRegex } from "../../../utils/AppUtils.js";
 import { getUserProfile } from '../../../services/UserProfileService';
 import { HttpService } from "../../../services/HttpService.js";
 
@@ -30,6 +30,10 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
     certificateUploadStatus: "",
     policyGroupName: ""
   });
+  const [invalidPartnerId, setInvalidPartnerId] = useState("");
+  const [invalidOrgName, setInvalidOrgName] = useState("");
+  const [invalidPolicyGroup, setInvalidPolicyGroup] = useState("");
+  const [invalidEmail, setInvalidEmail] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -91,10 +95,14 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
       ...prevFilters,
       [fieldName]: selectedFilter
     }));
+    if (fieldName === 'partnerId') { validateInputRegex(selectedFilter, setInvalidPartnerId, t); }
+    if (fieldName === 'orgName') { validateInputRegex(selectedFilter, setInvalidOrgName, t); }
+    if (fieldName === 'policyGroupName') { validateInputRegex(selectedFilter, setInvalidPolicyGroup, t); }
+    if (fieldName === 'emailAddress') { validateInputRegex(selectedFilter, setInvalidEmail, t); }
   };
 
   const areFiltersEmpty = () => {
-    return Object.values(filters).every(value => value === "");
+    return Object.values(filters).every(value => value === "") || invalidPartnerId || invalidOrgName || invalidPolicyGroup || invalidEmail;
   };
 
   const styles = {
@@ -117,6 +125,7 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
         placeHolderKey="partnerList.searchPartnerId"
         styleSet={styleSet}
         id="partner_id_filter"
+        inputError={invalidPartnerId}
       />
       <DropdownComponent
         fieldName="partnerType"
@@ -136,6 +145,7 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
         placeHolderKey="partnerList.searchOrganisation"
         styleSet={styleSet}
         id="partner_organisation_filter"
+        inputError={invalidOrgName}
       />
       <TextInputComponent
         fieldName="policyGroupName"
@@ -145,6 +155,7 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
         placeHolderKey="partnerList.searchPolicyGroup"
         styleSet={styleSet}
         id="policy_group_filter"
+        inputError={invalidPolicyGroup}
       />
       <TextInputComponent
         fieldName="emailAddress"
@@ -154,6 +165,7 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
         placeHolderKey="partnerList.searchEmailAddress"
         styleSet={styleSet}
         id="email_address_filter"
+        inputError={invalidEmail}
       />
       <DropdownComponent
         fieldName="certificateUploadStatus"
