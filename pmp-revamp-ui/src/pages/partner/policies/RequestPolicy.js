@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate, useBlocker } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../../services/UserProfileService";
-import { isLangRTL, getPartnerManagerUrl, getPolicyManagerUrl, handleServiceErrors, moveToPolicies, getPartnerTypeDescription, createDropdownData, createRequest } from '../../../utils/AppUtils';
+import { isLangRTL, getPartnerManagerUrl, getPolicyManagerUrl, handleServiceErrors, moveToPolicies, getPartnerTypeDescription, createDropdownData, createRequest, validateInputRegex } from '../../../utils/AppUtils';
 import { HttpService } from '../../../services/HttpService';
 import LoadingIcon from "../../common/LoadingIcon";
 import ErrorMessage from "../../common/ErrorMessage";
@@ -32,6 +32,7 @@ function RequestPolicy() {
     const [requestPolicySuccess, setRequestPolicySuccess] = useState(false);
     const [confirmationData, setConfirmationData] = useState({});
     const [isSubmitClicked, setIsSubmitClicked] = useState(false);
+    const [inputError, setInputError] = useState("");
 
     const cancelErrorMsg = () => {
         setErrorMsg("");
@@ -158,6 +159,7 @@ function RequestPolicy() {
         setPolicyName("");
         setPartnerComment("");
         setPoliciesDropdownData([]);
+        setInputError("");
     };
 
     const clickOnCancel = () => {
@@ -205,12 +207,13 @@ function RequestPolicy() {
     }
 
     const isFormValid = () => {
-        return partnerId && policyName && partnerComment.trim();
+        return partnerId && policyName && partnerComment.trim() && !inputError;
     };
 
     const handleCommentChange = (e) => {
         const { value } = e.target;
         setPartnerComment(value);
+        validateInputRegex(value, setInputError, t);
     };
 
     const adjustTextareaHeight = () => {
@@ -315,6 +318,7 @@ function RequestPolicy() {
                                                     <textarea id="request_policy_comment_box" maxLength={500} ref={textareaRef} value={partnerComment} onChange={(e) => handleCommentChange(e)} className="w-full px-2 py-2 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline
                                                 overflow-x-auto whitespace-pre-wrap no-scrollbar" placeholder={t('requestPolicy.commentBoxDesc')}>
                                                     </textarea>
+                                                    {inputError && <span className="text-sm text-crimson-red font-semibold">{inputError}</span>}
                                                 </div>
                                             </div>
                                         </div>

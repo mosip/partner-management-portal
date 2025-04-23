@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate, useBlocker } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../../services/UserProfileService";
-import { isLangRTL, onPressEnterKey } from "../../../utils/AppUtils";
+import { isLangRTL, onPressEnterKey, validateInputRegex } from "../../../utils/AppUtils";
 import { getPolicyManagerUrl, handleServiceErrors, getPolicyGroupList, createRequest, trimAndReplace, handleFileChange } from '../../../utils/AppUtils';
 import { HttpService } from '../../../services/HttpService';
 import LoadingIcon from "../../common/LoadingIcon";
@@ -39,6 +39,8 @@ function CreatePolicy() {
     const [policyDescriptionPlaceHolderKey, setPolicyDescriptionPlaceHolderKey] = useState("");
     const [confirmationHeader, setConfirmationHeader] = useState("");
     const [confirmationMessage, setConfirmationMessage] = useState("");
+    const [invalidPolicyNameError, setInvalidPolicyNameError] = useState("");
+    const [invalidPolicyDescError, setInvalidPolicyDescError] = useState("");
 
     const policyDescriptionRef = useRef(null);
     const policyDataRef = useRef(null);
@@ -92,6 +94,8 @@ function CreatePolicy() {
         setErrorCode("");
         setErrorMsg("");
         setSuccessMsg("");
+        setInvalidPolicyNameError("");
+        setInvalidPolicyDescError("");
     };
 
     const clickOnCancel = () => {
@@ -204,12 +208,13 @@ function CreatePolicy() {
     }
 
     const isFormValid = () => {
-        return policyGroup && policyName && policyDescription.trim() && policyData.trim();
+        return policyGroup && policyName && policyDescription.trim() && policyData.trim() && !invalidPolicyNameError && !invalidPolicyDescError;
     };
 
     const handlePolicyDescriptionChange = (e) => {
         const { value } = e.target;
         setPolicyDescription(value);
+        validateInputRegex(value, setInvalidPolicyDescError, t);
     };
 
     const handlePolicyDataChange = (e) => {
@@ -243,6 +248,7 @@ function CreatePolicy() {
 
     const onTextChange = (fieldName, fieldValue) => {
         setPolicyName(fieldValue);
+        validateInputRegex(fieldValue, setInvalidPolicyNameError, t);
     };
 
     const styleSet = {
@@ -310,6 +316,7 @@ function CreatePolicy() {
                                                         id="policy_name_box"
                                                         maxLength={128}
                                                     />
+                                                    {invalidPolicyNameError && <span className="text-sm text-crimson-red font-semibold">{invalidPolicyNameError}</span>}
                                                 </div>
                                             </div>
                                             <div className="flex my-2">
@@ -326,6 +333,7 @@ function CreatePolicy() {
                                                         placeholder={t(policyDescriptionPlaceHolderKey)}
                                                         maxLength={256}
                                                     />
+                                                    {invalidPolicyDescError && <span className="text-sm text-crimson-red font-semibold">{invalidPolicyDescError}</span>}
                                                 </div>
                                             </div>
                                             <div className="rounded-lg shadow-md border my-5">

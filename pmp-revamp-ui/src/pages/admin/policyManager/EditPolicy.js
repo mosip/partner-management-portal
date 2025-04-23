@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 import { useTranslation } from "react-i18next";
 import { useBlocker, useNavigate } from "react-router-dom";
-import { createRequest, getPolicyDetails, getPolicyManagerUrl, handleServiceErrors, isLangRTL, trimAndReplace, handleFileChange } from "../../../utils/AppUtils";
+import { createRequest, getPolicyDetails, getPolicyManagerUrl, handleServiceErrors, isLangRTL, trimAndReplace, handleFileChange, validateInputRegex } from "../../../utils/AppUtils";
 import { getUserProfile } from "../../../services/UserProfileService";
 import Title from "../../common/Title";
 import ErrorMessage from "../../common/ErrorMessage";
@@ -36,7 +36,8 @@ function EditPolicy() {
     const [policyData, setPolicyData] = useState("");
     const [confirmationData, setConfirmationData] = useState({});
     const [editPolicySuccess, setEditPolicySuccess] = useState(false);
-    
+    const [invalidPolicyNameError, setInvalidPolicyNameError] = useState("");
+    const [invalidPolicyDescError, setInvalidPolicyDescError] = useState("");
     const [isSubmitClicked, setIsSubmitClicked] = useState(false);
 
     const policyDescriptionRef = useRef(null);
@@ -215,6 +216,8 @@ function EditPolicy() {
         setPolicyName(policyDetails.policyName);
         setPolicyDescription(policyDetails.policyDesc);
         setPolicyData(JSON.stringify(policyDetails.policies, null, 2));
+        setInvalidPolicyNameError("");
+        setInvalidPolicyDescError("");
     };
 
     const clickOnCancel = () => {
@@ -223,6 +226,7 @@ function EditPolicy() {
 
     const onPolicyNameChange = (fieldName, fieldValue) => {
         setPolicyName(fieldValue);
+        validateInputRegex(fieldValue, setInvalidPolicyNameError, t);
     };
 
     const cancelErrorMsg = () => {
@@ -238,12 +242,15 @@ function EditPolicy() {
         (trimAndReplace(policyName) !== policyDetails.policyName) ||
         (trimAndReplace(policyDescription) !== policyDetails.policyDesc) ||
         (policyData !== JSON.stringify(policyDetails.policies, null, 2)))
-        && policyName.trim() !== "" && policyDescription !== "" && policyData !== "";
+        && policyName.trim() !== "" && policyDescription !== "" && policyData !== ""
+        && !invalidPolicyNameError && !invalidPolicyDescError;
     };
+
 
     const handlePolicyDescriptionChange = (e) => {
         const { value } = e.target;
         setPolicyDescription(value);
+        validateInputRegex(value, setInvalidPolicyDescError, t);
     };
 
     const handlePolicyDataChange = (e) => {
@@ -313,6 +320,7 @@ function EditPolicy() {
                                                         id="policy_name_box"
                                                         maxLength={128}
                                                     />
+                                                    {invalidPolicyNameError && <span className="text-sm text-crimson-red font-semibold">{invalidPolicyNameError}</span>}
                                                 </div>
                                             </div>
                                             <div className="flex my-2">
@@ -329,6 +337,7 @@ function EditPolicy() {
                                                         placeholder={t(policyDescriptionPlaceHolderKey)}
                                                         maxLength={256}
                                                     />
+                                                    {invalidPolicyDescError && <span className="text-sm text-crimson-red font-semibold">{invalidPolicyDescError}</span>}
                                                 </div>
                                             </div>
                                             <div className="rounded-lg shadow-md border my-5">

@@ -7,7 +7,8 @@ import { HttpService } from "../../../services/HttpService";
 import {
     moveToOidcClientsList, createRequest, isLangRTL, getPartnerManagerUrl, handleServiceErrors, getGrantTypes, validateUrl, onPressEnterKey, trimAndReplace,
     getClientNameLangMap, getErrorMessage,
-    formatPublicKey
+    formatPublicKey,
+    validateInputRegex
 } from "../../../utils/AppUtils";
 import LoadingIcon from "../../common/LoadingIcon";
 import ErrorMessage from "../../common/ErrorMessage";
@@ -54,6 +55,7 @@ function EditOidcClient() {
         redirectUris: [],
         grantTypes: [],
     });
+    const [inputError, setInputError] = useState("");
 
     const blocker = useBlocker(
         ({ currentLocation, nextLocation }) => {
@@ -163,6 +165,7 @@ function EditOidcClient() {
             ...prevDetails,
             clientNameEng: value
         }));
+        validateInputRegex(value, setInputError, t);
     }
 
     const handleLogoUrlChange = (value) => {
@@ -251,7 +254,7 @@ function EditOidcClient() {
             (oidcClientDetails.logoUri !== selectedClientDetails.logoUri) ||
             (trimAndReplace(oidcClientDetails.clientNameEng) !== selectedClientDetails.clientNameEng))
             && trimAndReplace(oidcClientDetails.clientNameEng) !== "" && oidcClientDetails.logoUri !== "" && isRedirectUriNotEmpty()
-            && !invalidLogoUrl && !invalidRedirectUrl;
+            && !invalidLogoUrl && !invalidRedirectUrl && !inputError;
     }
 
     const undoChanges = () => {
@@ -260,6 +263,7 @@ function EditOidcClient() {
         setErrorCode("");
         setErrorMsg("");
         setOidcClientDetails(selectedClientDetails);
+        setInputError("");
     }
 
     const getRedirectUris = () => {
@@ -419,6 +423,7 @@ function EditOidcClient() {
                                                             <input id="oidc_edit_enter_client_name_input" value={oidcClientDetails.clientNameEng} onChange={(e) => onChangeOidcClientName(e.target.value)} maxLength={256} placeholder={t('createOidcClient.enterNameForOidcClient')}
                                                                 className="h-10 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-normal no-scrollbar"
                                                             />
+                                                            {inputError && <span className="text-sm text-crimson-red font-semibold">{inputError}</span>}
                                                         </div>
                                                     </div>
                                                     <div className="flex my-[1%]">

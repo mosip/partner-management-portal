@@ -32,7 +32,8 @@
         "close": "يغلق",
         "unexpectedError": "لقد واجهنا خطأ غير متوقع",
         "undoChanges": "التراجع عن التغييرات",
-        "clear":"مسح"
+        "clear":"مسح",
+        "inputError": "لا يسمح باستخدام الأحرف الخاصة."
     },
     "dashboard": {
         "welcomeMsg": "مرحباً {{firstName}} {{lastName}}",
