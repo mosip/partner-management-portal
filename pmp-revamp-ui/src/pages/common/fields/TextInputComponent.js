@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { isLangRTL } from '../../../utils/AppUtils';
 import { getUserProfile } from '../../../services/UserProfileService';
 
-function TextInputComponent({ fieldName, fieldNameKey, placeHolderKey, textBoxValue, onTextChange, styleSet, id, maxLength, disableField }) {
+function TextInputComponent({ fieldName, fieldNameKey, placeHolderKey, textBoxValue, onTextChange, styleSet, id, maxLength, disableField, inputError }) {
     const { t } = useTranslation();
     const [inputValue, setInputValue] = useState("");
     const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
@@ -55,6 +55,7 @@ function TextInputComponent({ fieldName, fieldNameKey, placeHolderKey, textBoxVa
                 </button>
                 )}
             </div>
+            {inputError && <span className="text-sm text-crimson-red font-semibold">{inputError}</span>}
         </div>
     );
 }

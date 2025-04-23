@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import DropdownComponent from '../../common/fields/DropdownComponent.js';
 import { useTranslation } from 'react-i18next';
-import { createDropdownData, getOuterDivWidth, isLangRTL } from '../../../utils/AppUtils.js';
+import { createDropdownData, getOuterDivWidth, isLangRTL, validateInputRegex } from '../../../utils/AppUtils.js';
 import TextInputComponent from '../../common/fields/TextInputComponent.js';
 import { getUserProfile } from '../../../services/UserProfileService.js';
 import CalendarInput from '../../common/CalendarInput.js';
@@ -24,6 +24,9 @@ function CertificateNotificationsFilter({ onApplyFilter }) {
         issuedBy: "",
         expiryDate: ""
     });
+    const [invalidCertificateId, setInvalidCertificateId] = useState("");
+    const [invalidIssuedBy, setInvalidIssuedBy] = useState("");
+    const [invalidIssuedTo, setInvalidIssuedTo] = useState("");
 
     useEffect(() => {
         const fetchData = async () => {
@@ -39,6 +42,9 @@ function CertificateNotificationsFilter({ onApplyFilter }) {
             ...prevFilters,
             [fieldName]: selectedFilter
         }));
+        if (fieldName === 'certificateId') { validateInputRegex(selectedFilter, setInvalidCertificateId, t); }
+        if (fieldName === 'issuedBy') { validateInputRegex(selectedFilter, setInvalidIssuedBy, t); }
+        if (fieldName === 'issuedTo') { validateInputRegex(selectedFilter, setInvalidIssuedTo, t); }
     };
 
     const handleExpiryDateChange = (newDateStr) => {
@@ -46,7 +52,7 @@ function CertificateNotificationsFilter({ onApplyFilter }) {
     };
       
     const areFiltersEmpty = () => {
-        return Object.values(filters).every(value => value === "");
+        return Object.values(filters).every(value => value === "") || invalidCertificateId || invalidIssuedBy || invalidIssuedTo;
     };
 
     const styles = {
@@ -74,6 +80,7 @@ function CertificateNotificationsFilter({ onApplyFilter }) {
                     placeHolderKey="viewAllNotifications.searchCertificateId"
                     styleSet={styleSet}
                     id="cert_id_filter"
+                    inputError={invalidCertificateId}
                 />
                 <TextInputComponent
                     fieldName='issuedBy'
@@ -82,6 +89,7 @@ function CertificateNotificationsFilter({ onApplyFilter }) {
                     placeHolderKey='viewAllNotifications.searchIssuedBy'
                     styleSet={styleSet}
                     id='cert_issued_by_domain_filter'
+                    inputError={invalidIssuedBy}
                 />
                 <TextInputComponent
                     fieldName='issuedTo'
@@ -90,6 +98,7 @@ function CertificateNotificationsFilter({ onApplyFilter }) {
                     placeHolderKey='viewAllNotifications.searchIssuedTo'
                     styleSet={styleSet}
                     id='cert_issued_to_filter'
+                    inputError={invalidIssuedTo}
                 />
                 <DropdownComponent
                     fieldName="partnerDomain"
