@@ -1068,8 +1068,8 @@ export const validateInputRegex = (input, setInputError, t) => {
 };
 
 export const validateInput = (input) => {
-    // Only allow letters (any language), digits, spaces, and .,@#&()- characters
-    const allowedPattern = /^[\p{L}\p{N}\s.,@#&()\-\\]+$/u;
+    // Only allow letters (any language), digits, spaces, and .,@#&()-' characters
+    const allowedPattern = /^[\p{L}\p{N}\p{M}\s.,@#&()\-\\']+$/u;
 
     return allowedPattern.test(input);
 }
