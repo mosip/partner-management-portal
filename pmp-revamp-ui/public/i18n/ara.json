@@ -914,7 +914,8 @@
         "errorInOidcDetails": "أثناء جلب تفاصيل عميل OIDC، واجهنا خطأً."
     },
     "viewAdminFtmDetails": {
-        "errorWhileGettingFtmDetails": "أثناء جلب تفاصيل الشهادة، واجهنا خطأ"
+        "errorWhileGettingFtmDetails": "أثناء جلب تفاصيل الشهادة، واجهنا خطأ",
+        "compatibilityMsg":"لا يتم دعم تنزيل شهادة FTM في الإصدار الحالي من منصة MOSIP."
     },
     "viewSbiDetails": {
         "viewSbiDetails": "عرض تفاصيل SBI",

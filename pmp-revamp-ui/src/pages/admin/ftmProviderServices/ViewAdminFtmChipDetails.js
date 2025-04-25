@@ -240,7 +240,7 @@ function ViewAdminFtmChipDetails() {
                                                         </button>
                                                         {downloadCertApiNotExist && (ftmDetails.status === 'approved' || ftmDetails.status === 'pending_approval') && (
                                                             <div className={`absolute hidden group-hover:block group-focus:block text-center bg-gray-100 text-xs text-gray-500 font-semibold p-2 w-60 mt-1 z-10 ${isLoginLanguageRTL ? "left-0" : "right-0"} top-11  rounded-md shadow-md`}>
-                                                                {t('partnerCertificatesList.compatibilityMsg')}
+                                                                {t('viewAdminFtmDetails.compatibilityMsg')}
                                                             </div>
                                                         )}
                                                     </div>

@@ -914,7 +914,8 @@
         "errorInOidcDetails": "Lors de la récupération des détails du client OIDC, nous avons rencontré une erreur."
     },
     "viewAdminFtmDetails": {
-        "errorWhileGettingFtmDetails": "Lors de la récupération des détails du certificat, nous avons rencontré une erreur."
+        "errorWhileGettingFtmDetails": "Lors de la récupération des détails du certificat, nous avons rencontré une erreur.",
+        "compatibilityMsg":"Le téléchargement du certificat FTM n'est pas pris en charge dans la version actuelle de la plate-forme MOSIP."
     },
     "viewSbiDetails": {
         "viewSbiDetails": "Voir les détails du SBI",
