@@ -661,8 +661,9 @@
         "applyFilter": "Postulez maintenant",
         "searchPartnerId": "ID du partenaire de recherche",
         "searchOrganisation": "Rechercher une organisation",
-        "searchEmailAddress": "Rechercher une adresse e-mail",
-        "searchPolicyGroup": "Groupe de stratégies de recherche"
+        "searchEmailAddress": "Rechercher l'adresse e-mail complète",
+        "searchPolicyGroup": "Rechercher le groupe de politiques",
+        "emailAddressToolTip": "Remarque : Ce filtre effectue une correspondance exacte. Veuillez saisir l'adresse e-mail complète (ex : user@example.com) pour obtenir des résultats."
     },
     "viewPartnerDetails": {
         "viewPartnerDetails": "Afficher les détails du partenaire",

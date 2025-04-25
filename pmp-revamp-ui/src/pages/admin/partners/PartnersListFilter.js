@@ -163,6 +163,8 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
         textBoxValue={filters.emailAddress}
         fieldNameKey="partnerList.email"
         placeHolderKey="partnerList.searchEmailAddress"
+        infoKey={"partnerList.emailAddressToolTip"}
+        addInfoIcon={true}
         styleSet={styleSet}
         id="email_address_filter"
         inputError={invalidEmail}
