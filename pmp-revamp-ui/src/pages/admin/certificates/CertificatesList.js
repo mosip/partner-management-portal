@@ -10,7 +10,8 @@ import {
   getPartnerManagerUrl,
   downloadCaCertificate,
   setSubmenuRef,
-  handleServiceErrors
+  handleServiceErrors,
+  isRootIntermediateCertAvailable
 } from "../../../utils/AppUtils";
 import LoadingIcon from "../../common/LoadingIcon";
 import ErrorMessage from "../../common/ErrorMessage";
@@ -55,6 +56,7 @@ function CertificatesList({ certificateType, viewCertificateDetails, uploadCerti
   const [totalRecords, setTotalRecords] = useState(0);
   const [applyFilter, setApplyFilter] = useState(false);
   const [isApplyFilterClicked, setIsApplyFilterClicked] = useState(false);
+  const [showCompatibilityMsg, setShowCompatibilityMsg] = useState(false);
 
   const [filterAttributes, setFilterAttributes] = useState({
     certificateId: null,
@@ -134,7 +136,16 @@ function CertificatesList({ certificateType, viewCertificateDetails, uploadCerti
   }
 
   useEffect(() => {
-    fetchCertificatesList();
+    const checkCompatibleAndFetch = async () => {
+      const isApiExist = await isRootIntermediateCertAvailable();
+      if (isApiExist) {
+        fetchCertificatesList();
+      } else {
+        setShowCompatibilityMsg(true);
+      }
+    };
+  
+    checkCompatibleAndFetch();
   }, [sortFieldName, sortType, pageNo, pageSize]);
 
   useEffect(() => {
@@ -221,7 +232,15 @@ function CertificatesList({ certificateType, viewCertificateDetails, uploadCerti
                   : null
                 }
               </div>
-
+              {showCompatibilityMsg && (
+                <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
+                  <div className="flex items-center justify-center p-2">
+                    <div className="p-2 bg-[#FFF7E5] border-2 border-[#EDDCAF] rounded-md w-full">
+                      <p className="text-sm font-medium text-[#8B6105]">{t('certificatesList.compatibilityMsg')}</p>
+                    </div>
+                  </div>
+                </div>
+              )}
               <CertificateTab
                 activeRootCA={certificateType === 'root' ? true : false}
                 rootCertificatesPath={'/partnermanagement/admin/certificates/root-ca-certificate-list'}

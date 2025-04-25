@@ -123,7 +123,8 @@
         "mosipSignedCertificateSuccessMsg": "تم تنزيل شهادة MOSIP الموقعة بنجاح.",
         "certificateExpired": "انتهت صلاحية الشهادة. يرجى تحميل شهادة صالحة",
         "disabledBtnHoverMsg": "لقد تم إلغاء تنشيط حساب الشريك الخاص بك لنوع الشريك المحدد بواسطة المسؤول، مما أدى إلى تعطيل الإجراء'",
-        "errorWhileFetchingCertificateList": "بسبب خطأ، لم نتمكن من جلب قائمة الشهادات. يرجى المحاولة مرة أخرى."
+        "errorWhileFetchingCertificateList": "بسبب خطأ، لم نتمكن من جلب قائمة الشهادات. يرجى المحاولة مرة أخرى.",
+        "compatibilityMsg": "لا يتم دعم تنزيل الشهادة الأصلية في الإصدار الحالي من منصة MOSIP."
     },
     "uploadCertificate": {
         "uploadPartnerCertificate": "تحميل شهادة الشريك",
@@ -170,7 +171,8 @@
         "uploaded": "تم الرفع",
         "notUploaded": "لم يتم الرفع",
         "draft": "مسودة",
-        "valid": "صالح"
+        "valid": "صالح",
+        "notAvailable":"غير متوفر"
     },
     "policies": {
         "policies": "سياسات",
@@ -308,7 +310,8 @@
         "selectPolicyName": "حدد اسم السياسة",
         "selectStatus": "حدد الحالة",
         "searchOidcClientName": "البحث عن اسم عميل OIDC",
-        "errorInOidcClientsList": "أثناء جلب قائمة عملاء OIDC، واجهنا خطأ."
+        "errorInOidcClientsList": "أثناء جلب قائمة عملاء OIDC، واجهنا خطأ.",
+        "compatibilityMsg":"ملاحظة: لا يتم دعم الميزات المتعلقة بعميل OIDC في الإصدار الحالي من منصة MOSIP."
     },
     "viewOidcClientDetails": {
         "viewOidcClientDetails": "عرض تفاصيل عميل OIDC",
@@ -537,7 +540,8 @@
         "ftmId": "معرف FTM",
         "selectFtmId": "حدد معرف FTM",
         "searchFtmId": "البحث عن معرف FTM",
-        "errorWhileFetchingFtmList": "بسبب خطأ، لم نتمكن من الحصول على تفاصيل شريحة FTM. يرجى المحاولة مرة أخرى."
+        "errorWhileFetchingFtmList": "بسبب خطأ، لم نتمكن من الحصول على تفاصيل شريحة FTM. يرجى المحاولة مرة أخرى.",
+        "compatibilityMsg": "ملاحظة: لا تتوفر قيم تاريخ انتهاء الصلاحية والحالة في الإصدار الحالي من منصة MOSIP."
     },
     "addFtm": {
         "addFtmChipDetails": "إضافة تفاصيل شريحة FTM",
@@ -598,7 +602,8 @@
         "view": "منظر",
         "errorInCertificateList": "أثناء جلب الشهادات، واجهنا خطأً.",
         "errorAccessingApi": "مواجهة خطأ أثناء الوصول إلى واجهة برمجة تطبيقات مدير المفاتيح.",
-        "errorWhileDownloadingCertificate": "بسبب خطأ، لم نتمكن من تنزيل الشهادة. يرجى المحاولة مرة أخرى."
+        "errorWhileDownloadingCertificate": "بسبب خطأ، لم نتمكن من تنزيل الشهادة. يرجى المحاولة مرة أخرى.",
+        "compatibilityMsg": "ملاحظة: قائمة الشهادات غير متاحة لأن هذه الميزة غير مدعومة في الإصدار الحالي من منصة MOSIP."
     },
     "uploadTrustCertificate": {
         "uploadTrustCertificate": "شرفع هادة الثقة",

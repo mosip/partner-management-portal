@@ -10,7 +10,8 @@ import {
     populateClientNames,
     getClientNameLangMap,
     escapeKeyHandler,
-    setSubmenuRef
+    setSubmenuRef,
+    isOidcClientAvailable,
 } from '../../../utils/AppUtils';
 import ErrorMessage from '../../common/ErrorMessage';
 import LoadingIcon from '../../common/LoadingIcon';
@@ -67,6 +68,7 @@ function AdminOidcClientsList() {
         status: null,
     });
     const submenuRef = useRef([]);
+    const [showCompatibilityMsg, setShowCompatibilityMsg] = useState(false);
 
     useEffect(() => {
         handleMouseClickForDropdown(submenuRef, () => setActionId(-1));
@@ -132,7 +134,16 @@ function AdminOidcClientsList() {
     }
 
     useEffect(() => {
-        fetchOidcClientsListData();
+        const checkCompatibleAndFetch = async () => {
+            const isApiExist = await isOidcClientAvailable();
+            if (isApiExist) {
+                fetchOidcClientsListData();
+            } else {
+                setShowCompatibilityMsg(true);
+            }
+        };
+        
+        checkCompatibleAndFetch();
     }, [sortFieldName, sortType, pageNo, pageSize]);
 
     useEffect(() => {
@@ -256,6 +267,15 @@ function AdminOidcClientsList() {
                         <div className="flex justify-between mb-5 max-470:flex-col">
                             <Title title='authenticationServices.authenticationServices' backLink='/partnermanagement' />
                         </div>
+                        {showCompatibilityMsg && (
+                            <div className="bg-[#FCFCFC] w-full my-3 rounded-lg shadow-lg items-center">
+                                <div className="flex items-center justify-center p-2">
+                                    <div className="p-2 bg-[#FFF7E5] border-2 border-[#EDDCAF] rounded-md w-full">
+                                        <p className="text-sm font-medium text-[#8B6105]">{t('oidcClientsList.compatibilityMsg')}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
                         <AuthenticationServicesTab
                             activeOidcClient={true}
                             oidcClientPath='/partnermanagement/admin/authentication-services/oidc-clients-list'

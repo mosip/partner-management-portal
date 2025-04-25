@@ -123,7 +123,8 @@
         "mosipSignedCertificateSuccessMsg": "Certificat signé MOSIP téléchargé avec succès.",
         "certificateExpired": "Le certificat a expiré. Veuillez télécharger un certificat valide",
         "disabledBtnHoverMsg": "Votre compte partenaire pour un type de partenaire donné a été désactivé par l'administrateur, ce qui a entraîné la désactivation de l'action.",
-        "errorWhileFetchingCertificateList": "En raison d'une erreur, nous n'avons pas pu récupérer la liste des certificats. Veuillez réessayer."
+        "errorWhileFetchingCertificateList": "En raison d'une erreur, nous n'avons pas pu récupérer la liste des certificats. Veuillez réessayer.",
+        "compatibilityMsg": "Le téléchargement du certificat d'origine n'est pas pris en charge dans la version actuelle de la plate-forme MOSIP."
     },
     "uploadCertificate": {
         "uploadPartnerCertificate": "Télécharger le certificat de partenaire",
@@ -170,7 +171,8 @@
         "uploaded": "Téléchargé",
         "notUploaded": "Non téléchargé",
         "draft": "Brouillon",
-        "valid": "Valide"
+        "valid": "Valide",
+        "notAvailable":"Pas disponible"
     },
     "policies": {
         "policies": "Stratégies",
@@ -308,7 +310,8 @@
         "selectPolicyName": "Sélectionnez le nom de la stratégie",
         "selectStatus": "Sélectionnez le statut",
         "searchOidcClientName": "Rechercher le nom du client OIDC",
-        "errorInOidcClientsList": "Lors de la récupération de la liste des clients OIDC, nous avons rencontré une erreur."
+        "errorInOidcClientsList": "Lors de la récupération de la liste des clients OIDC, nous avons rencontré une erreur.",
+        "compatibilityMsg":"Remarque : les fonctionnalités liées au client OIDC ne sont pas prises en charge dans la version actuelle de la plateforme MOSIP."
     },
     "viewOidcClientDetails": {
         "viewOidcClientDetails": "Afficher les détails du client OIDC",
@@ -537,7 +540,8 @@
         "ftmId": "Identifiant FTM",
         "selectFtmId": "Sélectionnez l'ID FTM",
         "searchFtmId": "Rechercher l'identifiant FTM",
-        "errorWhileFetchingFtmList": "En raison d'une erreur, nous n'avons pas pu récupérer les informations de la puce FTM. Veuillez réessayer."
+        "errorWhileFetchingFtmList": "En raison d'une erreur, nous n'avons pas pu récupérer les informations de la puce FTM. Veuillez réessayer.",
+        "compatibilityMsg": "Remarque : les valeurs de date d’expiration et de statut ne sont pas disponibles dans la version actuelle de la plateforme MOSIP."
     },
     "addFtm": {
         "addFtmChipDetails": "Ajouter les détails de la puce FTM",
@@ -598,7 +602,8 @@
         "view": "Voir",
         "errorInCertificateList": "Lors de la récupération des certificats, nous avons rencontré une erreur.",
         "errorAccessingApi": "Je rencontre une erreur lors de l'accès à l'API du gestionnaire de clés.",
-        "errorWhileDownloadingCertificate": "En raison d'une erreur, nous n'avons pas pu télécharger le certificat. Veuillez réessayer."
+        "errorWhileDownloadingCertificate": "En raison d'une erreur, nous n'avons pas pu télécharger le certificat. Veuillez réessayer.",
+        "compatibilityMsg": "Remarque : la liste des certificats n'est pas disponible car cette fonctionnalité n'est pas prise en charge dans la version actuelle de la plateforme MOSIP."
     },
     "uploadTrustCertificate": {
         "uploadTrustCertificate": "Télécharger le certificat de confiance",
