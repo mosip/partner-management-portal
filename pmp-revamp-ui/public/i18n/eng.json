@@ -909,7 +909,8 @@
         "errorInOidcDetails": "While fetching OIDC client details, we have encountered with an error."
     },
     "viewAdminFtmDetails": {
-        "errorWhileGettingFtmDetails": "While fetching Certificate details, we have encountered with an error."
+        "errorWhileGettingFtmDetails": "While fetching Certificate details, we have encountered with an error.",
+        "compatibilityMsg":"Download of FTM Certificate is not supported in the current version of MOSIP Platform."
     },
     "viewSbiDetails": {
         "viewSbiDetails": "View SBI Details",

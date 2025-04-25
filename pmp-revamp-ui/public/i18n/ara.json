@@ -222,6 +222,7 @@
         "policyGroup": "مجموعة السياسات",
         "policyName": "اسم السياسة",
         "selectPartnerId": "معرف الشريك المعتمد",
+        "partnerIdHelpText": "حدد معرف الشريك",
         "selectPolicyName": "حدد اسم السياسة",
         "comments": "تعليقات",
         "commentBoxDesc": "اذكر الغرض من طلب السياسة",
@@ -914,7 +915,8 @@
         "errorInOidcDetails": "أثناء جلب تفاصيل عميل OIDC، واجهنا خطأً."
     },
     "viewAdminFtmDetails": {
-        "errorWhileGettingFtmDetails": "أثناء جلب تفاصيل الشهادة، واجهنا خطأ"
+        "errorWhileGettingFtmDetails": "أثناء جلب تفاصيل الشهادة، واجهنا خطأ",
+        "compatibilityMsg":"لا يتم دعم تنزيل شهادة FTM في الإصدار الحالي من منصة MOSIP."
     },
     "viewSbiDetails": {
         "viewSbiDetails": "عرض تفاصيل SBI",
