@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { isLangRTL } from '../../utils/AppUtils';
+import { isLangRTL, isCaSignedPartnerCertificateAvailable } from '../../utils/AppUtils';
 import { getUserProfile } from '../../services/UserProfileService';
 
 import dropdown_up_icon from '../../svg/download_dropdown_icon.svg';
@@ -12,6 +12,17 @@ function DownloadCertificateButton({ setShowDropDown, showDropDown, onClickFirst
 
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const [disableOriginalCert, setDisableOriginalCert] = useState(false);
+
+    useEffect(() => {
+        const checkCompatible = async () => {
+            const isApiExist = await isCaSignedPartnerCertificateAvailable();
+            if (!isApiExist) {
+                setDisableOriginalCert(true);
+            }
+        };
+        checkCompatible();
+    }, []);
 
     return (
         <div ref={downloadDropdownRef} className={`flex-col`}>
@@ -35,12 +46,19 @@ function DownloadCertificateButton({ setShowDropDown, showDropDown, onClickFirst
 
             {showDropDown && (
                 <div className={styleSet && styleSet.outerDiv}>
-                    <button id={'original_certificate_' + id} onClick={() => onClickFirstOption(requiredData)} className="flex items-center border-b w-full justify-between cursor-pointer hover:bg-gray-100">
-                        <p className="block px-4 py-2 text-xs font-semibold text-dark-blue">{t('commons.originalCertificate')}</p>
-                        <img src={downloadIcon} alt="" className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"}`} />
-                    </button>
+                    <div className='relative group'>
+                        <button disabled={disableOriginalCert} id={'original_certificate_' + id} onClick={() => onClickFirstOption(requiredData)} className={`flex items-center border-b w-full justify-between rounded-md ${disableOriginalCert ? 'bg-gray-500 bg-opacity-30' : 'cursor-pointer hover:bg-gray-100'}`}>
+                            <p className={`block px-4 py-3 text-xs font-semibold ${disableOriginalCert ? 'text-gray-700' : 'text-dark-blue'}`}>{t('commons.originalCertificate')}</p>
+                            <img src={disableOriginalCert ? disabled_download_icon : downloadIcon} alt="" className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"}`} />
+                        </button>
+                        {disableOriginalCert && (
+                            <div className={`absolute hidden group-hover:block group-focus:block text-center bg-gray-100 text-xs text-gray-500 font-semibold p-2 w-60 mt-1 z-10 top-11 ${isLoginLanguageRTL ? "left-5" : "right-5"} rounded-md shadow-md`}>
+                                {t('partnerCertificatesList.compatibilityMsg')}
+                            </div>
+                        )}
+                    </div>
                     <button id={'mosip_signed_certificate_' + id} onClick={() => onClickSecondOption(requiredData)} className={`flex items-center border-b w-full justify-between ${requiredData.disableSecondOption ? 'hover:bg-none' : 'hover:bg-gray-100 cursor-pointer'}`}>
-                        <p disabled={requiredData.disableSecondOption} className={`block px-4 py-2 text-xs font-semibold ${requiredData.disableSecondOption ? 'text-[#828385e0]' : 'text-dark-blue'}`}>{t('commons.mosipSignedCertificate')}</p>
+                        <p disabled={requiredData.disableSecondOption} className={`block px-4 py-3 text-xs font-semibold ${requiredData.disableSecondOption ? 'text-[#828385e0]' : 'text-dark-blue'}`}>{t('commons.mosipSignedCertificate')}</p>
                         <img src={requiredData.disableSecondOption ? disabled_download_icon : downloadIcon} alt="" className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"}`} />
                     </button>
                 </div>)}
