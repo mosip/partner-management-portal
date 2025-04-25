@@ -222,6 +222,7 @@
         "policyGroup": "مجموعة السياسات",
         "policyName": "اسم السياسة",
         "selectPartnerId": "معرف الشريك المعتمد",
+        "partnerIdHelpText": "حدد معرف الشريك",
         "selectPolicyName": "حدد اسم السياسة",
         "comments": "تعليقات",
         "commentBoxDesc": "اذكر الغرض من طلب السياسة",

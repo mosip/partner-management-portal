@@ -222,6 +222,7 @@
         "policyGroup": "Groupe de politiques",
         "policyName": "Nom de la politique",
         "selectPartnerId": "ID de partenaire approuvé",
+        "partnerIdHelpText": "Sélectionnez l'ID du partenaire",
         "selectPolicyName": "Sélectionnez le nom de la stratégie",
         "comments": "commentaires",
         "commentBoxDesc": "Mentionner le but de la demande de police",
