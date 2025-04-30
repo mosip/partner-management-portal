@@ -34,6 +34,7 @@ function ViewAdminOidcClientDetails() {
     useEffect(() => {
         const data = localStorage.getItem('selectedOidcClientAttributes');
         if (!data) {
+            setDataLoaded(true);
             setUnexpectedError(true);
             return;
         }

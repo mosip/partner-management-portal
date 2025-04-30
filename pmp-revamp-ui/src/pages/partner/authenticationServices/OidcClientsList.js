@@ -8,7 +8,8 @@ import {
     onPressEnterKey,
     populateClientNames,
     getClientNameLangMap,
-    setSubmenuRef
+    setSubmenuRef,
+    isOidcClientAvailable
 } from '../../../utils/AppUtils';
 import { HttpService } from '../../../services/HttpService';
 import ErrorMessage from '../../common/ErrorMessage';
@@ -58,6 +59,8 @@ function OidcClientsList() {
     };
     const [filterQuery, setFilterQuery] = useState({ ...defaultFilterQuery });
     const submenuRef = useRef([]);
+    const [showCompatibilityMsg, setShowCompatibilityMsg] = useState(false);
+    const [disableCreateOidcBtn, setDisableCreateOidcBtn] = useState(false);
 
     useEffect(() => {
         handleMouseClickForDropdown(submenuRef, () => setViewClientId(-1));
@@ -90,7 +93,18 @@ function OidcClientsList() {
                 }
             }
         };
-        fetchData();
+        const checkCompatibleAndFetch = async () => {
+            const isApiExist = await isOidcClientAvailable();
+            if (isApiExist) {
+                fetchData();
+            } else {
+                setDataLoaded(true);
+                setDisableCreateOidcBtn(true);
+                setShowCompatibilityMsg(true);
+            }
+        };
+
+        checkCompatibleAndFetch();
     }, []);
 
     const tableHeaders = [
@@ -258,12 +272,21 @@ function OidcClientsList() {
                         <div className="flex justify-between mb-5">
                             <Title title='authenticationServices.authenticationServices' backLink='/partnermanagement' />
                             {oidcClientsList.length > 0 ?
-                                <button id='create_oidc_btn' onClick={() => createOidcClient()} type="button" className="h-10 text-sm font-semibold px-7 text-white bg-tory-blue rounded-md">
+                                <button disabled={disableCreateOidcBtn} id='create_oidc_btn' onClick={() => createOidcClient()} type="button" className={`h-10 text-sm font-semibold text-white px-7 rounded-md ${disableCreateOidcBtn ? 'border-[#A5A5A5] bg-[#A5A5A5]' : 'bg-tory-blue'}`}>
                                     {t('createOidcClient.createOidcClient')}
                                 </button>
                                 : null
                             }
                         </div>
+                        {showCompatibilityMsg && (
+                            <div className="bg-[#FCFCFC] w-full my-3 rounded-lg shadow-lg items-center">
+                                <div className="flex items-center justify-center p-2">
+                                    <div className="p-2 bg-[#FFF7E5] border-2 border-[#EDDCAF] rounded-md w-full">
+                                        <p className="text-sm font-medium text-[#8B6105]">{t('oidcClientsList.compatibilityMsg')}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
                         <AuthenticationServicesTab
                             activeOidcClient={true}
                             oidcClientPath='/partnermanagement/authentication-services/oidc-clients-list'
@@ -280,6 +303,7 @@ function OidcClientsList() {
                                     customButtonName='createOidcClient.createOidcClient'
                                     buttonId='create_oid_client'
                                     onClickButton={createOidcClient}
+                                    disableBtn={disableCreateOidcBtn}
                                 />
                             </div>
                             :

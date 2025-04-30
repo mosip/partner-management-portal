@@ -4,7 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { getUserProfile } from '../../../services/UserProfileService';
 import {
     downloadFile, formatDate, getPartnerManagerUrl, getCertificate,
-    handleMouseClickForDropdown, handleServiceErrors, isLangRTL, getErrorMessage, getPartnerTypeDescription
+    handleMouseClickForDropdown, handleServiceErrors, isLangRTL, getErrorMessage, getPartnerTypeDescription,
+    isCaSignedPartnerCertificateAvailable,
+    checkCertificateExpired
 } from '../../../utils/AppUtils';
 import SuccessMessage from '../../common/SuccessMessage';
 import ErrorMessage from '../../common/ErrorMessage';
@@ -85,13 +87,25 @@ function ViewPartnerDetails() {
     }
 
     const getMosipSignedCertificate = async (partner) => {
-        const response = await fetchCertificate(partner.partnerId);
+        const isApiExist = await isCaSignedPartnerCertificateAvailable();
+        let response = null;
+
+        if (isApiExist) {
+            response = await fetchCertificate(partner.partnerId);
+        } else {
+            const isCertExpired = checkCertificateExpired(partner.certificateExpiryDateTime);
+            if (isCertExpired) {
+                setErrorMsg(t('partnerCertificatesList.certificateExpired'));
+                return;
+            }
+            response = await fetchCertificate(partner.partnerId);
+        }
         if (response) {
             if (response.isMosipSignedCertificateExpired) {
                 setErrorMsg(t('partnerCertificatesList.certificateExpired'));
             } else {
                 setSuccessMsg(t('partnerCertificatesList.mosipSignedCertificateSuccessMsg'));
-                downloadFile(response.mosipSignedCertificateData, 'mosip_signed_certificate.cer', 'application/x-x509-ca-cert')
+                downloadFile(isApiExist ? response.mosipSignedCertificateData : response.certificateData, 'mosip_signed_certificate.cer', 'application/x-x509-ca-cert')
             }
         }
     }

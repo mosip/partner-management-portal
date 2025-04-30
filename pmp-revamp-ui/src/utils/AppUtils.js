@@ -1,3 +1,4 @@
+import { getAppConfig } from "../services/ConfigService";
 import { Trans } from "react-i18next";
 import { HttpService } from "../services/HttpService";
 import { getLoginRedirectUrl } from "../services/LoginRedirectService";
@@ -84,6 +85,8 @@ export const getStatusCode = (status, t) => {
             return t('statusCodes.draft');
         } else if (status === "valid") {
             return t('statusCodes.valid');
+        } else if (status === "not_available") {
+            return t('statusCodes.notAvailable');
         } else if (status === "-") {
             return "-"
         }
@@ -474,7 +477,9 @@ export const getErrorMessage = (errorCode, t, errorMessage) => {
 
 export const getCertificate = async (HttpService, partnerId, setErrorCode, setErrorMsg, t) => {
     try {
-        const response = await HttpService.get(getPartnerManagerUrl('/partners/' + partnerId + '/certificate-data', process.env.NODE_ENV));
+        const isApiExist = await isCaSignedPartnerCertificateAvailable();
+        const url = isApiExist ? `/partners/${partnerId}/certificate-data` : `/partners/${partnerId}/certificate`;
+        const response = await HttpService.get(getPartnerManagerUrl(url, process.env.NODE_ENV));
         if (response && response.data) {
             const responseData = response.data
             if (responseData.response) {
@@ -856,6 +861,48 @@ export const handleKeymanagerErrors = (responseData, setErrorCode, setErrorMsg, 
 
 export const setSubmenuRef = (refArray, index) => (el) => {
     if (el) refArray.current[index] = el;
+};
+
+export const isCaSignedPartnerCertificateAvailable = async () => {
+    try {
+        const configData = await getAppConfig();
+        const isApiExist = configData.isCaSignedPartnerCertificateAvailable === "true" ? true : false;
+        return isApiExist;
+    } catch (error) {
+        console.error("Error fetching or parsing app config: ", error);
+        return false;
+    }
+};
+
+export const isOidcClientAvailable = async () => {
+    try {
+        const configData = await getAppConfig();
+        const isApiExist = configData.isOidcClientAvailable === "true" ? true : false;
+        return isApiExist;
+    } catch (error) {
+        console.error("Error fetching or parsing app config: ", error);
+        return false;
+    }
+};
+
+export const isRootIntermediateCertAvailable = async () => {
+    try {
+        const configData = await getAppConfig();
+        const isApiExist = configData.isRootIntermediateCertAvailable === "true" ? true : false;
+        return isApiExist;
+    } catch (error) {
+        console.error("Error fetching or parsing app config: ", error);
+        return false;
+    }
+};
+
+export const checkCertificateExpired = (expiryDateTime) => { 
+    if (!expiryDateTime) return false; // treat as non expired if no date
+
+    const currentUTC = new Date().toISOString(); // current UTC time
+    const expiryUTC = new Date(expiryDateTime).toISOString();
+
+    return expiryUTC < currentUTC;
 };
 
 export const getWeeklySummaryDescription = (notification, isLoginLanguageRTL, t) => {

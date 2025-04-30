@@ -5,7 +5,7 @@ import { getUserProfile } from "../../../services/UserProfileService";
 import ErrorMessage from "../../common/ErrorMessage";
 import SuccessMessage from "../../common/SuccessMessage";
 import LoadingIcon from "../../common/LoadingIcon";
-import { downloadFile, getCertificate, isLangRTL, formatDate, getPartnerTypeDescription, handleMouseClickForDropdown, getPartnerManagerUrl, getPartnerDomainType, handleServiceErrors } from "../../../utils/AppUtils";
+import { downloadFile, getCertificate, isLangRTL, formatDate, getPartnerTypeDescription, handleMouseClickForDropdown, getPartnerManagerUrl, getPartnerDomainType, handleServiceErrors, isCaSignedPartnerCertificateAvailable, checkCertificateExpired } from "../../../utils/AppUtils";
 import { useTranslation } from "react-i18next";
 
 import rectangleBox from '../../../svg/rectangle_box.svg';
@@ -67,13 +67,25 @@ function PartnerCertificatesList() {
     }
 
     const getMosipSignedCertificate = async (partner) => {
-        const response = await fetchCertificate(partner.partnerId);
+        const isApiExist = await isCaSignedPartnerCertificateAvailable();
+        let response = null;
+
+        if (isApiExist) {
+            response = await fetchCertificate(partner.partnerId);
+        } else {
+            const isCertExpired = checkCertificateExpired(partner.certificateExpiryDateTime);
+            if (isCertExpired) {
+                setErrorMsg(t('partnerCertificatesList.certificateExpired'));
+                return;
+            }
+            response = await fetchCertificate(partner.partnerId);
+        }
         if (response) {
             if (response.isMosipSignedCertificateExpired) {
                 setErrorMsg(t('partnerCertificatesList.certificateExpired'));
             } else {
                 setSuccessMsg(t('partnerCertificatesList.mosipSignedCertificateSuccessMsg'));
-                downloadFile(response.mosipSignedCertificateData, 'mosip_signed_certificate.cer', 'application/x-x509-ca-cert')
+                downloadFile(isApiExist ? response.mosipSignedCertificateData : response.certificateData, 'mosip_signed_certificate.cer', 'application/x-x509-ca-cert')
             }
         }
     }

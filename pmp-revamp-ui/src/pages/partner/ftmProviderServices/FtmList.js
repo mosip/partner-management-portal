@@ -7,7 +7,8 @@ import {
   isLangRTL, getPartnerManagerUrl, formatDate, getStatusCode,
   handleMouseClickForDropdown, toggleSortDescOrder, toggleSortAscOrder, bgOfStatus,
   createRequest, populateDeactivatedStatus, setSubmenuRef,
-  handleServiceErrors
+  handleServiceErrors,
+  isCaSignedPartnerCertificateAvailable
 } from '../../../utils/AppUtils';
 import ErrorMessage from '../../common/ErrorMessage';
 import Title from '../../common/Title';
@@ -50,6 +51,7 @@ function FtmList() {
   };
   const [filterQuery, setFilterQuery] = useState({ ...defaultFilterQuery });
   const submenuRef = useRef([]);
+  const [downloadCertApiNotExist, setDownloadCertApiNotExist] = useState(false);
 
   useEffect(() => {
     handleMouseClickForDropdown(submenuRef, () => setViewFtmId(-1));
@@ -58,6 +60,10 @@ function FtmList() {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        const isApiExist = await isCaSignedPartnerCertificateAvailable();
+        if (!isApiExist) {
+          setDownloadCertApiNotExist(true);
+        }
         setDataLoaded(false);
         const response = await HttpService.get(getPartnerManagerUrl('/ftpchipdetail', process.env.NODE_ENV));
         if (response) {
@@ -97,7 +103,9 @@ function FtmList() {
     // Updating the status based on the condition
     const updatedData = data.map(item => {
       if (item['isCertificateAvailable']) {
-        if ((item['isCertificateExpired'])) {
+        if (item['isCertificateExpired'] === null) {
+          return { ...item, certificateExpiryStatus: 'not_available' };
+        } else if (item['isCertificateExpired']) {
           return { ...item, certificateExpiryStatus: 'expired' };
         } else {
           return { ...item, certificateExpiryStatus: 'valid' };
@@ -234,6 +242,18 @@ function FtmList() {
     }
   };
 
+  const getCertificateExpiryStatus = (ftm) => {
+    if (downloadCertApiNotExist && ftm.status !== "pending_cert_upload") {
+      return t('statusCodes.notAvailable');
+    } else {
+      if (ftm.status !== 'pending_cert_upload') {
+        return ftm.isCertificateExpired ? t('statusCodes.expired') : t('statusCodes.valid');
+      } else {
+        return '-';
+      }
+    }  
+  };
+
 
   return (
     <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll font-inter`}>
@@ -254,6 +274,15 @@ function FtmList() {
                 </button>
               )}
             </div>
+            {downloadCertApiNotExist && (
+              <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
+                <div className="flex items-center justify-center p-2">
+                  <div className="p-2 bg-[#FFF7E5] border-2 border-[#EDDCAF] rounded-md w-full">
+                    <p className="text-sm font-medium text-[#8B6105]">{t('ftmList.compatibilityMsg')}</p>
+                  </div>
+                </div>
+              </div>
+            )}
             {ftmList.length === 0 ?
               <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg">
                 <EmptyList
@@ -312,8 +341,8 @@ function FtmList() {
                                 <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2">{ftm.model}</td>
                                 <td onClick={() => showFtmDetails(ftm)} className={`px-2 mx-2`}>{formatDate(ftm.createdDateTime, 'date')}</td>
                                 <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2">{formatDate(ftm.certificateUploadDateTime, 'dateTime')}</td>
-                                <td onClick={() => showFtmDetails(ftm)} className={`px-2 mx-2 ${(ftm.isCertificateExpired && ftm.status !== "deactivated") && 'text-crimson-red font-bold'}`}>{formatDate(ftm.certificateExpiryDateTime, 'dateTime')}</td>
-                                <td onClick={() => showFtmDetails(ftm)} className={`px-2 mx-2`}>{(ftm.status !== 'pending_cert_upload') ? ftm.isCertificateExpired ? t('statusCodes.expired') : t('statusCodes.valid') : '-'}</td>
+                                <td onClick={() => showFtmDetails(ftm)} className={`px-2 mx-2 max-1712:text-center max-1712:px-4 ${(ftm.isCertificateExpired && ftm.status !== "deactivated") && 'text-crimson-red font-bold'}`}>{(downloadCertApiNotExist && ftm.status !== "pending_cert_upload") ? t('statusCodes.notAvailable') : formatDate(ftm.certificateExpiryDateTime, 'dateTime')}</td>
+                                <td onClick={() => showFtmDetails(ftm)} className={`${isLoginLanguageRTL ? "pr-8 pl-4" : "pl-8 pr-4"} mx-2`}>{getCertificateExpiryStatus(ftm)}</td>
                                 <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2">
                                   <div className={`${bgOfStatus(ftm.status)} flex w-fit py-1.5 px-2 my-3 text-xs font-semibold rounded-md`}>
                                     {getStatusCode(ftm.status, t)}
