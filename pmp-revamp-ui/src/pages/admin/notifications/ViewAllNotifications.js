@@ -300,7 +300,7 @@ function ViewAllNotifications({ notificationType }) {
                                                                         <p className="font-semibold text-base text-[#101828]">{getNoticationTitle(notification, t)}</p>
                                                                         <p className={`text-xs text-gray-500 ${isLoginLanguageRTL ? 'text-left' : 'text-right'}`}>{formatDate(notification.createdDateTime, 'dateTime')}</p>
                                                                     </div>
-                                                                    <div className="text-[#475467] text-sm break-words">{getNotificationDescription(notification, isLoginLanguageRTL, t)}</div>
+                                                                    <div className="text-[#475467] text-sm md:break-normal break-all">{getNotificationDescription(notification, isLoginLanguageRTL, t)}</div>
                                                                     <hr className="h-0.5 my-4 bg-[#BCC5E5] border" />
                                                                     <div className={`flex space-x-4 ${isLoginLanguageRTL && 'space-x-reverse'}`}>
                                                                         <button onClick={() => dismissNotification(notification.notificationId)} className="text-tory-blue font-semibold text-sm px-4 py-[6px] rounded-md bg-[#F7F9FF]">{t('notificationPopup.dismiss')}</button>
@@ -333,7 +333,7 @@ function ViewAllNotifications({ notificationType }) {
                                                                             <p className="font-semibold text-base text-[#101828]">{getWeeklyNoticationTitle(notification, activeTab)}</p>
                                                                             <p className={`text-xs text-gray-500 ${isLoginLanguageRTL ? 'text-left' : 'text-right'}`}>{formatDate(notificationCreatedDateTime, 'dateTime')}</p>
                                                                         </div>
-                                                                        <div className="text-[#475467] text-sm break-words">{getWeeklyNoticationDescription(notification, activeTab)}</div>
+                                                                        <div className="text-[#475467] text-sm md:break-normal break-all">{getWeeklyNoticationDescription(notification, activeTab)}</div>
                                                                     </div>
                                                                 </div>
                                                             ))}
