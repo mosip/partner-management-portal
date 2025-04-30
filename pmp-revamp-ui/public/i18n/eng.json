@@ -536,7 +536,7 @@
         "selectFtmId": "Select FTM ID",
         "searchFtmId": "Search FTM ID",
         "errorWhileFetchingFtmList": "Due to an error, we were unable to fetch the FTM Chip details. Please try again.",
-        "compatibilityMsg": "Note: Expiry Date and Status values are not available in the current version of MOSIP Platform."
+        "compatibilityMsg": "Note: Certificate Expiry Date and Certificate Expiry Status values are not available in the current version of MOSIP Platform."
     },
     "addFtm": {
         "addFtmChipDetails": "Add FTM Chip details",

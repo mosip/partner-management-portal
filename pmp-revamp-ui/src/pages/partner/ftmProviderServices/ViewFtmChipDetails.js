@@ -259,7 +259,7 @@ function ViewFtmChipDetails() {
                                                 </div>
                                             )}
                                             {ftmDetails.isManageFtmCertificate && (
-                                                <div className="flex space-x-6 max-640:flex-col max-640:space-y-2 max-640:space-x-0">
+                                                <div className={`flex space-x-6 max-640:flex-col max-640:space-y-2 max-640:space-x-0 ${isLoginLanguageRTL && 'space-x-reverse'}`}>
                                                     <div className="relative group" tabIndex="0">
                                                         <button id='download_btn' disabled={downloadCertApiNotExist || ftmDetails.partnerStatus === 'deactivated' || !ftmDetails.isCertificateAvailable} onClick={() => getOriginalCertificate(ftmDetails)}
                                                             className={`flex items-center text-center w-fit h-10 ${(downloadCertApiNotExist || ftmDetails.partnerStatus === 'deactivated' || !ftmDetails.isCertificateAvailable) ? 'text-[#6f7070] border-gray-300 bg-white' : 'text-tory-blue bg-white border-blue-800'} text-xs px-[1.5rem] py-[1%] border font-semibold rounded-md`}>
