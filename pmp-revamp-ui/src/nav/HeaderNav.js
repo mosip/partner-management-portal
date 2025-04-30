@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../services/UserProfileService.js';
-import { isLangRTL, onPressEnterKey, handleMouseClickForDropdown, logout, getPartnerManagerUrl, fetchNotificationsList } from '../utils/AppUtils.js';
+import { isLangRTL, onPressEnterKey, handleMouseClickForDropdown, logout, getPartnerManagerUrl, fetchNotificationsList, createRequest } from '../utils/AppUtils.js';
 import profileIcon from '../profile_icon.png';
 import hamburgerIcon from '../svg/hamburger_icon.svg';
 import orgIcon from '../svg/org_icon.svg';
@@ -23,10 +23,31 @@ function HeaderNav({ open, setOpen }) {
     const notificationRef = useRef(null);
     const [openNotification, setOpenNotification] = useState(false);
     const [showLatestNotificationIcon, setShowLatestNotificationIcon] = useState(false);
+    const [isEmailVerified, setIsEmailVerified] = useState(false);
     const dispatch = useDispatch();
     const store = useStore();
     const [dropdownWidth, setDropdownWidth] = useState(0);
 
+    useEffect(() => {
+        const verifyUserEmail = async () => {
+            try {
+                const { email } = getUserProfile();
+                const request = createRequest({ emailId: email });
+
+                const response = await HttpService.put(
+                    getPartnerManagerUrl('/partners/email/verify', process.env.NODE_ENV),
+                    request
+                );
+                const emailExists = response?.data?.response?.emailExists || false;
+                setIsEmailVerified(emailExists);
+            } catch (error) {
+                console.error('Error verifying email:', error);
+            }
+        };
+
+        verifyUserEmail();
+    }, []);
+      
     useEffect(() => {
         handleMouseClickForDropdown(dropdownRef, () => setIsDropdownOpen(false));
         // Only attach handler to close notification if it's open
@@ -47,19 +68,21 @@ function HeaderNav({ open, setOpen }) {
             const notificationsSeenTimestamp = await fetchNotificationsSeenTimestamp();
             const notifications = await fetchNotificationsList(dispatch);
             console.log("last seen time : ", notificationsSeenTimestamp);
-            if(notificationsSeenTimestamp === null && notifications.length === 0) {
+    
+            if (notificationsSeenTimestamp === null && notifications.length === 0) {
                 setShowLatestNotificationIcon(false);
-            } else if(notificationsSeenTimestamp === null && notifications.length > 0) {
+            } else if (notificationsSeenTimestamp === null && notifications.length > 0) {
                 setShowLatestNotificationIcon(true);
             } else {
-                if(notifications.length === 0) {
+                if (notifications.length === 0) {
                     setShowLatestNotificationIcon(false);
                 } else {
                     const latestNotificationCrdtimes = notifications[0].createdDateTime;
                     console.log("latest notification created time : ", latestNotificationCrdtimes);
                     const lastSeenDate = new Date(notificationsSeenTimestamp);
                     const latestNotificationDate = new Date(latestNotificationCrdtimes);
-                    if(latestNotificationDate > lastSeenDate) {
+    
+                    if (latestNotificationDate > lastSeenDate) {
                         setShowLatestNotificationIcon(true);
                     } else {
                         setShowLatestNotificationIcon(false);
@@ -67,11 +90,11 @@ function HeaderNav({ open, setOpen }) {
                 }
             }
         }
-
+    
         // Fetch refresh time from localStorage before setting interval
         let refreshTime = 300; // Default to 5 min(300seconds)
         const config = localStorage.getItem("appConfig");
-
+    
         try {
             if (config) {
                 const configData = JSON.parse(config);
@@ -82,14 +105,24 @@ function HeaderNav({ open, setOpen }) {
         } catch (error) {
             console.error("Error fetching refresh notification time:", error);
         }
-
-        fetchNotificationsData();
+    
+        // Only call fetchNotificationsData if email is verified
+        if (isEmailVerified) {
+            fetchNotificationsData();
+        }
+    
         // Set up an interval to call the function every 5 minutes
-        const intervalId = setInterval(fetchNotificationsData, 1000*refreshTime);
-
+        const intervalId = setInterval(() => {
+            if (isEmailVerified) {
+                fetchNotificationsData();
+            }
+        }, 1000 * refreshTime);
+    
         // Cleanup function to clear the interval when component unmounts
         return () => clearInterval(intervalId);
-    }, []);
+    
+    }, [isEmailVerified]);
+    
 
     const fetchNotificationsSeenTimestamp = async () => {
         try {

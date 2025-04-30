@@ -40,6 +40,7 @@ function Dashboard() {
   const [rootCertExpiryCount, setRootCertExpiryCount] = useState();
   const [intermediateCertExpiryCount, setIntermediateCertExpiryCount] = useState();
   const [partnerCertExpiryCount, setPartnerCertExpiryCount] = useState();
+  const [isEmailVerified, setIsEmailVerified] = useState(false);
   let isSelectPolicyPopupVisible = false;
   let isUserConsentGiven = false;
 
@@ -100,6 +101,7 @@ function Dashboard() {
         if (response && response.data && response.data.response) {
           const resData = response.data.response;
           console.log(`user's email exist in db: ${resData.emailExists}`);
+          setIsEmailVerified(resData.emailExists);
           if (!resData.emailExists) {
             //2. if email does not exist then check if Policy Group selection is required for this Partner Type or not
             if (
@@ -343,10 +345,10 @@ function Dashboard() {
         console.error("Error fetching data:", err);
       }
     };
-    if (!isPartnerAdmin) {
+    if (!isPartnerAdmin && isEmailVerified) {
       fetchPartnerCertExpiryCount();
     }
-    if (isPartnerAdmin) {
+    if (isPartnerAdmin && isEmailVerified) {
       fetchTrustCertExpiryCount('ROOT');
       fetchTrustCertExpiryCount('INTERMEDIATE');
     
@@ -358,7 +360,7 @@ function Dashboard() {
       }, 3000);
     }
 
-  }, [isPartnerAdmin]);
+  }, [isPartnerAdmin, isEmailVerified]);
 
   const partnerCertificatesList = () => {
     navigate('/partnermanagement/certificates/partner-certificate')

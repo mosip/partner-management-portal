@@ -325,7 +325,7 @@ function OidcClientsList() {
                                                     <tr>
                                                         {tableHeaders.map((header, index) => {
                                                             return (
-                                                                <th key={index} className={`py-4 font-semibold text-sm text-[#6F6E6E] w-[14%] ${header.id === "status" && 'w-[10%]'} ${(header.id === 'policyName' || header.id === 'policyGroupName') ? (isLoginLanguageRTL ? 'pr-0.5' : 'pl-0.5') : 'px-1.5'}`}>
+                                                                <th key={index} className={`py-4 font-semibold text-sm whitespace-nowrap text-[#6F6E6E] w-[15%] ${header.id === "status" && 'w-[12%]'} ${(header.id === 'policyName' || header.id === 'policyGroupName') ? (isLoginLanguageRTL ? 'pr-0.5' : 'pl-0.5') : 'px-1.5'}`}>
                                                                     <div id={`${header.headerNameKey}_header`} className={`flex items-center gap-x-1 font-semibold  ${header.id === "oidcClientId" && 'justify-center'} ${header.id === "action" && 'justify-center'}`}>
                                                                         {t(header.headerNameKey)}
                                                                         {(header.id !== "action") && (header.id !== "oidcClientId") && (

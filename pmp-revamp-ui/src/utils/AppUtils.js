@@ -22,7 +22,7 @@ export const formatDate = (dateString, format) => {
         case 'dateInWords':
             return date.toLocaleDateString(navigator.language, {
                 month: "long",
-                day: "2-digit",
+                day: "numeric",
                 year: "numeric",
             });
         case 'dateMonthInWords':
