@@ -601,13 +601,6 @@ public class GlobalConstants {
 	public static final String isPolicyGroupDropdownEnabled = "Verify if policy group dropdown enabled";
 	public static final String isDashboardPageDisplayed="verify dashboardpage displayed";
 	public static final String isDownloadSuccessMessageDisplayed="verify if certificate download successfully message displayed";
-	
-	
-	
-	
-	
-	
-	
 	public static final String isPartnerIdContextDisplayed="Verify if partner id context is displayed";
 	public static final String isunexpectedErrorMessageDispayed="verify if encountered with unexpexted error message displayed";
 	public static final String isMakeFilterDisplayed="verify make filterbox is displayed";
@@ -648,12 +641,6 @@ public class GlobalConstants {
 	public static final String isPopupTitleDisplayed="verify if deactivate popup title is dislpayed";
 	public static final String isPopupSubTitleDisplayed = "Verify if deactivate popup sub title displayed";
 
-	
-	
-
-	
-	
-	
 	
 	public static final String APPID = "appId";
 	public static final String PASSWORD = "password";

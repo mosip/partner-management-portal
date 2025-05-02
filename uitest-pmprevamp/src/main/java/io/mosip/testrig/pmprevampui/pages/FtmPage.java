@@ -80,7 +80,6 @@ public class FtmPage extends BasePage {
 		
 	@FindBy(id = "list_of_ftm")
 	private WebElement listOfFtm;
-
 	
 	@FindBy(id = "ftm_list_action1")
 	private WebElement ftmListAction1;
@@ -224,7 +223,7 @@ public class FtmPage extends BasePage {
 	private WebElement rejectButton;
 	
 	@FindBy(xpath = "//*[contains(text(), 'Approve')]")
-	private WebElement Approved;
+	private WebElement approved;
 	
 	@FindBy(xpath = "//*[contains(text(), 'Rejected')]")
 	private WebElement rejectedText;
@@ -337,12 +336,6 @@ public class FtmPage extends BasePage {
 	@FindBy(xpath = "//*[contains(text(), 'FTM Chip certificate is downloaded successfully.')]")
 	private WebElement downloadSuccessMessage;
 	
-	
-	
-	
-	
-	
-	
 	@FindBy(id = "status_filter_option2")
 	private WebElement statusFilterOption2;
 	
@@ -414,18 +407,6 @@ public class FtmPage extends BasePage {
 	
 	@FindBy(xpath = "//*[contains(text(), 'Organisation')]")
 	private WebElement organisationCoulumeHeader;
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	public FtmPage(WebDriver driver) {
 		super(driver);
@@ -651,7 +632,7 @@ public class FtmPage extends BasePage {
 	}	
 	
 	public boolean isApprovedTextDisplayed() {
-		return isElementDisplayed(Approved);
+		return isElementDisplayed(approved);
 	}
 	
 	public void clickOnAddFtmChipButton() {
@@ -893,18 +874,12 @@ public class FtmPage extends BasePage {
 	}
 	
 	public void clickOnApprovedButton() {
-		 clickOnElement(Approved);
+		 clickOnElement(approved);
 	}
 	
 	public void clickOnStatusFilter() {
 		 clickOnElement(statusFilter);
 	}
-	
-	
-	
-	
-	
-	
 	
 	public void clickOnStatusFilterOption2() {
 		 clickOnElement(statusFilterOption2);
