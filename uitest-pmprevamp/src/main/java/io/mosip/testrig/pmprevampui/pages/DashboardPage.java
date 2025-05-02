@@ -368,4 +368,8 @@ public class DashboardPage extends BasePage {
 		clickOnElement(authenticationServices);
 		return new OidcClientPage(driver);
 	}
+	
+	public boolean isDashboardPageDisplayed() {
+		return isElementDisplayed(FTMChipTab);
+	}
 }

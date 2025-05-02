@@ -1,10 +1,13 @@
 package io.mosip.testrig.pmprevampui.pages;
 
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import io.mosip.testrig.pmprevampui.fw.util.PmpTestUtil;
 import io.mosip.testrig.pmprevampui.utility.TestRunner;
 
 public class FtmPage extends BasePage {
@@ -77,6 +80,7 @@ public class FtmPage extends BasePage {
 		
 	@FindBy(id = "list_of_ftm")
 	private WebElement listOfFtm;
+
 	
 	@FindBy(id = "ftm_list_action1")
 	private WebElement ftmListAction1;
@@ -330,17 +334,109 @@ public class FtmPage extends BasePage {
 	@FindBy(xpath = "//*[contains(text(), 'No Results Found')]")
 	private WebElement noResultsFound;
 	
+	@FindBy(xpath = "//*[contains(text(), 'FTM Chip certificate is downloaded successfully.')]")
+	private WebElement downloadSuccessMessage;
+	
+	
+	
+	
+	
+	
+	
+	@FindBy(id = "status_filter_option2")
+	private WebElement statusFilterOption2;
+	
+	@FindBy(id = "something_went_wrong_home_btn")
+	private WebElement homeBtn;
+	
+	@FindBy(xpath = "//*[@class='text-sm font-semibold text-[#6F6E6E] py-4']")
+	private WebElement unexpectedErrorMessage;
+	
+	@FindBy(xpath = "//*[@class='w-32 h-10 flex items-center justify-center font-semibold rounded-md text-sm mx-8 py-3 bg-tory-blue text-white']")
+	private WebElement errorMessageGoBackbtn;
+	
+	@FindBy(id = "make_filter")
+	private WebElement makeFilterBox;
+	
+	@FindBy(id = "model_filter")
+	private WebElement modelFilterBox;
+	
+	@FindBy(className = "table-fixed")
+	private WebElement resultTable;
+	
+	@FindBy(id = "ftm_list_view_option")
+	private WebElement ftmListViewOption;
+	
+	@FindBy(xpath = "//td[contains(text(), 'demoMake')]")
+	private WebElement makeInRow1;
+	
+	@FindBy(xpath = "//table//tbody//tr[1]")
+	private WebElement rowGreyedOut;
+	
+	@FindBy(xpath = "//p[contains(@class, 'text-lg text-dark-blue mb-2')]")
+	private WebElement ftmChipViewFage;
+	
+	@FindBy(id = "side_nav_ftmDetails_icon")
+	private WebElement ftmDetailsIcon;
+	
+	@FindBy(xpath = "//div[@id='root']//h1")
+	private WebElement viewFtmChipDetails;
+	
+	@FindBy(xpath = "//div[contains(text(), 'Created On')]")
+	private WebElement createdOnLabel;
+	
+	@FindBy(xpath = "//p[contains(text(), 'Partner ID')]")
+	private WebElement partnerIDLabel;
+	
+	@FindBy(xpath = "//p[contains(text(), 'pmpui-ftm')]")
+	private WebElement partnerIDContext;
+
+	@FindBy(xpath = "//p[contains(text(), 'Partner Type')]")
+	private WebElement partnerTypeLabel;
+	
+	@FindBy(xpath = "//p[contains(text(),'FTM Chip Provider')]")
+	private WebElement partnerTypeContext;
+	
+	@FindBy(xpath = "//p[contains(text(),'Organisation')]")
+	private WebElement organisationLabel;
+	
+	@FindBy(xpath = "//p[contains(text(),'AABBCC')]")
+	private WebElement organisationContext;
+
+	@FindBy(id = "approve_reject_popup_close_icon")
+	private WebElement approveRejectClose;
+	
+	@FindBy(xpath = "//*[@class='text-base leading-snug font-semibold text-black break-words px-[1.5rem]']")
+	private WebElement doYouWantToDeactivatePopupHeader;
+	
+	@FindBy(xpath = "//*[@class='text-sm font-semibold text-[#666666] break-normal py-[5%]']")
+	private WebElement onClickingConfirmYourFtmChipDetailsWillBeDeactivatedSubHeader;
+	
+	@FindBy(xpath = "//*[contains(text(), 'Organisation')]")
+	private WebElement organisationCoulumeHeader;
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	public FtmPage(WebDriver driver) {
 		super(driver);
 	}
 
 	public void clickOnAddFtmButtonWioutRecord() {
-		 if(isElementDisplayed(addFtmPartnerId)) {
-			 clickOnElement(addFtmPartnerId);
-		 }
 		 if(isElementDisplayed(addFtmButton)) {
-		 clickOnElement(addFtmButton);
+			 clickOnElement(addFtmButton);
+		 }
+		 else if(isElementDisplayed(addFtmChipButton)) {
+		 clickOnElement(addFtmChipButton);
 		 }
 		
 	}
@@ -520,6 +616,10 @@ public class FtmPage extends BasePage {
 	
 	public void clickOnFtmStatusFilterOption2() {
 		 clickOnElement(ftmStatusFilterOption2);
+	}
+	
+	public void clickOnFtmStatusFilterOption3() {
+		 clickOnElement(ftmStatusFilterOption3);
 	}
 
 	public boolean isPendingForApprovalTextDisplayed() {
@@ -799,4 +899,188 @@ public class FtmPage extends BasePage {
 	public void clickOnStatusFilter() {
 		 clickOnElement(statusFilter);
 	}
-}
+	
+	
+	
+	
+	
+	
+	
+	public void clickOnStatusFilterOption2() {
+		 clickOnElement(statusFilterOption2);
+	}
+	public void clickOnHomeButton() {
+		 clickOnElement(homeBtn);
+	}
+	
+	public boolean isunexpectedErrorMessageDispayed() {
+		return isElementDisplayed(unexpectedErrorMessage);
+	}
+	
+	public void clickOnGoBackButton() {
+		 clickOnElement(errorMessageGoBackbtn);
+	}
+		
+	
+	public void enterMakeNameFilterBox(String value) {
+		 enter(makeFilterBox,value);
+	}
+
+	public void enterModelNameFilterBox(String value) {
+		 enter(modelFilterBox,value);
+	}
+	
+	public boolean isFtmList1Displayed() {
+		return isElementDisplayed(ftmListItem1);
+	}
+	
+	public boolean isResultsTableDisplayed() {
+		return isElementDisplayed(resultTable);
+		
+	}
+	
+	public boolean isFtmListViewIsEnabled() {
+		return isElementDisplayed(ftmListViewOption);
+	}
+	
+	public boolean isFtmListApproveRejectOptionIsDisabled() {
+		return isElementEnabled(ftmListApproveRejectOption);
+	}
+	
+	public boolean isDemoMakeDisplayedInMakeColumn() {
+		return isElementEnabled(makeInRow1);
+	}
+	
+	public void clickOnCertificateUploadButton() {
+		 clickOnElement(certificateReuploadButton);
+	}
+	
+	public boolean isRowGreyedOut() {
+		return isElementDisplayed(rowGreyedOut);
+	}
+	
+	public boolean isDeactivateOptionDisabled() {
+		return isElementDisplayed(ftmListDeactivateOption);
+	}
+	
+	public void clickOnTitleBackIcon() {
+		 clickOnElement(titleBackIcon);
+	}
+
+	
+	public boolean isDownloadButtonViewPageEnabled() {
+		return isElementDisplayed(downloadButtonViewPage);
+	}
+	
+	public boolean isFtmChipDetailsViewDisplayed() {
+		return isElementDisplayed(ftmChipViewFage);
+	}
+	
+	public void clickOnSubTitleHomeButton() {
+		 clickOnElement(subTitleHomeButton);
+	}
+	
+	public boolean isFtmDetailsSideNavIconDisplayed() {
+		return isElementDisplayed(ftmDetailsIcon);
+	}
+	
+	public void clickOnFtmDetailsSideNavIcon() {
+		 clickOnElement(ftmDetailsIcon);
+	}
+	
+	public boolean isViewFtmChipDetailsTitleDisplayed() {
+		return isElementDisplayed(viewFtmChipDetails);
+	}
+	
+	public void clickOnViewFtmChipDetailsTitle() {
+		 clickOnElement(viewFtmChipDetails);
+	}
+	
+	public boolean isViewFtmChipDetailsTitleNotEditable() {
+		return isElementDisplayed(viewFtmChipDetails);
+	}
+	
+	public boolean isCreatedDateDisplayed() {
+		WebElement createdDate = driver
+				.findElement(By.xpath("//div[text()='Created On " + PmpTestUtil.todayDateWithoutZeroPadder + "']"));
+		return isElementDisplayed(createdDate);
+	}
+	
+	public boolean isCreatedOnLabelDisplayed() {
+		return isElementDisplayed(createdOnLabel);
+	}
+	
+	public boolean isViewFtmChipDetailsLabelPartnerIdDisplayed() {
+		return isElementDisplayed(partnerIDLabel);
+	}
+	
+	public boolean isViewFtmChipDetailsContextPartnerIdDisplayed() {
+		return isElementDisplayed(partnerIDContext);
+	}
+	
+	public boolean isViewFtmChipDetailsLabelPartnerTypeDisplayed() {
+		return isElementDisplayed(partnerTypeLabel);
+	}
+	
+	public boolean isViewFtmChipDetailsContextFtmChipProviderDisplayed() {
+		return isElementDisplayed(partnerTypeContext);
+	}
+	
+	public boolean isViewFtmChipDetailsLabelOrganisationDisplayed() {
+		return isElementDisplayed(organisationLabel);
+	}
+	
+	public boolean isViewFtmChipDetailsContextOrganistaionDisplayed() {
+		return isElementDisplayed(organisationContext);
+	}
+	
+	public void clickOnDownloadButton() {
+		 clickOnElement(downloadButtonViewPage);
+	}
+
+	public boolean isDownloadSuccessMessageDisplayed() {
+		return isElementDisplayed(downloadSuccessMessage);
+	}
+	
+	public boolean isApproveRejectCloseButtonDisplayed() {
+		return isElementDisplayed(approveRejectClose);
+	}
+	
+	public boolean isRejectButtonDisplayed() {
+		return isElementDisplayed(rejectButton);
+	}
+	
+	public boolean isApproveButtonDisplayed() {
+		return isElementDisplayed(approveButton);
+	}
+	
+	public void clickOnApproveRejectCloseButton() {
+		 clickOnElement(approveRejectClose);
+	}
+	
+	public void clickOnViewButton() {
+		 clickOnElement(ftmListViewOption);
+	}
+	
+	public boolean isDeactivateOptionEnabled() {
+		return isElementDisplayed(ftmListDeactivateOption);
+	}
+	
+	public boolean isDeactivateCancelButtonDisplayed() {
+		return isElementDisplayed(deactivateCancelButton);
+	}
+	
+	public boolean isDoYouWantToDeactivateFtmChipPopupTitleDisplayed() {
+		return isElementDisplayed(doYouWantToDeactivatePopupHeader);
+	}
+	
+	public boolean isonClickingConfirmYourFtmChipDetailsWillBeDeactivatedSubTitleDisplayed() {
+		return isElementDisplayed(onClickingConfirmYourFtmChipDetailsWillBeDeactivatedSubHeader);
+	}
+	
+	public boolean isOrganisationCoulumeHeaderDisplayed() {
+		return isElementDisplayed(organisationCoulumeHeader);
+	}
+
+	
+	}

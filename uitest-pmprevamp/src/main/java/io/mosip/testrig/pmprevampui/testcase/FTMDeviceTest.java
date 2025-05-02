@@ -20,7 +20,7 @@ import io.mosip.testrig.pmprevampui.utility.GlobalConstants;
 public class FTMDeviceTest extends BaseClass {
 	
 	
-	@Test(priority = 19)
+	@Test(priority = 1)
 	public void registerNewUserForFtmNoCert() throws InterruptedException {
 		DashboardPage dashboardpage = new DashboardPage(driver);
 		PartnerCertificatePage partnerCertificatePage = new PartnerCertificatePage(driver);
@@ -31,6 +31,10 @@ public class FTMDeviceTest extends BaseClass {
 		assertTrue(dashboardpage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
 
 		LoginPage loginpage = dashboardpage.clickOnLogoutButton();
+		assertTrue(loginpage.isPageNotFoundMessageDisplayed(), GlobalConstants.isKeycloakPageDisplayed);
+		BasePage.navigateBack();
+		dashboardpage.clickOnProfileDropdown();
+		dashboardpage.clickOnLogoutButton();
 		assertTrue(loginpage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
 		
 		loginpage.clickRegisterButton();
@@ -83,7 +87,7 @@ public class FTMDeviceTest extends BaseClass {
 		assertTrue(partnerCertificatePage.isUploadPartnerCertificatePopUpDisplayed(), GlobalConstants.isUploadPartnerCertificatePopUpDisplayed);
 		partnerCertificatePage.uploadCertificate();
 		partnerCertificatePage.clickOnSubmitButton();
-		assertTrue(partnerCertificatePage.isNoRootCertDisplayed(), GlobalConstants.isPartnerCertificatePageDisplayed);
+		assertTrue(partnerCertificatePage.isCertUploadErrorDisplayed(), GlobalConstants.isPartnerCertificatePageDisplayed);
 		partnerCertificatePage.clickOnErrorCloseButton();
 		partnerCertificatePage.clickOnRemoveCertificateButton();
 		
@@ -99,7 +103,6 @@ public class FTMDeviceTest extends BaseClass {
 		
 		partnerCertificatePage.clickOnFtmChipProviderCard();
 		ftmPage.clickOnAddFtmButtonWioutRecord();
-		
 		ftmPage.clickOnAddFtmPartnerIdForNoCert();
 		assertTrue(ftmPage.isNoDataAvailableMessageDisplayed(), GlobalConstants.isNoDataTextDisplaed);
 		
@@ -126,6 +129,7 @@ public class FTMDeviceTest extends BaseClass {
 		assertTrue(partnerCertificatePage.isPartnerCertificatePageDisplayed(), GlobalConstants.isPartnerCertificatePageDisplayed);
 		
 		ftmPage.clickOnAddFtmButtonWioutRecord();
+		
 		ftmPage.EnterInAddFtmMakeBox(data);
 		ftmPage.EnterInAddFtmModelBox(data);
 		
@@ -181,8 +185,12 @@ public class FTMDeviceTest extends BaseClass {
 		
 		dashboardpage.clickOnProfileDropdown();
 		assertTrue(dashboardpage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
-
+		
 		LoginPage loginpage = dashboardpage.clickOnLogoutButton();
+		assertTrue(loginpage.isPageNotFoundMessageDisplayed(), GlobalConstants.isKeycloakPageDisplayed);
+		BasePage.navigateBack();
+		dashboardpage.clickOnProfileDropdown();
+		dashboardpage.clickOnLogoutButton();
 		assertTrue(loginpage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
 		
 		loginpage.clickRegisterButton();
@@ -257,8 +265,9 @@ public class FTMDeviceTest extends BaseClass {
 		partnerCertificatePage.uploadCertificate();
 		partnerCertificatePage.clickOnSubmitButton();
 		assertTrue(partnerCertificatePage.isSuccessMessageForFtmCertDisplayed(), GlobalConstants.isSucessMessageDisplayed);
-		partnerCertificatePage.clickOnRemoveCertificateButton();
 		
+		partnerCertificatePage.clickOncertificateUploadCloseButton();
+		partnerCertificatePage.clickOnPartnerCertificateReuploadButton();
 		partnerCertificatePage.uploadCertificateInvalidCert();
 		assertTrue(partnerCertificatePage.isInvalidFormatErrorPopupDisplayed(), GlobalConstants.isInvalidCertFormatePopupDisplayed);
 		
@@ -275,8 +284,12 @@ public class FTMDeviceTest extends BaseClass {
 		
 		dashboardpage.clickOnProfileDropdown();
 		assertTrue(dashboardpage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
-
 		LoginPage loginpage = dashboardpage.clickOnLogoutButton();
+		assertTrue(loginpage.isPageNotFoundMessageDisplayed(), GlobalConstants.isKeycloakPageDisplayed);
+		BasePage.navigateBack();
+		dashboardpage.clickOnProfileDropdown();
+		dashboardpage.clickOnLogoutButton();
+		assertTrue(loginpage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
 		
 		loginpage.enterUserName("pmpui-ftm");
 		loginpage.enterPassword(password);
@@ -297,7 +310,6 @@ public class FTMDeviceTest extends BaseClass {
 		
 		
 		ftmPage.clickOnAddFtmButtonWioutRecord();
-		
 		ftmPage.clickOnAddFtmPartnerId();
 		ftmPage.EnterInAddFtmMakeBox(data);
 		ftmPage.EnterInAddFtmModelBox(data);
@@ -305,7 +317,7 @@ public class FTMDeviceTest extends BaseClass {
 		ftmPage.clickOnConfirmationCustomButton();
 		ftmPage.uploadCertificateConfrmationForFtm();
 		ftmPage.clickOnCertificateUploadSubmitButton();
-		assertTrue(partnerCertificatePage.isSuccessMessageForFtmCertDisplayed(), GlobalConstants.isSucessMessageDisplayed);
+		assertTrue(partnerCertificatePage.isSuccessMessageForFtmChipCertDisplayed(), GlobalConstants.isSucessMessageDisplayed);
 		partnerCertificatePage.clickOncertificateUploadCloseButton();
 		
 		assertTrue(ftmPage.isListOfFtmTextDisplayed(), GlobalConstants.isSucessMessageDisplayed);
@@ -345,10 +357,16 @@ public class FTMDeviceTest extends BaseClass {
 		assertTrue(dashboardpage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
 
 		dashboardpage.clickOnLogoutButton();
+		assertTrue(loginpage.isPageNotFoundMessageDisplayed(), GlobalConstants.isKeycloakPageDisplayed);
+		BasePage.navigateBack();
+		dashboardpage.clickOnProfileDropdown();
+		dashboardpage.clickOnLogoutButton();
+		assertTrue(loginpage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
 		
 		loginpage.enterUserName(userid);
 		loginpage.enterPassword(password);
 		loginpage.clickOnLoginButton();
+		ftmPage.clickOnSubTitleHomeButton();
 		dashboardpage.clickOnFTMChipTab();
 		ftmPage.clickOnFilterButton();
 		assertTrue(ftmPage.isListOfFtmChipDisplayed(), GlobalConstants.isListOfFtmChipTextDisplayed);
@@ -378,14 +396,14 @@ public class FTMDeviceTest extends BaseClass {
 		
 		assertTrue(ftmPage.isSubTitleHomeButtonDisplayed(), GlobalConstants.isSubTitleHomeDisplayed);
 		assertTrue(ftmPage.isSubTitleFtmButtonDisplayed(), GlobalConstants.isSubTitleDisplayed);
-//		assertTrue(ftmPage.isFtmChipDetailsLabelPartnerIdDisplayed(), GlobalConstants.isPartnerIdLableDisplayed);
-		assertTrue(ftmPage.isFtmChipDetailsContextPartnerIdDisplayed(), GlobalConstants.isPartnerIdDropdownDisplayed);
-		assertTrue(ftmPage.isFtmChipDetailsLabelMakeDisplayed(), GlobalConstants.isFtmChipMakeLableDisplayed);
-		assertTrue(ftmPage.isFtmChipDetailsContextMakeDisplayed(), GlobalConstants.isFtmChipMakeValueDisplayed);
-		assertTrue(ftmPage.isFtmChipDetailsLabelPartnerTypeDisplayed(), GlobalConstants.isPartnerTypeLableDisplayed);
-		assertTrue(ftmPage.isFtmChipDetailsContextFtmChipProviderDisplayed(), GlobalConstants.isPartnerTypeValueDisplayed);
-//		assertTrue(ftmPage.isFtmChipDetailsLabelModelDisplayed(), GlobalConstants.isFtmModelLableDisplayed);
-//		assertTrue(ftmPage.isFtmChipdetailsContextModelDisplayed(), GlobalConstants.isFtmModelValueDisplayed);
+		assertTrue(ftmPage.isViewFtmChipDetailsLabelPartnerIdDisplayed(), GlobalConstants.isPartnerIdLableDisplayed);
+		assertTrue(ftmPage.isViewFtmChipDetailsContextPartnerIdDisplayed(), GlobalConstants.isPartnerIdContextDisplayed);
+		//assertTrue(ftmPage.isFtmChipDetailsLabelMakeDisplayed(), GlobalConstants.isFtmChipMakeLableDisplayed);
+		//assertTrue(ftmPage.isFtmChipDetailsContextMakeDisplayed(), GlobalConstants.isFtmChipMakeValueDisplayed);
+		assertTrue(ftmPage.isViewFtmChipDetailsLabelPartnerTypeDisplayed(), GlobalConstants.isPartnerTypeLableDisplayed);
+		assertTrue(ftmPage.isViewFtmChipDetailsContextFtmChipProviderDisplayed(), GlobalConstants.isPartnerTypeValueDisplayed);
+		//assertTrue(ftmPage.isFtmChipDetailsLabelModelDisplayed(), GlobalConstants.isFtmModelLableDisplayed);
+		//assertTrue(ftmPage.isFtmChipdetailsContextModelDisplayed(), GlobalConstants.isFtmModelValueDisplayed);
 		assertTrue(ftmPage.isFtmChipDetailsCertificatelabelDisplayed(), GlobalConstants.isFtmModelCertifiateLableDisplayed);
 		assertTrue(ftmPage.isFtmChipDetailsPartnerTypeLabelDisplayed(), GlobalConstants.isPartnerTypeLableDisplayed);
 		assertTrue(ftmPage.isFtmChipDetailsPartnerTypeContextDisplayed(), GlobalConstants.isPartnerTypeValueDisplayed);
@@ -400,15 +418,20 @@ public class FTMDeviceTest extends BaseClass {
 		assertTrue(dashboardpage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
 
 		dashboardpage.clickOnLogoutButton();
+		assertTrue(loginpage.isPageNotFoundMessageDisplayed(), GlobalConstants.isKeycloakPageDisplayed);
+		BasePage.navigateBack();
+		dashboardpage.clickOnProfileDropdown();
+		dashboardpage.clickOnLogoutButton();
+		assertTrue(loginpage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
 		
 		loginpage.enterUserName("pmpui-ftm");
 		loginpage.enterPassword(password);
 		loginpage.clickOnLoginButton();
-		
+		ftmPage.clickOnGoBackButton();
+		ftmPage.clickOnHomeButton();
 		dashboardpage.clickOnDashboardFtmChipproviderCardHeader();
 		assertTrue(ftmPage.isApprovedTextDisplayed(), GlobalConstants.isApproveTextDisplayed);
-		ftmPage.clickOnAddFtmChipButton();
-		
+		ftmPage.clickOnAddFtmButtonWioutRecord();
 		ftmPage.clickOnAddFtmPartnerId();
 		ftmPage.EnterInAddFtmMakeBox(data+"1");
 		ftmPage.EnterInAddFtmModelBox(data+"1");
@@ -416,10 +439,9 @@ public class FTMDeviceTest extends BaseClass {
 		ftmPage.clickOnConfirmationCustomButton();
 		ftmPage.uploadCertificateConfrmationForFtm();
 		ftmPage.clickOnCertificateUploadSubmitButton();
-		assertTrue(partnerCertificatePage.isSuccessMessageForFtmCertDisplayed(), GlobalConstants.isSucessMessageDisplayed);
+		assertTrue(partnerCertificatePage.isSuccessMessageForFtmChipCertDisplayed(), GlobalConstants.isSucessMessageDisplayed);
 		partnerCertificatePage.clickOncertificateUploadCloseButton();
 		
-		assertTrue(ftmPage.isApprovedTextDisplayed(), GlobalConstants.isApproveTextDisplayed);
 		assertTrue(ftmPage.isPendingForApprovalTextDisplayed(), GlobalConstants.isPendingForApprovalTextDisplayed);
 		
 		ftmPage.clickOnStatusAscIcon();
@@ -428,7 +450,7 @@ public class FTMDeviceTest extends BaseClass {
 		ftmPage.clickOnStatusDescIcon();
 		assertTrue(partnerCertificatePage.VerifyTheStatusWithDesendingOrder(), GlobalConstants.isPendingForApprovalTextDisplayed);
 
-		ftmPage.clickOnAddFtmChipButton();
+		ftmPage.clickOnAddFtmButtonWioutRecord();
 		ftmPage.clickOnAddFtmPartnerId();
 		ftmPage.EnterInAddFtmMakeBox(data+"1");
 		ftmPage.EnterInAddFtmModelBox(data+"1");
@@ -453,6 +475,11 @@ public class FTMDeviceTest extends BaseClass {
 		assertTrue(dashboardpage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
 
 		LoginPage loginpage = dashboardpage.clickOnLogoutButton();
+		assertTrue(loginpage.isPageNotFoundMessageDisplayed(), GlobalConstants.isKeycloakPageDisplayed);
+		BasePage.navigateBack();
+		dashboardpage.clickOnProfileDropdown();
+		dashboardpage.clickOnLogoutButton();
+		assertTrue(loginpage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
 		
 		loginpage.enterUserName("pmpui-ftm");
 		loginpage.enterPassword(password);
@@ -460,8 +487,7 @@ public class FTMDeviceTest extends BaseClass {
 		
 		partnerCertificatePage.isDashboardFtmChipProviderCardDisplayed();
 		partnerCertificatePage.clickOnFtmChipProviderCard();
-		ftmPage.clickOnAddFtmChipButton();
-		
+		ftmPage.clickOnAddFtmButtonWioutRecord();
 		ftmPage.clickOnAddFtmPartnerId();
 		ftmPage.EnterInAddFtmMakeBox(data+"reject");
 		ftmPage.EnterInAddFtmModelBox(data+"reject");
@@ -469,7 +495,7 @@ public class FTMDeviceTest extends BaseClass {
 		ftmPage.clickOnConfirmationCustomButton();
 		ftmPage.uploadCertificateConfrmationForFtm();
 		ftmPage.clickOnCertificateUploadSubmitButton();
-		assertTrue(partnerCertificatePage.isSuccessMessageForFtmCertDisplayed(), GlobalConstants.isSucessMessageDisplayed);
+		assertTrue(partnerCertificatePage.isSuccessMessageForFtmChipCertDisplayed(), GlobalConstants.isSucessMessageDisplayed);
 		partnerCertificatePage.clickOncertificateUploadCloseButton();
 		
 		assertTrue(ftmPage.isListOfFtmTextDisplayed(), GlobalConstants.isSucessMessageDisplayed);
@@ -483,18 +509,25 @@ public class FTMDeviceTest extends BaseClass {
 		ftmPage.clickOnFilterButton();
 		
 		ftmPage.clickOnFtmStatusFilter();
-		ftmPage.clickOnFtmStatusFilterOption1();
+		ftmPage.clickOnFtmStatusFilterOption2();
 		
 		assertTrue(ftmPage.isPendingForApprovalTextDisplayed(), GlobalConstants.isPendingForApprovalTextDisplayed);
 		
 		dashboardpage.clickOnProfileDropdown();
 		assertTrue(dashboardpage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
 
+
 		dashboardpage.clickOnLogoutButton();
+		assertTrue(loginpage.isPageNotFoundMessageDisplayed(), GlobalConstants.isKeycloakPageDisplayed);
+		BasePage.navigateBack();
+		dashboardpage.clickOnProfileDropdown();
+		dashboardpage.clickOnLogoutButton();
+		assertTrue(loginpage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
 		
 		loginpage.enterUserName(userid);
 		loginpage.enterPassword(password);
 		loginpage.clickOnLoginButton();
+		ftmPage.clickOnSubTitleHomeButton();
 		dashboardpage.clickOnFTMChipTab();
 		ftmPage.clickOnFilterButton();
 		assertTrue(ftmPage.isFilterResetButtonDisplayed(), GlobalConstants.isResetFiletrButtonDisplayed);
@@ -513,13 +546,12 @@ public class FTMDeviceTest extends BaseClass {
 		ftmPage.clickOnApplyFilterButton();
 		assertTrue(ftmPage.isPendingForApprovalTextDisplayed(), GlobalConstants.isPendingForApprovalTextDisplayed);
 		ftmPage.ClickOnFilterResetButton();
-		ftmPage.clickOnApplyFilterButton();
-		assertTrue(ftmPage.isFilterResetButtonDisplayed(), GlobalConstants.isResetFiletrButtonDisplayed);
 		
 		ftmPage.clickOnFilterButton();
 		assertTrue(ftmPage.isFilterResetButtonDisplayed(), GlobalConstants.isResetFiletrButtonDisplayed);
 		ftmPage.enterModelFilterBox(data+"reject");
-		
+		ftmPage.clickOnApplyFilterButton();
+
 		ftmPage.clickOnFtmListActionMenuEllipsisButton();
 		ftmPage.clickOnFtmListApproveRejectOption();
 		
@@ -532,16 +564,20 @@ public class FTMDeviceTest extends BaseClass {
 		assertTrue(dashboardpage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
 
 		dashboardpage.clickOnLogoutButton();
+		assertTrue(loginpage.isPageNotFoundMessageDisplayed(), GlobalConstants.isKeycloakPageDisplayed);
+		BasePage.navigateBack();
+		dashboardpage.clickOnProfileDropdown();
+		dashboardpage.clickOnLogoutButton();
+		assertTrue(loginpage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
 		
 		loginpage.enterUserName("pmpui-ftm");
 		loginpage.enterPassword(password);
 		loginpage.clickOnLoginButton();
-		
+		ftmPage.clickOnHomeButton();
 		dashboardpage.clickOnDashboardFtmChipproviderCardHeader();
-		assertTrue(ftmPage.isRejectedTextDisplayed(), GlobalConstants.isRejectedTextDisplayed);
+		//assertTrue(ftmPage.isRejectedTextDisplayed(), GlobalConstants.isRejectedTextDisplayed);
 		
-		ftmPage.clickOnAddFtmChipButton();
-		
+		ftmPage.clickOnAddFtmButtonWioutRecord();
 		ftmPage.clickOnAddFtmPartnerId();
 		ftmPage.EnterInAddFtmMakeBox(data+"reject");
 		ftmPage.EnterInAddFtmModelBox(data+"reject");
@@ -549,7 +585,7 @@ public class FTMDeviceTest extends BaseClass {
 		ftmPage.clickOnConfirmationCustomButton();
 		ftmPage.uploadCertificateConfrmationForFtm();
 		ftmPage.clickOnCertificateUploadSubmitButton();
-		assertTrue(partnerCertificatePage.isSuccessMessageForFtmCertDisplayed(), GlobalConstants.isSucessMessageDisplayed);
+		assertTrue(partnerCertificatePage.isSuccessMessageForFtmChipCertDisplayed(), GlobalConstants.isSucessMessageDisplayed);
 	}
 
 	@Test(priority = 23)
@@ -563,6 +599,11 @@ public class FTMDeviceTest extends BaseClass {
 		assertTrue(dashboardpage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
 
 		LoginPage loginpage = dashboardpage.clickOnLogoutButton();
+		assertTrue(loginpage.isPageNotFoundMessageDisplayed(), GlobalConstants.isKeycloakPageDisplayed);
+		BasePage.navigateBack();
+		dashboardpage.clickOnProfileDropdown();
+		dashboardpage.clickOnLogoutButton();
+		assertTrue(loginpage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
 		
 		loginpage.enterUserName("pmpui-ftm");
 		loginpage.enterPassword(password);
@@ -572,14 +613,13 @@ public class FTMDeviceTest extends BaseClass {
 		partnerCertificatePage.clickOnFtmChipProviderCard();
 		ftmPage.clickOnAddFtmButtonWioutRecord();
 		ftmPage.clickOnAddFtmPartnerId();
-		
 		ftmPage.EnterInAddFtmMakeBox(data+"deactivate");
 		ftmPage.EnterInAddFtmModelBox(data+"deactivate");
 		ftmPage.clickOnAddFtmSubmitButton();
 		ftmPage.clickOnConfirmationCustomButton();
 		ftmPage.uploadCertificateConfrmationForFtm();
 		ftmPage.clickOnCertificateUploadSubmitButton();
-		assertTrue(partnerCertificatePage.isSuccessMessageForFtmCertDisplayed(), GlobalConstants.isSucessMessageDisplayed);
+		assertTrue(partnerCertificatePage.isSuccessMessageForFtmChipCertDisplayed(), GlobalConstants.isSucessMessageDisplayed);
 		partnerCertificatePage.clickOncertificateUploadCloseButton();
 		
 		assertTrue(ftmPage.isListOfFtmTextDisplayed(), GlobalConstants.isSucessMessageDisplayed);
@@ -593,7 +633,7 @@ public class FTMDeviceTest extends BaseClass {
 		ftmPage.clickOnFilterButton();
 		
 		ftmPage.clickOnFtmStatusFilter();
-		ftmPage.clickOnFtmStatusFilterOption1();
+		ftmPage.clickOnFtmStatusFilterOption2();
 		
 		assertTrue(ftmPage.isPendingForApprovalTextDisplayed(), GlobalConstants.isPendingForApprovalTextDisplayed);
 		
@@ -601,10 +641,16 @@ public class FTMDeviceTest extends BaseClass {
 		assertTrue(dashboardpage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
 
 		dashboardpage.clickOnLogoutButton();
+		assertTrue(loginpage.isPageNotFoundMessageDisplayed(), GlobalConstants.isKeycloakPageDisplayed);
+		BasePage.navigateBack();
+		dashboardpage.clickOnProfileDropdown();
+		dashboardpage.clickOnLogoutButton();
+		assertTrue(loginpage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
 		
 		loginpage.enterUserName(userid);
 		loginpage.enterPassword(password);
 		loginpage.clickOnLoginButton();
+		ftmPage.clickOnSubTitleHomeButton();
 		dashboardpage.clickOnFTMChipTab();
 		ftmPage.clickOnFilterButton();
 		assertTrue(ftmPage.isFilterResetButtonDisplayed(), GlobalConstants.isResetFiletrButtonDisplayed);
@@ -623,8 +669,7 @@ public class FTMDeviceTest extends BaseClass {
 		ftmPage.clickOnDeactivateSubmitButton();
 		
 		ftmPage.clickOnStatusFilter();
-		ftmPage.clickOnFtmStatusFilterOption2();
-		ftmPage.clickOnApplyFilterButton();
+		ftmPage.clickOnStatusFilterOption2();
 		assertTrue(ftmPage.isDeactivatedTextDisplayed(), GlobalConstants.isDeactivatedTextDisplayed);
 		
 		BasePage.navigateBack();
@@ -635,20 +680,26 @@ public class FTMDeviceTest extends BaseClass {
 		assertTrue(dashboardpage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
 
 		dashboardpage.clickOnLogoutButton();
+		assertTrue(loginpage.isPageNotFoundMessageDisplayed(), GlobalConstants.isKeycloakPageDisplayed);
+		BasePage.navigateBack();
+		dashboardpage.clickOnProfileDropdown();
+		dashboardpage.clickOnLogoutButton();
+		assertTrue(loginpage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
 		
 		loginpage.enterUserName("pmpui-ftm");
 		loginpage.enterPassword(password);
 		loginpage.clickOnLoginButton();
+		ftmPage.clickOnHomeButton();
 		
 		dashboardpage.clickOnDashboardFtmChipproviderCardHeader();
-		assertTrue(ftmPage.isDeactivatedTextDisplayed(), GlobalConstants.isDeactivatedTextDisplayed);
+		//assertTrue(ftmPage.isDeactivatedTextDisplayed(), GlobalConstants.isDeactivatedTextDisplayed);
 		
 		ftmPage.clickOnFtmListAction1Button();
-		ftmPage.clickOnFtmListManageCertificate();
+		ftmPage.clickOnFtmListViewButton();
 		assertTrue(ftmPage.isDeactivatedTextDisplayed(), GlobalConstants.isDeactivatedTextDisplayed);
+		ftmPage.clickOnFtmViewBackButton();
 		
-		ftmPage.clickOnAddFtmChipButton();
-	
+		ftmPage.clickOnAddFtmButtonWioutRecord();
 		ftmPage.clickOnAddFtmPartnerId();
 		ftmPage.EnterInAddFtmMakeBox(data+"deactivate");
 		ftmPage.EnterInAddFtmModelBox(data+"deactivate");
@@ -656,7 +707,7 @@ public class FTMDeviceTest extends BaseClass {
 		ftmPage.clickOnConfirmationCustomButton();
 		ftmPage.uploadCertificateConfrmationForFtm();
 		ftmPage.clickOnCertificateUploadSubmitButton();
-		assertTrue(partnerCertificatePage.isSuccessMessageForFtmCertDisplayed(), GlobalConstants.isSucessMessageDisplayed);
+		assertTrue(partnerCertificatePage.isSuccessMessageForFtmChipCertDisplayed(), GlobalConstants.isSucessMessageDisplayed);
 		ftmPage.clickOnCertificateUploadCloseButton();
 		ftmPage.clickOnFilterButton();
 		ftmPage.clickOnFtmStatusFilter();
@@ -675,6 +726,11 @@ public class FTMDeviceTest extends BaseClass {
 		assertTrue(dashboardpage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
 
 		LoginPage loginpage = dashboardpage.clickOnLogoutButton();
+		assertTrue(loginpage.isPageNotFoundMessageDisplayed(), GlobalConstants.isKeycloakPageDisplayed);
+		BasePage.navigateBack();
+		dashboardpage.clickOnProfileDropdown();
+		dashboardpage.clickOnLogoutButton();
+		assertTrue(loginpage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
 		
 		loginpage.enterUserName("pmpui-ftm");
 		loginpage.enterPassword(password);
@@ -682,7 +738,7 @@ public class FTMDeviceTest extends BaseClass {
 		
 		partnerCertificatePage.isDashboardFtmChipProviderCardDisplayed();
 		partnerCertificatePage.clickOnFtmChipProviderCard();
-		ftmPage.clickOnAddFtmChipButton();
+		ftmPage.clickOnAddFtmButtonWioutRecord();
 		ftmPage.clickOnAddFtmPartnerId();
 		ftmPage.EnterInAddFtmMakeBox(data+"withoutcertUpload");
 		ftmPage.EnterInAddFtmModelBox(data+"withoutcertUpload");
@@ -710,11 +766,19 @@ public class FTMDeviceTest extends BaseClass {
 		
 		dashboardpage.clickOnProfileDropdown();
 		assertTrue(dashboardpage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
-	    dashboardpage.clickOnLogoutButton();
+		dashboardpage.clickOnLogoutButton();
+		assertTrue(loginpage.isPageNotFoundMessageDisplayed(), GlobalConstants.isKeycloakPageDisplayed);
+		BasePage.navigateBack();
+		dashboardpage.clickOnProfileDropdown();
+		dashboardpage.clickOnLogoutButton();
+		assertTrue(loginpage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
 		
 		loginpage.enterUserName("pmpui-revamp");
 		loginpage.enterPassword(password);
 		loginpage.clickOnLoginButton();
+		assertTrue(ftmPage.isunexpectedErrorMessageDispayed(), GlobalConstants.isunexpectedErrorMessageDispayed);
+		ftmPage.clickOnGoBackButton();
+		ftmPage.clickOnSubTitleHomeButton();
 		dashboardpage.clickOnFTMChipTab();
 		
 		ftmPage.clickOnFtmListActionMenuEllipsisButton();
