@@ -291,7 +291,7 @@ function PartnersList() {
                                             <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[15%]">
                                               <div className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
                                                 {t(header.headerNameKey)}
-                                                {header.id !== "action" && (
+                                                {!["action", "emailAddress"].includes(header.id) && (
                                                   <SortingIcon
                                                     headerId={header.id}
                                                     sortDescOrder={sortDescOrder}

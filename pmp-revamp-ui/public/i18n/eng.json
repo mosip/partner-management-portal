@@ -656,8 +656,9 @@
         "applyFilter": "Apply Now",
         "searchPartnerId": "Search Partner ID",
         "searchOrganisation": "Search Organisation",
-        "searchEmailAddress": "Search Email Address",
-        "searchPolicyGroup": "Search Policy Group"
+        "searchEmailAddress": "Search Full Email Address",
+        "searchPolicyGroup": "Search Policy Group",
+        "emailAddressToolTip": "Note: This filter performs an exact match. Please enter the full email address (e.g., user@example.com) to find results."
     },
     "viewPartnerDetails": {
         "viewPartnerDetails": "View Partner Details",

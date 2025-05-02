@@ -661,8 +661,9 @@
         "applyFilter": "تقدم الآن",
         "searchPartnerId": "معرف شريك البحث",
         "searchOrganisation": "منظمة البحث",
-        "searchEmailAddress": "بحث في عنوان البريد الإلكتروني",
-        "searchPolicyGroup": "مجموعة سياسات البحث"
+        "searchEmailAddress": "ابحث عن عنوان البريد الإلكتروني الكامل",
+        "searchPolicyGroup": "ابحث عن مجموعة السياسات",
+        "emailAddressToolTip": "ملاحظة: يقوم هذا الفلتر بمطابقة تامة. الرجاء إدخال عنوان البريد الإلكتروني الكامل (مثل: user@example.com) للعثور على النتائج."
     },
     "viewPartnerDetails": {
         "viewPartnerDetails": "عرض تفاصيل الشريك",

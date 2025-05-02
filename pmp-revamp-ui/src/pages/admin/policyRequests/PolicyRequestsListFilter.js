@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import DropdownComponent from "../../common/fields/DropdownComponent.js";
 import TextInputComponent from "../../common/fields/TextInputComponent.js";
 import { useTranslation } from "react-i18next";
-import { isLangRTL, createDropdownData, createRequest, getPartnerManagerUrl, handleServiceErrors } from "../../../utils/AppUtils.js";
+import { isLangRTL, createDropdownData, createRequest, getPartnerManagerUrl, handleServiceErrors, validateInputRegex } from "../../../utils/AppUtils.js";
 import { getUserProfile } from '../../../services/UserProfileService';
 import { HttpService } from "../../../services/HttpService.js";
 
@@ -26,6 +26,11 @@ function PolicyRequestsListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) 
     policyName: "",
     policyGroupName: ""
   });
+  const [invalidPartnerId, setInvalidPartnerId] = useState("");
+  const [invalidOrgName, setInvalidOrgName] = useState("");
+  const [invalidPolicyId, setInvalidPolicyId] = useState("");
+  const [invalidPolicyName, setInvalidPolicyName] = useState("");
+  const [invalidPolicyGroupName, setInvalidPolicyGroupName] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -84,10 +89,16 @@ function PolicyRequestsListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) 
       ...prevFilters,
       [fieldName]: selectedFilter
     }));
+    if (fieldName === 'partnerId') { validateInputRegex(selectedFilter, setInvalidPartnerId, t); }
+    if (fieldName === 'orgName') { validateInputRegex(selectedFilter, setInvalidOrgName, t); }
+    if (fieldName === 'policyId') { validateInputRegex(selectedFilter, setInvalidPolicyId, t); }
+    if (fieldName === 'policyName') { validateInputRegex(selectedFilter, setInvalidPolicyName, t); }
+    if (fieldName === 'policyGroupName') { validateInputRegex(selectedFilter, setInvalidPolicyGroupName, t); }
   };
 
   const areFiltersEmpty = () => {
-    return Object.values(filters).every(value => value === "");
+    return Object.values(filters).every(value => value === "") || invalidPartnerId || invalidOrgName
+      || invalidPolicyId || invalidPolicyName || invalidPolicyGroupName;
   };
 
   const styles = {
@@ -110,6 +121,7 @@ function PolicyRequestsListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) 
         placeHolderKey="partnerPolicyMappingRequestList.searchPartnerId"
         styleSet={styleSet}
         id="partner_id_filter"
+        inputError={invalidPartnerId}
       />
       <DropdownComponent
         fieldName="partnerType"
@@ -129,6 +141,7 @@ function PolicyRequestsListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) 
         placeHolderKey="partnerPolicyMappingRequestList.searchOrganisation"
         styleSet={styleSet}
         id="partner_organisation_filter"
+        inputError={invalidOrgName}
       />
       <TextInputComponent
         fieldName="policyId"
@@ -138,6 +151,7 @@ function PolicyRequestsListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) 
         placeHolderKey="partnerPolicyMappingRequestList.searchPolicyId"
         styleSet={styleSet}
         id="policy_id_filter"
+        inputError={invalidPolicyId}
       />
       <TextInputComponent
         fieldName="policyName"
@@ -147,6 +161,7 @@ function PolicyRequestsListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) 
         placeHolderKey="partnerPolicyMappingRequestList.searchPolicyName"
         styleSet={styleSet}
         id="policy_name_filter"
+        inputError={invalidPolicyName}
       />
       <TextInputComponent
         fieldName="policyGroupName"
@@ -156,6 +171,7 @@ function PolicyRequestsListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) 
         placeHolderKey="partnerPolicyMappingRequestList.searchPolicyGroup"
         styleSet={styleSet}
         id="policy_group_filter"
+        inputError={invalidPolicyGroupName}
       />
       <DropdownComponent
         fieldName="status"
