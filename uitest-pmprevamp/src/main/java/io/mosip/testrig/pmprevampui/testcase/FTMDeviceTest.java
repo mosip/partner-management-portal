@@ -136,7 +136,7 @@ public class FTMDeviceTest extends BaseClass {
 		assertTrue(partnerCertificatePage.isDashboardFtmChipProviderCardDisplayed(), GlobalConstants.isProceedButtonDisplayed);	
 	}
 
-	@Test(priority = 20)
+	@Test(priority = 2)
 	public void registerNewUserForFtm() throws InterruptedException {
 		DashboardPage dashboardpage = new DashboardPage(driver);
 		PartnerCertificatePage partnerCertificatePage = new PartnerCertificatePage(driver);
@@ -264,7 +264,7 @@ public class FTMDeviceTest extends BaseClass {
 		partnerCertificatePage.clickOnCertificateUploadCancelButton();
 	}
 	
-	@Test(priority = 21)
+	@Test(priority = 3)
 	public void AddFtm() throws InterruptedException {
 		DashboardPage dashboardpage = new DashboardPage(driver);
 		PartnerCertificatePage partnerCertificatePage = new PartnerCertificatePage(driver);
@@ -445,7 +445,7 @@ public class FTMDeviceTest extends BaseClass {
 		ftmPage.clickOnAddFtmClearForm();		
 	}
 	
-	@Test(priority = 22)
+	@Test(priority = 4)
 	public void AddFtmAndreject() throws InterruptedException {
 		DashboardPage dashboardpage = new DashboardPage(driver);
 		PartnerCertificatePage partnerCertificatePage = new PartnerCertificatePage(driver);
@@ -567,7 +567,7 @@ public class FTMDeviceTest extends BaseClass {
 		assertTrue(partnerCertificatePage.isSuccessMessageForFtmChipCertDisplayed(), GlobalConstants.isSucessMessageDisplayed);
 	}
 
-	@Test(priority = 23)
+	@Test(priority = 5)
 	public void AddFtmAndDeactive() throws InterruptedException {
 		DashboardPage dashboardpage = new DashboardPage(driver);
 		PartnerCertificatePage partnerCertificatePage = new PartnerCertificatePage(driver);
@@ -693,7 +693,7 @@ public class FTMDeviceTest extends BaseClass {
 		assertTrue(ftmPage.isDeactivatedTextDisplayed(), GlobalConstants.isDeactivatedTextDisplayed);
 	}
 	
-	@Test(priority = 24)
+	@Test(priority = 6)
 	public void addFtmWithoutUploadingFtmChipCert() throws InterruptedException {
 		DashboardPage dashboardpage = new DashboardPage(driver);
 		PartnerCertificatePage partnerCertificatePage = new PartnerCertificatePage(driver);

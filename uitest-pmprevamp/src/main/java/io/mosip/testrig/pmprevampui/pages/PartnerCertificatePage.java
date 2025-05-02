@@ -366,10 +366,6 @@ public class PartnerCertificatePage extends BasePage {
 		 clickOnElement(errorCloseButton);
 	}
 	
-	/*public boolean isNoRootCertDisplayed() {
-		return isElementDisplayed(noRootCert);
-	}*/
-	
 	public boolean isErrorCodeForSelfSignedCerDisplayed() {
 		return isElementDisplayed(errorCodeForSelfSignedCer);
 	}
@@ -495,10 +491,6 @@ public class PartnerCertificatePage extends BasePage {
 	public boolean isSuccessMessageForFtmChipCertDisplayed() {
 		return isElementDisplayed(successMessageForFtmChipCert);
 	}
-	
-	/*public boolean isunableToUploadCertErrorMessageDisplayed() {
-		return isElementDisplayed(unableToUploadErrorMessage);
-	}*/
 	
 	public boolean isCertUploadErrorDisplayed() {
 	    if (isElementDisplayed(noRootCert)) {
