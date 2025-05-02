@@ -92,6 +92,9 @@ public class DatasharePolicyPage extends BasePage {
 	@FindBy(xpath = "//p[text()='Policy data should not exceed more than 5120 characters.']")
 	private WebElement policyDataExceedChractersMessage;
 	
+	@FindBy(xpath = "//p[text()='Invalid input parameter - info in policy data']")
+	private WebElement invalidInfoInPoliyDataMessage;
+	
 	@FindBy(id = "error_close_btn")
 	private WebElement errorCloseButton;
 	
@@ -220,32 +223,11 @@ public class DatasharePolicyPage extends BasePage {
 	
 	@FindBy(id = "policy_deactivate_btn")
 	private WebElement deactivateButton;
-
-	private WebElement viewDatasharePolicyPageTitle;
-	
-	@FindBy(id = "auth_Policy_view_back_btn")
-	private WebElement datashareViewBackButton;
-	
-	@FindBy(id = "policies_list_view1")
-	private WebElement datashareActionButton;
-	
-	@FindBy(id = "policy_publish_btn")
-	private WebElement datasharePublishButton;
-	
-	@FindBy(id = "policy_details_view_btn")
-	private WebElement datashareViewButton;
-	
-	@FindBy(id = "policy_replicate_btn")
-	private WebElement datashareCloneButton;
-	
-	@FindBy(id = "policy_deactivate_btn")
-	private WebElement datashareDeactivateButton;
 	
 	@FindBy(xpath = "//h3[text()='Publish Policy']")
 	private WebElement publishConfirmationPopup;
 	
 	@FindBy(xpath = "//p[contains(text(), 'By clicking ‘Publish,’ the policy - ')]")
-
 	private WebElement publishPolicyInfoMessage;
 	
 	@FindBy(id = "publish_policy_cancel")
@@ -383,7 +365,7 @@ public class DatasharePolicyPage extends BasePage {
 	@FindBy(id = "clone_policy_group_dropdown_search_input")
 	private WebElement clonePolicyGroupDropdownSearchInput;
 	
-	@FindBy(xpath = "//span[text()='A']")
+	@FindBy(xpath = "//span[normalize-space(text())='A']")
 	private WebElement clonePolicyGroupName;
 	
 	@FindBy(xpath = "//p[text()='A']")
@@ -427,6 +409,72 @@ public class DatasharePolicyPage extends BasePage {
 	
 	@FindBy(xpath = "//p[text()='Error: Partner - Policy Request Detected!']")
 	private WebElement partnerPolicyLinkPending;
+	
+	@FindBy(id = "policy_edit_btn")
+	private WebElement policyEditButton;
+	
+	@FindBy(xpath = "//h1[text()='Edit Datashare Policy']")
+	private WebElement editPolicyPageTitle;
+	
+	@FindBy(xpath = "//p[contains(text(), 'All fields marked with')]")
+	private WebElement policyFormSubTitle;
+	
+	@FindBy(xpath = "//span[contains(text(), 'automationui policy group')]")
+	private WebElement disabledPolicyGroupDropdown;
+	
+	@FindBy(xpath = "//span[contains(text(), 'automationui policy group')]")
+	private WebElement editPolicyGroupDropdownValue;
+	
+	@FindBy(xpath = "//input[@id='policy_name_box' and @value='editdatapolicy']")
+	private WebElement editPolicyNameValue;
+	
+	@FindBy(xpath = "//textarea[@id='policy_description_box' and text()='editdatapolicy']")
+	private WebElement editPolicyDescriptionValue;
+	
+	@FindBy(xpath = "//textarea[@id='policy_data_box' and contains(text(), '\"shareableAttributes\"')]")
+	private WebElement editPolicyDataContext;
+	
+	@FindBy(xpath = "//h6[text()='Re-Upload Policy Data']")
+	private WebElement reuploadPolicyDataLabel;
+	
+	@FindBy(id = "fileInput")
+	private WebElement reUploadFile;
+	
+	@FindBy(id = "edit_policy_undo_changes_btn")
+	private WebElement undoChangesButton;
+	
+	@FindBy(id = "edit_policy_form_cancel_btn")
+	private WebElement editPolicyFormCancelButton;
+	
+	@FindBy(id = "edit_policy_form_submit_btn")
+	private WebElement editPolicyFormSubmitButton;
+	
+	@FindBy(xpath = "//h1[text()='Data-Share Policy updated and submitted successfully!']")
+	private WebElement editPolicySuccessTitle;
+	
+	@FindBy(xpath = "//p[contains(text(), 'The Data-Share Policy for Policy Group')]")
+	private WebElement editPolicySuccessSubTitle;
+	
+	@FindBy(id = "confirmation_go_back_btn")
+	private WebElement editSuccessGoBackButton;
+	
+	@FindBy(id = "confirmation_home_btn")
+	private WebElement editSuccessHomeButton;
+	
+	@FindBy(xpath = "//p[text()='Your changes will be lost, are you sure you want to proceed?']")
+	private WebElement confirmationMessage;
+	
+	@FindBy(id = "block_messsage_proceed")
+	private WebElement changesLostProceedButton;
+	
+	@FindBy(id = "block_message_cancel")
+	private WebElement changesLostCancelButton;
+	
+	@FindBy(xpath = "//span[text()='Special characters are not allowed.']")
+	private WebElement specialCharactersAreNotAllowedErrorMessage;
+	
+	@FindBy(xpath = "//span[text()='Re-Upload']")
+	private WebElement reUploadButton;
 	
 	public DatasharePolicyPage(WebDriver driver) {
 		super(driver);
@@ -534,6 +582,18 @@ public class DatasharePolicyPage extends BasePage {
 		uploadImage(uploadFile, TestRunner.getResourcePath() + "\\pmp_revamp_cert\\invalidData.json");
 	}
 	
+	public void uploadBlankData() {
+		uploadImage(uploadFile, TestRunner.getResourcePath() + "\\pmp_revamp_cert\\BlankData.json");
+	}
+	
+	public void uploadAlphabetData() {
+		uploadImage(uploadFile, TestRunner.getResourcePath() + "\\pmp_revamp_cert\\Alphabet.json");
+	}
+	
+	public void uploadSpecialChData() {
+		uploadImage(uploadFile, TestRunner.getResourcePath() + "\\pmp_revamp_cert\\SpecialCharacter.json");
+	}	
+	
 	public boolean isSaveAsDraftButtonEnabled() {
 		return isElementEnabled(policySaveAsDraftButton);
 	}
@@ -574,6 +634,10 @@ public class DatasharePolicyPage extends BasePage {
 		return isElementDisplayed(policyDataExceedChractersMessage);
 	}
 	
+	public boolean isInvalidInfoInPoliyDataMessageDisplayed() {
+		return isElementDisplayed(invalidInfoInPoliyDataMessage);
+	}
+	
 	public void clickOnErrorCloseButton() {
 		clickOnElement(errorCloseButton);
 	}
@@ -594,38 +658,6 @@ public class DatasharePolicyPage extends BasePage {
 		clickOnElement(clearForm);
 	}
 	
-	public void clickOnDatashareViewBackButton() {
-		clickOnElement(datashareViewBackButton);
-	}
-	
-	public void clickOnDatashareActionButton() {
-		clickOnElement(datashareActionButton);
-	}
-	
-	public void clickOnDatasharePublishButton() {
-		clickOnElement(datasharePublishButton);
-	}
-	
-	public boolean isDatasharePublishButtonDisplayed() {
-		return isElementDisplayed(datasharePublishButton);
-	}
-	
-	public boolean isDatashareViewButtonDisplayed() {
-		return isElementDisplayed(datashareViewButton);
-	}
-	
-	public boolean isDatashareCloneButtonDisplayed() {
-		return isElementDisplayed(datashareCloneButton);
-	}
-	
-	public boolean isDatashareDeactivateButtonDisplayed() {
-		return isElementDisplayed(datashareDeactivateButton);
-	}
-	
-	public void clickOnDatashareDeactivateButton() {
-		clickOnElement(datashareDeactivateButton);
-	}
-	
 	public void clickOnFilterButton() {
 		clickOnElement(filterButton);
 	}
@@ -642,7 +674,7 @@ public class DatasharePolicyPage extends BasePage {
 		enter(policyGroupFilter,value);
 	}
 	
-	public void clickOnPolicyNameFilter(String value) {
+	public void enterPolicyNameInFilter(String value) {
 		enter(policyNameFilter,value);
 	}
 	
@@ -697,10 +729,6 @@ public class DatasharePolicyPage extends BasePage {
 	
 	public void clickOnPolicyDescriptionDescIcon() {
 		clickOnElement(policyDescriptionDescIcon);
-	}
-	
-	public void clickOnDatashareViewButton() {
-		clickOnElement(datashareViewButton);
 	}
 	
 	public void selectPolicyGroupDropdown(String value) {
@@ -1102,6 +1130,7 @@ public class DatasharePolicyPage extends BasePage {
 	}
 	
 	public void searchPolicyGroupForClone(String value) {
+		clickOnElement(clonePolicyGroupDropdownSearchInput);
 		enter(clonePolicyGroupDropdownSearchInput,value);
 	}
 	
@@ -1114,12 +1143,8 @@ public class DatasharePolicyPage extends BasePage {
 	}
 	
 	public void selectPolicyGroupForClone(String value) {
-		clickOnElement(clonePolicyGroupName);
-		enter(clonePolicyGroupDropdownSearchInput,value);
-		clickOnElement(clonePolicyGroupDropdownOption1);
-	}
-	
-	public void selectValidPolicyGroupForClone(String value) {
+		clickOnElement(clonePolicyGroupDropdown);
+		clickOnElement(clonePolicyGroupDropdownSearchInput);
 		enter(clonePolicyGroupDropdownSearchInput,value);
 		clickOnElement(clonePolicyGroupDropdownOption1);
 	}
@@ -1207,4 +1232,122 @@ public class DatasharePolicyPage extends BasePage {
 	public void clickOnHomeButton() {
 		clickOnElement(homeButton);
 	}
+
+	public boolean isEditButtonEnable() {
+		return isElementEnabled(policyEditButton);
+	}
+	
+	public void clickOnEditButton() {
+		clickOnElement(policyEditButton);
+	}
+	
+	public boolean isEditPolicyPageTitleDisplayed() {
+		return isElementDisplayed(editPolicyPageTitle);
+	}
+	
+	public boolean isPolicyFormSubTitleDisplayed() {
+		return isElementDisplayed(policyFormSubTitle);
+	}
+	
+	public boolean isPolicyGroupDropdownEnabled() {
+		return isElementEnabled(disabledPolicyGroupDropdown);
+	}
+	
+	public boolean isEditPolicyGroupDropdownValueDisplayed() {
+		return isElementDisplayed(editPolicyGroupDropdownValue);
+	}
+	
+	public boolean isPolicyNameBoxDisplayed() {
+		return isElementDisplayed(policyNameBox);
+	}
+	
+	public boolean isEditPolicyNameValueDisplayed() {
+		return isElementDisplayed(editPolicyNameValue);
+	}
+	
+	public boolean isEditPolicyDescriptionValueDisplayed() {
+		return isElementDisplayed(editPolicyDescriptionValue);
+	}
+	
+	public boolean isEditPolicyDataContextDisplayed() {
+		return isElementDisplayed(editPolicyDataContext);
+	}
+	
+	public boolean isReUploadPolicyDataLabelDisplayed() {
+		return isElementDisplayed(reuploadPolicyDataLabel);
+	}
+	
+	public boolean isReuploadButtonDisplayed() {
+		return isElementDisplayed(reUploadButton);
+	}
+	
+	public boolean isPolicyDescriptionBoxDisplayed() {
+		return isElementDisplayed(policyDescriptionBox);
+	}
+	
+	public boolean isEditPolicyClearButtonDisplayed() {
+		return isElementDisplayed(undoChangesButton);
+	}
+	
+	public boolean isEditPolicyCancelButtonDisplayed() {
+		return isElementDisplayed(editPolicyFormCancelButton);
+	}
+	
+	public boolean isEditPolicySubmitButtonDisplayed() {
+		return isElementDisplayed(editPolicyFormSubmitButton);
+	}
+	
+	public boolean isEditPolicySubmitButtonEnabled() {
+		return isElementEnabled(editPolicyFormSubmitButton);
+	}
+	
+	public boolean isEditPolicySuccessTitleDisplayed() {
+		return isElementDisplayed(editPolicySuccessTitle);
+	}
+	
+	public boolean isEditPolicySuccessSubTitleDisplayed() {
+		return isElementDisplayed(editPolicySuccessSubTitle);
+	}
+	
+	public boolean isEditSuccessGoBackButtonEnabled() {
+		return isElementEnabled(editSuccessGoBackButton);
+	}
+	
+	public boolean isEditSuccessHomeButtonEnabled() {
+		return isElementEnabled(editSuccessHomeButton);
+    }
+	
+	public void clearTextBoxPolicyData() {
+		clickOnElement(policyDataBox);
+		clearTextBox(policyDataBox);
+	}
+	
+	public void clickOnEditPolicyFormCancelButton() {
+		clickOnElement(editPolicyFormCancelButton);
+	}
+	
+	public boolean isChangesLostConfirmationMessageDisplayed() {
+		return isElementDisplayed(confirmationMessage);
+	}
+	
+	public void clickOnChangesLostProceedButton() {
+		clickOnElement(changesLostProceedButton);
+	}
+	
+	public void clickOnChangesLostCancelButton() {
+		clickOnElement(changesLostCancelButton);
+	}
+	
+	public void clickOnUndoChangesButton() {
+		clickOnElement(undoChangesButton);
+	}
+	
+	public boolean isSpecialCharactersAreNotAllowedErrorMessageDisplayed() {
+		return isElementDisplayed(specialCharactersAreNotAllowedErrorMessage);
+	}
+	
+	public void clickOnEditPolicyFormSubmitButton() {
+		clickOnElement(editPolicyFormSubmitButton);
+	}
 }
+	

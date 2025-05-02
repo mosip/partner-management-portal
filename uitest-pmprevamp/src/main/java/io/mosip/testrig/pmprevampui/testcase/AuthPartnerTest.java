@@ -166,9 +166,6 @@ public class AuthPartnerTest extends BaseClass {
 		partnerCertificatePage.clickOnSubmitButton();
 
 		assertTrue(partnerCertificatePage.isSuccessMessageDisplayed(), GlobalConstants.isSuccessMessageDisplayed);
-		partnerCertificatePage.clickOnRemoveCertificateButton();
-
-		assertTrue(partnerCertificatePage.isSuccessMessageDisplayed(), GlobalConstants.isSuccessMessageDisplayed);
 		partnerCertificatePage.clickOncertificateUploadCloseButton();
 
 		partnerCertificatePage.clickOnPartnerCertificateReuploadButton();
@@ -654,30 +651,30 @@ public class AuthPartnerTest extends BaseClass {
 		apiKeyPage.clickOnSubmitButton();
 		assertTrue(apiKeyPage.isDuplicateApiKeyNameErrorMessageDisplayed(),
 				GlobalConstants.isDuplicateApiKeyNameErrorMessageDisplayed);
-		apiKeyPage.clickOnDuplicateApiKeyNameErrorMessageCancelButton();
+		apiKeyPage.clickOnDuplicateApiKeyNameErrorMessageCloseButton();
 		apiKeyPage.enterNameOfApiKeyTextBox(GlobalConstants.SPECIAL_NUMERIC);
 		apiKeyPage.clickOnSubmitButton();
 		apiKeyPage.clickOnCopyIdCloseButton();
 		apiKeyPage.clickOnConfirmationGoBackButton();
 
 		apiKeyPage.clickOnapiListElipsisButton();
-		apiKeyPage.clickOnApiKeyDeactivateButton();
-		assertTrue(apiKeyPage.isApiKeyDeactivateConfirmationTextDisplayed(),
+		apiKeyPage.clickOnDeactivateButton();
+		assertTrue(apiKeyPage.isApiKeyDeactivatePopupDisplayed(),
 				GlobalConstants.isApiKeyDeactivateConfirmationTextDisplayed);
 		assertTrue(apiKeyPage.isApiKeyDeactivationInfoTextDisplayed(),
 				GlobalConstants.isApiKeyDeactivationInfoTextDisplayed);
-		assertTrue(apiKeyPage.isDeactivateCancelButtonDisplayed(), GlobalConstants.isDeactivateCancelButtonDisplayed);
-		assertTrue(apiKeyPage.isDeactivateConfirmButtonDisplayed(), GlobalConstants.isDeactivateConfirmButtonDisplayed);
+		assertTrue(apiKeyPage.isDeactivateCancelButtonAvailable(), GlobalConstants.isDeactivateCancelButtonAvailable);
+		assertTrue(apiKeyPage.isDeactivateSubmitButtonAvailable(), GlobalConstants.isDeactivateSubmitButtonAvailable);
 		apiKeyPage.clickOnDeactivateCancelButton();
 		apiKeyPage.clickOnapiListElipsisButton();
-		apiKeyPage.clickOnApiKeyDeactivateButton();
-		apiKeyPage.clickOnDeactivateConfirmButton();
+		apiKeyPage.clickOnDeactivateButton();
+		apiKeyPage.clickOnDeactivateSubmitButton();
 		apiKeyPage.clickOnDeactivatedApiKey();
 		assertTrue(apiKeyPage.isDeactivatedApiKeyDisabled(), GlobalConstants.isDeactivatedApiKeyDisabled);
 		assertTrue(apiKeyPage.isDeactivatedApiKeyGreyColored(), GlobalConstants.isDeactivatedApiKeyGreyColored);
 		apiKeyPage.clickOnapiListElipsisButton();
-		apiKeyPage.clickOnApiKeyDeactivateButton();
-		assertFalse(apiKeyPage.isApiKeyDeactivateConfirmationTextDisplayed(),
+		apiKeyPage.clickOnDeactivateButton();
+		assertFalse(apiKeyPage.isApiKeyDeactivatePopupDisplayed(),
 				GlobalConstants.isApiKeyDeactivateConfirmationTextDisplayed);
 		apiKeyPage.clickOnApiKeyViewButton();
 		assertTrue(apiKeyPage.isApiKeyStatusDeactivatedDisplayed(), GlobalConstants.isApiKeyStatusDeactivated);

@@ -1,8 +1,11 @@
 package io.mosip.testrig.pmprevampui.pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+
+import io.mosip.testrig.pmprevampui.fw.util.PmpTestUtil;
 
 public class OidcClientPage extends BasePage {
 
@@ -484,7 +487,7 @@ public class OidcClientPage extends BasePage {
 	private WebElement oidcClientIdEyeIcon;
 	
 	@FindBy(id = "oidc_client_list_action_view1")
-	private WebElement oidcClientActionButton;
+	private WebElement actionButton;
 	
 	@FindBy(xpath = "//h1[contains(text(), '  ')]")
 	private WebElement policyNameInEyeIconPopup;
@@ -505,10 +508,10 @@ public class OidcClientPage extends BasePage {
 	private WebElement orgName_asc_icon;
 	
 	@FindBy(id = "oidc_clients_list_view_btn")
-	private WebElement oidcClientViewButton;
+	private WebElement viewButton;
 	
 	@FindBy(id = "oidc_clients_list_deactivate_btn")
-	private WebElement oidcClientDeactivateButton;
+	private WebElement deactivateButton;
 	
 	@FindBy(id = "pagination_card")
 	private WebElement pgination;
@@ -539,6 +542,12 @@ public class OidcClientPage extends BasePage {
 	
 	@FindBy(xpath = "//p[@class='text-base font-bold text-[#1447B2] truncate']")
 	private WebElement activatedOidcClientIdElement;
+	
+	@FindBy(xpath = "//div[contains(text(), 'Created On')]")
+	private WebElement createdOnLabel;
+	
+	@FindBy(xpath = "//p[contains(text(), 'Copied!')]")
+	private WebElement copied;
 
 	public OidcClientPage(WebDriver driver) {
 		super(driver);
@@ -856,6 +865,7 @@ public class OidcClientPage extends BasePage {
 	public boolean isHomeButtonDisplayed() {
 		return isElementDisplayed(homeButton);
 	}
+	
 	public void listPageCreateOidcClientButton() {
 		clickOnElement(oidcClientListPageCreateOidcClientBtn);
 	}
@@ -1104,6 +1114,12 @@ public class OidcClientPage extends BasePage {
 		return isElementDisplayed(activatedStatus);
 	}
 	
+	public boolean isCreatedDateDisplayed() {
+		WebElement createdDate = driver
+				.findElement(By.xpath("//div[text()='Created On " + PmpTestUtil.todayDateWithoutZeroPadder + "']"));
+		return isElementDisplayed(createdDate);
+	}
+	
 	public boolean isOidcClientDetailsCopyIdDisplayed() {
 		return isElementDisplayed(oidcClientDetailsCopyId);
 	}
@@ -1240,7 +1256,7 @@ public class OidcClientPage extends BasePage {
 		return isElementDisplayed(noResultFound);
 	}
 	
-	public void clickOnOidcStatusFilter() {
+	public void clickOnStatusFilter() {
 		clickOnElement(statusFilter);
 	}
 	
@@ -1348,24 +1364,24 @@ public class OidcClientPage extends BasePage {
 		clickOnElement(orgName_asc_icon);
 	}
 	
-	public void clickOnOidcClientActionButton() {
-		clickOnElement(oidcClientActionButton);
+	public void clickOnActionButton() {
+		clickOnElement(actionButton);
 	}
 	
-	public boolean isOidcClientViewButtonEnabled() {
-		return isElementEnabled(oidcClientViewButton);
+	public boolean isViewButtonEnabled() {
+		return isElementEnabled(viewButton);
 	}
 	
-	public boolean isOidcClientDeactivateButtonEnabled() {
-		return isElementEnabled(oidcClientDeactivateButton);
+	public boolean isDeactivateButtonEnabled() {
+		return isElementEnabled(deactivateButton);
 	}
 	
 	public boolean isPaginationDisplayed() {
 		return isElementDisplayed(pgination);
 	}
 	
-	public void clickOnOidcClientViewButton() {
-		clickOnElement(oidcClientViewButton);
+	public void clickOnViewButton() {
+		clickOnElement(viewButton);
 	}
 	
 	public boolean isViewOidcClientDetailsPageTitleDisplayed() {
@@ -1380,8 +1396,8 @@ public class OidcClientPage extends BasePage {
 		return isElementDisplayed(oidcClientId);
 	}
 	
-	public void clickOnOidcClientDeactivateButton() {
-		clickOnElement(oidcClientDeactivateButton);
+	public void clickOnDeactivateButton() {
+		clickOnElement(deactivateButton);
 	}
 
 	public boolean isDeactivateOidcClientPopupDisplayed() {
@@ -1415,6 +1431,19 @@ public class OidcClientPage extends BasePage {
 	
 	public boolean isOidcClientDetailsOrgNameContextDisplayed() {
 		return isElementDisplayed(oidcClientDetailsOrgNameContext);
+	}
+	
+	public boolean isCreatedOnLabelDisplayed() {
+		return isElementDisplayed(createdOnLabel);
+	}
+	
+	public boolean isCopiedTextDisplayed() {
+		return isElementDisplayed(copied);
+	}
+	
+	public void selectDeactivateStatusInFilter() {
+		clickOnElement(statusFilter);
+		clickOnElement(deactivatedStatusInFilter);
 	}
 
 }

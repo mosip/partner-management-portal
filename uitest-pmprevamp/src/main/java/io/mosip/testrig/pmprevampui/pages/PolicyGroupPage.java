@@ -236,6 +236,9 @@ public class PolicyGroupPage extends BasePage{
 	@FindBy(id = "something_went_wrong_home_btn")
 	private WebElement somethingWentWrongHomeBtn;
 	
+	@FindBy(xpath = "//span[text()='Special characters are not allowed.']")
+	private WebElement specialCharactersAreNotAllowedErrorMessage;
+	
 	public PolicyGroupPage(WebDriver driver) {
 		super(driver);
 	}
@@ -611,6 +614,10 @@ public class PolicyGroupPage extends BasePage{
 	
 	public void clickOnSomethingWentWrongHomeBtn() {
 		clickOnElement(somethingWentWrongHomeBtn);
+	}
+	
+	public boolean isSpecialCharactersAreNotAllowedErrorMessageDisplayed() {
+		return isElementDisplayed(specialCharactersAreNotAllowedErrorMessage);
 	}
 
 }

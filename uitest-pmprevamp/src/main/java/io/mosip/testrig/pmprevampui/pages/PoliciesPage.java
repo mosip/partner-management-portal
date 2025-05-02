@@ -158,6 +158,9 @@ public class PoliciesPage extends BasePage {
 	@FindBy(id = "policies_auth_policy_tab")
 	private WebElement policiesAuthPolicyTab;
 	
+	@FindBy(id = "policies_data_share_policy_tab")
+	private WebElement policiesDataPolicyTab;
+	
 	@FindBy(id = "policy_data_box")
 	private WebElement policyDataBox;
 	
@@ -646,5 +649,9 @@ public class PoliciesPage extends BasePage {
 	
 	public void clickOnPoliciesPolicyGroupTab() {
 		clickOnElement(policiesPolicyGroupTab);
+	}
+	
+	public void clickOnDataSharePolicyTab() {
+		clickOnElement(policiesDataPolicyTab);
 	}
 }

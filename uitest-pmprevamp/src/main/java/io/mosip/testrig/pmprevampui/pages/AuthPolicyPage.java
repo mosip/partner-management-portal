@@ -78,7 +78,7 @@ public class AuthPolicyPage extends BasePage {
 	private WebElement titleOfCreatePolicYPage;
 	
 	@FindBy(xpath = "//p[contains(text(), 'All fields marked with')]")
-	private WebElement authPolicyFormSubTitle;
+	private WebElement policyFormSubTitle;
 	
 	@FindBy(xpath = "//span[text()='Select policy group']")
 	private WebElement policyGroupPlaceholder;
@@ -122,7 +122,7 @@ public class AuthPolicyPage extends BasePage {
 	@FindBy(xpath = "//p[text()='Policy data has been uploaded successfully']")
 	private WebElement policyDataUploadedSuccessMessage;
 	
-	@FindBy(xpath = "//textarea[contains(@value, 'vcgdytdsgvdshaccggv')]")
+	@FindBy(xpath = "//textarea[@id='policy_data_box' and contains(normalize-space(.), 'Aggfddfdteyuvdudyftftw')]")
 	private WebElement editedPolicyData;
 	
 	@FindBy(xpath = "//p[text()='Please provide valid JSON data']")
@@ -311,9 +311,6 @@ public class AuthPolicyPage extends BasePage {
 	@FindBy(xpath = "//p[text()='X']")
 	private WebElement previewCloseButton;
 	
-	@FindBy(xpath = "//textarea[contains(text(), '\"authTokenType\": \"policy\"')]")
-	private WebElement policyData;
-	
 	@FindBy(xpath = "//div[text()='Deactivated']")
 	private WebElement deactivateStatus;
 	
@@ -428,10 +425,10 @@ public class AuthPolicyPage extends BasePage {
 	@FindBy(xpath = "//span[contains(text(), 'automationui policy group')]")
 	private WebElement disabledPolicyGroupDropdown;
 	
-	@FindBy(xpath = "//input[@id='policy_name_box' and @value='authpolicy07']")
+	@FindBy(xpath = "//input[@id='policy_name_box' and @value='editauthpolicy']")
 	private WebElement editPolicyNameValue;
 	
-	@FindBy(xpath = "//textarea[@id='policy_description_box' and text()='authpolicy 07']")
+	@FindBy(xpath = "//textarea[@id='policy_description_box' and text()='editauthpolicy']")
 	private WebElement editPolicyDescriptionValue;
 	
 	@FindBy(xpath = "//textarea[contains(text(), '\"authTokenType\": \"policy\"')]")
@@ -455,7 +452,7 @@ public class AuthPolicyPage extends BasePage {
 	@FindBy(xpath = "//h1[text()='Authentication Policy updated and submitted successfully!']")
 	private WebElement editPolicySuccessTitle;
 	
-	@FindBy(xpath = "//p[contains(text(), 'The Authentication Policy for Policy Group: 0004501 has been successfully updated and submitted. To publish the policy, select the 'Publish' option from the action menu on the 'List of Authentication Policies' screen.')]")
+	@FindBy(xpath = "//p[contains(text(), 'The Authentication Policy for Policy Group')]")
 	private WebElement editPolicySuccessSubTitle;
 	
 	@FindBy(id = "confirmation_go_back_btn")
@@ -466,6 +463,21 @@ public class AuthPolicyPage extends BasePage {
 	
 	@FindBy(id = "sub_title_home_btn")
 	private WebElement subTitleHomeButton;
+	
+	@FindBy(xpath = "//p[text()='Your changes will be lost, are you sure you want to proceed?']")
+	private WebElement confirmationMessage;
+	
+	@FindBy(id = "block_messsage_proceed")
+	private WebElement changesLostProceedButton;
+	
+	@FindBy(id = "block_message_cancel")
+	private WebElement changesLostCancelButton;
+	
+	@FindBy(xpath = "//span[text()='Special characters are not allowed.']")
+	private WebElement specialCharactersAreNotAllowedErrorMessage;
+	
+	@FindBy(xpath = "//span[text()='Re-Upload']")
+	private WebElement reUploadButton;
 	
 	public AuthPolicyPage(WebDriver driver) {
 		super(driver);
@@ -504,6 +516,14 @@ public class AuthPolicyPage extends BasePage {
 	public void uploadBlankData() {
 		uploadImage(uploadFile, TestRunner.getResourcePath() + "\\pmp_revamp_cert\\BlankData.json");
 	}
+	
+	public void uploadAlphabetData() {
+		uploadImage(uploadFile, TestRunner.getResourcePath() + "\\pmp_revamp_cert\\Alphabet.json");
+	}
+	
+	public void uploadSpecialChData() {
+		uploadImage(uploadFile, TestRunner.getResourcePath() + "\\pmp_revamp_cert\\SpecialCharacter.json");
+	}	
 	
 	public void clickOnSaveAsDraftButton() {
 		clickOnElement(saveAsDraftButton);
@@ -554,7 +574,7 @@ public class AuthPolicyPage extends BasePage {
 		clickOnElement(publishPolicyCloseButton);
 	}
 	
-	public void enterPolicyGroupFilterBox(String policyGroupFilterValue) {
+	public void enterPolicyGroupInFilterBox(String policyGroupFilterValue) {
 		enter(policyGroupFilterBox, policyGroupFilterValue);
 	}
 	
@@ -574,8 +594,8 @@ public class AuthPolicyPage extends BasePage {
 		return isElementDisplayed(titleOfCreatePolicYPage);
 	}
 	
-	public boolean isAuthPolicyFormSubTitleDisplayed() {
-		return isElementDisplayed(authPolicyFormSubTitle);
+	public boolean isPolicyFormSubTitleDisplayed() {
+		return isElementDisplayed(policyFormSubTitle);
 	}
 	
 	public boolean isPolicyGroupDropdownDisplayed() {
@@ -752,11 +772,11 @@ public class AuthPolicyPage extends BasePage {
 	}
 	
 	public boolean isPolicyStatusActivateDisplayed() {
-		return isElementDisplayed(statusActivated);
+		return isElementDisplayed(activateStatus);
 	}
 	
 	public boolean isPolicyStatusDeactivateDisplayed() {
-		return isElementDisplayed(statusDeactivated);
+		return isElementDisplayed(deactivateStatus);
 	}
 	
 	public void clickOnActivatedAuthPolicy() {
@@ -954,10 +974,6 @@ public class AuthPolicyPage extends BasePage {
 		clickOnElement(policyDataPreviewButton);
 	}
 	
-	public boolean isPolicyDataJsonDisplayed() {
-		return isElementDisplayed(policyData);
-	}
-	
 	public void clickOnDownloadButton() {
 		clickOnElement(downloadButton);
 	}
@@ -1026,7 +1042,7 @@ public class AuthPolicyPage extends BasePage {
 	public void selectPolicyGroupDropdownForClone(String value) {
 		clickOnElement(clonePolicyGroupDropdown);
 		enter(clonePolicyGroupsearchInput,value);
-		clickOnElement(policyGroupDropdownOption1);
+		clickOnElement(clonePolicyGroupDropdownOption1);
 	}
 	
 	public boolean isPolicySavedAsDraftMessageDisplayed() {
@@ -1074,6 +1090,7 @@ public class AuthPolicyPage extends BasePage {
 	}
 	
 	public void searchPolicyGroupForClone(String value) {
+		clickOnElement(clonePolicyGroupDropdownSearchInput);
 		enter(clonePolicyGroupDropdownSearchInput,value);
 	}
 	
@@ -1086,7 +1103,8 @@ public class AuthPolicyPage extends BasePage {
 	}
 	
 	public void selectPolicyGroupForClone(String value) {
-		clickOnElement(clonePolicyGroupName);
+		clickOnElement(clonePolicyGroupDropdown);
+		clickOnElement(clonePolicyGroupDropdownSearchInput);
 		enter(clonePolicyGroupDropdownSearchInput,value);
 		clickOnElement(clonePolicyGroupDropdownOption1);
 	}
@@ -1224,7 +1242,7 @@ public class AuthPolicyPage extends BasePage {
 	}
 	
 	public boolean isReuploadButtonDisplayed() {
-		return isElementDisplayed(reUploadFile);
+		return isElementDisplayed(reUploadButton);
 	}
 	
 	public boolean isPolicyDescriptionBoxDisplayed() {
@@ -1257,6 +1275,38 @@ public class AuthPolicyPage extends BasePage {
 	
 	public boolean isEditSuccessHomeButtonEnabled() {
 		return isElementEnabled(editSuccessHomeButton);
+	}
+	
+	public void clickOnEditPolicyFormCancelButton() {
+		clickOnElement(editPolicyFormCancelButton);
+	}
+	
+	public void clickOnEditPolicyFormSubmitButton() {
+		clickOnElement(editPolicyFormSubmitButton);
+	}
+	
+	public boolean isChangesLostConfirmationMessageDisplayed() {
+		return isElementDisplayed(confirmationMessage);
+	}
+	
+	public void clickOnChangesLostProceedButton() {
+		clickOnElement(changesLostProceedButton);
+	}
+	
+	public void clickOnChangesLostCancelButton() {
+		clickOnElement(changesLostCancelButton);
+	}
+	
+	public void clickOnUndoChangesButton() {
+		clickOnElement(undoChangesButton);
+	}
+	
+	public boolean isSpecialCharactersAreNotAllowedErrorMessageDisplayed() {
+		return isElementDisplayed(specialCharactersAreNotAllowedErrorMessage);
+	}
+
+	public boolean isEditPolicySubmitButtonEnabled() {
+		return isElementEnabled(editPolicyFormSubmitButton);
 	}
 
 }
