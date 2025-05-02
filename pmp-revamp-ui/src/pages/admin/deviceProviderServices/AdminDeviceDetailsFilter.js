@@ -2,13 +2,13 @@ import { useState, useEffect } from "react";
 import DropdownComponent from "../../common/fields/DropdownComponent.js";
 import TextInputComponent from "../../common/fields/TextInputComponent.js";
 import { useTranslation } from "react-i18next";
-import { isLangRTL, createDropdownData, fetchDeviceTypeDropdownData, fetchDeviceSubTypeDropdownData } from "../../../utils/AppUtils.js";
+import { isLangRTL, createDropdownData, fetchDeviceTypeDropdownData, fetchDeviceSubTypeDropdownData, validateInputRegex } from "../../../utils/AppUtils.js";
 import { getUserProfile } from '../../../services/UserProfileService.js';
 
 function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg, removeSbiFields}) {
     const { t } = useTranslation();
     const [status, setStatus] = useState([]);
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [deviceTypeDropdownData, setDeviceTypeDropdownData] = useState([]);
     const [deviceSubTypeDropdownData, setDeviceSubTypeDropdownData] = useState([]);
     const [statusDropdownData, setStatusDropdownData] = useState([
@@ -29,6 +29,13 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg, re
         sbiId: "",
         sbiVersion: ""
     });
+    const [invalidPartnerId, setInvalidPartnerId] = useState("");
+    const [invalidOrgName, setInvalidOrgName] = useState("");
+    const [invalidSbiId, setInvalidSbiId] = useState("");
+    const [invalidSbiVersion, setInvalidSbiVersion] = useState("");
+    const [invalidDeviceId, setInvalidDeviceId] = useState("");
+    const [invalidMake, setInvalidMake] = useState("");
+    const [invalidModel, setInvalidModel] = useState("");
 
     useEffect(() => {
         const fetchData = async () => {
@@ -46,6 +53,13 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg, re
             ...prevFilters,
             [fieldName]: selectedFilter,
         }));
+        if (fieldName === 'partnerId') { validateInputRegex(selectedFilter, setInvalidPartnerId, t); }
+        if (fieldName === 'orgName') { validateInputRegex(selectedFilter, setInvalidOrgName, t); }
+        if (fieldName === 'sbiId') { validateInputRegex(selectedFilter, setInvalidSbiId, t); }
+        if (fieldName === 'sbiVersion') { validateInputRegex(selectedFilter, setInvalidSbiVersion, t); }
+        if (fieldName === 'deviceId') { validateInputRegex(selectedFilter, setInvalidDeviceId, t); }
+        if (fieldName === 'make') { validateInputRegex(selectedFilter, setInvalidMake, t); }
+        if (fieldName === 'model') { validateInputRegex(selectedFilter, setInvalidModel, t); }
     
         // Check if fieldName is 'deviceType'
         if (fieldName === 'deviceType') {
@@ -78,7 +92,9 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg, re
     };
     
     const areFiltersEmpty = () => {
-        return Object.values(filters).every(value => value === "" || value === null || value === undefined);
+        return Object.values(filters).every(value => value === "" || value === null || value === undefined)
+            || invalidPartnerId || invalidOrgName || invalidSbiId || invalidSbiVersion || invalidDeviceId
+            || invalidMake || invalidModel;
     };
 
     const styles = {
@@ -100,6 +116,7 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg, re
                 placeHolderKey="partnerList.searchPartnerId"
                 styleSet={styleSet}
                 id="partner_id_filter"
+                inputError={invalidPartnerId}
             />
             <TextInputComponent
                 fieldName="orgName"
@@ -108,6 +125,7 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg, re
                 placeHolderKey="partnerList.searchOrganisation"
                 styleSet={styleSet}
                 id="org_name_filter"
+                inputError={invalidOrgName}
             />
             { !removeSbiFields && (
                 <>
@@ -118,6 +136,7 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg, re
                         placeHolderKey="sbiList.searchSbiId"
                         styleSet={styleSet}
                         id="sbi_id_filter"
+                        inputError={invalidSbiId}
                     />
                     <TextInputComponent
                         fieldName="sbiVersion"
@@ -126,6 +145,7 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg, re
                         placeHolderKey="sbiList.searchVersion"
                         styleSet={styleSet}
                         id="sbi_version_filter"
+                        inputError={invalidSbiVersion}
                     />
                 </>
             )}
@@ -136,6 +156,7 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg, re
                 placeHolderKey="devicesList.searchDeviceId"
                 styleSet={styleSet}
                 id="device_id_filter"
+                inputError={invalidDeviceId}
             />
             <DropdownComponent
                 fieldName='deviceType'
@@ -165,6 +186,7 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg, re
                 placeHolderKey="ftmList.searchMake"
                 styleSet={styleSet}
                 id="make_filter"
+                inputError={invalidMake}
             />
             <TextInputComponent
                 fieldName="model"
@@ -173,6 +195,7 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg, re
                 placeHolderKey="ftmList.searchModel"
                 styleSet={styleSet}
                 id="model_filter"
+                inputError={invalidModel}
             />
             <DropdownComponent
                 fieldName="status"

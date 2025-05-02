@@ -1,3 +1,4 @@
+import { getAppConfig } from "../services/ConfigService";
 import { Trans } from "react-i18next";
 import { HttpService } from "../services/HttpService";
 import { getLoginRedirectUrl } from "../services/LoginRedirectService";
@@ -21,7 +22,7 @@ export const formatDate = (dateString, format) => {
         case 'dateInWords':
             return date.toLocaleDateString(navigator.language, {
                 month: "long",
-                day: "2-digit",
+                day: "numeric",
                 year: "numeric",
             });
         case 'dateMonthInWords':
@@ -84,6 +85,8 @@ export const getStatusCode = (status, t) => {
             return t('statusCodes.draft');
         } else if (status === "valid") {
             return t('statusCodes.valid');
+        } else if (status === "not_available") {
+            return t('statusCodes.notAvailable');
         } else if (status === "-") {
             return "-"
         }
@@ -164,8 +167,8 @@ export const handleServiceErrors = (responseData, setErrorCode, setErrorMsg) => 
     }
 }
 
-export const isLangRTL = (langCode) => {
-    if (langCode === 'ara') {
+export const isLangRTL = (locale) => {
+    if (locale === 'ara') {
         return true;
     }
     else {
@@ -280,20 +283,37 @@ export const toggleSortAscOrder = (sortItem, isDateCol, filteredList, setFiltere
 
 export const validateUrl = (index, value, length, urlArr, t) => {
     const urlPattern = /^(http|https):\/\/[^ "]+$/;
-    if (value === "") {
-        return "";
-    } else if (value.length > length) {
-        return t('commons.urlTooLong', { length: length });
-    } else if (!urlPattern.test(value.trim())) {
-        return t('commons.invalidUrl');
-    } else if (urlArr.some((url, i) => url === value && i !== index)) {
-        return t('commons.duplicateUrl');
-    } else if (/^\s+$/.test(value)) {
-        return t('commons.invalidUrl'); // Show error for input with only spaces
-    } else {
+
+    const validateSingleUrl = (val, i) => {
+        if (val === "") {
+            return "";
+        } else if (val.length > length) {
+            return t('commons.urlTooLong', { length: length });
+        } else if (!urlPattern.test(val.trim())) {
+            return t('commons.invalidUrl');
+        } else if (urlArr.some((url, idx) => url === val && idx !== i)) {
+            return t('commons.duplicateUrl');
+        } else if (/^\s+$/.test(val)) {
+            return t('commons.invalidUrl');
+        } else {
+            return "";
+        }
+    };
+
+    // Handle when value is an array
+    if (Array.isArray(value)) {
+        for (let i = 0; i < value.length; i++) {
+            const error = validateSingleUrl(value[i], i);
+            if (error) {
+                return error;
+            }
+        }
         return "";
     }
-}
+
+    // Fallback for single string input
+    return validateSingleUrl(value, index);
+};
 
 export const bgOfStatus = (status) => {
     if (status) {
@@ -457,7 +477,9 @@ export const getErrorMessage = (errorCode, t, errorMessage) => {
 
 export const getCertificate = async (HttpService, partnerId, setErrorCode, setErrorMsg, t) => {
     try {
-        const response = await HttpService.get(getPartnerManagerUrl('/partners/' + partnerId + '/certificate-data', process.env.NODE_ENV));
+        const isApiExist = await isCaSignedPartnerCertificateAvailable();
+        const url = isApiExist ? `/partners/${partnerId}/certificate-data` : `/partners/${partnerId}/certificate`;
+        const response = await HttpService.get(getPartnerManagerUrl(url, process.env.NODE_ENV));
         if (response && response.data) {
             const responseData = response.data
             if (responseData.response) {
@@ -841,6 +863,48 @@ export const setSubmenuRef = (refArray, index) => (el) => {
     if (el) refArray.current[index] = el;
 };
 
+export const isCaSignedPartnerCertificateAvailable = async () => {
+    try {
+        const configData = await getAppConfig();
+        const isApiExist = configData.isCaSignedPartnerCertificateAvailable === "true" ? true : false;
+        return isApiExist;
+    } catch (error) {
+        console.error("Error fetching or parsing app config: ", error);
+        return false;
+    }
+};
+
+export const isOidcClientAvailable = async () => {
+    try {
+        const configData = await getAppConfig();
+        const isApiExist = configData.isOidcClientAvailable === "true" ? true : false;
+        return isApiExist;
+    } catch (error) {
+        console.error("Error fetching or parsing app config: ", error);
+        return false;
+    }
+};
+
+export const isRootIntermediateCertAvailable = async () => {
+    try {
+        const configData = await getAppConfig();
+        const isApiExist = configData.isRootIntermediateCertAvailable === "true" ? true : false;
+        return isApiExist;
+    } catch (error) {
+        console.error("Error fetching or parsing app config: ", error);
+        return false;
+    }
+};
+
+export const checkCertificateExpired = (expiryDateTime) => { 
+    if (!expiryDateTime) return false; // treat as non expired if no date
+
+    const currentUTC = new Date().toISOString(); // current UTC time
+    const expiryUTC = new Date(expiryDateTime).toISOString();
+
+    return expiryUTC < currentUTC;
+};
+
 export const getWeeklySummaryDescription = (notification, isLoginLanguageRTL, t) => {
     const { certificateDetails = [], sbiDetails = [], apiKeyDetails = [] } = notification.notificationDetails || {};
 
@@ -881,7 +945,7 @@ export const getNotificationDescription = (notification, isLoginLanguageRTL, t) 
                     partnerDomain: notification.notificationDetails.certificateDetails[0].partnerDomain,
                     expiryDateTime: formatDate(notification.notificationDetails.certificateDetails[0].expiryDateTime, 'dateInWords')
                 }}
-                components={{ span: <span className="font-semibold" /> }}
+                components={{ span: <span className={`font-semibold`} /> }}
             />
         );
     } else if (notification.notificationType === 'INTERMEDIATE_CERT_EXPIRY') {
@@ -895,7 +959,7 @@ export const getNotificationDescription = (notification, isLoginLanguageRTL, t) 
                     partnerDomain: notification.notificationDetails.certificateDetails[0].partnerDomain,
                     expiryDateTime: formatDate(notification.notificationDetails.certificateDetails[0].expiryDateTime, 'dateInWords')
                 }}
-                components={{ span: <span className="font-semibold" /> }}
+                components={{ span: <span className={`font-semibold`} /> }}
             />
         );
     } else if (notification.notificationType === 'PARTNER_CERT_EXPIRY') {
@@ -908,7 +972,7 @@ export const getNotificationDescription = (notification, isLoginLanguageRTL, t) 
                     partnerDomain: notification.notificationDetails.certificateDetails[0].partnerDomain,
                     expiryDateTime: formatDate(notification.notificationDetails.certificateDetails[0].expiryDateTime, 'dateInWords')
                 }}
-                components={{ span: <span className="font-semibold" /> }}
+                components={{ span: <span className={`font-semibold`} /> }}
             />
         );
     } else if (notification.notificationType === 'WEEKLY_SUMMARY') {
@@ -926,7 +990,7 @@ export const getNotificationPanelDescription = (notification, isLoginLanguageRTL
                     partnerDomain: notification.notificationDetails.certificateDetails[0].partnerDomain,
                     expiryDateTime: formatDate(notification.notificationDetails.certificateDetails[0].expiryDateTime, 'dateInWords')
                 }}
-                components={{ span: <span className="font-semibold" /> }}
+                components={{ span: <span className={`font-semibold ${isLoginLanguageRTL && 'whitespace-nowrap'}`} /> }}
             />
         );
     } else if (notification.notificationType === 'INTERMEDIATE_CERT_EXPIRY') {
@@ -938,7 +1002,7 @@ export const getNotificationPanelDescription = (notification, isLoginLanguageRTL
                     partnerDomain: notification.notificationDetails.certificateDetails[0].partnerDomain,
                     expiryDateTime: formatDate(notification.notificationDetails.certificateDetails[0].expiryDateTime, 'dateInWords')
                 }}
-                components={{ span: <span className="font-semibold" /> }}
+                components={{ span: <span className={`font-semibold ${isLoginLanguageRTL && 'whitespace-nowrap'}`} /> }}
             />
         );
     } else if (notification.notificationType === 'PARTNER_CERT_EXPIRY') {
@@ -949,7 +1013,7 @@ export const getNotificationPanelDescription = (notification, isLoginLanguageRTL
                     partnerDomain: notification.notificationDetails.certificateDetails[0].partnerDomain,
                     expiryDateTime: formatDate(notification.notificationDetails.certificateDetails[0].expiryDateTime, 'dateInWords')
                 }}
-                components={{ span: <span className="font-semibold" /> }}
+                components={{ span: <span className={`font-semibold ${isLoginLanguageRTL && 'whitespace-nowrap'}`} /> }}
             />
         );
     } else if (notification.notificationType === 'WEEKLY_SUMMARY') {
@@ -1033,3 +1097,26 @@ export const fetchNotificationsList = async (dispatch) => {
         return [];
     }
 };
+
+export const getOuterDivWidth = (text) => {
+    if (text.length > 30) {
+        return 'min-w-[21rem]';
+    } else {
+        return 'min-w-64';
+    }
+};
+
+export const validateInputRegex = (input, setInputError, t) => {
+    if (input === '' || validateInput(input)) {
+        setInputError("");
+    } else {
+        setInputError(t('commons.inputError'));
+    }
+};
+
+export const validateInput = (input) => {
+    // Only allow letters (any language), digits, spaces, and .,@#&()-' characters
+    const allowedPattern = /^[\p{L}\p{N}\p{M}\s.,@#&()\\\-'?!":;=]+$/u;
+
+    return allowedPattern.test(input);
+}

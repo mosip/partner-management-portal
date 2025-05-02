@@ -8,7 +8,8 @@ import {
     onPressEnterKey,
     populateClientNames,
     getClientNameLangMap,
-    setSubmenuRef
+    setSubmenuRef,
+    isOidcClientAvailable
 } from '../../../utils/AppUtils';
 import { HttpService } from '../../../services/HttpService';
 import ErrorMessage from '../../common/ErrorMessage';
@@ -32,7 +33,7 @@ import disableEditPolicyIcon from "../../../svg/disable_edit_policy_icon.svg";
 function OidcClientsList() {
     const navigate = useNavigate('');
     const { t } = useTranslation();
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [dataLoaded, setDataLoaded] = useState(false);
@@ -58,6 +59,8 @@ function OidcClientsList() {
     };
     const [filterQuery, setFilterQuery] = useState({ ...defaultFilterQuery });
     const submenuRef = useRef([]);
+    const [showCompatibilityMsg, setShowCompatibilityMsg] = useState(false);
+    const [disableCreateOidcBtn, setDisableCreateOidcBtn] = useState(false);
 
     useEffect(() => {
         handleMouseClickForDropdown(submenuRef, () => setViewClientId(-1));
@@ -90,7 +93,18 @@ function OidcClientsList() {
                 }
             }
         };
-        fetchData();
+        const checkCompatibleAndFetch = async () => {
+            const isApiExist = await isOidcClientAvailable();
+            if (isApiExist) {
+                fetchData();
+            } else {
+                setDataLoaded(true);
+                setDisableCreateOidcBtn(true);
+                setShowCompatibilityMsg(true);
+            }
+        };
+
+        checkCompatibleAndFetch();
     }, []);
 
     const tableHeaders = [
@@ -258,12 +272,21 @@ function OidcClientsList() {
                         <div className="flex justify-between mb-5">
                             <Title title='authenticationServices.authenticationServices' backLink='/partnermanagement' />
                             {oidcClientsList.length > 0 ?
-                                <button id='create_oidc_btn' onClick={() => createOidcClient()} type="button" className="h-10 text-sm font-semibold px-7 text-white bg-tory-blue rounded-md">
+                                <button disabled={disableCreateOidcBtn} id='create_oidc_btn' onClick={() => createOidcClient()} type="button" className={`h-10 text-sm font-semibold text-white px-7 rounded-md ${disableCreateOidcBtn ? 'border-[#A5A5A5] bg-[#A5A5A5]' : 'bg-tory-blue'}`}>
                                     {t('createOidcClient.createOidcClient')}
                                 </button>
                                 : null
                             }
                         </div>
+                        {showCompatibilityMsg && (
+                            <div className="bg-[#FCFCFC] w-full my-3 rounded-lg shadow-lg items-center">
+                                <div className="flex items-center justify-center p-2">
+                                    <div className="p-2 bg-[#FFF7E5] border-2 border-[#EDDCAF] rounded-md w-full">
+                                        <p className="text-sm font-medium text-[#8B6105]">{t('oidcClientsList.compatibilityMsg')}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
                         <AuthenticationServicesTab
                             activeOidcClient={true}
                             oidcClientPath='/partnermanagement/authentication-services/oidc-clients-list'
@@ -280,6 +303,7 @@ function OidcClientsList() {
                                     customButtonName='createOidcClient.createOidcClient'
                                     buttonId='create_oid_client'
                                     onClickButton={createOidcClient}
+                                    disableBtn={disableCreateOidcBtn}
                                 />
                             </div>
                             :
@@ -301,7 +325,7 @@ function OidcClientsList() {
                                                     <tr>
                                                         {tableHeaders.map((header, index) => {
                                                             return (
-                                                                <th key={index} className={`py-4 font-semibold text-sm text-[#6F6E6E] w-[14%] ${header.id === "status" && 'w-[10%]'} ${(header.id === 'policyName' || header.id === 'policyGroupName') ? (isLoginLanguageRTL ? 'pr-0.5' : 'pl-0.5') : 'px-1.5'}`}>
+                                                                <th key={index} className={`py-4 font-semibold text-sm whitespace-nowrap text-[#6F6E6E] w-[15%] ${header.id === "status" && 'w-[12%]'} ${(header.id === 'policyName' || header.id === 'policyGroupName') ? (isLoginLanguageRTL ? 'pr-0.5' : 'pl-0.5') : 'px-1.5'}`}>
                                                                     <div id={`${header.headerNameKey}_header`} className={`flex items-center gap-x-1 font-semibold  ${header.id === "oidcClientId" && 'justify-center'} ${header.id === "action" && 'justify-center'}`}>
                                                                         {t(header.headerNameKey)}
                                                                         {(header.id !== "action") && (header.id !== "oidcClientId") && (

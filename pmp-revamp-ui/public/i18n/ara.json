@@ -32,7 +32,8 @@
         "close": "يغلق",
         "unexpectedError": "لقد واجهنا خطأ غير متوقع",
         "undoChanges": "التراجع عن التغييرات",
-        "clear":"مسح"
+        "clear":"مسح",
+        "inputError": "لا يسمح باستخدام الأحرف الخاصة."
     },
     "dashboard": {
         "welcomeMsg": "مرحباً {{firstName}} {{lastName}}",
@@ -72,7 +73,8 @@
         "ftmPendingApprovalRequestCountDesc": "يوجد حاليًا {{ftmPendingApprovalRequestCount}} طلبات شريحة FTM قيد الانتظار",
         "requestCountFetchError": "حدث خطأ غير متوقع أثناء جلب عدد الطلبات",
         "trustCertExpiryCountDesc": "ستنتهي صلاحية شهادات CA الجذرية {{rootCertExpiryCount}} وشهادات CA الوسيطة {{intermediateCertExpiryCount}} قريبًا",
-        "partnerCertExpiryCountDesc": "{{partnerCertExpiryCount}} شهادات الشركاء تنتهي صلاحيتها قريبًا"
+        "partnerCertExpiryCountDesc1": "{{partnerCertExpiryCount}} شهادات الشركاء تنتهي صلاحيتها قريبًا",
+        "partnerCertExpiryCountDesc2": "{{partnerCertExpiryCount}} شهادة الشريك تنتهي صلاحيتها قريبًا"
     },
     "header": {
         "userProfile": "ملف تعريفي للمستخدم",
@@ -125,7 +127,8 @@
         "mosipSignedCertificateSuccessMsg": "تم تنزيل شهادة MOSIP الموقعة بنجاح.",
         "certificateExpired": "انتهت صلاحية الشهادة. يرجى تحميل شهادة صالحة",
         "disabledBtnHoverMsg": "لقد تم إلغاء تنشيط حساب الشريك الخاص بك لنوع الشريك المحدد بواسطة المسؤول، مما أدى إلى تعطيل الإجراء'",
-        "errorWhileFetchingCertificateList": "بسبب خطأ، لم نتمكن من جلب قائمة الشهادات. يرجى المحاولة مرة أخرى."
+        "errorWhileFetchingCertificateList": "بسبب خطأ، لم نتمكن من جلب قائمة الشهادات. يرجى المحاولة مرة أخرى.",
+        "compatibilityMsg": "لا يتم دعم تنزيل الشهادة الأصلية في الإصدار الحالي من منصة MOSIP."
     },
     "uploadCertificate": {
         "uploadPartnerCertificate": "تحميل شهادة الشريك",
@@ -172,7 +175,8 @@
         "uploaded": "تم الرفع",
         "notUploaded": "لم يتم الرفع",
         "draft": "مسودة",
-        "valid": "صالح"
+        "valid": "صالح",
+        "notAvailable":"غير متوفر"
     },
     "policies": {
         "policies": "سياسات",
@@ -222,6 +226,7 @@
         "policyGroup": "مجموعة السياسات",
         "policyName": "اسم السياسة",
         "selectPartnerId": "معرف الشريك المعتمد",
+        "partnerIdHelpText": "حدد معرف الشريك",
         "selectPolicyName": "حدد اسم السياسة",
         "comments": "تعليقات",
         "commentBoxDesc": "اذكر الغرض من طلب السياسة",
@@ -310,7 +315,8 @@
         "selectPolicyName": "حدد اسم السياسة",
         "selectStatus": "حدد الحالة",
         "searchOidcClientName": "البحث عن اسم عميل OIDC",
-        "errorInOidcClientsList": "أثناء جلب قائمة عملاء OIDC، واجهنا خطأ."
+        "errorInOidcClientsList": "أثناء جلب قائمة عملاء OIDC، واجهنا خطأ.",
+        "compatibilityMsg":"ملاحظة: لا يتم دعم الميزات المتعلقة بعميل OIDC في الإصدار الحالي من منصة MOSIP."
     },
     "viewOidcClientDetails": {
         "viewOidcClientDetails": "عرض تفاصيل عميل OIDC",
@@ -539,7 +545,8 @@
         "ftmId": "معرف FTM",
         "selectFtmId": "حدد معرف FTM",
         "searchFtmId": "البحث عن معرف FTM",
-        "errorWhileFetchingFtmList": "بسبب خطأ، لم نتمكن من الحصول على تفاصيل شريحة FTM. يرجى المحاولة مرة أخرى."
+        "errorWhileFetchingFtmList": "بسبب خطأ، لم نتمكن من الحصول على تفاصيل شريحة FTM. يرجى المحاولة مرة أخرى.",
+        "compatibilityMsg": "ملاحظة: لا تتوفر قيم تاريخ انتهاء صلاحية الشهادة وحالة انتهاء صلاحية الشهادة في الإصدار الحالي من منصة MOSIP."
     },
     "addFtm": {
         "addFtmChipDetails": "إضافة تفاصيل شريحة FTM",
@@ -600,7 +607,8 @@
         "view": "منظر",
         "errorInCertificateList": "أثناء جلب الشهادات، واجهنا خطأً.",
         "errorAccessingApi": "مواجهة خطأ أثناء الوصول إلى واجهة برمجة تطبيقات مدير المفاتيح.",
-        "errorWhileDownloadingCertificate": "بسبب خطأ، لم نتمكن من تنزيل الشهادة. يرجى المحاولة مرة أخرى."
+        "errorWhileDownloadingCertificate": "بسبب خطأ، لم نتمكن من تنزيل الشهادة. يرجى المحاولة مرة أخرى.",
+        "compatibilityMsg": "ملاحظة: قائمة الشهادات غير متاحة لأن هذه الميزة غير مدعومة في الإصدار الحالي من منصة MOSIP."
     },
     "uploadTrustCertificate": {
         "uploadTrustCertificate": "شرفع هادة الثقة",
@@ -659,8 +667,9 @@
         "applyFilter": "تقدم الآن",
         "searchPartnerId": "معرف شريك البحث",
         "searchOrganisation": "منظمة البحث",
-        "searchEmailAddress": "بحث في عنوان البريد الإلكتروني",
-        "searchPolicyGroup": "مجموعة سياسات البحث"
+        "searchEmailAddress": "ابحث عن عنوان البريد الإلكتروني الكامل",
+        "searchPolicyGroup": "ابحث عن مجموعة السياسات",
+        "emailAddressToolTip": "ملاحظة: يقوم هذا الفلتر بمطابقة تامة. الرجاء إدخال عنوان البريد الإلكتروني الكامل (مثل: user@example.com) للعثور على النتائج."
     },
     "viewPartnerDetails": {
         "viewPartnerDetails": "عرض تفاصيل الشريك",
@@ -911,7 +920,8 @@
         "errorInOidcDetails": "أثناء جلب تفاصيل عميل OIDC، واجهنا خطأً."
     },
     "viewAdminFtmDetails": {
-        "errorWhileGettingFtmDetails": "أثناء جلب تفاصيل الشهادة، واجهنا خطأ"
+        "errorWhileGettingFtmDetails": "أثناء جلب تفاصيل الشهادة، واجهنا خطأ",
+        "compatibilityMsg":"لا يتم دعم تنزيل شهادة FTM في الإصدار الحالي من منصة MOSIP."
     },
     "viewSbiDetails": {
         "viewSbiDetails": "عرض تفاصيل SBI",
@@ -953,9 +963,9 @@
         "rootCertExpiry": "انتهاء صلاحية شهادة الجذر CA",
         "intermediateCertExpiry": "انتهاء صلاحية شهادة CA المتوسطة",
         "partnerCertExpiry": "انتهاء صلاحية شهادة الشريك",
-        "rootCertExpiryDescription": "شهادة CA الجذرية <span className='font-semibold'>{{certificateId}}</span> للنطاق <span className='font-semibold'>{{partnerDomain}}</span> من المقرر أن تنتهي صلاحيتها في <span className='font-semibold'>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات.",
-        "intermediateCertExpiryDescription": "شهادة CA المتوسطة <span className='font-semibold'>{{certificateId}}</span> للنطاق <span className='font-semibold'>{{partnerDomain}}</span> من المقرر أن تنتهي صلاحيتها في <span className='font-semibold'>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات.",
-        "partnerCertExpiryDescription": "من المقرر أن تنتهي صلاحية شهادة الشريك لنطاق <span className='font-semibold'>{{partnerDomain}}</span> في <span className='font-semibold'>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات.",
+        "rootCertExpiryDescription": "شهادة CA الجذرية <span>{{certificateId}}</span> للنطاق <span>{{partnerDomain}}</span> من المقرر أن تنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات.",
+        "intermediateCertExpiryDescription": "شهادة CA المتوسطة <span>{{certificateId}}</span> للنطاق <span>{{partnerDomain}}</span> من المقرر أن تنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات.",
+        "partnerCertExpiryDescription": "من المقرر أن تنتهي صلاحية شهادة الشريك لنطاق <span>{{partnerDomain}}</span> في <span>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات.",
         "dismiss": "رفض",
         "viewAllNotification": "عرض جميع الإشعارات",
         "expiringItems": "ملخص أسبوعي للعناصر منتهية الصلاحية التي أنشأها الشريك",
@@ -975,15 +985,15 @@
         "rootCaCertificate": "شهادة CA الجذرية",
         "intermediateCaCertificate": "شهادة CA متوسطة",
         "partner": "الملخص الأسبوعي - الشريك",
-        "rootCertExpiryDescription": "شهادة CA الجذرية <span className='font-semibold'>{{certificateId}}</span> الصادرة لـ <span className='font-semibold'>{{issuedTo}}</span> بواسطة <span className='font-semibold'>{{issuedBy}}</span> للنطاق <span className='font-semibold'>{{partnerDomain}}</span> من المقرر أن تنتهي صلاحيتها في <span className='font-semibold'>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات.",
-        "intermediateCertExpiryDescription": "شهادة CA المتوسطة <span className='font-semibold'>{{certificateId}}</span> الصادرة لـ <span className='font-semibold'>{{issuedTo}}</span> من قِبل <span className='font-semibold'>{{issuedBy}}</span> لنطاق <span className='font-semibold'>{{partnerDomain}}</span> من المقرر أن تنتهي صلاحيتها في <span className='font-semibold'>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات."
+        "rootCertExpiryDescription": "شهادة CA الجذرية <span>{{certificateId}}</span> الصادرة لـ <span>{{issuedTo}}</span> بواسطة <span>{{issuedBy}}</span> للنطاق <span>{{partnerDomain}}</span> من المقرر أن تنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات.",
+        "intermediateCertExpiryDescription": "شهادة CA المتوسطة <span>{{certificateId}}</span> الصادرة لـ <span>{{issuedTo}}</span> من قِبل <span>{{issuedBy}}</span> لنطاق <span>{{partnerDomain}}</span> من المقرر أن تنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات."
     },
     "partnerNotificationsTab": {
         "partnerCertificate":"شهادة الشريك",
         "apikey": "مفتاح API",
         "ftmCertificate": "شهادة شريحة FTM",
         "sbi": "SBI",
-        "partnerCertExpiryDescription":"شهادة الشريك الصادرة لـ <span className='font-semibold'>{{issuedTo}}</span> بواسطة <span className='font-semibold'>{{issuedBy}}</span> للنطاق <span className='font-semibold'>{{partnerDomain}}</span> من المقرر أن تنتهي صلاحيتها في <span className='font-semibold'>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات."
+        "partnerCertExpiryDescription":"شهادة الشريك الصادرة لـ <span>{{issuedTo}}</span> بواسطة <span>{{issuedBy}}</span> للنطاق <span>{{partnerDomain}}</span> من المقرر أن تنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات."
     },
     "viewAllNotifications": {
         "listOfNotifications": "قائمة الإشعارات",
@@ -1006,7 +1016,9 @@
         "selectCreatedToDate": "تاريخ إنشاء البحث إلى",
         "viewExpiringItems": "عرض العناصر منتهية الصلاحية",
         "partnerCertExpiryTitle": "شهادة الشريك على وشك الانتهاء لـ {{partnerId}}",
-        "partnerCertExpiryDescription": "شهادة الشريك <span className='font-semibold'>{{certificateId}}</span> الصادرة لـ <span className='font-semibold'>{{issuedTo}}</span> بواسطة <span className='font-semibold'>{{issuedBy}}</span> للنطاق <span className='font-semibold'>{{partnerDomain}}</span> من المقرر أن تنتهي صلاحيتها في <span className='font-semibold'>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات."
+        "partnerCertExpiryDescription": "شهادة الشريك <span>{{certificateId}}</span> الصادرة لـ <span>{{issuedTo}}</span> بواسطة <span>{{issuedBy}}</span> للنطاق <span>{{partnerDomain}}</span> من المقرر أن تنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات.",
+        "weeklyPartnerCertExpiryTitle": "شهادة الشريك على وشك الانتهاء لمعرف الشريك: {{partnerId}}",
+        "weeklyPartnerCertExpiryDescription": "شهادة الشريك <span>{{certificateId}}</span> الصادرة لـ <span>{{issuedTo}}</span> بواسطة <span>{{issuedBy}}</span> لـ <span>{{partnerId}}</span> من المقرر أن تنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات."
     },
     "serverError": {
         "PMS_COR_001": "معلمة الإدخال مفقودة",
@@ -1302,6 +1314,9 @@
         "PMS_NOTIFICATION_ERROR_011": "الإشعار غير تابع للشريك.",
         "PMS_NOTIFICATION_ERROR_012": "حالة الإشعار غير صالحة. المتوقع: تم رفضه.",
         "PMS_NOTIFICATION_ERROR_013": "تم مواجهة خطأ أثناء استرداد عدد الشهادات منتهية الصلاحية.",
-        "PMS_NOTIFICATION_ERROR_014": "سيحصل مسؤول الشريك فقط على عدد الشهادات الجذرية والوسيطة منتهية الصلاحية."
+        "PMS_NOTIFICATION_ERROR_014": "سيحصل مسؤول الشريك فقط على عدد الشهادات الجذرية والوسيطة منتهية الصلاحية.",
+        "PMS_NOTIFICATION_ERROR_015": "يجب تحديد نوع الإشعار للتصفية",
+        "PMS_NOTIFICATION_ERROR_016": "الرجاء إدخال تاريخ صالح",
+        "PMS_NOTIFICATION_ERROR_017": "التصفية حسب createFromDate / createToDate متاحة فقط عند تحديد أسبوعي كنوع الإشعار"
     }
 }

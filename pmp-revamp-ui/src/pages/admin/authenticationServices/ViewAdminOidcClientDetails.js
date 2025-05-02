@@ -14,7 +14,7 @@ import { HttpService } from '../../../services/HttpService';
 function ViewAdminOidcClientDetails() {
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [dataLoaded, setDataLoaded] = useState(false);
@@ -34,6 +34,7 @@ function ViewAdminOidcClientDetails() {
     useEffect(() => {
         const data = localStorage.getItem('selectedOidcClientAttributes');
         if (!data) {
+            setDataLoaded(true);
             setUnexpectedError(true);
             return;
         }

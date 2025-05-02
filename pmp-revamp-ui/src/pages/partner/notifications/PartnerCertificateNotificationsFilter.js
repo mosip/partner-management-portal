@@ -2,14 +2,14 @@
 import { useState, useEffect } from 'react';
 import DropdownComponent from '../../common/fields/DropdownComponent.js';
 import { useTranslation } from 'react-i18next';
-import { createDropdownData, isLangRTL } from '../../../utils/AppUtils.js';
+import { createDropdownData, getOuterDivWidth, isLangRTL, validateInputRegex } from '../../../utils/AppUtils.js';
 import TextInputComponent from '../../common/fields/TextInputComponent.js';
 import { getUserProfile } from '../../../services/UserProfileService.js';
 import CalendarInput from '../../common/CalendarInput.js';
 
 function PartnerCertificateNotificationsFilter({ onApplyFilter }) {
     const { t } = useTranslation();
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [partnerDomainData, setPartnerDomainData] = useState([]);
     const [isExpiryCalenderOpen, setIsExpiryCalenderOpen] = useState(false);
     const [partnerDomainDropdownData, setPartnerDomainDropdownData] = useState([
@@ -23,6 +23,8 @@ function PartnerCertificateNotificationsFilter({ onApplyFilter }) {
         issuedBy: "",
         expiryDate: ""
     });
+    const [invalidIssuedBy, setInvalidIssuedBy] = useState("");
+    const [invalidIssuedTo, setInvalidIssuedTo] = useState("");
 
     useEffect(() => {
         const fetchData = async () => {
@@ -38,6 +40,8 @@ function PartnerCertificateNotificationsFilter({ onApplyFilter }) {
             ...prevFilters,
             [fieldName]: selectedFilter
         }));
+        if (fieldName === 'issuedBy') { validateInputRegex(selectedFilter, setInvalidIssuedBy, t); }
+        if (fieldName === 'issuedTo') { validateInputRegex(selectedFilter, setInvalidIssuedTo, t); }
     };
 
     const handleExpiryDateChange = (newDateStr) => {
@@ -45,7 +49,7 @@ function PartnerCertificateNotificationsFilter({ onApplyFilter }) {
     };
       
     const areFiltersEmpty = () => {
-        return Object.values(filters).every(value => value === "");
+        return Object.values(filters).every(value => value === "") || invalidIssuedBy || invalidIssuedTo;
     };
 
     const styles = {
@@ -60,7 +64,7 @@ function PartnerCertificateNotificationsFilter({ onApplyFilter }) {
 
     const calenderStyleSet = {
         datePicker: "h-9 p-1",
-        outerDiv: "ml-4 min-w-64"
+        outerDiv: `ml-4 ${getOuterDivWidth(t('viewAllNotifications.selectExpiryDate'))}`
     };
 
     return (
@@ -73,6 +77,7 @@ function PartnerCertificateNotificationsFilter({ onApplyFilter }) {
                     placeHolderKey='viewAllNotifications.searchIssuedBy'
                     styleSet={styleSet}
                     id='cert_issued_by_domain_filter'
+                    inputError={invalidIssuedBy}
                 />
                 <TextInputComponent
                     fieldName='issuedTo'
@@ -81,6 +86,7 @@ function PartnerCertificateNotificationsFilter({ onApplyFilter }) {
                     placeHolderKey='viewAllNotifications.searchIssuedTo'
                     styleSet={styleSet}
                     id='cert_issued_to_filter'
+                    inputError={invalidIssuedTo}
                 />
                 <DropdownComponent
                     fieldName="partnerDomain"

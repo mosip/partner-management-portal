@@ -9,7 +9,7 @@ import { format } from 'date-fns';
 
 function CalendarInput({ isUsedAsFilter, showCalendar, addInfoIcon, infoKey, infoKey1, setShowCalender, placeholderText, label, onChange, styleSet, selectedDateStr, containsAsterisk, id}) {
   const { t } = useTranslation();
-  const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+  const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
 
   const calendarRef = useRef(null);
 

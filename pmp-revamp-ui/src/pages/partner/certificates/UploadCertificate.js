@@ -27,7 +27,7 @@ function UploadCertificate({ closePopup, popupData, request }) {
     const [dataLoaded, setDataLoaded] = useState(true);
     const [removeLastUploadDate, setRemoveLastUploadData] = useState(false);
     const { t } = useTranslation();
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
 
     useEffect(() => {
         document.body.style.overflow = "hidden";

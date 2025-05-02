@@ -4,7 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { getUserProfile } from '../../../services/UserProfileService';
 import {
     downloadFile, formatDate, getPartnerManagerUrl, getCertificate,
-    handleMouseClickForDropdown, handleServiceErrors, isLangRTL, getErrorMessage, getPartnerTypeDescription
+    handleMouseClickForDropdown, handleServiceErrors, isLangRTL, getErrorMessage, getPartnerTypeDescription,
+    isCaSignedPartnerCertificateAvailable,
+    checkCertificateExpired
 } from '../../../utils/AppUtils';
 import SuccessMessage from '../../common/SuccessMessage';
 import ErrorMessage from '../../common/ErrorMessage';
@@ -20,7 +22,7 @@ import LoadingIcon from '../../common/LoadingIcon';
 function ViewPartnerDetails() {
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [dataLoaded, setDataLoaded] = useState(false);
     const [downloadBtnId, setDownloadBtnId] = useState(false);
     const [unexpectedError, setUnexpectedError] = useState(false);
@@ -85,13 +87,25 @@ function ViewPartnerDetails() {
     }
 
     const getMosipSignedCertificate = async (partner) => {
-        const response = await fetchCertificate(partner.partnerId);
+        const isApiExist = await isCaSignedPartnerCertificateAvailable();
+        let response = null;
+
+        if (isApiExist) {
+            response = await fetchCertificate(partner.partnerId);
+        } else {
+            const isCertExpired = checkCertificateExpired(partner.certificateExpiryDateTime);
+            if (isCertExpired) {
+                setErrorMsg(t('partnerCertificatesList.certificateExpired'));
+                return;
+            }
+            response = await fetchCertificate(partner.partnerId);
+        }
         if (response) {
             if (response.isMosipSignedCertificateExpired) {
                 setErrorMsg(t('partnerCertificatesList.certificateExpired'));
             } else {
                 setSuccessMsg(t('partnerCertificatesList.mosipSignedCertificateSuccessMsg'));
-                downloadFile(response.mosipSignedCertificateData, 'mosip_signed_certificate.cer', 'application/x-x509-ca-cert')
+                downloadFile(isApiExist ? response.mosipSignedCertificateData : response.certificateData, 'mosip_signed_certificate.cer', 'application/x-x509-ca-cert')
             }
         }
     }
@@ -131,7 +145,7 @@ function ViewPartnerDetails() {
     };
 
     const dropdownStyle = {
-        outerDiv: `w-[18%] min-w-fit absolute py-2 px-1  ${isLoginLanguageRTL ? "origin-bottom-right left-[11.5rem] ml-2" : "origin-bottom-left right-[6rem]"} rounded-md bg-white shadow-lg ring-gray-50 border duration-700`
+        outerDiv: `w-[18%] min-w-fit absolute py-2 px-1  ${isLoginLanguageRTL ? "origin-bottom-right left-[6rem]" : "origin-bottom-left right-[6rem]"} rounded-md bg-white shadow-lg ring-gray-50 border duration-700`
     }
 
     return (

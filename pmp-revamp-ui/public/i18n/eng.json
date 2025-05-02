@@ -32,7 +32,8 @@
         "close": "Close",
         "unexpectedError": "We have encountered an unexpected error",
         "undoChanges": "Undo Changes",
-        "clear": "Clear"
+        "clear": "Clear",
+        "inputError": "Special characters are not allowed."
     },
     "dashboard": {
         "welcomeMsg": "Welcome {{firstName}} {{lastName}}",
@@ -72,7 +73,8 @@
         "ftmPendingApprovalRequestCountDesc": "{{ftmPendingApprovalRequestCount}} FTM Chip requests are currently pending",
         "requestCountFetchError": "An Unexpected error occured while fetching request count",
         "trustCertExpiryCountDesc": "{{rootCertExpiryCount}} Root CA Certificates and {{intermediateCertExpiryCount}} Intermediate CA Certificates are expiring soon",
-        "partnerCertExpiryCountDesc": "{{partnerCertExpiryCount}} Partner Certificates are expiring soon"
+        "partnerCertExpiryCountDesc1": "{{partnerCertExpiryCount}} Partner Certificates are expiring soon",
+        "partnerCertExpiryCountDesc2": "{{partnerCertExpiryCount}} Partner Certificate is expiring soon"
     },
     "header": {
         "userProfile": "User Profile",
@@ -125,7 +127,8 @@
         "mosipSignedCertificateSuccessMsg": "MOSIP signed certificate downloaded successfully.",
         "certificateExpired": "Certificate has expired. Please upload a valid certificate",
         "disabledBtnHoverMsg": "Your Partner account for given partner type has been deactivated by Admin, due to which the action has been disabled",
-        "errorWhileFetchingCertificateList": "Due to an error, we were unable to fetch the certificates list. Please try again."
+        "errorWhileFetchingCertificateList": "Due to an error, we were unable to fetch the certificates list. Please try again.",
+        "compatibilityMsg": "Download of Original Certificate is not supported in the current version of MOSIP Platform."
     },
     "uploadCertificate": {
         "uploadPartnerCertificate": "Upload Partner Certificate",
@@ -172,7 +175,8 @@
         "uploaded": "Uploaded",
         "notUploaded": "Not Uploaded",
         "draft": "Draft",
-        "valid": "Valid"
+        "valid": "Valid",
+        "notAvailable":"Not available"
     },
     "policies": {
         "policies": "Policies",
@@ -309,7 +313,8 @@
         "selectPolicyName": "Select Policy Name",
         "selectStatus": "Select Status",
         "searchOidcClientName": "Search OIDC Client Name",
-        "errorInOidcClientsList": "While fetching OIDC Clients List, we have encountered with an error."
+        "errorInOidcClientsList": "While fetching OIDC Clients List, we have encountered with an error.",
+        "compatibilityMsg":"Note: OIDC Client-related features are not supported in the current version of MOSIP Platform."
     },
     "viewOidcClientDetails": {
         "viewOidcClientDetails": "View OIDC Client Details",
@@ -534,7 +539,8 @@
         "ftmId": "FTM ID",
         "selectFtmId": "Select FTM ID",
         "searchFtmId": "Search FTM ID",
-        "errorWhileFetchingFtmList": "Due to an error, we were unable to fetch the FTM Chip details. Please try again."
+        "errorWhileFetchingFtmList": "Due to an error, we were unable to fetch the FTM Chip details. Please try again.",
+        "compatibilityMsg": "Note: Certificate Expiry Date and Certificate Expiry Status values are not available in the current version of MOSIP Platform."
     },
     "addFtm": {
         "addFtmChipDetails": "Add FTM Chip details",
@@ -595,7 +601,8 @@
         "view": "View",
         "errorInCertificateList": "While fetching certificates, we have encountered with an error.",
         "errorAccessingApi": "Facing an error while accessing the keymanager API.",
-        "errorWhileDownloadingCertificate": "Due to an error, we were unable to download the certificate. Please try again."
+        "errorWhileDownloadingCertificate": "Due to an error, we were unable to download the certificate. Please try again.",
+        "compatibilityMsg": "Note: List of Certificates is unavailable as this feature is not supported in the current version of MOSIP Platform."
     },
     "uploadTrustCertificate": {
         "uploadTrustCertificate": "Upload Trust Certificate",
@@ -654,8 +661,9 @@
         "applyFilter": "Apply Now",
         "searchPartnerId": "Search Partner ID",
         "searchOrganisation": "Search Organisation",
-        "searchEmailAddress": "Search Email Address",
-        "searchPolicyGroup": "Search Policy Group"
+        "searchEmailAddress": "Search Full Email Address",
+        "searchPolicyGroup": "Search Policy Group",
+        "emailAddressToolTip": "Note: This filter performs an exact match. Please enter the full email address (e.g., user@example.com) to find results."
     },
     "viewPartnerDetails": {
         "viewPartnerDetails": "View Partner Details",
@@ -906,7 +914,8 @@
         "errorInOidcDetails": "While fetching OIDC client details, we have encountered with an error."
     },
     "viewAdminFtmDetails": {
-        "errorWhileGettingFtmDetails": "While fetching Certificate details, we have encountered with an error."
+        "errorWhileGettingFtmDetails": "While fetching Certificate details, we have encountered with an error.",
+        "compatibilityMsg":"Download of FTM Certificate is not supported in the current version of MOSIP Platform."
     },
     "viewSbiDetails": {
         "viewSbiDetails": "View SBI Details",
@@ -948,9 +957,9 @@
         "rootCertExpiry": "Root CA Certificate Expiration",
         "intermediateCertExpiry": "Intermediate CA Certificate Expiration",
         "partnerCertExpiry": "Partner Certificate Expiration",
-        "rootCertExpiryDescription": "Root CA Certificate <span className='font-semibold'>{{certificateId}}</span> for the <span className='font-semibold'>{{partnerDomain}}</span> domain is set to expire on  <span className='font-semibold'>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions.",
-        "intermediateCertExpiryDescription": "Intermediate CA Certificate <span className='font-semibold'>{{certificateId}}</span> for the <span className='font-semibold'>{{partnerDomain}}</span> domain is set to expire on <span className='font-semibold'>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions.",
-        "partnerCertExpiryDescription": "Partner Certificate for <span className='font-semibold'>{{partnerDomain}}</span> domain is set to expire on <span className='font-semibold'>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions.",
+        "rootCertExpiryDescription": "Root CA Certificate <span>{{certificateId}}</span> for the <span>{{partnerDomain}}</span> domain is set to expire on  <span>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions.",
+        "intermediateCertExpiryDescription": "Intermediate CA Certificate <span>{{certificateId}}</span> for the <span>{{partnerDomain}}</span> domain is set to expire on <span>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions.",
+        "partnerCertExpiryDescription": "Partner Certificate for <span>{{partnerDomain}}</span> domain is set to expire on <span>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions.",
         "dismiss": "Dismiss",
         "viewAllNotification": "View all notifications",
         "expiringItems": "Weekly Summary of Partner-Created Expiring Items",
@@ -970,15 +979,15 @@
         "rootCaCertificate": "Root CA Certificate",
         "intermediateCaCertificate": "Intermediate CA Certificate",
         "partner": "Weekly Summary - Partner",
-        "rootCertExpiryDescription": "Root CA Certificate <span className='font-semibold'>{{certificateId}}</span> issued to <span className='font-semibold'>{{issuedTo}}</span> by <span className='font-semibold'>{{issuedBy}}</span> for the <span className='font-semibold'>{{partnerDomain}}</span> domain is set to expire on <span className='font-semibold'>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions.",
-        "intermediateCertExpiryDescription": "Intermediate CA Certificate <span className='font-semibold'>{{certificateId}}</span> issued to <span className='font-semibold'>{{issuedTo}}</span> by <span className='font-semibold'>{{issuedBy}}</span> for the <span className='font-semibold'>{{partnerDomain}}</span> domain is set to expire on <span className='font-semibold'>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions."
+        "rootCertExpiryDescription": "Root CA Certificate <span>{{certificateId}}</span> issued to <span>{{issuedTo}}</span> by <span>{{issuedBy}}</span> for the <span>{{partnerDomain}}</span> domain is set to expire on <span>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions.",
+        "intermediateCertExpiryDescription": "Intermediate CA Certificate <span>{{certificateId}}</span> issued to <span>{{issuedTo}}</span> by <span>{{issuedBy}}</span> for the <span>{{partnerDomain}}</span> domain is set to expire on <span>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions."
     },
     "partnerNotificationsTab": {
         "partnerCertificate":"Partner Certificate",
         "apikey": "API Key",
         "ftmCertificate": "FTM Chip Certificate",
         "sbi": "SBI",
-        "partnerCertExpiryDescription":"Partner Certificate issued to <span className='font-semibold'>{{issuedTo}}</span> by <span className='font-semibold'>{{issuedBy}}</span> for the <span className='font-semibold'>{{partnerDomain}}</span> domain is set to expire on <span className='font-semibold'>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions."
+        "partnerCertExpiryDescription":"Partner Certificate issued to <span>{{issuedTo}}</span> by <span>{{issuedBy}}</span> for the <span>{{partnerDomain}}</span> domain is set to expire on <span>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions."
     },
     "viewAllNotifications": {
         "listOfNotifications": "List of Notifications",
@@ -1001,7 +1010,9 @@
         "selectCreatedToDate": "Search Creation Date To",
         "viewExpiringItems": "View Expiring Items",
         "partnerCertExpiryTitle": "Partner certificate is expiring for {{partnerId}}",
-        "partnerCertExpiryDescription": "Partner Certificate <span className='font-semibold'>{{certificateId}}</span> issued to <span className='font-semibold'>{{issuedTo}}</span> by <span className='font-semibold'>{{issuedBy}}</span> for the <span className='font-semibold'>{{partnerDomain}}</span> domain is set to expire on <span className='font-semibold'>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions."
+        "partnerCertExpiryDescription": "Partner Certificate <span>{{certificateId}}</span> issued to <span>{{issuedTo}}</span> by <span>{{issuedBy}}</span> for the <span>{{partnerDomain}}</span> domain is set to expire on <span>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions.",
+        "weeklyPartnerCertExpiryTitle": "Partner Certificate is expiring for Partner ID: {{partnerId}}",
+        "weeklyPartnerCertExpiryDescription": "Partner Certificate <span>{{certificateId}}</span> issued to <span>{{issuedTo}}</span> by <span>{{issuedBy}}</span> for <span>{{partnerId}}</span> is set to expire on <span>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions."
     },
     "serverError": {
         "PMS_COR_001": "Missing Input Parameter",
@@ -1297,6 +1308,9 @@
         "PMS_NOTIFICATION_ERROR_011": "The notification does not belong to the partner.",
         "PMS_NOTIFICATION_ERROR_012": "Invalid notification status. Expected: DISMISSED.",
         "PMS_NOTIFICATION_ERROR_013": "Error encountered while retrieving the count of expiring certificates.",
-        "PMS_NOTIFICATION_ERROR_014": "Partner Admin will only get the count of expiring root and intermediate certificates."
+        "PMS_NOTIFICATION_ERROR_014": "Partner Admin will only get the count of expiring root and intermediate certificates.",
+        "PMS_NOTIFICATION_ERROR_015": "Notification type must be selected for filtering",
+        "PMS_NOTIFICATION_ERROR_016": "Please enter a valid date",
+        "PMS_NOTIFICATION_ERROR_017": "Filtering by createdFromDate / createdToDate is only available when 'weekly' is selected as the notificationType"
     }
 }

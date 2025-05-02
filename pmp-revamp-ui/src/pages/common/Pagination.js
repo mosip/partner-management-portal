@@ -8,7 +8,7 @@ import { IconContext } from "react-icons"; // for customizing icons
 
 function Pagination({ dataListLength, selectedRecordsPerPage, setSelectedRecordsPerPage, setFirstIndex, isServerSideFilter = false, getPaginationValues, isViewNotificationPage }) {
     const { t } = useTranslation();
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [isItemsPerPageOpen, setIsItemsPerPageOpen] = useState(false);
     const [selectedPage, setSelectedPage] = useState(0);
     const [itemsPerPageOptions, setItemsPerPageOptions] = useState([8, 16, 24, 32]);

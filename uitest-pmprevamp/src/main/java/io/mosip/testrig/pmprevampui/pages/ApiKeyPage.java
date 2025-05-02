@@ -245,6 +245,9 @@ public class ApiKeyPage extends BasePage {
 	
 	@FindBy(id = "sub_title_home_btn")
 	private WebElement breadcomb;
+
+	@FindBy(xpath = "//div[contains(text(), 'Deactivated')]")
+	private WebElement apiKeyStatus;
 	
 	@FindBy(xpath = "//p[contains(text(), 'No Data Available.')]")
 	private WebElement noDataInApiKeyFilterDropdown;

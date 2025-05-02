@@ -460,4 +460,5 @@ public class PartnerPolicyMappingPage extends BasePage {
 	public void clickOnViewBackButton() {
 		clickOnElement(viewBackButton);
 	}
+
 }

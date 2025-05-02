@@ -27,7 +27,8 @@ export const setupResponseInterceptor = (navigate) => {
           "phoneNumber": userData.phoneNumber,
           "orgName": userData.organizationName,
           "partnerType": userData.partnerType,
-          "langCode": userData.locale ? userData.locale : 'eng',
+          "langCode": userData.langCode ? userData.langCode : 'eng',
+          "locale": userData.locale ? userData.locale : 'eng',
           "roles": resp.role
         };
         localStorage.setItem("isAdmin", resp.role.includes("PARTNER_ADMIN"))

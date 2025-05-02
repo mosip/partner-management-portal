@@ -22,7 +22,7 @@ import ConsentPopup from './ConsentPopup.js';
 function Dashboard() {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+  const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
   const [errorCode, setErrorCode] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [dataLoaded, setDataLoaded] = useState(false);
@@ -40,6 +40,7 @@ function Dashboard() {
   const [rootCertExpiryCount, setRootCertExpiryCount] = useState();
   const [intermediateCertExpiryCount, setIntermediateCertExpiryCount] = useState();
   const [partnerCertExpiryCount, setPartnerCertExpiryCount] = useState();
+  const [isEmailVerified, setIsEmailVerified] = useState(false);
   let isSelectPolicyPopupVisible = false;
   let isUserConsentGiven = false;
 
@@ -100,6 +101,7 @@ function Dashboard() {
         if (response && response.data && response.data.response) {
           const resData = response.data.response;
           console.log(`user's email exist in db: ${resData.emailExists}`);
+          setIsEmailVerified(resData.emailExists);
           if (!resData.emailExists) {
             //2. if email does not exist then check if Policy Group selection is required for this Partner Type or not
             if (
@@ -164,36 +166,55 @@ function Dashboard() {
 
   useEffect(() => {
     const fetchTrustCertExpiryCount = async (certType) => {
-      const queryParams = new URLSearchParams();
-      queryParams.append('expiryPeriod', 30);
-      queryParams.append('caCertificateType', certType);
-      queryParams.append('pageSize', '2');
-      queryParams.append('pageNo', '0');
-
-      const url = `${getPartnerManagerUrl('/trust-chain-certificates', process.env.NODE_ENV)}?${queryParams.toString()}`;
+      const pageSize = 100;
+      let pageNo = 0;
+      let totalResults = 0;
+      let filteredCerts = [];
+    
       try {
-        const response = await HttpService.get(url);
-        if (response) {
-          const responseData = response.data;
+        while (true) {
+          const queryParams = new URLSearchParams();
+          queryParams.append('expiryPeriod', 30);
+          queryParams.append('caCertificateType', certType);
+          queryParams.append('pageSize', pageSize);
+          queryParams.append('pageNo', pageNo);
+    
+          const url = `${getPartnerManagerUrl('/trust-chain-certificates', process.env.NODE_ENV)}?${queryParams.toString()}`;
+    
+          const response = await HttpService.get(url);
+          const responseData = response?.data;
+    
           if (responseData && responseData.response) {
-            if (certType === "ROOT") {
-              setRootCertExpiryCount(responseData.response.totalResults);
-            } else if (certType === "INTERMEDIATE") {
-              setIntermediateCertExpiryCount(responseData.response.totalResults);
-            }
+            const { data, totalResults: total } = responseData.response;
+            totalResults = total;
+
+            const validCerts = data.filter(cert => cert.status === true);
+            filteredCerts = [...filteredCerts, ...validCerts];
+    
+            const totalPages = Math.ceil(totalResults / pageSize);
+            pageNo++;
+    
+            if (pageNo >= totalPages) break;
           } else {
             handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+            break;
           }
-        } else {
-          setErrorMsg(t('dashboard.requestCountFetchError'));
         }
+    
+        // After loop completes, set final count
+        if (certType === "ROOT") {
+          setRootCertExpiryCount(filteredCerts.length);
+        } else if (certType === "INTERMEDIATE") {
+          setIntermediateCertExpiryCount(filteredCerts.length)
+        }
+    
       } catch (err) {
         if (err.response?.status && err.response.status !== 401) {
           setErrorMsg(t('dashboard.requestCountFetchError'));
         }
         console.error("Error fetching data:", err);
       }
-    };
+    };    
 
     const fetchPartnerCertExpiryCount = async () => {
       const queryParams = new URLSearchParams();
@@ -324,10 +345,10 @@ function Dashboard() {
         console.error("Error fetching data:", err);
       }
     };
-    if (!isPartnerAdmin) {
+    if (!isPartnerAdmin && isEmailVerified) {
       fetchPartnerCertExpiryCount();
     }
-    if (isPartnerAdmin) {
+    if (isPartnerAdmin && isEmailVerified) {
       fetchTrustCertExpiryCount('ROOT');
       fetchTrustCertExpiryCount('INTERMEDIATE');
     
@@ -339,7 +360,7 @@ function Dashboard() {
       }, 3000);
     }
 
-  }, [isPartnerAdmin]);
+  }, [isPartnerAdmin, isEmailVerified]);
 
   const partnerCertificatesList = () => {
     navigate('/partnermanagement/certificates/partner-certificate')
@@ -437,7 +458,7 @@ function Dashboard() {
                 {partnerCertExpiryCount > 0 && (
                   <CountWithHover
                     count={partnerCertExpiryCount}
-                    descriptionKey="dashboard.partnerCertExpiryCountDesc"
+                    descriptionKey={partnerCertExpiryCount > 1 ? "dashboard.partnerCertExpiryCountDesc1" : "dashboard.partnerCertExpiryCountDesc2"}
                     descriptionParams={{ partnerCertExpiryCount }}
                     isExpiryHover={true}
                   />

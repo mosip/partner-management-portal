@@ -2,11 +2,12 @@ import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { isLangRTL } from '../../../utils/AppUtils';
 import { getUserProfile } from '../../../services/UserProfileService';
+import Information from './Information';
 
-function TextInputComponent({ fieldName, fieldNameKey, placeHolderKey, textBoxValue, onTextChange, styleSet, id, maxLength, disableField }) {
+function TextInputComponent({ fieldName, fieldNameKey, placeHolderKey, textBoxValue, onTextChange, styleSet, id, maxLength, addInfoIcon, infoKey, disableField, inputError }) {
     const { t } = useTranslation();
     const [inputValue, setInputValue] = useState("");
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
 
     const handleInputChange = (event) => {
         const newValue = event.target.value;
@@ -32,6 +33,9 @@ function TextInputComponent({ fieldName, fieldNameKey, placeHolderKey, textBoxVa
         <div className={`mb-2 ${styleSet?.outerDiv || ''}`}>
             <label className={`flex items-center text-dark-blue text-sm mb-1 ${styleSet?.inputLabel || ''}`}>
                 <p className={`font-semibold`}>{t(fieldNameKey)}{containsAsterisk && <span className={`text-crimson-red mx-1`}>*</span>}</p>
+                {addInfoIcon && (
+                    <Information infoKey={infoKey} id={id + '_info'}/>
+                )}
             </label>
             <div className={`flex border border-[#707070] rounded-[4px] text-[15px] items-center`}>
                 <input
@@ -55,6 +59,7 @@ function TextInputComponent({ fieldName, fieldNameKey, placeHolderKey, textBoxVa
                 </button>
                 )}
             </div>
+            {inputError && <span className="text-sm text-crimson-red font-semibold">{inputError}</span>}
         </div>
     );
 }

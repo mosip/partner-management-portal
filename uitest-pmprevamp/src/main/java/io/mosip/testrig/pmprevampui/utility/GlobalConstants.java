@@ -615,7 +615,6 @@ public class GlobalConstants {
 	public static final String isApiKeyDetailsOrgNameContextDisplayed = "Verify if apikey details org name context displayed";
 	public static final String isApiKeyStatusActivatedDisplayed = "Verify if apikey status activated displayed";
 	public static final String isSpecialCharactersAreNotAllowedErrorMessageDisplayed = "Verify if special characters are not allowed message displayed";
-	
 
 	
 	public static final String APPID = "appId";
@@ -741,10 +740,12 @@ public class GlobalConstants {
 	public static final String EDITDATAPOLICY1_DESCRIPTION = "editdatapolicy1";
 	public static final String DATAPOLICY_PARTLINK = "datapolpartlink";
 	public static final String DATAPOLICY_PARTLINK2 = "datapolpartlink2";
+
 	public static final String PENDING_POLICY = "pending";
 	public static final String PENDING_POLICY_DESCRIPTION = "pending approval policy";
 	public static final String DEACTIVATE_POLICY = "deactivate";
 	public static final String DEACTIVATE_POLICY_DESCRIPTION = "deactivate policy";
+
 	public static final String DEACTIVATE_DATA1 = "deactivatedata1";
 	public static final String DEACTIVATE_DATA1_DESCRIPTION = "deactivatedatapolicy1";
 	public static final String DEACTIVATE_DATA2 = "deactivatedata2";

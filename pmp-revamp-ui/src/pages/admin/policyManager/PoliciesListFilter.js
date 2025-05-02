@@ -2,13 +2,13 @@ import { useState, useEffect } from "react";
 import DropdownComponent from "../../common/fields/DropdownComponent.js";
 import TextInputComponent from "../../common/fields/TextInputComponent.js";
 import { useTranslation } from "react-i18next";
-import { isLangRTL, createDropdownData } from "../../../utils/AppUtils.js";
+import { isLangRTL, createDropdownData, validateInputRegex } from "../../../utils/AppUtils.js";
 import { getUserProfile } from '../../../services/UserProfileService';
 
 function PoliciesListFilter({ onApplyFilter }) {
 
     const { t } = useTranslation();
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [status, setStatus] = useState([]);
     const [statusDropdownData, setStatusDropdownData] = useState([
       { status: 'activated' },
@@ -22,6 +22,10 @@ function PoliciesListFilter({ onApplyFilter }) {
       policyGroupName: "",
       status: "",
     });
+    const [invalidPolicyId, setInvalidPolicyId] = useState("");
+    const [invalidPolicyName, setInvalidPolicyName] = useState("");
+    const [invalidPolicyDesc, setInvalidPolicyDesc] = useState("");
+    const [invalidPolicyGroupName, setInvalidPolicyGroupName] = useState("");
 
     useEffect(() => {
       const fetchData = async () => {
@@ -38,10 +42,15 @@ function PoliciesListFilter({ onApplyFilter }) {
         ...prevFilters,
         [fieldName]: selectedFilter
       }));
+      if (fieldName === 'policyId') { validateInputRegex(selectedFilter, setInvalidPolicyId, t); }
+      if (fieldName === 'policyName') { validateInputRegex(selectedFilter, setInvalidPolicyName, t); }
+      if (fieldName === 'policyDescription') { validateInputRegex(selectedFilter, setInvalidPolicyDesc, t); }
+      if (fieldName === 'policyGroupName') { validateInputRegex(selectedFilter, setInvalidPolicyGroupName, t); }
     };
 
     const areFiltersEmpty = () => {
-        return Object.values(filters).every(value => value === "");
+        return Object.values(filters).every(value => value === "") || invalidPolicyId || invalidPolicyName
+          || invalidPolicyDesc || invalidPolicyGroupName;
       };
     
     const styles = {
@@ -63,6 +72,7 @@ function PoliciesListFilter({ onApplyFilter }) {
             placeHolderKey="policiesList.searchPolicyId"
             styleSet={styleSet}
             id="policy_id_filter"
+            inputError={invalidPolicyId}
           />
           <TextInputComponent
             fieldName="policyName"
@@ -71,6 +81,7 @@ function PoliciesListFilter({ onApplyFilter }) {
             placeHolderKey="policiesList.searchPolicyName"
             styleSet={styleSet}
             id="policy_name_filter"
+            inputError={invalidPolicyName}
           />
           <TextInputComponent
             fieldName="policyDescription"
@@ -79,6 +90,7 @@ function PoliciesListFilter({ onApplyFilter }) {
             placeHolderKey="policiesList.searchPolicyDescription"
             styleSet={styleSet}
             id="policy_description_filter"
+            inputError={invalidPolicyDesc}
           />
           <TextInputComponent
             fieldName="policyGroupName"
@@ -87,6 +99,7 @@ function PoliciesListFilter({ onApplyFilter }) {
             placeHolderKey="policiesList.searchPolicyGroup"
             styleSet={styleSet}
             id="policy_group_filter"
+            inputError={invalidPolicyGroupName}
           />
           <DropdownComponent
             fieldName="status"

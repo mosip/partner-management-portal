@@ -1,12 +1,12 @@
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../../services/UserProfileService";
-import { isLangRTL } from "../../../utils/AppUtils";
+import { getOuterDivWidth, isLangRTL } from "../../../utils/AppUtils";
 import { useState } from "react";
 import CalendarInput from "../../common/CalendarInput";
 
 function WeeklyNotificationsFilter({ onApplyFilter }) {
     const { t } = useTranslation();
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [isExpiryCalenderOpen, setIsExpiryCalenderOpen] = useState(false);
     const [filters, setFilters] = useState({
         createdFromDate: "",
@@ -27,11 +27,16 @@ function WeeklyNotificationsFilter({ onApplyFilter }) {
     const areFiltersEmpty = () => {
         return Object.values(filters).every(value => value === "");
     };
-
-    const calenderStyleSet = {
+    
+    const createdFromDateStyleSet = {
         datePicker: "h-9 p-1",
-        outerDiv: "min-w-64"
+        outerDiv: getOuterDivWidth(t('viewAllNotifications.selectCreatedFromDate'))
     };
+
+    const createdToDateStyleSet = {
+        datePicker: "h-9 p-1",
+        outerDiv: getOuterDivWidth(t('viewAllNotifications.selectCreatedToDate'))
+    };  
 
     return (
         <>
@@ -45,12 +50,12 @@ function WeeklyNotificationsFilter({ onApplyFilter }) {
                         onChange={(newDateStr) => handleExpiryDateChange('createdFromDate', newDateStr)}
                         selectedDateStr={filters.createdFromDate }
                         isUsedAsFilter={true}
-                        styleSet={calenderStyleSet}
+                        styleSet={createdFromDateStyleSet}
                         placeholderText={t('viewAllNotifications.selectCreatedFromDate')}
                         id='created_from_date_calender'
                     />
                 </div>
-                <div className={`${isLoginLanguageRTL ? 'min-736:mr-9 mr-4' : 'min-736:ml-9 ml-4'}`}>
+                <div className={`${isLoginLanguageRTL ? 'mr-4' : 'ml-4'}`}>
                     <CalendarInput
                         fieldName='createdToDate'
                         label={t('viewAllNotifications.createdToDate')}
@@ -59,7 +64,7 @@ function WeeklyNotificationsFilter({ onApplyFilter }) {
                         onChange={(newDateStr) => handleExpiryDateChange('createdToDate', newDateStr)}
                         selectedDateStr={filters.createdToDate}
                         isUsedAsFilter={true}
-                        styleSet={calenderStyleSet}
+                        styleSet={createdToDateStyleSet}
                         placeholderText={t('viewAllNotifications.selectCreatedToDate')}
                         id='created_to_date_calender'
                     />

@@ -6,7 +6,7 @@ import backArrow from '../../svg/back_arrow.svg';
 function FilterButtons({ titleId, listTitle, dataListLength, filter, onResetFilter, setFilter, goBack, listSubTitle, addBackArrow, showTitleWithoutCount, removeFiler }) {
 
     const { t } = useTranslation();
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     return (
         <div className="flex items-center w-full p-2">
             <div id={titleId} className={`flex-col w-full ${isLoginLanguageRTL ? 'pr-[1.3rem]' : 'pl-[1.3rem]'} pt-1 items-center justify-start font-semibold text-dark-blue text-base`}>

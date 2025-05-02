@@ -7,7 +7,7 @@ import { isLangRTL, onPressEnterKey } from '../../utils/AppUtils';
 function AuthenticationServicesTab({ activeOidcClient, oidcClientPath, activeApiKey, apiKeyPath }) {
 
     const { t } = useTranslation();
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const navigate = useNavigate();
 
     const changeToOidcClients = () => {

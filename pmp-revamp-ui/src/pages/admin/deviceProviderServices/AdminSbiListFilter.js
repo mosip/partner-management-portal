@@ -3,11 +3,11 @@ import DropdownComponent from "../../common/fields/DropdownComponent";
 import TextInputComponent from "../../common/fields/TextInputComponent";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../../services/UserProfileService";
-import { isLangRTL, createDropdownData } from "../../../utils/AppUtils";
+import { isLangRTL, createDropdownData, validateInputRegex } from "../../../utils/AppUtils";
 
 function AdminSbiListFilter( {onApplyFilter} ) {
     const { t } = useTranslation();
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [status, setStatus] = useState([]);
     const [sbiExpiryStatus, setSbiExpiryStatus] = useState([]);
     const [statusDropdownData, setStatusDropdownData] = useState([
@@ -28,6 +28,10 @@ function AdminSbiListFilter( {onApplyFilter} ) {
       status: "",
       sbiExpiryStatus: "",
     });
+    const [invalidPartnerId, setInvalidPartnerId] = useState("");
+    const [invalidOrgName, setInvalidOrgName] = useState("");
+    const [invalidSbiId, setInvalidSbiId] = useState("");
+    const [invalidSbiVersion, setInvalidSbiVersion] = useState("");
 
     useEffect(() => {
         const fetchData = async () => {
@@ -42,10 +46,15 @@ function AdminSbiListFilter( {onApplyFilter} ) {
           ...prevFilters,
           [fieldName]: selectedFilter
         }));
+        if (fieldName === 'partnerId') { validateInputRegex(selectedFilter, setInvalidPartnerId, t); }
+        if (fieldName === 'orgName') { validateInputRegex(selectedFilter, setInvalidOrgName, t); }
+        if (fieldName === 'sbiId') { validateInputRegex(selectedFilter, setInvalidSbiId, t); }
+        if (fieldName === 'sbiVersion') { validateInputRegex(selectedFilter, setInvalidSbiVersion, t); }
     };
 
     const areFiltersEmpty = () => {
-        return Object.values(filters).every(value => value === "");
+        return Object.values(filters).every(value => value === "") || invalidPartnerId || invalidOrgName
+            || invalidSbiId || invalidSbiVersion;
     };
 
     const styles = {
@@ -67,6 +76,7 @@ function AdminSbiListFilter( {onApplyFilter} ) {
                 placeHolderKey="partnerList.searchPartnerId"
                 styleSet={styleSet}
                 id="partner_id_filter"
+                inputError={invalidPartnerId}
             />
             <TextInputComponent
                 fieldName="orgName"
@@ -75,6 +85,7 @@ function AdminSbiListFilter( {onApplyFilter} ) {
                 placeHolderKey="partnerList.searchOrganisation"
                 styleSet={styleSet}
                 id="org_name_filter"
+                inputError={invalidOrgName}
             />
             <TextInputComponent
                 fieldName="sbiId"
@@ -83,6 +94,7 @@ function AdminSbiListFilter( {onApplyFilter} ) {
                 placeHolderKey="sbiList.searchSbiId"
                 styleSet={styleSet}
                 id="sbi_id_filter"
+                inputError={invalidSbiId}
             />
             <TextInputComponent
                 fieldName="sbiVersion"
@@ -91,6 +103,7 @@ function AdminSbiListFilter( {onApplyFilter} ) {
                 placeHolderKey="sbiList.searchVersion"
                 styleSet={styleSet}
                 id="sbi_version_filter"
+                inputError={invalidSbiVersion}
             />
             <DropdownComponent
                 fieldName="sbiExpiryStatus"

@@ -428,7 +428,7 @@ public class AuthPolicyPage extends BasePage {
 	@FindBy(xpath = "//input[@id='policy_name_box' and @value='editauthpolicy']")
 	private WebElement editPolicyNameValue;
 	
-	@FindBy(xpath = "//textarea[@id='policy_description_box' and text()='editauthpolicy']")
+	@FindBy(xpath = "//textarea[@id='policy_description_box' and text()='authpolicy 07']")
 	private WebElement editPolicyDescriptionValue;
 	
 	@FindBy(xpath = "//textarea[contains(text(), '\"authTokenType\": \"policy\"')]")
@@ -772,11 +772,11 @@ public class AuthPolicyPage extends BasePage {
 	}
 	
 	public boolean isPolicyStatusActivateDisplayed() {
-		return isElementDisplayed(activateStatus);
+		return isElementDisplayed(statusActivated);
 	}
 	
 	public boolean isPolicyStatusDeactivateDisplayed() {
-		return isElementDisplayed(deactivateStatus);
+		return isElementDisplayed(statusDeactivated);
 	}
 	
 	public void clickOnActivatedAuthPolicy() {
@@ -973,7 +973,7 @@ public class AuthPolicyPage extends BasePage {
 	public void clickOnPolicyDataPreviewButton() {
 		clickOnElement(policyDataPreviewButton);
 	}
-	
+
 	public void clickOnDownloadButton() {
 		clickOnElement(downloadButton);
 	}
@@ -1090,7 +1090,6 @@ public class AuthPolicyPage extends BasePage {
 	}
 	
 	public void searchPolicyGroupForClone(String value) {
-		clickOnElement(clonePolicyGroupDropdownSearchInput);
 		enter(clonePolicyGroupDropdownSearchInput,value);
 	}
 	

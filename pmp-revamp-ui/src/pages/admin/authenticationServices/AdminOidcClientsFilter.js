@@ -2,12 +2,12 @@ import { useState, useEffect } from "react";
 import DropdownComponent from "../../common/fields/DropdownComponent.js";
 import TextInputComponent from "../../common/fields/TextInputComponent.js";
 import { useTranslation } from "react-i18next";
-import { createDropdownData, isLangRTL } from "../../../utils/AppUtils.js";
+import { createDropdownData, isLangRTL, validateInputRegex } from "../../../utils/AppUtils.js";
 import { getUserProfile } from '../../../services/UserProfileService';
 
 function AdminOidcClientsFilter ({ onApplyFilter }) {
     const { t } = useTranslation();
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [status, setStatus] = useState([]);
     const [statusDropdownData, setStatusDropdownData] = useState([
       { status: 'ACTIVE' },
@@ -21,6 +21,11 @@ function AdminOidcClientsFilter ({ onApplyFilter }) {
       clientNameEng: "",
       status: "",
     });
+    const [invalidPartnerId, setInvalidPartnerId] = useState("");
+    const [invalidOrgName, setInvalidOrgName] = useState("");
+    const [invalidPolicyGroupName, setInvalidPolicyGroupName] = useState("");
+    const [invalidPolicyName, setInvalidPolicyName] = useState("");
+    const [invalidClientName, setInvalidClientName] = useState("");
 
     useEffect(() => {
         const fetchData = async () => {
@@ -36,10 +41,16 @@ function AdminOidcClientsFilter ({ onApplyFilter }) {
           ...prevFilters,
           [fieldName]: selectedFilter
         }));
+        if (fieldName === 'partnerId') { validateInputRegex(selectedFilter, setInvalidPartnerId, t); }
+        if (fieldName === 'orgName') { validateInputRegex(selectedFilter, setInvalidOrgName, t); }
+        if (fieldName === 'policyGroupName') { validateInputRegex(selectedFilter, setInvalidPolicyGroupName, t); }
+        if (fieldName === 'policyName') { validateInputRegex(selectedFilter, setInvalidPolicyName, t); }
+        if (fieldName === 'clientNameEng') { validateInputRegex(selectedFilter, setInvalidClientName, t); }
     };
 
     const areFiltersEmpty = () => {
-        return Object.values(filters).every(value => value === "");
+        return Object.values(filters).every(value => value === "") || invalidPartnerId
+        || invalidOrgName || invalidPolicyGroupName || invalidPolicyName || invalidClientName;
     };
 
     const styles = {
@@ -61,6 +72,7 @@ function AdminOidcClientsFilter ({ onApplyFilter }) {
                 placeHolderKey="partnerList.searchPartnerId"
                 styleSet={styleSet}
                 id="partner_id_filter"
+                inputError={invalidPartnerId}
             />
             <TextInputComponent
                 fieldName="orgName"
@@ -69,6 +81,7 @@ function AdminOidcClientsFilter ({ onApplyFilter }) {
                 placeHolderKey="partnerList.searchOrganisation"
                 styleSet={styleSet}
                 id="org_name_filter"
+                inputError={invalidOrgName}
             />
             <TextInputComponent
                 fieldName="policyGroupName"
@@ -77,6 +90,7 @@ function AdminOidcClientsFilter ({ onApplyFilter }) {
                 placeHolderKey="policiesList.searchPolicyGroup"
                 styleSet={styleSet}
                 id="policy_group_filter"
+                inputError={invalidPolicyGroupName}
             />
             <TextInputComponent
                 fieldName="policyName"
@@ -85,6 +99,7 @@ function AdminOidcClientsFilter ({ onApplyFilter }) {
                 placeHolderKey="policiesList.searchPolicyName"
                 styleSet={styleSet}
                 id="policy_name_filter"
+                inputError={invalidPolicyName}
             />
             <TextInputComponent
                 fieldName="clientNameEng"
@@ -93,6 +108,7 @@ function AdminOidcClientsFilter ({ onApplyFilter }) {
                 placeHolderKey="oidcClientsList.searchOidcClientName"
                 styleSet={styleSet}
                 id="oidc_client_name_filter"
+                inputError={invalidClientName}
             />
             <DropdownComponent
                 fieldName="status"

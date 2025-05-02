@@ -2,13 +2,13 @@ import { useState, useEffect } from "react";
 import DropdownComponent from "../../common/fields/DropdownComponent.js";
 import TextInputComponent from "../../common/fields/TextInputComponent.js";
 import { useTranslation } from "react-i18next";
-import { createDropdownData, isLangRTL } from "../../../utils/AppUtils.js";
+import { createDropdownData, isLangRTL, validateInputRegex } from "../../../utils/AppUtils.js";
 import { getUserProfile } from '../../../services/UserProfileService';
 
 function AdminFtmListFilter ({ onApplyFilter }) {
     const { t } = useTranslation();
     const [status, setStatus] = useState([]);
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [statusDropdownData, setStatusDropdownData] = useState([
         { status: 'approved' },
         { status: 'rejected' },
@@ -24,6 +24,11 @@ function AdminFtmListFilter ({ onApplyFilter }) {
         model: "",
         status: ""
     });
+    const [invalidPartnerId, setInvalidPartnerId] = useState("");
+    const [invalidOrgName, setInvalidOrgName] = useState("");
+    const [invalidFtmId, setInvalidFtmId] = useState("");
+    const [invalidMake, setInvalidMake] = useState("");
+    const [invalidModel, setInvalidModel] = useState("");
 
     useEffect(() => {
         const fetchData = async () => {
@@ -39,10 +44,16 @@ function AdminFtmListFilter ({ onApplyFilter }) {
           ...prevFilters,
           [fieldName]: selectedFilter
         }));
+        if (fieldName === 'partnerId') { validateInputRegex(selectedFilter, setInvalidPartnerId, t); }
+        if (fieldName === 'orgName') { validateInputRegex(selectedFilter, setInvalidOrgName, t); }
+        if (fieldName === 'ftmId') { validateInputRegex(selectedFilter, setInvalidFtmId, t); }
+        if (fieldName === 'make') { validateInputRegex(selectedFilter, setInvalidMake, t); }
+        if (fieldName === 'model') { validateInputRegex(selectedFilter, setInvalidModel, t); }
     };
 
     const areFiltersEmpty = () => {
-        return Object.values(filters).every(value => value === "");
+        return Object.values(filters).every(value => value === "") || invalidPartnerId 
+        || invalidOrgName || invalidFtmId || invalidMake || invalidModel;
     };
 
     const styles = {
@@ -64,6 +75,7 @@ function AdminFtmListFilter ({ onApplyFilter }) {
                 placeHolderKey="partnerList.searchPartnerId"
                 styleSet={styleSet}
                 id="partner_id_filter"
+                inputError={invalidPartnerId}
             />
             <TextInputComponent
                 fieldName="orgName"
@@ -72,6 +84,7 @@ function AdminFtmListFilter ({ onApplyFilter }) {
                 placeHolderKey="partnerList.searchOrganisation"
                 styleSet={styleSet}
                 id="org_name_filter"
+                inputError={invalidOrgName}
             />
             <TextInputComponent
                 fieldName="ftmId"
@@ -80,6 +93,7 @@ function AdminFtmListFilter ({ onApplyFilter }) {
                 placeHolderKey="ftmList.searchFtmId"
                 styleSet={styleSet}
                 id="ftm_id_filter"
+                inputError={invalidFtmId}
             />
             <TextInputComponent
                 fieldName="make"
@@ -88,6 +102,7 @@ function AdminFtmListFilter ({ onApplyFilter }) {
                 placeHolderKey="ftmList.searchMake"
                 styleSet={styleSet}
                 id="make_filter"
+                inputError={invalidMake}
             />
             <TextInputComponent
                 fieldName="model"
@@ -96,6 +111,7 @@ function AdminFtmListFilter ({ onApplyFilter }) {
                 placeHolderKey="ftmList.searchModel"
                 styleSet={styleSet}
                 id="model_filter"
+                inputError={invalidModel}
             />
             <DropdownComponent
                 fieldName="status"

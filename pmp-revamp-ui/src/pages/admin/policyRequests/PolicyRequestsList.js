@@ -35,7 +35,7 @@ function PolicyRequestsList() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [filter, setFilter] = useState(false);
-  const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+  const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
   const [errorCode, setErrorCode] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [dataLoaded, setDataLoaded] = useState(false);

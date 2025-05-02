@@ -166,6 +166,9 @@ public class AuthPartnerTest extends BaseClass {
 		partnerCertificatePage.clickOnSubmitButton();
 
 		assertTrue(partnerCertificatePage.isSuccessMessageDisplayed(), GlobalConstants.isSuccessMessageDisplayed);
+		partnerCertificatePage.clickOnRemoveCertificateButton();
+
+		assertTrue(partnerCertificatePage.isSuccessMessageDisplayed(), GlobalConstants.isSuccessMessageDisplayed);
 		partnerCertificatePage.clickOncertificateUploadCloseButton();
 
 		partnerCertificatePage.clickOnPartnerCertificateReuploadButton();
@@ -651,6 +654,7 @@ public class AuthPartnerTest extends BaseClass {
 		apiKeyPage.clickOnSubmitButton();
 		assertTrue(apiKeyPage.isDuplicateApiKeyNameErrorMessageDisplayed(),
 				GlobalConstants.isDuplicateApiKeyNameErrorMessageDisplayed);
+
 		apiKeyPage.clickOnDuplicateApiKeyNameErrorMessageCloseButton();
 		apiKeyPage.enterNameOfApiKeyTextBox(GlobalConstants.SPECIAL_NUMERIC);
 		apiKeyPage.clickOnSubmitButton();

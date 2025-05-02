@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../../../services/UserProfileService';
-import { bgOfStatus, downloadFile, formatDate, getPartnerManagerUrl, getStatusCode, handleServiceErrors, isLangRTL } from '../../../utils/AppUtils';
+import { bgOfStatus, downloadFile, formatDate, getPartnerManagerUrl, getStatusCode, handleServiceErrors, isCaSignedPartnerCertificateAvailable, isLangRTL } from '../../../utils/AppUtils';
 import ErrorMessage from '../../common/ErrorMessage';
 import SuccessMessage from '../../common/SuccessMessage';
 import Title from '../../common/Title';
@@ -17,7 +17,7 @@ import LoadingIcon from '../../common/LoadingIcon';
 function ViewAdminFtmChipDetails() {
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [ftmDetails, setFtmDetails] = useState({});
     const [certificateDetails, setCertificateDetails] = useState({});
     const [unexpectedError, setUnexpectedError] = useState(false);
@@ -25,6 +25,7 @@ function ViewAdminFtmChipDetails() {
     const [errorMsg, setErrorMsg] = useState("");
     const [successMsg, setSuccessMsg] = useState("");
     const [dataLoaded, setDataLoaded] = useState(true);
+    const [downloadCertApiNotExist, setDownloadCertApiNotExist] = useState(false);
 
     useEffect(() => {
         const selectedFtmData = localStorage.getItem('selectedFtmAttributes');
@@ -72,9 +73,18 @@ function ViewAdminFtmChipDetails() {
             }
             setDataLoaded(true);
         }
-        if (selectedFtmDetails.status === "approved" || selectedFtmDetails.status === "pending_approval") {
-            fetchCertificateDetails();
-        }
+        const checkCompatibleAndFetch = async () => {
+            const isApiExist = await isCaSignedPartnerCertificateAvailable();
+            if (isApiExist) {
+                if (selectedFtmDetails.status === "approved" || selectedFtmDetails.status === "pending_approval") {
+                    fetchCertificateDetails();
+                }
+            } else {
+                setDownloadCertApiNotExist(true);
+            }
+        };
+
+        checkCompatibleAndFetch();
     }, []);
 
     const getOriginalCertificate = async () => {
@@ -207,9 +217,9 @@ function ViewAdminFtmChipDetails() {
                                     <hr className={`h-px w-full bg-gray-200 border-0 mb-[3%]`} />
                                     <div className="rounded-lg shadow-lg border mb-[2%]">
                                         <div className={`flex-col`}>
-                                            <div className={`flex py-[1rem] px-5 ${(ftmDetails.status === 'rejected' || ftmDetails.status === 'deactivated') ? 'bg-gray-100' : (ftmDetails.status === 'pending_approval' || ftmDetails.status === "pending_cert_upload") ? 'bg-[#f7f9fe]' : 'bg-[#f0fff6]'} justify-between items-center max-520:flex-col`}>
+                                            <div className={`flex py-[1rem] px-5 ${((downloadCertApiNotExist && ftmDetails.status !== 'pending_cert_upload') || ftmDetails.status === 'rejected' || ftmDetails.status === 'deactivated') ? 'bg-gray-100' : (ftmDetails.status === 'pending_approval' || ftmDetails.status === "pending_cert_upload") ? 'bg-[#f7f9fe]' : 'bg-[#f0fff6]'} justify-between items-center max-520:flex-col`}>
                                                 <div className="flex space-x-4 items-center ">
-                                                    {(ftmDetails.status === 'rejected' || ftmDetails.status === 'deactivated') ?
+                                                    {((downloadCertApiNotExist && ftmDetails.status !== 'pending_cert_upload') || ftmDetails.status === 'rejected' || ftmDetails.status === 'deactivated') ?
                                                         <img id='file_upload_disabled' src={fileUploadDisabled} className="h-8" alt="" />
                                                         :
                                                         <img id='file_upload_blue' src={ftmDetails.status === 'pending_approval' ? fileUploadBlue : !ftmDetails.isCertificateAvailable ? file : fileUpload} className="h-8" alt="" />
@@ -222,11 +232,16 @@ function ViewAdminFtmChipDetails() {
                                                 </div>
 
                                                 <div className=" flex space-x-2">
-                                                    <div className="flex space-x-2 max-640:flex-col max-640:space-y-2 max-640:space-x-0">
-                                                        <button id='download_btn' disabled={ftmDetails.status !== 'approved' && ftmDetails.status !== 'pending_approval'} onClick={() => getOriginalCertificate()}
-                                                            className={`flex items-center text-center w-fit h-10 ${isLoginLanguageRTL ? "ml-5" : "mr-5"} ${(ftmDetails.status !== 'approved' && ftmDetails.status !== 'pending_approval') ? 'text-[#6f7070] border-gray-300 bg-white' : 'text-tory-blue bg-white border-blue-800'} text-xs px-[1.5rem] py-[1%] border font-semibold rounded-lg text-center`}>
+                                                    <div className="relative group space-x-2 max-640:space-y-2 max-640:space-x-0">
+                                                        <button id='download_btn' disabled={downloadCertApiNotExist || (ftmDetails.status !== 'approved' && ftmDetails.status !== 'pending_approval')} onClick={() => getOriginalCertificate()}
+                                                            className={`flex items-center text-center w-fit h-10 ${isLoginLanguageRTL ? "ml-5" : "mr-5"} ${(downloadCertApiNotExist || (ftmDetails.status !== 'approved' && ftmDetails.status !== 'pending_approval')) ? 'text-[#6f7070] border-gray-300 bg-white' : 'text-tory-blue bg-white border-blue-800'} text-xs px-[1.5rem] py-[1%] border font-semibold rounded-lg text-center`}>
                                                             {t('commons.download')}
                                                         </button>
+                                                        {downloadCertApiNotExist && (ftmDetails.status === 'approved' || ftmDetails.status === 'pending_approval') && (
+                                                            <div className={`absolute hidden group-hover:block group-focus:block text-center bg-gray-100 text-xs text-gray-500 font-semibold p-2 w-60 mt-1 z-10 ${isLoginLanguageRTL ? "left-0" : "right-0"} top-11  rounded-md shadow-md`}>
+                                                                {t('viewAdminFtmDetails.compatibilityMsg')}
+                                                            </div>
+                                                        )}
                                                     </div>
                                                 </div>
                                             </div>
@@ -239,13 +254,13 @@ function ViewAdminFtmChipDetails() {
                                                 <div className={`flex-col ${isLoginLanguageRTL ? "mr-[10%]" : "ml-[10%]"} space-y-1`}>
                                                     <p id="ftm_chip_details_label_upload_date_time" className="font-semibold text-sm text-dim-gray">{t('partnerCertificatesList.timeOfUpload')}</p>
                                                     <p id="ftm_chip_details_context_upload_date_time" className="font-semibold text-base text-charcoal-gray">
-                                                        {formatDate(certificateDetails.mosipSignedCertUploadDateTime, 'dateTime')}
+                                                        {downloadCertApiNotExist && (ftmDetails.status === 'approved' || ftmDetails.status === 'pending_approval') ? t('statusCodes.notAvailable') : formatDate(certificateDetails.mosipSignedCertUploadDateTime, 'dateTime')}
                                                     </p>
                                                 </div>
                                                 <div className={`flex-col ${isLoginLanguageRTL ? "mr-[5%]" : "ml-[5%]"} space-y-1`}>
                                                     <p id="ftm_chip_details_label_expiry_date_time" className={`text-sm font-semibold text-dim-gray font-semibold'}`}>{t('partnerCertificatesList.expiryDate')}</p>
                                                     <p id="ftm_chip_details_context_expiry_date_time" className={`text-base ${certificateDetails.isCaSignedCertificateExpired ? 'text-crimson-red font-bold' : 'text-charcoal-gray font-semibold'}`}>
-                                                        {formatDate(certificateDetails.caSignedCertExpiryDateTime, 'dateTime')}
+                                                        {downloadCertApiNotExist && (ftmDetails.status === 'approved' || ftmDetails.status === 'pending_approval') ? t('statusCodes.notAvailable') : formatDate(certificateDetails.caSignedCertExpiryDateTime, 'dateTime')}
                                                     </p>
                                                 </div>
                                             </div>

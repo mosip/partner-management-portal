@@ -29,7 +29,7 @@ function PartnersList() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [filter, setFilter] = useState(false);
-  const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+  const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
   const [errorCode, setErrorCode] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [dataLoaded, setDataLoaded] = useState(false);
@@ -291,7 +291,7 @@ function PartnersList() {
                                             <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[15%]">
                                               <div className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
                                                 {t(header.headerNameKey)}
-                                                {header.id !== "action" && (
+                                                {!["action", "emailAddress"].includes(header.id) && (
                                                   <SortingIcon
                                                     headerId={header.id}
                                                     sortDescOrder={sortDescOrder}

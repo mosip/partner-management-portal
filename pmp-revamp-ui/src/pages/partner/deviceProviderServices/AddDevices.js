@@ -4,7 +4,7 @@ import { useNavigate, useBlocker } from "react-router-dom";
 import { getUserProfile } from '../../../services/UserProfileService.js';
 import { HttpService } from '../../../services/HttpService.js';
 import Title from '../../common/Title.js';
-import { isLangRTL, createDropdownData, createRequest, getPartnerManagerUrl, fetchDeviceTypeDropdownData, fetchDeviceSubTypeDropdownData, trimAndReplace } from '../../../utils/AppUtils.js';
+import { isLangRTL, createDropdownData, createRequest, getPartnerManagerUrl, fetchDeviceTypeDropdownData, fetchDeviceSubTypeDropdownData, trimAndReplace, validateInput } from '../../../utils/AppUtils.js';
 import LoadingIcon from "../../common/LoadingIcon.js";
 import ErrorMessage from '../../common/ErrorMessage.js';
 import SuccessMessage from "../../common/SuccessMessage";
@@ -15,7 +15,7 @@ import BlockerPrompt from "../../common/BlockerPrompt";
 function AddDevices() {
     const navigate = useNavigate();
     const { t } = useTranslation();
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [dataLoaded, setDataLoaded] = useState(true);
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
@@ -136,6 +136,8 @@ function AddDevices() {
             successMsg: "",
             errorCode: "",
             errorMsg: "",
+            invalidMakeError: "",
+            invalidModelError: "",
         };
     }
 
@@ -147,13 +149,21 @@ function AddDevices() {
             const subtypeData = await getDeviceSubTypeDropdownData(value, index);
             newEntries[index].deviceSubTypeDropdownData = createDropdownData('fieldCode', '', false, subtypeData, t);
         }
+        if (field === 'make' || field === 'model') {
+            if (value === "" || validateInput(value)) {
+                field === 'make' ? newEntries[index].invalidMakeError = "" : newEntries[index].invalidModelError = "";
+            } else {
+                field === 'make' ? newEntries[index].invalidMakeError = t('commons.inputError') : newEntries[index].invalidModelError = t('commons.inputError');
+            }
+        }
         setDeviceEntries(newEntries);
         updateButtonStates();
     };
 
     const isFormValid = (index) => {
         const entry = deviceEntries[index];
-        return entry.deviceType && entry.deviceSubType && entry.make.trim() && entry.model.trim();
+        return entry.deviceType && entry.deviceSubType && entry.make.trim() && entry.model.trim()
+            && !entry.invalidMakeError && !entry.invalidModelError;
     };
 
     const clearForm = async (index) => {
@@ -378,12 +388,14 @@ function AddDevices() {
                                                 <input disabled={entry.isSubmitted} value={entry.make} onChange={(e) => handleInputChange(index, 'make', e.target.value)} maxLength={36}
                                                     className={`h-10 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue ${entry.isSubmitted ? 'bg-[#EBEBEB]' : 'bg-white'} leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar`}
                                                     placeholder={t('addDevices.enterMake')} id='add_device_make_input'/>
+                                                {entry.invalidMakeError && <span className="text-sm text-crimson-red font-semibold">{entry.invalidMakeError}</span>}
                                             </div>
                                             <div className="flex flex-col w-[22.5%] max-[850px]:w-[47%] max-[585px]:w-full">
                                                 <label className={`block text-dark-blue text-base font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('addDevices.model')}<span className="text-crimson-red mx-1">*</span></label>
                                                 <input disabled={entry.isSubmitted} value={entry.model} onChange={(e) => handleInputChange(index, 'model', e.target.value)} maxLength={36}
                                                     className={`h-10 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue ${entry.isSubmitted ? 'bg-[#EBEBEB]' : 'bg-white'} leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar`}
                                                     placeholder={t('addDevices.enterModel')} id='add_device_model_input'/>
+                                                {entry.invalidModelError && <span className="text-sm text-crimson-red font-semibold">{entry.invalidModelError}</span>}
                                             </div>
                                         </div>
                                     </form>

@@ -7,7 +7,7 @@ import {
   getPartnerManagerUrl, handleServiceErrors, getPartnerTypeDescription, createRequest,
   moveToOidcClientsList, getGrantTypes, getApprovedAuthPartners,
   isLangRTL, createDropdownData, validateUrl, getPartnerPolicyRequests,
-  onPressEnterKey, trimAndReplace
+  onPressEnterKey, trimAndReplace, validateInputRegex
 } from '../../../utils/AppUtils';
 import { HttpService } from '../../../services/HttpService';
 import DropdownWithSearchComponent from "../../common/fields/DropdownWithSearchComponent";
@@ -50,6 +50,7 @@ function CreateOidcClient() {
   const [createOidcClientSuccess, setCreateOidcClientSuccess] = useState(false);
   const [confirmationData, setConfirmationData] = useState({});
   const [isSubmitClicked, setIsSubmitClicked] = useState(false);
+  const [inputError, setInputError] = useState("");
 
   const blocker = useBlocker(
     ({ currentLocation, nextLocation }) => {
@@ -210,6 +211,7 @@ function CreateOidcClient() {
 
   const onChangeOidcClientName = (value) => {
     setOidcClientName(value);
+    validateInputRegex(value, setInputError, t);
   }
 
   const handleGrantTypesChange = (fieldName, selectedValue) => {
@@ -221,13 +223,13 @@ function CreateOidcClient() {
 
 
   const navigate = useNavigate();
-  const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+  const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
 
   // Below code related to adding & deleting of Redirect URLs
   const onChangeRedirectUrl = (index, value) => {
     const newRedirectUrls = [...redirectUrls];
     newRedirectUrls[index] = value;
-    setInvalidRedirectUrl(validateUrl(index, value, 2048, newRedirectUrls, t));
+    setInvalidRedirectUrl(validateUrl(index, newRedirectUrls, 2048, newRedirectUrls, t));
     setRedirectUrls(newRedirectUrls);
   };
 
@@ -362,6 +364,7 @@ function CreateOidcClient() {
     setJsonError("");
     setInvalidLogoUrl("");
     setInvalidRedirectUrl("");
+    setInputError("");
   };
 
   const redirectUrlsNotEmpty = () => {
@@ -375,7 +378,7 @@ function CreateOidcClient() {
 
   const isFormValid = () => {
     return partnerId && policyName && oidcClientName.trim() && publicKey.trim() && logoUrl && redirectUrlsNotEmpty() && grantTypes
-      && !jsonError && !invalidLogoUrl && !invalidRedirectUrl;
+      && !jsonError && !invalidLogoUrl && !invalidRedirectUrl && !inputError;
   };
 
   const styles = {
@@ -468,6 +471,7 @@ function CreateOidcClient() {
                           <input value={oidcClientName} onChange={(e) => onChangeOidcClientName(e.target.value)} maxLength={256}
                             className="h-10 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                             placeholder={t('createOidcClient.enterNameForOidcClient')} id="create_oidc_client_name" />
+                          {inputError && <span className="text-sm text-crimson-red font-semibold">{inputError}</span>}
                         </div>
                       </div>
                       <div className="flex my-[1%]">

@@ -4,7 +4,7 @@ import { isLangRTL } from '../utils/AppUtils';
 
 function Footer() {
     const { t } = useTranslation();
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     return (
         <div className={`bg-anti-flash-white items-center ${isLoginLanguageRTL ? "mr-[8%]" : "ml-[8%]"}`}>
             <hr className="h-px bg-gray-200 border-0 " />

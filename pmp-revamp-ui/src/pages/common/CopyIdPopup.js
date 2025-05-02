@@ -8,7 +8,7 @@ import FocusTrap from 'focus-trap-react';
 function CopyIdPopUp({ closePopUp, policyName, partnerId, id, header, alertMsg, styleSet }) {
     const [copied, setCopied] = useState(false);
     const { t } = useTranslation();
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
 
     const copyId = () => {
         navigator.clipboard.writeText(id).then(() => {

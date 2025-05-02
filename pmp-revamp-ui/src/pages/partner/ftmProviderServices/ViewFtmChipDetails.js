@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { getUserProfile } from "../../../services/UserProfileService";
-import { bgOfStatus, formatDate, getStatusCode, isLangRTL, getPartnerDomainType, getPartnerManagerUrl, downloadFile } from "../../../utils/AppUtils";
+import { bgOfStatus, formatDate, getStatusCode, isLangRTL, getPartnerDomainType, getPartnerManagerUrl, downloadFile, isCaSignedPartnerCertificateAvailable } from "../../../utils/AppUtils";
 import Title from "../../common/Title";
 import fileUploadBlue from '../../../svg/file_upload_blue_icon.svg';
 import fileUploadDisabled from '../../../svg/file_upload_disabled_icon.svg';
@@ -17,7 +17,7 @@ import { HttpService } from "../../../services/HttpService";
 function ViewFtmChipDetails() {
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [ftmDetails, setFtmDetails] = useState(true);
     const [unexpectedError, setUnexpectedError] = useState(false);
     const [showPopup, setShowPopup] = useState(false);
@@ -26,6 +26,7 @@ function ViewFtmChipDetails() {
     const [successMsg, setSuccessMsg] = useState("");
     const [uploadCertificateRequest, setUploadCertificateRequest] = useState({});
     const [uploadCertificateData, setUploadCertificateData] = useState({});
+    const [downloadCertApiNotExist, setDownloadCertApiNotExist] = useState(false);
 
     useEffect(() => {
         const selectedFtm = localStorage.getItem('selectedFtmData');
@@ -35,6 +36,14 @@ function ViewFtmChipDetails() {
         }
         let ftmData = JSON.parse(selectedFtm);
         setFtmDetails(ftmData);
+        const checkCompatible = async () => {
+            const isApiExist = await isCaSignedPartnerCertificateAvailable();
+            if (!isApiExist) {
+                setDownloadCertApiNotExist(true);
+            }
+        };
+
+        checkCompatible();
     }, []);
 
     const clickOnUpload = () => {
@@ -127,7 +136,7 @@ function ViewFtmChipDetails() {
     const showHoverMsg = () => {
         return (
             <div className={`absolute hidden group-hover:block group-focus:block text-center bg-gray-100 text-xs text-gray-500 font-semibold p-2 w-60 mt-1 z-10 ${isLoginLanguageRTL ? "left-0" : "right-0"} top-11  rounded-md shadow-md`}>
-                {t('partnerCertificatesList.disabledBtnHoverMsg')}
+                {downloadCertApiNotExist ? t('viewAdminFtmDetails.compatibilityMsg') : t('partnerCertificatesList.disabledBtnHoverMsg')}
             </div>
         );
     }
@@ -220,9 +229,9 @@ function ViewFtmChipDetails() {
                             <hr className={`h-px w-full bg-gray-200 border-0 mb-[3%]`} />
                             <div className="rounded-lg shadow-lg border mb-[2%]">
                                 <div className={`flex-col`}>
-                                    <div className={`flex py-[1rem] px-5 ${ftmDetails.status === "deactivated" ? 'bg-gray-100' : 'bg-[#F9FBFF]'} justify-between items-center max-520:flex-col`}>
+                                    <div className={`flex py-[1rem] px-5 ${(downloadCertApiNotExist && ftmDetails.status !== "pending_cert_upload") || ftmDetails.status === "deactivated" ? 'bg-gray-100' : 'bg-[#F9FBFF]'} justify-between items-center max-520:flex-col`}>
                                         <div className="flex space-x-4 items-center ">
-                                            {ftmDetails.status === "deactivated" ?
+                                            {((downloadCertApiNotExist && ftmDetails.status !== "pending_cert_upload")) || ftmDetails.status === "deactivated" ?
                                                 <img id='file_upload_disabled' src={fileUploadDisabled} className="h-8" alt="" />
                                                 :
                                                 <img id='file_upload_blue' src={ftmDetails.isViewFtmChipDetails ? fileUploadBlue : ftmDetails.isCertificateAvailable ? fileUpload : file} className="h-8" alt="" />
@@ -240,23 +249,23 @@ function ViewFtmChipDetails() {
                                         <div className=" flex space-x-2">
                                             {ftmDetails.isViewFtmChipDetails && (
                                                 <div className="relative group" tabIndex="0">
-                                                    <button id='download_btn' disabled={ftmDetails.partnerStatus === 'deactivated' || (ftmDetails.status !== 'approved' && ftmDetails.status !== 'pending_approval')} onClick={() => getOriginalCertificate(ftmDetails)}
-                                                        className={`flex items-center text-center w-fit h-10 ${(ftmDetails.partnerStatus === 'deactivated' || (ftmDetails.status !== 'approved' && ftmDetails.status !== 'pending_approval')) ? 'text-[#6f7070] border-gray-300 bg-white' : 'text-tory-blue bg-white border-blue-800'} text-xs px-[1.5rem] py-[1%] border font-semibold rounded-md`}>
+                                                    <button id='download_btn' disabled={downloadCertApiNotExist || ftmDetails.partnerStatus === 'deactivated' || (ftmDetails.status !== 'approved' && ftmDetails.status !== 'pending_approval')} onClick={() => getOriginalCertificate(ftmDetails)}
+                                                        className={`flex items-center text-center w-fit h-10 ${(downloadCertApiNotExist || ftmDetails.partnerStatus === 'deactivated' || (ftmDetails.status !== 'approved' && ftmDetails.status !== 'pending_approval')) ? 'text-[#6f7070] border-gray-300 bg-white' : 'text-tory-blue bg-white border-blue-800'} text-xs px-[1.5rem] py-[1%] border font-semibold rounded-md`}>
                                                         {t('commons.download')}
                                                     </button>
-                                                    {ftmDetails.partnerStatus === 'deactivated' && (
+                                                    {((downloadCertApiNotExist && (ftmDetails.status === 'approved' || ftmDetails.status === 'pending_approval')) || ftmDetails.partnerStatus === 'deactivated') && (
                                                         showHoverMsg()
                                                     )}
                                                 </div>
                                             )}
                                             {ftmDetails.isManageFtmCertificate && (
-                                                <div className="flex justify-between max-640:flex-col max-640:space-y-3">
+                                                <div className={`flex justify-between max-640:flex-col max-640:space-y-3 ${isLoginLanguageRTL && 'space-x-reverse'}`}>
                                                     <div className="mx-2" tabIndex="0">
-                                                        <button id='download_btn' disabled={ftmDetails.partnerStatus === 'deactivated' || !ftmDetails.isCertificateAvailable} onClick={() => getOriginalCertificate(ftmDetails)}
-                                                            className={`flex items-center text-center w-fit h-10 ${(ftmDetails.partnerStatus === 'deactivated' || !ftmDetails.isCertificateAvailable) ? 'text-[#6f7070] border-gray-300 bg-white' : 'text-tory-blue bg-white border-blue-800'} text-xs px-[1.5rem] py-[1%] border font-semibold rounded-md`}>
+                                                        <button id='download_btn' disabled={downloadCertApiNotExist || ftmDetails.partnerStatus === 'deactivated' || !ftmDetails.isCertificateAvailable} onClick={() => getOriginalCertificate(ftmDetails)}
+                                                            className={`flex items-center text-center w-fit h-10 ${(downloadCertApiNotExist || ftmDetails.partnerStatus === 'deactivated' || !ftmDetails.isCertificateAvailable) ? 'text-[#6f7070] border-gray-300 bg-white' : 'text-tory-blue bg-white border-blue-800'} text-xs px-[1.5rem] py-[1%] border font-semibold rounded-md`}>
                                                             {t('commons.download')}
                                                         </button>
-                                                        {ftmDetails.partnerStatus === 'deactivated' && (
+                                                        {((downloadCertApiNotExist && (ftmDetails.status === 'approved' || ftmDetails.status === 'pending_approval')) || ftmDetails.partnerStatus === 'deactivated') && (
                                                             showHoverMsg()
                                                         )}
                                                     </div>
@@ -290,7 +299,7 @@ function ViewFtmChipDetails() {
                                         <div className={`flex-col ${isLoginLanguageRTL ? "mr-[5%]" : "ml-[5%]"} space-y-1`}>
                                             <p id="ftm_chip_details_label_expiry_date_time" className={`font-semibold text-sm text-dim-gray font-semibold'}`}>{t('partnerCertificatesList.expiryDate')}</p>
                                             <p id="ftm_chip_details_context_expiry_date_time" className={`font-semibold text-base ${ftmDetails.isCertificateExpired ? 'text-crimson-red font-bold' : 'text-charcoal-gray font-semibold'}`}>
-                                                {formatDate(ftmDetails.certificateExpiryDateTime, 'dateTime')}
+                                                {((downloadCertApiNotExist && ftmDetails.status !== "pending_cert_upload")) ? t('statusCodes.notAvailable') : formatDate(ftmDetails.certificateExpiryDateTime, 'dateTime')}
                                             </p>
                                         </div>
                                     </div>

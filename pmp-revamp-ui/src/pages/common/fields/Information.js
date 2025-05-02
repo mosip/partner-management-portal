@@ -7,7 +7,7 @@ import infoIcon from '../../../svg/info_icon.svg';
 function Information({ infoKey, infoKey1, id }) {
 
     const { t } = useTranslation();
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [showTooltip, setShowTooltip] = useState(false);
     const tooltipRef = useRef(null);
 

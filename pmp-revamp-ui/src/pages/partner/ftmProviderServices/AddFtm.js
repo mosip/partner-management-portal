@@ -5,7 +5,7 @@ import DropdownComponent from '../../common/fields/DropdownComponent';
 import { getUserProfile } from '../../../services/UserProfileService';
 import LoadingIcon from "../../common/LoadingIcon";
 import ErrorMessage from "../../common/ErrorMessage";
-import { createDropdownData, createRequest, getPartnerManagerUrl, getPartnerTypeDescription, handleServiceErrors, isLangRTL, getPartnerDomainType, trimAndReplace } from "../../../utils/AppUtils";
+import { createDropdownData, createRequest, getPartnerManagerUrl, getPartnerTypeDescription, handleServiceErrors, isLangRTL, getPartnerDomainType, trimAndReplace, validateInputRegex } from "../../../utils/AppUtils";
 import Title from "../../common/Title";
 import { HttpService } from "../../../services/HttpService";
 import BlockerPrompt from "../../common/BlockerPrompt";
@@ -15,7 +15,7 @@ import UploadCertificate from "../certificates/UploadCertificate";
 function AddFtm() {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+  const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
   const [dataLoaded, setDataLoaded] = useState(true);
   const [errorCode, setErrorCode] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
@@ -32,6 +32,8 @@ function AddFtm() {
   const [confirmationData, setConfirmationData] = useState({});
   const [ftpChipDetailId, setFtpChipDetailId] = useState("");
   const [uploadCertificateRequest, setUploadCertificateRequest] = useState({});
+  const [invalidMakeError, setInvalidMakeError] = useState("");
+  const [invalidModelError, setInvalidModelError] = useState("");
 
   const blocker = useBlocker(
     ({ currentLocation, nextLocation }) => {
@@ -80,10 +82,12 @@ function AddFtm() {
 
   const onChangeMake = (value) => {
     setMake(value);
+    validateInputRegex(value, setInvalidMakeError, t);
   }
 
   const onChangeModel = (value) => {
     setModel(value);
+    validateInputRegex(value, setInvalidModelError, t);
   }
 
   const clickOnUpload = () => {
@@ -210,10 +214,12 @@ function AddFtm() {
     setPartnerType("");
     setMake("");
     setModel("");
+    setInvalidMakeError("");
+    setInvalidModelError("");
   };
 
   const isFormValid = () => {
-    return partnerId && make.trim() && model.trim();
+    return partnerId && make.trim() && model.trim() && !invalidMakeError && !invalidModelError;
   };
 
   const clickOnCancel = () => {
@@ -272,12 +278,14 @@ function AddFtm() {
                           <input value={make} onChange={(e) => onChangeMake(e.target.value)} maxLength={36}
                             className="h-11 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                             placeholder={t('addFtm.enterMake')} id="add_ftm_make"/>
+                          {invalidMakeError && <span className="text-sm text-crimson-red font-semibold">{invalidMakeError}</span>}
                         </div>
                         <div className="flex flex-col w-[48%] max-[450px]:w-full">
                           <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('addDevices.model')}<span className="text-crimson-red mx-1">*</span></label>
                           <input value={model} onChange={(e) => onChangeModel(e.target.value)} maxLength={36}
                             className="h-11 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                             placeholder={t('addFtm.enterModel')} id="add_ftm_model"/>
+                          {invalidModelError && <span className="text-sm text-crimson-red font-semibold">{invalidModelError}</span>}
                         </div>
                       </div>
                     </div>

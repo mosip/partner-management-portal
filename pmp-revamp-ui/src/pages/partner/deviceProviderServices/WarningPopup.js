@@ -6,7 +6,7 @@ import FocusTrap from "focus-trap-react";
 
 function WarningPopup({ closePopUp, clickOnConfirm }) {
     const { t } = useTranslation();
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
 
     const closingPopUp = () => {
         closePopUp()

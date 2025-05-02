@@ -2,33 +2,59 @@ import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../services/UserProfileService.js';
-import { isLangRTL, onPressEnterKey, handleMouseClickForDropdown, logout, getPartnerManagerUrl, fetchNotificationsList } from '../utils/AppUtils.js';
+import { isLangRTL, onPressEnterKey, handleMouseClickForDropdown, logout, getPartnerManagerUrl, fetchNotificationsList, createRequest } from '../utils/AppUtils.js';
 import profileIcon from '../profile_icon.png';
 import hamburgerIcon from '../svg/hamburger_icon.svg';
 import orgIcon from '../svg/org_icon.svg';
 import side_menu_title from '../../src/side_menu_title.svg';
 import profileDropDown from '.././svg/profileDropDown.svg';
-import bellIcon from '.././svg/bell_icon.svg';
-import notificationRedIcon from '.././svg/notifications_red_icon.svg';
 import NotificationPopup from '../pages/common/NotificationPopup.js';
 import { HttpService } from '../services/HttpService.js';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useStore } from 'react-redux';
+import { updateDismissClicked, updateLastSeenDtimes } from '../notificationsSlice.js';
 
 function HeaderNav({ open, setOpen }) {
     const navigate = useNavigate('');
     const { t } = useTranslation();
     const location = useLocation();
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const dropdownRef = useRef(null);
+    const notificationRef = useRef(null);
     const [openNotification, setOpenNotification] = useState(false);
     const [showLatestNotificationIcon, setShowLatestNotificationIcon] = useState(false);
+    const [isEmailVerified, setIsEmailVerified] = useState(false);
     const dispatch = useDispatch();
+    const store = useStore();
     const [dropdownWidth, setDropdownWidth] = useState(0);
 
     useEffect(() => {
+        const verifyUserEmail = async () => {
+            try {
+                const { email } = getUserProfile();
+                const request = createRequest({ emailId: email });
+
+                const response = await HttpService.put(
+                    getPartnerManagerUrl('/partners/email/verify', process.env.NODE_ENV),
+                    request
+                );
+                const emailExists = response?.data?.response?.emailExists || false;
+                setIsEmailVerified(emailExists);
+            } catch (error) {
+                console.error('Error verifying email:', error);
+            }
+        };
+
+        verifyUserEmail();
+    }, []);
+      
+    useEffect(() => {
         handleMouseClickForDropdown(dropdownRef, () => setIsDropdownOpen(false));
-    }, [dropdownRef]);
+        // Only attach handler to close notification if it's open
+        if (openNotification) {
+            handleMouseClickForDropdown(notificationRef, () => closeNotificationPanel());
+        }
+    }, [dropdownRef, notificationRef, openNotification]);
 
     useEffect(() => {
         if (dropdownRef.current) {
@@ -42,19 +68,21 @@ function HeaderNav({ open, setOpen }) {
             const notificationsSeenTimestamp = await fetchNotificationsSeenTimestamp();
             const notifications = await fetchNotificationsList(dispatch);
             console.log("last seen time : ", notificationsSeenTimestamp);
-            if(notificationsSeenTimestamp === null && notifications.length === 0) {
+    
+            if (notificationsSeenTimestamp === null && notifications.length === 0) {
                 setShowLatestNotificationIcon(false);
-            } else if(notificationsSeenTimestamp === null && notifications.length > 0) {
+            } else if (notificationsSeenTimestamp === null && notifications.length > 0) {
                 setShowLatestNotificationIcon(true);
             } else {
-                if(notifications.length === 0) {
+                if (notifications.length === 0) {
                     setShowLatestNotificationIcon(false);
                 } else {
                     const latestNotificationCrdtimes = notifications[0].createdDateTime;
                     console.log("latest notification created time : ", latestNotificationCrdtimes);
                     const lastSeenDate = new Date(notificationsSeenTimestamp);
                     const latestNotificationDate = new Date(latestNotificationCrdtimes);
-                    if(latestNotificationDate > lastSeenDate) {
+    
+                    if (latestNotificationDate > lastSeenDate) {
                         setShowLatestNotificationIcon(true);
                     } else {
                         setShowLatestNotificationIcon(false);
@@ -62,11 +90,11 @@ function HeaderNav({ open, setOpen }) {
                 }
             }
         }
-
+    
         // Fetch refresh time from localStorage before setting interval
         let refreshTime = 300; // Default to 5 min(300seconds)
         const config = localStorage.getItem("appConfig");
-
+    
         try {
             if (config) {
                 const configData = JSON.parse(config);
@@ -77,14 +105,24 @@ function HeaderNav({ open, setOpen }) {
         } catch (error) {
             console.error("Error fetching refresh notification time:", error);
         }
-
-        fetchNotificationsData();
+    
+        // Only call fetchNotificationsData if email is verified
+        if (isEmailVerified) {
+            fetchNotificationsData();
+        }
+    
         // Set up an interval to call the function every 5 minutes
-        const intervalId = setInterval(fetchNotificationsData, 1000*refreshTime);
-
+        const intervalId = setInterval(() => {
+            if (isEmailVerified) {
+                fetchNotificationsData();
+            }
+        }, 1000 * refreshTime);
+    
         // Cleanup function to clear the interval when component unmounts
         return () => clearInterval(intervalId);
-    }, []);
+    
+    }, [isEmailVerified]);
+    
 
     const fetchNotificationsSeenTimestamp = async () => {
         try {
@@ -93,6 +131,7 @@ function HeaderNav({ open, setOpen }) {
             const responseData = response.data;
             if (responseData && responseData.response) {
               const resData = responseData.response;
+              dispatch(updateLastSeenDtimes(resData.notificationsSeenDtimes));
               return resData.notificationsSeenDtimes;
             } else {
               return null;
@@ -116,15 +155,27 @@ function HeaderNav({ open, setOpen }) {
     };
 
     const openNotificationPopup = () => {
-        setOpenNotification(!openNotification);
+        if (openNotification) {
+            closeNotificationPanel();
+        } else {
+            setOpenNotification(true);
+        }
     }
 
     const closeNotificationPanel = () => {
-        if (location.pathname.includes('notifications')) {
+        const dismissClicked = store.getState().headerNotifications.dismissClicked; 
+        if (location.pathname.includes('notifications') && dismissClicked) {
             window.location.reload()
         } else {
             setOpenNotification(false);
             setShowLatestNotificationIcon(false);
+        }
+        const notificationSeenDtimes = store.getState().headerNotifications.notificationSeenDtimes;
+        if (notificationSeenDtimes !== null) {
+            dispatch(updateLastSeenDtimes(notificationSeenDtimes));
+        }
+        if(dismissClicked) {
+            dispatch(updateDismissClicked(false));
         }
     }
 
@@ -162,12 +213,27 @@ function HeaderNav({ open, setOpen }) {
                 </div>
             </div>
             <div className={`flex items-center relative justify-between gap-x-4 ${isLoginLanguageRTL ? "left-3" : "right-3"}`}>
-                <div className="flex items-center">
-                    <button id='bellIcon' className={`${!showLatestNotificationIcon && 'p-2 m-1 bg-blue-50'} cursor-pointer rounded-md`} onClick={() => openNotificationPopup()}>
-                        <img src={showLatestNotificationIcon ? notificationRedIcon : bellIcon} alt="" className={`${!showLatestNotificationIcon ? 'w-5 h-5' : 'w-9'}`} />
-                    </button>
+                <div className="flex items-center" ref={notificationRef}>
+                    {!showLatestNotificationIcon ? (
+                        <button className='p-1.5 bg-blue-50 cursor-pointer' onClick={openNotificationPopup}>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M4 19.85V17.75H6.1V10.4C6.1 8.9475 6.5375 7.65687 7.4125 6.52812C8.2875 5.39937 9.425 4.66 10.825 4.31V3.575C10.825 3.1375 10.9781 2.76562 11.2844 2.45937C11.5906 2.15312 11.9625 2 12.4 2C12.8375 2 13.2094 2.15312 13.5156 2.45937C13.8219 2.76562 13.975 3.1375 13.975 3.575V4.31C15.375 4.66 16.5125 5.39937 17.3875 6.52812C18.2625 7.65687 18.7 8.9475 18.7 10.4V17.75H20.8V19.85H4ZM12.4 23C11.8225 23 11.3281 22.7944 10.9169 22.3831C10.5056 21.9719 10.3 21.4775 10.3 20.9H14.5C14.5 21.4775 14.2944 21.9719 13.8831 22.3831C13.4719 22.7944 12.9775 23 12.4 23ZM8.2 17.75H16.6V10.4C16.6 9.245 16.1887 8.25625 15.3663 7.43375C14.5437 6.61125 13.555 6.2 12.4 6.2C11.245 6.2 10.2562 6.61125 9.43375 7.43375C8.61125 8.25625 8.2 9.245 8.2 10.4V17.75Z" fill="#1447B2"/>
+                            </svg>
+                        </button>
+                    ) : (
+                        <button className="relative p-1.5 bg-blue-50 cursor-pointer" onClick={openNotificationPopup}>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M4 19.85V17.75H6.1V10.4C6.1 8.9475 6.5375 7.65687 7.4125 6.52812C8.2875 5.39937 9.425 4.66 10.825 4.31V3.575C10.825 3.1375 10.9781 2.76562 11.2844 2.45937C11.5906 2.15312 11.9625 2 12.4 2C12.8375 2 13.2094 2.15312 13.5156 2.45937C13.8219 2.76562 13.975 3.1375 13.975 3.575V4.31C15.375 4.66 16.5125 5.39937 17.3875 6.52812C18.2625 7.65687 18.7 8.9475 18.7 10.4V17.75H20.8V19.85H4ZM12.4 23C11.8225 23 11.3281 22.7944 10.9169 22.3831C10.5056 21.9719 10.3 21.4775 10.3 20.9H14.5C14.5 21.4775 14.2944 21.9719 13.8831 22.3831C13.4719 22.7944 12.9775 23 12.4 23ZM8.2 17.75H16.6V10.4C16.6 9.245 16.1887 8.25625 15.3663 7.43375C14.5437 6.61125 13.555 6.2 12.4 6.2C11.245 6.2 10.2562 6.61125 9.43375 7.43375C8.61125 8.25625 8.2 9.245 8.2 10.4V17.75Z" fill="#1447B2"/>
+                            </svg>
+                            <div className="absolute -top-1 -right-1">
+                                <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="5" cy="5" r="5" fill="#ED4537"/>
+                                </svg>
+                            </div>
+                        </button>
+                    )}
                     { openNotification && (
-                        <div className={`fixed inset-0 bg-black bg-opacity-0 z-40 cursor-default`}>
+                        <div className={`inset-0 bg-black bg-opacity-0 z-40 cursor-default`}>
                             <NotificationPopup
                                 closeNotification={closeNotificationPanel}
                             />

@@ -7,7 +7,8 @@ import LoadingIcon from "../../common/LoadingIcon";
 import ErrorMessage from "../../common/ErrorMessage";
 import {
     getPartnerManagerUrl, handleServiceErrors, getPartnerTypeDescription, isLangRTL, moveToApiKeysList,
-    createRequest, getPartnerPolicyRequests, createDropdownData, trimAndReplace, getApprovedAuthPartners
+    createRequest, getPartnerPolicyRequests, createDropdownData, trimAndReplace, getApprovedAuthPartners,
+    validateInputRegex
 } from "../../../utils/AppUtils";
 import { HttpService } from '../../../services/HttpService';
 import DropdownWithSearchComponent from "../../common/fields/DropdownWithSearchComponent";
@@ -18,7 +19,7 @@ import Confirmation from "../../common/Confirmation";
 
 function GenerateApiKey() {
     const { t } = useTranslation();
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [dataLoaded, setDataLoaded] = useState(true);
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
@@ -37,6 +38,7 @@ function GenerateApiKey() {
     const [generateApiKeySuccess, setGenerateApiKeySuccess] = useState(false);
     const [confirmationData, setConfirmationData] = useState({});
     const [isSubmitClicked, setIsSubmitClicked] = useState(false);
+    const [inputError, setInputError] = useState("");
 
     const navigate = useNavigate();
 
@@ -101,7 +103,8 @@ function GenerateApiKey() {
     };
 
     const onChangeNameLabel = (value) => {
-        setNameLabel(value)
+        setNameLabel(value);
+        validateInputRegex(value, setInputError, t);
     }
 
     useEffect(() => {
@@ -158,10 +161,11 @@ function GenerateApiKey() {
         setNameLabel("");
         setPoliciesDropdownData([]);
         setValidationError("");
+        setInputError("");
     };
 
     const isFormValid = () => {
-        return partnerId && policyName && nameLabel.trim() && !validationError;
+        return partnerId && policyName && nameLabel.trim() && !validationError && !inputError;
     };
 
     useEffect(() => {
@@ -314,6 +318,7 @@ function GenerateApiKey() {
                                                         <input value={nameLabel} onChange={(e) => onChangeNameLabel(e.target.value)} maxLength={36}
                                                             className="h-10 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                                                             placeholder={t('generateApiKey.enterNameForApiKey')} id="generate_api_key_name"/>
+                                                        {inputError && <span className="text-sm text-crimson-red font-semibold">{inputError}</span>}
                                                     </div>
                                                 </div>
                                             </div>

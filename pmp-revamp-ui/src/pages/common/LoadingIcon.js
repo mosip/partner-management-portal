@@ -4,7 +4,7 @@ import { isLangRTL } from '../../utils/AppUtils';
 
 function LoadingIcon({ styleSet }) {
     const { t } = useTranslation();
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
 
     return (
         <div className={`flex items-center justify-center h-full w-full ${(styleSet && styleSet.loadingDiv) ? styleSet.loadingDiv : ''}`}>

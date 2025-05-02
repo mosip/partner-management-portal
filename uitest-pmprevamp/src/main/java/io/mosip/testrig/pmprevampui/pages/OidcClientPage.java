@@ -512,7 +512,7 @@ public class OidcClientPage extends BasePage {
 	
 	@FindBy(id = "oidc_clients_list_deactivate_btn")
 	private WebElement deactivateButton;
-	
+
 	@FindBy(id = "pagination_card")
 	private WebElement pgination;
 	
@@ -865,7 +865,7 @@ public class OidcClientPage extends BasePage {
 	public boolean isHomeButtonDisplayed() {
 		return isElementDisplayed(homeButton);
 	}
-	
+
 	public void listPageCreateOidcClientButton() {
 		clickOnElement(oidcClientListPageCreateOidcClientBtn);
 	}

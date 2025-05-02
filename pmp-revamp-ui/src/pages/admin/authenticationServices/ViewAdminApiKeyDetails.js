@@ -12,7 +12,7 @@ import { HttpService } from '../../../services/HttpService';
 function ViewAdminApiKeyDetails() {
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [dataLoaded, setDataLoaded] = useState(true);
@@ -109,7 +109,7 @@ function ViewAdminApiKeyDetails() {
                                             </p>
                                         </div>
                                         <div className="my-3 max-[600px]:w-[100%] w-[49%]">
-                                            <p id='api_key_details_partner_type_label' className="font-[600] text-suva-gray text-sm">
+                                            <p id='api_key_details_organisation_label' className="font-[600] text-suva-gray text-sm">
                                                 {t("viewAdminOidcClientDetails.organisation")}
                                             </p>
                                             <p id='api_key_details_auth_partner_context' className="font-[600] text-vulcan text-base">

@@ -224,6 +224,24 @@ public class DatasharePolicyPage extends BasePage {
 	@FindBy(id = "policy_deactivate_btn")
 	private WebElement deactivateButton;
 	
+	@FindBy(id = "auth_Policy_view_back_btn")
+	private WebElement datashareViewBackButton;
+	
+	@FindBy(id = "policies_list_view1")
+	private WebElement datashareActionButton;
+	
+	@FindBy(id = "policy_publish_btn")
+	private WebElement datasharePublishButton;
+	
+	@FindBy(id = "policy_details_view_btn")
+	private WebElement datashareViewButton;
+	
+	@FindBy(id = "policy_replicate_btn")
+	private WebElement datashareCloneButton;
+	
+	@FindBy(id = "policy_deactivate_btn")
+	private WebElement datashareDeactivateButton;
+	
 	@FindBy(xpath = "//h3[text()='Publish Policy']")
 	private WebElement publishConfirmationPopup;
 	
@@ -658,6 +676,38 @@ public class DatasharePolicyPage extends BasePage {
 		clickOnElement(clearForm);
 	}
 	
+	public void clickOnDatashareViewBackButton() {
+		clickOnElement(datashareViewBackButton);
+	}
+	
+	public void clickOnDatashareActionButton() {
+		clickOnElement(datashareActionButton);
+	}
+	
+	public void clickOnDatasharePublishButton() {
+		clickOnElement(datasharePublishButton);
+	}
+	
+	public boolean isDatasharePublishButtonDisplayed() {
+		return isElementDisplayed(datasharePublishButton);
+	}
+	
+	public boolean isDatashareViewButtonDisplayed() {
+		return isElementDisplayed(datashareViewButton);
+	}
+	
+	public boolean isDatashareCloneButtonDisplayed() {
+		return isElementDisplayed(datashareCloneButton);
+	}
+	
+	public boolean isDatashareDeactivateButtonDisplayed() {
+		return isElementDisplayed(datashareDeactivateButton);
+	}
+	
+	public void clickOnDatashareDeactivateButton() {
+		clickOnElement(datashareDeactivateButton);
+	}
+
 	public void clickOnFilterButton() {
 		clickOnElement(filterButton);
 	}
@@ -731,6 +781,10 @@ public class DatasharePolicyPage extends BasePage {
 		clickOnElement(policyDescriptionDescIcon);
 	}
 	
+	public void clickOnDatashareViewButton() {
+		clickOnElement(datashareViewButton);
+	}
+
 	public void selectPolicyGroupDropdown(String value) {
 		clickOnElement(policyGroupDropdown);
 		enter(policyGroupDropdownSearchInput,value);
@@ -1349,5 +1403,6 @@ public class DatasharePolicyPage extends BasePage {
 	public void clickOnEditPolicyFormSubmitButton() {
 		clickOnElement(editPolicyFormSubmitButton);
 	}
+
 }
 	

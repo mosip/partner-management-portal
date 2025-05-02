@@ -8,7 +8,7 @@ import somethingWentWrongIcon from '../../../svg/something_went_wrong_icon.svg';
 
 function ViewDeviceDetails() {
     const { t } = useTranslation();
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const navigate = useNavigate();
     const [deviceDetails, setDeviceDetails] = useState([]);
     const [selectedSbidata, setSelectedSbidata] = useState(true);

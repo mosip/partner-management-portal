@@ -21,7 +21,7 @@ import EmptyList from '../../common/EmptyList';
 function PoliciesList() {
 
   const { t } = useTranslation();
-  const isLoginLanguageRTL = isLangRTL(getUserProfile().langCode);
+  const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
   const navigate = useNavigate();
   const [filter, setFilter] = useState(false);
   const [errorCode, setErrorCode] = useState("");
