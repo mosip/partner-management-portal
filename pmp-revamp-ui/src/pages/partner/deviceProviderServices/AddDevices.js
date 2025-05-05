@@ -224,12 +224,8 @@ function AddDevices() {
                 } else {
                     if (serverErrors[errorCode]) {
                         errorMessage = serverErrors[errorCode];
-                    } else {
-                        errorMessage = errorMessage;
                     }
                 }
-            } else {
-                errorMessage = errorMessage;
             }
             newEntries[index].errorMsg = errorMessage;
             setDeviceEntries(newEntries);

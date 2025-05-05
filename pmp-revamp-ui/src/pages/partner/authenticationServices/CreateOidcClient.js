@@ -526,6 +526,7 @@ function CreateOidcClient() {
                           {invalidRedirectUrl && <span className="text-sm text-crimson-red font-semibold">{invalidRedirectUrl}</span>}
                           {redirectUrls.length < 5 && (
                             <div
+                              role="button"
                               id="add_new_redirect_url"
                               className="text-[#1447b2] font-bold text-xs w-fit cursor-pointer"
                               tabIndex="0"

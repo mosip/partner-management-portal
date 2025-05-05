@@ -20,7 +20,7 @@ function SuccessMessage({ successMsg, clickOnCancel, customStyle, successParam }
                 </div>
                 <div className={`${isLoginLanguageRTL ? 'ml-3 mr-5 left-2' : 'mr-3 ml-5 right-2'} absolute ${(customStyle && customStyle.cancelIcon) ? customStyle.cancelIcon : 'top-4  mt-1'}`}>
                     <button id='success_msg_close_icon' className="cursor-pointer" onClick={clickOnCancel}>
-                        <img role='button' src={cancelIcon} alt="close" />
+                        <img src={cancelIcon} alt="close" />
                     </button>
                 </div>
             </div>

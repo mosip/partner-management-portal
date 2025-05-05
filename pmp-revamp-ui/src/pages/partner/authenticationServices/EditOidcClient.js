@@ -474,6 +474,7 @@ function EditOidcClient() {
                                                             {invalidRedirectUrl && <span className="text-sm text-crimson-red font-semibold">{invalidRedirectUrl}</span>}
                                                             {oidcClientDetails.redirectUris.length < 5 && (
                                                                 <div
+                                                                    role="button"
                                                                     id="oidc_edit_add_new_redirect_url"
                                                                     className="text-[#1447b2] font-bold text-xs w-fit flex items-center space-x-1 cursor-pointer"
                                                                     tabIndex="0"

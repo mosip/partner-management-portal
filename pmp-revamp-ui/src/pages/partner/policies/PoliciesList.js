@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { getUserProfile } from '../../../services/UserProfileService';
-import { isLangRTL } from '../../../utils/AppUtils';
+import { isLangRTL, onPressEnterKey } from '../../../utils/AppUtils';
 import {
   formatDate, getPartnerTypeDescription, getStatusCode, handleMouseClickForDropdown,
   toggleSortAscOrder, toggleSortDescOrder, bgOfStatus, getPartnerPolicyRequests, setSubmenuRef
@@ -229,7 +229,7 @@ function PoliciesList() {
                                     </button>
                                     {
                                       viewPolicyId === index && (
-                                        <div role='button' id='policy_list_view_card' onClick={() => showViewPolicyDetails(partner)}
+                                        <div role='button' id='policy_list_view_card' onClick={() => showViewPolicyDetails(partner)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => showViewPolicyDetails(partner))}
                                           className={`flex justify-between border bg-white absolute text-xs font-semibold rounded-md shadow-md w-[6rem] px-1.5 py-2 z-20 items-center cursor-pointer ${isLoginLanguageRTL ? "left-[4.5rem] text-right" : "right-[4.5rem] text-left"}`}>
                                           <p> {t('policies.view')} </p>
                                           <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />

@@ -8,7 +8,8 @@ import {
   handleMouseClickForDropdown, toggleSortDescOrder, toggleSortAscOrder, bgOfStatus,
   createRequest, populateDeactivatedStatus, setSubmenuRef,
   handleServiceErrors,
-  isCaSignedPartnerCertificateAvailable
+  isCaSignedPartnerCertificateAvailable,
+  onPressEnterKey
 } from '../../../utils/AppUtils';
 import ErrorMessage from '../../common/ErrorMessage';
 import Title from '../../common/Title';
@@ -355,17 +356,17 @@ function FtmList() {
                                     </button>
                                     {viewFtmId === index && (
                                       <div className={`absolute w-[7rem] z-50 bg-white text-xs text-start font-semibold rounded-lg shadow-md border ${isLoginLanguageRTL ? "left-[3.5rem] text-right" : "right-[3.5rem] text-left"}`}>
-                                        <div role='button' id='ftm_list_view' onClick={() => viewFtmDetails(ftm)} className={`flex justify-between py-2 w-full px-2 cursor-pointer text-[#3E3E3E] hover:bg-gray-100 ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
+                                        <div role='button' id='ftm_list_view' onClick={() => viewFtmDetails(ftm)} className={`flex justify-between py-2 w-full px-2 cursor-pointer text-[#3E3E3E] hover:bg-gray-100 ${isLoginLanguageRTL ? "text-right" : "text-left"}`} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => viewFtmDetails(ftm))}>
                                           <p>{t('ftmList.view')}</p>
                                           <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                         </div>
                                         <hr className="h-px bg-gray-200 border-0 mx-1" />
-                                        <div role='button' id='ftm_list_manage_certificate' onClick={() => showManageCertificate(ftm)} className={`flex justify-between py-2 w-full px-2 ${isLoginLanguageRTL ? "text-right" : "text-left"} ${(ftm.status === "approved" || ftm.status === "pending_cert_upload") ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`}>
+                                        <div role='button' id='ftm_list_manage_certificate' onClick={() => showManageCertificate(ftm)} className={`flex justify-between py-2 w-full px-2 ${isLoginLanguageRTL ? "text-right" : "text-left"} ${(ftm.status === "approved" || ftm.status === "pending_cert_upload") ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => showManageCertificate(ftm))}>
                                           <p> {t('ftmList.manageCertificate')} </p>
                                           <img src={(ftm.status === "approved" || ftm.status === "pending_cert_upload") ? manageCertificate : disableManageCertificate} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                         </div>
                                         <hr className="h-px bg-gray-200 border-0 mx-1" />
-                                        <div role='button' id='ftm_list_deactivate' onClick={() => showDeactivateFtm(ftm, index)} className={`flex justify-between py-2 px-2 ${ftm.status === "approved" ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`} >
+                                        <div role='button' id='ftm_list_deactivate' onClick={() => showDeactivateFtm(ftm, index)} className={`flex justify-between py-2 px-2 ${ftm.status === "approved" ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => showDeactivateFtm(ftm, index))}>
                                           <p> {t('ftmList.deActivate')}</p>
                                           <img src={ftm.status === "approved" ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                         </div>
