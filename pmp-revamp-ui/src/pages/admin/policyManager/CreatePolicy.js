@@ -348,10 +348,11 @@ function CreatePolicy() {
                                                                 <p className="text-xs text-light-gray">{t('createPolicy.uploadPolicyDataFileDesc')}</p>
                                                             </div>
                                                         </div>
-                                                        <div onKeyDown={(e) => { if (e.key === 'Enter') { document.getElementById('fileInput').click() } }}>
+                                                        <div>
                                                             <label
                                                                 tabIndex="0"
                                                                 htmlFor="fileInput"
+                                                                onKeyDown={(e) => { if (e.key === 'Enter') { document.getElementById('fileInput').click() }}}
                                                                 className="bg-tory-blue flex items-center justify-center h-11 w-28 text-snow-white text-xs font-semibold rounded-md cursor-pointer">
                                                                 <p>{t('createPolicy.upload')}</p>
                                                                 <input

@@ -7,7 +7,8 @@ import { HttpService } from '../../../services/HttpService';
 import {
     isLangRTL, bgOfStatus, getStatusCode, getPartnerTypeDescription, handleServiceErrors, formatDate, getPartnerManagerUrl,
     handleMouseClickForDropdown, populateDeactivatedStatus,
-    createRequest, setSubmenuRef
+    createRequest, setSubmenuRef,
+    onPressEnterKey
 } from '../../../utils/AppUtils.js';
 import LoadingIcon from "../../common/LoadingIcon.js";
 import ErrorMessage from '../../common/ErrorMessage.js';
@@ -239,7 +240,7 @@ function SbiList() {
 
                                                     {deactivateBtnId === index && (
                                                         <div className={`z-50 w-[15rem] min-w-fit absolute top-full mt-2  ${sbi.status === "approved" ? 'text-[#3E3E3E]' : 'text-[#A5A5A5]'} bg-white ${isLoginLanguageRTL ? "left-[3.25rem]" : "right-[3.25rem]"} rounded-md font-semibold shadow-lg hover:bg-gray-100 ring-gray-50 border duration-200`}>
-                                                            <div role='button' id='sbi_list_deactivate' onClick={() => onClickDeactivate(sbi, index)} className={`${isLoginLanguageRTL ? "text-right" : "text-left"} px-4 py-2 flex justify-between text-sm font-medium ${sbi.status !== "approved" ? ' cursor-auto' : 'cursor-pointer'}`}>
+                                                            <div role='button' id='sbi_list_deactivate' onClick={() => onClickDeactivate(sbi, index)} className={`${isLoginLanguageRTL ? "text-right" : "text-left"} px-4 py-2 flex justify-between text-sm font-medium ${sbi.status !== "approved" ? ' cursor-auto' : 'cursor-pointer'}`} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => onClickDeactivate(sbi, index))}>
                                                                 <p>{t('sbiList.deactivate')}</p>
                                                                 <img src={sbi.status === "approved" ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                             </div>

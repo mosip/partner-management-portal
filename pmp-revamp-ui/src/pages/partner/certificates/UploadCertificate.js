@@ -263,7 +263,8 @@ function UploadCertificate({ closePopup, popupData, request }) {
                                         {!uploading && fileName === '' && (
                                             <div id='upload_certificate_card' className={`flex flex-col items-center justify-center w-full min-h-36 cursor-pointer`}>
                                                 <button onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && document.getElementById('fileInput').click()}>
-                                                    <label htmlFor="fileInput" className="flex flex-col items-center w-full min-h-36 justify-center cursor-pointer" >
+                                                    <label className="flex flex-col items-center w-full min-h-36 justify-center cursor-pointer" >
+                                                        <input id="fileInput" type="file" className="hidden" accept=".cer,.pem" onChange={handleFileChange} />
                                                         <img src={fileUploadImg} alt="" className="mb-2 w-10 h-10" />
                                                         <h5 className="text-charcoal-gray text-base font-normal px-2">
                                                             {t('uploadCertificate.selectCertificate')}
@@ -273,8 +274,6 @@ function UploadCertificate({ closePopup, popupData, request }) {
                                                         </p>
                                                     </label>
                                                 </button>
-
-                                                <input id="fileInput" type="file" className="hidden" accept=".cer,.pem" onChange={handleFileChange} />
                                             </div>
                                         )}
                                         {!uploading && fileName && (
