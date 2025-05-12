@@ -216,6 +216,7 @@ export const logout = async () => {
 
     window.location.href = redirectUrl;
 };
+
 const areAllValuesSame = (list, column) => {
     const firstValue = list[0][column];
     return list.every(item => item[column] === firstValue);
@@ -335,8 +336,22 @@ export const bgOfStatus = (status) => {
         }
     }
 }
+export const createDropdownData = (
+    fieldName,
+    fieldDesc,
+    isBlankEntryRequired,
+    dataList,
+    t,
+    defaultPlaceholder
+) => {
+    if (
+        !Array.isArray(dataList) ||
+        typeof fieldName !== "string" ||
+        (fieldDesc && typeof fieldDesc !== "string")
+    ) {
+        return [];
+    }
 
-export const createDropdownData = (fieldName, fieldDesc, isBlankEntryRequired, dataList, t, defaultPlaceholder) => {
     let dataArr = [];
     if (isBlankEntryRequired) {
         dataArr.push({
@@ -344,20 +359,20 @@ export const createDropdownData = (fieldName, fieldDesc, isBlankEntryRequired, d
             fieldValue: "",
         });
     }
+
     dataList.forEach(item => {
-        let alreadyAdded = false;
-        dataArr.forEach(item1 => {
-            if (item1.fieldValue === item[fieldName]) {
-                alreadyAdded = true;
-            }
-        });
+
+        // Prevent duplicates
+        let alreadyAdded = dataArr.some(entry => entry.fieldValue === item[fieldName]);
         if (!alreadyAdded) {
             if (fieldName === "partnerType") {
                 dataArr.push({
                     fieldCode: getPartnerTypeDescription(item[fieldName], t) || item[fieldName],
                     fieldValue: item[fieldName]
                 });
-            } else if (fieldName === "status" || fieldName === "certificateExpiryStatus" || fieldName === "certificateUploadStatus" || fieldName === "sbiExpiryStatus") {
+            } else if (
+                ["status", "certificateExpiryStatus", "certificateUploadStatus", "sbiExpiryStatus"].includes(fieldName)
+            ) {
                 dataArr.push({
                     fieldCode: getStatusCode(item[fieldName], t) || item[fieldName],
                     fieldValue: item[fieldName]
