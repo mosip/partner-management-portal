@@ -149,7 +149,7 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
 
     useEffect(() => {
 
-        if (isApplyFilterClicked) {
+        if (isApplyFilterClicked && pageNo === 0) {
             fetchDeviceDetails(sbiId, sbiVersion);
             setIsApplyFilterClicked(false);
         }
@@ -441,6 +441,8 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
                                     setFirstIndex={setFirstIndex}
                                     isServerSideFilter={true}
                                     getPaginationValues={getPaginationValues}
+                                    isApplyFilterClicked={isApplyFilterClicked}
+                                    setIsApplyFilterClicked={setIsApplyFilterClicked}
                                 />
                             </div>
                         )}

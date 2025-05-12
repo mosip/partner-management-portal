@@ -147,7 +147,7 @@ function AdminOidcClientsList() {
 
     useEffect(() => {
 
-        if (isApplyFilterClicked) {
+        if (isApplyFilterClicked && pageNo === 0) {
             fetchOidcClientsListData();
             setIsApplyFilterClicked(false);
         }
@@ -400,6 +400,8 @@ function AdminOidcClientsList() {
                                     setFirstIndex={setFirstIndex}
                                     isServerSideFilter={true}
                                     getPaginationValues={getPaginationValues}
+                                    isApplyFilterClicked={isApplyFilterClicked}
+                                    setIsApplyFilterClicked={setIsApplyFilterClicked}
                                 />
                             </div>
                         )}

@@ -6,7 +6,7 @@ import { isLangRTL, handleMouseClickForDropdown, onPressEnterKey } from '../../u
 import { AiFillLeftCircle, AiFillRightCircle } from "react-icons/ai"; // icons form react-icons
 import { IconContext } from "react-icons"; // for customizing icons
 
-function Pagination({ dataListLength, selectedRecordsPerPage, setSelectedRecordsPerPage, setFirstIndex, isServerSideFilter = false, getPaginationValues, isViewNotificationPage }) {
+function Pagination({ dataListLength, selectedRecordsPerPage, setSelectedRecordsPerPage, setFirstIndex, isServerSideFilter = false, getPaginationValues, isViewNotificationPage, isApplyFilterClicked, setIsApplyFilterClicked }) {
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [isItemsPerPageOpen, setIsItemsPerPageOpen] = useState(false);
@@ -36,6 +36,13 @@ function Pagination({ dataListLength, selectedRecordsPerPage, setSelectedRecords
         }
     }, [selectedPage, selectedRecordsPerPage]);
 
+    useEffect(() => {
+        if (isApplyFilterClicked) {
+            setSelectedPage(0);
+            setIsApplyFilterClicked(false);
+        }
+    }, [isApplyFilterClicked]);
+
     const handlePageChange = (event) => {
         setSelectedPage(event.selected);
         const newIndex = (event.selected * selectedRecordsPerPage) % dataListLength;
@@ -45,12 +52,14 @@ function Pagination({ dataListLength, selectedRecordsPerPage, setSelectedRecords
         setIsItemsPerPageOpen(false);
         setSelectedRecordsPerPage(num);
         setFirstIndex(0);
+        setSelectedPage(0);
     };
 
     return (
         <div id='pagination_card' className="flex justify-between bg-[#FCFCFC] items-center h-9  mt-0.5 p-8 rounded-b-md shadow-md max-640:flex-col max-640:h-fit">
             <div></div>
             <ReactPaginate
+                forcePage={selectedPage}
                 containerClassName={"pagination"}
                 pageClassName={"page-item"}
                 activeClassName={"active"}
