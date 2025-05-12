@@ -324,7 +324,7 @@ function PolicyRequestsList() {
                                               {viewPartnerId === index && (
                                                 <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-9 text-right" : "right-9 text-left"}`}>
                                                   <div role='button' disabled={policyRequest.status !== 'InProgress'} onClick={() => approveRejectPolicyRequest(policyRequest, index)} className={`flex justify-between ${policyRequest.status === 'InProgress' && 'hover:bg-gray-100'} `} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => approveRejectPolicyRequest(policyRequest, index))}>
-                                                    <p id="partner_details_view_btn" className={`py-1.5 px-4 ${policyRequest.status === 'InProgress' ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-default'} ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("approveRejectPopup.approveReject")}</p>
+                                                    <p id="partner_details_approve_or_reject_btn" className={`py-1.5 px-4 ${policyRequest.status === 'InProgress' ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-default'} ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("approveRejectPopup.approveReject")}</p>
                                                     <img src={policyRequest.status === 'InProgress' ? approveRejectIcon : disabledApproveRejectIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                   </div>
                                                   <hr className="h-px bg-gray-100 border-0 mx-1" />
