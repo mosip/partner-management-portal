@@ -4,6 +4,7 @@ import TextInputComponent from "../../common/fields/TextInputComponent.js";
 import { useTranslation } from "react-i18next";
 import { isLangRTL, createDropdownData, validateInputRegex } from "../../../utils/AppUtils.js";
 import { getUserProfile } from '../../../services/UserProfileService';
+import PropTypes from 'prop-types';
 
 function PoliciesListFilter({ onApplyFilter }) {
 
@@ -126,5 +127,9 @@ function PoliciesListFilter({ onApplyFilter }) {
         </div>
     );
 }
+
+PoliciesListFilter.propTypes = {
+    onApplyFilter: PropTypes.func.isRequired,
+};
 
 export default PoliciesListFilter;

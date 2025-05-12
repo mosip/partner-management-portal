@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { isLangRTL, createDropdownData, createRequest, getPartnerManagerUrl, handleServiceErrors, validateInputRegex } from "../../../utils/AppUtils.js";
 import { getUserProfile } from '../../../services/UserProfileService';
 import { HttpService } from "../../../services/HttpService.js";
+import PropTypes from 'prop-types';
 
 function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
   const { t } = useTranslation();
@@ -204,5 +205,9 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
     </div>
   );
 }
+
+PartnerListFilter.propTypes = {
+    onApplyFilter: PropTypes.func.isRequired,
+};
 
 export default PartnerListFilter;

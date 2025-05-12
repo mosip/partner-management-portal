@@ -3,7 +3,7 @@ import { getUserProfile } from "../../../services/UserProfileService";
 import { getOuterDivWidth, isLangRTL } from "../../../utils/AppUtils";
 import { useState } from "react";
 import CalendarInput from "../../common/CalendarInput";
-
+import PropTypes from 'prop-types';
 function WeeklyNotificationsFilter({ onApplyFilter }) {
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
@@ -84,7 +84,10 @@ function WeeklyNotificationsFilter({ onApplyFilter }) {
             </div>
         </>
     );
-
-
 }
+
+WeeklyNotificationsFilter.propTypes = {
+    onApplyFilter: PropTypes.func.isRequired,
+};
+
 export default WeeklyNotificationsFilter;

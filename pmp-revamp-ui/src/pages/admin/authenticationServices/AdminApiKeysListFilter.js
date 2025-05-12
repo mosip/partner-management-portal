@@ -4,6 +4,7 @@ import TextInputComponent from "../../common/fields/TextInputComponent.js";
 import { useTranslation } from "react-i18next";
 import { createDropdownData, isLangRTL, validateInputRegex } from "../../../utils/AppUtils.js";
 import { getUserProfile } from '../../../services/UserProfileService';
+import PropTypes from 'prop-types';
 
 function AdminApiKeysListFilter({ onApplyFilter }) {
     const { t } = useTranslation();
@@ -135,4 +136,9 @@ function AdminApiKeysListFilter({ onApplyFilter }) {
         </div>
     );
 }
+
+AdminApiKeysListFilter.propTypes = {
+    onApplyFilter: PropTypes.func.isRequired,
+};
+
 export default AdminApiKeysListFilter;

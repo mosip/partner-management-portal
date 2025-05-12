@@ -4,6 +4,7 @@ import { SideNavMenuItem } from './SideNavMenuItem';
 import { useTranslation } from 'react-i18next';
 import { getUserProfile } from '../services/UserProfileService';
 import { isLangRTL } from '../utils/AppUtils';
+import PropTypes from 'prop-types';
 
 function SideNav({ open, policyRequiredPartnerTypes, partnerType }) {
     const location = useLocation();
@@ -189,5 +190,11 @@ function SideNav({ open, policyRequiredPartnerTypes, partnerType }) {
         </div>
     );
 }
+
+SideNav.propTypes = {
+    open: PropTypes.bool.isRequired,
+    policyRequiredPartnerTypes: PropTypes.array.isRequired,
+    partnerType: PropTypes.string.isRequired,
+};
 
 export default SideNav;
