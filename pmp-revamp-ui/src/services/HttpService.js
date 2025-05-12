@@ -68,7 +68,7 @@ export const setupResponseInterceptor = (navigate) => {
       } else {
         navigate('/partnermanagement/runtimeError');
       }
-      return Promise.reject(error instanceof Error ? error : new Error(JSON.stringify(error)));
+      return Promise.reject(error);
     });
 }
 
