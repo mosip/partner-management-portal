@@ -26,7 +26,7 @@ function DownloadCertificateButton({ setShowDropDown, showDropDown, onClickFirst
 
     return (
         <div ref={downloadDropdownRef} className={`flex-col`}>
-            <div className='relative group' tabIndex="0">
+            <div className='relative group'>
                 <button id={id} disabled={disableBtn} onClick={() => setShowDropDown()}
                     className={`flex items-center text-center w-fit h-10 ${disableBtn ? 'text-[#6f7070] border-gray-300 bg-white' : showDropDown ? 'bg-blue-800 text-white border-blue-800' : 'text-tory-blue bg-white border-blue-800'} text-xs px-[1.5rem] py-[1%] border font-semibold rounded-md`}>
                     {t('commons.download')}

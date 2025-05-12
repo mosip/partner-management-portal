@@ -349,20 +349,20 @@ function CreatePolicy() {
                                                             </div>
                                                         </div>
                                                         <div>
-                                                            <label
-                                                                tabIndex="0"
-                                                                htmlFor="fileInput"
-                                                                onKeyDown={(e) => { if (e.key === 'Enter') { document.getElementById('fileInput').click() }}}
-                                                                className="bg-tory-blue flex items-center justify-center h-11 w-28 text-snow-white text-xs font-semibold rounded-md cursor-pointer">
+                                                            <input
+                                                                type="file"
+                                                                id="fileInput"
+                                                                accept=".json"
+                                                                style={{ display: 'none' }}
+                                                                onChange={onFileChangeEvent}
+                                                            />
+                                                            <button
+                                                                type="button"
+                                                                onClick={() => document.getElementById('fileInput').click()}
+                                                                className="bg-tory-blue flex items-center justify-center h-11 w-28 text-snow-white text-xs font-semibold rounded-md cursor-pointer"
+                                                            >
                                                                 <p>{t('createPolicy.upload')}</p>
-                                                                <input
-                                                                    type="file"
-                                                                    id="fileInput"
-                                                                    accept=".json"
-                                                                    style={{ display: 'none' }}
-                                                                    onChange={onFileChangeEvent}
-                                                                />
-                                                            </label>
+                                                            </button>
                                                         </div>
                                                     </div>
                                                     <hr className="border bg-medium-gray h-px" />
