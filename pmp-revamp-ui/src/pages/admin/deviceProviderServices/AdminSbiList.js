@@ -132,7 +132,7 @@ function AdminSbiList() {
 
     useEffect(() => {
 
-        if (isApplyFilterClicked) {
+        if (isApplyFilterClicked && pageNo === 0) {
             fetchSbiListData();
             setIsApplyFilterClicked(false);
         }
@@ -401,6 +401,8 @@ function AdminSbiList() {
                                     setFirstIndex={setFirstIndex}
                                     isServerSideFilter={true}
                                     getPaginationValues={getPaginationValues}
+                                    isApplyFilterClicked={isApplyFilterClicked}
+                                    setIsApplyFilterClicked={setIsApplyFilterClicked}
                                 />
                             </div>
                         )}

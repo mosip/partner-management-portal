@@ -137,7 +137,7 @@ function PartnersList() {
 
   useEffect(() => {
 
-    if (isApplyFilterClicked) {
+    if (isApplyFilterClicked && pageNo === 0) {
       fetchPartnersData();
       setIsApplyFilterClicked(false);
     }
@@ -372,6 +372,8 @@ function PartnersList() {
                         setFirstIndex={setFirstIndex}
                         isServerSideFilter={true}
                         getPaginationValues={getPaginationValues}
+                        isApplyFilterClicked={isApplyFilterClicked}
+                        setIsApplyFilterClicked={setIsApplyFilterClicked}
                       />
                     </div>
                   </>

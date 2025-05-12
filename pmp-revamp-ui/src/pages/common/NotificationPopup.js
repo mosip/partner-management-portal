@@ -141,19 +141,10 @@ function NotificationPopup({ closeNotification }) {
         return removeListener;
     }, []);
 
-    const highlightLatestNotifications = (notification) => {
-        if (lastNotiticationSeenTimestamp === null) {
-            return "bg-[#EBF3FF]";
-        } else {
-            const latestNotificationCrdtimes = notification.createdDateTime;
-            const lastSeenDate = new Date(lastNotiticationSeenTimestamp);
-            const latestNotificationDate = new Date(latestNotificationCrdtimes);
-            if(latestNotificationDate > lastSeenDate) {
-                return "bg-[#EBF3FF]";
-            } else {
-                return "";
-            }
-        }
+    const isLatestNotification = (notification) => {
+        if (!notification?.createdDateTime) return false;
+        if (!lastNotiticationSeenTimestamp) return true;
+        return new Date(notification.createdDateTime) > new Date(lastNotiticationSeenTimestamp);
     };
 
     return (
@@ -179,16 +170,16 @@ function NotificationPopup({ closeNotification }) {
                                     <p className={`text-sm text-[#6F6E6E] font-medium ${isLoginLanguageRTL ? 'mr-4' : 'ml-4'} my-2`}>{t('notificationPopup.latest')}</p>
                                     <div className={`${isSmallScreen ? 'max-h-64' : 'max-h-96'} overflow-y-auto`}>
                                         {notifications.map(notification => (
-                                            <div key={notification.notificationId} className={`flex justify-between items-start px-3 py-2 border-b border-gray-200 ${highlightLatestNotifications(notification)}`}>
+                                            <div key={notification.notificationId} className={`flex justify-between items-start px-3 py-2 border-b border-gray-200 ${isLatestNotification(notification) ? 'bg-[#F0F6FF]' : ''}`}>
                                                 <img src={featuredIcon} alt='' id='featuredIcon' className={`${isLoginLanguageRTL ? 'ml-3' : 'mr-3'} mt-1`} />
-                                                <div>
+                                                <div className="mb-2">
                                                     <div className="flex justify-between space-x-2">
-                                                        <p className={`text-sm font-semibold text-gray-900 ${isLoginLanguageRTL ? 'text-right': 'text-left'}`}>{getNoticationTitle(notification, t)}</p>
-                                                        <p className={`text-xs text-gray-500 w-36 ${isLoginLanguageRTL ? 'text-left': 'text-right'}`}>{formatDate(notification.createdDateTime, 'dateTime')}</p>
+                                                        <p className={`text-sm ${isLatestNotification(notification) ? 'font-bold' : 'font-semibold'} text-gray-900 ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>{getNoticationTitle(notification, t)}</p>
+                                                        <p className={`text-xs text-gray-500 w-36 ${isLoginLanguageRTL ? 'text-left' : 'text-right'}`}>{formatDate(notification.createdDateTime, 'dateTime')}</p>
                                                     </div>
-                                                    <div className="text-sm text-[#344054] mt-1 whitespace-pre-line">{getNotificationPanelDescription(notification, isLoginLanguageRTL, t)}</div>
-                                                    <button 
-                                                        className="text-tory-blue font-semibold text-sm mt-2 px-4 py-[6px] rounded-md bg-[#F7F9FF]"
+                                                    <div className={`text-sm  ${isLatestNotification(notification) ? 'font-semibold' : 'font-normal'} text-[#344054] mt-1 mb-2 whitespace-pre-line`}>{getNotificationPanelDescription(notification, isLoginLanguageRTL, t)}</div>
+                                                    <button
+                                                        className={`text-tory-blue font-semibold text-sm ${isLatestNotification(notification) ? 'bg-[#F0F6FF]' : ''}`}
                                                         onClick={() => dismissNotification(notification.notificationId)}
                                                     >
                                                         {t('notificationPopup.dismiss')}

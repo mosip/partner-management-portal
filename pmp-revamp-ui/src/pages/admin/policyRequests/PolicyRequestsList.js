@@ -138,7 +138,7 @@ function PolicyRequestsList() {
 
   useEffect(() => {
 
-    if (isApplyFilterClicked) {
+    if (isApplyFilterClicked && pageNo === 0) {
       fetchPolicyRequestsListData();
       setIsApplyFilterClicked(false);
     }
@@ -364,6 +364,8 @@ function PolicyRequestsList() {
                       setFirstIndex={setFirstIndex}
                       isServerSideFilter={true}
                       getPaginationValues={getPaginationValues}
+                      isApplyFilterClicked={isApplyFilterClicked}
+                      setIsApplyFilterClicked={setIsApplyFilterClicked}
                     />
                   </div>
                 </>

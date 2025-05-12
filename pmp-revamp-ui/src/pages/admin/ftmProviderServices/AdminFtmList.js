@@ -126,7 +126,7 @@ function AdminFtmList() {
 
     useEffect(() => {
 
-        if (isApplyFilterClicked) {
+        if (isApplyFilterClicked && pageNo === 0) {
             fetchFtmListData();
             setIsApplyFilterClicked(false);
         }
@@ -374,6 +374,8 @@ function AdminFtmList() {
                                     setFirstIndex={setFirstIndex}
                                     isServerSideFilter={true}
                                     getPaginationValues={getPaginationValues}
+                                    isApplyFilterClicked={isApplyFilterClicked}
+                                    setIsApplyFilterClicked={setIsApplyFilterClicked}
                                 />
                             </div>
                         )}

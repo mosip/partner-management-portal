@@ -126,7 +126,7 @@ function AdminApiKeysList() {
 
     useEffect(() => {
 
-        if (isApplyFilterClicked) {
+        if (isApplyFilterClicked && pageNo === 0) {
             fetchApiKeysListData();
             setIsApplyFilterClicked(false);
         }
@@ -343,6 +343,8 @@ function AdminApiKeysList() {
                                     setFirstIndex={setFirstIndex}
                                     isServerSideFilter={true}
                                     getPaginationValues={getPaginationValues}
+                                    isApplyFilterClicked={isApplyFilterClicked}
+                                    setIsApplyFilterClicked={setIsApplyFilterClicked}
                                 />
                             </div>
                         )}

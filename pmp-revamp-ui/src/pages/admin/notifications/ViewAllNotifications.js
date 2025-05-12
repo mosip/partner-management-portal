@@ -112,7 +112,7 @@ function ViewAllNotifications({ notificationType }) {
     }, [pageNo, pageSize]);
 
     useEffect(() => {
-        if (isApplyFilterClicked) {
+        if (isApplyFilterClicked && pageNo === 0) {
             fetchNotifications();
             setIsApplyFilterClicked(false);
         }
@@ -354,6 +354,8 @@ function ViewAllNotifications({ notificationType }) {
                                         isServerSideFilter={true}
                                         getPaginationValues={getPaginationValues}
                                         isViewNotificationPage={true}
+                                        isApplyFilterClicked={isApplyFilterClicked}
+                                        setIsApplyFilterClicked={setIsApplyFilterClicked}
                                     />
                                 )}
                             </div>
