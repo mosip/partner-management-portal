@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { isLangRTL, createDropdownData, createRequest, getPartnerManagerUrl, handleServiceErrors, validateInputRegex } from "../../../utils/AppUtils.js";
 import { getUserProfile } from '../../../services/UserProfileService';
 import { HttpService } from "../../../services/HttpService.js";
+import PropTypes from 'prop-types';
 
 function PolicyRequestsListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
   const { t } = useTranslation();
@@ -198,5 +199,11 @@ function PolicyRequestsListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) 
     </div>
   );
 }
+
+PolicyRequestsListFilter.propTypes = {
+    onApplyFilter: PropTypes.func.isRequired,
+    setErrorCode: PropTypes.func.isRequired,
+    setErrorMsg: PropTypes.func.isRequired,
+};
 
 export default PolicyRequestsListFilter;

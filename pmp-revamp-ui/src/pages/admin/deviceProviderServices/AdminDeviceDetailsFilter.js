@@ -4,6 +4,7 @@ import TextInputComponent from "../../common/fields/TextInputComponent.js";
 import { useTranslation } from "react-i18next";
 import { isLangRTL, createDropdownData, fetchDeviceTypeDropdownData, fetchDeviceSubTypeDropdownData, validateInputRegex } from "../../../utils/AppUtils.js";
 import { getUserProfile } from '../../../services/UserProfileService.js';
+import PropTypes from 'prop-types';
 
 function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg, removeSbiFields}) {
     const { t } = useTranslation();
@@ -223,4 +224,12 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg, re
     );
 
 }
+
+AdminDeviceDetailsFilter.propTypes = {
+    onApplyFilter: PropTypes.func.isRequired,
+    setErrorCode: PropTypes.func.isRequired,
+    setErrorMsg: PropTypes.func.isRequired,
+    removeSbiFields: PropTypes.bool.isRequired,
+};
+
 export default AdminDeviceDetailsFilter;

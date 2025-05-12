@@ -4,6 +4,7 @@ import TextInputComponent from "../../common/fields/TextInputComponent";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../../services/UserProfileService";
 import { isLangRTL, createDropdownData, validateInputRegex } from "../../../utils/AppUtils";
+import PropTypes from 'prop-types';
 
 function AdminSbiListFilter( {onApplyFilter} ) {
     const { t } = useTranslation();
@@ -141,4 +142,9 @@ function AdminSbiListFilter( {onApplyFilter} ) {
     );
 
 }
+
+AdminSbiListFilter.propTypes = {
+    onApplyFilter: PropTypes.func.isRequired,
+};
+
 export default AdminSbiListFilter;

@@ -4,6 +4,7 @@ import TextInputComponent from "../../common/fields/TextInputComponent.js";
 import { useTranslation } from "react-i18next";
 import { createDropdownData, isLangRTL, validateInputRegex } from "../../../utils/AppUtils.js";
 import { getUserProfile } from '../../../services/UserProfileService';
+import PropTypes from 'prop-types';
 
 function AdminFtmListFilter ({ onApplyFilter }) {
     const { t } = useTranslation();
@@ -139,4 +140,9 @@ function AdminFtmListFilter ({ onApplyFilter }) {
     );
 
 }
+
+AdminFtmListFilter.propTypes = {
+    onApplyFilter: PropTypes.func.isRequired,
+};
+
 export default AdminFtmListFilter;

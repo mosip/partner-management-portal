@@ -12,6 +12,7 @@ import NotificationPopup from '../pages/common/NotificationPopup.js';
 import { HttpService } from '../services/HttpService.js';
 import { useDispatch, useStore } from 'react-redux';
 import { updateDismissClicked, updateLastSeenDtimes } from '../notificationsSlice.js';
+import PropTypes from 'prop-types';
 
 function HeaderNav({ open, setOpen }) {
     const navigate = useNavigate('');
@@ -268,5 +269,10 @@ function HeaderNav({ open, setOpen }) {
         </nav>
     );
 }
+
+HeaderNav.propTypes = {
+    open: PropTypes.bool.isRequired,
+    setOpen: PropTypes.func.isRequired,
+};
 
 export default HeaderNav;

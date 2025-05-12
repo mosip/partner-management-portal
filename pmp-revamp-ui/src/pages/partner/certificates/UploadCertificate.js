@@ -278,9 +278,7 @@ function UploadCertificate({ closePopup, popupData, request }) {
                                         )}
                                         {!uploading && fileName && (
                                             <div id='remove_certificate_card' className={`flex flex-col items-center justify-center mb-1`}>
-                                                <label htmlFor="fileInput" className="flex flex-col items-center justify-center">
-                                                    <img src={fileDescription} alt="" className="w-10 h-10 mb-1" />
-                                                </label>
+                                                <img src={fileDescription} alt="" className="w-10 h-10 mb-1" />
                                                 <h5 className="text-charcoal-gray text-sm font-semibold break-all">
                                                     {fileName}
                                                 </h5>

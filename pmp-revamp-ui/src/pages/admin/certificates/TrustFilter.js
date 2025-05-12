@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { createDropdownData, isLangRTL } from '../../../utils/AppUtils.js';
 import TextInputComponent from '../../common/fields/TextInputComponent.js';
 import { getUserProfile } from '../../../services/UserProfileService.js';
+import PropTypes from 'prop-types';
 
 function TrustFilter({ onApplyFilter }) {
     const { t } = useTranslation();
@@ -105,5 +106,9 @@ function TrustFilter({ onApplyFilter }) {
         </>
     );
 }
+
+TrustFilter.propTypes = {
+    onApplyFilter: PropTypes.func.isRequired,
+};
 
 export default TrustFilter;
