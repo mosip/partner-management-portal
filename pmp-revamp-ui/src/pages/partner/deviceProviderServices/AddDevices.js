@@ -214,9 +214,10 @@ function AddDevices() {
         setDataLoaded(true);
         setIsSubmitClicked(false);
     };
+
     const handleError = (responseData, index, newEntries) => {
         if (
-            responseData &&
+            responseData && responseData.errors &&
             Array.isArray(responseData.errors) &&
             responseData.errors.length > 0
         ) {

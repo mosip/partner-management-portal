@@ -58,7 +58,7 @@ export const getPartnerTypeDescription = (partnerType, t) => {
             return t(description);
         }
     }
-};
+}
 
 export const getStatusCode = (status, t) => {
     if (status) {
@@ -405,7 +405,7 @@ export const createDropdownData = (
     }
 
     return sortedData;
-};
+}
 
 export const getPartnerPolicyRequests = async (HttpService, setErrorCode, setErrorMsg, t) => {
     try {
