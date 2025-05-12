@@ -142,8 +142,9 @@ function DevicesList() {
     }
     useEffect(() => {
         let filteredRows = devicesList;
+        const allowedKeys = tableHeaders.map(header => header.id);
         Object.keys(filterQuery).forEach(key => {
-            if (filterQuery[key] !== '') {
+            if (allowedKeys.includes(key) && filterQuery[key] !== '') {
                 filteredRows = filteredRows.filter(item => item[key] === filterQuery[key]);
             }
         });

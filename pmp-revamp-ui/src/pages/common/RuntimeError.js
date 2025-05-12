@@ -26,7 +26,9 @@ function RuntimeError() {
         }
     };
 
-    const message = messages[messageType] || messages.somethingWentWrong;
+    const allowedTypes = ['somethingWentWrong', 'noAccess', 'timeout'];
+    const validatedType = allowedTypes.includes(messageType) ? messageType : 'somethingWentWrong';
+    const message = messages[validatedType];
 
     return (
         <div className="w-full h-screen bg-white flex items-center justify-center">
