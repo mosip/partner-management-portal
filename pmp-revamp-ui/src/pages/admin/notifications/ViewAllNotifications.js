@@ -21,6 +21,7 @@ import PartnerNotificationsTab from "../../partner/notifications/PartnerNotifica
 import PartnerCertificateNotificationsFilter from "../../partner/notifications/PartnerCertificateNotificationsFilter.js";
 import { useDispatch } from "react-redux";
 import WeeklyNotificationsFilter from "./WeeklyNotificationsFilter.js";
+import PropTypes from 'prop-types';
 
 function ViewAllNotifications({ notificationType }) {
     const { t } = useTranslation();
@@ -366,4 +367,9 @@ function ViewAllNotifications({ notificationType }) {
         </div>
     );
 }
+
+ViewAllNotifications.propTypes = {
+  notificationType: PropTypes.string.isRequired,
+};
+
 export default ViewAllNotifications;

@@ -2,6 +2,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { isLangRTL } from "../../../utils/AppUtils";
 import { getUserProfile } from "../../../services/UserProfileService";
+import PropTypes from 'prop-types';
 
 function AdminNotificationsTab({ activeRootCA, rootCaPath, activeIntermediateCA, intermediateCaPath, activePartner, partnerCertPath }) {
     const { t } = useTranslation();
@@ -44,4 +45,14 @@ function AdminNotificationsTab({ activeRootCA, rootCaPath, activeIntermediateCA,
         </div>
     );
 }
+
+AdminNotificationsTab.propTypes = {
+    activeRootCA: PropTypes.bool.isRequired,
+    rootCaPath: PropTypes.string.isRequired,
+    activeIntermediateCA: PropTypes.bool.isRequired,
+    intermediateCaPath: PropTypes.string.isRequired,
+    activePartner: PropTypes.bool.isRequired,
+    partnerCertPath: PropTypes.string.isRequired,
+};
+
 export default AdminNotificationsTab;

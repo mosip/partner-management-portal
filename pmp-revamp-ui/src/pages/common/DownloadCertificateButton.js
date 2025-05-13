@@ -7,6 +7,7 @@ import dropdown_up_icon from '../../svg/download_dropdown_icon.svg';
 import dropdown_down_icon from '../../svg/dropdown_up_btn.svg';
 import disabled_download_icon from '../../svg/disabled_download_icon.svg';
 import downloadIcon from '../../svg/download_icon.svg';
+import PropTypes from 'prop-types';
 
 function DownloadCertificateButton({ setShowDropDown, showDropDown, onClickFirstOption, onClickSecondOption, requiredData, downloadDropdownRef, disableBtn, disabledBtnHoverMsg, styleSet, id }) {
 
@@ -66,5 +67,18 @@ function DownloadCertificateButton({ setShowDropDown, showDropDown, onClickFirst
 
     )
 }
+
+DownloadCertificateButton.propTypes = {
+    setShowDropDown: PropTypes.func.isRequired,
+    showDropDown: PropTypes.bool.isRequired,
+    onClickFirstOption: PropTypes.func.isRequired,
+    onClickSecondOption: PropTypes.func.isRequired,
+    requiredData: PropTypes.object.isRequired,
+    downloadDropdownRef: PropTypes.object.isRequired,
+    disableBtn: PropTypes.bool.isRequired,
+    disabledBtnHoverMsg: PropTypes.string.isRequired,
+    styleSet: PropTypes.object.isRequired,
+    id: PropTypes.string.isRequired,
+};
 
 export default DownloadCertificateButton;

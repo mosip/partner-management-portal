@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { handleMouseClickForDropdown, isLangRTL } from '../../../utils/AppUtils';
 import { getUserProfile } from '../../../services/UserProfileService';
 import Information from './Information';
+import PropTypes from 'prop-types';
 
 function DropdownWithSearchComponent({ fieldName, dropdownDataList, onDropDownChangeEvent, fieldNameKey,
     placeHolderKey, searchKey, selectedDropdownValue, styleSet, addInfoIcon, infoKey, disabled, selectPolicyPopup, isPlaceHolderPresent, id }) {
@@ -116,5 +117,22 @@ function DropdownWithSearchComponent({ fieldName, dropdownDataList, onDropDownCh
         </div>
     );
 }
+
+DropdownWithSearchComponent.propTypes = {
+    fieldName: PropTypes.string.isRequired,
+    dropdownDataList: PropTypes.array.isRequired,
+    onDropDownChangeEvent: PropTypes.func.isRequired,
+    fieldNameKey: PropTypes.string.isRequired,
+    placeHolderKey: PropTypes.string.isRequired,
+    searchKey: PropTypes.string.isRequired,
+    selectedDropdownValue: PropTypes.string.isRequired,
+    styleSet: PropTypes.object.isRequired,
+    addInfoIcon: PropTypes.bool.isRequired,
+    infoKey: PropTypes.string.isRequired,
+    disabled: PropTypes.bool.isRequired,
+    isPlaceHolderPresent: PropTypes.bool.isRequired,
+    selectPolicyPopup: PropTypes.bool.isRequired,
+    id: PropTypes.string.isRequired,
+};
 
 export default DropdownWithSearchComponent;

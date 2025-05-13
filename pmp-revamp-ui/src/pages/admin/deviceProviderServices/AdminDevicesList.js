@@ -20,6 +20,7 @@ import disabledApproveRejectIcon from "../../../svg/approve_reject_disabled_icon
 import viewIcon from "../../../svg/view_icon.svg";
 import DeactivatePopup from '../../common/DeactivatePopup.js';
 import Pagination from '../../common/Pagination.js';
+import PropTypes from 'prop-types';
 
 function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
     const location = useLocation();
@@ -453,4 +454,11 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
     );
 
 }
+
+AdminDevicesList.propTypes = {
+  title: PropTypes.string.isRequired,
+  subTitle: PropTypes.string.isRequired,
+  isLinkedDevicesList: PropTypes.bool.isRequired,
+};
+
 export default AdminDevicesList;

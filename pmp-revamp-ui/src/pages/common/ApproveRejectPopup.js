@@ -6,6 +6,7 @@ import LoadingIcon from './LoadingIcon';
 import ErrorMessage from './ErrorMessage';
 import close_icon from '../../svg/close_icon.svg';
 import FocusTrap from 'focus-trap-react';
+import PropTypes from 'prop-types';
 
 function ApproveRejectPopup({ popupData, closePopUp, approveRejectResponse, title, subtitle, header, description }) {
     const { t } = useTranslation();
@@ -155,5 +156,15 @@ function ApproveRejectPopup({ popupData, closePopUp, approveRejectResponse, titl
         </div>
     );
 }
+
+ApproveRejectPopup.propTypes = {
+    popupData: PropTypes.object.isRequired,
+    closePopUp: PropTypes.func.isRequired,
+    approveRejectResponse: PropTypes.func.isRequired,
+    title: PropTypes.string.isRequired,
+    subtitle: PropTypes.string.isRequired,
+    header: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+};
 
 export default ApproveRejectPopup;

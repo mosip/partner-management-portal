@@ -3,12 +3,11 @@ import DatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css';
 import { isLangRTL, handleMouseClickForDropdown } from '../../utils/AppUtils';
 import { getUserProfile } from '../../services/UserProfileService';
-import { useTranslation } from 'react-i18next';
 import Information from './fields/Information';
 import { format } from 'date-fns';
+import PropTypes from 'prop-types';
 
 function CalendarInput({ isUsedAsFilter, showCalendar, addInfoIcon, infoKey, infoKey1, setShowCalender, placeholderText, label, onChange, styleSet, selectedDateStr, containsAsterisk, id}) {
-  const { t } = useTranslation();
   const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
 
   const calendarRef = useRef(null);
@@ -61,5 +60,21 @@ function CalendarInput({ isUsedAsFilter, showCalendar, addInfoIcon, infoKey, inf
     </div>
   )
 }
+
+CalendarInput.propTypes = {
+  isUsedAsFilter: PropTypes.bool.isRequired,
+  showCalendar: PropTypes.bool.isRequired,
+  addInfoIcon: PropTypes.bool.isRequired,
+  infoKey: PropTypes.string.isRequired,
+  infoKey1: PropTypes.string.isRequired,
+  setShowCalender: PropTypes.func.isRequired,
+  placeholderText: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  styleSet: PropTypes.object.isRequired,
+  selectedDateStr: PropTypes.string.isRequired,
+  containsAsterisk: PropTypes.bool.isRequired,
+  id: PropTypes.string.isRequired,
+};
 
 export default CalendarInput;

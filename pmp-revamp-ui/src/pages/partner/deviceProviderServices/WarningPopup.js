@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { isLangRTL } from "../../../utils/AppUtils";
 import { getUserProfile } from "../../../services/UserProfileService.js";
 import FocusTrap from "focus-trap-react";
+import PropTypes from 'prop-types';
 
 function WarningPopup({ closePopUp, clickOnConfirm }) {
     const { t } = useTranslation();
@@ -38,5 +39,10 @@ function WarningPopup({ closePopUp, clickOnConfirm }) {
     )
 
 }
+
+WarningPopup.propTypes = {
+    closePopUp: PropTypes.func.isRequired,
+    clickOnConfirm: PropTypes.func.isRequired,
+};
 
 export default WarningPopup;

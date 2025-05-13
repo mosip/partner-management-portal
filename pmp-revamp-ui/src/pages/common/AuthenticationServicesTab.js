@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
 import { getUserProfile } from '../../services/UserProfileService';
 import { isLangRTL, onPressEnterKey } from '../../utils/AppUtils';
+import PropTypes from 'prop-types';
 
 function AuthenticationServicesTab({ activeOidcClient, oidcClientPath, activeApiKey, apiKeyPath }) {
 
@@ -37,5 +38,12 @@ function AuthenticationServicesTab({ activeOidcClient, oidcClientPath, activeApi
         </div>
     )
 }
+
+AuthenticationServicesTab.propTypes = {
+    activeOidcClient: PropTypes.bool.isRequired,
+    oidcClientPath: PropTypes.string.isRequired,
+    activeApiKey: PropTypes.bool.isRequired,
+    apiKeyPath: PropTypes.string.isRequired,
+};
 
 export default AuthenticationServicesTab;

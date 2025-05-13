@@ -1,5 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import PropTypes from 'prop-types';
 
 function PartnerNotificationsTab({ activeTab }) {
     const { t } = useTranslation();
@@ -21,5 +22,9 @@ function PartnerNotificationsTab({ activeTab }) {
         </div>
     );
 }
+
+PartnerNotificationsTab.propTypes = {
+    activeTab: PropTypes.string.isRequired,
+};
 
 export default PartnerNotificationsTab;

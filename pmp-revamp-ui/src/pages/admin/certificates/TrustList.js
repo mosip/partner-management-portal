@@ -27,6 +27,7 @@ import { HttpService } from "../../../services/HttpService";
 import downloadIcon from "../../../svg/download.svg";
 import disableDownloadIcon from "../../../svg/disable_download.svg";
 import SuccessMessage from "../../common/SuccessMessage";
+import PropTypes from 'prop-types';
 
 function TrustList({ trustListType, uploadTrustBtnName, subTitle, downloadBtnName }) {
 
@@ -415,5 +416,12 @@ function TrustList({ trustListType, uploadTrustBtnName, subTitle, downloadBtnNam
     </div>
   )
 }
+
+TrustList.propTypes = {
+  trustListType: PropTypes.string.isRequired,
+  uploadTrustBtnName: PropTypes.string.isRequired,
+  subTitle: PropTypes.string.isRequired,
+  downloadBtnName: PropTypes.string.isRequired,
+};
 
 export default TrustList;

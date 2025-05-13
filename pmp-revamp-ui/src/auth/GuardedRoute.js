@@ -4,6 +4,7 @@ import { getUserProfile } from '../services/UserProfileService.js';
 import { setupResponseInterceptor } from '../services/HttpService.js';
 import { HttpService } from "../services/HttpService";
 import { getPartnerManagerUrl, createRequest } from "../utils/AppUtils";
+import PropTypes from 'prop-types';
 
 const GuardedRoute = ({ children }) => {
   const location = useLocation();
@@ -66,5 +67,9 @@ const GuardedRoute = ({ children }) => {
     isUserAuthenticated ? children : null
   )
 }
+
+GuardedRoute.propTypes = {
+  children: PropTypes.object.isRequired,
+};
 
 export default GuardedRoute;

@@ -6,6 +6,7 @@ import { createDropdownData, getOuterDivWidth, isLangRTL, validateInputRegex } f
 import TextInputComponent from '../../common/fields/TextInputComponent.js';
 import { getUserProfile } from '../../../services/UserProfileService.js';
 import CalendarInput from '../../common/CalendarInput.js';
+import PropTypes from 'prop-types';
 
 function PartnerCertificateNotificationsFilter({ onApplyFilter }) {
     const { t } = useTranslation();
@@ -125,5 +126,9 @@ function PartnerCertificateNotificationsFilter({ onApplyFilter }) {
         </>
     );
 }
+
+PartnerCertificateNotificationsFilter.propTypes = {
+    onApplyFilter: PropTypes.func.isRequired,
+};
 
 export default PartnerCertificateNotificationsFilter;

@@ -13,6 +13,7 @@ import vectorIcon from "../../svg/vector.svg";
 import ErrorMessage from "./ErrorMessage";
 import { useDispatch, useSelector } from "react-redux";
 import { updateDismissClicked, updateHeaderNotifications, updateNotificationSeenDtimes } from "../../notificationsSlice";
+import PropTypes from 'prop-types';
 
 function NotificationPopup({ closeNotification }) {
     const { t } = useTranslation();
@@ -214,5 +215,9 @@ function NotificationPopup({ closeNotification }) {
         </div>
     );
 }
+
+NotificationPopup.propTypes = {
+    closeNotification: PropTypes.func.isRequired,
+};
 
 export default NotificationPopup;

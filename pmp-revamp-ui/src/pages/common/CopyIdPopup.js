@@ -4,6 +4,7 @@ import { getUserProfile } from '../../services/UserProfileService';
 import { isLangRTL, handleEscapeKey } from '../../utils/AppUtils';
 import close_icon from '../../svg/close_icon.svg';
 import FocusTrap from 'focus-trap-react';
+import PropTypes from 'prop-types';
 
 function CopyIdPopUp({ closePopUp, policyName, partnerId, id, header, alertMsg, styleSet }) {
     const [copied, setCopied] = useState(false);
@@ -77,5 +78,15 @@ function CopyIdPopUp({ closePopUp, policyName, partnerId, id, header, alertMsg, 
         </div>
     )
 }
+
+CopyIdPopUp.propTypes = {
+    closePopUp: PropTypes.func.isRequired,
+    policyName: PropTypes.string.isRequired,
+    partnerId: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+    header: PropTypes.string.isRequired,
+    alertMsg: PropTypes.string.isRequired,
+    styleSet: PropTypes.object.isRequired,
+};
 
 export default CopyIdPopUp;

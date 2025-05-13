@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { getUserProfile } from '../../services/UserProfileService';
 import { isLangRTL } from '../../utils/AppUtils';
+import PropTypes from 'prop-types';
 
 function LoadingIcon({ styleSet }) {
     const { t } = useTranslation();
@@ -18,5 +19,9 @@ function LoadingIcon({ styleSet }) {
         </div>
     );
 }
+
+LoadingIcon.propTypes = {
+    styleSet: PropTypes.object.isRequired,
+};
 
 export default LoadingIcon;

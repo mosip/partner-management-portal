@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import DropdownComponent from '../../common/fields/DropdownComponent.js';
 import { useTranslation } from 'react-i18next';
-import { createDropdownData, isLangRTL } from '../../../utils/AppUtils.js';
+import { createDropdownData, isLangRTL, validateInputRegex } from '../../../utils/AppUtils.js';
 import TextInputComponent from '../../common/fields/TextInputComponent.js';
 import { getUserProfile } from '../../../services/UserProfileService.js';
 import PropTypes from 'prop-types';
@@ -22,6 +22,9 @@ function TrustFilter({ onApplyFilter }) {
         issuedTo: "",
         issuedBy: "",
     });
+    const [invalidCertId, setInvalidCertId] = useState("");
+    const [invalidIssuedTo, setInvalidIssuedTo] = useState("");
+    const [invalidIssuedBy, setInvalidIssuedBy] = useState("");
 
     useEffect(() => {
         const fetchData = async () => {
@@ -37,6 +40,9 @@ function TrustFilter({ onApplyFilter }) {
           ...prevFilters,
           [fieldName]: selectedFilter
         }));
+        if (fieldName === 'certificateId') { validateInputRegex(selectedFilter, setInvalidCertId, t); }
+        if (fieldName === 'issuedTo') { validateInputRegex(selectedFilter, setInvalidIssuedTo, t); }
+        if (fieldName === 'issuedBy') { validateInputRegex(selectedFilter, setInvalidIssuedBy, t); }
     };
 
     const areFiltersEmpty = () => {
@@ -63,6 +69,7 @@ function TrustFilter({ onApplyFilter }) {
                     placeHolderKey="trustList.searchCertificateId"
                     styleSet={styleSet}
                     id="cert_id_filter"
+                    inputError={invalidCertId}
                 />
                 <DropdownComponent
                     fieldName="partnerDomain"
@@ -81,6 +88,7 @@ function TrustFilter({ onApplyFilter }) {
                     placeHolderKey='trustList.searchIssuedTo'
                     styleSet={styleSet}
                     id='cert_issued_to_filter'
+                    inputError={invalidIssuedTo}
                 />
                 <TextInputComponent
                     fieldName='issuedBy'
@@ -89,6 +97,7 @@ function TrustFilter({ onApplyFilter }) {
                     placeHolderKey='trustList.searchIssuedBy'
                     styleSet={styleSet}
                     id='cert_issued_by_domain_filter'
+                    inputError={invalidIssuedBy}
                 />
                 <div className={`mt-6 mr-6 ${isLoginLanguageRTL ? "mr-auto" : "ml-auto"}`}>
                     <button

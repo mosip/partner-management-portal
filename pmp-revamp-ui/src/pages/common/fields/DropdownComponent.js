@@ -1,10 +1,10 @@
-
 import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { isLangRTL, handleMouseClickForDropdown } from '../../../utils/AppUtils';
 import {  } from '../../../utils/AppUtils';
 import { getUserProfile } from '../../../services/UserProfileService';
 import Information from './Information';
+import PropTypes from 'prop-types';
 
 function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent, fieldNameKey,
     placeHolderKey, selectedDropdownValue, styleSet, addInfoIcon, infoKey, disabled, isPlaceHolderPresent, changeDropdownBackground, id}) {
@@ -97,5 +97,21 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
         </div>
     );
 }
+
+DropdownComponent.propTypes = {
+    fieldName: PropTypes.string.isRequired,
+    dropdownDataList: PropTypes.array.isRequired,
+    onDropDownChangeEvent: PropTypes.func.isRequired,
+    fieldNameKey: PropTypes.string.isRequired,
+    placeHolderKey: PropTypes.string.isRequired,
+    selectedDropdownValue: PropTypes.string.isRequired,
+    styleSet: PropTypes.object.isRequired,
+    addInfoIcon: PropTypes.bool.isRequired,
+    infoKey: PropTypes.string.isRequired,
+    disabled: PropTypes.bool.isRequired,
+    isPlaceHolderPresent: PropTypes.bool.isRequired,
+    changeDropdownBackground: PropTypes.bool.isRequired,
+    id: PropTypes.string.isRequired,
+};
 
 export default DropdownComponent;

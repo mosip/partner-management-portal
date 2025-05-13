@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import DropdownComponent from '../../common/fields/DropdownComponent.js';
 import { useTranslation } from 'react-i18next';
 import { createDropdownData } from "../../../utils/AppUtils.js";
+import PropTypes from 'prop-types';
 
 function OidcClientsFilter({ filteredOidcClientsList, onFilterChange }) {
     const { t } = useTranslation();
@@ -87,5 +88,10 @@ function OidcClientsFilter({ filteredOidcClientsList, onFilterChange }) {
         </>
     )
 }
+
+OidcClientsFilter.propTypes = {
+    filteredOidcClientsList: PropTypes.array.isRequired,
+    onFilterChange: PropTypes.func.isRequired,
+};
 
 export default OidcClientsFilter;

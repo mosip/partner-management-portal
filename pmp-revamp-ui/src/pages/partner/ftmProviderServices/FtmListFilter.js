@@ -3,6 +3,7 @@ import DropdownComponent from '../../common/fields/DropdownComponent.js';
 import DropdownWithSearchComponent from "../../common/fields/DropdownWithSearchComponent.js";
 import { useTranslation } from 'react-i18next';
 import { createDropdownData } from "../../../utils/AppUtils.js";
+import PropTypes from 'prop-types';
 
 function FtmListFilter({ filteredFtmList, onFilterChange }) {
     const { t } = useTranslation();
@@ -101,5 +102,10 @@ function FtmListFilter({ filteredFtmList, onFilterChange }) {
         </>
     )
 }
+
+FtmListFilter.propTypes = {
+    filteredFtmList: PropTypes.array.isRequired,
+    onFilterChange: PropTypes.func.isRequired,
+};
 
 export default FtmListFilter;
