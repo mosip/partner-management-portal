@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from "react-i18next";
 import FocusTrap from 'focus-trap-react';
+import PropTypes from 'prop-types';
 
 const BlockerPrompt = ({ blocker }) => {
   const { t } = useTranslation();
@@ -34,6 +35,10 @@ const BlockerPrompt = ({ blocker }) => {
       </FocusTrap>
     </div>
   ) : null;
+};
+
+BlockerPrompt.propTypes = {
+  blocker: PropTypes.object.isRequired,
 };
 
 export default BlockerPrompt;

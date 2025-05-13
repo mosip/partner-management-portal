@@ -7,6 +7,7 @@ import LoadingIcon from '../../common/LoadingIcon';
 import ErrorMessage from '../../common/ErrorMessage';
 import { HttpService } from '../../../services/HttpService';
 import FocusTrap from 'focus-trap-react';
+import PropTypes from 'prop-types';
 
 function DeactivatePolicyPopup({ header, description, popupData, headerKeyName, closePopUp, onClickConfirm, request }) {
     const { t } = useTranslation();
@@ -238,5 +239,15 @@ function DeactivatePolicyPopup({ header, description, popupData, headerKeyName, 
         </div>
     )
 }
+
+DeactivatePolicyPopup.propTypes = {
+  header: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  popupData: PropTypes.object.isRequired,
+  headerKeyName: PropTypes.string.isRequired,
+  closePopUp: PropTypes.func.isRequired,
+  onClickConfirm: PropTypes.func.isRequired,
+  request: PropTypes.object.isRequired,
+};
 
 export default DeactivatePolicyPopup;

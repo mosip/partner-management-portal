@@ -208,6 +208,8 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
 
 PartnerListFilter.propTypes = {
     onApplyFilter: PropTypes.func.isRequired,
+    setErrorCode: PropTypes.func.isRequired,
+    setErrorMsg: PropTypes.func.isRequired,
 };
 
 export default PartnerListFilter;

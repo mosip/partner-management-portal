@@ -1,4 +1,5 @@
 import {onPressEnterKey} from '../../utils/AppUtils.js';
+import PropTypes from 'prop-types';
 
 function SortingIcon ({ headerId, sortDescOrder, sortAscOrder, order, activeSortDesc, activeSortAsc}) {
     return (
@@ -20,5 +21,14 @@ function SortingIcon ({ headerId, sortDescOrder, sortAscOrder, order, activeSort
         </div>
     )
 }
+
+SortingIcon.propTypes = {
+    headerId: PropTypes.string.isRequired,
+    sortDescOrder: PropTypes.func.isRequired,
+    sortAscOrder: PropTypes.func.isRequired,
+    order: PropTypes.string.isRequired,
+    activeSortDesc: PropTypes.string.isRequired,
+    activeSortAsc: PropTypes.string.isRequired,
+};
 
 export default SortingIcon;

@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { handleMouseClickForDropdown, isLangRTL } from '../../../utils/AppUtils';
 import { getUserProfile } from '../../../services/UserProfileService';
 import infoIcon from '../../../svg/info_icon.svg';
+import PropTypes from 'prop-types';
 
 function Information({ infoKey, infoKey1, id }) {
 
@@ -39,5 +40,11 @@ function Information({ infoKey, infoKey1, id }) {
         </div>
     )
 }
+
+Information.propTypes = {
+    infoKey: PropTypes.string.isRequired,
+    infoKey1: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+};
 
 export default Information;

@@ -1,6 +1,7 @@
 import { getUserProfile } from '../../services/UserProfileService';
 import cancelIcon from '../../svg/cancel_icon.svg';
 import { isLangRTL } from '../../utils/AppUtils';
+import PropTypes from 'prop-types';
 
 function SuccessMessage({ successMsg, clickOnCancel, customStyle, successParam }) {
 
@@ -27,5 +28,12 @@ function SuccessMessage({ successMsg, clickOnCancel, customStyle, successParam }
         </div>
     );
 }
+
+SuccessMessage.propTypes = {
+    successMsg: PropTypes.string.isRequired,
+    clickOnCancel: PropTypes.func.isRequired,
+    customStyle: PropTypes.object.isRequired,
+    successParam: PropTypes.string.isRequired,
+};
 
 export default SuccessMessage;

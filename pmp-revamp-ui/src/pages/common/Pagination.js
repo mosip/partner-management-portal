@@ -5,6 +5,7 @@ import { getUserProfile } from '../../services/UserProfileService';
 import { isLangRTL, handleMouseClickForDropdown, onPressEnterKey } from '../../utils/AppUtils';
 import { AiFillLeftCircle, AiFillRightCircle } from "react-icons/ai"; // icons form react-icons
 import { IconContext } from "react-icons"; // for customizing icons
+import PropTypes from 'prop-types';
 
 function Pagination({ dataListLength, selectedRecordsPerPage, setSelectedRecordsPerPage, setFirstIndex, isServerSideFilter = false, getPaginationValues, isViewNotificationPage, isApplyFilterClicked, setIsApplyFilterClicked }) {
     const { t } = useTranslation();
@@ -112,5 +113,16 @@ function Pagination({ dataListLength, selectedRecordsPerPage, setSelectedRecords
         </div>
     )
 }
+
+Pagination.propTypes = {
+    dataListLength: PropTypes.number.isRequired,
+    selectedRecordsPerPage: PropTypes.number.isRequired,
+    setSelectedRecordsPerPage: PropTypes.func.isRequired,
+    setFirstIndex: PropTypes.func.isRequired,
+    isServerSideFilter: PropTypes.bool.isRequired,
+    getPaginationValues: PropTypes.func.isRequired,
+    isViewNotificationPage: PropTypes.bool.isRequired,
+    isApplyFilterClicked: PropTypes.bool.isRequired,
+};
 
 export default Pagination;

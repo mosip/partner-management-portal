@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { isLangRTL } from '../../../utils/AppUtils';
 import { getUserProfile } from '../../../services/UserProfileService';
 import Information from './Information';
+import PropTypes from 'prop-types';
 
 function TextInputComponent({ fieldName, fieldNameKey, placeHolderKey, textBoxValue, onTextChange, styleSet, id, maxLength, addInfoIcon, infoKey, disableField, inputError }) {
     const { t } = useTranslation();
@@ -63,5 +64,20 @@ function TextInputComponent({ fieldName, fieldNameKey, placeHolderKey, textBoxVa
         </div>
     );
 }
+
+TextInputComponent.propTypes = {
+    fieldName: PropTypes.string.isRequired,
+    fieldNameKey: PropTypes.string.isRequired,
+    placeHolderKey: PropTypes.string.isRequired,
+    textBoxValue: PropTypes.string.isRequired,
+    onTextChange: PropTypes.func.isRequired,
+    styleSet: PropTypes.object.isRequired,
+    id: PropTypes.string.isRequired,
+    maxLength: PropTypes.number.isRequired,
+    addInfoIcon: PropTypes.bool.isRequired,
+    infoKey: PropTypes.string.isRequired,
+    disableField: PropTypes.bool.isRequired,
+    inputError: PropTypes.string.isRequired,
+};
 
 export default TextInputComponent;

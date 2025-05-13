@@ -11,6 +11,7 @@ import fileDescription from '../../../svg/file_description.svg';
 import FocusTrap from 'focus-trap-react';
 import { Certificate } from "pkijs";
 import { fromBER } from "asn1js";
+import PropTypes from 'prop-types';
 
 function UploadCertificate({ closePopup, popupData, request }) {
     const [partnerDomainType, setPartnerDomainType] = useState("");
@@ -315,5 +316,11 @@ function UploadCertificate({ closePopup, popupData, request }) {
 
     );
 }
+
+UploadCertificate.propTypes = {
+    closePopup: PropTypes.func.isRequired,
+    popupData: PropTypes.object.isRequired,
+    request: PropTypes.object.isRequired,
+};
 
 export default UploadCertificate;

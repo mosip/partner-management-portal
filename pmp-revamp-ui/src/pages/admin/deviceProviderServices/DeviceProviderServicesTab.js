@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
 import { onPressEnterKey } from '../../../utils/AppUtils';
+import PropTypes from 'prop-types';
 
 function DeviceProviderServiceTab({ activeSbi, sbiListPath, activeDevice, devicesListPath }) {
     const { t } = useTranslation();
@@ -40,4 +41,12 @@ function DeviceProviderServiceTab({ activeSbi, sbiListPath, activeDevice, device
         </div>
     )
 }
+
+DeviceProviderServiceTab.propTypes = {
+  activeSbi: PropTypes.bool.isRequired,
+  sbiListPath: PropTypes.string.isRequired,
+  activeDevice: PropTypes.bool.isRequired,
+  devicesListPath: PropTypes.string.isRequired,
+};
+
 export default DeviceProviderServiceTab;

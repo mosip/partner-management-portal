@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import cancelIcon from '../../svg/cancel_icon.svg';
-import { isLangRTL, getErrorMessage, onPressEnterKey } from "../../utils/AppUtils";
+import { isLangRTL, getErrorMessage } from "../../utils/AppUtils";
 import { getUserProfile } from "../../services/UserProfileService";
+import PropTypes from 'prop-types';
 
 function ErrorMessage({ errorCode, errorMessage, clickOnCancel, customStyle }) {
     const { t } = useTranslation();
@@ -33,5 +34,12 @@ function ErrorMessage({ errorCode, errorMessage, clickOnCancel, customStyle }) {
         </div>
     );
 }
+
+ErrorMessage.propTypes = {
+    errorCode: PropTypes.string.isRequired,
+    errorMessage: PropTypes.string.isRequired,
+    clickOnCancel: PropTypes.func.isRequired,
+    customStyle: PropTypes.object.isRequired,
+};
 
 export default ErrorMessage;

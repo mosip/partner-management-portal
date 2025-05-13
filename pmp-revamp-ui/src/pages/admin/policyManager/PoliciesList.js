@@ -29,6 +29,7 @@ import publishPolicyIcon from "../../../svg/publish_policy_icon.svg";
 import disablePublishPolicyIcon from "../../../svg/disable_publish_policy_icon.svg";
 import DeactivatePolicyPopup from './DeactivatePolicyPopup.js';
 import PublishPolicyPopup from './PublishPolicyPopup.js';
+import PropTypes from 'prop-types';
 
 function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTitle, fetchDataErrorMessage, viewPolicy, editPolicy }) {
     const { t } = useTranslation();
@@ -454,4 +455,15 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
         </div>
     )
 }
+
+PoliciesList.propTypes = {
+  policyType: PropTypes.string.isRequired,
+  createPolicyButtonName: PropTypes.string.isRequired,
+  createPolicy: PropTypes.func.isRequired,
+  subTitle: PropTypes.string.isRequired,
+  fetchDataErrorMessage: PropTypes.string.isRequired,
+  viewPolicy: PropTypes.func.isRequired,
+  editPolicy: PropTypes.func.isRequired,
+};
+
 export default PoliciesList;
