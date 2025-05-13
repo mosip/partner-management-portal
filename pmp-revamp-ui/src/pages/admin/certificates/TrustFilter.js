@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import DropdownComponent from '../../common/fields/DropdownComponent.js';
 import { useTranslation } from 'react-i18next';
-import { createDropdownData, isLangRTL, validateInputRegex } from '../../../utils/AppUtils.js';
+import { createDropdownData, getFilterDropdownStyle, getFilterTextFieldStyle, isLangRTL, validateInputRegex } from '../../../utils/AppUtils.js';
 import TextInputComponent from '../../common/fields/TextInputComponent.js';
 import { getUserProfile } from '../../../services/UserProfileService.js';
 import PropTypes from 'prop-types';
@@ -46,17 +46,7 @@ function TrustFilter({ onApplyFilter }) {
     };
 
     const areFiltersEmpty = () => {
-        return Object.values(filters).every(value => value === "");
-    };
-
-    const styles = {
-        dropdownButton: "min-w-64",
-    };
-
-    const styleSet = {
-        inputField: "min-w-64",
-        inputLabel: "mb-2",
-        outerDiv: "ml-4"
+        return Object.values(filters).every(value => value === "") || invalidCertId || invalidIssuedTo || invalidIssuedBy;
     };
 
     return (
@@ -67,7 +57,7 @@ function TrustFilter({ onApplyFilter }) {
                     onTextChange={onFilterChangeEvent}
                     fieldNameKey="trustList.certificateId"
                     placeHolderKey="trustList.searchCertificateId"
-                    styleSet={styleSet}
+                    styleSet={getFilterTextFieldStyle()}
                     id="cert_id_filter"
                     inputError={invalidCertId}
                 />
@@ -77,7 +67,7 @@ function TrustFilter({ onApplyFilter }) {
                     onDropDownChangeEvent={onFilterChangeEvent}
                     fieldNameKey="trustList.partnerDomain"
                     placeHolderKey="trustList.selectPartnerDomain"
-                    styleSet={styles}
+                    styleSet={getFilterDropdownStyle()}
                     isPlaceHolderPresent={true}
                     id="cert_partner_domain_filter"
                 />
@@ -86,7 +76,7 @@ function TrustFilter({ onApplyFilter }) {
                     onTextChange={onFilterChangeEvent}
                     fieldNameKey='trustList.issuedTo'
                     placeHolderKey='trustList.searchIssuedTo'
-                    styleSet={styleSet}
+                    styleSet={getFilterTextFieldStyle()}
                     id='cert_issued_to_filter'
                     inputError={invalidIssuedTo}
                 />
@@ -95,7 +85,7 @@ function TrustFilter({ onApplyFilter }) {
                     onTextChange={onFilterChangeEvent}
                     fieldNameKey='trustList.issuedBy'
                     placeHolderKey='trustList.searchIssuedBy'
-                    styleSet={styleSet}
+                    styleSet={getFilterTextFieldStyle()}
                     id='cert_issued_by_domain_filter'
                     inputError={invalidIssuedBy}
                 />

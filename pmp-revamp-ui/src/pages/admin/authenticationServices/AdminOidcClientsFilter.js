@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import DropdownComponent from "../../common/fields/DropdownComponent.js";
 import TextInputComponent from "../../common/fields/TextInputComponent.js";
 import { useTranslation } from "react-i18next";
-import { createDropdownData, isLangRTL, validateInputRegex } from "../../../utils/AppUtils.js";
+import { createDropdownData, getFilterDropdownStyle, getFilterTextFieldStyle, isLangRTL, validateInputRegex } from "../../../utils/AppUtils.js";
 import { getUserProfile } from '../../../services/UserProfileService';
 import PropTypes from 'prop-types';
 
@@ -54,16 +54,6 @@ function AdminOidcClientsFilter ({ onApplyFilter }) {
         || invalidOrgName || invalidPolicyGroupName || invalidPolicyName || invalidClientName;
     };
 
-    const styles = {
-        dropdownButton: "min-w-64",
-    };
-
-    const styleSet = {
-        inputField: "min-w-64",
-        inputLabel: "mb-2",
-        outerDiv: "ml-4"
-    };
-
     return (
         <div className="flex w-full p-3 justify-start bg-[#F7F7F7] flex-wrap">
             <TextInputComponent
@@ -71,7 +61,7 @@ function AdminOidcClientsFilter ({ onApplyFilter }) {
                 onTextChange={onFilterChangeEvent}
                 fieldNameKey="oidcClientsList.partnerId"
                 placeHolderKey="partnerList.searchPartnerId"
-                styleSet={styleSet}
+                styleSet={getFilterTextFieldStyle()}
                 id="partner_id_filter"
                 inputError={invalidPartnerId}
             />
@@ -80,7 +70,7 @@ function AdminOidcClientsFilter ({ onApplyFilter }) {
                 onTextChange={onFilterChangeEvent}
                 fieldNameKey="oidcClientsList.orgName"
                 placeHolderKey="partnerList.searchOrganisation"
-                styleSet={styleSet}
+                styleSet={getFilterTextFieldStyle()}
                 id="org_name_filter"
                 inputError={invalidOrgName}
             />
@@ -89,7 +79,7 @@ function AdminOidcClientsFilter ({ onApplyFilter }) {
                 onTextChange={onFilterChangeEvent}
                 fieldNameKey="policiesList.policyGroup"
                 placeHolderKey="policiesList.searchPolicyGroup"
-                styleSet={styleSet}
+                styleSet={getFilterTextFieldStyle()}
                 id="policy_group_filter"
                 inputError={invalidPolicyGroupName}
             />
@@ -98,7 +88,7 @@ function AdminOidcClientsFilter ({ onApplyFilter }) {
                 onTextChange={onFilterChangeEvent}
                 fieldNameKey="oidcClientsList.policyName"
                 placeHolderKey="policiesList.searchPolicyName"
-                styleSet={styleSet}
+                styleSet={getFilterTextFieldStyle()}
                 id="policy_name_filter"
                 inputError={invalidPolicyName}
             />
@@ -107,7 +97,7 @@ function AdminOidcClientsFilter ({ onApplyFilter }) {
                 onTextChange={onFilterChangeEvent}
                 fieldNameKey="oidcClientsList.oidcClientName"
                 placeHolderKey="oidcClientsList.searchOidcClientName"
-                styleSet={styleSet}
+                styleSet={getFilterTextFieldStyle()}
                 id="oidc_client_name_filter"
                 inputError={invalidClientName}
             />
@@ -117,7 +107,7 @@ function AdminOidcClientsFilter ({ onApplyFilter }) {
                 onDropDownChangeEvent={onFilterChangeEvent}
                 fieldNameKey="partnerList.status"
                 placeHolderKey="partnerList.selectStatus"
-                styleSet={styles}
+                styleSet={getFilterDropdownStyle()}
                 isPlaceHolderPresent={true}
                 id="status_filter"
             />
