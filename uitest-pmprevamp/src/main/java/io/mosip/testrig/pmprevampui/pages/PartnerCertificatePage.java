@@ -27,8 +27,11 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(xpath = "//*[text()='Partner certificate for Device Provider is uploaded successfully.']")
 	private WebElement deviceProviderSuccessMessage;
 	
-	@FindBy(xpath = "//p[contains(text(), 'FTM Chip Certificate is uploaded successfully')]")
+	@FindBy(xpath = "//p[contains(text(), 'Partner certificate for FTM Chip Provider is uploaded successfully.')]")
 	private WebElement successMessageForFtmCert;
+	
+	@FindBy(xpath = "//p[contains(text(), 'FTM Chip Certificate is uploaded successfully')]")
+	private WebElement successMessageForFtmChipCert;
 	
 	@FindBy(id = "fileInput")
 	private WebElement uploadFile;
@@ -185,6 +188,9 @@ public class PartnerCertificatePage extends BasePage {
 	
 	@FindBy(id = "certificate_list_view_btn")
 	private WebElement certificateListViewButton;
+	
+	@FindBy(xpath = "//*[@class='text-white text-sm max-[450px]:text-xs/4 break-normal font-inter']")
+	private WebElement unableToUploadErrorMessage;
 	
 	public PartnerCertificatePage(WebDriver driver) {
 		super(driver);
@@ -360,10 +366,6 @@ public class PartnerCertificatePage extends BasePage {
 		 clickOnElement(errorCloseButton);
 	}
 	
-	public boolean isNoRootCertDisplayed() {
-		return isElementDisplayed(noRootCert);
-	}
-	
 	public boolean isErrorCodeForSelfSignedCerDisplayed() {
 		return isElementDisplayed(errorCodeForSelfSignedCer);
 	}
@@ -484,6 +486,19 @@ public class PartnerCertificatePage extends BasePage {
 	
 	public void clickOnTitleBackButton() {
 		 clickOnElement(titleBackButton);
+	}
+	
+	public boolean isSuccessMessageForFtmChipCertDisplayed() {
+		return isElementDisplayed(successMessageForFtmChipCert);
+	}
+	
+	public boolean isCertUploadErrorDisplayed() {
+	    if (isElementDisplayed(noRootCert)) {
+	        return true;
+	    } else if (isElementDisplayed(unableToUploadErrorMessage)) {
+	        return true;
+	    }
+	    return false;
 	}
 	
 }

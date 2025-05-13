@@ -97,7 +97,7 @@ public class DashboardPage extends BasePage {
 	private WebElement dashboardPartnerCertificateListHeader;
 
 	@FindBy(xpath = "//h5[text()='FTM Chip']")
-	private WebElement FTMChipTab;
+	private WebElement ftmChipTab;
 
 	@FindBy(id = "admin_partner_certificate_list_icon")
 	private WebElement certificateTrustStore;
@@ -280,7 +280,7 @@ public class DashboardPage extends BasePage {
 	}
 
 	public void clickOnFTMChipTab() {
-		clickOnElement(FTMChipTab);
+		clickOnElement(ftmChipTab);
 	}
 
 	public void clickOnDashboardFtmChipproviderCardHeader() {
@@ -367,5 +367,9 @@ public class DashboardPage extends BasePage {
 	public OidcClientPage clickOnAuthenticationServices() {
 		clickOnElement(authenticationServices);
 		return new OidcClientPage(driver);
+	}
+	
+	public boolean isDashboardPageDisplayed() {
+		return isElementDisplayed(ftmChipTab);
 	}
 }

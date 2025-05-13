@@ -599,6 +599,47 @@ public class GlobalConstants {
 	public static final String isKeycloakPageDisplayed = "Verify if keycloak page displayed";
 	public static final String isPublishButtonEnabled = "Verify if publish button enabled";
 	public static final String isPolicyGroupDropdownEnabled = "Verify if policy group dropdown enabled";
+	public static final String isDashboardPageDisplayed="verify dashboardpage displayed";
+	public static final String isDownloadSuccessMessageDisplayed="verify if certificate download successfully message displayed";
+	public static final String isPartnerIdContextDisplayed="Verify if partner id context is displayed";
+	public static final String isunexpectedErrorMessageDispayed="verify if encountered with unexpexted error message displayed";
+	public static final String isMakeFilterDisplayed="verify make filterbox is displayed";
+	public static final String isModelFilterDisplayed="verify model filterbox is displayed";
+	public static final String isFtmList1Displayed="verify the ftm list1 displayed";
+	public static final String isNoResultsFoundDisplayed="verify no records should be displayed";
+	public static final String isResultsTableDisplayed="verify the table containing related results is displayed";
+	public static final String isFtmListApproveRejectOptionIsEnabled="verify approve/reject button is enabled";
+	public static final String isFtmListViewIsEnabled="verify view option is enabled";
+	public static final String isFtmListApproveRejectOptionIsDisabled="verify approve/reject button is disabled";
+	public static final String isDemoMakeDisplayedInMakeColumn="verify if newly created DemoMake is displayed";
+	public static final String isCertificateReuploadButtonDisplayed="verify upload button is available";	
+	public static final String isRowGreyedOut="verify the deactivated row displayed in grey";
+	public static final String isDeactivateOptionDisabled="verify deactivate option is disabled";
+	public static final String isListOfFtmChipDisplayed="verify List Of FtmChip text is Displayed ";
+	public static final String isPartnerIdColumnCorrect="verify partner id column is correctly displayed";
+	public static final String isOrganisationColumnCorrect="verify Organisation column is correctly displayed";
+	public static final String isFtmIdColumnCorrect="verify ftm id column is correctly displayed";
+	public static final String isMakeColumnCorrect="verify make column is correctly displayed";
+	public static final String isModelColumnCorrect="verify model column is correctly displayed";
+	public static final String isCreationDateColumnCorrect="verify creation date column is correctly displayed";
+	public static final String isStatusColumnCorrect="verify status column is correctly displayed";
+	public static final String isActionColumnCorrect="verify action column is correctly displayed";
+	public static final String isDownloadButtonViewPageEnabled="verify download option in view page is accessible";
+	public static final String isFtmChipDetailsViewDisplayed="verify FTM chip details view displayed";
+	public static final String isFtmDetailsSideNavIconDisplayed="verify Ftm deatils icon in side nav displayed";
+	public static final String isViewFtmChipDetailsTitleDisplayed="verify View Ftm chip details Text Displayed ";
+	public static final String isViewFtmChipDetailsTitleNotEditable="verify view Ftm chip details Text is not allowed to edit";
+	public static final String isCreatedDateDisplayed="verify created date is displayed";
+	public static final String isCreatedOnLabelDisplayed="verify created time is displayed";
+	public static final String isPartnerIdValueDisplayed="Verify if ftm chip partner type value displayed";
+	public static final String isOrganisationLableDisplayed="Verify if ftm chip organisation label displayed";
+	public static final String isOrganisationValueDisplayed="Verify if ftm chip organisation value displayed";
+	public static final String isApproveRejectCloseButtonDisplayed="verify if popup close button is dislpayed";
+	public static final String isRejectButtonDisplayed="verify if reject button is dislpayed";
+	public static final String isApproveButtonDisplayed="verify if approve button is dislpayed";
+	public static final String isElementIsEnabled = "Verify if element is enabled displayed";
+	public static final String isPopupTitleDisplayed="verify if deactivate popup title is dislpayed";
+	public static final String isPopupSubTitleDisplayed = "Verify if deactivate popup sub title displayed";
 
 	
 	public static final String APPID = "appId";
@@ -710,7 +751,25 @@ public class GlobalConstants {
 	public static final String DEACTIVATE_POLICY_DESCRIPTION = "deactivate policy";
 	public static final String DEACTIVATE_POLICY2 = "deactivate2";
 	public static final String DEACTIVATE_POLICY_DESCRIPTION2 = "deactivate policy2";
-	public static final String OIDCNAME = "odic name";	
+	public static final String OIDCNAME = "odic name";
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 
 }
