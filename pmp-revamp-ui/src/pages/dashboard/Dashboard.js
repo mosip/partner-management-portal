@@ -8,6 +8,7 @@ import ErrorMessage from '../common/ErrorMessage.js';
 import LoadingIcon from "../common/LoadingIcon.js";
 import LoadingCount from '../common/LoadingCount.js';
 import SelectPolicyPopup from './SelectPolicyPopup.js';
+import PropTypes from 'prop-types';
 
 import partnerCertificateIcon from '../../svg/partner_certificate_icon.svg';
 import policiesIcon from '../../svg/policies_icon.svg';
@@ -412,7 +413,8 @@ function Dashboard() {
 
   const CountWithHover = ({ count, descriptionKey, descriptionParams, isExpiryHover }) => (
     <div className={`absolute flex items-center -top-3 -right-3 min-w-fit w-10 h-8 ${isExpiryHover ? 'bg-[#FAD6D1]' : 'bg-[#FEF1C6]'} rounded-md text-[#6D1C00] text-sm shadow-md`}>
-      <div role='button' onClick={(e) => e.stopPropagation()} className="relative group flex items-center justify-center w-full" tabIndex="0">
+      <div role='button' onClick={(e) => e.stopPropagation()} className="relative group flex items-center justify-center w-full" tabIndex="0" 
+        onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); e.stopPropagation(); } }}>
         <span className="font-medium p-2 rounded">
           {count ?? <LoadingCount />}
         </span>
@@ -425,6 +427,13 @@ function Dashboard() {
       </div>
     </div>
   );
+
+  CountWithHover.propTypes = {
+    count: PropTypes.number.isRequired,
+    descriptionKey: PropTypes.string.isRequired,
+    descriptionParams: PropTypes.object.isRequired,
+    isExpiryHover: PropTypes.bool.isRequired,
+  };
 
   return (
     <div className={`w-full mb-[2%] ${isLoginLanguageRTL ? "mr-28" : "ml-20"} overflow-x-scroll relative`}>

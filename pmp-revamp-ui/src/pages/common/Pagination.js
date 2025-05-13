@@ -123,6 +123,7 @@ Pagination.propTypes = {
     getPaginationValues: PropTypes.func.isRequired,
     isViewNotificationPage: PropTypes.bool.isRequired,
     isApplyFilterClicked: PropTypes.bool.isRequired,
+    setIsApplyFilterClicked: PropTypes.func.isRequired,
 };
 
 export default Pagination;
