@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import DropdownComponent from "../../common/fields/DropdownComponent.js";
 import TextInputComponent from "../../common/fields/TextInputComponent.js";
 import { useTranslation } from "react-i18next";
-import { isLangRTL, createDropdownData, createRequest, getPartnerManagerUrl, handleServiceErrors, validateInputRegex } from "../../../utils/AppUtils.js";
+import { isLangRTL, createDropdownData, createRequest, getPartnerManagerUrl, handleServiceErrors, validateInputRegex, getFilterTextFieldStyle, getFilterDropdownStyle } from "../../../utils/AppUtils.js";
 import { getUserProfile } from '../../../services/UserProfileService';
 import { HttpService } from "../../../services/HttpService.js";
 import PropTypes from 'prop-types';
@@ -102,16 +102,6 @@ function PolicyRequestsListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) 
       || invalidPolicyId || invalidPolicyName || invalidPolicyGroupName;
   };
 
-  const styles = {
-    dropdownButton: "min-w-64",
-  };
-
-  const styleSet = {
-    inputField: "min-w-64 h-9",
-    inputLabel: "mb-2",
-    outerDiv: "ml-4"
-  };
-
   return (
     <div className="flex w-full p-3 justify-start bg-[#F7F7F7] flex-wrap">
       <TextInputComponent
@@ -120,7 +110,7 @@ function PolicyRequestsListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) 
         textBoxValue={filters.partnerId}
         fieldNameKey="partnerPolicyMappingRequestList.partnerId"
         placeHolderKey="partnerPolicyMappingRequestList.searchPartnerId"
-        styleSet={styleSet}
+        styleSet={getFilterTextFieldStyle()}
         id="partner_id_filter"
         inputError={invalidPartnerId}
       />
@@ -130,7 +120,7 @@ function PolicyRequestsListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) 
         onDropDownChangeEvent={onFilterChangeEvent}
         fieldNameKey="partnerPolicyMappingRequestList.partnerType"
         placeHolderKey="partnerPolicyMappingRequestList.selectPartnerType"
-        styleSet={styles}
+        styleSet={getFilterDropdownStyle()}
         isPlaceHolderPresent={true}
         id="partner_type_filter"
       />
@@ -140,7 +130,7 @@ function PolicyRequestsListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) 
         textBoxValue={filters.orgName}
         fieldNameKey="partnerPolicyMappingRequestList.organisation"
         placeHolderKey="partnerPolicyMappingRequestList.searchOrganisation"
-        styleSet={styleSet}
+        styleSet={getFilterTextFieldStyle()}
         id="partner_organisation_filter"
         inputError={invalidOrgName}
       />
@@ -150,7 +140,7 @@ function PolicyRequestsListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) 
         textBoxValue={filters.policyId}
         fieldNameKey="partnerPolicyMappingRequestList.policyId"
         placeHolderKey="partnerPolicyMappingRequestList.searchPolicyId"
-        styleSet={styleSet}
+        styleSet={getFilterTextFieldStyle()}
         id="policy_id_filter"
         inputError={invalidPolicyId}
       />
@@ -160,7 +150,7 @@ function PolicyRequestsListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) 
         textBoxValue={filters.policyName}
         fieldNameKey="partnerPolicyMappingRequestList.policyName"
         placeHolderKey="partnerPolicyMappingRequestList.searchPolicyName"
-        styleSet={styleSet}
+        styleSet={getFilterTextFieldStyle()}
         id="policy_name_filter"
         inputError={invalidPolicyName}
       />
@@ -170,7 +160,7 @@ function PolicyRequestsListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) 
         textBoxValue={filters.policyGroupName}
         fieldNameKey="partnerPolicyMappingRequestList.policyGroupName"
         placeHolderKey="partnerPolicyMappingRequestList.searchPolicyGroup"
-        styleSet={styleSet}
+        styleSet={getFilterTextFieldStyle()}
         id="policy_group_filter"
         inputError={invalidPolicyGroupName}
       />
@@ -180,7 +170,7 @@ function PolicyRequestsListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) 
         onDropDownChangeEvent={onFilterChangeEvent}
         fieldNameKey="partnerPolicyMappingRequestList.status"
         placeHolderKey="partnerPolicyMappingRequestList.selectStatus"
-        styleSet={styles}
+        styleSet={getFilterDropdownStyle()}
         isPlaceHolderPresent={true}
         id="status_filter"
       />

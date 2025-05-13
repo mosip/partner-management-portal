@@ -1135,3 +1135,19 @@ export const validateInput = (input) => {
 
     return allowedPattern.test(input);
 }
+
+export const getFilterDropdownStyle = () => {
+    const style = {
+        dropdownButton: "min-w-64",
+    };
+    return style;
+};
+
+export const getFilterTextFieldStyle = () => {
+    const styleSet = {
+        inputField: "min-w-64",
+        inputLabel: "mb-2",
+        outerDiv: "ml-4"
+    };
+    return styleSet;
+}
