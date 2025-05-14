@@ -262,17 +262,33 @@ public class AddDevicePage extends BasePage {
 	public boolean isSubmitEnabled() {
 		return isElementEnabled(submitButton);
 	}
+	
+	public boolean isSubmitDisabled() {
+		return isElementDisabled(submitButton);
+	}
 
 	public boolean isDeviceSubTypeEnabled() {
 		return isElementEnabled(addDeviceSubTypeSelectDropdown);
+	}
+	
+	public boolean isDeviceSubTypeDisabled() {
+		return isElementDisabled(addDeviceSubTypeSelectDropdown);
 	}
 
 	public boolean isAddDeviceEnabled() {
 		return isElementEnabled(addDeviceButton);
 	}
+	
+	public boolean isAddDeviceDisabled() {
+		return isElementDisabled(addDeviceButton);
+	}
 
 	public boolean isDeleteButtonEnabled() {
 		return isElementEnabled(deleteButton);
+	}
+	
+	public boolean isDeleteButtonDisabled() {
+		return isElementDisabled(deleteButton);
 	}
 
 	public void clickOnDeleteButton() {
@@ -311,8 +327,8 @@ public class AddDevicePage extends BasePage {
 		return getTextFromLocator(addDeviceTypeSelectDropdown);
 	}
 
-	public boolean isDeviceTypeEnabled() {
-		return isElementEnabled(addDeviceTypeSelectDropdown);
+	public boolean isDeviceTypeDisabled() {
+		return isElementDisabled(addDeviceTypeSelectDropdown);
 	}
 
 	public String getDeviceSubTypeValue() {

@@ -202,6 +202,12 @@ public class ListOfSbiPage extends BasePage {
 		return isElementDisplayed(status);
 	}
 
+	public boolean isRejectedStatusDisplayedInAdminPage(String sbiVersion) {
+		WebElement status = driver
+				.findElement(By.xpath("//td[text()='" + sbiVersion + "']/..//div[text()='Rejected']"));
+		return isElementDisplayed(status);
+	}
+	
 	public String getSbiListArrowDirection() {
 		return getTextFromAttribute(listOfSbiArrowButton, GlobalConstants.CLASS);
 	}

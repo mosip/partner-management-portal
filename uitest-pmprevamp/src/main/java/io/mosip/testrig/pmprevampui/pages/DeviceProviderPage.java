@@ -108,6 +108,9 @@ public class DeviceProviderPage extends BasePage {
 
 	@FindBy(xpath = "//p[text()='SBI details exists for given SBI Version. Multiple SBI with same SBI Version cannot be added.']")
 	private WebElement duplicateSbiErrorMessage;
+	
+	@FindBy(xpath = "//span[text()='Special characters are not allowed.']")
+	private WebElement specialCharacterErrorMessage;
 
 	@FindBy(xpath = "//p[text()='Your changes will be lost, are you sure you want to proceed?']")
 	private WebElement navigationAlertMessage;
@@ -188,6 +191,7 @@ public class DeviceProviderPage extends BasePage {
 	public void enterExpiryDate() {
 		clickOnElement(expiryDate);
 		clickOnElement(nextMonth);
+		clickOnElement(nextMonth);
 		clickOnElement(date24InCalender);
 	}
 
@@ -246,6 +250,10 @@ public class DeviceProviderPage extends BasePage {
 	public boolean isSubmitButtonEnabled() {
 		return isElementEnabled(submit);
 	}
+	
+	public boolean isSubmitButtonDisabled() {
+		return isElementDisabled(submit);
+	}
 
 	public boolean isListOfSbiTitleDisplayed() {
 		return isElementDisplayed(sbiList);
@@ -298,8 +306,8 @@ public class DeviceProviderPage extends BasePage {
 		return getTextFromLocator(partnerIdInfoMessage);
 	}
 
-	public boolean isPartnerTypeEnabled() {
-		return isElementEnabled(partnerTypeBox);
+	public boolean isPartnerTypeDisabled() {
+		return isElementDisabled(partnerTypeBox);
 	}
 
 	public boolean isSameDateErrorMessageDisplayed() {
@@ -312,6 +320,10 @@ public class DeviceProviderPage extends BasePage {
 
 	public boolean isSbiExistsErrorMessageDisplayed() {
 		return isElementDisplayed(duplicateSbiErrorMessage);
+	}
+	
+	public boolean isSpecialCharacterErrorMessageDisplayed() {
+		return isElementDisplayed(specialCharacterErrorMessage);
 	}
 
 	public void clickOnExpiryInfo() {

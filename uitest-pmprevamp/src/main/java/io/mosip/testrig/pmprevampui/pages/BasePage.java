@@ -8,6 +8,7 @@ import java.util.Random;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.ElementNotInteractableException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -16,18 +17,22 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Reporter;
+import org.apache.log4j.Logger;
 
 import io.mosip.testrig.pmprevampui.kernel.util.ConfigManager;
 import io.mosip.testrig.pmprevampui.utility.JsonUtil;
+import io.mosip.testrig.pmprevampui.utility.LogUtil;
 import io.mosip.testrig.pmprevampui.utility.Screenshot;
+import io.mosip.testrig.pmprevampui.utility.WaitUtil;
 
 public class BasePage {
 
-	protected static WebDriver driver;
+	protected WebDriver driver;
 	public static String appendDate = getPreAppend() + getDateTime();
+	private static final Logger logger = Logger.getLogger(BasePage.class);
 
 	public BasePage(WebDriver driver) {
-		BasePage.driver = driver;
+		this.driver = driver;
 		PageFactory.initElements(driver, this);
 	}
 
@@ -37,163 +42,174 @@ public class BasePage {
 		return dtf.format(now);
 	}
 
-	public static void clickOnElement(WebElement element) {
-		wait(1000);
+	public void waitForElementVisible(WebElement element) {
+		WaitUtil.waitForVisibility(driver, element);
+	}
+
+	protected void waitForElementClickable(WebElement element) {
+		WaitUtil.waitForClickability(driver, element);
+	}
+
+	public void clickOnElement(WebElement element) {
+		LogUtil.action("Clicking on element: ", element);
 		try {
-			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-			wait.until(ExpectedConditions.elementToBeClickable(element));
+			waitForElementClickable(element);
 			element.click();
 		} catch (Exception e) {
+			LogUtil.step("Standard click failed, trying JS click: " + element.toString());
 			try {
 				JavascriptExecutor executor = (JavascriptExecutor) driver;
 				executor.executeScript("arguments[0].click();", element);
-			} catch (Exception exception) {
-				try {
-					Reporter.log("<p><img src='data:image/png;base64," + Screenshot.ClickScreenshot(driver)
-							+ "' width='900' height='450'/></p>");
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-				throw exception;
+			} catch (Exception jsEx) {
+				LogUtil.error("JS click failed on element: " + element.toString());
+				LogUtil.error("Exception: " + jsEx.getMessage());
+				takeScreenshot();
+				throw jsEx;
 			}
 		}
 	}
 
-	public static void enter(WebElement element, String value) {
-
+	public void enter(WebElement element, String value) {
+		LogUtil.action("Entering value '" + value + "' into element: ", element);
 		try {
-			Thread.sleep(3000);
+			waitForElementVisible(element);
 			element.clear();
 			element.sendKeys(value);
 		} catch (Exception e) {
+			LogUtil.step("Standard entry failed, trying JS click before typing: " + element.toString());
 			try {
 				JavascriptExecutor executor = (JavascriptExecutor) driver;
 				executor.executeScript("arguments[0].click();", element);
-			} catch (Exception exception) {
-				try {
-					Reporter.log("<p><img src='data:image/png;base64," + Screenshot.ClickScreenshot(driver)
-							+ "' width='900' height='450'/></p>");
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-				throw exception;
+			} catch (Exception jsEx) {
+				LogUtil.error("JS click failed before typing: " + element.toString());
+				LogUtil.error("Exception: " + jsEx.getMessage());
+				takeScreenshot();
+				throw jsEx;
 			}
 		}
 	}
 
-	public static void enter(WebElement element, CharSequence[] value) {
-
+	public void enter(WebElement element, CharSequence[] value) {
+		LogUtil.action("Entering value '" + value + "' into element: ", element);
 		try {
-			Thread.sleep(3000);
+			waitForElementVisible(element);
 			element.clear();
 			element.sendKeys(value);
 		} catch (Exception e) {
+			LogUtil.step("Standard entry failed, trying JS click before typing: " + element.toString());
 			try {
 				JavascriptExecutor executor = (JavascriptExecutor) driver;
 				executor.executeScript("arguments[0].click();", element);
-			} catch (Exception exception) {
-				try {
-					Reporter.log("<p><img src='data:image/png;base64," + Screenshot.ClickScreenshot(driver)
-							+ "' width='900' height='450'/></p>");
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-				throw exception;
+			} catch (Exception jsEx) {
+				LogUtil.error("JS click failed before typing: " + element.toString());
+				takeScreenshot();
+				throw jsEx;
 			}
 		}
 	}
 
-	public static void uploadImage(WebElement element, String path) {
+	public void uploadImage(WebElement element, String path) {
+		LogUtil.action("Uploading image: " + path + " to element: ", element);
 		try {
-			wait(1000);
-			element.sendKeys(path);
-		} catch (Exception e) {
+			if (element.isDisplayed()) {
+				waitForElementVisible(element);
+			}
+
 			try {
-				wait(1000);
+				((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
 				element.sendKeys(path);
-			} catch (Exception exception) {
-				try {
-					Reporter.log("<p><img src='data:image/png;base64," + Screenshot.ClickScreenshot(driver)
-							+ "' width='900' height='450'/></p>");
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-				throw exception;
+			} catch (ElementNotInteractableException e) {
+				((JavascriptExecutor) driver).executeScript("arguments[0].style.display='block';", element);
+				element.sendKeys(path);
 			}
+
+		} catch (Exception e) {
+			LogUtil.step("Image upload failed for element: " + element.toString());
+			takeScreenshot();
+			throw new RuntimeException("Failed to upload file. Ensure <input type='file'> is used.", e);
 		}
 	}
 
-	public static void dropdownByIndex(WebElement element, int index) {
-
+	public void dropdownByIndex(WebElement element, int index) {
+		LogUtil.action("Selecting dropdown index " + index + " for element: ", element);
 		try {
-			Thread.sleep(50);
+			waitForElementVisible(element);
 			clickOnElement(element);
 			Select dropdown = new Select(element);
 			dropdown.selectByIndex(index);
 
 		} catch (Exception e) {
-			JavascriptExecutor executor = (JavascriptExecutor) driver;
-			executor.executeScript("arguments[0].click();", element);
-		}
-	}
-
-	public static void dropdown(WebElement element, String value) throws IOException {
-
-		try {
-			Thread.sleep(50);
-			clickOnElement(element);
-			Thread.sleep(50);
-			String val = "'" + value + "'";
-			click(By.xpath("//*[contains(text()," + val + ")]"));
+			LogUtil.step("Dropdown index select failed, trying JS click: " + element.toString());
 			try {
-				Thread.sleep(50);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				JavascriptExecutor executor = (JavascriptExecutor) driver;
+				executor.executeScript("arguments[0].click();", element);
+			} catch (Exception jsEx) {
+				LogUtil.error("Dropdown index select failed: " + element.toString());
+				takeScreenshot();
+				throw jsEx;
 			}
-		} catch (Exception e) {
-			JavascriptExecutor executor = (JavascriptExecutor) driver;
-			executor.executeScript("arguments[0].click();", element);
-
 		}
 	}
-	
-	public static void dropdownWithPosition(WebElement element, String value, int position) throws IOException {
 
+	public void dropdown(WebElement element, String value) throws IOException {
+		LogUtil.action("Selecting dropdown value '" + value + "' for element: ", element);
 		try {
-			Thread.sleep(50);
+			waitForElementVisible(element);
 			clickOnElement(element);
-			Thread.sleep(50);
+			click(By.xpath("//*[text()='" + value + "']"));
+		} catch (Exception e) {
+			LogUtil.step("Dropdown text select failed, trying JS click: " + element.toString());
+			try {
+				JavascriptExecutor executor = (JavascriptExecutor) driver;
+				executor.executeScript("arguments[0].click();", element);
+			} catch (Exception jsEx) {
+				LogUtil.error("Dropdown text select failed: " + element.toString());
+				takeScreenshot();
+				throw jsEx;
+			}
+		}
+	}
+
+	public void dropdownWithPosition(WebElement element, String value, int position) throws IOException {
+		LogUtil.action("Selecting dropdown position " + position + " for element: ", element);
+		try {
+			waitForElementVisible(element);
+			clickOnElement(element);
 			click(By.xpath("(//*[contains(text(),'" + value + "')])[" + position + "]"));
-			try {
-				Thread.sleep(50);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		} catch (Exception e) {
-			JavascriptExecutor executor = (JavascriptExecutor) driver;
-			executor.executeScript("arguments[0].click();", element);
-
+			LogUtil.step("Dropdown position select failed, trying JS click: " + element.toString());
+			try {
+				((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
+				WebElement option = driver
+						.findElement(By.xpath("(//*[contains(text(),'" + value + "')])[" + position + "]"));
+				((JavascriptExecutor) driver).executeScript("arguments[0].click();", option);
+			} catch (Exception jsEx) {
+				LogUtil.error("Dropdown text select failed: " + element.toString());
+				takeScreenshot();
+				throw new RuntimeException("Failed to select dropdown value '" + value + "' at position " + position,
+						jsEx);
+			}
 		}
 	}
-	
-	public static void selectByValueInDropdown(WebElement element, String value) {
+
+	public void selectByValueInDropdown(WebElement element, String value) {
+		LogUtil.action("Selecting dropdown value '" + value + "' for element: ", element);
 		Select select = new Select(element);
 		select.selectByValue(value);
 	}
 
-	protected static void click(By by) {
+	protected void click(By by) {
 		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			WebElement element = driver.findElement(by);
+			LogUtil.action("Clicking on element: ", element);
+			waitForElementClickable(element);
+			element.click();
+		} catch (Exception e) {
+			throw new RuntimeException("Failed to click on element: " + by, e);
 		}
-		driver.findElement(by).click();
 	}
 
-	public static String generateRandomAlphabetString() {
+	public String generateRandomAlphabetString() {
 		String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 		Random random = new Random();
 		StringBuilder stringBuilder = new StringBuilder(15);
@@ -207,59 +223,44 @@ public class BasePage {
 	}
 
 	protected boolean isElementDisplayed(WebElement element) {
+		LogUtil.verify("Checking is element is displayed: ", element);
 		try {
-			driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
-			Thread.sleep(2000);
 			waitForElementToBeVisible(element);
 			return true;
 		} catch (Exception e) {
-			try {
-				Reporter.log("<p><img src='data:image/png;base64," + Screenshot.ClickScreenshot(driver)
-						+ "' width='900' height='450'/></p>");
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
+			takeScreenshot();
 			return false;
 		}
 	}
-	
+
+
 	protected boolean isElementDisabled(WebElement element) {
+		LogUtil.verify("Checking is element is disabled: ", element);
 		try {
-			driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
-			Thread.sleep(2000);
-			waitForElementToBeDisabled(element);
-			return true;
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+			return wait.until(driver -> !element.isEnabled());
 		} catch (Exception e) {
-			try {
-				Reporter.log("<p><img src='data:image/png;base64," + Screenshot.ClickScreenshot(driver)
-						+ "' width='900' height='450'/></p>");
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
+			takeScreenshot();
 			return false;
 		}
 	}
 
 	protected boolean isElementEnabled(WebElement element) {
+		LogUtil.verify("Checking is element is enabled: ", element);
 		try {
-			waitForElementToBeVisible(element);
+			waitForElementClickable(element);
 			return element.isEnabled();
 		} catch (Exception e) {
-			try {
-				Reporter.log("<p><img src='data:image/png;base64," + Screenshot.ClickScreenshot(driver)
-						+ "' width='900' height='450'/></p>");
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
+			takeScreenshot();
 			return false;
 		}
 	}
-	
+
 	protected void waitForElementToBeVisible(WebElement element) {
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(40));
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 		wait.until(ExpectedConditions.visibilityOf(element));
 	}
-	
+
 	private void waitForElementToBeDisabled(WebElement element) {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 		wait.until(ExpectedConditions.invisibilityOfAllElements(element));
@@ -298,78 +299,88 @@ public class BasePage {
 	}
 
 	protected String getTextFromLocator(WebElement element) {
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			throw new RuntimeException(e);
-		}
-		this.waitForElementToBeVisible(element);
+		LogUtil.action("Getting text from element: ", element);
+		waitForElementVisible(element);
 		return element.getText();
 	}
 
 	protected String getTextFromAttribute(WebElement element, String atrr) {
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			throw new RuntimeException(e);
-		}
-		this.waitForElementToBeVisible(element);
+		LogUtil.action("Getting text from element for the " + atrr + " attribute: ", element);
+		waitForElementVisible(element);
 		return element.getAttribute(atrr);
 	}
 
 	public static String getTestData() {
 		return JsonUtil.readJsonFileText("TestData.json");
 	}
-	
+
 	public void refreshThePage() {
+		LogUtil.action("Refreshing the page");
 		driver.navigate().refresh();
 	}
-	
-	public static void navigateBack() {
+
+	public void navigateBack() {
+		LogUtil.action("Navigating to the back page");
 		driver.navigate().back();
 	}
-	
-	public static void navigateForword() {
+
+	public void navigateForword() {
+		LogUtil.action("Navigating to the forward page");
 		driver.navigate().forward();
 	}
 
 	public void reload() {
+		LogUtil.action("Reloading the page");
 		driver.navigate().refresh();
 	}
-	
+
 	public void back() {
+		LogUtil.action("Navigating to the back page");
 		driver.navigate().back();
 	}
-	
+
 	public void acceptAlert() {
+		LogUtil.action("Accepting the alert");
 		driver.switchTo().alert().accept();
 	}
-	
+
 	public void cancelAlert() {
+		LogUtil.action("Cancelling the alert");
 		driver.switchTo().alert().dismiss();
 	}
-	
+
 	public String getAlertText() {
+		LogUtil.action("Getting the alert text");
 		Alert alert = driver.switchTo().alert();
 		String alertText = alert.getText();
 		return alertText;
 	}
-	
+
 	protected void clearTextBox(WebElement element) {
-	    this.waitForElementToBeVisible(element);
-	    element.clear();
+		this.waitForElementToBeVisible(element);
+		element.clear();
 	}
-	
+
 	public void scrollToEndPage() {
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
 
 	}
-	
+
 	public void scrollToStartPage() {
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript("window.scrollTo(0, 0);");
 
 	}
 
+	private void takeScreenshot() {
+		try {
+			String base64Image = Screenshot.ClickScreenshot(driver);
+			String html = "<p><img src='data:image/png;base64," + base64Image + "' width='900' height='450'/></p>";
+			Reporter.log(html, true);
+			logger.info("Screenshot captured.");
+		} catch (IOException e) {
+			logger.error("Failed to take screenshot", e);
+		}
+	}
 }

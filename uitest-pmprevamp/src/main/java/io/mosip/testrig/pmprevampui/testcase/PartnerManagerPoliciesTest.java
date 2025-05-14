@@ -18,6 +18,7 @@ import io.mosip.testrig.pmprevampui.utility.BaseClass;
 import io.mosip.testrig.pmprevampui.utility.GlobalConstants;
 
 public class PartnerManagerPoliciesTest extends BaseClass {
+	private BasePage basePage;
 
 	@Test(priority = 1, description = "Create Policy Group")
 	public void createPolicyGroup() {
@@ -624,7 +625,8 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 	public void publishDatasharePolicy() {
 
 		DashboardPage dashboardPage = new DashboardPage(driver);
-		BasePage basePage = new BasePage(driver);
+		basePage = new BasePage(driver);
+
 		PolicyGroupPage policygroupPage = new PolicyGroupPage(driver);
 		DatasharePolicyPage datasharePolicyPage = new DatasharePolicyPage(driver);
 		PoliciesPage policiesPage = new PoliciesPage(driver);
@@ -856,7 +858,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 	public void deactivateDatasharePolicy() {
 
 		DashboardPage dashboardPage = new DashboardPage(driver);
-		BasePage basePage = new BasePage(driver);
+		basePage = new BasePage(driver);
 		PolicyGroupPage policygroupPage = new PolicyGroupPage(driver);
 		DatasharePolicyPage datasharePolicyPage = new DatasharePolicyPage(driver);
 		PoliciesPage policiesPage = new PoliciesPage(driver);
@@ -974,7 +976,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		LoginPage loginpage = dashboardPage.clickOnLogoutButton();
 
 		assertTrue(loginpage.isPageNotFoundMessageDisplayed(), GlobalConstants.isKeycloakPageDisplayed);
-		BasePage.navigateBack();
+		basePage.navigateBack();
 		dashboardPage.clickOnProfileDropdown();
 		dashboardPage.clickOnLogoutButton();
 	}

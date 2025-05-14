@@ -24,6 +24,8 @@ import io.mosip.testrig.pmprevampui.utility.BaseClass;
 import io.mosip.testrig.pmprevampui.utility.GlobalConstants;
 
 public class AuthPartnerTest extends BaseClass {
+	
+	private BasePage basePage;
 
 	@Test(priority = 1, description = "Uploading Trust Certificate")
 	public void uploadTrustCertificate() {
@@ -59,6 +61,7 @@ public class AuthPartnerTest extends BaseClass {
 	public void RegisterNewUser() {
 
 		DashboardPage dashboardPage = new DashboardPage(driver);
+		basePage = new BasePage(driver);
 		PartnerCertificatePage partnerCertificatePage = new PartnerCertificatePage(driver);
 		LoginPage loginPage = new LoginPage(driver);
 
@@ -113,7 +116,7 @@ public class AuthPartnerTest extends BaseClass {
 		dashboardPage.clickOnSelectPolicyGroupLogout();
 
 		assertTrue(loginPage.isPageNotFoundMessageDisplayed(), GlobalConstants.isKeycloakPageDisplayed);
-		BasePage.navigateBack();
+		basePage.navigateBack();
 		dashboardPage.clickOnProfileDropdown();
 		dashboardPage.clickOnLogoutButton();
 
@@ -163,10 +166,10 @@ public class AuthPartnerTest extends BaseClass {
 				GlobalConstants.iReUploadPartnerCertificateTextDisplayed);
 
 		partnerCertificatePage.uploadCertificate();
+		partnerCertificatePage.clickOnRemoveCertificateButton();
+		partnerCertificatePage.uploadCertificate();
 		partnerCertificatePage.clickOnSubmitButton();
 
-		assertTrue(partnerCertificatePage.isSuccessMessageDisplayed(), GlobalConstants.isSuccessMessageDisplayed);
-		partnerCertificatePage.clickOnRemoveCertificateButton();
 
 		assertTrue(partnerCertificatePage.isSuccessMessageDisplayed(), GlobalConstants.isSuccessMessageDisplayed);
 		partnerCertificatePage.clickOncertificateUploadCloseButton();
@@ -197,7 +200,7 @@ public class AuthPartnerTest extends BaseClass {
 		DashboardPage dashboardPage = new DashboardPage(driver);
 		PoliciesPage policiesPage = new PoliciesPage(driver);
 		AuthPolicyPage authPolicyPage = new AuthPolicyPage(driver);
-		BasePage basePage = new BasePage(driver);
+		basePage = new BasePage(driver);
 		LoginPage loginPage = new LoginPage(driver);
 
 		dashboardPage.clickOnPolicyButton();
@@ -361,6 +364,7 @@ public class AuthPartnerTest extends BaseClass {
 	public void createOidecClient() {
 
 		DashboardPage dashboardPage = new DashboardPage(driver);
+		basePage = new BasePage(driver);
 		PartnerPolicyMappingPage PartnerPolicyMappingPage = new PartnerPolicyMappingPage(driver);
 
 		dashboardPage.clickOnPartnerPolicyMappingTab();
@@ -393,7 +397,7 @@ public class AuthPartnerTest extends BaseClass {
 		LoginPage loginPage = dashboardPage.clickOnLogoutButton();
 
 		assertTrue(loginPage.isPageNotFoundMessageDisplayed(), GlobalConstants.isKeycloakPageDisplayed);
-		BasePage.navigateBack();
+		basePage.navigateBack();
 		dashboardPage.clickOnProfileDropdown();
 		dashboardPage.clickOnLogoutButton();
 
@@ -565,6 +569,7 @@ public class AuthPartnerTest extends BaseClass {
 
 		DashboardPage dashboardPage = new DashboardPage(driver);
 		ApiKeyPage apiKeyPage = new ApiKeyPage(driver);
+		basePage = new BasePage(driver);
 
 		loginAsAuthPartner(dashboardPage);
 
@@ -638,6 +643,8 @@ public class AuthPartnerTest extends BaseClass {
 		apiKeyPage.selectPartnerIdDropdown();
 		apiKeyPage.selectPolicyNameDropdown(data);
 		apiKeyPage.enterNameOfApiKeyTextBox(GlobalConstants.SPECIAL_CHARACTERS);
+		assertTrue(apiKeyPage.isSpecialCharacterErrorMessageDisplayed(), GlobalConstants.isSpecialCharacterErrorMessageDisplayed);
+		apiKeyPage.enterNameOfApiKeyTextBox(GlobalConstants.AUTOMATION);
 		apiKeyPage.clickOnSubmitButton();
 		apiKeyPage.clickOnCopyIdCloseButton();
 		apiKeyPage.clickOnConfirmationHomeButton();
@@ -650,12 +657,14 @@ public class AuthPartnerTest extends BaseClass {
 		apiKeyPage.selectPartnerIdDropdown();
 		apiKeyPage.selectPolicyNameDropdown(data);
 //  	assertFalse(apiKeyPage.isSubmitButtonEnabled(), GlobalConstants.isSubmitButtonEnable);
-		apiKeyPage.enterNameOfApiKeyTextBox(GlobalConstants.SPECIAL_CHARACTERS);
+		apiKeyPage.enterNameOfApiKeyTextBox(GlobalConstants.AUTOMATION);
 		apiKeyPage.clickOnSubmitButton();
 		assertTrue(apiKeyPage.isDuplicateApiKeyNameErrorMessageDisplayed(),
 				GlobalConstants.isDuplicateApiKeyNameErrorMessageDisplayed);
 		apiKeyPage.clickOnDuplicateApiKeyNameErrorMessageCancelButton();
 		apiKeyPage.enterNameOfApiKeyTextBox(GlobalConstants.SPECIAL_NUMERIC);
+		assertTrue(apiKeyPage.isSpecialCharacterErrorMessageDisplayed(), GlobalConstants.isSpecialCharacterErrorMessageDisplayed);
+		apiKeyPage.enterNameOfApiKeyTextBox(GlobalConstants.ALPHANUMERIC);
 		apiKeyPage.clickOnSubmitButton();
 		apiKeyPage.clickOnCopyIdCloseButton();
 		apiKeyPage.clickOnConfirmationGoBackButton();
@@ -747,6 +756,7 @@ public class AuthPartnerTest extends BaseClass {
 	@Test(priority = 6, description = "Search with invalid policy name")
 	public void searchWithInvalidPolicyName() {
 		DashboardPage dashboardPage = new DashboardPage(driver);
+		basePage = new BasePage(driver);
 
 		loginAsAuthPartner(dashboardPage);
 
@@ -777,6 +787,7 @@ public class AuthPartnerTest extends BaseClass {
 //	@Test(priority = 7, description = "Resubmit already submitted request policy")
 	public void reSubmitAlreadySubmittedRequestPolicy() {
 		DashboardPage dashboardpage = new DashboardPage(driver);
+		basePage = new BasePage(driver);
 
 		loginAsAuthPartner(dashboardpage);
 
@@ -815,6 +826,7 @@ public class AuthPartnerTest extends BaseClass {
 		PoliciesPage policiesPage = new PoliciesPage(driver);
 		RegisterPage registerPage = new RegisterPage(driver);
 		LoginPage loginPage = new LoginPage(driver);
+		basePage = new BasePage(driver);
 
 		logoutFromPartner(dashboardPage);
 
@@ -879,7 +891,6 @@ public class AuthPartnerTest extends BaseClass {
 		assertTrue(dashboardPage.isProceedButtonDisplayed(), GlobalConstants.isProceedButtonDisplayed);
 		dashboardPage.clickOnProceedButton();
 
-		Thread.sleep(3000);
 		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
 				GlobalConstants.isPartnerCertificateTitleDisplayed);
 		dashboardPage.clickOnPoliciesTitle();
@@ -898,6 +909,7 @@ public class AuthPartnerTest extends BaseClass {
 
 		DashboardPage dashboardPage = new DashboardPage(driver);
 		LoginPage loginPage = new LoginPage(driver);
+		basePage = new BasePage(driver);
 
 		logoutFromPartner(dashboardPage);
 
@@ -950,6 +962,7 @@ public class AuthPartnerTest extends BaseClass {
 		DashboardPage dashboardPage = new DashboardPage(driver);
 		ApiKeyPage apiKeyPage = new ApiKeyPage(driver);
 		LoginPage loginPage = new LoginPage(driver);
+		basePage = new BasePage(driver);
 
 		logoutFromPartner(dashboardPage);
 
@@ -974,6 +987,7 @@ public class AuthPartnerTest extends BaseClass {
 	@Test(priority = 11, description = "Deleting second redirct uri")
 	public void deletingSecondRedirectUri() {
 		DashboardPage dashboardPage = new DashboardPage(driver);
+		basePage = new BasePage(driver);
 
 		loginAsAuthPartner(dashboardPage);
 
@@ -990,6 +1004,7 @@ public class AuthPartnerTest extends BaseClass {
 	@Test(priority = 12, description = "Adding second redirect uri")
 	public void addingSecondRedirectUri() {
 		DashboardPage dashboardPage = new DashboardPage(driver);
+		basePage = new BasePage(driver);
 
 		loginAsAuthPartner(dashboardPage);
 
@@ -1004,6 +1019,7 @@ public class AuthPartnerTest extends BaseClass {
 	@Test(priority = 13, description = "clear form oidc client")
 	public void ClearFormOidcClient() {
 		DashboardPage dashboardPage = new DashboardPage(driver);
+		basePage = new BasePage(driver);
 
 		loginAsAuthPartner(dashboardPage);
 
@@ -1022,6 +1038,7 @@ public class AuthPartnerTest extends BaseClass {
 	@Test(priority = 14, description = "Using invalid data to create oidc")
 	public void usingInvalidDataToCreateOIDC() {
 		DashboardPage dashboardPage = new DashboardPage(driver);
+		basePage = new BasePage(driver);
 
 		loginAsAuthPartner(dashboardPage);
 
@@ -1041,6 +1058,7 @@ public class AuthPartnerTest extends BaseClass {
 	@Test(priority = 15, description = "edit OIDC client")
 	public void editOIDCClient() {
 		DashboardPage dashboardPage = new DashboardPage(driver);
+		basePage = new BasePage(driver);
 
 		loginAsAuthPartner(dashboardPage);
 
@@ -1073,6 +1091,7 @@ public class AuthPartnerTest extends BaseClass {
 	@Test(priority = 16, description = "Deactivate OIDC client")
 	public void deactivateOIDCClient() {
 		DashboardPage dashboardPage = new DashboardPage(driver);
+		basePage = new BasePage(driver);
 
 		loginAsAuthPartner(dashboardPage);
 
@@ -1112,6 +1131,7 @@ public class AuthPartnerTest extends BaseClass {
 		DashboardPage dashboardPage = new DashboardPage(driver);
 		ProfilePage profilePage = new ProfilePage(driver);
 		LoginPage loginPage = new LoginPage(driver);
+		basePage = new BasePage(driver);
 
 		logoutFromPartner(dashboardPage);
 
@@ -1151,6 +1171,7 @@ public class AuthPartnerTest extends BaseClass {
 		PartnerCertificatePage partnerCertificatePage = new PartnerCertificatePage(driver);
 		PoliciesPage policiesPage = new PoliciesPage(driver);
 		OidcClientPage oidcClientPage = new OidcClientPage(driver);
+		basePage = new BasePage(driver);
 
 		loginAsAuthPartner(dashboardPage);
 
@@ -1191,7 +1212,7 @@ public class AuthPartnerTest extends BaseClass {
 		LoginPage loginPage = dashboardPage.clickOnLogoutButton();
 
 		assertTrue(loginPage.isPageNotFoundMessageDisplayed(), GlobalConstants.isKeycloakPageDisplayed);
-		BasePage.navigateBack();
+		basePage.navigateBack();
 		dashboardPage.clickOnProfileDropdown();
 		dashboardPage.clickOnLogoutButton();
 	}
@@ -1202,7 +1223,7 @@ public class AuthPartnerTest extends BaseClass {
 		LoginPage loginPage = dashboardPage.clickOnLogoutButton();
 
 		assertTrue(loginPage.isPageNotFoundMessageDisplayed(), GlobalConstants.isKeycloakPageDisplayed);
-		BasePage.navigateBack();
+		basePage.navigateBack();
 		dashboardPage.clickOnProfileDropdown();
 		dashboardPage.clickOnLogoutButton();
 

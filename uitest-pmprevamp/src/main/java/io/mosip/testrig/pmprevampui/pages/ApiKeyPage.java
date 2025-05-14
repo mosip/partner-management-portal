@@ -264,6 +264,9 @@ public class ApiKeyPage extends BasePage {
 	@FindBy(xpath = "//button[contains(text(), 'Select Status')]")
 	private WebElement clearStatus;
 	
+	@FindBy(xpath = "//span[text()='Special characters are not allowed.']")
+	private WebElement specialCharacterErrorMessage;
+	
 	public ApiKeyPage(WebDriver driver) {
 		super(driver);
 	}
@@ -681,5 +684,9 @@ public class ApiKeyPage extends BasePage {
 	public void enterPendingPolicyNameDropdown(String value) {
 		clickOnElement(policyNameDropdown);
 		enter(generatePolicyNameSearchInputBox,value);
+	}
+	
+	public boolean isSpecialCharacterErrorMessageDisplayed() {
+		return isElementDisplayed(specialCharacterErrorMessage);
 	}
 }
