@@ -1,0 +1,26 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="	PMP Revamp UI TestRig">
+	
+	<test  name="PMP Revamp UI TestRig"  preserve-order="true">
+	
+		<classes>
+			<class name="io.mosip.testrig.pmprevampui.testcase.AuthPartnerTest" />
+			<class name="io.mosip.testrig.pmprevampui.testcase.NewUserPolicy" />
+			<class name="io.mosip.testrig.pmprevampui.testcase.CreateOidecClient" />
+			<class name="io.mosip.testrig.pmprevampui.testcase.CreateApiKey" />
+			<class name="io.mosip.testrig.pmprevampui.testcase.DeviceProviderTest" />
+			<class name="io.mosip.testrig.pmprevampui.testcase.FTMDeviceTest" />
+			<class name="io.mosip.testrig.pmprevampui.testcase.PartnerManagerPoliciesTest" />
+		</classes>
+		
+	</test>
+		<listeners>
+
+		<listener
+			  class-name="io.mosip.testrig.pmprevampui.utility.EmailableReport" />
+			
+	</listeners>
+
+</suite>

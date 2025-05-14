@@ -1,0 +1,44 @@
+#####  DB queries to be executed to tear down the data used and generated during the test rig run for partner revamp APIs
+
+#These are delete queries for AUTH PARTNER - pmpui-revamp
+delete from pms.partner_policy where cr_by='pmpui-revamp';
+delete from pms.oidc_client where cr_by='pmpui-revamp';
+delete from pms.partner_policy_request where cr_by='pmpui-revamp';
+delete from pms.auth_policy where cr_by='pmpui-revamp';
+delete from pms.policy_group where cr_by='pmpui-revamp';
+delete from pms.partner_h where cr_by='pmpui-revamp';
+delete from pms.partner where cr_by='pmpui-revamp';
+delete FROM pms.user_details where user_id='pmpui-revamp';
+
+#These are delete queries for AUTH PARTNER - pmpui-auth
+delete from pms.partner_policy where cr_by='pmpui-auth';
+delete from pms.oidc_client where cr_by='pmpui-auth';
+delete from pms.partner_policy_request where cr_by='pmpui-auth';
+delete from pms.auth_policy where cr_by='pmpui-auth';
+delete from pms.policy_group where cr_by='pmpui-auth';
+delete from pms.partner_h where cr_by='pmpui-auth';
+delete from pms.partner where cr_by='pmpui-auth';
+delete FROM pms.user_details where user_id='pmpui-auth';
+
+#These are delete queries for PARTNER ADMIN- pmpui-revamp [which are not deleted due to AUTH partner dependent]
+delete from pms.auth_policy where cr_by='pmpui-revamp';
+
+#These are delete queries for pmpui-nocert
+delete from pms.partner where user_id='pmpui-nocert';
+delete FROM pms.user_details where user_id='pmpui-nocert';
+
+#These are delete queries for DEVICE PROVIDER - pmpui-device
+delete FROM pms.secure_biometric_interface where cr_by='pmpui-device';
+delete FROM pms.device_detail where cr_by = 'pmpui-device';
+delete FROM pms.device_detail_sbi where cr_by = 'pmpui-device';
+delete from pms.partner where user_id='pmpui-device';
+delete FROM pms.user_details where user_id='pmpui-device';
+
+#These are delete queries for FTM PROVIDER - pmpui-ftmnocert
+delete from pms.partner where user_id='pmpui-ftmnocert';
+delete FROM pms.user_details where user_id='pmpui-ftmnocert';
+
+#These are delete queries for FTM PROVIDER - pmpui-ftm
+delete from pms.ftp_chip_detail where foundational_trust_provider_id='pmpui-ftm';
+delete from pms.partner where cr_by='pmpui-ftm';
+delete FROM pms.user_details where user_id='pmpui-ftm';
