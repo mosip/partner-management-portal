@@ -1,7 +1,0 @@
-modules:
-  - name: pmpui
-    enabled: true
-    image:
-      registry: docker.io
-      repository: mosipqa/pmptest
-      tag: 1.3.0-beta.1
