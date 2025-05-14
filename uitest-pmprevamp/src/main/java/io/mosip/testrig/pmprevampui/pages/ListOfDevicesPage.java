@@ -161,9 +161,13 @@ public class ListOfDevicesPage extends BasePage {
 	public boolean isAddDeviceButtonEnabled() {
 		return isElementEnabled(addDeviceButton);
 	}
+	
+	public boolean isAddDeviceButtonDisabled() {
+		return isElementDisabled(addDeviceButton);
+	}
 
-	public boolean isDeviceListAddDeviceButtonEnabled() {
-		return isElementEnabled(addDeviceButtonFromDeviceList);
+	public boolean isDeviceListAddDeviceButtonDisabled() {
+		return isElementDisabled(addDeviceButtonFromDeviceList);
 	}
 
 	public String getListOFDevicesTitle() {

@@ -1,6 +1,7 @@
 package io.mosip.testrig.pmprevampui.utility;
 
 import java.io.File;
+import java.lang.reflect.Method;
 import java.text.NumberFormat;
 import java.time.Duration;
 import java.time.LocalDate;
@@ -19,6 +20,7 @@ import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.mosip.testrig.pmprevampui.kernel.util.ConfigManager;
@@ -41,7 +43,7 @@ public class BaseClass {
 	public static String data = BasePage.appendDate.substring(0, BasePage.getSplitdigit());
 
 	@BeforeMethod
-	public void setUp() throws Exception {
+	public void setUp(Method method) throws Exception {
 		logger.info("Start set up");
 		if (System.getProperty("os.name").equalsIgnoreCase("Linux") && ConfigManager.getdocker().equals("yes")) {
 
@@ -67,7 +69,8 @@ public class BaseClass {
 		driver.get(envPathPmpRevamp);
 		logger.info("launch url --" + envPathPmpRevamp);
 		driver.manage().window().maximize();
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10)); // Configurable if needed
+		driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
 		String language1 = null;
 //		try {
 //
@@ -84,8 +87,16 @@ public class BaseClass {
 //			e.getMessage();
 //		}
 
-		BasePage.enter(driver.findElement(By.id("username")), userid);
-		BasePage.enter(driver.findElement(By.id("password")), "mosip123");
+		String testName = method.getName();
+		String description = method.getAnnotation(Test.class).description();
+		LogUtil.step("--------------------------------------------------");
+		LogUtil.step("🔹 Starting Test: " + testName);
+		LogUtil.step("📝 Description: " + description);
+		LogUtil.step("--------------------------------------------------");
+
+		BasePage basePage = new BasePage(driver);
+		basePage.enter(driver.findElement(By.id("username")), userid);
+		basePage.enter(driver.findElement(By.id("password")), "mosip123");
 		driver.findElement(By.xpath("//input[@name=\'login\']")).click();
 
 	}
