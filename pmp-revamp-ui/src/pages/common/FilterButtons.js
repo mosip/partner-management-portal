@@ -4,7 +4,7 @@ import { isLangRTL } from '../../utils/AppUtils';
 import backArrow from '../../svg/back_arrow.svg';
 import PropTypes from 'prop-types';
 
-function FilterButtons({ titleId, listTitle, dataListLength, filter, onResetFilter, setFilter, goBack, listSubTitle, addBackArrow, showTitleWithoutCount, removeFiler }) {
+function FilterButtons({ titleId, listTitle, dataListLength, filter, onResetFilter, setFilter, goBack, listSubTitle, addBackArrow, showTitleWithoutCount, removeFilter }) {
 
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
@@ -29,7 +29,7 @@ function FilterButtons({ titleId, listTitle, dataListLength, filter, onResetFilt
                     <p>{t(listTitle) + ' (' + dataListLength + ")"}</p>
                 }
             </div>
-            {!removeFiler && (
+            {!removeFilter && (
                 <div className="w-full flex justify-end relative items-center">
                     {filter &&
                         (<button id='filter_reset_btn' onClick={onResetFilter}
@@ -56,17 +56,17 @@ function FilterButtons({ titleId, listTitle, dataListLength, filter, onResetFilt
 }
 
 FilterButtons.propTypes = {
-    titleId: PropTypes.string.isRequired,
+    titleId: PropTypes.string,
     listTitle: PropTypes.string.isRequired,
     dataListLength: PropTypes.number.isRequired,
     filter: PropTypes.bool.isRequired,
     onResetFilter: PropTypes.func.isRequired,
     setFilter: PropTypes.func.isRequired,
-    goBack: PropTypes.func.isRequired,
-    listSubTitle: PropTypes.string.isRequired,
-    addBackArrow: PropTypes.bool.isRequired,
-    showTitleWithoutCount: PropTypes.bool.isRequired,
-    removeFiler: PropTypes.bool.isRequired,
+    goBack: PropTypes.func,
+    listSubTitle: PropTypes.string,
+    addBackArrow: PropTypes.bool,
+    showTitleWithoutCount: PropTypes.bool,
+    removeFilter: PropTypes.bool,
 };
 
 export default FilterButtons;

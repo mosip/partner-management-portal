@@ -52,7 +52,7 @@ function Confirmation({ confirmationData, onClickFunction }) {
 
 Confirmation.propTypes = {
     confirmationData: PropTypes.object.isRequired,
-    onClickFunction: PropTypes.func.isRequired,
+    onClickFunction: PropTypes.func,
 };
 
 export default Confirmation;

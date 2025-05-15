@@ -43,7 +43,7 @@ function Information({ infoKey, infoKey1, id }) {
 
 Information.propTypes = {
     infoKey: PropTypes.string.isRequired,
-    infoKey1: PropTypes.string.isRequired,
+    infoKey1: PropTypes.string,
     id: PropTypes.string.isRequired,
 };
 

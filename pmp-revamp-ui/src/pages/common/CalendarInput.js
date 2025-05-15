@@ -62,18 +62,18 @@ function CalendarInput({ isUsedAsFilter, showCalendar, addInfoIcon, infoKey, inf
 }
 
 CalendarInput.propTypes = {
-  isUsedAsFilter: PropTypes.bool.isRequired,
+  isUsedAsFilter: PropTypes.bool,
   showCalendar: PropTypes.bool.isRequired,
-  addInfoIcon: PropTypes.bool.isRequired,
-  infoKey: PropTypes.string.isRequired,
-  infoKey1: PropTypes.string.isRequired,
+  addInfoIcon: PropTypes.bool,
+  infoKey: PropTypes.string,
+  infoKey1: PropTypes.string,
   setShowCalender: PropTypes.func.isRequired,
-  placeholderText: PropTypes.string.isRequired,
+  placeholderText: PropTypes.string,
   label: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   styleSet: PropTypes.object.isRequired,
   selectedDateStr: PropTypes.string.isRequired,
-  containsAsterisk: PropTypes.bool.isRequired,
+  containsAsterisk: PropTypes.bool,
   id: PropTypes.string.isRequired,
 };
 
