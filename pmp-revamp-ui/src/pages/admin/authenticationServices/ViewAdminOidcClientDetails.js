@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { bgOfStatus, copyClientId, formatDate, formatPublicKey, getErrorMessage, getGrantTypes, getPartnerManagerUrl, getStatusCode, handleMouseClickForDropdown, handleServiceErrors, isLangRTL, onPressEnterKey } from '../../../utils/AppUtils';
+import { bgOfStatus, copyClientId, formatDate, formatPublicKey, getErrorMessage, getGrantTypes, getPartnerManagerUrl, getStatusCode, handleMouseClickForDropdown, handleServiceErrors, isLangRTL } from '../../../utils/AppUtils';
 import { getUserProfile } from '../../../services/UserProfileService';
 import Title from '../../common/Title';
 import { useNavigate } from 'react-router-dom';

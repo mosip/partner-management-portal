@@ -17,10 +17,6 @@ function CalendarInput({ isUsedAsFilter, showCalendar, addInfoIcon, infoKey, inf
       setShowCalender(false))
   }, [calendarRef]);
 
-  const openCalendar = () => {
-    setShowCalender(!showCalendar);
-  };
-
   const onDateChange = (newDate) => {
     let formattedDate = "";
   
