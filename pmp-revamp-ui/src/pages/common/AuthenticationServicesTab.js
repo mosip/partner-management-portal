@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
 import { getUserProfile } from '../../services/UserProfileService';
-import { isLangRTL, onPressEnterKey } from '../../utils/AppUtils';
+import { isLangRTL } from '../../utils/AppUtils';
 import PropTypes from 'prop-types';
 
 function AuthenticationServicesTab({ activeOidcClient, oidcClientPath, activeApiKey, apiKeyPath }) {
