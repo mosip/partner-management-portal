@@ -25,6 +25,7 @@ jobs:
           - SERVICE_LOCATION: 'pmp-revamp-ui'
             SERVICE_NAME: 'pmp-revamp-ui'
             SQUASH_LAYERS: '14'
+            PLATFORMS: "linux/amd64"
       fail-fast: false
     name: ${{ matrix.SERVICE_NAME }}
     uses: mosip/kattu/.github/workflows/docker-build.yml@master
@@ -32,6 +33,7 @@ jobs:
       SERVICE_LOCATION: ${{ matrix.SERVICE_LOCATION }}
       SERVICE_NAME: ${{ matrix.SERVICE_NAME }}
       SQUASH_LAYERS: ${{ matrix.SQUASH_LAYERS }}
+      PLATFORMS: ${{ matrix.PLATFORMS }}
     secrets:
       DEV_NAMESPACE_DOCKER_HUB: ${{ secrets.DEV_NAMESPACE_DOCKER_HUB }}
       ACTOR_DOCKER_HUB: ${{ secrets.ACTOR_DOCKER_HUB }}
