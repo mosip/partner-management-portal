@@ -85,7 +85,7 @@ CopyIdPopUp.propTypes = {
     partnerId: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
     header: PropTypes.string.isRequired,
-    alertMsg: PropTypes.string.isRequired,
+    alertMsg: PropTypes.string,
     styleSet: PropTypes.object.isRequired,
 };
 

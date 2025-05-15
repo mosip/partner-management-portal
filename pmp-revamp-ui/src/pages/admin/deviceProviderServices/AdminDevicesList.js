@@ -312,8 +312,8 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
                                     onResetFilter={onResetFilter}
                                     setFilter={setExpandFilter}
                                     addBackArrow={isLinkedDevicesList ? true : false}
-                                    goBack={isLinkedDevicesList && backToSbi}
-                                    listSubTitle={isLinkedDevicesList && getFilterSubTitle()}
+                                    goBack={isLinkedDevicesList ? backToSbi : undefined}
+                                    listSubTitle={isLinkedDevicesList ? getFilterSubTitle() : undefined}
                                 />
                                 <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
                                 {expandFilter && (

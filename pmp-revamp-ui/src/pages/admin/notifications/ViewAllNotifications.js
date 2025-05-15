@@ -262,8 +262,8 @@ function ViewAllNotifications({ notificationType }) {
                                     onResetFilter={onResetFilter}
                                     setFilter={setFilter}
                                     addBackArrow={showExpiringItems ? true : false}
-                                    goBack={showExpiringItems && backToWeeklySummary}
-                                    removeFiler={showExpiringItems ? true : false}
+                                    goBack={showExpiringItems ? backToWeeklySummary : undefined}
+                                    removeFilter={showExpiringItems ? true : false}
                                 />
                                 <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
                                 {filter && (
