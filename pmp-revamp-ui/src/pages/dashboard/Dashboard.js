@@ -226,7 +226,7 @@ function Dashboard() {
         if (response) {
           const responseData = response.data;
           if (responseData && responseData.response) {
-              setPartnerCertExpiryCount(responseData.response.length)
+              setPartnerCertExpiryCount(String(responseData.response.length))
           } else {
             handleServiceErrors(responseData, setErrorCode, setErrorMsg);
           }
@@ -253,7 +253,7 @@ function Dashboard() {
         if (response) {
           const responseData = response.data;
           if (responseData && responseData.response) {
-            setPartnerPolicyMappingRequestCount(responseData.response.totalResults);
+            setPartnerPolicyMappingRequestCount(String(responseData.response.totalResults));
           } else {
             handleServiceErrors(responseData, setErrorCode, setErrorMsg);
           }
@@ -332,7 +332,7 @@ function Dashboard() {
         if (response) {
           const responseData = response.data;
           if (responseData && responseData.response) {
-            setFtmPendingApprovalRequestCount(responseData.response.totalResults);
+            setFtmPendingApprovalRequestCount(String(responseData.response.totalResults));
           } else {
             handleServiceErrors(responseData, setErrorCode, setErrorMsg);
           }
@@ -411,15 +411,15 @@ function Dashboard() {
     setErrorMsg("");
   };
 
-  const CountWithHover = ({ count, descriptionKey, descriptionParams, isExpiryHover }) => (
+  const CountWithHover = ({ countLabel, descriptionKey, descriptionParams, isExpiryHover }) => (
     <div className={`absolute flex items-center -top-3 -right-3 min-w-fit w-10 h-8 ${isExpiryHover ? 'bg-[#FAD6D1]' : 'bg-[#FEF1C6]'} rounded-md text-[#6D1C00] text-sm shadow-md`}>
       <div role='button' onClick={(e) => e.stopPropagation()} className="relative group flex items-center justify-center w-full" tabIndex="0" 
         onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); e.stopPropagation(); } }}>
         <span className="font-medium p-2 rounded">
-          {count ?? <LoadingCount />}
+          {countLabel ?? <LoadingCount />}
         </span>
 
-        {count !== null && count !== undefined && (
+        {countLabel !== null && countLabel !== undefined && (
           <div className={`absolute hidden group-focus:block group-hover:block ${isExpiryHover ? 'bg-[#FAD6D1]' : 'bg-[#FEF1C6]'} text-xs text-center font-semibold p-2 w-40 mt-1 z-10 top-9 right-0 rounded-md shadow-md`}>
             {t(descriptionKey, descriptionParams)}
           </div>
@@ -429,10 +429,10 @@ function Dashboard() {
   );
 
   CountWithHover.propTypes = {
-    count: PropTypes.number.isRequired,
+    countLabel: PropTypes.string,
     descriptionKey: PropTypes.string.isRequired,
     descriptionParams: PropTypes.object.isRequired,
-    isExpiryHover: PropTypes.bool.isRequired,
+    isExpiryHover: PropTypes.bool,
   };
 
   return (
@@ -466,7 +466,7 @@ function Dashboard() {
                 </div>
                 {partnerCertExpiryCount > 0 && (
                   <CountWithHover
-                    count={partnerCertExpiryCount}
+                    countLabel={partnerCertExpiryCount}
                     descriptionKey={partnerCertExpiryCount > 1 ? "dashboard.partnerCertExpiryCountDesc1" : "dashboard.partnerCertExpiryCountDesc2"}
                     descriptionParams={{ partnerCertExpiryCount }}
                     isExpiryHover={true}
@@ -549,7 +549,7 @@ function Dashboard() {
                     </p>
                   </div>
                   <CountWithHover
-                    count={
+                    countLabel={
                       rootCertExpiryCount !== null &&
                       rootCertExpiryCount !== undefined &&
                       intermediateCertExpiryCount !== null &&
@@ -562,7 +562,6 @@ function Dashboard() {
                       rootCertExpiryCount,
                       intermediateCertExpiryCount
                     }}
-                    isExpiryHover
                   />
                 </div>
                 <div role='button' onClick={partnersList} className="w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, partnersList)}>
@@ -610,7 +609,7 @@ function Dashboard() {
                       </p>
                     </div>
                     <CountWithHover
-                      count={partnerPolicyMappingRequestCount}
+                      countLabel={partnerPolicyMappingRequestCount}
                       descriptionKey="dashboard.partnerPolicyMappingRequestCountDesc"
                       descriptionParams={{ partnerPolicyMappingRequestCount }}
                     />
@@ -629,7 +628,7 @@ function Dashboard() {
                       </p>
                     </div>
                     <CountWithHover
-                      count={
+                      countLabel={
                         sbiPendingApprovalRequestCount !== null &&
                         sbiPendingApprovalRequestCount !== undefined &&
                         devicePendingApprovalRequestCount !== null &&
@@ -658,7 +657,7 @@ function Dashboard() {
                       </p>
                     </div>
                     <CountWithHover
-                      count={ftmPendingApprovalRequestCount}
+                      countLabel={ftmPendingApprovalRequestCount}
                       descriptionKey="dashboard.ftmPendingApprovalRequestCountDesc"
                       descriptionParams={{ ftmPendingApprovalRequestCount }}
                     />

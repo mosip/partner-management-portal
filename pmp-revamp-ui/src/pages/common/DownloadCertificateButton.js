@@ -74,9 +74,12 @@ DownloadCertificateButton.propTypes = {
     onClickFirstOption: PropTypes.func.isRequired,
     onClickSecondOption: PropTypes.func.isRequired,
     requiredData: PropTypes.object.isRequired,
-    downloadDropdownRef: PropTypes.object.isRequired,
+    downloadDropdownRef: PropTypes.oneOfType([
+        PropTypes.func,
+        PropTypes.object
+    ]),
     disableBtn: PropTypes.bool.isRequired,
-    disabledBtnHoverMsg: PropTypes.string.isRequired,
+    disabledBtnHoverMsg: PropTypes.string,
     styleSet: PropTypes.object.isRequired,
     id: PropTypes.string.isRequired,
 };

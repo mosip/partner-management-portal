@@ -244,17 +244,17 @@ function ViewOidcClientDetails() {
                                             <div id='oidc_client_grant_types' className="flex-col">
                                                 {(oidcClientDetails.grantTypes).map((type, index) => {
                                                     return (
-                                                        <ul>
-                                                            <li key={type} className={`space-y-4 text-base ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
+                                                        <ul key={type}>
+                                                            <li className={`space-y-4 text-base ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
                                                                 <p className="max-[450px]:text-sm max-[450px]:font-semibold font-[600] text-[#36393E] text-sm py-1">
                                                                     {getGrantTypes(type, t)}
                                                                 </p>
-                                                                {(oidcClientDetails.grantTypes).length > 1 &&
-                                                                    (<hr className="h-px w-[72%] bg-[#707070] border-[1px]" />)
-                                                                }
+                                                                {oidcClientDetails.grantTypes.length > 1 && (
+                                                                    <hr className="h-px w-[72%] bg-[#707070] border-[1px]" />
+                                                                )}
                                                             </li>
                                                         </ul>
-                                                    )
+                                                    );
                                                 })}
                                             </div>
                                         </div>

@@ -186,7 +186,7 @@ DeactivatePopup.propTypes = {
     request: PropTypes.object.isRequired,
     headerMsg: PropTypes.string.isRequired,
     descriptionMsg: PropTypes.string.isRequired,
-    headerKeyName: PropTypes.string.isRequired,
+    headerKeyName: PropTypes.string,
 };
 
 export default DeactivatePopup;

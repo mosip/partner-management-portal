@@ -21,7 +21,7 @@ function LoadingIcon({ styleSet }) {
 }
 
 LoadingIcon.propTypes = {
-    styleSet: PropTypes.object.isRequired,
+    styleSet: PropTypes.object,
 };
 
 export default LoadingIcon;

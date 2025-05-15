@@ -57,13 +57,13 @@ function Title({ title, subTitle, subTitle2, backLink, backLink2, status, versio
 }
 
 Title.propTypes = {
-    title: PropTypes.string.isRequired,
-    subTitle: PropTypes.string.isRequired,
-    subTitle2: PropTypes.string.isRequired,
-    backLink: PropTypes.string.isRequired,
-    backLink2: PropTypes.string.isRequired,
-    status: PropTypes.string.isRequired,
-    version: PropTypes.string.isRequired,
+    title: PropTypes.string,
+    subTitle: PropTypes.string,
+    subTitle2: PropTypes.string,
+    backLink: PropTypes.string,
+    backLink2: PropTypes.string,
+    status: PropTypes.string,
+    version: PropTypes.string,
 };
 
 export default Title;

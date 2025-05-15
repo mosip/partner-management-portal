@@ -39,11 +39,11 @@ function EmptyList({tableHeaders, showCustomButton, customButtonName, buttonId, 
 
 EmptyList.propTypes = {
     tableHeaders: PropTypes.array.isRequired,
-    showCustomButton: PropTypes.bool.isRequired,
-    customButtonName: PropTypes.string.isRequired,
-    buttonId: PropTypes.string.isRequired,
-    onClickButton: PropTypes.func.isRequired,
-    disableBtn: PropTypes.bool.isRequired,
+    showCustomButton: PropTypes.bool,
+    customButtonName: PropTypes.string,
+    buttonId: PropTypes.string,
+    onClickButton: PropTypes.func,
+    disableBtn: PropTypes.bool,
 };
 
 export default EmptyList;
