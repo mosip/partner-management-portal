@@ -13,7 +13,6 @@ import { HttpService } from '../../../services/HttpService';
 import DropdownWithSearchComponent from "../../common/fields/DropdownWithSearchComponent";
 import LoadingIcon from "../../common/LoadingIcon";
 import ErrorMessage from "../../common/ErrorMessage";
-import { importJWK } from 'jose';
 import BlockerPrompt from "../../common/BlockerPrompt";
 import Information from "../../common/fields/Information";
 import Title from "../../common/Title";

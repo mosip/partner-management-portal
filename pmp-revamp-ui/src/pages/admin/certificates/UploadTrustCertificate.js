@@ -120,7 +120,6 @@ function UploadTrustCertificate() {
             if (response) {
                 const responseData = response.data;
                 if (responseData && responseData.response) {
-                    const resData = responseData.response;
                     const successMessage = t('uploadTrustCertificate.successMsg', { partnerDomain: selectedDomain });
                     const requiredData = {
                         backUrl: uploadTrustData.backLink,
@@ -186,10 +185,6 @@ function UploadTrustCertificate() {
         dropdownButton: "!text-light-grat !w-[23rem] !h-[2.6rem] !text-[1rem]",
         dropdownLabel: "!text-[1.03rem]"
     }
-
-    const style = {
-        backArrowIcon: "!mt-[9%]",
-    };
 
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll font-inter`}>
