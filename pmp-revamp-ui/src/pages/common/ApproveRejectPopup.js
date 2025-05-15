@@ -162,7 +162,7 @@ ApproveRejectPopup.propTypes = {
     closePopUp: PropTypes.func.isRequired,
     approveRejectResponse: PropTypes.func.isRequired,
     title: PropTypes.string.isRequired,
-    subtitle: PropTypes.string.isRequired,
+    subtitle: PropTypes.string,
     header: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
 };
