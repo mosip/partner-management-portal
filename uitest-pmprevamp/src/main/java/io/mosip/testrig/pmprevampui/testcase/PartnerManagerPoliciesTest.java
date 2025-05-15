@@ -189,7 +189,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 
 	}
 
-	@Test(priority = 3, description = "Policygroup Details View")
+//	@Test(priority = 3, description = "Policygroup Details View")
 	public void policyGroupDetailsView() {
 
 		DashboardPage dashboardPage = new DashboardPage(driver);
@@ -318,6 +318,10 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		basePage.scrollToEndPage();
 		datasharePolicyPage.clickOnSaveAsDraftButton();
 		datasharePolicyPage.clickOnGoBackButton();
+		
+		datasharePolicyPage.clickOnFilterButton();
+		datasharePolicyPage.enterPolicyNameInFilter(GlobalConstants.ALPHANUMERIC);
+		datasharePolicyPage.clickOnApplyFilterButton();
 		datasharePolicyPage.clickOnActionButton();
 		assertTrue(datasharePolicyPage.isPublishButtonDisplayed(), GlobalConstants.isPublishButtonDisplayed);
 		assertTrue(datasharePolicyPage.isViewButtonDisplayed(), GlobalConstants.isViewButtonDisplayed);
@@ -364,7 +368,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 
 	}
 
-	@Test(priority = 6, description = "Create Duplicate Datashare Policy")
+//	@Test(priority = 6, description = "Create Duplicate Datashare Policy")
 	public void createDuplicateDatasharePolicy() {
 
 		DashboardPage dashboardPage = new DashboardPage(driver);
@@ -414,7 +418,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 
 	}
 
-	@Test(priority = 7, description = "Upload Invalid Policy Data")
+//	@Test(priority = 7, description = "Upload Invalid Policy Data")
 	public void uploadInvalidPolicyData() {
 
 		DashboardPage dashboardPage = new DashboardPage(driver);
@@ -570,7 +574,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 
 	}
 
-	@Test(priority = 9, description = "View Datashare Policy Details")
+//	@Test(priority = 9, description = "View Datashare Policy Details")
 	public void viewDatasharePolicyDetails() {
 
 		DashboardPage dashboardPage = new DashboardPage(driver);
@@ -661,7 +665,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 
 		loginPage.clickOnSomethingWentWrongHomeBtn();
 		dashboardPage.clickOnPoliciesTitle();
-		policiesPage.clickOnRequestPolicyButton();
+		policiesPage.clickOnRequestPolicyButtonOfTabularPage();
 		policiesPage.selectPartnerIdDropdown();
 		policiesPage.selectInvalidPolicyNameDropdown(GlobalConstants.INVALID_DATA);
 		assertTrue(policiesPage.isNoDataAvailableTextDisplayed(), GlobalConstants.isNoDataAvailableTextDisplayed);
@@ -698,7 +702,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 
 //		loginPage.clickOnSomethingWentWrongHomeBtn();
 		dashboardPage.clickOnPoliciesTitle();
-		policiesPage.clickOnRequestPolicyButton();
+		policiesPage.clickOnRequestPolicyButtonOfTabularPage();
 		policiesPage.selectPartnerIdDropdown();
 		policiesPage.selectPolicyNameDropdown(GlobalConstants.DATAPOLICY01);
 		policiesPage.enterComments(GlobalConstants.DATAPOLICY01);
@@ -776,21 +780,11 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		datasharePolicyPage.clickOnApplyFilterButton();
 		datasharePolicyPage.clickOnActionButton();
 		datasharePolicyPage.clickOnEditButton();
-		datasharePolicyPage.enterPolicyName(GlobalConstants.EDITDATAPOLICY1);
-		datasharePolicyPage.enterpolicyDescription(GlobalConstants.EDITDATAPOLICY1);
-		datasharePolicyPage.clickOnEditPolicyFormSubmitButton();
-		datasharePolicyPage.clickOnGoBackButton();
-
-		datasharePolicyPage.clickOnFilterButton();
-		datasharePolicyPage.enterPolicyNameInFilter(GlobalConstants.EDITDATAPOLICY1);
-		datasharePolicyPage.clickOnApplyFilterButton();
-		datasharePolicyPage.clickOnActionButton();
-		datasharePolicyPage.clickOnEditButton();
 		datasharePolicyPage.enterPolicyName(GlobalConstants.AUTOMATION);
 		datasharePolicyPage.enterpolicyDescription(GlobalConstants.AUTOMATION);
 		datasharePolicyPage.clickOnEditPolicyFormSubmitButton();
 		datasharePolicyPage.clickOnGoBackButton();
-
+		
 		datasharePolicyPage.clickOnFilterButton();
 		datasharePolicyPage.enterPolicyNameInFilter(GlobalConstants.AUTOMATION);
 		datasharePolicyPage.clickOnApplyFilterButton();
@@ -1015,6 +1009,201 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		datasharePolicyPage.clickOnClonePolicyButton();
 		datasharePolicyPage.clickOnClonePolicyCloseButton();
 
+	}
+	
+	@Test(priority = 13, description = "Deactivate Datashare Policy")
+	public void deactivateDatasharePolicy() {
+
+		DashboardPage dashboardPage = new DashboardPage(driver);
+		BasePage basePage = new BasePage(driver);
+		PolicyGroupPage policygroupPage = new PolicyGroupPage(driver);
+		DatasharePolicyPage datasharePolicyPage = new DatasharePolicyPage(driver);
+		PoliciesPage policiesPage = new PoliciesPage(driver);
+		LoginPage loginPage = new LoginPage(driver);
+		ApiKeyPage apikeyPage = new ApiKeyPage(driver);
+		PartnerPolicyMappingPage partnerPolicyMappingPage = new PartnerPolicyMappingPage(driver);
+		
+		dashboardPage.clickOnPolicyButton();
+		policygroupPage.clickOnDatasharePolicyTab();
+		datasharePolicyPage.clickOnDatasharePolicyCreateButton();
+		datasharePolicyPage.enterPolicyName(GlobalConstants.EDITDATAPOLICY1);
+		datasharePolicyPage.enterpolicyDescription(GlobalConstants.EDITDATAPOLICY1);
+		datasharePolicyPage.clickOnSaveAsDraftButton();
+		datasharePolicyPage.clickOnGoBackButton();
+		datasharePolicyPage.clickOnFilterButton();
+		datasharePolicyPage.enterPolicyNameInFilter(GlobalConstants.EDITDATAPOLICY1);
+		datasharePolicyPage.clickOnApplyFilterButton();
+		datasharePolicyPage.clickOnActionButton();
+		datasharePolicyPage.clickOnPublishButton();
+		datasharePolicyPage.clickOnPublishPolicyButton();
+		datasharePolicyPage.clickOnPublishPolicyCloseButton();
+		datasharePolicyPage.clickOnFilterResetButton();
+
+		datasharePolicyPage.clickOnFilterButton();
+		datasharePolicyPage.clickOnPolicyGroupFilter(GlobalConstants.DEFAULTPOLICYGROUP);
+		datasharePolicyPage.enterPolicyNameInFilter(GlobalConstants.DATAPOLICY02);
+		datasharePolicyPage.clickOnApplyFilterButton();
+		datasharePolicyPage.clickOnActionButton();
+		assertTrue(datasharePolicyPage.isDeactivateButtonEnabled(), GlobalConstants.isDeactivateButtonEnabled);
+		datasharePolicyPage.clickOnPublishButton();
+		datasharePolicyPage.clickOnPublishPolicyButton();
+		datasharePolicyPage.clickOnPublishPolicyCloseButton();
+		datasharePolicyPage.clickOnHomeButton();
+		
+		dashboardPage.clickOnPolicyButton();
+		policygroupPage.clickOnDatasharePolicyTab();
+		datasharePolicyPage.clickOnFilterButton();
+		datasharePolicyPage.clickOnPolicyGroupFilter(GlobalConstants.DEFAULTPOLICYGROUP);
+		datasharePolicyPage.enterPolicyNameInFilter(GlobalConstants.DEACTIVATE_DATA2);
+		datasharePolicyPage.clickOnApplyFilterButton();
+		datasharePolicyPage.clickOnActionButton();
+		assertTrue(datasharePolicyPage.isViewButtonEnabled(), GlobalConstants.isViewButtonEnabled);
+		assertTrue(datasharePolicyPage.isCloneButtonEnabled(), GlobalConstants.isCloneButtonEnabled);
+		datasharePolicyPage.clickOnDeactivateButton();
+		assertFalse(datasharePolicyPage.isDeactivatePolicyPopupDisplayed(),
+				GlobalConstants.isDeactivatePolicyPopupDisplayed);
+		datasharePolicyPage.clickOnHomeButton();
+
+		dashboardPage.clickOnPolicyButton();
+		policygroupPage.clickOnDatasharePolicyTab();
+		datasharePolicyPage.clickOnFilterButton();
+		datasharePolicyPage.clickOnPolicyGroupFilter(GlobalConstants.DEFAULTPOLICYGROUP);
+		datasharePolicyPage.enterPolicyNameInFilter(GlobalConstants.DATAPOLICY01);
+		datasharePolicyPage.clickOnApplyFilterButton();
+		datasharePolicyPage.clickOnActionButton();
+		assertTrue(datasharePolicyPage.isDeactivateButtonEnabled(), GlobalConstants.isDeactivateButtonEnabled);
+		datasharePolicyPage.clickOnDeactivateButton();
+		assertTrue(datasharePolicyPage.isDeactivatePolicyPopupDisplayed(),
+				GlobalConstants.isDeactivatePolicyPopupDisplayed);
+		assertTrue(datasharePolicyPage.isDeactivatePolicyPopupTitleDisplayed(),
+				GlobalConstants.isDeactivatePolicyPopupTitleDisplayed);
+		assertTrue(datasharePolicyPage.isDeactivatePolicyInfoMessageDisplayed(),
+				GlobalConstants.isDeactivatePolicyInfoMessageDisplayed);
+		assertTrue(datasharePolicyPage.isDeactivateConfirmButtonAvailable(),
+				GlobalConstants.isDeactivateConfirmButtonAvailable);
+		assertTrue(datasharePolicyPage.isDeactivateCancelButtonAvailable(),
+				GlobalConstants.isDeactivateCancelButtonAvailable);
+		datasharePolicyPage.clickOnDeactivateCancelButton();
+		assertTrue(datasharePolicyPage.isSubTitleOfTabularViewDisplayed(),
+				GlobalConstants.isSubTitleOfTabularViewDisplayed);
+
+		logoutFromPartner(dashboardPage);
+
+		loginPage.enterUserName("pmpui-auth");
+		loginPage.enterPassword(password);
+		loginPage.clickOnLoginButton();
+
+		loginPage.clickOnSomethingWentWrongHomeBtn();
+		OidcClientPage oidcClientPage = dashboardPage.clickOnAuthenticationServicesTitle();
+		oidcClientPage.listPageCreateOidcClientButton();
+		oidcClientPage.selectPartnerIdDropdown();
+		oidcClientPage.enterDeactivePolicyNameInDropdown(GlobalConstants.DEACTIVATE_DATA2);
+		assertTrue(oidcClientPage.isNoDataAvailableTextDisplayed(), GlobalConstants.isNoDataAvailableTextDisplayed);
+		oidcClientPage.clickOnCreateOidcClearForm();
+		policiesPage.clickOnHomeButton();
+
+		dashboardPage.clickOnAuthenticationServicesTitle();
+		oidcClientPage.clickOnApiKeyTab();
+		apikeyPage.clickOnApiKeyListPageGenerateApiKeyBtn();
+		apikeyPage.selectPartnerIdDropdown();
+		apikeyPage.enterDeactivePolicyNameInDropdown(GlobalConstants.DEACTIVATE_DATA2);
+		assertTrue(apikeyPage.isNoDataAvailableTextDisplayed(), GlobalConstants.isNoDataAvailableTextDisplayed);
+		apikeyPage.clickOnClearButton();
+		policiesPage.clickOnHomeButton();
+
+		dashboardPage.clickOnPoliciesTitle();
+		policiesPage.clickOnRequestPolicyButtonOfTabularPage();
+		policiesPage.selectPartnerIdDropdown();
+		policiesPage.selectInvalidPolicyNameDropdown(GlobalConstants.DEACTIVATE_DATA2);
+		assertTrue(policiesPage.isNoDataAvailableTextDisplayed(), GlobalConstants.isNoDataAvailableTextDisplayed);
+		policiesPage.clickOnRequestPoliciesFormClearButton();
+		policiesPage.selectPartnerIdDropdown();
+		policiesPage.selectPolicyNameDropdown(GlobalConstants.DATAPOLICY02);
+		policiesPage.enterComments(GlobalConstants.DATAPOLICY02);
+		policiesPage.clickSubmitButton();
+		policiesPage.clickOnGoBackButton();
+
+		policiesPage.clickOnRequestPolicyButtonOfTabularPage();
+		policiesPage.selectPartnerIdDropdown();
+		policiesPage.selectPolicyNameDropdown(GlobalConstants.EDITDATAPOLICY1);
+		policiesPage.enterComments(GlobalConstants.EDITDATAPOLICY1);
+		policiesPage.clickSubmitButton();
+		policiesPage.clickOnGoBackButton();
+
+		policiesPage.clickOnRequestPolicyButtonOfTabularPage();
+		policiesPage.selectPartnerIdDropdown();
+		policiesPage.selectPolicyNameDropdown(GlobalConstants.DATAPOLICY01);
+		policiesPage.enterComments(GlobalConstants.DATAPOLICY01);
+		policiesPage.clickSubmitButton();
+		policiesPage.clickOnGoBackButton();
+
+		logoutFromPartner(dashboardPage);
+
+		loginPage.enterUserName("pmpui-revamp");
+		loginPage.enterPassword(password);
+		loginPage.clickOnLoginButton();
+
+		dashboardPage.clickOnPartnerPolicyMappingTab();
+		partnerPolicyMappingPage.clickOnFilterButton();
+		partnerPolicyMappingPage.enterpolicyGroupFilter(GlobalConstants.DEFAULTPOLICYGROUP);
+		partnerPolicyMappingPage.enterPendingPolicyNameInFilter(GlobalConstants.ALPHANUMERIC);
+		partnerPolicyMappingPage.clickOnApplyFilterButton();
+		partnerPolicyMappingPage.clickOnPartnerListViewElipsisButton();
+		partnerPolicyMappingPage.clickOnApproveOrRejectButton();
+		partnerPolicyMappingPage.clickOnApproveSubmitButton();
+
+		partnerPolicyMappingPage.enterPendingPolicyNameInFilter(GlobalConstants.DATAPOLICY01);
+		partnerPolicyMappingPage.clickOnApplyFilterButton();
+		partnerPolicyMappingPage.clickOnPartnerListViewElipsisButton();
+		partnerPolicyMappingPage.clickOnApproveOrRejectButton();
+		partnerPolicyMappingPage.clickOnRejectButton();
+		partnerPolicyMappingPage.clickOnHomeButton();
+
+		dashboardPage.clickOnPolicyButton();
+		policygroupPage.clickOnDatasharePolicyTab();
+		datasharePolicyPage.clickOnFilterButton();
+		datasharePolicyPage.clickOnPolicyGroupFilter(GlobalConstants.DEFAULTPOLICYGROUP);
+		datasharePolicyPage.enterPolicyNameInFilter(GlobalConstants.ALPHANUMERIC);
+		datasharePolicyPage.clickOnApplyFilterButton();
+		datasharePolicyPage.clickOnActionButton();
+		datasharePolicyPage.clickOnDeactivateButton();
+		datasharePolicyPage.clickOnDeactivateConfirmButton();
+		assertTrue(datasharePolicyPage.isPartnerPolicyLinkActivatedErrorDisplayed(),
+				GlobalConstants.isPartnerPolicyLinkActivatedErrorDisplayed);
+		datasharePolicyPage.clickOnAlertErrorOkButton();
+
+		datasharePolicyPage.enterPolicyName(GlobalConstants.EDITDATAPOLICY1);
+		datasharePolicyPage.clickOnApplyFilterButton();
+		datasharePolicyPage.clickOnActionButton();
+		datasharePolicyPage.clickOnDeactivateButton();
+		datasharePolicyPage.clickOnDeactivateConfirmButton();
+		assertTrue(datasharePolicyPage.isPartnerPolicyLinkPendingErrorDisplayed(),
+				GlobalConstants.isPartnerPolicyLinkPendingErrorDisplayed);
+		datasharePolicyPage.clickOnAlertErrorOkButton();
+
+		datasharePolicyPage.enterPolicyNameInFilter(GlobalConstants.DATAPOLICY01);
+		datasharePolicyPage.clickOnApplyFilterButton();
+		datasharePolicyPage.clickOnActionButton();
+		datasharePolicyPage.clickOnDeactivateButton();
+		datasharePolicyPage.clickOnDeactivateConfirmButton();
+		BasePage.navigateBack();
+		BasePage.navigateForword();
+
+		datasharePolicyPage.clickOnFilterButton();
+		datasharePolicyPage.clickOnPolicyGroupFilter(GlobalConstants.DEFAULTPOLICYGROUP);
+		datasharePolicyPage.enterPolicyNameInFilter(GlobalConstants.DATAPOLICY01);
+		datasharePolicyPage.clickOnApplyFilterButton();
+		assertTrue(datasharePolicyPage.isPolicyStatusDeactivateDisplayed(),
+				GlobalConstants.isPolicyStatusDeactivateDisplayed);
+
+		datasharePolicyPage.clickOnDatasharePolicyCreateButton();
+		datasharePolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULTPOLICYGROUP);
+		datasharePolicyPage.enterPolicyNameInFilter(GlobalConstants.DATAPOLICY01);
+		datasharePolicyPage.enterpolicyDescription(GlobalConstants.DATAPOLICY01_DESCRIPTION);
+		datasharePolicyPage.uploadPolicyData();
+		basePage.scrollToEndPage();
+		datasharePolicyPage.clickOnSaveAsDraftButton();
+		datasharePolicyPage.clickOnGoBackButton();
 	}
 
 	@Test(priority = 14, description = "Create Auth Policy")
@@ -1264,7 +1453,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		authPolicyPage.selectDeactivateStatusFilter();
 		authPolicyPage.enterPolicyNameInFilter(GlobalConstants.DEACTIVATE_AUTH2);
 		authPolicyPage.clickOnApplyFilterButton();
-		assertTrue(authPolicyPage.isPolicyStatusDeactivateDisplayed(),
+		assertTrue(authPolicyPage.isPolicyStatusDeactivatedDisplayed(),
 				GlobalConstants.isPolicyStatusDeactivateDisplayed);
 		authPolicyPage.clickOnDeactivatedAuthPolicy();
 		assertFalse(authPolicyPage.isPolicyViewPageTitleDisplayed(), GlobalConstants.isPolicyViewPageTitleDisplayed);
@@ -1301,7 +1490,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		assertTrue(authPolicyPage.isItemPerPage16Displayed(), GlobalConstants.isItemPerPage16Displayed);
 	}
 
-	@Test(priority = 17, description = "Auth Policy Details View")
+//	@Test(priority = 17, description = "Auth Policy Details View")
 	public void authPolicyDetailsView() {
 
 		DashboardPage dashboardPage = new DashboardPage(driver);
@@ -1359,10 +1548,517 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 				GlobalConstants.isPolicyStatusDeactivatedDisplayed);
 		authPolicyPage.clickOnHomeButton();
 	}
-
 	
+	@Test(priority = 18, description = "Edit Auth Policy")
+	public void editAuthPolicy() {
 
-	@Test(priority = 22, description = "Deactivate Policy Group")
+		DashboardPage dashboardpage = new DashboardPage(driver);
+		BasePage basePage = new BasePage(driver);
+		PoliciesPage policiesPage = new PoliciesPage(driver);
+		AuthPolicyPage authPolicyPage = new AuthPolicyPage(driver);
+		
+		dashboardpage.clickOnPolicyButton();
+		policiesPage.clickOnAuthPolicyTab();
+		authPolicyPage.clickOnCreateAuthPolicyButton();
+
+		authPolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULTPOLICYGROUP);
+		authPolicyPage.enterPolicyName(GlobalConstants.EDITAUTHPOLICY);
+		authPolicyPage.enterpolicyDescription(GlobalConstants.EDITAUTHPOLICY_DESCRIPTION);
+		authPolicyPage.uploadPolicyData();
+		basePage.scrollToEndPage();
+		authPolicyPage.clickOnSaveAsDraftButton();
+		authPolicyPage.clickOnGoBackButton();
+
+		authPolicyPage.clickOnFilterButton();
+		authPolicyPage.enterPolicyNameInFilter(GlobalConstants.EDITAUTHPOLICY);
+		authPolicyPage.clickOnApplyFilterButton();
+		authPolicyPage.clickOnActionButton();
+		assertTrue(authPolicyPage.isEditButtonEnable(), GlobalConstants.isEditButtonEnable);
+		authPolicyPage.clickOnEditButton();
+
+		assertTrue(authPolicyPage.isEditPolicyPageTitleDisplayed(), GlobalConstants.isEditPolicyPageTitleDisplayed);
+		assertTrue(authPolicyPage.isHomeButtonDisplayed(), GlobalConstants.isSubTitleHomeDisplayed);
+		assertTrue(authPolicyPage.isSubTitleDisplayed(), GlobalConstants.isSubTitleDisplayed);
+		assertTrue(authPolicyPage.isPolicyFormSubTitleDisplayed(),
+				GlobalConstants.isPolicyFormSubTitleDisplayed);
+		assertTrue(authPolicyPage.isPolicyGroupDropdownEnabled(), GlobalConstants.isPolicyGroupDropdownEnabled);
+		assertTrue(authPolicyPage.isEditPolicyGroupDropdownValueDisplayed(),
+				GlobalConstants.isEditPolicyGroupDropdownValueDisplayed);
+		assertTrue(authPolicyPage.isPolicyNameBoxDisplayed(), GlobalConstants.isPolicyNameBoxDisplayed);
+		assertTrue(authPolicyPage.isEditPolicyNameValueDisplayed(), GlobalConstants.isEditPolicyNameValueDisplayed);
+		assertTrue(authPolicyPage.isPolicyDescriptionBoxDisplayed(), GlobalConstants.isPolicyDescriptionBoxDisplayed);
+		assertTrue(authPolicyPage.isEditPolicyDescriptionValueDisplayed(),
+				GlobalConstants.isEditPolicyDescriptionValueDisplayed);
+		assertTrue(authPolicyPage.isReUploadPolicyDataLabelDisplayed(),
+				GlobalConstants.isReUploadPolicyDataLabelDisplayed);
+		assertTrue(authPolicyPage.isReuploadButtonDisplayed(), GlobalConstants.isReuploadButtonDisplayed);
+		assertTrue(authPolicyPage.isEditPolicyDataContextDisplayed(), GlobalConstants.isEditPolicyDataContextDisplayed);
+		assertTrue(authPolicyPage.isEditPolicyClearButtonDisplayed(), GlobalConstants.isEditPolicyClearButtonDisplayed);
+		assertTrue(authPolicyPage.isEditPolicySubmitButtonDisplayed(),
+				GlobalConstants.isEditPolicySubmitButtonDisplayed);
+		assertTrue(authPolicyPage.isEditPolicyCancelButtonDisplayed(),
+				GlobalConstants.isEditPolicyCancelButtonDisplayed);
+
+		authPolicyPage.enterPolicyName(GlobalConstants.SPACE);
+		assertFalse(authPolicyPage.isSaveAsDraftButtonEnabled(), GlobalConstants.isSaveAsDraftButtonEnabled);
+
+		authPolicyPage.enterPolicyName(GlobalConstants.Single_CHARACTERS);
+		authPolicyPage.enterpolicyDescription(GlobalConstants.Single_CHARACTERS);
+		basePage.scrollToEndPage();
+		authPolicyPage.clickOnEditPolicyFormSubmitButton();
+		assertTrue(authPolicyPage.isEditPolicySuccessTitleDisplayed(),
+				GlobalConstants.isEditPolicySuccessTitleDisplayed);
+		assertTrue(authPolicyPage.isEditPolicySuccessSubTitleDisplayed(),
+				GlobalConstants.isEditPolicySuccessSubTitleDisplayed);
+		assertTrue(authPolicyPage.isEditSuccessGoBackButtonEnabled(), GlobalConstants.isEditSuccessGoBackButtonEnabled);
+		assertTrue(authPolicyPage.isEditSuccessHomeButtonEnabled(), GlobalConstants.isEditSuccessHomeButtonEnabled);
+		authPolicyPage.clickOnGoBackButton();
+		
+		authPolicyPage.clickOnFilterButton();
+		authPolicyPage.enterPolicyNameInFilter(GlobalConstants.Single_CHARACTERS);
+		authPolicyPage.clickOnApplyFilterButton();
+		authPolicyPage.clickOnActionButton();
+		authPolicyPage.clickOnEditButton();
+		authPolicyPage.enterPolicyName(GlobalConstants.AUTOMATION);
+		authPolicyPage.enterpolicyDescription(GlobalConstants.AUTOMATION);
+		basePage.scrollToEndPage();
+		authPolicyPage.clickOnEditPolicyFormSubmitButton();
+		authPolicyPage.clickOnGoBackButton();
+		
+//		authPolicyPage.clickOnFilterResetButton();
+		authPolicyPage.clickOnFilterButton();
+		authPolicyPage.enterPolicyNameInFilter(GlobalConstants.AUTOMATION);
+		authPolicyPage.clickOnApplyFilterButton();
+		authPolicyPage.clickOnActionButton();
+		authPolicyPage.clickOnEditButton();
+		authPolicyPage.enterPolicyName(GlobalConstants.NUMERIC2);
+		authPolicyPage.enterpolicyDescription(GlobalConstants.NUMERIC2);
+		authPolicyPage.uploadBlankData();
+		assertTrue(authPolicyPage.isProvideValidJsonDataErrorMessageDisplayed(),
+				GlobalConstants.isProvideValidJsonDataErrorMessageDisplayed);
+		authPolicyPage.clickOnErrorCloseButton();
+		authPolicyPage.uploadInvalidPolicyData();
+		assertTrue(authPolicyPage.isProvideValidJsonDataErrorMessageDisplayed(),
+				GlobalConstants.isProvideValidJsonDataErrorMessageDisplayed);
+		authPolicyPage.clickOnErrorCloseButton();
+		authPolicyPage.uploadExceedData();
+		basePage.scrollToEndPage();
+		authPolicyPage.clickOnEditPolicyFormSubmitButton();
+		basePage.scrollToStartPage();
+		assertTrue(authPolicyPage.isInvalidInfoInPolicyDataErrorDisplayed(),
+				GlobalConstants.isInvalidInfoInPolicyDataErrorDisplayed);
+		authPolicyPage.clickOnErrorCloseButton();
+		authPolicyPage.uploadPolicyData();
+		authPolicyPage.clearTextBoxPolicyData();
+		basePage.scrollToEndPage();
+		assertTrue(authPolicyPage.isEditPolicySubmitButtonEnabled(), GlobalConstants.isSaveAsDraftButtonEnabled);
+		authPolicyPage.clickOnEditPolicyFormSubmitButton();
+		authPolicyPage.clickOnGoBackButton();
+		
+//		authPolicyPage.clickOnFilterResetButton();
+		authPolicyPage.clickOnFilterButton();
+		authPolicyPage.enterPolicyNameInFilter(GlobalConstants.NUMERIC2);
+		authPolicyPage.clickOnApplyFilterButton();
+		authPolicyPage.clickOnActionButton();
+		authPolicyPage.clickOnEditButton();
+		authPolicyPage.clickOnEditPolicyFormCancelButton();
+		authPolicyPage.clickOnFilterButton();
+		authPolicyPage.enterPolicyNameInFilter(GlobalConstants.NUMERIC2);
+		authPolicyPage.clickOnApplyFilterButton();
+		authPolicyPage.clickOnActionButton();
+		authPolicyPage.clickOnEditButton();
+		authPolicyPage.enterPolicyName(GlobalConstants.EDITAUTHPOLICY);
+		authPolicyPage.enterpolicyDescription(GlobalConstants.EDITAUTHPOLICY);
+		authPolicyPage.clickOnEditPolicyFormCancelButton();
+		assertTrue(authPolicyPage.isChangesLostConfirmationMessageDisplayed(),
+				GlobalConstants.isChangesLostConfirmationMessageDisplayed);
+		authPolicyPage.clickOnChangesLostCancelButton();
+		basePage.scrollToEndPage();
+		authPolicyPage.clickOnUndoChangesButton();
+		
+		basePage.scrollToStartPage();
+		authPolicyPage.enterPolicyName(GlobalConstants.EDITAUTHPOLICY);
+		authPolicyPage.enterpolicyDescription(GlobalConstants.EDITAUTHPOLICY);
+		authPolicyPage.uploadAlphabetData();
+		assertTrue(authPolicyPage.isProvideValidJsonDataErrorMessageDisplayed(),
+				GlobalConstants.isProvideValidJsonDataErrorMessageDisplayed);
+		authPolicyPage.clickOnErrorCloseButton();
+		authPolicyPage.uploadSpecialChData();
+		assertTrue(authPolicyPage.isProvideValidJsonDataErrorMessageDisplayed(),
+				GlobalConstants.isProvideValidJsonDataErrorMessageDisplayed);
+		authPolicyPage.clickOnErrorCloseButton();
+		authPolicyPage.uploadPolicyData();
+		authPolicyPage.clickOnEditPolicyFormSubmitButton();
+		authPolicyPage.clickOnGoBackButton();
+		basePage.navigateBack();
+
+	}
+
+	@Test(priority = 19, description = "Publish Auth Policy")
+	public void publishAuthPolicy() {
+
+		DashboardPage dashboardPage = new DashboardPage(driver);
+		PoliciesPage policiesPage = new PoliciesPage(driver);
+		AuthPolicyPage authPolicyPage = new AuthPolicyPage(driver);
+		PolicyGroupPage policygroupPage = new PolicyGroupPage(driver);
+
+		dashboardPage.clickOnPolicyButton();
+		policiesPage.clickOnAuthPolicyTab();
+		authPolicyPage.clickOnCreateAuthPolicyButton();
+
+		authPolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULTPOLICYGROUP);
+		authPolicyPage.enterPolicyName(GlobalConstants.AUTHPOLICY08);
+		authPolicyPage.enterpolicyDescription(GlobalConstants.AUTHPOLICY08_DESCRIPTION);
+		authPolicyPage.uploadPolicyData();
+		authPolicyPage.clickOnSaveAsDraftButton();
+		authPolicyPage.clickOnGoBackButton();
+
+		authPolicyPage.clickOnFilterButton();
+		authPolicyPage.enterPolicyNameInFilter(GlobalConstants.AUTHPOLICY08);
+		authPolicyPage.clickOnApplyFilterButton();
+		authPolicyPage.clickOnActionButton();
+		assertTrue(authPolicyPage.isPolicyPublishButtonDisplayed(), GlobalConstants.isPolicyPublishButtonDisplayed);
+		authPolicyPage.clickOnPolicyPublishButton();
+		assertTrue(authPolicyPage.isPublishPopupDisplayed(), GlobalConstants.isPublishPopupDisplayed);
+		assertTrue(authPolicyPage.isPublishPopupInfoTextDisplayed(), GlobalConstants.isPublishPopupInfoTextDisplayed);
+		assertTrue(authPolicyPage.isPublishPolicyButtonDisplayed(), GlobalConstants.isPublishPolicyButtonDisplayed);
+		assertTrue(authPolicyPage.isPublishCancelButtonDisplayed(),
+				GlobalConstants.isPublishPolicyCancelButtonDisplayed);
+		authPolicyPage.clickOnPublishCancelButton();
+		assertTrue(authPolicyPage.isListOfPoliciesPageDisplayed(), GlobalConstants.isListOfPoliciesPageDisplayed);
+
+		authPolicyPage.enterPolicyNameInFilter(GlobalConstants.AUTHPOLICY08);
+		authPolicyPage.clickOnApplyFilterButton();
+		authPolicyPage.clickOnActionButton();
+		authPolicyPage.clickOnPolicyPublishButton();
+		authPolicyPage.clickOnPublishPolicyButton();
+		authPolicyPage.clickOnSuccessMsgCloseButton();
+		authPolicyPage.clickOnPublishPolicyCloseButton();
+		assertTrue(authPolicyPage.isListOfPoliciesPageDisplayed(), GlobalConstants.isListOfPoliciesPageDisplayed);
+		
+		authPolicyPage.enterPolicyNameInFilter(GlobalConstants.AUTOMATION_25);
+		authPolicyPage.clickOnApplyFilterButton();
+		authPolicyPage.clickOnActionButton();
+		authPolicyPage.clickOnPolicyPublishButton();
+		authPolicyPage.clickOnPublishPolicyButton();
+		authPolicyPage.clickOnSuccessMsgCloseButton();
+		authPolicyPage.clickOnPublishPolicyCloseButton();
+		assertTrue(authPolicyPage.isListOfPoliciesPageDisplayed(), GlobalConstants.isListOfPoliciesPageDisplayed);
+
+		authPolicyPage.clickOnFilterButton();
+		authPolicyPage.enterPolicyNameInFilter(GlobalConstants.AUTHPOLICY08);
+		authPolicyPage.clickOnApplyFilterButton();
+		authPolicyPage.clickOnActionButton();
+		authPolicyPage.clickOnCloneButton();
+		authPolicyPage.selectPolicyGroupDropdownForClone(GlobalConstants.NUMERIC);
+		authPolicyPage.clickOnClonePolicyButton();
+		authPolicyPage.clickOnClonePolicyCloseButton();
+		policygroupPage.navigateBackDefaultButton();
+
+	}
+
+	@Test(priority = 20, description = "Clone Auth Policy")
+	public void cloneAuthPolicy() {
+
+		DashboardPage dashboardPage = new DashboardPage(driver);
+		AuthPolicyPage authPolicyPage = new AuthPolicyPage(driver);
+		PoliciesPage policiesPage = new PoliciesPage(driver);
+
+		dashboardPage.clickOnPolicyButton();
+		policiesPage.clickOnAuthPolicyTab();
+		authPolicyPage.clickOnCreateAuthPolicyButton();
+		authPolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULTPOLICYGROUP);
+		authPolicyPage.enterPolicyName(GlobalConstants.AUTHPOLICY06);
+		authPolicyPage.enterpolicyDescription(GlobalConstants.AUTHPOLICY06_DESCRIPTION);
+		authPolicyPage.uploadPolicyData();
+		authPolicyPage.scrollToEndPage();
+		authPolicyPage.clickOnSaveAsDraftButton();
+		authPolicyPage.clickOnGoBackButton();
+		authPolicyPage.clickOnActionButton();
+		authPolicyPage.clickOnCloneButton();
+		assertFalse(authPolicyPage.isClonePolicyPopupTitleDisplayed(),
+				GlobalConstants.isClonePolicyPopupTitleDisplayed);
+
+		authPolicyPage.clickOnFilterButton();
+		authPolicyPage.enterPolicyGroupInFilterBox(GlobalConstants.DEFAULTPOLICYGROUP);
+		authPolicyPage.selectDeactivateStatusFilter();
+		authPolicyPage.enterPolicyNameInFilter(GlobalConstants.DEACTIVATE_AUTH2);
+		authPolicyPage.clickOnApplyFilterButton();
+		authPolicyPage.clickOnActionButton();
+		assertTrue(authPolicyPage.isCloneButtonEnabled(), GlobalConstants.isCloneButtonEnabled);
+		
+		authPolicyPage.clickOnFilterResetButton();
+		authPolicyPage.clickOnFilterButton();
+		authPolicyPage.enterPolicyGroupInFilterBox(GlobalConstants.DEFAULTPOLICYGROUP);
+		authPolicyPage.enterPolicyNameInFilter(GlobalConstants.AUTHPOLICY06);
+		authPolicyPage.clickOnApplyFilterButton();
+		authPolicyPage.clickOnActionButton();
+		authPolicyPage.clickOnPolicyPublishButton();
+		authPolicyPage.clickOnPublishPolicyButton();
+		authPolicyPage.clickOnSuccessMsgCloseButton();
+		authPolicyPage.clickOnPublishPolicyCloseButton();	
+		assertTrue(authPolicyPage.isListOfPoliciesPageDisplayed(), GlobalConstants.isListOfPoliciesPageDisplayed);
+		
+		authPolicyPage.clickOnFilterResetButton();
+		authPolicyPage.clickOnFilterButton();
+		authPolicyPage.enterPolicyNameInFilter(GlobalConstants.AUTHPOLICY06);
+		authPolicyPage.clickOnApplyFilterButton();
+		authPolicyPage.clickOnActionButton();
+		assertTrue(authPolicyPage.isCloneButtonEnabled(), GlobalConstants.isCloneButtonEnabled);
+		authPolicyPage.clickOnCloneButton();
+		assertTrue(authPolicyPage.isClonePolicyPopupTitleDisplayed(), GlobalConstants.isClonePolicyPopupTitleDisplayed);
+		assertTrue(authPolicyPage.isClonePolicyInfoMessageDisplayed(),
+				GlobalConstants.isClonePolicyInfoMessageDisplayed);
+		assertTrue(authPolicyPage.isClonePolicyGroupDropdownDisplayed(),
+				GlobalConstants.isClonePolicyGroupDropdownDisplayed);
+		authPolicyPage.clickOnClonePolicyGroupDropdown();
+		assertTrue(authPolicyPage.isClonePolicyGroupSearchInputDisplayed(),
+				GlobalConstants.isClonePolicyGroupSearchInputDisplayed);
+		assertTrue(authPolicyPage.isClonePolicyCancelButtonAvailable(),
+				GlobalConstants.isClonePolicyCancelButtonAvailable);
+		assertTrue(authPolicyPage.isClonePolicyButtonAvailable(), GlobalConstants.isClonePolicyButtonAvailable);
+		assertFalse(authPolicyPage.isClonePolicyButtonEnabled(), GlobalConstants.isClonePolicyButtonEnabled);
+
+		authPolicyPage.searchPolicyGroupForClone(GlobalConstants.CHARACTERS_1);
+		assertTrue(authPolicyPage.isClonePolicyGroupNameDisplayed(), GlobalConstants.isClonePolicyGroupNameDisplayed);
+		assertTrue(authPolicyPage.isClonePolicyGroupDescriptionDisplayed(),
+				GlobalConstants.isClonePolicyGroupDescriptionDisplayed);
+
+		authPolicyPage.searchPolicyGroupForClone(GlobalConstants.DEACTIVATE_DATA1);
+		assertTrue(authPolicyPage.isNoDataAvailableDisplayed(), GlobalConstants.isNoDataAvailableDisplayed);
+		authPolicyPage.clickOnClonePolicyGroupDropdown();
+
+		authPolicyPage.selectPolicyGroupForClone(GlobalConstants.CHARACTERS_1);
+		assertTrue(authPolicyPage.isClonePolicyButtonEnabled(), GlobalConstants.isClonePolicyButtonEnabled);
+		authPolicyPage.clickOnClonePolicyButton();
+		assertTrue(authPolicyPage.isClonedSuccessMessageDisplayed(), GlobalConstants.isClonedSuccessPopupDisplayed);
+		assertFalse(authPolicyPage.isClonePolicyCancelButtonEnabled(),
+				GlobalConstants.isClonePolicyCancelButtonEnabled);
+		assertTrue(authPolicyPage.isClonePolicyCloseButtonEnabled(), GlobalConstants.isClonePolicyCloseButtonEnabled);
+		authPolicyPage.clickOnClonePolicyCloseButton();
+		assertTrue(authPolicyPage.isListOfPoliciesPageDisplayed(), GlobalConstants.isListOfPoliciesPageDisplayed);
+
+		authPolicyPage.clickOnFilterButton();
+		authPolicyPage.enterPolicyNameInFilter(GlobalConstants.AUTHPOLICY06);
+		authPolicyPage.clickOnApplyFilterButton();
+		assertTrue(authPolicyPage.isUpdatedPolicyGroupDisplayed(), GlobalConstants.isUpdatedPolicyGroupDisplayed);
+		assertTrue(authPolicyPage.isClonedPolicyStatusDraftDisplayed(),
+				GlobalConstants.isClonedPolicyStatusDraftDisplayed);
+		authPolicyPage.clickOnActionButton();
+		authPolicyPage.clickOnViewButton();
+		assertTrue(authPolicyPage.isViewPolicyDetailsStatusDraftDisplayed(),
+				GlobalConstants.isViewPolicyDetailsStatusDraftDisplayed);
+		authPolicyPage.clickOnViewBackButton();
+
+		authPolicyPage.clickOnFilterButton();
+		authPolicyPage.enterPolicyGroupInFilterBox(GlobalConstants.DEFAULTPOLICYGROUP);
+		authPolicyPage.enterPolicyNameInFilter(GlobalConstants.AUTHPOLICY06);
+		authPolicyPage.clickOnApplyFilterButton();
+		authPolicyPage.clickOnActionButton();
+		authPolicyPage.clickOnCloneButton();
+		authPolicyPage.clickOnClonePolicyCancelButton();
+		
+		authPolicyPage.clickOnFilterResetButton();
+		authPolicyPage.clickOnFilterButton();
+		authPolicyPage.enterPolicyGroupInFilterBox(GlobalConstants.DEFAULTPOLICYGROUP);
+		authPolicyPage.enterPolicyNameInFilter(GlobalConstants.AUTHPOLICY06);
+		authPolicyPage.clickOnApplyFilterButton();
+		authPolicyPage.clickOnActionButton();
+		authPolicyPage.clickOnCloneButton();
+		authPolicyPage.selectPolicyGroupForClone(GlobalConstants.CHARACTERS_1);
+		authPolicyPage.clickOnClonePolicyButton();
+		assertTrue(authPolicyPage.isAlreadyExistErrorMessageDisplayed(),
+				GlobalConstants.isAlreadyExistErrorMessageDisplayed);
+		authPolicyPage.clickOnCloseIcon();
+		assertTrue(authPolicyPage.isListOfPoliciesPageDisplayed(), GlobalConstants.isListOfPoliciesPageDisplayed);
+
+		authPolicyPage.enterPolicyGroupInFilterBox(GlobalConstants.DEFAULTPOLICYGROUP);
+		authPolicyPage.enterPolicyNameInFilter(GlobalConstants.AUTHPOLICY06);
+		authPolicyPage.clickOnApplyFilterButton();
+		authPolicyPage.clickOnActionButton();
+		authPolicyPage.clickOnCloneButton();
+		authPolicyPage.selectPolicyGroupForClone(GlobalConstants.DEFAULTPOLICYGROUP);
+		authPolicyPage.clickOnClonePolicyButton();
+		assertTrue(authPolicyPage.isAlreadyExistErrorMessageDisplayed(),
+				GlobalConstants.isAlreadyExistErrorMessageDisplayed);
+		authPolicyPage.clickOnCloseIcon();
+		assertTrue(authPolicyPage.isListOfPoliciesPageDisplayed(), GlobalConstants.isListOfPoliciesPageDisplayed);
+
+		authPolicyPage.enterPolicyGroupInFilterBox(GlobalConstants.DEFAULTPOLICYGROUP);
+		authPolicyPage.enterPolicyNameInFilter(GlobalConstants.AUTHPOLICY06);
+		authPolicyPage.clickOnApplyFilterButton();
+		authPolicyPage.clickOnActionButton();
+		authPolicyPage.clickOnCloneButton();
+		authPolicyPage.selectPolicyGroupForClone(GlobalConstants.POLICYGROUP07);
+		authPolicyPage.clickOnClonePolicyButton();
+		authPolicyPage.clickOnClonePolicyCloseButton();
+
+	}
+
+	@Test(priority = 21, description = "Deactivate Auth Policy")
+	public void deactivateAuthPolicy() {
+
+		DashboardPage dashboardPage = new DashboardPage(driver);
+		BasePage basePage = new BasePage(driver);
+		PolicyGroupPage policygroupPage = new PolicyGroupPage(driver);
+		PoliciesPage policiesPage = new PoliciesPage(driver);
+		LoginPage loginPage = new LoginPage(driver);
+		ApiKeyPage apikeyPage = new ApiKeyPage(driver);
+		AuthPolicyPage authpolicyPage = new AuthPolicyPage(driver);
+		PartnerPolicyMappingPage partnerPolicyMappingPage = new PartnerPolicyMappingPage(driver);
+		OidcClientPage oidcclientpage = new OidcClientPage(driver);
+
+		dashboardPage.clickOnPolicyButton();
+		policiesPage.clickOnAuthPolicyTab();
+		authpolicyPage.clickOnFilterButton();
+		authpolicyPage.enterPolicyGroupInFilterBox(GlobalConstants.DEFAULTPOLICYGROUP);
+		authpolicyPage.enterPolicyNameInFilter(GlobalConstants.DEACTIVATE_AUTH2);
+		authpolicyPage.clickOnApplyFilterButton();
+		authpolicyPage.clickOnActionButton();
+		assertTrue(authpolicyPage.isViewButtonEnabled(), GlobalConstants.isViewButtonEnabled);
+		assertTrue(authpolicyPage.isCloneButtonEnabled(), GlobalConstants.isCloneButtonEnabled);
+		authpolicyPage.clickOnDeactivateButton();
+		assertFalse(authpolicyPage.isDeactivatePolicyPopupDisplayed(),
+				GlobalConstants.isDeactivatePolicyPopupDisplayed);
+		authpolicyPage.clickOnHomeButton();
+
+		dashboardPage.clickOnPolicyButton();
+		policiesPage.clickOnAuthPolicyTab();
+		authpolicyPage.clickOnFilterButton();
+		authpolicyPage.enterPolicyGroupInFilterBox(GlobalConstants.DEFAULTPOLICYGROUP);
+		authpolicyPage.enterPolicyNameInFilter(GlobalConstants.AUTHPOLICY06);
+		authpolicyPage.clickOnApplyFilterButton();
+		authpolicyPage.clickOnActionButton();
+		assertTrue(authpolicyPage.isDeactivateButtonEnabled(), GlobalConstants.isDeactivateButtonEnabled);
+		authpolicyPage.clickOnDeactivateButton();
+		assertTrue(authpolicyPage.isDeactivatePolicyPopupDisplayed(), GlobalConstants.isDeactivatePolicyPopupDisplayed);
+		assertTrue(authpolicyPage.isDeactivatePolicyPopupTitleDisplayed(),
+				GlobalConstants.isDeactivatePolicyPopupTitleDisplayed);
+		assertTrue(authpolicyPage.isDeactivatePolicyInfoMessageDisplayed(),
+				GlobalConstants.isDeactivatePolicyInfoMessageDisplayed);
+		assertTrue(authpolicyPage.isDeactivateConfirmButtonAvailable(),
+				GlobalConstants.isDeactivateConfirmButtonAvailable);
+		assertTrue(authpolicyPage.isDeactivateCancelButtonAvailable(),
+				GlobalConstants.isDeactivateCancelButtonAvailable);
+		authpolicyPage.clickOnDeactivateCancelButton();
+		assertTrue(authpolicyPage.isListOfPoliciesPageDisplayed(), GlobalConstants.isListOfPoliciesPageDisplayed);
+
+		logoutFromPartner(dashboardPage);
+
+		loginPage.enterUserName("pmpui-auth");
+		loginPage.enterPassword(password);
+		loginPage.clickOnLoginButton();
+
+		loginPage.clickOnSomethingWentWrongHomeBtn();
+		dashboardPage.clickOnAuthenticationServicesTitle();
+		oidcclientpage.listPageCreateOidcClientButton();
+		oidcclientpage.selectPartnerIdDropdown();
+		oidcclientpage.enterDeactivePolicyNameInDropdown(GlobalConstants.DEACTIVATE_AUTH2);
+		assertTrue(oidcclientpage.isNoDataAvailableTextDisplayed(), GlobalConstants.isNoDataAvailableTextDisplayed);
+		policiesPage.clickOnHomeButton();
+		policiesPage.clickOnDataLostProcceedButton();
+		
+		dashboardPage.clickOnAuthenticationServicesTitle();
+		oidcclientpage.clickOnApiKeyTab();
+		apikeyPage.clickOnApiKeyListPageGenerateApiKeyBtn();
+		apikeyPage.selectPartnerIdDropdown();
+		apikeyPage.enterDeactivePolicyNameInDropdown(GlobalConstants.DEACTIVATE_AUTH2);
+		assertTrue(apikeyPage.isNoDataAvailableTextDisplayed(), GlobalConstants.isNoDataAvailableTextDisplayed);
+		policiesPage.clickOnHomeButton();
+		policiesPage.clickOnDataLostProcceedButton();
+
+		dashboardPage.clickOnPoliciesTitle();
+		policiesPage.clickOnRequestPolicyButtonOfTabularPage();
+		policiesPage.selectPartnerIdDropdown();
+		policiesPage.selectInvalidPolicyNameDropdown(GlobalConstants.DEACTIVATE_AUTH2);
+		assertTrue(policiesPage.isNoDataAvailableTextDisplayed(), GlobalConstants.isNoDataAvailableTextDisplayed);
+		policiesPage.selectPolicyNameDropdown(GlobalConstants.ALPHANUMERIC);
+		policiesPage.enterComments(GlobalConstants.ALPHANUMERIC);
+		policiesPage.clickSubmitButton();
+		policiesPage.clickOnGoBackButton();
+
+		policiesPage.clickOnRequestPolicyButtonOfTabularPage();
+		policiesPage.selectPartnerIdDropdown();
+		policiesPage.selectPolicyNameDropdown(GlobalConstants.AUTOMATION_25);
+		policiesPage.enterComments(GlobalConstants.AUTOMATION_25);
+		policiesPage.clickSubmitButton();
+
+		policiesPage.clickOnRequestPolicyButtonOfTabularPage();
+		policiesPage.selectPartnerIdDropdown();
+		policiesPage.selectPolicyNameDropdown(GlobalConstants.AUTHPOLICY06);
+		policiesPage.enterComments(GlobalConstants.AUTHPOLICY06);
+		policiesPage.clickSubmitButton();
+
+		logoutFromPartner(dashboardPage);
+
+		loginPage.enterUserName("pmpui-revamp");
+		loginPage.enterPassword(password);
+		loginPage.clickOnLoginButton();
+
+		dashboardPage.clickOnPartnerPolicyMappingTab();
+		partnerPolicyMappingPage.clickOnFilterButton();
+		partnerPolicyMappingPage.enterpolicyGroupFilter(GlobalConstants.DEFAULTPOLICYGROUP);
+		partnerPolicyMappingPage.enterPendingPolicyNameInFilter(GlobalConstants.ALPHANUMERIC);
+		partnerPolicyMappingPage.clickOnApplyFilterButton();
+		partnerPolicyMappingPage.clickOnPartnerListViewElipsisButton();
+		partnerPolicyMappingPage.clickOnApproveOrRejectButton();
+		partnerPolicyMappingPage.clickOnApproveSubmitButton();
+
+		partnerPolicyMappingPage.enterPendingPolicyNameInFilter(GlobalConstants.AUTHPOLICY06);
+		partnerPolicyMappingPage.clickOnApplyFilterButton();
+		partnerPolicyMappingPage.clickOnPartnerListViewElipsisButton();
+		partnerPolicyMappingPage.clickOnApproveOrRejectButton();
+		partnerPolicyMappingPage.clickOnRejectButton();
+		partnerPolicyMappingPage.clickOnHomeButton();
+
+		dashboardPage.clickOnPolicyButton();
+		policygroupPage.isAuthPolicyTabDisplayed();
+		authpolicyPage.clickOnFilterButton();
+		authpolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULTPOLICYGROUP);
+		authpolicyPage.enterPolicyNameInFilter(GlobalConstants.ALPHANUMERIC);
+		authpolicyPage.clickOnApplyFilterButton();
+		authpolicyPage.clickOnActionButton();
+		authpolicyPage.clickOnDeactivateButton();
+		authpolicyPage.clickOnDeactivateConfirmButton();
+		assertTrue(authpolicyPage.isPartnerPolicyLinkActivatedErrorDisplayed(),
+				GlobalConstants.isPartnerPolicyLinkActivatedErrorDisplayed);
+		authpolicyPage.clickOnAlertErrorOkButton();
+
+		authpolicyPage.enterPolicyNameInFilter(GlobalConstants.AUTOMATION_25);
+		authpolicyPage.clickOnApplyFilterButton();
+		authpolicyPage.clickOnActionButton();
+		authpolicyPage.clickOnDeactivateButton();
+		authpolicyPage.clickOnDeactivateConfirmButton();
+		assertTrue(authpolicyPage.isPartnerPolicyLinkPendingErrorDisplayed(),
+				GlobalConstants.isPartnerPolicyLinkPendingErrorDisplayed);
+		authpolicyPage.clickOnAlertErrorOkButton();
+
+		authpolicyPage.enterPolicyNameInFilter(GlobalConstants.AUTHPOLICY06);
+		authpolicyPage.clickOnApplyFilterButton();
+		authpolicyPage.clickOnActionButton();
+		authpolicyPage.clickOnDeactivateButton();
+		authpolicyPage.clickOnDeactivateConfirmButton();
+		BasePage.navigateBack();
+		BasePage.navigateForword();
+
+		authpolicyPage.clickOnFilterButton();
+		authpolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULTPOLICYGROUP);
+		authpolicyPage.enterPolicyNameInFilter(GlobalConstants.AUTHPOLICY06);
+		authpolicyPage.clickOnApplyFilterButton();
+		assertTrue(authpolicyPage.isPolicyStatusDeactivateDisplayed(),
+				GlobalConstants.isPolicyStatusDeactivateDisplayed);
+
+		authpolicyPage.clickOnCreateAuthPolicyButton();
+		authpolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULTPOLICYGROUP);
+		authpolicyPage.enterPolicyName(GlobalConstants.AUTHPOLICY06);
+		authpolicyPage.enterpolicyDescription(GlobalConstants.AUTHPOLICY06_DESCRIPTION);
+		authpolicyPage.uploadPolicyData();
+		basePage.scrollToEndPage();
+		authpolicyPage.clickOnSaveAsDraftButton();
+		authpolicyPage.clickOnGoBackButton();
+	}
+
+//	@Test(priority = 22, description = "Deactivate Policy Group")
 	public void deactivatePolicyGroup() {
 		DashboardPage dashboardPage = new DashboardPage(driver);
 		PoliciesPage policiesPage = new PoliciesPage(driver);

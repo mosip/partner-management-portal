@@ -130,7 +130,7 @@ public class DeviceProviderTest extends BaseClass {
 				GlobalConstants.iReUploadPartnerCertificateTextDisplayed);
 //		assertTrue(partnerCertificatePage.isReUploadPartnerCertificateSubTextDisplayed(), GlobalConstants.isReUploadPartnerCertificateSubTextDisplayed);
 
-		assertTrue(partnerCertificatePage.isPartnerDomainTypeDisplayed(),
+		assertTrue(partnerCertificatePage.isPartnerDomainTypeLabelDisplayed(),
 				GlobalConstants.iReUploadPartnerCertificateTextDisplayed);
 		assertTrue(partnerCertificatePage.isPartnerCertOvelayDisplayed(),
 				GlobalConstants.iReUploadPartnerCertificateTextDisplayed);

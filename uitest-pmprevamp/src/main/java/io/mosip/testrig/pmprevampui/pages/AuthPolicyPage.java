@@ -428,7 +428,7 @@ public class AuthPolicyPage extends BasePage {
 	@FindBy(xpath = "//input[@id='policy_name_box' and @value='editauthpolicy']")
 	private WebElement editPolicyNameValue;
 	
-	@FindBy(xpath = "//textarea[@id='policy_description_box' and text()='authpolicy 07']")
+	@FindBy(xpath = "//textarea[@id='policy_description_box' and text()='editauthpolicy']")
 	private WebElement editPolicyDescriptionValue;
 	
 	@FindBy(xpath = "//textarea[contains(text(), '\"authTokenType\": \"policy\"')]")
@@ -478,6 +478,9 @@ public class AuthPolicyPage extends BasePage {
 	
 	@FindBy(xpath = "//span[text()='Re-Upload']")
 	private WebElement reUploadButton;
+	
+	@FindBy(xpath = "//p[text()='Invalid input parameter - info in policy data']")
+	private WebElement invalidInfoInPolicyData;
 	
 	public AuthPolicyPage(WebDriver driver) {
 		super(driver);
@@ -1306,6 +1309,10 @@ public class AuthPolicyPage extends BasePage {
 
 	public boolean isEditPolicySubmitButtonEnabled() {
 		return isElementEnabled(editPolicyFormSubmitButton);
+	}
+	
+	public boolean isInvalidInfoInPolicyDataErrorDisplayed() {
+		return isElementDisplayed(invalidInfoInPolicyData);
 	}
 
 }

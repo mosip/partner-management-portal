@@ -1,8 +1,11 @@
 package io.mosip.testrig.pmprevampui.pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+
+import io.mosip.testrig.pmprevampui.fw.util.PmpTestUtil;
 
 public class PartnerPolicyMappingPage extends BasePage {
 
@@ -10,7 +13,7 @@ public class PartnerPolicyMappingPage extends BasePage {
 	@FindBy(xpath = "//h1[text()='Partner - Policy Linking']")
 	private WebElement partnerPolicyLinkingTitle;
 	
-	@FindBy(xpath = "//p[text()='List of Partner-Policy Linkages']")
+	@FindBy(xpath = "//p[contains(text(),'List of Partner-Policy Linkages')]")
 	private WebElement partnerPolicyLinkingSubTitle;
 	
 	@FindBy(xpath = "//div[text()='Partner ID']")
@@ -169,6 +172,111 @@ public class PartnerPolicyMappingPage extends BasePage {
 	@FindBy(id = "view_api_key_back_btn")
 	private WebElement viewBackButton;
 	
+	@FindBy(id = "partnerId_desc_icon")
+	private WebElement partnerId_desc_icon;
+
+	@FindBy(id = "partnerId_asc_icon")
+	private WebElement partnerId_asc_icon;
+	
+	@FindBy(id = "partnerType_desc_icon")
+	private WebElement partnerType_desc_icon;
+
+	@FindBy(id = "partnerType_asc_icon")
+	private WebElement partnerType_asc_icon;
+	
+	@FindBy(id = "orgName_asc_icon")
+	private WebElement orgName_asc_icon;
+	
+	@FindBy(id = "orgName_desc_icon")
+	private WebElement orgName_desc_icon;
+
+	@FindBy(id = "policyGroupName_desc_icon")
+	private WebElement policyGroupName_desc_icon;
+
+	@FindBy(id = "policyGroupName_asc_icon")
+	private WebElement policyGroupName_asc_icon;
+
+	@FindBy(id = "policyName_desc_icon")
+	private WebElement policyName_desc_icon;
+
+	@FindBy(id = "policyName_asc_icon")
+	private WebElement policyName_asc_icon;
+
+	@FindBy(id = "createdDateTime_desc_icon")
+	private WebElement createdDateTime_desc_icon;
+
+	@FindBy(id = "createdDateTime_asc_icon")
+	private WebElement createdDateTime_asc_icon;
+
+	@FindBy(id = "status_desc_icon")
+	private WebElement status_desc_icon;
+
+	@FindBy(id = "status_asc_icon")
+	private WebElement status_asc_icon;
+	
+	@FindBy(xpath = "//p[text()='check']")
+	private WebElement policyNameInPopup;
+	
+	@FindBy(xpath = "//div[text()='Approved']")
+	private WebElement approved;
+	
+	@FindBy(xpath = "//div[text()='Rejected']")
+	private WebElement rejected;
+	
+	@FindBy(xpath = "//div[text()='Pending For Approval']")
+	private WebElement pendingForApproval;
+	
+	@FindBy(id = "sub_title_btn")
+	private WebElement listOfPartnerPolicyLinkages;
+	
+	@FindBy(xpath = "//span[text()='MOVP-AUTOMATION']")
+	private WebElement partnerIdContext;
+	
+	@FindBy(xpath = "//div[contains(text(), 'Created On')]")
+	private WebElement createdOnLabel;
+	
+	@FindBy(xpath = "//p[text()='Policy ID']")
+	private WebElement policyId;
+	
+	@FindBy(xpath = "//span[text()='ab11CD22ef']")
+	private WebElement policyIdContext;
+	
+	@FindBy(xpath = "//p[text()='Policy Name']")
+	private WebElement policyName;
+	
+	@FindBy(xpath = "//p[text()='authpolpartlink']")
+	private WebElement policyNameContext;
+	
+	@FindBy(xpath = "//p[text()='Policy Group']")
+	private WebElement policyGroup;
+	
+	@FindBy(xpath = "//p[text()='automationui policy group']")
+	private WebElement policyGroupContext;
+	
+	@FindBy(xpath = "//p[text()='Auth_Partner']")
+	private WebElement partnerTypeContext;
+	
+	@FindBy(xpath = "//p[text()='AABBCC']")
+	private WebElement organisationNameContext;
+	
+	@FindBy(xpath = "//p[text()='Partner Status']")
+	private WebElement partnerStatusLabel;
+	
+	@FindBy(xpath = "//span[text()='Activated']")
+	private WebElement partnerStatusActivated;
+	
+	@FindBy(xpath = "//p[text()='Comments']")
+	private WebElement commentsLabel;
+	
+	@FindBy(xpath = "//h4[text()='Admin Comments']")
+	private WebElement adminCommentsLabel;
+	
+	@FindBy(xpath = "//h4[text()='Partner's Comments']")
+	private WebElement partnerCommentsLabel;
+	
+	@FindBy(xpath = "//span[text()='request']")
+	private WebElement partnerCommentsContext;
+	
 	public PartnerPolicyMappingPage(WebDriver driver) {
 		super(driver);
 	}
@@ -254,10 +362,14 @@ public class PartnerPolicyMappingPage extends BasePage {
 	}
 	
 	public void clickOnApproveOrRejectButton() {
-		clickOnElement(approveOrRejectButton);
+		clickOnElement(approveRejectButton);
 	}
 	
 	public boolean isConfirmationPopupDisplayed() {
+		return isElementEnabled(confirmationPopup);
+	}
+	
+	public boolean isPolicyPopupSubtitleDisplayed() {
 		return isElementEnabled(confirmationPopup);
 	}
 	
@@ -273,7 +385,7 @@ public class PartnerPolicyMappingPage extends BasePage {
 		return isElementEnabled(approveButton);
 	}
 	
-	public void clickOnApproveRejectButton() {
+	public void clickOnRejectButton() {
 		clickOnElement(rejectButton);
 	}
 	
@@ -285,15 +397,11 @@ public class PartnerPolicyMappingPage extends BasePage {
 		enter(policyNameFilter,value);
 	}
 	
-	public void clickOnRejectButton() {
-		clickOnElement(rejectButton);
-	}
-	
 	public void clickOnHomeButton() {
 		clickOnElement(homeButton);
 	}
 	
-	public void clickOntitleBackIcon() {
+	public void clickOnTitleBackIcon() {
 		clickOnElement(titleBackIcon);
 	}
 	
@@ -459,6 +567,208 @@ public class PartnerPolicyMappingPage extends BasePage {
 	
 	public void clickOnViewBackButton() {
 		clickOnElement(viewBackButton);
+	}
+	
+	public boolean isPartnerIdDescIconDisplayed() {
+		return isElementDisplayed(partnerId_desc_icon);
+	}
+
+	public boolean isPartnerIdAscIconDisplayed() {
+		return isElementDisplayed(partnerId_asc_icon);
+	}
+
+	public boolean isPolicyGroupNameDescIconDisplayed() {
+		return isElementDisplayed(policyGroupName_desc_icon);
+	}
+
+	public boolean isPolicyGroupNameAscIconDisplayed() {
+		return isElementDisplayed(policyGroupName_asc_icon);
+	}
+
+	public boolean isPolicyNameDescIconDisplayed() {
+		return isElementDisplayed(policyName_desc_icon);
+	}
+
+	public boolean isPolicyNameAscIconDisplayed() {
+		return isElementDisplayed(policyName_asc_icon);
+	}
+
+	public boolean isCreatedDateTimeDescISconDisplayed() {
+		return isElementDisplayed(createdDateTime_desc_icon);
+	}
+
+	public boolean isCreatedDateTimeAscIconDisplayed() {
+		return isElementDisplayed(createdDateTime_asc_icon);
+	}
+
+	public boolean isStatusDescIconDisplayed() {
+		return isElementDisplayed(status_desc_icon);
+	}
+
+	public boolean isStatusAscIconDisplayed() {
+		return isElementDisplayed(status_asc_icon);
+	}
+	
+	public boolean isOrgNameDescIconDisplayed() {
+		return isElementDisplayed(orgName_desc_icon);
+	}
+	
+	public boolean isOrgNameAscIconDisplayed() {
+		return isElementDisplayed(orgName_asc_icon);	
+	}
+	
+	public boolean isPartnerTypeDescIconDisplayed() {
+		return isElementDisplayed(partnerType_desc_icon);
+	}
+		
+	public boolean isPartnerTypeAscIconDisplayed() {
+	    return isElementDisplayed(partnerType_asc_icon);
+	}
+	
+	public void clickOnPartnerIdDescIcon() {
+		clickOnElement(partnerId_desc_icon);
+	}
+	
+	public void clickOnPartnerIdAscIcon() {
+		clickOnElement(partnerId_asc_icon);
+	}
+	
+	public void clickOnPolicyGroupNameDescIcon() {
+		clickOnElement(policyGroupName_desc_icon);
+	}
+	
+	public void clickOnPolicyGroupNameAscIcon() {
+		clickOnElement(policyGroupName_asc_icon);
+	}
+	
+	public void clickOnPolicyNameDescIcon() {
+		clickOnElement(policyName_desc_icon);
+	}
+	
+	public void clickOnPolicyNameAscIcon() {
+		clickOnElement(policyName_asc_icon);
+	}
+	
+	public void clickOnCreatedDateTimeDescIcon() {
+		clickOnElement(createdDateTime_desc_icon);
+	}
+	
+	public void clickOnCreatedDateTimeAscIcon() {
+		clickOnElement(createdDateTime_asc_icon);
+	}
+	
+	public void clickOnStatusDescIcon() {
+		clickOnElement(status_desc_icon);
+	}
+	
+	public void clickOnStatusAscIcon() {
+		clickOnElement(status_asc_icon);
+	}
+	
+	public void clickOnOrgNameDescIcon() {
+		clickOnElement(orgName_desc_icon);
+	}
+	
+	public void clickOnOrgNameAscIcon() {
+		clickOnElement(orgName_asc_icon);
+	}
+	
+	public boolean isPolicyNameInPopupDisplayed() {
+	    return isElementDisplayed(policyNameInPopup);
+	}
+	
+	public boolean isStatusApprovedDisplayed() {
+	    return isElementDisplayed(approved);
+	}
+	
+	public boolean isStatusRejectedDisplayed() {
+	    return isElementDisplayed(rejected);
+	}
+	
+	public boolean isStatusPendingForApprovalDisplayed() {
+	    return isElementDisplayed(pendingForApproval);
+	}
+	
+	public void clickOnviewButton() {
+		clickOnElement(viewButton);
+	}
+	
+	public boolean isListOfPartnerPolicyLinkagesDisplayed() {
+	    return isElementDisplayed(listOfPartnerPolicyLinkages);
+	}
+	
+	public boolean isPartnerIdContextDisplayed() {
+	    return isElementDisplayed(partnerIdContext);
+	}
+	
+	public boolean isCreatedOnLabelDisplayed() {
+		return isElementDisplayed(createdOnLabel);
+	}
+	
+	public boolean isCreatedDateDisplayed() {
+		WebElement createdDate = driver
+				.findElement(By.xpath("//div[text()='Created On " + PmpTestUtil.todayDateWithoutZeroPadder + "']"));
+		return isElementDisplayed(createdDate);
+	}
+	
+	public boolean isPolicyIdLabelDisplayed() {
+		return isElementDisplayed(policyId);
+	}
+	
+	public boolean isPolicyIdContextDisplayed() {
+		return isElementDisplayed(policyIdContext);
+	}
+	
+	public boolean isPolicyNameLabelDisplayed() {
+		return isElementDisplayed(policyName);
+	}
+	
+	public boolean isPolicyNameContextDisplayed() {
+		return isElementDisplayed(policyNameContext);
+	}
+	
+	public boolean isPolicyGroupLabelDisplayed() {
+		return isElementDisplayed(policyGroup);
+	}
+	
+	public boolean isPolicyGroupContextDisplayed() {
+		return isElementDisplayed(policyGroupContext);
+	}
+	
+	public boolean isPartnerTypeContextDisplayed() {
+		return isElementDisplayed(policyGroupContext);
+	}
+	
+	public boolean isOrgNameLabelDisplayed() {
+		return isElementDisplayed(organisationLabel);
+	}
+	
+	public boolean isOrgNameContextDisplayed() {
+		return isElementDisplayed(organisationNameContext);
+	}
+	
+	public boolean isPartnerStatusLabelDisplayed() {
+		return isElementDisplayed(partnerStatusLabel);
+	}
+	
+	public boolean isPartnerStatusActivatedDisplayed() {
+		return isElementDisplayed(partnerStatusActivated);
+	}
+	
+	public boolean isCommentsLabelDisplayed() {
+		return isElementDisplayed(commentsLabel);
+	}
+	
+	public boolean isAdminCommentsLabelDisplayed() {
+		return isElementDisplayed(adminCommentsLabel);
+	}
+	
+	public boolean isPartnerCommentsLabelDisplayed() {
+		return isElementDisplayed(partnerCommentsLabel);
+	}
+	
+	public boolean isPartnerCommentsContextDisplayed() {
+		return isElementDisplayed(partnerCommentsContext);
 	}
 
 }

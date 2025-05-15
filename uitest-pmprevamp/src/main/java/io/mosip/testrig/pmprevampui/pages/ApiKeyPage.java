@@ -1043,10 +1043,6 @@ public class ApiKeyPage extends BasePage {
 		return isElementDisplayed(deactivatedStatus);
 	}
 	
-	public void clickOnActivatedOidcClient() {
-		clickOnElement(apiKeyItem1);
-	}
-	
 	public void selectDeactivateStatusInFilter() {
 		clickOnElement(statusFilter);
 		clickOnElement(deactivatedStatusInFilter);

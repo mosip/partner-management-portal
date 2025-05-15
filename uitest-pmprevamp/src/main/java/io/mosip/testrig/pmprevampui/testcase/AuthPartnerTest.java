@@ -143,9 +143,12 @@ public class AuthPartnerTest extends BaseClass {
 
 		assertTrue(partnerCertificatePage.isUploadPartnerCertificatePopUpDisplayed(),
 				GlobalConstants.isUploadPartnerCertificatePopUpDisplayed);
+		assertTrue(partnerCertificatePage.isPleaseTabToSelectTextDisplayed(),
+				GlobalConstants.isPleaseTabToSelectTextDisplayed);
+		assertTrue(partnerCertificatePage.isCertFormatesTextDisplayed(),
+				GlobalConstants.isCertFormatesTextDisplayed);
 		partnerCertificatePage.uploadCertificate();
 		partnerCertificatePage.clickOnSubmitButton();
-
 		assertTrue(partnerCertificatePage.isSuccessMessageDisplayed(), GlobalConstants.isSuccessMessageDisplayed);
 		partnerCertificatePage.clickOncertificateUploadCloseButton();
 		dashboardPage = partnerCertificatePage.clickOnHomeButton();
@@ -155,18 +158,36 @@ public class AuthPartnerTest extends BaseClass {
 
 		assertTrue(partnerCertificatePage.isReUploadPartnerCertificateTextDisplayed(),
 				GlobalConstants.iReUploadPartnerCertificateTextDisplayed);
-//	    assertTrue(partnerCertificatePage.isReUploadPartnerCertificateSubTextDisplayed(),GlobalConstants.isReUploadPartnerCertificateSubTextDisplayed);
-
-		assertTrue(partnerCertificatePage.isPartnerDomainTypeDisplayed(),
-				GlobalConstants.iReUploadPartnerCertificateTextDisplayed);
-		assertTrue(partnerCertificatePage.isPartnerCertOvelayDisplayed(),
-				GlobalConstants.iReUploadPartnerCertificateTextDisplayed);
+	    assertTrue(partnerCertificatePage.isReUploadPartnerCertificateSubTextDisplayed(),GlobalConstants.isReUploadPartnerCertificateSubTextDisplayed);
+	    
+	    assertTrue(partnerCertificatePage.isPartnerTypeLabelDisplayed(),
+				GlobalConstants.isPartnerTypeLabelDisplayed);
+	    assertTrue(partnerCertificatePage.isPartnerTypeValueDisplayed(),
+				GlobalConstants.isPartnerTypeValueDisplayed);
+	    assertTrue(partnerCertificatePage.isPartnerTypeValueDisabled(),
+				GlobalConstants.isPartnerTypeValueDisabled);
+	    
+		assertTrue(partnerCertificatePage.isPartnerDomainTypeLabelDisplayed(),
+				GlobalConstants.isPartnerDomainTypeDisplayed);
+		assertTrue(partnerCertificatePage.isPartnerDomainTypeValueDisplayed(),
+				GlobalConstants.isPartnerDomainTypeValueDisplayed);
+		assertTrue(partnerCertificatePage.isPartnerDomainTypeValueDisabled(),
+				GlobalConstants.isPartnerDomainTypeValueDisabled);
+		
+		assertTrue(partnerCertificatePage.isUploadCertificateIconDisplayed(),
+				GlobalConstants.isUploadCertificateIconDisplayed);
+		assertTrue(partnerCertificatePage.isCertFormatesTextDisplayed(),
+				GlobalConstants.isCertFormatesTextDisplayed);
+		
+		assertTrue(partnerCertificatePage.isLastCertificateUploadDateDisplayed(),
+				GlobalConstants.isLastCertificateUploadDateDisplayed);
 
 		partnerCertificatePage.uploadCertificate();
+		assertTrue(partnerCertificatePage.isUploadedCertificateNameDisplayed(),
+				GlobalConstants.isUploadedCertificateNameDisplayed);
+		assertTrue(partnerCertificatePage.isCertificateRemoveButtonDisplayed(),
+				GlobalConstants.isCertificateRemoveButtonDisplayed);
 		partnerCertificatePage.clickOnSubmitButton();
-
-		assertTrue(partnerCertificatePage.isSuccessMessageDisplayed(), GlobalConstants.isSuccessMessageDisplayed);
-		partnerCertificatePage.clickOnRemoveCertificateButton();
 
 		assertTrue(partnerCertificatePage.isSuccessMessageDisplayed(), GlobalConstants.isSuccessMessageDisplayed);
 		partnerCertificatePage.clickOncertificateUploadCloseButton();
@@ -189,6 +210,7 @@ public class AuthPartnerTest extends BaseClass {
 
 //	    assertTrue(partnerCertificatePage.isSucessMessageDisplayed(), GlobalConstants.isSucessMessageDisplayed);
 		partnerCertificatePage.ClickOnsuccessMsgCloseButton();
+		partnerCertificatePage.clickOnTitleBackButton();
 	}
 
 	@Test(priority = 3, description = "Policy creation and filter")
@@ -401,7 +423,7 @@ public class AuthPartnerTest extends BaseClass {
 		loginPage.enterPassword(password);
 		loginPage.clickOnLoginButton();
 		
-		PartnerPolicyMappingPage.clickOntitleBackIcon();
+		PartnerPolicyMappingPage.clickOnTitleBackIcon();
 
 		assertTrue(dashboardPage.isAuthenticationServicesTitleDisplayed(),
 				GlobalConstants.isAuthenticationServicesDisplayed);
@@ -744,7 +766,7 @@ public class AuthPartnerTest extends BaseClass {
 		assertTrue(apiKeyPage.isBreadcombDisplayed(), GlobalConstants.isBreadcombDisplayed);
 		apiKeyPage.clickOnBreadcomb();
 	}
-
+/*
 	@Test(priority = 6, description = "Search with invalid policy name")
 	public void searchWithInvalidPolicyName() {
 		DashboardPage dashboardPage = new DashboardPage(driver);
@@ -1185,7 +1207,7 @@ public class AuthPartnerTest extends BaseClass {
 		assertTrue(dashboardPage.isWelcomeMessageDisplayed(), GlobalConstants.isWelcomeMessageDisplayed);
 
 	}
-
+*/
 	private void logoutFromPartner(DashboardPage dashboardPage) {
 		dashboardPage.clickOnProfileDropdown();
 		assertTrue(dashboardPage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);

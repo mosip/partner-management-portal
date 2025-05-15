@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import io.mosip.testrig.pmprevampui.fw.util.PmpTestUtil;
 import io.mosip.testrig.pmprevampui.utility.TestRunner;
 
 public class PartnerCertificatePage extends BasePage {
@@ -39,19 +40,19 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(id = "success_msg_close_icon")
 	private WebElement successMsgCloseButton;
 	
-	@FindBy(xpath = "//*[text()='Re-Upload Partner Certificate']")
+	@FindBy(xpath = "//h3[text()='Re-Upload Partner Certificate']")
 	private WebElement ReUploadPartnerCertificateText;
 	
-	@FindBy(xpath = "//*[text()='Please tap to select the certificate']")
+	@FindBy(xpath = "//h5[text()='Please tap to select the certificate']")
 	private WebElement PleaseTabToSelectText;
 	
-	@FindBy(xpath = "//*[text()='Only .cer or .pem certificate formats are allowed for upload']")
+	@FindBy(xpath = "//p[text()='Only .cer or .pem certificate formats are allowed for upload']")
 	private WebElement CertFormatesText;
 	
 	@FindBy(xpath = "//*[contains(text(), \"Last certificate was uploaded on\")]")
 	private WebElement lastUploadTimeAndDate;
 
-	@FindBy(xpath = "//*[text()='Please select all fields and upload the certificate")
+	@FindBy(xpath = "//p[text()='Please select all fields and upload the certificate")
 	private WebElement ReUploadPartnerCertificateSubText;
 
 	@FindBy(xpath = "//*[text()='Originally uploaded CA signed certificate downloaded successfully.']")
@@ -60,7 +61,7 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(xpath = "//*[text()='MOSIP signed certificate downloaded successfully.']")
 	private WebElement mosipSignedCertPopup;
 
-	@FindBy(xpath = "//*[text()='Partner Domain Type']")
+	@FindBy(xpath = "//label[text()='Partner Domain Type']")
 	private WebElement partnerDomainType;
 
 	@FindBy(id = "upload_file_FILL0_wght200_GRAD0_opsz24")
@@ -186,6 +187,141 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(id = "certificate_list_view_btn")
 	private WebElement certificateListViewButton;
 	
+	@FindBy(xpath = "//input[@value='Authentication Partner']")
+	private WebElement partnerTypeValue;
+	
+	@FindBy(xpath = "//input[@value='AUTH']")
+	private WebElement partnerDomainTypeValue;
+	
+	@FindBy(xpath = "//img[@class='mb-2 w-10 h-10']")
+	private WebElement uploadCertificateIcon;
+	
+	@FindBy(xpath = "//h5[text()='RootCA.cer']")
+	private WebElement uploadedCertificateName;
+	
+	@FindBy(xpath = "//label[text()='Partner Type']")
+	private WebElement partnerTypeLabel;
+	
+	@FindBy(xpath = "//h1[text()='Certificate Trust Store']")
+	private WebElement certificateTrustStoreTitle;
+	
+	@FindBy(xpath = "//h1[text()='Root CA']")
+	private WebElement rootCATab;
+	
+	@FindBy(xpath = "//p[text()='List of Root CA Certificates']")
+	private WebElement subtitleOfRootCA;
+	
+	@FindBy(xpath = "//p[text()='Home']")
+	private WebElement breadcumbHome;
+	
+	@FindBy(xpath = "//div[text()='Certificate ID']")
+	private WebElement certificateIdHeader;
+	
+	@FindBy(xpath = "//div[text()='Partner Domain']")
+	private WebElement partnerDomainHeader;
+	
+	@FindBy(xpath = "//div[text()='Issued To']")
+	private WebElement issuedToHeader;
+	
+	@FindBy(xpath = "//div[text()='Issued By']")
+	private WebElement issuedByHeader;
+	
+	@FindBy(xpath = "//div[text()='Valid From']")
+	private WebElement validFromHeader;
+	
+	@FindBy(xpath = "//div[text()='Valid To']")
+	private WebElement validToHeader;
+	
+	@FindBy(xpath = "//div[text()='Uploaded On']")
+	private WebElement uploadedOnHeader;
+	
+	@FindBy(xpath = "//div[text()='Validity Status']")
+	private WebElement validityStatusHeader;
+	
+	@FindBy(xpath = "//div[text()='Action']")
+	private WebElement actionHeader;
+	
+	@FindBy(id = "rootTrustList.uploadRootCaTrust")
+	private WebElement uploadTrustCertificateButton;
+	
+	@FindBy(xpath = "//h1[text()='Upload Trust Certificate']")
+	private WebElement certificateUploadPopup;
+	
+	@FindBy(id = "certificateId_asc_icon")
+	private WebElement certificateIdAscIcon;
+	
+	@FindBy(id = "certificateId_desc_icon")
+	private WebElement certificateIdDescIcon;
+	
+	@FindBy(id = "partnerDomain_asc_icon")
+	private WebElement partnerDomainAscIcon;
+	
+	@FindBy(id = "partnerDomain_desc_icon")
+	private WebElement partnerDomainDescIcon;
+	
+	@FindBy(id = "issuedTo_asc_icon")
+	private WebElement issuedToAscIcon;
+	
+	@FindBy(id = "issuedTo_desc_icon")
+	private WebElement issuedToDescIcon;
+	
+	@FindBy(id = "issuedBy_asc_icon")
+	private WebElement issuedByAscIcon;
+	
+	@FindBy(id = "issuedBy_desc_icon")
+	private WebElement issuedByDescIcon;
+	
+	@FindBy(id = "validFrom_asc_icon")
+	private WebElement validFromAscIcon;
+	
+	@FindBy(id = "validFrom_desc_icon")
+	private WebElement validFromDescIcon;
+	
+	@FindBy(id = "validTill_asc_icon")
+	private WebElement validToAscIcon;
+	
+	@FindBy(id = "validTill_desc_icon")
+	private WebElement validToDescIcon;
+	
+	@FindBy(id = "uploadedDateTime_asc_icon")
+	private WebElement uploadedTimeAscIcon;
+	
+	@FindBy(id = "uploadedDateTime_desc_icon")
+	private WebElement uploadedTimeDescIcon;
+	
+	@FindBy(id = "certificate_list_item1")
+	private WebElement certificateList1;
+	
+	@FindBy(xpath = "//h1[text()='View Root CA Certificate Details']")
+	private WebElement rootCACertificateDetailsPage;
+	
+	@FindBy(id = "filter_btn")
+	private WebElement filterButton;
+	
+	@FindBy(id = "cert_id_filter")
+	private WebElement certIdFilter;
+	
+	@FindBy(id = "cert_partner_domain_filter")
+	private WebElement partnerDomainFilter;
+	
+	@FindBy(id = "cert_issued_to_filter")
+	private WebElement certIssuedToFilter;
+	
+	@FindBy(id = "cert_issued_by_domain_filter")
+	private WebElement certIssuedByFilter;
+
+	@FindBy(id = "filter_reset_btn")
+	private WebElement filterResetButton;
+	
+	@FindBy(id = "apply_filter__btn")
+	private WebElement applyFilterButton;
+	
+	@FindBy(id = "cert_partner_domain_filter_option1")
+	private WebElement authPartnerDomain;
+	
+	@FindBy(xpath = "//p[text()='No Results Found']")
+	private WebElement noResultsFound;
+	
 	public PartnerCertificatePage(WebDriver driver) {
 		super(driver);
 	}
@@ -218,7 +354,6 @@ public class PartnerCertificatePage extends BasePage {
 	public void uploadCertificateForAnotherOrg() {
 		uploadImage(uploadFile, TestRunner.getResourcePath() + "\\pmp_revamp_cert\\FTM_ca.cer");
 	}
-
 
 	public void clickOnSubmitButton() {
 		clickOnElement(submitButton);
@@ -285,7 +420,7 @@ public class PartnerCertificatePage extends BasePage {
 		clickOnElement(removeCertificateButton);
 	}
 
-	public boolean isPartnerDomainTypeDisplayed() {
+	public boolean isPartnerDomainTypeLabelDisplayed() {
 		return isElementDisplayed(partnerDomainType);
 	}
 
@@ -354,7 +489,7 @@ public class PartnerCertificatePage extends BasePage {
 	public boolean VerifyTheStatusWithDesendingOrder() {
 		 WebElement first= driver.findElement(By.xpath("//*[@id='ftm_list_item1']//*[contains(text(), 'Pending For Approval')]"));
 		 return isElementDisplayed(first);
-		}	
+	}	
 		
 	public void clickOnErrorCloseButton() {
 		 clickOnElement(errorCloseButton);
@@ -387,7 +522,6 @@ public class PartnerCertificatePage extends BasePage {
 	public boolean isSubtitleButtonButtonDisplayed() {
 		return isElementDisplayed(subTitelButton);
 	}
-	
 	
 	public boolean isUploadTrustCertificateTextDisplayed() {
 		return isElementDisplayed(uploadTrustCertificateText);
@@ -424,7 +558,6 @@ public class PartnerCertificatePage extends BasePage {
 	public void clickOnrootCertificateDetailsViewButton() {
 		 clickOnElement(rootCertificateDetailsViewButton);
 	}
-	
 	
 	public boolean isFileIconDisplayed() {
 		return isElementDisplayed(fileIcon);
@@ -486,4 +619,292 @@ public class PartnerCertificatePage extends BasePage {
 		 clickOnElement(titleBackButton);
 	}
 	
+	public boolean isPartnerTypeValueDisplayed() {
+		return isElementDisplayed(partnerTypeValue);
+	}
+	
+	public boolean isPartnerTypeValueDisabled() {
+		return isElementDisabled(partnerTypeValue);
+	}
+	
+	public boolean isPartnerDomainTypeValueDisplayed() {
+		return isElementDisplayed(partnerDomainTypeValue);
+	}
+	
+	public boolean isPartnerDomainTypeValueDisabled() {
+		return isElementDisabled(partnerDomainTypeValue);
+	}
+	
+	public boolean isUploadCertificateIconDisplayed() {
+		return isElementDisplayed(uploadCertificateIcon);
+	}
+	
+	public boolean isLastCertificateUploadDateDisplayed() {
+	    String expectedDate = PmpTestUtil.todayDateWithoutZeroPadder;
+	    String xpath = "//p[contains(., 'Last certificate was uploaded on') and contains(., '" + expectedDate + "')]";
+	    WebElement uploadDate = driver.findElement(By.xpath(xpath));
+	    return isElementDisplayed(uploadDate);
+	}
+	
+	public boolean isUploadedCertificateNameDisplayed() {
+		return isElementDisplayed(uploadedCertificateName);
+	}
+	
+	public boolean isCertificateRemoveButtonDisplayed() {
+		return isElementDisplayed(removeCertificateButton);
+	}
+	
+	public boolean isPartnerTypeLabelDisplayed() {
+		return isElementDisplayed(partnerTypeLabel);
+	}
+	
+	public boolean isCertificateTrustStoreTitleDisplayed() {
+		return isElementDisplayed(certificateTrustStoreTitle);
+	}
+	
+	public boolean isRootCATabDisplayed() {
+		return isElementDisplayed(rootCATab);
+	}
+	
+	public boolean isSubtitleOfRootCADisplayed() {
+		return isElementDisplayed(subtitleOfRootCA);
+	}
+	
+	public boolean isBreadcumbHomeDisplayed() {
+		return isElementDisplayed(breadcumbHome);
+	}
+	
+	public boolean isCertificateIdHeaderDisplayed() {
+		return isElementDisplayed(certificateIdHeader);
+	}
+	
+	public boolean isPartnerDomainHeaderDisplayed() {
+		return isElementDisplayed(partnerDomainHeader);
+	}
+	
+	public boolean isIssuedToHeaderDisplayed() {
+		return isElementDisplayed(issuedToHeader);
+	}
+	
+	public boolean isIssuedByHeaderDisplayed() {
+		return isElementDisplayed(issuedByHeader);
+	}
+	
+	public boolean isValidFromHeaderDisplayed() {
+		return isElementDisplayed(validFromHeader);
+	}
+	
+	public boolean isValidToHeaderDisplayed() {
+		return isElementDisplayed(validToHeader);
+	}
+	
+	public boolean isUploadedOnHeaderDisplayed() {
+		return isElementDisplayed(uploadedOnHeader);
+	}
+	
+	public boolean isValidityStatusHeaderDisplayed() {
+		return isElementDisplayed(validityStatusHeader);
+	}
+	
+	public boolean isActionHeaderDisplayed() {
+		return isElementDisplayed(actionHeader);
+	}
+	
+	public boolean isUploadTrustCertificateButtonDisplayed() {
+		return isElementDisplayed(uploadTrustCertificateButton);
+	}
+	
+	public void clickOnUploadTrustCertificateButton() {
+		 clickOnElement(uploadTrustCertificateButton);
+	}
+	
+	public boolean isCertificateUploadPopupDisplayed() {
+		return isElementDisplayed(certificateUploadPopup);
+	}
+	
+	public boolean isCertificateIdAscIconDisplayed() {
+		return isElementDisplayed(certificateIdAscIcon);
+	}
+	
+	public boolean isCertificateIdDescIconDisplayed() {
+		return isElementDisplayed(certificateIdDescIcon);
+	}
+	
+	public boolean isPartnerDomainAscIconDisplayed() {
+		return isElementDisplayed(partnerDomainAscIcon);
+	}
+	
+	public boolean isPartnerDomainDescIconDisplayed() {
+		return isElementDisplayed(partnerDomainDescIcon);
+	}
+	
+	public boolean isIssuedToAscIconDisplayed() {
+		return isElementDisplayed(issuedToAscIcon);
+	}
+	
+	public boolean isIssuedToDescIconDisplayed() {
+		return isElementDisplayed(issuedToDescIcon);
+	}
+	
+	public boolean isIssuedByAscIconDisplayed() {
+		return isElementDisplayed(issuedByAscIcon);
+	}
+	
+	public boolean isIssuedByDescIconDisplayed() {
+		return isElementDisplayed(issuedByDescIcon);
+	}
+	
+	public boolean isValidFromAscIconDisplayed() {
+		return isElementDisplayed(validFromAscIcon);
+	}
+	
+	public boolean isValidFromDescIconDisplayed() {
+		return isElementDisplayed(validFromDescIcon);
+	}
+	
+	public boolean isValidToAscIconDisplayed() {
+		return isElementDisplayed(validToAscIcon);
+	}
+	
+	public boolean isValidToDescIconDisplayed() {
+		return isElementDisplayed(validToDescIcon);
+	}
+	
+	public boolean isUploadedTimeAscIconDisplayed() {
+		return isElementDisplayed(uploadedTimeAscIcon);
+	}
+	
+	public boolean isUploadedTimeDescIconDisplayed() {
+		return isElementDisplayed(uploadedTimeDescIcon);
+	}
+	
+	public void clickOnCertificateIdAscIcon() {
+		 clickOnElement(certificateIdAscIcon);
+	}
+	
+	public void clickOnCertificateIdDescIcon() {
+		 clickOnElement(certificateIdDescIcon);
+	}
+	
+	public void clickOnPartnerDomainAscIcon() {
+		 clickOnElement(partnerDomainAscIcon);
+	}
+	
+	public void clickOnPartnerDomainDescIcon() {
+		 clickOnElement(partnerDomainDescIcon);
+	}
+	
+	public void clickOnIssuedToAscIcon() {
+		 clickOnElement(issuedToAscIcon);
+	}
+	
+	public void clickOnIssuedToDescIcon() {
+		 clickOnElement(issuedToDescIcon);
+	}
+	
+	public void clickOnIssuedByAscIcon() {
+		 clickOnElement(issuedByAscIcon);
+	}
+	
+	public void clickOnIssuedByDescIcon() {
+		 clickOnElement(issuedByDescIcon);
+	}
+	
+	public void clickOnValidFromAscIcon() {
+		 clickOnElement(validFromAscIcon);
+	}
+	
+	public void clickOnValidFromDescIcon() {
+		 clickOnElement(validFromDescIcon);
+	}
+	
+	public void clickOnValidToAscIcon() {
+		 clickOnElement(validToAscIcon);
+	}
+	
+	public void clickOnValidToDescIcon() {
+		 clickOnElement(validToDescIcon);
+	}
+	
+	public void clickOnUploadedTimeAscIcon() {
+		 clickOnElement(uploadedTimeAscIcon);
+	}
+	
+	public void clickOnUploadedTimeDescIcon() {
+		 clickOnElement(uploadedTimeDescIcon);
+	}
+	
+	public void clickOnCertificateList1() {
+		 clickOnElement(certificateList1);
+	}
+	
+	public boolean isRootCACertificateDetailsPageDisplayed() {
+		return isElementDisplayed(rootCACertificateDetailsPage);
+	}
+	
+	public boolean isFilterButtonDisplayed() {
+		return isElementDisplayed(filterButton);
+	}
+	
+	public void clickOnFilterButton() {
+		 clickOnElement(filterButton);
+	}
+	
+	public boolean isCertIdFilterDisplayed() {
+		return isElementDisplayed(certIdFilter);
+	}
+	
+	public boolean isPartnerDomainFilterDisplayed() {
+		return isElementDisplayed(partnerDomainFilter);
+	}
+	
+	public boolean isCertIssuedToFilterDisplayed() {
+		return isElementDisplayed(certIssuedToFilter);
+	}
+	
+	public boolean isCertIssuedByFilterDisplayed() {
+		return isElementDisplayed(certIssuedByFilter);
+	}
+	
+	public boolean isApplyFilterButtonDisabled() {
+		return isElementDisabled(applyFilterButton);
+	}
+	
+	public boolean isFilterResetButtonEnabled() {
+		return isElementEnabled(filterResetButton);
+	}
+	
+	public boolean isFilterButtonDisabled() {
+		return isElementDisabled(filterButton);
+	}
+	
+	public void selectPartnerDomainAuthInFilter() {
+		 clickOnElement(partnerDomainFilter);
+		 clickOnElement(authPartnerDomain);
+	}
+	
+	public void enterIssuedToInFilter(String value) {
+		enter(certIssuedToFilter,value);
+	}
+	
+	public void enterIssuedByInFilter(String value) {
+		enter(certIssuedByFilter,value);
+	}
+	
+	public boolean isApplyFilterButtonEnabled() {
+		return isElementEnabled(applyFilterButton);
+	}
+	
+	public void clickOnApplyFilterButton() {
+		 clickOnElement(applyFilterButton);
+	}
+	
+	public void clickOnFilterResetButton() {
+		 clickOnElement(filterResetButton);
+	}
+	
+	public boolean isNoResultsFoundDisplayed() {
+		return isElementDisplayed(noResultsFound);
+	}
+
 }

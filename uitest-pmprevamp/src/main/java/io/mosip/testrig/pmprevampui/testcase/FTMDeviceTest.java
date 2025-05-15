@@ -20,7 +20,7 @@ import io.mosip.testrig.pmprevampui.utility.GlobalConstants;
 public class FTMDeviceTest extends BaseClass {
 	
 	
-	@Test(priority = 19)
+	@Test(priority = 1)
 	public void registerNewUserForFtmNoCert() throws InterruptedException {
 		DashboardPage dashboardpage = new DashboardPage(driver);
 		PartnerCertificatePage partnerCertificatePage = new PartnerCertificatePage(driver);
@@ -31,6 +31,10 @@ public class FTMDeviceTest extends BaseClass {
 		assertTrue(dashboardpage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
 
 		LoginPage loginpage = dashboardpage.clickOnLogoutButton();
+		assertTrue(loginpage.isPageNotFoundMessageDisplayed(), GlobalConstants.isKeycloakPageDisplayed);
+		BasePage.navigateBack();
+		dashboardpage.clickOnProfileDropdown();
+		dashboardpage.clickOnLogoutButton();
 		assertTrue(loginpage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
 		
 		loginpage.clickRegisterButton();
@@ -135,7 +139,7 @@ public class FTMDeviceTest extends BaseClass {
 		assertTrue(partnerCertificatePage.isDashboardFtmChipProviderCardDisplayed(), GlobalConstants.isProceedButtonDisplayed);	
 	}
 
-	@Test(priority = 20)
+	@Test(priority = 2)
 	public void registerNewUserForFtm() throws InterruptedException {
 		DashboardPage dashboardpage = new DashboardPage(driver);
 		PartnerCertificatePage partnerCertificatePage = new PartnerCertificatePage(driver);
@@ -251,7 +255,7 @@ public class FTMDeviceTest extends BaseClass {
 		assertTrue(partnerCertificatePage.isCertFormatesTextDisplayed(), GlobalConstants.isCertFormateDisplayed);
 		assertTrue(partnerCertificatePage.isLastUploadTimeAndDateTextDisplayed(), GlobalConstants.isLastUploadTimeAndDateDisplayed);
 		
-		assertTrue(partnerCertificatePage.isPartnerDomainTypeDisplayed(), GlobalConstants.iReUploadPartnerCertificateTextDisplayed);
+		assertTrue(partnerCertificatePage.isPartnerDomainTypeLabelDisplayed(), GlobalConstants.iReUploadPartnerCertificateTextDisplayed);
 		assertTrue(partnerCertificatePage.isPartnerCertOvelayDisplayed(), GlobalConstants.iReUploadPartnerCertificateTextDisplayed);
 		
 		partnerCertificatePage.uploadCertificate();
@@ -266,7 +270,7 @@ public class FTMDeviceTest extends BaseClass {
 	}
 	
 	
-	@Test(priority = 21)
+	@Test(priority = 3)
 	public void AddFtm() throws InterruptedException {
 		DashboardPage dashboardpage = new DashboardPage(driver);
 		PartnerCertificatePage partnerCertificatePage = new PartnerCertificatePage(driver);
@@ -442,7 +446,7 @@ public class FTMDeviceTest extends BaseClass {
 		
 	}
 	
-	@Test(priority = 22)
+	@Test(priority = 4)
 	public void AddFtmAndreject() throws InterruptedException {
 		DashboardPage dashboardpage = new DashboardPage(driver);
 		PartnerCertificatePage partnerCertificatePage = new PartnerCertificatePage(driver);
@@ -552,7 +556,7 @@ public class FTMDeviceTest extends BaseClass {
 		assertTrue(partnerCertificatePage.isSuccessMessageForFtmCertDisplayed(), GlobalConstants.isSucessMessageDisplayed);
 	}
 
-	@Test(priority = 23)
+	@Test(priority = 5)
 	public void AddFtmAndDeactive() throws InterruptedException {
 		DashboardPage dashboardpage = new DashboardPage(driver);
 		PartnerCertificatePage partnerCertificatePage = new PartnerCertificatePage(driver);
@@ -664,7 +668,7 @@ public class FTMDeviceTest extends BaseClass {
 		assertTrue(ftmPage.isDeactivatedTextDisplayed(), GlobalConstants.isDeactivatedTextDisplayed);
 	}
 	
-	@Test(priority = 24)
+	@Test(priority = 6)
 	public void addFtmWithoutUploadingFtmChipCert() throws InterruptedException {
 		DashboardPage dashboardpage = new DashboardPage(driver);
 		PartnerCertificatePage partnerCertificatePage = new PartnerCertificatePage(driver);
