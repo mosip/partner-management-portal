@@ -387,10 +387,6 @@ function CreateOidcClient() {
     selectionBox: "!top-10"
   }
 
-  const styleForTitle = {
-    backArrowIcon: "!mt-[5%]"
-  }
-
   return (
     <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll font-inter`}>
       {!dataLoaded && (
