@@ -41,7 +41,7 @@ function WeeklyNotificationsFilter({ onApplyFilter }) {
     return (
         <>
             <div className="flex w-full p-3 justify-start bg-[#F7F7F7] flex-wrap">
-                <div className={`${isLoginLanguageRTL ? 'mr-4' : 'ml-4'}`}>
+                <div className={`${isLoginLanguageRTL ? 'mr-4' : 'ml-4'} mt-2`}>
                     <CalendarInput
                         fieldName='createdFromDate'
                         label={t('viewAllNotifications.createdFromDate')}
@@ -55,7 +55,7 @@ function WeeklyNotificationsFilter({ onApplyFilter }) {
                         id='created_from_date_calender'
                     />
                 </div>
-                <div className={`${isLoginLanguageRTL ? 'mr-4' : 'ml-4'}`}>
+                <div className={`${isLoginLanguageRTL ? 'mr-4' : 'ml-4'} mt-2`}>
                     <CalendarInput
                         fieldName='createdToDate'
                         label={t('viewAllNotifications.createdToDate')}
@@ -69,7 +69,7 @@ function WeeklyNotificationsFilter({ onApplyFilter }) {
                         id='created_to_date_calender'
                     />
                 </div>
-                <div className={`mt-6 mr-6 ${isLoginLanguageRTL ? "mr-auto" : "ml-auto"}`}>
+                <div className={`mt-8 mr-6 ${isLoginLanguageRTL ? "mr-auto" : "ml-auto"}`}>
                     <button
                         id="apply_filter__btn"
                         onClick={() => onApplyFilter(filters)}
