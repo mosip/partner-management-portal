@@ -339,11 +339,6 @@ public class FtmPage extends BasePage {
 	}
 
 	public void clickOnAddFtmButtonWioutRecord() {
-//		if (isElementDisplayed(addFtmButton)) {
-//			clickOnElement(addFtmButton);
-//		} else {
-//			clickOnElement(addFtmPartnerId);
-//		}
 		clickOnElement(addFtmButton);
 		
 	}
