@@ -13,7 +13,6 @@ import { HttpService } from '../../../services/HttpService';
 import DropdownWithSearchComponent from "../../common/fields/DropdownWithSearchComponent";
 import LoadingIcon from "../../common/LoadingIcon";
 import ErrorMessage from "../../common/ErrorMessage";
-import { importJWK } from 'jose';
 import BlockerPrompt from "../../common/BlockerPrompt";
 import Information from "../../common/fields/Information";
 import Title from "../../common/Title";
@@ -386,10 +385,6 @@ function CreateOidcClient() {
     dropdownLabel: "!text-sm !mb-1",
     dropdownButton: "!w-full min-h-10 !rounded-md !text-base !text-start",
     selectionBox: "!top-10"
-  }
-
-  const styleForTitle = {
-    backArrowIcon: "!mt-[5%]"
   }
 
   return (

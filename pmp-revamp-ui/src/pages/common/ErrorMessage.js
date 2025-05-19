@@ -36,10 +36,10 @@ function ErrorMessage({ errorCode, errorMessage, clickOnCancel, customStyle }) {
 }
 
 ErrorMessage.propTypes = {
-    errorCode: PropTypes.string.isRequired,
+    errorCode: PropTypes.string,
     errorMessage: PropTypes.string.isRequired,
     clickOnCancel: PropTypes.func.isRequired,
-    customStyle: PropTypes.object.isRequired,
+    customStyle: PropTypes.object,
 };
 
 export default ErrorMessage;

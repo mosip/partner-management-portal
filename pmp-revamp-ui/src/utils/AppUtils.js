@@ -198,13 +198,14 @@ export const moveToSbisList = (navigate) => {
 
 export const logout = async () => {
     localStorage.clear();
+    sessionStorage.clear();
     let redirectUrl = process.env.NODE_ENV !== 'production' ? '' : window._env_.REACT_APP_PARTNER_MANAGER_API_BASE_URL;
 
     try {
         const apiResp = await HttpService.get(getPartnerManagerUrl(`/authorize/admin/validateToken`, process.env.NODE_ENV));
 
         if (apiResp && apiResp.status === 200 && apiResp.data.response) {
-            redirectUrl = redirectUrl + getPartnerManagerUrl(`/logout/user?redirecturi=` + btoa(window.location.href), process.env.NODE_ENV);
+            redirectUrl = redirectUrl + getPartnerManagerUrl(`/logout/user?redirecturi=` + btoa(window.location.origin + '/#/partnermanagement/dashboard'), process.env.NODE_ENV);
         } else {
             console.error('Token validation failed');
             redirectUrl = redirectUrl + getLoginRedirectUrl(window.location.href);

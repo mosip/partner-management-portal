@@ -171,7 +171,7 @@ function NotificationPopup({ closeNotification }) {
                                     <p className={`text-sm text-[#6F6E6E] font-medium ${isLoginLanguageRTL ? 'mr-4' : 'ml-4'} my-2`}>{t('notificationPopup.latest')}</p>
                                     <div className={`${isSmallScreen ? 'max-h-64' : 'max-h-96'} overflow-y-auto`}>
                                         {notifications.map(notification => (
-                                            <div key={notification.notificationId} className={`flex justify-between items-start px-3 py-2 border-b border-gray-200 ${isLatestNotification(notification) ? 'bg-[#F0F6FF]' : ''}`}>
+                                            <div key={notification.notificationId} className={`flex justify-between items-start px-4 py-2 border-b border-gray-200 ${isLatestNotification(notification) ? 'bg-[#F0F6FF]' : ''}`}>
                                                 <img src={featuredIcon} alt='' id='featuredIcon' className={`${isLoginLanguageRTL ? 'ml-3' : 'mr-3'} mt-1`} />
                                                 <div className="mb-2">
                                                     <div className="flex justify-between space-x-2">

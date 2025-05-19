@@ -69,15 +69,15 @@ TextInputComponent.propTypes = {
     fieldName: PropTypes.string.isRequired,
     fieldNameKey: PropTypes.string.isRequired,
     placeHolderKey: PropTypes.string.isRequired,
-    textBoxValue: PropTypes.string.isRequired,
+    textBoxValue: PropTypes.string,
     onTextChange: PropTypes.func.isRequired,
     styleSet: PropTypes.object.isRequired,
     id: PropTypes.string.isRequired,
-    maxLength: PropTypes.number.isRequired,
-    addInfoIcon: PropTypes.bool.isRequired,
-    infoKey: PropTypes.string.isRequired,
-    disableField: PropTypes.bool.isRequired,
-    inputError: PropTypes.string.isRequired,
+    maxLength: PropTypes.number,
+    addInfoIcon: PropTypes.bool,
+    infoKey: PropTypes.string,
+    disableField: PropTypes.bool,
+    inputError: PropTypes.string,
 };
 
 export default TextInputComponent;

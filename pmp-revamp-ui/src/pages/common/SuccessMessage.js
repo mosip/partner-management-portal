@@ -32,8 +32,8 @@ function SuccessMessage({ successMsg, clickOnCancel, customStyle, successParam }
 SuccessMessage.propTypes = {
     successMsg: PropTypes.string.isRequired,
     clickOnCancel: PropTypes.func.isRequired,
-    customStyle: PropTypes.object.isRequired,
-    successParam: PropTypes.string.isRequired,
+    customStyle: PropTypes.object,
+    successParam: PropTypes.string,
 };
 
 export default SuccessMessage;
