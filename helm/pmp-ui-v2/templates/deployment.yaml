@@ -21,15 +21,15 @@ spec:
     metadata:
       annotations:
         {{- if or .Values.podAnnotations .Values.metrics.enabled }}
-        {{- include "pmp-revamp-ui.podAnnotations" . | nindent 8 }}
+        {{- include "pmp-ui-v2.podAnnotations" . | nindent 8 }}
         {{- end }}
       labels: {{- include "common.labels.standard" . | nindent 8 }}
         {{- if .Values.podLabels }}
         {{- include "common.tplvalues.render" (dict "value" .Values.podLabels "context" $) | nindent 8 }}
         {{- end }}
     spec:
-      serviceAccountName: {{ template "pmp-revamp-ui.serviceAccountName" . }}
-      {{- include "pmp-revamp-ui.imagePullSecrets" . | nindent 6 }}
+      serviceAccountName: {{ template "pmp-ui-v2.serviceAccountName" . }}
+      {{- include "pmp-ui-v2.imagePullSecrets" . | nindent 6 }}
       {{- if .Values.hostAliases }}
       hostAliases: {{- include "common.tplvalues.render" (dict "value" .Values.hostAliases "context" $) | nindent 8 }}
       {{- end }}
@@ -56,7 +56,7 @@ spec:
       initContainers:
         {{- if and .Values.volumePermissions.enabled .Values.persistence.enabled }}
         - name: volume-permissions
-          image: {{ include "pmp-revamp-ui.volumePermissions.image" . }}
+          image: {{ include "pmp-ui-v2.volumePermissions.image" . }}
           imagePullPolicy: {{ .Values.volumePermissions.image.pullPolicy | quote }}
           command:
             - %%commands%%
@@ -73,8 +73,8 @@ spec:
           {{- include "common.tplvalues.render" (dict "value" .Values.initContainers "context" $) | nindent 8 }}
         {{- end }}
       containers:
-        - name: pmp-revamp-ui
-          image: {{ template "pmp-revamp-ui.image" . }}
+        - name: pmp-ui-v2
+          image: {{ template "pmp-ui-v2.image" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           {{- if .Values.lifecycleHooks }}
           lifecycle: {{- include "common.tplvalues.render" (dict "value" .Values.lifecycleHooks "context" $) | nindent 12 }}
