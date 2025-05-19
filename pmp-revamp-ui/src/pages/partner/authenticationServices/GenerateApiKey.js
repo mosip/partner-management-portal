@@ -197,8 +197,6 @@ function GenerateApiKey() {
             if (response) {
                 const responseData = response.data;
                 if (responseData && responseData.response) {
-                    const resData = responseData.response;
-                    console.log(`Response data: ${resData.length}`);
                     const requireData = {
                         title: "generateApiKey.generateApiKey",
                         backUrl: "/partnermanagement/authentication-services/api-keys-list",

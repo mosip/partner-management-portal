@@ -160,7 +160,6 @@ function AddFtm() {
         model: trimAndReplace(model)
       }
     );
-    console.log(request);
     try {
       const response = await HttpService.post(getPartnerManagerUrl(`/ftpchipdetail`, process.env.NODE_ENV), request, {
         headers: {
@@ -169,7 +168,6 @@ function AddFtm() {
       });
       if (response) {
         const responseData = response.data;
-        console.log(responseData);
         if (responseData && responseData.response) {
           setFtpChipDetailId(responseData.response.id);
           const requiredDataForCertUpload = {

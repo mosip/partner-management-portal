@@ -106,8 +106,6 @@ function CreatePolicyGroup() {
             if (response) {
                 const responseData = response.data;
                 if (responseData && responseData.response) {
-                    const resData = responseData.response;
-                    console.log(resData);
                     const requireData = {
                         backUrl: "/partnermanagement/policy-manager/policy-group-list",
                         header: "createPolicyGroup.creatPolicyGroupSuccessHeader",
