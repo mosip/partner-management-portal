@@ -36,7 +36,7 @@ function RuntimeError() {
 
     return (
         <div className="w-full h-screen bg-white flex items-center justify-center">
-            <div className="flex flex-col items-center justify-center p-4 ">
+            <div className="flex flex-col items-center justify-center p-4">
                 <SomethingWentWrongIcon className="max-w-60 min-w-52 my-2" />
                 {(errorCode || errorText) && (
                     <div className="flex items-center justify-center text-base mb-3">
@@ -48,18 +48,20 @@ function RuntimeError() {
                 <p className="text-base text-vulcan font-semibold">{message.description}</p>
                 <div className="p-1 flex flex-wrap justify-center relative items-center my-1">
                     <button
-                     id='something_went_wrong_home_btn' className="w-24 min-w-fit h-9 mx-2 my-1 p-2 border-[#1447B2] border rounded-md text-white text-sm font-semibold
-                               bg-tory-blue cursor-pointer"
+                        id="something_went_wrong_home_btn"
+                        className="w-24 min-w-fit h-9 mx-2 my-1 p-2 border-[#1447B2] border rounded-md text-white text-sm font-semibold bg-tory-blue cursor-pointer"
                         onClick={() => moveToHome(navigate)}
                     >
-                        {t('commons.home')}
+                        {messageType === 'networkError' ? t('commons.retry') : t('commons.home')}
                     </button>
-                    <button
-                        className="w-24 min-w-fit h-9 mx-2 my-1 p-2 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold"
-                        onClick={logout}
-                    >
-                        {t('commons.logout')}
-                    </button>
+                    {messageType !== 'networkError' && (
+                        <button
+                            className="w-24 min-w-fit h-9 mx-2 my-1 p-2 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold"
+                            onClick={logout}
+                        >
+                            {t('commons.logout')}
+                        </button>
+                    )}
                 </div>
             </div>
         </div>
