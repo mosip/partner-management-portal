@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { getUserProfile, setUserProfile } from '../../../services/UserProfileService';
-import { bgOfStatus, formatDate, getErrorMessage, getPartnerManagerUrl, getStatusCode, handleFileChange, handleServiceErrors, isLangRTL } from '../../../utils/AppUtils';
+import { getUserProfile } from '../../../services/UserProfileService';
+import { bgOfStatus, formatDate, getErrorMessage, getStatusCode, isLangRTL } from '../../../utils/AppUtils';
 import LoadingIcon from '../../common/LoadingIcon';
 import somethingWentWrongIcon from '../../../svg/something_went_wrong_icon.svg';
 import ErrorMessage from '../../common/ErrorMessage';
 import Title from '../../common/Title';
-import { HttpService } from '../../../services/HttpService';
 
 function ViewAdminApiKeyDetails() {
     const { t } = useTranslation();

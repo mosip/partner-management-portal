@@ -32,8 +32,11 @@
         "close": "Fermer",
         "unexpectedError": "Nous avons rencontré une erreur inattendue",
         "undoChanges": "Annuler les modifications",
-        "clear":"Effacer",
-        "inputError": "Les caractères spéciaux ne sont pas autorisés."
+        "clear": "Effacer",
+        "inputError": "Les caractères spéciaux ne sont pas autorisés.",
+        "networkError": "Erreur réseau",
+        "networkErrorDesc": "Veuillez vérifier votre connexion Internet et réessayer.",
+        "retry": "Réessayer"
     },
     "dashboard": {
         "welcomeMsg": "Bienvenue {{firstName}} {{lastName}}",

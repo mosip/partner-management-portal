@@ -12,7 +12,7 @@ function UserProfile() {
     return (
         <div className={`mt-5 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter`}>
             <Title title='userProfile.myProfile' backLink='/partnermanagement' />
-            <div className="bg-snow-white h-fit my-0.5 rounded-t-lg shadow-sm font-inter">
+            <div className="bg-snow-white h-fit my-0.5 mt-3 rounded-t-lg shadow-sm font-inter">
                 <div className="flex justify-between px-7 py-2 border-b max-[450px]:flex-col">
                     <p className="font-semibold text-base text-[#031640] my-2 text-left">
                         {t('userProfile.profileInformation')}

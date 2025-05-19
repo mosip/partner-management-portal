@@ -119,11 +119,11 @@ Pagination.propTypes = {
     selectedRecordsPerPage: PropTypes.number.isRequired,
     setSelectedRecordsPerPage: PropTypes.func.isRequired,
     setFirstIndex: PropTypes.func.isRequired,
-    isServerSideFilter: PropTypes.bool.isRequired,
-    getPaginationValues: PropTypes.func.isRequired,
-    isViewNotificationPage: PropTypes.bool.isRequired,
-    isApplyFilterClicked: PropTypes.bool.isRequired,
-    setIsApplyFilterClicked: PropTypes.func.isRequired,
+    isServerSideFilter: PropTypes.bool,
+    getPaginationValues: PropTypes.func,
+    isViewNotificationPage: PropTypes.bool,
+    isApplyFilterClicked: PropTypes.bool,
+    setIsApplyFilterClicked: PropTypes.func,
 };
 
 export default Pagination;
