@@ -433,10 +433,10 @@ istio:
   ingressController:
     name: ingressgateway-internal
   gateways:
-    - name: pmp-revamp-gateway
+    - name: pmp-ui-v2-gateway
       protocol: HTTP
       portName: http
       port: 80
   hosts:
-    - pmp-revamp.sandbox.xyz.net
+    - pmp-v2.sandbox.xyz.net
   prefix: /
