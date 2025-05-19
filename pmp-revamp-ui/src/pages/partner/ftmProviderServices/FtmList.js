@@ -312,8 +312,8 @@ function FtmList() {
                         <tr>
                           {tableHeaders.map((header, index) => {
                             return (
-                              <th key={index} className={`py-4 px-2 text-sm font-semibold text-[#6F6E6E] w-[12%] whitespace-nowrap`}>
-                                <div id={`${header.headerNameKey}_header`} className={`flex items-center text-left gap-x-1 font-semibold ${header.id === "action" && 'justify-center'}`}>
+                              <th key={index} className={`py-4 px-2 text-sm font-semibold text-[#6F6E6E] w-[10%]`}>
+                                <div id={`${header.headerNameKey}_header`} className={`flex items-center gap-x-1 font-semibold ${isLoginLanguageRTL ? "text-right" : "text-left"} ${header.id === "action" && 'justify-center'}`}>
                                   {t(header.headerNameKey)}
                                   {(header.id !== "action") && (
                                     <SortingIcon
@@ -336,15 +336,15 @@ function FtmList() {
                         {
                           tableRows.map((ftm, index, currentArray) => {
                             return (
-                              <tr id={'ftm_list_item' + (index + 1)} key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${(ftm.status === "deactivated") ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
+                              <tr id={'ftm_list_item' + (index + 1)} key={index} className={`border-t ${isLoginLanguageRTL ? "text-right" : "text-left"} border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${(ftm.status === "deactivated") ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
                                 <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2">{ftm.ftmId}</td>
                                 <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2">{ftm.partnerId}</td>
                                 <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2">{ftm.make}</td>
                                 <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2">{ftm.model}</td>
                                 <td onClick={() => showFtmDetails(ftm)} className={`px-2 mx-2`}>{formatDate(ftm.createdDateTime, 'date')}</td>
                                 <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2">{formatDate(ftm.certificateUploadDateTime, 'dateTime')}</td>
-                                <td onClick={() => showFtmDetails(ftm)} className={`px-2 mx-2 max-1712:text-center max-1712:px-4 ${(ftm.isCertificateExpired && ftm.status !== "deactivated") && 'text-crimson-red font-bold'}`}>{(downloadCertApiNotExist && ftm.status !== "pending_cert_upload") ? t('statusCodes.notAvailable') : formatDate(ftm.certificateExpiryDateTime, 'dateTime')}</td>
-                                <td onClick={() => showFtmDetails(ftm)} className={`${isLoginLanguageRTL ? "pr-8 pl-4" : "pl-8 pr-4"} mx-2`}>{getCertificateExpiryStatus(ftm)}</td>
+                                <td onClick={() => showFtmDetails(ftm)} className={`px-2 mx-2 ${(ftm.isCertificateExpired && ftm.status !== "deactivated") && 'text-crimson-red font-bold'}`}>{(downloadCertApiNotExist && ftm.status !== "pending_cert_upload") ? t('statusCodes.notAvailable') : formatDate(ftm.certificateExpiryDateTime, 'dateTime')}</td>
+                                <td onClick={() => showFtmDetails(ftm)} className={`px-2 mx-2`}>{getCertificateExpiryStatus(ftm)}</td>
                                 <td onClick={() => showFtmDetails(ftm)} className="px-2 mx-2">
                                   <div className={`${bgOfStatus(ftm.status)} flex w-fit py-1.5 px-2 my-3 text-xs font-semibold rounded-md`}>
                                     {getStatusCode(ftm.status, t)}
