@@ -35,7 +35,8 @@
         "clear": "Clear",
         "inputError": "Special characters are not allowed.",
         "networkError": "Network Error",
-        "networkErrorDesc": "Please check your internet connection and try again."
+        "networkErrorDesc": "Please check your internet connection and try again.",
+        "retry": "Retry"
     },
     "dashboard": {
         "welcomeMsg": "Welcome {{firstName}} {{lastName}}",
