@@ -27,6 +27,7 @@ import { HttpService } from "../../../services/HttpService";
 import downloadIcon from "../../../svg/download.svg";
 import disableDownloadIcon from "../../../svg/disable_download.svg";
 import SuccessMessage from "../../common/SuccessMessage";
+import PropTypes from 'prop-types';
 
 function TrustList({ trustListType, uploadTrustBtnName, subTitle, downloadBtnName }) {
 
@@ -148,7 +149,7 @@ function TrustList({ trustListType, uploadTrustBtnName, subTitle, downloadBtnNam
   }, [sortFieldName, sortType, pageNo, pageSize]);
 
   useEffect(() => {
-    if (isApplyFilterClicked) {
+    if (isApplyFilterClicked && pageNo === 0) {
       fetchTrustList();
       setIsApplyFilterClicked(false);
     }
@@ -402,6 +403,8 @@ function TrustList({ trustListType, uploadTrustBtnName, subTitle, downloadBtnNam
                       setFirstIndex={setFirstIndex}
                       isServerSideFilter={true}
                       getPaginationValues={getPaginationValues}
+                      isApplyFilterClicked={isApplyFilterClicked}
+                      setIsApplyFilterClicked={setIsApplyFilterClicked}
                     />
                   </div>
                 </>
@@ -413,5 +416,12 @@ function TrustList({ trustListType, uploadTrustBtnName, subTitle, downloadBtnNam
     </div>
   )
 }
+
+TrustList.propTypes = {
+  trustListType: PropTypes.string.isRequired,
+  uploadTrustBtnName: PropTypes.string.isRequired,
+  subTitle: PropTypes.string.isRequired,
+  downloadBtnName: PropTypes.string.isRequired,
+};
 
 export default TrustList;

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import PropTypes from 'prop-types';
 
 function TrustTab({ activeRootCA, rootCertificatesPath, activeIntermediateCA, intermediateCertificatesPath }) {
 
@@ -33,5 +34,12 @@ function TrustTab({ activeRootCA, rootCertificatesPath, activeIntermediateCA, in
         </div>
     )
 }
+
+TrustTab.propTypes = {
+    activeRootCA: PropTypes.bool.isRequired,
+    rootCertificatesPath: PropTypes.string.isRequired,
+    activeIntermediateCA: PropTypes.bool.isRequired,
+    intermediateCertificatesPath: PropTypes.string.isRequired,
+};
 
 export default TrustTab;

@@ -1,6 +1,7 @@
 import { getUserProfile } from '../../services/UserProfileService';
 import cancelIcon from '../../svg/cancel_icon.svg';
 import { isLangRTL } from '../../utils/AppUtils';
+import PropTypes from 'prop-types';
 
 function SuccessMessage({ successMsg, clickOnCancel, customStyle, successParam }) {
 
@@ -20,12 +21,19 @@ function SuccessMessage({ successMsg, clickOnCancel, customStyle, successParam }
                 </div>
                 <div className={`${isLoginLanguageRTL ? 'ml-3 mr-5 left-2' : 'mr-3 ml-5 right-2'} absolute ${(customStyle && customStyle.cancelIcon) ? customStyle.cancelIcon : 'top-4  mt-1'}`}>
                     <button id='success_msg_close_icon' className="cursor-pointer" onClick={clickOnCancel}>
-                        <img role='button' src={cancelIcon} alt="close" />
+                        <img src={cancelIcon} alt="close" />
                     </button>
                 </div>
             </div>
         </div>
     );
 }
+
+SuccessMessage.propTypes = {
+    successMsg: PropTypes.string.isRequired,
+    clickOnCancel: PropTypes.func.isRequired,
+    customStyle: PropTypes.object.isRequired,
+    successParam: PropTypes.string.isRequired,
+};
 
 export default SuccessMessage;

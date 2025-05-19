@@ -2,8 +2,9 @@ import { useState, useEffect } from "react";
 import DropdownComponent from "../../common/fields/DropdownComponent.js";
 import TextInputComponent from "../../common/fields/TextInputComponent.js";
 import { useTranslation } from "react-i18next";
-import { createDropdownData, isLangRTL, validateInputRegex } from "../../../utils/AppUtils.js";
+import { createDropdownData, getFilterDropdownStyle, getFilterTextFieldStyle, isLangRTL, validateInputRegex } from "../../../utils/AppUtils.js";
 import { getUserProfile } from '../../../services/UserProfileService';
+import PropTypes from 'prop-types';
 
 function AdminApiKeysListFilter({ onApplyFilter }) {
     const { t } = useTranslation();
@@ -53,16 +54,6 @@ function AdminApiKeysListFilter({ onApplyFilter }) {
         || invalidOrgName || invalidPolicyGroupName || invalidPolicyName || invalidApiKeyLabel;
     };
 
-    const styles = {
-        dropdownButton: "min-w-64",
-    };
-
-    const styleSet = {
-        inputField: "min-w-64",
-        inputLabel: "mb-2",
-        outerDiv: "ml-4"
-    };
-
     return (
         <div className="flex w-full p-3 justify-start bg-[#F7F7F7] flex-wrap">
             <TextInputComponent
@@ -70,7 +61,7 @@ function AdminApiKeysListFilter({ onApplyFilter }) {
                 onTextChange={onFilterChangeEvent}
                 fieldNameKey="oidcClientsList.partnerId"
                 placeHolderKey="partnerList.searchPartnerId"
-                styleSet={styleSet}
+                styleSet={getFilterTextFieldStyle()}
                 id="partner_id_filter"
                 inputError={invalidPartnerId}
             />
@@ -79,7 +70,7 @@ function AdminApiKeysListFilter({ onApplyFilter }) {
                 onTextChange={onFilterChangeEvent}
                 fieldNameKey="oidcClientsList.orgName"
                 placeHolderKey="partnerList.searchOrganisation"
-                styleSet={styleSet}
+                styleSet={getFilterTextFieldStyle()}
                 id="org_name_filter"
                 inputError={invalidOrgName}
             />
@@ -88,7 +79,7 @@ function AdminApiKeysListFilter({ onApplyFilter }) {
                 onTextChange={onFilterChangeEvent}
                 fieldNameKey="policiesList.policyGroup"
                 placeHolderKey="policiesList.searchPolicyGroup"
-                styleSet={styleSet}
+                styleSet={getFilterTextFieldStyle()}
                 id="policy_group_filter"
                 inputError={invalidPolicyGroupName}
             />
@@ -97,7 +88,7 @@ function AdminApiKeysListFilter({ onApplyFilter }) {
                 onTextChange={onFilterChangeEvent}
                 fieldNameKey="oidcClientsList.policyName"
                 placeHolderKey="policiesList.searchPolicyName"
-                styleSet={styleSet}
+                styleSet={getFilterTextFieldStyle()}
                 id="policy_name_filter"
                 inputError={invalidPolicyName}
             />
@@ -106,7 +97,7 @@ function AdminApiKeysListFilter({ onApplyFilter }) {
                 onTextChange={onFilterChangeEvent}
                 fieldNameKey="apiKeysList.apiKeyName"
                 placeHolderKey="apiKeysList.searchApiKeyName"
-                styleSet={styleSet}
+                styleSet={getFilterTextFieldStyle()}
                 id="api_key_name_filter"
                 inputError={invalidApiKeyLabel}
             />
@@ -116,7 +107,7 @@ function AdminApiKeysListFilter({ onApplyFilter }) {
                 onDropDownChangeEvent={onFilterChangeEvent}
                 fieldNameKey="partnerList.status"
                 placeHolderKey="partnerList.selectStatus"
-                styleSet={styles}
+                styleSet={getFilterDropdownStyle()}
                 isPlaceHolderPresent={true}
                 id="status_filter"
             />
@@ -135,4 +126,9 @@ function AdminApiKeysListFilter({ onApplyFilter }) {
         </div>
     );
 }
+
+AdminApiKeysListFilter.propTypes = {
+    onApplyFilter: PropTypes.func.isRequired,
+};
+
 export default AdminApiKeysListFilter;

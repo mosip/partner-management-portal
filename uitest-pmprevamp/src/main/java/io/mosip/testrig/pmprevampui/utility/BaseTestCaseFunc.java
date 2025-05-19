@@ -3,12 +3,15 @@ package io.mosip.testrig.pmprevampui.utility;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.TimeZone;
 
 import javax.ws.rs.core.MediaType;
 
@@ -200,6 +203,7 @@ public class BaseTestCaseFunc {
 		request.put("desc", "desc automationui policy group");
 		request.put("name", "automationui policy group");		
 		actualrequest.put("request", request);
+		actualrequest.put("requesttime", generateCurrentUTCTimeStamp());
 		logger.info(actualrequest.toJSONString());
 		Response response = RestClient.postRequestWithCookie(url, actualrequest, MediaType.APPLICATION_JSON,
 				MediaType.APPLICATION_JSON, "Authorization", token);
@@ -225,13 +229,14 @@ public class BaseTestCaseFunc {
 		JSONObject request = new JSONObject();
 		request.put("address", "Bangalore");
 		request.put("contactNumber", "8553967572");
-		request.put("emailId", "automationpmpui-revamp"+ BaseClass.data +"@automationlabs.com");
+		request.put("emailId", "automationpmpui-revamp" + BaseClass.data + "@automationlabs.com");
 		request.put("organizationName","AABBCC");
 		request.put("partnerId","pmpui-revamp");
 		request.put("partnerType","Auth_Partner");
 		request.put("policyGroup","automationui policy group");
 		
 		actualrequest.put("request", request);
+		actualrequest.put("requesttime", generateCurrentUTCTimeStamp());
 		logger.info(actualrequest.toJSONString());
 		Response response = RestClient.postRequestWithCookie(url, actualrequest, MediaType.APPLICATION_JSON,
 				MediaType.APPLICATION_JSON, "Authorization", token);
@@ -252,6 +257,7 @@ public class BaseTestCaseFunc {
 		request.put("policyGroup","automationui policy group");
 		
 		actualrequest.put("request", request);
+		actualrequest.put("requesttime", generateCurrentUTCTimeStamp());
 		logger.info(actualrequest.toJSONString());
 		Response response = RestClient.postRequestWithCookie(url, actualrequest, MediaType.APPLICATION_JSON,
 				MediaType.APPLICATION_JSON, "Authorization", token);
@@ -278,6 +284,13 @@ public class BaseTestCaseFunc {
 		Response response = RestClient.postRequestWithCookie(url, actualrequest, MediaType.APPLICATION_JSON,
 				MediaType.APPLICATION_JSON, "Authorization", token);
 		logger.info(response.toString());
+	}
+	
+	public static String generateCurrentUTCTimeStamp() {
+		Date date = new Date();
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+		dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+		return dateFormat.format(date);
 	}
 	
 

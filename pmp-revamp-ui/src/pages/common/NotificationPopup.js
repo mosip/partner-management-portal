@@ -13,6 +13,7 @@ import vectorIcon from "../../svg/vector.svg";
 import ErrorMessage from "./ErrorMessage";
 import { useDispatch, useSelector } from "react-redux";
 import { updateDismissClicked, updateHeaderNotifications, updateNotificationSeenDtimes } from "../../notificationsSlice";
+import PropTypes from 'prop-types';
 
 function NotificationPopup({ closeNotification }) {
     const { t } = useTranslation();
@@ -141,19 +142,10 @@ function NotificationPopup({ closeNotification }) {
         return removeListener;
     }, []);
 
-    const highlightLatestNotifications = (notification) => {
-        if (lastNotiticationSeenTimestamp === null) {
-            return "bg-[#EBF3FF]";
-        } else {
-            const latestNotificationCrdtimes = notification.createdDateTime;
-            const lastSeenDate = new Date(lastNotiticationSeenTimestamp);
-            const latestNotificationDate = new Date(latestNotificationCrdtimes);
-            if(latestNotificationDate > lastSeenDate) {
-                return "bg-[#EBF3FF]";
-            } else {
-                return "";
-            }
-        }
+    const isLatestNotification = (notification) => {
+        if (!notification?.createdDateTime) return false;
+        if (!lastNotiticationSeenTimestamp) return true;
+        return new Date(notification.createdDateTime) > new Date(lastNotiticationSeenTimestamp);
     };
 
     return (
@@ -167,7 +159,9 @@ function NotificationPopup({ closeNotification }) {
                         <div>
                             <div className="flex justify-between items-center px-4 py-3 border-b border-gray-200 cursor-default">
                                 <h2 className="text-lg font-bold text-gray-800">{t('notificationPopup.notification')}</h2>
-                                <img src={xClose} alt='' id='xIcon' onClick={() => closeNotification()} className="cursor-pointer" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, closeNotification)}/>
+                                <button id='xIcon' onClick={() => closeNotification()}>
+                                    <img src={xClose} alt=''/>
+                                </button>
                             </div>
                             {errorMsg && (
                                 <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customStyle={errorcustomStyle}/>
@@ -177,16 +171,16 @@ function NotificationPopup({ closeNotification }) {
                                     <p className={`text-sm text-[#6F6E6E] font-medium ${isLoginLanguageRTL ? 'mr-4' : 'ml-4'} my-2`}>{t('notificationPopup.latest')}</p>
                                     <div className={`${isSmallScreen ? 'max-h-64' : 'max-h-96'} overflow-y-auto`}>
                                         {notifications.map(notification => (
-                                            <div key={notification.notificationId} className={`flex justify-between items-start px-3 py-2 border-b border-gray-200 ${highlightLatestNotifications(notification)}`}>
+                                            <div key={notification.notificationId} className={`flex justify-between items-start px-3 py-2 border-b border-gray-200 ${isLatestNotification(notification) ? 'bg-[#F0F6FF]' : ''}`}>
                                                 <img src={featuredIcon} alt='' id='featuredIcon' className={`${isLoginLanguageRTL ? 'ml-3' : 'mr-3'} mt-1`} />
-                                                <div>
+                                                <div className="mb-2">
                                                     <div className="flex justify-between space-x-2">
-                                                        <p className={`text-sm font-semibold text-gray-900 ${isLoginLanguageRTL ? 'text-right': 'text-left'}`}>{getNoticationTitle(notification, t)}</p>
-                                                        <p className={`text-xs text-gray-500 w-36 ${isLoginLanguageRTL ? 'text-left': 'text-right'}`}>{formatDate(notification.createdDateTime, 'dateTime')}</p>
+                                                        <p className={`text-sm ${isLatestNotification(notification) ? 'font-bold' : 'font-semibold'} text-gray-900 ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>{getNoticationTitle(notification, t)}</p>
+                                                        <p className={`text-xs text-gray-500 w-36 ${isLoginLanguageRTL ? 'text-left' : 'text-right'}`}>{formatDate(notification.createdDateTime, 'dateTime')}</p>
                                                     </div>
-                                                    <div className="text-sm text-[#344054] mt-1 whitespace-pre-line">{getNotificationPanelDescription(notification, isLoginLanguageRTL, t)}</div>
-                                                    <button 
-                                                        className="text-tory-blue font-semibold text-sm mt-2 px-4 py-[6px] rounded-md bg-[#F7F9FF]"
+                                                    <div className={`text-sm  ${isLatestNotification(notification) ? 'font-semibold' : 'font-normal'} text-[#344054] mt-1 mb-2 whitespace-pre-line`}>{getNotificationPanelDescription(notification, isLoginLanguageRTL, t)}</div>
+                                                    <button
+                                                        className={`text-tory-blue font-semibold text-sm ${isLatestNotification(notification) ? 'bg-[#F0F6FF]' : ''}`}
                                                         onClick={() => dismissNotification(notification.notificationId)}
                                                     >
                                                         {t('notificationPopup.dismiss')}
@@ -221,5 +215,9 @@ function NotificationPopup({ closeNotification }) {
         </div>
     );
 }
+
+NotificationPopup.propTypes = {
+    closeNotification: PropTypes.func.isRequired,
+};
 
 export default NotificationPopup;

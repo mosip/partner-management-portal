@@ -1,5 +1,6 @@
 import { getUserProfile } from "../services/UserProfileService";
 import { isLangRTL } from "../utils/AppUtils";
+import PropTypes from 'prop-types';
 
 export const SideNavMenuItem = ({ title, id, isExpanded, activeIcon }) => {
 
@@ -135,3 +136,10 @@ export const SideNavMenuItem = ({ title, id, isExpanded, activeIcon }) => {
         </div>
     )
 }
+
+SideNavMenuItem.propTypes = {
+    title: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+    isExpanded: PropTypes.bool.isRequired,
+    activeIcon: PropTypes.string.isRequired,
+};

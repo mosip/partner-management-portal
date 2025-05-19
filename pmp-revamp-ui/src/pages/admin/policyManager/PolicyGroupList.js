@@ -126,7 +126,7 @@ function PolicyGroupList() {
 
     useEffect(() => {
 
-        if (isApplyFilterClicked) {
+        if (isApplyFilterClicked && pageNo === 0) {
             fetchPolicyGroupListData();
             setIsApplyFilterClicked(false);
         }
@@ -395,6 +395,8 @@ function PolicyGroupList() {
                                     setFirstIndex={setFirstIndex}
                                     isServerSideFilter={true}
                                     getPaginationValues={getPaginationValues}
+                                    isApplyFilterClicked={isApplyFilterClicked}
+                                    setIsApplyFilterClicked={setIsApplyFilterClicked}
                                 />
                             </div>
                         )

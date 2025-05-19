@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { getUserProfile } from '../../services/UserProfileService';
 import { isLangRTL, moveToHome } from '../../utils/AppUtils';
 import successIcon from '../../svg/success_message_icon.svg';
+import PropTypes from 'prop-types';
 
 function Confirmation({ confirmationData, onClickFunction }) {
 
@@ -48,5 +49,10 @@ function Confirmation({ confirmationData, onClickFunction }) {
         </div>
     )
 }
+
+Confirmation.propTypes = {
+    confirmationData: PropTypes.object.isRequired,
+    onClickFunction: PropTypes.func.isRequired,
+};
 
 export default Confirmation;

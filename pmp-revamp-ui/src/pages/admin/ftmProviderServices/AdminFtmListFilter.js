@@ -2,8 +2,9 @@ import { useState, useEffect } from "react";
 import DropdownComponent from "../../common/fields/DropdownComponent.js";
 import TextInputComponent from "../../common/fields/TextInputComponent.js";
 import { useTranslation } from "react-i18next";
-import { createDropdownData, isLangRTL, validateInputRegex } from "../../../utils/AppUtils.js";
+import { createDropdownData, getFilterDropdownStyle, getFilterTextFieldStyle, isLangRTL, validateInputRegex } from "../../../utils/AppUtils.js";
 import { getUserProfile } from '../../../services/UserProfileService';
+import PropTypes from 'prop-types';
 
 function AdminFtmListFilter ({ onApplyFilter }) {
     const { t } = useTranslation();
@@ -56,16 +57,6 @@ function AdminFtmListFilter ({ onApplyFilter }) {
         || invalidOrgName || invalidFtmId || invalidMake || invalidModel;
     };
 
-    const styles = {
-        dropdownButton: "min-w-64",
-    };
-
-    const styleSet = {
-        inputField: "min-w-64",
-        inputLabel: "mb-2",
-        outerDiv: "ml-4"
-    };
-
     return (
         <div className="flex w-full p-3 justify-start bg-[#F7F7F7] flex-wrap">
             <TextInputComponent
@@ -73,7 +64,7 @@ function AdminFtmListFilter ({ onApplyFilter }) {
                 onTextChange={onFilterChangeEvent}
                 fieldNameKey="oidcClientsList.partnerId"
                 placeHolderKey="partnerList.searchPartnerId"
-                styleSet={styleSet}
+                styleSet={getFilterTextFieldStyle()}
                 id="partner_id_filter"
                 inputError={invalidPartnerId}
             />
@@ -82,7 +73,7 @@ function AdminFtmListFilter ({ onApplyFilter }) {
                 onTextChange={onFilterChangeEvent}
                 fieldNameKey="oidcClientsList.orgName"
                 placeHolderKey="partnerList.searchOrganisation"
-                styleSet={styleSet}
+                styleSet={getFilterTextFieldStyle()}
                 id="org_name_filter"
                 inputError={invalidOrgName}
             />
@@ -91,7 +82,7 @@ function AdminFtmListFilter ({ onApplyFilter }) {
                 onTextChange={onFilterChangeEvent}
                 fieldNameKey="ftmList.ftmId"
                 placeHolderKey="ftmList.searchFtmId"
-                styleSet={styleSet}
+                styleSet={getFilterTextFieldStyle()}
                 id="ftm_id_filter"
                 inputError={invalidFtmId}
             />
@@ -100,7 +91,7 @@ function AdminFtmListFilter ({ onApplyFilter }) {
                 onTextChange={onFilterChangeEvent}
                 fieldNameKey="ftmList.make"
                 placeHolderKey="ftmList.searchMake"
-                styleSet={styleSet}
+                styleSet={getFilterTextFieldStyle()}
                 id="make_filter"
                 inputError={invalidMake}
             />
@@ -109,7 +100,7 @@ function AdminFtmListFilter ({ onApplyFilter }) {
                 onTextChange={onFilterChangeEvent}
                 fieldNameKey="ftmList.model"
                 placeHolderKey="ftmList.searchModel"
-                styleSet={styleSet}
+                styleSet={getFilterTextFieldStyle()}
                 id="model_filter"
                 inputError={invalidModel}
             />
@@ -119,7 +110,7 @@ function AdminFtmListFilter ({ onApplyFilter }) {
                 onDropDownChangeEvent={onFilterChangeEvent}
                 fieldNameKey="partnerList.status"
                 placeHolderKey="partnerList.selectStatus"
-                styleSet={styles}
+                styleSet={getFilterDropdownStyle()}
                 isPlaceHolderPresent={true}
                 id="status_filter"
             />
@@ -139,4 +130,9 @@ function AdminFtmListFilter ({ onApplyFilter }) {
     );
 
 }
+
+AdminFtmListFilter.propTypes = {
+    onApplyFilter: PropTypes.func.isRequired,
+};
+
 export default AdminFtmListFilter;

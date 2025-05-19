@@ -619,5 +619,9 @@ public class PolicyGroupPage extends BasePage{
 	public boolean isSpecialCharactersAreNotAllowedErrorMessageDisplayed() {
 		return isElementDisplayed(specialCharactersAreNotAllowedErrorMessage);
 	}
+	
+	public void clickOnAuthPolicyTab() {
+		clickOnElement(authPolicyTab);
+	}
 
 }

@@ -1,5 +1,9 @@
 package io.mosip.testrig.pmprevampui.pages;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -52,7 +56,7 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(xpath = "//*[contains(text(), \"Last certificate was uploaded on\")]")
 	private WebElement lastUploadTimeAndDate;
 
-	@FindBy(xpath = "//p[text()='Please select all fields and upload the certificate")
+	@FindBy(xpath = "//p[contains(text(), 'Please select all fields and upload')]")
 	private WebElement ReUploadPartnerCertificateSubText;
 
 	@FindBy(xpath = "//*[text()='Originally uploaded CA signed certificate downloaded successfully.']")
@@ -196,8 +200,8 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(xpath = "//img[@class='mb-2 w-10 h-10']")
 	private WebElement uploadCertificateIcon;
 	
-	@FindBy(xpath = "//h5[text()='RootCA.cer']")
-	private WebElement uploadedCertificateName;
+	@FindBy(xpath = "//h5[text()='Client.cer']")
+	private WebElement uploadedCertificateFileName;
 	
 	@FindBy(xpath = "//label[text()='Partner Type']")
 	private WebElement partnerTypeLabel;
@@ -208,7 +212,7 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(xpath = "//h1[text()='Root CA']")
 	private WebElement rootCATab;
 	
-	@FindBy(xpath = "//p[text()='List of Root CA Certificates']")
+	@FindBy(xpath = "//p[contains(text(), 'List of Root CA Certificates')]")
 	private WebElement subtitleOfRootCA;
 	
 	@FindBy(xpath = "//p[text()='Home']")
@@ -292,7 +296,7 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(id = "certificate_list_item1")
 	private WebElement certificateList1;
 	
-	@FindBy(xpath = "//h1[text()='View Root CA Certificate Details']")
+	@FindBy(xpath = "//h1[contains(text()='View Root CA Certificate Details')]")
 	private WebElement rootCACertificateDetailsPage;
 	
 	@FindBy(id = "filter_btn")
@@ -322,6 +326,60 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(xpath = "//p[text()='No Results Found']")
 	private WebElement noResultsFound;
 	
+	@FindBy(xpath = "//p[text()='Root CA Certificate is downloaded successfully']")
+	private WebElement rootCACertificateDownloaded;
+
+	@FindBy(xpath = "//p[text()='List of Root CA Certificates']")
+	private WebElement bredacumbOfRootCA;
+	
+	@FindBy(xpath = "//p[text()='Certificate ID']")
+	private WebElement certificateIdLabel;
+	
+	@FindBy(xpath = "//p[text()='Issued To']")
+	private WebElement issuedToLabel;
+	
+	@FindBy(xpath = "//p[text()='Issued By']")
+	private WebElement issuedByLabel;
+	
+	@FindBy(xpath = "//p[text()='CN=CA,OU=CA,O=CA,L=aa,ST=aa,C=aa']")
+	private WebElement issuedToContext;
+	
+	@FindBy(xpath = "//p[text()='CN=CA,OU=CA,O=CA,L=aa,ST=aa,C=aa']")
+	private WebElement issuedByContext;
+	
+	@FindBy(xpath = "//p[text()='Certificate Thumbprint']")
+	private WebElement certificateThumbprintLabel;
+	
+	@FindBy(xpath = "(//p[@class='font-[600] text-vulcan text-base break-all'])[3]")
+	private WebElement certificateThumbprintValue;
+	
+	@FindBy(xpath = "//h6[text()='Root CA Certificate']")
+	private WebElement rootCertificateTitle;
+	
+	@FindBy(id = "root_of_trust_certificates_tab")
+	private WebElement rootCACertTab;
+	
+	@FindBy(id = "intermediate_root_of_trust_certificates_tab")
+	private WebElement intermediateCACertTab;
+	
+	@FindBy(xpath = "//p[contains(text(), 'List of Intermediate CA Certificates')]")
+	private WebElement subtitleOfIntermediateCA;
+	
+	@FindBy(xpath = "//p[contains(text(), 'View Intermediate CA Certificate Details')]")
+	private WebElement viewIntermediateCADetails;
+	
+	@FindBy(xpath = "//td[contains(text(), 'Valid')]")
+	private WebElement statusValid;
+	
+	@FindBy(xpath = "//td[@class='px-2 break-all' and text()='CN=SUBCA,OU=SUBCA,O=SUBCA,L=aa,ST=aa,C=aa']")
+	private WebElement issuedToDetails;
+	
+	@FindBy(xpath = "//td[@class='px-2 break-all' and text()='CN=CA,OU=CA,O=CA,L=aa,ST=aa,C=aa']")
+	private WebElement issuedByDetails;
+	
+	@FindBy(xpath = "//p[contains(text(), 'Certificate Chain of Trust for the given Intermediate CA certificate is downloaded successfully.')]")
+	private WebElement intCACertDownloadedMsg;
+
 	public PartnerCertificatePage(WebDriver driver) {
 		super(driver);
 	}
@@ -455,7 +513,7 @@ public class PartnerCertificatePage extends BasePage {
 		clickOnElement(GoBackButton);
 	}
 	
-	public void ClickOnsuccessMsgCloseButton() {
+	public void ClickOnSuccessMsgCloseButton() {
 		clickOnElement(successMsgCloseButton);
 	}
 	
@@ -607,7 +665,7 @@ public class PartnerCertificatePage extends BasePage {
 		return isElementDisplayed(successMeassageCloseIcon);
 	}
 	
-	public void clickOnCertificateListViewButton() {
+	public void clickOnRootCADownloadButton() {
 		 clickOnElement(certificateListViewButton);
 	}
 	
@@ -647,7 +705,7 @@ public class PartnerCertificatePage extends BasePage {
 	}
 	
 	public boolean isUploadedCertificateNameDisplayed() {
-		return isElementDisplayed(uploadedCertificateName);
+		return isElementDisplayed(uploadedCertificateFileName);
 	}
 	
 	public boolean isCertificateRemoveButtonDisplayed() {
@@ -906,5 +964,126 @@ public class PartnerCertificatePage extends BasePage {
 	public boolean isNoResultsFoundDisplayed() {
 		return isElementDisplayed(noResultsFound);
 	}
+	
+	public boolean isRootCACertificateDownloadedDisplayed() {
+		return isElementDisplayed(rootCACertificateDownloaded);
+	}
+	
+	public boolean isBredacumbOfRootCADisplayed() {
+		return isElementDisplayed(bredacumbOfRootCA);
+	}
+	
+	public boolean isCertificateIdLabelDisplayed() {
+		return isElementDisplayed(certificateIdLabel);
+	}
+	
+	public boolean isUploadedOnDateDisplayed() {
+	    String expectedDate = PmpTestUtil.todayDateWithoutZeroPadder;
+	    String xpath = "//div[contains(., 'Uploaded On') and contains(., '" + expectedDate + "')]";
+	    WebElement uploadDate = driver.findElement(By.xpath(xpath));
+	    return isElementDisplayed(uploadDate);
+	}
+	
+	public boolean isIssuedToLabelDisplayed() {
+		return isElementDisplayed(issuedToLabel);
+	}
+	
+	public boolean isIssuedByLabelDisplayed() {
+		return isElementDisplayed(issuedByLabel);
+	}
+	
+	public boolean isIssuedToContextDisplayed() {
+		return isElementDisplayed(issuedToContext);
+	}
+	
+	public boolean isIssuedByContextDisplayed() {
+		return isElementDisplayed(issuedByContext);
+	}
+	
+	public boolean isCertificateThumbprintLabelDisplayed() {
+		return isElementDisplayed(certificateThumbprintLabel);
+	}
+	
+	public boolean isCertificateThumbprintValueDisplayed() {
+		return isElementDisplayed(certificateThumbprintValue);
+	}
+	
+	public boolean isRootCertificateTitleDisplayed() {
+		return isElementDisplayed(rootCertificateTitle);
+	}
+	
+	public boolean isValidFromDateTimeFormatValid() {	
+	    String browserTime = trustCertificateContextUploadDateTime.getText();
+	    DateTimeFormatter dateTimeFormatter = PmpTestUtil.dateTimeFormatter;
+
+	    try {
+	        LocalDateTime.parse(browserTime, dateTimeFormatter);
+	        return true;
+	    } catch (DateTimeParseException e) {
+	        return false;
+	    }
+	}
+	
+	public boolean isValidToDateTimeFormatValid() {	
+	    String browserTime = trustCertificateContextExpiryDateTime.getText();
+	    DateTimeFormatter dateTimeFormatter = PmpTestUtil.dateTimeFormatter;
+
+	    try {
+	        LocalDateTime.parse(browserTime, dateTimeFormatter);
+	        return true;
+	    } catch (DateTimeParseException e) {
+	        return false;
+	    }
+	}
+	
+	public void clickOnbredacumbOfRootCA() {
+		 clickOnElement(bredacumbOfRootCA);
+	}
+	
+	public boolean isRootCACertTabDisplayed() {
+		return isElementDisplayed(rootCACertTab);
+	}
+	
+	public boolean isIntermediateCACertTabDisplayed() {
+		return isElementDisplayed(intermediateCACertTab);
+	}
+	
+	public void clickOnIntermediateCACertTab() {
+		 clickOnElement(intermediateCACertTab);
+	}
+	
+	public boolean isSubtitleOfIntermediateCADisplayed() {
+		return isElementDisplayed(subtitleOfIntermediateCA);
+	}
+	
+	public boolean isViewIntermediateCADetailsPageDisplayed() {
+		return isElementDisplayed(viewIntermediateCADetails);
+	}
+	
+	public boolean isStatusValidDisplayed() {
+		return isElementDisplayed(statusValid);
+	}
+	
+	public boolean isIssuedToDetailsDisplayed() {
+		return isElementDisplayed(issuedToDetails);
+	}
+	
+	public boolean isIssuedByDetailsDisplayed() {
+		return isElementDisplayed(issuedByDetails);
+	}
+	
+	public boolean isIntCACertDownloadedSuccessMsgDisplayed() {
+		return isElementDisplayed(intCACertDownloadedMsg);
+	}
+	
+	public boolean isDownloadCertificateChainButtonDisplayed() {
+		return isElementDisplayed(certificateListViewButton);
+	}
+	
+	public void clickOnDownloadCertificateChainButton() {
+		 clickOnElement(certificateListViewButton);
+	}
 
 }
+
+

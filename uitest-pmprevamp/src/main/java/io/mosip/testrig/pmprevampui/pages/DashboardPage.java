@@ -15,7 +15,7 @@ public class DashboardPage extends BasePage {
 	@FindBy(id = "header_user_profile_logout_btn")
 	private WebElement logoutButton;
 
-	@FindBy(xpath = "//*[text()='Select Policy Group']")
+	@FindBy(xpath = "//h3[text()='Select Policy Group']")
 	private WebElement selectPolicyGroupPopUp;
 
 	@FindBy(xpath = "//div[@class='relative w-full']/button")

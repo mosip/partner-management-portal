@@ -6,7 +6,8 @@ import {
     isLangRTL, handleServiceErrors, getPartnerManagerUrl, formatDate, getStatusCode,
     handleMouseClickForDropdown, toggleSortDescOrder, toggleSortAscOrder, bgOfStatus,
     moveToSbisList, populateDeactivatedStatus,
-    createRequest, setSubmenuRef
+    createRequest, setSubmenuRef,
+    onPressEnterKey
 } from '../../../utils/AppUtils.js';
 import { HttpService } from '../../../services/HttpService';
 import ErrorMessage from '../../common/ErrorMessage';
@@ -141,8 +142,9 @@ function DevicesList() {
     }
     useEffect(() => {
         let filteredRows = devicesList;
+        const allowedKeys = tableHeaders.map(header => header.id);
         Object.keys(filterQuery).forEach(key => {
-            if (filterQuery[key] !== '') {
+            if (allowedKeys.includes(key) && filterQuery[key] !== '') {
                 filteredRows = filteredRows.filter(item => item[key] === filterQuery[key]);
             }
         });
@@ -336,12 +338,12 @@ function DevicesList() {
                                                                                 </button>
                                                                                 {viewDeviceId === index && (
                                                                                     <div className={`absolute w-[7rem] z-50 bg-white text-xs text-start font-semibold rounded-lg shadow-md border ${isLoginLanguageRTL ? "left-[3.5rem] text-right" : "right-[3.5rem] text-left"}`}>
-                                                                                        <div role='button' id='device_list_view_details' onClick={() => viewDeviceDetails(device)} className={`flex justify-between py-2 px-2 w-full cursor-pointer text-[#3E3E3E] hover:bg-gray-100 ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
+                                                                                        <div role='button' id='device_list_view_details' onClick={() => viewDeviceDetails(device)} className={`flex justify-between py-2 px-2 w-full cursor-pointer text-[#3E3E3E] hover:bg-gray-100 ${isLoginLanguageRTL ? "text-right" : "text-left"}`} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => viewDeviceDetails(device))}>
                                                                                             <p> {t('devicesList.view')} </p>
                                                                                             <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                         </div>
                                                                                         <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                        <div role='button' id='device_list_deactivate_device' onClick={() => showDeactivateDevice(device, index)} className={`flex justify-between py-2 px-2 w-full ${isLoginLanguageRTL ? "text-right" : "text-left"} ${device.status === "approved" ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`}>
+                                                                                        <div role='button' id='device_list_deactivate_device' onClick={() => showDeactivateDevice(device, index)} className={`flex justify-between py-2 px-2 w-full ${isLoginLanguageRTL ? "text-right" : "text-left"} ${device.status === "approved" ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => showDeactivateDevice(device, index))}>
                                                                                             <p> {t('devicesList.deActivate')}</p>
                                                                                             <img src={device.status === "approved" ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                         </div>

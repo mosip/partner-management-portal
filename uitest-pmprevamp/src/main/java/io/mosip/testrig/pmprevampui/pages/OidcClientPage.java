@@ -483,16 +483,16 @@ public class OidcClientPage extends BasePage {
 	@FindBy(xpath = "//button[text()='x']")
 	private WebElement filterCloseButton;
 	
-	@FindBy(id = "visibility_FILL0_wght400_GRAD0_opsz48")
+	@FindBy(id = "oidc_show_copy_popup_btn1")
 	private WebElement oidcClientIdEyeIcon;
 	
 	@FindBy(id = "oidc_client_list_action_view1")
 	private WebElement actionButton;
 	
-	@FindBy(xpath = "//h1[contains(text(), '  ')]")
+	@FindBy(xpath = "//h1[@class='font-bold text-base text-[#333333] break-words']")
 	private WebElement policyNameInEyeIconPopup;
 	
-	@FindBy(xpath = "//p[contains(text(), 'sudeep-auth')]")
+	@FindBy(xpath = "//p[@class='text-xs font-bold text-[#717171] text-left' and normalize-space(.)='# pmpui-auth']")
 	private WebElement partnerIdInEyeIconPopup;
 	
 	@FindBy(xpath = "//h1[contains(text(), 'OIDC Client ID')]")

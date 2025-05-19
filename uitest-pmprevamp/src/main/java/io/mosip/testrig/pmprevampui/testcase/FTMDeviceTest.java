@@ -19,10 +19,12 @@ import io.mosip.testrig.pmprevampui.utility.GlobalConstants;
 
 public class FTMDeviceTest extends BaseClass {
 	
+	private BasePage basePage;
 	
 	@Test(priority = 1)
 	public void registerNewUserForFtmNoCert() throws InterruptedException {
 		DashboardPage dashboardpage = new DashboardPage(driver);
+		basePage = new BasePage(driver);
 		PartnerCertificatePage partnerCertificatePage = new PartnerCertificatePage(driver);
 		RegisterPage registerPage = new RegisterPage(driver);
 		FtmPage ftmPage = new FtmPage(driver);
@@ -32,7 +34,7 @@ public class FTMDeviceTest extends BaseClass {
 
 		LoginPage loginpage = dashboardpage.clickOnLogoutButton();
 		assertTrue(loginpage.isPageNotFoundMessageDisplayed(), GlobalConstants.isKeycloakPageDisplayed);
-		BasePage.navigateBack();
+		basePage.navigateBack();
 		dashboardpage.clickOnProfileDropdown();
 		dashboardpage.clickOnLogoutButton();
 		assertTrue(loginpage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
@@ -124,7 +126,7 @@ public class FTMDeviceTest extends BaseClass {
 		
 		ftmPage.EnterInAddFtmMakeBox(data);
 		ftmPage.EnterInAddFtmModelBox(data);
-		BasePage.navigateBack();
+		basePage.navigateBack();
 		
 		ftmPage.clickOnBlockMesssageProceed();
 		assertTrue(partnerCertificatePage.isPartnerCertificatePageDisplayed(), GlobalConstants.isPartnerCertificatePageDisplayed);
@@ -240,8 +242,8 @@ public class FTMDeviceTest extends BaseClass {
 		partnerCertificatePage.uploadCertificate();
 		partnerCertificatePage.clickOnSubmitButton();
 
-		assertTrue(partnerCertificatePage.isSuccessMessageForFtmCertDisplayed(), GlobalConstants.isSucessMessageDisplayed);
-		partnerCertificatePage.ClickOnsuccessMsgCloseButton();
+		assertTrue(partnerCertificatePage.isSuccessMessageForFtmCertDisplayed(), GlobalConstants.isSuccessMessageDisplayed);
+		partnerCertificatePage.ClickOnSuccessMsgCloseButton();
 		partnerCertificatePage.certifiCateUploadCancelButton();
 		dashboardpage = partnerCertificatePage.clickOnHomeButton();
 
@@ -260,7 +262,7 @@ public class FTMDeviceTest extends BaseClass {
 		
 		partnerCertificatePage.uploadCertificate();
 		partnerCertificatePage.clickOnSubmitButton();
-		assertTrue(partnerCertificatePage.isSuccessMessageForFtmCertDisplayed(), GlobalConstants.isSucessMessageDisplayed);
+		assertTrue(partnerCertificatePage.isSuccessMessageForFtmCertDisplayed(), GlobalConstants.isSuccessMessageDisplayed);
 		partnerCertificatePage.clickOnRemoveCertificateButton();
 		
 		partnerCertificatePage.uploadCertificateInvalidCert();
@@ -309,11 +311,11 @@ public class FTMDeviceTest extends BaseClass {
 		ftmPage.clickOnConfirmationCustomButton();
 		ftmPage.uploadCertificateConfrmationForFtm();
 		ftmPage.clickOnCertificateUploadSubmitButton();
-		assertTrue(partnerCertificatePage.isSuccessMessageForFtmCertDisplayed(), GlobalConstants.isSucessMessageDisplayed);
+		assertTrue(partnerCertificatePage.isSuccessMessageForFtmCertDisplayed(), GlobalConstants.isSuccessMessageDisplayed);
 		partnerCertificatePage.clickOncertificateUploadCloseButton();
 		
-		assertTrue(ftmPage.isListOfFtmTextDisplayed(), GlobalConstants.isSucessMessageDisplayed);
-		assertTrue(ftmPage.islFtmListAction1Displayed(), GlobalConstants.isSucessMessageDisplayed);
+		assertTrue(ftmPage.isListOfFtmTextDisplayed(), GlobalConstants.isSuccessMessageDisplayed);
+		assertTrue(ftmPage.islFtmListAction1Displayed(), GlobalConstants.isSuccessMessageDisplayed);
 		ftmPage.clickOnFtmListAction1Button();
 		ftmPage.clickOnFtmListViewButton();
 		
@@ -420,7 +422,7 @@ public class FTMDeviceTest extends BaseClass {
 		ftmPage.clickOnConfirmationCustomButton();
 		ftmPage.uploadCertificateConfrmationForFtm();
 		ftmPage.clickOnCertificateUploadSubmitButton();
-		assertTrue(partnerCertificatePage.isSuccessMessageForFtmCertDisplayed(), GlobalConstants.isSucessMessageDisplayed);
+		assertTrue(partnerCertificatePage.isSuccessMessageForFtmCertDisplayed(), GlobalConstants.isSuccessMessageDisplayed);
 		partnerCertificatePage.clickOncertificateUploadCloseButton();
 		
 		assertTrue(ftmPage.isApprovedTextDisplayed(), GlobalConstants.isApproveTextDisplayed);
@@ -473,11 +475,11 @@ public class FTMDeviceTest extends BaseClass {
 		ftmPage.clickOnConfirmationCustomButton();
 		ftmPage.uploadCertificateConfrmationForFtm();
 		ftmPage.clickOnCertificateUploadSubmitButton();
-		assertTrue(partnerCertificatePage.isSuccessMessageForFtmCertDisplayed(), GlobalConstants.isSucessMessageDisplayed);
+		assertTrue(partnerCertificatePage.isSuccessMessageForFtmCertDisplayed(), GlobalConstants.isSuccessMessageDisplayed);
 		partnerCertificatePage.clickOncertificateUploadCloseButton();
 		
-		assertTrue(ftmPage.isListOfFtmTextDisplayed(), GlobalConstants.isSucessMessageDisplayed);
-		assertTrue(ftmPage.islFtmListAction1Displayed(), GlobalConstants.isSucessMessageDisplayed);
+		assertTrue(ftmPage.isListOfFtmTextDisplayed(), GlobalConstants.isSuccessMessageDisplayed);
+		assertTrue(ftmPage.islFtmListAction1Displayed(), GlobalConstants.isSuccessMessageDisplayed);
 		ftmPage.clickOnFtmListAction1Button();
 		ftmPage.clickOnFtmListViewButton();
 		
@@ -553,12 +555,13 @@ public class FTMDeviceTest extends BaseClass {
 		ftmPage.clickOnConfirmationCustomButton();
 		ftmPage.uploadCertificateConfrmationForFtm();
 		ftmPage.clickOnCertificateUploadSubmitButton();
-		assertTrue(partnerCertificatePage.isSuccessMessageForFtmCertDisplayed(), GlobalConstants.isSucessMessageDisplayed);
+		assertTrue(partnerCertificatePage.isSuccessMessageForFtmCertDisplayed(), GlobalConstants.isSuccessMessageDisplayed);
 	}
 
 	@Test(priority = 5)
 	public void AddFtmAndDeactive() throws InterruptedException {
 		DashboardPage dashboardpage = new DashboardPage(driver);
+		basePage = new BasePage(driver);
 		PartnerCertificatePage partnerCertificatePage = new PartnerCertificatePage(driver);
 		RegisterPage registerPage = new RegisterPage(driver);
 		FtmPage ftmPage = new FtmPage(driver);
@@ -583,11 +586,11 @@ public class FTMDeviceTest extends BaseClass {
 		ftmPage.clickOnConfirmationCustomButton();
 		ftmPage.uploadCertificateConfrmationForFtm();
 		ftmPage.clickOnCertificateUploadSubmitButton();
-		assertTrue(partnerCertificatePage.isSuccessMessageForFtmCertDisplayed(), GlobalConstants.isSucessMessageDisplayed);
+		assertTrue(partnerCertificatePage.isSuccessMessageForFtmCertDisplayed(), GlobalConstants.isSuccessMessageDisplayed);
 		partnerCertificatePage.clickOncertificateUploadCloseButton();
 		
-		assertTrue(ftmPage.isListOfFtmTextDisplayed(), GlobalConstants.isSucessMessageDisplayed);
-		assertTrue(ftmPage.islFtmListAction1Displayed(), GlobalConstants.isSucessMessageDisplayed);
+		assertTrue(ftmPage.isListOfFtmTextDisplayed(), GlobalConstants.isSuccessMessageDisplayed);
+		assertTrue(ftmPage.islFtmListAction1Displayed(), GlobalConstants.isSuccessMessageDisplayed);
 		ftmPage.clickOnFtmListAction1Button();
 		ftmPage.clickOnFtmListViewButton();
 		
@@ -631,8 +634,8 @@ public class FTMDeviceTest extends BaseClass {
 		ftmPage.clickOnApplyFilterButton();
 		assertTrue(ftmPage.isDeactivatedTextDisplayed(), GlobalConstants.isDeactivatedTextDisplayed);
 		
-		BasePage.navigateBack();
-		BasePage.navigateForword();
+		basePage.navigateBack();
+		basePage.navigateForword();
 		assertTrue(ftmPage.isDeactivatedTextDisplayed(), GlobalConstants.isDeactivatedTextDisplayed);
 		
 		dashboardpage.clickOnProfileDropdown();
@@ -660,7 +663,7 @@ public class FTMDeviceTest extends BaseClass {
 		ftmPage.clickOnConfirmationCustomButton();
 		ftmPage.uploadCertificateConfrmationForFtm();
 		ftmPage.clickOnCertificateUploadSubmitButton();
-		assertTrue(partnerCertificatePage.isSuccessMessageForFtmCertDisplayed(), GlobalConstants.isSucessMessageDisplayed);
+		assertTrue(partnerCertificatePage.isSuccessMessageForFtmCertDisplayed(), GlobalConstants.isSuccessMessageDisplayed);
 		ftmPage.clickOnCertificateUploadCloseButton();
 		ftmPage.clickOnFilterButton();
 		ftmPage.clickOnFtmStatusFilter();

@@ -2,6 +2,7 @@ import { React, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import FocusTrap from 'focus-trap-react';
 import { handleEscapeKey } from '../../../utils/AppUtils';
+import PropTypes from 'prop-types';
 
 function ViewPolicyPopup({ title, downloadJsonFile, closePopUp, jsonData }) {
     const { t } = useTranslation();
@@ -44,5 +45,12 @@ function ViewPolicyPopup({ title, downloadJsonFile, closePopUp, jsonData }) {
         </div>
     )
 }
+
+ViewPolicyPopup.propTypes = {
+  title: PropTypes.string.isRequired,
+  downloadJsonFile: PropTypes.func.isRequired,
+  closePopUp: PropTypes.func.isRequired,
+  jsonData: PropTypes.object.isRequired,
+};
 
 export default ViewPolicyPopup;

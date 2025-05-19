@@ -2,8 +2,9 @@ import { useState, useEffect } from "react";
 import DropdownComponent from "../../common/fields/DropdownComponent.js";
 import TextInputComponent from "../../common/fields/TextInputComponent.js";
 import { useTranslation } from "react-i18next";
-import { isLangRTL, createDropdownData, validateInputRegex } from "../../../utils/AppUtils.js";
+import { isLangRTL, createDropdownData, validateInputRegex, getFilterDropdownStyle, getFilterTextFieldStyle } from "../../../utils/AppUtils.js";
 import { getUserProfile } from '../../../services/UserProfileService';
+import PropTypes from 'prop-types';
 
 function PoliciesListFilter({ onApplyFilter }) {
 
@@ -52,16 +53,6 @@ function PoliciesListFilter({ onApplyFilter }) {
         return Object.values(filters).every(value => value === "") || invalidPolicyId || invalidPolicyName
           || invalidPolicyDesc || invalidPolicyGroupName;
       };
-    
-    const styles = {
-      dropdownButton: "min-w-64",
-    };
-    
-    const styleSet = {
-      inputField: "min-w-64",
-      inputLabel: "mb-2",
-      outerDiv: "ml-4"
-    };
 
     return (
         <div className="flex w-full p-2.5 justify-start bg-[#F7F7F7] flex-wrap">
@@ -70,7 +61,7 @@ function PoliciesListFilter({ onApplyFilter }) {
             onTextChange={onFilterChangeEvent}
             fieldNameKey="policiesList.policyId"
             placeHolderKey="policiesList.searchPolicyId"
-            styleSet={styleSet}
+            styleSet={getFilterTextFieldStyle()}
             id="policy_id_filter"
             inputError={invalidPolicyId}
           />
@@ -79,7 +70,7 @@ function PoliciesListFilter({ onApplyFilter }) {
             onTextChange={onFilterChangeEvent}
             fieldNameKey="policiesList.policyName"
             placeHolderKey="policiesList.searchPolicyName"
-            styleSet={styleSet}
+            styleSet={getFilterTextFieldStyle()}
             id="policy_name_filter"
             inputError={invalidPolicyName}
           />
@@ -88,7 +79,7 @@ function PoliciesListFilter({ onApplyFilter }) {
             onTextChange={onFilterChangeEvent}
             fieldNameKey="policiesList.policyDescription"
             placeHolderKey="policiesList.searchPolicyDescription"
-            styleSet={styleSet}
+            styleSet={getFilterTextFieldStyle()}
             id="policy_description_filter"
             inputError={invalidPolicyDesc}
           />
@@ -97,7 +88,7 @@ function PoliciesListFilter({ onApplyFilter }) {
             onTextChange={onFilterChangeEvent}
             fieldNameKey="policiesList.policyGroup"
             placeHolderKey="policiesList.searchPolicyGroup"
-            styleSet={styleSet}
+            styleSet={getFilterTextFieldStyle()}
             id="policy_group_filter"
             inputError={invalidPolicyGroupName}
           />
@@ -107,7 +98,7 @@ function PoliciesListFilter({ onApplyFilter }) {
             onDropDownChangeEvent={onFilterChangeEvent}
             fieldNameKey="partnerList.status"
             placeHolderKey="partnerList.selectStatus"
-            styleSet={styles}
+            styleSet={getFilterDropdownStyle()}
             isPlaceHolderPresent={true}
             id="status_filter"
           />
@@ -126,5 +117,9 @@ function PoliciesListFilter({ onApplyFilter }) {
         </div>
     );
 }
+
+PoliciesListFilter.propTypes = {
+    onApplyFilter: PropTypes.func.isRequired,
+};
 
 export default PoliciesListFilter;

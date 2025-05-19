@@ -1,7 +1,8 @@
 import { useTranslation } from 'react-i18next';
 import { getUserProfile } from '../../services/UserProfileService';
-import { isLangRTL, onPressEnterKey } from '../../utils/AppUtils';
+import { isLangRTL } from '../../utils/AppUtils';
 import backArrow from '../../svg/back_arrow.svg';
+import PropTypes from 'prop-types';
 
 function FilterButtons({ titleId, listTitle, dataListLength, filter, onResetFilter, setFilter, goBack, listSubTitle, addBackArrow, showTitleWithoutCount, removeFiler }) {
 
@@ -53,5 +54,19 @@ function FilterButtons({ titleId, listTitle, dataListLength, filter, onResetFilt
         </div>
     )
 }
+
+FilterButtons.propTypes = {
+    titleId: PropTypes.string.isRequired,
+    listTitle: PropTypes.string.isRequired,
+    dataListLength: PropTypes.number.isRequired,
+    filter: PropTypes.bool.isRequired,
+    onResetFilter: PropTypes.func.isRequired,
+    setFilter: PropTypes.func.isRequired,
+    goBack: PropTypes.func.isRequired,
+    listSubTitle: PropTypes.string.isRequired,
+    addBackArrow: PropTypes.bool.isRequired,
+    showTitleWithoutCount: PropTypes.bool.isRequired,
+    removeFiler: PropTypes.bool.isRequired,
+};
 
 export default FilterButtons;

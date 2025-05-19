@@ -61,9 +61,6 @@ public class PartnerPolicyMappingPage extends BasePage {
 	@FindBy(id = "partner_list_view1")
 	private WebElement partnerListViewElipsisButton;
 	
-	@FindBy(xpath = "//p[contains(text(), 'Approve / Reject')]")
-	private WebElement approveOrRejectButton;
-	
 	@FindBy(xpath = "//p[contains(text(), 'Do you want to Approve/Reject the Policy')]")
 	private WebElement confirmationPopup;
 	
@@ -139,7 +136,7 @@ public class PartnerPolicyMappingPage extends BasePage {
 	@FindBy(xpath = "//input[@placeholder='Search Partner ID']")
 	private WebElement searchPartnerId;
 	
-	@FindBy(xpath = "//input[@placeholder='Select Partner Type']")
+	@FindBy(xpath = "//span[text()='Select Partner Type']")
 	private WebElement searchPartnerType;
 	
 	@FindBy(xpath = "//input[@placeholder='Search Organisation']")
@@ -151,7 +148,7 @@ public class PartnerPolicyMappingPage extends BasePage {
 	@FindBy(xpath = "//button[text()='x']")
 	private WebElement cancelButtonOfTextBox;
 	
-	@FindBy(id = "partner_details_view_btn")
+	@FindBy(id = "partner_details_approve_or_reject_btn")
 	private WebElement approveRejectButton;
 	
 	@FindBy(id = "partner_details_view_btn")
@@ -214,7 +211,7 @@ public class PartnerPolicyMappingPage extends BasePage {
 	@FindBy(id = "status_asc_icon")
 	private WebElement status_asc_icon;
 	
-	@FindBy(xpath = "//p[text()='check']")
+	@FindBy(xpath = "//p[text()='authpolpartlink']")
 	private WebElement policyNameInPopup;
 	
 	@FindBy(xpath = "//div[text()='Approved']")
@@ -229,7 +226,7 @@ public class PartnerPolicyMappingPage extends BasePage {
 	@FindBy(id = "sub_title_btn")
 	private WebElement listOfPartnerPolicyLinkages;
 	
-	@FindBy(xpath = "//span[text()='MOVP-AUTOMATION']")
+	@FindBy(xpath = "//span[text()='pmpui-auth']")
 	private WebElement partnerIdContext;
 	
 	@FindBy(xpath = "//div[contains(text(), 'Created On')]")
@@ -238,7 +235,7 @@ public class PartnerPolicyMappingPage extends BasePage {
 	@FindBy(xpath = "//p[text()='Policy ID']")
 	private WebElement policyId;
 	
-	@FindBy(xpath = "//span[text()='ab11CD22ef']")
+	@FindBy(xpath = "//span[text()='26621']")
 	private WebElement policyIdContext;
 	
 	@FindBy(xpath = "//p[text()='Policy Name']")
@@ -271,7 +268,7 @@ public class PartnerPolicyMappingPage extends BasePage {
 	@FindBy(xpath = "//h4[text()='Admin Comments']")
 	private WebElement adminCommentsLabel;
 	
-	@FindBy(xpath = "//h4[text()='Partner's Comments']")
+	@FindBy(xpath = "//h4[text()=\"Partner's Comments\"]")
 	private WebElement partnerCommentsLabel;
 	
 	@FindBy(xpath = "//span[text()='request']")
@@ -365,7 +362,7 @@ public class PartnerPolicyMappingPage extends BasePage {
 		clickOnElement(approveRejectButton);
 	}
 	
-	public boolean isConfirmationPopupDisplayed() {
+	public boolean isApproveOrRejectConfirmationPopupDisplayed() {
 		return isElementEnabled(confirmationPopup);
 	}
 	
@@ -769,6 +766,12 @@ public class PartnerPolicyMappingPage extends BasePage {
 	
 	public boolean isPartnerCommentsContextDisplayed() {
 		return isElementDisplayed(partnerCommentsContext);
+	}
+	
+	public boolean isCommentsCreatedDateDisplayed() {
+		WebElement createdDate = driver
+				.findElement(By.xpath("//div[text()='Created On " + PmpTestUtil.todayDateWithoutZeroPadder + "']"));
+		return isElementDisplayed(createdDate);
 	}
 
 }

@@ -7,6 +7,7 @@ import { getPartnerManagerUrl, isLangRTL, handleServiceErrors, handleEscapeKey} 
 import { HttpService } from "../../services/HttpService.js";
 import { getUserProfile } from "../../services/UserProfileService.js";
 import FocusTrap from "focus-trap-react";
+import PropTypes from 'prop-types';
 
 function DeactivatePopup({ onClickConfirm, closePopUp, popupData, request, headerMsg, descriptionMsg, headerKeyName }) {
     const { t } = useTranslation();
@@ -177,5 +178,15 @@ function DeactivatePopup({ onClickConfirm, closePopUp, popupData, request, heade
     )
 
 }
+
+DeactivatePopup.propTypes = {
+    onClickConfirm: PropTypes.func.isRequired,
+    closePopUp: PropTypes.func.isRequired,
+    popupData: PropTypes.object.isRequired,
+    request: PropTypes.object.isRequired,
+    headerMsg: PropTypes.string.isRequired,
+    descriptionMsg: PropTypes.string.isRequired,
+    headerKeyName: PropTypes.string.isRequired,
+};
 
 export default DeactivatePopup;

@@ -1,7 +1,8 @@
 import { useTranslation } from "react-i18next";
 import rectangleGrid from "../../svg/rectangle_grid.svg";
+import PropTypes from 'prop-types';
 
-function EmptyList({tableHeaders, showCustomButton, customButtonName,buttonId, onClickButton, disableBtn}) {
+function EmptyList({tableHeaders, showCustomButton, customButtonName, buttonId, onClickButton, disableBtn}) {
     const { t } = useTranslation();
     return (
         <>
@@ -35,5 +36,14 @@ function EmptyList({tableHeaders, showCustomButton, customButtonName,buttonId, o
         </>
     );
 }
+
+EmptyList.propTypes = {
+    tableHeaders: PropTypes.array.isRequired,
+    showCustomButton: PropTypes.bool.isRequired,
+    customButtonName: PropTypes.string.isRequired,
+    buttonId: PropTypes.string.isRequired,
+    onClickButton: PropTypes.func.isRequired,
+    disableBtn: PropTypes.bool.isRequired,
+};
 
 export default EmptyList;

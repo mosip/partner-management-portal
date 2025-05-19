@@ -3,7 +3,8 @@ import DropdownComponent from "../../common/fields/DropdownComponent";
 import TextInputComponent from "../../common/fields/TextInputComponent";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../../services/UserProfileService";
-import { isLangRTL, createDropdownData, validateInputRegex } from "../../../utils/AppUtils";
+import { isLangRTL, createDropdownData, validateInputRegex, getFilterDropdownStyle, getFilterTextFieldStyle } from "../../../utils/AppUtils";
+import PropTypes from 'prop-types';
 
 function AdminSbiListFilter( {onApplyFilter} ) {
     const { t } = useTranslation();
@@ -57,16 +58,6 @@ function AdminSbiListFilter( {onApplyFilter} ) {
             || invalidSbiId || invalidSbiVersion;
     };
 
-    const styles = {
-        dropdownButton: "min-w-64",
-    };
-
-    const styleSet = {
-        inputField: "min-w-64",
-        inputLabel: "mb-2",
-        outerDiv: "ml-4"
-    };
-
     return (
         <div className="flex w-full p-2.5 justify-start bg-[#F7F7F7] flex-wrap">
             <TextInputComponent
@@ -74,7 +65,7 @@ function AdminSbiListFilter( {onApplyFilter} ) {
                 onTextChange={onFilterChangeEvent}
                 fieldNameKey="oidcClientsList.partnerId"
                 placeHolderKey="partnerList.searchPartnerId"
-                styleSet={styleSet}
+                styleSet={getFilterTextFieldStyle()}
                 id="partner_id_filter"
                 inputError={invalidPartnerId}
             />
@@ -83,7 +74,7 @@ function AdminSbiListFilter( {onApplyFilter} ) {
                 onTextChange={onFilterChangeEvent}
                 fieldNameKey="oidcClientsList.orgName"
                 placeHolderKey="partnerList.searchOrganisation"
-                styleSet={styleSet}
+                styleSet={getFilterTextFieldStyle()}
                 id="org_name_filter"
                 inputError={invalidOrgName}
             />
@@ -92,7 +83,7 @@ function AdminSbiListFilter( {onApplyFilter} ) {
                 onTextChange={onFilterChangeEvent}
                 fieldNameKey="sbiList.sbiId"
                 placeHolderKey="sbiList.searchSbiId"
-                styleSet={styleSet}
+                styleSet={getFilterTextFieldStyle()}
                 id="sbi_id_filter"
                 inputError={invalidSbiId}
             />
@@ -101,7 +92,7 @@ function AdminSbiListFilter( {onApplyFilter} ) {
                 onTextChange={onFilterChangeEvent}
                 fieldNameKey="sbiList.sbiVersion"
                 placeHolderKey="sbiList.searchVersion"
-                styleSet={styleSet}
+                styleSet={getFilterTextFieldStyle()}
                 id="sbi_version_filter"
                 inputError={invalidSbiVersion}
             />
@@ -111,7 +102,7 @@ function AdminSbiListFilter( {onApplyFilter} ) {
                 onDropDownChangeEvent={onFilterChangeEvent}
                 fieldNameKey="sbiList.sbiExpiryStatus"
                 placeHolderKey="sbiList.selectSbiExpiryStatus"
-                styleSet={styles}
+                styleSet={getFilterDropdownStyle()}
                 isPlaceHolderPresent={true}
                 id="sbi_expiry_status_filter"
             />
@@ -121,7 +112,7 @@ function AdminSbiListFilter( {onApplyFilter} ) {
                 onDropDownChangeEvent={onFilterChangeEvent}
                 fieldNameKey="partnerList.status"
                 placeHolderKey="partnerList.selectStatus"
-                styleSet={styles}
+                styleSet={getFilterDropdownStyle()}
                 isPlaceHolderPresent={true}
                 id="status_filter"
             />
@@ -141,4 +132,9 @@ function AdminSbiListFilter( {onApplyFilter} ) {
     );
 
 }
+
+AdminSbiListFilter.propTypes = {
+    onApplyFilter: PropTypes.func.isRequired,
+};
+
 export default AdminSbiListFilter;

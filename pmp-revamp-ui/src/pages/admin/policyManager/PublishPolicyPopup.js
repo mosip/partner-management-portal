@@ -6,6 +6,7 @@ import FocusTrap from 'focus-trap-react';
 import { HttpService } from '../../../services/HttpService.js';
 import { getPolicyManagerUrl, handleServiceErrors, handleEscapeKey } from '../../../utils/AppUtils.js';
 import SuccessMessage from '../../common/SuccessMessage.js';
+import PropTypes from 'prop-types';
 
 function PublishPolicyPopup ({policyDetails, closePopUp, onClickPublish}) {
     const [errorCode, setErrorCode] = useState("");
@@ -139,5 +140,11 @@ function PublishPolicyPopup ({policyDetails, closePopUp, onClickPublish}) {
         </div>
     );
 }
+
+PublishPolicyPopup.propTypes = {
+  policyDetails: PropTypes.object.isRequired,
+  closePopUp: PropTypes.func.isRequired,
+  onClickPublish: PropTypes.func.isRequired,
+};
 
 export default PublishPolicyPopup;

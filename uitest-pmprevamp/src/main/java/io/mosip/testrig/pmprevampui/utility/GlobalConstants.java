@@ -26,7 +26,6 @@ public class GlobalConstants {
 	public static final String isUploadPartnerCertificatePopUpDisplayed = "Verify if upload partner certificate pop up is displayed";
 	public static final String isSuccessMessageDisplayed = "Verify if Partner certificate for Authentication Partner is uploaded successfully.";
 	public static final String isDeviceProviderSucessMessageDisplayed = "Verify if Partner certificate for device provider is uploaded successfully.";
-	public static final String isSucessMessageDisplayed = "Verify if Partner certificate for Authentication Partner is uploaded successfully.";
 	public static final String isPoliciesTitleDisplayed = "Verify if policies title is displayed";
 	public static final String isPoliciesPageDisplayed = "Verify if policies page is displayed after click on policies title";
 	public static final String isPartnerIdDropdownDisplayed = "Verify if partner id dropdown is displayed.";
@@ -45,13 +44,17 @@ public class GlobalConstants {
 	public static final String isDeviceSubTypeOptionsDisplayed = "Verify if device sub type option is displayed";
 	public static final String isCreatedTwentyFifthDeviceDisplayed = "Verify if created twenty fifth device is displayed";
 	public static final String isDeviceSubTypeEnabled = "Verify if Device sub type dropdown is enabled";
+	public static final String isDeviceTypeDisabled = "Verify if Device type dropdown is disabled";
 	public static final String isAddDeviceButtonEnabled = "Verify if Add Device button is enabled";
+	public static final String isAddDeviceButtonDisabled = "Verify if Add Device button is disabled";
+	public static final String isPartnerTypeDisabled = "Verify if partner type is disabled";
 	public static final String isDeleteButtonEnabled = "Verify if Delete button is enabled";
 	public static final String isSbiVersionDisplayed = "Verify if sbi version is displayed";
 	public static final String isAddSbiDetailsInfoMessageDisplayed = "Verify if add sbi details info message is displayed";
 	public static final String isSameDateErrorMessageDisplayed = "Verify if error message is displayed for same date in created and expiry";
 	public static final String isFutureDateErrorMessageDisplayed = "Verify if error message is displayed for future date in created";
 	public static final String isSbiExistsErrorMessageDisplayed = "Verify if error message is displayed for SBI already exists";
+	public static final String isSpecialCharacterErrorMessageDisplayed = "Verify if error message is displayed for Special characters";
 	public static final String isNavigationAlertMessageDisplayed = "Verify if alert message for browser navigation is displayed";
 	public static final String isPastDateErrorMessageDisplayed = "Verify if error message is displayed for past date in expiry date";
 	public static final String isCreateOIDCClientDisplayed = "Verify if create OIDC client is displayed";
@@ -137,6 +140,8 @@ public class GlobalConstants {
 	public static final String isNoDataAvailableTextDisplayed = "Verify if api list is displayed";
 	public static final String isHomeButtonInAuthenticationDisplayed = "Verify if home button in authentication page displayed";
 	public static final String isSubmitButtonEnabled = "Verify if submit button is enabled";
+	public static final String isSubmitButtonDisabled = "Verify if submit button is disabled";
+	public static final String isDeviceListAddDeviceButtonDisabled = "Verify if device list add device is disabled";
 	public static final String isPolicyCommentBoxTextDisplayed = "Mention the purpose of requesting the policy";
 	public static final String isFtmChipMakeLableDisplayed = "Verify if ftm chipe make lable displayed";
 	public static final String isFtmChipMakeValueDisplayed = "Verify if ftm chipe make value displayed";
@@ -671,6 +676,8 @@ public class GlobalConstants {
 	public static final String isAdminCommentsLabelDisplayed = "Verify if admin comments label displayed";
 	public static final String isPartnerCommentsLabelDisplayed = "Verify if partner comments label displayed";
 	public static final String isPartnerCommentsContextDisplayed = "Verify if partner comments context displayed";
+	public static final String isApproveOrRejectConfirmationPopupDisplayed = "Verify if approve/reject conf. displayed";
+	public static final String isApiKeyNamePlaceHolderDisplayed = "Verify if api key name placeholder displayed";
 
 	public static final String APPID = "appId";
 	public static final String PASSWORD = "password";
@@ -693,12 +700,14 @@ public class GlobalConstants {
 	public static final String CHARACTERS_1 = "A";
 	public static final String Single_CHARACTERS = "P";
 	public static final String ALPHANUMERIC = "Automation123";
+	public static final String ALPHANUMERIC2 = "Automation1232";
+	public static final String AUTOMATION_REJECTING = "AutomationRejecting";
 	public static final String AUTOMATION_DEACTIVATING = "AutomationDeactivating";
 	public static final String AUTOMATION_DEACTIVATING_1 = "AutomationDeactivating1";
 	public static final String AUTOMATION_DEACTIVATING_2 = "AutomationDeactivating2";
 	public static final String AUTOMATION_DEACTIVATING_3 = "AutomationDeactivating3";
 	public static final String AUTOMATION_DEACTIVATING_4 = "AutomationDeactivating4";
-	public static final String ALPHANUMERIC_AND_SYMBOLS = "$Automation@123#";
+	public static final String ALPHANUMERIC_AND_SYMBOLS = "Automation@123#";
 	public static final String SPECIAL_CHARACTERS = "!@#$%^&";
 	public static final String SPECIAL_CHARACTERS2 = "&*&@#$%^&";
 	public static final String NUMERIC = "123456789";
@@ -731,6 +740,12 @@ public class GlobalConstants {
 	public static final String MODEL = "Model";
 	public static final String STATUS = "Status";
 	public static final String SBI_VERSION = "SBI Version";
+	
+//  Certificate
+	public static final String ROOTCAISSUEDTO = "CN=CA,OU=CA,O=CA,L=aa,ST=aa,C=aa";
+	public static final String ROOTCAISSUEDBY = "CN=CA,OU=CA,O=CA,L=aa,ST=aa,C=aa";
+	public static final String INTERCAISSUEDTO = "CN=SUBCA,OU=SUBCA,O=SUBCA,L=aa,ST=aa,C=aa";
+	public static final String INTERCAISSUEDBY = "CN=CA,OU=CA,O=CA,L=aa,ST=aa,C=aa";
 	
 //  Policy Group
 	public static final String AUTHPARTNER = "pmpui-auth";
@@ -766,12 +781,14 @@ public class GlobalConstants {
 	public static final String EDITAUTHPOLICY_DESCRIPTION = "editauthpolicy";
 	public static final String AUTHPOLICY08 = "authpolicy08";
 	public static final String AUTHPOLICY08_DESCRIPTION = "authpolicy 08";
+	public static final String AUTHPOLICY09 = "authpolicy09";
+	public static final String AUTHPOLICY09_DESCRIPTION = "authpolicy 09";
 	public static final String DEACTIVATE_AUTH1 = "deactivateauth1";
 	public static final String DEACTIVATE_AUTH1_DESCRIPTION = "deactivateauthpolicy1";
 	public static final String DEACTIVATE_AUTH2 = "deactivateauth2";
 	public static final String DEACTIVATE_AUTH2_DESCRIPTION = "deactivateauthpolicy2";
 	public static final String AUTHPOLICY_PARTLINK = "authpolpartlink";
-	public static final String AUTHPOLICY_PARTLINK2 = "authpolpartlink2";
+	public static final String AUTHPOLICY_PARTLINK2 = "authpartlink2";
 	//DataShare Policy
 	public static final String DATAPOLICY01 = "datapolicy01";
 	public static final String DATAPOLICY01_DESCRIPTION = "datapolicy 01";
@@ -798,15 +815,21 @@ public class GlobalConstants {
 
 	public static final String PENDING_POLICY = "pending";
 	public static final String PENDING_POLICY_DESCRIPTION = "pending approval policy";
-	public static final String DEACTIVATE_POLICY = "deactivate";
+	public static final String DEACTIVATE_POLICY = "deactivateauth";
+	public static final String DEACTIVATE_AUTHPOLICY = "deactivateauth";
 	public static final String DEACTIVATE_POLICY_DESCRIPTION = "deactivate policy";
 
 	public static final String DEACTIVATE_DATA1 = "deactivatedata1";
 	public static final String DEACTIVATE_DATA1_DESCRIPTION = "deactivatedatapolicy1";
 	public static final String DEACTIVATE_DATA2 = "deactivatedata2";
 	public static final String DEACTIVATE_DATA2_DESCRIPTION = "deactivatedatapolicy2";
+	public static final String DEACTIVATE_DATA3 = "datapolicydeact3";
+	public static final String DEACTIVATE_DATA3_DESCRIPTION = "datapolicydeact3";
 	public static final String DEACTIVATE_POLICYGROUP = "deactivepolicygroup";
 	public static final String OIDCNAME = "odic name";
-	public static final String DEACTIVATE_POLICY2 = "deactivatepolicy2";	
+	public static final String DEACTIVATE_OIDCPOLICY2 = "deactivateoidcpolicy";	
+	public static final String DEACTIVATE_APIKEY = "deactivateapikey";
+	public static final String ACTIVATE_ADMINAPIKEY = "activateadminapikey";
+	
 	
 }

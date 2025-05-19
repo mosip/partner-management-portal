@@ -2,9 +2,10 @@ import { useState, useEffect } from "react";
 import DropdownComponent from "../../common/fields/DropdownComponent.js";
 import TextInputComponent from "../../common/fields/TextInputComponent.js";
 import { useTranslation } from "react-i18next";
-import { isLangRTL, createDropdownData, createRequest, getPartnerManagerUrl, handleServiceErrors, validateInputRegex } from "../../../utils/AppUtils.js";
+import { isLangRTL, createDropdownData, createRequest, getPartnerManagerUrl, handleServiceErrors, validateInputRegex, getFilterTextFieldStyle, getFilterDropdownStyle } from "../../../utils/AppUtils.js";
 import { getUserProfile } from '../../../services/UserProfileService';
 import { HttpService } from "../../../services/HttpService.js";
+import PropTypes from 'prop-types';
 
 function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
   const { t } = useTranslation();
@@ -105,16 +106,6 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
     return Object.values(filters).every(value => value === "") || invalidPartnerId || invalidOrgName || invalidPolicyGroup || invalidEmail;
   };
 
-  const styles = {
-    dropdownButton: "min-w-64",
-  };
-
-  const styleSet = {
-    inputField: "min-w-64 h-9",
-    inputLabel: "mb-2",
-    outerDiv: "ml-4"
-  };
-
   return (
     <div className="flex w-full p-2.5 justify-start bg-[#F7F7F7] flex-wrap">
       <TextInputComponent
@@ -123,7 +114,7 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
         textBoxValue={filters.partnerId}
         fieldNameKey="partnerList.partnerId"
         placeHolderKey="partnerList.searchPartnerId"
-        styleSet={styleSet}
+        styleSet={getFilterTextFieldStyle()}
         id="partner_id_filter"
         inputError={invalidPartnerId}
       />
@@ -133,7 +124,7 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
         onDropDownChangeEvent={onFilterChangeEvent}
         fieldNameKey="partnerList.partnerType"
         placeHolderKey="partnerList.selectPartnerType"
-        styleSet={styles}
+        styleSet={getFilterDropdownStyle()}
         isPlaceHolderPresent={true}
         id="partner_type_filter"
       />
@@ -143,7 +134,7 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
         textBoxValue={filters.orgName}
         fieldNameKey="partnerList.organisation"
         placeHolderKey="partnerList.searchOrganisation"
-        styleSet={styleSet}
+        styleSet={getFilterTextFieldStyle()}
         id="partner_organisation_filter"
         inputError={invalidOrgName}
       />
@@ -153,7 +144,7 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
         textBoxValue={filters.policyGroupName}
         fieldNameKey="partnerList.policyGroup"
         placeHolderKey="partnerList.searchPolicyGroup"
-        styleSet={styleSet}
+        styleSet={getFilterTextFieldStyle()}
         id="policy_group_filter"
         inputError={invalidPolicyGroup}
       />
@@ -165,7 +156,7 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
         placeHolderKey="partnerList.searchEmailAddress"
         infoKey={"partnerList.emailAddressToolTip"}
         addInfoIcon={true}
-        styleSet={styleSet}
+        styleSet={getFilterTextFieldStyle()}
         id="email_address_filter"
         inputError={invalidEmail}
       />
@@ -175,7 +166,7 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
         onDropDownChangeEvent={onFilterChangeEvent}
         fieldNameKey="partnerList.certUploadStatus"
         placeHolderKey="partnerList.selectCertUploadStatus"
-        styleSet={styles}
+        styleSet={getFilterDropdownStyle()}
         isPlaceHolderPresent={true}
         id="cert_upload_status_filter"
       />
@@ -185,7 +176,7 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
         onDropDownChangeEvent={onFilterChangeEvent}
         fieldNameKey="partnerList.status"
         placeHolderKey="partnerList.selectStatus"
-        styleSet={styles}
+        styleSet={getFilterDropdownStyle()}
         isPlaceHolderPresent={true}
         id="status_filter"
       />
@@ -204,5 +195,11 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
     </div>
   );
 }
+
+PartnerListFilter.propTypes = {
+    onApplyFilter: PropTypes.func.isRequired,
+    setErrorCode: PropTypes.func.isRequired,
+    setErrorMsg: PropTypes.func.isRequired,
+};
 
 export default PartnerListFilter;

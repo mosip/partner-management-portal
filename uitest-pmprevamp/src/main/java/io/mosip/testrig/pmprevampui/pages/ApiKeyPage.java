@@ -342,7 +342,7 @@ public class ApiKeyPage extends BasePage {
 	@FindBy(xpath = "//span[contains(text(), 'Select Status')]")
 	private WebElement statusPlaceHolder;
 	
-	@FindBy(id = "apply_filter__btn")
+	@FindBy(id = "apply_filter_btn")
 	private WebElement applyFilterButton;
 	
 	@FindBy(xpath = "//p[contains(text(), 'No Results Found')]")
@@ -395,6 +395,21 @@ public class ApiKeyPage extends BasePage {
 	
 	@FindBy(xpath = "//div[contains(text(), 'Created On')]")
 	private WebElement createdOnLabel;
+
+	@FindBy(xpath = "//span[text()='Special characters are not allowed.']")
+	private WebElement specialCharacterErrorMessage;
+	
+	@FindBy(id = "partner_id_filter")
+	private WebElement partnerIdFilter;
+	
+	@FindBy(xpath = "//p[contains(text(), 'On clicking ‘Confirm’, the API Key will be deactivated and can no longer be used for authentication')]")
+	private WebElement apiKeyInAdminDeactivateInfoText;
+	
+	@FindBy(xpath = "//p[contains(text(), 'Are you sure you want to Deactivate API Key')]")
+	private WebElement apiKeyInAdminDeactivateTitle;
+	
+	@FindBy(id = "api_key_list_item1")
+	private WebElement activatedAdminApiKey;
 	
 	public ApiKeyPage(WebDriver driver) {
 		super(driver);
@@ -790,7 +805,7 @@ public class ApiKeyPage extends BasePage {
 	
 	public void enterInvalidDataInApiKeyNameFilter(String value) {
 		clickOnElement(apiKeyNameFilter);
-		enter(apiKeySearchTextBox, value);
+		enter(apiKeySearchTextBox,value);
 	}
 	
 	public boolean isNoDataAvailabelDisplayed() {
@@ -1008,7 +1023,7 @@ public class ApiKeyPage extends BasePage {
 	}
 	
 	public void enterPartnerIdInFilter(String value) {
-		enter(apiKeyPartnerIdFilter,value);
+		enter(partnerIdFilter,value);
 	}
 	
 	public void enterPolicyGroupInFilter(String value) {
@@ -1086,4 +1101,35 @@ public class ApiKeyPage extends BasePage {
 		clickOnElement(subTitleButton);
 	}
 
+	public boolean isSpecialCharacterErrorMessageDisplayed() {
+		return isElementDisplayed(specialCharacterErrorMessage);
+	}
+	
+	public void clickOnApiKeyDeactivateButton() {
+		clickOnElement(deactivateButton);
+	}
+	
+	public boolean isApiKeyInAdminDeactivateInfoTextDisplayed() {
+		return isElementDisplayed(apiKeyInAdminDeactivateInfoText);
+	}
+	
+	public boolean isApiKeyInAdminDeactivatePopupDisplayed() {
+		return isElementDisplayed(apiKeyInAdminDeactivateTitle);
+	}
+	
+	public boolean isApiKeyInAdminDeactivateTitleDisplayed() {
+		return isElementDisplayed(apiKeyInAdminDeactivateTitle);
+	}
+	
+	public void enterInvalidDataInAdminApiKeyNameFilter(String value) {
+		enter(apiKeyNameFilter,value);
+	}
+	
+	public void clickOnActivatedAdminApiKey() {
+		clickOnElement(activatedAdminApiKey);
+	}
+	
+	public void clickOnViewButton() {
+		clickOnElement(viewButton);
+	}
 }

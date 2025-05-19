@@ -28,6 +28,7 @@ function AddDevices() {
     const [previousPath, setPreviousPath] = useState(true);
     const [selectedSbidata, setSelectedSbidata] = useState(true);
     const [unexpectedError, setUnexpectedError] = useState(false);
+    const allowedFields = ['deviceType', 'deviceSubType', 'make', 'model'];
 
     const blocker = useBlocker(
         ({ currentLocation, nextLocation }) => {
@@ -142,6 +143,7 @@ function AddDevices() {
     }
 
     const handleInputChange = async (index, field, value) => {
+        if (!allowedFields.includes(field)) return;
         const newEntries = [...deviceEntries];
         newEntries[index][field] = value;
         if (field === 'deviceType') {
@@ -214,29 +216,28 @@ function AddDevices() {
     };
 
     const handleError = (responseData, index, newEntries) => {
-        if (responseData && responseData.errors && responseData.errors.length > 0) {
-            const errorCode = responseData.errors[0].errorCode;
-            let errorMessage = responseData.errors[0].message;
+        if (
+            responseData && responseData.errors &&
+            Array.isArray(responseData.errors) &&
+            responseData.errors.length > 0
+        ) {
+            const { errorCode, message } = responseData.errors[0];
+            let errorMessage = message;
             const serverErrors = t('serverError', { returnObjects: true });
+    
             if (errorCode) {
                 if (errorCode === "PMS_AUT_002") {
                     errorMessage = serverErrors[errorCode];
-                } else {
-                    if (serverErrors[errorCode]) {
-                        errorMessage = serverErrors[errorCode];
-                    } else {
-                        errorMessage = errorMessage;
-                    }
+                } else if (serverErrors[errorCode]) {
+                    errorMessage = serverErrors[errorCode];
                 }
-            } else {
-                errorMessage = errorMessage;
             }
             newEntries[index].errorMsg = errorMessage;
             setDeviceEntries(newEntries);
             console.error('Error:', errorMessage);
         }
     };
-
+    
     const deleteEntry = (index) => {
         setErrorCode("");
         setErrorMsg("");

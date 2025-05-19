@@ -18,6 +18,8 @@ import io.mosip.testrig.pmprevampui.utility.GlobalConstants;
 
 public class PartnerPolicyLinkingTest extends BaseClass {
 
+	private BasePage basePage;
+
 	@Test(priority = 01, description = "Create Auth DataShare Policy")
 	public void creatAuthPolicyDataSharePolicy() {
 
@@ -246,8 +248,9 @@ public class PartnerPolicyLinkingTest extends BaseClass {
 		partnerPolicyMappingPage.clickOnApprovedStatus();
 		partnerPolicyMappingPage.clickOnApplyFilterButton();
 		partnerPolicyMappingPage.clickOnPartnerListViewElipsisButton();
-		assertFalse(partnerPolicyMappingPage.isApproveRejectButtonEnabled(),
-				GlobalConstants.isApproveRejectButtonEnabled);
+		partnerPolicyMappingPage.clickOnApproveOrRejectButton();
+		assertFalse(partnerPolicyMappingPage.isApproveOrRejectConfirmationPopupDisplayed(),
+				GlobalConstants.isApproveOrRejectConfirmationPopupDisplayed);
 		assertTrue(partnerPolicyMappingPage.isViewButtoEnabled(), GlobalConstants.isViewButtoEnabled);
 		partnerPolicyMappingPage.clickOnApprovedPolicy();
 		assertTrue(partnerPolicyMappingPage.isPartnerPolicyDetailsPageDisplayed(),
@@ -262,8 +265,9 @@ public class PartnerPolicyLinkingTest extends BaseClass {
 		partnerPolicyMappingPage.clickOnRejectedStatus();
 		partnerPolicyMappingPage.clickOnApplyFilterButton();
 		partnerPolicyMappingPage.clickOnPartnerListViewElipsisButton();
-		assertFalse(partnerPolicyMappingPage.isApproveRejectButtonEnabled(),
-				GlobalConstants.isApproveRejectButtonEnabled);
+		partnerPolicyMappingPage.clickOnApproveOrRejectButton();
+		assertFalse(partnerPolicyMappingPage.isApproveOrRejectConfirmationPopupDisplayed(),
+				GlobalConstants.isApproveOrRejectConfirmationPopupDisplayed);
 		assertTrue(partnerPolicyMappingPage.isViewButtoEnabled(), GlobalConstants.isViewButtoEnabled);
 		partnerPolicyMappingPage.clickOnRejectedPolicy();
 		assertTrue(partnerPolicyMappingPage.isPartnerPolicyDetailsPageDisplayed(),
@@ -306,14 +310,12 @@ public class PartnerPolicyLinkingTest extends BaseClass {
 		partnerPolicyMappingPage.enterPendingPolicyNameInFilter(GlobalConstants.AUTHPOLICY_PARTLINK);
 		partnerPolicyMappingPage.clickOnApplyFilterButton();
 		partnerPolicyMappingPage.clickOnPartnerListViewElipsisButton();
-		partnerPolicyMappingPage.clickOnviewButton();
-		assertTrue(partnerPolicyMappingPage.isPartnerStatusActivatedDisplayed(),
-				GlobalConstants.isPartnerStatusActivatedDisplayed);
-		
 		assertTrue(partnerPolicyMappingPage.isApproveRejectButtonEnabled(),
 				GlobalConstants.isApproveRejectButtonEnabled);
 		partnerPolicyMappingPage.clickOnApproveOrRejectButton();
 
+		assertTrue(partnerPolicyMappingPage.isApproveOrRejectConfirmationPopupDisplayed(),
+				GlobalConstants.isApproveOrRejectConfirmationPopupDisplayed);
 		assertTrue(partnerPolicyMappingPage.isPolicyNameInPopupDisplayed(),
 				GlobalConstants.isPolicyNameInPopupDisplayed);
 		assertTrue(partnerPolicyMappingPage.isPolicyPopupSubtitleDisplayed(),
@@ -328,14 +330,14 @@ public class PartnerPolicyLinkingTest extends BaseClass {
 		partnerPolicyMappingPage.clickOnApproveSubmitButton();
 		assertTrue(partnerPolicyMappingPage.isPartnerPolicyLinkingTitleDisplayed(),
 				GlobalConstants.isPartnerPolicyLinkingTitleDisplayed);
-		partnerPolicyMappingPage.clickOnFilterButton();
 		partnerPolicyMappingPage.enterpolicyGroupFilter(GlobalConstants.DEFAULTPOLICYGROUP);
 		partnerPolicyMappingPage.enterPendingPolicyNameInFilter(GlobalConstants.AUTHPOLICY_PARTLINK);
 		partnerPolicyMappingPage.clickOnApplyFilterButton();
 		assertTrue(partnerPolicyMappingPage.isStatusApprovedDisplayed(), GlobalConstants.isStatusApprovedDisplayed);
 		partnerPolicyMappingPage.clickOnPartnerListViewElipsisButton();
-		assertFalse(partnerPolicyMappingPage.isApproveRejectButtonEnabled(),
-				GlobalConstants.isApproveRejectButtonEnabled);
+		partnerPolicyMappingPage.clickOnApproveOrRejectButton();
+		assertFalse(partnerPolicyMappingPage.isApproveOrRejectConfirmationPopupDisplayed(),
+				GlobalConstants.isApproveOrRejectConfirmationPopupDisplayed);
 
 		partnerPolicyMappingPage.enterpolicyGroupFilter(GlobalConstants.DEFAULTPOLICYGROUP);
 		partnerPolicyMappingPage.enterPendingPolicyNameInFilter(GlobalConstants.AUTHPOLICY_PARTLINK2);
@@ -345,12 +347,12 @@ public class PartnerPolicyLinkingTest extends BaseClass {
 		partnerPolicyMappingPage.clickOnRejectButton();
 		assertTrue(partnerPolicyMappingPage.isStatusRejectedDisplayed(), GlobalConstants.isStatusRejectedDisplayed);
 		partnerPolicyMappingPage.clickOnPartnerListViewElipsisButton();
-		assertFalse(partnerPolicyMappingPage.isApproveRejectButtonEnabled(),
-				GlobalConstants.isApproveRejectButtonEnabled);
-
+		partnerPolicyMappingPage.clickOnApproveOrRejectButton();
+		assertFalse(partnerPolicyMappingPage.isApproveOrRejectConfirmationPopupDisplayed(),
+				GlobalConstants.isApproveOrRejectConfirmationPopupDisplayed);
+		
 		loginAsAuthPartner(dashboardPage);
 
-		loginPage.clickOnSomethingWentWrongHomeBtn();
 		dashboardPage.clickOnPoliciesTitle();
 		policiesPage.clickOnFilterButton();
 		policiesPage.selectActivatedStatusInFilter();
@@ -387,7 +389,6 @@ public class PartnerPolicyLinkingTest extends BaseClass {
 		assertTrue(partnerPolicyMappingPage.isCreatedOnLabelDisplayed(), GlobalConstants.isCreatedOnLabelDisplayed);
 		assertTrue(partnerPolicyMappingPage.isCreatedDateDisplayed(), GlobalConstants.isCreatedDateDisplayed);
 		assertTrue(partnerPolicyMappingPage.isPolicyIdLabelDisplayed(), GlobalConstants.isPolicyIdLabelDisplayed);
-//		assertTrue(partnerPolicyMappingPage.isPolicyIdContextDisplayed(), GlobalConstants.isPolicyIdContextDisplayed);
 		assertTrue(partnerPolicyMappingPage.isPolicyNameLabelDisplayed(), GlobalConstants.isPolicyNameLabelDisplayed);
 		assertTrue(partnerPolicyMappingPage.isPolicyNameContextDisplayed(),
 				GlobalConstants.isPolicyNameContextDisplayed);
@@ -410,7 +411,7 @@ public class PartnerPolicyLinkingTest extends BaseClass {
 		assertTrue(partnerPolicyMappingPage.isPartnerCommentsLabelDisplayed(),
 				GlobalConstants.isPartnerCommentsLabelDisplayed);
 		assertTrue(partnerPolicyMappingPage.isStatusApprovedDisplayed(), GlobalConstants.isStatusApprovedDisplayed);
-		assertTrue(partnerPolicyMappingPage.isCreatedDateDisplayed(), GlobalConstants.isCreatedDateDisplayed);
+		assertTrue(partnerPolicyMappingPage.isCommentsCreatedDateDisplayed(), GlobalConstants.isCreatedDateDisplayed);
 		assertTrue(partnerPolicyMappingPage.isPartnerCommentsContextDisplayed(),
 				GlobalConstants.isPartnerCommentsContextDisplayed);
 		partnerPolicyMappingPage.clickOnTitleBackIcon();
@@ -422,21 +423,12 @@ public class PartnerPolicyLinkingTest extends BaseClass {
 		assertTrue(dashboardPage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
 		LoginPage loginPage = dashboardPage.clickOnLogoutButton();
 
-		assertTrue(loginPage.isPageNotFoundMessageDisplayed(), GlobalConstants.isKeycloakPageDisplayed);
-		BasePage.navigateBack();
-		dashboardPage.clickOnProfileDropdown();
-		dashboardPage.clickOnLogoutButton();
 	}
 
 	private void loginAsAuthPartner(DashboardPage dashboardPage) {
 		dashboardPage.clickOnProfileDropdown();
 		assertTrue(dashboardPage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
 		LoginPage loginPage = dashboardPage.clickOnLogoutButton();
-
-		assertTrue(loginPage.isPageNotFoundMessageDisplayed(), GlobalConstants.isKeycloakPageDisplayed);
-		BasePage.navigateBack();
-		dashboardPage.clickOnProfileDropdown();
-		dashboardPage.clickOnLogoutButton();
 
 		loginPage.enterUserName("pmpui-auth");
 		loginPage.enterPassword(password);

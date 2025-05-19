@@ -21,6 +21,7 @@ import PartnerNotificationsTab from "../../partner/notifications/PartnerNotifica
 import PartnerCertificateNotificationsFilter from "../../partner/notifications/PartnerCertificateNotificationsFilter.js";
 import { useDispatch } from "react-redux";
 import WeeklyNotificationsFilter from "./WeeklyNotificationsFilter.js";
+import PropTypes from 'prop-types';
 
 function ViewAllNotifications({ notificationType }) {
     const { t } = useTranslation();
@@ -112,7 +113,7 @@ function ViewAllNotifications({ notificationType }) {
     }, [pageNo, pageSize]);
 
     useEffect(() => {
-        if (isApplyFilterClicked) {
+        if (isApplyFilterClicked && pageNo === 0) {
             fetchNotifications();
             setIsApplyFilterClicked(false);
         }
@@ -354,6 +355,8 @@ function ViewAllNotifications({ notificationType }) {
                                         isServerSideFilter={true}
                                         getPaginationValues={getPaginationValues}
                                         isViewNotificationPage={true}
+                                        isApplyFilterClicked={isApplyFilterClicked}
+                                        setIsApplyFilterClicked={setIsApplyFilterClicked}
                                     />
                                 )}
                             </div>
@@ -364,4 +367,9 @@ function ViewAllNotifications({ notificationType }) {
         </div>
     );
 }
+
+ViewAllNotifications.propTypes = {
+  notificationType: PropTypes.string.isRequired,
+};
+
 export default ViewAllNotifications;

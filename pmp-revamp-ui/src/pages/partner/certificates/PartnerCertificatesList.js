@@ -214,7 +214,7 @@ function PartnerCertificatesList() {
                                                             disabledBtnHoverMsg="partnerCertificatesList.disabledBtnHoverMsg"
                                                             id={'download_btn' + (index + 1)}
                                                         />
-                                                        <div className="relative group" tabIndex="0">
+                                                        <div className="relative group">
                                                             <button disabled={!partner.isPartnerActive} id={"partner_certificate_re_upload_btn" + (index + 1)} onClick={() => clickOnUpload(partner, index)} className={`h-10 w-28 relative text-xs p-3 py-2 ${partner.isPartnerActive ? "text-tory-blue bg-white border border-blue-800" : "bg-white border border-gray-300 text-[#6f7070]"}  font-semibold rounded-md text-center`}>
                                                                 {t('partnerCertificatesList.reUpload')}
                                                             </button>

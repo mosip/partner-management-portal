@@ -688,4 +688,8 @@ public class PoliciesPage extends BasePage {
 	public void clickOnDataLostProcceedButton() {
 		clickOnElement(dataLostProcceedButton);
 	}
+	
+	public void clickOnPolicyNameDropdown() {
+		clickOnElement(policyNameDropdown);
+	}
 }

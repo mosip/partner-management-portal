@@ -5,8 +5,9 @@ import { getUserProfile } from '../../services/UserProfileService';
 import { isLangRTL, handleMouseClickForDropdown, onPressEnterKey } from '../../utils/AppUtils';
 import { AiFillLeftCircle, AiFillRightCircle } from "react-icons/ai"; // icons form react-icons
 import { IconContext } from "react-icons"; // for customizing icons
+import PropTypes from 'prop-types';
 
-function Pagination({ dataListLength, selectedRecordsPerPage, setSelectedRecordsPerPage, setFirstIndex, isServerSideFilter = false, getPaginationValues, isViewNotificationPage }) {
+function Pagination({ dataListLength, selectedRecordsPerPage, setSelectedRecordsPerPage, setFirstIndex, isServerSideFilter = false, getPaginationValues, isViewNotificationPage, isApplyFilterClicked, setIsApplyFilterClicked }) {
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [isItemsPerPageOpen, setIsItemsPerPageOpen] = useState(false);
@@ -36,6 +37,13 @@ function Pagination({ dataListLength, selectedRecordsPerPage, setSelectedRecords
         }
     }, [selectedPage, selectedRecordsPerPage]);
 
+    useEffect(() => {
+        if (isApplyFilterClicked) {
+            setSelectedPage(0);
+            setIsApplyFilterClicked(false);
+        }
+    }, [isApplyFilterClicked]);
+
     const handlePageChange = (event) => {
         setSelectedPage(event.selected);
         const newIndex = (event.selected * selectedRecordsPerPage) % dataListLength;
@@ -45,12 +53,14 @@ function Pagination({ dataListLength, selectedRecordsPerPage, setSelectedRecords
         setIsItemsPerPageOpen(false);
         setSelectedRecordsPerPage(num);
         setFirstIndex(0);
+        setSelectedPage(0);
     };
 
     return (
         <div id='pagination_card' className="flex justify-between bg-[#FCFCFC] items-center h-9  mt-0.5 p-8 rounded-b-md shadow-md max-640:flex-col max-640:h-fit">
             <div></div>
             <ReactPaginate
+                forcePage={selectedPage}
                 containerClassName={"pagination"}
                 pageClassName={"page-item"}
                 activeClassName={"active"}
@@ -103,5 +113,17 @@ function Pagination({ dataListLength, selectedRecordsPerPage, setSelectedRecords
         </div>
     )
 }
+
+Pagination.propTypes = {
+    dataListLength: PropTypes.number.isRequired,
+    selectedRecordsPerPage: PropTypes.number.isRequired,
+    setSelectedRecordsPerPage: PropTypes.func.isRequired,
+    setFirstIndex: PropTypes.func.isRequired,
+    isServerSideFilter: PropTypes.bool.isRequired,
+    getPaginationValues: PropTypes.func.isRequired,
+    isViewNotificationPage: PropTypes.bool.isRequired,
+    isApplyFilterClicked: PropTypes.bool.isRequired,
+    setIsApplyFilterClicked: PropTypes.func.isRequired,
+};
 
 export default Pagination;

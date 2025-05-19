@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../../services/UserProfileService';
 import { isLangRTL, moveToHome, getStatusCode, bgOfStatus } from '../../utils/AppUtils';
 import backArrow from '../../svg/back_arrow.svg';
+import PropTypes from 'prop-types';
 
 function Title({ title, subTitle, subTitle2, backLink, backLink2, status, version }) {
     const { t } = useTranslation();
@@ -54,5 +55,15 @@ function Title({ title, subTitle, subTitle2, backLink, backLink2, status, versio
         </div>
     )
 }
+
+Title.propTypes = {
+    title: PropTypes.string.isRequired,
+    subTitle: PropTypes.string.isRequired,
+    subTitle2: PropTypes.string.isRequired,
+    backLink: PropTypes.string.isRequired,
+    backLink2: PropTypes.string.isRequired,
+    status: PropTypes.string.isRequired,
+    version: PropTypes.string.isRequired,
+};
 
 export default Title;

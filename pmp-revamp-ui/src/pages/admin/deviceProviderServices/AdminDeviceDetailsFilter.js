@@ -2,8 +2,9 @@ import { useState, useEffect } from "react";
 import DropdownComponent from "../../common/fields/DropdownComponent.js";
 import TextInputComponent from "../../common/fields/TextInputComponent.js";
 import { useTranslation } from "react-i18next";
-import { isLangRTL, createDropdownData, fetchDeviceTypeDropdownData, fetchDeviceSubTypeDropdownData, validateInputRegex } from "../../../utils/AppUtils.js";
+import { isLangRTL, createDropdownData, fetchDeviceTypeDropdownData, fetchDeviceSubTypeDropdownData, validateInputRegex, getFilterDropdownStyle, getFilterTextFieldStyle } from "../../../utils/AppUtils.js";
 import { getUserProfile } from '../../../services/UserProfileService.js';
+import PropTypes from 'prop-types';
 
 function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg, removeSbiFields}) {
     const { t } = useTranslation();
@@ -97,16 +98,6 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg, re
             || invalidMake || invalidModel;
     };
 
-    const styles = {
-        dropdownButton: "min-w-64",
-    };
-
-    const styleSet = {
-        inputField: "min-w-64",
-        inputLabel: "mb-2",
-        outerDiv: "ml-4"
-    };
-
     return (
         <div className="flex w-full p-3 justify-start bg-[#F7F7F7] flex-wrap">
             <TextInputComponent
@@ -114,7 +105,7 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg, re
                 onTextChange={onFilterChangeEvent}
                 fieldNameKey="oidcClientsList.partnerId"
                 placeHolderKey="partnerList.searchPartnerId"
-                styleSet={styleSet}
+                styleSet={getFilterTextFieldStyle()}
                 id="partner_id_filter"
                 inputError={invalidPartnerId}
             />
@@ -123,7 +114,7 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg, re
                 onTextChange={onFilterChangeEvent}
                 fieldNameKey="oidcClientsList.orgName"
                 placeHolderKey="partnerList.searchOrganisation"
-                styleSet={styleSet}
+                styleSet={getFilterTextFieldStyle()}
                 id="org_name_filter"
                 inputError={invalidOrgName}
             />
@@ -134,7 +125,7 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg, re
                         onTextChange={onFilterChangeEvent}
                         fieldNameKey="sbiList.sbiId"
                         placeHolderKey="sbiList.searchSbiId"
-                        styleSet={styleSet}
+                        styleSet={getFilterTextFieldStyle()}
                         id="sbi_id_filter"
                         inputError={invalidSbiId}
                     />
@@ -143,7 +134,7 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg, re
                         onTextChange={onFilterChangeEvent}
                         fieldNameKey="sbiList.sbiVersion"
                         placeHolderKey="sbiList.searchVersion"
-                        styleSet={styleSet}
+                        styleSet={getFilterTextFieldStyle()}
                         id="sbi_version_filter"
                         inputError={invalidSbiVersion}
                     />
@@ -154,7 +145,7 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg, re
                 onTextChange={onFilterChangeEvent}
                 fieldNameKey="devicesList.deviceId"
                 placeHolderKey="devicesList.searchDeviceId"
-                styleSet={styleSet}
+                styleSet={getFilterTextFieldStyle()}
                 id="device_id_filter"
                 inputError={invalidDeviceId}
             />
@@ -165,7 +156,7 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg, re
                 fieldNameKey='addDevices.deviceType'
                 placeHolderKey='addDevices.selectDeviceType'
                 isPlaceHolderPresent={true}
-                styleSet={styles}
+                styleSet={getFilterDropdownStyle()}
                 id='device_type_filter'>
             </DropdownComponent>
             <DropdownComponent
@@ -174,7 +165,7 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg, re
                 onDropDownChangeEvent={onFilterChangeEvent}
                 fieldNameKey='addDevices.deviceSubType'
                 placeHolderKey='addDevices.selectDeviceSubType'
-                styleSet={styles}
+                styleSet={getFilterDropdownStyle()}
                 disabled={filters.deviceType === ""}
                 isPlaceHolderPresent={true}
                 id='device_sub_type_filter'>
@@ -184,7 +175,7 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg, re
                 onTextChange={onFilterChangeEvent}
                 fieldNameKey="ftmList.make"
                 placeHolderKey="ftmList.searchMake"
-                styleSet={styleSet}
+                styleSet={getFilterTextFieldStyle()}
                 id="make_filter"
                 inputError={invalidMake}
             />
@@ -193,7 +184,7 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg, re
                 onTextChange={onFilterChangeEvent}
                 fieldNameKey="ftmList.model"
                 placeHolderKey="ftmList.searchModel"
-                styleSet={styleSet}
+                styleSet={getFilterTextFieldStyle()}
                 id="model_filter"
                 inputError={invalidModel}
             />
@@ -203,7 +194,7 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg, re
                 onDropDownChangeEvent={onFilterChangeEvent}
                 fieldNameKey="partnerList.status"
                 placeHolderKey="partnerList.selectStatus"
-                styleSet={styles}
+                styleSet={getFilterDropdownStyle()}
                 isPlaceHolderPresent={true}
                 id="status_filter"
             />
@@ -223,4 +214,12 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg, re
     );
 
 }
+
+AdminDeviceDetailsFilter.propTypes = {
+    onApplyFilter: PropTypes.func.isRequired,
+    setErrorCode: PropTypes.func.isRequired,
+    setErrorMsg: PropTypes.func.isRequired,
+    removeSbiFields: PropTypes.bool.isRequired,
+};
+
 export default AdminDeviceDetailsFilter;

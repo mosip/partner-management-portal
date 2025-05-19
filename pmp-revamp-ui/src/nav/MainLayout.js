@@ -8,6 +8,7 @@ import { useState, useEffect, useRef } from 'react';
 import { logout, getPartnerManagerUrl, createRequest } from "../utils/AppUtils";
 import { getAppConfig } from '../services/ConfigService.js';
 import { HttpService } from "../services/HttpService";
+import PropTypes from 'prop-types';
 
 function MainLayout({ children }) {
     const { i18n } = useTranslation();
@@ -152,5 +153,9 @@ function MainLayout({ children }) {
         </div>
     );
 }
+
+MainLayout.propTypes = {
+  children: PropTypes.object.isRequired,
+};
 
 export default MainLayout;

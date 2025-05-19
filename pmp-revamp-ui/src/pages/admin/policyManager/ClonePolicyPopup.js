@@ -8,6 +8,7 @@ import { HttpService } from '../../../services/HttpService.js';
 import { getPolicyGroupList, getPolicyManagerUrl, createRequest, getPolicyDetails, handleEscapeKey } from '../../../utils/AppUtils.js';
 import SuccessMessage from '../../common/SuccessMessage.js';
 import closeIcon from "../../../svg/close_icon.svg";
+import PropTypes from 'prop-types';
 
 function ClonePolicyPopup ({policyDetails, closePopUp}) {
     const [selectedPolicyGroup, setSelectedPolicyGroup] = useState('');
@@ -202,5 +203,10 @@ function ClonePolicyPopup ({policyDetails, closePopUp}) {
     );
 
 }
+
+ClonePolicyPopup.propTypes = {
+  policyDetails: PropTypes.object.isRequired,
+  closePopUp: PropTypes.func.isRequired,
+};
 
 export default ClonePolicyPopup;
