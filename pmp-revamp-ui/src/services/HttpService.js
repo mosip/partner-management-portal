@@ -52,7 +52,10 @@ export const setupResponseInterceptor = (navigate) => {
     (error) => { // block to handle error case
       if (error.code === 'ECONNABORTED') {
         // Handle timeout error
-        navigate('/partnermanagement/runtimeError', { state: { messageType: 'timeout'} });
+        navigate('/partnermanagement/runtimeError', { state: { messageType: 'timeout' } });
+      } else if (error.code === 'ERR_NETWORK') {
+        // --- Added network error handling ---
+        navigate('/partnermanagement/runtimeError', { state: { messageType: 'networkError' } });
       } else if (error.response) {
         if (error.response.status === 401) {
           console.log(error);

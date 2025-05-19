@@ -33,7 +33,9 @@
         "unexpectedError": "لقد واجهنا خطأ غير متوقع",
         "undoChanges": "التراجع عن التغييرات",
         "clear":"مسح",
-        "inputError": "لا يسمح باستخدام الأحرف الخاصة."
+        "inputError": "لا يسمح باستخدام الأحرف الخاصة.",
+        "networkError": "خطأ في الشبكة",
+        "networkErrorDesc": "يرجى التحقق من اتصالك بالإنترنت ثم المحاولة مرة أخرى."
     },
     "dashboard": {
         "welcomeMsg": "مرحباً {{firstName}} {{lastName}}",
