@@ -68,7 +68,6 @@ function DevicesList() {
         }
         let sbiData = JSON.parse(selectedSbi);
         setSelectedSbidata(sbiData);
-        console.log(sbiData)
         if (!sbiData.canAddDevices) {
             setCanAddDevices(false);
         }
