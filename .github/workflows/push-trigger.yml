@@ -68,6 +68,7 @@ jobs:
         include:
           - SERVICE_LOCATION: 'pmp-revamp-ui'
             SERVICE_NAME: 'pmp-revamp-ui'
+            PLATFORMS: "linux/amd64"
       fail-fast: false
     name: ${{ matrix.SERVICE_NAME }}
     uses: mosip/kattu/.github/workflows/docker-build.yml@master
