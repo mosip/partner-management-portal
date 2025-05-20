@@ -27,8 +27,11 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(xpath = "//*[text()='Partner certificate for Device Provider is uploaded successfully.']")
 	private WebElement deviceProviderSuccessMessage;
 	
-	@FindBy(xpath = "//p[contains(text(), 'FTM Chip Certificate is uploaded successfully')]")
+	@FindBy(xpath = "//p[contains(text(), 'Partner certificate for FTM Chip Provider is uploaded successfully.')]")
 	private WebElement successMessageForFtmCert;
+	
+	@FindBy(xpath = "//p[contains(text(), 'FTM Chip Certificate is uploaded successfully')]")
+	private WebElement successMessageForFtmChipCert;
 	
 	@FindBy(id = "fileInput")
 	private WebElement uploadFile;
@@ -334,6 +337,10 @@ public class PartnerCertificatePage extends BasePage {
 	
 	public boolean isSuccessMessageForFtmCertDisplayed() {
 		return isElementDisplayed(successMessageForFtmCert);
+	}
+	
+	public boolean isSuccessMessageForFtmChipCertDisplayed() {
+		return isElementDisplayed(successMessageForFtmChipCert);
 	}
 	
 	public void clickOnFtmChipProviderCard() {
