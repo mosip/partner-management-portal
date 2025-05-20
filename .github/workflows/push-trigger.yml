@@ -36,6 +36,7 @@ jobs:
             SERVICE_NAME: 'pmp-ui'
             NPM_BUILD: true
             BUILD_ARTIFACT: 'pmp-ui'
+            PLATFORMS: "linux/amd64"
       fail-fast: false
     name: ${{ matrix.SERVICE_NAME }}
     uses: mosip/kattu/.github/workflows/docker-build.yml@master
