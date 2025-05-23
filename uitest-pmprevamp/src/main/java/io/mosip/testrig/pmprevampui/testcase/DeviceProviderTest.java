@@ -130,7 +130,7 @@ public class DeviceProviderTest extends BaseClass {
 				GlobalConstants.iReUploadPartnerCertificateTextDisplayed);
 //		assertTrue(partnerCertificatePage.isReUploadPartnerCertificateSubTextDisplayed(), GlobalConstants.isReUploadPartnerCertificateSubTextDisplayed);
 
-		assertTrue(partnerCertificatePage.isPartnerDomainTypeDisplayed(),
+		assertTrue(partnerCertificatePage.isPartnerDomainTypeLabelDisplayed(),
 				GlobalConstants.iReUploadPartnerCertificateTextDisplayed);
 		assertTrue(partnerCertificatePage.isPartnerCertOvelayDisplayed(),
 				GlobalConstants.iReUploadPartnerCertificateTextDisplayed);
@@ -161,7 +161,7 @@ public class DeviceProviderTest extends BaseClass {
 				GlobalConstants.isMosipCertificateDownloadPopupDisplayed);
 
 //		assertTrue(partnerCertificatePage.isSucessMessageDisplayed(), GlobalConstants.isSucessMessageDisplayed);
-		partnerCertificatePage.ClickOnsuccessMsgCloseButton();
+		partnerCertificatePage.ClickOnSuccessMsgCloseButton();
 	}
 
 	@Test(priority = 26, description = "Creating SBI Device")
