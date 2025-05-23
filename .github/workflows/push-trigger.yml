@@ -19,12 +19,12 @@ on:
       - 1.2.*
 
 jobs:
-  build-dockers-pmp-revamp-ui:
+  build-dockers-pmp-ui-v2:
     strategy:
       matrix:
         include:
-          - SERVICE_LOCATION: 'pmp-revamp-ui'
-            SERVICE_NAME: 'pmp-revamp-ui'
+          - SERVICE_LOCATION: 'pmp-ui-v2'
+            SERVICE_NAME: 'pmp-ui-v2'
             SQUASH_LAYERS: '14'
             PLATFORMS: "linux/amd64"
       fail-fast: false
@@ -41,12 +41,12 @@ jobs:
       RELEASE_DOCKER_HUB: ${{ secrets.RELEASE_DOCKER_HUB }}
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }} 
 
-  sonar-analysis-pmp-revamp-ui:
-    needs: build-dockers-pmp-revamp-ui
+  sonar-analysis-pmp-ui-v2:
+    needs: build-dockers-pmp-ui-v2
     if: "${{ github.event_name != 'pull_request' }}"
     uses: mosip/kattu/.github/workflows/npm-sonar-analysis.yml@develop
     with:
-      SERVICE_LOCATION: pmp-revamp-ui
+      SERVICE_LOCATION: pmp-ui-v2
       NPM_BUILD_TYPE: BOB
     secrets:
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
