@@ -159,7 +159,6 @@ function AddSbi() {
                 providerId: partnerId
             }
         );
-        console.log(request);
         try {
             const response = await HttpService.post(getPartnerManagerUrl(`/securebiometricinterface`, process.env.NODE_ENV), request, {
                 headers: {
@@ -168,7 +167,6 @@ function AddSbi() {
             });
             if (response) {
                 const responseData = response.data;
-                console.log(responseData);
                 if (responseData && responseData.response) {
                     navigate('/partnermanagement/device-provider-services/sbi-list')
                 } else {

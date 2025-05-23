@@ -111,6 +111,9 @@ public class FtmPage extends BasePage {
 	@FindBy(id = "ftm_chip_details_context_ftm_chip_provider")
 	private WebElement ftmChipDetailsContextFtmChipProvider;
 	
+	@FindBy(id = "ftm_chip_details_context_partner_type")
+	private WebElement ftmChipDetailsContextPartnerType;
+	
 	@FindBy(id = "ftm_chip_details_label_model")
 	private WebElement ftmChipDetailsLabelModel;
 	
@@ -180,13 +183,13 @@ public class FtmPage extends BasePage {
 	@FindBy(id = "ftm_status_filter")
 	private WebElement ftmStatusFilter;
 	
-	@FindBy(id = "ftm_status_filter_option1")
-	private WebElement ftmStatusFilterOption1;
+	@FindBy(xpath = "//button[text()='Pending For Approval']")
+	private WebElement ftmStatusFilterPendingForApproval;
 	
-	@FindBy(id = "ftm_status_filter_option2")
-	private WebElement ftmStatusFilterOption2;
+	@FindBy(xpath = "//button[text()='Deactivated']")
+	private WebElement ftmStatusFilterDeactivated;
 
-	@FindBy(id = "	ftm_status_filter_option3")
+	@FindBy(id = "status_filter_option3")
 	private WebElement ftmStatusFilterOption3;
 	
 	@FindBy(xpath = "//*[contains(text(), 'Pending For Approval')]")
@@ -219,7 +222,7 @@ public class FtmPage extends BasePage {
 	@FindBy(id = "reject_btn")
 	private WebElement rejectButton;
 	
-	@FindBy(xpath = "//*[contains(text(), 'Approve')]")
+	@FindBy(xpath = "//div[text()='Approved']")
 	private WebElement Approved;
 	
 	@FindBy(xpath = "//*[contains(text(), 'Rejected')]")
@@ -335,12 +338,7 @@ public class FtmPage extends BasePage {
 	}
 
 	public void clickOnAddFtmButtonWioutRecord() {
-		 if(isElementDisplayed(addFtmPartnerId)) {
-			 clickOnElement(addFtmPartnerId);
-		 }
-		 if(isElementDisplayed(addFtmButton)) {
-		 clickOnElement(addFtmButton);
-		 }
+		clickOnElement(addFtmButton);
 		
 	}
 	
@@ -423,6 +421,10 @@ public class FtmPage extends BasePage {
 	
 	public boolean isFtmChipDetailsContextFtmChipProviderDisplayed() {
 		return isElementDisplayed(ftmChipDetailsContextFtmChipProvider);
+	}
+	
+	public boolean isFtmChipDetailsContextPartnerTypeDisplayed() {
+		return isElementDisplayed(ftmChipDetailsContextPartnerType);
 	}
 	
 	public boolean isFtmChipDetailsLabelModelDisplayed() {
@@ -513,12 +515,12 @@ public class FtmPage extends BasePage {
 		 clickOnElement(ftmStatusFilter);
 	}
 	
-	public void clickOnFtmStatusFilterOption1() {
-		 clickOnElement(ftmStatusFilterOption1);
+	public void clickOnFtmStatusFilterPendingForApproval() {
+		 clickOnElement(ftmStatusFilterPendingForApproval);
 	}
 	
-	public void clickOnFtmStatusFilterOption2() {
-		 clickOnElement(ftmStatusFilterOption2);
+	public void clickOnFtmStatusFilterDeactivated() {
+		 clickOnElement(ftmStatusFilterDeactivated);
 	}
 
 	public boolean isPendingForApprovalTextDisplayed() {
