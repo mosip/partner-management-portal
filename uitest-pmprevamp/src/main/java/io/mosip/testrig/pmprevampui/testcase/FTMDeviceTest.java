@@ -21,7 +21,7 @@ public class FTMDeviceTest extends BaseClass {
 	
 	private BasePage basePage;
 	
-	@Test(priority = 1)
+	@Test(priority = 19)
 	public void registerNewUserForFtmNoCert() throws InterruptedException {
 		DashboardPage dashboardpage = new DashboardPage(driver);
 		basePage = new BasePage(driver);
@@ -137,7 +137,7 @@ public class FTMDeviceTest extends BaseClass {
 		assertTrue(partnerCertificatePage.isDashboardFtmChipProviderCardDisplayed(), GlobalConstants.isProceedButtonDisplayed);	
 	}
 
-	@Test(priority = 2)
+	@Test(priority = 20)
 	public void registerNewUserForFtm() throws InterruptedException {
 		DashboardPage dashboardpage = new DashboardPage(driver);
 		PartnerCertificatePage partnerCertificatePage = new PartnerCertificatePage(driver);
@@ -263,7 +263,7 @@ public class FTMDeviceTest extends BaseClass {
 		assertTrue(partnerCertificatePage.isSuccessMessageForFtmCertDisplayed(), GlobalConstants.isSuccessMessageDisplayed);
 	}
 		
-	@Test(priority = 3)
+	@Test(priority = 21)
 	public void AddFtm() throws InterruptedException {
 		DashboardPage dashboardpage = new DashboardPage(driver);
 		PartnerCertificatePage partnerCertificatePage = new PartnerCertificatePage(driver);
@@ -436,7 +436,7 @@ public class FTMDeviceTest extends BaseClass {
 		
 	}
 	
-	@Test(priority = 4)
+	@Test(priority = 22)
 	public void AddFtmAndreject() throws InterruptedException {
 		DashboardPage dashboardpage = new DashboardPage(driver);
 		PartnerCertificatePage partnerCertificatePage = new PartnerCertificatePage(driver);
@@ -545,10 +545,10 @@ public class FTMDeviceTest extends BaseClass {
 		assertTrue(partnerCertificatePage.isSuccessMessageForFtmChipCertDisplayed(), GlobalConstants.isSuccessMessageDisplayed);
 	}
 
-	@Test(priority = 5)
+	@Test(priority = 23)
 	public void AddFtmAndDeactive() throws InterruptedException {
 		DashboardPage dashboardpage = new DashboardPage(driver);
-		BasePage basePage = new BasePage(driver);
+	    basePage = new BasePage(driver);
 		PartnerCertificatePage partnerCertificatePage = new PartnerCertificatePage(driver);
 		FtmPage ftmPage = new FtmPage(driver);
 		
@@ -657,7 +657,7 @@ public class FTMDeviceTest extends BaseClass {
 		assertTrue(ftmPage.isDeactivatedTextDisplayed(), GlobalConstants.isDeactivatedTextDisplayed);
 	}
 	
-	@Test(priority = 6)
+	@Test(priority = 24)
 	public void addFtmWithoutUploadingFtmChipCert() throws InterruptedException {
 		DashboardPage dashboardpage = new DashboardPage(driver);
 		PartnerCertificatePage partnerCertificatePage = new PartnerCertificatePage(driver);
