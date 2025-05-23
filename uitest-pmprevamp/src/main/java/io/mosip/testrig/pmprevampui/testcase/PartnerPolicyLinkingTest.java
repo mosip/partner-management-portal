@@ -350,7 +350,7 @@ public class PartnerPolicyLinkingTest extends BaseClass {
 		partnerPolicyMappingPage.clickOnApproveOrRejectButton();
 		assertFalse(partnerPolicyMappingPage.isApproveOrRejectConfirmationPopupDisplayed(),
 				GlobalConstants.isApproveOrRejectConfirmationPopupDisplayed);
-		
+
 		loginAsAuthPartner(dashboardPage);
 
 		dashboardPage.clickOnPoliciesTitle();
@@ -415,7 +415,7 @@ public class PartnerPolicyLinkingTest extends BaseClass {
 		assertTrue(partnerPolicyMappingPage.isPartnerCommentsContextDisplayed(),
 				GlobalConstants.isPartnerCommentsContextDisplayed);
 		partnerPolicyMappingPage.clickOnTitleBackIcon();
-		
+
 	}
 
 	private void logoutFromPartner(DashboardPage dashboardPage) {

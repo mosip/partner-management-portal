@@ -437,10 +437,10 @@ public class DatasharePolicyPage extends BasePage {
 	@FindBy(xpath = "//p[contains(text(), 'All fields marked with')]")
 	private WebElement policyFormSubTitle;
 	
-	@FindBy(xpath = "//span[contains(text(), 'automationui policy group')]")
+	@FindBy(xpath = "//span[text()='automationui policy group']")
 	private WebElement disabledPolicyGroupDropdown;
 	
-	@FindBy(xpath = "//span[contains(text(), 'automationui policy group')]")
+	@FindBy(xpath = "//span[text()='automationui policy group']")
 	private WebElement editPolicyGroupDropdownValue;
 	
 	@FindBy(xpath = "//input[@id='policy_name_box' and @value='editdatapolicy']")
@@ -888,7 +888,7 @@ public class DatasharePolicyPage extends BasePage {
 		return isElementDisplayed(creationDateAscIcon);
 	}
 	
-	public boolean isStatusDescISconDisplayed() {
+	public boolean isStatusDescIconDisplayed() {
 		return isElementDisplayed(statusDescIcon);
 	}
 	

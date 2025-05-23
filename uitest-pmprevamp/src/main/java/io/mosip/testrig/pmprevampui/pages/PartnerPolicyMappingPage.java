@@ -229,7 +229,7 @@ public class PartnerPolicyMappingPage extends BasePage {
 	@FindBy(xpath = "//span[text()='pmpui-auth']")
 	private WebElement partnerIdContext;
 	
-	@FindBy(xpath = "//div[contains(text(), 'Created On')]")
+	@FindBy(xpath = "//div[text()='Created On']")
 	private WebElement createdOnLabel;
 	
 	@FindBy(xpath = "//p[text()='Policy ID']")

@@ -75,13 +75,13 @@ public class OidcClientPage extends BasePage {
 	@FindBy(xpath = "(//span[contains(text(), 'Enter a valid URI')])[2]")
 	private WebElement enterValidUriForRedirectUriText;
 
-	@FindBy(xpath = "//span[contains(text(), 'Authorization Code')]")
+	@FindBy(xpath = "//span[text()='Authorization Code']")
 	private WebElement authorizationCode;
 	
 	@FindBy(xpath = "//*[contains(text(), 'User Id does not exists')]")
 	private WebElement userIdDoesNotExistsPopup;
 	
-	@FindBy(xpath = "//p[contains(text(), 'No Data Available.')]")
+	@FindBy(xpath = "//p[text()='No Data Available.']")
 	private WebElement noDataAvailableText;
 	
 	@FindBy(id = "create_oidc_partner_id")
@@ -99,10 +99,10 @@ public class OidcClientPage extends BasePage {
 	@FindBy(id = "create_oidc_policy_name_option1")
 	private WebElement createOidcPolicyNameOption1;
 
-	@FindBy(xpath = "//h1[contains(text(), 'Details Submitted Successfully!')]")
+	@FindBy(xpath = "//h1[text()='Details Submitted Successfully!']")
 	private WebElement detailsSubmittedSuccessfully;
 
-	@FindBy(xpath = "//div[contains(text(), 'Activated')]")
+	@FindBy(xpath = "//div[text()='Activated']")
 	private WebElement activatedText;
 
 	@FindBy(id = "confirmation_go_back_btn")
@@ -387,49 +387,49 @@ public class OidcClientPage extends BasePage {
 	@FindBy(xpath = "//p[contains(text(), 'List of OIDC Clients')]")
 	private WebElement subTitleOfTabularView;
 	
-	@FindBy(xpath = "//div[contains(text(), 'Partner ID')]")
+	@FindBy(xpath = "//div[text()='Partner ID']")
 	private WebElement partnerIdColumnHeader;
 	
-	@FindBy(xpath = "//div[contains(text(), 'Organisation')]")
+	@FindBy(xpath = "//div[text()='Organisation']")
 	private WebElement organisationColumnHeader;
 	
-	@FindBy(xpath = "//div[contains(text(), 'Policy Group')]")
+	@FindBy(xpath = "//div[text()='Policy Group']")
 	private WebElement policyGroupColumnHeader;
 	
-	@FindBy(xpath = "//div[contains(text(), 'Policy Name')]")
+	@FindBy(xpath = "//div[text()='Policy Name']")
 	private WebElement policyNameColumnHeader;
 	
-	@FindBy(xpath = "//div[contains(text(), 'OIDC Client Name')]")
+	@FindBy(xpath = "//div[text()='OIDC Client Name']")
 	private WebElement oidcClientNameColumnHeader;
 	
-	@FindBy(xpath = "//div[contains(text(), 'Creation Date')]")
+	@FindBy(xpath = "//div[text()='Creation Date']")
 	private WebElement creationDateColumnHeader;
 	
-	@FindBy(xpath = "//div[contains(text(), 'Status')]")
+	@FindBy(xpath = "//div[text()='Status']")
 	private WebElement statusColumnHeader;
 	
-	@FindBy(xpath = "//div[contains(text(), 'OIDC Client ID')]")
+	@FindBy(xpath = "//div[text()='OIDC Client ID']")
 	private WebElement oidcClientIdColumnHeader;
 	
-	@FindBy(xpath = "//div[contains(text(), 'Action')]")
+	@FindBy(xpath = "//div[text()='Action']")
 	private WebElement actionColumnHeader;
 	
-	@FindBy(xpath = "//p[contains(text(), 'Partner ID')]")
+	@FindBy(xpath = "//p[text()='Partner ID']")
 	private WebElement partnerIdFilterHeader;
 	
-	@FindBy(xpath = "//p[contains(text(), 'Organisation')]")
+	@FindBy(xpath = "//p[text()='Organisation']")
 	private WebElement organisationFilterHeader;
 	
-	@FindBy(xpath = "//p[contains(text(), 'Policy Group')]")
+	@FindBy(xpath = "//p[text()='Policy Group']")
 	private WebElement policyGroupFilterHeader;
 	
-	@FindBy(xpath = "//p[contains(text(), 'Policy Name')]")
+	@FindBy(xpath = "//p[text()='Policy Name']")
 	private WebElement policyNameFilterHeader;
 	
-	@FindBy(xpath = "//p[contains(text(), 'OIDC Client Name')]")
+	@FindBy(xpath = "//p[text()='OIDC Client Name']")
 	private WebElement oidcClientNameFilterHeader;
 	
-	@FindBy(xpath = "//p[contains(text(), 'Status')]")
+	@FindBy(xpath = "//p[text()='Status']")
 	private WebElement statusFilterHeader;
 	
 	@FindBy(xpath = "//input[@placeholder='Search Partner ID']")
@@ -447,7 +447,7 @@ public class OidcClientPage extends BasePage {
 	@FindBy(xpath = "//input[@placeholder='Search OIDC Client Name']")
 	private WebElement oidcClientNamePlaceHolder;
 	
-	@FindBy(xpath = "//span[contains(text(), 'Select Status')]")
+	@FindBy(xpath = "//span[text()='Select Status']")
 	private WebElement statusPlaceHolder;
 	
 	@FindBy(id = "partner_id_filter")
@@ -471,7 +471,7 @@ public class OidcClientPage extends BasePage {
 	@FindBy(id = "apply_filter__btn")
 	private WebElement applyFilterButton;
 	
-	@FindBy(xpath = "//p[contains(text(), 'No Results Found')]")
+	@FindBy(xpath = "//p[text()='No Results Found']")
 	private WebElement noResultFound;
 	
 	@FindBy(id = "status_filter_option1")
@@ -495,7 +495,7 @@ public class OidcClientPage extends BasePage {
 	@FindBy(xpath = "//p[@class='text-xs font-bold text-[#717171] text-left' and normalize-space(.)='# pmpui-auth']")
 	private WebElement partnerIdInEyeIconPopup;
 	
-	@FindBy(xpath = "//h1[contains(text(), 'OIDC Client ID')]")
+	@FindBy(xpath = "//h1[text()='OIDC Client ID']")
 	private WebElement oidcClientIdLabelInEyeIconPopup;
 	
 	@FindBy(xpath = "//button[contains(text(), 'Copied!')]")
@@ -519,7 +519,7 @@ public class OidcClientPage extends BasePage {
 	@FindBy(id = "sub_title_btn")
 	private WebElement listOfOidcClients;
 	
-	@FindBy(xpath = "//p[contains(text(), 'OIDC Client ID')]")
+	@FindBy(xpath = "//p[text()='OIDC Client ID']")
 	private WebElement oidcClientId;
 	
 	@FindBy(xpath = "//p[contains(text(),'Are you sure you want to Deactivate OIDC Client')]")
@@ -543,7 +543,7 @@ public class OidcClientPage extends BasePage {
 	@FindBy(xpath = "//p[@class='text-base font-bold text-[#1447B2] truncate']")
 	private WebElement activatedOidcClientIdElement;
 	
-	@FindBy(xpath = "//div[contains(text(), 'Created On')]")
+	@FindBy(xpath = "//div[text()='Created On']")
 	private WebElement createdOnLabel;
 	
 	@FindBy(xpath = "//p[contains(text(), 'Copied!')]")

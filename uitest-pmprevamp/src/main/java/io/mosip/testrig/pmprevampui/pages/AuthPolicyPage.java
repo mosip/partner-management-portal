@@ -419,10 +419,10 @@ public class AuthPolicyPage extends BasePage {
 	@FindBy(xpath = "//h1[text()='Edit Authentication Policy']")
 	private WebElement editPolicyPageTitle;
 	
-	@FindBy(xpath = "//span[contains(text(), 'automationui policy group')]")
+	@FindBy(xpath = "//span[text()='automationui policy group']")
 	private WebElement editPolicyGroupDropdownValue;
 	
-	@FindBy(xpath = "//span[contains(text(), 'automationui policy group')]")
+	@FindBy(xpath = "//span[text()='automationui policy group']")
 	private WebElement disabledPolicyGroupDropdown;
 	
 	@FindBy(xpath = "//input[@id='policy_name_box' and @value='editauthpolicy']")

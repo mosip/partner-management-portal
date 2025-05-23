@@ -131,6 +131,9 @@ public class DashboardPage extends BasePage {
 	
 	@FindBy(xpath = "//h5[text()='Authentication Services']")
 	private WebElement authenticationServices;
+	
+	@FindBy(xpath = "//h5[text()='Partners']")
+	private WebElement partners;
 
 	public DashboardPage(WebDriver driver) {
 		super(driver);
@@ -367,5 +370,17 @@ public class DashboardPage extends BasePage {
 	public OidcClientPage clickOnAuthenticationServices() {
 		clickOnElement(authenticationServices);
 		return new OidcClientPage(driver);
+	}
+	
+	public boolean isCertificateTrustStoreDisplayed() {
+		return isElementDisplayed(certificateTrustStore);
+	}
+	
+	public boolean isPartnersDisplayed() {
+		return isElementDisplayed(partners);
+	}
+	
+	public void clickOnPartners() {
+		clickOnElement(partners);	
 	}
 }

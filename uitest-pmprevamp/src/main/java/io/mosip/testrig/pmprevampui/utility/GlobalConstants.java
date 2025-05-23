@@ -678,7 +678,11 @@ public class GlobalConstants {
 	public static final String isPartnerCommentsContextDisplayed = "Verify if partner comments context displayed";
 	public static final String isApproveOrRejectConfirmationPopupDisplayed = "Verify if approve/reject conf. displayed";
 	public static final String isApiKeyNamePlaceHolderDisplayed = "Verify if api key name placeholder displayed";
+	public static final String isUploadRootCertificateFirstErrorMessageDisplayed = "Verify if upload root certificate first error message displayed";
+	public static final String isUploadedSuccessfullyMessageDisplayed = "Verify if upload successfully message displayed";
+	public static final String isSuccessIconDisplayed = "Verify if success icon displayed";
 
+	
 	public static final String APPID = "appId";
 	public static final String PASSWORD = "password";
 	public static final String USER_NAME = "userName";

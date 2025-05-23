@@ -24,7 +24,7 @@ import io.mosip.testrig.pmprevampui.utility.BaseClass;
 import io.mosip.testrig.pmprevampui.utility.GlobalConstants;
 
 public class AuthPartnerTest extends BaseClass {
-	
+
 	private BasePage basePage;
 
 	@Test(priority = 1, description = "Uploading Trust Certificate")
@@ -38,14 +38,26 @@ public class AuthPartnerTest extends BaseClass {
 		dashboardPage.clickOnCheckbox();
 		assertTrue(dashboardPage.isProceedButtonDisplayed(), GlobalConstants.isProceedButtonDisplayed);
 		dashboardPage.clickOnProceedButton();
+
 		dashboardPage.clickOnCertificateTrustStore();
-//		dashboardpage.clickOnRootOFTrustCertText();
 		dashboardPage.clickOnRootCertificateUploadButton();
 		partnerCertificatePage.clickOnpartnerDomainSelectorDropdown();
 		partnerCertificatePage.clickOnpartnerpartnerDomainSelectorDropdownOptionAuth();
+
+		partnerCertificatePage.uploadCertificateSubCa();
+		partnerCertificatePage.ClickonSubmitButtonForAdmin();
+		assertTrue(partnerCertificatePage.isUploadRootCertificateFirstErrorMessageDisplayed(),
+				GlobalConstants.isUploadRootCertificateFirstErrorMessageDisplayed);
+		partnerCertificatePage.clickOnErrorCloseButton();
+		partnerCertificatePage.clickOnRemoveCertificateButton();
+
 		partnerCertificatePage.uploadCertificateRootCa();
 		partnerCertificatePage.ClickonSubmitButtonForAdmin();
+		assertTrue(partnerCertificatePage.isUploadedSuccessfullyMessageDisplayed(),
+				GlobalConstants.isUploadedSuccessfullyMessageDisplayed);
+		assertTrue(partnerCertificatePage.isSuccessIconDisplayed(), GlobalConstants.isSuccessIconDisplayed);
 		partnerCertificatePage.ClickOnGoBackButton();
+
 		dashboardPage.clickOnRootCertificateUploadButton();
 		partnerCertificatePage.clickOnpartnerDomainSelectorDropdown();
 		partnerCertificatePage.clickOnpartnerpartnerDomainSelectorDropdownOptionAuth();
@@ -143,8 +155,7 @@ public class AuthPartnerTest extends BaseClass {
 				GlobalConstants.isUploadPartnerCertificatePopUpDisplayed);
 		assertTrue(partnerCertificatePage.isPleaseTabToSelectTextDisplayed(),
 				GlobalConstants.isPleaseTabToSelectTextDisplayed);
-		assertTrue(partnerCertificatePage.isCertFormatesTextDisplayed(),
-				GlobalConstants.isCertFormatesTextDisplayed);
+		assertTrue(partnerCertificatePage.isCertFormatesTextDisplayed(), GlobalConstants.isCertFormatesTextDisplayed);
 		partnerCertificatePage.uploadCertificate();
 		partnerCertificatePage.clickOnSubmitButton();
 		assertTrue(partnerCertificatePage.isSuccessMessageDisplayed(), GlobalConstants.isSuccessMessageDisplayed);
@@ -156,27 +167,24 @@ public class AuthPartnerTest extends BaseClass {
 
 		assertTrue(partnerCertificatePage.isReUploadPartnerCertificateTextDisplayed(),
 				GlobalConstants.iReUploadPartnerCertificateTextDisplayed);
-	    assertTrue(partnerCertificatePage.isReUploadPartnerCertificateSubTextDisplayed(),GlobalConstants.isReUploadPartnerCertificateSubTextDisplayed);
-	    
-	    assertTrue(partnerCertificatePage.isPartnerTypeLabelDisplayed(),
-				GlobalConstants.isPartnerTypeLabelDisplayed);
-	    assertTrue(partnerCertificatePage.isPartnerTypeValueDisplayed(),
-				GlobalConstants.isPartnerTypeValueDisplayed);
-	    assertTrue(partnerCertificatePage.isPartnerTypeValueDisabled(),
-				GlobalConstants.isPartnerTypeValueDisabled);
-	    
+		assertTrue(partnerCertificatePage.isReUploadPartnerCertificateSubTextDisplayed(),
+				GlobalConstants.isReUploadPartnerCertificateSubTextDisplayed);
+
+		assertTrue(partnerCertificatePage.isPartnerTypeLabelDisplayed(), GlobalConstants.isPartnerTypeLabelDisplayed);
+		assertTrue(partnerCertificatePage.isPartnerTypeValueDisplayed(), GlobalConstants.isPartnerTypeValueDisplayed);
+		assertTrue(partnerCertificatePage.isPartnerTypeValueDisabled(), GlobalConstants.isPartnerTypeValueDisabled);
+
 		assertTrue(partnerCertificatePage.isPartnerDomainTypeLabelDisplayed(),
 				GlobalConstants.isPartnerDomainTypeDisplayed);
 		assertTrue(partnerCertificatePage.isPartnerDomainTypeValueDisplayed(),
 				GlobalConstants.isPartnerDomainTypeValueDisplayed);
 		assertTrue(partnerCertificatePage.isPartnerDomainTypeValueDisabled(),
 				GlobalConstants.isPartnerDomainTypeValueDisabled);
-		
+
 		assertTrue(partnerCertificatePage.isUploadCertificateIconDisplayed(),
 				GlobalConstants.isUploadCertificateIconDisplayed);
-		assertTrue(partnerCertificatePage.isCertFormatesTextDisplayed(),
-				GlobalConstants.isCertFormatesTextDisplayed);
-		
+		assertTrue(partnerCertificatePage.isCertFormatesTextDisplayed(), GlobalConstants.isCertFormatesTextDisplayed);
+
 		assertTrue(partnerCertificatePage.isLastCertificateUploadDateDisplayed(),
 				GlobalConstants.isLastCertificateUploadDateDisplayed);
 
@@ -540,7 +548,7 @@ public class AuthPartnerTest extends BaseClass {
 		createOidcClient(oidcClientPage, GlobalConstants.DEACTIVATE_OIDCPOLICY2);
 
 		createOidcClient(oidcClientPage, GlobalConstants.DEACTIVATE_AUTHPOLICY);
-		
+
 		createOidcClient(oidcClientPage, GlobalConstants.AUTOMATION_LOWERCASE);
 
 		oidcClientPage.listPageCreateOidcClientButton();
@@ -652,7 +660,8 @@ public class AuthPartnerTest extends BaseClass {
 		apiKeyPage.selectPartnerIdDropdown();
 		apiKeyPage.selectPolicyNameDropdown(data);
 		apiKeyPage.enterNameOfApiKeyTextBox(GlobalConstants.SPECIAL_CHARACTERS);
-		assertTrue(apiKeyPage.isSpecialCharacterErrorMessageDisplayed(), GlobalConstants.isSpecialCharacterErrorMessageDisplayed);
+		assertTrue(apiKeyPage.isSpecialCharacterErrorMessageDisplayed(),
+				GlobalConstants.isSpecialCharacterErrorMessageDisplayed);
 		apiKeyPage.enterNameOfApiKeyTextBox(GlobalConstants.AUTOMATION);
 		apiKeyPage.clickOnSubmitButton();
 		apiKeyPage.clickOnCopyIdCloseButton();
@@ -673,7 +682,8 @@ public class AuthPartnerTest extends BaseClass {
 
 		apiKeyPage.clickOnDuplicateApiKeyNameErrorMessageCloseButton();
 		apiKeyPage.enterNameOfApiKeyTextBox(GlobalConstants.SPECIAL_NUMERIC);
-		assertTrue(apiKeyPage.isSpecialCharacterErrorMessageDisplayed(), GlobalConstants.isSpecialCharacterErrorMessageDisplayed);
+		assertTrue(apiKeyPage.isSpecialCharacterErrorMessageDisplayed(),
+				GlobalConstants.isSpecialCharacterErrorMessageDisplayed);
 		apiKeyPage.enterNameOfApiKeyTextBox(GlobalConstants.ALPHANUMERIC);
 		apiKeyPage.clickOnSubmitButton();
 		apiKeyPage.clickOnCopyIdCloseButton();
@@ -753,9 +763,9 @@ public class AuthPartnerTest extends BaseClass {
 		createApiKey(apiKeyPage, GlobalConstants.AUTHPOLICY05);
 
 		createApiKey(apiKeyPage, GlobalConstants.AUTHPOLICY06);
-		
+
 		createApiKey(apiKeyPage, GlobalConstants.DEACTIVATE_APIKEY);
-		
+
 		createApiKey(apiKeyPage, GlobalConstants.ACTIVATE_ADMINAPIKEY);
 
 		assertTrue(apiKeyPage.isItemsPerPageDisplayed(), GlobalConstants.isItemsPerPageDisplayed);

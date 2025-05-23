@@ -204,7 +204,7 @@ public class ApiKeyPage extends BasePage {
 	@FindBy(id = "generate_api_key_btn")
 	private WebElement apiKeyListPageGenerateApiKeyBtn;
 	
-	@FindBy(xpath = "//span[contains(text(), 'Select Partner ID')]")
+	@FindBy(xpath = "//span[text()='Select Partner ID']")
 	private WebElement partnerIdHelpText;
 	
 	@FindBy(xpath = "//span[contains(text(), 'Select policy for which API Key is required')]")
@@ -246,13 +246,13 @@ public class ApiKeyPage extends BasePage {
 	@FindBy(id = "sub_title_home_btn")
 	private WebElement breadcomb;
 
-	@FindBy(xpath = "//div[contains(text(), 'Deactivated')]")
+	@FindBy(xpath = "//div[text()='Deactivated']")
 	private WebElement apiKeyStatus;
 	
-	@FindBy(xpath = "//p[contains(text(), 'No Data Available.')]")
+	@FindBy(xpath = "//p[text()='No Data Available.']")
 	private WebElement noDataInApiKeyFilterDropdown;
 	
-	@FindBy(xpath = "//h6[contains(text(), 'Items per page')]")
+	@FindBy(xpath = "//h6[text()='Items per page']")
 	private WebElement itemsPerPagePrefix;
 	
 	@FindBy(id = "pagination_select_record_per_page")
@@ -270,7 +270,7 @@ public class ApiKeyPage extends BasePage {
 	@FindBy(id = "api_key_name_filter_search_input")
 	private WebElement apiKeySearchTextBox;
 	
-	@FindBy(xpath = "//button[contains(text(), 'Select Status')]")
+	@FindBy(xpath = "//button[text()='Select Status']")
 	private WebElement clearStatus;
 	
 	@FindBy(xpath = "//p[contains(text(), 'List of API Keys')]")
@@ -279,49 +279,49 @@ public class ApiKeyPage extends BasePage {
 	@FindBy(id = "sub_title_home_btn")
 	private WebElement homeButton;
 	
-	@FindBy(xpath = "//div[contains(text(), 'Partner ID')]")
+	@FindBy(xpath = "//div[text()='Partner ID']")
 	private WebElement partnerIdColumnHeader;
 	
-	@FindBy(xpath = "//div[contains(text(), 'Organisation')]")
+	@FindBy(xpath = "//div[text()='Organisation']")
 	private WebElement organisationColumnHeader;
 	
-	@FindBy(xpath = "//div[contains(text(), 'Policy Group')]")
+	@FindBy(xpath = "//div[text()='Policy Group']")
 	private WebElement policyGroupColumnHeader;
 	
-	@FindBy(xpath = "//div[contains(text(), 'Policy Name')]")
+	@FindBy(xpath = "//div[text()='Policy Name']")
 	private WebElement policyNameColumnHeader;
 	
-	@FindBy(xpath = "//div[contains(text(), 'API Key Name')]")
+	@FindBy(xpath = "//div[text()='API Key Name']")
 	private WebElement apiKeyNameColumnHeader;
 	
-	@FindBy(xpath = "//div[contains(text(), 'Creation Date')]")
+	@FindBy(xpath = "//div[text()='Creation Date']")
 	private WebElement creationDateColumnHeader;
 	
-	@FindBy(xpath = "//div[contains(text(), 'Status')]")
+	@FindBy(xpath = "//div[text()='Status']")
 	private WebElement statusColumnHeader;
 	
-	@FindBy(xpath = "//div[contains(text(), 'OIDC Client ID')]")
+	@FindBy(xpath = "//div[text()='OIDC Client ID']")
 	private WebElement oidcClientIdColumnHeader;
 	
-	@FindBy(xpath = "//div[contains(text(), 'Action')]")
+	@FindBy(xpath = "//div[text()='Action']")
 	private WebElement actionColumnHeader;
 	
-	@FindBy(xpath = "//p[contains(text(), 'Partner ID')]")
+	@FindBy(xpath = "//p[text()='Partner ID']")
 	private WebElement partnerIdFilterHeader;
 	
-	@FindBy(xpath = "//p[contains(text(), 'Organisation')]")
+	@FindBy(xpath = "//p[text()='Organisation']")
 	private WebElement organisationFilterHeader;
 	
-	@FindBy(xpath = "//p[contains(text(), 'Policy Group')]")
+	@FindBy(xpath = "//p[text()='Policy Group']")
 	private WebElement policyGroupFilterHeader;
 	
-	@FindBy(xpath = "//p[contains(text(), 'Policy Name')]")
+	@FindBy(xpath = "//p[text()='Policy Name']")
 	private WebElement policyNameFilterHeader;
 	
-	@FindBy(xpath = "//p[contains(text(), 'API Key Name')]")
+	@FindBy(xpath = "//p[text()='API Key Name']")
 	private WebElement apiKeyNameFilterHeader;
 	
-	@FindBy(xpath = "//p[contains(text(), 'Status')]")
+	@FindBy(xpath = "//p[text()='Status']")
 	private WebElement statusFilterHeader;
 	
 	@FindBy(xpath = "//input[@placeholder='Search Partner ID']")
@@ -339,13 +339,13 @@ public class ApiKeyPage extends BasePage {
 	@FindBy(xpath = "//input[@placeholder='Search API Key Name']")
 	private WebElement apiKeyNamePlaceHolder;
 	
-	@FindBy(xpath = "//span[contains(text(), 'Select Status')]")
+	@FindBy(xpath = "//span[text()='Select Status']")
 	private WebElement statusPlaceHolder;
 	
 	@FindBy(id = "apply_filter_btn")
 	private WebElement applyFilterButton;
 	
-	@FindBy(xpath = "//p[contains(text(), 'No Results Found')]")
+	@FindBy(xpath = "//p[text()='No Results Found']")
 	private WebElement noResultFound;
 	
 	@FindBy(id = "status_filter_option1")
@@ -393,7 +393,7 @@ public class ApiKeyPage extends BasePage {
 	@FindBy(id = "api_key_details_auth_partner_context")
 	private WebElement apiKeyDetailsPartnerTypeContext;
 	
-	@FindBy(xpath = "//div[contains(text(), 'Created On')]")
+	@FindBy(xpath = "//div[text()='Created On']")
 	private WebElement createdOnLabel;
 
 	@FindBy(xpath = "//span[text()='Special characters are not allowed.']")

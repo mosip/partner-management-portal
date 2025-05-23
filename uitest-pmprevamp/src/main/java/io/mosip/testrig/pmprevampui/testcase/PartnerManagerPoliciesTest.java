@@ -483,7 +483,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 				GlobalConstants.isCreatedDateTimeDescAscIcon);
 		assertTrue(datasharePolicyPage.isCreatedDateTimeAscIconDisplayed(),
 				GlobalConstants.isCreatedDateTimeDescAscIcon);
-		assertTrue(datasharePolicyPage.isStatusDescISconDisplayed(), GlobalConstants.isStatusDescISconDisplayed);
+		assertTrue(datasharePolicyPage.isStatusDescIconDisplayed(), GlobalConstants.isStatusDescISconDisplayed);
 		assertTrue(datasharePolicyPage.isStatusAscIconDisplayed(), GlobalConstants.isStatusAscIconDisplayed);
 
 		datasharePolicyPage.clickOnFilterButton();

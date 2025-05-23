@@ -24,34 +24,34 @@ public class FtmPage extends BasePage {
 	@FindBy(id = "add_ftm")
 	private WebElement addFtmButton;
 	
-	@FindBy(xpath = "//*[contains(text(), 'Partner ID')]")
+	@FindBy(xpath = "//div[text()='Partner ID']")
 	private WebElement partnerIdCoulumeHeader;
 	
-	@FindBy(xpath = "//*[contains(text(), 'Make')]")
+	@FindBy(xpath = "//div[text()='Make']")
 	private WebElement makeCoulumeHeader;
 	
-	@FindBy(xpath = "//*[contains(text(), 'Model')]")
+	@FindBy(xpath = "//div[text()='Model']")
 	private WebElement modelCoulumeHeader;
 	
-	@FindBy(xpath = "//*[contains(text(), 'Creation Date')]")
+	@FindBy(xpath = "//div[text()='Creation Date']")
 	private WebElement createdDateCoulumeHeader;
 	
-	@FindBy(xpath = "//*[contains(text(), 'Cert Time of Upload')]")
+	@FindBy(xpath = "//div[text()='Cert Time of Upload']")
 	private WebElement certTimeofUploadCoulumeHeader;
 	
-	@FindBy(xpath = "//*[contains(text(), 'Cert Expiry Date & Time')]")
+	@FindBy(xpath = "//div[text()='Cert Expiry Date & Time']")
 	private WebElement certExpiryCoulumeHeader;
 	
-	@FindBy(xpath = "//*[contains(text(), 'Cert Expiry Status')]")
+	@FindBy(xpath = "//div[text()='Cert Expiry Status']")
 	private WebElement certExpiryStatusCoulumeHeader;
 	
-	@FindBy(xpath = "//*[contains(text(), 'Status')]")
+	@FindBy(xpath = "//div[text()='Status']")
 	private WebElement statusCoulumeHeader;
 	
-	@FindBy(xpath = "//*[contains(text(), 'Action')]")
+	@FindBy(xpath = "//div[text()='Action']")
 	private WebElement actionCoulumeHeader;
 	
-	@FindBy(xpath = "//*[contains(text(), 'FTM ID')]")
+	@FindBy(xpath = "//div[text()='FTM ID']")
 	private WebElement ftmIdCoulumeHeader;
 	
 	@FindBy(id = "add_ftm_partner_id")
@@ -329,8 +329,7 @@ public class FtmPage extends BasePage {
 	
 	@FindBy(xpath = "//*[contains(text(), 'No Results Found')]")
 	private WebElement noResultsFound;
-	
-	
+		
 	public FtmPage(WebDriver driver) {
 		super(driver);
 	}

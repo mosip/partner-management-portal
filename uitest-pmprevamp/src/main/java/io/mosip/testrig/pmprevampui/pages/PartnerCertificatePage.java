@@ -296,7 +296,7 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(id = "certificate_list_item1")
 	private WebElement certificateList1;
 	
-	@FindBy(xpath = "//h1[contains(text()='View Root CA Certificate Details')]")
+	@FindBy(xpath = "//h1[text()='View Root CA Certificate Details']")
 	private WebElement rootCACertificateDetailsPage;
 	
 	@FindBy(id = "filter_btn")
@@ -342,10 +342,10 @@ public class PartnerCertificatePage extends BasePage {
 	private WebElement issuedByLabel;
 	
 	@FindBy(xpath = "//p[text()='CN=CA,OU=CA,O=CA,L=aa,ST=aa,C=aa']")
-	private WebElement issuedToContext;
+	private WebElement rootCAIssuedToContext;
 	
 	@FindBy(xpath = "//p[text()='CN=CA,OU=CA,O=CA,L=aa,ST=aa,C=aa']")
-	private WebElement issuedByContext;
+	private WebElement rootCAIssuedByContext;
 	
 	@FindBy(xpath = "//p[text()='Certificate Thumbprint']")
 	private WebElement certificateThumbprintLabel;
@@ -365,10 +365,10 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(xpath = "//p[contains(text(), 'List of Intermediate CA Certificates')]")
 	private WebElement subtitleOfIntermediateCA;
 	
-	@FindBy(xpath = "//p[contains(text(), 'View Intermediate CA Certificate Details')]")
+	@FindBy(xpath = "//p[text()='View Intermediate CA Certificate Details']")
 	private WebElement viewIntermediateCADetails;
 	
-	@FindBy(xpath = "//td[contains(text(), 'Valid')]")
+	@FindBy(xpath = "//td[text()='Valid']")
 	private WebElement statusValid;
 	
 	@FindBy(xpath = "//td[@class='px-2 break-all' and text()='CN=SUBCA,OU=SUBCA,O=SUBCA,L=aa,ST=aa,C=aa']")
@@ -379,6 +379,48 @@ public class PartnerCertificatePage extends BasePage {
 	
 	@FindBy(xpath = "//p[contains(text(), 'Certificate Chain of Trust for the given Intermediate CA certificate is downloaded successfully.')]")
 	private WebElement intCACertDownloadedMsg;
+	
+	@FindBy(xpath = "//p[contains(text(), 'List of Intermediate CA Certificates')]")
+	private WebElement intCACertBreadcumb;
+	
+	@FindBy(xpath = "//p[text()='CN=SUBCA,OU=SUBCA,O=SUBCA,L=aa,ST=aa,C=aa']")
+	private WebElement intCAIssuedToContext;
+	
+	@FindBy(xpath = "//p[text()='CN=CA,OU=CA,O=CA,L=aa,ST=aa,C=aa']")
+	private WebElement intCAIssuedByContext;
+	
+	@FindBy(xpath = "//h6[text()='Intermediate CA Certificate']")
+	private WebElement intCACertificateTitle;
+	
+	@FindBy(xpath = "//h1[text()='Upload Trust Certificate']")
+	private WebElement partnerAdminCertUploadTitle;
+	
+	@FindBy(xpath = "//p[@class='text-light-gray py-1' and text()='Please select the partner domain and upload Root CA / Intermediate CA Certificate.']")
+	private WebElement uploadInstructionMessage;
+	
+	@FindBy(xpath = "//h1[text()='Select partner domain']")
+	private WebElement selectPartnerDomainPlaceHolder;
+	
+	@FindBy(xpath = "//h5[contains(text(), 'Please tap to select the Root CA / Intermediate CA Certificate')]")
+	private WebElement uploadCertInstructionText;
+	
+	@FindBy(xpath = "//h1[contains(text(), 'Trust Certificate for AUTH is uploaded successfully!')]")
+	private WebElement uploadedSuccessfullyMessage;
+	
+	@FindBy(xpath = "//img[@id='confirmation_success_icon']")
+	private WebElement successIcon;
+	
+	@FindBy(xpath = "//h5[normalize-space()='expiredRoot.cer']")
+	private WebElement uploadedExpiredRootCACertificateName;
+	
+	@FindBy(xpath = "//p[text()='Certificate Dates are not valid.']")
+	private WebElement certificateDatesNotValidMessage;
+	
+	@FindBy(xpath = "//p[contains(text(), 'Please upload corresponding Root Certificate to proceed further')]")
+	private WebElement uploadRootCertificateFirstErrorMessage;
+	
+	@FindBy(id = "upload_trust_certificate_clear")
+	private WebElement certificateClearButton;
 
 	public PartnerCertificatePage(WebDriver driver) {
 		super(driver);
@@ -411,6 +453,10 @@ public class PartnerCertificatePage extends BasePage {
 	
 	public void uploadCertificateForAnotherOrg() {
 		uploadImage(uploadFile, TestRunner.getResourcePath() + "\\pmp_revamp_cert\\FTM_ca.cer");
+	}
+	
+	public void uploadExpiredCertificateForRootCa() {
+		uploadImage(uploadFile, TestRunner.getResourcePath() + "\\pmp_revamp_cert\\expiredRoot.cer");
 	}
 
 	public void clickOnSubmitButton() {
@@ -992,12 +1038,12 @@ public class PartnerCertificatePage extends BasePage {
 		return isElementDisplayed(issuedByLabel);
 	}
 	
-	public boolean isIssuedToContextDisplayed() {
-		return isElementDisplayed(issuedToContext);
+	public boolean isRootCAIssuedToContextDisplayed() {
+		return isElementDisplayed(rootCAIssuedToContext);
 	}
 	
 	public boolean isIssuedByContextDisplayed() {
-		return isElementDisplayed(issuedByContext);
+		return isElementDisplayed(rootCAIssuedByContext);
 	}
 	
 	public boolean isCertificateThumbprintLabelDisplayed() {
@@ -1082,6 +1128,66 @@ public class PartnerCertificatePage extends BasePage {
 	
 	public void clickOnDownloadCertificateChainButton() {
 		 clickOnElement(certificateListViewButton);
+	}
+	
+	public boolean isIntCACertBreadcumbDisplayed() {
+		return isElementDisplayed(intCACertBreadcumb);
+	}
+	
+	public boolean isIntCAIssuedToContextDisplayed() {
+		return isElementDisplayed(intCAIssuedToContext);
+	}
+	
+	public boolean isIntCAIssuedByContextDisplayed() {
+		return isElementDisplayed(intCAIssuedByContext);
+	}
+	
+	public boolean isIntCACertificateTitleDisplayed() {
+		return isElementDisplayed(intCACertificateTitle);
+	}
+	
+	public boolean isPartnerAdminCertUploadTitleDisplayed() {
+		return isElementDisplayed(partnerAdminCertUploadTitle);
+	}
+	
+	public boolean isUploadInstructionMessageDisplayed() {
+		return isElementDisplayed(uploadInstructionMessage);
+	}
+	
+	public boolean isSelectPartnerDomainPlaceHolderDisplayed() {
+		return isElementDisplayed(selectPartnerDomainPlaceHolder);
+	}
+	
+	public boolean isPartnerDomainDropdownAuthDisplayed() {
+		return isElementDisplayed(partnerDomainSelectorDropdownOptionAuth);
+	}
+	
+	public boolean isUploadCertInstructionTextDisplayed() {
+		return isElementDisplayed(uploadCertInstructionText);
+	}
+	
+	public boolean isSuccessIconDisplayed() {
+		return isElementDisplayed(successIcon);
+	}
+	
+	public boolean isUploadedSuccessfullyMessageDisplayed() {
+		return isElementDisplayed(uploadedSuccessfullyMessage);
+	}
+	
+	public boolean isUploadedRootCACertificateNameDisplayed() {
+		return isElementDisplayed(uploadedExpiredRootCACertificateName);
+	}
+	
+	public boolean isCertificateDatesNotValidMessageDisplayed() {
+		return isElementDisplayed(certificateDatesNotValidMessage);
+	}
+	
+	public boolean isUploadRootCertificateFirstErrorMessageDisplayed() {
+		return isElementDisplayed(uploadRootCertificateFirstErrorMessage);
+	}
+	
+	public void clickOnCertificateClearButton() {
+		 clickOnElement(certificateClearButton);
 	}
 
 }
