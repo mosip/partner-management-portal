@@ -75,9 +75,12 @@
         "sbiAndDevicePendingApprovalRequestCountDesc": "{{sbiPendingApprovalRequestCount}} SBI and {{devicePendingApprovalRequestCount}} Device requests are currently pending",
         "ftmPendingApprovalRequestCountDesc": "{{ftmPendingApprovalRequestCount}} FTM Chip requests are currently pending",
         "requestCountFetchError": "An Unexpected error occured while fetching request count",
+        "expiryCountFetchError": "An Unexpected error occured while fetching expiry count",
         "trustCertExpiryCountDesc": "{{rootCertExpiryCount}} Root CA Certificates and {{intermediateCertExpiryCount}} Intermediate CA Certificates are expiring soon",
         "partnerCertExpiryCountDesc1": "{{partnerCertExpiryCount}} Partner Certificates are expiring soon",
-        "partnerCertExpiryCountDesc2": "{{partnerCertExpiryCount}} Partner Certificate is expiring soon"
+        "partnerCertExpiryCountDesc2": "{{partnerCertExpiryCount}} Partner Certificate is expiring soon",
+        "ftmChipCertExpiryCountDesc1": "{{expiringFtmCertificateCount}} FTM Chip Certificates are expiring soon",
+        "ftmChipCertExpiryCountDesc2": "{{expiringFtmCertificateCount}} FTM Chip Certificate is expiring soon"
     },
     "header": {
         "userProfile": "User Profile",
