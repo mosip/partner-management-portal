@@ -29,7 +29,7 @@ function installing_pmp_ui_v2() {
   POLICY_MANAGER_SERVICE_NAME="pms-policy"
 
   echo Installing pmp-ui-v2
-  helm -n $NS install pmp-ui-v2 /home/bhuminathan/partner-management-portal/helm/pmp-ui-v2 \
+  helm -n $NS install pmp-ui-v2 mosip/pmp-ui-v2 \
   --set pmp_revamp.react_app_partner_manager_api_base_url="https://$INTERNAL_API_HOST/v1/partnermanager" \
   --set pmp_revamp.react_app_policy_manager_api_base_url="https://$INTERNAL_API_HOST/v1/policymanager" \
   --set pmp_revamp.pms_partner_manager_internal_service_url="http://$PARTNER_MANAGER_SERVICE_NAME.$NS/v1/partnermanager" \
