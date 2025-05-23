@@ -33,7 +33,7 @@
         "unexpectedError": "Nous avons rencontré une erreur inattendue",
         "undoChanges": "Annuler les modifications",
         "clear": "Effacer",
-        "inputError": "Les caractères spéciaux ne sont pas autorisés.",
+        "inputError": "Caractère non valide. Les caractères spéciaux autorisés sont : @ # & ( ) \\ - ' ? ! \" : ; = _",
         "networkError": "Erreur réseau",
         "networkErrorDesc": "Veuillez vérifier votre connexion Internet et réessayer.",
         "retry": "Réessayer"
