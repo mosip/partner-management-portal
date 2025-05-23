@@ -548,7 +548,7 @@ public class FTMDeviceTest extends BaseClass {
 	@Test(priority = 23)
 	public void AddFtmAndDeactive() throws InterruptedException {
 		DashboardPage dashboardpage = new DashboardPage(driver);
-	    basePage = new BasePage(driver);
+		basePage = new BasePage(driver);
 		PartnerCertificatePage partnerCertificatePage = new PartnerCertificatePage(driver);
 		FtmPage ftmPage = new FtmPage(driver);
 		
