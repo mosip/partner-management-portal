@@ -1148,7 +1148,7 @@ export const getFilterTextFieldStyle = () => {
     const styleSet = {
         inputField: "min-w-64",
         inputLabel: "mb-2",
-        outerDiv: "ml-4"
+        outerDiv: "ml-4 w-[16.5rem]"
     };
     return styleSet;
 }

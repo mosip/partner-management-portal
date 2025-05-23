@@ -33,7 +33,7 @@
         "unexpectedError": "We have encountered an unexpected error",
         "undoChanges": "Undo Changes",
         "clear": "Clear",
-        "inputError": "Special characters are not allowed.",
+        "inputError": "Invalid character. Allowed special characters are: @ # & ( ) \\ - ' ? ! \" : ; = _",
         "networkError": "Network Error",
         "networkErrorDesc": "Please check your internet connection and try again.",
         "retry": "Retry"
