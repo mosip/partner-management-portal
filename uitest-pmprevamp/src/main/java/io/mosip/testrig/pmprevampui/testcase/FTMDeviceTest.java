@@ -142,13 +142,6 @@ public class FTMDeviceTest extends BaseClass {
 		DashboardPage dashboardpage = new DashboardPage(driver);
 		PartnerCertificatePage partnerCertificatePage = new PartnerCertificatePage(driver);
 		RegisterPage registerPage = new RegisterPage(driver);
-		FtmPage ftmPage = new FtmPage(driver);
-		
-//		assertTrue(dashboardpage.isTermsAndConditionsPopUppDisplayed(), GlobalConstants.isTermsAndConditionsPopUppDisplayed);
-//		dashboardpage.clickOnCheckbox();
-//
-//		assertTrue(dashboardpage.isProceedButtonDisplayed(), GlobalConstants.isProceedButtonDisplayed);
-//		dashboardpage.clickOnProceedButton();
 		
 		dashboardpage.clickOnRootOFTrustCertText();
 		dashboardpage.clickOnRootCertificateUploadButton();
@@ -239,7 +232,7 @@ public class FTMDeviceTest extends BaseClass {
 		partnerCertificatePage.clickOnSubmitButton();
 
 		assertTrue(partnerCertificatePage.isSuccessMessageForFtmCertDisplayed(), GlobalConstants.isSuccessMessageDisplayed);
-		partnerCertificatePage.ClickOnsuccessMsgCloseButton();
+		partnerCertificatePage.ClickOnSuccessMsgCloseButton();
 		partnerCertificatePage.certifiCateUploadCancelButton();
 		dashboardpage = partnerCertificatePage.clickOnHomeButton();
 
@@ -253,7 +246,7 @@ public class FTMDeviceTest extends BaseClass {
 		assertTrue(partnerCertificatePage.isCertFormatesTextDisplayed(), GlobalConstants.isCertFormateDisplayed);
 		assertTrue(partnerCertificatePage.isLastUploadTimeAndDateTextDisplayed(), GlobalConstants.isLastUploadTimeAndDateDisplayed);
 		
-		assertTrue(partnerCertificatePage.isPartnerDomainTypeDisplayed(), GlobalConstants.iReUploadPartnerCertificateTextDisplayed);
+		assertTrue(partnerCertificatePage.isPartnerDomainTypeLabelDisplayed(), GlobalConstants.iReUploadPartnerCertificateTextDisplayed);
 		assertTrue(partnerCertificatePage.isPartnerCertOvelayDisplayed(), GlobalConstants.iReUploadPartnerCertificateTextDisplayed);
 		
 		partnerCertificatePage.uploadCertificate();
@@ -269,13 +262,11 @@ public class FTMDeviceTest extends BaseClass {
 		partnerCertificatePage.clickOnSubmitButton();
 		assertTrue(partnerCertificatePage.isSuccessMessageForFtmCertDisplayed(), GlobalConstants.isSuccessMessageDisplayed);
 	}
-	
-	
+		
 	@Test(priority = 21)
 	public void AddFtm() throws InterruptedException {
 		DashboardPage dashboardpage = new DashboardPage(driver);
 		PartnerCertificatePage partnerCertificatePage = new PartnerCertificatePage(driver);
-		RegisterPage registerPage = new RegisterPage(driver);
 		FtmPage ftmPage = new FtmPage(driver);
 		
 		dashboardpage.clickOnProfileDropdown();
@@ -299,8 +290,7 @@ public class FTMDeviceTest extends BaseClass {
 		assertTrue(ftmPage.isCertExpiryStatusCoulumeHeaderDisplayed(), GlobalConstants.isFtmTablHeadersDisplaed);
 		assertTrue(ftmPage.isStatusCoulumeHeaderDisplayed(), GlobalConstants.isFtmTablHeadersDisplaed);
 		assertTrue(ftmPage.isActionCoulumeHeaderDisplayed(), GlobalConstants.isFtmTablHeadersDisplaed);
-		
-		
+			
 		ftmPage.clickOnAddFtmButtonWioutRecord();
 		
 		ftmPage.clickOnAddFtmPartnerId();
@@ -443,7 +433,6 @@ public class FTMDeviceTest extends BaseClass {
 		assertTrue(ftmPage.isErrorCloseButtonDisplayed(), GlobalConstants.isErrorCrossButtonDisplayed);
 		
 		ftmPage.clickOnAddFtmClearForm();
-//		assertFalse(partnerCertificatePage.isAddFtmSubmitButtonDisabled(), GlobalConstants.isElementIsDisabled);
 		
 	}
 	
@@ -451,7 +440,6 @@ public class FTMDeviceTest extends BaseClass {
 	public void AddFtmAndreject() throws InterruptedException {
 		DashboardPage dashboardpage = new DashboardPage(driver);
 		PartnerCertificatePage partnerCertificatePage = new PartnerCertificatePage(driver);
-		RegisterPage registerPage = new RegisterPage(driver);
 		FtmPage ftmPage = new FtmPage(driver);
 		
 		dashboardpage.clickOnProfileDropdown();
@@ -562,7 +550,6 @@ public class FTMDeviceTest extends BaseClass {
 		DashboardPage dashboardpage = new DashboardPage(driver);
 		basePage = new BasePage(driver);
 		PartnerCertificatePage partnerCertificatePage = new PartnerCertificatePage(driver);
-		RegisterPage registerPage = new RegisterPage(driver);
 		FtmPage ftmPage = new FtmPage(driver);
 		
 		dashboardpage.clickOnProfileDropdown();
@@ -674,12 +661,10 @@ public class FTMDeviceTest extends BaseClass {
 	public void addFtmWithoutUploadingFtmChipCert() throws InterruptedException {
 		DashboardPage dashboardpage = new DashboardPage(driver);
 		PartnerCertificatePage partnerCertificatePage = new PartnerCertificatePage(driver);
-		RegisterPage registerPage = new RegisterPage(driver);
 		FtmPage ftmPage = new FtmPage(driver);
 		
 		dashboardpage.clickOnProfileDropdown();
 		assertTrue(dashboardpage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
-
 		LoginPage loginpage = dashboardpage.clickOnLogoutButton();
 		
 		loginpage.enterUserName("pmpui-ftm");
@@ -721,8 +706,8 @@ public class FTMDeviceTest extends BaseClass {
 		loginpage.enterUserName("pmpui-revamp");
 		loginpage.enterPassword(password);
 		loginpage.clickOnLoginButton();
-		dashboardpage.clickOnFTMChipTab();
 		
+		dashboardpage.clickOnFTMChipTab();		
 		ftmPage.clickOnFtmListActionMenuEllipsisButton();
 		ftmPage.clickOnFtmListApproveRejectOption();
 		

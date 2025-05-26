@@ -24,7 +24,7 @@ import io.mosip.testrig.pmprevampui.utility.BaseClass;
 import io.mosip.testrig.pmprevampui.utility.GlobalConstants;
 
 public class AuthPartnerTest extends BaseClass {
-	
+
 	private BasePage basePage;
 
 	@Test(priority = 1, description = "Uploading Trust Certificate")
@@ -38,14 +38,26 @@ public class AuthPartnerTest extends BaseClass {
 		dashboardPage.clickOnCheckbox();
 		assertTrue(dashboardPage.isProceedButtonDisplayed(), GlobalConstants.isProceedButtonDisplayed);
 		dashboardPage.clickOnProceedButton();
+
 		dashboardPage.clickOnCertificateTrustStore();
-//		dashboardpage.clickOnRootOFTrustCertText();
 		dashboardPage.clickOnRootCertificateUploadButton();
 		partnerCertificatePage.clickOnpartnerDomainSelectorDropdown();
 		partnerCertificatePage.clickOnpartnerpartnerDomainSelectorDropdownOptionAuth();
+
+		partnerCertificatePage.uploadCertificateSubCa();
+		partnerCertificatePage.ClickonSubmitButtonForAdmin();
+		assertTrue(partnerCertificatePage.isUploadRootCertificateFirstErrorMessageDisplayed(),
+				GlobalConstants.isUploadRootCertificateFirstErrorMessageDisplayed);
+		partnerCertificatePage.clickOnErrorCloseButton();
+		partnerCertificatePage.clickOnRemoveCertificateButton();
+
 		partnerCertificatePage.uploadCertificateRootCa();
 		partnerCertificatePage.ClickonSubmitButtonForAdmin();
+		assertTrue(partnerCertificatePage.isUploadedSuccessfullyMessageDisplayed(),
+				GlobalConstants.isUploadedSuccessfullyMessageDisplayed);
+		assertTrue(partnerCertificatePage.isSuccessIconDisplayed(), GlobalConstants.isSuccessIconDisplayed);
 		partnerCertificatePage.ClickOnGoBackButton();
+
 		dashboardPage.clickOnRootCertificateUploadButton();
 		partnerCertificatePage.clickOnpartnerDomainSelectorDropdown();
 		partnerCertificatePage.clickOnpartnerpartnerDomainSelectorDropdownOptionAuth();
@@ -115,11 +127,6 @@ public class AuthPartnerTest extends BaseClass {
 				GlobalConstants.isTermsAndConditionsPopUppDisplayed);
 		dashboardPage.clickOnSelectPolicyGroupLogout();
 
-		assertTrue(loginPage.isPageNotFoundMessageDisplayed(), GlobalConstants.isKeycloakPageDisplayed);
-		basePage.navigateBack();
-		dashboardPage.clickOnProfileDropdown();
-		dashboardPage.clickOnLogoutButton();
-
 		loginPage.enterUserName("pmpui-auth");
 		loginPage.enterPassword(password);
 		loginPage.clickOnLoginButton();
@@ -146,9 +153,11 @@ public class AuthPartnerTest extends BaseClass {
 
 		assertTrue(partnerCertificatePage.isUploadPartnerCertificatePopUpDisplayed(),
 				GlobalConstants.isUploadPartnerCertificatePopUpDisplayed);
+		assertTrue(partnerCertificatePage.isPleaseTabToSelectTextDisplayed(),
+				GlobalConstants.isPleaseTabToSelectTextDisplayed);
+		assertTrue(partnerCertificatePage.isCertFormatesTextDisplayed(), GlobalConstants.isCertFormatesTextDisplayed);
 		partnerCertificatePage.uploadCertificate();
 		partnerCertificatePage.clickOnSubmitButton();
-
 		assertTrue(partnerCertificatePage.isSuccessMessageDisplayed(), GlobalConstants.isSuccessMessageDisplayed);
 		partnerCertificatePage.clickOncertificateUploadCloseButton();
 		dashboardPage = partnerCertificatePage.clickOnHomeButton();
@@ -158,18 +167,34 @@ public class AuthPartnerTest extends BaseClass {
 
 		assertTrue(partnerCertificatePage.isReUploadPartnerCertificateTextDisplayed(),
 				GlobalConstants.iReUploadPartnerCertificateTextDisplayed);
-//	    assertTrue(partnerCertificatePage.isReUploadPartnerCertificateSubTextDisplayed(),GlobalConstants.isReUploadPartnerCertificateSubTextDisplayed);
+		assertTrue(partnerCertificatePage.isReUploadPartnerCertificateSubTextDisplayed(),
+				GlobalConstants.isReUploadPartnerCertificateSubTextDisplayed);
 
-		assertTrue(partnerCertificatePage.isPartnerDomainTypeDisplayed(),
-				GlobalConstants.iReUploadPartnerCertificateTextDisplayed);
-		assertTrue(partnerCertificatePage.isPartnerCertOvelayDisplayed(),
-				GlobalConstants.iReUploadPartnerCertificateTextDisplayed);
+		assertTrue(partnerCertificatePage.isPartnerTypeLabelDisplayed(), GlobalConstants.isPartnerTypeLabelDisplayed);
+		assertTrue(partnerCertificatePage.isPartnerTypeValueDisplayed(), GlobalConstants.isPartnerTypeValueDisplayed);
+		assertTrue(partnerCertificatePage.isPartnerTypeValueDisabled(), GlobalConstants.isPartnerTypeValueDisabled);
+
+		assertTrue(partnerCertificatePage.isPartnerDomainTypeLabelDisplayed(),
+				GlobalConstants.isPartnerDomainTypeDisplayed);
+		assertTrue(partnerCertificatePage.isPartnerDomainTypeValueDisplayed(),
+				GlobalConstants.isPartnerDomainTypeValueDisplayed);
+		assertTrue(partnerCertificatePage.isPartnerDomainTypeValueDisabled(),
+				GlobalConstants.isPartnerDomainTypeValueDisabled);
+
+		assertTrue(partnerCertificatePage.isUploadCertificateIconDisplayed(),
+				GlobalConstants.isUploadCertificateIconDisplayed);
+		assertTrue(partnerCertificatePage.isCertFormatesTextDisplayed(), GlobalConstants.isCertFormatesTextDisplayed);
+
+		assertTrue(partnerCertificatePage.isLastCertificateUploadDateDisplayed(),
+				GlobalConstants.isLastCertificateUploadDateDisplayed);
 
 		partnerCertificatePage.uploadCertificate();
-		partnerCertificatePage.clickOnRemoveCertificateButton();
-		partnerCertificatePage.uploadCertificate();
+
+		assertTrue(partnerCertificatePage.isUploadedCertificateNameDisplayed(),
+				GlobalConstants.isUploadedCertificateNameDisplayed);
+		assertTrue(partnerCertificatePage.isCertificateRemoveButtonDisplayed(),
+				GlobalConstants.isCertificateRemoveButtonDisplayed);
 		partnerCertificatePage.clickOnSubmitButton();
-
 
 		assertTrue(partnerCertificatePage.isSuccessMessageDisplayed(), GlobalConstants.isSuccessMessageDisplayed);
 		partnerCertificatePage.clickOncertificateUploadCloseButton();
@@ -191,7 +216,8 @@ public class AuthPartnerTest extends BaseClass {
 				GlobalConstants.isMosipCertificateDownloadPopupDisplayed);
 
 //	    assertTrue(partnerCertificatePage.isSucessMessageDisplayed(), GlobalConstants.isSucessMessageDisplayed);
-		partnerCertificatePage.ClickOnsuccessMsgCloseButton();
+		partnerCertificatePage.ClickOnSuccessMsgCloseButton();
+		partnerCertificatePage.clickOnTitleBackButton();
 	}
 
 	@Test(priority = 3, description = "Policy creation and filter")
@@ -231,7 +257,7 @@ public class AuthPartnerTest extends BaseClass {
 
 		basePage.scrollToStartPage();
 
-		createAuthPolicy(authPolicyPage, basePage, GlobalConstants.DEACTIVATE_POLICY,
+		createAuthPolicy(authPolicyPage, basePage, GlobalConstants.DEACTIVATE_AUTHPOLICY,
 				GlobalConstants.DEACTIVATE_POLICY_DESCRIPTION);
 
 		basePage.scrollToStartPage();
@@ -245,7 +271,7 @@ public class AuthPartnerTest extends BaseClass {
 
 		filterAndPublishAuthPolicy(authPolicyPage, GlobalConstants.PENDING_POLICY);
 
-		filterAndDeactivateAuthPolicy(authPolicyPage, GlobalConstants.DEACTIVATE_POLICY);
+		filterAndDeactivateAuthPolicy(authPolicyPage, GlobalConstants.DEACTIVATE_AUTHPOLICY);
 
 		logoutFromPartner(dashboardPage);
 
@@ -253,7 +279,6 @@ public class AuthPartnerTest extends BaseClass {
 		loginPage.enterPassword(password);
 		loginPage.clickOnLoginButton();
 
-		loginPage.clickOnSomethingWentWrongHomeBtn();
 		assertTrue(dashboardPage.isWelcomeMessageDisplayed(), GlobalConstants.isWelcomeMessageDisplayed);
 
 		assertTrue(dashboardPage.isPoliciesTitleDisplayed(), GlobalConstants.isPoliciesTitleDisplayed);
@@ -332,9 +357,7 @@ public class AuthPartnerTest extends BaseClass {
 
 		policiesPage.clickOnPolicyListItem1();
 		assertTrue(policiesPage.isSubTitleHomeButtonDisplayed(), GlobalConstants.isSubTitleHomeDisplayed);
-//		assertTrue(policiesPage.isSubTitleButtonDisplayed(), GlobalConstants.isSubTitleDisplayed);
 		assertTrue(policiesPage.isTitleBackIconDisplayed(), GlobalConstants.isBackArrow);
-//		assertTrue(policiesPage.isViewPolicyDetailsTextDisplayed(), GlobalConstants.isViewPolicyTitle);
 		policiesPage.clickOnTitleBackIcon();
 		assertTrue(policiesPage.isTitleOfPolicyPageDisplayed(), GlobalConstants.isTitleOfPolicyPageDisplayed);
 		assertTrue(policiesPage.isRequestPolicyButtonDisplayed(), GlobalConstants.isRequestPolicyButtonDisplayed);
@@ -345,7 +368,7 @@ public class AuthPartnerTest extends BaseClass {
 
 		policiesPage.clickOnRequestPolicyButtonOfTabularPage();
 		policiesPage.selectPartnerIdDropdown();
-		policiesPage.enterInvalidPolicyNameDropdown(GlobalConstants.DEACTIVATE_POLICY);
+		policiesPage.enterInvalidPolicyNameDropdown(GlobalConstants.DEACTIVATE_AUTHPOLICY);
 		assertTrue(policiesPage.isNoDataAvailableDisplayed(), GlobalConstants.isNoDataAvailableDisplayed);
 		policiesPage.clickOnRequestPoliciesFormClearButton();
 		policiesPage.selectPartnerIdDropdown();
@@ -374,8 +397,8 @@ public class AuthPartnerTest extends BaseClass {
 		PartnerPolicyMappingPage.clickOnApplyFilterButton();
 		PartnerPolicyMappingPage.clickOnPartnerListViewElipsisButton();
 		PartnerPolicyMappingPage.clickOnApproveOrRejectButton();
-		assertTrue(PartnerPolicyMappingPage.isConfirmationPopupDisplayed(),
-				GlobalConstants.isConfirmationPopupDisplayed);
+		assertTrue(PartnerPolicyMappingPage.isApproveOrRejectConfirmationPopupDisplayed(),
+				GlobalConstants.isApproveOrRejectConfirmationPopupDisplayed);
 		assertTrue(PartnerPolicyMappingPage.isConfirmationPopupDetailedMessageDisplayed(),
 				GlobalConstants.isConfirmationPopupDetailedMessageDisplayed);
 		assertTrue(PartnerPolicyMappingPage.isApproveRejectButtonDisplayed(),
@@ -396,16 +419,9 @@ public class AuthPartnerTest extends BaseClass {
 		assertTrue(dashboardPage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
 		LoginPage loginPage = dashboardPage.clickOnLogoutButton();
 
-		assertTrue(loginPage.isPageNotFoundMessageDisplayed(), GlobalConstants.isKeycloakPageDisplayed);
-		basePage.navigateBack();
-		dashboardPage.clickOnProfileDropdown();
-		dashboardPage.clickOnLogoutButton();
-
 		loginPage.enterUserName("pmpui-auth");
 		loginPage.enterPassword(password);
 		loginPage.clickOnLoginButton();
-		
-		PartnerPolicyMappingPage.clickOntitleBackIcon();
 
 		assertTrue(dashboardPage.isAuthenticationServicesTitleDisplayed(),
 				GlobalConstants.isAuthenticationServicesDisplayed);
@@ -510,7 +526,6 @@ public class AuthPartnerTest extends BaseClass {
 		assertTrue(oidcClientPage.isOidcClientDetailsCopyIdDisplayed(),
 				GlobalConstants.isOidcClientDetailsCopyIdDisplayed);
 		assertTrue(oidcClientPage.isOidcClientNameLabelDisplayed(), GlobalConstants.isOidcClientNameLabelDisplayed);
-//		assertTrue(oidcClientPage.isOidcClientNameContextDisplayed(),GlobalConstants.isOidcClientNameContextDisplayed);  [Validating oidc client name]
 		assertTrue(oidcClientPage.isOidcClientDetailsBackButtonDisplayed(),
 				GlobalConstants.isOidcClientDetailsBackButtonDisplayed);
 		oidcClientPage.clickOidcClientDetailsBackButton();
@@ -530,9 +545,11 @@ public class AuthPartnerTest extends BaseClass {
 
 		createOidcClient(oidcClientPage, GlobalConstants.AUTOMATION_UPPERCASE);
 
-		createOidcClient(oidcClientPage, GlobalConstants.DEACTIVATE_POLICY2);
+		createOidcClient(oidcClientPage, GlobalConstants.DEACTIVATE_OIDCPOLICY2);
 
-		createOidcClient(oidcClientPage, GlobalConstants.DEACTIVATE_POLICY);
+		createOidcClient(oidcClientPage, GlobalConstants.DEACTIVATE_AUTHPOLICY);
+
+		createOidcClient(oidcClientPage, GlobalConstants.AUTOMATION_LOWERCASE);
 
 		oidcClientPage.listPageCreateOidcClientButton();
 		oidcClientPage.selectPartnerIdDropdown();
@@ -643,7 +660,8 @@ public class AuthPartnerTest extends BaseClass {
 		apiKeyPage.selectPartnerIdDropdown();
 		apiKeyPage.selectPolicyNameDropdown(data);
 		apiKeyPage.enterNameOfApiKeyTextBox(GlobalConstants.SPECIAL_CHARACTERS);
-		assertTrue(apiKeyPage.isSpecialCharacterErrorMessageDisplayed(), GlobalConstants.isSpecialCharacterErrorMessageDisplayed);
+		assertTrue(apiKeyPage.isSpecialCharacterErrorMessageDisplayed(),
+				GlobalConstants.isSpecialCharacterErrorMessageDisplayed);
 		apiKeyPage.enterNameOfApiKeyTextBox(GlobalConstants.AUTOMATION);
 		apiKeyPage.clickOnSubmitButton();
 		apiKeyPage.clickOnCopyIdCloseButton();
@@ -661,32 +679,34 @@ public class AuthPartnerTest extends BaseClass {
 		apiKeyPage.clickOnSubmitButton();
 		assertTrue(apiKeyPage.isDuplicateApiKeyNameErrorMessageDisplayed(),
 				GlobalConstants.isDuplicateApiKeyNameErrorMessageDisplayed);
-		apiKeyPage.clickOnDuplicateApiKeyNameErrorMessageCancelButton();
+
+		apiKeyPage.clickOnDuplicateApiKeyNameErrorMessageCloseButton();
 		apiKeyPage.enterNameOfApiKeyTextBox(GlobalConstants.SPECIAL_NUMERIC);
-		assertTrue(apiKeyPage.isSpecialCharacterErrorMessageDisplayed(), GlobalConstants.isSpecialCharacterErrorMessageDisplayed);
+		assertTrue(apiKeyPage.isSpecialCharacterErrorMessageDisplayed(),
+				GlobalConstants.isSpecialCharacterErrorMessageDisplayed);
 		apiKeyPage.enterNameOfApiKeyTextBox(GlobalConstants.ALPHANUMERIC);
 		apiKeyPage.clickOnSubmitButton();
 		apiKeyPage.clickOnCopyIdCloseButton();
 		apiKeyPage.clickOnConfirmationGoBackButton();
 
 		apiKeyPage.clickOnapiListElipsisButton();
-		apiKeyPage.clickOnApiKeyDeactivateButton();
-		assertTrue(apiKeyPage.isApiKeyDeactivateConfirmationTextDisplayed(),
+		apiKeyPage.clickOnDeactivateButton();
+		assertTrue(apiKeyPage.isApiKeyDeactivatePopupDisplayed(),
 				GlobalConstants.isApiKeyDeactivateConfirmationTextDisplayed);
 		assertTrue(apiKeyPage.isApiKeyDeactivationInfoTextDisplayed(),
 				GlobalConstants.isApiKeyDeactivationInfoTextDisplayed);
-		assertTrue(apiKeyPage.isDeactivateCancelButtonDisplayed(), GlobalConstants.isDeactivateCancelButtonDisplayed);
-		assertTrue(apiKeyPage.isDeactivateConfirmButtonDisplayed(), GlobalConstants.isDeactivateConfirmButtonDisplayed);
+		assertTrue(apiKeyPage.isDeactivateCancelButtonAvailable(), GlobalConstants.isDeactivateCancelButtonAvailable);
+		assertTrue(apiKeyPage.isDeactivateSubmitButtonAvailable(), GlobalConstants.isDeactivateSubmitButtonAvailable);
 		apiKeyPage.clickOnDeactivateCancelButton();
 		apiKeyPage.clickOnapiListElipsisButton();
-		apiKeyPage.clickOnApiKeyDeactivateButton();
-		apiKeyPage.clickOnDeactivateConfirmButton();
+		apiKeyPage.clickOnDeactivateButton();
+		apiKeyPage.clickOnDeactivateSubmitButton();
 		apiKeyPage.clickOnDeactivatedApiKey();
 		assertTrue(apiKeyPage.isDeactivatedApiKeyDisabled(), GlobalConstants.isDeactivatedApiKeyDisabled);
 		assertTrue(apiKeyPage.isDeactivatedApiKeyGreyColored(), GlobalConstants.isDeactivatedApiKeyGreyColored);
 		apiKeyPage.clickOnapiListElipsisButton();
-		apiKeyPage.clickOnApiKeyDeactivateButton();
-		assertFalse(apiKeyPage.isApiKeyDeactivateConfirmationTextDisplayed(),
+		apiKeyPage.clickOnDeactivateButton();
+		assertFalse(apiKeyPage.isApiKeyDeactivatePopupDisplayed(),
 				GlobalConstants.isApiKeyDeactivateConfirmationTextDisplayed);
 		apiKeyPage.clickOnApiKeyViewButton();
 		assertTrue(apiKeyPage.isApiKeyStatusDeactivatedDisplayed(), GlobalConstants.isApiKeyStatusDeactivated);
@@ -744,6 +764,10 @@ public class AuthPartnerTest extends BaseClass {
 
 		createApiKey(apiKeyPage, GlobalConstants.AUTHPOLICY06);
 
+		createApiKey(apiKeyPage, GlobalConstants.DEACTIVATE_APIKEY);
+
+		createApiKey(apiKeyPage, GlobalConstants.ACTIVATE_ADMINAPIKEY);
+
 		assertTrue(apiKeyPage.isItemsPerPageDisplayed(), GlobalConstants.isItemsPerPageDisplayed);
 		assertTrue(apiKeyPage.isItemsPerPageDropdownAvailable(), GlobalConstants.isItemsPerPageDropdownAvailable);
 		apiKeyPage.clickOnItemsPerPageDropdown();
@@ -784,7 +808,7 @@ public class AuthPartnerTest extends BaseClass {
 				GlobalConstants.isListOfPolicyRequestedTextDisplayed);
 	}
 
-//	@Test(priority = 7, description = "Resubmit already submitted request policy")
+	@Test(priority = 7, description = "Resubmit already submitted request policy")
 	public void reSubmitAlreadySubmittedRequestPolicy() {
 		DashboardPage dashboardpage = new DashboardPage(driver);
 		basePage = new BasePage(driver);
@@ -1201,7 +1225,6 @@ public class AuthPartnerTest extends BaseClass {
 		assertTrue(dashboardPage.isOrganizationIconWithNameDisplayed(),
 				GlobalConstants.isOrganizationIconWithNameDisplayed);
 		assertTrue(dashboardPage.isContactusLinkDisplayed(), GlobalConstants.isContactusLinkDisplayed);
-//		dashboardpage.clickOnContactusLink();
 		assertTrue(dashboardPage.isWelcomeMessageDisplayed(), GlobalConstants.isWelcomeMessageDisplayed);
 
 	}
@@ -1210,22 +1233,12 @@ public class AuthPartnerTest extends BaseClass {
 		dashboardPage.clickOnProfileDropdown();
 		assertTrue(dashboardPage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
 		LoginPage loginPage = dashboardPage.clickOnLogoutButton();
-
-		assertTrue(loginPage.isPageNotFoundMessageDisplayed(), GlobalConstants.isKeycloakPageDisplayed);
-		basePage.navigateBack();
-		dashboardPage.clickOnProfileDropdown();
-		dashboardPage.clickOnLogoutButton();
 	}
 
 	private void loginAsAuthPartner(DashboardPage dashboardPage) {
 		dashboardPage.clickOnProfileDropdown();
 		assertTrue(dashboardPage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
 		LoginPage loginPage = dashboardPage.clickOnLogoutButton();
-
-		assertTrue(loginPage.isPageNotFoundMessageDisplayed(), GlobalConstants.isKeycloakPageDisplayed);
-		basePage.navigateBack();
-		dashboardPage.clickOnProfileDropdown();
-		dashboardPage.clickOnLogoutButton();
 
 		loginPage.enterUserName("pmpui-auth");
 		loginPage.enterPassword(password);
