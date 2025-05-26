@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import DropdownComponent from '../../common/fields/DropdownComponent.js';
 import { useTranslation } from 'react-i18next';
-import { createDropdownData, getOuterDivWidth, isLangRTL, validateInputRegex } from '../../../utils/AppUtils.js';
+import { createDropdownData, getFilterDropdownStyle, getFilterTextFieldStyle, getOuterDivWidth, isLangRTL, validateInputRegex } from '../../../utils/AppUtils.js';
 import TextInputComponent from '../../common/fields/TextInputComponent.js';
 import { getUserProfile } from '../../../services/UserProfileService.js';
 import CalendarInput from '../../common/CalendarInput.js';
@@ -56,16 +56,6 @@ function CertificateNotificationsFilter({ onApplyFilter }) {
         return Object.values(filters).every(value => value === "") || invalidCertificateId || invalidIssuedBy || invalidIssuedTo;
     };
 
-    const styles = {
-        dropdownButton: "min-w-64",
-    };
-
-    const styleSet = {
-        inputField: "min-w-64",
-        inputLabel: "mb-2",
-        outerDiv: "ml-4"
-    };
-
     const calenderStyleSet = {
         datePicker: "h-9 p-1",
         outerDiv: `ml-4 ${getOuterDivWidth(t('viewAllNotifications.selectExpiryDate'))}`
@@ -79,7 +69,7 @@ function CertificateNotificationsFilter({ onApplyFilter }) {
                     onTextChange={onFilterChangeEvent}
                     fieldNameKey="viewAllNotifications.certificateId"
                     placeHolderKey="viewAllNotifications.searchCertificateId"
-                    styleSet={styleSet}
+                    styleSet={getFilterTextFieldStyle()}
                     id="cert_id_filter"
                     inputError={invalidCertificateId}
                 />
@@ -88,7 +78,7 @@ function CertificateNotificationsFilter({ onApplyFilter }) {
                     onTextChange={onFilterChangeEvent}
                     fieldNameKey='viewAllNotifications.issuedBy'
                     placeHolderKey='viewAllNotifications.searchIssuedBy'
-                    styleSet={styleSet}
+                    styleSet={getFilterTextFieldStyle()}
                     id='cert_issued_by_domain_filter'
                     inputError={invalidIssuedBy}
                 />
@@ -97,7 +87,7 @@ function CertificateNotificationsFilter({ onApplyFilter }) {
                     onTextChange={onFilterChangeEvent}
                     fieldNameKey='viewAllNotifications.issuedTo'
                     placeHolderKey='viewAllNotifications.searchIssuedTo'
-                    styleSet={styleSet}
+                    styleSet={getFilterTextFieldStyle()}
                     id='cert_issued_to_filter'
                     inputError={invalidIssuedTo}
                 />
@@ -107,7 +97,7 @@ function CertificateNotificationsFilter({ onApplyFilter }) {
                     onDropDownChangeEvent={onFilterChangeEvent}
                     fieldNameKey="viewAllNotifications.partnerDomain"
                     placeHolderKey="viewAllNotifications.selectPartnerDomain"
-                    styleSet={styles}
+                    styleSet={getFilterDropdownStyle()}
                     isPlaceHolderPresent={true}
                     id="cert_partner_domain_filter"
                 />
