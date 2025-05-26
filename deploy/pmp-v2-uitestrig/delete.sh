@@ -12,7 +12,7 @@ function deleting_uitestrig() {
       read -p "Are you sure you want to delete uitestrig helm charts?(Y/n) " yn
       if [ $yn = "Y" ]
         then
-          helm -n $NS delete pmp-uitestrig
+          helm -n $NS delete pmp-ui-v2testrig
           break
         else
           break
