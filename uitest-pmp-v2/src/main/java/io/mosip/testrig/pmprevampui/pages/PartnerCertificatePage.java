@@ -1,4 +1,4 @@
-package io.mosip.testrig.pmpv2ui.pages;
+package io.mosip.testrig.pmpuiv2.pages;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -9,8 +9,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-import io.mosip.testrig.pmpv2ui.fw.util.PmpTestUtil;
-import io.mosip.testrig.pmpv2ui.utility.TestRunner;
+import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
+import io.mosip.testrig.pmpuiv2.utility.TestRunner;
 
 public class PartnerCertificatePage extends BasePage {
 

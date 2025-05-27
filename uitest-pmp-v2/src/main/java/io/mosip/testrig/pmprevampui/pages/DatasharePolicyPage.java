@@ -1,15 +1,19 @@
-package io.mosip.testrig.pmpv2ui.pages;
+package io.mosip.testrig.pmpuiv2.pages;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+<<<<<<< HEAD
 <<<<<<< HEAD:uitest-pmprevamp/src/main/java/io/mosip/testrig/pmprevampui/pages/DatasharePolicyPage.java
 import io.mosip.testrig.pmprevampui.fw.util.PmpTestUtil;
 import io.mosip.testrig.pmprevampui.utility.TestRunner;
 =======
 import io.mosip.testrig.pmpv2ui.utility.TestRunner;
 >>>>>>> 1941d522 ([MOSIP-40990] changes related to renaming from pmp-revamp to pmp-ui-v2):uitest-pmp-v2/src/main/java/io/mosip/testrig/pmprevampui/pages/DatasharePolicyPage.java
+=======
+import io.mosip.testrig.pmpuiv2.utility.TestRunner;
+>>>>>>> 24047727 ([MOSIP-40990] changes related to renaming from pmp-revamp to pmp-ui-v2)
 
 public class DatasharePolicyPage extends BasePage {
 	

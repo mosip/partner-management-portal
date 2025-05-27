@@ -1,4 +1,4 @@
-package io.mosip.testrig.pmpv2ui.pages;
+package io.mosip.testrig.pmpuiv2.pages;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -19,11 +19,11 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Reporter;
 import org.apache.log4j.Logger;
 
-import io.mosip.testrig.pmpv2ui.kernel.util.ConfigManager;
-import io.mosip.testrig.pmpv2ui.utility.JsonUtil;
-import io.mosip.testrig.pmpv2ui.utility.LogUtil;
-import io.mosip.testrig.pmpv2ui.utility.Screenshot;
-import io.mosip.testrig.pmpv2ui.utility.WaitUtil;
+import io.mosip.testrig.pmpuiv2.kernel.util.ConfigManager;
+import io.mosip.testrig.pmpuiv2.utility.JsonUtil;
+import io.mosip.testrig.pmpuiv2.utility.LogUtil;
+import io.mosip.testrig.pmpuiv2.utility.Screenshot;
+import io.mosip.testrig.pmpuiv2.utility.WaitUtil;
 
 public class BasePage {
 

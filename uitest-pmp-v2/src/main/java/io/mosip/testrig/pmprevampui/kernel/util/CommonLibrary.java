@@ -1,4 +1,4 @@
-package io.mosip.testrig.pmpv2ui.kernel.util;
+package io.mosip.testrig.pmpuiv2.kernel.util;
 
 import static io.restassured.RestAssured.given;
 
@@ -16,9 +16,9 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import io.mosip.testrig.pmpv2ui.kernel.service.ApplicationLibrary;
-import io.mosip.testrig.pmpv2ui.utility.BaseTestCaseFunc;
-import io.mosip.testrig.pmpv2ui.utility.TestRunner;
+import io.mosip.testrig.pmpuiv2.kernel.service.ApplicationLibrary;
+import io.mosip.testrig.pmpuiv2.utility.BaseTestCaseFunc;
+import io.mosip.testrig.pmpuiv2.utility.TestRunner;
 import io.restassured.http.Cookie;
 import io.restassured.response.Response;
 

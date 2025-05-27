@@ -1,4 +1,4 @@
-package io.mosip.testrig.pmpv2ui.authentication.fw.util;
+package io.mosip.testrig.pmpuiv2.authentication.fw.util;
 
 import static io.restassured.RestAssured.given;
 

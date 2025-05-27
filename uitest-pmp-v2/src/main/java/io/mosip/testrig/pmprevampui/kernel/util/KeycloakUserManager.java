@@ -1,4 +1,4 @@
-package io.mosip.testrig.pmpv2ui.kernel.util;
+package io.mosip.testrig.pmpuiv2.kernel.util;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -26,10 +26,10 @@ import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.RoleRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
 
-import io.mosip.testrig.pmpv2ui.fw.util.PmpTestUtil;
-import io.mosip.testrig.pmpv2ui.utility.BaseClass;
-import io.mosip.testrig.pmpv2ui.utility.BaseTestCaseFunc;
-import io.mosip.testrig.pmpv2ui.utility.TestRunner;
+import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
+import io.mosip.testrig.pmpuiv2.utility.BaseClass;
+import io.mosip.testrig.pmpuiv2.utility.BaseTestCaseFunc;
+import io.mosip.testrig.pmpuiv2.utility.TestRunner;
 
 public class KeycloakUserManager extends BaseTestCaseFunc {
 	public static String moduleSpecificUser = null;

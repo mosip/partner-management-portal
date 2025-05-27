@@ -1,4 +1,4 @@
-package io.mosip.testrig.pmpv2ui.kernel.util;
+package io.mosip.testrig.pmpuiv2.kernel.util;
 
 import java.io.File;
 import java.util.ArrayList;

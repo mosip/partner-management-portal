@@ -1,4 +1,4 @@
-package io.mosip.testrig.pmpv2ui.utility;
+package io.mosip.testrig.pmpuiv2.utility;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -10,9 +10,9 @@ import org.testng.xml.XmlClass;
 import org.testng.xml.XmlSuite;
 import org.testng.xml.XmlTest;
 
-import io.mosip.testrig.pmpv2ui.dbaccess.DBManager;
-import io.mosip.testrig.pmpv2ui.fw.util.AdminTestUtil;
-import io.mosip.testrig.pmpv2ui.kernel.util.ConfigManager;
+import io.mosip.testrig.pmpuiv2.dbaccess.DBManager;
+import io.mosip.testrig.pmpuiv2.fw.util.AdminTestUtil;
+import io.mosip.testrig.pmpuiv2.kernel.util.ConfigManager;
 
 public class TestRunner {
 	static TestListenerAdapter tla = new TestListenerAdapter();
@@ -37,10 +37,10 @@ public class TestRunner {
 
 			XmlSuite suite = new XmlSuite();
 			suite.setName("MySuite");
-			suite.addListener("io.mosip.testrig.pmpv2ui.utility.EmailableReport");
-			XmlClass AuthPartnerTest = new XmlClass("io.mosip.testrig.pmpv2ui.testcase.AuthPartnerTest");
-			XmlClass devicePartnerTest = new XmlClass("io.mosip.testrig.pmpv2ui.testcase.DevicePartnerTest");
-			XmlClass FTMDeviceTest = new XmlClass("io.mosip.testrig.pmpv2ui.testcase.FTMDeviceTest");
+			suite.addListener("io.mosip.testrig.pmpuiv2.utility.EmailableReport");
+			XmlClass AuthPartnerTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.AuthPartnerTest");
+			XmlClass devicePartnerTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.DevicePartnerTest");
+			XmlClass FTMDeviceTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.FTMDeviceTest");
 
 			List<XmlClass> classes = new ArrayList<>();
 			String[] Scenarioname = ConfigManager.gettestcases().split(",");

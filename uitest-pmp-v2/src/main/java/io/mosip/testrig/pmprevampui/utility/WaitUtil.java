@@ -1,11 +1,11 @@
-package io.mosip.testrig.pmpv2ui.utility;
+package io.mosip.testrig.pmpuiv2.utility;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import io.mosip.testrig.pmpv2ui.kernel.util.ConfigManager;
+import io.mosip.testrig.pmpuiv2.kernel.util.ConfigManager;
 
 import java.time.Duration;
 

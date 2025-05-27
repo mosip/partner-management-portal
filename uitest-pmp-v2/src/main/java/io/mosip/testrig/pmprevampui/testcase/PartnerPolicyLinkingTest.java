@@ -1,20 +1,20 @@
-package io.mosip.testrig.pmpv2ui.testcase;
+package io.mosip.testrig.pmpuiv2.testcase;
 
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import org.testng.annotations.Test;
 
-import io.mosip.testrig.pmpv2ui.pages.AuthPolicyPage;
-import io.mosip.testrig.pmpv2ui.pages.BasePage;
-import io.mosip.testrig.pmpv2ui.pages.DashboardPage;
-import io.mosip.testrig.pmpv2ui.pages.DatasharePolicyPage;
-import io.mosip.testrig.pmpv2ui.pages.LoginPage;
-import io.mosip.testrig.pmpv2ui.pages.PartnerPolicyMappingPage;
-import io.mosip.testrig.pmpv2ui.pages.PoliciesPage;
-import io.mosip.testrig.pmpv2ui.pages.PolicyGroupPage;
-import io.mosip.testrig.pmpv2ui.utility.BaseClass;
-import io.mosip.testrig.pmpv2ui.utility.GlobalConstants;
+import io.mosip.testrig.pmpuiv2.pages.AuthPolicyPage;
+import io.mosip.testrig.pmpuiv2.pages.BasePage;
+import io.mosip.testrig.pmpuiv2.pages.DashboardPage;
+import io.mosip.testrig.pmpuiv2.pages.DatasharePolicyPage;
+import io.mosip.testrig.pmpuiv2.pages.LoginPage;
+import io.mosip.testrig.pmpuiv2.pages.PartnerPolicyMappingPage;
+import io.mosip.testrig.pmpuiv2.pages.PoliciesPage;
+import io.mosip.testrig.pmpuiv2.pages.PolicyGroupPage;
+import io.mosip.testrig.pmpuiv2.utility.BaseClass;
+import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
 public class PartnerPolicyLinkingTest extends BaseClass {
 

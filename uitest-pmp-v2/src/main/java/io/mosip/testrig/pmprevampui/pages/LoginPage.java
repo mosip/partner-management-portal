@@ -1,4 +1,4 @@
-package io.mosip.testrig.pmpv2ui.pages;
+package io.mosip.testrig.pmpuiv2.pages;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

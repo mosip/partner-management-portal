@@ -1,4 +1,4 @@
-package io.mosip.testrig.pmpv2ui.testcase;
+package io.mosip.testrig.pmpuiv2.testcase;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
@@ -6,22 +6,22 @@ import static org.testng.Assert.assertTrue;
 
 import org.testng.annotations.Test;
 
-import io.mosip.testrig.pmpv2ui.fw.util.PmpTestUtil;
-import io.mosip.testrig.pmpv2ui.kernel.util.ConfigManager;
-import io.mosip.testrig.pmpv2ui.kernel.util.KeycloakUserManager;
-import io.mosip.testrig.pmpv2ui.pages.ApiKeyPage;
-import io.mosip.testrig.pmpv2ui.pages.AuthPolicyPage;
-import io.mosip.testrig.pmpv2ui.pages.BasePage;
-import io.mosip.testrig.pmpv2ui.pages.DashboardPage;
-import io.mosip.testrig.pmpv2ui.pages.LoginPage;
-import io.mosip.testrig.pmpv2ui.pages.OidcClientPage;
-import io.mosip.testrig.pmpv2ui.pages.PartnerCertificatePage;
-import io.mosip.testrig.pmpv2ui.pages.PartnerPolicyMappingPage;
-import io.mosip.testrig.pmpv2ui.pages.PoliciesPage;
-import io.mosip.testrig.pmpv2ui.pages.ProfilePage;
-import io.mosip.testrig.pmpv2ui.pages.RegisterPage;
-import io.mosip.testrig.pmpv2ui.utility.BaseClass;
-import io.mosip.testrig.pmpv2ui.utility.GlobalConstants;
+import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
+import io.mosip.testrig.pmpuiv2.kernel.util.ConfigManager;
+import io.mosip.testrig.pmpuiv2.kernel.util.KeycloakUserManager;
+import io.mosip.testrig.pmpuiv2.pages.ApiKeyPage;
+import io.mosip.testrig.pmpuiv2.pages.AuthPolicyPage;
+import io.mosip.testrig.pmpuiv2.pages.BasePage;
+import io.mosip.testrig.pmpuiv2.pages.DashboardPage;
+import io.mosip.testrig.pmpuiv2.pages.LoginPage;
+import io.mosip.testrig.pmpuiv2.pages.OidcClientPage;
+import io.mosip.testrig.pmpuiv2.pages.PartnerCertificatePage;
+import io.mosip.testrig.pmpuiv2.pages.PartnerPolicyMappingPage;
+import io.mosip.testrig.pmpuiv2.pages.PoliciesPage;
+import io.mosip.testrig.pmpuiv2.pages.ProfilePage;
+import io.mosip.testrig.pmpuiv2.pages.RegisterPage;
+import io.mosip.testrig.pmpuiv2.utility.BaseClass;
+import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
 public class AuthPartnerTest extends BaseClass {
 

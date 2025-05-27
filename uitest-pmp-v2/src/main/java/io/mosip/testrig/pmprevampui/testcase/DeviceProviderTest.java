@@ -1,22 +1,22 @@
-package io.mosip.testrig.pmpv2ui.testcase;
+package io.mosip.testrig.pmpuiv2.testcase;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 import org.testng.annotations.Test;
 
-import io.mosip.testrig.pmpv2ui.fw.util.PmpTestUtil;
-import io.mosip.testrig.pmpv2ui.pages.AddDevicePage;
-import io.mosip.testrig.pmpv2ui.pages.DashboardPage;
-import io.mosip.testrig.pmpv2ui.pages.DeviceProviderPage;
-import io.mosip.testrig.pmpv2ui.pages.ListOfDevicesPage;
-import io.mosip.testrig.pmpv2ui.pages.ListOfSbiPage;
-import io.mosip.testrig.pmpv2ui.pages.LoginPage;
-import io.mosip.testrig.pmpv2ui.pages.PartnerCertificatePage;
-import io.mosip.testrig.pmpv2ui.pages.RegisterPage;
-import io.mosip.testrig.pmpv2ui.pages.ViewDeviceDetailsPage;
-import io.mosip.testrig.pmpv2ui.utility.BaseClass;
-import io.mosip.testrig.pmpv2ui.utility.GlobalConstants;
+import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
+import io.mosip.testrig.pmpuiv2.pages.AddDevicePage;
+import io.mosip.testrig.pmpuiv2.pages.DashboardPage;
+import io.mosip.testrig.pmpuiv2.pages.DeviceProviderPage;
+import io.mosip.testrig.pmpuiv2.pages.ListOfDevicesPage;
+import io.mosip.testrig.pmpuiv2.pages.ListOfSbiPage;
+import io.mosip.testrig.pmpuiv2.pages.LoginPage;
+import io.mosip.testrig.pmpuiv2.pages.PartnerCertificatePage;
+import io.mosip.testrig.pmpuiv2.pages.RegisterPage;
+import io.mosip.testrig.pmpuiv2.pages.ViewDeviceDetailsPage;
+import io.mosip.testrig.pmpuiv2.utility.BaseClass;
+import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
 public class DeviceProviderTest extends BaseClass {
 

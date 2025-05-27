@@ -1,4 +1,4 @@
-package io.mosip.testrig.pmpv2ui.utility;
+package io.mosip.testrig.pmpuiv2.utility;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -19,10 +19,10 @@ import javax.ws.rs.core.MediaType;
 //import org.apache.log4j.PropertyConfigurator;
 import org.json.simple.JSONObject;
 
-import io.mosip.testrig.pmpv2ui.authentication.fw.util.RestClient;
-import io.mosip.testrig.pmpv2ui.kernel.util.CommonLibrary;
-import io.mosip.testrig.pmpv2ui.kernel.util.ConfigManager;
-import io.mosip.testrig.pmpv2ui.kernel.util.KernelAuthentication;
+import io.mosip.testrig.pmpuiv2.authentication.fw.util.RestClient;
+import io.mosip.testrig.pmpuiv2.kernel.util.CommonLibrary;
+import io.mosip.testrig.pmpuiv2.kernel.util.ConfigManager;
+import io.mosip.testrig.pmpuiv2.kernel.util.KernelAuthentication;
 import io.restassured.response.Response;
 
 //import org.apache.log4j.Logger;

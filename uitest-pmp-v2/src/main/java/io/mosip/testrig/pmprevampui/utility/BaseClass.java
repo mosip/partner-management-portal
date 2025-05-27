@@ -1,4 +1,4 @@
-package io.mosip.testrig.pmpv2ui.utility;
+package io.mosip.testrig.pmpuiv2.utility;
 
 import java.io.File;
 import java.lang.reflect.Method;
@@ -23,8 +23,8 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import io.mosip.testrig.pmpv2ui.kernel.util.ConfigManager;
-import io.mosip.testrig.pmpv2ui.pages.BasePage;
+import io.mosip.testrig.pmpuiv2.kernel.util.ConfigManager;
+import io.mosip.testrig.pmpuiv2.pages.BasePage;
 
 public class BaseClass {
 	protected WebDriver driver;

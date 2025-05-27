@@ -1,4 +1,4 @@
-package io.mosip.testrig.pmpv2ui.utility;
+package io.mosip.testrig.pmpuiv2.utility;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebElement;

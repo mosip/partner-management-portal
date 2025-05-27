@@ -1,10 +1,10 @@
-package io.mosip.testrig.pmpv2ui.pages;
+package io.mosip.testrig.pmpuiv2.pages;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-import io.mosip.testrig.pmpv2ui.utility.TestRunner;
+import io.mosip.testrig.pmpuiv2.utility.TestRunner;
 
 public class PoliciesPage extends BasePage {
 

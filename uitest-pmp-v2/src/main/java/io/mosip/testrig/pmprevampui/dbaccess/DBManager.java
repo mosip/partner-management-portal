@@ -1,4 +1,4 @@
-package io.mosip.testrig.pmpv2ui.dbaccess;
+package io.mosip.testrig.pmpuiv2.dbaccess;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -16,9 +16,9 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
 import org.hibernate.jdbc.Work;
 
-import io.mosip.testrig.pmpv2ui.kernel.util.ConfigManager;
-import io.mosip.testrig.pmpv2ui.utility.BaseClass;
-import io.mosip.testrig.pmpv2ui.utility.GlobalConstants;
+import io.mosip.testrig.pmpuiv2.kernel.util.ConfigManager;
+import io.mosip.testrig.pmpuiv2.utility.BaseClass;
+import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
 public class DBManager extends BaseClass {
 	private static Logger logger = Logger.getLogger(DBManager.class);

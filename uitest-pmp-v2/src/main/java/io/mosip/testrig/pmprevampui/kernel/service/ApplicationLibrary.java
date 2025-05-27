@@ -1,9 +1,9 @@
-package io.mosip.testrig.pmpv2ui.kernel.service;
+package io.mosip.testrig.pmpuiv2.kernel.service;
 
 import javax.ws.rs.core.MediaType;
 
-import io.mosip.testrig.pmpv2ui.kernel.util.CommonLibrary;
-import io.mosip.testrig.pmpv2ui.utility.BaseTestCaseFunc;
+import io.mosip.testrig.pmpuiv2.kernel.util.CommonLibrary;
+import io.mosip.testrig.pmpuiv2.utility.BaseTestCaseFunc;
 import io.restassured.response.Response;
 
 public class ApplicationLibrary extends BaseTestCaseFunc {

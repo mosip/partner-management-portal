@@ -1,4 +1,4 @@
 #!/bin/bash
 
 java --version
-java -jar pmpv2ui-*-jar-with-dependencies.jar
+java -jar pmpuiv2-*-jar-with-dependencies.jar

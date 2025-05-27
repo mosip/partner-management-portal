@@ -1,4 +1,4 @@
-package io.mosip.testrig.pmpv2ui.fw.util;
+package io.mosip.testrig.pmpuiv2.fw.util;
 
 import static io.restassured.RestAssured.given;
 
@@ -21,11 +21,11 @@ import java.util.List;
 import org.json.JSONObject;
 import com.nimbusds.jose.jwk.KeyUse;
 import com.nimbusds.jose.jwk.RSAKey;
-import io.mosip.testrig.pmpv2ui.authentication.fw.util.RestClient;
-import io.mosip.testrig.pmpv2ui.kernel.util.ConfigManager;
-import io.mosip.testrig.pmpv2ui.kernel.util.KeycloakUserManager;
-import io.mosip.testrig.pmpv2ui.utility.BaseTestCaseFunc;
-import io.mosip.testrig.pmpv2ui.utility.TestRunner;
+import io.mosip.testrig.pmpuiv2.authentication.fw.util.RestClient;
+import io.mosip.testrig.pmpuiv2.kernel.util.ConfigManager;
+import io.mosip.testrig.pmpuiv2.kernel.util.KeycloakUserManager;
+import io.mosip.testrig.pmpuiv2.utility.BaseTestCaseFunc;
+import io.mosip.testrig.pmpuiv2.utility.TestRunner;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 

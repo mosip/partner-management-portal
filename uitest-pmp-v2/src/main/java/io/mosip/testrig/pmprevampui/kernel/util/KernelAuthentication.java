@@ -1,15 +1,15 @@
-package io.mosip.testrig.pmpv2ui.kernel.util;
+package io.mosip.testrig.pmpuiv2.kernel.util;
 
 import java.util.Map;
 
 import org.json.simple.JSONObject;
 
-import io.mosip.testrig.pmpv2ui.kernel.service.ApplicationLibrary;
-import io.mosip.testrig.pmpv2ui.utility.BaseTestCaseFunc;
-import io.mosip.testrig.pmpv2ui.utility.GlobalConstants;
+import io.mosip.testrig.pmpuiv2.kernel.service.ApplicationLibrary;
+import io.mosip.testrig.pmpuiv2.utility.BaseTestCaseFunc;
+import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 import io.restassured.response.Response;
 
-public class KernelAuthentication extends io.mosip.testrig.pmpv2ui.utility.BaseTestCaseFunc {
+public class KernelAuthentication extends io.mosip.testrig.pmpuiv2.utility.BaseTestCaseFunc {
 	private String authRequest = "/config/Authorization/request.json";
 	private String authInternalRequest = "/config/Authorization/internalAuthRequest.json";
 	public String zonemapCookie = null;

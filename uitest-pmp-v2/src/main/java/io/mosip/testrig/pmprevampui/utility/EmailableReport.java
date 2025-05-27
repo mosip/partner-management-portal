@@ -1,4 +1,4 @@
-package io.mosip.testrig.pmpv2ui.utility;
+package io.mosip.testrig.pmpuiv2.utility;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -32,9 +32,9 @@ import org.testng.internal.Utils;
 import org.testng.log4testng.Logger;
 import org.testng.xml.XmlSuite;
 
-import io.mosip.testrig.pmpv2ui.fw.util.AdminTestUtil;
-import io.mosip.testrig.pmpv2ui.kernel.util.ConfigManager;
-import io.mosip.testrig.pmpv2ui.kernel.util.S3Adapter;
+import io.mosip.testrig.pmpuiv2.fw.util.AdminTestUtil;
+import io.mosip.testrig.pmpuiv2.kernel.util.ConfigManager;
+import io.mosip.testrig.pmpuiv2.kernel.util.S3Adapter;
 
 /**
  * Reporter that generates a single-page HTML report of the test results.

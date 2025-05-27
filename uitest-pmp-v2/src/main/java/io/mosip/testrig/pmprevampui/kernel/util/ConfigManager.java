@@ -1,4 +1,4 @@
-package io.mosip.testrig.pmpv2ui.kernel.util;
+package io.mosip.testrig.pmpuiv2.kernel.util;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
-import io.mosip.testrig.pmpv2ui.utility.TestRunner;
+import io.mosip.testrig.pmpuiv2.utility.TestRunner;
 
 public class ConfigManager {
 

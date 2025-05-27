@@ -1,4 +1,4 @@
-package io.mosip.testrig.pmpv2ui.pages;
+package io.mosip.testrig.pmpuiv2.pages;
 
 import java.io.IOException;
 
