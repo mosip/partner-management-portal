@@ -84,7 +84,9 @@
         "intermediateCertExpiryCountSingular": "{{intermediateCertExpiryCount}} شهادة CA المتوسطة تنتهي صلاحيتها قريبًا",
         "intermediateCertExpiryCountPlural": "ستنتهي صلاحية شهادات CA المتوسطة {{intermediateCertExpiryCount}} قريبًا",
         "partnerCertExpiryCountDesc1": "{{partnerCertExpiryCount}} شهادات الشركاء تنتهي صلاحيتها قريبًا",
-        "partnerCertExpiryCountDesc2": "{{partnerCertExpiryCount}} شهادة الشريك تنتهي صلاحيتها قريبًا"
+        "partnerCertExpiryCountDesc2": "{{partnerCertExpiryCount}} شهادة الشريك تنتهي صلاحيتها قريبًا",
+        "ftmChipCertExpiryCountDesc1": "{{expiringFtmCertificateCount}} من شهادات شريحة FTM ستنتهي صلاحيتها قريبًا",
+        "ftmChipCertExpiryCountDesc2": "{{expiringFtmCertificateCount}} شهادة شريحة FTM ستنتهي صلاحيتها قريبًا"
     },
     "header": {
         "userProfile": "ملف تعريفي للمستخدم",

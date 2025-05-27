@@ -84,7 +84,9 @@
         "intermediateCertExpiryCountSingular": "{{intermediateCertExpiryCount}} Le certificat CA intermédiaire expire bientôt",
         "intermediateCertExpiryCountPlural": "{{intermediateCertExpiryCount}} Les certificats CA intermédiaires expirent bientôt",
         "partnerCertExpiryCountDesc1": "{{partnerCertExpiryCount}} Les certificats partenaires expirent bientôt",
-        "partnerCertExpiryCountDesc2": "{{partnerCertExpiryCount}} Le certificat de partenaire expire bientôt"
+        "partnerCertExpiryCountDesc2": "{{partnerCertExpiryCount}} Le certificat de partenaire expire bientôt",
+        "ftmChipCertExpiryCountDesc1": "{{expiringFtmCertificateCount}} certificats de puce FTM expirent bientôt",
+        "ftmChipCertExpiryCountDesc2": "{{expiringFtmCertificateCount}} certificat de puce FTM expire bientôt"
     },
     "header": {
         "userProfile": "Profil de l'utilisateur",

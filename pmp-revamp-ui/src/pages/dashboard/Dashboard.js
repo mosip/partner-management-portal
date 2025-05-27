@@ -38,6 +38,7 @@ function Dashboard() {
   const [sbiPendingApprovalRequestCount, setSbiPendingApprovalRequestCount] = useState();
   const [devicePendingApprovalRequestCount, setDevicePendingApprovalRequestCount] = useState();
   const [ftmPendingApprovalRequestCount, setFtmPendingApprovalRequestCount] = useState();
+  const [expiringFtmCertificateCount, setExpiringFtmCertificateCount] = useState();
   const [rootCertExpiryCount, setRootCertExpiryCount] = useState();
   const [intermediateCertExpiryCount, setIntermediateCertExpiryCount] = useState();
   const [partnerCertExpiryCount, setPartnerCertExpiryCount] = useState();
@@ -346,8 +347,38 @@ function Dashboard() {
         console.error("Error fetching data:", err);
       }
     };
+
+     const fetchFtmCertificateExpiryCount = async () => {
+      const queryParams = new URLSearchParams();
+      queryParams.append('expiryPeriod', 30);
+      const url = `${getPartnerManagerUrl('/ftpchipdetail', process.env.NODE_ENV)}?${queryParams.toString()}`;
+      try {
+        const response = await HttpService.get(url);
+        if (response) {
+          const responseData = response.data;
+          if (responseData && responseData.response) {
+            console.log(responseData.response.length);
+
+            setExpiringFtmCertificateCount(String(responseData.response.length));
+          } else {
+            handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+          }
+        } else {
+          setErrorMsg(t('dashboard.expiryCountFetchError'));
+        }
+      } catch (err) {
+        if (err.response?.status && err.response.status !== 401) {
+          setErrorMsg(t('dashboard.expiryCountFetchError'));
+        }
+        console.error("Error fetching data:", err);
+      }
+    };
+
     if (!isPartnerAdmin && isEmailVerified) {
       fetchPartnerCertExpiryCount();
+    }
+    if (!isPartnerAdmin && isEmailVerified && showFtmServices) {
+      fetchFtmCertificateExpiryCount();
     }
     if (isPartnerAdmin && isEmailVerified) {
       fetchTrustCertExpiryCount('ROOT');
@@ -543,7 +574,7 @@ function Dashboard() {
               </div>
             )}
             {!isPartnerAdmin && !isPolicyManager && showFtmServices && (
-              <div role='button' id='dashboard_ftm_chip_provider_card' onClick={ftmChipProviderServices} className="w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, ftmChipProviderServices)}>
+              <div role='button' id='dashboard_ftm_chip_provider_card' onClick={ftmChipProviderServices} className="relative w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, ftmChipProviderServices)}>
                 <div className="flex justify-center mb-5">
                   <img id='dashboard_ftm_chip_provider_icon' src={ftmServicesIcon} alt="" className="w-8 h-8" />
                 </div>
@@ -555,6 +586,14 @@ function Dashboard() {
                     {t('dashboard.ftmChipProviderServicesDesc')}
                   </p>
                 </div>
+                {expiringFtmCertificateCount > 0 && (
+                  <CountWithHover
+                    countLabel={expiringFtmCertificateCount}
+                    descriptionKey={expiringFtmCertificateCount > 1 ? "dashboard.ftmChipCertExpiryCountDesc1" : "dashboard.ftmChipCertExpiryCountDesc2"}
+                    descriptionParams={{ expiringFtmCertificateCount }}
+                    isExpiryHover={true}
+                  />
+                )}
               </div>
             )}
              {isPartnerAdmin && (
