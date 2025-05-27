@@ -466,6 +466,29 @@ function Dashboard() {
     isExpiryHover: PropTypes.bool,
   };
 
+  const getTrustCertExpiryCountDescription = () => {
+    if (rootCertExpiryCount > 0 && intermediateCertExpiryCount > 0) {
+      if (rootCertExpiryCount > 1 && intermediateCertExpiryCount > 1) {
+        return "dashboard.bothTrustCertExpiryCountPlural";
+      } 
+      if (rootCertExpiryCount === 1 && intermediateCertExpiryCount === 1) {
+        return "dashboard.bothTrustCertExpiryCountSingular";
+      } 
+      if (rootCertExpiryCount === 1 && intermediateCertExpiryCount > 1) {
+        return "dashboard.rootTrustCertExpiryCountSingular";
+      } 
+      if (rootCertExpiryCount > 1 && intermediateCertExpiryCount === 1) {
+        return "dashboard.intermediateTrustCertExpiryCountSingular";
+      }
+    } 
+    if (rootCertExpiryCount > 0) {
+      return rootCertExpiryCount > 1 ? "dashboard.rootCertExpiryCountPlural" : "dashboard.rootCertExpiryCountSingular";
+    }
+    if (intermediateCertExpiryCount > 0) {
+      return intermediateCertExpiryCount > 1 ? "dashboard.intermediateCertExpiryCountPlural" : "dashboard.intermediateCertExpiryCountSingular";
+    }
+  }
+
   return (
     <div className={`w-full mb-[2%] ${isLoginLanguageRTL ? "mr-28" : "ml-20"} overflow-x-scroll relative`}>
       {!dataLoaded && (
@@ -587,21 +610,29 @@ function Dashboard() {
                       {t('dashboard.certificateTrustStoreDesc')}
                     </p>
                   </div>
-                  <CountWithHover
-                    countLabel={
-                      rootCertExpiryCount !== null &&
-                      rootCertExpiryCount !== undefined &&
-                      intermediateCertExpiryCount !== null &&
-                      intermediateCertExpiryCount !== undefined
-                        ? `${rootCertExpiryCount} | ${intermediateCertExpiryCount}`
-                        : null
-                    }
-                    descriptionKey="dashboard.trustCertExpiryCountDesc"
-                    descriptionParams={{
-                      rootCertExpiryCount,
-                      intermediateCertExpiryCount
-                    }}
-                  />
+                  {(rootCertExpiryCount > 0 || intermediateCertExpiryCount > 0) && (
+                    <CountWithHover
+                      countLabel={
+                        rootCertExpiryCount > 0 && intermediateCertExpiryCount > 0
+                          ? `${rootCertExpiryCount} | ${intermediateCertExpiryCount}`
+                          : rootCertExpiryCount > 0
+                          ? `${rootCertExpiryCount}`
+                          : intermediateCertExpiryCount > 0
+                          ? `${intermediateCertExpiryCount}`
+                          : null
+                      }
+                      descriptionKey={getTrustCertExpiryCountDescription()}
+                      descriptionParams={
+                        rootCertExpiryCount > 0 && intermediateCertExpiryCount > 0
+                          ? { rootCertExpiryCount, intermediateCertExpiryCount }
+                          : rootCertExpiryCount > 0
+                          ? { rootCertExpiryCount }
+                          : intermediateCertExpiryCount > 0
+                          ? { intermediateCertExpiryCount }
+                          : {}}
+                      isExpiryHover={true}
+                    />
+                  )}
                 </div>
                 <div role='button' onClick={partnersList} className="w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, partnersList)}>
                   <div className="flex justify-center mb-5">

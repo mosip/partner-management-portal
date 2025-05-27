@@ -20,12 +20,6 @@ public class LoginPage extends BasePage {
 
 	@FindBy(xpath = "//input[@name=\'login\']")
 	private WebElement LoginButton;
-	
-	@FindBy(xpath = "//p[@class='instruction' and text()='Page not found']")
-	WebElement pageNotFoundMessage;
-	
-	@FindBy(id = "something_went_wrong_home_btn")
-	private WebElement somethingWentWrongHomeBtn;
 
 	public LoginPage(WebDriver driver) {
 		super(driver);
@@ -50,14 +44,6 @@ public class LoginPage extends BasePage {
 
 	public void clickOnLoginButton() {
 		clickOnElement(LoginButton);
-	}
-	
-	public boolean isPageNotFoundMessageDisplayed() {
-		return isElementDisplayed(pageNotFoundMessage);
-	}
-	
-	public void clickOnSomethingWentWrongHomeBtn() {
-		clickOnElement(somethingWentWrongHomeBtn);
 	}
 
 }

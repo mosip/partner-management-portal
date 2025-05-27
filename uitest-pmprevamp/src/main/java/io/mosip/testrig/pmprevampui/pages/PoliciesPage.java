@@ -158,6 +158,9 @@ public class PoliciesPage extends BasePage {
 	@FindBy(id = "policies_auth_policy_tab")
 	private WebElement policiesAuthPolicyTab;
 	
+	@FindBy(id = "policies_data_share_policy_tab")
+	private WebElement policiesDataPolicyTab;
+	
 	@FindBy(id = "policy_data_box")
 	private WebElement policyDataBox;
 	
@@ -247,6 +250,18 @@ public class PoliciesPage extends BasePage {
 	
 	@FindBy(id = "create_auth_policy_btn")
 	private WebElement createAuthPolicyButton;
+	
+	@FindBy(id = "policy_status_filter_option3")
+	private WebElement rejectedStatus;
+	
+	@FindBy(xpath = "//div[text()='Approved']")
+	private WebElement statusApproved;
+	
+	@FindBy(xpath = "//div[text()='Rejected']")
+	private WebElement statusRejected;
+	
+	@FindBy(id = "block_messsage_proceed")
+	private WebElement dataLostProcceedButton;
 	
 	public PoliciesPage(WebDriver driver) {
 		super(driver);
@@ -646,5 +661,35 @@ public class PoliciesPage extends BasePage {
 	
 	public void clickOnPoliciesPolicyGroupTab() {
 		clickOnElement(policiesPolicyGroupTab);
+	}
+	
+	public void clickOnDataSharePolicyTab() {
+		clickOnElement(policiesDataPolicyTab);
+	}
+	
+	public void selectActivatedStatusInFilter() {
+		clickOnElement(policyStatusFilter);
+		clickOnElement(policy_status_filter_option1);
+	}
+	
+	public void selectRejectedStatusInFilter() {
+		clickOnElement(policyStatusFilter);
+		clickOnElement(rejectedStatus);
+	}
+	
+	public boolean isStatusApprovedDisplayed() {
+		return isElementDisplayed(statusApproved);
+	}
+	
+	public boolean isStatusRejectedDisplayed() {
+		return isElementDisplayed(statusRejected);
+	}
+	
+	public void clickOnDataLostProcceedButton() {
+		clickOnElement(dataLostProcceedButton);
+	}
+	
+	public void clickOnPolicyNameDropdown() {
+		clickOnElement(policyNameDropdown);
 	}
 }
