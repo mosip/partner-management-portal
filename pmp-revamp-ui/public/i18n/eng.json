@@ -1029,7 +1029,9 @@
         "partnerCertExpiryDescription": "Partner Certificate <span>{{certificateId}}</span> issued to <span>{{issuedTo}}</span> by <span>{{issuedBy}}</span> for the <span>{{partnerDomain}}</span> domain is set to expire on <span>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions.",
         "weeklyPartnerCertExpiryTitle": "Partner Certificate is expiring for Partner ID: {{partnerId}}",
         "weeklyPartnerCertExpiryDescription": "Partner Certificate <span>{{certificateId}}</span> issued to <span>{{issuedTo}}</span> by <span>{{issuedBy}}</span> for <span>{{partnerId}}</span> is set to expire on <span>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions.",
-        "ftmChipCertExpiryDescription": "FTM Chip Certificate for <span>{{make}}</span> - <span>{{model}}</span> (FTM ID: <span>{{ftmId}}</span>) is set to expire on <span>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions."
+        "ftmChipCertExpiryDescription": "FTM Chip Certificate for <span>{{make}}</span> - <span>{{model}}</span> (FTM ID: <span>{{ftmId}}</span>) is set to expire on <span>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions.",
+        "weeklyFtmCertExpiryTitle": "FTM Chip Certificate is expiring for Partner ID: {{partnerId}}",
+        "weeklyFtmCertExpiryDescription": "FTM Chip Certificate for <span>{{make}}</span> - <span>{{model}}</span> (FTM ID: <span>{{ftmId}}</span>) uploaded by <span>{{partnerId}}</span> is set to expire on <span>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions."
     },
     "serverError": {
         "PMS_COR_001": "Missing Input Parameter",
