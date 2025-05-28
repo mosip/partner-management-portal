@@ -1032,7 +1032,8 @@
         "partnerCertExpiryTitle": "Le certificat du partenaire expire pour {{partnerId}}",
         "partnerCertExpiryDescription": "Le certificat partenaire <span>{{certificateId}}</span> délivré à <span>{{issuedTo}}</span> par <span>{{issuedBy}}</span> pour le domaine <span>{{partnerDomain}}</span> expirera le <span>{{expiryDateTime}}</span>. Renouvelez-le dès maintenant pour éviter toute interruption.",
         "weeklyPartnerCertExpiryTitle": "Le certificat du partenaire expire pour l'ID du partenaire : {{partnerId}}",
-        "weeklyPartnerCertExpiryDescription": "Le certificat partenaire <span>{{certificateId}}</span> délivré à <span>{{issuedTo}}</span> par <span>{{issuedBy}}</span> pour <span>{{partnerId}}</span> expirera le <span>{{expiryDateTime}}</span>. Renouvelez-le dès maintenant pour éviter toute interruption."
+        "weeklyPartnerCertExpiryDescription": "Le certificat partenaire <span>{{certificateId}}</span> délivré à <span>{{issuedTo}}</span> par <span>{{issuedBy}}</span> pour <span>{{partnerId}}</span> expirera le <span>{{expiryDateTime}}</span>. Renouvelez-le dès maintenant pour éviter toute interruption.",
+        "ftmChipCertExpiryDescription": "Le certificat de puce FTM pour <span>{{make}}</span> - <span>{{model}}</span> (ID FTM : <span>{{ftmId}}</span>) expirera le <span>{{expiryDateTime}}</span>. Renouvelez-le dès maintenant pour éviter toute interruption."
     },
     "serverError": {
         "PMS_COR_001": "Paramètre d'entrée manquant",
