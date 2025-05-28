@@ -1032,7 +1032,8 @@
         "partnerCertExpiryTitle": "شهادة الشريك على وشك الانتهاء لـ {{partnerId}}",
         "partnerCertExpiryDescription": "شهادة الشريك <span>{{certificateId}}</span> الصادرة لـ <span>{{issuedTo}}</span> بواسطة <span>{{issuedBy}}</span> للنطاق <span>{{partnerDomain}}</span> من المقرر أن تنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات.",
         "weeklyPartnerCertExpiryTitle": "شهادة الشريك على وشك الانتهاء لمعرف الشريك: {{partnerId}}",
-        "weeklyPartnerCertExpiryDescription": "شهادة الشريك <span>{{certificateId}}</span> الصادرة لـ <span>{{issuedTo}}</span> بواسطة <span>{{issuedBy}}</span> لـ <span>{{partnerId}}</span> من المقرر أن تنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات."
+        "weeklyPartnerCertExpiryDescription": "شهادة الشريك <span>{{certificateId}}</span> الصادرة لـ <span>{{issuedTo}}</span> بواسطة <span>{{issuedBy}}</span> لـ <span>{{partnerId}}</span> من المقرر أن تنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات.",
+        "ftmChipCertExpiryDescription": "شهادة شريحة FTM لـ <span>{{make}}</span> - <span>{{model}}</span> (FTM ID: <span>{{ftmId}}</span>) من المقرر أن تنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. قم بتجديده الآن لتجنب أي انقطاع."
     },
     "serverError": {
         "PMS_COR_001": "معلمة الإدخال مفقودة",

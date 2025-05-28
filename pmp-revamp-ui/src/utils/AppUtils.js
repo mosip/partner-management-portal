@@ -991,6 +991,19 @@ export const getNotificationDescription = (notification, isLoginLanguageRTL, t) 
                 components={{ span: <span className={`font-semibold`} /> }}
             />
         );
+    } else if (notification.notificationType === 'FTM_CHIP_CERT_EXPIRY') {
+        return (
+            <Trans 
+                i18nKey="viewAllNotifications.ftmChipCertExpiryDescription"
+                values={{
+                    make: notification.notificationDetails.certificateDetails[0].make,
+                    model: notification.notificationDetails.certificateDetails[0].model,
+                    ftmId: notification.notificationDetails.certificateDetails[0].ftmId,
+                    expiryDateTime: formatDate(notification.notificationDetails.certificateDetails[0].expiryDateTime, 'dateInWords')
+                }}
+                components={{ span: <span className={`font-semibold`} /> }}
+            />
+        );
     } else if (notification.notificationType === 'WEEKLY_SUMMARY') {
         return getWeeklySummaryDescription(notification, isLoginLanguageRTL, t);
     }
@@ -1048,7 +1061,7 @@ export const getNotificationPanelDescription = (notification, isLoginLanguageRTL
     }
 };
 
-export const getNoticationTitle = (notification, t) => {
+export const getNotificationTitle = (notification, t) => {
     if (notification.notificationType === 'ROOT_CERT_EXPIRY') {
         return t('notificationPopup.rootCertExpiry');
     } else if (notification.notificationType === 'INTERMEDIATE_CERT_EXPIRY') {

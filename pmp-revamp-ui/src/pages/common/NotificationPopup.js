@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import xClose from '../../svg/x_close.svg';
-import { createRequest, dismissNotificationById, formatDate, getNoticationTitle, getNotificationPanelDescription, getPartnerManagerUrl, handleEscapeKey, handleServiceErrors, isLangRTL, onPressEnterKey } from "../../utils/AppUtils";
+import { createRequest, dismissNotificationById, formatDate, getNotificationTitle, getNotificationPanelDescription, getPartnerManagerUrl, handleEscapeKey, handleServiceErrors, isLangRTL, onPressEnterKey } from "../../utils/AppUtils";
 import featuredIcon from "../../svg/featured_icon.svg";
 import noNotificationIcon from "../../svg/frame.svg";
 import { getUserProfile } from "../../services/UserProfileService";
@@ -175,7 +175,7 @@ function NotificationPopup({ closeNotification }) {
                                                 <img src={featuredIcon} alt='' id='featuredIcon' className={`${isLoginLanguageRTL ? 'ml-3' : 'mr-3'} mt-1`} />
                                                 <div className="mb-2">
                                                     <div className="flex justify-between space-x-2">
-                                                        <p className={`text-sm ${isLatestNotification(notification) ? 'font-bold' : 'font-semibold'} text-gray-900 ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>{getNoticationTitle(notification, t)}</p>
+                                                        <p className={`text-sm ${isLatestNotification(notification) ? 'font-bold' : 'font-semibold'} text-gray-900 ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>{getNotificationTitle(notification, t)}</p>
                                                         <p className={`text-xs text-gray-500 w-36 ${isLoginLanguageRTL ? 'text-left' : 'text-right'}`}>{formatDate(notification.createdDateTime, 'dateTime')}</p>
                                                     </div>
                                                     <div className={`text-sm  ${isLatestNotification(notification) ? 'font-semibold' : 'font-normal'} text-[#344054] mt-1 mb-2 whitespace-pre-line`}>{getNotificationPanelDescription(notification, isLoginLanguageRTL, t)}</div>

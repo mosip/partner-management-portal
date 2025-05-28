@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getUserProfile } from "../../../services/UserProfileService.js";
 import {
-    formatDate, getNoticationTitle, getNotificationDescription, getPartnerManagerUrl, handleServiceErrors,
+    formatDate, getNotificationTitle, getNotificationDescription, getPartnerManagerUrl, handleServiceErrors,
     isLangRTL, resetPageNumber, setPageNumberAndPageSize, onResetFilter, onClickApplyFilter,
     createRequest,
     fetchNotificationsList
@@ -22,6 +22,7 @@ import PartnerCertificateNotificationsFilter from "../../partner/notifications/P
 import { useDispatch } from "react-redux";
 import WeeklyNotificationsFilter from "./WeeklyNotificationsFilter.js";
 import PropTypes from 'prop-types';
+import FtmChipCertNotificationFilter from "../../partner/notifications/FtmChipCertNotificationFilter.js";
 
 function ViewAllNotifications({ notificationType }) {
     const { t } = useTranslation();
@@ -48,7 +49,10 @@ function ViewAllNotifications({ notificationType }) {
         issuedBy: null,
         expiryDate: null,
         createdFromDate: null,
-        createdToDate: null
+        createdToDate: null,
+        ftmId: null,
+        make: null,
+        model: null,
     });
     const dispatch = useDispatch();
     const [showExpiringItems, setShowExpiringItems] = useState(false);
@@ -72,6 +76,9 @@ function ViewAllNotifications({ notificationType }) {
         if (filterAttributes.expiryDate) queryParams.append('expiryDate', filterAttributes.expiryDate);
         if (filterAttributes.createdFromDate) queryParams.append('createdFromDate', filterAttributes.createdFromDate);
         if (filterAttributes.createdToDate) queryParams.append('createdToDate', filterAttributes.createdToDate);
+        if (filterAttributes.ftmId) queryParams.append('ftmId', filterAttributes.ftmId);
+        if (filterAttributes.make) queryParams.append('make', filterAttributes.make);
+        if (filterAttributes.model) queryParams.append('model', filterAttributes.model);
 
         const url = `${getPartnerManagerUrl('/notifications', process.env.NODE_ENV)}?${queryParams.toString()}`;
         try {
@@ -277,6 +284,9 @@ function ViewAllNotifications({ notificationType }) {
                                         {(notificationType === "partner") && (
                                             <PartnerCertificateNotificationsFilter onApplyFilter={onApplyFilter} />
                                         )}
+                                        {(notificationType === "ftm-chip") && (
+                                            <FtmChipCertNotificationFilter onApplyFilter={onApplyFilter} />
+                                        )}
                                         
                                     </>
                                 )}
@@ -298,7 +308,7 @@ function ViewAllNotifications({ notificationType }) {
                                                                 <img src={featuredIcon} alt='' id='featuredIcon' className={`${isLoginLanguageRTL ? 'ml-3' : 'mr-3'} mt-2`} />
                                                                 <div className="mt-0.5 w-full">
                                                                     <div className="flex justify-between flex-wrap">
-                                                                        <p className="font-semibold text-base text-[#101828]">{getNoticationTitle(notification, t)}</p>
+                                                                        <p className="font-semibold text-base text-[#101828]">{getNotificationTitle(notification, t)}</p>
                                                                         <p className={`text-xs text-gray-500 ${isLoginLanguageRTL ? 'text-left' : 'text-right'}`}>{formatDate(notification.createdDateTime, 'dateTime')}</p>
                                                                     </div>
                                                                     <div className="text-[#475467] text-sm md:break-normal break-all">{getNotificationDescription(notification, isLoginLanguageRTL, t)}</div>
