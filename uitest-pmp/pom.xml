@@ -31,7 +31,7 @@
 	<properties>
 		<guava.version>31.1-jre</guava.version>
 		<testng.version>7.10.1</testng.version>
-		<commons.beanutils.version>1.9.2</commons.beanutils.version>
+		<commons.beanutils.version>1.11.0</commons.beanutils.version>
 		<!-- automationtests version -->
 		<wink-json4j-provider.version>1.1.2-incubating</wink-json4j-provider.version>
 		<kernel.version>1.2.0.1-B1</kernel.version>
