@@ -7,14 +7,14 @@ set -e
 
 # i18n bundle
 # echo "Downloading i18n bundle files"
-# wget --no-check-certificate --no-cache --no-cookies $artifactory_url_env/artifactory/libs-release-local/i18n/pmp-revamp-i18n-bundle.zip -O $i18n_path/pmp-revamp-i18n-bundle.zip
+# wget --no-check-certificate --no-cache --no-cookies $artifactory_url_env/artifactory/libs-release-local/i18n/pmp-uiv2-i18n-bundle.zip -O $i18n_path/pmp-uiv2-i18n-bundle.zip
 
 # echo "unzip i18n bundle files.."
 # chmod 775 $i18n_path/*
 
 # cd $i18n_path
-# unzip -o pmp-revamp-i18n-bundle.zip
-# rm pmp-revamp-i18n-bundle.zip
+# unzip -o pmp-uiv2-i18n-bundle.zip
+# rm pmp-uiv2-i18n-bundle.zip
 
 # echo "Pre-requisites download completed."
 

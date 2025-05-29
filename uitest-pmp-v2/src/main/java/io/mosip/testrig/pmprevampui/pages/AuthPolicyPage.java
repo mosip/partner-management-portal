@@ -514,6 +514,7 @@ public class AuthPolicyPage extends BasePage {
 	}
 	
 	public void uploadPolicyData() {
+<<<<<<< HEAD
 		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_revamp_cert", "policyData.json"));
 	}
 	
@@ -535,6 +536,29 @@ public class AuthPolicyPage extends BasePage {
 	
 	public void uploadSpecialChData() {
 		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_revamp_cert", "SpecialCharacter.json"));
+=======
+		uploadImage(uploadFile, TestRunner.getResourcePath() + "\\pmp_uiv2_cert\\policyData.json");
+	}
+	
+	public void uploadExceedData() {
+		uploadImage(uploadFile, TestRunner.getResourcePath() + "\\pmp_uiv2_cert\\exceedData.json");
+	}
+	
+	public void uploadInvalidPolicyData() {
+		uploadImage(uploadFile, TestRunner.getResourcePath() + "\\pmp_uiv2_cert\\invalidData.json");
+	}
+	
+	public void uploadBlankData() {
+		uploadImage(uploadFile, TestRunner.getResourcePath() + "\\pmp_uiv2_cert\\BlankData.json");
+	}
+	
+	public void uploadAlphabetData() {
+		uploadImage(uploadFile, TestRunner.getResourcePath() + "\\pmp_uiv2_cert\\Alphabet.json");
+	}
+	
+	public void uploadSpecialChData() {
+		uploadImage(uploadFile, TestRunner.getResourcePath() + "\\pmp_uiv2_cert\\SpecialCharacter.json");
+>>>>>>> 1048d585 ([MOSIP-40990] changes related to renaming from pmp-revamp to pmp-ui-v2)
 	}	
 	
 	public void clickOnSaveAsDraftButton() {

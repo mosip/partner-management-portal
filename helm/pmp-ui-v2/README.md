@@ -1,6 +1,6 @@
 # Authmanager
 
-Helm chart for installing MOSIP pmp revamp UI module
+Helm chart for installing MOSIP pmp uiv2 UI module
 
 ## TL;DR
 

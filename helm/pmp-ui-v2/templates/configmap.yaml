@@ -13,8 +13,8 @@ metadata:
     {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
   {{- end }}
 data:
-  REACT_APP_PARTNER_MANAGER_API_BASE_URL: {{ .Values.pmp_revamp.pms_partner_manager_internal_service_url }}
-  REACT_APP_POLICY_MANAGER_API_BASE_URL: {{ .Values.pmp_revamp.pms_policy_manager_internal_service_url }}
+  REACT_APP_PARTNER_MANAGER_API_BASE_URL: {{ .Values.pmp_uiv2.pms_partner_manager_internal_service_url }}
+  REACT_APP_POLICY_MANAGER_API_BASE_URL: {{ .Values.pmp_uiv2.pms_policy_manager_internal_service_url }}
   default.conf: |
     server {
       listen       3000;
@@ -49,7 +49,7 @@ data:
         gzip_types text/plain text/css application/json application/javascript application/x-javascript text/xml application/xml application/xml+rss text/javascript;
     
         location /v1/partnermanager {
-          proxy_pass         {{ .Values.pmp_revamp.pms_partner_manager_internal_service_url }};
+          proxy_pass         {{ .Values.pmp_uiv2.pms_partner_manager_internal_service_url }};
           proxy_redirect     off;
           proxy_set_header   Host $host;
           proxy_set_header   X-Real-IP $remote_addr;
@@ -57,7 +57,7 @@ data:
           proxy_set_header   X-Forwarded-Host $server_name;
         }
         location /v1/policymanager {
-          proxy_pass         {{ .Values.pmp_revamp.pms_policy_manager_internal_service_url }};
+          proxy_pass         {{ .Values.pmp_uiv2.pms_policy_manager_internal_service_url }};
           proxy_redirect     off;
           proxy_set_header   Host $host;
           proxy_set_header   X-Real-IP $remote_addr;

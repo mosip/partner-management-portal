@@ -15,8 +15,8 @@ public class ConfigManager {
 
 	private static String IAM_ADMINPORTAL_PATH = "PmpPortalPath";
 
-	private static String IAM_PMPREVAMP_PATH = "pmpRevampUrl";
-	private static String IAM_PMPREVAMP = "pmpRevamp";
+	private static String IAM_PMPUIV2_PATH = "pmpuiv2Url";
+	private static String IAM_PMPUIV2 = "pmpuiv2";
 	private static String IAM_APIENVUSER = "apiEnvUser";
 	private static String IAM_APIINTERNALENDPOINT = "apiInternalEndPoint";
 	private static String MOSIP_IDREPO_CLIENT_SECRET = "mosip_idrepo_client_secret";
@@ -150,8 +150,8 @@ public class ConfigManager {
 	private static String iam_users_to_create;
 	private static String iam_users_password;
 	private static String iam_adminportal_path;
-	private static String iam_pmprevamp_path;
-	private static String iam_pmprevamp;
+	private static String iam_pmpuiv2_path;
+	private static String iam_pmpuiv2;
 	private static String iam_apienvuser;
 	private static String iam_apiinternalendpoint;
 	public static Properties propsKernel;
@@ -227,8 +227,8 @@ public class ConfigManager {
 				? propsKernel.getProperty(IAM_ADMINPORTAL_PATH)
 				: System.getenv(IAM_ADMINPORTAL_PATH);
 
-		iam_pmprevamp_path = System.getenv(IAM_PMPREVAMP_PATH) == null ? propsKernel.getProperty(IAM_PMPREVAMP_PATH)
-				: System.getenv(IAM_PMPREVAMP_PATH);
+		iam_pmpuiv2_path = System.getenv(IAM_PMPUIV2_PATH) == null ? propsKernel.getProperty(IAM_PMPUIV2_PATH)
+				: System.getenv(IAM_PMPUIV2_PATH);
 
 		pms_db_user = getValueForKey(PMS_DB_USER);
 		pms_db_pass = getValueForKey(PMS_DB_PASS);
@@ -244,8 +244,8 @@ public class ConfigManager {
 		mosippartnerclientid = getValueForKey(MOSIPPARTNERCLIENTID);
 		mosippartnerclentsecret = getValueForKey(MOSIPPARTNERCLIENTSECRATES);
 
-		iam_pmprevamp = System.getenv(IAM_PMPREVAMP) == null ? propsKernel.getProperty(IAM_PMPREVAMP)
-				: System.getenv(IAM_PMPREVAMP);
+		iam_pmpuiv2 = System.getenv(IAM_PMPUIV2) == null ? propsKernel.getProperty(IAM_PMPUIV2)
+				: System.getenv(IAM_PMPUIV2);
 
 		logger.info("adminportal_path from config manager::" + iam_adminportal_path);
 		iam_apienvuser = System.getenv(IAM_APIENVUSER) == null ? propsKernel.getProperty(IAM_APIENVUSER)
@@ -455,12 +455,12 @@ public class ConfigManager {
 		return iam_adminportal_path;
 	}
 
-	public static String getiam_pmprevamp_path() {
-		return iam_pmprevamp_path;
+	public static String getiam_pmpuiv2_path() {
+		return iam_pmpuiv2_path;
 	}
 
-	public static String getiam_pmprevamp() {
-		return iam_pmprevamp;
+	public static String getiam_pmpuiv2() {
+		return iam_pmpuiv2;
 	}
 
 	public static String getiam_apienvuser() {

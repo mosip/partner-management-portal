@@ -666,7 +666,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 
 		logoutFromPartner(dashboardPage);
 
-		loginPage.enterUserName("pmpui-revamp");
+		loginPage.enterUserName("pmpui-v2");
 		loginPage.enterPassword(password);
 		loginPage.clickOnLoginButton();
 
@@ -1145,7 +1145,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 
 		logoutFromPartner(dashboardPage);
 
-		loginPage.enterUserName("pmpui-revamp");
+		loginPage.enterUserName("pmpui-v2");
 		loginPage.enterPassword(password);
 		loginPage.clickOnLoginButton();
 
@@ -2017,7 +2017,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 
 		logoutFromPartner(dashboardPage);
 
-		loginPage.enterUserName("pmpui-revamp");
+		loginPage.enterUserName("pmpui-v2");
 		loginPage.enterPassword(password);
 		loginPage.clickOnLoginButton();
 

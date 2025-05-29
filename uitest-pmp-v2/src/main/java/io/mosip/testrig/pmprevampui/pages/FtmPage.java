@@ -635,7 +635,11 @@ public class FtmPage extends BasePage {
 	}
 	
 	public void uploadCertificateConfrmationForFtm() {
+<<<<<<< HEAD
 		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_revamp_cert", "Client.cer"));
+=======
+		uploadImage(uploadFile, TestRunner.getResourcePath() + "\\pmp_uiv2_cert\\Client.cer");
+>>>>>>> 1048d585 ([MOSIP-40990] changes related to renaming from pmp-revamp to pmp-ui-v2)
 	}
 	
 	public boolean isCertificateReuploadButtonDisplayed() {

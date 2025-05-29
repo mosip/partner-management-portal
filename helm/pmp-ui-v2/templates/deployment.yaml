@@ -94,9 +94,9 @@ spec:
             - name: JDK_JAVA_OPTIONS
               value: {{ .Values.additionalResources.javaOpts }}
             - name: REACT_APP_PARTNER_MANAGER_API_BASE_URL
-              value: {{ .Values.pmp_revamp.react_app_partner_manager_api_base_url }}
+              value: {{ .Values.pmp_uiv2.react_app_partner_manager_api_base_url }}
             - name: REACT_APP_POLICY_MANAGER_API_BASE_URL
-              value: {{ .Values.pmp_revamp.react_app_policy_manager_api_base_url }}
+              value: {{ .Values.pmp_uiv2.react_app_policy_manager_api_base_url }}
             {{- if .Values.extraEnvVars }}
             {{- include "common.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
             {{- end }}

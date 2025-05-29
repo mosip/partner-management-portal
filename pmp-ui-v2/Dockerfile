@@ -1,4 +1,4 @@
-FROM node:21.7.3-alpine as build_pmp_revamp_ui
+FROM node:21.7.3-alpine as build_pmp_uiv2_ui
 
 ENV NODE_ENV production
 
@@ -71,7 +71,7 @@ RUN chmod +x configure_start.sh
 COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
 
 # copy build files to nginx html directory
-COPY --from=build_pmp_revamp_ui /build  ${work_dir}
+COPY --from=build_pmp_uiv2_ui /build  ${work_dir}
 
 RUN echo "REACT_APP_PARTNER_MANAGER_API_BASE_URL=$REACT_APP_PARTNER_MANAGER_API_BASE_URL" >> ${work_dir}/env.env
 RUN echo "REACT_APP_POLICY_MANAGER_API_BASE_URL=$REACT_APP_POLICY_MANAGER_API_BASE_URL" >> ${work_dir}/env.env

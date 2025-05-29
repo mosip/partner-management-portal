@@ -703,7 +703,7 @@ public class FTMDeviceTest extends BaseClass {
 		assertTrue(dashboardpage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
 	    dashboardpage.clickOnLogoutButton();
 		
-		loginpage.enterUserName("pmpui-revamp");
+		loginpage.enterUserName("pmpui-v2");
 		loginpage.enterPassword(password);
 		loginpage.clickOnLoginButton();
 		

@@ -196,7 +196,7 @@ public class BaseTestCaseFunc {
 	
 	@SuppressWarnings("unchecked")
 	public static void DefinePolicyGroup() {
-		String token = kernelAuthLib.getTokenByRole("revampadmin");
+		String token = kernelAuthLib.getTokenByRole("uiv2admin");
 		String url = ApplnURI + propsKernel.getProperty("definePolicyGroupUrl");
 		org.json.simple.JSONObject actualrequest = getRequestJson(definePolicyGroupRequest);
 		JSONObject request = new JSONObject();
@@ -212,7 +212,7 @@ public class BaseTestCaseFunc {
 	
 	@SuppressWarnings("unchecked")
 	public static void DefinePolicy() {
-		String token = kernelAuthLib.getTokenByRole("revampadmin");
+		String token = kernelAuthLib.getTokenByRole("uiv2admin");
 		String url = ApplnURI + propsKernel.getProperty("definePolicyUrl");
 		org.json.simple.JSONObject actualrequest = getRequestJson(definePolicyRequest);
 		logger.info(actualrequest.toJSONString());
@@ -223,15 +223,15 @@ public class BaseTestCaseFunc {
 	
 	@SuppressWarnings("unchecked")
 	public static void CreateAdminPartner() {
-		String token = kernelAuthLib.getTokenByRole("revampadmin");
-		String url = ApplnURI + propsKernel.getProperty("revampCreatePartnerUrl");
+		String token = kernelAuthLib.getTokenByRole("uiv2admin");
+		String url = ApplnURI + propsKernel.getProperty("uiv2CreatePartnerUrl");
 		org.json.simple.JSONObject actualrequest = getRequestJson(partnerCreationRequest);
 		JSONObject request = new JSONObject();
 		request.put("address", "Bangalore");
 		request.put("contactNumber", "8553967572");
-		request.put("emailId", "automationpmpui-revamp" + BaseClass.data + "@automationlabs.com");
+		request.put("emailId", "automationpmpui-v2" + BaseClass.data + "@automationlabs.com");
 		request.put("organizationName","AABBCC");
-		request.put("partnerId","pmpui-revamp");
+		request.put("partnerId","pmpui-v2");
 		request.put("partnerType","Auth_Partner");
 		request.put("policyGroup","automationui policy group");
 		
@@ -244,13 +244,13 @@ public class BaseTestCaseFunc {
 	}
 	
 	public static void CreateAuthPartner() {
-		String token = kernelAuthLib.getTokenByRole("revampAuth");
-		String url = ApplnURI + propsKernel.getProperty("revampCreatePartnerUrl");
+		String token = kernelAuthLib.getTokenByRole("uiv2Auth");
+		String url = ApplnURI + propsKernel.getProperty("uiv2CreatePartnerUrl");
 		org.json.simple.JSONObject actualrequest = getRequestJson(partnerCreationRequest);
 		JSONObject request = new JSONObject();
 		request.put("address", "Bangalore");
 		request.put("contactNumber", "8553967571");
-		request.put("emailId", "automationpmpui-auth001317281@automationlabs.com");
+		request.put("emailId", "automationpmpui-v2auth001317281@automationlabs.com");
 		request.put("organizationName","AABBCC");
 		request.put("partnerId","pmpui-auth");
 		request.put("partnerType","Auth_Partner");
@@ -265,7 +265,7 @@ public class BaseTestCaseFunc {
 	}
 	
 	public static void UploadCaCertPartner() {
-		String token = kernelAuthLib.getTokenByRole("revampadmin");
+		String token = kernelAuthLib.getTokenByRole("uiv2admin");
 		String url = ApplnURI + propsKernel.getProperty("uploadCaCertUrl");
 		org.json.simple.JSONObject actualrequest = getRequestJson(uploadCaCert);
 		
@@ -276,7 +276,7 @@ public class BaseTestCaseFunc {
 	}
 	
 	public static void UploadSubCaCertPartner() {
-		String token = kernelAuthLib.getTokenByRole("revampadmin");
+		String token = kernelAuthLib.getTokenByRole("uiv2admin");
 		String url = ApplnURI + propsKernel.getProperty("uploadCaCertUrl");
 		org.json.simple.JSONObject actualrequest = getRequestJson(uploadSubCaCert);
 		

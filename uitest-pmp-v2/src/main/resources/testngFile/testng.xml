@@ -1,9 +1,9 @@
 <?xml version = "1.0" encoding = "UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
-<suite name="	PMP Revamp UI TestRig">
+<suite name="	PMP uiv2 UI TestRig">
 	
-	<test  name="PMP Revamp UI TestRig"  preserve-order="true">
+	<test  name="PMP uiv2 UI TestRig"  preserve-order="true">
 	
 		<classes>
 			<class name="io.mosip.testrig.pmpuiv2.testcase.AuthPartnerTest" />

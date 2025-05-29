@@ -30,10 +30,10 @@ function installing_pmp_ui() {
 
   echo Installing pmp-ui-v2
   helm -n $NS install pmp-ui-v2 mosip/pmp-ui-v2 \
-  --set pmp_revamp.react_app_partner_manager_api_base_url="https://$INTERNAL_API_HOST/v1/partnermanager" \
-  --set pmp_revamp.react_app_policy_manager_api_base_url="https://$INTERNAL_API_HOST/v1/policymanager" \
-  --set pmp_revamp.pms_partner_manager_internal_service_url="http://$PARTNER_MANAGER_SERVICE_NAME.$NS/v1/partnermanager" \
-  --set pmp_revamp.pms_policy_manager_internal_service_url="http://$POLICY_MANAGER_SERVICE_NAME.$NS/v1/policymanager" \
+  --set pmp_uiv2.react_app_partner_manager_api_base_url="https://$INTERNAL_API_HOST/v1/partnermanager" \
+  --set pmp_uiv2.react_app_policy_manager_api_base_url="https://$INTERNAL_API_HOST/v1/policymanager" \
+  --set pmp_uiv2.pms_partner_manager_internal_service_url="http://$PARTNER_MANAGER_SERVICE_NAME.$NS/v1/partnermanager" \
+  --set pmp_uiv2.pms_policy_manager_internal_service_url="http://$POLICY_MANAGER_SERVICE_NAME.$NS/v1/policymanager" \
   --set istio.hosts=["$PMP_UI_HOST"] --version $CHART_VERSION
 
   kubectl -n $NS  get deploy -o name |  xargs -n1 -t  kubectl -n $NS rollout status

@@ -32,8 +32,8 @@ public class BaseClass {
 	protected static JavascriptExecutor js;
 	protected String langcode;
 	protected String envPath = ConfigManager.getiam_adminportal_path();
-	protected String envPathPmpRevamp = ConfigManager.getiam_pmprevamp_path();
-	protected String PmpRevamp = ConfigManager.getiam_pmprevamp();
+	protected String envPathPmpUiv2 = ConfigManager.getiam_pmpuiv2_path();
+	protected String Pmpuiv2 = ConfigManager.getiam_pmpuiv2();
 	protected String env = ConfigManager.getiam_apienvuser();
 	protected String[] Alluserid = ConfigManager.getIAMUsersToCreate().split(",");
 	protected String userid = BaseTestCaseFunc.currentModule + "-" + Alluserid[1];
@@ -66,8 +66,8 @@ public class BaseClass {
 		driver = new ChromeDriver(options);
 		js = (JavascriptExecutor) driver;
 		vars = new HashMap<String, Object>();
-		driver.get(envPathPmpRevamp);
-		logger.info("launch url --" + envPathPmpRevamp);
+		driver.get(envPathPmpUiv2);
+		logger.info("launch url --" + envPathPmpUiv2);
 		driver.manage().window().maximize();
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10)); // Configurable if needed
 		driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));

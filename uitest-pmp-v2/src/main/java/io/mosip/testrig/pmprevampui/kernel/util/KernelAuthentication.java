@@ -13,15 +13,15 @@ public class KernelAuthentication extends io.mosip.testrig.pmpuiv2.utility.BaseT
 	private String authRequest = "/config/Authorization/request.json";
 	private String authInternalRequest = "/config/Authorization/internalAuthRequest.json";
 	public String zonemapCookie = null;
-	public String revampAuth = null;
-	public String revampAdmin = null;
+	public String uiv2Auth = null;
+	public String uiv2Admin = null;
 	String cookie;
 	static String dataKey = "response";
 	CommonLibrary clib = new CommonLibrary();
 	public final Map<String, String> props = clib.readProperty("Kernel");
 	private String partner_password = props.get("partner_user_password");
-	private String partner_revamp_userName = props.get("partner_revamp_userName");
-	private String partner_revamp_authUserName = props.get("partner_revamp_authUserName");
+	private String partner_uiv2_userName = props.get("partner_uiv2_userName");
+	private String partner_uiv2_authUserName = props.get("partner_uiv2_authUserName");
 	private String admin_password = props.get("admin_password");
 	private String admin_userName = props.get("admin_userName");
 	private String authenticationInternalEndpoint = props.get("authenticationInternal");
@@ -52,14 +52,14 @@ public class KernelAuthentication extends io.mosip.testrig.pmpuiv2.utility.BaseT
 			if (!kernelCmnLib.isValidToken(zonemapCookie))
 				zonemapCookie = kernelAuthLib.getAuthForzoneMap();
 			return zonemapCookie;
-		case "revampauth":
-			if (!kernelCmnLib.isValidToken(revampAuth))
-				revampAuth = kernelAuthLib.getAuthForPartner();
-			return revampAuth;
-		case "revampadmin":
-			if (!kernelCmnLib.isValidToken(revampAdmin))
-				revampAdmin = kernelAuthLib.getAdminForPartner();
-			return revampAdmin;
+		case "uiv2auth":
+			if (!kernelCmnLib.isValidToken(uiv2Auth))
+				uiv2Auth = kernelAuthLib.getAuthForPartner();
+			return uiv2Auth;
+		case "uiv2admin":
+			if (!kernelCmnLib.isValidToken(uiv2Admin))
+				uiv2Admin = kernelAuthLib.getAdminForPartner();
+			return uiv2Admin;
 		default:
 			if (!kernelCmnLib.isValidToken(adminCookie))
 				adminCookie = kernelAuthLib.getAuthForAdmin();
@@ -131,7 +131,7 @@ public class KernelAuthentication extends io.mosip.testrig.pmpuiv2.utility.BaseT
 
 		request.put(GlobalConstants.APPID, ConfigManager.getPmsAppId());
 		request.put(GlobalConstants.PASSWORD, partner_password);
-		request.put(GlobalConstants.USER_NAME, partner_revamp_authUserName);
+		request.put(GlobalConstants.USER_NAME, partner_uiv2_authUserName);
 		JSONObject actualInternalrequest = getRequestJson(authInternalRequest);
 
 		request.put(GlobalConstants.CLIENTID, ConfigManager.getPmsClientId());
@@ -152,7 +152,7 @@ public class KernelAuthentication extends io.mosip.testrig.pmpuiv2.utility.BaseT
 
 		request.put(GlobalConstants.APPID, ConfigManager.getPmsAppId());
 		request.put(GlobalConstants.PASSWORD, partner_password);
-		request.put(GlobalConstants.USER_NAME, partner_revamp_userName);
+		request.put(GlobalConstants.USER_NAME, partner_uiv2_userName);
 		JSONObject actualInternalrequest = getRequestJson(authInternalRequest);
 
 		request.put(GlobalConstants.CLIENTID, ConfigManager.getPmsClientId());

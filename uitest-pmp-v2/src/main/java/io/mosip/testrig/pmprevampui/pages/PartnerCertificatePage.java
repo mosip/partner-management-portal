@@ -445,23 +445,43 @@ public class PartnerCertificatePage extends BasePage {
 	}
 
 	public void uploadCertificateRootCa() {
+<<<<<<< HEAD
 		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_revamp_cert", "RootCA.cer"));
+=======
+		uploadImage(uploadFile, TestRunner.getResourcePath() + "\\pmp_uiv2_cert\\RootCA.cer");
+>>>>>>> 1048d585 ([MOSIP-40990] changes related to renaming from pmp-revamp to pmp-ui-v2)
 	}
 
 	public void uploadCertificateSubCa() {
+<<<<<<< HEAD
 		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_revamp_cert", "IntermediateCA.cer"));
+=======
+		uploadImage(uploadFile, TestRunner.getResourcePath() + "\\pmp_uiv2_cert\\IntermediateCA.cer");
+>>>>>>> 1048d585 ([MOSIP-40990] changes related to renaming from pmp-revamp to pmp-ui-v2)
 	}
 
 	public void uploadCertificate() {
+<<<<<<< HEAD
 		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_revamp_cert", "Client.cer"));
+=======
+		uploadImage(uploadFile, TestRunner.getResourcePath() + "\\pmp_uiv2_cert\\Client.cer");
+>>>>>>> 1048d585 ([MOSIP-40990] changes related to renaming from pmp-revamp to pmp-ui-v2)
 	}
 
 	public void uploadCertificateForAnotherOrg() {
+<<<<<<< HEAD
 		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_revamp_cert", "FTM_ca.cer"));
+=======
+		uploadImage(uploadFile, TestRunner.getResourcePath() + "\\pmp_uiv2_cert\\FTM_ca.cer");
+>>>>>>> 1048d585 ([MOSIP-40990] changes related to renaming from pmp-revamp to pmp-ui-v2)
 	}
 
 	public void uploadExpiredCertificateForRootCa() {
+<<<<<<< HEAD
 		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_revamp_cert", "expiredRoot.cer"));
+=======
+		uploadImage(uploadFile, TestRunner.getResourcePath() + "\\pmp_uiv2_cert\\expiredRoot.cer");
+>>>>>>> 1048d585 ([MOSIP-40990] changes related to renaming from pmp-revamp to pmp-ui-v2)
 	}
 
 	public void clickOnSubmitButton() {
@@ -522,7 +542,11 @@ public class PartnerCertificatePage extends BasePage {
 	}
 
 	public void uploadCertificateInvalidCert() {
+<<<<<<< HEAD
 		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_revamp_cert", "cert.crdownload"));
+=======
+		uploadImage(uploadFile, TestRunner.getResourcePath() + "\\pmp_uiv2_cert\\cert.crdownload");
+>>>>>>> 1048d585 ([MOSIP-40990] changes related to renaming from pmp-revamp to pmp-ui-v2)
 	}
 
 	public void clickOnRemoveCertificateButton() {
