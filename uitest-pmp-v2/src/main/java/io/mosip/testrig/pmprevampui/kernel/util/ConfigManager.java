@@ -15,7 +15,7 @@ public class ConfigManager {
 
 	private static String IAM_ADMINPORTAL_PATH = "PmpPortalPath";
 
-	private static String IAM_PMPUIV2_PATH = "pmpuiv2Url";
+	private static String IAM_PMPUIV2_PATH = "pmpUiv2Url";
 	private static String IAM_PMPUIV2 = "pmpuiv2";
 	private static String IAM_APIENVUSER = "apiEnvUser";
 	private static String IAM_APIINTERNALENDPOINT = "apiInternalEndPoint";
