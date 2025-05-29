@@ -19,6 +19,7 @@ import partner_admin_icon from '../../svg/partner_admin_icon.svg';
 import admin_policies_icon from '../../svg/admin_policies_icon.svg';
 import partner_policy_mapping_icon from '../../svg/partner_policy_mapping_icon.svg';
 import ConsentPopup from './ConsentPopup.js';
+import { getAppConfig } from '../../services/ConfigService.js';
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -43,6 +44,7 @@ function Dashboard() {
   const [intermediateCertExpiryCount, setIntermediateCertExpiryCount] = useState();
   const [partnerCertExpiryCount, setPartnerCertExpiryCount] = useState();
   const [isEmailVerified, setIsEmailVerified] = useState(false);
+  const [configData, setConfigData] = useState(null);
   let isSelectPolicyPopupVisible = false;
   let isUserConsentGiven = false;
 
@@ -157,6 +159,15 @@ function Dashboard() {
 
   }, []);
 
+  useEffect(() => {
+    async function fetchConfig() {
+      const config = await getAppConfig();
+      setConfigData(config);
+    }
+
+    fetchConfig();
+  }, []);
+
   const callUserConsentPopup = async () => {
     if (!isSelectPolicyPopupVisible) {
       await fetchUserConsent();
@@ -227,7 +238,7 @@ function Dashboard() {
         if (response) {
           const responseData = response.data;
           if (responseData && responseData.response) {
-              setPartnerCertExpiryCount(String(responseData.response.length))
+              setPartnerCertExpiryCount(responseData.response.length)
           } else {
             handleServiceErrors(responseData, setErrorCode, setErrorMsg);
           }
@@ -254,7 +265,7 @@ function Dashboard() {
         if (response) {
           const responseData = response.data;
           if (responseData && responseData.response) {
-            setPartnerPolicyMappingRequestCount(String(responseData.response.totalResults));
+            setPartnerPolicyMappingRequestCount(responseData.response.totalResults);
           } else {
             handleServiceErrors(responseData, setErrorCode, setErrorMsg);
           }
@@ -333,7 +344,7 @@ function Dashboard() {
         if (response) {
           const responseData = response.data;
           if (responseData && responseData.response) {
-            setFtmPendingApprovalRequestCount(String(responseData.response.totalResults));
+            setFtmPendingApprovalRequestCount(responseData.response.totalResults);
           } else {
             handleServiceErrors(responseData, setErrorCode, setErrorMsg);
           }
@@ -359,7 +370,7 @@ function Dashboard() {
           if (responseData && responseData.response) {
             console.log(responseData.response.length);
 
-            setExpiringFtmCertificateCount(String(responseData.response.length));
+            setExpiringFtmCertificateCount(responseData.response.length);
           } else {
             handleServiceErrors(responseData, setErrorCode, setErrorMsg);
           }
@@ -374,24 +385,31 @@ function Dashboard() {
       }
     };
 
-    if (!isPartnerAdmin && isEmailVerified) {
-      fetchPartnerCertExpiryCount();
-    }
-    if (!isPartnerAdmin && isEmailVerified && showFtmServices) {
-      fetchFtmCertificateExpiryCount();
-    }
-    if (isPartnerAdmin && isEmailVerified) {
-      fetchTrustCertExpiryCount('ROOT');
-      fetchTrustCertExpiryCount('INTERMEDIATE');
-    
-      setTimeout(() => {
-        fetchPartnerPolicyMappingRequestCount();
-        fetchPendingApprovalSbiCount();
-        fetchPendingApprovalDevicesCount();
-        fetchPendingApprovalFtmCount();
-      }, 3000);
+    async function init() {
+      if (!isPartnerAdmin && isEmailVerified) {
+        fetchPartnerCertExpiryCount();
+      }
+
+      if (!isPartnerAdmin && isEmailVerified && showFtmServices && configData.isCaSignedPartnerCertificateAvailable === 'true') {
+        fetchFtmCertificateExpiryCount();
+      }
+
+      if (isPartnerAdmin && isEmailVerified) {
+        if (configData.isRootIntermediateCertAvailable === 'true') {
+          fetchTrustCertExpiryCount('ROOT');
+          fetchTrustCertExpiryCount('INTERMEDIATE');
+        }
+
+        setTimeout(() => {
+          fetchPartnerPolicyMappingRequestCount();
+          fetchPendingApprovalSbiCount();
+          fetchPendingApprovalDevicesCount();
+          fetchPendingApprovalFtmCount();
+        }, 3000);
+      }
     }
 
+    init();
   }, [isPartnerAdmin, isEmailVerified]);
 
   const partnerCertificatesList = () => {
@@ -460,7 +478,10 @@ function Dashboard() {
   );
 
   CountWithHover.propTypes = {
-    countLabel: PropTypes.string,
+    countLabel: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number
+    ]),
     descriptionKey: PropTypes.string.isRequired,
     descriptionParams: PropTypes.object.isRequired,
     isExpiryHover: PropTypes.bool,
@@ -586,7 +607,7 @@ function Dashboard() {
                     {t('dashboard.ftmChipProviderServicesDesc')}
                   </p>
                 </div>
-                {expiringFtmCertificateCount > 0 && (
+                {configData.isCaSignedPartnerCertificateAvailable && expiringFtmCertificateCount > 0 && (
                   <CountWithHover
                     countLabel={expiringFtmCertificateCount}
                     descriptionKey={expiringFtmCertificateCount > 1 ? "dashboard.ftmChipCertExpiryCountDesc1" : "dashboard.ftmChipCertExpiryCountDesc2"}
@@ -610,7 +631,7 @@ function Dashboard() {
                       {t('dashboard.certificateTrustStoreDesc')}
                     </p>
                   </div>
-                  {(rootCertExpiryCount > 0 || intermediateCertExpiryCount > 0) && (
+                  {configData.isRootIntermediateCertAvailable === 'true' && (rootCertExpiryCount > 0 || intermediateCertExpiryCount > 0) && (
                     <CountWithHover
                       countLabel={
                         rootCertExpiryCount > 0 && intermediateCertExpiryCount > 0
