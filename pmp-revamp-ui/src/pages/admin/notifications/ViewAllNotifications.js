@@ -183,21 +183,17 @@ function ViewAllNotifications({ notificationType }) {
         setShowExpiringItems(true);
         setNotificationCreatedDateTime(notification.createdDateTime);
         const certificateList = Array.isArray(notification.notificationDetails.certificateDetails) ? notification.notificationDetails.certificateDetails : [];
+        setPartnerCertList(certificateList);
 
-        // filter only partner certificate expiry items
-        const partnerCertificateList = certificateList.filter(cert => cert.certificateType === "partner");
-        setPartnerCertList(partnerCertificateList);
+        const ftmList = Array.isArray(notification.notificationDetails.ftmDetails) ? notification.notificationDetails.ftmDetails : [];
+        setFtmCertList(ftmList);
 
-        // filter only FTM chip certificate expiry items
-        const ftmCertificateList = certificateList.filter(cert => cert.certificateType === "ftm");
-        setFtmCertList(ftmCertificateList);
-
-        if (partnerCertificateList.length > 0) {
+        if (certificateList.length > 0) {
             setActiveTab('partner');
-            setWeeklyNotificationList(partnerCertificateList);
-        } else if (ftmCertificateList.length > 0) {
+            setWeeklyNotificationList(certificateList);
+        } else if (ftmList.length > 0) {
             setActiveTab('ftm');
-            setWeeklyNotificationList(ftmCertificateList);
+            setWeeklyNotificationList(ftmList);
         }
     };
 
