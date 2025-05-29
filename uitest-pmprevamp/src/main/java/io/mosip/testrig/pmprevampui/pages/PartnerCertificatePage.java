@@ -447,17 +447,19 @@ public class PartnerCertificatePage extends BasePage {
 	public void uploadCertificateRootCa() {
 		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_revamp_cert", "RootCA.cer"));
 	}
+
 	public void uploadCertificateSubCa() {
 		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_revamp_cert", "IntermediateCA.cer"));
 	}
+
 	public void uploadCertificate() {
 		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_revamp_cert", "Client.cer"));
 	}
-	
+
 	public void uploadCertificateForAnotherOrg() {
 		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_revamp_cert", "FTM_ca.cer"));
 	}
-	
+
 	public void uploadExpiredCertificateForRootCa() {
 		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_revamp_cert", "expiredRoot.cer"));
 	}
