@@ -138,7 +138,7 @@
         "certificateExpired": "Certificate has expired. Please upload a valid certificate",
         "disabledBtnHoverMsg": "Your Partner account for given partner type has been deactivated by Admin, due to which the action has been disabled",
         "errorWhileFetchingCertificateList": "Due to an error, we were unable to fetch the certificates list. Please try again.",
-        "compatibilityMsg": "Download of Original Certificate is not supported in the current version of MOSIP Platform."
+        "compatibilityMsg": "<italic>Download of Original Certificate</italic> is not supported in the current version of MOSIP Platform."
     },
     "uploadCertificate": {
         "uploadPartnerCertificate": "Upload Partner Certificate",
@@ -324,7 +324,7 @@
         "selectStatus": "Select Status",
         "searchOidcClientName": "Search OIDC Client Name",
         "errorInOidcClientsList": "While fetching OIDC Clients List, we have encountered with an error.",
-        "compatibilityMsg":"Note: OIDC Client-related features are not supported in the current version of MOSIP Platform."
+        "compatibilityMsg":"Note: <italic>OIDC Client-related features</italic> are not supported in the current version of MOSIP Platform."
     },
     "viewOidcClientDetails": {
         "viewOidcClientDetails": "View OIDC Client Details",
@@ -550,7 +550,7 @@
         "selectFtmId": "Select FTM ID",
         "searchFtmId": "Search FTM ID",
         "errorWhileFetchingFtmList": "Due to an error, we were unable to fetch the FTM Chip details. Please try again.",
-        "compatibilityMsg": "Note: Certificate Expiry Date and Certificate Expiry Status values are not available in the current version of MOSIP Platform."
+        "compatibilityMsg": "Note: <italic>Certificate Expiry Date</italic> and <italic>Certificate Expiry Status</italic> values are not available in the current version of MOSIP Platform."
     },
     "addFtm": {
         "addFtmChipDetails": "Add FTM Chip details",
@@ -612,7 +612,7 @@
         "errorInCertificateList": "While fetching certificates, we have encountered with an error.",
         "errorAccessingApi": "Facing an error while accessing the keymanager API.",
         "errorWhileDownloadingCertificate": "Due to an error, we were unable to download the certificate. Please try again.",
-        "compatibilityMsg": "Note: List of Certificates is unavailable as this feature is not supported in the current version of MOSIP Platform."
+        "compatibilityMsg": "Note: <italic>List of Certificates</italic> is unavailable as this feature is not supported in the current version of MOSIP Platform."
     },
     "uploadTrustCertificate": {
         "uploadTrustCertificate": "Upload Trust Certificate",
@@ -925,7 +925,7 @@
     },
     "viewAdminFtmDetails": {
         "errorWhileGettingFtmDetails": "While fetching Certificate details, we have encountered with an error.",
-        "compatibilityMsg":"Download of FTM Certificate is not supported in the current version of MOSIP Platform."
+        "compatibilityMsg":"<italic>Download of FTM Certificate</italic> is not supported in the current version of MOSIP Platform."
     },
     "viewSbiDetails": {
         "viewSbiDetails": "View SBI Details",

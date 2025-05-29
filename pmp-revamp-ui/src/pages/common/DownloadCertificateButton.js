@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { isCaSignedPartnerCertificateAvailable, isLangRTL } from '../../utils/AppUtils';
 import { getUserProfile } from '../../services/UserProfileService';
 
@@ -54,7 +54,7 @@ function DownloadCertificateButton({ setShowDropDown, showDropDown, onClickFirst
                         </button>
                         {disableOriginalCert && (
                             <div className={`absolute hidden group-hover:block group-focus:block text-center bg-gray-100 text-xs text-gray-500 font-semibold p-2 w-60 mt-1 z-10 top-11 ${isLoginLanguageRTL ? "left-5" : "right-5"} rounded-md shadow-md`}>
-                                {t('partnerCertificatesList.compatibilityMsg')}
+                                <Trans i18nKey="partnerCertificatesList.compatibilityMsg" components={{ italic: <i /> }} />
                             </div>
                         )}
                     </div>
