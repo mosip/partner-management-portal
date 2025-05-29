@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { getUserProfile } from "../../../services/UserProfileService";
 import { bgOfStatus, formatDate, getStatusCode, isLangRTL, getPartnerDomainType, getPartnerManagerUrl, downloadFile, isCaSignedPartnerCertificateAvailable } from "../../../utils/AppUtils";
@@ -136,7 +136,11 @@ function ViewFtmChipDetails() {
     const showHoverMsg = () => {
         return (
             <div className={`absolute hidden group-hover:block group-focus:block text-center bg-gray-100 text-xs text-gray-500 font-semibold p-2 w-60 mt-1 z-10 ${isLoginLanguageRTL ? "left-0" : "right-0"} top-11  rounded-md shadow-md`}>
-                {downloadCertApiNotExist ? t('viewAdminFtmDetails.compatibilityMsg') : t('partnerCertificatesList.disabledBtnHoverMsg')}
+                {downloadCertApiNotExist ? (
+                    <Trans i18nKey="viewAdminFtmDetails.compatibilityMsg" components={{ italic: <i /> }} />
+                ) : 
+                    t('partnerCertificatesList.disabledBtnHoverMsg')
+                }
             </div>
         );
     }
