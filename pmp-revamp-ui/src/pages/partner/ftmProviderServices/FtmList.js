@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../../../services/UserProfileService';
 import { HttpService } from '../../../services/HttpService';
@@ -280,7 +280,9 @@ function FtmList() {
               <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
                 <div className="flex items-center justify-center p-2">
                   <div className="p-2 bg-[#FFF7E5] border-2 border-[#EDDCAF] rounded-md w-full">
-                    <p className="text-sm font-medium text-[#8B6105]">{t('ftmList.compatibilityMsg')}</p>
+                    <p className="text-sm font-medium text-[#8B6105]">
+                      <Trans i18nKey="ftmList.compatibilityMsg" components={{ italic: <i /> }} />
+                    </p>
                   </div>
                 </div>
               </div>
