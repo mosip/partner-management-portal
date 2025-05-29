@@ -66,7 +66,7 @@ function installing_uitestrig() {
   API_INTERNAL_HOST=$( kubectl -n default get cm global -o json  |jq -r '.data."mosip-api-internal-host"' )
 
   echo Installing pmp uitestrig
-  helm -n $NS install pmp-ui-v2testrig mosip/uitestrig \
+  helm -n $NS install uitest-pmp-v2 mosip/uitestrig \
   --set crontime="0 $time * * *" \
   -f values.yaml  \
   --version $CHART_VERSION \
