@@ -922,14 +922,15 @@ export const checkCertificateExpired = (expiryDateTime) => {
 };
 
 export const getWeeklySummaryDescription = (notification, isLoginLanguageRTL, t) => {
-    const { certificateDetails = [], sbiDetails = [], apiKeyDetails = [] } = notification.notificationDetails || {};
+    const { certificateDetails = [], ftmDetails = [], sbiDetails = [], apiKeyDetails = [] } = notification.notificationDetails || {};
 
     const certificateList = Array.isArray(certificateDetails) ? certificateDetails : [];
+    const ftmCertList = Array.isArray(ftmDetails) ? ftmDetails : [];
     const sbiList = Array.isArray(sbiDetails) ? sbiDetails : [];
     const apiKeyList = Array.isArray(apiKeyDetails) ? apiKeyDetails : [];
 
-    const partnerCertCount = certificateList.filter(cert => cert.certificateType === "partner").length;
-    const ftmCertCount = certificateList.filter(cert => cert.certificateType === "ftm").length;
+    const partnerCertCount = certificateList.length;
+    const ftmCertCount = ftmCertList.length;
     const sbiCount = sbiList.length;
     const apiKeyCount = apiKeyList.length;
 
@@ -996,10 +997,10 @@ export const getNotificationDescription = (notification, isLoginLanguageRTL, t) 
             <Trans 
                 i18nKey="viewAllNotifications.ftmChipCertExpiryDescription"
                 values={{
-                    make: notification.notificationDetails.certificateDetails[0].make,
-                    model: notification.notificationDetails.certificateDetails[0].model,
-                    ftmId: notification.notificationDetails.certificateDetails[0].ftmId,
-                    expiryDateTime: formatDate(notification.notificationDetails.certificateDetails[0].expiryDateTime, 'dateInWords')
+                    make: notification.notificationDetails.ftmDetails[0].make,
+                    model: notification.notificationDetails.ftmDetails[0].model,
+                    ftmId: notification.notificationDetails.ftmDetails[0].ftmId,
+                    expiryDateTime: formatDate(notification.notificationDetails.ftmDetails[0].expiryDateTime, 'dateInWords')
                 }}
                 components={{ span: <span className={`font-semibold`} /> }}
             />
@@ -1050,8 +1051,8 @@ export const getNotificationPanelDescription = (notification, isLoginLanguageRTL
             <Trans 
                 i18nKey="notificationPopup.ftmChipCertExpiryDescription"
                 values={{
-                    ftmId: notification.notificationDetails.certificateDetails[0].ftmId,
-                    expiryDateTime: formatDate(notification.notificationDetails.certificateDetails[0].expiryDateTime, 'dateInWords')
+                    ftmId: notification.notificationDetails.ftmDetails[0].ftmId,
+                    expiryDateTime: formatDate(notification.notificationDetails.ftmDetails[0].expiryDateTime, 'dateInWords')
                 }}
                 components={{ span: <span className={`font-semibold ${isLoginLanguageRTL && 'whitespace-nowrap'}`} /> }}
             />
