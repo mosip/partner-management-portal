@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from 'react-router-dom';
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import { getUserProfile } from "../../../services/UserProfileService";
 import {
   formatDate, isLangRTL, onClickApplyFilter, onPressEnterKey,
@@ -284,7 +284,9 @@ function TrustList({ trustListType, uploadTrustBtnName, subTitle, downloadBtnNam
                 <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
                   <div className="flex items-center justify-center p-2">
                     <div className="p-2 bg-[#FFF7E5] border-2 border-[#EDDCAF] rounded-md w-full">
-                      <p className="text-sm font-medium text-[#8B6105]">{t('certificatesList.compatibilityMsg')}</p>
+                      <p className="text-sm font-medium text-[#8B6105]">
+                        <Trans i18nKey="trustList.compatibilityMsg" components={{ italic: <i /> }} />
+                      </p>
                     </div>
                   </div>
                 </div>
