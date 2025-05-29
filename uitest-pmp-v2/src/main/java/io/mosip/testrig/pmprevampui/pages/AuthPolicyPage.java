@@ -5,12 +5,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 <<<<<<< HEAD
-<<<<<<< HEAD:uitest-pmprevamp/src/main/java/io/mosip/testrig/pmprevampui/pages/AuthPolicyPage.java
-import io.mosip.testrig.pmprevampui.fw.util.PmpTestUtil;
-import io.mosip.testrig.pmprevampui.utility.TestRunner;
+<<<<<<< HEAD:uitest-pmprevamp/src/main/java/io/mosip/testrig/pmpuiv2/pages/AuthPolicyPage.java
+import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
+import io.mosip.testrig.pmpuiv2.utility.TestRunner;
 =======
 import io.mosip.testrig.pmpv2ui.utility.TestRunner;
->>>>>>> 1941d522 ([MOSIP-40990] changes related to renaming from pmp-revamp to pmp-ui-v2):uitest-pmp-v2/src/main/java/io/mosip/testrig/pmprevampui/pages/AuthPolicyPage.java
+>>>>>>> 1941d522 ([MOSIP-40990] changes related to renaming from pmp-revamp to pmp-ui-v2):uitest-pmp-v2/src/main/java/io/mosip/testrig/pmpuiv2/pages/AuthPolicyPage.java
 =======
 import io.mosip.testrig.pmpuiv2.utility.TestRunner;
 >>>>>>> 24047727 ([MOSIP-40990] changes related to renaming from pmp-revamp to pmp-ui-v2)
@@ -515,27 +515,27 @@ public class AuthPolicyPage extends BasePage {
 	
 	public void uploadPolicyData() {
 <<<<<<< HEAD
-		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_revamp_cert", "policyData.json"));
+		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "policyData.json"));
 	}
 	
 	public void uploadExceedData() {
-		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_revamp_cert", "exceedData.json"));
+		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "exceedData.json"));
 	}
 	
 	public void uploadInvalidPolicyData() {
-		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_revamp_cert", "invalidData.json"));
+		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "invalidData.json"));
 	}
 	
 	public void uploadBlankData() {
-		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_revamp_cert", "BlankData.json"));
+		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "BlankData.json"));
 	}
 	
 	public void uploadAlphabetData() {
-		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_revamp_cert", "Alphabet.json"));
+		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "Alphabet.json"));
 	}
 	
 	public void uploadSpecialChData() {
-		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_revamp_cert", "SpecialCharacter.json"));
+		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "SpecialCharacter.json"));
 =======
 		uploadImage(uploadFile, TestRunner.getResourcePath() + "\\pmp_uiv2_cert\\policyData.json");
 	}
