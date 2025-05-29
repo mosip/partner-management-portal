@@ -138,7 +138,7 @@
         "certificateExpired": "انتهت صلاحية الشهادة. يرجى تحميل شهادة صالحة",
         "disabledBtnHoverMsg": "لقد تم إلغاء تنشيط حساب الشريك الخاص بك لنوع الشريك المحدد بواسطة المسؤول، مما أدى إلى تعطيل الإجراء'",
         "errorWhileFetchingCertificateList": "بسبب خطأ، لم نتمكن من جلب قائمة الشهادات. يرجى المحاولة مرة أخرى.",
-        "compatibilityMsg": "لا يتم دعم تنزيل الشهادة الأصلية في الإصدار الحالي من منصة MOSIP."
+        "compatibilityMsg": "لا يتم دعم <italic>تنزيل الشهادة الأصلية</italic> في الإصدار الحالي من منصة MOSIP."
     },
     "uploadCertificate": {
         "uploadPartnerCertificate": "تحميل شهادة الشريك",
@@ -326,7 +326,7 @@
         "selectStatus": "حدد الحالة",
         "searchOidcClientName": "البحث عن اسم عميل OIDC",
         "errorInOidcClientsList": "أثناء جلب قائمة عملاء OIDC، واجهنا خطأ.",
-        "compatibilityMsg":"ملاحظة: لا يتم دعم الميزات المتعلقة بعميل OIDC في الإصدار الحالي من منصة MOSIP."
+        "compatibilityMsg":"ملاحظة: لا يتم دعم <italic>الميزات المرتبطة بعميل OIDC</italic> في الإصدار الحالي من منصة MOSIP."
     },
     "viewOidcClientDetails": {
         "viewOidcClientDetails": "عرض تفاصيل عميل OIDC",
@@ -556,7 +556,7 @@
         "selectFtmId": "حدد معرف FTM",
         "searchFtmId": "البحث عن معرف FTM",
         "errorWhileFetchingFtmList": "بسبب خطأ، لم نتمكن من الحصول على تفاصيل شريحة FTM. يرجى المحاولة مرة أخرى.",
-        "compatibilityMsg": "ملاحظة: لا تتوفر قيم تاريخ انتهاء صلاحية الشهادة وحالة انتهاء صلاحية الشهادة في الإصدار الحالي من منصة MOSIP."
+        "compatibilityMsg": "ملاحظة: لا تتوفر قيم <italic>تاريخ انتهاء صلاحية الشهادة</italic> و<italic>حالة انتهاء صلاحية الشهادة</italic> في الإصدار الحالي من منصة MOSIP."
     },
     "addFtm": {
         "addFtmChipDetails": "إضافة تفاصيل شريحة FTM",
@@ -618,7 +618,7 @@
         "errorInCertificateList": "أثناء جلب الشهادات، واجهنا خطأً.",
         "errorAccessingApi": "مواجهة خطأ أثناء الوصول إلى واجهة برمجة تطبيقات مدير المفاتيح.",
         "errorWhileDownloadingCertificate": "بسبب خطأ، لم نتمكن من تنزيل الشهادة. يرجى المحاولة مرة أخرى.",
-        "compatibilityMsg": "ملاحظة: قائمة الشهادات غير متاحة لأن هذه الميزة غير مدعومة في الإصدار الحالي من منصة MOSIP."
+        "compatibilityMsg": "ملاحظة: <italic>قائمة الشهادات</italic> غير متوفرة لأن هذه الميزة غير مدعومة في الإصدار الحالي من منصة MOSIP."
     },
     "uploadTrustCertificate": {
         "uploadTrustCertificate": "شرفع هادة الثقة",
@@ -931,7 +931,7 @@
     },
     "viewAdminFtmDetails": {
         "errorWhileGettingFtmDetails": "أثناء جلب تفاصيل الشهادة، واجهنا خطأ",
-        "compatibilityMsg":"لا يتم دعم تنزيل شهادة FTM في الإصدار الحالي من منصة MOSIP."
+        "compatibilityMsg":"لا يتم دعم <italic>تنزيل شهادة FTM</italic> في الإصدار الحالي من منصة MOSIP."
     },
     "viewSbiDetails": {
         "viewSbiDetails": "عرض تفاصيل SBI",
