@@ -445,21 +445,23 @@ public class PartnerCertificatePage extends BasePage {
 	}
 
 	public void uploadCertificateRootCa() {
-		uploadImage(uploadFile, TestRunner.getResourcePath() + "\\pmp_revamp_cert\\RootCA.cer");
+		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_revamp_cert", "RootCA.cer"));
 	}
+
 	public void uploadCertificateSubCa() {
-		uploadImage(uploadFile, TestRunner.getResourcePath() + "\\pmp_revamp_cert\\IntermediateCA.cer");
+		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_revamp_cert", "IntermediateCA.cer"));
 	}
+
 	public void uploadCertificate() {
-		uploadImage(uploadFile, TestRunner.getResourcePath() + "\\pmp_revamp_cert\\Client.cer");
+		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_revamp_cert", "Client.cer"));
 	}
-	
+
 	public void uploadCertificateForAnotherOrg() {
-		uploadImage(uploadFile, TestRunner.getResourcePath() + "\\pmp_revamp_cert\\FTM_ca.cer");
+		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_revamp_cert", "FTM_ca.cer"));
 	}
-	
+
 	public void uploadExpiredCertificateForRootCa() {
-		uploadImage(uploadFile, TestRunner.getResourcePath() + "\\pmp_revamp_cert\\expiredRoot.cer");
+		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_revamp_cert", "expiredRoot.cer"));
 	}
 
 	public void clickOnSubmitButton() {
@@ -520,7 +522,7 @@ public class PartnerCertificatePage extends BasePage {
 	}
 
 	public void uploadCertificateInvalidCert() {
-		uploadImage(uploadFile, TestRunner.getResourcePath() + "\\pmp_revamp_cert\\cert.crdownload");
+		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_revamp_cert", "cert.crdownload"));
 	}
 
 	public void clickOnRemoveCertificateButton() {
