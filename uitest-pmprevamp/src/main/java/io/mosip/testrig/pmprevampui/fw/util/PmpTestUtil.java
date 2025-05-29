@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
@@ -163,5 +164,9 @@ public class PmpTestUtil extends BaseTestCaseFunc {
 			logger.error(e.getMessage());
 			return null;
 		}
+	}
+	
+	public static String getResourceFilePath(String folderName, String fileName) {
+		return Paths.get(TestRunner.getResourcePath(), folderName, fileName).toString();
 	}
 }

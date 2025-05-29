@@ -4,6 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import io.mosip.testrig.pmprevampui.fw.util.PmpTestUtil;
 import io.mosip.testrig.pmprevampui.utility.TestRunner;
 
 public class DatasharePolicyPage extends BasePage {
@@ -589,27 +590,27 @@ public class DatasharePolicyPage extends BasePage {
 	}
 	
 	public void uploadPolicyData() {
-		uploadImage(uploadFile, TestRunner.getResourcePath() + "\\pmp_revamp_cert\\DatasharePolicy.json");
+		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_revamp_cert", "DatasharePolicy.json"));
 	}
 	
 	public void uploadExceedPolicyData() {
-		uploadImage(uploadFile, TestRunner.getResourcePath() + "\\pmp_revamp_cert\\exceedData.json");
+		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_revamp_cert", "exceedData.json"));
 	}
 	
 	public void uploadInvalidPolicyData() {
-		uploadImage(uploadFile, TestRunner.getResourcePath() + "\\pmp_revamp_cert\\invalidData.json");
+		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_revamp_cert", "invalidData.json"));
 	}
 	
 	public void uploadBlankData() {
-		uploadImage(uploadFile, TestRunner.getResourcePath() + "\\pmp_revamp_cert\\BlankData.json");
+		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_revamp_cert", "BlankData.json"));
 	}
 	
 	public void uploadAlphabetData() {
-		uploadImage(uploadFile, TestRunner.getResourcePath() + "\\pmp_revamp_cert\\Alphabet.json");
+		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_revamp_cert", "Alphabet.json"));
 	}
 	
 	public void uploadSpecialChData() {
-		uploadImage(uploadFile, TestRunner.getResourcePath() + "\\pmp_revamp_cert\\SpecialCharacter.json");
+		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_revamp_cert", "SpecialCharacter.json"));
 	}	
 	
 	public boolean isSaveAsDraftButtonEnabled() {
