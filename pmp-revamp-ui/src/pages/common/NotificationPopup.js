@@ -202,7 +202,7 @@ function NotificationPopup({ closeNotification }) {
                                             <p className="text-sm text-gray-500">{t('notificationPopup.noNotification')}</p>
                                             <p className="text-sm text-gray-500">{t('notificationPopup.noNotificationDescr')}</p>
                                         </div>
-                                        <button className="p-3 text-center text-gray-500 text-sm font-medium w-full cursor-default">
+                                        <button className="p-3 text-center text-gray-500 text-sm font-semibold w-full cursor-default">
                                             {t('notificationPopup.viewAllNotification')}
                                         </button>
                                     </div>
