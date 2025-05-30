@@ -19,6 +19,7 @@ import partner_admin_icon from '../../svg/partner_admin_icon.svg';
 import admin_policies_icon from '../../svg/admin_policies_icon.svg';
 import partner_policy_mapping_icon from '../../svg/partner_policy_mapping_icon.svg';
 import ConsentPopup from './ConsentPopup.js';
+import { getAppConfig } from '../../services/ConfigService.js';
 import MissingAttributesPopup from './MissingAttributesPopup.js';
 
 function Dashboard() {

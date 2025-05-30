@@ -110,6 +110,16 @@
         "mosipCommunity": "Communauté MOSIP",
         "contactUs": "Contactez-nous"
     },
+    "missingAttributesPopup": {
+        "title": "Configuration du compte requise",
+        "description": "Votre compte utilisateur Keycloak n’a pas été créé via l’auto-enregistrement sur le portail PMS.<br />Par conséquent, nous ne pouvons pas vous intégrer dans le portail PMS.",
+        "instructionsTitle": "<strong>Pour résoudre ce problème, vous pouvez suivre les étapes ci-dessous :</strong>",
+        "instructionsList": [
+            "Contactez l’administrateur Keycloak pour supprimer ce compte.",
+            "Inscrivez-vous à nouveau via l’auto-enregistrement du portail PMS."
+        ],
+        "logout": "Se déconnecter et continuer"
+    },
     "selectPolicyPopup": {
         "title": "Sélectionnez un groupe de stratégies",
         "description": "Sélectionnez le groupe de stratégies applicable à votre organisation pour poursuivre le flux de type de partenaire inscrit. Veuillez vous assurer de parcourir la description du groupe de stratégies pour confirmer le groupe de stratégies. Une fois votre sélection enregistrée, vous ne pourrez plus modifier le groupe de stratégies. Un seul groupe de stratégies est autorisé par ID de partenaire.",
