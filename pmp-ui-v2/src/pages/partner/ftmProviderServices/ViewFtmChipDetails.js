@@ -61,7 +61,7 @@ function ViewFtmChipDetails() {
             ftpProviderId: ftmDetails.partnerId,
             ftpChipDeatilId: ftmDetails.ftmId,
             isItForRegistrationDevice: true,
-            organizationName: getUserProfile().organizationName,
+            organizationName: getUserProfile().orgName,
             partnerDomain: getPartnerDomainType("FTM_Provider"),
         };
         setUploadCertificateRequest(request);
