@@ -15,7 +15,6 @@ function MainLayout({ children }) {
     const [showPrompt, setShowPrompt] = useState(false);
     const { t } = useTranslation();
     const [policyRequiredPartnerTypes, setPolicyRequiredPartnerTypes] = useState([]);
-    const [partnerType, setPartnerType] = useState("");
     const timer = useRef(null);
     const promptTimer = useRef(null);
     const inActivityTimer = useRef(null);
@@ -124,7 +123,6 @@ function MainLayout({ children }) {
                 if (response?.data?.response) {
                     const resData = response.data.response;
                     setPolicyRequiredPartnerTypes(resData.policyRequiredPartnerTypes);
-                    setPartnerType(userProfile.partnerType);
                 }
 
             } catch (err) {
@@ -138,7 +136,7 @@ function MainLayout({ children }) {
         <div className="flex flex-col justify-evenly bg-anti-flash-white font-inter">
             <HeaderNav open={open} setOpen={setOpen}></HeaderNav>
             <div className='flex flex-row justify-stretch h-full'>
-                <SideNav open={open} policyRequiredPartnerTypes={policyRequiredPartnerTypes} partnerType={partnerType}></SideNav>
+                <SideNav open={open} policyRequiredPartnerTypes={policyRequiredPartnerTypes}></SideNav>
                 {children}
             </div>
             <Footer></Footer>

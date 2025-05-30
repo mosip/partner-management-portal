@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { getUserProfile } from '../services/UserProfileService';
 import { isLangRTL } from '../utils/AppUtils';
 
-function SideNav({ open, policyRequiredPartnerTypes, partnerType }) {
+function SideNav({ open, policyRequiredPartnerTypes }) {
     const location = useLocation();
     const navigate = useNavigate();
     const [activeIcon, setActiveIcon] = useState("");
@@ -51,25 +51,28 @@ function SideNav({ open, policyRequiredPartnerTypes, partnerType }) {
     }, [selectedPath]);
 
     useEffect(() => {
-        if (policyRequiredPartnerTypes.indexOf(partnerType) > -1) {
+        const userProfile = getUserProfile();
+        const roles = userProfile.roles ?? '';
+        const userRoles = roles.split(',');
+        if (userRoles.some(role => policyRequiredPartnerTypes.includes(role))) {
             setEnablePoliciesMenu(true);
         }
-        if (partnerType === "AUTH_PARTNER") {
+        if (roles.includes("AUTH_PARTNER")) {
             setEnableAuthenticationServicesMenu(true);
         }
-        if (partnerType === "DEVICE_PROVIDER") {
+        if (roles.includes("DEVICE_PROVIDER")) {
             setEnableDeviceProviderServicesMenu(true);
         }
-        if (partnerType === "FTM_PROVIDER") {
+        if (roles.includes("FTM_PROVIDER")) {
             setEnableFtmServicesMenu(true);
         }
-        if (getUserProfile().roles.includes('PARTNER_ADMIN')) {
+        if (roles.includes('PARTNER_ADMIN')) {
             setEnablePartnerAdminMenu(true);
         }
-        if (getUserProfile().roles.includes('POLICYMANAGER')) {
+        if (roles.includes('POLICYMANAGER')) {
             setEnablePolicyManagerMenu(true);
         }
-    }, [policyRequiredPartnerTypes, partnerType]);
+    }, [policyRequiredPartnerTypes]);
 
     function showHome() {
         navigate('/partnermanagement/dashboard');
