@@ -100,7 +100,8 @@
         "partnerType": "Partner Type",
         "phoneNumber": "Phone Number",
         "emailAddress": "Email Address",
-        "userName": "User Name"
+        "userName": "User Name",
+        "info": "Note: The highlighted user details are currently not available in Keycloak. As a result, these fields appear as <italic>Not available</italic> in the profile section."
     },
     "footer": {
         "allRightsReserved": "All rights reserved.",
