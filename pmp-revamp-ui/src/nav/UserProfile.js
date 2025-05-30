@@ -44,7 +44,7 @@ function UserProfile() {
                             {t("userProfile.organisationName")}
                         </p>
                         <p className="font-[600] text-vulcan text-base break-normal break-words">
-                            {userData.orgName}
+                            {userData.organizationName}
                         </p>
                     </div>
                     <div className={`w-[49%] max-[600px]:w-[100%] mb-3 ${isLoginLanguageRTL ? "mr-[1%]": "ml-[1%]"}`}>
