@@ -102,7 +102,8 @@
         "partnerType": "Type de partenaire",
         "phoneNumber": "Numéro de téléphone",
         "emailAddress": "Adresse e-mail",
-        "userName": "Nom d'utilisateur"
+        "userName": "Nom d'utilisateur",
+        "info": "Remarque : Les informations utilisateur mises en évidence ne sont actuellement pas disponibles dans Keycloak. Par conséquent, ces champs apparaissent comme <italic>Pas disponible</italic> dans la section Profil."
     },
     "footer": {
         "allRightsReserved": "Tous droits réservés.",
