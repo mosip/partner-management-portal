@@ -1,8 +1,8 @@
-# Authmanager
+# Partner Management Portal
 
-Helm chart for installing MOSIP pmp uiv2 UI module
+Helm chart for installing MOSIP `pmp-ui-v2` UI module
 
-## TL;DR
+## 
 
 ```console
 $ helm repo add mosip https://mosip.github.io
