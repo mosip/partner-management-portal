@@ -19,6 +19,7 @@ import partner_admin_icon from '../../svg/partner_admin_icon.svg';
 import admin_policies_icon from '../../svg/admin_policies_icon.svg';
 import partner_policy_mapping_icon from '../../svg/partner_policy_mapping_icon.svg';
 import ConsentPopup from './ConsentPopup.js';
+import MissingAttributesPopup from './MissingAttributesPopup.js';
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -42,6 +43,7 @@ function Dashboard() {
   const [rootCertExpiryCount, setRootCertExpiryCount] = useState();
   const [intermediateCertExpiryCount, setIntermediateCertExpiryCount] = useState();
   const [partnerCertExpiryCount, setPartnerCertExpiryCount] = useState();
+  const [showMissingAttributesPopup, setShowMissingAttributesPopup] = useState(false);
   const [isEmailVerified, setIsEmailVerified] = useState(false);
   let isSelectPolicyPopupVisible = false;
   let isUserConsentGiven = false;
@@ -105,17 +107,31 @@ function Dashboard() {
           console.log(`user's email exist in db: ${resData.emailExists}`);
           setIsEmailVerified(resData.emailExists);
           if (!resData.emailExists) {
-            //2. if email does not exist then check if Policy Group selection is required for this Partner Type or not
+            // 2. If email does not exist, check if any required attributes are missing
+            const requiredFields = ['userName', 'orgName', 'address', 'phoneNumber', 'email', 'partnerType', 'langCode'];
+
+            const isAnyAttributeMissing = requiredFields.some(field => {
+              const value = userProfile[field];
+              return !value || (typeof value === 'string' && value.trim() === '');
+            });
+
+            if (isAnyAttributeMissing) {
+              setShowMissingAttributesPopup(true);
+              setDataLoaded(true);
+              return;
+            }
+
+            //3. if email does not exist then check if Policy Group selection is required for this Partner Type or not
             if (
               resData.policyRequiredPartnerTypes.indexOf(userProfile.partnerType) > -1) {
               console.log(`show policy group selection popup`);
               setShowPolicies(true);
-              //3. show policy group selection popup
+              //4. show policy group selection popup
               //TODO show policy group selection popup
               setShowPopup(true);
               isSelectPolicyPopupVisible = true;
             } else {
-              //4. register the new user in PMS
+              //5. register the new user in PMS
               const registerUserRequest = createRequest({
                 partnerId: userProfile.userName,
                 organizationName: userProfile.orgName,
@@ -754,6 +770,9 @@ function Dashboard() {
           )}
           {showConsentPopup && (
             <ConsentPopup />
+          )}
+          {showMissingAttributesPopup && (
+            <MissingAttributesPopup />
           )}
         </>)
       }
