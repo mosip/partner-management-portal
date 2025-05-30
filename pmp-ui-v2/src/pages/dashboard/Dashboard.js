@@ -138,7 +138,7 @@ function Dashboard() {
               //5. register the new user in PMS
               const registerUserRequest = createRequest({
                 partnerId: userProfile.userName,
-                organizationName: userProfile.organizationName,
+                organizationName: userProfile.orgName,
                 address: userProfile.address,
                 contactNumber: userProfile.phoneNumber,
                 emailId: userProfile.email,
