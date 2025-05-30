@@ -19,7 +19,7 @@ import partner_admin_icon from '../../svg/partner_admin_icon.svg';
 import admin_policies_icon from '../../svg/admin_policies_icon.svg';
 import partner_policy_mapping_icon from '../../svg/partner_policy_mapping_icon.svg';
 import ConsentPopup from './ConsentPopup.js';
-import { getAppConfig } from '../../services/ConfigService.js';
+import MissingAttributesPopup from './MissingAttributesPopup.js';
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -43,6 +43,7 @@ function Dashboard() {
   const [rootCertExpiryCount, setRootCertExpiryCount] = useState();
   const [intermediateCertExpiryCount, setIntermediateCertExpiryCount] = useState();
   const [partnerCertExpiryCount, setPartnerCertExpiryCount] = useState();
+  const [showMissingAttributesPopup, setShowMissingAttributesPopup] = useState(false);
   const [isEmailVerified, setIsEmailVerified] = useState(false);
   const [configData, setConfigData] = useState(null);
   let isSelectPolicyPopupVisible = false;
@@ -107,20 +108,36 @@ function Dashboard() {
           console.log(`user's email exist in db: ${resData.emailExists}`);
           setIsEmailVerified(resData.emailExists);
           if (!resData.emailExists) {
-            //2. if email does not exist then check if Policy Group selection is required for this Partner Type or not
+            // 2. If email does not exist, check if any required attributes are missing
+            const requiredFields = ['userName', 'organizationName', 'address', 'phoneNumber', 'email', 'partnerType', 'langCode'];
+
+            const isAttributeMissing = requiredFields.some(field => {
+              const value = userProfile[field];
+
+              // Check if value is null, undefined, or an empty/whitespace-only string
+              return value == null || (typeof value === 'string' && value.trim() === '');
+            });
+
+            if (isAttributeMissing) {
+              setShowMissingAttributesPopup(true);
+              setDataLoaded(true);
+              return;
+            }
+
+            //3. if email does not exist then check if Policy Group selection is required for this Partner Type or not
             if (
               resData.policyRequiredPartnerTypes.indexOf(userProfile.partnerType) > -1) {
               console.log(`show policy group selection popup`);
               setShowPolicies(true);
-              //3. show policy group selection popup
+              //4. show policy group selection popup
               //TODO show policy group selection popup
               setShowPopup(true);
               isSelectPolicyPopupVisible = true;
             } else {
-              //4. register the new user in PMS
+              //5. register the new user in PMS
               const registerUserRequest = createRequest({
                 partnerId: userProfile.userName,
-                organizationName: userProfile.orgName,
+                organizationName: userProfile.organizationName,
                 address: userProfile.address,
                 contactNumber: userProfile.phoneNumber,
                 emailId: userProfile.email,
@@ -775,6 +792,9 @@ function Dashboard() {
           )}
           {showConsentPopup && (
             <ConsentPopup />
+          )}
+          {showMissingAttributesPopup && (
+            <MissingAttributesPopup />
           )}
         </>)
       }

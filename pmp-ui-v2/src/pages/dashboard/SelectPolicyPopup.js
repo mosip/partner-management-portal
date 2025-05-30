@@ -58,7 +58,7 @@ function SelectPolicyPopup() {
         const userProfile = getUserProfile();
         const registerUserRequest = createRequest({
             partnerId: userProfile.userName,
-            organizationName: userProfile.orgName,
+            organizationName: userProfile.organizationName,
             address: userProfile.address,
             contactNumber: userProfile.phoneNumber,
             emailId: userProfile.email,
