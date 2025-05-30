@@ -95,7 +95,7 @@ public class TestRunner {
 		runner.run();
 		DBManager.executeDBQueries(ConfigManager.getPMSDbUrl(), ConfigManager.getPMSDbUser(),
 				ConfigManager.getPMSDbPass(), ConfigManager.getPMSDbSchema(),
-				TestRunner.getResourcePath() + "\\" + "config\\partnerUiv2DataDeleteQueries.txt");
+				TestRunner.getResourcePath() + "/" + "config/partnerUiv2DataDeleteQueries.txt");
 
 		DBManager.executeDBQueries(ConfigManager.getKMDbUrl(), ConfigManager.getMasterDbUser(),
 				ConfigManager.getMasterDbPass(), ConfigManager.getMasterDbSchema(),
