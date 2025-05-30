@@ -8,6 +8,7 @@ import ErrorMessage from '../common/ErrorMessage.js';
 import LoadingIcon from "../common/LoadingIcon.js";
 import LoadingCount from '../common/LoadingCount.js';
 import SelectPolicyPopup from './SelectPolicyPopup.js';
+import MissingAttributesPopup from './MissingAttributesPopup.js';
 
 import partnerCertificateIcon from '../../svg/partner_certificate_icon.svg';
 import policiesIcon from '../../svg/policies_icon.svg';
@@ -37,6 +38,7 @@ function Dashboard() {
   const [sbiPendingApprovalRequestCount, setSbiPendingApprovalRequestCount] = useState();
   const [devicePendingApprovalRequestCount, setDevicePendingApprovalRequestCount] = useState();
   const [ftmPendingApprovalRequestCount, setFtmPendingApprovalRequestCount] = useState();
+  const [showMissingAttributesPopup, setShowMissingAttributesPopup] = useState(false);
   let isSelectPolicyPopupVisible = false;
   let isUserConsentGiven = false;
 
@@ -100,17 +102,33 @@ function Dashboard() {
           const resData = response.data.response;
           console.log(`user's email exist in db: ${resData.emailExists}`);
           if (!resData.emailExists) {
-            //2. if email does not exist then check if Policy Group selection is required for this Partner Type or not
+            // 2. If email does not exist, check if any required attributes are missing
+            const requiredFields = ['userName', 'orgName', 'address', 'phoneNumber', 'email', 'partnerType'];
+
+            const isAttributeMissing = requiredFields.some(field => {
+              const value = userProfile[field];
+
+              // Check if value is null, undefined, or an empty/whitespace-only string
+              return value == null || (typeof value === 'string' && value.trim() === '');
+            });
+
+            if (isAttributeMissing) {
+              setShowMissingAttributesPopup(true);
+              setDataLoaded(true);
+              return;
+            }
+
+            //3. if email does not exist then check if Policy Group selection is required for this Partner Type or not
             if (
               userRoles.some(role => resData.policyRequiredPartnerTypes.includes(role)) && !roles.includes('PARTNER_ADMIN') && !roles.includes('POLICYMANAGER')) {
               console.log(`show policy group selection popup`);
               setShowPolicies(true);
-              //3. show policy group selection popup
+              //4. show policy group selection popup
               //TODO show policy group selection popup
               setShowPopup(true);
               isSelectPolicyPopupVisible = true;
             } else {
-              //4. register the new user in PMS
+              //5. register the new user in PMS
               const registerUserRequest = createRequest({
                 partnerId: userProfile.userName,
                 organizationName: userProfile.orgName,
@@ -559,6 +577,9 @@ function Dashboard() {
           )}
           {showConsentPopup && (
             <ConsentPopup />
+          )}
+          {showMissingAttributesPopup && (
+            <MissingAttributesPopup />
           )}
         </>)
       }
