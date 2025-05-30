@@ -121,15 +121,15 @@ public class AdminTestUtil extends BaseTestCaseFunc {
 
 			DBManager.executeDBQueries(ConfigManager.getPMSDbUrl(), ConfigManager.getPMSDbUser(),
 					ConfigManager.getPMSDbPass(), ConfigManager.getPMSDbSchema(),
-					TestRunner.getResourcePath() + "\\" + "config\\partneruiv2DataDeleteQueries.txt");
+					TestRunner.getResourcePath() + "\\" + "config\\partnerUiv2DataDeleteQueries.txt");
 
 			DBManager.executeDBQueries(ConfigManager.getKMDbUrl(), ConfigManager.getMasterDbUser(),
 					ConfigManager.getMasterDbPass(), ConfigManager.getMasterDbSchema(),
-					TestRunner.getResourcePath() + "/" + "config/partneruiv2DataDeleteQueriesForKeyMgr.txt");
+					TestRunner.getResourcePath() + "/" + "config/partnerUiv2DataDeleteQueriesForKeyMgr.txt");
 
 			DBManager.executeDBQueries(ConfigManager.getIdaDbUrl(), ConfigManager.getMasterDbUser(),
 					ConfigManager.getPMSDbPass(), ConfigManager.getIDADBSchema(),
-					TestRunner.getResourcePath() + "/" + "config/partneruiv2DataDeleteQueriesForIDA.txt");
+					TestRunner.getResourcePath() + "/" + "config/partnerUiv2DataDeleteQueriesForIDA.txt");
 			KeycloakUserManager.removeUser();
 			KeycloakUserManager.createUsers();
 			BaseTestCaseFunc.DefinePolicyGroup();
