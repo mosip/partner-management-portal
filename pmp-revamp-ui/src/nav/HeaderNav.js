@@ -246,7 +246,7 @@ function HeaderNav({ open, setOpen }) {
                         <img id='orgIcon' src={orgIcon} alt="" className="w-5 h-5" />
                     </div>
 
-                    <h2 className={`text-xs font-bold text-gray-600 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{getUserProfile().orgName}</h2>
+                    <h2 className={`text-xs font-bold text-gray-600 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{getUserProfile().organizationName}</h2>
                 </div>
                 <div role='button' onClick={openDropdown} className={`flex items-center ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`} ref={dropdownRef} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, openDropdown)}>
                     <button id='header_user_profile_icon_btn' className="relative flex rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-transparent">

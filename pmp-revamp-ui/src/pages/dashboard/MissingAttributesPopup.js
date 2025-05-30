@@ -26,16 +26,29 @@ function MissingAttributesPopup() {
                     </div>
 
                     <div className="p-4 text-sm text-[#414141]">
+                        <div className="bg-gray-50 p-4 mb-2 rounded-lg border-l-2 border-amber-400">
+                            <div className="text-sm text-gray-700 leading-relaxed">
+                                <Trans
+                                    i18nKey="missingAttributesPopup.description"
+                                    components={{ br: <br /> }}
+                                />
+                            </div>
+                        </div>
                         <Trans
-                            i18nKey="missingAttributesPopup.description"
-                            components={{ br: <br /> }}
+                            i18nKey="missingAttributesPopup.instructionsTitle"
+                            components={{ strong: <strong /> }}
                         />
+                        <ul className="list-disc list-inside mt-2">
+                            {t('missingAttributesPopup.instructionsList', { returnObjects: true }).map((item, index) => (
+                                <li key={index}>{item}</li>
+                            ))}
+                        </ul>
                     </div>
 
                     <div className="p-4 flex justify-between items-center border-t border-gray-200">
                         <p className="text-[#333333] text-sm font-semibold">
                             <button
-                                className="w-24 min-w-fit h-9 mx-2 my-1 p-2 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold"
+                                className="w-24 flex min-w-fit h-9 py-2 px-3 border rounded-md bg-[#1447B2] text-white text-sm font-semibold"
                                 onClick={logout}
                             >
                                 {t('missingAttributesPopup.logout')}

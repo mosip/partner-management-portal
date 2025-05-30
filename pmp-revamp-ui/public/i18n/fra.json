@@ -112,7 +112,12 @@
     },
     "missingAttributesPopup": {
         "title": "Configuration du compte requise",
-        "description": "Votre compte utilisateur Keycloak n'a pas été créé via l’auto-inscription sur le portail PMS.<br />Par conséquent, nous ne pouvons pas vous intégrer au portail PMS.<br /><br />Pour résoudre ce problème, veuillez suivre les étapes suivantes :<br />1. Contactez votre administrateur Keycloak pour supprimer ce compte.<br />2. Inscrivez-vous à nouveau via le processus d’auto-inscription du portail PMS.",
+        "description": "Votre compte utilisateur Keycloak n’a pas été créé via l’auto-enregistrement sur le portail PMS.<br />Par conséquent, nous ne pouvons pas vous intégrer dans le portail PMS.",
+        "instructionsTitle": "<strong>Pour résoudre ce problème, vous pouvez suivre les étapes ci-dessous :</strong>",
+        "instructionsList": [
+            "Contactez l’administrateur Keycloak pour supprimer ce compte.",
+            "Inscrivez-vous à nouveau via l’auto-enregistrement du portail PMS."
+        ],
         "logout": "Se déconnecter et continuer"
     },
     "selectPolicyPopup": {
