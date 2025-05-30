@@ -227,7 +227,7 @@ public class ConfigManager {
 				? propsKernel.getProperty(IAM_ADMINPORTAL_PATH)
 				: System.getenv(IAM_ADMINPORTAL_PATH);
 
-		iam_pmpuiv2_path = System.getenv(IAM_PMPUIV2_PATH) == null ? propsKernel.getProperty(IAM_PMPuiv2_PATH)
+		iam_pmpuiv2_path = System.getenv(IAM_PMPUIV2_PATH) == null ? propsKernel.getProperty(IAM_PMPUIV2_PATH)
 				: System.getenv(IAM_PMPUIV2_PATH);
 
 		pms_db_user = getValueForKey(PMS_DB_USER);
@@ -245,7 +245,7 @@ public class ConfigManager {
 		mosippartnerclentsecret = getValueForKey(MOSIPPARTNERCLIENTSECRATES);
 
 		iam_pmpuiv2 = System.getenv(IAM_PMPUIV2) == null ? propsKernel.getProperty(IAM_PMPUIV2)
-				: System.getenv(IAM_PMPUIV22);
+				: System.getenv(IAM_PMPUIV2);
 
 		logger.info("adminportal_path from config manager::" + iam_adminportal_path);
 		iam_apienvuser = System.getenv(IAM_APIENVUSER) == null ? propsKernel.getProperty(IAM_APIENVUSER)
