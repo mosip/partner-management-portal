@@ -112,7 +112,9 @@ function Dashboard() {
 
             const isAttributeMissing = requiredFields.some(field => {
               const value = userProfile[field];
-              return !value || (typeof value === 'string' && value.trim() === '');
+
+              // Check if value is null, undefined, or an empty/whitespace-only string
+              return value == null || (typeof value === 'string' && value.trim() === '');
             });
 
             if (isAttributeMissing) {
