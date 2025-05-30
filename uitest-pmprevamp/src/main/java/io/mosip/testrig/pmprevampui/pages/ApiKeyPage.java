@@ -393,10 +393,10 @@ public class ApiKeyPage extends BasePage {
 	@FindBy(id = "api_key_details_auth_partner_context")
 	private WebElement apiKeyDetailsPartnerTypeContext;
 	
-	@FindBy(xpath = "//div[text()='Created On']")
+	@FindBy(xpath = "//div[contains(text(), 'Created On')]")
 	private WebElement createdOnLabel;
 
-	@FindBy(xpath = "//span[text()='Special characters are not allowed.']")
+	@FindBy(xpath = "//span[contains(text(), 'Invalid character')]")
 	private WebElement specialCharacterErrorMessage;
 	
 	@FindBy(id = "partner_id_filter")

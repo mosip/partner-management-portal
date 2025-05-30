@@ -362,10 +362,10 @@ public class AuthPolicyPage extends BasePage {
 	@FindBy(id = "clone_policy_group_dropdown_search_input")
 	private WebElement clonePolicyGroupDropdownSearchInput;
 	
-	@FindBy(xpath = "//span[text()='A']")
+	@FindBy(xpath = "//span[text()='@#A#@']")
 	private WebElement clonePolicyGroupName;
 	
-	@FindBy(xpath = "//p[text()='A']")
+	@FindBy(xpath = "//p[text()='@#A#@']")
 	private WebElement clonePolicyGroupDescription;
 	
 	@FindBy(id = "clone_policy_group_dropdown_option1")
@@ -383,7 +383,7 @@ public class AuthPolicyPage extends BasePage {
 	@FindBy(id = "clone_policy_close_button")
 	private WebElement clonePolicyCloseButton;
 	
-	@FindBy(xpath = "//td[text()='A']")
+	@FindBy(xpath = "//td[text()='@#A#@']")
 	private WebElement updatedPolicyGroup;
 	
 	@FindBy(xpath = "//div[text()='Draft']")
@@ -473,7 +473,7 @@ public class AuthPolicyPage extends BasePage {
 	@FindBy(id = "block_message_cancel")
 	private WebElement changesLostCancelButton;
 	
-	@FindBy(xpath = "//span[text()='Special characters are not allowed.']")
+	@FindBy(xpath = "//span[contains(text(), 'Invalid character')]")
 	private WebElement specialCharactersAreNotAllowedErrorMessage;
 	
 	@FindBy(xpath = "//span[text()='Re-Upload']")

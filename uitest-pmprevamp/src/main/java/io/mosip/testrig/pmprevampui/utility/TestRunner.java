@@ -95,7 +95,7 @@ public class TestRunner {
 		runner.run();
 		DBManager.executeDBQueries(ConfigManager.getPMSDbUrl(), ConfigManager.getPMSDbUser(),
 				ConfigManager.getPMSDbPass(), ConfigManager.getPMSDbSchema(),
-				TestRunner.getResourcePath() + "\\" + "config\\partnerRevampDataDeleteQueries.txt");
+				TestRunner.getResourcePath() + "/" + "config/partnerRevampDataDeleteQueries.txt");
 
 		DBManager.executeDBQueries(ConfigManager.getKMDbUrl(), ConfigManager.getMasterDbUser(),
 				ConfigManager.getMasterDbPass(), ConfigManager.getMasterDbSchema(),

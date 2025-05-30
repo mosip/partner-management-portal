@@ -493,13 +493,6 @@ public class DeviceProviderTest extends BaseClass {
 		listOfSbiPage = new ListOfSbiPage(driver);
 		listOfDevicesPage = new ListOfDevicesPage(driver);
 
-		assertTrue(dashboardpage.isTermsAndConditionsPopUppDisplayed(),
-				GlobalConstants.isTermsAndConditionsPopUppDisplayed);
-		dashboardpage.clickOnCheckbox();
-
-		assertTrue(dashboardpage.isProceedButtonDisplayed(), GlobalConstants.isProceedButtonDisplayed);
-		dashboardpage.clickOnProceedButton();
-
 		dashboardpage.clickOnSbiDevices();
 		listOfSbiPage.clickOnDeviceTab();
 

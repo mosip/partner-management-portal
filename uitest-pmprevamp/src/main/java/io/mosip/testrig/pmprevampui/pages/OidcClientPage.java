@@ -264,7 +264,7 @@ public class OidcClientPage extends BasePage {
 	@FindBy(xpath = "//*[@placeholder='Enter Logo URI']")  
 	private WebElement enterLogoUriTextBoxEmpty;
 	
-	@FindBy(xpath = "(//span[@class='text-sm text-crimson-red font-semibold'])[1]")
+	@FindBy(xpath = "//span[normalize-space(text())='Enter valid public key in JWK format']")
 	private WebElement publicKeyFormatErrorDisplayed;
 	
 	@FindBy(xpath = "(//span[@class='text-sm text-crimson-red font-semibold' and text()='Enter a valid URI'])[1]")
@@ -543,7 +543,7 @@ public class OidcClientPage extends BasePage {
 	@FindBy(xpath = "//p[@class='text-base font-bold text-[#1447B2] truncate']")
 	private WebElement activatedOidcClientIdElement;
 	
-	@FindBy(xpath = "//div[text()='Created On']")
+	@FindBy(xpath = "//div[contains(text(), 'Created On')]")
 	private WebElement createdOnLabel;
 	
 	@FindBy(xpath = "//p[contains(text(), 'Copied!')]")

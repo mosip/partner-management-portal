@@ -271,25 +271,24 @@ public class FTMDeviceTest extends BaseClass {
 		
 		dashboardpage.clickOnProfileDropdown();
 		assertTrue(dashboardpage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
-
 		LoginPage loginpage = dashboardpage.clickOnLogoutButton();
 		
 		loginpage.enterUserName("pmpui-ftm");
 		loginpage.enterPassword(password);
 		loginpage.clickOnLoginButton();
 		
-		partnerCertificatePage.isDashboardFtmChipProviderCardDisplayed();
+		assertTrue(partnerCertificatePage.isDashboardFtmChipProviderCardDisplayed(), GlobalConstants.isDashboardFtmChipProviderCardDisplayed);
 		partnerCertificatePage.clickOnFtmChipProviderCard();
 		
-		assertTrue(ftmPage.isPartnerIdCoulumeHeaderDisplayed(), GlobalConstants.isFtmTablHeadersDisplaed);
-		assertTrue(ftmPage.isMakeCoulumeHeaderDisplayed(), GlobalConstants.isFtmTablHeadersDisplaed);
-		assertTrue(ftmPage.isModelCoulumeHeaderDisplayed(), GlobalConstants.isFtmTablHeadersDisplaed);
-		assertTrue(ftmPage.isCreatedDateCoulumeHeaderDisplayed(), GlobalConstants.isFtmTablHeadersDisplaed);
-		assertTrue(ftmPage.iscertTimeofUploadCoulumeHeaderDisplayed(), GlobalConstants.isFtmTablHeadersDisplaed);
-		assertTrue(ftmPage.isCertExpiryCoulumeHeaderDisplayed(), GlobalConstants.isFtmTablHeadersDisplaed);
-		assertTrue(ftmPage.isCertExpiryStatusCoulumeHeaderDisplayed(), GlobalConstants.isFtmTablHeadersDisplaed);
-		assertTrue(ftmPage.isStatusCoulumeHeaderDisplayed(), GlobalConstants.isFtmTablHeadersDisplaed);
-		assertTrue(ftmPage.isActionCoulumeHeaderDisplayed(), GlobalConstants.isFtmTablHeadersDisplaed);
+		assertTrue(ftmPage.isPartnerIdCoulumeHeaderDisplayed(), GlobalConstants.isPartnerIdHeaderDisplayed);
+		assertTrue(ftmPage.isMakeCoulumeHeaderDisplayed(), GlobalConstants.isMakeCoulumeHeaderDisplayed);
+		assertTrue(ftmPage.isModelCoulumeHeaderDisplayed(), GlobalConstants.isModelCoulumeHeaderDisplayed);
+		assertTrue(ftmPage.isCreatedDateCoulumeHeaderDisplayed(), GlobalConstants.isCreatedDateHeaderDisplayed);
+		assertTrue(ftmPage.iscertTimeofUploadCoulumeHeaderDisplayed(), GlobalConstants.isCreatedDateCoulumeHeaderDisplayed);
+		assertTrue(ftmPage.isCertExpiryCoulumeHeaderDisplayed(), GlobalConstants.isCertExpiryHeaderDisplayed);
+		assertTrue(ftmPage.isCertExpiryStatusCoulumeHeaderDisplayed(), GlobalConstants.isCertExpiryStatusHeaderDisplayed);
+		assertTrue(ftmPage.isStatusCoulumeHeaderDisplayed(), GlobalConstants.isStatusHeaderDisplayed);
+		assertTrue(ftmPage.isActionCoulumeHeaderDisplayed(), GlobalConstants.isActionHeaderDisplayed);
 			
 		ftmPage.clickOnAddFtmButtonWioutRecord();
 		

@@ -24,34 +24,34 @@ public class FtmPage extends BasePage {
 	@FindBy(id = "add_ftm")
 	private WebElement addFtmButton;
 	
-	@FindBy(xpath = "//div[text()='Partner ID']")
+	@FindBy(id = "partnerId")
 	private WebElement partnerIdCoulumeHeader;
 	
-	@FindBy(xpath = "//div[text()='Make']")
+	@FindBy(id = "make")
 	private WebElement makeCoulumeHeader;
 	
-	@FindBy(xpath = "//div[text()='Model']")
+	@FindBy(id = "model")
 	private WebElement modelCoulumeHeader;
 	
-	@FindBy(xpath = "//div[text()='Creation Date']")
+	@FindBy(id = "createdDateTime")
 	private WebElement createdDateCoulumeHeader;
 	
-	@FindBy(xpath = "//div[text()='Cert Time of Upload']")
+	@FindBy(id = "certificateUploadDateTime")
 	private WebElement certTimeofUploadCoulumeHeader;
 	
-	@FindBy(xpath = "//div[text()='Cert Expiry Date & Time']")
+	@FindBy(id = "certificateExpiryDateTime")
 	private WebElement certExpiryCoulumeHeader;
 	
-	@FindBy(xpath = "//div[text()='Cert Expiry Status']")
+	@FindBy(id = "certificateExpiryStatus")
 	private WebElement certExpiryStatusCoulumeHeader;
 	
-	@FindBy(xpath = "//div[text()='Status']")
+	@FindBy(id = "status")
 	private WebElement statusCoulumeHeader;
 	
-	@FindBy(xpath = "//div[text()='Action']")
+	@FindBy(id = "action")
 	private WebElement actionCoulumeHeader;
 	
-	@FindBy(xpath = "//div[text()='FTM ID']")
+	@FindBy(id = "ftmId")
 	private WebElement ftmIdCoulumeHeader;
 	
 	@FindBy(id = "add_ftm_partner_id")

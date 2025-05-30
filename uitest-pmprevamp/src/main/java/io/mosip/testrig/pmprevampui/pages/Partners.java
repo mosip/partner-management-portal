@@ -1,8 +1,11 @@
 package io.mosip.testrig.pmprevampui.pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+
+import io.mosip.testrig.pmprevampui.fw.util.PmpTestUtil;
 
 public class Partners extends BasePage {
 
@@ -134,6 +137,87 @@ public class Partners extends BasePage {
 	
 	@FindBy(id = "email_address_filter")
 	private WebElement emailAddressFilter;
+	
+	@FindBy(xpath = "//p[contains(text(), 'Do you want to deactivate partner')]")
+	private WebElement partnerDeactivatePopup;
+	
+	@FindBy(xpath = "//p[text()='No Results Found']")
+	private WebElement noResultsFound;
+	
+	@FindBy(xpath = "//h6[text()='Items per page']")
+	private WebElement prefixOfPage;
+	
+	@FindBy(id = "title_back_icon")
+	private WebElement titleBackIcon;
+	
+	@FindBy(xpath = "//input[@placeholder='Search Partner ID']")
+	private WebElement partnerIdPlaceHolder;
+	
+	@FindBy(xpath = "//input[@placeholder='Search Organisation']")
+	private WebElement organisationPlaceHolder;
+	
+	@FindBy(xpath = "//input[@placeholder='Search Policy Group']")
+	private WebElement policyGroupPlaceHolder;
+	
+	@FindBy(xpath = "//input[@placeholder='Search Full Email Address']")
+	private WebElement emailAddressPlaceHolder;
+	
+	@FindBy(xpath = "//span[text()='Select Partner Type']")
+	private WebElement selectPartnerTypePlaceHolder;
+	
+	@FindBy(xpath = "//span[text()='Select Cert. Upload Status']")
+	private WebElement certUploadStatusPlaceHolder;
+	
+	@FindBy(xpath = "//span[text()='Select Status']")
+	private WebElement statusPlaceHolder;
+	
+	@FindBy(xpath = "//h6[text()='Partner Certificate']")
+	private WebElement titleOfPartnerCertificateInPartnerDetails;
+	
+	@FindBy(xpath = "//p[text()='Partner Type']")
+	private WebElement partnerTypeLabelInCertificate;	
+	
+	@FindBy(xpath = "//h6[text()='Auth_Partner']")
+	private WebElement partnerTypeContextInPartnerDetails;
+	
+	@FindBy(xpath = "//p[text()='Expiry date & time']")
+	private WebElement expiryDateTimeLabelInCertificate;
+	
+	@FindBy(xpath = "//p[text()='Time of Upload']")
+	private WebElement uploadTimeLabelInCertificate;
+	
+	@FindBy(id = "download_partner_cer_btn")
+	private WebElement downloadPartnerCertBtn;
+	
+	@FindBy(id = "original_certificate_download_partner_cer_btn")
+	private WebElement originalCertificateDownloadBtn;
+	
+	@FindBy(id = "mosip_signed_certificate_download_partner_cer_btn")
+	private WebElement mosipSignedCertificateDownloadBtn;
+	
+	@FindBy(xpath = "//p[text()='Original Certificate downloaded successfully.']")
+	private WebElement originalCertificateSuccessMsg;
+	
+	@FindBy(xpath = "//p[text()='MOSIP signed certificate downloaded successfully.']")
+	private WebElement mosipSignedCertificateSuccessMsg;
+	
+	@FindBy(xpath = "//div[text()='Created On']")
+	private WebElement createdOnLabel;
+	
+	@FindBy(xpath = "//img[@alt='Mosip Icon']")
+	private WebElement mosipIcon;
+
+	@FindBy(id = "hamburger_close_icon")
+	private WebElement hamburgerIcon;
+	
+	@FindBy(xpath = "//p[contains(normalize-space(.), 'MOSIP - All rights reserved')]")
+	private WebElement footerMosipText;
+
+	@FindBy(id = "footer_documentation_link")
+	private WebElement footerDocumentation;
+	
+	@FindBy(id = "footer_contact_us_link")
+	private WebElement footerContactUs;
 	
 	public Partners(WebDriver driver) {
 		super(driver);
@@ -293,6 +377,10 @@ public class Partners extends BasePage {
 		return isElementDisplayed(deactivatedStatus);
 	}
 	
+	public boolean isActivatedStatusDisplayed() {
+		return isElementDisplayed(ActivatedStatus);
+	}
+	
 	public void clickOnActivatedStatus() {
 		 clickOnElement(ActivatedStatus);
 	}
@@ -333,4 +421,174 @@ public class Partners extends BasePage {
 		return isElementDisabled(filterbtn);
 	}
 	
+	public void clickOnDeactivateButton() {
+		 clickOnElement(deactivateButton);
+	}
+	
+	public boolean isPartnerDeactivatePopupDisplayed() {
+		return isElementDisplayed(partnerDeactivatePopup);
+	}
+	
+	public void clickOnPartnerIdDescIcon() {
+		 clickOnElement(partnerId_desc_icon);
+	}
+	
+	public void clickOnPartnerIdAscIcon() {
+		 clickOnElement(partnerId_asc_icon);
+	}
+	
+	public void clickOnPolicyGroupNameDescIcon() {
+		 clickOnElement(policyGroupName_desc_icon);
+	}
+	
+	public void clickOnPolicyGroupNameAscIcon() {
+		 clickOnElement(policyGroupName_asc_icon);
+	}
+	
+	public void clickOnPartnerTypeDescIcon() {
+		 clickOnElement(partnerType_desc_icon);
+	}
+	
+	public void clickOnPartnerTypeAscIcon() {
+		 clickOnElement(partnerType_asc_icon);
+	}
+		
+	public void clickOnCertificateUploadStatusDescIcon() {
+		 clickOnElement(certificateUploadStatus_desc_icon);
+	}
+	
+	public void clickOnCertificateUploadStatusAscIcon() {
+		 clickOnElement(certificateUploadStatus_asc_icon);
+	}
+	
+	public void clickOnStatusDescIcon() {
+		 clickOnElement(statusDescIcon);
+	}
+	
+	public void clickOnStatusAscIcon() {
+		 clickOnElement(statusAscIcon);
+	}
+	
+	public boolean isNoResultsFoundDisplayed() {
+		return isElementDisplayed(noResultsFound);
+	}
+	
+	public boolean isPrefixOfPageDisplayed() {
+		return isElementDisplayed(prefixOfPage);
+	}
+	
+	public void clickOnTitleBackIcon() {
+		 clickOnElement(titleBackIcon);
+	}
+	
+	public boolean isPartnerIdPlaceHolderDisplayed() {
+		return isElementDisplayed(partnerIdPlaceHolder);
+	}
+	
+	public boolean isOrganisationPlaceHolderDisplayed() {
+		return isElementDisplayed(organisationPlaceHolder);
+	}
+	
+	public boolean isPolicyGroupPlaceHolderDisplayed() {
+		return isElementDisplayed(policyGroupPlaceHolder);
+	}
+	
+	public boolean isEmailAddressPlaceHolderDisplayed() {
+		return isElementDisplayed(emailAddressPlaceHolder);
+	}
+	
+	public boolean isPartnerTypePlaceHolderDisplayed() {
+		return isElementDisplayed(selectPartnerTypePlaceHolder);
+	}
+	
+	public boolean isCertUploadStatusPlaceHolderDisplayed() {
+		return isElementDisplayed(certUploadStatusPlaceHolder);
+	}
+	
+	public boolean isStatusPlaceHolderDisplayed() {
+		return isElementDisplayed(statusPlaceHolder);
+	}
+	
+	public boolean isTitleOfPartnerCertificateInPartnerDetailsDisplayed() {
+		return isElementDisplayed(titleOfPartnerCertificateInPartnerDetails);
+	}
+	
+	public boolean isExpiryDateTimeLabelInCertificateDisplayed() {
+		return isElementDisplayed(expiryDateTimeLabelInCertificate);
+	}
+	
+	public boolean isUploadTimeLabelInCertificateDisplayed() {
+		return isElementDisplayed(uploadTimeLabelInCertificate);
+	}
+	
+	public boolean isDownloadPartnerCertBtnEnabled() {
+		return isElementEnabled(downloadPartnerCertBtn);
+	}
+	
+	public boolean isOriginalCertificateDownloadBtnEnabled() {
+		return isElementEnabled(originalCertificateDownloadBtn);
+	}
+	
+	public boolean isMosipSignedCertificateDownloadBtnEnabled() {
+		return isElementEnabled(mosipSignedCertificateDownloadBtn);
+	}
+	
+	public void clickOnDownloadPartnerCertBtn() {
+		 clickOnElement(downloadPartnerCertBtn);
+	}
+	
+	public void clickOnOriginalCertificateDownloadBtn() {
+		 clickOnElement(originalCertificateDownloadBtn);
+	}
+	
+	public void clickOnMosipSignedCertificateDownloadBtn() {
+		 clickOnElement(mosipSignedCertificateDownloadBtn);
+	}
+	
+	public boolean isOriginalCertificateSuccessMsgDisplayed() {
+		return isElementDisplayed(originalCertificateSuccessMsg);
+	}
+	
+	public boolean isMosipSignedCertificateSuccessMsgDisplayed() {
+		return isElementDisplayed(mosipSignedCertificateSuccessMsg);
+	}
+	
+	public void clickOnViewButton() {
+		 clickOnElement(viewButton);
+	}
+	
+	public boolean isDownloadPartnerCertBtnDisabled() {
+		return isElementDisabled(downloadPartnerCertBtn);
+	}
+	
+	public boolean isCreatedOnLabelDisplayed() {
+		return isElementDisplayed(createdOnLabel);
+	}
+	
+	public boolean isCreatedDateDisplayed() {
+		WebElement createdDate = driver
+				.findElement(By.xpath("//div[text()='Created On " + PmpTestUtil.todayDateWithoutZeroPadder + "']"));
+		return isElementDisplayed(createdDate);
+	}
+	
+	public boolean isMosipIconDisplayed() {
+		return isElementDisplayed(mosipIcon);
+	}
+	
+	public boolean isHamburgerIconDisplayed() {
+		return isElementDisplayed(hamburgerIcon);
+	}
+	
+	public boolean isFooterMosipTextDisplayed() {
+		return isElementDisplayed(footerMosipText);
+	}
+	
+	public boolean isFooterDocumentationDisplayed() {
+		return isElementDisplayed(footerDocumentation);
+	}
+	
+	public boolean isFooterContactUsDisplayed() {
+		return isElementDisplayed(footerContactUs);
+	}
+
 }

@@ -1136,13 +1136,6 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		policiesPage.clickSubmitButton();
 		policiesPage.clickOnGoBackButton();
 
-		policiesPage.clickOnRequestPolicyButtonOfTabularPage();
-		policiesPage.selectPartnerIdDropdown();
-		policiesPage.selectPolicyNameDropdown(GlobalConstants.DATAPOLICY01);
-		policiesPage.enterComments(GlobalConstants.DATAPOLICY01);
-		policiesPage.clickSubmitButton();
-		policiesPage.clickOnGoBackButton();
-
 		logoutFromPartner(dashboardPage);
 
 		loginPage.enterUserName("pmpui-revamp");

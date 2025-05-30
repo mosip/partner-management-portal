@@ -109,7 +109,7 @@ public class DeviceProviderPage extends BasePage {
 	@FindBy(xpath = "//p[text()='SBI details exists for given SBI Version. Multiple SBI with same SBI Version cannot be added.']")
 	private WebElement duplicateSbiErrorMessage;
 	
-	@FindBy(xpath = "//span[text()='Special characters are not allowed.']")
+	@FindBy(xpath = "//span[contains(text(), 'Invalid character')]")
 	private WebElement specialCharacterErrorMessage;
 
 	@FindBy(xpath = "//p[text()='Your changes will be lost, are you sure you want to proceed?']")

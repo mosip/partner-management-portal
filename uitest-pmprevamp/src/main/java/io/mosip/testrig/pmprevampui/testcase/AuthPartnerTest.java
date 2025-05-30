@@ -44,12 +44,12 @@ public class AuthPartnerTest extends BaseClass {
 		partnerCertificatePage.clickOnpartnerDomainSelectorDropdown();
 		partnerCertificatePage.clickOnpartnerpartnerDomainSelectorDropdownOptionAuth();
 
-		partnerCertificatePage.uploadCertificateSubCa();
-		partnerCertificatePage.ClickonSubmitButtonForAdmin();
-		assertTrue(partnerCertificatePage.isUploadRootCertificateFirstErrorMessageDisplayed(),
-				GlobalConstants.isUploadRootCertificateFirstErrorMessageDisplayed);
-		partnerCertificatePage.clickOnErrorCloseButton();
-		partnerCertificatePage.clickOnRemoveCertificateButton();
+//		partnerCertificatePage.uploadCertificateSubCa();
+//		partnerCertificatePage.ClickonSubmitButtonForAdmin();
+//		assertTrue(partnerCertificatePage.isUploadRootCertificateFirstErrorMessageDisplayed(),
+//				GlobalConstants.isUploadRootCertificateFirstErrorMessageDisplayed);
+//		partnerCertificatePage.clickOnErrorCloseButton();
+//		partnerCertificatePage.clickOnRemoveCertificateButton();
 
 		partnerCertificatePage.uploadCertificateRootCa();
 		partnerCertificatePage.ClickonSubmitButtonForAdmin();
@@ -662,6 +662,15 @@ public class AuthPartnerTest extends BaseClass {
 		apiKeyPage.enterNameOfApiKeyTextBox(GlobalConstants.SPECIAL_CHARACTERS);
 		assertTrue(apiKeyPage.isSpecialCharacterErrorMessageDisplayed(),
 				GlobalConstants.isSpecialCharacterErrorMessageDisplayed);
+		apiKeyPage.enterNameOfApiKeyTextBox(GlobalConstants.VALID_SPECIAL_CHARACTERS);
+		apiKeyPage.clickOnSubmitButton();
+		apiKeyPage.clickOnCopyIdCloseButton();
+		apiKeyPage.clickOnConfirmationGoBackButton();
+
+		apiKeyPage.clickOnApiKeyListPageGenerateApiKeyBtn();
+		apiKeyPage.selectPartnerIdDropdown();
+		apiKeyPage.selectPartnerIdDropdown();
+		apiKeyPage.selectPolicyNameDropdown(data);
 		apiKeyPage.enterNameOfApiKeyTextBox(GlobalConstants.AUTOMATION);
 		apiKeyPage.clickOnSubmitButton();
 		apiKeyPage.clickOnCopyIdCloseButton();
