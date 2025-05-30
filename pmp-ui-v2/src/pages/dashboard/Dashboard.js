@@ -110,7 +110,7 @@ function Dashboard() {
           setIsEmailVerified(resData.emailExists);
           if (!resData.emailExists) {
             // 2. If email does not exist, check if any required attributes are missing
-            const requiredFields = ['userName', 'orgName', 'address', 'phoneNumber', 'email', 'partnerType', 'langCode'];
+            const requiredFields = ['userName', 'orgName', 'address', 'phoneNumber', 'email', 'partnerType'];
 
             const isAttributeMissing = requiredFields.some(field => {
               const value = userProfile[field];
