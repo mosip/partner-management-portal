@@ -83,19 +83,21 @@ function Dashboard() {
     const fetchData = async () => {
       try {
         const userProfile = getUserProfile();
-        if (userProfile.partnerType === "AUTH_PARTNER") {
+        const roles = userProfile.roles ?? '';
+        const userRoles = roles.split(',');
+        if (roles.includes("AUTH_PARTNER")) {
           setShowAuthenticationServices(true);
         }
-        if (getUserProfile().partnerType === "DEVICE_PROVIDER") {
+        if (roles.includes("DEVICE_PROVIDER")) {
           setShowDeviceProviderServices(true);
         }
-        if (getUserProfile().partnerType === "FTM_PROVIDER") {
+        if (roles.includes("FTM_PROVIDER")) {
           setShowFtmServices(true);
         }
-        if (getUserProfile().roles.includes('PARTNER_ADMIN')) {
+        if (roles.includes('PARTNER_ADMIN')) {
           setIsPartnerAdmin(true);
         }
-        if (getUserProfile().roles.includes('POLICYMANAGER')) {
+        if (roles.includes('POLICYMANAGER')) {
           setIsPolicyManager(true);
         }
         //1. verify that the logged in user's email is registered in PMS table or not
@@ -127,7 +129,7 @@ function Dashboard() {
 
             //3. if email does not exist then check if Policy Group selection is required for this Partner Type or not
             if (
-              resData.policyRequiredPartnerTypes.indexOf(userProfile.partnerType) > -1) {
+              (userRoles.some(role => resData.policyRequiredPartnerTypes.includes(role))) && !roles.includes('PARTNER_ADMIN') && !roles.includes('POLICYMANAGER')) {
               console.log(`show policy group selection popup`);
               setShowPolicies(true);
               //4. show policy group selection popup
@@ -157,7 +159,7 @@ function Dashboard() {
           callUserConsentPopup();
           //if email exists then do nothing
           if (
-            resData.policyRequiredPartnerTypes.indexOf(userProfile.partnerType) > -1) {
+            userRoles.some(role => resData.policyRequiredPartnerTypes.includes(role))) {
             setShowPolicies(true);
           }
         } else {
@@ -545,7 +547,7 @@ function Dashboard() {
           </div>
           <div className="flex mt-2 ml-[1.8rem] flex-wrap break-words">
             {!isPartnerAdmin && !isPolicyManager &&
-              < div role='button' id='dashboard_partner_certificate_list_card' onClick={() => partnerCertificatesList()} className="relative w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => partnerCertificatesList())}>
+              <div role='button' id='dashboard_partner_certificate_list_card' onClick={() => partnerCertificatesList()} className="relative w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => partnerCertificatesList())}>
                 <div className="flex justify-center mb-5">
                   <img id='dashboard_partner_certificated_list_icon' src={partnerCertificateIcon} alt="" className="w-8 h-8" />
                 </div>
