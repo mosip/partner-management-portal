@@ -1,12 +1,12 @@
 # Authmanager
 
-Helm chart for installing MOSIP pmp revamp UI module
+Helm chart for installing MOSIP pmp uiv2 UI module
 
 ## TL;DR
 
 ```console
 $ helm repo add mosip https://mosip.github.io
-$ helm install my-release mosip/pmp-revamp-ui
+$ helm install my-release mosip/pmp-ui-v2
 ```
 
 ## Prerequisites
@@ -18,10 +18,10 @@ $ helm install my-release mosip/pmp-revamp-ui
 
 ## Installing the Chart
 
-To install the chart with the release name `pmp-revamp-ui`.
+To install the chart with the release name `pmp-ui-v2`.
 
 ```console
-helm install my-release mosip/pmp-revamp-ui
+helm install my-release mosip/pmp-ui-v2
 ```
 
 > **Tip**: List all releases using `helm list`

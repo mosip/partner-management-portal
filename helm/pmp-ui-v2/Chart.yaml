@@ -1,8 +1,8 @@
 apiVersion: v2
-name: pmp-revamp-ui
-description: A Helm chart for MOSIP pmp revamp UI module
+name: pmp-ui-v2
+description: A Helm chart for MOSIP pmp uiv2 UI module
 type: application
-version: 1.3.0-beta.1-develop
+version: 0.0.1-develop
 appVersion: ""
 dependencies:
   - name: common
