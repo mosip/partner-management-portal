@@ -4,7 +4,8 @@ import {
     formatDate, getNotificationTitle, getNotificationDescription, getPartnerManagerUrl, handleServiceErrors,
     isLangRTL, resetPageNumber, setPageNumberAndPageSize, onResetFilter, onClickApplyFilter,
     createRequest,
-    fetchNotificationsList
+    fetchNotificationsList,
+    getWeeklySummaryDate
 } from "../../../utils/AppUtils.js";
 import LoadingIcon from "../../common/LoadingIcon.js";
 import ErrorMessage from "../../common/ErrorMessage.js";
@@ -188,13 +189,8 @@ function ViewAllNotifications({ notificationType }) {
         const ftmList = Array.isArray(notification.notificationDetails.ftmDetails) ? notification.notificationDetails.ftmDetails : [];
         setFtmCertList(ftmList);
 
-        if (certificateList.length > 0) {
-            setActiveTab('partner');
-            setWeeklyNotificationList(certificateList);
-        } else if (ftmList.length > 0) {
-            setActiveTab('ftm');
-            setWeeklyNotificationList(ftmList);
-        }
+        setActiveTab('partner');
+        setWeeklyNotificationList(certificateList);
     };
 
     const backToWeeklySummary = () => {
@@ -254,6 +250,18 @@ function ViewAllNotifications({ notificationType }) {
         }
     };
 
+    const emptyNotifications = () => {
+        return (
+            <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
+                <div className="flex flex-col items-center py-20 px-2 border-b border-gray-200">
+                    <img src={noNotificationIcon} alt='' id='noNotificationIcon' />
+                    <p className="text-sm text-gray-500">{t('notificationPopup.noNotification')}</p>
+                    <p className="text-sm text-gray-500">{t('notificationPopup.noNotificationDescr')}</p>
+                </div>
+            </div>
+        );
+    };
+
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter overflow-x-scroll`}>
             {!dataLoaded && (
@@ -285,14 +293,7 @@ function ViewAllNotifications({ notificationType }) {
                     )}
                     
                     {!isFilterApplied && notificationsList.length === 0 ? (
-                        <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
-
-                            <div className="flex flex-col items-center py-20 px-2 border-b border-gray-200">
-                                <img src={noNotificationIcon} alt='' id='noNotificationIcon' />
-                                <p className="text-sm text-gray-500">{t('notificationPopup.noNotification')}</p>
-                                <p className="text-sm text-gray-500">{t('notificationPopup.noNotificationDescr')}</p>
-                            </div>
-                        </div>
+                        emptyNotifications()
                     ) : (
                         <>
                             <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
@@ -306,6 +307,7 @@ function ViewAllNotifications({ notificationType }) {
                                     addBackArrow={showExpiringItems ? true : false}
                                     goBack={showExpiringItems ? backToWeeklySummary : undefined}
                                     removeFilter={showExpiringItems ? true : false}
+                                    listSubTitle={showExpiringItems ? t('notificationPopup.expiringItems') + " (" + formatDate(notificationCreatedDateTime, 'dateInWords') + t('notificationPopup.to') + formatDate(getWeeklySummaryDate(notificationCreatedDateTime), 'dateInWords') + ")" : undefined}
                                 />
                                 <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
                                 {filter && (
@@ -361,39 +363,40 @@ function ViewAllNotifications({ notificationType }) {
                                                 ) : (
                                                     <div>
                                                         <div className={`flex text-xs bg-[#FCFCFC] font-bold ${isLoginLanguageRTL && 'space-x-reverse'} space-x-16 items-start px-8 border-b-2`}>
-                                                            {partnerCertList.length > 0 && (
-                                                                <div id='partner_cert_tab' className={`flex-col justify-center text-center`}>
-                                                                    <button onClick={changeToPartnerCert} className={`${activeTab === "partner" ? "text-[#1447b2]" : "text-[#031640]"} py-3 cursor-pointer text-base`}>
-                                                                        <h6> {t('partnerNotificationsTab.partnerCertificate')} </h6>
-                                                                    </button>
+                                                            <div id='partner_cert_tab' className={`flex-col justify-center text-center`}>
+                                                                <button onClick={changeToPartnerCert} className={`${activeTab === "partner" ? "text-[#1447b2]" : "text-[#031640]"} py-3 cursor-pointer text-base`}>
+                                                                    <h6> {t('partnerNotificationsTab.partnerCertificate')} ({partnerCertList.length}) </h6>
+                                                                </button>
 
-                                                                    <div className={`h-1 w-full ${activeTab === "partner" ? "bg-tory-blue" : "bg-transparent"}  rounded-t-md`}></div>
-                                                                </div>
-                                                            )}
-                                                            {ftmCertList.length > 0 && (
-                                                                <div id='ftm_cert_tab' className={`flex-col justify-center text-center`}>
-                                                                    <button onClick={changeToFTMCert} className={`${activeTab === "ftm" ? "text-[#1447b2]" : "text-[#031640]"} py-3 cursor-pointer text-base`}>
-                                                                        <h6> {t('partnerNotificationsTab.ftmCertificate')} </h6>
-                                                                    </button>
+                                                                <div className={`h-1 w-full ${activeTab === "partner" ? "bg-tory-blue" : "bg-transparent"}  rounded-t-md`}></div>
+                                                            </div>
+                                                            <div id='ftm_cert_tab' className={`flex-col justify-center text-center`}>
+                                                                <button onClick={changeToFTMCert} className={`${activeTab === "ftm" ? "text-[#1447b2]" : "text-[#031640]"} py-3 cursor-pointer text-base`}>
+                                                                    <h6> {t('partnerNotificationsTab.ftmCertificate')} ({ftmCertList.length}) </h6>
+                                                                </button>
 
-                                                                    <div className={`h-1 w-full ${activeTab === "ftm" ? "bg-tory-blue" : "bg-transparent"}  rounded-t-md`}></div>
-                                                                </div>
-                                                            )}
+                                                                <div className={`h-1 w-full ${activeTab === "ftm" ? "bg-tory-blue" : "bg-transparent"}  rounded-t-md`}></div>
+                                                            </div>
                                                         </div>
                                                         {/* <hr className="h-0.5 bg-gray-200 border-0" /> */}
                                                         <div className="p-4">
-                                                            {weeklyNotificationList.map((notification, index) => (
-                                                                <div key={index} className="flex items-start w-full bg-white p-4 rounded-lg shadow mb-3 border-b border-[#D0D5DD]">
-                                                                    <img src={featuredIcon} alt='' id='featuredIcon' className={`${isLoginLanguageRTL ? 'ml-3' : 'mr-3'} mt-2`} />
-                                                                    <div className="mt-0.5 w-full">
-                                                                        <div className="flex justify-between flex-wrap">
-                                                                            <p className="font-semibold text-base text-[#101828]">{getWeeklyNotificationTitle(notification, activeTab)}</p>
-                                                                            <p className={`text-xs text-gray-500 ${isLoginLanguageRTL ? 'text-left' : 'text-right'}`}>{formatDate(notificationCreatedDateTime, 'dateTime')}</p>
+                                                            {weeklyNotificationList.length !== 0 ? 
+                                                            <>
+                                                                {weeklyNotificationList.map((notification, index) => (
+                                                                    <div key={index} className="flex items-start w-full bg-white p-4 rounded-lg shadow mb-3 border-b border-[#D0D5DD]">
+                                                                        <img src={featuredIcon} alt='' id='featuredIcon' className={`${isLoginLanguageRTL ? 'ml-3' : 'mr-3'} mt-2`} />
+                                                                        <div className="mt-0.5 w-full">
+                                                                            <div className="flex justify-between flex-wrap">
+                                                                                <p className="font-semibold text-base text-[#101828]">{getWeeklyNotificationTitle(notification, activeTab)}</p>
+                                                                                <p className={`text-xs text-gray-500 ${isLoginLanguageRTL ? 'text-left' : 'text-right'}`}>{formatDate(notificationCreatedDateTime, 'dateTime')}</p>
+                                                                            </div>
+                                                                            <div className="text-[#475467] text-sm md:break-normal break-all">{getWeeklyNotificationDescription(notification, activeTab)}</div>
                                                                         </div>
-                                                                        <div className="text-[#475467] text-sm md:break-normal break-all">{getWeeklyNotificationDescription(notification, activeTab)}</div>
                                                                     </div>
-                                                                </div>
-                                                            ))}
+                                                                ))}
+                                                            </> : 
+                                                                emptyNotifications()
+                                                            }
                                                         </div>
                                                     </div>
                                                 )}
