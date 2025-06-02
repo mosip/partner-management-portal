@@ -926,20 +926,20 @@ export const getWeeklySummaryDescription = (notification, isLoginLanguageRTL, t)
 
     const certificateList = Array.isArray(certificateDetails) ? certificateDetails : [];
     const ftmCertList = Array.isArray(ftmDetails) ? ftmDetails : [];
-    const sbiList = Array.isArray(sbiDetails) ? sbiDetails : [];
-    const apiKeyList = Array.isArray(apiKeyDetails) ? apiKeyDetails : [];
+    // const sbiList = Array.isArray(sbiDetails) ? sbiDetails : [];
+    // const apiKeyList = Array.isArray(apiKeyDetails) ? apiKeyDetails : [];
 
     const partnerCertCount = certificateList.length;
     const ftmCertCount = ftmCertList.length;
-    const sbiCount = sbiList.length;
-    const apiKeyCount = apiKeyList.length;
+    // const sbiCount = sbiList.length;
+    // const apiKeyCount = apiKeyList.length;
 
     const descriptionItems = [
-        partnerCertCount > 0 && t('notificationPopup.partnerCertificates', { partnerCertCount }),
-        ftmCertCount > 0 && t('notificationPopup.ftmCertificates', { ftmCertCount }),
-        apiKeyCount > 0 && t('notificationPopup.apiKeys', { apiKeyCount }),
-        sbiCount > 0 && t('notificationPopup.sbiDevices', { sbiCount }),
-    ].filter(Boolean);
+        t('notificationPopup.partnerCertificates', { partnerCertCount }),
+        t('notificationPopup.ftmCertificates', { ftmCertCount }),
+        // t('notificationPopup.apiKeys', { apiKeyCount }),
+        // t('notificationPopup.sbiDevices', { sbiCount }),
+    ];
 
     return descriptionItems.length ? (
         <ul className={`list-disc ${isLoginLanguageRTL ? 'mr-6' : 'ml-6'}`}>
@@ -1072,12 +1072,12 @@ export const getNotificationTitle = (notification, t) => {
     } else if (notification.notificationType === 'FTM_CHIP_CERT_EXPIRY') {
         return t('notificationPopup.ftmChipCertExpiry');
     } else if (notification.notificationType === 'WEEKLY_SUMMARY') {
-        return t('notificationPopup.expiringItems') + " (" + formatDate(notification.createdDateTime, 'dateInWords') + t('notificationPopup.to') + formatDate(getWeeklySummaryDate(notification), 'dateInWords') + ")";
+        return t('notificationPopup.expiringItems') + " (" + formatDate(notification.createdDateTime, 'dateInWords') + t('notificationPopup.to') + formatDate(getWeeklySummaryDate(notification.createdDateTime), 'dateInWords') + ")";
     }
 };
 
-export const getWeeklySummaryDate = (notification) => {
-    const date = new Date(notification.createdDateTime);
+export const getWeeklySummaryDate = (createdDateTime) => {
+    const date = new Date(createdDateTime);
     date.setDate(date.getDate() + 7);
     return date.toString();
 };
