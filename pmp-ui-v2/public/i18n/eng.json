@@ -115,13 +115,13 @@
     },
     "missingAttributesPopup": {
         "title": "Account Setup Required",
-        "description": "Your Keycloak user account has not been created via the PMS Portal self-registration.<br />As a result, we are unable to onboard you into the PMS Portal.",
+        "description": "Your Keycloak user account has not been created via the PMS Portal self-registration. As a result, we are unable to onboard you into the PMS Portal.",
         "instructionsTitle": "<strong>To resolve this, you can do the below steps:</strong>",
         "instructionsList": [
             "Contact Keycloak Administrator to delete this Keycloak account.",
-            "Register again via PMS portal self registration."
+            "Register again via <strong>PMS portal self registration.</strong>"
         ],
-        "logout": "Log Out & Continue"
+        "logout": "Logout & Re-register"
     },
     "selectPolicyPopup": {
         "title": "Select Policy Group",
