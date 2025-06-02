@@ -489,7 +489,7 @@ public class DatasharePolicyPage extends BasePage {
 	@FindBy(id = "block_message_cancel")
 	private WebElement changesLostCancelButton;
 	
-	@FindBy(xpath = "//span[text()='Special characters are not allowed.']")
+	@FindBy(xpath = "//span[contains(text(), 'Invalid character. Allowed special characters')]")
 	private WebElement specialCharactersAreNotAllowedErrorMessage;
 	
 	@FindBy(xpath = "//span[text()='Re-Upload']")

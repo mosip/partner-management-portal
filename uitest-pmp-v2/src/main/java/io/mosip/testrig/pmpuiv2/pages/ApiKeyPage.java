@@ -396,7 +396,7 @@ public class ApiKeyPage extends BasePage {
 	@FindBy(xpath = "//div[text()='Created On']")
 	private WebElement createdOnLabel;
 
-	@FindBy(xpath = "//span[text()='Special characters are not allowed.']")
+	@FindBy(xpath = "//span[contains(text(), 'Invalid character. Allowed special characters')]")
 	private WebElement specialCharacterErrorMessage;
 	
 	@FindBy(id = "partner_id_filter")
