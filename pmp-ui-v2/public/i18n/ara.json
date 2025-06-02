@@ -109,10 +109,6 @@
         "mosipCommunity": "مجتمع موسيب",
         "contactUs": "اتصل بنا"
     },
-<<<<<<< HEAD
-<<<<<<< HEAD:pmp-revamp-ui/public/i18n/ara.json
-=======
->>>>>>> f7a0032b ([MOSIP-40990]added renamed code from develop branch)
     "missingAttributesPopup": {
         "title": "مطلوب إعداد الحساب",
         "description": "لم يتم إنشاء حساب المستخدم الخاص بك في Keycloak من خلال التسجيل الذاتي على بوابة PMS. نتيجة لذلك، لا يمكننا تسجيلك في بوابة PMS.",
@@ -123,11 +119,6 @@
         ],
         "logout": "تسجيل الخروج وإعادة التسجيل"
     },
-<<<<<<< HEAD
-=======
->>>>>>> 3ccc2af3 ([MOSIP-40990]added rename code(pmp-ui-v2) from develop branch):pmp-ui-v2/public/i18n/ara.json
-=======
->>>>>>> f7a0032b ([MOSIP-40990]added renamed code from develop branch)
     "selectPolicyPopup": {
         "title": "حدد مجموعة السياسات",
         "description": "حدد مجموعة السياسات التي تنطبق على مؤسستك لمتابعة تدفق نوع الشريك المسجل. يرجى التأكد من مراجعة وصف مجموعة السياسات لتأكيد مجموعة السياسات. بعد حفظ التحديد، لن تتمكن من تعديل مجموعة السياسات مرة أخرى. يُسمح بمجموعة سياسة واحدة فقط لكل معرف شريك.",

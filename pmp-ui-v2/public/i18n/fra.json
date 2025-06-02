@@ -109,10 +109,6 @@
         "mosipCommunity": "Communauté MOSIP",
         "contactUs": "Contactez-nous"
     },
-<<<<<<< HEAD
-<<<<<<< HEAD:pmp-revamp-ui/public/i18n/fra.json
-=======
->>>>>>> f7a0032b ([MOSIP-40990]added renamed code from develop branch)
      "missingAttributesPopup": {
         "title": "Configuration du compte requise",
         "description": "Votre compte utilisateur Keycloak n'a pas été créé via l'auto-inscription sur le portail PMS. Par conséquent, nous ne pouvons pas vous intégrer au portail PMS.",
@@ -123,11 +119,6 @@
         ],
         "logout": "Se déconnecter et se réinscrire"
     },
-<<<<<<< HEAD
-=======
->>>>>>> 3ccc2af3 ([MOSIP-40990]added rename code(pmp-ui-v2) from develop branch):pmp-ui-v2/public/i18n/fra.json
-=======
->>>>>>> f7a0032b ([MOSIP-40990]added renamed code from develop branch)
     "selectPolicyPopup": {
         "title": "Sélectionnez un groupe de stratégies",
         "description": "Sélectionnez le groupe de stratégies applicable à votre organisation pour poursuivre le flux de type de partenaire inscrit. Veuillez vous assurer de parcourir la description du groupe de stratégies pour confirmer le groupe de stratégies. Une fois votre sélection enregistrée, vous ne pourrez plus modifier le groupe de stratégies. Un seul groupe de stratégies est autorisé par ID de partenaire.",

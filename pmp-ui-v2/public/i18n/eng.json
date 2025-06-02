@@ -109,10 +109,6 @@
         "mosipCommunity": "MOSIP Community",
         "contactUs": "Contact Us"
     },
-<<<<<<< HEAD
-<<<<<<< HEAD:pmp-revamp-ui/public/i18n/eng.json
-=======
->>>>>>> f7a0032b ([MOSIP-40990]added renamed code from develop branch)
     "missingAttributesPopup": {
         "title": "Account Setup Required",
         "description": "Your Keycloak user account has not been created via the PMS Portal self-registration. As a result, we are unable to onboard you into the PMS Portal.",
@@ -123,11 +119,6 @@
         ],
         "logout": "Logout & Re-register"
     },
-<<<<<<< HEAD
-=======
->>>>>>> 3ccc2af3 ([MOSIP-40990]added rename code(pmp-ui-v2) from develop branch):pmp-ui-v2/public/i18n/eng.json
-=======
->>>>>>> f7a0032b ([MOSIP-40990]added renamed code from develop branch)
     "selectPolicyPopup": {
         "title": "Select Policy Group",
         "description": "Select policy group applicable to your organisation to proceed with enrolled partner type flow. Please ensure you go through the policy group description to confirm the policy group. After your selection is saved, you will not be able to modify the policy group again. Only one policy group is allowed per partner ID.",
