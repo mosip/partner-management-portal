@@ -8,6 +8,7 @@ import ErrorMessage from '../common/ErrorMessage.js';
 import LoadingIcon from "../common/LoadingIcon.js";
 import LoadingCount from '../common/LoadingCount.js';
 import SelectPolicyPopup from './SelectPolicyPopup.js';
+import MissingAttributesPopup from './MissingAttributesPopup.js';
 import PropTypes from 'prop-types';
 
 import partnerCertificateIcon from '../../svg/partner_certificate_icon.svg';
@@ -39,12 +40,12 @@ function Dashboard() {
   const [sbiPendingApprovalRequestCount, setSbiPendingApprovalRequestCount] = useState();
   const [devicePendingApprovalRequestCount, setDevicePendingApprovalRequestCount] = useState();
   const [ftmPendingApprovalRequestCount, setFtmPendingApprovalRequestCount] = useState();
-  const [expiringFtmCertificateCount, setExpiringFtmCertificateCount] = useState();
   const [rootCertExpiryCount, setRootCertExpiryCount] = useState();
   const [intermediateCertExpiryCount, setIntermediateCertExpiryCount] = useState();
   const [partnerCertExpiryCount, setPartnerCertExpiryCount] = useState();
   const [isEmailVerified, setIsEmailVerified] = useState(false);
   const [configData, setConfigData] = useState(null);
+  const [showMissingAttributesPopup, setShowMissingAttributesPopup] = useState(false);
   let isSelectPolicyPopupVisible = false;
   let isUserConsentGiven = false;
 
@@ -81,19 +82,21 @@ function Dashboard() {
     const fetchData = async () => {
       try {
         const userProfile = getUserProfile();
-        if (userProfile.partnerType === "AUTH_PARTNER") {
+        const roles = userProfile.roles ?? '';
+        const userRoles = roles.split(',');
+        if (roles.includes("AUTH_PARTNER")) {
           setShowAuthenticationServices(true);
         }
-        if (getUserProfile().partnerType === "DEVICE_PROVIDER") {
+        if (roles.includes("DEVICE_PROVIDER")) {
           setShowDeviceProviderServices(true);
         }
-        if (getUserProfile().partnerType === "FTM_PROVIDER") {
+        if (roles.includes("FTM_PROVIDER")) {
           setShowFtmServices(true);
         }
-        if (getUserProfile().roles.includes('PARTNER_ADMIN')) {
+        if (roles.includes('PARTNER_ADMIN')) {
           setIsPartnerAdmin(true);
         }
-        if (getUserProfile().roles.includes('POLICYMANAGER')) {
+        if (roles.includes('POLICYMANAGER')) {
           setIsPolicyManager(true);
         }
         //1. verify that the logged in user's email is registered in PMS table or not
@@ -107,17 +110,33 @@ function Dashboard() {
           console.log(`user's email exist in db: ${resData.emailExists}`);
           setIsEmailVerified(resData.emailExists);
           if (!resData.emailExists) {
-            //2. if email does not exist then check if Policy Group selection is required for this Partner Type or not
+            // 2. If email does not exist, check if any required attributes are missing
+            const requiredFields = ['userName', 'orgName', 'address', 'phoneNumber', 'email', 'partnerType'];
+
+            const isAttributeMissing = requiredFields.some(field => {
+              const value = userProfile[field];
+
+              // Check if value is null, undefined, or an empty/whitespace-only string
+              return value == null || (typeof value === 'string' && value.trim() === '');
+            });
+
+            if (isAttributeMissing) {
+              setShowMissingAttributesPopup(true);
+              setDataLoaded(true);
+              return;
+            }
+
+            //3. if email does not exist then check if Policy Group selection is required for this Partner Type or not
             if (
-              resData.policyRequiredPartnerTypes.indexOf(userProfile.partnerType) > -1) {
+              (userRoles.some(role => resData.policyRequiredPartnerTypes.includes(role))) && !roles.includes('PARTNER_ADMIN') && !roles.includes('POLICYMANAGER')) {
               console.log(`show policy group selection popup`);
               setShowPolicies(true);
-              //3. show policy group selection popup
+              //4. show policy group selection popup
               //TODO show policy group selection popup
               setShowPopup(true);
               isSelectPolicyPopupVisible = true;
             } else {
-              //4. register the new user in PMS
+              //5. register the new user in PMS
               const registerUserRequest = createRequest({
                 partnerId: userProfile.userName,
                 organizationName: userProfile.orgName,
@@ -139,7 +158,7 @@ function Dashboard() {
           callUserConsentPopup();
           //if email exists then do nothing
           if (
-            resData.policyRequiredPartnerTypes.indexOf(userProfile.partnerType) > -1) {
+            userRoles.some(role => resData.policyRequiredPartnerTypes.includes(role))) {
             setShowPolicies(true);
           }
         } else {
@@ -359,39 +378,9 @@ function Dashboard() {
       }
     };
 
-     const fetchFtmCertificateExpiryCount = async () => {
-      const queryParams = new URLSearchParams();
-      queryParams.append('expiryPeriod', 30);
-      const url = `${getPartnerManagerUrl('/ftpchipdetail', process.env.NODE_ENV)}?${queryParams.toString()}`;
-      try {
-        const response = await HttpService.get(url);
-        if (response) {
-          const responseData = response.data;
-          if (responseData && responseData.response) {
-            console.log(responseData.response.length);
-
-            setExpiringFtmCertificateCount(responseData.response.length);
-          } else {
-            handleServiceErrors(responseData, setErrorCode, setErrorMsg);
-          }
-        } else {
-          setErrorMsg(t('dashboard.expiryCountFetchError'));
-        }
-      } catch (err) {
-        if (err.response?.status && err.response.status !== 401) {
-          setErrorMsg(t('dashboard.expiryCountFetchError'));
-        }
-        console.error("Error fetching data:", err);
-      }
-    };
-
     async function init() {
       if (!isPartnerAdmin && isEmailVerified) {
         fetchPartnerCertExpiryCount();
-      }
-
-      if (!isPartnerAdmin && isEmailVerified && showFtmServices && configData.isCaSignedPartnerCertificateAvailable === 'true') {
-        fetchFtmCertificateExpiryCount();
       }
 
       if (isPartnerAdmin && isEmailVerified) {
@@ -527,7 +516,7 @@ function Dashboard() {
           </div>
           <div className="flex mt-2 ml-[1.8rem] flex-wrap break-words">
             {!isPartnerAdmin && !isPolicyManager &&
-              < div role='button' id='dashboard_partner_certificate_list_card' onClick={() => partnerCertificatesList()} className="relative w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => partnerCertificatesList())}>
+              <div role='button' id='dashboard_partner_certificate_list_card' onClick={() => partnerCertificatesList()} className="relative w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => partnerCertificatesList())}>
                 <div className="flex justify-center mb-5">
                   <img id='dashboard_partner_certificated_list_icon' src={partnerCertificateIcon} alt="" className="w-8 h-8" />
                 </div>
@@ -595,7 +584,7 @@ function Dashboard() {
               </div>
             )}
             {!isPartnerAdmin && !isPolicyManager && showFtmServices && (
-              <div role='button' id='dashboard_ftm_chip_provider_card' onClick={ftmChipProviderServices} className="relative w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, ftmChipProviderServices)}>
+              <div role='button' id='dashboard_ftm_chip_provider_card' onClick={ftmChipProviderServices} className="w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, ftmChipProviderServices)}>
                 <div className="flex justify-center mb-5">
                   <img id='dashboard_ftm_chip_provider_icon' src={ftmServicesIcon} alt="" className="w-8 h-8" />
                 </div>
@@ -607,14 +596,6 @@ function Dashboard() {
                     {t('dashboard.ftmChipProviderServicesDesc')}
                   </p>
                 </div>
-                {configData.isCaSignedPartnerCertificateAvailable && expiringFtmCertificateCount > 0 && (
-                  <CountWithHover
-                    countLabel={expiringFtmCertificateCount}
-                    descriptionKey={expiringFtmCertificateCount > 1 ? "dashboard.ftmChipCertExpiryCountDesc1" : "dashboard.ftmChipCertExpiryCountDesc2"}
-                    descriptionParams={{ expiringFtmCertificateCount }}
-                    isExpiryHover={true}
-                  />
-                )}
               </div>
             )}
              {isPartnerAdmin && (
@@ -775,6 +756,9 @@ function Dashboard() {
           )}
           {showConsentPopup && (
             <ConsentPopup />
+          )}
+          {showMissingAttributesPopup && (
+            <MissingAttributesPopup />
           )}
         </>)
       }

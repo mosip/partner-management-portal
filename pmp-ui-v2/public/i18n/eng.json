@@ -75,8 +75,6 @@
         "sbiAndDevicePendingApprovalRequestCountDesc": "{{sbiPendingApprovalRequestCount}} SBI and {{devicePendingApprovalRequestCount}} Device requests are currently pending",
         "ftmPendingApprovalRequestCountDesc": "{{ftmPendingApprovalRequestCount}} FTM Chip requests are currently pending",
         "requestCountFetchError": "An Unexpected error occured while fetching request count",
-        "expiryCountFetchError": "An Unexpected error occured while fetching expiry count",
-        "trustCertExpiryCountDesc": "{{rootCertExpiryCount}} Root CA Certificates and {{intermediateCertExpiryCount}} Intermediate CA Certificates are expiring soon",
         "bothTrustCertExpiryCountPlural": "{{rootCertExpiryCount}} Root CA Certificates and {{intermediateCertExpiryCount}} Intermediate CA Certificates are expiring soon",
         "bothTrustCertExpiryCountSingular": "{{rootCertExpiryCount}} Root CA Certificate and {{intermediateCertExpiryCount}} Intermediate CA Certificate are expiring soon",
         "rootTrustCertExpiryCountSingular": "{{rootCertExpiryCount}} Root CA Certificate and {{intermediateCertExpiryCount}} Intermediate CA Certificates are expiring soon",
@@ -86,9 +84,7 @@
         "intermediateCertExpiryCountSingular": "{{intermediateCertExpiryCount}} Intermediate CA Certificate is expiring soon",
         "intermediateCertExpiryCountPlural": "{{intermediateCertExpiryCount}} Intermediate CA Certificates are expiring soon",
         "partnerCertExpiryCountDesc1": "{{partnerCertExpiryCount}} Partner Certificates are expiring soon",
-        "partnerCertExpiryCountDesc2": "{{partnerCertExpiryCount}} Partner Certificate is expiring soon",
-        "ftmChipCertExpiryCountDesc1": "{{expiringFtmCertificateCount}} FTM Chip Certificates are expiring soon",
-        "ftmChipCertExpiryCountDesc2": "{{expiringFtmCertificateCount}} FTM Chip Certificate is expiring soon"
+        "partnerCertExpiryCountDesc2": "{{partnerCertExpiryCount}} Partner Certificate is expiring soon"
     },
     "header": {
         "userProfile": "User Profile",
@@ -104,7 +100,8 @@
         "partnerType": "Partner Type",
         "phoneNumber": "Phone Number",
         "emailAddress": "Email Address",
-        "userName": "User Name"
+        "userName": "User Name",
+        "info": "Note: The highlighted user details are currently not available in Keycloak. As a result, these fields appear as <italic>Not available</italic> in the profile section."
     },
     "footer": {
         "allRightsReserved": "All rights reserved.",
@@ -112,7 +109,10 @@
         "mosipCommunity": "MOSIP Community",
         "contactUs": "Contact Us"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD:pmp-revamp-ui/public/i18n/eng.json
+=======
+>>>>>>> f7a0032b ([MOSIP-40990]added renamed code from develop branch)
     "missingAttributesPopup": {
         "title": "Account Setup Required",
         "description": "Your Keycloak user account has not been created via the PMS Portal self-registration. As a result, we are unable to onboard you into the PMS Portal.",
@@ -123,8 +123,11 @@
         ],
         "logout": "Logout & Re-register"
     },
+<<<<<<< HEAD
 =======
 >>>>>>> 3ccc2af3 ([MOSIP-40990]added rename code(pmp-ui-v2) from develop branch):pmp-ui-v2/public/i18n/eng.json
+=======
+>>>>>>> f7a0032b ([MOSIP-40990]added renamed code from develop branch)
     "selectPolicyPopup": {
         "title": "Select Policy Group",
         "description": "Select policy group applicable to your organisation to proceed with enrolled partner type flow. Please ensure you go through the policy group description to confirm the policy group. After your selection is saved, you will not be able to modify the policy group again. Only one policy group is allowed per partner ID.",
@@ -984,11 +987,9 @@
         "rootCertExpiry": "Root CA Certificate Expiration",
         "intermediateCertExpiry": "Intermediate CA Certificate Expiration",
         "partnerCertExpiry": "Partner Certificate Expiration",
-        "ftmChipCertExpiry": "FTM Chip Certificate Expiration",
         "rootCertExpiryDescription": "Root CA Certificate <span>{{certificateId}}</span> for the <span>{{partnerDomain}}</span> domain is set to expire on  <span>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions.",
         "intermediateCertExpiryDescription": "Intermediate CA Certificate <span>{{certificateId}}</span> for the <span>{{partnerDomain}}</span> domain is set to expire on <span>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions.",
         "partnerCertExpiryDescription": "Partner Certificate for <span>{{partnerDomain}}</span> domain is set to expire on <span>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions.",
-        "ftmChipCertExpiryDescription": "FTM Chip Certificate with FTM ID : <span>{{ftmId}}</span> is set to expire on <span>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions.",
         "dismiss": "Dismiss",
         "viewAllNotification": "View all notifications",
         "expiringItems": "Weekly Summary of Partner-Created Expiring Items",
@@ -1041,10 +1042,7 @@
         "partnerCertExpiryTitle": "Partner certificate is expiring for {{partnerId}}",
         "partnerCertExpiryDescription": "Partner Certificate <span>{{certificateId}}</span> issued to <span>{{issuedTo}}</span> by <span>{{issuedBy}}</span> for the <span>{{partnerDomain}}</span> domain is set to expire on <span>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions.",
         "weeklyPartnerCertExpiryTitle": "Partner Certificate is expiring for Partner ID: {{partnerId}}",
-        "weeklyPartnerCertExpiryDescription": "Partner Certificate <span>{{certificateId}}</span> issued to <span>{{issuedTo}}</span> by <span>{{issuedBy}}</span> for <span>{{partnerId}}</span> is set to expire on <span>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions.",
-        "ftmChipCertExpiryDescription": "FTM Chip Certificate for <span>{{make}}</span> - <span>{{model}}</span> (FTM ID: <span>{{ftmId}}</span>) is set to expire on <span>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions.",
-        "weeklyFtmCertExpiryTitle": "FTM Chip Certificate is expiring for Partner ID: {{partnerId}}",
-        "weeklyFtmCertExpiryDescription": "FTM Chip Certificate for <span>{{make}}</span> - <span>{{model}}</span> (FTM ID: <span>{{ftmId}}</span>) uploaded by <span>{{partnerId}}</span> is set to expire on <span>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions."
+        "weeklyPartnerCertExpiryDescription": "Partner Certificate <span>{{certificateId}}</span> issued to <span>{{issuedTo}}</span> by <span>{{issuedBy}}</span> for <span>{{partnerId}}</span> is set to expire on <span>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions."
     },
     "serverError": {
         "PMS_COR_001": "Missing Input Parameter",

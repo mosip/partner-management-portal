@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getUserProfile } from "../../../services/UserProfileService.js";
 import {
-    formatDate, getNotificationTitle, getNotificationDescription, getPartnerManagerUrl, handleServiceErrors,
+    formatDate, getNoticationTitle, getNotificationDescription, getPartnerManagerUrl, handleServiceErrors,
     isLangRTL, resetPageNumber, setPageNumberAndPageSize, onResetFilter, onClickApplyFilter,
     createRequest,
     fetchNotificationsList
@@ -22,7 +22,6 @@ import PartnerCertificateNotificationsFilter from "../../partner/notifications/P
 import { useDispatch } from "react-redux";
 import WeeklyNotificationsFilter from "./WeeklyNotificationsFilter.js";
 import PropTypes from 'prop-types';
-import FtmChipCertNotificationFilter from "../../partner/notifications/FtmChipCertNotificationFilter.js";
 
 function ViewAllNotifications({ notificationType }) {
     const { t } = useTranslation();
@@ -49,18 +48,13 @@ function ViewAllNotifications({ notificationType }) {
         issuedBy: null,
         expiryDate: null,
         createdFromDate: null,
-        createdToDate: null,
-        ftmId: null,
-        make: null,
-        model: null,
+        createdToDate: null
     });
     const dispatch = useDispatch();
     const [showExpiringItems, setShowExpiringItems] = useState(false);
     const [activeTab, setActiveTab] = useState('');
     const [weeklyNotificationList, setWeeklyNotificationList] = useState([]);
     const [notificationCreatedDateTime, setNotificationCreatedDateTime] = useState("");
-    const [partnerCertList, setPartnerCertList] = useState([]);
-    const [ftmCertList, setFtmCertList] = useState([]);
 
     const fetchNotifications = async (noDateLoaded) => {
         const queryParams = new URLSearchParams();
@@ -78,9 +72,6 @@ function ViewAllNotifications({ notificationType }) {
         if (filterAttributes.expiryDate) queryParams.append('expiryDate', filterAttributes.expiryDate);
         if (filterAttributes.createdFromDate) queryParams.append('createdFromDate', filterAttributes.createdFromDate);
         if (filterAttributes.createdToDate) queryParams.append('createdToDate', filterAttributes.createdToDate);
-        if (filterAttributes.ftmId) queryParams.append('ftmId', filterAttributes.ftmId);
-        if (filterAttributes.make) queryParams.append('make', filterAttributes.make);
-        if (filterAttributes.model) queryParams.append('model', filterAttributes.model);
 
         const url = `${getPartnerManagerUrl('/notifications', process.env.NODE_ENV)}?${queryParams.toString()}`;
         try {
@@ -181,20 +172,11 @@ function ViewAllNotifications({ notificationType }) {
 
     const viewExpiringItems = (notification) => {
         setShowExpiringItems(true);
+        setActiveTab('partner');
         setNotificationCreatedDateTime(notification.createdDateTime);
         const certificateList = Array.isArray(notification.notificationDetails.certificateDetails) ? notification.notificationDetails.certificateDetails : [];
-        setPartnerCertList(certificateList);
-
-        const ftmList = Array.isArray(notification.notificationDetails.ftmDetails) ? notification.notificationDetails.ftmDetails : [];
-        setFtmCertList(ftmList);
-
-        if (certificateList.length > 0) {
-            setActiveTab('partner');
-            setWeeklyNotificationList(certificateList);
-        } else if (ftmList.length > 0) {
-            setActiveTab('ftm');
-            setWeeklyNotificationList(ftmList);
-        }
+        const partnerCertList = certificateList.filter(cert => cert.certificateType === "partner");
+        setWeeklyNotificationList(partnerCertList);
     };
 
     const backToWeeklySummary = () => {
@@ -203,25 +185,16 @@ function ViewAllNotifications({ notificationType }) {
     };
 
     const changeToPartnerCert = () => {
-        setActiveTab('partner');
-        setWeeklyNotificationList(partnerCertList);
+        setActiveTab('partner')
     }
 
-    const changeToFTMCert = () => {
-        setActiveTab('ftm');
-        setWeeklyNotificationList(ftmCertList);
-    }
-
-    const getWeeklyNotificationTitle = (notification, type) => {
+    const getWeeklyNoticationTitle = (notification, type) => {
         if (type === 'partner') {
             return t('viewAllNotifications.weeklyPartnerCertExpiryTitle', {partnerId: notification.partnerId});
         }
-        if (type === 'ftm') {
-            return t('viewAllNotifications.weeklyFtmCertExpiryTitle', {partnerId: notification.partnerId});
-        }
     }
 
-    const getWeeklyNotificationDescription = (notification, type) => {
+    const getWeeklyNoticationDescription = (notification, type) => {
         if (type === 'partner') {
             return (
                 <Trans 
@@ -230,21 +203,6 @@ function ViewAllNotifications({ notificationType }) {
                         certificateId: notification.certificateId,
                         issuedTo: notification.issuedTo,
                         issuedBy: notification.issuedBy,
-                        partnerId: notification.partnerId,
-                        expiryDateTime: formatDate(notification.expiryDateTime, 'dateInWords')
-                    }}
-                    components={{ span: <span className={`font-semibold ${isLoginLanguageRTL && 'whitespace-nowrap'}`} /> }}
-                />
-            );
-        }
-        if (type === 'ftm') {
-            return (
-                <Trans 
-                    i18nKey="viewAllNotifications.weeklyFtmCertExpiryDescription"
-                    values={{
-                        make: notification.make,
-                        model: notification.model,
-                        ftmId: notification.ftmId,
                         partnerId: notification.partnerId,
                         expiryDateTime: formatDate(notification.expiryDateTime, 'dateInWords')
                     }}
@@ -319,9 +277,6 @@ function ViewAllNotifications({ notificationType }) {
                                         {(notificationType === "partner") && (
                                             <PartnerCertificateNotificationsFilter onApplyFilter={onApplyFilter} />
                                         )}
-                                        {(notificationType === "ftm-chip") && (
-                                            <FtmChipCertNotificationFilter onApplyFilter={onApplyFilter} />
-                                        )}
                                         
                                     </>
                                 )}
@@ -343,7 +298,7 @@ function ViewAllNotifications({ notificationType }) {
                                                                 <img src={featuredIcon} alt='' id='featuredIcon' className={`${isLoginLanguageRTL ? 'ml-3' : 'mr-3'} mt-2`} />
                                                                 <div className="mt-0.5 w-full">
                                                                     <div className="flex justify-between flex-wrap">
-                                                                        <p className="font-semibold text-base text-[#101828]">{getNotificationTitle(notification, t)}</p>
+                                                                        <p className="font-semibold text-base text-[#101828]">{getNoticationTitle(notification, t)}</p>
                                                                         <p className={`text-xs text-gray-500 ${isLoginLanguageRTL ? 'text-left' : 'text-right'}`}>{formatDate(notification.createdDateTime, 'dateTime')}</p>
                                                                     </div>
                                                                     <div className="text-[#475467] text-sm md:break-normal break-all">{getNotificationDescription(notification, isLoginLanguageRTL, t)}</div>
@@ -360,25 +315,14 @@ function ViewAllNotifications({ notificationType }) {
                                                     </div>
                                                 ) : (
                                                     <div>
-                                                        <div className={`flex text-xs bg-[#FCFCFC] font-bold ${isLoginLanguageRTL && 'space-x-reverse'} space-x-16 items-start px-8 border-b-2`}>
-                                                            {partnerCertList.length > 0 && (
-                                                                <div id='partner_cert_tab' className={`flex-col justify-center text-center`}>
-                                                                    <button onClick={changeToPartnerCert} className={`${activeTab === "partner" ? "text-[#1447b2]" : "text-[#031640]"} py-3 cursor-pointer text-base`}>
-                                                                        <h6> {t('partnerNotificationsTab.partnerCertificate')} </h6>
-                                                                    </button>
+                                                        <div className='flex text-xs bg-[#FCFCFC] font-bold space-x-16 items-start px-8 border-b-2'>
+                                                            <div id='partner_cert_tab' className={`flex-col justify-center text-center`}>
+                                                                <button onClick={changeToPartnerCert} className={`${activeTab === "partner" ? "text-[#1447b2]" : "text-[#031640]"} py-3 cursor-pointer text-base`}>
+                                                                    <h6> {t('partnerNotificationsTab.partnerCertificate')} </h6>
+                                                                </button>
 
-                                                                    <div className={`h-1 w-full ${activeTab === "partner" ? "bg-tory-blue" : "bg-transparent"}  rounded-t-md`}></div>
-                                                                </div>
-                                                            )}
-                                                            {ftmCertList.length > 0 && (
-                                                                <div id='ftm_cert_tab' className={`flex-col justify-center text-center`}>
-                                                                    <button onClick={changeToFTMCert} className={`${activeTab === "ftm" ? "text-[#1447b2]" : "text-[#031640]"} py-3 cursor-pointer text-base`}>
-                                                                        <h6> {t('partnerNotificationsTab.ftmCertificate')} </h6>
-                                                                    </button>
-
-                                                                    <div className={`h-1 w-full ${activeTab === "ftm" ? "bg-tory-blue" : "bg-transparent"}  rounded-t-md`}></div>
-                                                                </div>
-                                                            )}
+                                                                <div className={`h-1 w-full ${activeTab === "partner" ? "bg-tory-blue" : "bg-transparent"}  rounded-t-md`}></div>
+                                                            </div>
                                                         </div>
                                                         {/* <hr className="h-0.5 bg-gray-200 border-0" /> */}
                                                         <div className="p-4">
@@ -387,10 +331,10 @@ function ViewAllNotifications({ notificationType }) {
                                                                     <img src={featuredIcon} alt='' id='featuredIcon' className={`${isLoginLanguageRTL ? 'ml-3' : 'mr-3'} mt-2`} />
                                                                     <div className="mt-0.5 w-full">
                                                                         <div className="flex justify-between flex-wrap">
-                                                                            <p className="font-semibold text-base text-[#101828]">{getWeeklyNotificationTitle(notification, activeTab)}</p>
+                                                                            <p className="font-semibold text-base text-[#101828]">{getWeeklyNoticationTitle(notification, activeTab)}</p>
                                                                             <p className={`text-xs text-gray-500 ${isLoginLanguageRTL ? 'text-left' : 'text-right'}`}>{formatDate(notificationCreatedDateTime, 'dateTime')}</p>
                                                                         </div>
-                                                                        <div className="text-[#475467] text-sm md:break-normal break-all">{getWeeklyNotificationDescription(notification, activeTab)}</div>
+                                                                        <div className="text-[#475467] text-sm md:break-normal break-all">{getWeeklyNoticationDescription(notification, activeTab)}</div>
                                                                     </div>
                                                                 </div>
                                                             ))}

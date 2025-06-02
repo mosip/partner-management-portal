@@ -54,7 +54,7 @@ function PartnerCertificateNotificationsFilter({ onApplyFilter }) {
     };
 
     const calenderStyleSet = {
-        datePicker: "h-[2.4rem] p-1",
+        datePicker: "h-9 p-1",
         outerDiv: `ml-4 ${getOuterDivWidth(t('viewAllNotifications.selectExpiryDate'))}`
     };
 

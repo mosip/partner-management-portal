@@ -84,9 +84,7 @@
         "intermediateCertExpiryCountSingular": "{{intermediateCertExpiryCount}} Le certificat CA intermédiaire expire bientôt",
         "intermediateCertExpiryCountPlural": "{{intermediateCertExpiryCount}} Les certificats CA intermédiaires expirent bientôt",
         "partnerCertExpiryCountDesc1": "{{partnerCertExpiryCount}} Les certificats partenaires expirent bientôt",
-        "partnerCertExpiryCountDesc2": "{{partnerCertExpiryCount}} Le certificat de partenaire expire bientôt",
-        "ftmChipCertExpiryCountDesc1": "{{expiringFtmCertificateCount}} certificats de puce FTM expirent bientôt",
-        "ftmChipCertExpiryCountDesc2": "{{expiringFtmCertificateCount}} certificat de puce FTM expire bientôt"
+        "partnerCertExpiryCountDesc2": "{{partnerCertExpiryCount}} Le certificat de partenaire expire bientôt"
     },
     "header": {
         "userProfile": "Profil de l'utilisateur",
@@ -102,7 +100,8 @@
         "partnerType": "Type de partenaire",
         "phoneNumber": "Numéro de téléphone",
         "emailAddress": "Adresse e-mail",
-        "userName": "Nom d'utilisateur"
+        "userName": "Nom d'utilisateur",
+        "info": "Remarque : Les informations utilisateur mises en évidence ne sont actuellement pas disponibles dans Keycloak. Par conséquent, ces champs apparaissent comme <italic>Pas disponible</italic> dans la section Profil."
     },
     "footer": {
         "allRightsReserved": "Tous droits réservés.",
@@ -110,7 +109,10 @@
         "mosipCommunity": "Communauté MOSIP",
         "contactUs": "Contactez-nous"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD:pmp-revamp-ui/public/i18n/fra.json
+=======
+>>>>>>> f7a0032b ([MOSIP-40990]added renamed code from develop branch)
      "missingAttributesPopup": {
         "title": "Configuration du compte requise",
         "description": "Votre compte utilisateur Keycloak n'a pas été créé via l'auto-inscription sur le portail PMS. Par conséquent, nous ne pouvons pas vous intégrer au portail PMS.",
@@ -121,8 +123,11 @@
         ],
         "logout": "Se déconnecter et se réinscrire"
     },
+<<<<<<< HEAD
 =======
 >>>>>>> 3ccc2af3 ([MOSIP-40990]added rename code(pmp-ui-v2) from develop branch):pmp-ui-v2/public/i18n/fra.json
+=======
+>>>>>>> f7a0032b ([MOSIP-40990]added renamed code from develop branch)
     "selectPolicyPopup": {
         "title": "Sélectionnez un groupe de stratégies",
         "description": "Sélectionnez le groupe de stratégies applicable à votre organisation pour poursuivre le flux de type de partenaire inscrit. Veuillez vous assurer de parcourir la description du groupe de stratégies pour confirmer le groupe de stratégies. Une fois votre sélection enregistrée, vous ne pourrez plus modifier le groupe de stratégies. Un seul groupe de stratégies est autorisé par ID de partenaire.",
@@ -988,11 +993,9 @@
         "rootCertExpiry": "Expiration du certificat CA racine",
         "intermediateCertExpiry": "Expiration du certificat CA intermédiaire",
         "partnerCertExpiry": "Expiration du certificat de partenaire",
-        "ftmChipCertExpiry": "Expiration du certificat de puce FTM",
         "rootCertExpiryDescription": "Le certificat CA racine <span>{{certificateId}}</span> du domaine <span>{{partnerDomain}}</span> expirera le <span>{{expiryDateTime}}</span>. Renouvelez-le dès maintenant pour éviter toute interruption.",
         "intermediateCertExpiryDescription": "Le certificat CA intermédiaire <span>{{certificateId}}</span> du domaine <span>{{partnerDomain}}</span> expirera le <span>{{expiryDateTime}}</span>. Renouvelez-le dès maintenant pour éviter toute interruption.",
         "partnerCertExpiryDescription": "Le certificat partenaire du domaine <span>{{partnerDomain}}</span> expirera le <span>{{expiryDateTime}}</span>. Renouvelez-le dès maintenant pour éviter toute interruption.",
-        "ftmChipCertExpiryDescription": "Le certificat de puce FTM avec l'identifiant FTM : <span>{{ftmId}}</span> expire le <span>{{expiryDateTime}}</span>. Renouvelez-le dès maintenant pour éviter toute interruption.",
         "dismiss": "Rejeter",
         "viewAllNotification": "Afficher toutes les notifications",
         "expiringItems": "Résumé hebdomadaire des articles expirés créés par les partenaires",
@@ -1045,10 +1048,7 @@
         "partnerCertExpiryTitle": "Le certificat du partenaire expire pour {{partnerId}}",
         "partnerCertExpiryDescription": "Le certificat partenaire <span>{{certificateId}}</span> délivré à <span>{{issuedTo}}</span> par <span>{{issuedBy}}</span> pour le domaine <span>{{partnerDomain}}</span> expirera le <span>{{expiryDateTime}}</span>. Renouvelez-le dès maintenant pour éviter toute interruption.",
         "weeklyPartnerCertExpiryTitle": "Le certificat du partenaire expire pour l'ID du partenaire : {{partnerId}}",
-        "weeklyPartnerCertExpiryDescription": "Le certificat partenaire <span>{{certificateId}}</span> délivré à <span>{{issuedTo}}</span> par <span>{{issuedBy}}</span> pour <span>{{partnerId}}</span> expirera le <span>{{expiryDateTime}}</span>. Renouvelez-le dès maintenant pour éviter toute interruption.",
-        "ftmChipCertExpiryDescription": "Le certificat de puce FTM pour <span>{{make}}</span> - <span>{{model}}</span> (ID FTM : <span>{{ftmId}}</span>) expirera le <span>{{expiryDateTime}}</span>. Renouvelez-le dès maintenant pour éviter toute interruption.",
-        "weeklyFtmCertExpiryTitle": "Le certificat de puce FTM expire pour l'ID partenaire : {{partnerId}}",
-        "weeklyFtmCertExpiryDescription": "Le certificat de puce FTM pour <span>{{make}}</span> - <span>{{model}}</span> (ID FTM : <span>{{ftmId}}</span>) téléchargé par <span>{{partnerId}}</span> expirera le <span>{{expiryDateTime}}</span>. Renouvelez-le dès maintenant pour éviter toute interruption."
+        "weeklyPartnerCertExpiryDescription": "Le certificat partenaire <span>{{certificateId}}</span> délivré à <span>{{issuedTo}}</span> par <span>{{issuedBy}}</span> pour <span>{{partnerId}}</span> expirera le <span>{{expiryDateTime}}</span>. Renouvelez-le dès maintenant pour éviter toute interruption."
     },
     "serverError": {
         "PMS_COR_001": "Paramètre d'entrée manquant",

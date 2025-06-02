@@ -84,9 +84,7 @@
         "intermediateCertExpiryCountSingular": "{{intermediateCertExpiryCount}} شهادة CA المتوسطة تنتهي صلاحيتها قريبًا",
         "intermediateCertExpiryCountPlural": "ستنتهي صلاحية شهادات CA المتوسطة {{intermediateCertExpiryCount}} قريبًا",
         "partnerCertExpiryCountDesc1": "{{partnerCertExpiryCount}} شهادات الشركاء تنتهي صلاحيتها قريبًا",
-        "partnerCertExpiryCountDesc2": "{{partnerCertExpiryCount}} شهادة الشريك تنتهي صلاحيتها قريبًا",
-        "ftmChipCertExpiryCountDesc1": "{{expiringFtmCertificateCount}} من شهادات شريحة FTM ستنتهي صلاحيتها قريبًا",
-        "ftmChipCertExpiryCountDesc2": "{{expiringFtmCertificateCount}} شهادة شريحة FTM ستنتهي صلاحيتها قريبًا"
+        "partnerCertExpiryCountDesc2": "{{partnerCertExpiryCount}} شهادة الشريك تنتهي صلاحيتها قريبًا"
     },
     "header": {
         "userProfile": "ملف تعريفي للمستخدم",
@@ -102,7 +100,8 @@
         "partnerType": "نوع الشريك",
         "phoneNumber": "رقم التليفون",
         "emailAddress": "عنوان البريد الإلكتروني",
-        "userName": "اسم المستخدم"
+        "userName": "اسم المستخدم",
+        "info": "ملاحظة: تفاصيل المستخدم المميزة غير متوفرة حاليًا في Keycloak. نتيجةً لذلك، تظهر هذه الحقول بالخط المائل <italic>غير متوفرة</italic> في قسم الملف الشخصي."
     },
     "footer": {
         "allRightsReserved": "كل الحقوق محفوظة.",
@@ -110,7 +109,10 @@
         "mosipCommunity": "مجتمع موسيب",
         "contactUs": "اتصل بنا"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD:pmp-revamp-ui/public/i18n/ara.json
+=======
+>>>>>>> f7a0032b ([MOSIP-40990]added renamed code from develop branch)
     "missingAttributesPopup": {
         "title": "مطلوب إعداد الحساب",
         "description": "لم يتم إنشاء حساب المستخدم الخاص بك في Keycloak من خلال التسجيل الذاتي على بوابة PMS. نتيجة لذلك، لا يمكننا تسجيلك في بوابة PMS.",
@@ -121,8 +123,11 @@
         ],
         "logout": "تسجيل الخروج وإعادة التسجيل"
     },
+<<<<<<< HEAD
 =======
 >>>>>>> 3ccc2af3 ([MOSIP-40990]added rename code(pmp-ui-v2) from develop branch):pmp-ui-v2/public/i18n/ara.json
+=======
+>>>>>>> f7a0032b ([MOSIP-40990]added renamed code from develop branch)
     "selectPolicyPopup": {
         "title": "حدد مجموعة السياسات",
         "description": "حدد مجموعة السياسات التي تنطبق على مؤسستك لمتابعة تدفق نوع الشريك المسجل. يرجى التأكد من مراجعة وصف مجموعة السياسات لتأكيد مجموعة السياسات. بعد حفظ التحديد، لن تتمكن من تعديل مجموعة السياسات مرة أخرى. يُسمح بمجموعة سياسة واحدة فقط لكل معرف شريك.",
@@ -988,11 +993,9 @@
         "rootCertExpiry": "انتهاء صلاحية شهادة الجذر CA",
         "intermediateCertExpiry": "انتهاء صلاحية شهادة CA المتوسطة",
         "partnerCertExpiry": "انتهاء صلاحية شهادة الشريك",
-        "ftmChipCertExpiry": "انتهاء صلاحية شهادة شريحة FTM",
         "rootCertExpiryDescription": "شهادة CA الجذرية <span>{{certificateId}}</span> للنطاق <span>{{partnerDomain}}</span> من المقرر أن تنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات.",
         "intermediateCertExpiryDescription": "شهادة CA المتوسطة <span>{{certificateId}}</span> للنطاق <span>{{partnerDomain}}</span> من المقرر أن تنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات.",
         "partnerCertExpiryDescription": "من المقرر أن تنتهي صلاحية شهادة الشريك لنطاق <span>{{partnerDomain}}</span> في <span>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات.",
-        "ftmChipCertExpiryDescription": "شهادة شريحة FTM مع معرف FTM: <span>{{ftmId}}</span> من المقرر أن تنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. قم بتجديده الآن لتجنب أي انقطاع.",
         "dismiss": "رفض",
         "viewAllNotification": "عرض جميع الإشعارات",
         "expiringItems": "ملخص أسبوعي للعناصر منتهية الصلاحية التي أنشأها الشريك",
@@ -1045,10 +1048,7 @@
         "partnerCertExpiryTitle": "شهادة الشريك على وشك الانتهاء لـ {{partnerId}}",
         "partnerCertExpiryDescription": "شهادة الشريك <span>{{certificateId}}</span> الصادرة لـ <span>{{issuedTo}}</span> بواسطة <span>{{issuedBy}}</span> للنطاق <span>{{partnerDomain}}</span> من المقرر أن تنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات.",
         "weeklyPartnerCertExpiryTitle": "شهادة الشريك على وشك الانتهاء لمعرف الشريك: {{partnerId}}",
-        "weeklyPartnerCertExpiryDescription": "شهادة الشريك <span>{{certificateId}}</span> الصادرة لـ <span>{{issuedTo}}</span> بواسطة <span>{{issuedBy}}</span> لـ <span>{{partnerId}}</span> من المقرر أن تنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات.",
-        "ftmChipCertExpiryDescription": "شهادة شريحة FTM لـ <span>{{make}}</span> - <span>{{model}}</span> (FTM ID: <span>{{ftmId}}</span>) من المقرر أن تنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. قم بتجديده الآن لتجنب أي انقطاع.",
-        "weeklyFtmCertExpiryTitle": "شهادة شريحة FTM على وشك الانتهاء لمعرف الشريك: {{partnerId}}",
-        "weeklyFtmCertExpiryDescription": "شهادة شريحة FTM لـ <span>{{make}}</span> - <span>{{model}}</span> (FTM ID: <span>{{ftmId}}</span>) تم الرفع بواسطة <span>{{partnerId}}</span> من المقرر أن تنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. قم بتجديده الآن لتجنب أي انقطاع."
+        "weeklyPartnerCertExpiryDescription": "شهادة الشريك <span>{{certificateId}}</span> الصادرة لـ <span>{{issuedTo}}</span> بواسطة <span>{{issuedBy}}</span> لـ <span>{{partnerId}}</span> من المقرر أن تنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات."
     },
     "serverError": {
         "PMS_COR_001": "معلمة الإدخال مفقودة",
