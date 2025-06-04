@@ -1057,6 +1057,17 @@ export const getNotificationPanelDescription = (notification, isLoginLanguageRTL
                 components={{ span: <span className={`font-semibold ${isLoginLanguageRTL && 'whitespace-nowrap'}`} /> }}
             />
         );
+    } else if (notification.notificationType === 'API_KEY_EXPIRY') {
+        return (
+            <Trans 
+                i18nKey="notificationPopup.apiKeyExpiryDescription"
+                values={{
+                    apiKeyName: notification.notificationDetails.apiKeyDetails[0].apiKeyName,
+                    expiryDateTime: formatDate(notification.notificationDetails.apiKeyDetails[0].expiryDateTime, 'dateInWords')
+                }}
+                components={{ span: <span className={`font-semibold ${isLoginLanguageRTL && 'whitespace-nowrap'}`} /> }}
+            />
+        );
     } else if (notification.notificationType === 'WEEKLY_SUMMARY') {
         return getWeeklySummaryDescription (notification, isLoginLanguageRTL, t);
     }
@@ -1071,6 +1082,8 @@ export const getNotificationTitle = (notification, t) => {
         return t('notificationPopup.partnerCertExpiry');
     } else if (notification.notificationType === 'FTM_CHIP_CERT_EXPIRY') {
         return t('notificationPopup.ftmChipCertExpiry');
+    } else if (notification.notificationType === 'API_KEY_EXPIRY') {
+        return t('notificationPopup.apiKeyExpiry');
     } else if (notification.notificationType === 'WEEKLY_SUMMARY') {
         return t('notificationPopup.expiringItems') + " (" + formatDate(notification.createdDateTime, 'dateInWords') + t('notificationPopup.to') + formatDate(getWeeklySummaryDate(notification.createdDateTime), 'dateInWords') + ")";
     }
