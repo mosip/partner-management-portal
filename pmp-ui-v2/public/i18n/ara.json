@@ -1047,6 +1047,7 @@
         "weeklyPartnerCertExpiryTitle": "شهادة الشريك على وشك الانتهاء لمعرف الشريك: {{partnerId}}",
         "weeklyPartnerCertExpiryDescription": "شهادة الشريك <span>{{certificateId}}</span> الصادرة لـ <span>{{issuedTo}}</span> بواسطة <span>{{issuedBy}}</span> لـ <span>{{partnerId}}</span> من المقرر أن تنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات.",
         "ftmChipCertExpiryDescription": "شهادة شريحة FTM لـ <span>{{make}}</span> - <span>{{model}}</span> (FTM ID: <span>{{ftmId}}</span>) من المقرر أن تنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. قم بتجديده الآن لتجنب أي انقطاع.",
+        "apiKeyExpiryDescription": "مفتاح API المسمى <span>{{apiKeyName}}</span> المرتبطة بالسياسة: <span>{{policyName}}</span> من المقرر أن تنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. قم بتجديده الآن لتجنب أي انقطاع.",
         "weeklyFtmCertExpiryTitle": "شهادة شريحة FTM على وشك الانتهاء لمعرف الشريك: {{partnerId}}",
         "weeklyFtmCertExpiryDescription": "شهادة شريحة FTM لـ <span>{{make}}</span> - <span>{{model}}</span> (FTM ID: <span>{{ftmId}}</span>) تم الرفع بواسطة <span>{{partnerId}}</span> من المقرر أن تنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. قم بتجديده الآن لتجنب أي انقطاع."
     },

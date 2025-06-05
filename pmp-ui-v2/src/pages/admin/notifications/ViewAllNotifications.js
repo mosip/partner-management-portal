@@ -24,6 +24,7 @@ import { useDispatch } from "react-redux";
 import WeeklyNotificationsFilter from "./WeeklyNotificationsFilter.js";
 import PropTypes from 'prop-types';
 import FtmChipCertNotificationFilter from "../../partner/notifications/FtmChipCertNotificationFilter.js";
+import ApiKeyNotificationFilter from "../../partner/notifications/ApiKeyNotificationFilter.js";
 
 function ViewAllNotifications({ notificationType }) {
     const { t } = useTranslation();
@@ -54,6 +55,8 @@ function ViewAllNotifications({ notificationType }) {
         ftmId: null,
         make: null,
         model: null,
+        apiKeyName: null,
+        policyName: null
     });
     const dispatch = useDispatch();
     const [showExpiringItems, setShowExpiringItems] = useState(false);
@@ -82,6 +85,8 @@ function ViewAllNotifications({ notificationType }) {
         if (filterAttributes.ftmId) queryParams.append('ftmId', filterAttributes.ftmId);
         if (filterAttributes.make) queryParams.append('make', filterAttributes.make);
         if (filterAttributes.model) queryParams.append('model', filterAttributes.model);
+        if (filterAttributes.apiKeyName) queryParams.append('apiKeyName', filterAttributes.apiKeyName);
+        if (filterAttributes.policyName) queryParams.append('policyName', filterAttributes.policyName);
 
         const url = `${getPartnerManagerUrl('/notifications', process.env.NODE_ENV)}?${queryParams.toString()}`;
         try {
@@ -324,7 +329,9 @@ function ViewAllNotifications({ notificationType }) {
                                         {(notificationType === "ftm-chip") && (
                                             <FtmChipCertNotificationFilter onApplyFilter={onApplyFilter} />
                                         )}
-                                        
+                                        {(notificationType === "apikey") && (
+                                            <ApiKeyNotificationFilter onApplyFilter={onApplyFilter} setErrorCode={setErrorCode} setErrorMsg={setErrorMsg} />
+                                        )}
                                     </>
                                 )}
                                 {!notificationDataLoaded ? (
