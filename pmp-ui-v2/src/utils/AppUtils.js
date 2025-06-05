@@ -1005,6 +1005,18 @@ export const getNotificationDescription = (notification, isLoginLanguageRTL, t) 
                 components={{ span: <span className={`font-semibold`} /> }}
             />
         );
+    } else if (notification.notificationType === 'API_KEY_EXPIRY') {
+        return (
+            <Trans 
+                i18nKey="viewAllNotifications.apiKeyExpiryDescription"
+                values={{
+                    apiKeyName: notification.notificationDetails.apiKeyDetails[0].apiKeyName,
+                    policyName: notification.notificationDetails.apiKeyDetails[0].policyName,
+                    expiryDateTime: formatDate(notification.notificationDetails.apiKeyDetails[0].expiryDateTime, 'dateInWords')
+                }}
+                components={{ span: <span className={`font-semibold`} /> }}
+            />
+        );
     } else if (notification.notificationType === 'WEEKLY_SUMMARY') {
         return getWeeklySummaryDescription(notification, isLoginLanguageRTL, t);
     }
