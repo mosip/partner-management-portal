@@ -108,6 +108,60 @@ public class NotificationPage extends BasePage {
 	@FindBy(xpath = "//p[text()='No Notifications Found']")
 	private WebElement noNotificationsFound;
 	
+	@FindBy(xpath = "//button[.='x']")
+	private WebElement textBoxCloseButton;
+	
+	@FindBy(xpath = "(//p[text()='Root CA Certificate Expiration'])[1]")
+	private WebElement titleOfExpiryRootCACertificate;
+	
+	@FindBy(xpath = "(//p[text()='Intermediate CA Certificate Expiration'])[1]")
+	private WebElement titleOfExpiryIntCACertificate;
+	
+	@FindBy(xpath = "//p[contains(@class, 'text-xs') and contains(@class, 'text-gray-500') and contains(@class, 'text-right')]")
+	private WebElement expiryCACertDateAndTime;
+	
+	@FindBy(xpath = "//img[@id='featuredIcon']")
+	private WebElement featuredIcon;
+
+	@FindBy(id = "pagination_card")
+	private WebElement pagination;
+	
+	@FindBy(xpath = "//a[@aria-label='Previous page']")
+	private WebElement previousPage;
+	
+	@FindBy(xpath = "//a[@aria-label='Next page']")
+	private WebElement nextPage;
+	
+	@FindBy(id = "expand_more_FILL0_wght400_GRAD0_opsz48")
+	private WebElement expandIcon;
+	
+	@FindBy(id = "pagination_select_record_per_page")
+	private WebElement recordPerPage;
+	
+	@FindBy(xpath = "//h6[text()='Items per page']")
+	private WebElement prefixOfPage;
+	
+	@FindBy(xpath = "(//button[normalize-space()='Dismiss'])[1]")
+	private WebElement firstDismissButton;
+	
+	@FindBy(id = "created_from_date_calender")
+	private WebElement creationDateFromTextbox;
+	
+	@FindBy(id = "created_to_date_calender")
+	private WebElement creationDateToTextbox;
+	
+	@FindBy(xpath = "//p[text()='Notification Creation Date From']")
+	private WebElement creationFromDateFilterLabel;
+	
+	@FindBy(xpath = "//p[text()='Notification Creation Date To']")
+	private WebElement creationToDateFilterLabel;
+	
+	@FindBy(xpath = "//input[@placeholder='Search Creation Date From']")
+	private WebElement creationFromDatePlaceHolder;
+	
+	@FindBy(xpath = "//input[@placeholder='Search Creation Date To']")
+	private WebElement creationToDatePlaceHolder;
+
 	public NotificationPage(WebDriver driver) {
 		super(driver);
 	}
@@ -291,5 +345,93 @@ public class NotificationPage extends BasePage {
 	
 	public void enterCertIssuedByInFilter(String value) {
 		enter(certIssuedByFilterTextbox,value);
+	}
+	
+	public void clickOnTextBoxCloseButton() {
+		clickOnElement(textBoxCloseButton);
+	}
+	
+	public boolean isTitleOfExpiryRootCACertificateDisplayed() {
+		return isElementDisplayed(titleOfExpiryRootCACertificate);
+	}
+	
+	public boolean isTitleOfExpiryIntCACertificateDisplayed() {
+		return isElementDisplayed(titleOfExpiryIntCACertificate);
+	}
+	
+	public boolean isExpiryCACertDateAndTimeDisplayed() {
+		return isElementDisplayed(expiryCACertDateAndTime);
+	}
+	
+	public boolean isFeaturedIconDisplayed() {
+		return isElementDisplayed(featuredIcon);
+	}
+	
+	public boolean isPaginationDisplayed() {
+		return isElementDisplayed(pagination);
+	}
+	
+	public boolean isPreviusPageButtonDisplayed() {
+		return isElementDisplayed(previousPage);
+	}
+	
+	public boolean isNextPageButtonDisplayed() {
+		return isElementDisplayed(nextPage);
+	}
+	
+	public boolean isPrefixOfPageDisplayed() {
+		return isElementDisplayed(prefixOfPage);
+	}
+	
+	public boolean isRecordPerPageDisplayed() {
+		return isElementDisplayed(recordPerPage);
+	}
+	
+	public boolean isexpandIconDisplayed() {
+		return isElementDisplayed(expandIcon);
+	}
+	
+	public void clickOnCACertDismissButton() {
+		clickOnElement(firstDismissButton);
+	}
+	
+	public void clickOnIntermediateCACertificateTab() {
+		clickOnElement(intermediateCACertificateTab);
+	}
+	
+	public void clickOnWeeklySummaryTab() {
+		clickOnElement(weeklySummaryTab);
+	}
+	
+	public boolean isCreationDateFromTextboxDisplayed() {
+		return isElementDisplayed(creationDateFromTextbox);
+	}
+	
+	public boolean isCreationDateToTextboxDisplayed() {
+		return isElementDisplayed(creationDateToTextbox);
+	}
+	
+	public void enterCreationFromDateInFilter(String value) {
+		enter(creationDateFromTextbox,value);
+	}
+	
+	public void enterCreationToDateInFilter(String value) {
+		enter(creationDateToTextbox,value);
+	}
+	
+	public boolean isCreationFromDateFilterLabelDisplayed() {
+		return isElementDisplayed(creationFromDateFilterLabel);
+	}
+	
+	public boolean isCreationToDateFilterLabelDisplayed() {
+		return isElementDisplayed(creationToDateFilterLabel);
+	}
+	
+	public boolean isCreationFromDatePlaceHolderDisplayed() {
+		return isElementDisplayed(creationFromDatePlaceHolder);
+	}
+	
+	public boolean isCreationToDatePlaceHolderDisplayed() {
+		return isElementDisplayed(creationToDatePlaceHolder);
 	}
 }

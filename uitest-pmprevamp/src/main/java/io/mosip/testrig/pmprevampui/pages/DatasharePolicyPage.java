@@ -404,7 +404,7 @@ public class DatasharePolicyPage extends BasePage {
 	@FindBy(id = "clone_policy_close_button")
 	private WebElement clonePolicyCloseButton;
 	
-	@FindBy(xpath = "//td[contains(text(), 'A')]")
+	@FindBy(xpath = "//td[contains(text(), '@#A#@')]")
 	private WebElement updatedPolicyGroup;
 	
 	@FindBy(xpath = "//div[text()='Draft' and contains(@class, 'rounded-md')]")

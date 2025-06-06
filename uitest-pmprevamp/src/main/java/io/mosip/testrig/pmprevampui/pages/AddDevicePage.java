@@ -262,7 +262,7 @@ public class AddDevicePage extends BasePage {
 	public boolean isSubmitEnabled() {
 		return isElementEnabled(submitButton);
 	}
-	
+
 	public boolean isSubmitDisabled() {
 		return isElementDisabled(submitButton);
 	}
@@ -270,7 +270,7 @@ public class AddDevicePage extends BasePage {
 	public boolean isDeviceSubTypeEnabled() {
 		return isElementEnabled(addDeviceSubTypeSelectDropdown);
 	}
-	
+
 	public boolean isDeviceSubTypeDisabled() {
 		return isElementDisabled(addDeviceSubTypeSelectDropdown);
 	}
@@ -278,7 +278,7 @@ public class AddDevicePage extends BasePage {
 	public boolean isAddDeviceEnabled() {
 		return isElementEnabled(addDeviceButton);
 	}
-	
+
 	public boolean isAddDeviceDisabled() {
 		return isElementDisabled(addDeviceButton);
 	}
@@ -286,7 +286,7 @@ public class AddDevicePage extends BasePage {
 	public boolean isDeleteButtonEnabled() {
 		return isElementEnabled(deleteButton);
 	}
-	
+
 	public boolean isDeleteButtonDisabled() {
 		return isElementDisabled(deleteButton);
 	}
