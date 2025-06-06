@@ -144,6 +144,7 @@
         "upload": "رفع",
         "partnerType": "نوع الشريك",
         "expiryDate": "تاريخ الانتهاء",
+        "searchExpiryDate": "تاريخ انتهاء صلاحية البحث",
         "timeOfUpload": "وقت التحميل",
         "errorMsgForOriginalCertificate": "هذه الميزة قيد التطوير.",
         "errorWhileDownloadingCertificate": "هناك خطأ ما في تنزيل الشهادة. حاول مرة أخرى في وقت لاحق!",

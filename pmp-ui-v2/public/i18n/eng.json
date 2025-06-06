@@ -146,6 +146,7 @@
         "upload": "Upload",
         "partnerType": "Partner Type",
         "expiryDate": "Expiry Date",
+        "searchExpiryDate": "Search Expiry Date",
         "timeOfUpload": "Time of Upload",
         "errorMsgForOriginalCertificate": "This feature is under development.",
         "errorWhileDownloadingCertificate": "There is some error in downloading the certificate. Try again later!",

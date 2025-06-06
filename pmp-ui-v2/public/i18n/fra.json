@@ -144,6 +144,7 @@
         "upload": "Télécharger",
         "partnerType": "Type de partenaire",
         "expiryDate": "Date d'expiration",
+        "searchExpiryDate": "Date d'expiration de la recherche",
         "timeOfUpload": "Heure de téléchargement",
         "errorMsgForOriginalCertificate": "Cette fonctionnalité est en cours de développement.",
         "errorWhileDownloadingCertificate": "Une erreur s'est produite lors du téléchargement du certificat. Réessayez plus tard!",
