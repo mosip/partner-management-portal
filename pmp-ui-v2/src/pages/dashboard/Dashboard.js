@@ -409,6 +409,7 @@ function Dashboard() {
     const fetchExpiringApiKeyCount = async () => {
       const queryParams = new URLSearchParams();
       queryParams.append('expiryPeriod', 30)
+      queryParams.append('status', 'activated');
       queryParams.append('pageSize', '1');
       queryParams.append('pageNo', '0');
 
