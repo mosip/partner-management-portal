@@ -86,7 +86,9 @@
         "partnerCertExpiryCountDesc1": "{{partnerCertExpiryCount}} شهادات الشركاء تنتهي صلاحيتها قريبًا",
         "partnerCertExpiryCountDesc2": "{{partnerCertExpiryCount}} شهادة الشريك تنتهي صلاحيتها قريبًا",
         "ftmChipCertExpiryCountDesc1": "{{expiringFtmCertificateCount}} من شهادات شريحة FTM ستنتهي صلاحيتها قريبًا",
-        "ftmChipCertExpiryCountDesc2": "{{expiringFtmCertificateCount}} شهادة شريحة FTM ستنتهي صلاحيتها قريبًا"
+        "ftmChipCertExpiryCountDesc2": "{{expiringFtmCertificateCount}} شهادة شريحة FTM ستنتهي صلاحيتها قريبًا",
+        "apiKeyExpiryCountDesc1": "{{expiringApiKeyCount}} مفتاح API سينتهي قريبًا",
+        "apiKeyExpiryCountDesc2": "{{expiringApiKeyCount}} مفاتيح API ستنتهي قريبًا"
     },
     "header": {
         "userProfile": "ملف تعريفي للمستخدم",

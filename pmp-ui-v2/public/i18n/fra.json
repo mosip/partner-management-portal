@@ -86,7 +86,9 @@
         "partnerCertExpiryCountDesc1": "{{partnerCertExpiryCount}} Les certificats partenaires expirent bientôt",
         "partnerCertExpiryCountDesc2": "{{partnerCertExpiryCount}} Le certificat de partenaire expire bientôt",
         "ftmChipCertExpiryCountDesc1": "{{expiringFtmCertificateCount}} certificats de puce FTM expirent bientôt",
-        "ftmChipCertExpiryCountDesc2": "{{expiringFtmCertificateCount}} certificat de puce FTM expire bientôt"
+        "ftmChipCertExpiryCountDesc2": "{{expiringFtmCertificateCount}} certificat de puce FTM expire bientôt",
+        "apiKeyExpiryCountDesc1": "{{expiringApiKeyCount}} clés API vont bientôt expirer",
+        "apiKeyExpiryCountDesc2": "{{expiringApiKeyCount}} clé API va bientôt expirer"
     },
     "header": {
         "userProfile": "Profil de l'utilisateur",
