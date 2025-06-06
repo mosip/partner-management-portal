@@ -65,6 +65,7 @@ function ViewAllNotifications({ notificationType }) {
     const [notificationCreatedDateTime, setNotificationCreatedDateTime] = useState("");
     const [partnerCertList, setPartnerCertList] = useState([]);
     const [ftmCertList, setFtmCertList] = useState([]);
+    const [apiKeyList, setApiKeyList] = useState([]);
 
     const fetchNotifications = async (noDateLoaded) => {
         const queryParams = new URLSearchParams();
@@ -194,6 +195,9 @@ function ViewAllNotifications({ notificationType }) {
         const ftmList = Array.isArray(notification.notificationDetails.ftmDetails) ? notification.notificationDetails.ftmDetails : [];
         setFtmCertList(ftmList);
 
+        const apiKeyExpiryList = Array.isArray(notification.notificationDetails.apiKeyDetails) ? notification.notificationDetails.apiKeyDetails : [];
+        setApiKeyList(apiKeyExpiryList);
+
         setActiveTab('partner');
         setWeeklyNotificationList(certificateList);
     };
@@ -206,12 +210,17 @@ function ViewAllNotifications({ notificationType }) {
     const changeToPartnerCert = () => {
         setActiveTab('partner');
         setWeeklyNotificationList(partnerCertList);
-    }
+    };
 
     const changeToFTMCert = () => {
         setActiveTab('ftm');
         setWeeklyNotificationList(ftmCertList);
-    }
+    };
+
+    const changeToApiKey = () => {
+        setActiveTab('apikey');
+        setWeeklyNotificationList(apiKeyList);
+    };
 
     const getWeeklyNotificationTitle = (notification, type) => {
         if (type === 'partner') {
@@ -219,6 +228,9 @@ function ViewAllNotifications({ notificationType }) {
         }
         if (type === 'ftm') {
             return t('viewAllNotifications.weeklyFtmCertExpiryTitle', {partnerId: notification.partnerId});
+        }
+        if (type === 'apikey') {
+            return t('viewAllNotifications.weeklyApiKeyExpiryTitle', {partnerId: notification.partnerId});
         }
     }
 
@@ -246,6 +258,19 @@ function ViewAllNotifications({ notificationType }) {
                         make: notification.make,
                         model: notification.model,
                         ftmId: notification.ftmId,
+                        partnerId: notification.partnerId,
+                        expiryDateTime: formatDate(notification.expiryDateTime, 'dateInWords')
+                    }}
+                    components={{ span: <span className={`font-semibold ${isLoginLanguageRTL && 'whitespace-nowrap'}`} /> }}
+                />
+            );
+        }
+        if (type === 'apikey') {
+            return (
+                <Trans 
+                    i18nKey="viewAllNotifications.weeklyApiKeyExpiryDescription"
+                    values={{
+                        apiKeyName: notification.apiKeyName,
                         partnerId: notification.partnerId,
                         expiryDateTime: formatDate(notification.expiryDateTime, 'dateInWords')
                     }}
@@ -383,6 +408,13 @@ function ViewAllNotifications({ notificationType }) {
                                                                 </button>
 
                                                                 <div className={`h-1 w-full ${activeTab === "ftm" ? "bg-tory-blue" : "bg-transparent"}  rounded-t-md`}></div>
+                                                            </div>
+                                                            <div id='api_key_tab' className={`flex-col justify-center text-center`}>
+                                                                <button onClick={changeToApiKey} className={`${activeTab === "apikey" ? "text-[#1447b2]" : "text-[#031640]"} py-3 cursor-pointer text-base`}>
+                                                                    <h6> {t('partnerNotificationsTab.apikey')} ({apiKeyList.length}) </h6>
+                                                                </button>
+
+                                                                <div className={`h-1 w-full ${activeTab === "apikey" ? "bg-tory-blue" : "bg-transparent"}  rounded-t-md`}></div>
                                                             </div>
                                                         </div>
                                                         {/* <hr className="h-0.5 bg-gray-200 border-0" /> */}
