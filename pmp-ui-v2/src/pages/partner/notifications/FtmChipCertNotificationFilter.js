@@ -75,14 +75,14 @@ function FtmChipCertNotificationFilter( { onApplyFilter }) {
                 />
                 <CalendarInput
                     fieldName='expiryDate'
-                    label={t('viewAllNotifications.expiryDate')}
+                    label={t('partnerCertificatesList.expiryDate')}
                     showCalendar={isExpiryCalenderOpen}
                     setShowCalender={setIsExpiryCalenderOpen}
                     onChange={handleExpiryDateChange}
                     selectedDateStr={filters.expiryDate}
                     isUsedAsFilter={true}
                     styleSet={calenderStyleSet}
-                    placeholderText={t('viewAllNotifications.selectExpiryDate')}
+                    placeholderText={t('partnerCertificatesList.searchExpiryDate')}
                     id='ftm_chip_cert_expiry_date_calender'
                 />
                 <div className={`mt-6 mr-6 ${isLoginLanguageRTL ? "mr-auto" : "ml-auto"}`}>

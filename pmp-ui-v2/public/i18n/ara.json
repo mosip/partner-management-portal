@@ -86,7 +86,9 @@
         "partnerCertExpiryCountDesc1": "{{partnerCertExpiryCount}} شهادات الشركاء تنتهي صلاحيتها قريبًا",
         "partnerCertExpiryCountDesc2": "{{partnerCertExpiryCount}} شهادة الشريك تنتهي صلاحيتها قريبًا",
         "ftmChipCertExpiryCountDesc1": "{{expiringFtmCertificateCount}} من شهادات شريحة FTM ستنتهي صلاحيتها قريبًا",
-        "ftmChipCertExpiryCountDesc2": "{{expiringFtmCertificateCount}} شهادة شريحة FTM ستنتهي صلاحيتها قريبًا"
+        "ftmChipCertExpiryCountDesc2": "{{expiringFtmCertificateCount}} شهادة شريحة FTM ستنتهي صلاحيتها قريبًا",
+        "apiKeyExpiryCountDesc1": "{{expiringApiKeyCount}} مفتاح API سينتهي قريبًا",
+        "apiKeyExpiryCountDesc2": "{{expiringApiKeyCount}} مفاتيح API ستنتهي قريبًا"
     },
     "header": {
         "userProfile": "ملف تعريفي للمستخدم",
@@ -142,6 +144,7 @@
         "upload": "رفع",
         "partnerType": "نوع الشريك",
         "expiryDate": "تاريخ الانتهاء",
+        "searchExpiryDate": "تاريخ انتهاء صلاحية البحث",
         "timeOfUpload": "وقت التحميل",
         "errorMsgForOriginalCertificate": "هذه الميزة قيد التطوير.",
         "errorWhileDownloadingCertificate": "هناك خطأ ما في تنزيل الشهادة. حاول مرة أخرى في وقت لاحق!",
@@ -1049,7 +1052,9 @@
         "ftmChipCertExpiryDescription": "شهادة شريحة FTM لـ <span>{{make}}</span> - <span>{{model}}</span> (FTM ID: <span>{{ftmId}}</span>) من المقرر أن تنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. قم بتجديده الآن لتجنب أي انقطاع.",
         "apiKeyExpiryDescription": "مفتاح API المسمى <span>{{apiKeyName}}</span> المرتبطة بالسياسة: <span>{{policyName}}</span> من المقرر أن تنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. قم بتجديده الآن لتجنب أي انقطاع.",
         "weeklyFtmCertExpiryTitle": "شهادة شريحة FTM على وشك الانتهاء لمعرف الشريك: {{partnerId}}",
-        "weeklyFtmCertExpiryDescription": "شهادة شريحة FTM لـ <span>{{make}}</span> - <span>{{model}}</span> (FTM ID: <span>{{ftmId}}</span>) تم الرفع بواسطة <span>{{partnerId}}</span> من المقرر أن تنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. قم بتجديده الآن لتجنب أي انقطاع."
+        "weeklyFtmCertExpiryDescription": "شهادة شريحة FTM لـ <span>{{make}}</span> - <span>{{model}}</span> (FTM ID: <span>{{ftmId}}</span>) تم الرفع بواسطة <span>{{partnerId}}</span> من المقرر أن تنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. قم بتجديده الآن لتجنب أي انقطاع.",
+        "weeklyApiKeyExpiryTitle": "مفتاح API على وشك الانتهاء لمعرف الشريك: {{partnerId}}",
+        "weeklyApiKeyExpiryDescription": "مفتاح API المسمى <span>{{apiKeyName}}</span> تم إنشاؤه بواسطة <span>{{partnerId}}</span> من المقرر أن تنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. قم بتجديده الآن لتجنب أي انقطاع."
     },
     "serverError": {
         "PMS_COR_001": "معلمة الإدخال مفقودة",

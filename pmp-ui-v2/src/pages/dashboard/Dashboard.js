@@ -44,6 +44,7 @@ function Dashboard() {
   const [rootCertExpiryCount, setRootCertExpiryCount] = useState();
   const [intermediateCertExpiryCount, setIntermediateCertExpiryCount] = useState();
   const [partnerCertExpiryCount, setPartnerCertExpiryCount] = useState();
+  const [expiringApiKeyCount, setExpiringApiKeyCount] = useState();
   const [showMissingAttributesPopup, setShowMissingAttributesPopup] = useState(false);
   const [isEmailVerified, setIsEmailVerified] = useState(false);
   const [configData, setConfigData] = useState(null);
@@ -405,6 +406,34 @@ function Dashboard() {
       }
     };
 
+    const fetchExpiringApiKeyCount = async () => {
+      const queryParams = new URLSearchParams();
+      queryParams.append('expiryPeriod', 30)
+      queryParams.append('status', 'activated');
+      queryParams.append('pageSize', '1');
+      queryParams.append('pageNo', '0');
+
+      const url = `${getPartnerManagerUrl('/partner-api-keys', process.env.NODE_ENV)}?${queryParams.toString()}`;
+      try {
+        const response = await HttpService.get(url);
+        if (response) {
+          const responseData = response.data;
+          if (responseData && responseData.response) {
+            setExpiringApiKeyCount(responseData.response.totalResults);
+          } else {
+            handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+          }
+        } else {
+          setErrorMsg(t('dashboard.requestCountFetchError'));
+        }
+      } catch (err) {
+        if (err.response?.status && err.response.status !== 401) {
+          setErrorMsg(t('dashboard.requestCountFetchError'));
+        }
+        console.error("Error fetching data:", err);
+      }
+    };
+
     async function init() {
       if (!isPartnerAdmin && isEmailVerified) {
         fetchPartnerCertExpiryCount();
@@ -412,6 +441,10 @@ function Dashboard() {
 
       if (!isPartnerAdmin && isEmailVerified && showFtmServices && configData.isCaSignedPartnerCertificateAvailable === 'true') {
         fetchFtmCertificateExpiryCount();
+      }
+
+      if (!isPartnerAdmin && isEmailVerified && showAuthenticationServices) {
+        fetchExpiringApiKeyCount();
       }
 
       if (isPartnerAdmin && isEmailVerified) {
@@ -585,7 +618,7 @@ function Dashboard() {
               </div>
             )}
             {!isPartnerAdmin && !isPolicyManager && showAuthenticationServices && (
-              <div role='button' id='dashboard_authentication_clients_list_card' onClick={() => moveToOidcClientsList(navigate)} className="w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => moveToOidcClientsList(navigate))}>
+              <div role='button' id='dashboard_authentication_clients_list_card' onClick={() => moveToOidcClientsList(navigate)} className="w-[23.5%] relative min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => moveToOidcClientsList(navigate))}>
                 <div className="flex justify-center mb-5">
                   <img id='dashboard_authentication_clients_list_icon' src={authServiceIcon} alt="" className="w-8 h-8" />
                 </div>
@@ -597,6 +630,14 @@ function Dashboard() {
                     {t('dashboard.authenticationServicesDesc')}
                   </p>
                 </div>
+                {expiringApiKeyCount > 0 && (
+                  <CountWithHover
+                    countLabel={expiringApiKeyCount}
+                    descriptionKey={expiringApiKeyCount > 1 ? "dashboard.apiKeyExpiryCountDesc1" : "dashboard.apiKeyExpiryCountDesc2"}
+                    descriptionParams={{ expiringApiKeyCount }}
+                    isExpiryHover={true}
+                  />
+                )}
               </div>
             )}
             {!isPartnerAdmin && !isPolicyManager && showDeviceProviderServices && (

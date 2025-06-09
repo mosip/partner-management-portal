@@ -96,14 +96,14 @@ function ApiKeyNotificationFilter({ onApplyFilter, setErrorCode, setErrorMsg }) 
                 </DropdownComponent>
                 <CalendarInput
                     fieldName='expiryDate'
-                    label={t('viewAllNotifications.expiryDate')}
+                    label={t('partnerCertificatesList.expiryDate')}
                     showCalendar={isExpiryCalenderOpen}
                     setShowCalender={setIsExpiryCalenderOpen}
                     onChange={handleExpiryDateChange}
                     selectedDateStr={filters.expiryDate}
                     isUsedAsFilter={true}
                     styleSet={calenderStyleSet}
-                    placeholderText={t('viewAllNotifications.selectExpiryDate')}
+                    placeholderText={t('partnerCertificatesList.searchExpiryDate')}
                     id='api_key_expiry_date_calender'
                 />
                 <div className={`mt-6 mr-6 ${isLoginLanguageRTL ? "mr-auto" : "ml-auto"}`}>

@@ -86,7 +86,9 @@
         "partnerCertExpiryCountDesc1": "{{partnerCertExpiryCount}} Les certificats partenaires expirent bientôt",
         "partnerCertExpiryCountDesc2": "{{partnerCertExpiryCount}} Le certificat de partenaire expire bientôt",
         "ftmChipCertExpiryCountDesc1": "{{expiringFtmCertificateCount}} certificats de puce FTM expirent bientôt",
-        "ftmChipCertExpiryCountDesc2": "{{expiringFtmCertificateCount}} certificat de puce FTM expire bientôt"
+        "ftmChipCertExpiryCountDesc2": "{{expiringFtmCertificateCount}} certificat de puce FTM expire bientôt",
+        "apiKeyExpiryCountDesc1": "{{expiringApiKeyCount}} clés API vont bientôt expirer",
+        "apiKeyExpiryCountDesc2": "{{expiringApiKeyCount}} clé API va bientôt expirer"
     },
     "header": {
         "userProfile": "Profil de l'utilisateur",
@@ -142,6 +144,7 @@
         "upload": "Télécharger",
         "partnerType": "Type de partenaire",
         "expiryDate": "Date d'expiration",
+        "searchExpiryDate": "Date d'expiration de la recherche",
         "timeOfUpload": "Heure de téléchargement",
         "errorMsgForOriginalCertificate": "Cette fonctionnalité est en cours de développement.",
         "errorWhileDownloadingCertificate": "Une erreur s'est produite lors du téléchargement du certificat. Réessayez plus tard!",
@@ -1049,7 +1052,9 @@
         "ftmChipCertExpiryDescription": "Le certificat de puce FTM pour <span>{{make}}</span> - <span>{{model}}</span> (ID FTM : <span>{{ftmId}}</span>) expirera le <span>{{expiryDateTime}}</span>. Renouvelez-le dès maintenant pour éviter toute interruption.",
         "apiKeyExpiryDescription": "La clé API <span>{{apiKeyName}}</span> associée à la politique : <span>{{policyName}}</span> expirera le <span>{{expiryDateTime}}</span>. Renouvelez-la dès maintenant pour éviter toute interruption.",
         "weeklyFtmCertExpiryTitle": "Le certificat de puce FTM expire pour l'ID partenaire : {{partnerId}}",
-        "weeklyFtmCertExpiryDescription": "Le certificat de puce FTM pour <span>{{make}}</span> - <span>{{model}}</span> (ID FTM : <span>{{ftmId}}</span>) téléchargé par <span>{{partnerId}}</span> expirera le <span>{{expiryDateTime}}</span>. Renouvelez-le dès maintenant pour éviter toute interruption."
+        "weeklyFtmCertExpiryDescription": "Le certificat de puce FTM pour <span>{{make}}</span> - <span>{{model}}</span> (ID FTM : <span>{{ftmId}}</span>) téléchargé par <span>{{partnerId}}</span> expirera le <span>{{expiryDateTime}}</span>. Renouvelez-le dès maintenant pour éviter toute interruption.",
+        "weeklyApiKeyExpiryTitle": "La clé API expire pour l'ID partenaire : {{partnerId}}",
+        "weeklyApiKeyExpiryDescription": "La clé API nommée <span>{{apiKeyName}}</span> générée par <span>{{partnerId}}</span> expirera le <span>{{expiryDateTime}}</span>. Renouvelez-la dès maintenant pour éviter toute interruption."
     },
     "serverError": {
         "PMS_COR_001": "Paramètre d'entrée manquant",
