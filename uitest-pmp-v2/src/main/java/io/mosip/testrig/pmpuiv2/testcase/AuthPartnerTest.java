@@ -1070,7 +1070,10 @@ public class AuthPartnerTest extends BaseClass {
 				GlobalConstants.isAuthenticationServicesDisplayed);
 		OidcClientPage oidcClientPage = dashboardPage.clickOnAuthenticationServicesTitle();
 		oidcClientPage.listPageCreateOidcClientButton();
-		oidcClientPage.enterPublicKeyTextBox(GlobalConstants.INVALID_DATA);
+		oidcClientPage.selectPartnerIdDropdown();
+		oidcClientPage.selectPolicyNameDropdown(data);
+		oidcClientPage.enterNameOidcTextBox(GlobalConstants.AUTOMATION_LOWERCASE);
+		oidcClientPage.enterPublicKeyTextBox(GlobalConstants.INVALID_PUBLIC_KEY);
 		assertTrue(oidcClientPage.isPublicKeyFormatErrorDisplayed(), GlobalConstants.isPublicKeyFormatErrorDisplayed);
 		oidcClientPage.enterLogoUrTextBox(GlobalConstants.INVALID_DATA);
 		assertTrue(oidcClientPage.isInvalidLogoUriErrorDisplayed(), GlobalConstants.isInvalidLogoUriErrorDisplayed);

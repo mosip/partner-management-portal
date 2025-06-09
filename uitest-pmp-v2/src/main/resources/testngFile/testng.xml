@@ -12,6 +12,7 @@
 			<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerManagerPoliciesTest" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerPolicyLinkingTest" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.AuthenticationServices" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.CertificateTrustStoreTest" />
 		</classes>
 		
 	</test>
