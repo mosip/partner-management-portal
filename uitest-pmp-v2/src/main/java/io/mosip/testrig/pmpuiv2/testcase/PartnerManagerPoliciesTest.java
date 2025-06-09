@@ -686,20 +686,6 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		datasharePolicyPage.clickOnPublishPolicyCloseButton();
 		policiesPage.clickOnHomeButton();
 
-		logoutFromPartner(dashboardPage);
-
-		loginPage.enterUserName("pmpui-auth");
-		loginPage.enterPassword(password);
-		loginPage.clickOnLoginButton();
-
-		dashboardPage.clickOnPoliciesTitle();
-		policiesPage.clickOnRequestPolicyButtonOfTabularPage();
-		policiesPage.selectPartnerIdDropdown();
-		policiesPage.selectPolicyNameDropdown(GlobalConstants.DATAPOLICY01);
-		policiesPage.enterComments(GlobalConstants.DATAPOLICY01);
-		policiesPage.clickSubmitButton();
-		policygroupPage.navigateBackDefaultButton();
-
 	}
 
 	@Test(priority = 11, description = "Edit Datashare Policy")
@@ -1135,7 +1121,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		policiesPage.enterComments(GlobalConstants.ALPHANUMERIC);
 		policiesPage.clickSubmitButton();
 		policiesPage.clickOnGoBackButton();
-
+		
 		policiesPage.clickOnRequestPolicyButtonOfTabularPage();
 		policiesPage.selectPartnerIdDropdown();
 		policiesPage.selectPolicyNameDropdown(GlobalConstants.DATAPOLICY01);
@@ -1156,8 +1142,10 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		partnerPolicyMappingPage.clickOnApplyFilterButton();
 		partnerPolicyMappingPage.clickOnPartnerListViewElipsisButton();
 		partnerPolicyMappingPage.clickOnApproveOrRejectButton();
-		partnerPolicyMappingPage.clickOnApproveSubmitButton();
+		partnerPolicyMappingPage.clickOnFilterResetButton();
 
+		partnerPolicyMappingPage.clickOnFilterButton();
+		partnerPolicyMappingPage.enterpolicyGroupFilter(GlobalConstants.DEFAULTPOLICYGROUP);
 		partnerPolicyMappingPage.enterPendingPolicyNameInFilter(GlobalConstants.DATAPOLICY01);
 		partnerPolicyMappingPage.clickOnApplyFilterButton();
 		partnerPolicyMappingPage.clickOnPartnerListViewElipsisButton();
@@ -1174,10 +1162,13 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		datasharePolicyPage.clickOnActionButton();
 		datasharePolicyPage.clickOnDeactivateButton();
 		datasharePolicyPage.clickOnDeactivateConfirmButton();
-		assertTrue(datasharePolicyPage.isPartnerPolicyLinkActivatedErrorDisplayed(),
-				GlobalConstants.isPartnerPolicyLinkActivatedErrorDisplayed);
+		assertTrue(datasharePolicyPage.isPartnerPolicyLinkPendingErrorDisplayed(),
+				GlobalConstants.isPartnerPolicyLinkPendingErrorDisplayed);
 		datasharePolicyPage.clickOnAlertErrorOkButton();
+		partnerPolicyMappingPage.clickOnFilterResetButton();
 
+		partnerPolicyMappingPage.clickOnFilterButton();
+		partnerPolicyMappingPage.enterpolicyGroupFilter(GlobalConstants.DEFAULTPOLICYGROUP);
 		datasharePolicyPage.enterPolicyNameInFilter(GlobalConstants.EDITDATAPOLICY1);
 		datasharePolicyPage.clickOnApplyFilterButton();
 		datasharePolicyPage.clickOnActionButton();
@@ -1186,7 +1177,10 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		assertTrue(datasharePolicyPage.isPartnerPolicyLinkPendingErrorDisplayed(),
 				GlobalConstants.isPartnerPolicyLinkPendingErrorDisplayed);
 		datasharePolicyPage.clickOnAlertErrorOkButton();
+		partnerPolicyMappingPage.clickOnFilterResetButton();
 
+		partnerPolicyMappingPage.clickOnFilterButton();
+		partnerPolicyMappingPage.enterpolicyGroupFilter(GlobalConstants.DEFAULTPOLICYGROUP);
 		datasharePolicyPage.enterPolicyNameInFilter(GlobalConstants.DATAPOLICY01);
 		datasharePolicyPage.clickOnApplyFilterButton();
 		datasharePolicyPage.clickOnActionButton();
@@ -2029,7 +2023,10 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		partnerPolicyMappingPage.clickOnPartnerListViewElipsisButton();
 		partnerPolicyMappingPage.clickOnApproveOrRejectButton();
 		partnerPolicyMappingPage.clickOnApproveSubmitButton();
+		partnerPolicyMappingPage.clickOnFilterResetButton();
 
+		partnerPolicyMappingPage.clickOnFilterButton();
+		partnerPolicyMappingPage.enterpolicyGroupFilter(GlobalConstants.DEFAULTPOLICYGROUP);
 		partnerPolicyMappingPage.enterPendingPolicyNameInFilter(GlobalConstants.AUTHPOLICY06);
 		partnerPolicyMappingPage.clickOnApplyFilterButton();
 		partnerPolicyMappingPage.clickOnPartnerListViewElipsisButton();
@@ -2048,7 +2045,10 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		assertTrue(authpolicyPage.isPartnerPolicyLinkActivatedErrorDisplayed(),
 				GlobalConstants.isPartnerPolicyLinkActivatedErrorDisplayed);
 		authpolicyPage.clickOnAlertErrorOkButton();
+		partnerPolicyMappingPage.clickOnFilterResetButton();
 
+		partnerPolicyMappingPage.clickOnFilterButton();
+		partnerPolicyMappingPage.enterpolicyGroupFilter(GlobalConstants.DEFAULTPOLICYGROUP);
 		authpolicyPage.enterPolicyNameInFilter(GlobalConstants.AUTHPOLICY09);
 		authpolicyPage.clickOnApplyFilterButton();
 		authpolicyPage.clickOnActionButton();
@@ -2057,7 +2057,9 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		assertTrue(authpolicyPage.isPartnerPolicyLinkPendingErrorDisplayed(),
 				GlobalConstants.isPartnerPolicyLinkPendingErrorDisplayed);
 		authpolicyPage.clickOnAlertErrorOkButton();
+		partnerPolicyMappingPage.clickOnFilterResetButton();
 
+		partnerPolicyMappingPage.clickOnFilterButton();
 		partnerPolicyMappingPage.enterpolicyGroupFilter(GlobalConstants.DEFAULTPOLICYGROUP);
 		authpolicyPage.enterPolicyNameInFilter(GlobalConstants.AUTHPOLICY06);
 		authpolicyPage.clickOnApplyFilterButton();
