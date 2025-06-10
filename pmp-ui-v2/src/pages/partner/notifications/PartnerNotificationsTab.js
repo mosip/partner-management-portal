@@ -22,6 +22,10 @@ function PartnerNotificationsTab({ activeTab }) {
         navigate('/partnermanagement/notifications/view-api-key-expiry');
     };
 
+    const changeToSbiTab = () => {
+        navigate('/partnermanagement/notifications/view-sbi-expiry');
+    };
+
     return (
         <div className={`flex text-xs bg-[#FCFCFC] font-bold ${isLoginLanguageRTL && 'space-x-reverse'} gap-x-4 sm:gap-x-16 items-start rounded-lg px-8`}>
             <div id='partner_cert_notifications_tab' className={`flex-col justify-center text-center w-full sm:w-auto`}>
@@ -47,6 +51,15 @@ function PartnerNotificationsTab({ activeTab }) {
                     </button>
 
                     <div className={`h-1 w-full ${activeTab === "apikey" ? "bg-tory-blue" : "bg-transparent"}  rounded-t-md`}></div>
+                </div>
+            )}
+            { partnerType === "DEVICE_PROVIDER" && (
+                <div id='sbi_notifications_tab' className={`flex-col justify-center text-center w-full sm:w-auto`}>
+                    <button onClick={changeToSbiTab} className={`${activeTab === "sbi" ? "text-[#1447b2]" : "text-[#031640]"} py-4 cursor-pointer text-base`}>
+                        <h6> {t('partnerNotificationsTab.sbi')} </h6>
+                    </button>
+
+                    <div className={`h-1 w-full ${activeTab === "sbi" ? "bg-tory-blue" : "bg-transparent"}  rounded-t-md`}></div>
                 </div>
             )}
         </div>

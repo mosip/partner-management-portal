@@ -25,6 +25,7 @@ import WeeklyNotificationsFilter from "./WeeklyNotificationsFilter.js";
 import PropTypes from 'prop-types';
 import FtmChipCertNotificationFilter from "../../partner/notifications/FtmChipCertNotificationFilter.js";
 import ApiKeyNotificationFilter from "../../partner/notifications/ApiKeyNotificationFilter.js";
+import SbiNotificationFilter from "../../partner/notifications/SbiNotificationFilter.js";
 
 function ViewAllNotifications({ notificationType }) {
     const { t } = useTranslation();
@@ -56,7 +57,9 @@ function ViewAllNotifications({ notificationType }) {
         make: null,
         model: null,
         apiKeyName: null,
-        policyName: null
+        policyName: null,
+        sbiId: null,
+        sbiVersion: null,
     });
     const dispatch = useDispatch();
     const [showExpiringItems, setShowExpiringItems] = useState(false);
@@ -88,6 +91,8 @@ function ViewAllNotifications({ notificationType }) {
         if (filterAttributes.model) queryParams.append('model', filterAttributes.model);
         if (filterAttributes.apiKeyName) queryParams.append('apiKeyName', filterAttributes.apiKeyName);
         if (filterAttributes.policyName) queryParams.append('policyName', filterAttributes.policyName);
+        if (filterAttributes.sbiId) queryParams.append('sbiId', filterAttributes.sbiId);
+        if (filterAttributes.sbiVersion) queryParams.append('sbiVersion', filterAttributes.sbiVersion);
 
         const url = `${getPartnerManagerUrl('/notifications', process.env.NODE_ENV)}?${queryParams.toString()}`;
         try {
@@ -280,18 +285,6 @@ function ViewAllNotifications({ notificationType }) {
         }
     };
 
-    const emptyNotifications = () => {
-        return (
-            <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
-                <div className="flex flex-col items-center py-20 px-2 border-b border-gray-200">
-                    <img src={noNotificationIcon} alt='' id='noNotificationIcon' />
-                    <p className="text-sm text-gray-500">{t('notificationPopup.noNotification')}</p>
-                    <p className="text-sm text-gray-500">{t('notificationPopup.noNotificationDescr')}</p>
-                </div>
-            </div>
-        );
-    };
-
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter overflow-x-scroll`}>
             {!dataLoaded && (
@@ -323,7 +316,13 @@ function ViewAllNotifications({ notificationType }) {
                     )}
                     
                     {!isFilterApplied && notificationsList.length === 0 ? (
-                        emptyNotifications()
+                        <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
+                            <div className="flex flex-col items-center py-20 px-2 border-b border-gray-200">
+                                <img src={noNotificationIcon} alt='' id='noNotificationIcon' />
+                                <p className="text-sm text-gray-500">{t('notificationPopup.noNotification')}</p>
+                                <p className="text-sm text-gray-500">{t('notificationPopup.noNotificationDescr')}</p>
+                            </div>
+                        </div>
                     ) : (
                         <>
                             <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
@@ -356,6 +355,9 @@ function ViewAllNotifications({ notificationType }) {
                                         )}
                                         {(notificationType === "apikey") && (
                                             <ApiKeyNotificationFilter onApplyFilter={onApplyFilter} setErrorCode={setErrorCode} setErrorMsg={setErrorMsg} />
+                                        )}
+                                        {(notificationType === "sbi") && (
+                                            <SbiNotificationFilter onApplyFilter={onApplyFilter} />
                                         )}
                                     </>
                                 )}
@@ -434,7 +436,18 @@ function ViewAllNotifications({ notificationType }) {
                                                                     </div>
                                                                 ))}
                                                             </> : 
-                                                                emptyNotifications()
+                                                                <div className="flex flex-col items-center py-12 px-2 border-gray-200">
+                                                                    <img src={noNotificationIcon} alt='' id='noNotificationIcon' />
+                                                                    { activeTab === "partner" && (
+                                                                        <p className="text-sm text-gray-500">{t('viewAllNotifications.noPartnerCertExpiry')}</p>
+                                                                    )}
+                                                                    { activeTab === "ftm" && (
+                                                                        <p className="text-sm text-gray-500">{t('viewAllNotifications.noFtmChipCertExpiry')}</p>
+                                                                    )}
+                                                                    { activeTab === "apikey" && (
+                                                                        <p className="text-sm text-gray-500">{t('viewAllNotifications.noApiKeyExpiry')}</p>
+                                                                    )}
+                                                                </div>
                                                             }
                                                         </div>
                                                     </div>

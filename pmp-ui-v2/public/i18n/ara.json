@@ -991,11 +991,13 @@
         "partnerCertExpiry": "انتهاء صلاحية شهادة الشريك",
         "ftmChipCertExpiry": "انتهاء صلاحية شهادة شريحة FTM",
         "apiKeyExpiry": "انتهاء صلاحية مفتاح API",
+        "sbiExpiry": "انتهاء صلاحية SBI",
         "rootCertExpiryDescription": "شهادة CA الجذرية <span>{{certificateId}}</span> للنطاق <span>{{partnerDomain}}</span> من المقرر أن تنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات.",
         "intermediateCertExpiryDescription": "شهادة CA المتوسطة <span>{{certificateId}}</span> للنطاق <span>{{partnerDomain}}</span> من المقرر أن تنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات.",
         "partnerCertExpiryDescription": "من المقرر أن تنتهي صلاحية شهادة الشريك لنطاق <span>{{partnerDomain}}</span> في <span>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات.",
         "ftmChipCertExpiryDescription": "شهادة شريحة FTM مع معرف FTM: <span>{{ftmId}}</span> من المقرر أن تنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. قم بتجديده الآن لتجنب أي انقطاع.",
         "apiKeyExpiryDescription": "مفتاح API باسم:<span>{{apiKeyName}}</span> من المقرر أن تنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. قم بتجديده الآن لتجنب أي انقطاع.",
+        "sbiExpiryDescription": "بطاقة SBI ذات المعرف: <span>{{sbiId}}</span> مُعدّة للانتهاء في <span>{{expiryDateTime}}</span>. جدّدها الآن لتجنب أي انقطاع.",
         "dismiss": "رفض",
         "viewAllNotification": "عرض جميع الإشعارات",
         "expiringItems": "ملخص أسبوعي للعناصر منتهية الصلاحية التي أنشأها الشريك",
@@ -1054,7 +1056,11 @@
         "weeklyFtmCertExpiryTitle": "شهادة شريحة FTM على وشك الانتهاء لمعرف الشريك: {{partnerId}}",
         "weeklyFtmCertExpiryDescription": "شهادة شريحة FTM لـ <span>{{make}}</span> - <span>{{model}}</span> (FTM ID: <span>{{ftmId}}</span>) تم الرفع بواسطة <span>{{partnerId}}</span> من المقرر أن تنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. قم بتجديده الآن لتجنب أي انقطاع.",
         "weeklyApiKeyExpiryTitle": "مفتاح API على وشك الانتهاء لمعرف الشريك: {{partnerId}}",
-        "weeklyApiKeyExpiryDescription": "مفتاح API المسمى <span>{{apiKeyName}}</span> تم إنشاؤه بواسطة <span>{{partnerId}}</span> من المقرر أن تنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. قم بتجديده الآن لتجنب أي انقطاع."
+        "weeklyApiKeyExpiryDescription": "مفتاح API المسمى <span>{{apiKeyName}}</span> تم إنشاؤه بواسطة <span>{{partnerId}}</span> من المقرر أن تنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. قم بتجديده الآن لتجنب أي انقطاع.",
+        "noPartnerCertExpiry": "لا توجد شهادات شركاء تنتهي صلاحيتها هذا الأسبوع.",
+        "noFtmChipCertExpiry": "لا توجد شهادات شريحة FTM تنتهي صلاحيتها هذا الأسبوع.",
+        "noApiKeyExpiry": "لا توجد مفاتيح API تنتهي صلاحيتها هذا الأسبوع.",
+        "sbiExpiryDescription": "بطاقة SBI ذات المعرف: <span>{{sbiId}}</span> والإصدار: <span>{{sbiVersion}}</span> مُعدّة للانتهاء في <span>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاع."
     },
     "serverError": {
         "PMS_COR_001": "معلمة الإدخال مفقودة",
