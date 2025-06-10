@@ -926,19 +926,19 @@ export const getWeeklySummaryDescription = (notification, isLoginLanguageRTL, t)
 
     const certificateList = Array.isArray(certificateDetails) ? certificateDetails : [];
     const ftmCertList = Array.isArray(ftmDetails) ? ftmDetails : [];
-    // const sbiList = Array.isArray(sbiDetails) ? sbiDetails : [];
+    const sbiList = Array.isArray(sbiDetails) ? sbiDetails : [];
     const apiKeyList = Array.isArray(apiKeyDetails) ? apiKeyDetails : [];
 
     const partnerCertCount = certificateList.length;
     const ftmCertCount = ftmCertList.length;
-    // const sbiCount = sbiList.length;
+    const sbiCount = sbiList.length;
     const apiKeyCount = apiKeyList.length;
 
     const descriptionItems = [
         t('notificationPopup.partnerCertificates', { partnerCertCount }),
         t('notificationPopup.ftmCertificates', { ftmCertCount }),
         t('notificationPopup.apiKeys', { apiKeyCount }),
-        // t('notificationPopup.sbiDevices', { sbiCount }),
+        t('notificationPopup.sbiDevices', { sbiCount }),
     ];
 
     return descriptionItems.length ? (
