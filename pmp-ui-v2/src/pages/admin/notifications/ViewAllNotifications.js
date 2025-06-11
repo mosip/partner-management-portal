@@ -25,6 +25,7 @@ import WeeklyNotificationsFilter from "./WeeklyNotificationsFilter.js";
 import PropTypes from 'prop-types';
 import FtmChipCertNotificationFilter from "../../partner/notifications/FtmChipCertNotificationFilter.js";
 import ApiKeyNotificationFilter from "../../partner/notifications/ApiKeyNotificationFilter.js";
+import SbiNotificationFilter from "../../partner/notifications/SbiNotificationFilter.js";
 
 function ViewAllNotifications({ notificationType }) {
     const { t } = useTranslation();
@@ -56,7 +57,9 @@ function ViewAllNotifications({ notificationType }) {
         make: null,
         model: null,
         apiKeyName: null,
-        policyName: null
+        policyName: null,
+        sbiId: null,
+        sbiVersion: null,
     });
     const dispatch = useDispatch();
     const [showExpiringItems, setShowExpiringItems] = useState(false);
@@ -66,6 +69,7 @@ function ViewAllNotifications({ notificationType }) {
     const [partnerCertList, setPartnerCertList] = useState([]);
     const [ftmCertList, setFtmCertList] = useState([]);
     const [apiKeyList, setApiKeyList] = useState([]);
+    const [sbiList, setSbiList] = useState([]);
 
     const fetchNotifications = async (noDateLoaded) => {
         const queryParams = new URLSearchParams();
@@ -88,6 +92,8 @@ function ViewAllNotifications({ notificationType }) {
         if (filterAttributes.model) queryParams.append('model', filterAttributes.model);
         if (filterAttributes.apiKeyName) queryParams.append('apiKeyName', filterAttributes.apiKeyName);
         if (filterAttributes.policyName) queryParams.append('policyName', filterAttributes.policyName);
+        if (filterAttributes.sbiId) queryParams.append('sbiId', filterAttributes.sbiId);
+        if (filterAttributes.sbiVersion) queryParams.append('sbiVersion', filterAttributes.sbiVersion);
 
         const url = `${getPartnerManagerUrl('/notifications', process.env.NODE_ENV)}?${queryParams.toString()}`;
         try {
@@ -198,6 +204,9 @@ function ViewAllNotifications({ notificationType }) {
         const apiKeyExpiryList = Array.isArray(notification.notificationDetails.apiKeyDetails) ? notification.notificationDetails.apiKeyDetails : [];
         setApiKeyList(apiKeyExpiryList);
 
+        const sbiExpiryList = Array.isArray(notification.notificationDetails.sbiDetails) ? notification.notificationDetails.sbiDetails : [];
+        setSbiList(sbiExpiryList);
+
         setActiveTab('partner');
         setWeeklyNotificationList(certificateList);
     };
@@ -222,6 +231,11 @@ function ViewAllNotifications({ notificationType }) {
         setWeeklyNotificationList(apiKeyList);
     };
 
+    const changeToSbi = () => {
+        setActiveTab('sbi');
+        setWeeklyNotificationList(sbiList);
+    };
+
     const getWeeklyNotificationTitle = (notification, type) => {
         if (type === 'partner') {
             return t('viewAllNotifications.weeklyPartnerCertExpiryTitle', {partnerId: notification.partnerId});
@@ -231,6 +245,9 @@ function ViewAllNotifications({ notificationType }) {
         }
         if (type === 'apikey') {
             return t('viewAllNotifications.weeklyApiKeyExpiryTitle', {partnerId: notification.partnerId});
+        }
+        if (type === 'sbi') {
+            return t('viewAllNotifications.weeklySbiExpiryTitle', {partnerId: notification.partnerId});
         }
     }
 
@@ -278,18 +295,20 @@ function ViewAllNotifications({ notificationType }) {
                 />
             );
         }
-    };
-
-    const emptyNotifications = () => {
-        return (
-            <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
-                <div className="flex flex-col items-center py-20 px-2 border-b border-gray-200">
-                    <img src={noNotificationIcon} alt='' id='noNotificationIcon' />
-                    <p className="text-sm text-gray-500">{t('notificationPopup.noNotification')}</p>
-                    <p className="text-sm text-gray-500">{t('notificationPopup.noNotificationDescr')}</p>
-                </div>
-            </div>
-        );
+        if (type === 'sbi') {
+            return (
+                <Trans 
+                    i18nKey="viewAllNotifications.weeklySbiExpiryDescription"
+                    values={{
+                        sbiId: notification.sbiId,
+                        sbiVersion: notification.sbiVersion,
+                        partnerId: notification.partnerId,
+                        expiryDateTime: formatDate(notification.expiryDateTime, 'dateInWords')
+                    }}
+                    components={{ span: <span className={`font-semibold ${isLoginLanguageRTL && 'whitespace-nowrap'}`} /> }}
+                />
+            );
+        }
     };
 
     return (
@@ -323,7 +342,13 @@ function ViewAllNotifications({ notificationType }) {
                     )}
                     
                     {!isFilterApplied && notificationsList.length === 0 ? (
-                        emptyNotifications()
+                        <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
+                            <div className="flex flex-col items-center py-20 px-2 border-b border-gray-200">
+                                <img src={noNotificationIcon} alt='' id='noNotificationIcon' />
+                                <p className="text-sm text-gray-500">{t('notificationPopup.noNotification')}</p>
+                                <p className="text-sm text-gray-500">{t('notificationPopup.noNotificationDescr')}</p>
+                            </div>
+                        </div>
                     ) : (
                         <>
                             <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
@@ -356,6 +381,9 @@ function ViewAllNotifications({ notificationType }) {
                                         )}
                                         {(notificationType === "apikey") && (
                                             <ApiKeyNotificationFilter onApplyFilter={onApplyFilter} setErrorCode={setErrorCode} setErrorMsg={setErrorMsg} />
+                                        )}
+                                        {(notificationType === "sbi") && (
+                                            <SbiNotificationFilter onApplyFilter={onApplyFilter} />
                                         )}
                                     </>
                                 )}
@@ -416,6 +444,13 @@ function ViewAllNotifications({ notificationType }) {
 
                                                                 <div className={`h-1 w-full ${activeTab === "apikey" ? "bg-tory-blue" : "bg-transparent"}  rounded-t-md`}></div>
                                                             </div>
+                                                            <div id='sbi_tab' className={`flex-col justify-center text-center`}>
+                                                                <button onClick={changeToSbi} className={`${activeTab === "sbi" ? "text-[#1447b2]" : "text-[#031640]"} py-3 cursor-pointer text-base`}>
+                                                                    <h6> {t('partnerNotificationsTab.sbi')} ({sbiList.length}) </h6>
+                                                                </button>
+
+                                                                <div className={`h-1 w-full ${activeTab === "sbi" ? "bg-tory-blue" : "bg-transparent"}  rounded-t-md`}></div>
+                                                            </div>
                                                         </div>
                                                         {/* <hr className="h-0.5 bg-gray-200 border-0" /> */}
                                                         <div className="p-4">
@@ -434,7 +469,21 @@ function ViewAllNotifications({ notificationType }) {
                                                                     </div>
                                                                 ))}
                                                             </> : 
-                                                                emptyNotifications()
+                                                                <div className="flex flex-col items-center py-12 px-2 border-gray-200">
+                                                                    <img src={noNotificationIcon} alt='' id='noNotificationIcon' />
+                                                                    { activeTab === "partner" && (
+                                                                        <p className="text-sm text-gray-500">{t('viewAllNotifications.noPartnerCertExpiry')}</p>
+                                                                    )}
+                                                                    { activeTab === "ftm" && (
+                                                                        <p className="text-sm text-gray-500">{t('viewAllNotifications.noFtmChipCertExpiry')}</p>
+                                                                    )}
+                                                                    { activeTab === "apikey" && (
+                                                                        <p className="text-sm text-gray-500">{t('viewAllNotifications.noApiKeyExpiry')}</p>
+                                                                    )}
+                                                                    { activeTab === "sbi" && (
+                                                                        <p className="text-sm text-gray-500">{t('viewAllNotifications.noSbiExpiry')}</p>
+                                                                    )}
+                                                                </div>
                                                             }
                                                         </div>
                                                     </div>
