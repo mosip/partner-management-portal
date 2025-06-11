@@ -45,6 +45,7 @@ function Dashboard() {
   const [intermediateCertExpiryCount, setIntermediateCertExpiryCount] = useState();
   const [partnerCertExpiryCount, setPartnerCertExpiryCount] = useState();
   const [expiringApiKeyCount, setExpiringApiKeyCount] = useState();
+  const [expiringSbiCount, setExpiringSbiCount] = useState();
   const [showMissingAttributesPopup, setShowMissingAttributesPopup] = useState(false);
   const [isEmailVerified, setIsEmailVerified] = useState(false);
   const [configData, setConfigData] = useState(null);
@@ -434,6 +435,34 @@ function Dashboard() {
       }
     };
 
+    const fetchExpiringSbiCount = async () => {
+      const queryParams = new URLSearchParams();
+      queryParams.append('expiryPeriod', 30)
+      queryParams.append('status', 'approved');
+      queryParams.append('pageSize', '1');
+      queryParams.append('pageNo', '0');
+
+      const url = `${getPartnerManagerUrl('/securebiometricinterface', process.env.NODE_ENV)}?${queryParams.toString()}`;
+      try {
+        const response = await HttpService.get(url);
+        if (response) {
+          const responseData = response.data;
+          if (responseData && responseData.response) {
+            setExpiringSbiCount(responseData.response.totalResults);
+          } else {
+            handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+          }
+        } else {
+          setErrorMsg(t('dashboard.requestCountFetchError'));
+        }
+      } catch (err) {
+        if (err.response?.status && err.response.status !== 401) {
+          setErrorMsg(t('dashboard.requestCountFetchError'));
+        }
+        console.error("Error fetching data:", err);
+      }
+    };
+
     async function init() {
       if (!isPartnerAdmin && isEmailVerified) {
         fetchPartnerCertExpiryCount();
@@ -445,6 +474,10 @@ function Dashboard() {
 
       if (!isPartnerAdmin && isEmailVerified && showAuthenticationServices) {
         fetchExpiringApiKeyCount();
+      }
+
+      if (!isPartnerAdmin && isEmailVerified && showDeviceProviderServices) {
+        fetchExpiringSbiCount();
       }
 
       if (isPartnerAdmin && isEmailVerified) {
@@ -641,7 +674,7 @@ function Dashboard() {
               </div>
             )}
             {!isPartnerAdmin && !isPolicyManager && showDeviceProviderServices && (
-              <div role='button' id='dashboard_device_provider_service_card' onClick={deviceProviderServices} className="w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, deviceProviderServices)}>
+              <div role='button' id='dashboard_device_provider_service_card' onClick={deviceProviderServices} className="w-[23.5%] relative min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, deviceProviderServices)}>
                 <div className="flex justify-center mb-5">
                   <img id='dashboard_device_provider_service_icon' src={deviceProviderServicesIcon} alt="" className="w-8 h-8" />
                 </div>
@@ -653,6 +686,14 @@ function Dashboard() {
                     {t('dashboard.deviceProviderServicesDesc')}
                   </p>
                 </div>
+                {expiringSbiCount > 0 && (
+                  <CountWithHover
+                    countLabel={expiringSbiCount}
+                    descriptionKey={expiringSbiCount > 1 ? "dashboard.sbiExpiryCountDesc1" : "dashboard.sbiExpiryCountDesc2"}
+                    descriptionParams={{ expiringSbiCount }}
+                    isExpiryHover={true}
+                  />
+                )}
               </div>
             )}
             {!isPartnerAdmin && !isPolicyManager && showFtmServices && (

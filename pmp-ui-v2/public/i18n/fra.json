@@ -88,7 +88,9 @@
         "ftmChipCertExpiryCountDesc1": "{{expiringFtmCertificateCount}} certificats de puce FTM expirent bientôt",
         "ftmChipCertExpiryCountDesc2": "{{expiringFtmCertificateCount}} certificat de puce FTM expire bientôt",
         "apiKeyExpiryCountDesc1": "{{expiringApiKeyCount}} clés API vont bientôt expirer",
-        "apiKeyExpiryCountDesc2": "{{expiringApiKeyCount}} clé API va bientôt expirer"
+        "apiKeyExpiryCountDesc2": "{{expiringApiKeyCount}} clé API va bientôt expirer",
+        "sbiExpiryCountDesc1": "{{expiringSbiCount}} SBI vont bientôt expirer",
+        "sbiExpiryCountDesc2": "{{expiringSbiCount}} SBI va bientôt expirer"
     },
     "header": {
         "userProfile": "Profil de l'utilisateur",
