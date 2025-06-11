@@ -39,8 +39,8 @@ function FtmChipCertNotificationFilter( { onApplyFilter }) {
     };
 
     const calenderStyleSet = {
-        datePicker: "h-[2.4rem] p-1",
-        outerDiv: `ml-4 ${getOuterDivWidth(t('viewAllNotifications.selectExpiryDate'))}`
+        datePicker: `h-[2.4rem] p-1 ${isLoginLanguageRTL && 'pr-8'}`,
+        outerDiv: `ml-4 ${getOuterDivWidth(t('partnerCertificatesList.searchExpiryDate'))}`
     };
 
     return (
