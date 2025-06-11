@@ -1060,7 +1060,10 @@
         "noPartnerCertExpiry": "Il n'y a aucun certificat partenaire expirant cette semaine.",
         "noFtmChipCertExpiry": "Il n'y a pas de certificats de puce FTM expirant cette semaine.",
         "noApiKeyExpiry": "Aucune clé API n'expire cette semaine.",
-        "sbiExpiryDescription": "Le contrat SBI avec l'ID : <span>{{sbiId}}</span> et la version : <span>{{sbiVersion}}</span> expirera le <span>{{expiryDateTime}}</span>. Renouvelez-le dès maintenant pour éviter toute interruption."
+        "noSbiExpiry": "Il n'y a pas de SBI expirant cette semaine.",
+        "sbiExpiryDescription": "Le contrat SBI avec l'ID : <span>{{sbiId}}</span> et la version : <span>{{sbiVersion}}</span> expirera le <span>{{expiryDateTime}}</span>. Renouvelez-le dès maintenant pour éviter toute interruption.",
+        "weeklySbiExpiryTitle": "SBI expire pour l'ID de partenaire : {{partnerId}}",
+        "weeklySbiExpiryDescription": "Le contrat SBI avec l'identifiant SBI : <span>{{sbiId}}</span> et la version SBI : <span>{{sbiVersion}}</span> généré par <span>{{partnerId}}</span> expirera le <span>{{expiryDateTime}}</span>. Renouvelez-le dès maintenant pour éviter toute interruption."
     },
     "serverError": {
         "PMS_COR_001": "Paramètre d'entrée manquant",
