@@ -44,7 +44,9 @@ public class PmpTestUtil extends BaseTestCaseFunc {
 	public static DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
 	public static DateTimeFormatter nonZeroPadderDateFormatter = DateTimeFormatter.ofPattern("M/d/yyyy");
 	public static DateTimeFormatter monthYearFormatter = DateTimeFormatter.ofPattern("MMMM yyyy");
-	public static DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy, hh:mm:ss a");
+	public static DateTimeFormatter yyyyMmDdFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+	public static DateTimeFormatter yyyyMmmDdFormatter = DateTimeFormatter.ofPattern("yyyy-MMM-dd");
+	public static DateTimeFormatter yyyyMmDdFormatter2 = DateTimeFormatter.ofPattern("yyyy.MM.dd");	
 	public static String todayDate = LocalDate.now().format(dateFormatter);
 	public static String todayDateWithoutZeroPadder = LocalDate.now().format(nonZeroPadderDateFormatter);
 	public static String expiryDate = LocalDate.now().plusWeeks(2).format(dateFormatter);

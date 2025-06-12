@@ -144,6 +144,7 @@ public class AuthenticationServices extends BaseClass {
 				GlobalConstants.isCreatedDateTimeDescISconDisplayed);
 		assertTrue(oidcClientPage.isCreatedDateTimeAscIconDisplayed(),
 				GlobalConstants.isCreatedDateTimeAscIconDisplayed);
+		
 		assertTrue(oidcClientPage.isStatusDescIconDisplayed(), GlobalConstants.isStatusDescIconDisplayed);
 		assertTrue(oidcClientPage.isStatusAscIconDisplayed(), GlobalConstants.isStatusAscIconDisplayed);
 		assertTrue(oidcClientPage.isOrgNameDescIconDisplayed(), GlobalConstants.isOrgNameDescIconDisplayed);

@@ -1,5 +1,6 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -422,7 +423,7 @@ public class PartnerCertificatePage extends BasePage {
 
 	@FindBy(id = "upload_trust_certificate_clear")
 	private WebElement certificateClearButton;
-	
+
 	@FindBy(id = "intermediateTrustList.uploadIntermediateCaTrust")
 	private WebElement intermediateUploadTrustCertificateButton;
 
@@ -1073,10 +1074,11 @@ public class PartnerCertificatePage extends BasePage {
 
 	public boolean isValidFromDateTimeFormatValid() {
 		String browserTime = trustCertificateContextUploadDateTime.getText();
-		DateTimeFormatter dateTimeFormatter = PmpTestUtil.dateTimeFormatter;
+		String datePart = browserTime.split(",")[0].trim();
+		DateTimeFormatter dateFormatter = PmpTestUtil.dateFormatter;
 
 		try {
-			LocalDateTime.parse(browserTime, dateTimeFormatter);
+			LocalDate.parse(datePart, dateFormatter);
 			return true;
 		} catch (DateTimeParseException e) {
 			return false;
@@ -1085,10 +1087,11 @@ public class PartnerCertificatePage extends BasePage {
 
 	public boolean isValidToDateTimeFormatValid() {
 		String browserTime = trustCertificateContextExpiryDateTime.getText();
-		DateTimeFormatter dateTimeFormatter = PmpTestUtil.dateTimeFormatter;
+		String datePart = browserTime.split(",")[0].trim();
+		DateTimeFormatter dateFormatter = PmpTestUtil.dateFormatter;
 
 		try {
-			LocalDateTime.parse(browserTime, dateTimeFormatter);
+			LocalDate.parse(datePart, dateFormatter);
 			return true;
 		} catch (DateTimeParseException e) {
 			return false;
@@ -1202,7 +1205,7 @@ public class PartnerCertificatePage extends BasePage {
 	public void clickOnCertificateClearButton() {
 		clickOnElement(certificateClearButton);
 	}
-	
+
 	public boolean isIntermediateUploadTrustCertificateButtonDisplayed() {
 		return isElementDisplayed(intermediateUploadTrustCertificateButton);
 	}
@@ -1210,7 +1213,7 @@ public class PartnerCertificatePage extends BasePage {
 	public void clickOnUploadIntTrustCertificateButton() {
 		clickOnElement(intermediateUploadTrustCertificateButton);
 	}
-	
+
 	public void clickOnIntCACertBreadcumb() {
 		clickOnElement(intCACertBreadcumb);
 	}

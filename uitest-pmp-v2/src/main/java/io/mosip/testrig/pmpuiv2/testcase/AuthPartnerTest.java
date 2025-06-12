@@ -1199,7 +1199,6 @@ public class AuthPartnerTest extends BaseClass {
 		PoliciesPage policiesPage = new PoliciesPage(driver);
 		OidcClientPage oidcClientPage = new OidcClientPage(driver);
 		basePage = new BasePage(driver);
-
 		loginAsAuthPartner(dashboardPage);
 
 		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
