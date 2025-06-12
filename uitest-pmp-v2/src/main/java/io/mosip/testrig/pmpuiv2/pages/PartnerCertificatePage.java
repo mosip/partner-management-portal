@@ -423,7 +423,7 @@ public class PartnerCertificatePage extends BasePage {
 
 	@FindBy(id = "upload_trust_certificate_clear")
 	private WebElement certificateClearButton;
-
+	
 	@FindBy(id = "intermediateTrustList.uploadIntermediateCaTrust")
 	private WebElement intermediateUploadTrustCertificateButton;
 
@@ -1205,7 +1205,6 @@ public class PartnerCertificatePage extends BasePage {
 	public void clickOnCertificateClearButton() {
 		clickOnElement(certificateClearButton);
 	}
-
 	public boolean isIntermediateUploadTrustCertificateButtonDisplayed() {
 		return isElementDisplayed(intermediateUploadTrustCertificateButton);
 	}
@@ -1213,7 +1212,6 @@ public class PartnerCertificatePage extends BasePage {
 	public void clickOnUploadIntTrustCertificateButton() {
 		clickOnElement(intermediateUploadTrustCertificateButton);
 	}
-
 	public void clickOnIntCACertBreadcumb() {
 		clickOnElement(intCACertBreadcumb);
 	}

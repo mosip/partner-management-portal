@@ -926,19 +926,19 @@ export const getWeeklySummaryDescription = (notification, isLoginLanguageRTL, t)
 
     const certificateList = Array.isArray(certificateDetails) ? certificateDetails : [];
     const ftmCertList = Array.isArray(ftmDetails) ? ftmDetails : [];
-    // const sbiList = Array.isArray(sbiDetails) ? sbiDetails : [];
+    const sbiList = Array.isArray(sbiDetails) ? sbiDetails : [];
     const apiKeyList = Array.isArray(apiKeyDetails) ? apiKeyDetails : [];
 
     const partnerCertCount = certificateList.length;
     const ftmCertCount = ftmCertList.length;
-    // const sbiCount = sbiList.length;
+    const sbiCount = sbiList.length;
     const apiKeyCount = apiKeyList.length;
 
     const descriptionItems = [
         t('notificationPopup.partnerCertificates', { partnerCertCount }),
         t('notificationPopup.ftmCertificates', { ftmCertCount }),
         t('notificationPopup.apiKeys', { apiKeyCount }),
-        // t('notificationPopup.sbiDevices', { sbiCount }),
+        t('notificationPopup.sbiDevices', { sbiCount }),
     ];
 
     return descriptionItems.length ? (
@@ -1017,6 +1017,18 @@ export const getNotificationDescription = (notification, isLoginLanguageRTL, t) 
                 components={{ span: <span className={`font-semibold`} /> }}
             />
         );
+    } else if (notification.notificationType === 'SBI_EXPIRY') {
+        return (
+            <Trans 
+                i18nKey="viewAllNotifications.sbiExpiryDescription"
+                values={{
+                    sbiId: notification.notificationDetails.sbiDetails[0].sbiId,
+                    sbiVersion: notification.notificationDetails.sbiDetails[0].sbiVersion,
+                    expiryDateTime: formatDate(notification.notificationDetails.sbiDetails[0].expiryDateTime, 'dateInWords')
+                }}
+                components={{ span: <span className={`font-semibold`} /> }}
+            />
+        );
     } else if (notification.notificationType === 'WEEKLY_SUMMARY') {
         return getWeeklySummaryDescription(notification, isLoginLanguageRTL, t);
     }
@@ -1080,6 +1092,17 @@ export const getNotificationPanelDescription = (notification, isLoginLanguageRTL
                 components={{ span: <span className={`font-semibold ${isLoginLanguageRTL && 'whitespace-nowrap'}`} /> }}
             />
         );
+    } else if (notification.notificationType === 'SBI_EXPIRY') {
+        return (
+            <Trans 
+                i18nKey="notificationPopup.sbiExpiryDescription"
+                values={{
+                    sbiId: notification.notificationDetails.sbiDetails[0].sbiId,
+                    expiryDateTime: formatDate(notification.notificationDetails.sbiDetails[0].expiryDateTime, 'dateInWords')
+                }}
+                components={{ span: <span className={`font-semibold ${isLoginLanguageRTL && 'whitespace-nowrap'}`} /> }}
+            />
+        );
     } else if (notification.notificationType === 'WEEKLY_SUMMARY') {
         return getWeeklySummaryDescription (notification, isLoginLanguageRTL, t);
     }
@@ -1096,6 +1119,8 @@ export const getNotificationTitle = (notification, t) => {
         return t('notificationPopup.ftmChipCertExpiry');
     } else if (notification.notificationType === 'API_KEY_EXPIRY') {
         return t('notificationPopup.apiKeyExpiry');
+    } else if (notification.notificationType === 'SBI_EXPIRY') {
+        return t('notificationPopup.sbiExpiry');
     } else if (notification.notificationType === 'WEEKLY_SUMMARY') {
         return t('notificationPopup.expiringItems') + " (" + formatDate(notification.createdDateTime, 'dateInWords') + t('notificationPopup.to') + formatDate(getWeeklySummaryDate(notification.createdDateTime), 'dateInWords') + ")";
     }

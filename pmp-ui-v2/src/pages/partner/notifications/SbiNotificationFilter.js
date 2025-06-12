@@ -1,33 +1,30 @@
-import { useTranslation } from "react-i18next";
-import { getFilterTextFieldStyle, getOuterDivWidth, isLangRTL, validateInputRegex } from "../../../utils/AppUtils";
 import { useState } from "react";
+import { getFilterTextFieldStyle, getOuterDivWidth, isLangRTL, validateInputRegex } from "../../../utils/AppUtils";
+import { getUserProfile } from "../../../services/UserProfileService";
+import PropTypes from 'prop-types';
+import { useTranslation } from "react-i18next";
 import TextInputComponent from "../../common/fields/TextInputComponent";
 import CalendarInput from "../../common/CalendarInput";
-import PropTypes from 'prop-types';
-import { getUserProfile } from "../../../services/UserProfileService";
 
-function FtmChipCertNotificationFilter( { onApplyFilter }) {
+function SbiNotificationFilter({ onApplyFilter }) {
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [isExpiryCalenderOpen, setIsExpiryCalenderOpen] = useState(false);
     const [filters, setFilters] = useState({
-        ftmId: "",
-        make: "",
-        model: "",
+        sbiId: "",
+        sbiVersion: "",
         expiryDate: ""
     });
-    const [invalidFtmId, setInvalidFtmId] = useState("");
-    const [invalidMake, setInvalidMake] = useState("");
-    const [invalidModel, setInvalidModel] = useState("");
+    const [invalidSbiId, setInvalidSbiId] = useState("");
+    const [invalidSbiVersion, setInvalidSbiVersion] = useState("");
 
     const onFilterChangeEvent = (fieldName, selectedFilter) => {
         setFilters((prevFilters) => ({
             ...prevFilters,
             [fieldName]: selectedFilter
         }));
-        if (fieldName === 'ftmId') { validateInputRegex(selectedFilter, setInvalidFtmId, t); }
-        if (fieldName === 'make') { validateInputRegex(selectedFilter, setInvalidMake, t); }
-        if (fieldName === 'model') { validateInputRegex(selectedFilter, setInvalidModel, t); }
+        if (fieldName === 'sbiId') { validateInputRegex(selectedFilter, setInvalidSbiId, t); }
+        if (fieldName === 'sbiVersion') { validateInputRegex(selectedFilter, setInvalidSbiVersion, t); }
     };
 
     const handleExpiryDateChange = (newDateStr) => {
@@ -35,7 +32,7 @@ function FtmChipCertNotificationFilter( { onApplyFilter }) {
     };
         
     const areFiltersEmpty = () => {
-        return Object.values(filters).every(value => value === "") || invalidFtmId || invalidMake || invalidModel;
+        return Object.values(filters).every(value => value === "") || invalidSbiId || invalidSbiVersion;
     };
 
     const calenderStyleSet = {
@@ -47,31 +44,22 @@ function FtmChipCertNotificationFilter( { onApplyFilter }) {
         <>
             <div className="flex w-full p-3 justify-start bg-[#F7F7F7] flex-wrap">
                 <TextInputComponent
-                    fieldName='ftmId'
+                    fieldName='sbiId'
                     onTextChange={onFilterChangeEvent}
-                    fieldNameKey='ftmList.ftmId'
-                    placeHolderKey='ftmList.searchFtmId'
+                    fieldNameKey='sbiList.sbiId'
+                    placeHolderKey='sbiList.searchSbiId'
                     styleSet={getFilterTextFieldStyle()}
-                    id='ftm_chip_cert_expiry_ftm_id_filter'
-                    inputError={invalidFtmId}
+                    id='sbi_expiry_sbi_id_filter'
+                    inputError={invalidSbiId}
                 />
                 <TextInputComponent
-                    fieldName='make'
+                    fieldName='sbiVersion'
                     onTextChange={onFilterChangeEvent}
-                    fieldNameKey='ftmList.make'
-                    placeHolderKey='ftmList.searchMake'
+                    fieldNameKey='sbiList.sbiVersion'
+                    placeHolderKey='sbiList.searchVersion'
                     styleSet={getFilterTextFieldStyle()}
-                    id='ftm_chip_cert_expiry_make_filter'
-                    inputError={invalidMake}
-                />
-                <TextInputComponent
-                    fieldName='model'
-                    onTextChange={onFilterChangeEvent}
-                    fieldNameKey='ftmList.model'
-                    placeHolderKey='ftmList.searchModel'
-                    styleSet={getFilterTextFieldStyle()}
-                    id='ftm_chip_cert_expiry_model_filter'
-                    inputError={invalidModel}
+                    id='sbi_expiry_sbi_version_filter'
+                    inputError={invalidSbiVersion}
                 />
                 <CalendarInput
                     fieldName='expiryDate'
@@ -83,7 +71,7 @@ function FtmChipCertNotificationFilter( { onApplyFilter }) {
                     isUsedAsFilter={true}
                     styleSet={calenderStyleSet}
                     placeholderText={t('partnerCertificatesList.searchExpiryDate')}
-                    id='ftm_chip_cert_expiry_date_calender'
+                    id='sbi_expiry_date_calender'
                 />
                 <div className={`mt-6 mr-6 ${isLoginLanguageRTL ? "mr-auto" : "ml-auto"}`}>
                     <button
@@ -101,8 +89,8 @@ function FtmChipCertNotificationFilter( { onApplyFilter }) {
     );
 }
 
-FtmChipCertNotificationFilter.propTypes = {
+SbiNotificationFilter.propTypes = {
     onApplyFilter: PropTypes.func.isRequired,
 };
 
-export default FtmChipCertNotificationFilter;
+export default SbiNotificationFilter;

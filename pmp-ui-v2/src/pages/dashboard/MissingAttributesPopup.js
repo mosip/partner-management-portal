@@ -57,10 +57,10 @@ function MissingAttributesPopup() {
                             </ul>
                         </div>
                     </div>
-                    <div className="p-4 flex justify-end items-center border-t border-gray-200">
+                    <div className="p-4 flex justify-end items-center">
                         <p className="text-[#333333] text-sm font-semibold">
                             <button
-                                className="w-44 flex justify-center min-w-fit h-10 py-2 px-3 border rounded-md bg-[#1447B2] text-white text-sm font-semibold"
+                                className="flex justify-center w-fit h-10 py-2 px-3 rounded-md bg-[#1447B2] text-white text-sm font-semibold"
                                 onClick={logout}
                             >
                                 {t('missingAttributesPopup.logout')}

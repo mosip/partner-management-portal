@@ -29,12 +29,12 @@ function WeeklyNotificationsFilter({ onApplyFilter }) {
     };
     
     const createdFromDateStyleSet = {
-        datePicker: "h-[2.4rem] p-1",
+        datePicker: `h-[2.4rem] p-1 ${isLoginLanguageRTL && 'pr-8'}`,
         outerDiv: getOuterDivWidth(t('viewAllNotifications.selectCreatedFromDate'))
     };
 
     const createdToDateStyleSet = {
-        datePicker: "h-[2.4rem] p-1",
+        datePicker: `h-[2.4rem] p-1 ${isLoginLanguageRTL && 'pr-8'}`,
         outerDiv: getOuterDivWidth(t('viewAllNotifications.selectCreatedToDate'))
     };  
 
