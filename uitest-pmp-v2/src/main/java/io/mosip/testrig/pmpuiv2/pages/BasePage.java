@@ -319,7 +319,7 @@ public class BasePage {
 		driver.navigate().refresh();
 	}
 
-	public void navigateBack() {
+	public  void navigateBack() {
 		LogUtil.action("Navigating to the back page");
 		driver.navigate().back();
 	}
