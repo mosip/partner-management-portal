@@ -144,10 +144,10 @@ public class GlobalConstants {
 	public static final String isSubmitButtonDisabled = "Verify if submit button is disabled";
 	public static final String isDeviceListAddDeviceButtonDisabled = "Verify if device list add device is disabled";
 	public static final String isPolicyCommentBoxTextDisplayed = "Mention the purpose of requesting the policy";
-	public static final String isFtmChipMakeLableDisplayed = "Verify if ftm chipe make lable displayed";
-	public static final String isFtmChipMakeValueDisplayed = "Verify if ftm chipe make value displayed";
-	public static final String isPartnerTypeLableDisplayed = "Verify if ftm chipe partner type lable displayed";
-	public static final String isPartnerTypeValueDisplayed = "Verify if ftm chipe partner type value displayed";
+	public static final String isFtmChipMakeLableDisplayed = "Verify if ftm chip make lable displayed";
+	public static final String isFtmChipMakeValueDisplayed = "Verify if ftm chip make value displayed";
+	public static final String isPartnerTypeLableDisplayed = "Verify if ftm chip partner type lable displayed";
+	public static final String isPartnerTypeValueDisplayed = "Verify if ftm chip partner type value displayed";
 
 	public static final String isFtmModelLableDisplayed = "Verify if ftm chipe model lable displayed";
 	public static final String isFtmModelValueDisplayed = "Verify if ftm chipe model value displayed";
@@ -805,7 +805,35 @@ public class GlobalConstants {
 	public static final String isCreationToDateFilterLabelDisplayed = "Verify if creation to date filter label displayed";
 	public static final String isCreationFromDatePlaceHolderDisplayed = "Verify if creation from date placeholder displayed";
 	public static final String isCreationToDatePlaceHolderDisplayed = "Verify if creation to date placeholder displayed";
-	
+	public static final String isFtmList1Displayed="verify if ftm list 1st row displayed";
+	public static final String isElementIsEnabled = "Verify if element is enabled displayed";
+	public static final String isDashboardPageDisplayed = "Verify if dashboard page is displayed";
+	public static final String isListOfFtmChipDisplayed = "Verify if list of ftm page is displayed";
+	public static final String isApproveRejectCloseButtonDisplayed = "Verify if close button in approve/reject popup page is displayed";
+	public static final String isRejectButtonDisplayed = "Verify if reject button in approve/reject popup page is displayed";
+	public static final String isApproveButtonDisplayed = "Verify if approve button in approve/reject popup page is displayed";
+	public static final String isDeactivateFtmPopupTitleDisplayed = "Verify if title in deactivate ftm chip popup page is displayed";
+	public static final String isDeactivateFtmPopupSubTitleDisplayed = "Verify if Sub title in deactivate ftm chip popup page is displayed";
+	public static final String isFtmDetailsSideNavIconDisplayed="verify if Ftm deatils icon in side nav displayed";
+	public static final String isDownloadSuccessMessageDisplayed="verify if success message after download is displayed";
+	public static final String isViewFtmChipDetailsTitleDisplayed="verify if title view FTM chip details is displayed";
+	public static final String isFtmCertDetailsNotFound="verify if FTM certificate details in row is not displayed";
+	public static final String isReUploadPopUpPageTitleDisplayed="verify if title in re-upload popup page is displayed";
+	public static final String isReUploadPopUpPagePartnerTypeNameDisplayed="verify if partner type name in re-upload popup page is displayed";
+	public static final String isReUploadPopUpPagePartnerDomainDisplayed="verify if partner domain in re-upload popup page is displayed";
+	public static final String isReUploadPopUpPageUploadIconDisplayed="verify if upload icon in re-upload popup page is displayed";
+	public static final String isReUploadPopUpPageCloseButtonDisplayed="verify if Close button in re-upload popup page is displayed";
+	public static final String isReUploadPopUpPageSubmitButtonDisplayed="verify if submit button in re-upload popup page is displayed";
+	public static final String isReUploadPopUpPagePartnerTypeNameDisabled="verify if partner type in re-upload popup page is disabled";
+	public static final String isReUploadPopUpPagePartnerDomainDisabled="verify if partner domain in re-upload popup page is disabled";
+	public static final String isReUploadPopUpPageFetchingCertMsgDisplayed="verify if we're fetching your certificate message in re-upload popup page is displayed";
+	public static final String isReUploadCertRemoveBtnDisplayed="verify if remove button in re-upload popup page is displayed";
+	public static final String isReUploadCertNameDisplayed="verify if uploaded certificate name in re-upload popup page is displayed";
+	public static final String isReUploadPopUpPageSubmitButtonDisabled="verify if submit button before upload is disabled";
+	public static final String isFtmChipDetailsContextUploadDateTimeUpdated="verify if new time of upload is updated";
+	public static final String isFtmListSortedInDescendingOrder="verify if Ftm list sorted in decending order based on model";
+	public static final String isFtmListSortedInAscendingOrder="verify if Ftm list sorted in ascending order based on model";
+
 	public static final String APPID = "appId";
 	public static final String PASSWORD = "password";
 	public static final String USER_NAME = "userName";
@@ -959,6 +987,4 @@ public class GlobalConstants {
 	public static final String DEACTIVATE_OIDCPOLICY2 = "deactivateoidcpolicy";	
 	public static final String DEACTIVATE_APIKEY = "deactivateapikey";
 	public static final String ACTIVATE_ADMINAPIKEY = "activateadminapikey";
-	
-	
 }

@@ -137,6 +137,9 @@ public class DashboardPage extends BasePage {
 	
 	@FindBy(xpath = "//button[contains(@class, 'bg-blue-50') and contains(@class, 'cursor-pointer')]")
 	private WebElement notificationIcon;
+	
+	@FindBy(id = "welcome_msg")
+	private WebElement welcomeMsgDashboardPage;
 
 	public DashboardPage(WebDriver driver) {
 		super(driver);
@@ -394,5 +397,9 @@ public class DashboardPage extends BasePage {
 	public NotificationPage clickOnNotificationIcon() {
 		clickOnElement(notificationIcon);	
 		return new NotificationPage(driver);
+	}
+	
+	public boolean isDashboardPageDisplayed() {
+		return isElementDisplayed(welcomeMsgDashboardPage);
 	}
 }
