@@ -142,6 +142,48 @@ public class ListOfDevicesPage extends BasePage {
 	@FindBy(xpath = "//button[text()='32']")
 	private WebElement recordCount32;
 
+	@FindBy(id = "deviceId_asc_icon")
+	private WebElement deviceIdAscIcon;
+
+	@FindBy(id = "deviceId_desc_icon")
+	private WebElement deviceIdDescIcon;
+
+	@FindBy(id = "deviceTypeCode_asc_icon")
+	private WebElement deviceTypeCodeAscIcon;
+
+	@FindBy(id = "deviceTypeCode_desc_icon")
+	private WebElement deviceTypeCodeDescIcon;
+
+	@FindBy(id = "deviceSubTypeCode_asc_icon")
+	private WebElement deviceSubTypeCodeAscIcon;
+
+	@FindBy(id = "deviceSubTypeCode_desc_icon")
+	private WebElement deviceSubTypeCodeDescIcon;
+
+	@FindBy(id = "make_asc_icon")
+	private WebElement makeAscIcon;
+
+	@FindBy(id = "make_desc_icon")
+	private WebElement makeDescIcon;
+
+	@FindBy(id = "model_asc_icon")
+	private WebElement modelAscIcon;
+
+	@FindBy(id = "model_desc_icon")
+	private WebElement modelDescIcon;
+
+	@FindBy(id = "createdDateTime_asc_icon")
+	private WebElement createdDateTimeAscIcon;
+
+	@FindBy(id = "createdDateTime_desc_icon")
+	private WebElement createdDateTimeDescIcon;
+
+	@FindBy(id = "status_asc_icon")
+	private WebElement statusAscIcon;
+
+	@FindBy(id = "status_desc_icon")
+	private WebElement statusDescIcon;
+
 	public ListOfDevicesPage(WebDriver driver) {
 		super(driver);
 	}
@@ -161,7 +203,7 @@ public class ListOfDevicesPage extends BasePage {
 	public boolean isAddDeviceButtonEnabled() {
 		return isElementEnabled(addDeviceButton);
 	}
-	
+
 	public boolean isAddDeviceButtonDisabled() {
 		return isElementDisabled(addDeviceButton);
 	}
@@ -403,4 +445,117 @@ public class ListOfDevicesPage extends BasePage {
 	public String getBreadcrumbText() {
 		return getTextFromLocator(homeButton) + getTextFromLocator(listOfSbiButton);
 	}
+
+	public boolean isDeviceIdAscIconDisplayed() {
+		return isElementDisplayed(deviceIdAscIcon);
+	}
+
+	public boolean isDeviceIdDescIconDisplayed() {
+		return isElementDisplayed(deviceIdDescIcon);
+	}
+
+	public boolean isDeviceTypeCodeAscIconDisplayed() {
+		return isElementDisplayed(deviceTypeCodeAscIcon);
+	}
+
+	public boolean isDeviceTypeCodeDescIconDisplayed() {
+		return isElementDisplayed(deviceTypeCodeDescIcon);
+	}
+
+	public boolean isDeviceSubTypeCodeAscIconDisplayed() {
+		return isElementDisplayed(deviceSubTypeCodeAscIcon);
+	}
+
+	public boolean isDeviceSubTypeCodeDescIconDisplayed() {
+		return isElementDisplayed(deviceSubTypeCodeDescIcon);
+	}
+
+	public boolean isMakeAscIconDisplayed() {
+		return isElementDisplayed(makeAscIcon);
+	}
+
+	public boolean isMakeDescIconDisplayed() {
+		return isElementDisplayed(makeDescIcon);
+	}
+
+	public boolean isModelAscIconDisplayed() {
+		return isElementDisplayed(modelAscIcon);
+	}
+
+	public boolean isModelDescIconDisplayed() {
+		return isElementDisplayed(modelDescIcon);
+	}
+
+	public boolean isCreatedDateTimeAscIconDisplayed() {
+		return isElementDisplayed(createdDateTimeAscIcon);
+	}
+
+	public boolean isCreatedDateTimeDescIconDisplayed() {
+		return isElementDisplayed(createdDateTimeDescIcon);
+	}
+
+	public boolean isStatusAscIconDisplayed() {
+		return isElementDisplayed(statusAscIcon);
+	}
+
+	public boolean isStatusDescIconDisplayed() {
+		return isElementDisplayed(statusDescIcon);
+	}
+
+	public void clickOnDeviceIdAscIcon() {
+		clickOnElement(deviceIdAscIcon);
+	}
+
+	public void clickOnDeviceIdDescIcon() {
+		clickOnElement(deviceIdDescIcon);
+	}
+
+	public void clickOnDeviceTypeCodeAscIcon() {
+		clickOnElement(deviceTypeCodeAscIcon);
+	}
+
+	public void clickOnDeviceTypeCodeDescIcon() {
+		clickOnElement(deviceTypeCodeDescIcon);
+	}
+
+	public void clickOnDeviceSubTypeCodeAscIcon() {
+		clickOnElement(deviceSubTypeCodeAscIcon);
+	}
+
+	public void clickOnDeviceSubTypeCodeDescIcon() {
+		clickOnElement(deviceSubTypeCodeDescIcon);
+	}
+
+	public void clickOnMakeAscIcon() {
+		clickOnElement(makeAscIcon);
+	}
+
+	public void clickOnMakeDescIcon() {
+		clickOnElement(makeDescIcon);
+	}
+
+	public void clickOnModelAscIcon() {
+		clickOnElement(modelAscIcon);
+	}
+
+	public void clickOnModelDescIcon() {
+		clickOnElement(modelDescIcon);
+	}
+
+	public void clickOnCreatedDateTimeAscIcon() {
+		clickOnElement(createdDateTimeAscIcon);
+	}
+
+	public void clickOnCreatedDateTimeDescIcon() {
+		clickOnElement(createdDateTimeDescIcon);
+	}
+
+	public void clickOnStatusAscIcon() {
+		clickOnElement(statusAscIcon);
+	}
+
+	public void clickOnStatusDescIcon() {
+		clickOnElement(statusDescIcon);
+	}
+
 }

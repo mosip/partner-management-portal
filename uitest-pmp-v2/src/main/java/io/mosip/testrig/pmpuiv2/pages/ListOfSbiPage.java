@@ -82,6 +82,15 @@ public class ListOfSbiPage extends BasePage {
 	@FindBy(xpath = "//div[@id='sbi_list_deactivate' and contains(@class, 'cursor-auto')]")
 	private WebElement deactivateSbiButtonWithGreyedOut;
 
+	@FindBy(xpath = "//p[text()='Do you want to Approve or Reject the SBI?']")
+	private WebElement approveOrRejectSbiPopup;
+
+	@FindBy(xpath = "//p[text()='Automation']")
+	private WebElement approveOrRejectSbiPopupTitle;
+
+	@FindBy(xpath = "//p[text()='Please review the SBI details carefully before taking appropriate action.']")
+	private WebElement approveOrRejectSbiPopupInfo;
+
 	public ListOfSbiPage(WebDriver driver) {
 		super(driver);
 	}
@@ -207,7 +216,7 @@ public class ListOfSbiPage extends BasePage {
 				.findElement(By.xpath("//td[text()='" + sbiVersion + "']/..//div[text()='Rejected']"));
 		return isElementDisplayed(status);
 	}
-	
+
 	public String getSbiListArrowDirection() {
 		return getTextFromAttribute(listOfSbiArrowButton, GlobalConstants.CLASS);
 	}
@@ -293,6 +302,26 @@ public class ListOfSbiPage extends BasePage {
 
 	public boolean isDeactivatedSbiGreyedOut() {
 		return isElementDisplayed(deactivatedSbiGreyedOut);
+	}
+
+	public boolean isApproveRejectButtonEnabled() {
+		return isElementEnabled(approveRejectButton);
+	}
+
+	public boolean isApproveOrRejectSbiPopupDisplayed() {
+		return isElementDisplayed(approveOrRejectSbiPopup);
+	}
+
+	public boolean isApproveOrRejectSbiPopupSubtitleDisplayed() {
+		return isElementDisplayed(approveOrRejectSbiPopup);
+	}
+
+	public boolean isApproveOrRejectSbiPopupTitleDisplayed() {
+		return isElementDisplayed(approveOrRejectSbiPopupTitle);
+	}
+
+	public boolean isApproveOrRejectSbiPopupDescrDisplayed() {
+		return isElementDisplayed(approveOrRejectSbiPopupInfo);
 	}
 
 }
