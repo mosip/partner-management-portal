@@ -176,7 +176,7 @@ function NotificationPopup({ closeNotification }) {
                                                 <div className="mb-2">
                                                     <div className="flex justify-between space-x-2">
                                                         <p className={`text-sm ${isLatestNotification(notification) ? 'font-bold' : 'font-semibold'} text-gray-900 ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>{getNotificationTitle(notification, t)}</p>
-                                                        <p className={`text-xs text-gray-500 w-36 ${isLoginLanguageRTL ? 'text-left' : 'text-right'}`}>{formatDate(notification.createdDateTime, 'dateTime')}</p>
+                                                        <p className={`text-xs text-gray-500 w-48 whitespace-nowrap ${isLoginLanguageRTL ? 'text-left' : 'text-right'}`}>{formatDate(notification.createdDateTime, 'dateTime')}</p>
                                                     </div>
                                                     <div className={`text-sm  ${isLatestNotification(notification) ? 'font-semibold' : 'font-normal'} text-[#344054] mt-1 mb-2 whitespace-pre-line`}>{getNotificationPanelDescription(notification, isLoginLanguageRTL, t)}</div>
                                                     <button
