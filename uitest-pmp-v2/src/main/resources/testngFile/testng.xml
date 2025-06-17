@@ -1,0 +1,26 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="	PMP uiv2 UI TestRig">
+	
+	<test  name="PMP uiv2 UI TestRig"  preserve-order="true">
+	
+		<classes>
+			<class name="io.mosip.testrig.pmpuiv2.testcase.AuthPartnerTest" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.DeviceProviderTest" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.FTMDeviceTest" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerManagerPoliciesTest" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerPolicyLinkingTest" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.AuthenticationServices" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.CertificateTrustStoreTest" />
+		</classes>
+		
+	</test>
+		<listeners>
+
+		<listener
+			  class-name="io.mosip.testrig.pmpuiv2.utility.EmailableReport" />
+			
+	</listeners>
+
+</suite>
