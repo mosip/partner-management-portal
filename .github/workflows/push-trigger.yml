@@ -53,7 +53,7 @@ jobs:
       ORG_KEY: ${{ secrets.ORG_KEY }}
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}    
 
-    build-maven-uitest-pmp-v2:
+  build-maven-uitest-pmp-v2:
     uses: mosip/kattu/.github/workflows/maven-build.yml@master-java21
     with:
       SERVICE_LOCATION: ./uitest-pmp-v2
