@@ -1,0 +1,230 @@
+{
+	"shareableAttributes": [
+		{
+			"attributeName": "fullName",
+			"source": [
+				{
+					"attribute": "fullName"
+				}
+			],
+			"encrypted": true
+		},
+		{
+			"attributeName": "dateOfBirth",
+			"source": [
+				{
+					"attribute": "dateOfBirth"
+				}
+			],
+			"encrypted": true
+		},
+		{
+			"attributeName": "gender",
+			"source": [
+				{
+					"attribute": "gender"
+				}
+			],
+			"encrypted": true
+		},
+		{
+			"attributeName": "residenceStatus",
+			"source": [
+				{
+					"attribute": "residenceStatus"
+				}
+			],
+			"encrypted": true
+		},
+		{
+			"attributeName": "phone",
+			"source": [
+				{
+					"attribute": "phone"
+				}
+			],
+			"encrypted": true
+		},
+		{
+			"attributeName": "email",
+			"source": [
+				{
+					"attribute": "email"
+				}
+			],
+			"encrypted": true
+		},
+		{
+			"attributeName": "dualCitizenshipAvailability",
+			"source": [
+				{
+					"attribute": "dualCitizenshipAvailability"
+				}
+			],
+			"encrypted": true
+		},
+		{
+			"attributeName": "fatherName",
+			"source": [
+				{
+					"attribute": "fatherName"
+				}
+			],
+			"encrypted": true
+		},
+		{
+			"attributeName": "shortenedPrintedName",
+			"source": [
+				{
+					"attribute": "shortenedPrintedName"
+				}
+			],
+			"encrypted": true
+		},
+		{
+			"attributeName": "layName",
+			"source": [
+				{
+					"attribute": "layName"
+				}
+			],
+			"encrypted": true
+		},
+		{
+			"attributeName": "nationalIdentityNumber",
+			"source": [
+				{
+					"attribute": "nationalIdentityNumber"
+				}
+			],
+			"encrypted": true
+		},
+		{
+			"attributeName": "permanentAddress",
+			"source": [
+				{
+					"attribute": "permanentAddress"
+				}
+			],
+			"encrypted": true
+		},
+		{
+			"attributeName": "temporaryAddress",
+			"source": [
+				{
+					"attribute": "temporaryAddress"
+				}
+			],
+			"encrypted": true
+		},
+		{
+			"attributeName": "addressLine1",
+			"source": [
+				{
+					"attribute": "addressLine1"
+				}
+			],
+			"encrypted": true
+		},
+		{
+			"attributeName": "addressLine2",
+			"source": [
+				{
+					"attribute": "addressLine2"
+				}
+			],
+			"encrypted": true
+		},
+		{
+			"attributeName": "addressLine3",
+			"source": [
+				{
+					"attribute": "addressLine3"
+				}
+			],
+			"encrypted": true
+		},
+		{
+			"attributeName": "region",
+			"source": [
+				{
+					"attribute": "region"
+				}
+			],
+			"encrypted": true
+		},
+		{
+			"attributeName": "province",
+			"source": [
+				{
+					"attribute": "province"
+				}
+			],
+			"encrypted": true
+		},
+		{
+			"attributeName": "profession",
+			"source": [
+				{
+					"attribute": "profession"
+				}
+			],
+			"encrypted": true
+		},
+		{
+			"attributeName": "city",
+			"source": [
+				{
+					"attribute": "city"
+				}
+			],
+			"encrypted": true
+		},
+		{
+			"attributeName": "postalCode",
+			"source": [
+				{
+					"attribute": "postalCode"
+				}
+			],
+			"encrypted": true
+		},
+		{
+			"attributeName": "zone",
+			"source": [
+				{
+					"attribute": "zone"
+				}
+			],
+			"encrypted": true
+		},
+		{
+			"attributeName": "preferredLang",
+			"source": [
+				{
+					"attribute": "preferredLang"
+				}
+			],
+			"encrypted": false
+		},
+		{
+			"attributeName": "individualBiometrics",
+			"group": "CBEFF",
+			"source": [
+				{
+					"attribute": "individualBiometrics"
+				}
+			],
+			"encrypted": true,
+			"format": "extraction"
+		}
+	],
+	"dataSharePolicies": {
+		"typeOfShare": "Data Share",
+		"validForInMinutes": "30",
+		"transactionsAllowed": "2",
+		"encryptionType": "Partner Based",
+		"shareDomain": "datashare.datashare",
+		"source": "ID Repository"
+	}
+}
