@@ -935,11 +935,11 @@ export const getWeeklySummaryDescription = (notification, isLoginLanguageRTL, t)
     const apiKeyCount = apiKeyList.length;
 
     const descriptionItems = [
-        t('notificationPopup.partnerCertificates', { partnerCertCount }),
-        t('notificationPopup.ftmCertificates', { ftmCertCount }),
-        t('notificationPopup.apiKeys', { apiKeyCount }),
-        t('notificationPopup.sbiDevices', { sbiCount }),
-    ];
+        partnerCertCount > 0 && t('notificationPopup.partnerCertificates', { partnerCertCount }),
+        ftmCertCount > 0 && t('notificationPopup.ftmCertificates', { ftmCertCount }),
+        apiKeyCount > 0 && t('notificationPopup.apiKeys', { apiKeyCount }),
+        sbiCount > 0 && t('notificationPopup.sbiDevices', { sbiCount }),
+    ].filter(Boolean);
 
     return descriptionItems.length ? (
         <ul className={`list-disc ${isLoginLanguageRTL ? 'mr-6' : 'ml-6'}`}>

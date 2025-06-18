@@ -1059,10 +1059,6 @@
         "weeklyFtmCertExpiryDescription": "شهادة شريحة FTM لـ <span>{{make}}</span> - <span>{{model}}</span> (FTM ID: <span>{{ftmId}}</span>) تم الرفع بواسطة <span>{{partnerId}}</span> من المقرر أن تنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. قم بتجديده الآن لتجنب أي انقطاع.",
         "weeklyApiKeyExpiryTitle": "مفتاح API على وشك الانتهاء لمعرف الشريك: {{partnerId}}",
         "weeklyApiKeyExpiryDescription": "مفتاح API المسمى <span>{{apiKeyName}}</span> تم إنشاؤه بواسطة <span>{{partnerId}}</span> من المقرر أن تنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. قم بتجديده الآن لتجنب أي انقطاع.",
-        "noPartnerCertExpiry": "لا توجد شهادات شركاء تنتهي صلاحيتها هذا الأسبوع.",
-        "noFtmChipCertExpiry": "لا توجد شهادات شريحة FTM تنتهي صلاحيتها هذا الأسبوع.",
-        "noApiKeyExpiry": "لا توجد مفاتيح API تنتهي صلاحيتها هذا الأسبوع.",
-        "noSbiExpiry": "لا توجد سندات SBI تنتهي صلاحيتها هذا الأسبوع.",
         "sbiExpiryDescription": "بطاقة SBI ذات المعرف: <span>{{sbiId}}</span> والإصدار: <span>{{sbiVersion}}</span> مُعدّة للانتهاء في <span>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاع.",
         "weeklySbiExpiryTitle": "تنتهي صلاحية SBI لمعرف الشريك: {{partnerId}}",
         "weeklySbiExpiryDescription": "بطاقة SBI ذات مُعرِّف SBI: <span>{{sbiId}}</span> وإصدار SBI: <span>{{sbiVersion}}</span>، المُولَّدة بواسطة <span>{{partnerId}}</span>، مُعَدَّة لتنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. جَدِّدها الآن لتجنب أي انقطاع."
