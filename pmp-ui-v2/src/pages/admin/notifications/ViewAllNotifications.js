@@ -207,8 +207,19 @@ function ViewAllNotifications({ notificationType }) {
         const sbiExpiryList = Array.isArray(notification.notificationDetails.sbiDetails) ? notification.notificationDetails.sbiDetails : [];
         setSbiList(sbiExpiryList);
 
-        setActiveTab('partner');
-        setWeeklyNotificationList(certificateList);
+        if (certificateList.length > 0) {
+            setActiveTab('partner');
+            setWeeklyNotificationList(certificateList);
+        } else if (ftmList.length > 0) {
+            setActiveTab('ftm');
+            setWeeklyNotificationList(ftmList);
+        } else if (apiKeyExpiryList.length > 0) {
+            setActiveTab('apikey');
+            setWeeklyNotificationList(apiKeyExpiryList);
+        } else if (sbiExpiryList.length > 0) {
+            setActiveTab('sbi');
+            setWeeklyNotificationList(sbiExpiryList);
+        }
     };
 
     const backToWeeklySummary = () => {
@@ -423,68 +434,57 @@ function ViewAllNotifications({ notificationType }) {
                                                 ) : (
                                                     <div>
                                                         <div className={`flex text-xs bg-[#FCFCFC] font-bold ${isLoginLanguageRTL && 'space-x-reverse'} space-x-16 items-start px-8 border-b-2`}>
-                                                            <div id='partner_cert_tab' className={`flex-col justify-center text-center`}>
-                                                                <button onClick={changeToPartnerCert} className={`${activeTab === "partner" ? "text-[#1447b2]" : "text-[#031640]"} py-3 cursor-pointer text-base`}>
-                                                                    <h6> {t('partnerNotificationsTab.partnerCertificate')} ({partnerCertList.length}) </h6>
-                                                                </button>
+                                                            {partnerCertList.length > 0 && (
+                                                                <div id='partner_cert_tab' className={`flex-col justify-center text-center`}>
+                                                                    <button onClick={changeToPartnerCert} className={`${activeTab === "partner" ? "text-[#1447b2]" : "text-[#031640]"} py-3 cursor-pointer text-base`}>
+                                                                        <h6> {t('partnerNotificationsTab.partnerCertificate')} ({partnerCertList.length}) </h6>
+                                                                    </button>
 
-                                                                <div className={`h-1 w-full ${activeTab === "partner" ? "bg-tory-blue" : "bg-transparent"}  rounded-t-md`}></div>
-                                                            </div>
-                                                            <div id='ftm_cert_tab' className={`flex-col justify-center text-center`}>
-                                                                <button onClick={changeToFTMCert} className={`${activeTab === "ftm" ? "text-[#1447b2]" : "text-[#031640]"} py-3 cursor-pointer text-base`}>
-                                                                    <h6> {t('partnerNotificationsTab.ftmCertificate')} ({ftmCertList.length}) </h6>
-                                                                </button>
+                                                                    <div className={`h-1 w-full ${activeTab === "partner" ? "bg-tory-blue" : "bg-transparent"}  rounded-t-md`}></div>
+                                                                </div>
+                                                            )}
+                                                            {ftmCertList.length > 0 && (
+                                                                <div id='ftm_cert_tab' className={`flex-col justify-center text-center`}>
+                                                                    <button onClick={changeToFTMCert} className={`${activeTab === "ftm" ? "text-[#1447b2]" : "text-[#031640]"} py-3 cursor-pointer text-base`}>
+                                                                        <h6> {t('partnerNotificationsTab.ftmCertificate')} ({ftmCertList.length}) </h6>
+                                                                    </button>
 
-                                                                <div className={`h-1 w-full ${activeTab === "ftm" ? "bg-tory-blue" : "bg-transparent"}  rounded-t-md`}></div>
-                                                            </div>
-                                                            <div id='api_key_tab' className={`flex-col justify-center text-center`}>
-                                                                <button onClick={changeToApiKey} className={`${activeTab === "apikey" ? "text-[#1447b2]" : "text-[#031640]"} py-3 cursor-pointer text-base`}>
-                                                                    <h6> {t('partnerNotificationsTab.apikey')} ({apiKeyList.length}) </h6>
-                                                                </button>
+                                                                    <div className={`h-1 w-full ${activeTab === "ftm" ? "bg-tory-blue" : "bg-transparent"}  rounded-t-md`}></div>
+                                                                </div>
+                                                            )}
+                                                            {apiKeyList.length > 0 && (
+                                                                <div id='api_key_tab' className={`flex-col justify-center text-center`}>
+                                                                    <button onClick={changeToApiKey} className={`${activeTab === "apikey" ? "text-[#1447b2]" : "text-[#031640]"} py-3 cursor-pointer text-base`}>
+                                                                        <h6> {t('partnerNotificationsTab.apikey')} ({apiKeyList.length}) </h6>
+                                                                    </button>
 
-                                                                <div className={`h-1 w-full ${activeTab === "apikey" ? "bg-tory-blue" : "bg-transparent"}  rounded-t-md`}></div>
-                                                            </div>
-                                                            <div id='sbi_tab' className={`flex-col justify-center text-center`}>
-                                                                <button onClick={changeToSbi} className={`${activeTab === "sbi" ? "text-[#1447b2]" : "text-[#031640]"} py-3 cursor-pointer text-base`}>
-                                                                    <h6> {t('partnerNotificationsTab.sbi')} ({sbiList.length}) </h6>
-                                                                </button>
+                                                                    <div className={`h-1 w-full ${activeTab === "apikey" ? "bg-tory-blue" : "bg-transparent"}  rounded-t-md`}></div>
+                                                                </div>
+                                                            )}
+                                                            {sbiList.length > 0 && (
+                                                                <div id='sbi_tab' className={`flex-col justify-center text-center`}>
+                                                                    <button onClick={changeToSbi} className={`${activeTab === "sbi" ? "text-[#1447b2]" : "text-[#031640]"} py-3 cursor-pointer text-base`}>
+                                                                        <h6> {t('partnerNotificationsTab.sbi')} ({sbiList.length}) </h6>
+                                                                    </button>
 
-                                                                <div className={`h-1 w-full ${activeTab === "sbi" ? "bg-tory-blue" : "bg-transparent"}  rounded-t-md`}></div>
-                                                            </div>
+                                                                    <div className={`h-1 w-full ${activeTab === "sbi" ? "bg-tory-blue" : "bg-transparent"}  rounded-t-md`}></div>
+                                                                </div>
+                                                            )}
                                                         </div>
                                                         {/* <hr className="h-0.5 bg-gray-200 border-0" /> */}
                                                         <div className="p-4">
-                                                            {weeklyNotificationList.length !== 0 ? 
-                                                            <>
-                                                                {weeklyNotificationList.map((notification, index) => (
-                                                                    <div key={index} className="flex items-start w-full bg-white p-4 rounded-lg shadow mb-3 border-b border-[#D0D5DD]">
-                                                                        <img src={featuredIcon} alt='' id='featuredIcon' className={`${isLoginLanguageRTL ? 'ml-3' : 'mr-3'} mt-2`} />
-                                                                        <div className="mt-0.5 w-full">
-                                                                            <div className="flex justify-between flex-wrap">
-                                                                                <p className="font-semibold text-base text-[#101828]">{getWeeklyNotificationTitle(notification, activeTab)}</p>
-                                                                                <p className={`text-xs text-gray-500 ${isLoginLanguageRTL ? 'text-left' : 'text-right'}`}>{formatDate(notificationCreatedDateTime, 'dateTime')}</p>
-                                                                            </div>
-                                                                            <div className="text-[#475467] text-sm md:break-normal break-all">{getWeeklyNotificationDescription(notification, activeTab)}</div>
+                                                            {weeklyNotificationList.map((notification, index) => (
+                                                                <div key={index} className="flex items-start w-full bg-white p-4 rounded-lg shadow mb-3 border-b border-[#D0D5DD]">
+                                                                    <img src={featuredIcon} alt='' id='featuredIcon' className={`${isLoginLanguageRTL ? 'ml-3' : 'mr-3'} mt-2`} />
+                                                                    <div className="mt-0.5 w-full">
+                                                                        <div className="flex justify-between flex-wrap">
+                                                                            <p className="font-semibold text-base text-[#101828]">{getWeeklyNotificationTitle(notification, activeTab)}</p>
+                                                                            <p className={`text-xs text-gray-500 ${isLoginLanguageRTL ? 'text-left' : 'text-right'}`}>{formatDate(notificationCreatedDateTime, 'dateTime')}</p>
                                                                         </div>
+                                                                        <div className="text-[#475467] text-sm md:break-normal break-all">{getWeeklyNotificationDescription(notification, activeTab)}</div>
                                                                     </div>
-                                                                ))}
-                                                            </> : 
-                                                                <div className="flex flex-col items-center py-12 px-2 border-gray-200">
-                                                                    <img src={noNotificationIcon} alt='' id='noNotificationIcon' />
-                                                                    { activeTab === "partner" && (
-                                                                        <p className="text-sm text-gray-500">{t('viewAllNotifications.noPartnerCertExpiry')}</p>
-                                                                    )}
-                                                                    { activeTab === "ftm" && (
-                                                                        <p className="text-sm text-gray-500">{t('viewAllNotifications.noFtmChipCertExpiry')}</p>
-                                                                    )}
-                                                                    { activeTab === "apikey" && (
-                                                                        <p className="text-sm text-gray-500">{t('viewAllNotifications.noApiKeyExpiry')}</p>
-                                                                    )}
-                                                                    { activeTab === "sbi" && (
-                                                                        <p className="text-sm text-gray-500">{t('viewAllNotifications.noSbiExpiry')}</p>
-                                                                    )}
                                                                 </div>
-                                                            }
+                                                            ))}
                                                         </div>
                                                     </div>
                                                 )}
