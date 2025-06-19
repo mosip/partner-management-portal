@@ -965,7 +965,9 @@
     },
     "deviceApproveRejectPopup": {
         "header": "Voulez-vous approuver ou rejeter l'appareil ?",
-        "description": "Veuillez examiner attentivement les détails de l'appareil avant de prendre une décision appropriée."
+        "description": "Veuillez examiner attentivement les détails de l'appareil avant de prendre une décision appropriée.",
+        "rejectHeader": "Confirmer le rejet de l'appareil",
+        "rejectDescription":"Cet appareil n'est associé à aucun SBI, il doit donc être rejeté."
     },
     "consentPopup": {
         "title": "Termes et conditions",

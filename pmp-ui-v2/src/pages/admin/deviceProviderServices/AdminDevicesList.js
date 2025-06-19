@@ -21,6 +21,7 @@ import viewIcon from "../../../svg/view_icon.svg";
 import DeactivatePopup from '../../common/DeactivatePopup.js';
 import Pagination from '../../common/Pagination.js';
 import PropTypes from 'prop-types';
+import RejectPopup from '../../common/RejectPopup.js';
 
 function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
     const location = useLocation();
@@ -67,6 +68,7 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
     const [sbiId, setSbiId] = useState(null);
     const [sbiVersion, setSbiVersion] = useState(null);
     const submenuRef = useRef([]);
+    const [showRejectPopup, setShowRejectPopup] = useState(null);
 
     const tableHeaders = [
         { id: "partnerId", headerNameKey: 'sbiList.partnerId' },
@@ -167,8 +169,12 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
     const approveRejectDeviceDetails = (device, index) => {
         if (device.status === 'pending_approval') {
             setActionId(-1);
-            setShowActiveIndexDeviceDetailApproveRejectPopup(index);
             setSelectedDevice(device);
+            if(device.sbiId !== null) {
+                setShowActiveIndexDeviceDetailApproveRejectPopup(index);
+            } else {
+                setShowRejectPopup(index);
+            }
         }
     };
 
@@ -184,9 +190,26 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
         }
     };
 
+    const onClickReject = (responseData, selectedDevice) => {
+        if (responseData) {
+            setShowRejectPopup(null);
+            setSelectedDevice({});
+            setDevicesList((prevList) =>
+                prevList.map(deviceItem =>
+                    deviceItem.deviceId === selectedDevice.deviceId ? { ...deviceItem, status: "rejected", isActive: false } : deviceItem
+                )
+            );
+        }
+    };
+
     const closeApproveRejectPopup = () => {
         setSelectedDevice({});
         setShowActiveIndexDeviceDetailApproveRejectPopup(null);
+    };
+
+    const closeRejectPopup = () => {
+        setSelectedDevice({});
+        setShowRejectPopup(null);
     };
 
     const deactivateDevice = (selectedDevice, index) => {
@@ -402,6 +425,14 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
                                                                                                 <img src={device.status === 'approved' ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                             </div>
                                                                                         </div>
+                                                                                    )}
+                                                                                    {showRejectPopup === index && (
+                                                                                        <RejectPopup 
+                                                                                            popupData={selectedDevice}
+                                                                                            closePopUp={closeRejectPopup}
+                                                                                            rejectResponse={(responseData) => onClickReject(responseData, selectedDevice)}
+                                                                                            title={`${selectedDevice.make} | ${selectedDevice.model}`}
+                                                                                        />
                                                                                     )}
                                                                                     {showActiveIndexDeviceDetailApproveRejectPopup === index && (
                                                                                         <ApproveRejectPopup

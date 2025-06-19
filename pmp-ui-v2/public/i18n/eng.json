@@ -961,7 +961,9 @@
     },
     "deviceApproveRejectPopup": {
         "header": "Do you want to Approve or Reject the Device?",
-        "description": "Please review the Device details carefully before taking appropriate action."
+        "description": "Please review the Device details carefully before taking appropriate action.",
+        "rejectHeader": "Confirm Device Rejection",
+        "rejectDescription":"This device is not associated with any SBI, so it must be rejected."
     },
     "consentPopup": {
         "title": "Terms and Conditions",
