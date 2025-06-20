@@ -1347,7 +1347,7 @@
         "PMS_NOTIFICATION_ERROR_003": "User details does not exist for the user.",
         "PMS_NOTIFICATION_ERROR_004": "Error while fetching notifications seen date time.",
         "PMS_NOTIFICATION_ERROR_005": "Error while fetching notifications.",
-        "PMS_NOTIFICATION_ERROR_006": "Partner Admin will only get notifications for root/intermediate certificate expiry and the weekly summary.",
+        "PMS_NOTIFICATION_ERROR_006": "Only partner admin will get notifications for root/intermediate certificate expiry and the weekly summary.",
         "PMS_NOTIFICATION_ERROR_007": "Error parsing notification details JSON.",
         "PMS_NOTIFICATION_ERROR_008": "Notification does not exist.",
         "PMS_NOTIFICATION_ERROR_009": "Notification has already been dismissed.",
@@ -1358,6 +1358,13 @@
         "PMS_NOTIFICATION_ERROR_014": "Partner Admin will only get the count of expiring root and intermediate certificates.",
         "PMS_NOTIFICATION_ERROR_015": "Notification type must be selected for filtering",
         "PMS_NOTIFICATION_ERROR_016": "Please enter a valid date",
-        "PMS_NOTIFICATION_ERROR_017": "Filtering by createdFromDate / createdToDate is only available when 'weekly' is selected as the notificationType"
+        "PMS_NOTIFICATION_ERROR_017": "The selected notification type is invalid. Only 'weekly' type is allowed for this filter.",
+        "PMS_NOTIFICATION_ERROR_018": "Only Partner Admin can dismiss this notification",
+        "PMS_NOTIFICATION_ERROR_019": "Notification status is required in the request",
+        "PMS_NOTIFICATION_ERROR_020": "The selected notification type is invalid. Only 'apikey' type is allowed for this filter.",
+        "PMS_NOTIFICATION_ERROR_021": "The selected notification type is invalid. Only 'root', 'intermediate', or 'partner' types are allowed for this filter.",
+        "PMS_NOTIFICATION_ERROR_022": "The selected notification type is invalid. Only 'ftm-chip' type is allowed for this filter.",
+        "PMS_NOTIFICATION_ERROR_023": "The selected notification type is invalid. Only 'sbi' type is allowed for this filter.",
+        "PMS_NOTIFICATION_ERROR_024": "The selected notification type is invalid. Please select a type other than 'weekly'."
     }
 }
