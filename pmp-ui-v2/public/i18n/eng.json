@@ -399,7 +399,9 @@
         "searchApiKeyName": "Search API Key Name",
         "selectApiKeyName": "Select API Key Name",
         "apiKeyIdAlertMsg": "API Key contains sensitive information. Make sure to copy the API key before closing this window because the API key will not be visible anymore once the window is closed.",
-        "errorInApiKeysList": "While fetching API Key Requests, we have encountered with an error."
+        "errorInApiKeysList": "While fetching API Key Requests, we have encountered with an error.",
+        "expirationDate": "Expiration Date",
+        "noExpiry": "No Expiry"
     },
     "generateApiKey": {
         "generateApiKey": "Generate API Key",

@@ -399,7 +399,9 @@
         "searchApiKeyName": "Rechercher le nom de la clé API",
         "selectApiKeyName": "Sélectionner le nom de la clé API",
         "apiKeyIdAlertMsg": "La clé API contient des informations sensibles. Assurez-vous de copier la clé API avant de fermer cette fenêtre car la clé API ne sera plus visible une fois la fenêtre fermée.",
-        "errorInApiKeysList": "Lors de la récupération des demandes de clé API, nous avons rencontré une erreur."
+        "errorInApiKeysList": "Lors de la récupération des demandes de clé API, nous avons rencontré une erreur.",
+        "expirationDate": "Date d'expiration",
+        "noExpiry": "Aucune expiration"
     },
     "generateApiKey": {
         "generateApiKey": "Générer une clé API",
