@@ -57,7 +57,7 @@ function ApiKeysList() {
         const fetchData = async () => {
             try {
                 setDataLoaded(false);
-                const response = await HttpService.get(getPartnerManagerUrl('/partner-api-keys', process.env.NODE_ENV));
+                const response = await HttpService.get(getPartnerManagerUrl('/v2/partner-api-keys', process.env.NODE_ENV));
                 if (response) {
                     const responseData = response.data;
                     if (responseData && responseData.response) {
@@ -88,6 +88,7 @@ function ApiKeysList() {
         { id: "policyName", headerNameKey: "oidcClientsList.policyName" },
         { id: "apiKeyLabel", headerNameKey: "apiKeysList.apiKeyName" },
         { id: "createdDateTime", headerNameKey: "oidcClientsList.creationDate" },
+        { id: "apiKeyExpiryDateTime", headerNameKey: "apiKeysList.expirationDate" },
         { id: "status", headerNameKey: "oidcClientsList.status" },
         { id: "action", headerNameKey: 'oidcClientsList.action' }
     ];
@@ -154,12 +155,12 @@ function ApiKeysList() {
     }
 
     const sortAscOrder = (header) => {
-        const isDateCol = (header === "createdDateTime") ? true : false;
+        const isDateCol = (header === "createdDateTime" || header === "apiKeyExpiryDateTime") ? true : false;
         toggleSortAscOrder(header, isDateCol, filteredApiKeysList, setFilteredApiKeysList, order, setOrder, isDescending, setIsDescending, activeSortAsc, setActiveSortAsc, activeSortDesc, setActiveSortDesc);
     }
 
     const sortDescOrder = (header) => {
-        const isDateCol = (header === "createdDateTime") ? true : false;
+        const isDateCol = (header === "createdDateTime" || header === "apiKeyExpiryDateTime") ? true : false;
         toggleSortDescOrder(header, isDateCol, filteredApiKeysList, setFilteredApiKeysList, order, setOrder, isDescending, setIsDescending, activeSortAsc, setActiveSortAsc, activeSortDesc, setActiveSortDesc);
     }
 
@@ -242,7 +243,7 @@ function ApiKeysList() {
                                                 <tr>
                                                     {tableHeaders.map((header, index) => {
                                                         return (
-                                                            <th key={index} className={`py-4 px-2 text-sm font-semibold text-[#6F6E6E] w-[17%] whitespace-nowrap`}>
+                                                            <th key={index} className={`py-4 px-2 text-sm font-semibold text-[#6F6E6E] w-[15%] whitespace-nowrap`}>
                                                                 <div id={`${header.headerNameKey}_header`} className={`flex gap-x-1 items-center font-semibold ${header.id === "action" && 'justify-center'}`}>
                                                                     {t(header.headerNameKey)}
                                                                     {(header.id !== "action") && (header.id !== "apiKeyReqID") && (
@@ -272,6 +273,7 @@ function ApiKeysList() {
                                                                 <td onClick={() => showViewApiKeyDetails(apiKey)} className="px-2 mx-2">{apiKey.policyName}</td>
                                                                 <td onClick={() => showViewApiKeyDetails(apiKey)} className="px-2 mx-2">{apiKey.apiKeyLabel}</td>
                                                                 <td onClick={() => showViewApiKeyDetails(apiKey)} className="px-2 mx-2">{formatDate(apiKey.createdDateTime, 'date')}</td>
+                                                                <td onClick={() => showViewApiKeyDetails(apiKey)} className="px-2 mx-2">{apiKey.apiKeyExpiryDateTime ? formatDate(apiKey.apiKeyExpiryDateTime, 'date') : t('apiKeysList.noExpiry')}</td>
                                                                 <td onClick={() => showViewApiKeyDetails(apiKey)} className="px-2 mx-2">
                                                                     <div className={`${bgOfStatus(apiKey.status)} flex w-fit py-1.5 px-2 my-3 text-xs font-semibold rounded-md`}>
                                                                         {getStatusCode(apiKey.status, t)}
