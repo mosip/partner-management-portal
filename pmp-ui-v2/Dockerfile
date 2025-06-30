@@ -17,7 +17,7 @@ RUN npm install
 COPY . ./
 RUN npm run build
 
-FROM nginx
+FROM nginx:1.28
 
 ARG SOURCE
 ARG COMMIT_HASH
