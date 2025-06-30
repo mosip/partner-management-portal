@@ -414,7 +414,7 @@ function Dashboard() {
       queryParams.append('pageSize', '1');
       queryParams.append('pageNo', '0');
 
-      const url = `${getPartnerManagerUrl('/v2/partner-api-keys', process.env.NODE_ENV)}?${queryParams.toString()}`;
+      const url = `${getPartnerManagerUrl('/partner-api-keys/v2', process.env.NODE_ENV)}?${queryParams.toString()}`;
       try {
         const response = await HttpService.get(url);
         if (response) {

@@ -57,7 +57,7 @@ function ApiKeysList() {
         const fetchData = async () => {
             try {
                 setDataLoaded(false);
-                const response = await HttpService.get(getPartnerManagerUrl('/v2/partner-api-keys', process.env.NODE_ENV));
+                const response = await HttpService.get(getPartnerManagerUrl('/partner-api-keys/v2', process.env.NODE_ENV));
                 if (response) {
                     const responseData = response.data;
                     if (responseData && responseData.response) {
