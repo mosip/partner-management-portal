@@ -111,6 +111,14 @@ function ViewApiKeyDetails() {
                                     {apiKeyDetails.policyDescription}
                                 </p>
                             </div>
+                            <div className={`w-[49%] max-[600px]:w-[100%] my-3 ${isLoginLanguageRTL ? "ml[1%]" : "mr-[1%]"}`}>
+                                <p id='api_key_details_expiration_date_label' className="font-[600] text-suva-gray text-sm">
+                                    {t("apiKeysList.expirationDate")}
+                                </p>
+                                <p id='api_key_details_expiration_date_context' className="font-[600] text-vulcan text-base">
+                                    {apiKeyDetails.apiKeyExpiryDateTime ? formatDate(apiKeyDetails.apiKeyExpiryDateTime, 'date') : t('apiKeysList.noExpiry')}
+                                </p>
+                            </div>
                         </div>
                     </div>
                     <hr className="h-px w-full bg-gray-200 border-0" />
