@@ -150,6 +150,14 @@ function ViewAdminApiKeyDetails() {
                                                 {apiKeyDetails.policyDescription}
                                             </p>
                                         </div>
+                                        <div className={`w-[49%] max-[600px]:w-[100%] my-4 ${isLoginLanguageRTL ? "ml-[1%]" : "mr-[1%]"}`}>
+                                            <p id='api_key_details_policy_name_description_label' className="font-[600] text-suva-gray text-sm">
+                                                {t("apiKeysList.expirationDate")}
+                                            </p>
+                                            <p id='api_key_details_policy_description_context' className="font-[600] text-vulcan text-base">
+                                                {apiKeyDetails.apiKeyExpiryDateTime ? formatDate(apiKeyDetails.apiKeyExpiryDateTime, 'date') : t('apiKeysList.noExpiry')}
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
                                 <hr className="h-px w-full bg-gray-200 border-0" />
