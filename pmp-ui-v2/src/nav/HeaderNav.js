@@ -214,7 +214,7 @@ function HeaderNav({ open, setOpen }) {
                 </div>
             </div>
             <div className={`flex items-center relative justify-between gap-x-4 ${isLoginLanguageRTL ? "left-3" : "right-3"}`}>
-                <div className="flex items-center" ref={notificationRef}>
+                <div className="flex items-center relative" ref={notificationRef}>
                     {!showLatestNotificationIcon ? (
                         <button className='p-1.5 bg-blue-50 cursor-pointer' onClick={openNotificationPopup}>
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

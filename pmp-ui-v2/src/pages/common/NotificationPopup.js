@@ -149,7 +149,7 @@ function NotificationPopup({ closeNotification }) {
     };
 
     return (
-        <div className={`absolute top-[3.75rem] ${isLoginLanguageRTL ? 'max-850:left-4 left-[15rem]' : 'max-850:right-4 right-[15rem]'} bg-white w-[28rem] max-520:w-[286px] rounded-lg shadow-lg border border-gray-200 z-50`}>
+        <div className={`absolute top-[3.75rem] ${isLoginLanguageRTL ? 'left-0' : 'right-0'} bg-white w-[28rem] max-520:w-72 rounded-lg shadow-lg border border-gray-200 z-50`}>
             <FocusTrap focusTrapOptions={{ initialFocus: false, allowOutsideClick: true }}>
                 <div>
                     {!dataLoaded && (
