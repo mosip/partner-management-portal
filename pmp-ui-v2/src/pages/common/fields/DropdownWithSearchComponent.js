@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { handleMouseClickForDropdown, isLangRTL } from '../../../utils/AppUtils';
@@ -18,7 +17,7 @@ function DropdownWithSearchComponent({ fieldName, dropdownDataList, onDropDownCh
     const dropdownRef = useRef(null);
 
     const containsAsterisk = fieldNameKey.includes('*');
-    fieldNameKey = containsAsterisk ? fieldNameKey.replace('*', '') : fieldNameKey;
+    fieldNameKey = containsAsterisk ? fieldNameKey.replace(/\*/g, '') : fieldNameKey;
 
     const filteredPolicyGroupList = dropdownDataList.filter(dropdownItem =>
         dropdownItem.fieldValue.toLowerCase().includes(searchItem.toLowerCase())
