@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
 <groupId>io.mosip.testrig.pmpui</groupId>
   <artifactId>uitest-pmp</artifactId>
-  <version>1.2.2.1</version>
+  <version>1.2.2.2</version>
   <name>uitest-automation</name>
   <description>Parent project of uitest-automation</description>
   <url>https://github.com/mosip/Partner-management-portal</url>
