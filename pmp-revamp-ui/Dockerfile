@@ -1,4 +1,4 @@
-FROM node:21.7.3-alpine as build_pmp_revamp_ui
+FROM node:22-alpine as build_pmp_revamp_ui
 
 ENV NODE_ENV production
 
@@ -17,7 +17,7 @@ RUN npm install
 COPY . ./
 RUN npm run build
 
-FROM nginx
+FROM nginx:stable
 
 ARG SOURCE
 ARG COMMIT_HASH
