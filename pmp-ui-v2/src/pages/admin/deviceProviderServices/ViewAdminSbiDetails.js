@@ -90,7 +90,7 @@ function ViewAdminSbiDetails() {
                                 <>
                                     <div>
                                         <button id="view_approve_reject_btn" onClick={() => setShowApproveRejectPopup(true)}
-                                            className="h-fit w-fit text-sm p-3 py-2 text-white bg-tory-blue border border-blue-800 font-semibold rounded-md text-center" onKeyDown={(e) => onPressEnterKey(e, () => setShowApproveRejectPopup(true))}>
+                                            className="h-fit w-fit text-sm p-4 py-3 text-white bg-tory-blue border border-blue-800 font-medium rounded-md text-center" onKeyDown={(e) => onPressEnterKey(e, () => setShowApproveRejectPopup(true))}>
                                             {t("approveRejectPopup.approveReject")}
                                         </button>
                                     </div>
