@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { bgOfStatus, formatDate, getStatusCode, isLangRTL, onPressEnterKey } from '../../../utils/AppUtils';
+import { bgOfStatus, formatDate, getApproveRejectStatus, getStatusCode, isLangRTL, onPressEnterKey, updateActiveState } from '../../../utils/AppUtils';
 import { getUserProfile } from '../../../services/UserProfileService';
 import { useNavigate } from 'react-router-dom';
 import Title from '../../common/Title';
 import somethingWentWrongIcon from '../../../svg/something_went_wrong_icon.svg';
+import ApproveRejectPopup from '../../common/ApproveRejectPopup';
+import RejectPopup from '../../common/RejectPopup';
 
 function ViewAdminDeviceDetails() {
     const { t } = useTranslation();
@@ -12,6 +14,8 @@ function ViewAdminDeviceDetails() {
     const navigate = useNavigate();
     const [unexpectedError, setUnexpectedError] = useState(false);
     const [deviceDetails, setDeviceDetails] = useState({});
+    const [showApproveRejectPopup, setShowApproveRejectPopup] = useState(false);
+    const [showRejectPopup, setShowRejectPopup] = useState(false);
 
     useEffect(() => {
         const selectedDeviceAttributes = localStorage.getItem('selectedDeviceAttributes');
@@ -33,6 +37,32 @@ function ViewAdminDeviceDetails() {
 
     const moveToDevicesList = () => {
         navigate(backToDevicesList());
+    };
+
+    const approveRejectDeviceDetails = () => {
+        if(deviceDetails.sbiId !== null) {
+            setShowApproveRejectPopup(true);
+        } else {
+            setShowRejectPopup(true);
+        }
+    };
+
+    const onClickApproveReject = (responseData, status) => {
+        if (responseData) {
+            setShowApproveRejectPopup(false);
+            const updatedDeviceDetails = {...deviceDetails, status: getApproveRejectStatus(status), isActive: updateActiveState(status)};
+            setDeviceDetails(updatedDeviceDetails);
+            localStorage.setItem('selectedDeviceAttributes', JSON.stringify(updatedDeviceDetails));
+        }
+    };
+
+    const onClickReject = (responseData) => {
+        if (responseData) {
+            setShowRejectPopup(false);
+            const updatedDeviceDetails = {...deviceDetails, status: 'rejected', isActive: false};
+            setDeviceDetails(updatedDeviceDetails);
+            localStorage.setItem('selectedDeviceAttributes', JSON.stringify(updatedDeviceDetails));
+        }
     };
 
     return (
@@ -58,7 +88,7 @@ function ViewAdminDeviceDetails() {
                 )}
                 {!unexpectedError && (
                     <div className="bg-snow-white h-fit mt-1 rounded-md shadow-lg font-inter">
-                        <div className="flex justify-between px-7 pt-3 border-b max-[450px]:flex-col">
+                        <div className="flex justify-between items-center px-7 pt-3 border-b max-[450px]:flex-col">
                             <div className="flex-col">
                                 <p className="text-lg text-dark-blue mb-2">
                                     {t('devicesList.deviceId')}: <span className="font-semibold">{deviceDetails.deviceId}</span>
@@ -77,6 +107,34 @@ function ViewAdminDeviceDetails() {
                                     </div>
                                 </div>
                             </div>
+                            {deviceDetails.status === 'pending_approval' && (
+                                <>
+                                    <div>
+                                        <button id="view_approve_reject_btn" onClick={() => approveRejectDeviceDetails()}
+                                            className="h-fit w-fit text-sm p-3 py-2 text-white bg-tory-blue border border-blue-800 font-semibold rounded-md text-center" onKeyDown={(e) => onPressEnterKey(e, () => setShowApproveRejectPopup(true))}>
+                                            {t("approveRejectPopup.approveReject")}
+                                        </button>
+                                    </div>
+                                    {showRejectPopup && (
+                                        <RejectPopup 
+                                            popupData={deviceDetails}
+                                            closePopUp={() => setShowRejectPopup(false)}
+                                            rejectResponse={(responseData) => onClickReject(responseData)}
+                                            title={`${deviceDetails.make} | ${deviceDetails.model}`}
+                                        />
+                                    )}
+                                    {showApproveRejectPopup && (
+                                        <ApproveRejectPopup
+                                            popupData={{ ...deviceDetails, isDeviceRequest: true }}
+                                            closePopUp={() => setShowApproveRejectPopup(false)}
+                                            approveRejectResponse={(responseData, status) => onClickApproveReject(responseData, status)}
+                                            title={`${deviceDetails.make} | ${deviceDetails.model}`}
+                                            header={t('deviceApproveRejectPopup.header')}
+                                            description={t('deviceApproveRejectPopup.description')}
+                                        />
+                                    )}
+                                </>
+                            )}
                         </div>
                         <div className={`${isLoginLanguageRTL ? "pr-8 ml-8" : "pl-8 mr-8"} pt-3 mb-2`}>
                             <div className="flex flex-wrap py-1 max-[450px]:flex-col">

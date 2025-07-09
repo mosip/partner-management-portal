@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next';
-import { bgOfStatus, formatDate, getStatusCode, isLangRTL, onPressEnterKey } from '../../../utils/AppUtils';
+import { bgOfStatus, formatDate, getApproveRejectStatus, getStatusCode, isLangRTL, onPressEnterKey, updateActiveState } from '../../../utils/AppUtils';
 import { getUserProfile } from '../../../services/UserProfileService';
 import { useNavigate } from 'react-router-dom';
 import somethingWentWrongIcon from '../../../svg/something_went_wrong_icon.svg';
 import Title from '../../common/Title';
+import ApproveRejectPopup from '../../common/ApproveRejectPopup';
 
 function ViewAdminSbiDetails() {
     const { t } = useTranslation();
@@ -12,6 +13,7 @@ function ViewAdminSbiDetails() {
     const navigate = useNavigate();
     const [unexpectedError, setUnexpectedError] = useState(false);
     const [sbiDetails, setSbiDetails] = useState({});
+    const [showApproveRejectPopup, setShowApproveRejectPopup] = useState(false);
 
     useEffect(() => {
         const selectedSbiAttributes = localStorage.getItem('selectedSbiAttributes');
@@ -32,6 +34,15 @@ function ViewAdminSbiDetails() {
             navigate(`/partnermanagement/admin/device-provider-services/linked-devices-list?sbiId=${sbiDetails.sbiId}&sbiVersion=${sbiDetails.sbiVersion}`);
         }
     };
+
+    const onClickApproveReject = (responseData, status) => {
+        if (responseData !== "") {
+            setShowApproveRejectPopup(false);
+            const updatedSbiDetails = {...sbiDetails, status: getApproveRejectStatus(status), isActive: updateActiveState(status)};
+            setSbiDetails(updatedSbiDetails);
+            localStorage.setItem('selectedSbiAttributes', JSON.stringify(updatedSbiDetails));
+        }
+    }
 
     return (
         <div className={`w-full p-4 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm mb-[2%] ${isLoginLanguageRTL ? "mr-24 ml-1" : "ml-24 mr-1"} overflow-x-scroll`}>
@@ -56,7 +67,7 @@ function ViewAdminSbiDetails() {
                 )}
                 {!unexpectedError && (
                     <div className="bg-snow-white h-fit mt-1 rounded-md shadow-lg font-inter">
-                        <div className="flex justify-between px-7 pt-3 border-b max-[450px]:flex-col">
+                        <div className="flex justify-between items-center px-7 pt-3 border-b max-[450px]:flex-col">
                             <div className="flex-col">
                                 <p className="text-lg text-dark-blue mb-2">
                                     {t('sbiList.sbiId')}: <span className="font-semibold">{sbiDetails.sbiId}</span>
@@ -75,6 +86,26 @@ function ViewAdminSbiDetails() {
                                     </div>
                                 </div>
                             </div>
+                            {sbiDetails.status === 'pending_approval' && (
+                                <>
+                                    <div>
+                                        <button id="view_approve_reject_btn" onClick={() => setShowApproveRejectPopup(true)}
+                                            className="h-fit w-fit text-sm p-3 py-2 text-white bg-tory-blue border border-blue-800 font-semibold rounded-md text-center" onKeyDown={(e) => onPressEnterKey(e, () => setShowApproveRejectPopup(true))}>
+                                            {t("approveRejectPopup.approveReject")}
+                                        </button>
+                                    </div>
+                                    {showApproveRejectPopup &&
+                                        <ApproveRejectPopup
+                                            popupData={{ ...sbiDetails, isSbiRequest: true }}
+                                            closePopUp={() => setShowApproveRejectPopup(false)}
+                                            approveRejectResponse={(responseData, status) => onClickApproveReject(responseData, status)}
+                                            title={sbiDetails.sbiVersion}
+                                            header={t('sbiApproveRejectPopup.header')}
+                                            description={t('sbiApproveRejectPopup.description')}
+                                        />
+                                    }
+                                </>
+                            )}
                         </div>
                         <div className={`${isLoginLanguageRTL ? "pr-8 ml-8" : "pl-8 mr-8"} pt-3 mb-2`}>
                             <div className="flex flex-wrap py-1 max-[450px]:flex-col">
