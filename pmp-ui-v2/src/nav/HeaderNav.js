@@ -175,9 +175,6 @@ function HeaderNav({ open, setOpen }) {
         if (notificationSeenDtimes !== null) {
             dispatch(updateLastSeenDtimes(notificationSeenDtimes));
         }
-        if(dismissClicked) {
-            dispatch(updateDismissClicked(false));
-        }
     }
 
     return (
