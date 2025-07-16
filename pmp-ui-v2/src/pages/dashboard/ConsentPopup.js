@@ -77,11 +77,11 @@ function ConsentPopup() {
                                 <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customStyle={customStyle} />
                             )}
                             <div className="p-4">
-                                <h3 className="text-base font-bold text-[#333333]">{t('consentPopup.title')}</h3>
+                                <h3 id='consent_popup_title' className="text-base font-bold text-[#333333]">{t('consentPopup.title')}</h3>
                             </div>
                             <div className="border-gray-200 border-opacity-75 border-t"></div>
                             <div className="text-sm text-[#414141] w-full">
-                                <div className="p-4"> <p>{consentText}</p></div>
+                                <div id='consent_popup_description' className="p-4"> <p>{consentText}</p></div>
                                 <div className="flex items-start mt-3 bg-alice-green w-full px-4 py-3">
                                     <input id="default-checkbox" checked={isChecked} onChange={handleCheckboxChange} type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded mt-[3px]" tabIndex="0"
                                         onKeyDown={(e) => onPressEnterKey(e, handleCheckboxChange)} />

@@ -47,7 +47,7 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
     return (
         <div key={fieldName} className={`ml-4 mb-2 ${(styleSet && styleSet.outerDiv) ? styleSet.outerDiv : ''}`}>
             <label className={`flex items-center text-dark-blue text-sm mb-2 ${(styleSet && styleSet.dropdownLabel) ? styleSet.dropdownLabel : ''} ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
-                <p className={`font-semibold`}>{t(fieldNameKey)}{containsAsterisk && <span className={`text-crimson-red mx-1`}>*</span>}</p>
+                <p id={id + '_label'} className={`font-semibold`}>{t(fieldNameKey)}{containsAsterisk && <span className={`text-crimson-red mx-1`}>*</span>}</p>
                 {addInfoIcon && (
                     <Information infoKey={infoKey} id={id + '_info'}/>
                 )}
@@ -71,7 +71,7 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
                         <div className="absolute mt-auto z-10 border border-gray-400 scroll-auto bg-white rounded-t-[2px] shadow-lg w-full cursor-pointer">
                             {dropdownDataList.length === 0 && (
                                 <div className="min-h-3 p-4 cursor-auto">
-                                    <p className="text-base text-dark-blue font-semibold">{t('commons.emptyMsg')}</p>
+                                    <p id={id + '_no_data_available'} className="text-base text-dark-blue font-semibold">{t('commons.emptyMsg')}</p>
                                 </div>
                             )}
                             <div className="max-h-40 overflow-y-auto">

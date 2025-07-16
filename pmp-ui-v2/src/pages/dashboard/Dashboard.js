@@ -721,15 +721,15 @@ function Dashboard() {
             )}
              {isPartnerAdmin && (
               <>
-                <div role='button' onClick={rootTrustCertificateList} className="relative w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, rootTrustCertificateList)}>
+                <div role='button' id='dashboard_certificate_trust_store_card' onClick={rootTrustCertificateList} className="relative w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, rootTrustCertificateList)}>
                   <div className="flex justify-center mb-5">
                     <img id='admin_partner_certificate_list_icon' src={partnerCertificateIcon} alt="" className="w-8 h-8" />
                   </div>
                   <div>
-                    <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
+                    <h5 id='dashboard_certificate_trust_store_card_header' className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
                       {t('dashboard.certificateTrustStore')}
                     </h5>
-                    <p className="mb-3 text-xs font-normal text-gray-400">
+                    <p id='dashboard_certificate_trust_store_card_description' className="mb-3 text-xs font-normal text-gray-400">
                       {t('dashboard.certificateTrustStoreDesc')}
                     </p>
                   </div>
@@ -757,15 +757,15 @@ function Dashboard() {
                     />
                   )}
                 </div>
-                <div role='button' onClick={partnersList} className="w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, partnersList)}>
+                <div role='button' id='dashboard_partner_card' onClick={partnersList} className="w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, partnersList)}>
                   <div className="flex justify-center mb-5">
                     <img id='partner_admin_icon' src={partner_admin_icon} alt="" className="w-8 h-8" />
                   </div>
                   <div>
-                    <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
+                    <h5 id='dashboard_partner_card_header' className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
                       {t('dashboard.partner')}
                     </h5>
-                    <p className="mb-3 text-xs font-normal text-gray-400">
+                    <p id='dashboard_partner_card_description' className="mb-3 text-xs font-normal text-gray-400">
                       {t('dashboard.partnerDesc')}
                     </p>
                   </div>
@@ -773,15 +773,15 @@ function Dashboard() {
                 </>
               )}
               {(isPolicyManager || isPartnerAdmin) && (
-                <div role='button' onClick={policiesInAdmin} className="w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, policiesInAdmin)}>
+                <div role='button' id='dashboard_policies_card' onClick={policiesInAdmin} className="w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, policiesInAdmin)}>
                   <div className="flex justify-center mb-5">
                     <img id='admin_policies_icon' src={admin_policies_icon} alt="" className="w-8 h-8" />
                   </div>
                   <div>
-                    <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
+                    <h5 id='dashboard_policies_card_header' className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
                       {t('dashboard.policies')}
                     </h5>
-                    <p className="mb-3 text-xs font-normal text-gray-400">
+                    <p id='dashboard_policies_card_description' className="mb-3 text-xs font-normal text-gray-400">
                       {t('dashboard.policiesadminDesc')}
                     </p>
                   </div>
@@ -789,15 +789,15 @@ function Dashboard() {
               )}
               {isPartnerAdmin && (
                 <>
-                  <div role='button' onClick={partnerPolicyMappingRequestList} className="relative w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, partnerPolicyMappingRequestList)}>
+                  <div role='button' id='dashboard_partner_policy_linking_card' onClick={partnerPolicyMappingRequestList} className="relative w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, partnerPolicyMappingRequestList)}>
                     <div className="flex justify-center mb-5">
                       <img id='partner_policy_mapping_icon' src={partner_policy_mapping_icon} alt="" className="w-8 h-8" />
                     </div>
                     <div>
-                      <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
+                      <h5 id='dashboard_partner_policy_linking_card_header' className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
                         {t('dashboard.partnerPolicyMapping')}
                       </h5>
-                      <p className="mb-3 text-xs font-normal text-gray-400">
+                      <p id='dashboard_partner_policy_linking_card_description' className="mb-3 text-xs font-normal text-gray-400">
                         {t('dashboard.partnerPolicyMappingDesc')}
                       </p>
                     </div>
@@ -808,15 +808,15 @@ function Dashboard() {
                     />
                   </div>
 
-                  <div role='button' onClick={adminDeviceProviderServices} className="relative w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, adminDeviceProviderServices)}>
+                  <div role='button' id='dashboard_sbi_device_card' onClick={adminDeviceProviderServices} className="relative w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, adminDeviceProviderServices)}>
                     <div className="flex justify-center mb-5">
                       <img id='deviceProviderServicesIcon' src={deviceProviderServicesIcon} alt="" className="w-8 h-8" />
                     </div>
                     <div>
-                      <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
+                      <h5 id='dashboard_sbi_device_card_header' className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
                         {t('dashboard.sbiDevice')}
                       </h5>
-                      <p className="mb-3 text-xs font-normal text-gray-400">
+                      <p id='dashboard_sbi_device_card_description' className="mb-3 text-xs font-normal text-gray-400">
                         {t('dashboard.sbiDeviceDesc')}
                       </p>
                     </div>
@@ -837,15 +837,15 @@ function Dashboard() {
                     />
                   </div>
 
-                  <div role='button' onClick={adminftmChipProviderServices} className="relative w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, adminftmChipProviderServices)}>
+                  <div role='button' id='dashboard_ftm_chip_card' onClick={adminftmChipProviderServices} className="relative w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, adminftmChipProviderServices)}>
                     <div className="flex justify-center mb-5">
                       <img id='ftmServicesIcon' src={ftmServicesIcon} alt="" className="w-8 h-8" />
                     </div>
                     <div>
-                      <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
+                      <h5 id='dashboard_ftm_chip_card_header' className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
                         {t('dashboard.ftmChip')}
                       </h5>
-                      <p className="mb-3 text-xs font-normal text-gray-400">
+                      <p id='dashboard_ftm_chip_card_description' className="mb-3 text-xs font-normal text-gray-400">
                         {t('dashboard.ftmChipDesc')}
                       </p>
                     </div>
@@ -856,15 +856,15 @@ function Dashboard() {
                     />
                   </div>
 
-                  <div role='button' onClick={adminAuthenticationServices} className="w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, adminAuthenticationServices)}>
+                  <div role='button' id='dashboard_admin_authentication_services_card' onClick={adminAuthenticationServices} className="w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, adminAuthenticationServices)}>
                     <div className="flex justify-center mb-5">
                       <img id='admin_auth_service_icon' src={authServiceIcon} alt="" className="w-8 h-8" />
                     </div>
                     <div>
-                      <h5 className="mb-2 text-sm font-semibold tracking-tight text-gray-600 ">
+                      <h5 id='dashboard_admin_authentication_services_card_header' className="mb-2 text-sm font-semibold tracking-tight text-gray-600 ">
                         {t('dashboard.authenticationServices')}
                       </h5>
-                      <p className="mb-3 text-xs font-normal text-gray-400">
+                      <p id='dashboard_admin_authentication_services_card_description' className="mb-3 text-xs font-normal text-gray-400">
                         {t('dashboard.adminAuthenticationServicesDesc')}
                       </p>
                     </div>
