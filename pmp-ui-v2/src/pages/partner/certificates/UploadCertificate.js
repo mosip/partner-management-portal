@@ -222,8 +222,8 @@ function UploadCertificate({ closePopup, popupData, request }) {
                     {dataLoaded && (
                         <>
                             <div className="px-[3.5%] py-[2%]">
-                                <h3 className="text-base font-bold text-[#333333]">{popupData.isCertificateAvailable ? t(popupData.reUploadHeader) : t(popupData.uploadHeader)}</h3>
-                                <p className="text-sm text-[#717171]">{t('uploadCertificate.selectFieldsMsg')}</p>
+                                <h3 id='upload_certificate_popup_title' className="text-base font-bold text-[#333333]">{popupData.isCertificateAvailable ? t(popupData.reUploadHeader) : t(popupData.uploadHeader)}</h3>
+                                <p id='upload_certificate_popup_msg' className="text-sm text-[#717171]">{t('uploadCertificate.selectFieldsMsg')}</p>
                             </div>
                             <div className="border-gray-200 border-opacity-75 border-t"></div>
                             <div className="relative">
@@ -236,13 +236,13 @@ function UploadCertificate({ closePopup, popupData, request }) {
                                 <div className="px-[4%] py-[2%]">
                                     <form>
                                         <div className="mb-2">
-                                            <label className="block text-dark-blue text-base font-semibold mb-1">{t('uploadCertificate.partnerTypeLabel')}</label>
-                                            <input type="text" className="w-full h-10 px-3 py-2 border border-[#C1C1C1] rounded-md text-base text-gunmetal-gray bg-[#EBEBEB] leading-tight focus:outline-none focus:shadow-outline"
+                                            <label id='upload_popup_partner_type_label' className="block text-dark-blue text-base font-semibold mb-1">{t('uploadCertificate.partnerTypeLabel')}</label>
+                                            <input id='upload_popup_partner_type_context' type="text" className="w-full h-10 px-3 py-2 border border-[#C1C1C1] rounded-md text-base text-gunmetal-gray bg-[#EBEBEB] leading-tight focus:outline-none focus:shadow-outline"
                                                 value={partnerType} disabled />
                                         </div>
                                         <div className="mb-3">
-                                            <label className="block text-dark-blue text-base font-semibold mb-1">{t('uploadCertificate.partnerDomainType')}</label>
-                                            <input type="text" className="w-full h-10 px-3 py-2 border border-[#C1C1C1] rounded-md text-base text-gunmetal-gray bg-[#EBEBEB] leading-tight focus:outline-none focus:shadow-outline"
+                                            <label id='upload_popup_partner_domain_type_label' className="block text-dark-blue text-base font-semibold mb-1">{t('uploadCertificate.partnerDomainType')}</label>
+                                            <input id='upload_popup_partner_domain_type_context' type="text" className="w-full h-10 px-3 py-2 border border-[#C1C1C1] rounded-md text-base text-gunmetal-gray bg-[#EBEBEB] leading-tight focus:outline-none focus:shadow-outline"
                                                 value={partnerDomainType} disabled />
                                         </div>
                                     </form>
@@ -253,10 +253,10 @@ function UploadCertificate({ closePopup, popupData, request }) {
                                                     <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor" />
                                                     <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill" />
                                                 </svg>
-                                                <h5 className="text-charcoal-gray text-sm font-semibold">
+                                                <h5 id='upload_popup_selecting_file' className="text-charcoal-gray text-sm font-semibold">
                                                     {t('uploadCertificate.selectingFile')}
                                                 </h5>
-                                                <button className="text-sm font-semibold text-tory-blue" onClick={cancelUpload}>
+                                                <button id='upload_popup_cancel_file' className="text-sm font-semibold text-tory-blue" onClick={cancelUpload}>
                                                     <p> {t('uploadCertificate.cancel')} </p>
                                                 </button>
                                             </div>
@@ -267,10 +267,10 @@ function UploadCertificate({ closePopup, popupData, request }) {
                                                     <label className="flex flex-col items-center w-full min-h-36 justify-center cursor-pointer" >
                                                         <input id="fileInput" type="file" className="hidden" accept=".cer,.pem" onChange={handleFileChange} />
                                                         <img src={fileUploadImg} alt="" className="mb-2 w-10 h-10" />
-                                                        <h5 className="text-charcoal-gray text-base font-normal px-2">
+                                                        <h5 id='upload_popup_selecting_certificate_msg' className="text-charcoal-gray text-base font-normal px-2">
                                                             {t('uploadCertificate.selectCertificate')}
                                                         </h5>
-                                                        <p className="text-xs text-light-gray px-2">
+                                                        <p id='upload_popup_certificate_format_msg' className="text-xs text-light-gray px-2">
                                                             {t('uploadCertificate.certificateFormat')}
                                                         </p>
                                                     </label>
@@ -280,7 +280,7 @@ function UploadCertificate({ closePopup, popupData, request }) {
                                         {!uploading && fileName && (
                                             <div id='remove_certificate_card' className={`flex flex-col items-center justify-center mb-1`}>
                                                 <img src={fileDescription} alt="" className="w-10 h-10 mb-1" />
-                                                <h5 className="text-charcoal-gray text-sm font-semibold break-all">
+                                                <h5 id='upload_popup_file_name' className="text-charcoal-gray text-sm font-semibold break-all">
                                                     {fileName}
                                                 </h5>
                                                 {!uploadSuccess && (
@@ -292,7 +292,7 @@ function UploadCertificate({ closePopup, popupData, request }) {
                                         )}
                                     </div>
                                     {popupData.isCertificateAvailable && !removeLastUploadDate && (
-                                       <p className="text-sm text-gray-800 text-center mt-1">
+                                       <p id='last_certificate_upload_date'className="text-sm text-gray-800 text-center mt-1">
                                        {t('uploadCertificate.lastcertificateUploadDate')}{' '}
                                        <span className="whitespace-nowrap">{formattedDate}</span>
                                      </p>

@@ -51,7 +51,7 @@ function DropdownWithSearchComponent({ fieldName, dropdownDataList, onDropDownCh
 
     return (
         <div key={fieldName} className={`ml-4 mb-2 ${(styleSet && styleSet.outerDiv) ? styleSet.outerDiv : ''}`}>
-            <label className={`flex items-center text-dark-blue text-sm mb-2 ${(styleSet && styleSet.dropdownLabel) ? styleSet.dropdownLabel : ''} ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+            <label id={id + '_label'} className={`flex items-center text-dark-blue text-sm mb-2 ${(styleSet && styleSet.dropdownLabel) ? styleSet.dropdownLabel : ''} ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
             <p className={`font-semibold`}>{t(fieldNameKey)}{containsAsterisk && <span className={`text-crimson-red mx-1`}>*</span>}</p>
                 {addInfoIcon && (
                     <Information infoKey={infoKey} id={id + "_info"}/>
@@ -83,7 +83,7 @@ function DropdownWithSearchComponent({ fieldName, dropdownDataList, onDropDownCh
                             </div>
                             {filteredPolicyGroupList.length === 0 && (
                                 <div className="min-h-3 p-4 cursor-auto">
-                                    <p className="text-sm text-dark-blue font-semibold">{t('commons.emptyMsg')}</p>
+                                    <p id={id + '_no_data_available'} className="text-sm text-dark-blue font-semibold">{t('commons.emptyMsg')}</p>
                                 </div>
                             )}
                             <div className="max-h-32 overflow-y-auto">
