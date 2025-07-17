@@ -76,7 +76,7 @@ function RejectPopup({ popupData, closePopUp, rejectResponse, title }) {
                         <>
                             <div className="relative">
                                 {errorMsg && (
-                                    <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customStyle={customStyle} />
+                                    <ErrorMessage id='reject_popup_error_msg' errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customStyle={customStyle} />
                                 )}
                                 <>
                                     <div className="flex justify-between items-center px-[1rem] p-4 w-full border-b-2 border-gray-200">

@@ -54,10 +54,10 @@ function ViewTrustDetails() {
     return (
         <div className={`w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter overflow-x-scroll`}>
             {errorMsg && (
-                <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
+                <ErrorMessage id='view_trust_details_error_msg' errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
             )}
             {successMsg && (
-                <SuccessMessage successMsg={successMsg} clickOnCancel={cancelSuccessMsg} />
+                <SuccessMessage id='view_trust_details_success_msg' successMsg={successMsg} clickOnCancel={cancelSuccessMsg} />
             )}
             <div className="flex-col mt-5">
                 <div className="flex justify-between mb-5">

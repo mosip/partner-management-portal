@@ -164,7 +164,7 @@ function NotificationPopup({ closeNotification }) {
                                 </button>
                             </div>
                             {errorMsg && (
-                                <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customStyle={errorcustomStyle}/>
+                                <ErrorMessage id='notification_popup_error_msg' errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customStyle={errorcustomStyle}/>
                             )}
                             {notifications.length > 0 ? (
                                 <>

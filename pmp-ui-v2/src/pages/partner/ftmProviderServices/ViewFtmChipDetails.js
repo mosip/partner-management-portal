@@ -147,10 +147,10 @@ function ViewFtmChipDetails() {
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter relative`}>
             {errorMsg && (
-                <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
+                <ErrorMessage id='view_ftm_chip_details_error_msg' errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
             )}
             {successMsg && (
-                <SuccessMessage successMsg={successMsg} clickOnCancel={cancelSuccessMsg} />
+                <SuccessMessage id='view_ftm_chip_details_success_msg' successMsg={successMsg} clickOnCancel={cancelSuccessMsg} />
             )}
             <div className={`flex-col mt-5 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm mb-[2%]`}>
                 <div className="flex justify-between mb-3">

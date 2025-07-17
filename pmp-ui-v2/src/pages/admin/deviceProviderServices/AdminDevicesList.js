@@ -309,7 +309,7 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
             {dataLoaded && (
                 <>
                     {errorMsg && (
-                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
+                        <ErrorMessage id='admin_devices_list_error_msg' errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
                     <div className="flex-col mt-5">
                         <div className="flex justify-between mb-5 max-470:flex-col">

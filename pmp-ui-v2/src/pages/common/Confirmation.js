@@ -6,7 +6,7 @@ import { isLangRTL, moveToHome } from '../../utils/AppUtils';
 import successIcon from '../../svg/success_message_icon.svg';
 import PropTypes from 'prop-types';
 
-function Confirmation({ confirmationData, onClickFunction }) {
+function Confirmation({ id, confirmationData, onClickFunction }) {
 
     const navigate = useNavigate();
     const { t } = useTranslation();
@@ -18,10 +18,10 @@ function Confirmation({ confirmationData, onClickFunction }) {
             <div className="flex flex-col justify-center items-center w-[50%]">
                 <img id="confirmation_success_icon" src={successIcon} alt="" className={`${isLoginLanguageRTL ? (style && style.imgIconRtl ? style.imgIconRtl : "") : (style && style.imgIconLtr ? style.imgIconLtr : "")} h-40`} />
                 <div className={`text-center space-y-2`}>
-                    <h1 className="font-bold text-black text-lg max-[450px]:text-sm">
+                    <h1 id={id + '_header'} className="font-bold text-black text-lg max-[450px]:text-sm">
                         {t(confirmationData.header)}
                     </h1>
-                    <p className="text-[#666666] text-sm font-semibold max-[450px]:text-xs">
+                    <p id={id + '_description'} className="text-[#666666] text-sm font-semibold max-[450px]:text-xs">
                     {confirmationData.descriptionParams ? t(confirmationData.description, confirmationData.descriptionParams) : t(confirmationData.description)}
                         {confirmationData.description1 && (
                             <span className="text-[#666666] text-sm font-semibold max-[450px]:text-xs">{t(confirmationData.description1)}</span>

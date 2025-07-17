@@ -18,15 +18,15 @@ function FilterButtons({ titleId, listTitle, dataListLength, filter, onResetFilt
                                 <img src={backArrow} alt="" />
                             </button>
                             {showTitleWithoutCount ? (
-                                <p className={`py-2 ${isLoginLanguageRTL ? 'pr-2' : 'pl-2'}`}>{t(listTitle)}</p>
+                                <p id={titleId + '_title'} className={`py-2 ${isLoginLanguageRTL ? 'pr-2' : 'pl-2'}`}>{t(listTitle)}</p>
                             ) : (
-                                <p className={`text-lg ${isLoginLanguageRTL ? 'pr-2' : 'pl-2'}`}>{t(listTitle) + ' (' + dataListLength + ")"}</p>
+                                <p id={titleId + '_title'} className={`text-lg ${isLoginLanguageRTL ? 'pr-2' : 'pl-2'}`}>{t(listTitle) + ' (' + dataListLength + ")"}</p>
                             )}
                         </div>
-                        <p className='text-sm text-gray-500 pl-7'>{listSubTitle}</p>
+                        <p id={titleId + '_sub_title'} className='text-sm text-gray-500 pl-7'>{listSubTitle}</p>
                     </div>
                 ) : 
-                    <p>{t(listTitle) + ' (' + dataListLength + ")"}</p>
+                    <p id={titleId + '_title'}>{t(listTitle) + ' (' + dataListLength + ")"}</p>
                 }
             </div>
             {!removeFilter && (

@@ -168,10 +168,10 @@ function PartnerCertificatesList() {
             {dataLoaded && (
                 <>
                     {errorMsg && (
-                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
+                        <ErrorMessage id='partner_certificates_list_error_msg' errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
                     {successMsg && (
-                        <SuccessMessage successMsg={successMsg} clickOnCancel={cancelSuccessMsg} />
+                        <SuccessMessage id='partner_certificates_list_success_msg' successMsg={successMsg} clickOnCancel={cancelSuccessMsg} />
                     )}
                     <div className="flex-col mt-5">
                         <div className="flex justify-between mb-5">

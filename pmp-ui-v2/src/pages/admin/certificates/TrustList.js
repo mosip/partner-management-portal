@@ -264,10 +264,10 @@ function TrustList({ trustListType, uploadTrustBtnName, subTitle, downloadBtnNam
       {dataLoaded && (
         <>
           {errorMsg && (
-            <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
+            <ErrorMessage id='trust_list_error_msg' errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
           )}
           {successMsg && (
-            <SuccessMessage successMsg={successMsg} clickOnCancel={cancelSuccessMsg} />
+            <SuccessMessage id='trust_list_success_msg' successMsg={successMsg} clickOnCancel={cancelSuccessMsg} />
           )}
           <div className="flex-col mt-5">
             <div className="justify-between mb-5 flex-col">

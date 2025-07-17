@@ -119,7 +119,7 @@ function ApproveRejectPopup({ popupData, closePopUp, approveRejectResponse, titl
                         <>
                             <div className="relative">
                                 {errorMsg && (
-                                    <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customStyle={customStyle} />
+                                    <ErrorMessage id='approve_reject_popup_error_msg' errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customStyle={customStyle} />
                                 )}
                                 <>
                                     <div className="flex justify-between px-[1rem] my-4 w-full">

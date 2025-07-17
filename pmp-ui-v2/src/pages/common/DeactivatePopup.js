@@ -123,11 +123,11 @@ function DeactivatePopup({ onClickConfirm, closePopUp, popupData, request, heade
                     {dataLoaded && (
                         <div className="relative">
                             {errorMsg && (
-                                <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customStyle={customStyle} />
+                                <ErrorMessage id='deactivate_popup_error_msg' errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customStyle={customStyle} />
                             )}
                             <div className={`p-[2rem] flex-col text-center justify-center items-center`}>
                                 {!isLoginLanguageRTL ? (
-                                    <p className="text-base leading-snug font-semibold text-black break-words px-[1.5rem]">
+                                    <p id='deactivate_popup_header' className="text-base leading-snug font-semibold text-black break-words px-[1.5rem]">
                                         {t(headerMsg)}
                                         {(popupData.isDeactivateDevice || popupData.isDeactivateFtm)
                                             ? ` - '${popupData.make} - ${popupData.model}'`
@@ -136,7 +136,7 @@ function DeactivatePopup({ onClickConfirm, closePopUp, popupData, request, heade
                                                 : ` - '${headerKeyName}'`}?
                                     </p>
                                 ) : (
-                                    <p className="text-base leading-snug font-semibold text-black break-words px-[1.5rem]">
+                                    <p id='deactivate_popup_header' className="text-base leading-snug font-semibold text-black break-words px-[1.5rem]">
                                         {t(headerMsg)}
                                         {(popupData.isDeactivateDevice || popupData.isDeactivateFtm)
                                             ? ` - ${popupData.make} - ${popupData.model}`
@@ -145,12 +145,12 @@ function DeactivatePopup({ onClickConfirm, closePopUp, popupData, request, heade
                                                 : ` - ${headerKeyName}`}
                                     </p>
                                 )}
-                                <p className="text-sm font-semibold text-[#666666] break-normal py-[5%]">
+                                <p id='deactivate_popup_description' className="text-sm font-semibold text-[#666666] break-normal py-[5%]">
                                     {t(descriptionMsg)}
                                 </p>
                                 {popupData.isDeactivateSbi &&
                                     (<div className="bg-[#FFF7E5] border-2 break-words border-[#EDDCAF] font-semibold rounded-md w-full p-[2%] mb-2">
-                                        <p className="text-sm font-inter text-[#8B6105]">
+                                        <p id='deactivate_popup_description_for_sbi' className="text-sm font-inter text-[#8B6105]">
                                             {t(formatDeviceCountMessage(
                                                 popupData.countOfApprovedDevices,
                                                 'deactivateSbi.deactivateApprovedDevicesSingular',

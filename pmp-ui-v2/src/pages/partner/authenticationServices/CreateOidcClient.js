@@ -395,7 +395,7 @@ function CreateOidcClient() {
       {dataLoaded && (
         <>
           {errorMsg && (
-            <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
+            <ErrorMessage id='create_oidc_client_error_msg' errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
           )}
           <div className="flex-col mt-5">
             <div className="flex justify-between">
@@ -404,7 +404,7 @@ function CreateOidcClient() {
             {!createOidcClientSuccess ?
               <div className="w-[100%] bg-snow-white mt-[1.5%] rounded-lg shadow-md">
                 <div className="px-[2.5%] py-[2%]">
-                  <p className="text-base text-[#3D4468]">{t('requestPolicy.mandatoryFieldsMsg1')} <span className="text-crimson-red mx-1">*</span> {t('requestPolicy.mandatoryFieldsMsg2')}</p>
+                  <p id='create_oidc_client_mandatory_field_msg' className="text-base text-[#3D4468]">{t('requestPolicy.mandatoryFieldsMsg1')} <span className="text-crimson-red mx-1">*</span> {t('requestPolicy.mandatoryFieldsMsg2')}</p>
                   <form>
                     <div className="flex flex-col">
                       <div className="flex flex-row justify-between space-x-4 my-[1%]">
@@ -423,8 +423,8 @@ function CreateOidcClient() {
                           </DropdownComponent>
                         </div>
                         <div className="flex flex-col w-[48%]">
-                          <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('requestPolicy.partnerType')}<span className="text-crimson-red mx-1">*</span></label>
-                          <button disabled className="flex items-center justify-between w-full h-10 px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-vulcan bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
+                          <label id='create_oidc_client_partner_type_label' className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('requestPolicy.partnerType')}<span className="text-crimson-red mx-1">*</span></label>
+                          <button id='create_oidc_client_partner_type_context' disabled className="flex items-center justify-between w-full h-10 px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-vulcan bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
                           overflow-x-auto whitespace-nowrap no-scrollbar" type="button">
                             <span className={`w-full break-words ${partnerType ? 'text-dark-blue' : 'text-gray-400'} text-wrap text-start`}>{partnerType || t('commons.partnersHelpText')}</span>
                             <svg className={`w-3 h-2 ml-3 transform 'rotate-0' text-gray-500 text-base`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
@@ -435,8 +435,8 @@ function CreateOidcClient() {
                       </div>
                       <div className="flex flex-row justify-between space-x-4 my-2">
                         <div className="flex flex-col w-[48%]">
-                          <label className={`block text-dark-blue text-sm font-semibold mb-1 mx-1`}>{t('requestPolicy.policyGroup')}<span className="text-crimson-red mx-1">*</span></label>
-                          <button disabled className="flex items-center justify-between w-full h-10 px-2 py-2 border border-[#C1C1C1] rounded-md text-sm text-vulcan bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
+                          <label id='create_oidc_client_policy_group_label' className={`block text-dark-blue text-sm font-semibold mb-1 mx-1`}>{t('requestPolicy.policyGroup')}<span className="text-crimson-red mx-1">*</span></label>
+                          <button id='create_oidc_client_policy_group_context' disabled className="flex items-center justify-between w-full h-10 px-2 py-2 border border-[#C1C1C1] rounded-md text-sm text-vulcan bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
                           overflow-x-auto whitespace-nowrap no-scrollbar" type="button">
                             <span className={`${partnerType ? 'text-dark-blue' : 'text-gray-400'}`}>{policyGroupName || t('commons.partnersHelpText')}</span>
                             <svg className={`w-3 h-2 transform 'rotate-0' text-gray-500 text-base`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
@@ -462,16 +462,16 @@ function CreateOidcClient() {
                       </div>
                       <div className="flex my-2">
                         <div className="flex flex-col w-[562px]">
-                          <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('authenticationServices.oidcClientName')}<span className="text-crimson-red mx-1">*</span></label>
+                          <label id='create_oidc_client_name_label' className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('authenticationServices.oidcClientName')}<span className="text-crimson-red mx-1">*</span></label>
                           <input value={oidcClientName} onChange={(e) => onChangeOidcClientName(e.target.value)} maxLength={256}
                             className="h-10 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                             placeholder={t('createOidcClient.enterNameForOidcClient')} id="create_oidc_client_name" />
-                          {inputError && <span className="text-sm text-crimson-red font-semibold">{inputError}</span>}
+                          {inputError && <span id='create_oidc_invalid_client_name' className="text-sm text-crimson-red font-semibold">{inputError}</span>}
                         </div>
                       </div>
                       <div className="flex my-[1%]">
                         <div className="flex flex-col w-full">
-                          <label className={`flex items-center text-dark-blue text-sm mb-1  ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+                          <label id='create_oidc_client_public_key_label' className={`flex items-center text-dark-blue text-sm mb-1  ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                             <p className={`font-semibold`}>{t('createOidcClient.publicKey')}<span className={`text-crimson-red mx-1`}>*</span></p>
                             <Information infoKey={t('createOidcClient.publicKeyToolTip')} id='public_key_info' />
                           </label>
@@ -479,22 +479,22 @@ function CreateOidcClient() {
                             className="px-2 py-4 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                             placeholder={t('createOidcClient.publicKeyPlaceHolder')}>
                           </textarea>
-                          {jsonError && <span className="text-sm text-crimson-red font-semibold">{jsonError}</span>}
+                          {jsonError && <span id="create_oidc_invalid_public_key" className="text-sm text-crimson-red font-semibold">{jsonError}</span>}
                         </div>
                       </div>
                       <div className="flex my-[1%]">
                         <div className="flex flex-col w-full">
-                          <label className={`block text-dark-blue text-sm font-semibold mb-1  ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('createOidcClient.logoUrl')}<span className="text-crimson-red mx-1">*</span></label>
+                          <label id="create_oidc_logo_url_label" className={`block text-dark-blue text-sm font-semibold mb-1  ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('createOidcClient.logoUrl')}<span className="text-crimson-red mx-1">*</span></label>
                           <input id="create_oidc_logo_url" value={logoUrl} onChange={(e) => handleLogoUrlChange(e.target.value)}
                             className="h-10 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                             placeholder={t('createOidcClient.logoUrlPlaceHolder')} />
-                          {invalidLogoUrl && <span className="text-sm text-crimson-red font-semibold">{invalidLogoUrl}</span>}
+                          {invalidLogoUrl && <span id="create_oidc_invalid_logo_url" className="text-sm text-crimson-red font-semibold">{invalidLogoUrl}</span>}
                         </div>
                       </div>
 
                       <div className="flex flex-row justify-between space-x-4 my-[1%]">
                         <div className="flex flex-col w-[48%]">
-                          <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+                          <label id="create_oidc_redirect_url_label" className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                             {t('createOidcClient.redirectUrl')}<span className="text-crimson-red mx-1">*</span>
                           </label>
                           {redirectUrls.map((url, index) => (
@@ -518,7 +518,7 @@ function CreateOidcClient() {
                               </div>
                             </div>
                           ))}
-                          {invalidRedirectUrl && <span className="text-sm text-crimson-red font-semibold">{invalidRedirectUrl}</span>}
+                          {invalidRedirectUrl && <span id="create_oidc_invalid_redirect_url" className="text-sm text-crimson-red font-semibold">{invalidRedirectUrl}</span>}
                           {redirectUrls.length < 5 && (
                             <div
                               role="button"
@@ -558,7 +558,7 @@ function CreateOidcClient() {
                 </div>
               </div>
               :
-              <Confirmation confirmationData={confirmationData} />
+              <Confirmation id='create_oidc_client_confirmation' confirmationData={confirmationData} />
             }
           </div>
         </>

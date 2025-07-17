@@ -41,21 +41,21 @@ function ViewPolicyDetails() {
                 </div>
                 <div className="bg-snow-white h-fit mt-1 rounded-t-xl shadow-lg ml-3">
                     <div className={`flex-col ${isLoginLanguageRTL ? "pr-8" : "pl-8"} pt-6 pb-5`}>
-                        <p className="text-lg text-dark-blue mb-3">{t('policies.policyId')}: <span className="font-semibold">{policyDetails.policyId}</span></p>
+                        <p id='view_policy_details_policy_id' className="text-lg text-dark-blue mb-3">{t('policies.policyId')}: <span className="font-semibold">{policyDetails.policyId}</span></p>
                         <div className="flex items-center justify-start">
-                            <div
+                            <div id='view_policy_details_status'
                                 className={`${bgOfStatus(
                                     policyDetails.status
                                 )}flex w-fit py-1.5 px-3 text-sm rounded-md font-semibold`}
                             >
                                 {getStatusCode(policyDetails.status, t)}
                             </div>
-                            <div className={`font-semibold ${isLoginLanguageRTL ? "mr-3" : "ml-3"} text-sm text-dark-blue`}>
+                            <div id='view_policy_details_created_on' className={`font-semibold ${isLoginLanguageRTL ? "mr-3" : "ml-3"} text-sm text-dark-blue`}>
                                 {t("viewPolicyDetails.createdOn") + ' ' +
                                     formatDate(policyDetails.createdDateTime, "date")}
                             </div>
                             <div className="mx-3 text-gray-300">|</div>
-                            <div className="font-semibold text-sm text-dark-blue">
+                            <div id='view_policy_details_created_date-time' className="font-semibold text-sm text-dark-blue">
                                 {formatDate(policyDetails.createdDateTime, "time")}
                             </div>
                         </div>
@@ -128,21 +128,21 @@ function ViewPolicyDetails() {
                                     </span>
                                     <div className="flex bg-floral-white w-full flex-col p-4 relative rounded-md overflow-hidden">
                                         <div className={`w-0 h-0 border-t-[0.5rem] border-t-transparent border-b-[0.5rem] border-b-transparent absolute top-4 ${isLoginLanguageRTL ? "-right-[0.38rem] border-l-[7px] border-l-[#FFF9F0]" : "-left-[0.38rem] border-r-[7px] border-r-[#FFF9F0]"}`}></div>
-                                        <h4 className="text-sm  text-[#031640]">
+                                        <h4 id='policy_details_admin_comments' className="text-sm  text-[#031640]">
                                             {t("viewPolicyDetails.adminComments")}
                                         </h4>
                                         <div className="flex items-center justify-start mt-4 w-[79rem]">
-                                            <div className={`${bgOfStatus(policyDetails.status)}flex w-fit py-1.5 px-3 text-sm rounded-md`}>
+                                            <div id='policy_details_status' className={`${bgOfStatus(policyDetails.status)}flex w-fit py-1.5 px-3 text-sm rounded-md`}>
                                                 {getStatusCode(policyDetails.status, t)}
                                             </div>
                                             <div>
                                                 {policyDetails.updatedDateTime && (
                                                     <div className="flex">
-                                                        <div className={`font-semibold ${isLoginLanguageRTL ? "mr-3" : "ml-3"} text-sm text-dark-blue`}>
+                                                        <div id='policy_details_updated_date' className={`font-semibold ${isLoginLanguageRTL ? "mr-3" : "ml-3"} text-sm text-dark-blue`}>
                                                             {formatDate(policyDetails.updatedDateTime, "date")}
                                                         </div>
                                                         <div className="mx-3 text-gray-300">|</div>
-                                                        <div className="font-semibold text-sm text-dark-blue">
+                                                        <div id='policy_details_updated_time' className="font-semibold text-sm text-dark-blue">
                                                             {formatDate(policyDetails.updatedDateTime, "time")}
                                                         </div>
                                                     </div>
@@ -158,20 +158,20 @@ function ViewPolicyDetails() {
                                         </span>
                                         <div className="flex bg-alice-green w-full flex-col p-4 relative rounded-md overflow-hidden">
                                             <div className={`w-0 h-0 border-t-[0.5rem] border-t-transparent border-b-[0.5rem] border-b-transparent absolute top-4 ${isLoginLanguageRTL ? "-right-[0.38rem] border-l-[#F2F5FC] border-l-[7px]" : "-left-[0.38rem] border-r-[#F2F5FC] border-r-[7px]"}`}></div>
-                                            <h4 className="text-sm text-[#031640]">
+                                            <h4 id='policy_details_partner_comments_label' className="text-sm text-[#031640]">
                                                 {t("viewPolicyDetails.partnerComment")}
                                             </h4>
-                                            <span className="text-sm mt-3 break-words">
+                                            <span id='policy_details_partner_comments_context' className="text-sm mt-3 break-words">
                                                 {policyDetails.partnerComment}
                                             </span>
                                             <hr className="h-px w-full bg-gray-200 border-0 my-4" />
                                             <div className="flex items-center justify-start">
-                                                <div className="font-semibold text-sm text-dark-blue">
+                                                <div id='policy_details_created_on' className="font-semibold text-sm text-dark-blue">
                                                     {t("viewPolicyDetails.createdOn") + ' ' +
                                                         formatDate(policyDetails.createdDateTime, "date")}
                                                 </div>
                                                 <div className="mx-3 text-gray-300">|</div>
-                                                <div className="font-semibold text-sm text-dark-blue">
+                                                <div id='policy_details_created_date_time' className="font-semibold text-sm text-dark-blue">
                                                     {formatDate(policyDetails.createdDateTime, "time")}
                                                 </div>
                                             </div>

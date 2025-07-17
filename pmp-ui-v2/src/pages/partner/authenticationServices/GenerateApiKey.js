@@ -244,7 +244,7 @@ function GenerateApiKey() {
             {dataLoaded && (
                 <>
                     {errorMsg && (
-                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
+                        <ErrorMessage id='generate_api_key_error_msg' errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
                     <div className="flex-col mt-5">
                         <div className="flex justify-between">
@@ -253,7 +253,7 @@ function GenerateApiKey() {
                         {!generateApiKeySuccess ?
                             <div className="w-[100%] bg-snow-white mt-[1.5%] rounded-lg shadow-md">
                                 <div className="px-[2.5%] py-[2%]">
-                                    <p className="text-base text-[#3D4468]">{t('requestPolicy.mandatoryFieldsMsg1')} <span className="text-crimson-red">*</span> {t('requestPolicy.mandatoryFieldsMsg2')}</p>
+                                    <p id='generate_api_key_mandatory_fields_msg' className="text-base text-[#3D4468]">{t('requestPolicy.mandatoryFieldsMsg1')} <span className="text-crimson-red">*</span> {t('requestPolicy.mandatoryFieldsMsg2')}</p>
                                     <form onSubmit={handleFormSubmit}>
                                         <div className="flex flex-col">
                                             <div className="flex flex-row justify-between space-x-4 max-[450px]:space-x-0 my-[1%] max-[450px]:flex-col">
@@ -272,8 +272,8 @@ function GenerateApiKey() {
                                                     </DropdownComponent>
                                                 </div>
                                                 <div className="flex-col w-[48%] max-[450px]:w-full">
-                                                    <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('requestPolicy.partnerType')}<span className="text-crimson-red mx-1">*</span></label>
-                                                    <button disabled className="flex items-center justify-between w-full h-auto px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-vulcan bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
+                                                    <label id='generate_api_key_partner_type_label' className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('requestPolicy.partnerType')}<span className="text-crimson-red mx-1">*</span></label>
+                                                    <button id='generate_api_key_partner_type' disabled className="flex items-center justify-between w-full h-auto px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-vulcan bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
                                                 overflow-x-auto whitespace-normal no-scrollbar" type="button">
                                                         <span className={`w-full break-all ${partnerType ? 'text-dark-blue' : 'text-gray-400'} text-wrap text-start`}>{partnerType || t('commons.partnersHelpText')}</span>
                                                         <svg className={`w-3 h-2 ml-3 transform 'rotate-0' text-gray-500 text-base`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
@@ -284,8 +284,8 @@ function GenerateApiKey() {
                                             </div>
                                             <div className="flex flex-row justify-between space-x-4 max-[450px]:space-x-0 my-2 max-[450px]:flex-col">
                                                 <div className="flex flex-col w-[48%] max-[450px]:w-full">
-                                                    <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('requestPolicy.policyGroup')}<span className="text-crimson-red mx-1">*</span></label>
-                                                    <button disabled className="flex items-center justify-between w-full h-auto px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-vulcan bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
+                                                    <label id='generate_api_key_policy_group_label' className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('requestPolicy.policyGroup')}<span className="text-crimson-red mx-1">*</span></label>
+                                                    <button id='generate_api_key_policy_group' disabled className="flex items-center justify-between w-full h-auto px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-vulcan bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
                                                 overflow-x-auto whitespace-normal no-scrollbar" type="button">
                                                         <span className={`w-full break-all ${partnerType ? 'text-dark-blue' : 'text-gray-400'} text-wrap text-start`}>{policyGroupName || t('commons.partnersHelpText')}</span>
                                                         <svg className={`w-3 h-2 ml-3 transform 'rotate-0' text-gray-500 text-base`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
@@ -312,11 +312,11 @@ function GenerateApiKey() {
                                             <div className="space-y-6">
                                                 <div className="my-4">
                                                     <div className="flex flex-col w-[48%] max-[450px]:w-full">
-                                                        <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('viewApiKeyDetails.apiKeyName')}<span className="text-crimson-red mx-1">*</span></label>
+                                                        <label id='generate_api_key_name_label' className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('viewApiKeyDetails.apiKeyName')}<span className="text-crimson-red mx-1">*</span></label>
                                                         <input value={nameLabel} onChange={(e) => onChangeNameLabel(e.target.value)} maxLength={36}
                                                             className="h-10 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                                                             placeholder={t('generateApiKey.enterNameForApiKey')} id="generate_api_key_name"/>
-                                                        {inputError && <span className="text-sm text-crimson-red font-semibold">{inputError}</span>}
+                                                        {inputError && <span id="generate_api_key_invalid_name" className="text-sm text-crimson-red font-semibold">{inputError}</span>}
                                                     </div>
                                                 </div>
                                             </div>
@@ -336,7 +336,7 @@ function GenerateApiKey() {
                                     </div>
                                 </div>
                             </div>
-                            : <Confirmation confirmationData={confirmationData} />
+                            : <Confirmation id='generate_api_key_confirmation' confirmationData={confirmationData} />
                         }
                     </div>
                 </>

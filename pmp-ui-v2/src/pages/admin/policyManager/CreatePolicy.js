@@ -276,10 +276,10 @@ function CreatePolicy() {
             {dataLoaded && (
                 <>
                     {errorMsg && (
-                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
+                        <ErrorMessage id='create_policy_error_msg' errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
                     {successMsg && (
-                        <SuccessMessage successMsg={successMsg} clickOnCancel={cancelSuccessMsg} customStyle={successcustomStyle} />
+                        <SuccessMessage id='create_policy_success_msg' successMsg={successMsg} clickOnCancel={cancelSuccessMsg} customStyle={successcustomStyle} />
                     )}
                     <div className="flex-col mt-5 w-full">
                         <div className="w-fit">
@@ -396,7 +396,7 @@ function CreatePolicy() {
                                     </div>
                                 </div>
                             </div>
-                            : <Confirmation confirmationData={confirmationData} />
+                            : <Confirmation id='create_policy_confirmation' confirmationData={confirmationData} />
                         }
                     </div>
                 </>

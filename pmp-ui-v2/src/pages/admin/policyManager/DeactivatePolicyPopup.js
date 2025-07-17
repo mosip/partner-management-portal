@@ -210,7 +210,7 @@ function DeactivatePolicyPopup({ header, description, popupData, headerKeyName, 
                                 )
                                 : (<>
                                     {errorMsg && (
-                                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customStyle={customStyle} />
+                                        <ErrorMessage id='deactivate_policy_popup_error_msg' errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customStyle={customStyle} />
                                     )}
                                     <div className={`p-[8%] flex-col text-center justify-center items-center`}>
                                         {!isLoginLanguageRTL ?
