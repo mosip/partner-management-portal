@@ -103,7 +103,7 @@ function SelectPolicyPopup() {
                                 <h3 id='select_policy_group_popup_title' className="text-base font-bold text-[#333333]">{t('selectPolicyPopup.title')}</h3>
                             </div>
                             {errorMsg && (
-                                <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customStyle={customStyle} />
+                                <ErrorMessage id='select_policy_popup_error_msg' errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customStyle={customStyle} />
                             )}
                             <div className="border-gray-200 border-opacity-75 border-t"></div>
                             <div className="py-3 px-4 text-sm text-[#414141]">

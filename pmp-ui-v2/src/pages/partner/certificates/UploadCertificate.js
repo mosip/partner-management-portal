@@ -228,10 +228,10 @@ function UploadCertificate({ closePopup, popupData, request }) {
                             <div className="border-gray-200 border-opacity-75 border-t"></div>
                             <div className="relative">
                                 {uploadFailure && errorMsg && (
-                                    <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customStyle={errorcustomStyle} />
+                                    <ErrorMessage id='upload_certificate_error_msg' errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customStyle={errorcustomStyle} />
                                 )}
                                 {uploadSuccess && successMsg && (
-                                    <SuccessMessage successMsg={successMsg} clickOnCancel={cancelSuccessMsg} customStyle={successcustomStyle} />
+                                    <SuccessMessage id='upload_certificate_success_msg' successMsg={successMsg} clickOnCancel={cancelSuccessMsg} customStyle={successcustomStyle} />
                                 )}
                                 <div className="px-[4%] py-[2%]">
                                     <form>

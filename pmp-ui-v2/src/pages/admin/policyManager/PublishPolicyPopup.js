@@ -101,10 +101,10 @@ function PublishPolicyPopup ({policyDetails, closePopUp, onClickPublish}) {
                             </div>
                             <div className="border-gray-200 border-opacity-75 border-t"></div>
                             {errorMsg && (
-                                <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customStyle={customStyle}/>
+                                <ErrorMessage id='publish_policy_popup_error_msg' errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customStyle={customStyle}/>
                             )}
                             {successMsg && (
-                                <SuccessMessage successParam={policyDetails.policyName} successMsg={successMsg} clickOnCancel={cancelSuccessMsg} customStyle={customStyle}/>
+                                <SuccessMessage id='publish_policy_popup_success_msg' successParam={policyDetails.policyName} successMsg={successMsg} clickOnCancel={cancelSuccessMsg} customStyle={customStyle}/>
                             )}
                             <div className="py-4 px-6">
                             <p className="text-sm font-normal text-[#414141] break-words">{t('publishPolicyPopup.description1')} 

@@ -249,7 +249,7 @@ function RequestPolicy() {
             {dataLoaded && (
                 <>
                     {errorMsg && (
-                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
+                        <ErrorMessage id='request_policy_error_msg' errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
                     <div className="flex-col mt-5">
                         <Title title='requestPolicy.requestPolicy' subTitle='requestPolicy.policies' backLink='/partnermanagement/policies/policies-list' />
@@ -318,7 +318,7 @@ function RequestPolicy() {
                                                     <textarea id="request_policy_comment_box" maxLength={500} ref={textareaRef} value={partnerComment} onChange={(e) => handleCommentChange(e)} className="w-full px-2 py-2 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline
                                                 overflow-x-auto whitespace-pre-wrap no-scrollbar" placeholder={t('requestPolicy.commentBoxDesc')}>
                                                     </textarea>
-                                                    {inputError && <span className="text-sm text-crimson-red font-semibold">{inputError}</span>}
+                                                    {inputError && <span id='request_policy_invalid_comment' className="text-sm text-crimson-red font-semibold">{inputError}</span>}
                                                 </div>
                                             </div>
                                         </div>
@@ -333,7 +333,7 @@ function RequestPolicy() {
                                     </div>
                                 </div>
                             </div>
-                            : <Confirmation confirmationData={confirmationData} />
+                            : <Confirmation id='request_policy_confirmation' confirmationData={confirmationData} />
                         }
                     </div>
                 </>

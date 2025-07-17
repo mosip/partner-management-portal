@@ -149,7 +149,7 @@ function CreatePolicyGroup() {
             {dataLoaded && (
                 <>
                     {errorMsg && (
-                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
+                        <ErrorMessage id='create_policy_group_error_msg' errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
                     <div className="flex-col mt-5">
                         <div className="flex justify-between">
@@ -201,7 +201,7 @@ function CreatePolicyGroup() {
                                     </div>
                                 </div>
                             </div>
-                            : <Confirmation confirmationData={confirmationData} /> 
+                            : <Confirmation id='create_policy_group_confirmation' confirmationData={confirmationData} /> 
                         }
                     </div>
                 </>

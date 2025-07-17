@@ -74,7 +74,7 @@ function ConsentPopup() {
                     {dataLoaded && (
                         <>
                             {errorMsg && (
-                                <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customStyle={customStyle} />
+                                <ErrorMessage id='consent_popup_error_msg' errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customStyle={customStyle} />
                             )}
                             <div className="p-4">
                                 <h3 id='consent_popup_title' className="text-base font-bold text-[#333333]">{t('consentPopup.title')}</h3>

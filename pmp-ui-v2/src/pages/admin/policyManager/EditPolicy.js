@@ -281,10 +281,10 @@ function EditPolicy() {
             {dataLoaded && (
                 <>
                     {errorMsg && (
-                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
+                        <ErrorMessage id='edit_policy_error_msg' errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
                     {successMsg && (
-                        <SuccessMessage successMsg={successMsg} clickOnCancel={cancelSuccessMsg} customStyle={successCustomStyle} />
+                        <SuccessMessage id='edit_policy_success_msg' successMsg={successMsg} clickOnCancel={cancelSuccessMsg} customStyle={successCustomStyle} />
                     )}
                     <div className="flex-col mt-5 w-full">
                         <div className="w-fit">
@@ -391,7 +391,7 @@ function EditPolicy() {
                                     </div>
                                 </div>
                             </div>
-                            : <Confirmation confirmationData={confirmationData} />
+                            : <Confirmation id='edit_policy_confirmation' confirmationData={confirmationData} />
                         }
                     </div>
                 </>

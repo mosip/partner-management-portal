@@ -267,7 +267,7 @@ function OidcClientsList() {
             {dataLoaded && (
                 <>
                     {errorMsg && (
-                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
+                        <ErrorMessage id='oidc_clients_list_error_msg' errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
                     <div className="flex-col mt-5">
                         <div className="flex justify-between mb-5">
@@ -283,7 +283,7 @@ function OidcClientsList() {
                             <div className="bg-[#FCFCFC] w-full my-3 rounded-lg shadow-lg items-center">
                                 <div className="flex items-center justify-center p-2">
                                     <div className="p-2 bg-[#FFF7E5] border-2 border-[#EDDCAF] rounded-md w-full">
-                                        <p className="text-sm font-medium text-[#8B6105]">
+                                        <p id='oidc_client_list_compatibility_msg' className="text-sm font-medium text-[#8B6105]">
                                             <Trans i18nKey="oidcClientsList.compatibilityMsg" components={{ italic: <i /> }} />
                                         </p>
                                     </div>
