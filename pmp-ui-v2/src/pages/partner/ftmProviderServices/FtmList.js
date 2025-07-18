@@ -280,7 +280,7 @@ function FtmList() {
               <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
                 <div className="flex items-center justify-center p-2">
                   <div className="p-2 bg-[#FFF7E5] border-2 border-[#EDDCAF] rounded-md w-full">
-                    <p className="text-sm font-medium text-[#8B6105]">
+                    <p id='ftm_list_compatibility_msg' className="text-sm font-medium text-[#8B6105]">
                       <Trans i18nKey="ftmList.compatibilityMsg" components={{ italic: <i /> }} />
                     </p>
                   </div>

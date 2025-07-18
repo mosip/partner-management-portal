@@ -238,7 +238,7 @@ function PartnersList() {
                 <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
                   <div className="py-2 pt-4 text-sm font-semibold text-[#6F6E6E]">
                     <div className="flex w-full px-2">
-                      <div className="flex w-full pl-[2%] pt-1 items-center justify-start font-semibold text-dark-blue text-base">
+                      <div id='partners_list_sub_title' className="flex w-full pl-[2%] pt-1 items-center justify-start font-semibold text-dark-blue text-base">
                         {t("partnerList.listOfPartnerTitle")}
                       </div>
                       <button disabled type="button"
@@ -289,10 +289,11 @@ function PartnersList() {
                                         {tableHeaders.map((header, index) => {
                                           return (
                                             <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[15%]">
-                                              <div className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
+                                              <div id={`${header.headerNameKey}_header`} className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
                                                 {t(header.headerNameKey)}
                                                 {!["action", "emailAddress"].includes(header.id) && (
                                                   <SortingIcon
+                                                    id={`${header.headerNameKey}_sorting_icon`}
                                                     headerId={header.id}
                                                     sortDescOrder={sortDescOrder}
                                                     sortAscOrder={sortAscOrder}

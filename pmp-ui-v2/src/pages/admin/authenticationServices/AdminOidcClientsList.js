@@ -262,7 +262,7 @@ function AdminOidcClientsList() {
                             <div className="bg-[#FCFCFC] w-full my-3 rounded-lg shadow-lg items-center">
                                 <div className="flex items-center justify-center p-2">
                                     <div className="p-2 bg-[#FFF7E5] border-2 border-[#EDDCAF] rounded-md w-full">
-                                        <p className="text-sm font-medium text-[#8B6105]">
+                                        <p id='admin_oidc_clients_list_compatibility_msg' className="text-sm font-medium text-[#8B6105]">
                                             <Trans i18nKey="oidcClientsList.compatibilityMsg" components={{ italic: <i /> }} />
                                         </p>
                                     </div>
@@ -307,10 +307,11 @@ function AdminOidcClientsList() {
                                                                     {tableHeaders.map((header, index) => {
                                                                         return (
                                                                             <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[15%]">
-                                                                                <div className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
+                                                                                <div id={`${header.headerNameKey}_header`} className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
                                                                                     {t(header.headerNameKey)}
                                                                                     {(header.id !== "action") && (header.id !== "clientId") && (header.id !== "clientNameEng") && (
                                                                                         <SortingIcon
+                                                                                            id={`${header.headerNameKey}_sorting_icon`}
                                                                                             headerId={header.id}
                                                                                             sortDescOrder={sortDescOrder}
                                                                                             sortAscOrder={sortAscOrder}

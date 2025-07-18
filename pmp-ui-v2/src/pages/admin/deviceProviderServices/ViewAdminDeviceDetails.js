@@ -77,8 +77,8 @@ function ViewAdminDeviceDetails() {
                         <div className="flex items-center justify-center p-24">
                             <div className="flex flex-col justify-center items-center">
                                 <img className="max-w-60 min-w-52 my-2" src={somethingWentWrongIcon} alt="" />
-                                <p className="text-sm font-semibold text-[#6F6E6E] py-4">{t('devicesList.unexpectedError')}</p>
-                                <button onClick={moveToDevicesList} type="button"
+                                <p id='view_admin_device_details_unexpected_error' className="text-sm font-semibold text-[#6F6E6E] py-4">{t('devicesList.unexpectedError')}</p>
+                                <button onClick={moveToDevicesList} type="button" id='view_admin_device_details_go_back_btn'
                                     className={`w-32 h-10 flex items-center justify-center font-semibold rounded-md text-sm mx-8 py-3 bg-tory-blue text-white`}>
                                     {t('commons.goBack')}
                                 </button>
@@ -90,19 +90,19 @@ function ViewAdminDeviceDetails() {
                     <div className="bg-snow-white h-fit mt-1 rounded-md shadow-lg font-inter">
                         <div className="flex justify-between items-center px-7 pt-3 border-b max-[450px]:flex-col">
                             <div className="flex-col">
-                                <p className="text-lg text-dark-blue mb-2">
+                                <p id='view_admin_device_details_sub_title_id' className="text-lg text-dark-blue mb-2">
                                     {t('devicesList.deviceId')}: <span className="font-semibold">{deviceDetails.deviceId}</span>
                                 </p>
                                 <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
-                                    <div className={`${bgOfStatus(deviceDetails.status)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
+                                    <div id='view_admin_device_details_status' className={`${bgOfStatus(deviceDetails.status)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
                                         {getStatusCode(deviceDetails.status, t)}
                                     </div>
-                                    <div className={`font-semibold ${isLoginLanguageRTL ? "mr-[1.4rem]" : "ml-[0.75rem]"} text-sm text-dark-blue`}>
+                                    <div id='view_admin_device_details_created_on' className={`font-semibold ${isLoginLanguageRTL ? "mr-[1.4rem]" : "ml-[0.75rem]"} text-sm text-dark-blue`}>
                                         {t("viewOidcClientDetails.createdOn") + ' ' +
                                             formatDate(deviceDetails.createdDateTime, "date")}
                                     </div>
                                     <div className="mx-2 text-gray-300">|</div>
-                                    <div className="font-semibold text-sm text-dark-blue">
+                                    <div id='view_admin_device_details_created_date_time' className="font-semibold text-sm text-dark-blue">
                                         {formatDate(deviceDetails.createdDateTime, "time")}
                                     </div>
                                 </div>
@@ -139,68 +139,68 @@ function ViewAdminDeviceDetails() {
                         <div className={`${isLoginLanguageRTL ? "pr-8 ml-8" : "pl-8 mr-8"} pt-3 mb-2`}>
                             <div className="flex flex-wrap py-1 max-[450px]:flex-col">
                                 <div className={`w-[48%] max-[600px]:w-[100%] mb-3 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
-                                    <p className="font-[600] text-suva-gray text-sm">
+                                    <p id='view_admin_device_details_partner_id_label' className="font-[600] text-suva-gray text-sm">
                                         {t("sbiList.partnerId")}
                                     </p>
-                                    <p className="font-[600] text-vulcan text-base">
+                                    <p id='view_admin_device_details_partner_id_context' className="font-[600] text-vulcan text-base">
                                         {deviceDetails.partnerId}
                                     </p>
                                 </div>
                                 <div className={`mb-3 max-[600px]:w-[100%] w-[50%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
-                                    <p className="font-[600] text-suva-gray text-sm">
+                                    <p id='view_admin_device_details_partner_type_label' className="font-[600] text-suva-gray text-sm">
                                         {t("viewPolicyRequest.partnerType")}
                                     </p>
-                                    <p className="font-[600] text-vulcan text-base">
+                                    <p id='view_admin_device_details_partner_type_context' className="font-[600] text-vulcan text-base">
                                         {t("partnerTypes.deviceProvider")}
                                     </p>
                                 </div>
                                 <div className={`mb-3 max-[600px]:w-[100%] w-[48%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
-                                    <p className="font-[600] text-suva-gray text-sm">
+                                    <p id='view_admin_device_details_org_name_label' className="font-[600] text-suva-gray text-sm">
                                         {t("sbiList.orgName")}
                                     </p>
-                                    <p className="font-[600] text-vulcan text-base">
+                                    <p id='view_admin_device_details_org_name_context' className="font-[600] text-vulcan text-base">
                                         {deviceDetails.orgName}
                                     </p>
                                 </div>
                                 <div className={`mb-5 max-[600px]:w-[100%] w-[48%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
-                                    <p className="font-[600] text-suva-gray text-sm">
+                                    <p id='view_admin_device_details_sbi_id_label' className="font-[600] text-suva-gray text-sm">
                                         {t("sbiList.sbiId")}
                                     </p>
-                                    <p className="font-[600] text-vulcan text-base">
+                                    <p id='view_admin_device_details_sbi_id_context' className="font-[600] text-vulcan text-base">
                                         {deviceDetails.sbiId}
                                     </p>
                                 </div>
                             </div>
                             <div className="flex flex-wrap py-1 max-[450px]:flex-col">
                                 <div className={`mb-5 max-[600px]:w-[100%] w-[48%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
-                                    <p className="font-[600] text-suva-gray text-sm">
+                                    <p id='view_admin_device_details_device_type_label' className="font-[600] text-suva-gray text-sm">
                                         {t("devicesList.deviceType")}
                                     </p>
-                                    <p className="font-[600] text-vulcan text-base">
+                                    <p id='view_admin_device_details_device_type_context' className="font-[600] text-vulcan text-base">
                                         {deviceDetails.deviceType}
                                     </p>
                                 </div>
                                 <div className={`mb-5 max-[600px]:w-[100%] w-[50%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
-                                    <p className="font-[600] text-suva-gray text-sm">
+                                    <p id='view_admin_device_details_device_sub_type_label' className="font-[600] text-suva-gray text-sm">
                                         {t("devicesList.deviceSubType")}
                                     </p>
-                                    <p className="font-[600] text-vulcan text-base">
+                                    <p id='view_admin_device_details_device_sub_type_context' className="font-[600] text-vulcan text-base">
                                         {deviceDetails.deviceSubType}
                                     </p>
                                 </div>
                                 <div className={`mb-5 max-[600px]:w-[100%] w-[48%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
-                                <p className="font-[600] text-suva-gray text-sm">
+                                    <p id='view_admin_device_details_make_label' className="font-[600] text-suva-gray text-sm">
                                         {t("devicesList.make")}
                                     </p>
-                                    <p className="font-[600] text-vulcan text-base">
+                                    <p id='view_admin_device_details_make_context' className="font-[600] text-vulcan text-base">
                                         {deviceDetails.make}
                                     </p>
                                 </div>
                                 <div className={`mb-5 max-[600px]:w-[100%] w-[48%] ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
-                                    <p className="font-[600] text-suva-gray text-sm">
+                                    <p id='view_admin_device_details_model_label' className="font-[600] text-suva-gray text-sm">
                                         {t("devicesList.model")}
                                     </p>
-                                    <p className="font-[600] text-vulcan text-base">
+                                    <p id='view_admin_device_details_model_context' className="font-[600] text-vulcan text-base">
                                         {deviceDetails.model}
                                     </p>
                                 </div>

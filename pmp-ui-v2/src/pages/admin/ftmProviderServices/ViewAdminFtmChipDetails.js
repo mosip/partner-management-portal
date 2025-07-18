@@ -149,8 +149,8 @@ function ViewAdminFtmChipDetails() {
                                 <div className="flex items-center justify-center p-24">
                                     <div className="flex flex-col justify-center items-center">
                                         <img className="max-w-60 min-w-52 my-2" src={somethingWentWrongIcon} alt="" />
-                                        <p className="text-sm font-semibold text-[#6F6E6E] py-4">{t('devicesList.unexpectedError')}</p>
-                                        <button onClick={moveToAdminFtmList} type="button"
+                                        <p id='view_admin_ftm_chip_unexpected_error' className="text-sm font-semibold text-[#6F6E6E] py-4">{t('devicesList.unexpectedError')}</p>
+                                        <button onClick={moveToAdminFtmList} type="button" id='view_admin_ftm_chip_go_back_btn'
                                             className={`w-32 h-10 flex items-center justify-center font-semibold rounded-md text-sm mx-8 py-3 bg-tory-blue text-white`}>
                                             {t('commons.goBack')}
                                         </button>
@@ -162,19 +162,19 @@ function ViewAdminFtmChipDetails() {
                             <div className="bg-snow-white h-fit mt-1 rounded-t-xl shadow-lg font-inter">
                                 <div className="flex justify-between items-center px-7 pt-3 border-b max-[450px]:flex-col">
                                     <div className="flex-col">
-                                        <p className="text-lg text-dark-blue mb-2">
+                                        <p id='view_admin_ftm_chip_sub_title_id' className="text-lg text-dark-blue mb-2">
                                             {t('ftmList.ftmId')}: <span className="font-semibold">{ftmDetails.ftmId}</span>
                                         </p>
                                         <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
-                                            <div className={`${bgOfStatus(ftmDetails.status, t)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
+                                            <div id='view_admin_ftm_chip_status' className={`${bgOfStatus(ftmDetails.status, t)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
                                                 {getStatusCode(ftmDetails.status, t)}
                                             </div>
-                                            <div className={`font-semibold ${isLoginLanguageRTL ? "mr-[1.4rem]" : "ml-[0.75rem]"} text-sm text-dark-blue`}>
+                                            <div id='view_admin_ftm_chip_created_on' className={`font-semibold ${isLoginLanguageRTL ? "mr-[1.4rem]" : "ml-[0.75rem]"} text-sm text-dark-blue`}>
                                                 {t("viewDeviceDetails.createdOn") + ' ' +
                                                     formatDate(ftmDetails.createdDateTime, "date")}
                                             </div>
                                             <div className="mx-1 text-gray-300">|</div>
-                                            <div className="font-semibold text-sm text-dark-blue">
+                                            <div id='view_admin_ftm_chip_created_date_time' className="font-semibold text-sm text-dark-blue">
                                                 {formatDate(ftmDetails.createdDateTime, "time")}
                                             </div>
                                         </div>

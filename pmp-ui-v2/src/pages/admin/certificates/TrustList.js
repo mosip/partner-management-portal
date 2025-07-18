@@ -274,7 +274,7 @@ function TrustList({ trustListType, uploadTrustBtnName, subTitle, downloadBtnNam
               <div className="flex justify-between">
                 <Title title="trustList.certificateTrustStore" backLink="/partnermanagement" />
                 {trustDataList.length !== 0 ?
-                  <button onClick={showUploadTrust} id={uploadTrustBtnName} type="button" className="h-auto text-sm px-3 font-semibold text-white bg-tory-blue rounded-md">
+                  <button onClick={showUploadTrust} id={trustListType + '_upload_trust_certificate_btn'} type="button" className="h-auto text-sm px-3 font-semibold text-white bg-tory-blue rounded-md">
                     {t('uploadTrustCertificate.uploadTrustCertificate')}
                   </button>
                   : null
@@ -284,7 +284,7 @@ function TrustList({ trustListType, uploadTrustBtnName, subTitle, downloadBtnNam
                 <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
                   <div className="flex items-center justify-center p-2">
                     <div className="p-2 bg-[#FFF7E5] border-2 border-[#EDDCAF] rounded-md w-full">
-                      <p className="text-sm font-medium text-[#8B6105]">
+                      <p id={trustListType + '_compatibility_msg'} className="text-sm font-medium text-[#8B6105]">
                         <Trans i18nKey="trustList.compatibilityMsg" components={{ italic: <i /> }} />
                       </p>
                     </div>
@@ -336,10 +336,11 @@ function TrustList({ trustListType, uploadTrustBtnName, subTitle, downloadBtnNam
                                       {tableHeaders.map((header, index) => {
                                         return (
                                           <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[14%]">
-                                            <div className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
+                                            <div id={`${header.headerNameKey}_header`} className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
                                               {t(header.headerNameKey)}
                                               {header.id !== "action" && header.id !== "validityStatus" && (
                                                 <SortingIcon
+                                                  id={`${header.headerNameKey}_sorting_icon`}
                                                   headerId={header.id}
                                                   sortDescOrder={sortDescOrder}
                                                   sortAscOrder={sortAscOrder}

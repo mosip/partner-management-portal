@@ -171,9 +171,9 @@ function ViewPartnerDetails() {
                                 <div className="flex items-center justify-center p-24">
                                     <div className="flex flex-col justify-center items-center">
                                         <img className="max-w-60 min-w-52 my-2" src={somethingWentWrongIcon} alt="" />
-                                        <p className="text-base font-semibold text-[#6F6E6E] pt-4">{t('commons.unexpectedError')}</p>
-                                        <p className="text-sm font-semibold text-[#6F6E6E] pt-1 pb-4">{getErrorMessage(errorCode, t, errorMsg)}</p>
-                                        <button onClick={moveToPartnersList} type="button"
+                                        <p id='view_partner_unexpected_error' className="text-base font-semibold text-[#6F6E6E] pt-4">{t('commons.unexpectedError')}</p>
+                                        <p id='view_partner_unexpected_error_msg' className="text-sm font-semibold text-[#6F6E6E] pt-1 pb-4">{getErrorMessage(errorCode, t, errorMsg)}</p>
+                                        <button onClick={moveToPartnersList} type="button" id='view_partner_go_back_btn'
                                             className={`w-32 h-10 flex items-center justify-center font-semibold rounded-md text-sm mx-8 py-3 bg-tory-blue text-white`}>
                                             {t('commons.goBack')}
                                         </button>
@@ -185,19 +185,19 @@ function ViewPartnerDetails() {
                             <div className="bg-snow-white h-fit mt-1 rounded-t-xl shadow-lg font-inter">
                                 <div className="flex justify-between px-7 pt-3 border-b max-[450px]:flex-col">
                                     <div className="flex-col">
-                                        <p className="text-lg text-dark-blue mb-2">
+                                        <p id='view_partner_details_partner_id' className="text-lg text-dark-blue mb-2">
                                             {t('partnerList.partnerId')}: <span className="font-semibold">{partnerDetails.partnerId}</span>
                                         </p>
                                         <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
-                                            <div className={`${partnerDetails.isActive ? 'bg-[#D1FADF] text-[#155E3E]' : 'bg-[#EAECF0] text-[#525252]'} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
+                                            <div id='view_partner_details_partner_status' className={`${partnerDetails.isActive ? 'bg-[#D1FADF] text-[#155E3E]' : 'bg-[#EAECF0] text-[#525252]'} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
                                                 {partnerDetails.isActive ? t('statusCodes.activated') : t('statusCodes.deactivated')}
                                             </div>
-                                            <div className={`font-semibold ${isLoginLanguageRTL ? "mr-[1.4rem]" : "ml-[0.75rem]"} text-sm text-dark-blue`}>
+                                            <div id='view_partner_details_partner_created_on' className={`font-semibold ${isLoginLanguageRTL ? "mr-[1.4rem]" : "ml-[0.75rem]"} text-sm text-dark-blue`}>
                                                 {t("viewPartnerDetails.createdOn") + ' ' +
                                                     formatDate(partnerDetails.createdDateTime, "date")}
                                             </div>
                                             <div className="mx-1 text-gray-300">|</div>
-                                            <div className="font-semibold text-sm text-dark-blue">
+                                            <div id='view_partner_details_partner_created_date_time' className="font-semibold text-sm text-dark-blue">
                                                 {formatDate(partnerDetails.createdDateTime, "time")}
                                             </div>
                                         </div>
@@ -206,58 +206,58 @@ function ViewPartnerDetails() {
                                 <div className={`${isLoginLanguageRTL ? "pr-8 ml-8" : "pl-8 mr-8"} pt-3 mb-2`}>
                                     <div className="flex flex-wrap py-1 max-[450px]:flex-col">
                                         <div className={`mb-3 max-[600px]:w-[100%] w-[50%] ${isLoginLanguageRTL ? "pl-[1%]" : "pr-[1%]"}`}>
-                                            <p className="font-[600] text-suva-gray text-sm">
+                                            <p id='view_partner_details_partner_type_label' className="font-[600] text-suva-gray text-sm">
                                                 {t("viewOidcClientDetails.partnerType")}
                                             </p>
-                                            <p className="font-[600] text-vulcan text-base">
+                                            <p id='view_partner_details_partner_type_context' className="font-[600] text-vulcan text-base">
                                                 {getPartnerTypeDescription(partnerDetails.partnerType, t)}
                                             </p>
                                         </div>
                                         <div className="w-[50%] max-[600px]:w-[100%] mb-3">
-                                            <p className="font-[600] text-suva-gray text-sm">
+                                            <p id='view_partner_details_org_name_label' className="font-[600] text-suva-gray text-sm">
                                                 {t("viewPartnerDetails.organisationName")}
                                             </p>
-                                            <p className="font-[600] text-vulcan text-base">
+                                            <p id='view_partner_details_org_name_context' className="font-[600] text-vulcan text-base">
                                                 {partnerDetails.organizationName}
                                             </p>
                                         </div>
                                         <div className={`w-[50%] max-[600px]:w-[100%] mb-3 ${isLoginLanguageRTL ? "pl-[1%]" : "pr-[1%]"}`}>
-                                            <p className="font-[600] text-suva-gray text-sm">
+                                            <p id='view_partner_details_first_name_label' className="font-[600] text-suva-gray text-sm">
                                                 {t("viewPartnerDetails.firstName")}
                                             </p>
-                                            <p className="font-[600] text-vulcan text-base">
+                                            <p id='view_partner_details_first_name_context' className="font-[600] text-vulcan text-base">
                                                 {partnerDetails.firstName ?? "-"}
                                             </p>
                                         </div>
                                         <div className="w-[50%] max-[600px]:w-[100%] mb-3">
-                                            <p className="font-[600] text-suva-gray text-sm">
+                                            <p id='view_partner_details_last_name_label' className="font-[600] text-suva-gray text-sm">
                                                 {t("viewPartnerDetails.lastName")}
                                             </p>
-                                            <p className="font-[600] text-vulcan text-base">
+                                            <p id='view_partner_details_last_name_context' className="font-[600] text-vulcan text-base">
                                                 {partnerDetails.lastName ?? "-"}
                                             </p>
                                         </div>
                                         <div className={`mb-3 max-[600px]:w-[100%] w-[50%] ${isLoginLanguageRTL ? "pl-[1%]" : "pr-[1%]"}`}>
-                                            <p className="font-[600] text-suva-gray text-sm">
+                                            <p id='view_partner_details_phone_number_label' className="font-[600] text-suva-gray text-sm">
                                                 {t("userProfile.phoneNumber")}
                                             </p>
-                                            <p className="font-[600] text-vulcan text-base">
+                                            <p id='view_partner_details_phone_number_context' className="font-[600] text-vulcan text-base">
                                                 {partnerDetails.contactNumber ? partnerDetails.contactNumber : '-'}
                                             </p>
                                         </div>
                                         <div className="mb-3 max-[600px]:w-[100%] w-[50%]">
-                                            <p className="font-[600] text-suva-gray text-sm">
+                                            <p id='view_partner_details_email_label' className="font-[600] text-suva-gray text-sm">
                                                 {t("userProfile.emailAddress")}
                                             </p>
-                                            <p className="font-[600] text-vulcan text-base">
+                                            <p id='view_partner_details_email_context' className="font-[600] text-vulcan text-base">
                                                 {partnerDetails.emailId}
                                             </p>
                                         </div>
                                         <div className="mb-3 w-[100%]">
-                                            <p className="font-[600] text-suva-gray text-sm">
+                                            <p id='view_partner_details_policy_group_label' className="font-[600] text-suva-gray text-sm">
                                                 {t("viewOidcClientDetails.policyGroup")}
                                             </p>
-                                            <p className="font-[600] text-vulcan text-base">
+                                            <p id='view_partner_details_policy_group_context' className="font-[600] text-vulcan text-base">
                                                 {partnerDetails.policyGroupName ? partnerDetails.policyGroupName : '-'}
                                             </p>
                                         </div>
@@ -272,7 +272,7 @@ function ViewPartnerDetails() {
                                                         : <img src={fileUpload} className="h-8" alt="" />
                                                     }
                                                     <div className='flex-col p-3 items-center'>
-                                                        <h6 className={`text-sm ${partnerDetails.isCertificateAvailable ? 'font-bold text-black' : 'font-semibold text-charcoal-gray'}`}>
+                                                        <h6 id='view_partner_details_partner_certificate_title' className={`text-sm ${partnerDetails.isCertificateAvailable ? 'font-bold text-black' : 'font-semibold text-charcoal-gray'}`}>
                                                             {t("viewPartnerDetails.partnerCertificate")}
                                                         </h6>
                                                     </div>
@@ -292,16 +292,16 @@ function ViewPartnerDetails() {
                                             <hr className="border bg-medium-gray h-px" />
                                             <div className="flex items-center p-5 bg-white rounded-lg">
                                                 <div className="flex-col space-y-1">
-                                                    <p className="font-semibold text-sm text-dim-gray">{t('partnerCertificatesList.partnerType')}</p>
-                                                    <p className="font-bold text-base text-charcoal-gray">{partnerDetails.partnerType}</p>
+                                                    <p id='view_partner_type_label' className="font-semibold text-sm text-dim-gray">{t('partnerCertificatesList.partnerType')}</p>
+                                                    <p id='view_partner_type_context' className="font-bold text-base text-charcoal-gray">{partnerDetails.partnerType}</p>
                                                 </div>
                                                 <div className={`flex-col ${isLoginLanguageRTL ? "mr-[5%]" : "ml-[5%]"} space-y-1`}>
-                                                    <p className="font-semibold text-sm text-dim-gray">{t('viewPartnerDetails.expiryDate')}</p>
-                                                    <p className="font-semibold text-base text-charcoal-gray">{formatDate(partnerDetails.certificateExpiryDateTime, "dateTime")}</p>
+                                                    <p id='view_expiry_date_label' className="font-semibold text-sm text-dim-gray">{t('viewPartnerDetails.expiryDate')}</p>
+                                                    <p id='view_expiry_date_context' className="font-semibold text-base text-charcoal-gray">{formatDate(partnerDetails.certificateExpiryDateTime, "dateTime")}</p>
                                                 </div>
                                                 <div className={`flex-col ${isLoginLanguageRTL ? "mr-[10%]" : "ml-[10%]"} space-y-1`}>
-                                                    <p className="font-semibold text-sm text-dim-gray">{t('partnerCertificatesList.timeOfUpload')}</p>
-                                                    <p className="font-semibold text-base text-charcoal-gray">{formatDate(partnerDetails.certificateUploadDateTime, "dateTime")}</p>
+                                                    <p id='view_certificate_upload_date_label' className="font-semibold text-sm text-dim-gray">{t('partnerCertificatesList.timeOfUpload')}</p>
+                                                    <p id='view_certificate_upload_date_context' className="font-semibold text-base text-charcoal-gray">{formatDate(partnerDetails.certificateUploadDateTime, "dateTime")}</p>
                                                 </div>
                                             </div>
                                         </div>
