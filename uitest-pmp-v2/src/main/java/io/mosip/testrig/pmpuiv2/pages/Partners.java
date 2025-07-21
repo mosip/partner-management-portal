@@ -15,7 +15,7 @@ public class Partners extends BasePage {
 	@FindBy(id = "sub_title_home_btn")
 	private WebElement homeButton;
 
-	@FindBy(xpath = "//p(contains(text(), 'List of Partners'")
+	@FindBy(xpath = "//p[contains(text(), 'List of Partners')]")
 	private WebElement tabularViewSubtitle;
 
 	@FindBy(xpath = "//div[text()='Partner ID']")
@@ -417,7 +417,7 @@ public class Partners extends BasePage {
 		return isElementEnabled(filterResetButton);
 	}
 
-	public boolean isFilterButtonDisbaled() {
+	public boolean isFilterButtonDisabled() {
 		return isElementDisabled(filterbtn);
 	}
 

@@ -383,5 +383,9 @@ public class AddDevicePage extends BasePage {
 	public String getDuplicateDeviceErrorMessage() {
 		return getTextFromLocator(duplicateDeviceErrorMessage);
 	}
-
+	
+	public void selectAddDeviceTypeForReject() {
+		clickOnElement(addDeviceTypeSelectDropdown);
+		clickOnElement(addDeviceTypeOption);
+	}
 }

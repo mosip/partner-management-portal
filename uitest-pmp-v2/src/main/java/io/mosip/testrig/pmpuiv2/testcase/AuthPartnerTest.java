@@ -1234,7 +1234,7 @@ public class AuthPartnerTest extends BaseClass {
 	private void logoutFromPartner(DashboardPage dashboardPage) {
 		dashboardPage.clickOnProfileDropdown();
 		assertTrue(dashboardPage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
-		LoginPage loginPage = dashboardPage.clickOnLogoutButton();
+		dashboardPage.clickOnLogoutButton();
 	}
 
 	private void loginAsAuthPartner(DashboardPage dashboardPage) {

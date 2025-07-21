@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -383,14 +384,18 @@ public class DeviceProviderPage extends BasePage {
 	}
 
 	public void enterDateManuallyInCreatedDate(String yearDateValue) {
+		createdDate.sendKeys(Keys.chord(Keys.CONTROL, "a")); 
+		createdDate.sendKeys(Keys.BACK_SPACE);
 		enter(createdDate, yearDateValue);
 	}
 
 	public void enterDateManuallyInExpiryDate(String yearDateValue) {
+		expiryDate.sendKeys(Keys.chord(Keys.CONTROL, "a")); 
+		expiryDate.sendKeys(Keys.BACK_SPACE);
 		enter(expiryDate, yearDateValue);
 	}
 
-	public boolean isEnteredDateInYearDateWithSlashFormatDisplayed() {
+	public boolean isEnteredDateInYearDateWithSlashDisplayed() {
 		String dateFromTextbox = driver.findElement(By.id("sbi_created_date_calender")).getAttribute("value");
 
 		DateTimeFormatter yearMonthDateFormatter = PmpTestUtil.yyyyMmDdFormatter;
@@ -414,7 +419,7 @@ public class DeviceProviderPage extends BasePage {
 		}
 	}
 
-	public boolean isEnteredDateInYearDateWithMinusFormatDisplayed() {
+	public boolean isEnteredDateInYearDateWithHyphenDisplayed() {
 		String dateFromTextbox = driver.findElement(By.id("sbi_created_date_calender")).getAttribute("value");
 
 		DateTimeFormatter yearMonthDateFormatter = PmpTestUtil.yyyyMmmDdFormatter;
@@ -426,7 +431,7 @@ public class DeviceProviderPage extends BasePage {
 		}
 	}
 
-	public boolean isEnteredDateInYearDateWithDotFormatDisplayed() {
+	public boolean isEnteredDateInYearDateWithDotDisplayed() {
 		String dateFromTextbox = driver.findElement(By.id("sbi_created_date_calender")).getAttribute("value");
 
 		DateTimeFormatter yearMonthDateFormatter = PmpTestUtil.yyyyMmDdFormatter2;
@@ -438,7 +443,7 @@ public class DeviceProviderPage extends BasePage {
 		}
 	}
 
-	public boolean isExpireDateInYearDateWithSlashFormatDisplayed() {
+	public boolean isExpireDateInYearDateWithSlashDisplayed() {
 		String dateFromTextbox = driver.findElement(By.id("sbi_expiry_date_calender")).getAttribute("value");
 
 		DateTimeFormatter yearMonthDateFormatter = PmpTestUtil.yyyyMmDdFormatter;
@@ -462,7 +467,7 @@ public class DeviceProviderPage extends BasePage {
 		}
 	}
 
-	public boolean isExpireDateInYearDateWithMinusFormatDisplayed() {
+	public boolean isExpireDateInYearDateWithHyphenDisplayed() {
 		String dateFromTextbox = driver.findElement(By.id("sbi_expiry_date_calender")).getAttribute("value");
 
 		DateTimeFormatter yearMonthDateFormatter = PmpTestUtil.yyyyMmmDdFormatter;
@@ -474,7 +479,7 @@ public class DeviceProviderPage extends BasePage {
 		}
 	}
 
-	public boolean isExpireDateInYearDateWithDotFormatDisplayed() {
+	public boolean isExpireDateInYearDateWithDotDisplayed() {
 		String dateFromTextbox = driver.findElement(By.id("sbi_expiry_date_calender")).getAttribute("value");
 
 		DateTimeFormatter yearMonthDateFormatter = PmpTestUtil.yyyyMmDdFormatter2;

@@ -302,7 +302,6 @@ public class PartnerPolicyLinkingTest extends BaseClass {
 		DashboardPage dashboardPage = new DashboardPage(driver);
 		PoliciesPage policiesPage = new PoliciesPage(driver);
 		PartnerPolicyMappingPage partnerPolicyMappingPage = new PartnerPolicyMappingPage(driver);
-		LoginPage loginPage = new LoginPage(driver);
 
 		dashboardPage.clickOnPartnerPolicyMappingTab();
 		partnerPolicyMappingPage.clickOnFilterButton();
@@ -421,7 +420,7 @@ public class PartnerPolicyLinkingTest extends BaseClass {
 	private void logoutFromPartner(DashboardPage dashboardPage) {
 		dashboardPage.clickOnProfileDropdown();
 		assertTrue(dashboardPage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
-		LoginPage loginPage = dashboardPage.clickOnLogoutButton();
+		dashboardPage.clickOnLogoutButton();
 
 	}
 

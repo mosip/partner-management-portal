@@ -42,7 +42,7 @@ public class DashboardPage extends BasePage {
 	@FindBy(id = "consent_proceed_btn")
 	private WebElement proceedButton;
 
-	@FindBy(id = "dashboard_partner_certificate_list_card")
+	@FindBy(id = "dashboard_partner_certificate_list_header")
 	private WebElement partnerCertificateTitle;
 
 	@FindBy(id = "dashboard_policies_card")
@@ -90,7 +90,7 @@ public class DashboardPage extends BasePage {
 	@FindBy(xpath = "//h5[text()='Partner - Policy Linking']")
 	private WebElement PartnerPolicyMappingTab;
 
-	@FindBy(xpath = "//h5[text()='SBI - Device']")
+	@FindBy(id = "dashboard_sbi_device_card_header")
 	private WebElement sbiDevicesButton;
 
 	@FindBy(id = "dashboard_partner_certificate_list_header")
