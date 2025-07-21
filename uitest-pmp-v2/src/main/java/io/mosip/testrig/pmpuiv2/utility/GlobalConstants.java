@@ -924,7 +924,7 @@ public class GlobalConstants {
 	public static final String AUTOMATION_DEACTIVATING_3 = "AutomationDeactivating3";
 	public static final String AUTOMATION_DEACTIVATING_4 = "AutomationDeactivating4";
 	public static final String AUTOMATION_DEACTIVATING_5 = "AutomationDeactivating5";
-	
+
 	public static final String ALPHANUMERIC_AND_SYMBOLS = "Automation@123#";
 	public static final String SPECIAL_CHARACTERS = "!@#$%^&";
 	public static final String SPECIAL_CHARACTERS2 = "&*&@#$%^&";

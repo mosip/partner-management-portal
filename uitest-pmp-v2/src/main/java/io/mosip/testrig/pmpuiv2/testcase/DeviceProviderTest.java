@@ -958,7 +958,7 @@ public class DeviceProviderTest extends BaseClass {
 		assertTrue(listOfSbiPage.isHighlightedConfirmDeactivateSbiDisplayed(),
 				GlobalConstants.isHighlightedConfirmDeactivateSbiDisplayed);
 		listOfSbiPage.clickOnDeactivateSbiCancel();
-		
+
 		listOfSbiPage.clickOnThreeDotsOfSbiList(GlobalConstants.ALPHANUMERIC);
 		listOfSbiPage.clickOnDeactivateSbi();
 		listOfSbiPage.clickOnDeactivateSubmit();
@@ -1058,7 +1058,7 @@ public class DeviceProviderTest extends BaseClass {
 		deviceProviderPage = dashboardpage.clickOnDeviceProviderServicesTitle();
 
 		listOfSbiPage.clickOnViewDeviceButton(GlobalConstants.ALPHANUMERIC);
-		
+
 		listOfDevicesPage.isDeviceStatusDisplayed(GlobalConstants.FACE, GlobalConstants.FULL_FACE,
 				GlobalConstants.AUTOMATION_DEACTIVATING_5, GlobalConstants.AUTOMATION_DEACTIVATING_5,
 				GlobalConstants.REJECTED);
@@ -1116,8 +1116,7 @@ public class DeviceProviderTest extends BaseClass {
 
 		verifyLinkedDevicesOfApprovededSbiInList(GlobalConstants.AUTOMATION, GlobalConstants.APPROVED);
 
-		verifyLinkedDevicesOfPendingForApprovalSbiInList(GlobalConstants.NUMERIC,
-				GlobalConstants.PENDING_FOR_APPROVAL);
+		verifyLinkedDevicesOfPendingForApprovalSbiInList(GlobalConstants.NUMERIC, GlobalConstants.PENDING_FOR_APPROVAL);
 
 		verifyLinkedDevicesOfRejectedSbiInList(GlobalConstants.AUTOMATION_REJECTING, GlobalConstants.REJECTED);
 
@@ -1134,9 +1133,6 @@ public class DeviceProviderTest extends BaseClass {
 		assertTrue(authPolicyPage.isRecordPerPageDisplayed(), GlobalConstants.isRecordPerPageDisplayed);
 
 	}
-
-	
-
 
 	private void loginAsDeviceProvider() {
 		dashboardpage.clickOnProfileDropdown();
@@ -1226,8 +1222,9 @@ public class DeviceProviderTest extends BaseClass {
 		addDevicePage.enterModelName(model);
 		assertTrue(addDevicePage.isSubmitEnabled(), GlobalConstants.isSubmitButtonEnabled);
 	}
-	
-	private void fillDeviceDetailsForRejectVerification(String deviceType, String deviceSubType, String make, String model) {
+
+	private void fillDeviceDetailsForRejectVerification(String deviceType, String deviceSubType, String make,
+			String model) {
 		addDevicePage.selectAddDeviceTypeForReject();
 		addDevicePage.selectDeviceSubType(deviceSubType);
 		addDevicePage.enterMakeName(make);
@@ -1521,7 +1518,7 @@ public class DeviceProviderTest extends BaseClass {
 	}
 
 	private void verifyLinkedDevicesOfApprovededSbiInList(String sbiVersion, String status) {
-		assertTrue(listOfSbiPage.isLinkedDevicePresentForStatus("Approved", "38"),GlobalConstants.Linked_Device38);
+		assertTrue(listOfSbiPage.isLinkedDevicePresentForStatus("Approved", "38"), GlobalConstants.Linked_Device38);
 		listOfSbiPage.clickOnLinkedDevicesInSbiList("Approved", "38");
 		assertTrue(listOfSbiPage.isLinkedDevicesListDisplayed(), GlobalConstants.isLinkedDevicesListDisplayed);
 		listOfSbiPage.clickOnBackIconOfLinkedDevices();
@@ -1535,7 +1532,8 @@ public class DeviceProviderTest extends BaseClass {
 	}
 
 	private void verifyLinkedDevicesOfPendingForApprovalSbiInList(String sbiVersion, String status) {
-		assertTrue(listOfSbiPage.isLinkedDevicePresentForStatus("Pending For Approval", "0"), GlobalConstants.Linked_Device0);
+		assertTrue(listOfSbiPage.isLinkedDevicePresentForStatus("Pending For Approval", "0"),
+				GlobalConstants.Linked_Device0);
 		listOfSbiPage.clickOnLinkedDevicesInSbiList("Pending For Approval", "0");
 		assertFalse(listOfSbiPage.isLinkedDevicesListDisplayed(), GlobalConstants.isLinkedDevicesListDisplayed);
 

@@ -47,10 +47,10 @@ public class RegisterPage extends BasePage {
 
 	@FindBy(xpath = "//input[@type='submit']")
 	private WebElement submitButton;
-	
+
 	@FindBy(xpath = "//*[@value='FTM_PROVIDER']")
 	private WebElement FtmProvider;
-	
+
 	@FindBy(xpath = "//span[text()='Please specify phoneNumber']")
 	private WebElement enterPhoneNumberWarningMessage;
 
@@ -81,7 +81,7 @@ public class RegisterPage extends BasePage {
 	public void selectPartnerTypeDropdown(int val) {
 		dropdownByIndex(partnerTypeDropdown, val);
 	}
-	
+
 	public void selectDeviceProviderInPartnerTypeDropdown() {
 		dropdownByIndex(partnerTypeDropdown, 0);
 	}
@@ -203,7 +203,7 @@ public class RegisterPage extends BasePage {
 	public void CloseTheTab() {
 		driver.close();
 	}
-	
+
 	public boolean isPhoneNumberWarningMessageDisplayed() {
 		return isElementDisplayed(enterPhoneNumberWarningMessage);
 	}

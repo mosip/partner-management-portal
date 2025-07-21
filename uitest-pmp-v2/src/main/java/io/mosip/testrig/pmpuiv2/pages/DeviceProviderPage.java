@@ -384,13 +384,13 @@ public class DeviceProviderPage extends BasePage {
 	}
 
 	public void enterDateManuallyInCreatedDate(String yearDateValue) {
-		createdDate.sendKeys(Keys.chord(Keys.CONTROL, "a")); 
+		createdDate.sendKeys(Keys.chord(Keys.CONTROL, "a"));
 		createdDate.sendKeys(Keys.BACK_SPACE);
 		enter(createdDate, yearDateValue);
 	}
 
 	public void enterDateManuallyInExpiryDate(String yearDateValue) {
-		expiryDate.sendKeys(Keys.chord(Keys.CONTROL, "a")); 
+		expiryDate.sendKeys(Keys.chord(Keys.CONTROL, "a"));
 		expiryDate.sendKeys(Keys.BACK_SPACE);
 		enter(expiryDate, yearDateValue);
 	}

@@ -175,7 +175,7 @@ public class Partners extends BasePage {
 	private WebElement titleOfPartnerCertificateInPartnerDetails;
 
 	@FindBy(xpath = "//p[text()='Partner Type']")
-	private WebElement partnerTypeLabelInCertificate;	
+	private WebElement partnerTypeLabelInCertificate;
 
 	@FindBy(xpath = "//h6[text()='Auth_Partner']")
 	private WebElement partnerTypeContextInPartnerDetails;
@@ -236,35 +236,35 @@ public class Partners extends BasePage {
 	}
 
 	public boolean isPartnerIdHeaderDisplayed() {
-	    return isElementDisplayed(partnerIdHeader);
+		return isElementDisplayed(partnerIdHeader);
 	}
 
 	public boolean isPartnerTypeHeaderDisplayed() {
-	    return isElementDisplayed(partnerTypeHeader);
+		return isElementDisplayed(partnerTypeHeader);
 	}
 
 	public boolean isOrganisationNameHeaderDisplayed() {
-	    return isElementDisplayed(organisationHeader);
+		return isElementDisplayed(organisationHeader);
 	}
 
 	public boolean isPolicyGroupHeaderDisplayed() {
-	    return isElementDisplayed(policyGroupHeader);
+		return isElementDisplayed(policyGroupHeader);
 	}
 
 	public boolean isStatusHeaderDisplayed() {
-	    return isElementDisplayed(statusHeader);
+		return isElementDisplayed(statusHeader);
 	}
 
 	public boolean isActionHeaderDisplayed() {
-	    return isElementDisplayed(actionHeader);
+		return isElementDisplayed(actionHeader);
 	}
 
 	public boolean isCertUploadStatusHeaderDisplayed() {
-	    return isElementDisplayed(certUploadStatusHeader);
+		return isElementDisplayed(certUploadStatusHeader);
 	}
 
 	public boolean isEmailAddressHeaderDisplayed() {
-	    return isElementDisplayed(emailAddressHeader);
+		return isElementDisplayed(emailAddressHeader);
 	}
 
 	public boolean isPartnerIdDescIconDisplayed() {
@@ -288,15 +288,15 @@ public class Partners extends BasePage {
 	}
 
 	public boolean isPartnerTypeAscIconDisplayed() {
-	    return isElementDisplayed(partnerType_asc_icon);
+		return isElementDisplayed(partnerType_asc_icon);
 	}
 
 	public boolean isCertificateUploadStatusDescIconDisplayed() {
-	    return isElementDisplayed(certificateUploadStatus_desc_icon);
+		return isElementDisplayed(certificateUploadStatus_desc_icon);
 	}
 
 	public boolean isCertificateUploadStatusAscIconDisplayed() {
-	    return isElementDisplayed(certificateUploadStatus_asc_icon);
+		return isElementDisplayed(certificateUploadStatus_asc_icon);
 	}
 
 	public boolean isStatusDescISconDisplayed() {
@@ -308,19 +308,19 @@ public class Partners extends BasePage {
 	}
 
 	public void clickOnFilterbtn() {
-		 clickOnElement(filterbtn);
+		clickOnElement(filterbtn);
 	}
 
 	public void enterPartnerIdInFilter(String value) {
-		 enter(partnerIdFilter,value);
+		enter(partnerIdFilter, value);
 	}
 
 	public void enterPolicyGroupInFilter(String value) {
-		 enter(policyGroupFilter,value);
+		enter(policyGroupFilter, value);
 	}
 
 	public void clickOnApplyFilterBtn() {
-		 clickOnElement(applyFilterBtn);
+		clickOnElement(applyFilterBtn);
 	}
 
 	public boolean isActivatedPartnerDisplayed() {
@@ -332,21 +332,21 @@ public class Partners extends BasePage {
 	}
 
 	public void clickOnActivatedPartner() {
-		 clickOnElement(partnerList1);
+		clickOnElement(partnerList1);
 	}
 
 	public void clickOnActionButton() {
-		 clickOnElement(actionButton);
+		clickOnElement(actionButton);
 	}
 
 	public void selectActivatedStatusInFilter() {
-		 clickOnElement(statusFilter);
-		 clickOnElement(activatedStatusInFilter);
+		clickOnElement(statusFilter);
+		clickOnElement(activatedStatusInFilter);
 	}
 
 	public void selectDeactivatedStatusInFilter() {
-		 clickOnElement(statusFilter);
-		 clickOnElement(deActivatedStatusInFilter);
+		clickOnElement(statusFilter);
+		clickOnElement(deActivatedStatusInFilter);
 	}
 
 	public boolean isViewButtonDisplayed() {
@@ -366,11 +366,11 @@ public class Partners extends BasePage {
 	}
 
 	public void clickOnDetailsPageGoBackButton() {
-		 clickOnElement(detailsPageGoBackButton);
+		clickOnElement(detailsPageGoBackButton);
 	}
 
 	public void clickOnFilterResetButton() {
-		 clickOnElement(filterResetButton);
+		clickOnElement(filterResetButton);
 	}
 
 	public boolean isDeactivatedStatusDisplayed() {
@@ -382,7 +382,7 @@ public class Partners extends BasePage {
 	}
 
 	public void clickOnActivatedStatus() {
-		 clickOnElement(ActivatedStatus);
+		clickOnElement(ActivatedStatus);
 	}
 
 	public boolean isPartnerIdFilterDisplayed() {
@@ -422,7 +422,7 @@ public class Partners extends BasePage {
 	}
 
 	public void clickOnDeactivateButton() {
-		 clickOnElement(deactivateButton);
+		clickOnElement(deactivateButton);
 	}
 
 	public boolean isPartnerDeactivatePopupDisplayed() {
@@ -430,43 +430,43 @@ public class Partners extends BasePage {
 	}
 
 	public void clickOnPartnerIdDescIcon() {
-		 clickOnElement(partnerId_desc_icon);
+		clickOnElement(partnerId_desc_icon);
 	}
 
 	public void clickOnPartnerIdAscIcon() {
-		 clickOnElement(partnerId_asc_icon);
+		clickOnElement(partnerId_asc_icon);
 	}
 
 	public void clickOnPolicyGroupNameDescIcon() {
-		 clickOnElement(policyGroupName_desc_icon);
+		clickOnElement(policyGroupName_desc_icon);
 	}
 
 	public void clickOnPolicyGroupNameAscIcon() {
-		 clickOnElement(policyGroupName_asc_icon);
+		clickOnElement(policyGroupName_asc_icon);
 	}
 
 	public void clickOnPartnerTypeDescIcon() {
-		 clickOnElement(partnerType_desc_icon);
+		clickOnElement(partnerType_desc_icon);
 	}
 
 	public void clickOnPartnerTypeAscIcon() {
-		 clickOnElement(partnerType_asc_icon);
+		clickOnElement(partnerType_asc_icon);
 	}
 
 	public void clickOnCertificateUploadStatusDescIcon() {
-		 clickOnElement(certificateUploadStatus_desc_icon);
+		clickOnElement(certificateUploadStatus_desc_icon);
 	}
 
 	public void clickOnCertificateUploadStatusAscIcon() {
-		 clickOnElement(certificateUploadStatus_asc_icon);
+		clickOnElement(certificateUploadStatus_asc_icon);
 	}
 
 	public void clickOnStatusDescIcon() {
-		 clickOnElement(statusDescIcon);
+		clickOnElement(statusDescIcon);
 	}
 
 	public void clickOnStatusAscIcon() {
-		 clickOnElement(statusAscIcon);
+		clickOnElement(statusAscIcon);
 	}
 
 	public boolean isNoResultsFoundDisplayed() {
@@ -478,7 +478,7 @@ public class Partners extends BasePage {
 	}
 
 	public void clickOnTitleBackIcon() {
-		 clickOnElement(titleBackIcon);
+		clickOnElement(titleBackIcon);
 	}
 
 	public boolean isPartnerIdPlaceHolderDisplayed() {
@@ -534,15 +534,15 @@ public class Partners extends BasePage {
 	}
 
 	public void clickOnDownloadPartnerCertBtn() {
-		 clickOnElement(downloadPartnerCertBtn);
+		clickOnElement(downloadPartnerCertBtn);
 	}
 
 	public void clickOnOriginalCertificateDownloadBtn() {
-		 clickOnElement(originalCertificateDownloadBtn);
+		clickOnElement(originalCertificateDownloadBtn);
 	}
 
 	public void clickOnMosipSignedCertificateDownloadBtn() {
-		 clickOnElement(mosipSignedCertificateDownloadBtn);
+		clickOnElement(mosipSignedCertificateDownloadBtn);
 	}
 
 	public boolean isOriginalCertificateSuccessMsgDisplayed() {
@@ -554,7 +554,7 @@ public class Partners extends BasePage {
 	}
 
 	public void clickOnViewButton() {
-		 clickOnElement(viewButton);
+		clickOnElement(viewButton);
 	}
 
 	public boolean isDownloadPartnerCertBtnDisabled() {

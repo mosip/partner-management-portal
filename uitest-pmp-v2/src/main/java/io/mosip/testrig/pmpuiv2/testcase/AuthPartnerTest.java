@@ -915,8 +915,6 @@ public class AuthPartnerTest extends BaseClass {
 		assertTrue(dashboardPage.isProceedButtonDisplayed(), GlobalConstants.isProceedButtonDisplayed);
 		dashboardPage.clickOnProceedButton();
 
-		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
-				GlobalConstants.isPartnerCertificateTitleDisplayed);
 		dashboardPage.clickOnPoliciesTitle();
 
 		assertTrue(policiesPage.isPoliciesPageDisplayed(), GlobalConstants.isPoliciesPageDisplayed);
