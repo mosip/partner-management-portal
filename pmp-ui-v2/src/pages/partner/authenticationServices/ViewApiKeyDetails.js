@@ -40,19 +40,19 @@ function ViewApiKeyDetails() {
                 <div className="bg-snow-white h-fit mt-1 rounded-t-xl shadow-lg font-inter">
                     <div className="flex justify-between px-7 pt-3 border-b max-[450px]:flex-col">
                         <div className="flex-col">
-                            <p className="text-lg text-dark-blue mb-2">
+                            <p id='view_api_key_name' className="text-lg text-dark-blue mb-2">
                                 {t('apiKeysList.apiKeyName')}: <span className="font-semibold">{apiKeyDetails.apiKeyLabel}</span>
                             </p>
                             <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
-                                <div className={`${bgOfStatus(apiKeyDetails.status)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
+                                <div id='view_api_key_status' className={`${bgOfStatus(apiKeyDetails.status)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
                                     {getStatusCode(apiKeyDetails.status, t)}
                                 </div>
-                                <div className={`font-semibold ${isLoginLanguageRTL ? "mr-1" : "ml-3"} text-sm text-dark-blue`}>
+                                <div id='view_api_key_created_on' className={`font-semibold ${isLoginLanguageRTL ? "mr-1" : "ml-3"} text-sm text-dark-blue`}>
                                     {t("viewOidcClientDetails.createdOn") + ' ' +
                                         formatDate(apiKeyDetails.createdDateTime, "date")}
                                 </div>
                                 <div className="mx-1 text-gray-300">|</div>
-                                <div className="font-semibold text-sm text-dark-blue">
+                                <div id='view_api_key_created_date_time' className="font-semibold text-sm text-dark-blue">
                                     {formatDate(apiKeyDetails.createdDateTime, "time")}
                                 </div>
                             </div>

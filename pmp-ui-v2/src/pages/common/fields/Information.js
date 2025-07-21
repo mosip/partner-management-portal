@@ -17,7 +17,7 @@ function Information({ infoKey, infoKey1, id }) {
     }, [tooltipRef])
     return (
         <div>
-            <div ref={tooltipRef} className="absolute flex items-center">
+            <div ref={tooltipRef} className="absolute mx-2 flex items-center">
                 <div
                     id={id}
                     onClick={() => setShowTooltip(!showTooltip)}

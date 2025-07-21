@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { bgOfStatus, formatDate, getStatusCode, isLangRTL, onPressEnterKey } from '../../../utils/AppUtils';
+import { bgOfStatus, formatDate, getApproveRejectStatus, getStatusCode, isLangRTL, onPressEnterKey } from '../../../utils/AppUtils';
 import { getUserProfile } from '../../../services/UserProfileService';
 import { useNavigate } from 'react-router-dom';
 import Title from '../../common/Title';
 import adminImage from "../../../svg/admin.png";
 import partnerImage from "../../../svg/partner.png";
 import dotImg from "../../../svg/dot.svg";
+import ApproveRejectPopup from '../../common/ApproveRejectPopup';
 
 function ViewPolicyRequestDetails() {
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const navigate = useNavigate();
     const [policyRequestDetails, setPolicyRequestDetails] = useState({});
+    const [showApproveRejectPopup, setShowApproveRejectPopup] = useState(false);
 
     useEffect(() => {
         const policyRequestData = localStorage.getItem('selectedPartnerPolicyRequest');
@@ -33,6 +35,15 @@ function ViewPolicyRequestDetails() {
         navigate('/partnermanagement/admin/policy-requests-list');
     };
 
+    const onClickApproveReject = (responseData, status) => {
+        if (responseData !== "") {
+            setShowApproveRejectPopup(false);
+            const updatedPolicyRequestDetails = {...policyRequestDetails, status: getApproveRejectStatus(status)};
+            setPolicyRequestDetails(updatedPolicyRequestDetails);
+            localStorage.setItem('selectedPartnerPolicyRequest', JSON.stringify(updatedPolicyRequestDetails));
+        }
+    }
+
     return (
         <>
             <div className={`w-full p-5 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm overflow-x-scroll mb-[2%] ${isLoginLanguageRTL ? "mr-24 ml-1" : "ml-24 mr-1"} mt-3`}>
@@ -40,7 +51,7 @@ function ViewPolicyRequestDetails() {
                     <Title title='viewPolicyRequest.viewPolicyRequest' subTitle='viewPolicyRequest.listOfPolicyRequests' backLink='/partnermanagement/admin/policy-requests-list' />
                 </div>
                 <div className="bg-snow-white h-fit mt-1 rounded-md shadow-lg font-inter">
-                    <div className="flex justify-between px-7 pt-3 border-b max-[450px]:flex-col">
+                    <div className="flex justify-between items-center px-7 pt-3 border-b max-[450px]:flex-col">
                         <div className="flex-col py-3">
                             <p className="text-lg text-dark-blue mb-2">
                                 {t('partnerList.partnerId')}: <span className="font-semibold">{policyRequestDetails.partnerId}</span>
@@ -59,6 +70,27 @@ function ViewPolicyRequestDetails() {
                                 </div>
                             </div>
                         </div>
+                        {policyRequestDetails.status === 'InProgress' && (
+                            <>
+                                <div>
+                                    <button id="view_approve_reject_btn" onClick={() => setShowApproveRejectPopup(true)}
+                                        className="h-fit w-fit text-sm p-4 py-3 text-white bg-tory-blue border border-blue-800 font-medium rounded-md text-center" onKeyDown={(e) => onPressEnterKey(e, () => setShowApproveRejectPopup(true))}>
+                                        {t("approveRejectPopup.approveReject")}
+                                    </button>
+                                </div>
+                                {showApproveRejectPopup &&
+                                    <ApproveRejectPopup
+                                        popupData={{ ...policyRequestDetails, isPartnerPolicyRequest: true }}
+                                        closePopUp={() => setShowApproveRejectPopup(false)}
+                                        approveRejectResponse={(responseData, status) => onClickApproveReject(responseData, status)}
+                                        title={policyRequestDetails.policyName}
+                                        subtitle={`# ${policyRequestDetails.policyId}`}
+                                        header={t('partnerPolicyRequestApproveRejectPopup.header')}
+                                        description={t('partnerPolicyRequestApproveRejectPopup.description')}
+                                    />
+                                }
+                            </>
+                        )}
                     </div>
                     <div className={`${isLoginLanguageRTL ? "pr-8 ml-8" : "pl-8 mr-8"} pt-3 mb-2`}>
                         <div className="flex flex-wrap py-1 max-[450px]:flex-col">

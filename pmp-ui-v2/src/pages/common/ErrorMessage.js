@@ -5,7 +5,7 @@ import { isLangRTL, getErrorMessage } from "../../utils/AppUtils";
 import { getUserProfile } from "../../services/UserProfileService";
 import PropTypes from 'prop-types';
 
-function ErrorMessage({ errorCode, errorMessage, clickOnCancel, customStyle }) {
+function ErrorMessage({ id, errorCode, errorMessage, clickOnCancel, customStyle}) {
     const { t } = useTranslation();
     const [errorMsg, setErrorMsg] = useState();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
@@ -20,7 +20,7 @@ function ErrorMessage({ errorCode, errorMessage, clickOnCancel, customStyle }) {
             <div className={`bg-[#C61818] ${customStyle ? customStyle.innerDiv : 'flex justify-between items-center rounded-xl max-w-[35rem] min-h-14 max-h-[3.8rem] min-w-72 p-4'}`}>
                 <div className="flex items-center">
                     <div className={`h-full ${isLoginLanguageRTL ? 'ml-8' : 'mr-8'}`}>
-                        <p className="text-white text-sm max-[450px]:text-xs/4 break-normal font-inter">
+                        <p id={id} className="text-white text-sm max-[450px]:text-xs/4 break-normal font-inter">
                             {errorMsg}
                         </p>
                     </div>

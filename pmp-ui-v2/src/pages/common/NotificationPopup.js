@@ -149,7 +149,7 @@ function NotificationPopup({ closeNotification }) {
     };
 
     return (
-        <div className={`absolute top-[3.75rem] ${isLoginLanguageRTL ? 'max-850:left-4 left-[15rem]' : 'max-850:right-4 right-[15rem]'} bg-white w-[28rem] max-520:w-[286px] rounded-lg shadow-lg border border-gray-200 z-50`}>
+        <div className={`absolute top-[3.75rem] ${isLoginLanguageRTL ? 'left-0' : 'right-0'} bg-white max-850:w-[25rem] w-[29rem] max-520:w-72 rounded-lg shadow-lg border border-gray-200 z-50`}>
             <FocusTrap focusTrapOptions={{ initialFocus: false, allowOutsideClick: true }}>
                 <div>
                     {!dataLoaded && (
@@ -164,14 +164,14 @@ function NotificationPopup({ closeNotification }) {
                                 </button>
                             </div>
                             {errorMsg && (
-                                <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customStyle={errorcustomStyle}/>
+                                <ErrorMessage id='notification_popup_error_msg' errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customStyle={errorcustomStyle}/>
                             )}
                             {notifications.length > 0 ? (
                                 <>
                                     <p className={`text-sm text-[#6F6E6E] font-medium ${isLoginLanguageRTL ? 'mr-4' : 'ml-4'} my-2`}>{t('notificationPopup.latest')}</p>
                                     <div className={`${isSmallScreen ? 'max-h-64' : 'max-h-96'} overflow-y-auto`}>
                                         {notifications.map(notification => (
-                                            <div key={notification.notificationId} className={`flex justify-between items-start px-4 py-2 border-b border-gray-200 ${isLatestNotification(notification) ? 'bg-[#F0F6FF]' : ''}`}>
+                                            <div key={notification.notificationId} className={`flex justify-between items-start px-6 py-2 border-b border-gray-200 ${isLatestNotification(notification) ? 'bg-[#F0F6FF]' : ''}`}>
                                                 <img src={featuredIcon} alt='' id='featuredIcon' className={`${isLoginLanguageRTL ? 'ml-3' : 'mr-3'} mt-1`} />
                                                 <div className="mb-2">
                                                     <div className="flex justify-between space-x-2">

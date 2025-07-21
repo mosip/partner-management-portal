@@ -330,7 +330,7 @@ function ViewAllNotifications({ notificationType }) {
             {dataLoaded && (
                 <>
                     {errorMsg && (
-                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
+                        <ErrorMessage id='view_all_notifications_error_msg' errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
                     <div className="flex-col mt-5">
                         <div className="flex justify-between mb-5 max-470:flex-col">
@@ -419,7 +419,7 @@ function ViewAllNotifications({ notificationType }) {
                                                                         <p className="font-semibold text-base text-[#101828]">{getNotificationTitle(notification, t)}</p>
                                                                         <p className={`text-xs text-gray-500 ${isLoginLanguageRTL ? 'text-left' : 'text-right'}`}>{formatDate(notification.createdDateTime, 'dateTime')}</p>
                                                                     </div>
-                                                                    <div className="text-[#475467] text-sm min-560:break-normal break-all">{getNotificationDescription(notification, isLoginLanguageRTL, t)}</div>
+                                                                    <div className="text-[#475467] text-sm break-normal">{getNotificationDescription(notification, isLoginLanguageRTL, t)}</div>
                                                                     <hr className="h-0.5 my-4 bg-[#BCC5E5] border" />
                                                                     <div className={`flex space-x-4 ${isLoginLanguageRTL && 'space-x-reverse'}`}>
                                                                         <button onClick={() => dismissNotification(notification.notificationId)} className="text-tory-blue font-semibold text-sm px-4 py-[6px] rounded-md bg-[#F7F9FF]">{t('notificationPopup.dismiss')}</button>

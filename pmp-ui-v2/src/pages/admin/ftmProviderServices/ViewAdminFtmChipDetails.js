@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../../../services/UserProfileService';
-import { bgOfStatus, downloadFile, formatDate, getPartnerManagerUrl, getStatusCode, handleServiceErrors, isCaSignedPartnerCertificateAvailable, isLangRTL } from '../../../utils/AppUtils';
+import { bgOfStatus, downloadFile, formatDate, getApproveRejectStatus, getPartnerManagerUrl, getStatusCode, handleServiceErrors, isCaSignedPartnerCertificateAvailable, isLangRTL, onPressEnterKey, updateActiveState } from '../../../utils/AppUtils';
 import ErrorMessage from '../../common/ErrorMessage';
 import SuccessMessage from '../../common/SuccessMessage';
 import Title from '../../common/Title';
@@ -13,6 +13,7 @@ import fileUpload from '../../../svg/file_upload_icon.svg';
 import file from '../../../svg/file_icon.svg';
 import { HttpService } from '../../../services/HttpService';
 import LoadingIcon from '../../common/LoadingIcon';
+import ApproveRejectPopup from '../../common/ApproveRejectPopup';
 
 function ViewAdminFtmChipDetails() {
     const { t } = useTranslation();
@@ -26,6 +27,7 @@ function ViewAdminFtmChipDetails() {
     const [successMsg, setSuccessMsg] = useState("");
     const [dataLoaded, setDataLoaded] = useState(true);
     const [downloadCertApiNotExist, setDownloadCertApiNotExist] = useState(false);
+    const [showApproveRejectPopup, setShowApproveRejectPopup] = useState(false);
 
     useEffect(() => {
         const selectedFtmData = localStorage.getItem('selectedFtmAttributes');
@@ -115,6 +117,15 @@ function ViewAdminFtmChipDetails() {
         setSuccessMsg("");
     };
 
+    const onClickApproveReject = (responseData, status) => {
+        if (responseData) {
+            setShowApproveRejectPopup(false);
+            const updatedFtmDetails = {...ftmDetails, status: getApproveRejectStatus(status), isActive: updateActiveState(status)};
+            setFtmDetails(updatedFtmDetails);
+            localStorage.setItem('selectedFtmAttributes', JSON.stringify(updatedFtmDetails));
+        }
+    };
+
     return (
         <div className={`w-full p-4 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm mb-[2%] ${isLoginLanguageRTL ? "mr-24 ml-1" : "ml-24 mr-1"} overflow-x-scroll`}>
             {!dataLoaded && (
@@ -123,10 +134,10 @@ function ViewAdminFtmChipDetails() {
             {dataLoaded && (
                 <>
                     {errorMsg && (
-                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
+                        <ErrorMessage id='view_admin_ftm_chip_details_error_msg' errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
                     {successMsg && (
-                        <SuccessMessage successMsg={successMsg} clickOnCancel={cancelSuccessMsg} />
+                        <SuccessMessage id='view_admin_ftm_chip_details_success_msg' successMsg={successMsg} clickOnCancel={cancelSuccessMsg} />
                     )}
                     <div className={`flex-col mt-5 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm mb-[2%]`}>
                         <div className="flex justify-between mb-3">
@@ -149,7 +160,7 @@ function ViewAdminFtmChipDetails() {
                         )}
                         {!unexpectedError && (
                             <div className="bg-snow-white h-fit mt-1 rounded-t-xl shadow-lg font-inter">
-                                <div className="flex justify-between px-7 pt-3 border-b max-[450px]:flex-col">
+                                <div className="flex justify-between items-center px-7 pt-3 border-b max-[450px]:flex-col">
                                     <div className="flex-col">
                                         <p className="text-lg text-dark-blue mb-2">
                                             {t('ftmList.ftmId')}: <span className="font-semibold">{ftmDetails.ftmId}</span>
@@ -168,6 +179,26 @@ function ViewAdminFtmChipDetails() {
                                             </div>
                                         </div>
                                     </div>
+                                    {ftmDetails.status === 'pending_approval' && (
+                                        <>
+                                            <div>
+                                                <button id="view_approve_reject_btn" onClick={() => setShowApproveRejectPopup(true)}
+                                                    className="h-fit w-fit text-sm p-4 py-3 text-white bg-tory-blue border border-blue-800 font-medium rounded-md text-center" onKeyDown={(e) => onPressEnterKey(e, () => setShowApproveRejectPopup(true))}>
+                                                    {t("approveRejectPopup.approveReject")}
+                                                </button>
+                                            </div>
+                                            {showApproveRejectPopup &&
+                                                <ApproveRejectPopup
+                                                    popupData={{ ...ftmDetails, isFtmRequest: true }}
+                                                    closePopUp={() => setShowApproveRejectPopup(false)}
+                                                    approveRejectResponse={(responseData, status) => onClickApproveReject(responseData, status)}
+                                                    title={`${ftmDetails.make} | ${ftmDetails.model}`}
+                                                    header={t('ftmRequestApproveRejectPopup.header', { make: ftmDetails.make, model: ftmDetails.model })}
+                                                    description={t('ftmRequestApproveRejectPopup.description')}
+                                                />
+                                            }
+                                        </>
+                                    )}
                                 </div>
                                 <div className={`${isLoginLanguageRTL ? "pr-8 ml-8" : "pl-8 mr-8"} pt-3 mb-2`}>
                                     <div className="flex flex-wrap py-1 max-[450px]:flex-col">

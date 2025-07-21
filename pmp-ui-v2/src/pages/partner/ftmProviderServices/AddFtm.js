@@ -232,7 +232,7 @@ function AddFtm() {
       {dataLoaded && (
         <>
           {errorMsg && (
-            <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
+            <ErrorMessage id='add_ftm_error_msg' errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
           )}
           <div className="flex-col mt-5">
             <div className="flex justify-between">
@@ -301,7 +301,7 @@ function AddFtm() {
                 </div>
               </div>
               : <>
-                <Confirmation confirmationData={confirmationData} onClickFunction={clickOnUpload} />
+                <Confirmation id='add_ftm_confirmation' confirmationData={confirmationData} onClickFunction={clickOnUpload} />
                 {
                   showPopup && (
                     <UploadCertificate header={t('addFtm.uploadFtmCertificate')} closePopup={closePopup} popupData={uploadCertificateData} request={uploadCertificateRequest} />

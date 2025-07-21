@@ -79,7 +79,7 @@ function Pagination({ dataListLength, selectedRecordsPerPage, setSelectedRecords
                 }
             />
             <div className="flex items-center gap-x-3">
-                <h6 className="text-gray-500 text-xs">{t('commons.itemsPerPage')}</h6>
+                <h6 id='items_per_page' className="text-gray-500 text-xs">{t('commons.itemsPerPage')}</h6>
                 <div ref={itemsCountSelectionRef} className='relative min-w-fit w-10'
                     role='button' id='pagination_select_record_per_page' onClick={() => setIsItemsPerPageOpen(!isItemsPerPageOpen)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => setIsItemsPerPageOpen(!isItemsPerPageOpen))}>
                     {isItemsPerPageOpen && (

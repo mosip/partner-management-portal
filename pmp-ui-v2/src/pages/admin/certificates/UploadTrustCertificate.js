@@ -194,7 +194,7 @@ function UploadTrustCertificate() {
             {dataLoaded && (
                 <>
                     {errorMsg && (
-                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
+                        <ErrorMessage id='upload_trust_certificate_error_msg' errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
                     <div className="flex-col mt-5">
                         <div className="flex justify-between">
@@ -319,7 +319,7 @@ function UploadTrustCertificate() {
                                             </div>
                                         </div>
                                     </div>
-                                    : <Confirmation confirmationData={confirmationData} />
+                                    : <Confirmation id='upload_trust_certificate_confirmation' confirmationData={confirmationData} />
                                 }
                             </div>
                         )}

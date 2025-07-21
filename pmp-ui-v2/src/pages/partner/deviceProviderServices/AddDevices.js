@@ -321,7 +321,7 @@ function AddDevices() {
             {dataLoaded && (
                 <>
                     {errorMsg && (
-                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
+                        <ErrorMessage id='add_devices_error_msg' errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
                     <div className="flex-col mt-8">
                         <div className="flex justify-between mb-5">
@@ -348,10 +348,10 @@ function AddDevices() {
                                             <p className="text-base text-[#3D4468] px-6 py-2">{t('requestPolicy.mandatoryFieldsMsg1')} <span className="text-crimson-red">*</span> {t('requestPolicy.mandatoryFieldsMsg2')}</p>
                                         )}
                                         {entry.successMsg && (
-                                            <SuccessMessage successMsg={entry.successMsg} clickOnCancel={() => cancelSuccessMsg(index)} customStyle={customStyle} />
+                                            <SuccessMessage id={'add_devices_' + (index + 1) + '_success_msg'} successMsg={entry.successMsg} clickOnCancel={() => cancelSuccessMsg(index)} customStyle={customStyle} />
                                         )}
                                         {entry.errorMsg && (
-                                            <ErrorMessage errorCode={entry.errorCode} errorMessage={entry.errorMsg} clickOnCancel={() => cancelError(index)} customStyle={customStyle} />
+                                            <ErrorMessage id={'add_devices_' + (index + 1) + '_error_msg'} errorCode={entry.errorCode} errorMessage={entry.errorMsg} clickOnCancel={() => cancelError(index)} customStyle={customStyle} />
                                         )}
                                     </div>
                                     <form>

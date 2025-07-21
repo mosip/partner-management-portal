@@ -31,7 +31,7 @@ function TextInputComponent({ fieldName, fieldNameKey, placeHolderKey, textBoxVa
     fieldNameKey = containsAsterisk ? fieldNameKey.replace('*', '') : fieldNameKey;
 
     return (
-        <div className={`mb-2 ${styleSet?.outerDiv || ''}`}>
+        <div className={`mb-2 min-w-fit ${styleSet?.outerDiv || ''}`}>
             <label className={`flex items-center text-dark-blue text-sm mb-1 ${styleSet?.inputLabel || ''}`}>
                 <p className={`font-semibold`}>{t(fieldNameKey)}{containsAsterisk && <span className={`text-crimson-red mx-1`}>*</span>}</p>
                 {addInfoIcon && (
@@ -45,9 +45,10 @@ function TextInputComponent({ fieldName, fieldNameKey, placeHolderKey, textBoxVa
                     value={inputValue}
                     onChange={handleInputChange}
                     placeholder={t(placeHolderKey)}
+                    size={t(placeHolderKey).length}
                     {...(maxLength && { maxLength })}
                     readOnly={disableField}
-                    className={`${disableField ? 'bg-platinum-gray': 'bg-white'} ${isLoginLanguageRTL ? 'pl-7': 'pr-7'} rounded-[4px] h-9 w-full p-2 focus:outline-none items-center ${styleSet?.inputField || ''}`}
+                    className={`${disableField ? 'bg-platinum-gray': 'bg-white'} ${isLoginLanguageRTL ? 'pl-7': 'pr-7'} rounded-[4px] h-9 p-2 focus:outline-none items-center ${styleSet?.inputField || ''}`}
                 />
                 {inputValue && !disableField && (
                     <button
