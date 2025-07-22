@@ -118,7 +118,7 @@ function SelectPolicyPopup() {
                                 <form>
                                     <div className="pt-2 w-full mb-1 flex flex-col">
                                         <div className="flex flex-col">
-                                            <label className="block text-dark-blue text-sm font-semibold mb-2">
+                                            <label id="select_policy_group_partner_type_label" className="block text-dark-blue text-sm font-semibold mb-2">
                                                 {t('selectPolicyPopup.partnerTypeLabel')}<span className="text-red-500 pl-1">*</span>
                                             </label>
                                             <button id='select_policyPopup_partner_type' disabled className="flex items-center justify-between w-full h-10 px-2 py-2 border border-gray-300 rounded-md text-sm text-dark-blue bg-gray-200 leading-tight focus:outline-none focus:shadow-outline" type="button">

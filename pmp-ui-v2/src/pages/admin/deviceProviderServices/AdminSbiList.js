@@ -294,10 +294,11 @@ function AdminSbiList() {
                                                                     {tableHeaders.map((header, index) => {
                                                                         return (
                                                                             <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[15%]">
-                                                                                <div className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
+                                                                                <div id={`${header.headerNameKey}_header`} className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
                                                                                     {t(header.headerNameKey)}
                                                                                     {(header.id !== "action") && (
                                                                                         <SortingIcon
+                                                                                            id={`${header.headerNameKey}_sorting_icon`}
                                                                                             headerId={header.id}
                                                                                             sortDescOrder={sortDescOrder}
                                                                                             sortAscOrder={sortAscOrder}
@@ -331,7 +332,7 @@ function AdminSbiList() {
                                                                                 </div>
                                                                             </td>
                                                                             <td className={`text-center px-5`}>
-                                                                                <button onClick={() => showLinkedDevices(sbi)} className={`flex items-center justify-center ${sbi.countOfAssociatedDevices > 0 ? 'cursor-pointer' : 'cursor-default'}`}>
+                                                                                <button id={'sbi_list_linked_devices_' + (index + 1)} onClick={() => showLinkedDevices(sbi)} className={`flex items-center justify-center ${sbi.countOfAssociatedDevices > 0 ? 'cursor-pointer' : 'cursor-default'}`}>
                                                                                     <img src={sbi.countOfAssociatedDevices > 0 ? activeLinkedDevices : deactiveLinkedDevices} alt='' />
                                                                                     <p className={`${sbi.countOfAssociatedDevices > 0 ? 'text-tory-blue' : 'text-[#969696]'} px-2`}>{sbi.countOfAssociatedDevices}</p>
                                                                                 </button>

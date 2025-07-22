@@ -56,9 +56,9 @@ function ViewAdminApiKeyDetails() {
                                 <div className="flex items-center justify-center p-24">
                                     <div className="flex flex-col justify-center items-center">
                                         <img className="max-w-60 min-w-52 my-2" src={somethingWentWrongIcon} alt="" />
-                                        <p className="text-base font-semibold text-[#6F6E6E] pt-4">{t('commons.unexpectedError')}</p>
-                                        <p className="text-sm font-semibold text-[#6F6E6E] pt-1 pb-4">{getErrorMessage(errorCode, t, errorMsg)}</p>
-                                        <button onClick={moveToApiClientsList} type="button"
+                                        <p id='view_admin_api_key_details_unexpected_error' className="text-base font-semibold text-[#6F6E6E] pt-4">{t('commons.unexpectedError')}</p>
+                                        <p id='view_admin_api_key_details_unexpected_error_msg' className="text-sm font-semibold text-[#6F6E6E] pt-1 pb-4">{getErrorMessage(errorCode, t, errorMsg)}</p>
+                                        <button onClick={moveToApiClientsList} type="button" id='view_admin_api_key_details_go_back_btn'
                                             className={`w-32 h-10 flex items-center justify-center font-semibold rounded-md text-sm mx-8 py-3 bg-tory-blue text-white`}>
                                             {t('commons.goBack')}
                                         </button>
@@ -71,19 +71,19 @@ function ViewAdminApiKeyDetails() {
                             <div className="bg-snow-white h-fit mt-1 rounded-t-xl shadow-lg font-inter">
                                 <div className="flex justify-between px-7 pt-3 border-b max-[450px]:flex-col">
                                     <div className="flex-col">
-                                        <p className="text-lg text-dark-blue mb-2">
+                                        <p id='view_admin_api_key_details_sub_title_id' className="text-lg text-dark-blue mb-2">
                                             {t('apiKeysList.apiKeyName')}: <span className="font-semibold">{apiKeyDetails.apiKeyLabel}</span>
                                         </p>
                                         <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
-                                            <div className={`${bgOfStatus(apiKeyDetails.status)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
+                                            <div id='view_admin_api_key_details_status' className={`${bgOfStatus(apiKeyDetails.status)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
                                                 {getStatusCode(apiKeyDetails.status, t)}
                                             </div>
-                                            <div className={`font-semibold ${isLoginLanguageRTL ? "mr-[1.4rem]" : "ml-[0.75rem]"} text-sm text-dark-blue`}>
+                                            <div id='view_admin_api_key_details_created_on' className={`font-semibold ${isLoginLanguageRTL ? "mr-[1.4rem]" : "ml-[0.75rem]"} text-sm text-dark-blue`}>
                                                 {t("viewOidcClientDetails.createdOn") + ' ' +
                                                     formatDate(apiKeyDetails.createdDateTime, "date")}
                                             </div>
                                             <div className="mx-1 text-gray-300">|</div>
-                                            <div className="font-semibold text-sm text-dark-blue">
+                                            <div id='view_admin_api_key_details_created_date_time' className="font-semibold text-sm text-dark-blue">
                                                 {formatDate(apiKeyDetails.createdDateTime, "time")}
                                             </div>
                                         </div>

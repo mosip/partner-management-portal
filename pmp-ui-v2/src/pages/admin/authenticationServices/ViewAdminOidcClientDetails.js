@@ -95,9 +95,9 @@ function ViewAdminOidcClientDetails() {
                                 <div className="flex items-center justify-center p-24">
                                     <div className="flex flex-col justify-center items-center">
                                         <img className="max-w-60 min-w-52 my-2" src={somethingWentWrongIcon} alt="" />
-                                        <p className="text-base font-semibold text-[#6F6E6E] pt-4">{t('commons.unexpectedError')}</p>
-                                        <p className="text-sm font-semibold text-[#6F6E6E] pt-1 pb-4">{getErrorMessage(errorCode, t, errorMsg)}</p>
-                                        <button onClick={moveToOidcClientsList} type="button"
+                                        <p id='view_admin_oidc_clients_unexpected_error' className="text-base font-semibold text-[#6F6E6E] pt-4">{t('commons.unexpectedError')}</p>
+                                        <p id='view_admin_oidc_clients_unexpected_error_msg' className="text-sm font-semibold text-[#6F6E6E] pt-1 pb-4">{getErrorMessage(errorCode, t, errorMsg)}</p>
+                                        <button onClick={moveToOidcClientsList} type="button" id='view_admin_oidc_clients_go_back_btn'
                                             className={`w-32 h-10 flex items-center justify-center font-semibold rounded-md text-sm mx-8 py-3 bg-tory-blue text-white`}>
                                             {t('commons.goBack')}
                                         </button>
@@ -109,17 +109,17 @@ function ViewAdminOidcClientDetails() {
                             <div className="bg-snow-white h-fit mt-1 rounded-t-xl shadow-lg font-inter">
                                 <div className="flex justify-between px-7 pt-3 border-b max-[450px]:flex-col">
                                     <div className="flex-col">
-                                        <p className="text-lg text-dark-blue mb-2">{t('authenticationServices.oidcClientName')}: <span className="font-semibold">{selectedClientData.clientNameEng}</span></p>
+                                        <p id='view_admin_oidc_clients_sub_title_id' className="text-lg text-dark-blue mb-2">{t('authenticationServices.oidcClientName')}: <span className="font-semibold">{selectedClientData.clientNameEng}</span></p>
                                         <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
-                                            <div className={`${bgOfStatus(oidcClientDetails.status)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
+                                            <div id='view_admin_oidc_clients_status' className={`${bgOfStatus(oidcClientDetails.status)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
                                                 {getStatusCode(selectedClientData.status, t)}
                                             </div>
-                                            <div className={`font-semibold ${isLoginLanguageRTL ? "mr-[1.4rem]" : "ml-[0.75rem]"} text-sm text-dark-blue`}>
+                                            <div id='view_admin_oidc_clients_created_on' className={`font-semibold ${isLoginLanguageRTL ? "mr-[1.4rem]" : "ml-[0.75rem]"} text-sm text-dark-blue`}>
                                                 {t("viewOidcClientDetails.createdOn") + ' ' +
                                                     formatDate(selectedClientData.createdDateTime, "date")}
                                             </div>
                                             <div className="mx-1 text-gray-300">|</div>
-                                            <div className="font-semibold text-sm text-dark-blue">
+                                            <div id='view_admin_oidc_clients_created_date_time' className="font-semibold text-sm text-dark-blue">
                                                 {formatDate(selectedClientData.createdDateTime, "time")}
                                             </div>
                                         </div>
@@ -127,9 +127,9 @@ function ViewAdminOidcClientDetails() {
 
                                     <button id="oidc_client_details_copy_id" className={`${oidcClientDetails.status === "ACTIVE" ? 'bg-[#F0F5FF] border-[#BED3FF] cursor-pointer hover:shadow-md' : 'bg-gray-200 border-gray-400 cursor-default'}  border h-[4%] w-[15%] max-[450px]:w-[40%] max-[800px]:w-[25%] ${isLoginLanguageRTL ? "pr-[3%] pl-[1.5%]" : "pl-[3%] pr-[1%]"} py-[0.5%] rounded-md text-right`}
                                          onClick={() => copyClientId(selectedClientData, selectedClientData.clientId, setCopied)} tabIndex={oidcClientDetails.status === "ACTIVE" && "0"}>
-                                        <p className="text-sm font-semibold text-[#333333]">{t('viewOidcClientDetails.oidcClientId')}</p>
+                                        <p id='view_admin_oidc_client_id_label' className="text-sm font-semibold text-[#333333]">{t('viewOidcClientDetails.oidcClientId')}</p>
                                         <div className="flex space-x-1 items-center">
-                                            <p className={`text-base font-bold ${selectedClientData.status === "ACTIVE" ? 'text-[#1447B2]' : 'text-gray-400'} truncate`}>
+                                            <p id='view_admin_oidc_client_id' className={`text-base font-bold ${selectedClientData.status === "ACTIVE" ? 'text-[#1447B2]' : 'text-gray-400'} truncate`}>
                                                 {selectedClientData.clientId}
                                             </p>
                                             {selectedClientData.status === "ACTIVE" ? (
@@ -140,7 +140,7 @@ function ViewAdminOidcClientDetails() {
                                             {copied &&
                                                 (
                                                     <div ref={copyToolTipRef} className={`z-20 px-4 py-1 mt-[3.5rem] max-h-[32%] font-semibold overflow-y-auto absolute ${isLoginLanguageRTL ? "left-10" : "right-10"} shadow-lg bg-white border border-gray-300 rounded-md`}>
-                                                        <p className="text-[#36393E] text-base font-inter">{t('viewOidcClientDetails.copied!')}</p>
+                                                        <p id='view_admin_oidc_client_id_copied' className="text-[#36393E] text-base font-inter">{t('viewOidcClientDetails.copied!')}</p>
                                                     </div>
                                                 )
                                             }

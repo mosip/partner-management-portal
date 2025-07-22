@@ -124,9 +124,9 @@ function ApproveRejectPopup({ popupData, closePopUp, approveRejectResponse, titl
                                 <>
                                     <div className="flex justify-between px-[1rem] my-4 w-full">
                                         <div className="flex-col space-y-2 break-words w-[19.5rem]">
-                                            <p className="text-sm font-bold">{title}</p>
+                                            <p id='approve-reject_popup_title' className="text-sm font-bold">{title}</p>
                                             {subtitle && (
-                                                <p className="text-[#A5A5A5] text-xs">{subtitle}</p>
+                                                <p id='approve-reject_popup_sub_title' className="text-[#A5A5A5] text-xs">{subtitle}</p>
                                             )}
                                         </div>
                                         <button id="approve_reject_popup_close_icon" onClick={closingPopUp} className="h-6 hover:cursor-pointer">
@@ -135,8 +135,8 @@ function ApproveRejectPopup({ popupData, closePopUp, approveRejectResponse, titl
                                     </div>
                                     <hr className="h-px bg-gray-100 border-[0.02rem]" />
                                     <div className="px-[1.5rem] py-3 text-center break-words">
-                                        <p className="text-base font-semibold text-black">{header}</p>
-                                        <p className="text-sm text-[#666666] py-3">{description}</p>
+                                        <p id='approve-reject_popup_header' className="text-base font-semibold text-black">{header}</p>
+                                        <p id='approve-reject_popup_description' className="text-sm text-[#666666] py-3">{description}</p>
                                     </div>
                                     <hr className="h-px bg-gray-100 border-[0.02rem]" />
                                     <div className="flex items-center justify-between space-x-3 p-[6%]">

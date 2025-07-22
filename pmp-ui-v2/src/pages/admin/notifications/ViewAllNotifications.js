@@ -356,8 +356,8 @@ function ViewAllNotifications({ notificationType }) {
                         <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
                             <div className="flex flex-col items-center py-20 px-2 border-b border-gray-200">
                                 <img src={noNotificationIcon} alt='' id='noNotificationIcon' />
-                                <p className="text-sm text-gray-500">{t('notificationPopup.noNotification')}</p>
-                                <p className="text-sm text-gray-500">{t('notificationPopup.noNotificationDescr')}</p>
+                                <p id='no_notifications_header' className="text-sm text-gray-500">{t('notificationPopup.noNotification')}</p>
+                                <p id='no_notifications_description' className="text-sm text-gray-500">{t('notificationPopup.noNotificationDescr')}</p>
                             </div>
                         </div>
                     ) : (
@@ -405,26 +405,26 @@ function ViewAllNotifications({ notificationType }) {
                                         {isFilterApplied && notificationsList.length === 0 ? (
                                             <div className="flex flex-col items-center py-20 px-2 border-b border-gray-200">
                                                 <img src={noNotificationIcon} alt='' id='noNotificationIcon' />
-                                                <p className="text-sm text-gray-500">{t('notificationPopup.filterNoNotificationTitle')}</p>
+                                                <p id='no_filter_notifications' className="text-sm text-gray-500">{t('notificationPopup.filterNoNotificationTitle')}</p>
                                             </div>
                                         ) : (
                                             <>
                                                 {!showExpiringItems ? (
                                                     <div className="p-6">
-                                                        {notificationsList.map((notification) => (
-                                                            <div key={notification.notificationId} className="flex items-start w-full bg-white p-4 rounded-lg shadow mb-3 border-b border-[#D0D5DD]">
+                                                        {notificationsList.map((notification, index) => (
+                                                            <div id={'notiifcation_item_' + (index + 1)} key={notification.notificationId} className="flex items-start w-full bg-white p-4 rounded-lg shadow mb-3 border-b border-[#D0D5DD]">
                                                                 <img src={featuredIcon} alt='' id='featuredIcon' className={`${isLoginLanguageRTL ? 'ml-3' : 'mr-3'} mt-2`} />
                                                                 <div className="mt-0.5 w-full">
                                                                     <div className="flex justify-between flex-wrap">
-                                                                        <p className="font-semibold text-base text-[#101828]">{getNotificationTitle(notification, t)}</p>
-                                                                        <p className={`text-xs text-gray-500 ${isLoginLanguageRTL ? 'text-left' : 'text-right'}`}>{formatDate(notification.createdDateTime, 'dateTime')}</p>
+                                                                        <p id={'notification_title_' + (index + 1)} className="font-semibold text-base text-[#101828]">{getNotificationTitle(notification, t)}</p>
+                                                                        <p id={'notification_created_date_time_' + (index + 1)} className={`text-xs text-gray-500 ${isLoginLanguageRTL ? 'text-left' : 'text-right'}`}>{formatDate(notification.createdDateTime, 'dateTime')}</p>
                                                                     </div>
-                                                                    <div className="text-[#475467] text-sm break-normal">{getNotificationDescription(notification, isLoginLanguageRTL, t)}</div>
+                                                                    <div id={'notification_description_' + (index + 1)} className="text-[#475467] text-sm break-normal">{getNotificationDescription(notification, isLoginLanguageRTL, t)}</div>
                                                                     <hr className="h-0.5 my-4 bg-[#BCC5E5] border" />
                                                                     <div className={`flex space-x-4 ${isLoginLanguageRTL && 'space-x-reverse'}`}>
-                                                                        <button onClick={() => dismissNotification(notification.notificationId)} className="text-tory-blue font-semibold text-sm px-4 py-[6px] rounded-md bg-[#F7F9FF]">{t('notificationPopup.dismiss')}</button>
+                                                                        <button id={'notification_dismiss_btn_' + (index + 1)} onClick={() => dismissNotification(notification.notificationId)} className="text-tory-blue font-semibold text-sm px-4 py-[6px] rounded-md bg-[#F7F9FF]">{t('notificationPopup.dismiss')}</button>
                                                                         {(notificationType === "weekly") && (
-                                                                            <button onClick={() => viewExpiringItems(notification)} className="text-tory-blue font-semibold text-sm px-4 py-[6px] rounded-md bg-[#F7F9FF]">{t('viewAllNotifications.viewExpiringItems')}</button>
+                                                                            <button id={'notification_view_expiring_item_btn_' + (index + 1)} onClick={() => viewExpiringItems(notification)} className="text-tory-blue font-semibold text-sm px-4 py-[6px] rounded-md bg-[#F7F9FF]">{t('viewAllNotifications.viewExpiringItems')}</button>
                                                                         )}
                                                                     </div>
                                                                 </div>
@@ -478,10 +478,10 @@ function ViewAllNotifications({ notificationType }) {
                                                                     <img src={featuredIcon} alt='' id='featuredIcon' className={`${isLoginLanguageRTL ? 'ml-3' : 'mr-3'} mt-2`} />
                                                                     <div className="mt-0.5 w-full">
                                                                         <div className="flex justify-between flex-wrap">
-                                                                            <p className="font-semibold text-base text-[#101828]">{getWeeklyNotificationTitle(notification, activeTab)}</p>
-                                                                            <p className={`text-xs text-gray-500 ${isLoginLanguageRTL ? 'text-left' : 'text-right'}`}>{formatDate(notificationCreatedDateTime, 'dateTime')}</p>
+                                                                            <p id={'weekly_notification_title_' + (index + 1)} className="font-semibold text-base text-[#101828]">{getWeeklyNotificationTitle(notification, activeTab)}</p>
+                                                                            <p id={'weekly_notification_created_date_time_' + (index + 1)} className={`text-xs text-gray-500 ${isLoginLanguageRTL ? 'text-left' : 'text-right'}`}>{formatDate(notificationCreatedDateTime, 'dateTime')}</p>
                                                                         </div>
-                                                                        <div className="text-[#475467] text-sm md:break-normal break-all">{getWeeklyNotificationDescription(notification, activeTab)}</div>
+                                                                        <div id={'weekly_notification_description_' + (index + 1)} className="text-[#475467] text-sm md:break-normal break-all">{getWeeklyNotificationDescription(notification, activeTab)}</div>
                                                                     </div>
                                                                 </div>
                                                             ))}

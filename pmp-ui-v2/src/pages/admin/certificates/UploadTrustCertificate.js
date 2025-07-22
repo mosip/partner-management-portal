@@ -205,9 +205,9 @@ function UploadTrustCertificate() {
                                 <div className="flex items-center justify-center p-24">
                                     <div className="flex flex-col justify-center items-center">
                                         <img className="max-w-60 min-w-52 my-2" src={somethingWentWrongIcon} alt="" />
-                                        <p className="text-base font-semibold text-[#6F6E6E] pt-4">{t('commons.unexpectedError')}</p>
-                                        <p className="text-sm font-semibold text-[#6F6E6E] pt-1 pb-4">{getErrorMessage(errorCode, t, errorMsg)}</p>
-                                        <button onClick={moveBackToList} type="button"
+                                        <p id='upload_trust_certificate_unexpected_error' className="text-base font-semibold text-[#6F6E6E] pt-4">{t('commons.unexpectedError')}</p>
+                                        <p id='upload_trust_certificate_unexpected_error_msg' className="text-sm font-semibold text-[#6F6E6E] pt-1 pb-4">{getErrorMessage(errorCode, t, errorMsg)}</p>
+                                        <button onClick={moveBackToList} type="button" id='upload_trust_certificate_go_back_btn'
                                             className={`w-32 h-10 flex items-center justify-center font-semibold rounded-md text-sm mx-8 py-3 bg-tory-blue text-white`}>
                                             {t('commons.goBack')}
                                         </button>
@@ -220,8 +220,8 @@ function UploadTrustCertificate() {
                                 {!uploadSuccess ?
                                     <div className="w-[100%] bg-snow-white mt-[1.5%] rounded-lg shadow-md p-1">
                                         <div className={`flex-col text-center text-base my-5`}>
-                                            <h1 className='font-semibold text-dark-blue'>{t('uploadTrustCertificate.uploadTrustCertificate')}</h1>
-                                            <p className='text-light-gray py-1'>{t('uploadTrustCertificate.description')}</p>
+                                            <h1 id='upload_trust_certificate_header' className='font-semibold text-dark-blue'>{t('uploadTrustCertificate.uploadTrustCertificate')}</h1>
+                                            <p id='upload_trust_certificate_description' className='text-light-gray py-1'>{t('uploadTrustCertificate.description')}</p>
                                         </div>
                                         <div className='flex-col w-full'>
                                             <div className='flex justify-center'>
@@ -249,7 +249,7 @@ function UploadTrustCertificate() {
                                                                         <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor" />
                                                                         <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill" />
                                                                     </svg>
-                                                                    <h5 className="text-charcoal-gray text-sm font-semibold">
+                                                                    <h5 id='uploading_trust_cert_msg' className="text-charcoal-gray text-sm font-semibold">
                                                                         {t('uploadTrustCertificate.uploadingCertMessage')}
                                                                     </h5>
                                                                     <button
@@ -272,10 +272,10 @@ function UploadTrustCertificate() {
                                                                         className="flex flex-col items-center w-full min-h-36 justify-center"
                                                                     >
                                                                         <img src={fileUploadImg} alt="" className="mb-3 w-10 h-10" />
-                                                                        <h5 className="text-charcoal-gray text-sm font-medium">
+                                                                        <h5 id='upload_trust_section_description' className="text-charcoal-gray text-sm font-medium">
                                                                             {t('uploadTrustCertificate.uploadSectionDescription')}
                                                                         </h5>
-                                                                        <p className="text-xs text-light-gray">
+                                                                        <p id='upload_trust_certificate_format_msg' className="text-xs text-light-gray">
                                                                             {t('uploadCertificate.certificateFormat')}
                                                                         </p>
                                                                     </button>
@@ -291,13 +291,14 @@ function UploadTrustCertificate() {
                                                             {!uploading && fileName && (
                                                                 <div id="remove_certificate_card" className="flex flex-col items-center justify-center cursor-pointer py-[0.4rem]">
                                                                     <label
+                                                                        id='select_trust_certificate'
                                                                         htmlFor="fileInput"
                                                                         className="flex flex-col items-center justify-center cursor-pointer"
                                                                         aria-label={t('uploadCertificate.selectCertificate')}
                                                                     >
                                                                         <img src={fileDescription} alt="" className="w-10 h-10 mb-3" />
                                                                     </label>
-                                                                    <h5 className="w-[20rem] break-words text-charcoal-gray text-sm font-semibold">
+                                                                    <h5 id='trust_certificate_file_name' className="w-[20rem] break-words text-charcoal-gray text-sm font-semibold">
                                                                         {fileName}
                                                                     </h5>
                                                                     <button id="remove_certificate_btn" className="text-sm font-semibold text-tory-blue pt-[0.45rem]" onClick={removeUpload} onKeyDown={(e) => {if (e.key === 'Enter' || e.key === ' ') removeUpload();}}>

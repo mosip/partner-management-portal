@@ -248,8 +248,8 @@ function DevicesList() {
                                 <div className="flex items-center justify-center p-24">
                                     <div className="flex flex-col justify-center items-center">
                                         <img className="max-w-60 min-w-52 my-2" src={somethingWentWrongIcon} alt="" />
-                                        <p className="text-sm font-semibold text-[#6F6E6E] py-4">{t('devicesList.unexpectedError')}</p>
-                                        <button onClick={() => moveToSbisList(navigate)} type="button"
+                                        <p id='devices_list_unexpected_error' className="text-sm font-semibold text-[#6F6E6E] py-4">{t('devicesList.unexpectedError')}</p>
+                                        <button onClick={() => moveToSbisList(navigate)} type="button" id='devices_list_go_back_btn'
                                             className={`w-32 h-10 flex items-center justify-center font-semibold rounded-md text-sm mx-8 py-3 bg-tory-blue text-white`}>
                                             {t('commons.goBack')}
                                         </button>
@@ -262,7 +262,7 @@ function DevicesList() {
                                 <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
                                     <div className="flex items-center justify-center p-2">
                                         <div className="p-2 bg-[#FFF7E5] border-2 border-[#EDDCAF] rounded-md w-full">
-                                            <p className="text-sm font-medium text-[#8B6105]">{t('sbiList.guidence')}</p>
+                                            <p id='devices_list_guidence' className="text-sm font-medium text-[#8B6105]">{t('sbiList.guidence')}</p>
                                         </div>
                                     </div>
                                 </div>

@@ -336,7 +336,7 @@ function AddDevices() {
                         <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
                             <div className="flex items-center justify-center p-2">
                                 <div className="p-2 bg-[#FFF7E5] border-2 border-[#EDDCAF] rounded-md w-full">
-                                    <p className="text-sm font-medium text-[#8B6105]">{t('addDevices.guidence')}</p>
+                                    <p id='add_devices_guidence' className="text-sm font-medium text-[#8B6105]">{t('addDevices.guidence')}</p>
                                 </div>
                             </div>
                         </div>
@@ -345,7 +345,7 @@ function AddDevices() {
                                 <div className="flex flex-col p-2">
                                     <div className={`flex justify-between ${entry.successMsg ? 'mb-16' : 'mb-2'} ${entry.errorMsg && 'mb-4'}`}>
                                         {!entry.isSubmitted && (
-                                            <p className="text-base text-[#3D4468] px-6 py-2">{t('requestPolicy.mandatoryFieldsMsg1')} <span className="text-crimson-red">*</span> {t('requestPolicy.mandatoryFieldsMsg2')}</p>
+                                            <p id={'add_devices_mandatory_fields_msg_' + (index + 1)} className="text-base text-[#3D4468] px-6 py-2">{t('requestPolicy.mandatoryFieldsMsg1')} <span className="text-crimson-red">*</span> {t('requestPolicy.mandatoryFieldsMsg2')}</p>
                                         )}
                                         {entry.successMsg && (
                                             <SuccessMessage id={'add_devices_' + (index + 1) + '_success_msg'} successMsg={entry.successMsg} clickOnCancel={() => cancelSuccessMsg(index)} customStyle={customStyle} />
@@ -385,18 +385,18 @@ function AddDevices() {
                                                 </DropdownComponent>
                                             </div>
                                             <div className="flex flex-col w-[22.5%] max-[850px]:w-[47%] max-[585px]:w-full">
-                                                <label className={`block text-dark-blue text-base font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('addDevices.make')}<span className="text-crimson-red mx-1">*</span></label>
+                                                <label id='add_devices_make_label' className={`block text-dark-blue text-base font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('addDevices.make')}<span className="text-crimson-red mx-1">*</span></label>
                                                 <input disabled={entry.isSubmitted} value={entry.make} onChange={(e) => handleInputChange(index, 'make', e.target.value)} maxLength={36}
                                                     className={`h-10 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue ${entry.isSubmitted ? 'bg-[#EBEBEB]' : 'bg-white'} leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar`}
                                                     placeholder={t('addDevices.enterMake')} id='add_device_make_input'/>
-                                                {entry.invalidMakeError && <span className="text-sm text-crimson-red font-semibold">{entry.invalidMakeError}</span>}
+                                                {entry.invalidMakeError && <span id='add_devices_invalid_make' className="text-sm text-crimson-red font-semibold">{entry.invalidMakeError}</span>}
                                             </div>
                                             <div className="flex flex-col w-[22.5%] max-[850px]:w-[47%] max-[585px]:w-full">
-                                                <label className={`block text-dark-blue text-base font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('addDevices.model')}<span className="text-crimson-red mx-1">*</span></label>
+                                                <label id='add_devices_model_label' className={`block text-dark-blue text-base font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('addDevices.model')}<span className="text-crimson-red mx-1">*</span></label>
                                                 <input disabled={entry.isSubmitted} value={entry.model} onChange={(e) => handleInputChange(index, 'model', e.target.value)} maxLength={36}
                                                     className={`h-10 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue ${entry.isSubmitted ? 'bg-[#EBEBEB]' : 'bg-white'} leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar`}
                                                     placeholder={t('addDevices.enterModel')} id='add_device_model_input'/>
-                                                {entry.invalidModelError && <span className="text-sm text-crimson-red font-semibold">{entry.invalidModelError}</span>}
+                                                {entry.invalidModelError && <span id='add_devices_invalid_model' className="text-sm text-crimson-red font-semibold">{entry.invalidModelError}</span>}
                                             </div>
                                         </div>
                                     </form>
