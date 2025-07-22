@@ -42,7 +42,7 @@ public class DashboardPage extends BasePage {
 	@FindBy(id = "consent_proceed_btn")
 	private WebElement proceedButton;
 
-	@FindBy(id = "dashboard_partner_certificate_list_card")
+	@FindBy(id = "dashboard_partner_certificate_list_header")
 	private WebElement partnerCertificateTitle;
 
 	@FindBy(id = "dashboard_policies_card")
@@ -90,7 +90,7 @@ public class DashboardPage extends BasePage {
 	@FindBy(xpath = "//h5[text()='Partner - Policy Linking']")
 	private WebElement PartnerPolicyMappingTab;
 
-	@FindBy(xpath = "//h5[text()='SBI - Device']")
+	@FindBy(id = "dashboard_sbi_device_card_header")
 	private WebElement sbiDevicesButton;
 
 	@FindBy(id = "dashboard_partner_certificate_list_header")
@@ -104,37 +104,37 @@ public class DashboardPage extends BasePage {
 
 	@FindBy(id = "dashboard_ftm_chip_provider_card_header")
 	private WebElement dashboardFtmChipproviderCardHeader;
-	
+
 	@FindBy(id = "dashboard_authentication_clients_list_card_description")
 	private WebElement authenticationServiceInfoText;
-	
+
 	@FindBy(id = "dashboard_authentication_clients_list_icon")
 	private WebElement authenticationServiceIcon;
-	
+
 	@FindBy(id = "side_nav_home_icon")
 	private WebElement homeOptionOfHamburger;
-	
+
 	@FindBy(id = "side_nav_partner_certificate_icon")
 	private WebElement partnerCertificateOfHamburger;
-	
+
 	@FindBy(id = "side_nav_policies_icon")
 	private WebElement policiesOfHamburger;
-	
+
 	@FindBy(id = "side_nav_authentication_service_icon")
 	private WebElement authenticationServiceOfHamburger;
-	
+
 	@FindBy(id = "orgIcon")
 	private WebElement organizationIconWithName;
-	
+
 	@FindBy(id = "footer_contact_us_link")
 	private WebElement contactusLink;
-	
+
 	@FindBy(xpath = "//h5[text()='Authentication Services']")
 	private WebElement authenticationServices;
-	
+
 	@FindBy(xpath = "//h5[text()='Partners']")
 	private WebElement partners;
-	
+
 	@FindBy(xpath = "//button[contains(@class, 'bg-blue-50') and contains(@class, 'cursor-pointer')]")
 	private WebElement notificationIcon;
 
@@ -156,7 +156,7 @@ public class DashboardPage extends BasePage {
 	}
 
 	public boolean isSelectPolicyGroupPopUpDisplayed() {
-        return isElementDisplayed(selectPolicyGroupPopUp);
+		return isElementDisplayed(selectPolicyGroupPopUp);
 	}
 
 	public boolean isSubmitButtonSelectPolicyGroupPopUpDisplayed() {
@@ -317,82 +317,82 @@ public class DashboardPage extends BasePage {
 	public void clickOnCertificateTrustStore() {
 		clickOnElement(certificateTrustStore);
 	}
-	
+
 	public boolean isAuthenticationServiceInfoTextDisplayed() {
 		return isElementEnabled(authenticationServiceInfoText);
 	}
-	
+
 	public boolean isAuthenticationServiceIconDisplayed() {
 		return isElementEnabled(authenticationServiceIcon);
 	}
-	
+
 	public boolean isHumburgerOptionsExpandable() {
 		return isElementEnabled(homeOptionOfHamburger);
 	}
-	
+
 	public void clickOnHomeOptionOfHamburger() {
 		clickOnElement(homeOptionOfHamburger);
 	}
-	
+
 	public void clickOnPartnerCertificateOfHamburger() {
 		clickOnElement(partnerCertificateOfHamburger);
 	}
-	
+
 	public void clickOnPoliciesOfHamburger() {
 		clickOnElement(policiesOfHamburger);
 	}
-	
+
 	public void clickOnAuthenticationServiceOfHamburger() {
 		clickOnElement(authenticationServiceOfHamburger);
 	}
-	
+
 	public boolean isHumburgerOptionsCollapse() {
 		return isElementEnabled(hamburgerOpen);
 	}
-	
+
 	public boolean isOrganizationIconWithNameDisplayed() {
 		return isElementEnabled(organizationIconWithName);
 	}
-	
+
 	public boolean isContactusLinkDisplayed() {
 		return isElementEnabled(contactusLink);
 	}
-	
+
 	public void clickOnContactusLink() {
-		clickOnElement(contactusLink);	
+		clickOnElement(contactusLink);
 	}
-	
+
 	public boolean isSideNavigationHomeIconDisplayed() {
 		return isElementEnabled(homeOptionOfHamburger);
 	}
-	
+
 	public boolean isAuthenticationServicesDisplayed() {
 		return isElementDisplayed(authenticationServices);
 	}
-	
+
 	public OidcClientPage clickOnAuthenticationServices() {
 		clickOnElement(authenticationServices);
 		return new OidcClientPage(driver);
 	}
-	
+
 	public boolean isCertificateTrustStoreDisplayed() {
 		return isElementDisplayed(certificateTrustStore);
 	}
-	
+
 	public boolean isPartnersDisplayed() {
 		return isElementDisplayed(partners);
 	}
-	
+
 	public void clickOnPartners() {
-		clickOnElement(partners);	
+		clickOnElement(partners);
 	}
-	
+
 	public boolean isNotificationIconDisplayed() {
 		return isElementDisplayed(notificationIcon);
 	}
 
 	public NotificationPage clickOnNotificationIcon() {
-		clickOnElement(notificationIcon);	
+		clickOnElement(notificationIcon);
 		return new NotificationPage(driver);
 	}
 }

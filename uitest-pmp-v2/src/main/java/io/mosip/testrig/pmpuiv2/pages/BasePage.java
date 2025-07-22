@@ -233,7 +233,6 @@ public class BasePage {
 		}
 	}
 
-
 	protected boolean isElementDisabled(WebElement element) {
 		LogUtil.verify("Checking is element is disabled: ", element);
 		try {
