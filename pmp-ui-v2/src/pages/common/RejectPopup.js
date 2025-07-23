@@ -6,6 +6,7 @@ import ErrorMessage from "./ErrorMessage";
 import close_icon from '../../svg/close_icon.svg';
 import { createRequest, getPartnerManagerUrl, handleEscapeKey, handleServiceErrors } from "../../utils/AppUtils";
 import { HttpService } from "../../services/HttpService";
+import PropTypes from 'prop-types';
 
 function RejectPopup({ popupData, closePopUp, rejectResponse, title }) {
     const { t } = useTranslation();
@@ -107,5 +108,12 @@ function RejectPopup({ popupData, closePopUp, rejectResponse, title }) {
     );
 
 }
+
+RejectPopup.propTypes = {
+    popupData: PropTypes.object.isRequired,
+    closePopUp: PropTypes.func.isRequired,
+    rejectResponse: PropTypes.func.isRequired,
+    title: PropTypes.string.isRequired,
+};
 
 export default RejectPopup;

@@ -13,11 +13,11 @@ function PolicyRequestsListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) 
   const [partnerType, setPartnerType] = useState([]);
   const [status, setStatus] = useState([]);
   const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
-  const [statusDropdownData, setStatusDropdownData] = useState([
+  const statusDropdownData = [
     { status: 'approved' },
     { status: 'rejected' },
     { status: 'InProgress' }
-  ]);
+  ];
   const [filters, setFilters] = useState({
     partnerId: "",
     partnerType: "",

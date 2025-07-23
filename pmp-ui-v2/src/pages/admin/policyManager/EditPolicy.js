@@ -21,7 +21,6 @@ function EditPolicy() {
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [successMsg, setSuccessMsg] = useState("");
-    const [policyType, setPolicyType] = useState(null);
     const [title, setTitle] = useState("");
     const [subTitle, setSubTitle] = useState("");
     const [policyNamePlaceHolderKey, setPolicyNamePlaceHolderKey] = useState("");
@@ -66,7 +65,6 @@ function EditPolicy() {
                     console.err('policy Type not found');
                     navigate('/partnermanagement/policy-manager/policy-group-list')
                 }
-                setPolicyType(storedPolicyType);
                 if (storedPolicyType === 'DataShare') {
                     setTitle('editPolicy.editDataSharePolicyTitle');
                     setSubTitle('policiesList.listOfDataSharePolicies');
@@ -163,6 +161,7 @@ function EditPolicy() {
                 throw new Error("Parsed data is not a valid JSON object");
             }
         } catch (error) {
+            console.log(`Exception while parsing json: ${error}`);
             setErrorMsg(t('createPolicy.jsonParseError'));
             setIsSubmitClicked(false);
             setDataLoaded(true);

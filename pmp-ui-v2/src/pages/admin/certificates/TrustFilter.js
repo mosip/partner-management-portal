@@ -11,11 +11,11 @@ function TrustFilter({ onApplyFilter }) {
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [partnerDomainData, setPartnerDomainData] = useState([]);
-    const [partnerDomainDropdownData, setPartnerDomainDropdownData] = useState([
+    const partnerDomainDropdownData = [
         { partnerDomain: 'AUTH' },
         { partnerDomain: 'DEVICE' },
         { partnerDomain: 'FTM' }
-    ]);
+    ];
     const [filters, setFilters] = useState({
         certificateId: "",
         partnerDomain: "",

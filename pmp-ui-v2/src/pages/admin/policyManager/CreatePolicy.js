@@ -161,6 +161,7 @@ function CreatePolicy() {
                 throw new Error("Parsed data is not a valid JSON object");
             }
         } catch (error) {
+            console.log(`Exception while parsing json: ${error}`);
             setErrorMsg(t('createPolicy.jsonParseError'));
             setIsSubmitClicked(false);
             setDataLoaded(true);

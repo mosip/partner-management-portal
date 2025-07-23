@@ -152,10 +152,13 @@ function AddDevices() {
             newEntries[index].deviceSubTypeDropdownData = createDropdownData('fieldCode', '', false, subtypeData, t);
         }
         if (field === 'make' || field === 'model') {
-            if (value === "" || validateInput(value)) {
-                field === 'make' ? newEntries[index].invalidMakeError = "" : newEntries[index].invalidModelError = "";
+            const isValid = value === "" || validateInput(value);
+            const errorMsg = isValid ? "" : t('commons.inputError');
+
+            if (field === 'make') {
+                newEntries[index].invalidMakeError = errorMsg;
             } else {
-                field === 'make' ? newEntries[index].invalidMakeError = t('commons.inputError') : newEntries[index].invalidModelError = t('commons.inputError');
+                newEntries[index].invalidModelError = errorMsg;
             }
         }
         setDeviceEntries(newEntries);

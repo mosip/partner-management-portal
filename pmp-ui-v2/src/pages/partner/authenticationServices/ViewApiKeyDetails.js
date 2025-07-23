@@ -27,10 +27,6 @@ function ViewApiKeyDetails() {
         }
     }, [navigate]);
 
-    const styleForTitle = {
-        backArrowIcon: "!mt-[4%]"
-    }
-
     return (
         <>
             <div className={`w-full p-5 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm mb-[2%] ${isLoginLanguageRTL ? "mr-24 ml-1" : "ml-24 mr-1"} overflow-x-scroll`}>

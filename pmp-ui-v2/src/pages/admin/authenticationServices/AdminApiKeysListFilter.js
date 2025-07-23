@@ -10,10 +10,7 @@ function AdminApiKeysListFilter({ onApplyFilter }) {
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [status, setStatus] = useState([]);
-    const [statusDropdownData, setStatusDropdownData] = useState([
-        { status: 'activated' },
-        { status: 'deactivated' }
-    ]);
+    const statusDropdownData = [{ status: 'activated' },{ status: 'deactivated' }];
     const [filters, setFilters] = useState({
         partnerId: "",
         orgName: "",

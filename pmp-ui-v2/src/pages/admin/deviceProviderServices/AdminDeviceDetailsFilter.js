@@ -12,12 +12,12 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg, re
     const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [deviceTypeDropdownData, setDeviceTypeDropdownData] = useState([]);
     const [deviceSubTypeDropdownData, setDeviceSubTypeDropdownData] = useState([]);
-    const [statusDropdownData, setStatusDropdownData] = useState([
+    const statusDropdownData = [
         { status: 'approved' },
         { status: 'rejected' },
         { status: 'pending_approval' },
         { status: 'deactivated' }
-    ]);
+    ];
     const [filters, setFilters] = useState({
         deviceId: "",
         partnerId: "",

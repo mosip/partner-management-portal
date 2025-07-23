@@ -10,10 +10,7 @@ function AdminOidcClientsFilter ({ onApplyFilter }) {
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [status, setStatus] = useState([]);
-    const [statusDropdownData, setStatusDropdownData] = useState([
-      { status: 'ACTIVE' },
-      { status: 'INACTIVE'}
-    ]);
+    const statusDropdownData= [{ status: 'ACTIVE' },{ status: 'INACTIVE'}];
     const [filters, setFilters] = useState({
       partnerId: "",
       orgName: "",

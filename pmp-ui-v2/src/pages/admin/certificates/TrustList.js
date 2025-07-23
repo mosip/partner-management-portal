@@ -29,7 +29,7 @@ import disableDownloadIcon from "../../../svg/disable_download.svg";
 import SuccessMessage from "../../common/SuccessMessage";
 import PropTypes from 'prop-types';
 
-function TrustList({ trustListType, uploadTrustBtnName, subTitle, downloadBtnName }) {
+function TrustList({ trustListType, subTitle, downloadBtnName }) {
 
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -46,8 +46,6 @@ function TrustList({ trustListType, uploadTrustBtnName, subTitle, downloadBtnNam
   const [actionId, setActionId] = useState(-1);
   const [sortFieldName, setSortFieldName] = useState("uploadedDateTime");
   const [sortType, setSortType] = useState("desc");
-
-  const [firstIndex, setFirstIndex] = useState(0);
   const [pageNo, setPageNo] = useState(0);
   const [pageSize, setPageSize] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
   const [fetchData, setFetchData] = useState(false);
@@ -403,7 +401,6 @@ function TrustList({ trustListType, uploadTrustBtnName, subTitle, downloadBtnNam
                       dataListLength={totalRecords}
                       selectedRecordsPerPage={selectedRecordsPerPage}
                       setSelectedRecordsPerPage={setSelectedRecordsPerPage}
-                      setFirstIndex={setFirstIndex}
                       isServerSideFilter={true}
                       getPaginationValues={getPaginationValues}
                       isApplyFilterClicked={isApplyFilterClicked}
@@ -422,7 +419,6 @@ function TrustList({ trustListType, uploadTrustBtnName, subTitle, downloadBtnNam
 
 TrustList.propTypes = {
   trustListType: PropTypes.string.isRequired,
-  uploadTrustBtnName: PropTypes.string.isRequired,
   subTitle: PropTypes.string.isRequired,
   downloadBtnName: PropTypes.string.isRequired,
 };
