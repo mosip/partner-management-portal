@@ -34,7 +34,6 @@ function ViewAllNotifications({ notificationType }) {
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(4);
-    const [firstIndex, setFirstIndex] = useState(0);
     const [pageNo, setPageNo] = useState(0);
     const [pageSize, setPageSize] = useState(4);
     const [fetchData, setFetchData] = useState(false);
@@ -164,7 +163,7 @@ function ViewAllNotifications({ notificationType }) {
                         prevNotifications.filter((notif) => notif.notificationId !== id)
                     );
                     await fetchNotifications(true);
-                    const notifications = await fetchNotificationsList(dispatch);
+                    await fetchNotificationsList(dispatch);
                 } else {
                     handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                 }
@@ -498,7 +497,6 @@ function ViewAllNotifications({ notificationType }) {
                                         dataListLength={totalRecords}
                                         selectedRecordsPerPage={selectedRecordsPerPage}
                                         setSelectedRecordsPerPage={setSelectedRecordsPerPage}
-                                        setFirstIndex={setFirstIndex}
                                         isServerSideFilter={true}
                                         getPaginationValues={getPaginationValues}
                                         isViewNotificationPage={true}

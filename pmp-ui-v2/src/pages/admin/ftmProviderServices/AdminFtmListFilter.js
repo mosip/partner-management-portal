@@ -10,13 +10,13 @@ function AdminFtmListFilter ({ onApplyFilter }) {
     const { t } = useTranslation();
     const [status, setStatus] = useState([]);
     const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
-    const [statusDropdownData, setStatusDropdownData] = useState([
+    const statusDropdownData = [
         { status: 'approved' },
         { status: 'rejected' },
         { status: 'pending_approval' },
         { status: 'pending_cert_upload' },
         { status: 'deactivated' }
-    ]);
+    ];
     const [filters, setFilters] = useState({
         partnerId: "",
         orgName: "",

@@ -11,11 +11,11 @@ function PoliciesListFilter({ onApplyFilter }) {
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [status, setStatus] = useState([]);
-    const [statusDropdownData, setStatusDropdownData] = useState([
+    const statusDropdownData = [
       { status: 'activated' },
       { status: 'deactivated'},
       { status: 'draft'}
-    ]);
+    ];
     const [filters, setFilters] = useState({
       policyId: "",
       policyName: "",

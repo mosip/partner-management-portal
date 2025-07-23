@@ -37,7 +37,6 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
     const [activeAscIcon, setActiveAscIcon] = useState("");
     const [activeDescIcon, setActiveDescIcon] = useState("createdDateTime");
     const [actionId, setActionId] = useState(-1);
-    const [firstIndex, setFirstIndex] = useState(0);
     const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
     const [sortFieldName, setSortFieldName] = useState("createdDateTime");
     const [sortType, setSortType] = useState("desc");
@@ -471,7 +470,6 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
                                     dataListLength={totalRecords}
                                     selectedRecordsPerPage={selectedRecordsPerPage}
                                     setSelectedRecordsPerPage={setSelectedRecordsPerPage}
-                                    setFirstIndex={setFirstIndex}
                                     isServerSideFilter={true}
                                     getPaginationValues={getPaginationValues}
                                     isApplyFilterClicked={isApplyFilterClicked}

@@ -14,14 +14,14 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
   const [status, setStatus] = useState([]);
   const [certUploadStatus, setCertUploadStatus] = useState([]);
   const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
-  const [certUploadStatusDropdownData, setCertUploadStatusDropdownData] = useState([
+  const certUploadStatusDropdownData = [
     { certificateUploadStatus: 'uploaded' },
     { certificateUploadStatus: 'not_uploaded' }
-  ]);
-  const [statusDropdownData, setStatusDropdownData] = useState([
+  ];
+  const statusDropdownData = [
     { status: 'active' },
     { status: 'deactivated' }
-  ]);
+  ];
   const [filters, setFilters] = useState({
     partnerId: "",
     partnerType: "",

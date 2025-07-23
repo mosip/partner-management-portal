@@ -11,16 +11,16 @@ function AdminSbiListFilter( {onApplyFilter} ) {
     const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [status, setStatus] = useState([]);
     const [sbiExpiryStatus, setSbiExpiryStatus] = useState([]);
-    const [statusDropdownData, setStatusDropdownData] = useState([
+    const statusDropdownData = [
         { status: 'approved' },
         { status: 'rejected'},
         { status: 'pending_approval'},
         { status: 'deactivated'}
-    ]);
-    const [sbiExpiryStatusDropdownData, setSbiExpiryStatusDropdownData] = useState([
+    ];
+    const sbiExpiryStatusDropdownData = [
         { sbiExpiryStatus: 'expired' },
         { sbiExpiryStatus: 'valid'}
-      ]);
+      ];
     const [filters, setFilters] = useState({
       partnerId: "",
       orgName: "",

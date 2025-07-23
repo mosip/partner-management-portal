@@ -47,12 +47,16 @@ function Pagination({ dataListLength, selectedRecordsPerPage, setSelectedRecords
     const handlePageChange = (event) => {
         setSelectedPage(event.selected);
         const newIndex = (event.selected * selectedRecordsPerPage) % dataListLength;
-        setFirstIndex(newIndex);
+        if(!isServerSideFilter) {
+            setFirstIndex(newIndex);
+        }
     };
     const changeItemsPerPage = (num) => {
         setIsItemsPerPageOpen(false);
         setSelectedRecordsPerPage(num);
-        setFirstIndex(0);
+        if(!isServerSideFilter) {
+            setFirstIndex(0);
+        }
         setSelectedPage(0);
     };
 
@@ -118,7 +122,7 @@ Pagination.propTypes = {
     dataListLength: PropTypes.number.isRequired,
     selectedRecordsPerPage: PropTypes.number.isRequired,
     setSelectedRecordsPerPage: PropTypes.func.isRequired,
-    setFirstIndex: PropTypes.func.isRequired,
+    setFirstIndex: PropTypes.func,
     isServerSideFilter: PropTypes.bool,
     getPaginationValues: PropTypes.func,
     isViewNotificationPage: PropTypes.bool,

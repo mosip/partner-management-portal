@@ -26,7 +26,6 @@ function UploadTrustCertificate() {
     const [fileName, setFileName] = useState('');
     const [unexpectedError, setUnexpectedError] = useState(false);
     const [uploadSuccess, setUploadSuccess] = useState(false);
-    const [uploadFailure, setUploadFailure] = useState(false);
     const [confirmationData, setConfirmationData] = useState({});
     const [uploadTrustData, setUploadTrustData] = useState(true);
     const [isSubmitClicked, setIsSubmitClicked] = useState(false);
@@ -170,7 +169,6 @@ function UploadTrustCertificate() {
                 }
                 reader.readAsText(file);
             } else {
-                setUploadFailure(true);
                 setErrorMsg(t('uploadCertificate.fileUploadError'));
             }
         }

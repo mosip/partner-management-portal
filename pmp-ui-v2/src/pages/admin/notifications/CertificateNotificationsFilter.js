@@ -13,11 +13,11 @@ function CertificateNotificationsFilter({ onApplyFilter }) {
     const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [partnerDomainData, setPartnerDomainData] = useState([]);
     const [isExpiryCalenderOpen, setIsExpiryCalenderOpen] = useState(false);
-    const [partnerDomainDropdownData, setPartnerDomainDropdownData] = useState([
+    const partnerDomainDropdownData = [
         { partnerDomain: 'AUTH' },
         { partnerDomain: 'DEVICE' },
         { partnerDomain: 'FTM' }
-    ]);
+    ];
     const [filters, setFilters] = useState({
         certificateId: "",
         partnerDomain: "",

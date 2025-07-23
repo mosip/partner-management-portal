@@ -43,7 +43,6 @@ function PolicyRequestsList() {
   const [order, setOrder] = useState("DESC");
   const [activeSortAsc, setActiveSortAsc] = useState("");
   const [activeSortDesc, setActiveSortDesc] = useState("createdDateTime");
-  const [firstIndex, setFirstIndex] = useState(0);
   const [viewPartnerId, setViewPartnersId] = useState(-1);
   const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
   const [sortFieldName, setSortFieldName] = useState("createdDateTime");
@@ -362,7 +361,6 @@ function PolicyRequestsList() {
                       dataListLength={totalRecords}
                       selectedRecordsPerPage={selectedRecordsPerPage}
                       setSelectedRecordsPerPage={setSelectedRecordsPerPage}
-                      setFirstIndex={setFirstIndex}
                       isServerSideFilter={true}
                       getPaginationValues={getPaginationValues}
                       isApplyFilterClicked={isApplyFilterClicked}

@@ -625,6 +625,7 @@ export const handleFileChange = (event, setErrorCode, setErrorMsg, setSuccessMsg
                 setPolicyData(JSON.stringify(data, null, 2));
                 setSuccessMsg(t('createPolicy.fileUploadSuccessMsg'));
             } catch (error) {
+                console.log(`Exception while parsing json: ${error}`);
                 setErrorMsg(t('createPolicy.jsonParseError'));
             }
         };

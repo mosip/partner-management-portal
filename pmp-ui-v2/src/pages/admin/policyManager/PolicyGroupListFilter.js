@@ -10,10 +10,10 @@ function PolicyGroupListFilter({ onApplyFilter }) {
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [status, setStatus] = useState([]);
-    const [statusDropdownData, setStatusDropdownData] = useState([
+    const statusDropdownData = [
       { status: 'active' },
       { status: 'deactivated' }
-    ]);
+    ];
     const [filters, setFilters] = useState({
       id: "",
       name: "",

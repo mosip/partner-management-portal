@@ -268,7 +268,7 @@ function AddSbi() {
                                                 {invalidVersionError && <span id='add_sbi_invalid_version' className="text-sm text-crimson-red font-semibold">{invalidVersionError}</span>}
                                             </div>
                                             <div className="flex-col w-[48%] max-[450px]:w-full">
-                                                <label add className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('addSbis.binaryHash')} <span className="text-crimson-red">*</span></label>
+                                                <label id='add_sbi_binary_hash_label' className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('addSbis.binaryHash')} <span className="text-crimson-red">*</span></label>
                                                 <input id="binary_hash_input" value={binaryHash} onChange={(e) => onChangeBinaryHash(e.target.value)} maxLength={26}
                                                     className="h-10 w-full px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                                                     placeholder={t('addSbis.enterBinaryHash')} />
