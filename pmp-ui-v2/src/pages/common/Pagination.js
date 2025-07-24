@@ -29,7 +29,7 @@ function Pagination({ dataListLength, selectedRecordsPerPage, setSelectedRecords
                 setItemsPerPageOptions([itemsPerPage, itemsPerPage * 2, itemsPerPage * 3, itemsPerPage * 4]);
             }
         }
-    }, []);
+    }, [isViewNotificationPage]);
 
     useEffect(() => {
         if (isServerSideFilter) {
