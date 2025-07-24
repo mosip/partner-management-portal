@@ -99,7 +99,7 @@ function MainLayout({ children }) {
             resetTimer();
             handleLogoutTimer();
         };
-        
+
         initialize();
         initializeItemsPerPage();
 
