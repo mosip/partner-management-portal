@@ -4,7 +4,7 @@ import Footer from './Footer.js';
 import '../index.css';
 import { getUserProfile } from '../services/UserProfileService.js';
 import { useTranslation } from 'react-i18next';
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { logout, getPartnerManagerUrl, createRequest } from "../utils/AppUtils";
 import { getAppConfig } from '../services/ConfigService.js';
 import { HttpService } from "../services/HttpService";
@@ -24,7 +24,9 @@ function MainLayout({ children }) {
     const INACTIVITY_TIMER = 'inActivityTimer';
     const INACTIVITY_PROMPT_TIMER = 'inActivityPromptTimer';
 
-    const handleLogoutTimer = useCallback(() => {
+    const events = ["load", "click", "scroll", "keypress"];
+
+    const handleLogoutTimer = () => {
         clearTimeout(timer.current);
         clearTimeout(promptTimer.current);
 
@@ -35,7 +37,7 @@ function MainLayout({ children }) {
                 logout();
             }, inActivityPromptTimer.current);
         }, inActivityTimer.current);
-    }, [inActivityPromptTimer, inActivityTimer]);
+    };
 
     const resetTimer = () => {
         clearTimeout(timer.current);
@@ -68,7 +70,6 @@ function MainLayout({ children }) {
     }
 
     useEffect(() => {
-        const events = ["load", "click", "scroll", "keypress"];
         const locale = getUserProfile() ? getUserProfile().locale: null;
         if (locale != null) {
             if (locale === "ara") {
@@ -86,11 +87,6 @@ function MainLayout({ children }) {
             await getItemPerPage()
         };
 
-        const resetTimerAndStartTimer = () => {
-            resetTimer();
-            handleLogoutTimer();
-        };
-
         const initialize = async () => {
             await getTimerValues();
             events.forEach(event => {
@@ -99,6 +95,11 @@ function MainLayout({ children }) {
             handleLogoutTimer();
         };
 
+        const resetTimerAndStartTimer = () => {
+            resetTimer();
+            handleLogoutTimer();
+        };
+        
         initialize();
         initializeItemsPerPage();
 
@@ -109,7 +110,7 @@ function MainLayout({ children }) {
             clearTimeout(timer.current);
             clearTimeout(promptTimer.current);
         };
-    }, [i18n, handleLogoutTimer]);
+    }, [i18n]);
 
     useEffect(() => {
         async function fetchData() {
