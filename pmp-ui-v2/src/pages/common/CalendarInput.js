@@ -15,7 +15,7 @@ function CalendarInput({ isUsedAsFilter, showCalendar, addInfoIcon, infoKey, inf
   useEffect(() => {
     handleMouseClickForDropdown(calendarRef, () =>
       setShowCalender(false))
-  }, [calendarRef, setShowCalender]);
+  }, [calendarRef]);
 
   const onDateChange = (newDate) => {
     let formattedDate = "";
