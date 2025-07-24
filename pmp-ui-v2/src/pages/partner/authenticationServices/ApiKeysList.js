@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../../../services/UserProfileService';
@@ -80,9 +80,9 @@ function ApiKeysList() {
             }
         };
         fetchData();
-    }, []);
+    }, [t]);
 
-    const tableHeaders = [
+    const tableHeaders = useMemo(() => [
         { id: "partnerId", headerNameKey: 'oidcClientsList.partnerId' },
         { id: "policyGroupName", headerNameKey: "oidcClientsList.policyGroup" },
         { id: "policyName", headerNameKey: "oidcClientsList.policyName" },
@@ -91,7 +91,7 @@ function ApiKeysList() {
         { id: "apiKeyExpiryDateTime", headerNameKey: "apiKeysList.expirationDate" },
         { id: "status", headerNameKey: "oidcClientsList.status" },
         { id: "action", headerNameKey: 'oidcClientsList.action' }
-    ];
+    ], []);
 
     const cancelErrorMsg = () => {
         setErrorMsg("");
@@ -148,7 +148,7 @@ function ApiKeysList() {
         });
         setFilteredApiKeysList(filteredRows);
         setFirstIndex(0);
-    }, [filterQuery, apiKeysList]);
+    }, [filterQuery, apiKeysList, tableHeaders]);
 
     const onResetFilter = () => {
         window.location.reload();

@@ -13,11 +13,6 @@ function PolicyRequestsListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) 
   const [partnerType, setPartnerType] = useState([]);
   const [status, setStatus] = useState([]);
   const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
-  const statusDropdownData = [
-    { status: 'approved' },
-    { status: 'rejected' },
-    { status: 'InProgress' }
-  ];
   const [filters, setFilters] = useState({
     partnerId: "",
     partnerType: "",
@@ -33,57 +28,59 @@ function PolicyRequestsListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) 
   const [invalidPolicyName, setInvalidPolicyName] = useState("");
   const [invalidPolicyGroupName, setInvalidPolicyGroupName] = useState("");
 
+
   useEffect(() => {
+    async function fetchPartnerTypeData() {
+      const request = createRequest({
+        "filters": [],
+        "pagination": { "pageFetch": 100, "pageStart": 0 },
+        "sort": []
+      });
+
+      try {
+        const response = await HttpService.post(
+          getPartnerManagerUrl(`/partners/partnertype/search`, process.env.NODE_ENV),
+          request
+        );
+
+        if (response && response.data) {
+          const responseData = response.data;
+          if (responseData.response && responseData.response.data) {
+            const partnerTypeData = responseData.response.data.map(item => ({
+              partnerType: item.code
+            }));
+            return partnerTypeData;
+          } else {
+            handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+            return [];
+          }
+        } else {
+          setErrorMsg(t('partnerPolicyMappingRequestList.errorInpartnerPolicyMappingRequestList'));
+          return [];
+        }
+      } catch (err) {
+        if (err.response?.status && err.response.status !== 401) {
+          setErrorMsg(err.message || t('partnerPolicyMappingRequestList.errorInpartnerPolicyMappingRequestList'));
+        }
+        console.error("Error fetching partner type data: ", err);
+        return [];
+      }
+    }
+
     const fetchData = async () => {
       const partnerTypeDropdownData = await fetchPartnerTypeData();
       setPartnerType(
         createDropdownData("partnerType", "", true, partnerTypeDropdownData, t, t("partnerPolicyMappingRequestList.selectPartnerType"))
       );
+
+      const statusDropdownData = [{ status: 'approved' },{ status: 'rejected' },{ status: 'InProgress' }];
       setStatus(
         createDropdownData("status", "", true, statusDropdownData, t, t("partnerPolicyMappingRequestList.selectStatus"))
       );
     };
 
     fetchData();
-  }, [t]);
-
-  async function fetchPartnerTypeData() {
-    const request = createRequest({
-      "filters": [],
-      "pagination": { "pageFetch": 100, "pageStart": 0 },
-      "sort": []
-    });
-
-    try {
-      const response = await HttpService.post(
-        getPartnerManagerUrl(`/partners/partnertype/search`, process.env.NODE_ENV),
-        request
-      );
-
-      if (response && response.data) {
-        const responseData = response.data;
-        if (responseData.response && responseData.response.data) {
-          const partnerTypeData = responseData.response.data.map(item => ({
-            partnerType: item.code
-          }));
-          return partnerTypeData;
-        } else {
-          handleServiceErrors(responseData, setErrorCode, setErrorMsg);
-          return [];
-        }
-      } else {
-        setErrorMsg(t('partnerPolicyMappingRequestList.errorInpartnerPolicyMappingRequestList'));
-        return [];
-      }
-    } catch (err) {
-      if (err.response?.status && err.response.status !== 401) {
-        setErrorMsg(err.message || t('partnerPolicyMappingRequestList.errorInpartnerPolicyMappingRequestList'));
-      }
-      console.error("Error fetching partner type data: ", err);
-      return [];
-    }
-  }
-
+  }, [t, setErrorCode, setErrorMsg]);
 
   const onFilterChangeEvent = (fieldName, selectedFilter) => {
     setFilters((prevFilters) => ({

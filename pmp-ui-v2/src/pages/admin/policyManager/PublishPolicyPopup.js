@@ -27,7 +27,7 @@ function PublishPolicyPopup ({policyDetails, closePopUp, onClickPublish}) {
     useEffect(() => {
         const removeListener = handleEscapeKey(() => closePopUp());
         return removeListener;
-    }, []);
+    }, [closePopUp]);
 
     const cancelErrorMsg = () => {
         setErrorMsg("");

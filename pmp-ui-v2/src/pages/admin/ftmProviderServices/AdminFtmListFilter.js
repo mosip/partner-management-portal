@@ -10,13 +10,6 @@ function AdminFtmListFilter ({ onApplyFilter }) {
     const { t } = useTranslation();
     const [status, setStatus] = useState([]);
     const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
-    const statusDropdownData = [
-        { status: 'approved' },
-        { status: 'rejected' },
-        { status: 'pending_approval' },
-        { status: 'pending_cert_upload' },
-        { status: 'deactivated' }
-    ];
     const [filters, setFilters] = useState({
         partnerId: "",
         orgName: "",
@@ -33,6 +26,7 @@ function AdminFtmListFilter ({ onApplyFilter }) {
 
     useEffect(() => {
         const fetchData = async () => {
+            const statusDropdownData = [{ status: 'approved' },{ status: 'rejected' },{ status: 'pending_approval' },{ status: 'pending_cert_upload' },{ status: 'deactivated' }];
             setStatus(
                 createDropdownData("status", "", true, statusDropdownData, t, t("partnerList.selectStatus"))
             );

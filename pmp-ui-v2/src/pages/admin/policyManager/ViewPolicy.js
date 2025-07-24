@@ -45,7 +45,7 @@ function ViewPolicy() {
             setDataLoaded(true);
         };
         fetchData();
-    }, []);
+    }, [t]);
 
     const moveBackToList = () => {
         navigate(viewPolicyPageHeaders.backLink);

@@ -179,7 +179,7 @@ function CreateOidcClient() {
 
     fetchPolicyRequestsData();
     fetchData();
-  }, []);
+  }, [t]);
 
   const onChangePartnerId = async (fieldName, selectedValue) => {
     setPartnerId(selectedValue);

@@ -100,7 +100,7 @@ function RequestPolicy() {
             }
         };
         fetchData();
-    }, []);
+    }, [t]);
 
     const onChangePartnerId = async (fieldName, selectedValue) => {
         setPartnerId(selectedValue);

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useBlocker } from "react-router-dom";
 import { getUserProfile } from '../../../services/UserProfileService.js';
@@ -91,7 +91,24 @@ function AddDevices() {
         setSelectedSbidata(sbiData);
         let path = JSON.parse(pathData);
         setPreviousPath(path);
-    }, []);
+    }, [t]);
+
+    const createEmptyDeviceEntry = useCallback(async (deviceTypeData) => {
+        return {
+            deviceType: "",
+            deviceSubType: "",
+            make: "",
+            model: "",
+            deviceTypeDropdownData: createDropdownData('fieldCode', '', false, deviceTypeData, t),
+            deviceSubTypeDropdownData: [],
+            isSubmitted: false,
+            successMsg: "",
+            errorCode: "",
+            errorMsg: "",
+            invalidMakeError: "",
+            invalidModelError: "",
+        };
+    }, [t]);
 
     useEffect(() => {
         async function initialize() {
@@ -103,7 +120,7 @@ function AddDevices() {
             setDataLoaded(true);
         }
         initialize();
-    }, []);
+    }, [createEmptyDeviceEntry]);
 
     async function getDeviceSubTypeDropdownData(type, index) {
         const newEntries = [...deviceEntries];
@@ -124,23 +141,6 @@ function AddDevices() {
             return [];
         }
     }   
-
-    async function createEmptyDeviceEntry(deviceTypeData) {
-        return {
-            deviceType: "",
-            deviceSubType: "",
-            make: "",
-            model: "",
-            deviceTypeDropdownData: createDropdownData('fieldCode', '', false, deviceTypeData, t),
-            deviceSubTypeDropdownData: [],
-            isSubmitted: false,
-            successMsg: "",
-            errorCode: "",
-            errorMsg: "",
-            invalidMakeError: "",
-            invalidModelError: "",
-        };
-    }
 
     const handleInputChange = async (index, field, value) => {
         if (!allowedFields.includes(field)) return;

@@ -68,7 +68,7 @@ function ViewPartnerDetails() {
             }
         };
         fetchData();
-    }, []);
+    }, [t]);
 
     const moveToPartnersList = () => {
         navigate('/partnermanagement/admin/partners-list');

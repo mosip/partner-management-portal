@@ -10,10 +10,6 @@ function PolicyGroupListFilter({ onApplyFilter }) {
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [status, setStatus] = useState([]);
-    const statusDropdownData = [
-      { status: 'active' },
-      { status: 'deactivated' }
-    ];
     const [filters, setFilters] = useState({
       id: "",
       name: "",
@@ -26,6 +22,7 @@ function PolicyGroupListFilter({ onApplyFilter }) {
 
     useEffect(() => {
       const fetchData = async () => {
+        const statusDropdownData = [{ status: 'active' },{ status: 'deactivated' }];
         setStatus(
           createDropdownData("status", "", true, statusDropdownData, t, t("partnerList.selectStatus"))
         );

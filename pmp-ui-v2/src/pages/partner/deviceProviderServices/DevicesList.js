@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../../../services/UserProfileService';
@@ -105,9 +105,9 @@ function DevicesList() {
             }
         };
         fetchData();
-    }, []);
+    }, [t]);
 
-    const tableHeaders = [
+    const tableHeaders = useMemo(() => [
         { id: "deviceId", headerNameKey: 'devicesList.deviceId' },
         { id: "deviceTypeCode", headerNameKey: 'devicesList.deviceType' },
         { id: "deviceSubTypeCode", headerNameKey: "devicesList.deviceSubType" },
@@ -116,7 +116,7 @@ function DevicesList() {
         { id: "createdDateTime", headerNameKey: "devicesList.creationDate" },
         { id: "status", headerNameKey: "devicesList.status" },
         { id: "action", headerNameKey: 'devicesList.action' }
-    ];
+    ], []);
 
     const cancelErrorMsg = () => {
         setErrorMsg("");
@@ -149,7 +149,7 @@ function DevicesList() {
         });
         setFilteredDevicesList(filteredRows);
         setFirstIndex(0);
-    }, [filterQuery, devicesList]);
+    }, [filterQuery, devicesList, tableHeaders]);
 
     const onResetFilter = () => {
         window.location.reload();

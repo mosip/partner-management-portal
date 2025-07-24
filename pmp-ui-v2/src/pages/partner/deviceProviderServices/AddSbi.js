@@ -99,7 +99,7 @@ function AddSbi() {
             }
         };
         fetchData();
-    }, []);
+    }, [t]);
 
     const onChangeSbiVersion = (value) => {
         setSbiVersion(value);

@@ -138,7 +138,7 @@ function CreatePolicy() {
             setDataLoaded(true);
         };
         fetchData();
-    }, []);
+    }, [navigate, t]);
 
     const clickOnSubmit = async () => {
         setIsSubmitClicked(true);

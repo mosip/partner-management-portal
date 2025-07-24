@@ -19,7 +19,7 @@ function ViewPolicyPopup({ title, downloadJsonFile, closePopUp, jsonData }) {
     useEffect(() => {
         const removeListener = handleEscapeKey(() => closePopUp());
         return removeListener;
-    }, []);
+    }, [closePopUp]);
 
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-[50%] z-50 font-inter cursor-default">

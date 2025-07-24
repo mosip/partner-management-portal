@@ -23,7 +23,7 @@ function CopyIdPopUp({ closePopUp, policyName, partnerId, id, header, alertMsg, 
     useEffect(() => {
         const removeListener = handleEscapeKey(() => closePopUp(false));
         return removeListener;
-    }, []);
+    }, [closePopUp]);
 
     const dismiss = () => {
         closePopUp(false);

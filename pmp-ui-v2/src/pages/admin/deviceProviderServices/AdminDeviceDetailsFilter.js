@@ -12,12 +12,6 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg, re
     const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [deviceTypeDropdownData, setDeviceTypeDropdownData] = useState([]);
     const [deviceSubTypeDropdownData, setDeviceSubTypeDropdownData] = useState([]);
-    const statusDropdownData = [
-        { status: 'approved' },
-        { status: 'rejected' },
-        { status: 'pending_approval' },
-        { status: 'deactivated' }
-    ];
     const [filters, setFilters] = useState({
         deviceId: "",
         partnerId: "",
@@ -42,6 +36,8 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg, re
         const fetchData = async () => {
             const deviceTypeData = await fetchDeviceTypeDropdownData();
             setDeviceTypeDropdownData(createDropdownData("fieldCode", "", true, deviceTypeData, t, t("addDevices.selectDeviceType")));
+
+            const statusDropdownData = [{ status: 'approved' },{ status: 'rejected' },{ status: 'pending_approval' },{ status: 'deactivated' }];
             setStatus(
                 createDropdownData("status", "", true, statusDropdownData, t, t("partnerList.selectStatus"))
             );

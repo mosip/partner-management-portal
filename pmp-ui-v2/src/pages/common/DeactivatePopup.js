@@ -27,7 +27,7 @@ function DeactivatePopup({ onClickConfirm, closePopUp, popupData, request, heade
     useEffect(() => {
         const removeListener = handleEscapeKey(() => closePopUp());
         return removeListener;
-    }, []);
+    }, [closePopUp]);
 
     const cancelErrorMsg = () => {
         setErrorMsg("");
