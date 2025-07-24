@@ -13,11 +13,6 @@ function PartnerCertificateNotificationsFilter({ onApplyFilter }) {
     const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [partnerDomainData, setPartnerDomainData] = useState([]);
     const [isExpiryCalenderOpen, setIsExpiryCalenderOpen] = useState(false);
-    const partnerDomainDropdownData = [
-        { partnerDomain: 'AUTH' },
-        { partnerDomain: 'DEVICE' },
-        { partnerDomain: 'FTM' }
-    ];
     const [filters, setFilters] = useState({
         partnerDomain: "",
         issuedTo: "",
@@ -29,6 +24,7 @@ function PartnerCertificateNotificationsFilter({ onApplyFilter }) {
 
     useEffect(() => {
         const fetchData = async () => {
+            const partnerDomainDropdownData = [{ partnerDomain: 'AUTH' },{ partnerDomain: 'DEVICE' },{ partnerDomain: 'FTM' }];
             setPartnerDomainData(
                 createDropdownData("partnerDomain", "", true, partnerDomainDropdownData, t, t("viewAllNotifications.selectPartnerDomain"))
             );

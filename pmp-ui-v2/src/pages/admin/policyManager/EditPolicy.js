@@ -106,7 +106,7 @@ function EditPolicy() {
             setDataLoaded(true);
         };
         fetchData();
-    }, []);
+    }, [navigate, t]);
 
     const adjustTextareaHeight = (ref) => {
         if (ref && ref.current) {

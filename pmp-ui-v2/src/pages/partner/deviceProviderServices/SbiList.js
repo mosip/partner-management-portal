@@ -72,7 +72,7 @@ function SbiList() {
             }
         };
         fetchData();
-    }, []);
+    }, [t]);
 
     const addSbi = () => {
         navigate('/partnermanagement/device-provider-services/add-sbi');

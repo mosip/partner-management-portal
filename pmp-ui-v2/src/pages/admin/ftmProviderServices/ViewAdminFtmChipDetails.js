@@ -87,7 +87,7 @@ function ViewAdminFtmChipDetails() {
         };
 
         checkCompatibleAndFetch();
-    }, []);
+    }, [t]);
 
     const getOriginalCertificate = async () => {
         if (Object.keys(certificateDetails).length === 0) {

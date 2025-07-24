@@ -66,7 +66,7 @@ function ViewAdminOidcClientDetails() {
             }
         };
         fetchData();
-    }, []);
+    }, [t]);
 
     const moveToOidcClientsList = () => {
         navigate('/partnermanagement/admin/authentication-services/oidc-clients-list');

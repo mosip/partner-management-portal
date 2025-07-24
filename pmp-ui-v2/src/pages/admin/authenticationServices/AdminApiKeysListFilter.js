@@ -10,7 +10,6 @@ function AdminApiKeysListFilter({ onApplyFilter }) {
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [status, setStatus] = useState([]);
-    const statusDropdownData = [{ status: 'activated' },{ status: 'deactivated' }];
     const [filters, setFilters] = useState({
         partnerId: "",
         orgName: "",
@@ -27,6 +26,7 @@ function AdminApiKeysListFilter({ onApplyFilter }) {
 
     useEffect(() => {
         const fetchData = async () => {
+            const statusDropdownData = [{ status: 'activated' },{ status: 'deactivated' }];
             setStatus(
                 createDropdownData("status", "", true, statusDropdownData, t, t("partnerList.selectStatus"))
             );

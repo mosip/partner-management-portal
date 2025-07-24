@@ -32,7 +32,7 @@ function DeactivatePolicyPopup({ header, description, popupData, headerKeyName, 
     useEffect(() => {
         const removeListener = handleEscapeKey(() => closePopUp());
         return removeListener;
-    }, []);
+    }, [closePopUp]);
 
     const cancelErrorMsg = () => {
         setErrorMsg("");

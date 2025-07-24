@@ -44,7 +44,7 @@ function SelectPolicyPopup() {
             setDataLoaded(true);
         };
         fetchData();
-    }, []);
+    }, [t]);
 
     const changePolicyGroupSelection = (fieldName, policyGrpId) => {
         setSelectedPolicyGroup(policyGrpId);

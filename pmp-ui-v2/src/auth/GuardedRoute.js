@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../services/UserProfileService.js';
 import { setupResponseInterceptor } from '../services/HttpService.js';
@@ -10,10 +10,10 @@ const GuardedRoute = ({ children }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
+  const initialPathnameRef = useRef(location.pathname); 
 
   useEffect(() => {
     setupResponseInterceptor(navigate);
-
     //if user is accessing partneradmin path
     const isPartnerAdminPath = location.pathname.includes('admin');
     // If user is on a partnerAdmin path, ensure they have admin privileges
@@ -27,7 +27,7 @@ const GuardedRoute = ({ children }) => {
       navigate('/partnermanagement/runtimeError', { state: { messageType: 'noAccess', errorCode: '', errorText: '' } });
     };
 
-  }, [navigate]);
+  }, [navigate, location.pathname]);
 
   useEffect(() => {
     async function fetchData() {
@@ -41,8 +41,7 @@ const GuardedRoute = ({ children }) => {
           //and he is not a registered user, then we want to forecfully redirect him to dashboard 
           //in the Axios Http Interceptor
           const userProfile = getUserProfile();
-          const currentPath = location.pathname;
-          const isDashboard = currentPath.split('/').includes('dashboard') ? true : false;
+          const isDashboard = initialPathnameRef.current.split('/').includes('dashboard') ? true : false;
           if (userProfile && !isDashboard) {
             const verifyEmailRequest = createRequest({
               "emailId": userProfile.email

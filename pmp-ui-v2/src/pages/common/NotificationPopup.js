@@ -140,7 +140,7 @@ function NotificationPopup({ closeNotification }) {
     useEffect(() => {
         const removeListener = handleEscapeKey(() => closeNotification());
         return removeListener;
-    }, []);
+    }, [closeNotification]);
 
     const isLatestNotification = (notification) => {
         if (!notification?.createdDateTime) return false;

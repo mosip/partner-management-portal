@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { getUserProfile } from '../../../services/UserProfileService';
@@ -47,7 +47,7 @@ function PoliciesList() {
     handleMouseClickForDropdown(submenuRef, () => setViewPolicyId(-1));
   }, [submenuRef]);
 
-  const tableHeaders = [
+  const tableHeaders = useMemo(() => [
     { id: "partnerId", headerNameKey: 'policies.partnerId' },
     { id: "partnerType", headerNameKey: "policies.partnerType" },
     { id: "policyGroupName", headerNameKey: "policies.policyGroupName" },
@@ -56,7 +56,7 @@ function PoliciesList() {
     { id: "createdDateTime", headerNameKey: "policies.creationDate" },
     { id: "status", headerNameKey: "policies.status" },
     { id: "action", headerNameKey: 'policies.action' }
-  ];
+  ], []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -79,7 +79,7 @@ function PoliciesList() {
       }
     };
     fetchData();
-  }, []);
+  }, [t]);
 
   const showRequestPolicy = () => {
     navigate('/partnermanagement/policies/request-policy')
@@ -124,7 +124,7 @@ function PoliciesList() {
     });
     setFilteredPoliciesList(filteredRows);
     setFirstIndex(0);
-  }, [filterQuery, policiesList]);
+  }, [filterQuery, policiesList, tableHeaders]);
 
   const onResetFilter = () => {
     window.location.reload();

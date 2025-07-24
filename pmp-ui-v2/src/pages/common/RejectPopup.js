@@ -25,7 +25,7 @@ function RejectPopup({ popupData, closePopUp, rejectResponse, title }) {
     useEffect(() => {
         const removeListener = handleEscapeKey(() => closePopUp());
         return removeListener;
-    }, []);
+    }, [closePopUp]);
 
     const cancelErrorMsg = () => setErrorMsg("");
 

@@ -31,7 +31,7 @@ function ClonePolicyPopup ({policyDetails, closePopUp}) {
     useEffect(() => {
         const removeListener = handleEscapeKey(() => closePopUp());
         return removeListener;
-    }, []);
+    }, [closePopUp]);
 
     const changePolicyGroupSelection = (fieldName, selectedValue) => {
         setSelectedPolicyGroup(selectedValue);
@@ -52,7 +52,7 @@ function ClonePolicyPopup ({policyDetails, closePopUp}) {
             setDataLoaded(true);
         };
         fetchData();
-    }, []);
+    }, [t]);
 
     const cancelPopUp = () => {
         closePopUp();
