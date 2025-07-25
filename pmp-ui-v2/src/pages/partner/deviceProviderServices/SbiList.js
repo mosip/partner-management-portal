@@ -146,7 +146,7 @@ function SbiList() {
 
     const getbgOfStatus = (sbi) => {
         if (sbi.status === "deactivated") {
-            return 'bg-[#EAECF0] border rounded-lg';
+            return 'bg-[#EAECF0] border border-[#D2D8E6] rounded-lg';
         }
         else if (sbi.sbiExpiryStatus === 'expired') {
             return 'bg-[#fef1f1]';
