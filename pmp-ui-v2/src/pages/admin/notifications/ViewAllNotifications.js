@@ -375,7 +375,7 @@ function ViewAllNotifications({ notificationType }) {
                                     listSubTitle={showExpiringItems ? t('notificationPopup.expiringItems') + " (" + formatDate(notificationCreatedDateTime, 'dateInWords') + t('notificationPopup.to') + formatDate(getWeeklySummaryDate(notificationCreatedDateTime), 'dateInWords') + ")" : undefined}
                                 />
                                 <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
-                                {filter && (
+                                {!showExpiringItems && filter && (
                                     <>
                                         {(notificationType === "root" || notificationType === "intermediate") && (
                                             <CertificateNotificationsFilter onApplyFilter={onApplyFilter} />
