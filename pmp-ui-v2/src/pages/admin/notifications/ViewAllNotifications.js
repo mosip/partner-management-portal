@@ -273,7 +273,7 @@ function ViewAllNotifications({ notificationType }) {
                         partnerId: notification.partnerId,
                         expiryDateTime: formatDate(notification.expiryDateTime, 'dateInWords')
                     }}
-                    components={{ span: <span className={`font-semibold ${isLoginLanguageRTL && 'whitespace-nowrap'}`} /> }}
+                    components={{ span: <span className={`font-semibold md:whitespace-nowrap md:break-words break-all`} /> }}
                 />
             );
         }
@@ -288,7 +288,7 @@ function ViewAllNotifications({ notificationType }) {
                         partnerId: notification.partnerId,
                         expiryDateTime: formatDate(notification.expiryDateTime, 'dateInWords')
                     }}
-                    components={{ span: <span className={`font-semibold ${isLoginLanguageRTL && 'whitespace-nowrap'}`} /> }}
+                    components={{ span: <span className={`font-semibold md:whitespace-nowrap md:break-words break-all`} /> }}
                 />
             );
         }
@@ -301,7 +301,7 @@ function ViewAllNotifications({ notificationType }) {
                         partnerId: notification.partnerId,
                         expiryDateTime: formatDate(notification.expiryDateTime, 'dateInWords')
                     }}
-                    components={{ span: <span className={`font-semibold ${isLoginLanguageRTL && 'whitespace-nowrap'}`} /> }}
+                    components={{ span: <span className={`font-semibold md:whitespace-nowrap md:break-words break-all`} /> }}
                 />
             );
         }
@@ -315,7 +315,7 @@ function ViewAllNotifications({ notificationType }) {
                         partnerId: notification.partnerId,
                         expiryDateTime: formatDate(notification.expiryDateTime, 'dateInWords')
                     }}
-                    components={{ span: <span className={`font-semibold ${isLoginLanguageRTL && 'whitespace-nowrap'}`} /> }}
+                    components={{ span: <span className={`font-semibold md:whitespace-nowrap md:break-words break-all`} /> }}
                 />
             );
         }
@@ -418,7 +418,7 @@ function ViewAllNotifications({ notificationType }) {
                                                                         <p id={'notification_title_' + (index + 1)} className="font-semibold text-base text-[#101828]">{getNotificationTitle(notification, t)}</p>
                                                                         <p id={'notification_created_date_time_' + (index + 1)} className={`text-xs text-gray-500 ${isLoginLanguageRTL ? 'text-left' : 'text-right'}`}>{formatDate(notification.createdDateTime, 'dateTime')}</p>
                                                                     </div>
-                                                                    <div id={'notification_description_' + (index + 1)} className="text-[#475467] text-sm break-normal">{getNotificationDescription(notification, isLoginLanguageRTL, t)}</div>
+                                                                    <div id={'notification_description_' + (index + 1)} className="text-[#475467] text-sm break-words">{getNotificationDescription(notification, isLoginLanguageRTL, t)}</div>
                                                                     <hr className="h-0.5 my-4 bg-[#BCC5E5] border" />
                                                                     <div className={`flex space-x-4 ${isLoginLanguageRTL && 'space-x-reverse'}`}>
                                                                         <button id={'notification_dismiss_btn_' + (index + 1)} onClick={() => dismissNotification(notification.notificationId)} className="text-tory-blue font-semibold text-sm px-4 py-[6px] rounded-md bg-[#F7F9FF]">{t('notificationPopup.dismiss')}</button>
@@ -480,7 +480,7 @@ function ViewAllNotifications({ notificationType }) {
                                                                             <p id={'weekly_notification_title_' + (index + 1)} className="font-semibold text-base text-[#101828]">{getWeeklyNotificationTitle(notification, activeTab)}</p>
                                                                             <p id={'weekly_notification_created_date_time_' + (index + 1)} className={`text-xs text-gray-500 ${isLoginLanguageRTL ? 'text-left' : 'text-right'}`}>{formatDate(notificationCreatedDateTime, 'dateTime')}</p>
                                                                         </div>
-                                                                        <div id={'weekly_notification_description_' + (index + 1)} className="text-[#475467] text-sm md:break-normal break-all">{getWeeklyNotificationDescription(notification, activeTab)}</div>
+                                                                        <div id={'weekly_notification_description_' + (index + 1)} className="text-[#475467] text-sm break-words">{getWeeklyNotificationDescription(notification, activeTab)}</div>
                                                                     </div>
                                                                 </div>
                                                             ))}
