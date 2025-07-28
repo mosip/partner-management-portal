@@ -75,6 +75,8 @@
         "sbiAndDevicePendingApprovalRequestCountDesc": "{{sbiPendingApprovalRequestCount}} SBI and {{devicePendingApprovalRequestCount}} Device requests are currently pending",
         "ftmPendingApprovalRequestCountDesc": "{{ftmPendingApprovalRequestCount}} FTM Chip requests are currently pending",
         "requestCountFetchError": "An Unexpected error occured while fetching request count",
+        "expiryCountFetchError": "An Unexpected error occured while fetching expiry count",
+        "trustCertExpiryCountDesc": "{{rootCertExpiryCount}} Root CA Certificates and {{intermediateCertExpiryCount}} Intermediate CA Certificates are expiring soon",
         "bothTrustCertExpiryCountPlural": "{{rootCertExpiryCount}} Root CA Certificates and {{intermediateCertExpiryCount}} Intermediate CA Certificates are expiring soon",
         "bothTrustCertExpiryCountSingular": "{{rootCertExpiryCount}} Root CA Certificate and {{intermediateCertExpiryCount}} Intermediate CA Certificate are expiring soon",
         "rootTrustCertExpiryCountSingular": "{{rootCertExpiryCount}} Root CA Certificate and {{intermediateCertExpiryCount}} Intermediate CA Certificates are expiring soon",
@@ -84,7 +86,13 @@
         "intermediateCertExpiryCountSingular": "{{intermediateCertExpiryCount}} Intermediate CA Certificate is expiring soon",
         "intermediateCertExpiryCountPlural": "{{intermediateCertExpiryCount}} Intermediate CA Certificates are expiring soon",
         "partnerCertExpiryCountDesc1": "{{partnerCertExpiryCount}} Partner Certificates are expiring soon",
-        "partnerCertExpiryCountDesc2": "{{partnerCertExpiryCount}} Partner Certificate is expiring soon"
+        "partnerCertExpiryCountDesc2": "{{partnerCertExpiryCount}} Partner Certificate is expiring soon",
+        "ftmChipCertExpiryCountDesc1": "{{expiringFtmCertificateCount}} FTM Chip Certificates are expiring soon",
+        "ftmChipCertExpiryCountDesc2": "{{expiringFtmCertificateCount}} FTM Chip Certificate is expiring soon",
+        "apiKeyExpiryCountDesc1": "{{expiringApiKeyCount}} API Keys are expiring soon",
+        "apiKeyExpiryCountDesc2": "{{expiringApiKeyCount}} API Key is expiring soon",
+        "sbiExpiryCountDesc1": "{{expiringSbiCount}} SBIs are expiring soon",
+        "sbiExpiryCountDesc2": "{{expiringSbiCount}} SBI is expiring soon"
     },
     "header": {
         "userProfile": "User Profile",
@@ -140,6 +148,7 @@
         "upload": "Upload",
         "partnerType": "Partner Type",
         "expiryDate": "Expiry Date",
+        "searchExpiryDate": "Search Expiry Date",
         "timeOfUpload": "Time of Upload",
         "errorMsgForOriginalCertificate": "This feature is under development.",
         "errorWhileDownloadingCertificate": "There is some error in downloading the certificate. Try again later!",
@@ -390,7 +399,9 @@
         "searchApiKeyName": "Search API Key Name",
         "selectApiKeyName": "Select API Key Name",
         "apiKeyIdAlertMsg": "API Key contains sensitive information. Make sure to copy the API key before closing this window because the API key will not be visible anymore once the window is closed.",
-        "errorInApiKeysList": "While fetching API Key Requests, we have encountered with an error."
+        "errorInApiKeysList": "While fetching API Key Requests, we have encountered with an error.",
+        "expirationDate": "Expiration Date",
+        "noExpiry": "No Expiry"
     },
     "generateApiKey": {
         "generateApiKey": "Generate API Key",
@@ -952,7 +963,9 @@
     },
     "deviceApproveRejectPopup": {
         "header": "Do you want to Approve or Reject the Device?",
-        "description": "Please review the Device details carefully before taking appropriate action."
+        "description": "Please review the Device details carefully before taking appropriate action.",
+        "rejectHeader": "Confirm Device Rejection",
+        "rejectDescription":"This device is not associated with any SBI, so it must be rejected."
     },
     "consentPopup": {
         "title": "Terms and Conditions",
@@ -978,9 +991,15 @@
         "rootCertExpiry": "Root CA Certificate Expiration",
         "intermediateCertExpiry": "Intermediate CA Certificate Expiration",
         "partnerCertExpiry": "Partner Certificate Expiration",
+        "ftmChipCertExpiry": "FTM Chip Certificate Expiration",
+        "apiKeyExpiry": "API Key Expiration",
+        "sbiExpiry": "SBI Expiration",
         "rootCertExpiryDescription": "Root CA Certificate <span>{{certificateId}}</span> for the <span>{{partnerDomain}}</span> domain is set to expire on  <span>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions.",
         "intermediateCertExpiryDescription": "Intermediate CA Certificate <span>{{certificateId}}</span> for the <span>{{partnerDomain}}</span> domain is set to expire on <span>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions.",
         "partnerCertExpiryDescription": "Partner Certificate for <span>{{partnerDomain}}</span> domain is set to expire on <span>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions.",
+        "ftmChipCertExpiryDescription": "FTM Chip Certificate with FTM ID : <span>{{ftmId}}</span> is set to expire on <span>{{expiryDateTime}}</span>. Reupload the new certificate now to avoid any disruptions.",
+        "apiKeyExpiryDescription": "API Key with name : <span>{{apiKeyName}}</span> is set to expire on <span>{{expiryDateTime}}</span>. Generate a new API Key now to avoid any disruptions.",
+        "sbiExpiryDescription": "SBI with ID: <span>{{sbiId}}</span> is set to expire on <span>{{expiryDateTime}}</span>. Create a new SBI now to avoid any disruptions.",
         "dismiss": "Dismiss",
         "viewAllNotification": "View all notifications",
         "expiringItems": "Weekly Summary of Partner-Created Expiring Items",
@@ -1033,7 +1052,16 @@
         "partnerCertExpiryTitle": "Partner certificate is expiring for {{partnerId}}",
         "partnerCertExpiryDescription": "Partner Certificate <span>{{certificateId}}</span> issued to <span>{{issuedTo}}</span> by <span>{{issuedBy}}</span> for the <span>{{partnerDomain}}</span> domain is set to expire on <span>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions.",
         "weeklyPartnerCertExpiryTitle": "Partner Certificate is expiring for Partner ID: {{partnerId}}",
-        "weeklyPartnerCertExpiryDescription": "Partner Certificate <span>{{certificateId}}</span> issued to <span>{{issuedTo}}</span> by <span>{{issuedBy}}</span> for <span>{{partnerId}}</span> is set to expire on <span>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions."
+        "weeklyPartnerCertExpiryDescription": "Partner Certificate <span>{{certificateId}}</span> issued to <span>{{issuedTo}}</span> by <span>{{issuedBy}}</span> for <span>{{partnerId}}</span> is set to expire on <span>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions.",
+        "ftmChipCertExpiryDescription": "FTM Chip Certificate for <span>Make: {{make}}</span> - <span>Model: {{model}}</span> (FTM ID: <span>{{ftmId}}</span>) is set to expire on <span>{{expiryDateTime}}</span>. Reupload the new certificate now to avoid any disruptions.",
+        "apiKeyExpiryDescription": "API Key named <span>{{apiKeyName}}</span> associated with policy: <span>{{policyName}}</span> is set to expire on <span>{{expiryDateTime}}</span>. Generate a new API Key now to avoid any disruptions.",
+        "weeklyFtmCertExpiryTitle": "FTM Chip Certificate is expiring for Partner ID: {{partnerId}}",
+        "weeklyFtmCertExpiryDescription": "FTM Chip Certificate for <span>Make: {{make}}</span> - <span>Model: {{model}}</span> (FTM ID: <span>{{ftmId}}</span>) uploaded by <span>{{partnerId}}</span> is set to expire on <span>{{expiryDateTime}}</span>. Reupload the new certificate now to avoid any disruptions.",
+        "weeklyApiKeyExpiryTitle": "API Key is expiring for Partner ID: {{partnerId}}",
+        "weeklyApiKeyExpiryDescription": "API Key named <span>{{apiKeyName}}</span> generated by <span>{{partnerId}}</span> is set to expire on <span>{{expiryDateTime}}</span>. Generate a new API Key now to avoid any disruptions.",
+        "sbiExpiryDescription": "SBI with ID: <span>{{sbiId}}</span> and version: <span>{{sbiVersion}}</span> is set to expire on <span>{{expiryDateTime}}</span>. Create a new SBI now to avoid any disruptions.",
+        "weeklySbiExpiryTitle": "SBI is expiring for Partner ID: {{partnerId}}",
+        "weeklySbiExpiryDescription": "SBI with SBI ID: <span>{{sbiId}}</span> and SBI Version: <span>{{sbiVersion}}</span> generated by <span>{{partnerId}}</span> is set to expire on <span>{{expiryDateTime}}</span>. Create a new SBI now to avoid any disruptions."
     },
     "serverError": {
         "PMS_COR_001": "Missing Input Parameter",
@@ -1316,12 +1344,13 @@
         "KER-PMS-019": "CA Certificate not found for the given ID.",
         "KER-PMS-020": "Uploading future-dated certificates is not allowed.",
         "KER-CRY-003": "Invalid certificate: Possible file corruption, tampering, or unsupported format. Ensure it is properly Base64-encoded and try again.",
+        "KER-KMS-021": "The certificate's validity period is shorter than the required minimum duration.",
         "PMS_NOTIFICATION_ERROR_001": "Error while updating notifications seen date time.",
         "PMS_NOTIFICATION_ERROR_002": "Invalid notification seen timestamp.",
         "PMS_NOTIFICATION_ERROR_003": "User details does not exist for the user.",
         "PMS_NOTIFICATION_ERROR_004": "Error while fetching notifications seen date time.",
         "PMS_NOTIFICATION_ERROR_005": "Error while fetching notifications.",
-        "PMS_NOTIFICATION_ERROR_006": "Partner Admin will only get notifications for root/intermediate certificate expiry and the weekly summary.",
+        "PMS_NOTIFICATION_ERROR_006": "Only partner admin will get notifications for root/intermediate certificate expiry and the weekly summary.",
         "PMS_NOTIFICATION_ERROR_007": "Error parsing notification details JSON.",
         "PMS_NOTIFICATION_ERROR_008": "Notification does not exist.",
         "PMS_NOTIFICATION_ERROR_009": "Notification has already been dismissed.",
@@ -1332,6 +1361,13 @@
         "PMS_NOTIFICATION_ERROR_014": "Partner Admin will only get the count of expiring root and intermediate certificates.",
         "PMS_NOTIFICATION_ERROR_015": "Notification type must be selected for filtering",
         "PMS_NOTIFICATION_ERROR_016": "Please enter a valid date",
-        "PMS_NOTIFICATION_ERROR_017": "Filtering by createdFromDate / createdToDate is only available when 'weekly' is selected as the notificationType"
+        "PMS_NOTIFICATION_ERROR_017": "The selected notification type is invalid. Only 'weekly' type is allowed for this filter.",
+        "PMS_NOTIFICATION_ERROR_018": "Only Partner Admin can dismiss this notification",
+        "PMS_NOTIFICATION_ERROR_019": "Notification status is required in the request",
+        "PMS_NOTIFICATION_ERROR_020": "The selected notification type is invalid. Only 'apikey' type is allowed for this filter.",
+        "PMS_NOTIFICATION_ERROR_021": "The selected notification type is invalid. Only 'root', 'intermediate', or 'partner' types are allowed for this filter.",
+        "PMS_NOTIFICATION_ERROR_022": "The selected notification type is invalid. Only 'ftm-chip' type is allowed for this filter.",
+        "PMS_NOTIFICATION_ERROR_023": "The selected notification type is invalid. Only 'sbi' type is allowed for this filter.",
+        "PMS_NOTIFICATION_ERROR_024": "The selected notification type is invalid. Please select a type other than 'weekly'."
     }
 }

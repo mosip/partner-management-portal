@@ -3,7 +3,7 @@ import ViewAllNotifications from "../../admin/notifications/ViewAllNotifications
 function ViewFtmCertificateNotifications() {
     return (
         <ViewAllNotifications
-            notificationType='ftm'
+            notificationType='ftm-chip'
         />
     );
 }

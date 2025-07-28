@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useMemo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../../../services/UserProfileService';
@@ -98,7 +98,7 @@ function FtmList() {
       }
     };
     fetchData();
-  }, []);
+  }, [t]);
 
   const populateCertificateExpiryStatus = (data) => {
     // Updating the status based on the condition
@@ -118,7 +118,7 @@ function FtmList() {
     return updatedData;
   };
 
-  const tableHeaders = [
+  const tableHeaders = useMemo(() => [
     { id: "ftmId", headerNameKey: 'ftmList.ftmId' },
     { id: "partnerId", headerNameKey: 'ftmList.partnerId' },
     { id: "make", headerNameKey: "ftmList.make" },
@@ -129,7 +129,7 @@ function FtmList() {
     { id: "certificateExpiryStatus", headerNameKey: "ftmList.certExpiryStatus" },
     { id: "status", headerNameKey: "ftmList.status" },
     { id: "action", headerNameKey: 'ftmList.action' }
-  ];
+  ], []);
 
   const cancelErrorMsg = () => {
     setErrorMsg("");
@@ -156,7 +156,7 @@ function FtmList() {
     });
     setFilteredFtmList(filteredRows);
     setFirstIndex(0);
-  }, [filterQuery, ftmList]);
+  }, [filterQuery, ftmList, tableHeaders]);
 
   const onResetFilter = () => {
     window.location.reload();
@@ -265,7 +265,7 @@ function FtmList() {
       {dataLoaded && (
         <>
           {errorMsg && (
-            <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
+            <ErrorMessage id='ftm_list_error_msg' errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
           )}
           <div className="flex-col mt-5">
             <div className="flex justify-between mb-5">
@@ -280,7 +280,7 @@ function FtmList() {
               <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
                 <div className="flex items-center justify-center p-2">
                   <div className="p-2 bg-[#FFF7E5] border-2 border-[#EDDCAF] rounded-md w-full">
-                    <p className="text-sm font-medium text-[#8B6105]">
+                    <p id='ftm_list_compatibility_msg' className="text-sm font-medium text-[#8B6105]">
                       <Trans i18nKey="ftmList.compatibilityMsg" components={{ italic: <i /> }} />
                     </p>
                   </div>

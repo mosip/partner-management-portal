@@ -72,7 +72,7 @@ function SbiList() {
             }
         };
         fetchData();
-    }, []);
+    }, [t]);
 
     const addSbi = () => {
         navigate('/partnermanagement/device-provider-services/add-sbi');
@@ -146,7 +146,7 @@ function SbiList() {
 
     const getbgOfStatus = (sbi) => {
         if (sbi.status === "deactivated") {
-            return 'bg-[#EAECF0] border rounded-lg';
+            return 'bg-[#EAECF0] border border-[#D2D8E6] rounded-lg';
         }
         else if (sbi.sbiExpiryStatus === 'expired') {
             return 'bg-[#fef1f1]';
@@ -170,7 +170,7 @@ function SbiList() {
             {dataLoaded && (
                 <>
                     {errorMsg && (
-                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
+                        <ErrorMessage id='sbi_list_error_msg' errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
                     <div className="flex-col mt-5 !mb-4">
                         <div className="flex justify-between mb-5">
@@ -186,7 +186,7 @@ function SbiList() {
                         <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
                             <div className="flex items-center justify-center p-2">
                                 <div className="p-2 bg-[#FFF7E5] border-2 border-[#EDDCAF] rounded-md w-full">
-                                    <p className="text-sm font-medium text-[#8B6105]">{t('sbiList.guidence')}</p>
+                                    <p id='sbi_list_guidence' className="text-sm font-medium text-[#8B6105]">{t('sbiList.guidence')}</p>
                                 </div>
                             </div>
                         </div>
@@ -209,19 +209,19 @@ function SbiList() {
                                                 <div className="flex flex-row justify-between items-center max-[670px]:mb-2">
                                                     <img src={getIcon(sbi)} alt="" className={`${isLoginLanguageRTL ? "ml-4" : "mr-4"}`} />
                                                     <div className="flex flex-col">
-                                                        <p className={`text-base break-all font-bold p-1 ${sbi.status === "deactivated" ? 'text-[#8E8E8E]' : 'text-dark-blue'}`}>{sbi.sbiVersion}</p>
+                                                        <p id={'sbi_list_sbi_version_' + (index+1)} className={`text-base break-all font-bold p-1 ${sbi.status === "deactivated" ? 'text-[#8E8E8E]' : 'text-dark-blue'}`}>{sbi.sbiVersion}</p>
                                                         <div className="flex flex-row items-center space-x-1">
-                                                            <div className={`${(sbi.status === 'deactivated' || sbi.sbiExpiryStatus === 'expired') ? 'bg-[#A5A5A5] text-white' : bgOfStatus(sbi.status)} flex w-fit py-1.5 px-2 ${isLoginLanguageRTL ? "ml-1" : "mr-1"} text-xs font-semibold rounded-md`}>
+                                                            <div id={'sbi_list_sbi_status_' + (index+1)} className={`${(sbi.status === 'deactivated' || sbi.sbiExpiryStatus === 'expired') ? 'bg-[#A5A5A5] text-white' : bgOfStatus(sbi.status)} flex w-fit py-1.5 px-2 ${isLoginLanguageRTL ? "ml-1" : "mr-1"} text-xs font-semibold rounded-md`}>
                                                                 {getStatusCode(sbi.status, t)}
                                                             </div>
                                                             <div className='flex items-center w-fit px-2 mx-1'>
-                                                                <p className="text-xs font-semibold text-[#505E7C]">
+                                                                <p id={'sbi_list_associated_approved_devices_count_' + (index+1)} className="text-xs font-semibold text-[#505E7C]">
                                                                     <span className={`text-xs font-semibold ${sbi.status === "deactivated" ? 'text-[#4F5E7C]' : 'text-tory-blue'} `}>
                                                                         {sbi.countOfApprovedDevices} {sbi.countOfApprovedDevices <= 1 ? t('sbiList.device') : t('sbiList.devices')}
                                                                     </span> {t('sbiList.approved')}
                                                                 </p>
                                                                 <span className='mx-1'>{'|'}</span>
-                                                                <p className="text-xs font-semibold text-[#505E7C]">
+                                                                <p id={'sbi_list_associated_pending_devices_count_' + (index+1)} className="text-xs font-semibold text-[#505E7C]">
                                                                     <span className={`text-xs font-semibold ${sbi.status === "deactivated" ? 'text-[#4F5E7C]' : 'text-[#ba5f04]'} `}>
                                                                         {sbi.countOfPendingDevices} {sbi.countOfPendingDevices <= 1 ? t('sbiList.device') : t('sbiList.devices')}
                                                                     </span> {t('sbiList.pendingForApprovalContx')}
@@ -267,30 +267,30 @@ function SbiList() {
                                                     <div className="flex flex-col space-y-1">
                                                         <div className="flex flex-row justify-evenly items-center font-semibold max-[530px]:flex-col max-[530px]:items-start max-[530px]:space-y-2">
                                                             <div className="flex flex-col w-1/3 max-[530px]:w-full">
-                                                                <p className="text-xs text-suva-gray">{t('sbiList.sbiId')}</p>
-                                                                <p className="text-sm text-vulcan">{sbi.sbiId}</p>
+                                                                <p id='sbi_list_sbi_id_label' className="text-xs text-suva-gray">{t('sbiList.sbiId')}</p>
+                                                                <p id='sbi_list_sbi_id_context' className="text-sm text-vulcan">{sbi.sbiId}</p>
                                                             </div>
                                                             <div className="flex flex-col w-1/3 max-[530px]:w-full">
-                                                                <p className="text-xs text-suva-gray">{t('sbiList.partnerId')}</p>
-                                                                <p className="text-sm text-vulcan">{sbi.partnerId}</p>
+                                                                <p id='sbi_list_partner_id_label' className="text-xs text-suva-gray">{t('sbiList.partnerId')}</p>
+                                                                <p id='sbi_list_partner_id_context' className="text-sm text-vulcan">{sbi.partnerId}</p>
                                                             </div>
                                                             <div className={`flex flex-col w-1/3 max-[530px]:w-full`}>
-                                                                <p className="text-xs text-suva-gray">{t('sbiList.partnerType')}</p>
-                                                                <p className="text-sm text-vulcan">{getPartnerTypeDescription("Device_Provider", t)}</p>
+                                                                <p id='sbi_list_partner_type_label' className="text-xs text-suva-gray">{t('sbiList.partnerType')}</p>
+                                                                <p id='sbi_list_partner_type_context' className="text-sm text-vulcan">{getPartnerTypeDescription("Device_Provider", t)}</p>
                                                             </div>
                                                         </div>
                                                         <div className="flex flex-row justify-evenly font-semibold pt-3 items-center max-[530px]:flex-col max-[530px]:items-start max-[530px]:space-y-2">
                                                             <div className={`flex flex-col w-1/3 max-[530px]:w-full`}>
-                                                                <p className="text-xs text-suva-gray">{t('sbiList.submittedOn')}</p>
-                                                                <p className="text-sm text-vulcan">{formatDate(sbi.createdDateTime, 'date')}</p>
+                                                                <p id='sbi_list_created_date_time_label' className="text-xs text-suva-gray">{t('sbiList.submittedOn')}</p>
+                                                                <p id='sbi_list_created_date_time_context'className="text-sm text-vulcan">{formatDate(sbi.createdDateTime, 'date')}</p>
                                                             </div>
                                                             <div className={`flex flex-col w-1/3 max-[530px]:w-full`}>
-                                                                <p className="text-xs text-suva-gray">{t('sbiList.sbiCreatedDate')}</p>
-                                                                <p className="text-sm text-vulcan">{formatDate(sbi.sbiCreatedDateTime, 'date')}</p>
+                                                                <p id='sbi_list_sbi_created_date_label' className="text-xs text-suva-gray">{t('sbiList.sbiCreatedDate')}</p>
+                                                                <p id='sbi_list_sbi_created_date_context' className="text-sm text-vulcan">{formatDate(sbi.sbiCreatedDateTime, 'date')}</p>
                                                             </div>
                                                             <div className={`flex flex-col w-1/3 max-[530px]:w-full`}>
-                                                                <p className={'text-xs text-suva-gray'}>{t('sbiList.sbiExpiryDate')}</p>
-                                                                <p className={`text-sm ${(sbi.status !== "deactivated" && sbi.sbiExpiryStatus === 'expired') ? 'font-bold text-crimson-red' : 'text-vulcan'} `}>{formatDate(sbi.sbiExpiryDateTime, 'date')}</p>
+                                                                <p id='sbi_list_sbi_expiry_date_label' className={'text-xs text-suva-gray'}>{t('sbiList.sbiExpiryDate')}</p>
+                                                                <p id='sbi_list_sbi_expiry_date_context' className={`text-sm ${(sbi.status !== "deactivated" && sbi.sbiExpiryStatus === 'expired') ? 'font-bold text-crimson-red' : 'text-vulcan'} `}>{formatDate(sbi.sbiExpiryDateTime, 'date')}</p>
                                                             </div>
                                                         </div>
                                                     </div>

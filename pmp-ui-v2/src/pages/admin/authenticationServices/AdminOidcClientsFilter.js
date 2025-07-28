@@ -10,10 +10,6 @@ function AdminOidcClientsFilter ({ onApplyFilter }) {
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [status, setStatus] = useState([]);
-    const [statusDropdownData, setStatusDropdownData] = useState([
-      { status: 'ACTIVE' },
-      { status: 'INACTIVE'}
-    ]);
     const [filters, setFilters] = useState({
       partnerId: "",
       orgName: "",
@@ -30,9 +26,10 @@ function AdminOidcClientsFilter ({ onApplyFilter }) {
 
     useEffect(() => {
         const fetchData = async () => {
-          setStatus(
-            createDropdownData("status", "", true, statusDropdownData, t, t("partnerList.selectStatus"))
-          );
+            const statusDropdownData= [{ status: 'ACTIVE' },{ status: 'INACTIVE'}];
+            setStatus(
+                createDropdownData("status", "", true, statusDropdownData, t, t("partnerList.selectStatus"))
+            );
         };
         fetchData();
     }, [t]);

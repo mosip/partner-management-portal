@@ -84,7 +84,13 @@
         "intermediateCertExpiryCountSingular": "{{intermediateCertExpiryCount}} Le certificat CA intermédiaire expire bientôt",
         "intermediateCertExpiryCountPlural": "{{intermediateCertExpiryCount}} Les certificats CA intermédiaires expirent bientôt",
         "partnerCertExpiryCountDesc1": "{{partnerCertExpiryCount}} Les certificats partenaires expirent bientôt",
-        "partnerCertExpiryCountDesc2": "{{partnerCertExpiryCount}} Le certificat de partenaire expire bientôt"
+        "partnerCertExpiryCountDesc2": "{{partnerCertExpiryCount}} Le certificat de partenaire expire bientôt",
+        "ftmChipCertExpiryCountDesc1": "{{expiringFtmCertificateCount}} certificats de puce FTM expirent bientôt",
+        "ftmChipCertExpiryCountDesc2": "{{expiringFtmCertificateCount}} certificat de puce FTM expire bientôt",
+        "apiKeyExpiryCountDesc1": "{{expiringApiKeyCount}} clés API vont bientôt expirer",
+        "apiKeyExpiryCountDesc2": "{{expiringApiKeyCount}} clé API va bientôt expirer",
+        "sbiExpiryCountDesc1": "{{expiringSbiCount}} SBI vont bientôt expirer",
+        "sbiExpiryCountDesc2": "{{expiringSbiCount}} SBI va bientôt expirer"
     },
     "header": {
         "userProfile": "Profil de l'utilisateur",
@@ -109,7 +115,7 @@
         "mosipCommunity": "Communauté MOSIP",
         "contactUs": "Contactez-nous"
     },
-     "missingAttributesPopup": {
+    "missingAttributesPopup": {
         "title": "Configuration du compte requise",
         "description": "Votre compte utilisateur Keycloak n'a pas été créé via l'auto-inscription sur le portail PMS. Par conséquent, nous ne pouvons pas vous intégrer au portail PMS.",
         "instructionsTitle": "<strong>Pour résoudre ce problème, vous pouvez suivre les étapes suivantes :</strong>",
@@ -140,6 +146,7 @@
         "upload": "Télécharger",
         "partnerType": "Type de partenaire",
         "expiryDate": "Date d'expiration",
+        "searchExpiryDate": "Date d'expiration de la recherche",
         "timeOfUpload": "Heure de téléchargement",
         "errorMsgForOriginalCertificate": "Cette fonctionnalité est en cours de développement.",
         "errorWhileDownloadingCertificate": "Une erreur s'est produite lors du téléchargement du certificat. Réessayez plus tard!",
@@ -392,7 +399,9 @@
         "searchApiKeyName": "Rechercher le nom de la clé API",
         "selectApiKeyName": "Sélectionner le nom de la clé API",
         "apiKeyIdAlertMsg": "La clé API contient des informations sensibles. Assurez-vous de copier la clé API avant de fermer cette fenêtre car la clé API ne sera plus visible une fois la fenêtre fermée.",
-        "errorInApiKeysList": "Lors de la récupération des demandes de clé API, nous avons rencontré une erreur."
+        "errorInApiKeysList": "Lors de la récupération des demandes de clé API, nous avons rencontré une erreur.",
+        "expirationDate": "Date d'expiration",
+        "noExpiry": "Aucune expiration"
     },
     "generateApiKey": {
         "generateApiKey": "Générer une clé API",
@@ -958,7 +967,9 @@
     },
     "deviceApproveRejectPopup": {
         "header": "Voulez-vous approuver ou rejeter l'appareil ?",
-        "description": "Veuillez examiner attentivement les détails de l'appareil avant de prendre une décision appropriée."
+        "description": "Veuillez examiner attentivement les détails de l'appareil avant de prendre une décision appropriée.",
+        "rejectHeader": "Confirmer le rejet de l'appareil",
+        "rejectDescription":"Cet appareil n'est associé à aucun SBI, il doit donc être rejeté."
     },
     "consentPopup": {
         "title": "Termes et conditions",
@@ -984,9 +995,15 @@
         "rootCertExpiry": "Expiration du certificat CA racine",
         "intermediateCertExpiry": "Expiration du certificat CA intermédiaire",
         "partnerCertExpiry": "Expiration du certificat de partenaire",
+        "ftmChipCertExpiry": "Expiration du certificat de puce FTM",
+        "apiKeyExpiry": "Expiration de la clé API",
+        "sbiExpiry": "Expiration SBI",
         "rootCertExpiryDescription": "Le certificat CA racine <span>{{certificateId}}</span> du domaine <span>{{partnerDomain}}</span> expirera le <span>{{expiryDateTime}}</span>. Renouvelez-le dès maintenant pour éviter toute interruption.",
         "intermediateCertExpiryDescription": "Le certificat CA intermédiaire <span>{{certificateId}}</span> du domaine <span>{{partnerDomain}}</span> expirera le <span>{{expiryDateTime}}</span>. Renouvelez-le dès maintenant pour éviter toute interruption.",
         "partnerCertExpiryDescription": "Le certificat partenaire du domaine <span>{{partnerDomain}}</span> expirera le <span>{{expiryDateTime}}</span>. Renouvelez-le dès maintenant pour éviter toute interruption.",
+        "ftmChipCertExpiryDescription": "Le certificat de puce FTM avec l'identifiant FTM : <span>{{ftmId}}</span> expire le <span>{{expiryDateTime}}</span>. Téléchargez le nouveau certificat pour éviter toute perturbation.",
+        "apiKeyExpiryDescription": "La clé API portant le nom <span>{{apiKeyName}}</span> expirera le <span>{{expiryDateTime}}</span>. Générez une nouvelle clé API maintenant pour éviter toute interruption.",
+        "sbiExpiryDescription": "L'abonnement SBI avec l'ID : <span>{{sbiId}}</span> expire le <span>{{expiryDateTime}}</span>. Créez un nouveau SBI maintenant pour éviter toute perturbation.",
         "dismiss": "Rejeter",
         "viewAllNotification": "Afficher toutes les notifications",
         "expiringItems": "Résumé hebdomadaire des articles expirés créés par les partenaires",
@@ -1039,7 +1056,16 @@
         "partnerCertExpiryTitle": "Le certificat du partenaire expire pour {{partnerId}}",
         "partnerCertExpiryDescription": "Le certificat partenaire <span>{{certificateId}}</span> délivré à <span>{{issuedTo}}</span> par <span>{{issuedBy}}</span> pour le domaine <span>{{partnerDomain}}</span> expirera le <span>{{expiryDateTime}}</span>. Renouvelez-le dès maintenant pour éviter toute interruption.",
         "weeklyPartnerCertExpiryTitle": "Le certificat du partenaire expire pour l'ID du partenaire : {{partnerId}}",
-        "weeklyPartnerCertExpiryDescription": "Le certificat partenaire <span>{{certificateId}}</span> délivré à <span>{{issuedTo}}</span> par <span>{{issuedBy}}</span> pour <span>{{partnerId}}</span> expirera le <span>{{expiryDateTime}}</span>. Renouvelez-le dès maintenant pour éviter toute interruption."
+        "weeklyPartnerCertExpiryDescription": "Le certificat partenaire <span>{{certificateId}}</span> délivré à <span>{{issuedTo}}</span> par <span>{{issuedBy}}</span> pour <span>{{partnerId}}</span> expirera le <span>{{expiryDateTime}}</span>. Renouvelez-le dès maintenant pour éviter toute interruption.",
+        "ftmChipCertExpiryDescription": "Le certificat de puce FTM pour <span>Marque : {{make}}</span> - <span>Modèle : {{model}}</span> (ID FTM : <span>{{ftmId}}</span>) expirera le <span>{{expiryDateTime}}</span>. Téléchargez le nouveau certificat pour éviter toute perturbation.",
+        "apiKeyExpiryDescription": "La clé API <span>{{apiKeyName}}</span> associée à la politique : <span>{{policyName}}</span> expirera le <span>{{expiryDateTime}}</span>. Générez une nouvelle clé API maintenant pour éviter toute interruption.",
+        "weeklyFtmCertExpiryTitle": "Le certificat de puce FTM expire pour l'ID partenaire : {{partnerId}}",
+        "weeklyFtmCertExpiryDescription": "Le certificat de puce FTM pour <span>Marque : {{make}}</span> - <span>Modèle : {{model}}</span> (ID FTM : <span>{{ftmId}}</span>) téléchargé par <span>{{partnerId}}</span> expirera le <span>{{expiryDateTime}}</span>. Téléchargez le nouveau certificat pour éviter toute perturbation.",
+        "weeklyApiKeyExpiryTitle": "La clé API expire pour l'ID partenaire : {{partnerId}}",
+        "weeklyApiKeyExpiryDescription": "La clé API nommée <span>{{apiKeyName}}</span> générée par <span>{{partnerId}}</span> expirera le <span>{{expiryDateTime}}</span>. Générez une nouvelle clé API maintenant pour éviter toute interruption.",
+        "sbiExpiryDescription": "Le contrat SBI avec l'ID : <span>{{sbiId}}</span> et la version : <span>{{sbiVersion}}</span> expirera le <span>{{expiryDateTime}}</span>. Créez un nouveau SBI maintenant pour éviter toute perturbation.",
+        "weeklySbiExpiryTitle": "SBI expire pour l'ID de partenaire : {{partnerId}}",
+        "weeklySbiExpiryDescription": "Le contrat SBI avec l'identifiant SBI : <span>{{sbiId}}</span> et la version SBI : <span>{{sbiVersion}}</span> généré par <span>{{partnerId}}</span> expirera le <span>{{expiryDateTime}}</span>. Créez un nouveau SBI maintenant pour éviter toute perturbation."
     },
     "serverError": {
         "PMS_COR_001": "Paramètre d'entrée manquant",
@@ -1214,6 +1240,7 @@
         "KER-PCM-005": "Veuillez télécharger le certificat racine correspondant pour continuer",
         "KER-KMS-013": "Erreur d'analyse du certificat. Téléchargez un certificat valide.",
         "KER-KMS-015": "Le téléchargement du certificat ne sera pas autorisé pour mettre à jour un autre certificat de domaine.",
+        "KER-KMS-021": "La période de validité du certificat est inférieure à la durée minimale requise.",
         "PMS_AUT_001": "Code de sous-type de périphérique Reg introuvable dans la liste des sous-types de périphérique Reg",
         "PMS_PRT_053": "Cette politique est déjà en attente d'approbation par rapport à votre identifiant de partenaire.",
         "PMS_PRT_060": "Cette politique a déjà été approuvée par rapport à votre identifiant de partenaire.",
@@ -1327,7 +1354,7 @@
         "PMS_NOTIFICATION_ERROR_003": "Les informations utilisateur n'existent pas pour cet utilisateur.",
         "PMS_NOTIFICATION_ERROR_004": "Erreur lors de la récupération des notifications date et heure.",
         "PMS_NOTIFICATION_ERROR_005": "Erreur lors de la récupération des notifications.",
-        "PMS_NOTIFICATION_ERROR_006": "L'administrateur partenaire ne recevra que les notifications d'expiration du certificat racine/intermédiaire et le résumé hebdomadaire.",
+        "PMS_NOTIFICATION_ERROR_006": "Seul l'administrateur partenaire recevra des notifications concernant l'expiration du certificat racine/intermédiaire et le résumé hebdomadaire.",
         "PMS_NOTIFICATION_ERROR_007": "Erreur lors de l'analyse des informations de notification au format JSON.",
         "PMS_NOTIFICATION_ERROR_008": "La notification ne s'affiche pas. existe.",
         "PMS_NOTIFICATION_ERROR_009": "La notification a déjà été rejetée.",
@@ -1338,6 +1365,13 @@
         "PMS_NOTIFICATION_ERROR_014": "L'administrateur partenaire obtiendra uniquement le nombre de certificats racine et intermédiaires expirant.",
         "PMS_NOTIFICATION_ERROR_015": "Le type de notification doit être sélectionné pour le filtrage",
         "PMS_NOTIFICATION_ERROR_016": "Veuillez saisir une date valide",
-        "PMS_NOTIFICATION_ERROR_017": "Le filtrage par createdFromDate / createdToDate n'est disponible que lorsque « hebdomadaire » est sélectionné comme type de notification"
+        "PMS_NOTIFICATION_ERROR_017": "Le type de notification sélectionné n'est pas valide. Seul le type « hebdomadaire » est autorisé pour ce filtre.",
+        "PMS_NOTIFICATION_ERROR_018": "Seul l'administrateur partenaire peut ignorer cette notification",
+        "PMS_NOTIFICATION_ERROR_019": "Le statut de notification est requis dans la demande",
+        "PMS_NOTIFICATION_ERROR_020": "Le type de notification sélectionné n'est pas valide. Seul le type « apikey » est autorisé pour ce filtre.",
+        "PMS_NOTIFICATION_ERROR_021": "Le type de notification sélectionné n'est pas valide. Seuls les types « racine », « intermédiaire » ou « partenaire » sont autorisés pour ce filtre.",
+        "PMS_NOTIFICATION_ERROR_022": "Le type de notification sélectionné n'est pas valide. Seul le type « ftm-chip » est autorisé pour ce filtre.",
+        "PMS_NOTIFICATION_ERROR_023": "Le type de notification sélectionné n'est pas valide. Seul le type « sbi » est autorisé pour ce filtre.",
+        "PMS_NOTIFICATION_ERROR_024": "Le type de notification sélectionné n'est pas valide. Veuillez sélectionner un type autre que « hebdomadaire »."
     }
 }

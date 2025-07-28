@@ -27,10 +27,6 @@ function ViewApiKeyDetails() {
         }
     }, [navigate]);
 
-    const styleForTitle = {
-        backArrowIcon: "!mt-[4%]"
-    }
-
     return (
         <>
             <div className={`w-full p-5 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm mb-[2%] ${isLoginLanguageRTL ? "mr-24 ml-1" : "ml-24 mr-1"} overflow-x-scroll`}>
@@ -40,19 +36,19 @@ function ViewApiKeyDetails() {
                 <div className="bg-snow-white h-fit mt-1 rounded-t-xl shadow-lg font-inter">
                     <div className="flex justify-between px-7 pt-3 border-b max-[450px]:flex-col">
                         <div className="flex-col">
-                            <p className="text-lg text-dark-blue mb-2">
+                            <p id='view_api_key_name' className="text-lg text-dark-blue mb-2">
                                 {t('apiKeysList.apiKeyName')}: <span className="font-semibold">{apiKeyDetails.apiKeyLabel}</span>
                             </p>
                             <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
-                                <div className={`${bgOfStatus(apiKeyDetails.status)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
+                                <div id='view_api_key_status' className={`${bgOfStatus(apiKeyDetails.status)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
                                     {getStatusCode(apiKeyDetails.status, t)}
                                 </div>
-                                <div className={`font-semibold ${isLoginLanguageRTL ? "mr-1" : "ml-3"} text-sm text-dark-blue`}>
+                                <div id='view_api_key_created_on' className={`font-semibold ${isLoginLanguageRTL ? "mr-1" : "ml-3"} text-sm text-dark-blue`}>
                                     {t("viewOidcClientDetails.createdOn") + ' ' +
                                         formatDate(apiKeyDetails.createdDateTime, "date")}
                                 </div>
                                 <div className="mx-1 text-gray-300">|</div>
-                                <div className="font-semibold text-sm text-dark-blue">
+                                <div id='view_api_key_created_date_time' className="font-semibold text-sm text-dark-blue">
                                     {formatDate(apiKeyDetails.createdDateTime, "time")}
                                 </div>
                             </div>
@@ -109,6 +105,14 @@ function ViewApiKeyDetails() {
                                 </p>
                                 <p id='api_key_details_policy_description_context' className="font-[600] text-vulcan text-base">
                                     {apiKeyDetails.policyDescription}
+                                </p>
+                            </div>
+                            <div className={`w-[49%] max-[600px]:w-[100%] my-3 ${isLoginLanguageRTL ? "ml[1%]" : "mr-[1%]"}`}>
+                                <p id='api_key_details_expiration_date_label' className="font-[600] text-suva-gray text-sm">
+                                    {t("apiKeysList.expirationDate")}
+                                </p>
+                                <p id='api_key_details_expiration_date_context' className="font-[600] text-vulcan text-base">
+                                    {apiKeyDetails.apiKeyExpiryDateTime ? formatDate(apiKeyDetails.apiKeyExpiryDateTime, 'date') : t('apiKeysList.noExpiry')}
                                 </p>
                             </div>
                         </div>

@@ -32,7 +32,7 @@ function DeactivatePolicyPopup({ header, description, popupData, headerKeyName, 
     useEffect(() => {
         const removeListener = handleEscapeKey(() => closePopUp());
         return removeListener;
-    }, []);
+    }, [closePopUp]);
 
     const cancelErrorMsg = () => {
         setErrorMsg("");
@@ -185,19 +185,19 @@ function DeactivatePolicyPopup({ header, description, popupData, headerKeyName, 
                                 ? (
                                     <div className={`flex-col text-center justify-center p-[1rem] items-center place-self-center`}>
                                         <img src={errorIcon} alt="" className={`h-[5.5rem] ${isLoginLanguageRTL ? "mr-[8.5rem]" : "ml-[8.5rem]"}`} />
-                                        <p className="text-[1rem] leading-snug font-semibold text-black break-normal">
+                                        <p id='alert_error_popup_header_msg' className="text-[1rem] leading-snug font-semibold text-black break-normal">
                                             {errorHeaderMsg}
                                         </p>
                                         <div className={`p-3 ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
-                                            <p className="text-sm text-[#666666] break-normal">
+                                            <p id='alert_error_popup_description_msg' className="text-sm text-[#666666] break-normal">
                                                 {errorDescriptionMsg}
                                             </p>
                                             {activeDraftPoliciesDescr1 && activeDraftPoliciesDescr2 && (
                                                 <>
-                                                    <p className="text-sm text-[#666666] break-normal">
+                                                    <p id='active_draft-policies_description_1' className="text-sm text-[#666666] break-normal">
                                                         {activeDraftPoliciesDescr1}
                                                     </p>
-                                                    <p className="text-sm text-[#666666] break-normal">
+                                                    <p id='active_draft-policies_description_2' className="text-sm text-[#666666] break-normal">
                                                         {activeDraftPoliciesDescr2}
                                                     </p>
                                                 </>
@@ -210,18 +210,18 @@ function DeactivatePolicyPopup({ header, description, popupData, headerKeyName, 
                                 )
                                 : (<>
                                     {errorMsg && (
-                                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customStyle={customStyle} />
+                                        <ErrorMessage id='deactivate_policy_popup_error_msg' errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customStyle={customStyle} />
                                     )}
                                     <div className={`p-[8%] flex-col text-center justify-center items-center`}>
                                         {!isLoginLanguageRTL ?
-                                            <p className="text-base leading-snug font-semibold text-black break-words px-[1%]">
+                                            <p id='deactivate_policy_popup_header' className="text-base leading-snug font-semibold text-black break-words px-[1%]">
                                                 {`${t(header)} -  '${headerKeyName} ?'`}
                                             </p>
-                                            : <p className="text-base leading-snug font-semibold text-black break-words px-[1%]">
+                                            : <p id='deactivate_policy_popup_header' className="text-base leading-snug font-semibold text-black break-words px-[1%]">
                                                 {t(header)} {' - ' + headerKeyName}
                                             </p>
                                         }
-                                        <p className="text-sm text-[#666666] break-words py-[5%]">
+                                        <p id='deactivate_policy_popup_description' className="text-sm text-[#666666] break-words py-[5%]">
                                             {t(description)}
                                         </p>
                                         <div className="flex flex-row items-center justify-center space-x-3 pt-[4%]">

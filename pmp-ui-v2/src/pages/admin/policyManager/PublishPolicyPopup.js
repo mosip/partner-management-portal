@@ -27,7 +27,7 @@ function PublishPolicyPopup ({policyDetails, closePopUp, onClickPublish}) {
     useEffect(() => {
         const removeListener = handleEscapeKey(() => closePopUp());
         return removeListener;
-    }, []);
+    }, [closePopUp]);
 
     const cancelErrorMsg = () => {
         setErrorMsg("");
@@ -97,19 +97,19 @@ function PublishPolicyPopup ({policyDetails, closePopUp, onClickPublish}) {
                     {dataLoaded && (
                         <div className="relative">
                             <div className="px-6 py-3">
-                                <h3 className="text-lg font-bold text-[#333333]">{t('publishPolicyPopup.title')}</h3>
+                                <h3 id='publish_policy_popup_title' className="text-lg font-bold text-[#333333]">{t('publishPolicyPopup.title')}</h3>
                             </div>
                             <div className="border-gray-200 border-opacity-75 border-t"></div>
                             {errorMsg && (
-                                <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customStyle={customStyle}/>
+                                <ErrorMessage id='publish_policy_popup_error_msg' errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customStyle={customStyle}/>
                             )}
                             {successMsg && (
-                                <SuccessMessage successParam={policyDetails.policyName} successMsg={successMsg} clickOnCancel={cancelSuccessMsg} customStyle={customStyle}/>
+                                <SuccessMessage id='publish_policy_popup_success_msg' successParam={policyDetails.policyName} successMsg={successMsg} clickOnCancel={cancelSuccessMsg} customStyle={customStyle}/>
                             )}
                             <div className="py-4 px-6">
-                            <p className="text-sm font-normal text-[#414141] break-words">{t('publishPolicyPopup.description1')} 
-                                    <span className="font-bold"> {policyDetails.policyName}</span> {t('publishPolicyPopup.description2')}
-                                </p>
+                            <p id='publish_policy_popup_policy_name' className="text-sm font-normal text-[#414141] break-words">{t('publishPolicyPopup.description1')} 
+                                <span className="font-bold"> {policyDetails.policyName}</span> {t('publishPolicyPopup.description2')}
+                            </p>
                             </div>
                             <div className="border-[#E5EBFA] border-t mx-2"></div>
                             <div className="px-6 py-3 flex justify-between relative">

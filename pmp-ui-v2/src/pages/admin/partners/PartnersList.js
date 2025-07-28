@@ -37,7 +37,6 @@ function PartnersList() {
   const [order, setOrder] = useState("DESC");
   const [activeSortAsc, setActiveSortAsc] = useState("");
   const [activeSortDesc, setActiveSortDesc] = useState("");
-  const [firstIndex, setFirstIndex] = useState(0);
   const [viewPartnerId, setViewPartnersId] = useState(-1);
   const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
   const [sortFieldName, setSortFieldName] = useState("createdDateTime");
@@ -227,7 +226,7 @@ function PartnersList() {
       {dataLoaded && (
         <>
           {errorMsg && (
-            <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
+            <ErrorMessage id='partners_list_error_msg' errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
           )}
           <div className="flex-col mt-5">
             <div className="flex justify-between mb-3">
@@ -238,7 +237,7 @@ function PartnersList() {
                 <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
                   <div className="py-2 pt-4 text-sm font-semibold text-[#6F6E6E]">
                     <div className="flex w-full px-2">
-                      <div className="flex w-full pl-[2%] pt-1 items-center justify-start font-semibold text-dark-blue text-base">
+                      <div id='partners_list_sub_title' className="flex w-full pl-[2%] pt-1 items-center justify-start font-semibold text-dark-blue text-base">
                         {t("partnerList.listOfPartnerTitle")}
                       </div>
                       <button disabled type="button"
@@ -289,10 +288,11 @@ function PartnersList() {
                                         {tableHeaders.map((header, index) => {
                                           return (
                                             <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[15%]">
-                                              <div className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
+                                              <div id={`${header.headerNameKey}_header`} className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
                                                 {t(header.headerNameKey)}
                                                 {!["action", "emailAddress"].includes(header.id) && (
                                                   <SortingIcon
+                                                    id={`${header.headerNameKey}_sorting_icon`}
                                                     headerId={header.id}
                                                     sortDescOrder={sortDescOrder}
                                                     sortAscOrder={sortAscOrder}
@@ -369,7 +369,6 @@ function PartnersList() {
                         dataListLength={totalRecords}
                         selectedRecordsPerPage={selectedRecordsPerPage}
                         setSelectedRecordsPerPage={setSelectedRecordsPerPage}
-                        setFirstIndex={setFirstIndex}
                         isServerSideFilter={true}
                         getPaginationValues={getPaginationValues}
                         isApplyFilterClicked={isApplyFilterClicked}

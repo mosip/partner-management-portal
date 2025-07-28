@@ -21,6 +21,7 @@ import viewIcon from "../../../svg/view_icon.svg";
 import DeactivatePopup from '../../common/DeactivatePopup.js';
 import Pagination from '../../common/Pagination.js';
 import PropTypes from 'prop-types';
+import RejectPopup from '../../common/RejectPopup.js';
 
 function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
     const location = useLocation();
@@ -36,7 +37,6 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
     const [activeAscIcon, setActiveAscIcon] = useState("");
     const [activeDescIcon, setActiveDescIcon] = useState("createdDateTime");
     const [actionId, setActionId] = useState(-1);
-    const [firstIndex, setFirstIndex] = useState(0);
     const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
     const [sortFieldName, setSortFieldName] = useState("createdDateTime");
     const [sortType, setSortType] = useState("desc");
@@ -67,6 +67,7 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
     const [sbiId, setSbiId] = useState(null);
     const [sbiVersion, setSbiVersion] = useState(null);
     const submenuRef = useRef([]);
+    const [showRejectPopup, setShowRejectPopup] = useState(null);
 
     const tableHeaders = [
         { id: "partnerId", headerNameKey: 'sbiList.partnerId' },
@@ -167,8 +168,12 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
     const approveRejectDeviceDetails = (device, index) => {
         if (device.status === 'pending_approval') {
             setActionId(-1);
-            setShowActiveIndexDeviceDetailApproveRejectPopup(index);
             setSelectedDevice(device);
+            if(device.sbiId !== null) {
+                setShowActiveIndexDeviceDetailApproveRejectPopup(index);
+            } else {
+                setShowRejectPopup(index);
+            }
         }
     };
 
@@ -184,9 +189,26 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
         }
     };
 
+    const onClickReject = (responseData, selectedDevice) => {
+        if (responseData) {
+            setShowRejectPopup(null);
+            setSelectedDevice({});
+            setDevicesList((prevList) =>
+                prevList.map(deviceItem =>
+                    deviceItem.deviceId === selectedDevice.deviceId ? { ...deviceItem, status: "rejected", isActive: false } : deviceItem
+                )
+            );
+        }
+    };
+
     const closeApproveRejectPopup = () => {
         setSelectedDevice({});
         setShowActiveIndexDeviceDetailApproveRejectPopup(null);
+    };
+
+    const closeRejectPopup = () => {
+        setSelectedDevice({});
+        setShowRejectPopup(null);
     };
 
     const deactivateDevice = (selectedDevice, index) => {
@@ -286,7 +308,7 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
             {dataLoaded && (
                 <>
                     {errorMsg && (
-                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
+                        <ErrorMessage id='admin_devices_list_error_msg' errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
                     <div className="flex-col mt-5">
                         <div className="flex justify-between mb-5 max-470:flex-col">
@@ -339,10 +361,11 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
                                                                     {filteredTableHeaders.map((header, index) => {
                                                                         return (
                                                                             <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[17%]">
-                                                                                <div className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
+                                                                                <div id={`${header.headerNameKey}_header`} className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
                                                                                     {t(header.headerNameKey)}
                                                                                     {(header.id !== "action") && (
                                                                                         <SortingIcon
+                                                                                            id={`${header.headerNameKey}_sorting_icon`}
                                                                                             headerId={header.id}
                                                                                             sortDescOrder={sortDescOrder}
                                                                                             sortAscOrder={sortAscOrder}
@@ -403,6 +426,14 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
                                                                                             </div>
                                                                                         </div>
                                                                                     )}
+                                                                                    {showRejectPopup === index && (
+                                                                                        <RejectPopup 
+                                                                                            popupData={selectedDevice}
+                                                                                            closePopUp={closeRejectPopup}
+                                                                                            rejectResponse={(responseData) => onClickReject(responseData, selectedDevice)}
+                                                                                            title={`${selectedDevice.make} | ${selectedDevice.model}`}
+                                                                                        />
+                                                                                    )}
                                                                                     {showActiveIndexDeviceDetailApproveRejectPopup === index && (
                                                                                         <ApproveRejectPopup
                                                                                             popupData={{ ...selectedDevice, isDeviceRequest: true }}
@@ -439,7 +470,6 @@ function AdminDevicesList({ title, subTitle, isLinkedDevicesList }) {
                                     dataListLength={totalRecords}
                                     selectedRecordsPerPage={selectedRecordsPerPage}
                                     setSelectedRecordsPerPage={setSelectedRecordsPerPage}
-                                    setFirstIndex={setFirstIndex}
                                     isServerSideFilter={true}
                                     getPaginationValues={getPaginationValues}
                                     isApplyFilterClicked={isApplyFilterClicked}

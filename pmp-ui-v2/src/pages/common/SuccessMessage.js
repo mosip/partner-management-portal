@@ -3,7 +3,7 @@ import cancelIcon from '../../svg/cancel_icon.svg';
 import { isLangRTL } from '../../utils/AppUtils';
 import PropTypes from 'prop-types';
 
-function SuccessMessage({ successMsg, clickOnCancel, customStyle, successParam }) {
+function SuccessMessage({ id, successMsg, clickOnCancel, customStyle, successParam }) {
 
     const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
 
@@ -12,8 +12,8 @@ function SuccessMessage({ successMsg, clickOnCancel, customStyle, successParam }
             <div className={` bg-fruit-salad ${customStyle ? customStyle.innerDiv : 'flex justify-between items-center rounded-xl max-w-[35rem] min-h-14 min-w-72 p-4'}`}>
                 <div className={`${isLoginLanguageRTL ? 'ml-6' : 'mr-6'} w-[90%]`}>
                     {!successParam 
-                    ? <p className="text-sm/4 text-white break-words font-inter" dangerouslySetInnerHTML={{ __html: successMsg }} /> 
-                    : <p className="text-sm/4 text-white break-words font-normal">
+                    ? <p id={id} className="text-sm/4 text-white break-words font-inter" dangerouslySetInnerHTML={{ __html: successMsg }} /> 
+                    : <p id={id + '_with_param'} className="text-sm/4 text-white break-words font-normal">
                         <span className='font-bold'>{successParam}</span>{successMsg}
                     </p>
                     }
@@ -30,6 +30,7 @@ function SuccessMessage({ successMsg, clickOnCancel, customStyle, successParam }
 }
 
 SuccessMessage.propTypes = {
+    id: PropTypes.string.isRequired,
     successMsg: PropTypes.string.isRequired,
     clickOnCancel: PropTypes.func.isRequired,
     customStyle: PropTypes.object,

@@ -29,7 +29,7 @@ function EmptyList({tableHeaders, showCustomButton, customButtonName, buttonId, 
                             {t(customButtonName)}
                         </button>
                         :
-                        <p className="text-[#A1A1A1] mt-3">{t("partnerList.noResultsFound")}</p>
+                        <p id='no_results_found' className="text-[#A1A1A1] mt-3">{t("partnerList.noResultsFound")}</p>
                     }
                 </div>
             </div>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import xClose from '../../svg/x_close.svg';
-import { createRequest, dismissNotificationById, formatDate, getNoticationTitle, getNotificationPanelDescription, getPartnerManagerUrl, handleEscapeKey, handleServiceErrors, isLangRTL, onPressEnterKey } from "../../utils/AppUtils";
+import { createRequest, dismissNotificationById, formatDate, getNotificationTitle, getNotificationPanelDescription, getPartnerManagerUrl, handleEscapeKey, handleServiceErrors, isLangRTL, onPressEnterKey } from "../../utils/AppUtils";
 import featuredIcon from "../../svg/featured_icon.svg";
 import noNotificationIcon from "../../svg/frame.svg";
 import { getUserProfile } from "../../services/UserProfileService";
@@ -140,7 +140,7 @@ function NotificationPopup({ closeNotification }) {
     useEffect(() => {
         const removeListener = handleEscapeKey(() => closeNotification());
         return removeListener;
-    }, []);
+    }, [closeNotification]);
 
     const isLatestNotification = (notification) => {
         if (!notification?.createdDateTime) return false;
@@ -149,7 +149,7 @@ function NotificationPopup({ closeNotification }) {
     };
 
     return (
-        <div className={`absolute top-[3.75rem] ${isLoginLanguageRTL ? 'max-850:left-4 left-[15rem]' : 'max-850:right-4 right-[15rem]'} bg-white w-[28rem] max-520:w-[286px] rounded-lg shadow-lg border border-gray-200 z-50`}>
+        <div className={`absolute top-[3.75rem] ${isLoginLanguageRTL ? 'left-0' : 'right-0'} bg-white max-850:w-[25rem] w-[29rem] max-520:w-72 rounded-lg shadow-lg border border-gray-200 z-50`}>
             <FocusTrap focusTrapOptions={{ initialFocus: false, allowOutsideClick: true }}>
                 <div>
                     {!dataLoaded && (
@@ -158,29 +158,29 @@ function NotificationPopup({ closeNotification }) {
                     {dataLoaded && (
                         <div>
                             <div className="flex justify-between items-center px-4 py-3 border-b border-gray-200 cursor-default">
-                                <h2 className="text-lg font-bold text-gray-800">{t('notificationPopup.notification')}</h2>
+                                <h2 id='notification_popup_title' className="text-lg font-bold text-gray-800">{t('notificationPopup.notification')}</h2>
                                 <button id='xIcon' onClick={() => closeNotification()}>
                                     <img src={xClose} alt=''/>
                                 </button>
                             </div>
                             {errorMsg && (
-                                <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customStyle={errorcustomStyle}/>
+                                <ErrorMessage id='notification_popup_error_msg' errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customStyle={errorcustomStyle}/>
                             )}
                             {notifications.length > 0 ? (
                                 <>
-                                    <p className={`text-sm text-[#6F6E6E] font-medium ${isLoginLanguageRTL ? 'mr-4' : 'ml-4'} my-2`}>{t('notificationPopup.latest')}</p>
+                                    <p id='notification_popup_latest' className={`text-sm text-[#6F6E6E] font-medium ${isLoginLanguageRTL ? 'mr-4' : 'ml-4'} my-2`}>{t('notificationPopup.latest')}</p>
                                     <div className={`${isSmallScreen ? 'max-h-64' : 'max-h-96'} overflow-y-auto`}>
-                                        {notifications.map(notification => (
-                                            <div key={notification.notificationId} className={`flex justify-between items-start px-4 py-2 border-b border-gray-200 ${isLatestNotification(notification) ? 'bg-[#F0F6FF]' : ''}`}>
+                                        {notifications.map((notification, index) => (
+                                            <div key={notification.notificationId} className={`flex justify-between items-start px-6 py-2 border-b border-gray-200 ${isLatestNotification(notification) ? 'bg-[#F0F6FF]' : ''}`}>
                                                 <img src={featuredIcon} alt='' id='featuredIcon' className={`${isLoginLanguageRTL ? 'ml-3' : 'mr-3'} mt-1`} />
                                                 <div className="mb-2">
                                                     <div className="flex justify-between space-x-2">
-                                                        <p className={`text-sm ${isLatestNotification(notification) ? 'font-bold' : 'font-semibold'} text-gray-900 ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>{getNoticationTitle(notification, t)}</p>
-                                                        <p className={`text-xs text-gray-500 w-36 ${isLoginLanguageRTL ? 'text-left' : 'text-right'}`}>{formatDate(notification.createdDateTime, 'dateTime')}</p>
+                                                        <p id={'notification_title_' + (index + 1)} className={`text-sm ${isLatestNotification(notification) ? 'font-bold' : 'font-semibold'} text-gray-900 ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>{getNotificationTitle(notification, t)}</p>
+                                                        <p id={'notification_created_date_time_' + (index + 1)} className={`text-xs text-gray-500 w-48 whitespace-nowrap ${isLoginLanguageRTL ? 'text-left' : 'text-right'}`}>{formatDate(notification.createdDateTime, 'dateTime')}</p>
                                                     </div>
-                                                    <div className={`text-sm  ${isLatestNotification(notification) ? 'font-semibold' : 'font-normal'} text-[#344054] mt-1 mb-2 whitespace-pre-line`}>{getNotificationPanelDescription(notification, isLoginLanguageRTL, t)}</div>
+                                                    <div id={'notification_description_' + (index + 1)} className={`text-sm  ${isLatestNotification(notification) ? 'font-semibold' : 'font-normal'} text-[#344054] mt-1 mb-2 whitespace-pre-line`}>{getNotificationPanelDescription(notification, isLoginLanguageRTL, t)}</div>
                                                     <button
-                                                        className={`text-tory-blue font-semibold text-sm ${isLatestNotification(notification) ? 'bg-[#F0F6FF]' : ''}`}
+                                                        id={'notification_dismiss_btn_' + (index + 1)} className={`text-tory-blue font-semibold text-sm ${isLatestNotification(notification) ? 'bg-[#F0F6FF]' : ''}`}
                                                         onClick={() => dismissNotification(notification.notificationId)}
                                                     >
                                                         {t('notificationPopup.dismiss')}
@@ -190,7 +190,7 @@ function NotificationPopup({ closeNotification }) {
                                         ))}
                                     </div>
                                     <div role="button" className="flex p-3 justify-center items-center text-tory-blue text-sm font-medium cursor-pointer" onClick={viewAllNotifications} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, viewAllNotifications)}>
-                                        <p>{t('notificationPopup.viewAllNotification')}</p>
+                                        <p id='view_all_notification_btn'>{t('notificationPopup.viewAllNotification')}</p>
                                         <img src={vectorIcon} alt="" className={`${isLoginLanguageRTL ? 'pr-2' : 'pl-2'}`}/>
                                         <img src={vectorIcon} alt="" />
                                     </div>
@@ -199,10 +199,10 @@ function NotificationPopup({ closeNotification }) {
                                     <div className="cursor-default">
                                         <div className="flex flex-col items-center py-16 px-2 border-b border-gray-200">
                                             <img src={noNotificationIcon} alt='' id='noNotificationIcon' />
-                                            <p className="text-sm text-gray-500">{t('notificationPopup.noNotification')}</p>
-                                            <p className="text-sm text-gray-500">{t('notificationPopup.noNotificationDescr')}</p>
+                                            <p id='no_notification_in_popup' className="text-sm text-gray-500">{t('notificationPopup.noNotification')}</p>
+                                            <p id='no_notification_description_in_popup' className="text-sm text-gray-500">{t('notificationPopup.noNotificationDescr')}</p>
                                         </div>
-                                        <button className="p-3 text-center text-gray-500 text-sm font-semibold w-full cursor-default">
+                                        <button id='disabled_view_all_notifications' className="p-3 text-center text-gray-500 text-sm font-semibold w-full cursor-default">
                                             {t('notificationPopup.viewAllNotification')}
                                         </button>
                                     </div>

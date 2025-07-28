@@ -35,7 +35,7 @@ function CalendarInput({ isUsedAsFilter, showCalendar, addInfoIcon, infoKey, inf
   
   return (
     <div className={`flex flex-col ${styleSet?.outerDiv || ''} overflow-x-auto`}>
-      <label className={`flex items-center text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+      <label id={id + '_label'} className={`flex items-center text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
         <p className={`mb-0.5`}>{label}{containsAsterisk && <span className={`text-crimson-red mx-1`}>*</span>}</p>
         {addInfoIcon && (
           <Information infoKey={infoKey} infoKey1={infoKey1} id={id + '_info'}/>
@@ -48,7 +48,7 @@ function CalendarInput({ isUsedAsFilter, showCalendar, addInfoIcon, infoKey, inf
           onChange={(date) => onDateChange(date)}
           placeholderText={placeholderText}
           dateFormat="MM/dd/yyyy"
-          className={`${styleSet?.datePicker || ''} w-full px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar`}
+          className={`${styleSet?.datePicker || ''} w-full px-2 py-3 border border-[#707070] rounded-[4px] text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar`}
           wrapperClassName="w-full"
           isClearable={isUsedAsFilter? true : false}
         />

@@ -625,6 +625,7 @@ export const handleFileChange = (event, setErrorCode, setErrorMsg, setSuccessMsg
                 setPolicyData(JSON.stringify(data, null, 2));
                 setSuccessMsg(t('createPolicy.fileUploadSuccessMsg'));
             } catch (error) {
+                console.log(`Exception while parsing json: ${error}`);
                 setErrorMsg(t('createPolicy.jsonParseError'));
             }
         };
@@ -922,14 +923,15 @@ export const checkCertificateExpired = (expiryDateTime) => {
 };
 
 export const getWeeklySummaryDescription = (notification, isLoginLanguageRTL, t) => {
-    const { certificateDetails = [], sbiDetails = [], apiKeyDetails = [] } = notification.notificationDetails || {};
+    const { certificateDetails = [], ftmDetails = [], sbiDetails = [], apiKeyDetails = [] } = notification.notificationDetails || {};
 
     const certificateList = Array.isArray(certificateDetails) ? certificateDetails : [];
+    const ftmCertList = Array.isArray(ftmDetails) ? ftmDetails : [];
     const sbiList = Array.isArray(sbiDetails) ? sbiDetails : [];
     const apiKeyList = Array.isArray(apiKeyDetails) ? apiKeyDetails : [];
 
-    const partnerCertCount = certificateList.filter(cert => cert.certificateType === "partner").length;
-    const ftmCertCount = certificateList.filter(cert => cert.certificateType === "ftm").length;
+    const partnerCertCount = certificateList.length;
+    const ftmCertCount = ftmCertList.length;
     const sbiCount = sbiList.length;
     const apiKeyCount = apiKeyList.length;
 
@@ -961,7 +963,7 @@ export const getNotificationDescription = (notification, isLoginLanguageRTL, t) 
                     partnerDomain: notification.notificationDetails.certificateDetails[0].partnerDomain,
                     expiryDateTime: formatDate(notification.notificationDetails.certificateDetails[0].expiryDateTime, 'dateInWords')
                 }}
-                components={{ span: <span className={`font-semibold`} /> }}
+                components={{ span: <span className={`font-semibold md:whitespace-nowrap md:break-words break-all`} /> }}
             />
         );
     } else if (notification.notificationType === 'INTERMEDIATE_CERT_EXPIRY') {
@@ -975,7 +977,7 @@ export const getNotificationDescription = (notification, isLoginLanguageRTL, t) 
                     partnerDomain: notification.notificationDetails.certificateDetails[0].partnerDomain,
                     expiryDateTime: formatDate(notification.notificationDetails.certificateDetails[0].expiryDateTime, 'dateInWords')
                 }}
-                components={{ span: <span className={`font-semibold`} /> }}
+                components={{ span: <span className={`font-semibold md:whitespace-nowrap md:break-words break-all`} /> }}
             />
         );
     } else if (notification.notificationType === 'PARTNER_CERT_EXPIRY') {
@@ -988,7 +990,44 @@ export const getNotificationDescription = (notification, isLoginLanguageRTL, t) 
                     partnerDomain: notification.notificationDetails.certificateDetails[0].partnerDomain,
                     expiryDateTime: formatDate(notification.notificationDetails.certificateDetails[0].expiryDateTime, 'dateInWords')
                 }}
-                components={{ span: <span className={`font-semibold`} /> }}
+                components={{ span: <span className={`font-semibold md:whitespace-nowrap md:break-words break-all`} /> }}
+            />
+        );
+    } else if (notification.notificationType === 'FTM_CHIP_CERT_EXPIRY') {
+        return (
+            <Trans 
+                i18nKey="viewAllNotifications.ftmChipCertExpiryDescription"
+                values={{
+                    make: notification.notificationDetails.ftmDetails[0].make,
+                    model: notification.notificationDetails.ftmDetails[0].model,
+                    ftmId: notification.notificationDetails.ftmDetails[0].ftmId,
+                    expiryDateTime: formatDate(notification.notificationDetails.ftmDetails[0].expiryDateTime, 'dateInWords')
+                }}
+                components={{ span: <span className={`font-semibold md:whitespace-nowrap md:break-words break-all`} /> }}
+            />
+        );
+    } else if (notification.notificationType === 'API_KEY_EXPIRY') {
+        return (
+            <Trans 
+                i18nKey="viewAllNotifications.apiKeyExpiryDescription"
+                values={{
+                    apiKeyName: notification.notificationDetails.apiKeyDetails[0].apiKeyName,
+                    policyName: notification.notificationDetails.apiKeyDetails[0].policyName,
+                    expiryDateTime: formatDate(notification.notificationDetails.apiKeyDetails[0].expiryDateTime, 'dateInWords')
+                }}
+                components={{ span: <span className={`font-semibold md:whitespace-nowrap md:break-words break-all`} /> }}
+            />
+        );
+    } else if (notification.notificationType === 'SBI_EXPIRY') {
+        return (
+            <Trans 
+                i18nKey="viewAllNotifications.sbiExpiryDescription"
+                values={{
+                    sbiId: notification.notificationDetails.sbiDetails[0].sbiId,
+                    sbiVersion: notification.notificationDetails.sbiDetails[0].sbiVersion,
+                    expiryDateTime: formatDate(notification.notificationDetails.sbiDetails[0].expiryDateTime, 'dateInWords')
+                }}
+                components={{ span: <span className={`font-semibold md:whitespace-nowrap md:break-words break-all`} /> }}
             />
         );
     } else if (notification.notificationType === 'WEEKLY_SUMMARY') {
@@ -1032,25 +1071,64 @@ export const getNotificationPanelDescription = (notification, isLoginLanguageRTL
                 components={{ span: <span className={`font-semibold ${isLoginLanguageRTL && 'whitespace-nowrap'}`} /> }}
             />
         );
+    } else if (notification.notificationType === 'FTM_CHIP_CERT_EXPIRY') {
+        return (
+            <Trans 
+                i18nKey="notificationPopup.ftmChipCertExpiryDescription"
+                values={{
+                    ftmId: notification.notificationDetails.ftmDetails[0].ftmId,
+                    expiryDateTime: formatDate(notification.notificationDetails.ftmDetails[0].expiryDateTime, 'dateInWords')
+                }}
+                components={{ span: <span className={`font-semibold ${isLoginLanguageRTL && 'whitespace-nowrap'}`} /> }}
+            />
+        );
+    } else if (notification.notificationType === 'API_KEY_EXPIRY') {
+        return (
+            <Trans 
+                i18nKey="notificationPopup.apiKeyExpiryDescription"
+                values={{
+                    apiKeyName: notification.notificationDetails.apiKeyDetails[0].apiKeyName,
+                    expiryDateTime: formatDate(notification.notificationDetails.apiKeyDetails[0].expiryDateTime, 'dateInWords')
+                }}
+                components={{ span: <span className={`font-semibold ${isLoginLanguageRTL && 'whitespace-nowrap'}`} /> }}
+            />
+        );
+    } else if (notification.notificationType === 'SBI_EXPIRY') {
+        return (
+            <Trans 
+                i18nKey="notificationPopup.sbiExpiryDescription"
+                values={{
+                    sbiId: notification.notificationDetails.sbiDetails[0].sbiId,
+                    expiryDateTime: formatDate(notification.notificationDetails.sbiDetails[0].expiryDateTime, 'dateInWords')
+                }}
+                components={{ span: <span className={`font-semibold ${isLoginLanguageRTL && 'whitespace-nowrap'}`} /> }}
+            />
+        );
     } else if (notification.notificationType === 'WEEKLY_SUMMARY') {
         return getWeeklySummaryDescription (notification, isLoginLanguageRTL, t);
     }
 };
 
-export const getNoticationTitle = (notification, t) => {
+export const getNotificationTitle = (notification, t) => {
     if (notification.notificationType === 'ROOT_CERT_EXPIRY') {
         return t('notificationPopup.rootCertExpiry');
     } else if (notification.notificationType === 'INTERMEDIATE_CERT_EXPIRY') {
         return t('notificationPopup.intermediateCertExpiry');
     } else if (notification.notificationType === 'PARTNER_CERT_EXPIRY') {
         return t('notificationPopup.partnerCertExpiry');
+    } else if (notification.notificationType === 'FTM_CHIP_CERT_EXPIRY') {
+        return t('notificationPopup.ftmChipCertExpiry');
+    } else if (notification.notificationType === 'API_KEY_EXPIRY') {
+        return t('notificationPopup.apiKeyExpiry');
+    } else if (notification.notificationType === 'SBI_EXPIRY') {
+        return t('notificationPopup.sbiExpiry');
     } else if (notification.notificationType === 'WEEKLY_SUMMARY') {
-        return t('notificationPopup.expiringItems') + " (" + formatDate(notification.createdDateTime, 'dateInWords') + t('notificationPopup.to') + formatDate(getWeeklySummaryDate(notification), 'dateInWords') + ")";
+        return t('notificationPopup.expiringItems') + " (" + formatDate(notification.createdDateTime, 'dateInWords') + t('notificationPopup.to') + formatDate(getWeeklySummaryDate(notification.createdDateTime), 'dateInWords') + ")";
     }
 };
 
-export const getWeeklySummaryDate = (notification) => {
-    const date = new Date(notification.createdDateTime);
+export const getWeeklySummaryDate = (createdDateTime) => {
+    const date = new Date(createdDateTime);
     date.setDate(date.getDate() + 7);
     return date.toString();
 };

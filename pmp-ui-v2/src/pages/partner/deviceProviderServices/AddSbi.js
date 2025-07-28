@@ -99,7 +99,7 @@ function AddSbi() {
             }
         };
         fetchData();
-    }, []);
+    }, [t]);
 
     const onChangeSbiVersion = (value) => {
         setSbiVersion(value);
@@ -218,7 +218,7 @@ function AddSbi() {
             {dataLoaded && (
                 <>
                     {errorMsg && (
-                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
+                        <ErrorMessage id='add_sbi_error_msg' errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
                     <div className="flex-col mt-5 font-inter">
                         <div className="flex justify-between">
@@ -226,9 +226,9 @@ function AddSbi() {
                         </div>
                         <div className="w-[100%] bg-snow-white mt-[1.5%] rounded-lg shadow-md">
                             <div className="px-[2.5%] py-[2%]">
-                                <p className="text-base text-[#3D4468]">{t('requestPolicy.mandatoryFieldsMsg1')} <span className="text-crimson-red">*</span> {t('requestPolicy.mandatoryFieldsMsg2')}</p>
+                                <p id='add_sbi_mandatory_fields_msg' className="text-base text-[#3D4468]">{t('requestPolicy.mandatoryFieldsMsg1')} <span className="text-crimson-red">*</span> {t('requestPolicy.mandatoryFieldsMsg2')}</p>
                                 <div className="p-1 bg-[#FFF7E5] border-2 border-[#EDDCAF] rounded-md mt-[1%] w-full">
-                                    <p className="text-sm text-[#8B6105]">{t('addSbis.guidence')}</p>
+                                    <p id='add_sbi_guidence' className="text-sm text-[#8B6105]">{t('addSbis.guidence')}</p>
                                 </div>
                                 <form onSubmit={handleFormSubmit}>
                                     <div className="flex flex-col">
@@ -249,8 +249,8 @@ function AddSbi() {
                                                 </DropdownComponent>
                                             </div>
                                             <div className="flex-col w-[48%] max-[450px]:w-full">
-                                                <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('requestPolicy.partnerType')}<span className="text-crimson-red mx-1">*</span></label>
-                                                <button disabled className="flex items-center justify-between w-full min-h-10 px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-dark-blue bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
+                                                <label id='add_sbi_partner_type_label' className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('requestPolicy.partnerType')}<span className="text-crimson-red mx-1">*</span></label>
+                                                <button id='add_sbi_partner_type' disabled className="flex items-center justify-between w-full min-h-10 px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-dark-blue bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
                                                     overflow-x-auto whitespace-normal no-scrollbar" type="button">
                                                     <span className={`w-full break-words ${partnerType ? 'text-dark-blue' : 'text-gray-400'} text-wrap text-start`}>{partnerType || t('commons.partnersHelpText')}</span>
                                                     <svg className={`w-3 h-2 ml-3 transform 'rotate-0' text-gray-500 text-base`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
@@ -261,18 +261,18 @@ function AddSbi() {
                                         </div>
                                         <div className="flex justify-between space-x-4 max-[450px]:space-x-0 max-[450px]:flex-col">
                                             <div className="flex-col w-[48%] max-[450px]:w-full">
-                                                <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('addSbis.sbiVersion')} <span className="text-crimson-red">*</span></label>
+                                                <label id='add_sbi_version_label' className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('addSbis.sbiVersion')} <span className="text-crimson-red">*</span></label>
                                                 <input id="add_sbi_software_version_input" value={sbiVersion} onChange={(e) => onChangeSbiVersion(e.target.value)} maxLength={64}
                                                     className="h-10 w-full px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                                                     placeholder={t('addSbis.enterVersionOfSoftware')} />
-                                                {invalidVersionError && <span className="text-sm text-crimson-red font-semibold">{invalidVersionError}</span>}
+                                                {invalidVersionError && <span id='add_sbi_invalid_version' className="text-sm text-crimson-red font-semibold">{invalidVersionError}</span>}
                                             </div>
                                             <div className="flex-col w-[48%] max-[450px]:w-full">
-                                                <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('addSbis.binaryHash')} <span className="text-crimson-red">*</span></label>
+                                                <label id='add_sbi_binary_hash_label' className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('addSbis.binaryHash')} <span className="text-crimson-red">*</span></label>
                                                 <input id="binary_hash_input" value={binaryHash} onChange={(e) => onChangeBinaryHash(e.target.value)} maxLength={26}
                                                     className="h-10 w-full px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                                                     placeholder={t('addSbis.enterBinaryHash')} />
-                                                {invalidHashError && <span className="text-sm text-crimson-red font-semibold">{invalidHashError}</span>}
+                                                {invalidHashError && <span id='add_sbi_invalid_hash' className="text-sm text-crimson-red font-semibold">{invalidHashError}</span>}
                                             </div>
                                         </div>
 

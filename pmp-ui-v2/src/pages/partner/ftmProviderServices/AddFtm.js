@@ -139,7 +139,7 @@ function AddFtm() {
       }
     };
     fetchData();
-  }, []);
+  }, [t]);
 
   const styles = {
     outerDiv: "!ml-0 !mb-0",
@@ -232,7 +232,7 @@ function AddFtm() {
       {dataLoaded && (
         <>
           {errorMsg && (
-            <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
+            <ErrorMessage id='add_ftm_error_msg' errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
           )}
           <div className="flex-col mt-5">
             <div className="flex justify-between">
@@ -241,7 +241,7 @@ function AddFtm() {
             {!addFtmSuccess ?
               <div className="w-[100%] bg-snow-white mt-[1.5%] rounded-lg shadow-md">
                 <div className="px-[2.5%] py-[2%]">
-                  <p className="text-base text-[#3D4468]">{t('requestPolicy.mandatoryFieldsMsg1')} <span className="text-crimson-red">*</span> {t('requestPolicy.mandatoryFieldsMsg2')}</p>
+                  <p id='add_ftm_mandatory_msg' className="text-base text-[#3D4468]">{t('requestPolicy.mandatoryFieldsMsg1')} <span className="text-crimson-red">*</span> {t('requestPolicy.mandatoryFieldsMsg2')}</p>
                   <form onSubmit={handleFormSubmit}>
                     <div className="flex flex-col">
                       <div className="flex flex-row justify-between space-x-4 max-[450px]:space-x-0 my-[1%] max-[450px]:flex-col max-[700px]:space-x-2">
@@ -260,8 +260,8 @@ function AddFtm() {
                           </DropdownComponent>
                         </div>
                         <div className="flex-col w-[48%] max-[450px]:w-full">
-                          <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('requestPolicy.partnerType')}<span className="text-crimson-red mx-1">*</span></label>
-                          <button disabled className="flex items-center justify-between w-full min-h-10 px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-dark-blue bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
+                          <label id='add_ftm_partner_type_label' className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('requestPolicy.partnerType')}<span className="text-crimson-red mx-1">*</span></label>
+                          <button id='add_ftm_partner_type' disabled className="flex items-center justify-between w-full min-h-10 px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-dark-blue bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
                             overflow-x-auto whitespace-normal no-scrollbar" type="button">
                             <span className={`w-full break-words ${partnerType ? 'text-dark-blue' : 'text-gray-400'} text-wrap text-start`}>{partnerType || t('commons.partnersHelpText')}</span>
                             <svg className={`w-3 h-2 ml-3 transform 'rotate-0' text-gray-500 text-base`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
@@ -272,18 +272,18 @@ function AddFtm() {
                       </div>
                       <div className="flex flex-row justify-between space-x-4 max-[450px]:space-x-0 my-[1%] max-[450px]:flex-col max-[700px]:space-x-2">
                         <div className="flex flex-col w-[48%] max-[450px]:w-full">
-                          <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('addDevices.make')}<span className="text-crimson-red mx-1">*</span></label>
+                          <label id='add_ftm_make_label' className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('addDevices.make')}<span className="text-crimson-red mx-1">*</span></label>
                           <input value={make} onChange={(e) => onChangeMake(e.target.value)} maxLength={36}
                             className="h-11 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                             placeholder={t('addFtm.enterMake')} id="add_ftm_make"/>
-                          {invalidMakeError && <span className="text-sm text-crimson-red font-semibold">{invalidMakeError}</span>}
+                          {invalidMakeError && <span id='add_ftm_invalid_make' className="text-sm text-crimson-red font-semibold">{invalidMakeError}</span>}
                         </div>
                         <div className="flex flex-col w-[48%] max-[450px]:w-full">
-                          <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('addDevices.model')}<span className="text-crimson-red mx-1">*</span></label>
+                          <label id='add_ftm_model_label' className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('addDevices.model')}<span className="text-crimson-red mx-1">*</span></label>
                           <input value={model} onChange={(e) => onChangeModel(e.target.value)} maxLength={36}
                             className="h-11 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                             placeholder={t('addFtm.enterModel')} id="add_ftm_model"/>
-                          {invalidModelError && <span className="text-sm text-crimson-red font-semibold">{invalidModelError}</span>}
+                          {invalidModelError && <span id='add_ftm_invalid_model' className="text-sm text-crimson-red font-semibold">{invalidModelError}</span>}
                         </div>
                       </div>
                     </div>
@@ -301,7 +301,7 @@ function AddFtm() {
                 </div>
               </div>
               : <>
-                <Confirmation confirmationData={confirmationData} onClickFunction={clickOnUpload} />
+                <Confirmation id='add_ftm_confirmation' confirmationData={confirmationData} onClickFunction={clickOnUpload} />
                 {
                   showPopup && (
                     <UploadCertificate header={t('addFtm.uploadFtmCertificate')} closePopup={closePopup} popupData={uploadCertificateData} request={uploadCertificateRequest} />
