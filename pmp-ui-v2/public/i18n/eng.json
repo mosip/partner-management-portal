@@ -1360,7 +1360,7 @@
         "PMS_NOTIFICATION_ERROR_013": "Error encountered while retrieving the count of expiring certificates.",
         "PMS_NOTIFICATION_ERROR_014": "Partner Admin will only get the count of expiring root and intermediate certificates.",
         "PMS_NOTIFICATION_ERROR_015": "Notification type must be selected for filtering",
-        "PMS_NOTIFICATION_ERROR_016": "Please enter a valid date",
+        "PMS_NOTIFICATION_ERROR_016": "Please enter a valid expiry date.",
         "PMS_NOTIFICATION_ERROR_017": "The selected notification type is invalid. Only 'weekly' type is allowed for this filter.",
         "PMS_NOTIFICATION_ERROR_018": "Only Partner Admin can dismiss this notification",
         "PMS_NOTIFICATION_ERROR_019": "Notification status is required in the request",
@@ -1368,6 +1368,9 @@
         "PMS_NOTIFICATION_ERROR_021": "The selected notification type is invalid. Only 'root', 'intermediate', or 'partner' types are allowed for this filter.",
         "PMS_NOTIFICATION_ERROR_022": "The selected notification type is invalid. Only 'ftm-chip' type is allowed for this filter.",
         "PMS_NOTIFICATION_ERROR_023": "The selected notification type is invalid. Only 'sbi' type is allowed for this filter.",
-        "PMS_NOTIFICATION_ERROR_024": "The selected notification type is invalid. Please select a type other than 'weekly'."
+        "PMS_NOTIFICATION_ERROR_024": "The selected notification type is invalid. Please select a type other than 'weekly'.",
+        "PMS_NOTIFICATION_ERROR_025": "Please enter a valid created from date.",
+	    "PMS_NOTIFICATION_ERROR_026": "Please enter a valid created to date."
+	
     }
 }
