@@ -1364,7 +1364,7 @@
         "PMS_NOTIFICATION_ERROR_013": "Erreur rencontrée lors de la récupération du nombre de certificats expirant.",
         "PMS_NOTIFICATION_ERROR_014": "L'administrateur partenaire obtiendra uniquement le nombre de certificats racine et intermédiaires expirant.",
         "PMS_NOTIFICATION_ERROR_015": "Le type de notification doit être sélectionné pour le filtrage",
-        "PMS_NOTIFICATION_ERROR_016": "Veuillez saisir une date valide",
+        "PMS_NOTIFICATION_ERROR_016": "Veuillez saisir une date d'expiration valide.",
         "PMS_NOTIFICATION_ERROR_017": "Le type de notification sélectionné n'est pas valide. Seul le type « hebdomadaire » est autorisé pour ce filtre.",
         "PMS_NOTIFICATION_ERROR_018": "Seul l'administrateur partenaire peut ignorer cette notification",
         "PMS_NOTIFICATION_ERROR_019": "Le statut de notification est requis dans la demande",
@@ -1372,6 +1372,8 @@
         "PMS_NOTIFICATION_ERROR_021": "Le type de notification sélectionné n'est pas valide. Seuls les types « racine », « intermédiaire » ou « partenaire » sont autorisés pour ce filtre.",
         "PMS_NOTIFICATION_ERROR_022": "Le type de notification sélectionné n'est pas valide. Seul le type « ftm-chip » est autorisé pour ce filtre.",
         "PMS_NOTIFICATION_ERROR_023": "Le type de notification sélectionné n'est pas valide. Seul le type « sbi » est autorisé pour ce filtre.",
-        "PMS_NOTIFICATION_ERROR_024": "Le type de notification sélectionné n'est pas valide. Veuillez sélectionner un type autre que « hebdomadaire »."
+        "PMS_NOTIFICATION_ERROR_024": "Le type de notification sélectionné n'est pas valide. Veuillez sélectionner un type autre que « hebdomadaire ».",
+        "PMS_NOTIFICATION_ERROR_025": "Veuillez saisir une date de début de création valide.",
+        "PMS_NOTIFICATION_ERROR_026": "Veuillez saisir une date de fin de création valide."
     }
 }
