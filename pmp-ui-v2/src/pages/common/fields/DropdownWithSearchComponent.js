@@ -51,14 +51,14 @@ function DropdownWithSearchComponent({ fieldName, dropdownDataList, onDropDownCh
 
     return (
         <div key={fieldName} className={`ml-4 mb-2 ${(styleSet && styleSet.outerDiv) ? styleSet.outerDiv : ''}`}>
-            <label className={`flex items-center text-dark-blue text-sm mb-2 ${(styleSet && styleSet.dropdownLabel) ? styleSet.dropdownLabel : ''} ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+            <label id={id + '_label'} className={`flex items-center text-dark-blue text-sm mb-2 ${(styleSet && styleSet.dropdownLabel) ? styleSet.dropdownLabel : ''} ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
             <p className={`font-semibold`}>{t(fieldNameKey)}{containsAsterisk && <span className={`text-crimson-red mx-1`}>*</span>}</p>
                 {addInfoIcon && (
                     <Information infoKey={infoKey} id={id + "_info"}/>
                 )}
             </label>
             <div className="relative w-full" ref={dropdownRef}>
-                <button id={id} onClick={openDropdown} disabled={disabled} className={`flex items-center justify-between w-fit h-auto px-2 py-2 border border-[#707070] bg-white rounded-[4px] text-[15px] ${selectedDropdownEntry ? 'text-[#343434]' : 'text-grayish-blue'} leading-tight
+                <button id={id + '_dropdown_btn'} onClick={openDropdown} disabled={disabled} className={`flex items-center justify-between w-fit h-auto px-2 py-2 border border-[#707070] bg-white rounded-[4px] text-[15px] ${selectedDropdownEntry ? 'text-[#343434]' : 'text-grayish-blue'} leading-tight
                     focus:shadow-none overflow-x-auto whitespace-nowrap no-scrollbar ${(styleSet && styleSet.dropdownButton) ? styleSet.dropdownButton : ''}`} type="button">
                     <span className='w-full break-all text-wrap text-start'>{
                         selectedDropdownEntry ?
@@ -83,7 +83,7 @@ function DropdownWithSearchComponent({ fieldName, dropdownDataList, onDropDownCh
                             </div>
                             {filteredPolicyGroupList.length === 0 && (
                                 <div className="min-h-3 p-4 cursor-auto">
-                                    <p className="text-sm text-dark-blue font-semibold">{t('commons.emptyMsg')}</p>
+                                    <p id={id + '_no_data_available'} className="text-sm text-dark-blue font-semibold">{t('commons.emptyMsg')}</p>
                                 </div>
                             )}
                             <div className="max-h-32 overflow-y-auto">
@@ -100,7 +100,7 @@ function DropdownWithSearchComponent({ fieldName, dropdownDataList, onDropDownCh
                                                 {dropdownItem.fieldDescription && (
                                                     <>
                                                         <br />
-                                                        <p className="text-xs text-[#727272]">{dropdownItem.fieldDescription}</p>
+                                                        <p id={id + '_description_' + (index + 1)} className="text-xs text-[#727272]">{dropdownItem.fieldDescription}</p>
                                                     </>
                                                 )}
                                             </button>

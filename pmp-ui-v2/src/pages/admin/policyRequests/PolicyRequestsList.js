@@ -43,7 +43,6 @@ function PolicyRequestsList() {
   const [order, setOrder] = useState("DESC");
   const [activeSortAsc, setActiveSortAsc] = useState("");
   const [activeSortDesc, setActiveSortDesc] = useState("createdDateTime");
-  const [firstIndex, setFirstIndex] = useState(0);
   const [viewPartnerId, setViewPartnersId] = useState(-1);
   const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
   const [sortFieldName, setSortFieldName] = useState("createdDateTime");
@@ -220,7 +219,7 @@ function PolicyRequestsList() {
       {dataLoaded && (
         <>
           {errorMsg && (
-            <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
+            <ErrorMessage id='policy_requests_list_error_msg' errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
           )}
           <div className="flex-col mt-5">
             <div className="flex justify-between mb-3">
@@ -231,10 +230,10 @@ function PolicyRequestsList() {
                 <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
                   <div className="py-2 pt-4 text-sm font-semibold text-[#6F6E6E]">
                     <div className="flex w-full px-2">
-                      <div className="flex w-full pl-[2%] pt-1 items-center justify-start font-semibold text-dark-blue text-base">
+                      <div id='partner_policy_linking_sub_title' className="flex w-full pl-[2%] pt-1 items-center justify-start font-semibold text-dark-blue text-base">
                         {t("partnerPolicyMappingRequestList.listOfPartnerPolicyMappingRequestTitle")}
                       </div>
-                      <button disabled type="button"
+                      <button id='partner_policy_linking_filter_btn' disabled type="button"
                         className={`flex justify-center items-center w-[14%] text-sm py-2 mt-2 border border-[#D0D0D0] font-semibold rounded-md text-center min-w-fit px-2 bg-transparent text-[#D0D0D0] cursor-auto ${isLoginLanguageRTL ? "mr-3" : "ml-3"}`}>
                         {t("commons.filterBtn")}
                         <svg xmlns="http://www.w3.org/2000/svg" className={`${isLoginLanguageRTL ? "mr-2" : "ml-2"}`}
@@ -282,10 +281,11 @@ function PolicyRequestsList() {
                                       {tableHeaders.map((header, index) => {
                                         return (
                                           <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[15%]">
-                                            <div className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
+                                            <div id={`${header.headerNameKey}_header`} className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
                                               {t(header.headerNameKey)}
                                               {header.id !== "action" && (
                                                 <SortingIcon
+                                                  id={`${header.headerNameKey}_sorting_icon`}
                                                   headerId={header.id}
                                                   sortDescOrder={sortDescOrder}
                                                   sortAscOrder={sortAscOrder}
@@ -361,7 +361,6 @@ function PolicyRequestsList() {
                       dataListLength={totalRecords}
                       selectedRecordsPerPage={selectedRecordsPerPage}
                       setSelectedRecordsPerPage={setSelectedRecordsPerPage}
-                      setFirstIndex={setFirstIndex}
                       isServerSideFilter={true}
                       getPaginationValues={getPaginationValues}
                       isApplyFilterClicked={isApplyFilterClicked}

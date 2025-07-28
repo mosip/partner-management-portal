@@ -142,7 +142,7 @@ function PartnerCertificatesList() {
             }
         };
         fetchData();
-    }, []);
+    }, [t]);
 
     const cancelErrorMsg = () => {
         setErrorMsg("");
@@ -168,10 +168,10 @@ function PartnerCertificatesList() {
             {dataLoaded && (
                 <>
                     {errorMsg && (
-                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
+                        <ErrorMessage id='partner_certificates_list_error_msg' errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
                     {successMsg && (
-                        <SuccessMessage successMsg={successMsg} clickOnCancel={cancelSuccessMsg} />
+                        <SuccessMessage id='partner_certificates_list_success_msg' successMsg={successMsg} clickOnCancel={cancelSuccessMsg} />
                     )}
                     <div className="flex-col mt-5">
                         <div className="flex justify-between mb-5">
@@ -181,7 +181,7 @@ function PartnerCertificatesList() {
                             {certificatesData.length === 0 ?
                                 <div className="p-[8%] flex flex-col justify-center items-center w-full">
                                     <img src={rectangleBox} alt="" />
-                                    <p className="mt-[1.5%] font-inter text-xs font-normal tracking-tight text-[#666666]">{t('partnerCertificatesList.noPartnerTypesAreMapped')}</p>
+                                    <p id='no_partner_types_are_mapped' className="mt-[1.5%] font-inter text-xs font-normal tracking-tight text-[#666666]">{t('partnerCertificatesList.noPartnerTypesAreMapped')}</p>
                                 </div> :
                                 certificatesData.map((partner, index) => {
                                     return (
@@ -194,10 +194,10 @@ function PartnerCertificatesList() {
                                                     }
 
                                                     <div className="flex-col p-3 items-center">
-                                                        <h6 className={`text-sm ${partner.isCertificateAvailable ? 'font-bold text-black' : 'font-semibold text-charcoal-gray'}`}>
+                                                        <h6 id={partner.isCertificateAvailable ? "certificate_issued_to_label" + (index+1) : "upload_partner_certificate_label" + (index+1)} className={`text-sm ${partner.isCertificateAvailable ? 'font-bold text-black' : 'font-semibold text-charcoal-gray'}`}>
                                                             {partner.isCertificateAvailable ? partner.certificateIssuedTo : t('partnerCertificatesList.uploadPartnerCertificate')}
                                                         </h6>
-                                                        <p className="text-xs text-light-gray">{partner.isCertificateAvailable ? null : t('partnerCertificatesList.certificateFormatMsg')}</p>
+                                                        <p id={"certificate_format_msg" + (index+1)} className="text-xs text-light-gray">{partner.isCertificateAvailable ? null : t('partnerCertificatesList.certificateFormatMsg')}</p>
                                                     </div>
                                                 </div>
                                                 {partner.isCertificateAvailable
@@ -235,16 +235,16 @@ function PartnerCertificatesList() {
                                             <hr className="border bg-medium-gray" />
                                             <div className="flex items-center p-5 bg-white rounded-lg">
                                                 <div className="flex-col">
-                                                    <p className="font-semibold text-xs text-dim-gray">{t('partnerCertificatesList.partnerType')}</p>
-                                                    <p className="font-bold text-sm text-charcoal-gray">{getPartnerType(partner.partnerType)}</p>
+                                                    <p id='partner_type_label' className="font-semibold text-xs text-dim-gray">{t('partnerCertificatesList.partnerType')}</p>
+                                                    <p id='partner_type_context' className="font-bold text-sm text-charcoal-gray">{getPartnerType(partner.partnerType)}</p>
                                                 </div>
                                                 <div className={`flex-col ${isLoginLanguageRTL ? "mr-[5%]" : "ml-[5%]"}`}>
-                                                    <p className="font-semibold text-xs text-dim-gray">{t('partnerCertificatesList.expiryDate')}</p>
-                                                    <p className="font-semibold text-sm text-charcoal-gray">{formatDate(partner.certificateExpiryDateTime, 'dateTime')}</p>
+                                                    <p id='certificate_expiry_date_label' className="font-semibold text-xs text-dim-gray">{t('partnerCertificatesList.expiryDate')}</p>
+                                                    <p id='certificate_expiry_date_context' className="font-semibold text-sm text-charcoal-gray">{formatDate(partner.certificateExpiryDateTime, 'dateTime')}</p>
                                                 </div>
                                                 <div className={`flex-col ${isLoginLanguageRTL ? "mr-[10%]" : "ml-[10%]"}`}>
-                                                    <p className="font-semibold text-xs text-dim-gray">{t('partnerCertificatesList.timeOfUpload')}</p>
-                                                    <p className="font-semibold text-sm text-charcoal-gray">{formatDate(partner.certificateUploadDateTime, 'dateTime')}</p>
+                                                    <p id='certificate_uploaded_date_label' className="font-semibold text-xs text-dim-gray">{t('partnerCertificatesList.timeOfUpload')}</p>
+                                                    <p id='certificate_uploaded_date_context' className="font-semibold text-sm text-charcoal-gray">{formatDate(partner.certificateUploadDateTime, 'dateTime')}</p>
                                                 </div>
                                             </div>
                                         </li>

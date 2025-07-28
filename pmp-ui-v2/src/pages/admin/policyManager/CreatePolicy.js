@@ -138,7 +138,7 @@ function CreatePolicy() {
             setDataLoaded(true);
         };
         fetchData();
-    }, []);
+    }, [navigate, t]);
 
     const clickOnSubmit = async () => {
         setIsSubmitClicked(true);
@@ -161,6 +161,7 @@ function CreatePolicy() {
                 throw new Error("Parsed data is not a valid JSON object");
             }
         } catch (error) {
+            console.log(`Exception while parsing json: ${error}`);
             setErrorMsg(t('createPolicy.jsonParseError'));
             setIsSubmitClicked(false);
             setDataLoaded(true);
@@ -276,10 +277,10 @@ function CreatePolicy() {
             {dataLoaded && (
                 <>
                     {errorMsg && (
-                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
+                        <ErrorMessage id='create_policy_error_msg' errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
                     {successMsg && (
-                        <SuccessMessage successMsg={successMsg} clickOnCancel={cancelSuccessMsg} customStyle={successcustomStyle} />
+                        <SuccessMessage id='create_policy_success_msg' successMsg={successMsg} clickOnCancel={cancelSuccessMsg} customStyle={successcustomStyle} />
                     )}
                     <div className="flex-col mt-5 w-full">
                         <div className="w-fit">
@@ -288,7 +289,7 @@ function CreatePolicy() {
                         {!createPolicySuccess ?
                             <div className="w-[100%] bg-snow-white mt-[1%] rounded-lg shadow-md">
                                 <div className="p-7">
-                                    <p className="text-base text-[#3D4468]">{t('requestPolicy.mandatoryFieldsMsg1')} <span className="text-crimson-red">*</span> {t('requestPolicy.mandatoryFieldsMsg2')}</p>
+                                    <p id='create_policy_mandatory_field_msg' className="text-base text-[#3D4468]">{t('requestPolicy.mandatoryFieldsMsg1')} <span className="text-crimson-red">*</span> {t('requestPolicy.mandatoryFieldsMsg2')}</p>
                                     <form>
                                         <div className="flex flex-col w-full">
                                             <div className="flex flex-row justify-between my-4 max-[450px]:flex-col">
@@ -316,12 +317,12 @@ function CreatePolicy() {
                                                         id="policy_name_box"
                                                         maxLength={128}
                                                     />
-                                                    {invalidPolicyNameError && <span className="text-sm text-crimson-red font-semibold">{invalidPolicyNameError}</span>}
+                                                    {invalidPolicyNameError && <span id='create_policy_invalid_policy_name' className="text-sm text-crimson-red font-semibold">{invalidPolicyNameError}</span>}
                                                 </div>
                                             </div>
                                             <div className="flex my-2">
                                                 <div className="flex flex-col w-full">
-                                                    <label className={`block text-dark-blue text-sm font-semibold mb-1  ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+                                                    <label id='create_policy_policy_description_label' className={`block text-dark-blue text-sm font-semibold mb-1  ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                                                         {t('createPolicy.policyDescription')}<span className="text-crimson-red px-1">*</span>
                                                     </label>
                                                     <textarea
@@ -333,7 +334,7 @@ function CreatePolicy() {
                                                         placeholder={t(policyDescriptionPlaceHolderKey)}
                                                         maxLength={256}
                                                     />
-                                                    {invalidPolicyDescError && <span className="text-sm text-crimson-red font-semibold">{invalidPolicyDescError}</span>}
+                                                    {invalidPolicyDescError && <span id='create_policy_invalid_policy_description' className="text-sm text-crimson-red font-semibold">{invalidPolicyDescError}</span>}
                                                 </div>
                                             </div>
                                             <div className="rounded-lg shadow-md border my-5">
@@ -342,10 +343,10 @@ function CreatePolicy() {
                                                         <div className="flex space-x-4 items-center ">
                                                             <img src={uploadPolicyDataFileIcon} className="h-8" alt="" />
                                                             <div className="flex-col p-1 items-center">
-                                                                <h6 className={`text-sm font-semibold text-dark-blue`}>
+                                                                <h6 id='upload_policy_data_file_header' className={`text-sm font-semibold text-dark-blue`}>
                                                                     {t('createPolicy.uploadPolicyDataFile')}<span className="text-crimson-red mx-1">*</span>
                                                                 </h6>
-                                                                <p className="text-xs text-light-gray">{t('createPolicy.uploadPolicyDataFileDesc')}</p>
+                                                                <p id='upload_policy_data_file_description' className="text-xs text-light-gray">{t('createPolicy.uploadPolicyDataFileDesc')}</p>
                                                             </div>
                                                         </div>
                                                         <div>
@@ -357,6 +358,7 @@ function CreatePolicy() {
                                                                 onChange={onFileChangeEvent}
                                                             />
                                                             <button
+                                                                id='upload_policy_data_file_btn'
                                                                 type="button"
                                                                 onClick={() => document.getElementById('fileInput').click()}
                                                                 className="bg-tory-blue flex items-center justify-center h-11 w-28 text-snow-white text-xs font-semibold rounded-md cursor-pointer"
@@ -396,7 +398,7 @@ function CreatePolicy() {
                                     </div>
                                 </div>
                             </div>
-                            : <Confirmation confirmationData={confirmationData} />
+                            : <Confirmation id='create_policy_confirmation' confirmationData={confirmationData} />
                         }
                     </div>
                 </>

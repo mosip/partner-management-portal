@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { getUserProfile } from "../../../services/UserProfileService.js";
 import {
-    formatDate, getNoticationTitle, getNotificationDescription, getPartnerManagerUrl, handleServiceErrors,
+    formatDate, getNotificationTitle, getNotificationDescription, getPartnerManagerUrl, handleServiceErrors,
     isLangRTL, resetPageNumber, setPageNumberAndPageSize, onResetFilter, onClickApplyFilter,
     createRequest,
-    fetchNotificationsList
+    fetchNotificationsList,
+    getWeeklySummaryDate
 } from "../../../utils/AppUtils.js";
 import LoadingIcon from "../../common/LoadingIcon.js";
 import ErrorMessage from "../../common/ErrorMessage.js";
@@ -22,6 +23,9 @@ import PartnerCertificateNotificationsFilter from "../../partner/notifications/P
 import { useDispatch } from "react-redux";
 import WeeklyNotificationsFilter from "./WeeklyNotificationsFilter.js";
 import PropTypes from 'prop-types';
+import FtmChipCertNotificationFilter from "../../partner/notifications/FtmChipCertNotificationFilter.js";
+import ApiKeyNotificationFilter from "../../partner/notifications/ApiKeyNotificationFilter.js";
+import SbiNotificationFilter from "../../partner/notifications/SbiNotificationFilter.js";
 
 function ViewAllNotifications({ notificationType }) {
     const { t } = useTranslation();
@@ -30,7 +34,6 @@ function ViewAllNotifications({ notificationType }) {
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(4);
-    const [firstIndex, setFirstIndex] = useState(0);
     const [pageNo, setPageNo] = useState(0);
     const [pageSize, setPageSize] = useState(4);
     const [fetchData, setFetchData] = useState(false);
@@ -48,13 +51,24 @@ function ViewAllNotifications({ notificationType }) {
         issuedBy: null,
         expiryDate: null,
         createdFromDate: null,
-        createdToDate: null
+        createdToDate: null,
+        ftmId: null,
+        make: null,
+        model: null,
+        apiKeyName: null,
+        policyName: null,
+        sbiId: null,
+        sbiVersion: null,
     });
     const dispatch = useDispatch();
     const [showExpiringItems, setShowExpiringItems] = useState(false);
     const [activeTab, setActiveTab] = useState('');
     const [weeklyNotificationList, setWeeklyNotificationList] = useState([]);
     const [notificationCreatedDateTime, setNotificationCreatedDateTime] = useState("");
+    const [partnerCertList, setPartnerCertList] = useState([]);
+    const [ftmCertList, setFtmCertList] = useState([]);
+    const [apiKeyList, setApiKeyList] = useState([]);
+    const [sbiList, setSbiList] = useState([]);
 
     const fetchNotifications = async (noDateLoaded) => {
         const queryParams = new URLSearchParams();
@@ -72,6 +86,13 @@ function ViewAllNotifications({ notificationType }) {
         if (filterAttributes.expiryDate) queryParams.append('expiryDate', filterAttributes.expiryDate);
         if (filterAttributes.createdFromDate) queryParams.append('createdFromDate', filterAttributes.createdFromDate);
         if (filterAttributes.createdToDate) queryParams.append('createdToDate', filterAttributes.createdToDate);
+        if (filterAttributes.ftmId) queryParams.append('ftmId', filterAttributes.ftmId);
+        if (filterAttributes.make) queryParams.append('make', filterAttributes.make);
+        if (filterAttributes.model) queryParams.append('model', filterAttributes.model);
+        if (filterAttributes.apiKeyName) queryParams.append('apiKeyName', filterAttributes.apiKeyName);
+        if (filterAttributes.policyName) queryParams.append('policyName', filterAttributes.policyName);
+        if (filterAttributes.sbiId) queryParams.append('sbiId', filterAttributes.sbiId);
+        if (filterAttributes.sbiVersion) queryParams.append('sbiVersion', filterAttributes.sbiVersion);
 
         const url = `${getPartnerManagerUrl('/notifications', process.env.NODE_ENV)}?${queryParams.toString()}`;
         try {
@@ -142,7 +163,7 @@ function ViewAllNotifications({ notificationType }) {
                         prevNotifications.filter((notif) => notif.notificationId !== id)
                     );
                     await fetchNotifications(true);
-                    const notifications = await fetchNotificationsList(dispatch);
+                    await fetchNotificationsList(dispatch);
                 } else {
                     handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                 }
@@ -172,11 +193,32 @@ function ViewAllNotifications({ notificationType }) {
 
     const viewExpiringItems = (notification) => {
         setShowExpiringItems(true);
-        setActiveTab('partner');
         setNotificationCreatedDateTime(notification.createdDateTime);
         const certificateList = Array.isArray(notification.notificationDetails.certificateDetails) ? notification.notificationDetails.certificateDetails : [];
-        const partnerCertList = certificateList.filter(cert => cert.certificateType === "partner");
-        setWeeklyNotificationList(partnerCertList);
+        setPartnerCertList(certificateList);
+
+        const ftmList = Array.isArray(notification.notificationDetails.ftmDetails) ? notification.notificationDetails.ftmDetails : [];
+        setFtmCertList(ftmList);
+
+        const apiKeyExpiryList = Array.isArray(notification.notificationDetails.apiKeyDetails) ? notification.notificationDetails.apiKeyDetails : [];
+        setApiKeyList(apiKeyExpiryList);
+
+        const sbiExpiryList = Array.isArray(notification.notificationDetails.sbiDetails) ? notification.notificationDetails.sbiDetails : [];
+        setSbiList(sbiExpiryList);
+
+        if (certificateList.length > 0) {
+            setActiveTab('partner');
+            setWeeklyNotificationList(certificateList);
+        } else if (ftmList.length > 0) {
+            setActiveTab('ftm');
+            setWeeklyNotificationList(ftmList);
+        } else if (apiKeyExpiryList.length > 0) {
+            setActiveTab('apikey');
+            setWeeklyNotificationList(apiKeyExpiryList);
+        } else if (sbiExpiryList.length > 0) {
+            setActiveTab('sbi');
+            setWeeklyNotificationList(sbiExpiryList);
+        }
     };
 
     const backToWeeklySummary = () => {
@@ -185,16 +227,41 @@ function ViewAllNotifications({ notificationType }) {
     };
 
     const changeToPartnerCert = () => {
-        setActiveTab('partner')
-    }
+        setActiveTab('partner');
+        setWeeklyNotificationList(partnerCertList);
+    };
 
-    const getWeeklyNoticationTitle = (notification, type) => {
+    const changeToFTMCert = () => {
+        setActiveTab('ftm');
+        setWeeklyNotificationList(ftmCertList);
+    };
+
+    const changeToApiKey = () => {
+        setActiveTab('apikey');
+        setWeeklyNotificationList(apiKeyList);
+    };
+
+    const changeToSbi = () => {
+        setActiveTab('sbi');
+        setWeeklyNotificationList(sbiList);
+    };
+
+    const getWeeklyNotificationTitle = (notification, type) => {
         if (type === 'partner') {
             return t('viewAllNotifications.weeklyPartnerCertExpiryTitle', {partnerId: notification.partnerId});
         }
+        if (type === 'ftm') {
+            return t('viewAllNotifications.weeklyFtmCertExpiryTitle', {partnerId: notification.partnerId});
+        }
+        if (type === 'apikey') {
+            return t('viewAllNotifications.weeklyApiKeyExpiryTitle', {partnerId: notification.partnerId});
+        }
+        if (type === 'sbi') {
+            return t('viewAllNotifications.weeklySbiExpiryTitle', {partnerId: notification.partnerId});
+        }
     }
 
-    const getWeeklyNoticationDescription = (notification, type) => {
+    const getWeeklyNotificationDescription = (notification, type) => {
         if (type === 'partner') {
             return (
                 <Trans 
@@ -206,7 +273,49 @@ function ViewAllNotifications({ notificationType }) {
                         partnerId: notification.partnerId,
                         expiryDateTime: formatDate(notification.expiryDateTime, 'dateInWords')
                     }}
-                    components={{ span: <span className={`font-semibold ${isLoginLanguageRTL && 'whitespace-nowrap'}`} /> }}
+                    components={{ span: <span className={`font-semibold md:whitespace-nowrap md:break-words break-all`} /> }}
+                />
+            );
+        }
+        if (type === 'ftm') {
+            return (
+                <Trans 
+                    i18nKey="viewAllNotifications.weeklyFtmCertExpiryDescription"
+                    values={{
+                        make: notification.make,
+                        model: notification.model,
+                        ftmId: notification.ftmId,
+                        partnerId: notification.partnerId,
+                        expiryDateTime: formatDate(notification.expiryDateTime, 'dateInWords')
+                    }}
+                    components={{ span: <span className={`font-semibold md:whitespace-nowrap md:break-words break-all`} /> }}
+                />
+            );
+        }
+        if (type === 'apikey') {
+            return (
+                <Trans 
+                    i18nKey="viewAllNotifications.weeklyApiKeyExpiryDescription"
+                    values={{
+                        apiKeyName: notification.apiKeyName,
+                        partnerId: notification.partnerId,
+                        expiryDateTime: formatDate(notification.expiryDateTime, 'dateInWords')
+                    }}
+                    components={{ span: <span className={`font-semibold md:whitespace-nowrap md:break-words break-all`} /> }}
+                />
+            );
+        }
+        if (type === 'sbi') {
+            return (
+                <Trans 
+                    i18nKey="viewAllNotifications.weeklySbiExpiryDescription"
+                    values={{
+                        sbiId: notification.sbiId,
+                        sbiVersion: notification.sbiVersion,
+                        partnerId: notification.partnerId,
+                        expiryDateTime: formatDate(notification.expiryDateTime, 'dateInWords')
+                    }}
+                    components={{ span: <span className={`font-semibold md:whitespace-nowrap md:break-words break-all`} /> }}
                 />
             );
         }
@@ -220,7 +329,7 @@ function ViewAllNotifications({ notificationType }) {
             {dataLoaded && (
                 <>
                     {errorMsg && (
-                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
+                        <ErrorMessage id='view_all_notifications_error_msg' errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
                     <div className="flex-col mt-5">
                         <div className="flex justify-between mb-5 max-470:flex-col">
@@ -244,11 +353,10 @@ function ViewAllNotifications({ notificationType }) {
                     
                     {!isFilterApplied && notificationsList.length === 0 ? (
                         <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
-
                             <div className="flex flex-col items-center py-20 px-2 border-b border-gray-200">
                                 <img src={noNotificationIcon} alt='' id='noNotificationIcon' />
-                                <p className="text-sm text-gray-500">{t('notificationPopup.noNotification')}</p>
-                                <p className="text-sm text-gray-500">{t('notificationPopup.noNotificationDescr')}</p>
+                                <p id='no_notifications_header' className="text-sm text-gray-500">{t('notificationPopup.noNotification')}</p>
+                                <p id='no_notifications_description' className="text-sm text-gray-500">{t('notificationPopup.noNotificationDescr')}</p>
                             </div>
                         </div>
                     ) : (
@@ -264,9 +372,10 @@ function ViewAllNotifications({ notificationType }) {
                                     addBackArrow={showExpiringItems ? true : false}
                                     goBack={showExpiringItems ? backToWeeklySummary : undefined}
                                     removeFilter={showExpiringItems ? true : false}
+                                    listSubTitle={showExpiringItems ? t('notificationPopup.expiringItems') + " (" + formatDate(notificationCreatedDateTime, 'dateInWords') + t('notificationPopup.to') + formatDate(getWeeklySummaryDate(notificationCreatedDateTime), 'dateInWords') + ")" : undefined}
                                 />
                                 <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
-                                {filter && (
+                                {!showExpiringItems && filter && (
                                     <>
                                         {(notificationType === "root" || notificationType === "intermediate") && (
                                             <CertificateNotificationsFilter onApplyFilter={onApplyFilter} />
@@ -277,7 +386,15 @@ function ViewAllNotifications({ notificationType }) {
                                         {(notificationType === "partner") && (
                                             <PartnerCertificateNotificationsFilter onApplyFilter={onApplyFilter} />
                                         )}
-                                        
+                                        {(notificationType === "ftm-chip") && (
+                                            <FtmChipCertNotificationFilter onApplyFilter={onApplyFilter} />
+                                        )}
+                                        {(notificationType === "apikey") && (
+                                            <ApiKeyNotificationFilter onApplyFilter={onApplyFilter} setErrorCode={setErrorCode} setErrorMsg={setErrorMsg} />
+                                        )}
+                                        {(notificationType === "sbi") && (
+                                            <SbiNotificationFilter onApplyFilter={onApplyFilter} />
+                                        )}
                                     </>
                                 )}
                                 {!notificationDataLoaded ? (
@@ -287,26 +404,26 @@ function ViewAllNotifications({ notificationType }) {
                                         {isFilterApplied && notificationsList.length === 0 ? (
                                             <div className="flex flex-col items-center py-20 px-2 border-b border-gray-200">
                                                 <img src={noNotificationIcon} alt='' id='noNotificationIcon' />
-                                                <p className="text-sm text-gray-500">{t('notificationPopup.filterNoNotificationTitle')}</p>
+                                                <p id='no_filter_notifications' className="text-sm text-gray-500">{t('notificationPopup.filterNoNotificationTitle')}</p>
                                             </div>
                                         ) : (
                                             <>
                                                 {!showExpiringItems ? (
                                                     <div className="p-6">
-                                                        {notificationsList.map((notification) => (
-                                                            <div key={notification.notificationId} className="flex items-start w-full bg-white p-4 rounded-lg shadow mb-3 border-b border-[#D0D5DD]">
+                                                        {notificationsList.map((notification, index) => (
+                                                            <div id={'notiifcation_item_' + (index + 1)} key={notification.notificationId} className="flex items-start w-full bg-white p-4 rounded-lg shadow mb-3 border-b border-[#D0D5DD]">
                                                                 <img src={featuredIcon} alt='' id='featuredIcon' className={`${isLoginLanguageRTL ? 'ml-3' : 'mr-3'} mt-2`} />
                                                                 <div className="mt-0.5 w-full">
                                                                     <div className="flex justify-between flex-wrap">
-                                                                        <p className="font-semibold text-base text-[#101828]">{getNoticationTitle(notification, t)}</p>
-                                                                        <p className={`text-xs text-gray-500 ${isLoginLanguageRTL ? 'text-left' : 'text-right'}`}>{formatDate(notification.createdDateTime, 'dateTime')}</p>
+                                                                        <p id={'notification_title_' + (index + 1)} className="font-semibold text-base text-[#101828]">{getNotificationTitle(notification, t)}</p>
+                                                                        <p id={'notification_created_date_time_' + (index + 1)} className={`text-xs text-gray-500 ${isLoginLanguageRTL ? 'text-left' : 'text-right'}`}>{formatDate(notification.createdDateTime, 'dateTime')}</p>
                                                                     </div>
-                                                                    <div className="text-[#475467] text-sm md:break-normal break-all">{getNotificationDescription(notification, isLoginLanguageRTL, t)}</div>
+                                                                    <div id={'notification_description_' + (index + 1)} className="text-[#475467] text-sm break-words">{getNotificationDescription(notification, isLoginLanguageRTL, t)}</div>
                                                                     <hr className="h-0.5 my-4 bg-[#BCC5E5] border" />
                                                                     <div className={`flex space-x-4 ${isLoginLanguageRTL && 'space-x-reverse'}`}>
-                                                                        <button onClick={() => dismissNotification(notification.notificationId)} className="text-tory-blue font-semibold text-sm px-4 py-[6px] rounded-md bg-[#F7F9FF]">{t('notificationPopup.dismiss')}</button>
+                                                                        <button id={'notification_dismiss_btn_' + (index + 1)} onClick={() => dismissNotification(notification.notificationId)} className="text-tory-blue font-semibold text-sm px-4 py-[6px] rounded-md bg-[#F7F9FF]">{t('notificationPopup.dismiss')}</button>
                                                                         {(notificationType === "weekly") && (
-                                                                            <button onClick={() => viewExpiringItems(notification)} className="text-tory-blue font-semibold text-sm px-4 py-[6px] rounded-md bg-[#F7F9FF]">{t('viewAllNotifications.viewExpiringItems')}</button>
+                                                                            <button id={'notification_view_expiring_item_btn_' + (index + 1)} onClick={() => viewExpiringItems(notification)} className="text-tory-blue font-semibold text-sm px-4 py-[6px] rounded-md bg-[#F7F9FF]">{t('viewAllNotifications.viewExpiringItems')}</button>
                                                                         )}
                                                                     </div>
                                                                 </div>
@@ -315,14 +432,43 @@ function ViewAllNotifications({ notificationType }) {
                                                     </div>
                                                 ) : (
                                                     <div>
-                                                        <div className='flex text-xs bg-[#FCFCFC] font-bold space-x-16 items-start px-8 border-b-2'>
-                                                            <div id='partner_cert_tab' className={`flex-col justify-center text-center`}>
-                                                                <button onClick={changeToPartnerCert} className={`${activeTab === "partner" ? "text-[#1447b2]" : "text-[#031640]"} py-3 cursor-pointer text-base`}>
-                                                                    <h6> {t('partnerNotificationsTab.partnerCertificate')} </h6>
-                                                                </button>
+                                                        <div className={`flex text-xs bg-[#FCFCFC] font-bold ${isLoginLanguageRTL && 'space-x-reverse'} space-x-16 items-start px-8 border-b-2`}>
+                                                            {partnerCertList.length > 0 && (
+                                                                <div id='partner_cert_tab' className={`flex-col justify-center text-center`}>
+                                                                    <button onClick={changeToPartnerCert} className={`${activeTab === "partner" ? "text-[#1447b2]" : "text-[#031640]"} py-3 cursor-pointer text-base`}>
+                                                                        <h6> {t('partnerNotificationsTab.partnerCertificate')} ({partnerCertList.length}) </h6>
+                                                                    </button>
 
-                                                                <div className={`h-1 w-full ${activeTab === "partner" ? "bg-tory-blue" : "bg-transparent"}  rounded-t-md`}></div>
-                                                            </div>
+                                                                    <div className={`h-1 w-full ${activeTab === "partner" ? "bg-tory-blue" : "bg-transparent"}  rounded-t-md`}></div>
+                                                                </div>
+                                                            )}
+                                                            {ftmCertList.length > 0 && (
+                                                                <div id='ftm_cert_tab' className={`flex-col justify-center text-center`}>
+                                                                    <button onClick={changeToFTMCert} className={`${activeTab === "ftm" ? "text-[#1447b2]" : "text-[#031640]"} py-3 cursor-pointer text-base`}>
+                                                                        <h6> {t('partnerNotificationsTab.ftmCertificate')} ({ftmCertList.length}) </h6>
+                                                                    </button>
+
+                                                                    <div className={`h-1 w-full ${activeTab === "ftm" ? "bg-tory-blue" : "bg-transparent"}  rounded-t-md`}></div>
+                                                                </div>
+                                                            )}
+                                                            {apiKeyList.length > 0 && (
+                                                                <div id='api_key_tab' className={`flex-col justify-center text-center`}>
+                                                                    <button onClick={changeToApiKey} className={`${activeTab === "apikey" ? "text-[#1447b2]" : "text-[#031640]"} py-3 cursor-pointer text-base`}>
+                                                                        <h6> {t('partnerNotificationsTab.apikey')} ({apiKeyList.length}) </h6>
+                                                                    </button>
+
+                                                                    <div className={`h-1 w-full ${activeTab === "apikey" ? "bg-tory-blue" : "bg-transparent"}  rounded-t-md`}></div>
+                                                                </div>
+                                                            )}
+                                                            {sbiList.length > 0 && (
+                                                                <div id='sbi_tab' className={`flex-col justify-center text-center`}>
+                                                                    <button onClick={changeToSbi} className={`${activeTab === "sbi" ? "text-[#1447b2]" : "text-[#031640]"} py-3 cursor-pointer text-base`}>
+                                                                        <h6> {t('partnerNotificationsTab.sbi')} ({sbiList.length}) </h6>
+                                                                    </button>
+
+                                                                    <div className={`h-1 w-full ${activeTab === "sbi" ? "bg-tory-blue" : "bg-transparent"}  rounded-t-md`}></div>
+                                                                </div>
+                                                            )}
                                                         </div>
                                                         {/* <hr className="h-0.5 bg-gray-200 border-0" /> */}
                                                         <div className="p-4">
@@ -331,10 +477,10 @@ function ViewAllNotifications({ notificationType }) {
                                                                     <img src={featuredIcon} alt='' id='featuredIcon' className={`${isLoginLanguageRTL ? 'ml-3' : 'mr-3'} mt-2`} />
                                                                     <div className="mt-0.5 w-full">
                                                                         <div className="flex justify-between flex-wrap">
-                                                                            <p className="font-semibold text-base text-[#101828]">{getWeeklyNoticationTitle(notification, activeTab)}</p>
-                                                                            <p className={`text-xs text-gray-500 ${isLoginLanguageRTL ? 'text-left' : 'text-right'}`}>{formatDate(notificationCreatedDateTime, 'dateTime')}</p>
+                                                                            <p id={'weekly_notification_title_' + (index + 1)} className="font-semibold text-base text-[#101828]">{getWeeklyNotificationTitle(notification, activeTab)}</p>
+                                                                            <p id={'weekly_notification_created_date_time_' + (index + 1)} className={`text-xs text-gray-500 ${isLoginLanguageRTL ? 'text-left' : 'text-right'}`}>{formatDate(notificationCreatedDateTime, 'dateTime')}</p>
                                                                         </div>
-                                                                        <div className="text-[#475467] text-sm md:break-normal break-all">{getWeeklyNoticationDescription(notification, activeTab)}</div>
+                                                                        <div id={'weekly_notification_description_' + (index + 1)} className="text-[#475467] text-sm break-words">{getWeeklyNotificationDescription(notification, activeTab)}</div>
                                                                     </div>
                                                                 </div>
                                                             ))}
@@ -351,7 +497,6 @@ function ViewAllNotifications({ notificationType }) {
                                         dataListLength={totalRecords}
                                         selectedRecordsPerPage={selectedRecordsPerPage}
                                         setSelectedRecordsPerPage={setSelectedRecordsPerPage}
-                                        setFirstIndex={setFirstIndex}
                                         isServerSideFilter={true}
                                         getPaginationValues={getPaginationValues}
                                         isViewNotificationPage={true}

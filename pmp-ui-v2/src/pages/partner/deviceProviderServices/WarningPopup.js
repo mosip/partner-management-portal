@@ -25,12 +25,12 @@ function WarningPopup({ closePopUp, clickOnConfirm }) {
             <FocusTrap focusTrapOptions={{ initialFocus: false, allowOutsideClick: true }}>
                 <div className={`bg-white md:w-[390px] w-[55%] mx-auto rounded-lg shadow-lg h-fit`}>
                     <div className={`p-7 flex-col text-center justify-center items-center`}>
-                        <p className="text-sm break-words pb-[6%] text-left">
+                        <p id='limit_exceed_warning_msg' className="text-sm break-words pb-[6%] text-left">
                             {t('addDevices.limitExceedWarning')}
                         </p>
                         <div className="flex flex-row items-center justify-center space-x-3 pt-[4%]">
-                            <button onClick={() => closingPopUp()} type="button" className="w-40 h-12 border-[#1447B2] border rounded-md text-tory-blue text-sm font-semibold">{t('requestPolicy.cancel')}</button>
-                            <button onClick={() => clickOnConfirm()} type="button" className={`w-40 h-12 border-[#1447B2] border rounded-md bg-tory-blue text-white text-sm font-semibold ${isLoginLanguageRTL && '!mr-3'}`}>{t('deactivateOidcClient.confirm')}</button>
+                            <button id='limit_exceed_cancel_btn' onClick={() => closingPopUp()} type="button" className="w-40 h-12 border-[#1447B2] border rounded-md text-tory-blue text-sm font-semibold">{t('requestPolicy.cancel')}</button>
+                            <button id='limit_exceed_confirm_btn' onClick={() => clickOnConfirm()} type="button" className={`w-40 h-12 border-[#1447B2] border rounded-md bg-tory-blue text-white text-sm font-semibold ${isLoginLanguageRTL && '!mr-3'}`}>{t('deactivateOidcClient.confirm')}</button>
                         </div>
                     </div>
                 </div>

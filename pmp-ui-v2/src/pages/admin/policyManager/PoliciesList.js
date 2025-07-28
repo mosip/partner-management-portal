@@ -43,7 +43,6 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
     const [activeAscIcon, setActiveAscIcon] = useState("");
     const [activeDescIcon, setActiveDescIcon] = useState("createdDateTime");
     const [actionId, setActionId] = useState(-1);
-    const [firstIndex, setFirstIndex] = useState(0);
     const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
     const [sortFieldName, setSortFieldName] = useState("createdDateTime");
     const [sortType, setSortType] = useState("desc");
@@ -278,7 +277,7 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
             {dataLoaded && (
                 <>
                     {errorMsg && (
-                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
+                        <ErrorMessage id={policyType + '_policies_list_error_msg'} errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
                     <div className="flex-col mt-5">
                         <div className="flex justify-between mb-5 max-470:flex-col">
@@ -334,10 +333,11 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
                                                                         {tableHeaders.map((header, index) => {
                                                                             return (
                                                                                 <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[20%]">
-                                                                                    <div className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
+                                                                                    <div id={`${header.headerNameKey}_header`} className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
                                                                                         {t(header.headerNameKey)}
                                                                                         {header.id !== "action" && (
                                                                                             <SortingIcon
+                                                                                                id={`${header.headerNameKey}_sorting_icon`}
                                                                                                 headerId={header.id}
                                                                                                 sortDescOrder={sortDescOrder}
                                                                                                 sortAscOrder={sortAscOrder}
@@ -440,7 +440,6 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
                                         dataListLength={totalRecords}
                                         selectedRecordsPerPage={selectedRecordsPerPage}
                                         setSelectedRecordsPerPage={setSelectedRecordsPerPage}
-                                        setFirstIndex={setFirstIndex}
                                         isServerSideFilter={true}
                                         getPaginationValues={getPaginationValues}
                                         isApplyFilterClicked={isApplyFilterClicked}

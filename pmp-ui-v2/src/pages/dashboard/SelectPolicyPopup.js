@@ -44,7 +44,7 @@ function SelectPolicyPopup() {
             setDataLoaded(true);
         };
         fetchData();
-    }, []);
+    }, [t]);
 
     const changePolicyGroupSelection = (fieldName, policyGrpId) => {
         setSelectedPolicyGroup(policyGrpId);
@@ -100,14 +100,14 @@ function SelectPolicyPopup() {
                     {dataLoaded && (
                         <>
                             <div className="px-4 py-2">
-                                <h3 className="text-base font-bold text-[#333333]">{t('selectPolicyPopup.title')}</h3>
+                                <h3 id='select_policy_group_popup_title' className="text-base font-bold text-[#333333]">{t('selectPolicyPopup.title')}</h3>
                             </div>
                             {errorMsg && (
-                                <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customStyle={customStyle} />
+                                <ErrorMessage id='select_policy_popup_error_msg' errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customStyle={customStyle} />
                             )}
                             <div className="border-gray-200 border-opacity-75 border-t"></div>
                             <div className="py-3 px-4 text-sm text-[#414141]">
-                                <p>
+                                <p id='select_policy_group_popup_description'>
                                     {displayText}
                                 </p>
                                 {descriptionText.split(' ').length > maxWords && (
@@ -118,7 +118,7 @@ function SelectPolicyPopup() {
                                 <form>
                                     <div className="pt-2 w-full mb-1 flex flex-col">
                                         <div className="flex flex-col">
-                                            <label className="block text-dark-blue text-sm font-semibold mb-2">
+                                            <label id="select_policy_group_partner_type_label" className="block text-dark-blue text-sm font-semibold mb-2">
                                                 {t('selectPolicyPopup.partnerTypeLabel')}<span className="text-red-500 pl-1">*</span>
                                             </label>
                                             <button id='select_policyPopup_partner_type' disabled className="flex items-center justify-between w-full h-10 px-2 py-2 border border-gray-300 rounded-md text-sm text-dark-blue bg-gray-200 leading-tight focus:outline-none focus:shadow-outline" type="button">

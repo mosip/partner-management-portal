@@ -34,7 +34,6 @@ function PolicyGroupList() {
     const [activeAscIcon, setActiveAscIcon] = useState("");
     const [activeDescIcon, setActiveDescIcon] = useState("crDtimes");
     const [actionId, setActionId] = useState(-1);
-    const [firstIndex, setFirstIndex] = useState(0);
     const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
     const [sortFieldName, setSortFieldName] = useState("crDtimes");
     const [sortType, setSortType] = useState("desc");
@@ -262,7 +261,7 @@ function PolicyGroupList() {
             {dataLoaded && (
                 <>
                     {errorMsg && (
-                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
+                        <ErrorMessage id='policy_group_list_error_msg' errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
                     <div className="flex-col mt-5">
                         <div className="flex justify-between mb-5 max-470:flex-col">
@@ -315,10 +314,11 @@ function PolicyGroupList() {
                                                                     {tableHeaders.map((header, index) => {
                                                                         return (
                                                                             <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[20%]">
-                                                                                <div className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
+                                                                                <div id={`${header.headerNameKey}_header`} className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
                                                                                     {t(header.headerNameKey)}
                                                                                     {header.id !== "action" && (
                                                                                         <SortingIcon
+                                                                                            id={`${header.headerNameKey}_sorting_icon`}
                                                                                             headerId={header.id}
                                                                                             sortDescOrder={sortDescOrder}
                                                                                             sortAscOrder={sortAscOrder}
@@ -392,7 +392,6 @@ function PolicyGroupList() {
                                     dataListLength={totalRecords}
                                     selectedRecordsPerPage={selectedRecordsPerPage}
                                     setSelectedRecordsPerPage={setSelectedRecordsPerPage}
-                                    setFirstIndex={setFirstIndex}
                                     isServerSideFilter={true}
                                     getPaginationValues={getPaginationValues}
                                     isApplyFilterClicked={isApplyFilterClicked}

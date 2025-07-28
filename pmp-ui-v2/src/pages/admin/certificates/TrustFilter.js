@@ -11,11 +11,6 @@ function TrustFilter({ onApplyFilter }) {
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [partnerDomainData, setPartnerDomainData] = useState([]);
-    const [partnerDomainDropdownData, setPartnerDomainDropdownData] = useState([
-        { partnerDomain: 'AUTH' },
-        { partnerDomain: 'DEVICE' },
-        { partnerDomain: 'FTM' }
-    ]);
     const [filters, setFilters] = useState({
         certificateId: "",
         partnerDomain: "",
@@ -28,6 +23,11 @@ function TrustFilter({ onApplyFilter }) {
 
     useEffect(() => {
         const fetchData = async () => {
+            const partnerDomainDropdownData = [
+                { partnerDomain: 'AUTH' },
+                { partnerDomain: 'DEVICE' },
+                { partnerDomain: 'FTM' }
+            ];
             setPartnerDomainData(
                 createDropdownData("partnerDomain", "", true, partnerDomainDropdownData, t, t("trustList.selectPartnerDomain"))
             );

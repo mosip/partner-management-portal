@@ -62,7 +62,7 @@ function ViewOidcClientDetails() {
             }
         };
         fetchData();
-    }, []);
+    }, [t]);
 
     useEffect(() => {
         handleMouseClickForDropdown(copyToolTipRef, () => setCopied(false));
@@ -80,7 +80,7 @@ function ViewOidcClientDetails() {
             {dataLoaded && (
                 <>
                     {!unexpectedError && errorMsg && (
-                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
+                        <ErrorMessage id='view_oidc-client_details_error_msg' errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
                     <div className="flex justify-between mb-3">
                         <Title title='viewOidcClientDetails.viewOidcClientDetails' subTitle='oidcClientsList.listOfOidcClients' backLink='/partnermanagement/authentication-services/oidc-clients-list' />
@@ -90,9 +90,9 @@ function ViewOidcClientDetails() {
                             <div className="flex items-center justify-center p-24">
                                 <div className="flex flex-col justify-center items-center">
                                     <img className="max-w-60 min-w-52 my-2" src={somethingWentWrongIcon} alt="" />
-                                    <p className="text-base font-semibold text-[#6F6E6E] pt-4">{t('commons.unexpectedError')}</p>
-                                    <p className="text-sm font-semibold text-[#6F6E6E] pt-1 pb-4">{getErrorMessage(errorCode, t, errorMsg)}</p>
-                                    <button onClick={() => moveToOidcClientsList(navigate)} type="button"
+                                    <p id='view_oidc_unexpected_error_header' className="text-base font-semibold text-[#6F6E6E] pt-4">{t('commons.unexpectedError')}</p>
+                                    <p id='view_oidc_unexpected_error_message' className="text-sm font-semibold text-[#6F6E6E] pt-1 pb-4">{getErrorMessage(errorCode, t, errorMsg)}</p>
+                                    <button id='view_oidc_go_back_btn' onClick={() => moveToOidcClientsList(navigate)} type="button"
                                         className={`w-32 h-10 flex items-center justify-center font-semibold rounded-md text-sm mx-8 py-3 bg-tory-blue text-white`}>
                                         {t('commons.goBack')}
                                     </button>
@@ -104,17 +104,17 @@ function ViewOidcClientDetails() {
                         <div className="bg-snow-white h-fit mt-1 rounded-t-xl shadow-lg font-inter">
                             <div className="flex justify-between px-7 pt-3 border-b max-[450px]:flex-col">
                                 <div className="flex-col">
-                                    <p className="text-lg text-dark-blue mb-2">{t('authenticationServices.oidcClientName')}: <span className="font-semibold">{oidcClientDetails.clientNameEng}</span></p>
+                                    <p id='view_oidc_client_name' className="text-lg text-dark-blue mb-2">{t('authenticationServices.oidcClientName')}: <span className="font-semibold">{oidcClientDetails.clientNameEng}</span></p>
                                     <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
-                                        <div className={`${bgOfStatus(oidcClientDetails.status)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
+                                        <div id='view_oidc_status' className={`${bgOfStatus(oidcClientDetails.status)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
                                             {getStatusCode(oidcClientDetails.status, t)}
                                         </div>
-                                        <div className={`font-semibold ${isLoginLanguageRTL ? "mr-1" : "ml-3"} text-sm text-dark-blue`}>
+                                        <div id='view_oidc_client_created_on' className={`font-semibold ${isLoginLanguageRTL ? "mr-1" : "ml-3"} text-sm text-dark-blue`}>
                                             {t("viewOidcClientDetails.createdOn") + ' ' +
                                                 formatDate(oidcClientDetails.createdDateTime, "date")}
                                         </div>
                                         <div className="mx-1 text-gray-300">|</div>
-                                        <div className="font-semibold text-sm text-dark-blue">
+                                        <div id='view_oidc_client_created_date_time' className="font-semibold text-sm text-dark-blue">
                                             {formatDate(oidcClientDetails.createdDateTime, "time")}
                                         </div>
                                     </div>
@@ -135,7 +135,7 @@ function ViewOidcClientDetails() {
                                         {copied &&
                                             (
                                                 <div ref={copyToolTipRef} className={`z-20 px-4 py-1 mt-[3.5%] max-h-[32%] font-semibold overflow-y-auto absolute ${isLoginLanguageRTL ? "mr-[9.5%] left-16" : "ml-[80px] right-16"} shadow-lg bg-white border border-gray-300 rounded-md`}>
-                                                    <p className="text-[#36393E] text-base font-inter">{t('viewOidcClientDetails.copied!')}</p>
+                                                    <p id='view_oidc_client_id_copied' className="text-[#36393E] text-base font-inter">{t('viewOidcClientDetails.copied!')}</p>
                                                 </div>
                                             )
                                         }

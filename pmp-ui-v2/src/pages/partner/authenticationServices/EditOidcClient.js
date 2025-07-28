@@ -154,7 +154,7 @@ function EditOidcClient() {
              }
          };
          fetchData();
-     }, []);
+     }, [createGrantTypesDropdownData, t]);
 
     const cancelErrorMsg = () => {
         setErrorMsg("");
@@ -336,7 +336,7 @@ function EditOidcClient() {
             {dataLoaded && (
                 <>
                     {!unexpectedError && errorMsg && (
-                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
+                        <ErrorMessage id='edit_oidc_client_error_msg' errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
                     <div className="flex-col mt-5">
                         <div className="flex justify-between">
@@ -347,9 +347,9 @@ function EditOidcClient() {
                                 <div className="flex items-center justify-center p-24">
                                     <div className="flex flex-col justify-center items-center">
                                         <img className="max-w-60 min-w-52 my-2" src={somethingWentWrongIcon} alt="" />
-                                        <p className="text-base font-semibold text-[#6F6E6E] pt-4">{t('commons.unexpectedError')}</p>
-                                        <p className="text-sm font-semibold text-[#6F6E6E] pt-1 pb-4">{getErrorMessage(errorCode, t, errorMsg)}</p>
-                                        <button onClick={() => moveToOidcClientsList(navigate)} type="button"
+                                        <p id='edit_oidc_unexpected_error_header' className="text-base font-semibold text-[#6F6E6E] pt-4">{t('commons.unexpectedError')}</p>
+                                        <p id='edit_oidc_unexpected_error_message' className="text-sm font-semibold text-[#6F6E6E] pt-1 pb-4">{getErrorMessage(errorCode, t, errorMsg)}</p>
+                                        <button onClick={() => moveToOidcClientsList(navigate)} type="button" id='edit_oidc_go_back_btn'
                                             className={`w-32 h-10 flex items-center justify-center font-semibold rounded-md text-sm mx-8 py-3 bg-tory-blue text-white`}>
                                             {t('commons.goBack')}
                                         </button>
@@ -362,16 +362,16 @@ function EditOidcClient() {
                                 {!editOidcClientSuccess ?
                                     <div className="w-[100%] bg-snow-white mt-[1.5%] rounded-lg shadow-md">
                                         <div className="px-[2.5%] py-[2%]">
-                                            <p className="text-base text-[#3D4468]">{t('requestPolicy.mandatoryFieldsMsg1')} <span className="text-crimson-red">*</span> {t('requestPolicy.mandatoryFieldsMsg2')}</p>
+                                            <p id='edit_oidc_mandatory_fields_msg' className="text-base text-[#3D4468]">{t('requestPolicy.mandatoryFieldsMsg1')} <span className="text-crimson-red">*</span> {t('requestPolicy.mandatoryFieldsMsg2')}</p>
                                             <form>
                                                 <div className="flex flex-col">
                                                     <div className="flex flex-row justify-between space-x-4 my-[1%]">
                                                         <div className="flex flex-col w-[48%]">
-                                                            <label className={`flex text-dark-blue items-center text-sm mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+                                                            <label id='edit_oidc_partner_id_label' className={`flex text-dark-blue items-center text-sm mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                                                                 <p className={`font-semibold`}>{t('requestPolicy.partnerId')}<span className={`text-crimson-red mx-1`}>*</span></p>
                                                                 <Information infoKey={t('createOidcClient.partnerIdTooltip')} id='partner_id_info' />
                                                             </label>
-                                                            <button disabled className="flex items-center justify-between w-full h-auto px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-vulcan bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
+                                                            <button id='edit_oidc_partner_id' disabled className="flex items-center justify-between w-full h-auto px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-vulcan bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
                                                  overflow-x-auto whitespace-normal no-scrollbar" type="button">
                                                                 <span className="w-full break-all text-wrap text-start">{oidcClientDetails.partnerId}</span>
                                                                 <svg className={`w-3 h-2 ml-3 transform 'rotate-0' text-gray-500 text-base`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
@@ -380,10 +380,10 @@ function EditOidcClient() {
                                                             </button>
                                                         </div>
                                                         <div className="flex flex-col w-[48%]">
-                                                            <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+                                                            <label id='edit_oidc_partner_type_label' className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                                                                 {t('requestPolicy.partnerType')}<span className="text-crimson-red mx-1">*</span>
                                                             </label>
-                                                            <button disabled className="flex items-center justify-between w-full h-auto px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-vulcan bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
+                                                            <button id='edit_oidc_partner_type' disabled className="flex items-center justify-between w-full h-auto px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-vulcan bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
                                                  overflow-x-auto whitespace-normal no-scrollbar" type="button">
                                                                 <span className="w-full break-all text-wrap text-start">{t("partnerTypes.authPartner")}</span>
                                                                 <svg className={`w-3 h-2 ml-3 transform 'rotate-0' text-gray-500 text-base`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
@@ -394,8 +394,8 @@ function EditOidcClient() {
                                                     </div>
                                                     <div className="flex flex-row justify-between space-x-4 my-2">
                                                         <div className="flex flex-col w-[48%]">
-                                                            <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('requestPolicy.policyGroup')}<span className="text-crimson-red mx-1">*</span></label>
-                                                            <button disabled className="flex items-center justify-between w-full h-auto px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-vulcan bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
+                                                            <label id='edit_oidc_policy_group_label' className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('requestPolicy.policyGroup')}<span className="text-crimson-red mx-1">*</span></label>
+                                                            <button id='edit_oidc_policy_group' disabled className="flex items-center justify-between w-full h-auto px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-vulcan bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
                                                  overflow-x-auto whitespace-normal no-scrollbar" type="button">
                                                                 <span className="w-full break-all text-wrap text-start">{oidcClientDetails.policyGroupName}</span>
                                                                 <svg className={`w-3 h-2 ml-3 transform 'rotate-0' text-gray-500 text-base`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
@@ -404,11 +404,11 @@ function EditOidcClient() {
                                                             </button>
                                                         </div>
                                                         <div className="flex flex-col w-[48%]">
-                                                            <label className={`flex text-dark-blue items-center text-sm mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+                                                            <label id='edit_oidc_policy_name_label' className={`flex text-dark-blue items-center text-sm mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                                                                 <p className={`font-semibold`}>{t('requestPolicy.policyName')}<span className={`text-crimson-red mx-1`}>*</span></p>
                                                                 <Information infoKey={t('createOidcClient.policyNameToolTip')} id='policy_name_info' />
                                                             </label>
-                                                            <button disabled className="flex items-center justify-between w-full h-auto px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-vulcan bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
+                                                            <button id='edit_oidc_policy_name' disabled className="flex items-center justify-between w-full h-auto px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-vulcan bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
                                                  overflow-x-auto whitespace-normal no-scrollbar" type="button">
                                                                 <span className="w-full break-all text-wrap text-start">{oidcClientDetails.policyName}</span>
                                                                 <svg className={`w-3 h-2 ml-3 transform 'rotate-0' text-gray-500 text-base`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
@@ -419,35 +419,35 @@ function EditOidcClient() {
                                                     </div>
                                                     <div className="flex my-2">
                                                         <div className="flex flex-col w-[562px]">
-                                                            <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('authenticationServices.oidcClientName')}<span className="text-crimson-red mx-1">*</span></label>
+                                                            <label id='edit_oidc_client_name_label' className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('authenticationServices.oidcClientName')}<span className="text-crimson-red mx-1">*</span></label>
                                                             <input id="oidc_edit_enter_client_name_input" value={oidcClientDetails.clientNameEng} onChange={(e) => onChangeOidcClientName(e.target.value)} maxLength={256} placeholder={t('createOidcClient.enterNameForOidcClient')}
                                                                 className="h-10 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-normal no-scrollbar"
                                                             />
-                                                            {inputError && <span className="text-sm text-crimson-red font-semibold">{inputError}</span>}
+                                                            {inputError && <span id='edit_oidc_invalid_client_name' className="text-sm text-crimson-red font-semibold">{inputError}</span>}
                                                         </div>
                                                     </div>
                                                     <div className="flex my-[1%]">
                                                         <div className="flex flex-col w-full">
-                                                            <label className={`flex space-x-1 items-center text-dark-blue text-sm mb-1  ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+                                                            <label id='edit_oidc_public_key_label' className={`flex space-x-1 items-center text-dark-blue text-sm mb-1  ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                                                                 <p className={`font-semibold`}>{t('createOidcClient.publicKey')}<span className={`text-crimson-red ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>*</span></p>
                                                                 <Information infoKey={t('createOidcClient.publicKeyToolTip')} id='public_key_info' />
                                                             </label>
-                                                            <pre className="px-2 py-4 border border-[#C1C1C1] rounded-md text-base text-vulcan bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline h-20 overflow-auto no-scrollbar">
+                                                            <pre id='edit_oidc_public_key' className="px-2 py-4 border border-[#C1C1C1] rounded-md text-base text-vulcan bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline h-20 overflow-auto no-scrollbar">
                                                                 {formatPublicKey(oidcClientDetails.publicKey)}
                                                             </pre>
                                                         </div>
                                                     </div>
                                                     <div className="flex my-[1%]">
                                                         <div className="flex flex-col w-full">
-                                                            <label className={`block text-dark-blue text-sm font-semibold mb-1  ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('createOidcClient.logoUrl')}<span className="text-crimson-red mx-1">*</span></label>
+                                                            <label id='edit_oidc_logo_url_label' className={`block text-dark-blue text-sm font-semibold mb-1  ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('createOidcClient.logoUrl')}<span className="text-crimson-red mx-1">*</span></label>
                                                             <input id="oidc_edit_enter_logo_url_input" value={oidcClientDetails.logoUri} onChange={(e) => handleLogoUrlChange(e.target.value)} placeholder={t('createOidcClient.logoUrlPlaceHolder')}
                                                                 className="h-10 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-normal no-scrollbar" />
-                                                            {invalidLogoUrl && <span className="text-sm text-crimson-red font-semibold">{invalidLogoUrl}</span>}
+                                                            {invalidLogoUrl && <span id='edit_oidc_invalid_logo_url' className="text-sm text-crimson-red font-semibold">{invalidLogoUrl}</span>}
                                                         </div>
                                                     </div>
                                                     <div className="flex flex-row justify-between space-x-4 my-[1%]">
                                                         <div className="flex flex-col w-[48%]">
-                                                            <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+                                                            <label id='edit_oidc_redirect_url_label' className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                                                                 {t('createOidcClient.redirectUrl')}<span className="text-crimson-red mx-1">*</span>
                                                             </label>
                                                             {(oidcClientDetails.redirectUris).map((url, index) => (
@@ -471,7 +471,7 @@ function EditOidcClient() {
                                                                     </div>
                                                                 </div>
                                                             ))}
-                                                            {invalidRedirectUrl && <span className="text-sm text-crimson-red font-semibold">{invalidRedirectUrl}</span>}
+                                                            {invalidRedirectUrl && <span id='edit_oidc_invalid_redirect_url' className="text-sm text-crimson-red font-semibold">{invalidRedirectUrl}</span>}
                                                             {oidcClientDetails.redirectUris.length < 5 && (
                                                                 <div
                                                                     role="button"
@@ -510,7 +510,7 @@ function EditOidcClient() {
                                             </div>
                                         </div>
                                     </div>
-                                    : <Confirmation confirmationData={confirmationData} />
+                                    : <Confirmation id='edit_oidc_client_confirmation' confirmationData={confirmationData} />
                                 }
                             </>
                         )}

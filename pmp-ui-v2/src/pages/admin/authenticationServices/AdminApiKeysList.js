@@ -34,7 +34,6 @@ function AdminApiKeysList() {
     const [activeAscIcon, setActiveAscIcon] = useState("");
     const [activeDescIcon, setActiveDescIcon] = useState("createdDateTime");
     const [actionId, setActionId] = useState(-1);
-    const [firstIndex, setFirstIndex] = useState(0);
     const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
     const [sortFieldName, setSortFieldName] = useState("createdDateTime");
     const [sortType, setSortType] = useState("desc");
@@ -66,6 +65,7 @@ function AdminApiKeysList() {
         { id: "policyName", headerNameKey: "oidcClientsList.policyName" },
         { id: "apiKeyLabel", headerNameKey: "apiKeysList.apiKeyName" },
         { id: "createdDateTime", headerNameKey: "oidcClientsList.creationDate" },
+        { id: "apiKeyExpiryDateTime", headerNameKey: "apiKeysList.expirationDate" },
         { id: "status", headerNameKey: "oidcClientsList.status" },
         { id: "action", headerNameKey: 'oidcClientsList.action' }
     ];
@@ -92,7 +92,7 @@ function AdminApiKeysList() {
         if (filterAttributes.apiKeyLabel) queryParams.append('apiKeyLabel', filterAttributes.apiKeyLabel);
         if (filterAttributes.status) queryParams.append('status', filterAttributes.status);
 
-        const url = `${getPartnerManagerUrl('/partner-api-keys', process.env.NODE_ENV)}?${queryParams.toString()}`;
+        const url = `${getPartnerManagerUrl('/partner-api-keys/v2', process.env.NODE_ENV)}?${queryParams.toString()}`;
         try {
             fetchData ? setTableDataLoaded(false) : setDataLoaded(false);
             const response = await HttpService.get(url);
@@ -217,7 +217,7 @@ function AdminApiKeysList() {
             {dataLoaded && (
                 <>
                     {errorMsg && (
-                        <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
+                        <ErrorMessage id='admin_api_key_list_error_msg' errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
                     <div className="flex-col mt-5">
                         <div className="flex justify-between mb-5 max-470:flex-col">
@@ -260,11 +260,12 @@ function AdminApiKeysList() {
                                                                 <tr>
                                                                     {tableHeaders.map((header, index) => {
                                                                         return (
-                                                                            <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[15%]">
-                                                                                <div className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
+                                                                            <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[13%]">
+                                                                                <div id={`${header.headerNameKey}_header`} className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
                                                                                     {t(header.headerNameKey)}
                                                                                     {(header.id !== "action") && (
                                                                                         <SortingIcon
+                                                                                            id={`${header.headerNameKey}_sorting_icon`}
                                                                                             headerId={header.id}
                                                                                             sortDescOrder={sortDescOrder}
                                                                                             sortAscOrder={sortAscOrder}
@@ -290,6 +291,7 @@ function AdminApiKeysList() {
                                                                             <td onClick={() => apiKey.status !== 'deactivated' && viewApiKeyRequestDetails(apiKey)} className="px-2">{apiKey.policyName ? apiKey.policyName : '-'}</td>
                                                                             <td onClick={() => apiKey.status !== 'deactivated' && viewApiKeyRequestDetails(apiKey)} className="px-2">{apiKey.apiKeyLabel}</td>
                                                                             <td onClick={() => apiKey.status !== 'deactivated' && viewApiKeyRequestDetails(apiKey)} className="px-2">{formatDate(apiKey.createdDateTime, "date")}</td>
+                                                                            <td onClick={() => apiKey.status !== 'deactivated' && viewApiKeyRequestDetails(apiKey)} className="px-2">{apiKey.apiKeyExpiryDateTime ? formatDate(apiKey.apiKeyExpiryDateTime, 'date') : t('apiKeysList.noExpiry')}</td>
                                                                             <td onClick={() => apiKey.status !== 'deactivated' && viewApiKeyRequestDetails(apiKey)}>
                                                                                 <div className={`${bgOfStatus(apiKey.status)} flex min-w-fit w-14 justify-center py-1.5 px-2 mx-2 my-3 text-xs font-semibold rounded-md`}>
                                                                                     {getStatusCode(apiKey.status, t)}
@@ -340,7 +342,6 @@ function AdminApiKeysList() {
                                     dataListLength={totalRecords}
                                     selectedRecordsPerPage={selectedRecordsPerPage}
                                     setSelectedRecordsPerPage={setSelectedRecordsPerPage}
-                                    setFirstIndex={setFirstIndex}
                                     isServerSideFilter={true}
                                     getPaginationValues={getPaginationValues}
                                     isApplyFilterClicked={isApplyFilterClicked}

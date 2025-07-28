@@ -13,11 +13,6 @@ function CertificateNotificationsFilter({ onApplyFilter }) {
     const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [partnerDomainData, setPartnerDomainData] = useState([]);
     const [isExpiryCalenderOpen, setIsExpiryCalenderOpen] = useState(false);
-    const [partnerDomainDropdownData, setPartnerDomainDropdownData] = useState([
-        { partnerDomain: 'AUTH' },
-        { partnerDomain: 'DEVICE' },
-        { partnerDomain: 'FTM' }
-    ]);
     const [filters, setFilters] = useState({
         certificateId: "",
         partnerDomain: "",
@@ -31,6 +26,11 @@ function CertificateNotificationsFilter({ onApplyFilter }) {
 
     useEffect(() => {
         const fetchData = async () => {
+            const partnerDomainDropdownData = [
+                { partnerDomain: 'AUTH' },
+                { partnerDomain: 'DEVICE' },
+                { partnerDomain: 'FTM' }
+            ];
             setPartnerDomainData(
                 createDropdownData("partnerDomain", "", true, partnerDomainDropdownData, t, t("viewAllNotifications.selectPartnerDomain"))
             );
@@ -57,7 +57,7 @@ function CertificateNotificationsFilter({ onApplyFilter }) {
     };
 
     const calenderStyleSet = {
-        datePicker: "h-9 p-1",
+        datePicker: `h-[2.4rem] p-1 ${isLoginLanguageRTL && 'pr-8'}`,
         outerDiv: `ml-4 ${getOuterDivWidth(t('viewAllNotifications.selectExpiryDate'))}`
     };
 

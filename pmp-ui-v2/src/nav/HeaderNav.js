@@ -175,9 +175,6 @@ function HeaderNav({ open, setOpen }) {
         if (notificationSeenDtimes !== null) {
             dispatch(updateLastSeenDtimes(notificationSeenDtimes));
         }
-        if(dismissClicked) {
-            dispatch(updateDismissClicked(false));
-        }
     }
 
     return (
@@ -214,7 +211,7 @@ function HeaderNav({ open, setOpen }) {
                 </div>
             </div>
             <div className={`flex items-center relative justify-between gap-x-4 ${isLoginLanguageRTL ? "left-3" : "right-3"}`}>
-                <div className="flex items-center" ref={notificationRef}>
+                <div className="flex items-center relative" ref={notificationRef}>
                     {!showLatestNotificationIcon ? (
                         <button className='p-1.5 bg-blue-50 cursor-pointer' onClick={openNotificationPopup}>
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -248,15 +245,15 @@ function HeaderNav({ open, setOpen }) {
 
                     <h2 className={`text-xs font-bold text-gray-600 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{getUserProfile().orgName}</h2>
                 </div>
-                <div role='button' onClick={openDropdown} className={`flex items-center ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`} ref={dropdownRef} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, openDropdown)}>
-                    <button id='header_user_profile_icon_btn' className="relative flex rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-transparent">
+                <div role='button' onClick={openDropdown} className={`relative flex items-center ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`} ref={dropdownRef} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, openDropdown)}>
+                    <button id='header_user_profile_icon_btn' className="flex rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-transparent">
                         <img id='orgIcon' className="h-9 w-8 rounded-full" src={profileIcon} alt="" />
                     </button>
                     <h2 id='header_user_profile_title' className={`text-xs font-bold text-gray-600 cursor-pointer ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{getUserProfile().userName}</h2>
                     <img id="profileDropDown" src={profileDropDown} alt="" className={`h-2 mt-[1%] cursor-pointer ${isLoginLanguageRTL ? "mr-2 ml-2" : "ml-2 mr-2"} ${isDropdownOpen ? "rotate-180 duration-500" : "duration-500"}`} />
 
                     {isDropdownOpen && (
-                        <div className={`absolute top-[3.1rem] ${isLoginLanguageRTL ? "origin-top-left" : "origin-top-right"} z-10 rounded-md bg-white py-1 shadow-md ring-1 ring-gray-50 focus:outline-none ${dropdownWidth < 100 ? 'w-min right-0' : 'w-dynamic'}`}>
+                        <div className={`absolute top-10 ${isLoginLanguageRTL ? "origin-top-left" : "origin-top-right"} z-10 rounded-md bg-white py-1 shadow-md ring-1 ring-gray-50 focus:outline-none ${dropdownWidth < 100 ? 'w-min right-0' : 'w-dynamic'}`}>
                             <button id='header_user_profile_info_btn' onClick={moveToMyProfile} className={`block w-full px-4 py-2 text-xs text-gray-900 ${isLoginLanguageRTL ? "text-right" : "text-left"} hover:bg-gray-100`} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, moveToMyProfile)}>
                                 {t('header.userProfile')}
                             </button>

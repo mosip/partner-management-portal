@@ -23,7 +23,7 @@ function CopyIdPopUp({ closePopUp, policyName, partnerId, id, header, alertMsg, 
     useEffect(() => {
         const removeListener = handleEscapeKey(() => closePopUp(false));
         return removeListener;
-    }, []);
+    }, [closePopUp]);
 
     const dismiss = () => {
         closePopUp(false);
@@ -42,8 +42,8 @@ function CopyIdPopUp({ closePopUp, policyName, partnerId, id, header, alertMsg, 
                 <div className={`bg-white md:w-[378px] w-[40%] mx-auto rounded-lg shadow-lg h-fit`}>
                     <header className={`flex justify-between p-[5%]`}>
                         <div className={`flex-col w-[19rem]`}>
-                            <h1 className={`font-bold text-base text-[#333333] break-words`}>{policyName}</h1>
-                            <p className={`text-xs font-bold text-[#717171] ${isLoginLanguageRTL ? "text-right" : "text-left"}`}># {partnerId}</p>
+                            <h1 id='copy_id_popup_tile' className={`font-bold text-base text-[#333333] break-words`}>{policyName}</h1>
+                            <p id='copy_id_popup_sub_title' className={`text-xs font-bold text-[#717171] ${isLoginLanguageRTL ? "text-right" : "text-left"}`}># {partnerId}</p>
                         </div>
                         <button id='copy_id_close_btn' onClick={dismiss} className={`flex items-start min-w-fit cursor-pointer ${isLoginLanguageRTL ? "mr-2 " : "ml-2"}`}>
                             <img
@@ -57,11 +57,11 @@ function CopyIdPopUp({ closePopUp, policyName, partnerId, id, header, alertMsg, 
                     <div className={`px-5 pt-1 pb-6 flex-col text-center justify-center items-center`}>
                         {alertMsg && (
                             <div className="w-full border border-[#EDDCAF] bg-[#FFF7E5] rounded-md p-2 text-left mb-2">
-                                <p className="test-[13px] font-medium text-[#8B6105]">{t(alertMsg)}</p>
+                                <p id='copy_id_popup_alert_msg' className="test-[13px] font-medium text-[#8B6105]">{t(alertMsg)}</p>
                             </div>
                         )}
-                        <h1 className={`text-[#6A6A6A] text-sm opacity-8 mb-[0.5%]`}>{t(header)}</h1>
-                        <p className={`font-bold text-sm text-black break-words px-6`}>{id}</p>
+                        <h1 id='copy_id_popup_header' className={`text-[#6A6A6A] text-sm opacity-8 mb-[0.5%]`}>{t(header)}</h1>
+                        <p id='copy_id_popup_id' className={`font-bold text-sm text-black break-words px-6`}>{id}</p>
                         <button id='copy_id_btn' type="button" onClick={() => copyId()} className={`flex items-center justify-center gap-x-2 my-[4%] border-2 py-[3%] w-[40%] rounded-2xl ${copied ? "text-[#FFFFFF] bg-[#1447B2] border-0" : "text-[#1447B2] border-[#1447B2]"} ${isLoginLanguageRTL ? "mr-[31%]" : "ml-[31%]"} cursor-pointer`}>
                             <svg xmlns="http://www.w3.org/2000/svg"
                                 width="13" height="15" viewBox="0 0 13.808 16.481">

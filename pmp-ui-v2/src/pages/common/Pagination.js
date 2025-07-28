@@ -3,8 +3,7 @@ import { useRef, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { getUserProfile } from '../../services/UserProfileService';
 import { isLangRTL, handleMouseClickForDropdown, onPressEnterKey } from '../../utils/AppUtils';
-import { AiFillLeftCircle, AiFillRightCircle } from "react-icons/ai"; // icons form react-icons
-import { IconContext } from "react-icons"; // for customizing icons
+import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import PropTypes from 'prop-types';
 
 function Pagination({ dataListLength, selectedRecordsPerPage, setSelectedRecordsPerPage, setFirstIndex, isServerSideFilter = false, getPaginationValues, isViewNotificationPage, isApplyFilterClicked, setIsApplyFilterClicked }) {
@@ -47,39 +46,46 @@ function Pagination({ dataListLength, selectedRecordsPerPage, setSelectedRecords
     const handlePageChange = (event) => {
         setSelectedPage(event.selected);
         const newIndex = (event.selected * selectedRecordsPerPage) % dataListLength;
-        setFirstIndex(newIndex);
+        if(!isServerSideFilter) {
+            setFirstIndex(newIndex);
+        }
     };
     const changeItemsPerPage = (num) => {
         setIsItemsPerPageOpen(false);
         setSelectedRecordsPerPage(num);
-        setFirstIndex(0);
+        if(!isServerSideFilter) {
+            setFirstIndex(0);
+        }
         setSelectedPage(0);
     };
+
+    const isFirstPage = selectedPage === 0;
+    const isLastPage = selectedPage === Math.ceil(dataListLength / selectedRecordsPerPage) - 1;
+
+    const greyBtn = "text-[#707070] border-[#BABABA]";
+    const blueBtn = "text-[#1447B2] border-[#1447B2] cursor-pointer";
 
     return (
         <div id='pagination_card' className="flex justify-between bg-[#FCFCFC] items-center h-9  mt-0.5 p-8 rounded-b-md shadow-md max-640:flex-col max-640:h-fit">
             <div></div>
             <ReactPaginate
                 forcePage={selectedPage}
-                containerClassName={"pagination"}
-                pageClassName={"page-item"}
-                activeClassName={"active"}
-                onPageChange={(event) => handlePageChange(event)}
+                onPageChange={handlePageChange}
                 pageCount={Math.ceil(dataListLength / selectedRecordsPerPage)}
+                pageRangeDisplayed={4}
+                marginPagesDisplayed={1}
                 breakLabel="..."
-                previousLabel={
-                    <IconContext.Provider value={{ color: "#B8C1CC", size: "25px" }}>
-                        {isLoginLanguageRTL ? <AiFillRightCircle /> : <AiFillLeftCircle />}
-                    </IconContext.Provider>
-                }
-                nextLabel={
-                    <IconContext.Provider value={{ color: "#B8C1CC", size: "25px" }}>
-                        {isLoginLanguageRTL ? <AiFillLeftCircle /> : <AiFillRightCircle />}
-                    </IconContext.Provider>
-                }
+                containerClassName="flex items-center justify-center space-x-3"
+                pageClassName="px-3 py-1.5 text-[#1447B2] cursor-pointer text-sm"
+                activeClassName="bg-[#1447B2] text-white text-sm p-1.5 rounded-md"
+                previousClassName={`p-1.5 border rounded-md ${isFirstPage ? greyBtn : blueBtn}`}
+                nextClassName={`p-1.5 border rounded-md ${isLastPage ? greyBtn : blueBtn}`}
+                breakClassName="px-2 py-1 text-[#1447B2]"
+                previousLabel={<FiChevronLeft />}
+                nextLabel={<FiChevronRight />}
             />
             <div className="flex items-center gap-x-3">
-                <h6 className="text-gray-500 text-xs">{t('commons.itemsPerPage')}</h6>
+                <h6 id='items_per_page' className="text-gray-500 text-xs">{t('commons.itemsPerPage')}</h6>
                 <div ref={itemsCountSelectionRef} className='relative min-w-fit w-10'
                     role='button' id='pagination_select_record_per_page' onClick={() => setIsItemsPerPageOpen(!isItemsPerPageOpen)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => setIsItemsPerPageOpen(!isItemsPerPageOpen))}>
                     {isItemsPerPageOpen && (
@@ -97,7 +103,7 @@ function Pagination({ dataListLength, selectedRecordsPerPage, setSelectedRecords
                     )}
                     <div className="cursor-pointer flex justify-between w-auto h-6 items-center 
                         text-xs border px-1 rounded-md border-[#1447b2] bg-white text-tory-blue font-semibold">
-                        <p className='px-1'>
+                        <p id='selected_records_count' className='px-1'>
                             {selectedRecordsPerPage}
                         </p>
                         <svg className={`${isItemsPerPageOpen ? "rotate-180 duration-500" : "duration-500"}`}
@@ -118,7 +124,7 @@ Pagination.propTypes = {
     dataListLength: PropTypes.number.isRequired,
     selectedRecordsPerPage: PropTypes.number.isRequired,
     setSelectedRecordsPerPage: PropTypes.func.isRequired,
-    setFirstIndex: PropTypes.func.isRequired,
+    setFirstIndex: PropTypes.func,
     isServerSideFilter: PropTypes.bool,
     getPaginationValues: PropTypes.func,
     isViewNotificationPage: PropTypes.bool,

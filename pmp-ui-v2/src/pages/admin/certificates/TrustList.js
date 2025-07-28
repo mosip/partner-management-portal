@@ -29,7 +29,7 @@ import disableDownloadIcon from "../../../svg/disable_download.svg";
 import SuccessMessage from "../../common/SuccessMessage";
 import PropTypes from 'prop-types';
 
-function TrustList({ trustListType, uploadTrustBtnName, subTitle, downloadBtnName }) {
+function TrustList({ trustListType, subTitle, downloadBtnName }) {
 
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -46,8 +46,6 @@ function TrustList({ trustListType, uploadTrustBtnName, subTitle, downloadBtnNam
   const [actionId, setActionId] = useState(-1);
   const [sortFieldName, setSortFieldName] = useState("uploadedDateTime");
   const [sortType, setSortType] = useState("desc");
-
-  const [firstIndex, setFirstIndex] = useState(0);
   const [pageNo, setPageNo] = useState(0);
   const [pageSize, setPageSize] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
   const [fetchData, setFetchData] = useState(false);
@@ -264,17 +262,17 @@ function TrustList({ trustListType, uploadTrustBtnName, subTitle, downloadBtnNam
       {dataLoaded && (
         <>
           {errorMsg && (
-            <ErrorMessage errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
+            <ErrorMessage id='trust_list_error_msg' errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
           )}
           {successMsg && (
-            <SuccessMessage successMsg={successMsg} clickOnCancel={cancelSuccessMsg} />
+            <SuccessMessage id='trust_list_success_msg' successMsg={successMsg} clickOnCancel={cancelSuccessMsg} />
           )}
           <div className="flex-col mt-5">
             <div className="justify-between mb-5 flex-col">
               <div className="flex justify-between">
                 <Title title="trustList.certificateTrustStore" backLink="/partnermanagement" />
                 {trustDataList.length !== 0 ?
-                  <button onClick={showUploadTrust} id={uploadTrustBtnName} type="button" className="h-auto text-sm px-3 font-semibold text-white bg-tory-blue rounded-md">
+                  <button onClick={showUploadTrust} id={trustListType + '_upload_trust_certificate_btn'} type="button" className="h-auto text-sm px-3 font-semibold text-white bg-tory-blue rounded-md">
                     {t('uploadTrustCertificate.uploadTrustCertificate')}
                   </button>
                   : null
@@ -284,7 +282,7 @@ function TrustList({ trustListType, uploadTrustBtnName, subTitle, downloadBtnNam
                 <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
                   <div className="flex items-center justify-center p-2">
                     <div className="p-2 bg-[#FFF7E5] border-2 border-[#EDDCAF] rounded-md w-full">
-                      <p className="text-sm font-medium text-[#8B6105]">
+                      <p id={trustListType + '_compatibility_msg'} className="text-sm font-medium text-[#8B6105]">
                         <Trans i18nKey="trustList.compatibilityMsg" components={{ italic: <i /> }} />
                       </p>
                     </div>
@@ -336,10 +334,11 @@ function TrustList({ trustListType, uploadTrustBtnName, subTitle, downloadBtnNam
                                       {tableHeaders.map((header, index) => {
                                         return (
                                           <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[14%]">
-                                            <div className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
+                                            <div id={`${header.headerNameKey}_header`} className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
                                               {t(header.headerNameKey)}
                                               {header.id !== "action" && header.id !== "validityStatus" && (
                                                 <SortingIcon
+                                                  id={`${header.headerNameKey}_sorting_icon`}
                                                   headerId={header.id}
                                                   sortDescOrder={sortDescOrder}
                                                   sortAscOrder={sortAscOrder}
@@ -402,7 +401,6 @@ function TrustList({ trustListType, uploadTrustBtnName, subTitle, downloadBtnNam
                       dataListLength={totalRecords}
                       selectedRecordsPerPage={selectedRecordsPerPage}
                       setSelectedRecordsPerPage={setSelectedRecordsPerPage}
-                      setFirstIndex={setFirstIndex}
                       isServerSideFilter={true}
                       getPaginationValues={getPaginationValues}
                       isApplyFilterClicked={isApplyFilterClicked}
@@ -421,7 +419,6 @@ function TrustList({ trustListType, uploadTrustBtnName, subTitle, downloadBtnNam
 
 TrustList.propTypes = {
   trustListType: PropTypes.string.isRequired,
-  uploadTrustBtnName: PropTypes.string.isRequired,
   subTitle: PropTypes.string.isRequired,
   downloadBtnName: PropTypes.string.isRequired,
 };
