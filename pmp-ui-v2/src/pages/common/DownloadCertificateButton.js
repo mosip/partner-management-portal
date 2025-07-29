@@ -38,7 +38,7 @@ function DownloadCertificateButton({ setShowDropDown, showDropDown, onClickFirst
                         )
                     }
                     {disableBtn && disabledBtnHoverMsg && (
-                        <div className={`absolute hidden group-hover:block group-focus:block text-center bg-gray-100 text-xs text-gray-500 font-semibold p-2 w-60 mt-1 z-10 top-11 ${isLoginLanguageRTL ? "left-5" : "right-5"} rounded-md shadow-md`}>
+                        <div id={id + 'hover_msg'} className={`absolute hidden group-hover:block group-focus:block text-center bg-gray-100 text-xs text-gray-500 font-semibold p-2 w-60 mt-1 z-10 top-11 ${isLoginLanguageRTL ? "left-5" : "right-5"} rounded-md shadow-md`}>
                             {t(disabledBtnHoverMsg)}
                         </div>
                     )}
@@ -53,7 +53,7 @@ function DownloadCertificateButton({ setShowDropDown, showDropDown, onClickFirst
                             <img src={disableOriginalCert ? disabled_download_icon : downloadIcon} alt="" className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"}`} />
                         </button>
                         {disableOriginalCert && (
-                            <div className={`absolute hidden group-hover:block group-focus:block text-center bg-gray-100 text-xs text-gray-500 font-semibold p-2 w-60 mt-1 z-10 top-11 ${isLoginLanguageRTL ? "left-5" : "right-5"} rounded-md shadow-md`}>
+                            <div id='original_certificate_hover_msg' className={`absolute hidden group-hover:block group-focus:block text-center bg-gray-100 text-xs text-gray-500 font-semibold p-2 w-60 mt-1 z-10 top-11 ${isLoginLanguageRTL ? "left-5" : "right-5"} rounded-md shadow-md`}>
                                 <Trans i18nKey="partnerCertificatesList.compatibilityMsg" components={{ italic: <i /> }} />
                             </div>
                         )}

@@ -40,12 +40,12 @@ function RuntimeError() {
                 <SomethingWentWrongIcon className="max-w-60 min-w-52 my-2" />
                 {(errorCode || errorText) && (
                     <div className="flex items-center justify-center text-base mb-3">
-                        {errorCode && <p className="font-semibold mx-1">{errorCode}</p>}
-                        {errorText && <p className="font-semibold">{errorText}</p>}
+                        {errorCode && <p id='run_time_error_code' className="font-semibold mx-1">{errorCode}</p>}
+                        {errorText && <p id='run_time_error_msg' className="font-semibold">{errorText}</p>}
                     </div>
                 )}
-                <p className="text-xl font-semibold">{message.title}</p>
-                <p className="text-base text-vulcan font-semibold">{message.description}</p>
+                <p id='run_time_error_title' className="text-xl font-semibold">{message.title}</p>
+                <p id='run_time_error_description' className="text-base text-vulcan font-semibold">{message.description}</p>
                 <div className="p-1 flex flex-wrap justify-center relative items-center my-1">
                     <button
                         id="something_went_wrong_home_btn"
@@ -56,6 +56,7 @@ function RuntimeError() {
                     </button>
                     {messageType !== 'networkError' && (
                         <button
+                            id='run_time_error_logout_btn'
                             className="w-24 min-w-fit h-9 mx-2 my-1 p-2 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold"
                             onClick={logout}
                         >

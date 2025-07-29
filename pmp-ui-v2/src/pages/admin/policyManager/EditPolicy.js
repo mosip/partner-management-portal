@@ -21,7 +21,6 @@ function EditPolicy() {
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [successMsg, setSuccessMsg] = useState("");
-    const [policyType, setPolicyType] = useState(null);
     const [title, setTitle] = useState("");
     const [subTitle, setSubTitle] = useState("");
     const [policyNamePlaceHolderKey, setPolicyNamePlaceHolderKey] = useState("");
@@ -66,7 +65,6 @@ function EditPolicy() {
                     console.err('policy Type not found');
                     navigate('/partnermanagement/policy-manager/policy-group-list')
                 }
-                setPolicyType(storedPolicyType);
                 if (storedPolicyType === 'DataShare') {
                     setTitle('editPolicy.editDataSharePolicyTitle');
                     setSubTitle('policiesList.listOfDataSharePolicies');
@@ -108,7 +106,7 @@ function EditPolicy() {
             setDataLoaded(true);
         };
         fetchData();
-    }, []);
+    }, [navigate, t]);
 
     const adjustTextareaHeight = (ref) => {
         if (ref && ref.current) {
@@ -163,6 +161,7 @@ function EditPolicy() {
                 throw new Error("Parsed data is not a valid JSON object");
             }
         } catch (error) {
+            console.log(`Exception while parsing json: ${error}`);
             setErrorMsg(t('createPolicy.jsonParseError'));
             setIsSubmitClicked(false);
             setDataLoaded(true);
@@ -293,15 +292,15 @@ function EditPolicy() {
                         {!editPolicySuccess ?
                             <div className="w-[100%] bg-snow-white mt-[1%] rounded-lg shadow-md">
                                 <div className="p-7">
-                                    <p className="text-base text-[#3D4468]">{t('requestPolicy.mandatoryFieldsMsg1')} <span className="text-crimson-red">*</span> {t('requestPolicy.mandatoryFieldsMsg2')}</p>
+                                    <p id='edit_policy_mandatory_field_msg' className="text-base text-[#3D4468]">{t('requestPolicy.mandatoryFieldsMsg1')} <span className="text-crimson-red">*</span> {t('requestPolicy.mandatoryFieldsMsg2')}</p>
                                     <form>
                                         <div className="flex flex-col w-full">
                                             <div className="flex flex-row justify-between my-4 max-[450px]:flex-col">
                                                 <div className="flex flex-col w-2/4">
-                                                    <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+                                                    <label id='edit_policy_policy_group_label' className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                                                         {t('createPolicy.policyGroup')}<span className="text-crimson-red mx-1">*</span>
                                                     </label>
-                                                    <button disabled className="flex items-center justify-between w-full min-h-11 px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-vulcan bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
+                                                    <button id='edit_policy_policy_group_context' disabled className="flex items-center justify-between w-full min-h-11 px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-vulcan bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
                                                         overflow-x-auto whitespace-normal no-scrollbar" type="button">
                                                         <span className="w-full break-words text-wrap text-start">{policyDetails.policyGroupName}</span>
                                                         <svg className={`w-3 h-2 ml-3 transform 'rotate-0' text-gray-500 text-base`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
@@ -320,12 +319,12 @@ function EditPolicy() {
                                                         id="policy_name_box"
                                                         maxLength={128}
                                                     />
-                                                    {invalidPolicyNameError && <span className="text-sm text-crimson-red font-semibold">{invalidPolicyNameError}</span>}
+                                                    {invalidPolicyNameError && <span id='edit_policy_invalid_policy_name' className="text-sm text-crimson-red font-semibold">{invalidPolicyNameError}</span>}
                                                 </div>
                                             </div>
                                             <div className="flex my-2">
                                                 <div className="flex flex-col w-full">
-                                                    <label className={`block text-dark-blue text-sm font-semibold mb-1  ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+                                                    <label id='edit_policy_description' className={`block text-dark-blue text-sm font-semibold mb-1  ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                                                         {t('createPolicy.policyDescription')}<span className="text-crimson-red px-1">*</span>
                                                     </label>
                                                     <textarea
@@ -337,7 +336,7 @@ function EditPolicy() {
                                                         placeholder={t(policyDescriptionPlaceHolderKey)}
                                                         maxLength={256}
                                                     />
-                                                    {invalidPolicyDescError && <span className="text-sm text-crimson-red font-semibold">{invalidPolicyDescError}</span>}
+                                                    {invalidPolicyDescError && <span id='edit_policy_invalid_policy_description' className="text-sm text-crimson-red font-semibold">{invalidPolicyDescError}</span>}
                                                 </div>
                                             </div>
                                             <div className="rounded-lg shadow-md border my-5">
@@ -346,14 +345,14 @@ function EditPolicy() {
                                                         <div className="flex space-x-4 items-center ">
                                                             <img src={uploadPolicyDataFileIcon} className="h-8" alt="" />
                                                             <div className="flex-col p-1 items-center">
-                                                                <h6 className={`text-sm font-semibold text-dark-blue`}>
+                                                                <h6 id='edit_policy_reupload_policy_data' className={`text-sm font-semibold text-dark-blue`}>
                                                                     {t('editPolicy.reUploadPolicyData')}<span className="text-crimson-red mx-1">*</span>
                                                                 </h6>
-                                                                <p className="text-xs text-light-gray">{t('createPolicy.uploadPolicyDataFileDesc')}</p>
+                                                                <p id='edit_policy_reupload_policy_data_description' className="text-xs text-light-gray">{t('createPolicy.uploadPolicyDataFileDesc')}</p>
                                                             </div>
                                                         </div>
                                                         <div>
-                                                            <label htmlFor="fileInput" className="bg-tory-blue flex items-center justify-center h-11 w-28 text-snow-white text-xs font-semibold rounded-md cursor-pointer">
+                                                            <label id='edit_policy_reupload_btn' htmlFor="fileInput" className="bg-tory-blue flex items-center justify-center h-11 w-28 text-snow-white text-xs font-semibold rounded-md cursor-pointer">
                                                                 <span className="px-2">{t('editPolicy.reuploadBtn')}</span>
                                                             </label>
                                                             <input

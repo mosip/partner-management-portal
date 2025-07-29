@@ -41,7 +41,7 @@ function UploadCertificate({ closePopup, popupData, request }) {
     useEffect(() => {
         const removeListener = handleEscapeKey(() => closePopup(true, 'cancel'));
         return removeListener;
-    }, []);
+    }, [closePopup]);
 
     const clickOnCancel = () => {
         closePopup(true, 'cancel');

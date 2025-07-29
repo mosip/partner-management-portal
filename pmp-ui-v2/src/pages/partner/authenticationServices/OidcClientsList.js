@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useMemo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../../../services/UserProfileService';
@@ -105,9 +105,9 @@ function OidcClientsList() {
         };
 
         checkCompatibleAndFetch();
-    }, []);
+    }, [t]);
 
-    const tableHeaders = [
+    const tableHeaders = useMemo(() => [
         { id: "partnerId", headerNameKey: 'oidcClientsList.partnerId' },
         { id: "policyGroupName", headerNameKey: "oidcClientsList.policyGroup" },
         { id: "policyName", headerNameKey: "oidcClientsList.policyName" },
@@ -116,7 +116,7 @@ function OidcClientsList() {
         { id: "status", headerNameKey: "oidcClientsList.status" },
         { id: "oidcClientId", headerNameKey: "oidcClientsList.oidcClientId" },
         { id: "action", headerNameKey: 'oidcClientsList.action' }
-    ];
+    ], []);
 
     const cancelErrorMsg = () => {
         setErrorMsg("");
@@ -212,7 +212,7 @@ function OidcClientsList() {
         });
         setFilteredOidcClientsList(filteredRows);
         setFirstIndex(0);
-    }, [filterQuery, oidcClientsList]);
+    }, [filterQuery, oidcClientsList, tableHeaders]);
 
     const onResetFilter = () => {
         window.location.reload();

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { createDropdownData, getFilterDropdownStyle, getFilterTextFieldStyle, getOuterDivWidth, getPartnerManagerUrl, handleServiceErrors, isLangRTL, validateInputRegex } from "../../../utils/AppUtils";
 import { getUserProfile } from "../../../services/UserProfileService";
 import PropTypes from 'prop-types';
@@ -20,15 +20,7 @@ function ApiKeyNotificationFilter({ onApplyFilter, setErrorCode, setErrorMsg }) 
     });
     const [invalidApiKeyName, setInvalidApiKeyName] = useState("");
 
-    useEffect(() => {
-        const fetchData = async () => {
-            const policyNameData = await fetchPolicyNameDropdownData();
-            setPolicyNameDropdownData(createDropdownData("policyName", "", true, policyNameData, t, t("policies.selectPolicyName")));
-        };
-        fetchData();
-    }, [t]);
-
-    const fetchPolicyNameDropdownData = async () => {
+    const fetchPolicyNameDropdownData = useCallback(async () => {
         const queryParams = new URLSearchParams();
         queryParams.append('status', 'approved');
         const url = `${getPartnerManagerUrl('/partner-policy-requests', process.env.NODE_ENV)}?${queryParams.toString()}`;
@@ -50,7 +42,15 @@ function ApiKeyNotificationFilter({ onApplyFilter, setErrorCode, setErrorMsg }) 
             console.log("Error fetching data: ", err);
             return [];
         }
-    }
+    }, [setErrorCode, setErrorMsg, t]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const policyNameData = await fetchPolicyNameDropdownData();
+            setPolicyNameDropdownData(createDropdownData("policyName", "", true, policyNameData, t, t("policies.selectPolicyName")));
+        };
+        fetchData();
+    }, [fetchPolicyNameDropdownData, t]);
 
     const onFilterChangeEvent = (fieldName, selectedFilter) => {
         setFilters((prevFilters) => ({
@@ -124,6 +124,8 @@ function ApiKeyNotificationFilter({ onApplyFilter, setErrorCode, setErrorMsg }) 
 
 ApiKeyNotificationFilter.propTypes = {
     onApplyFilter: PropTypes.func.isRequired,
+    setErrorCode: PropTypes.func.isRequired,
+    setErrorMsg: PropTypes.func.isRequired,
 };
 
 export default ApiKeyNotificationFilter;

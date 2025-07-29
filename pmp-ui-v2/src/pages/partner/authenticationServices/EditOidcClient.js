@@ -154,7 +154,7 @@ function EditOidcClient() {
              }
          };
          fetchData();
-     }, []);
+     }, [createGrantTypesDropdownData, t]);
 
     const cancelErrorMsg = () => {
         setErrorMsg("");

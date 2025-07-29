@@ -14,14 +14,6 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
   const [status, setStatus] = useState([]);
   const [certUploadStatus, setCertUploadStatus] = useState([]);
   const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
-  const [certUploadStatusDropdownData, setCertUploadStatusDropdownData] = useState([
-    { certificateUploadStatus: 'uploaded' },
-    { certificateUploadStatus: 'not_uploaded' }
-  ]);
-  const [statusDropdownData, setStatusDropdownData] = useState([
-    { status: 'active' },
-    { status: 'deactivated' }
-  ]);
   const [filters, setFilters] = useState({
     partnerId: "",
     partnerType: "",
@@ -36,59 +28,64 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
   const [invalidPolicyGroup, setInvalidPolicyGroup] = useState("");
   const [invalidEmail, setInvalidEmail] = useState("");
 
+
   useEffect(() => {
+    const fetchPartnerTypeData = async () => {
+      const request = createRequest({
+        "filters": [],
+        "pagination": { "pageFetch": 100, "pageStart": 0 },
+        "sort": []
+      });
+
+      try {
+        const response = await HttpService.post(
+          getPartnerManagerUrl(`/partners/partnertype/search`, process.env.NODE_ENV),
+          request
+        );
+
+        if (response && response.data) {
+          const responseData = response.data;
+          if (responseData.response && responseData.response.data) {
+            const partnerTypeData = responseData.response.data.map(item => ({
+              partnerType: item.code
+            }));
+            return partnerTypeData;
+          } else {
+            handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+            return [];
+          }
+        } else {
+          setErrorMsg(t('partnerList.errorInPartnersList'));
+          return [];
+        }
+      } catch (err) {
+        console.error("Error fetching partner type data: ", err);
+        if (err.response?.status && err.response.status !== 401) {
+          setErrorMsg(err.message || t('partnerList.errorInPartnersList'));
+        }
+        return [];
+      }
+    };
+
     const fetchData = async () => {
       const partnerTypeDropdownData = await fetchPartnerTypeData();
       setPartnerType(
         createDropdownData("partnerType", "", true, partnerTypeDropdownData, t, t("partnerList.selectPartnerType"))
       );
+
+      const statusDropdownData = [{ status: 'active' },{ status: 'deactivated' }];
       setStatus(
         createDropdownData("status", "", true, statusDropdownData, t, t("partnerList.selectStatus"))
       );
+
+      const certUploadStatusDropdownData = [{ certificateUploadStatus: 'uploaded' },{ certificateUploadStatus: 'not_uploaded' }];
       setCertUploadStatus(
         createDropdownData("certificateUploadStatus", "", true, certUploadStatusDropdownData, t, t("partnerList.selectCertUploadStatus"))
       );
     };
 
     fetchData();
-  }, [t]);
-
-  async function fetchPartnerTypeData() {
-    const request = createRequest({
-      "filters": [],
-      "pagination": { "pageFetch": 100, "pageStart": 0 },
-      "sort": []
-    });
-
-    try {
-      const response = await HttpService.post(
-        getPartnerManagerUrl(`/partners/partnertype/search`, process.env.NODE_ENV),
-        request
-      );
-
-      if (response && response.data) {
-        const responseData = response.data;
-        if (responseData.response && responseData.response.data) {
-          const partnerTypeData = responseData.response.data.map(item => ({
-            partnerType: item.code
-          }));
-          return partnerTypeData;
-        } else {
-          handleServiceErrors(responseData, setErrorCode, setErrorMsg);
-          return [];
-        }
-      } else {
-        setErrorMsg(t('partnerList.errorInPartnersList'));
-        return [];
-      }
-    } catch (err) {
-      console.error("Error fetching partner type data: ", err);
-      if (err.response?.status && err.response.status !== 401) {
-        setErrorMsg(err.message || t('partnerList.errorInPartnersList'));
-      }
-      return [];
-    }
-  }
+  }, [t, setErrorCode, setErrorMsg]);
 
 
   const onFilterChangeEvent = (fieldName, selectedFilter) => {

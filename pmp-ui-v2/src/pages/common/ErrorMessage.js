@@ -36,6 +36,7 @@ function ErrorMessage({ id, errorCode, errorMessage, clickOnCancel, customStyle}
 }
 
 ErrorMessage.propTypes = {
+    id: PropTypes.string.isRequired,
     errorCode: PropTypes.string,
     errorMessage: PropTypes.string.isRequired,
     clickOnCancel: PropTypes.func.isRequired,

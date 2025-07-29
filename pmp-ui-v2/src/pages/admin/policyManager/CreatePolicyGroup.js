@@ -158,30 +158,30 @@ function CreatePolicyGroup() {
                         {!createPolicySuccess ?
                             <div className="w-[100%] bg-snow-white mt-[1.5%] rounded-lg shadow-md">
                                 <div className="px-[2.5%] py-[2%]">
-                                    <p className="text-base text-[#3D4468]">{t('requestPolicy.mandatoryFieldsMsg1')} <span className="text-crimson-red">*</span> {t('requestPolicy.mandatoryFieldsMsg2')}</p>
+                                    <p id='create_policy_group_mandatory_field_msg' className="text-base text-[#3D4468]">{t('requestPolicy.mandatoryFieldsMsg1')} <span className="text-crimson-red">*</span> {t('requestPolicy.mandatoryFieldsMsg2')}</p>
                                     <form onSubmit={handleFormSubmit}>
                                         <div className="flex flex-col">
                                             <div className="space-y-6">
                                                 <div className="my-4">
                                                     <div className="flex flex-col w-[48%] max-[450px]:w-full">
-                                                        <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('createPolicyGroup.policyGroupName')}<span className="text-crimson-red mx-1">*</span></label>
+                                                        <label id='create_policy_group_name_label' className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('createPolicyGroup.policyGroupName')}<span className="text-crimson-red mx-1">*</span></label>
                                                         <input value={policyGroupName} onChange={(e) => onChangePolicyGroupName(e.target.value)} maxLength={128}
                                                             className="h-12 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                                                             placeholder={t('createPolicyGroup.enterNameforPolicyGroup')} id="policy_group_name"
                                                         />
-                                                        {invalidPolicyGroupName && <span className="text-sm text-crimson-red font-semibold">{invalidPolicyGroupName}</span>}
+                                                        {invalidPolicyGroupName && <span id='create_policy_group_invalid_name' className="text-sm text-crimson-red font-semibold">{invalidPolicyGroupName}</span>}
                                                     </div>
                                                 </div>
                                             </div>
                                             <div className="space-y-6">
                                                 <div className="my-4">
                                                     <div className="flex flex-col w-full max-[450px]:w-full">
-                                                        <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('createPolicyGroup.policyGroupDescription')}<span className="text-crimson-red mx-1">*</span></label>
+                                                        <label id='create_policy_group_description' className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('createPolicyGroup.policyGroupDescription')}<span className="text-crimson-red mx-1">*</span></label>
                                                         <textarea value={policyGroupDesc} onChange={(e) => onChangePolicyGroupDesc(e.target.value)} maxLength={256}
                                                             className="h-14 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                                                             placeholder={t('createPolicyGroup.enterPolicyGroupDescription')} id="policy_group_description"
                                                         />
-                                                        {invalidPolicyGroupDesc && <span className="text-sm text-crimson-red font-semibold">{invalidPolicyGroupDesc}</span>}
+                                                        {invalidPolicyGroupDesc && <span id='create_policy_group_invalid_description' className="text-sm text-crimson-red font-semibold">{invalidPolicyGroupDesc}</span>}
                                                     </div>
                                                 </div>
                                             </div>
