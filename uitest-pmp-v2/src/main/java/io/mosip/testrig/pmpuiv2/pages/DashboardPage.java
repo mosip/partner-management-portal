@@ -90,8 +90,8 @@ public class DashboardPage extends BasePage {
 	@FindBy(xpath = "//h5[text()='Partner - Policy Linking']")
 	private WebElement PartnerPolicyMappingTab;
 
-	@FindBy(id = "dashboard_sbi_device_card_header")
-	private WebElement sbiDevicesButton;
+	@FindBy(xpath = "//h5[text()='SBI - Device']")
+	private WebElement sbiDeviceHeader;
 
 	@FindBy(id = "dashboard_partner_certificate_list_header")
 	private WebElement dashboardPartnerCertificateListHeader;
@@ -311,7 +311,7 @@ public class DashboardPage extends BasePage {
 	}
 
 	public void clickOnSbiDevices() {
-		clickOnElement(sbiDevicesButton);
+		clickOnElement(sbiDeviceHeader);
 	}
 
 	public void clickOnCertificateTrustStore() {

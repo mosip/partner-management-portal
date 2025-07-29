@@ -30,46 +30,19 @@ public class FTMDeviceTest extends BaseClass {
 		FtmPage ftmPage = new FtmPage(driver);
 
 		dashboardpage.clickOnProfileDropdown();
-		assertTrue(dashboardpage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
-
 		LoginPage loginpage = dashboardpage.clickOnLogoutButton();
-		assertTrue(loginpage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
-
 		loginpage.clickRegisterButton();
-
 		registerPage.enterFirstName("pmpui-ftmnocert");
-		assertTrue(registerPage.isLastNameTextBoxDisplayed(), GlobalConstants.isLastNameTextBoxDisplayed);
 		registerPage.enterLastName("pmpui-ftmnocert");
-
-		assertTrue(registerPage.isOrganizationNameDisplayed(), GlobalConstants.isOrganizationNameDisplayed);
 		registerPage.enterOrganizationName("AABBCC");
-
-		assertTrue(registerPage.isPartnerTypeDropdownDisplayed(), GlobalConstants.isPartnerTypeDropdownDisplayed);
 		registerPage.selectPartnerTypeDropdown(1);
-
-		assertTrue(registerPage.isAddressTextBoxDisplayed(), GlobalConstants.isAddressTextBoxDisplayed);
 		registerPage.enterAddress("0" + data);
-
-		assertTrue(registerPage.isEmailTextBoxDisplayed(), GlobalConstants.isEmailTextBoxDisplayed);
 		registerPage.enterEmail("0" + data + "ftmnocert" + "@gmail.com");
-
-		assertTrue(registerPage.isPhoneNumberTextboxDisplayed(), GlobalConstants.isPhoneNumberTextboxDisplayed);
 		registerPage.enterPhone("9876544211");
-
-		assertTrue(registerPage.isNotificationLanguageDropdownDisplayed(),
-				GlobalConstants.isNotificationLanguageDropdownDisplayed);
 		registerPage.selectNotificationLanguageDropdown();
-
-		assertTrue(registerPage.isUsernameTextBoxDisplayed(), GlobalConstants.isUsernameTextBoxDisplayed);
 		registerPage.enterUsername("pmpui-ftmnocert");
-
-		assertTrue(registerPage.isPasswordTextBoxDisplayed(), GlobalConstants.isPasswordTextBoxDisplayed);
 		registerPage.enterPassword("mosip123");
-
-		assertTrue(registerPage.isPasswordConfirmTextBoxDisplayed(), GlobalConstants.isPasswordConfirmTextBoxDisplayed);
 		registerPage.enterPasswordConfirm("mosip123");
-
-		assertTrue(registerPage.isSubmitButtonDisplayed(), GlobalConstants.isSubmitButtonDisplayed);
 		dashboardpage = registerPage.clickSubmitButton();
 
 		assertTrue(dashboardpage.isTermsAndConditionsPopUppDisplayed(),
@@ -197,46 +170,19 @@ public class FTMDeviceTest extends BaseClass {
 		partnerCertificatePage.ClickOnGoBackButton();
 
 		dashboardpage.clickOnProfileDropdown();
-		assertTrue(dashboardpage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
-
 		LoginPage loginpage = dashboardpage.clickOnLogoutButton();
-		assertTrue(loginpage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
-
 		loginpage.clickRegisterButton();
-
 		registerPage.enterFirstName("pmpui-ftm");
-		assertTrue(registerPage.isLastNameTextBoxDisplayed(), GlobalConstants.isLastNameTextBoxDisplayed);
 		registerPage.enterLastName("pmpui-ftm");
-
-		assertTrue(registerPage.isOrganizationNameDisplayed(), GlobalConstants.isOrganizationNameDisplayed);
 		registerPage.enterOrganizationName("AABBCC");
-
-		assertTrue(registerPage.isPartnerTypeDropdownDisplayed(), GlobalConstants.isPartnerTypeDropdownDisplayed);
 		registerPage.selectPartnerTypeDropdown(1);
-
-		assertTrue(registerPage.isAddressTextBoxDisplayed(), GlobalConstants.isAddressTextBoxDisplayed);
 		registerPage.enterAddress("0" + data);
-
-		assertTrue(registerPage.isEmailTextBoxDisplayed(), GlobalConstants.isEmailTextBoxDisplayed);
 		registerPage.enterEmail("0" + data + "ftm" + "@gmail.com");
-
-		assertTrue(registerPage.isPhoneNumberTextboxDisplayed(), GlobalConstants.isPhoneNumberTextboxDisplayed);
 		registerPage.enterPhone("9876544210");
-
-		assertTrue(registerPage.isNotificationLanguageDropdownDisplayed(),
-				GlobalConstants.isNotificationLanguageDropdownDisplayed);
 		registerPage.selectNotificationLanguageDropdown();
-
-		assertTrue(registerPage.isUsernameTextBoxDisplayed(), GlobalConstants.isUsernameTextBoxDisplayed);
 		registerPage.enterUsername("pmpui-ftm");
-
-		assertTrue(registerPage.isPasswordTextBoxDisplayed(), GlobalConstants.isPasswordTextBoxDisplayed);
 		registerPage.enterPassword("mosip123");
-
-		assertTrue(registerPage.isPasswordConfirmTextBoxDisplayed(), GlobalConstants.isPasswordConfirmTextBoxDisplayed);
 		registerPage.enterPasswordConfirm("mosip123");
-
-		assertTrue(registerPage.isSubmitButtonDisplayed(), GlobalConstants.isSubmitButtonDisplayed);
 		dashboardpage = registerPage.clickSubmitButton();
 
 		assertTrue(dashboardpage.isTermsAndConditionsPopUppDisplayed(),

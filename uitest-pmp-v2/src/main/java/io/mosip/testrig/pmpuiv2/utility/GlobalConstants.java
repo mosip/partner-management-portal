@@ -196,6 +196,9 @@ public class GlobalConstants {
 	public static final String DEVICE_PROVIDER = "Device Provider";
 	public static final String DEVICE_PARTNER_ID = "pmpui-device";
 	public static final String Organisation_Name = "AABBCC";
+	public static final String PARTNER_ADMIN = "pmpui-admin";
+	public static final String PARTNER_PASSWORD = "mosip123";
+	public static final String AUTH_PARTNER_ID = "pmpui-auth";
 	public static final String DEVICE_PROVIDER_TITLE = "Device Provider Services";
 	public static final String RELOAD_MESSAGE = "Changes you made may not be saved.";
 	public static final String INITIAL_SBI_VERSION = "Enter version of SBI";

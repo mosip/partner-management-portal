@@ -224,11 +224,8 @@ public class ListOfDevicesPage extends BasePage {
 	@FindBy(id = "device_list_filter_model_search_input")
 	private WebElement deviceModelFilterSearchBar;
 
-	@FindBy(id = "device_list_filter_make_no_data_available")
-	private WebElement noDataAvailableForInvalidMake;
-
-	@FindBy(id = "device_list_filter_model_no_data_available")
-	private WebElement noDataAvailableForInvalidModel;
+	@FindBy(xpath = "//p[text()='No Data Available.']")
+	private WebElement noDataAvailableMessage;
 
 	@FindBy(xpath = "//span[text()='Select Device ID']")
 	private WebElement deviceIdPlaceHolder;
@@ -706,11 +703,11 @@ public class ListOfDevicesPage extends BasePage {
 	}
 
 	public boolean isMakeDropdownNoDataAvailableDisplayed() {
-		return isElementDisplayed(noDataAvailableForInvalidMake);
+		return isElementDisplayed(noDataAvailableMessage);
 	}
 
 	public boolean isModelDropdownNoDataAvailableDisplayed() {
-		return isElementDisplayed(noDataAvailableForInvalidModel);
+		return isElementDisplayed(noDataAvailableMessage);
 	}
 
 	public boolean isDeviceIdPlaceHolderDisplayed() {

@@ -40,7 +40,7 @@ public class BaseClass {
 	protected String[] allpassword = ConfigManager.getIAMUsersPassword().split(",");
 	protected String password = allpassword[0];
 	public static final Logger logger = Logger.getLogger(BaseClass.class);
-	public static String data = BasePage.appendDate.substring(0, BasePage.getSplitdigit());
+	public static String data = BasePage.appendDate.substring(0, BasePage.getSplitdigit());;
 
 	@BeforeMethod
 	public void setUp(Method method) throws Exception {
