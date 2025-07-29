@@ -32,7 +32,7 @@ function TextInputComponent({ fieldName, fieldNameKey, placeHolderKey, textBoxVa
 
     return (
         <div className={`mb-2 min-w-fit ${styleSet?.outerDiv || ''}`}>
-            <label className={`flex items-center text-dark-blue text-sm mb-1 ${styleSet?.inputLabel || ''}`}>
+            <label id={id + '_label'} className={`flex items-center text-dark-blue text-sm mb-1 ${styleSet?.inputLabel || ''}`}>
                 <p className={`font-semibold`}>{t(fieldNameKey)}{containsAsterisk && <span className={`text-crimson-red mx-1`}>*</span>}</p>
                 {addInfoIcon && (
                     <Information infoKey={infoKey} id={id + '_info'}/>
@@ -48,10 +48,11 @@ function TextInputComponent({ fieldName, fieldNameKey, placeHolderKey, textBoxVa
                     size={t(placeHolderKey).length}
                     {...(maxLength && { maxLength })}
                     readOnly={disableField}
-                    className={`${disableField ? 'bg-platinum-gray': 'bg-white'} ${isLoginLanguageRTL ? 'pl-7': 'pr-7'} rounded-[4px] h-9 p-2 focus:outline-none items-center ${styleSet?.inputField || ''}`}
+                    className={`${disableField ? 'bg-platinum-gray': 'bg-white'} ${isLoginLanguageRTL ? 'pl-7': 'pr-7'} w-full rounded-[4px] h-9 p-2 focus:outline-none items-center ${styleSet?.inputField || ''}`}
                 />
                 {inputValue && !disableField && (
                     <button
+                    id={id + '_cancel_btn'}
                     onClick={onTextClear}
                     className={`flex items-center bg-white font-bold rounded-md px-2 min-h-9 ${isLoginLanguageRTL ? '-mr-6' : '-ml-6'} focus:ring-2 focus:ring-blue-500 items-center hover:cursor-pointer`}
                     tabIndex="0"
@@ -61,7 +62,7 @@ function TextInputComponent({ fieldName, fieldNameKey, placeHolderKey, textBoxVa
                 </button>
                 )}
             </div>
-            {inputError && <span className="text-sm text-crimson-red font-semibold">{inputError}</span>}
+            {inputError && <span id={id + '_input_error'} className="text-sm text-crimson-red font-semibold">{inputError}</span>}
         </div>
     );
 }

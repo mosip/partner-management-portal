@@ -62,7 +62,7 @@ function ViewOidcClientDetails() {
             }
         };
         fetchData();
-    }, []);
+    }, [t]);
 
     useEffect(() => {
         handleMouseClickForDropdown(copyToolTipRef, () => setCopied(false));

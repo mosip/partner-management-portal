@@ -53,19 +53,19 @@ function ViewPolicyRequestDetails() {
                 <div className="bg-snow-white h-fit mt-1 rounded-md shadow-lg font-inter">
                     <div className="flex justify-between items-center px-7 pt-3 border-b max-[450px]:flex-col">
                         <div className="flex-col py-3">
-                            <p className="text-lg text-dark-blue mb-2">
+                            <p id='view_partner_policy_sub_title_id' className="text-lg text-dark-blue mb-2">
                                 {t('partnerList.partnerId')}: <span className="font-semibold">{policyRequestDetails.partnerId}</span>
                             </p>
                             <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
-                                <div className={`${bgOfStatus(policyRequestDetails.status)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
+                                <div id='view_partner_policy_request_status' className={`${bgOfStatus(policyRequestDetails.status)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
                                     {getStatusCode(policyRequestDetails.status, t)}
                                 </div>
-                                <div className={`font-semibold ${isLoginLanguageRTL ? "mr-[1.4rem]" : "ml-[0.75rem]"} text-sm text-dark-blue`}>
+                                <div id='view_partner_policy_request_created_on' className={`font-semibold ${isLoginLanguageRTL ? "mr-[1.4rem]" : "ml-[0.75rem]"} text-sm text-dark-blue`}>
                                     {t("viewOidcClientDetails.createdOn") + ' ' +
                                         formatDate(policyRequestDetails.createdDateTime, "date")}
                                 </div>
                                 <div className="mx-2 text-gray-300">|</div>
-                                <div className="font-semibold text-sm text-dark-blue">
+                                <div id='view_partner_policy_request_created_date_time' className="font-semibold text-sm text-dark-blue">
                                     {formatDate(policyRequestDetails.createdDateTime, "time")}
                                 </div>
                             </div>
@@ -95,18 +95,18 @@ function ViewPolicyRequestDetails() {
                     <div className={`${isLoginLanguageRTL ? "pr-8 ml-8" : "pl-8 mr-8"} pt-3 mb-2`}>
                         <div className="flex flex-wrap py-1 max-[450px]:flex-col">
                             <div className={`mb-3 max-[600px]:w-[100%] w-[50%] ${isLoginLanguageRTL ? "pl-[1%]" : "pr-[1%]"}`}>
-                                <p className="font-[600] text-suva-gray text-sm">
+                                <p id='view_partner_policy_request_partner_type_label' className="font-[600] text-suva-gray text-sm">
                                     {t("viewPolicyRequest.partnerType")}
                                 </p>
-                                <p className="font-[600] text-vulcan text-base">
+                                <p id='view_partner_policy_request_partner_type_context' className="font-[600] text-vulcan text-base">
                                     {policyRequestDetails.partnerType}
                                 </p>
                             </div>
                             <div className="w-[50%] max-[600px]:w-[100%] mb-3 px-2">
-                                <p className="font-[600] text-suva-gray text-sm">
+                                <p id='view_partner_policy_request_organisation_label' className="font-[600] text-suva-gray text-sm">
                                     {t("viewPolicyRequest.organisation")}
                                 </p>
-                                <p className="font-[600] text-vulcan text-base">
+                                <p id='view_partner_policy_request_organisation_context' className="font-[600] text-vulcan text-base">
                                     {policyRequestDetails.orgName}
                                 </p>
                             </div>
@@ -114,36 +114,36 @@ function ViewPolicyRequestDetails() {
                         <div className={`flex flex-wrap pt-3`}>
                             <div className={`w-[50%] max-[600px]:w-[100%] mb-3 ${isLoginLanguageRTL ? "pl-[1%]" : "pr-[1%]"}`}>
 
-                                <p className="font-[600] text-suva-gray text-sm">
+                                <p id='view_partner_policy_request_policy_id_label' className="font-[600] text-suva-gray text-sm">
                                     {t("viewPolicyRequest.policyId")}
                                 </p>
-                                <p className="font-[600] text-vulcan text-base">
+                                <p id='view_partner_policy_request_policy_id_context' className="font-[600] text-vulcan text-base">
                                     {policyRequestDetails.policyId}
                                 </p>
                             </div>
                             <div className={`w-[50%] max-[600px]:w-[100%] mb-3 px-2`}>
-                                <p className="font-[600] text-suva-gray text-sm">
+                                <p id='view_partner_policy_request_policy_name_label' className="font-[600] text-suva-gray text-sm">
                                     {t("viewPolicyRequest.policyName")}
                                 </p>
-                                <p className="font-[600] text-vulcan text-base">
+                                <p id='view_partner_policy_request_policy_name_context' className="font-[600] text-vulcan text-base">
                                     {policyRequestDetails.policyName}
                                 </p>
                             </div>
                         </div>
                         <div className="flex flex-wrap py-1 max-[450px]:flex-col">
                             <div className={`mb-3 w-[50%] max-[600px]:w-[100%]`}>
-                                <p className="font-[600] text-suva-gray text-sm">
+                                <p id='view_partner_policy_request_policy_group_label' className="font-[600] text-suva-gray text-sm">
                                     {t("viewPolicyRequest.policyGroup")}
                                 </p>
-                                <p className="font-[600] text-vulcan text-base">
+                                <p id='view_partner_policy_request_policy_group_context' className="font-[600] text-vulcan text-base">
                                     {policyRequestDetails.policyGroupName}
                                 </p>
                             </div>
                             <div className={`w-[50%] max-[600px]:w-[100%] mb-3 px-2`}>
-                                <p className="font-[600] text-suva-gray text-sm">
+                                <p id='view_partner_policy_request_partner_status_label' className="font-[600] text-suva-gray text-sm">
                                     {t("viewPolicyRequest.partnerStatus")}
                                 </p>
-                                <p className={`flex w-fit py-1 px-3 text-sm rounded-md my-1 font-semibold ${bgOfStatus(policyRequestDetails.partnerStatus)} text-base`}>
+                                <p id='view_partner_policy_request_partner_status_context' className={`flex w-fit py-1 px-3 text-sm rounded-md my-1 font-semibold ${bgOfStatus(policyRequestDetails.partnerStatus)} text-base`}>
                                     <img src={dotImg} alt="" /> 
                                     <span className={`${isLoginLanguageRTL ? 'pr-2' : 'pl-2'}`}>{getStatusCode(policyRequestDetails.partnerStatus, t)}</span>
                                 </p>
@@ -151,7 +151,7 @@ function ViewPolicyRequestDetails() {
                         </div>
                         <hr className="h-px mt-3 w-full bg-gray-200 border-0" />
                         <div className="py-3">
-                            <p className="font-semibold text-vulcan text-base mb-3">
+                            <p id='view_partner_policy_request_comments_label' className="font-semibold text-vulcan text-base mb-3">
                                 {t("viewPolicyDetails.comments")}
                             </p>
                             <div>
@@ -162,21 +162,21 @@ function ViewPolicyRequestDetails() {
                                     </span>
                                     <div className="flex bg-floral-white w-full flex-col p-4 relative rounded-md overflow-hidden">
                                         <div className={`w-0 h-0 border-t-[0.5rem] border-t-transparent border-b-[0.5rem] border-b-transparent absolute top-4 ${isLoginLanguageRTL ? "-right-[0.38rem] border-l-[7px] border-l-[#FFF9F0]" : "-left-[0.38rem] border-r-[7px] border-r-[#FFF9F0]"}`}></div>
-                                        <h4 className="text-sm text-[#031640]">
+                                        <h4 id='view_partner_policy_request_admin_comments_label' className="text-sm text-[#031640]">
                                             {t("viewPolicyDetails.adminComments")}
                                         </h4>
                                         <div className="flex items-center justify-start mt-4">
-                                            <div className={`${bgOfStatus(policyRequestDetails.status)} flex w-fit py-1.5 px-3 text-sm rounded-md`}>
+                                            <div id='partner_policy_request_status' className={`${bgOfStatus(policyRequestDetails.status)} flex w-fit py-1.5 px-3 text-sm rounded-md`}>
                                                 {getStatusCode(policyRequestDetails.status, t)}
                                             </div>
                                             <div>
                                                 {policyRequestDetails.updatedDateTime && (
                                                     <div className="flex">
-                                                        <div className={`font-semibold ${isLoginLanguageRTL ? "mr-3" : "ml-3"} text-sm text-dark-blue`}>
+                                                        <div id='partner_policy_request_updated_date' className={`font-semibold ${isLoginLanguageRTL ? "mr-3" : "ml-3"} text-sm text-dark-blue`}>
                                                             {formatDate(policyRequestDetails.updatedDateTime, "date")}
                                                         </div>
                                                         <div className="mx-3 text-gray-300">|</div>
-                                                        <div className="font-semibold text-sm text-dark-blue">
+                                                        <div id='partner_policy_request_updated_time' className="font-semibold text-sm text-dark-blue">
                                                             {formatDate(policyRequestDetails.updatedDateTime, "time")}
                                                         </div>
                                                     </div>
@@ -192,20 +192,20 @@ function ViewPolicyRequestDetails() {
                                         </span>
                                         <div className="flex bg-alice-green w-full flex-col p-4 relative rounded-md overflow-hidden">
                                             <div className={`w-0 h-0 border-t-[0.5rem] border-t-transparent border-b-[0.5rem] border-b-transparent absolute top-4 ${isLoginLanguageRTL ? "-right-[0.38rem] border-l-[#F2F5FC] border-l-[7px]" : "-left-[0.38rem] border-r-[#F2F5FC] border-r-[7px]"}`}></div>
-                                            <h4 className="text-sm text-[#031640]">
+                                            <h4 id='partner_policy_request_partner_comment_label' className="text-sm text-[#031640]">
                                                 {t("viewPolicyDetails.partnerComment")}
                                             </h4>
-                                            <span className="text-sm mt-3 break-words">
+                                            <span id='partner_policy_request_partner_comment' className="text-sm mt-3 break-words">
                                                 {policyRequestDetails.partnerComment}
                                             </span>
                                             <hr className="h-px w-full bg-gray-200 border-0 my-4" />
                                             <div className="flex items-center justify-start">
-                                                <div className="font-semibold text-sm text-dark-blue">
+                                                <div id='partner_policy_request_created_on' className="font-semibold text-sm text-dark-blue">
                                                     {t("viewPolicyDetails.createdOn") + ' ' +
                                                         formatDate(policyRequestDetails.createdDateTime, "date")}
                                                 </div>
                                                 <div className="mx-3 text-gray-300">|</div>
-                                                <div className="font-semibold text-sm text-dark-blue">
+                                                <div id='partner_policy_request_created_date_time' className="font-semibold text-sm text-dark-blue">
                                                     {formatDate(policyRequestDetails.createdDateTime, "time")}
                                                 </div>
                                             </div>
@@ -217,7 +217,7 @@ function ViewPolicyRequestDetails() {
                     </div>
                     <hr className="h-px w-full bg-gray-200 border-0" />
                     <div className={`flex justify-end py-8 ${isLoginLanguageRTL ? "ml-8" : "mr-8"}`}>
-                        <button id="view_api_key_back_btn" onClick={moveToPolicyRequestsList}
+                        <button id="view_partner_policy_request_back_btn" onClick={moveToPolicyRequestsList}
                             className="h-10 w-28 text-sm p-3 py-2 text-tory-blue bg-white border border-blue-800 font-semibold rounded-md text-center" onKeyDown={(e) => onPressEnterKey(e, moveToPolicyRequestsList)}>
                             {t("commons.back")}
                         </button>

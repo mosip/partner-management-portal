@@ -68,9 +68,9 @@ function ViewTrustDetails() {
                         <div className="flex items-center justify-center p-24">
                             <div className="flex flex-col justify-center items-center">
                                 <img className="max-w-60 min-w-52 my-2" src={somethingWentWrongIcon} alt="" />
-                                <p className="text-base font-semibold text-[#6F6E6E] pt-4">{t('commons.unexpectedError')}</p>
-                                <p className="text-sm font-semibold text-[#6F6E6E] pt-1 pb-4">{getErrorMessage(errorCode, t, errorMsg)}</p>
-                                <button onClick={moveBackToList} type="button"
+                                <p id='view_trust_details_unexpected_error' className="text-base font-semibold text-[#6F6E6E] pt-4">{t('commons.unexpectedError')}</p>
+                                <p id='view_trust_details_unexpected_error_msg' className="text-sm font-semibold text-[#6F6E6E] pt-1 pb-4">{getErrorMessage(errorCode, t, errorMsg)}</p>
+                                <button onClick={moveBackToList} type="button" id='view_trust_details_go_back_btn'
                                     className={`w-32 h-10 flex items-center justify-center font-semibold rounded-md text-sm mx-8 py-3 bg-tory-blue text-white`}>
                                     {t('commons.goBack')}
                                 </button>
@@ -82,17 +82,17 @@ function ViewTrustDetails() {
                     <div className="bg-snow-white h-fit mt-1 rounded-t-xl shadow-lg font-inter">
                         <div className="flex justify-between px-7 pt-3 border-b max-[450px]:flex-col">
                             <div className="flex-col">
-                                <p className="text-lg text-dark-blue mb-2 break-all">
+                                <p id='view_trust_details_certificate_id' className="text-lg text-dark-blue mb-2 break-all">
                                     {t('trustList.certificateId')}: <span className="font-semibold">{viewCertDetails.certId}</span>
                                 </p>
                                 <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
-                                    <div className={`font-semibold text-sm text-dark-blue`}>
+                                    <div id='view_trust_details_certificate_uploaded_on' className={`font-semibold text-sm text-dark-blue`}>
                                         {t("viewCertificateDetails.uploadedOn") + ' ' +
                                             formatDate(viewCertDetails.uploadTime, "date")
                                         }
                                     </div>
                                     <div className="mx-2 text-gray-300">|</div>
-                                    <div className="font-semibold text-sm text-dark-blue">
+                                    <div id='view_trust_details_certificate_uploaded_date_time' className="font-semibold text-sm text-dark-blue">
                                         {formatDate(viewCertDetails.uploadTime, "time")}
                                     </div>
                                 </div>
@@ -101,28 +101,28 @@ function ViewTrustDetails() {
                         <div className={`${isLoginLanguageRTL ? "pr-8 ml-8" : "pl-8 mr-8"} pt-3 mb-2`}>
                             <div className="flex flex-wrap py-2 max-[450px]:flex-col">
                                 <div className={`w-[48%] max-[600px]:w-[100%] mb-1 ${isLoginLanguageRTL ? "ml-[1%]" : "mr-[1%]"}`}>
-                                    <p className="font-[600] text-suva-gray text-sm">
+                                    <p id='view_trust_details_issued_to_label' className="font-[600] text-suva-gray text-sm">
                                         {t("trustList.issuedTo")}
                                     </p>
-                                    <p className="font-[600] text-vulcan text-base break-all">
+                                    <p id='view_trust_details_issued_to_context' className="font-[600] text-vulcan text-base break-all">
                                         {viewCertDetails.issuedTo}
                                     </p>
                                 </div>
                                 <div className="w-[48%] max-[600px]:w-[100%] mb-1">
-                                    <p className="font-[600] text-suva-gray text-sm">
+                                    <p id='view_trust_details_issued_by_label' className="font-[600] text-suva-gray text-sm">
                                         {t("trustList.issuedBy")}
                                     </p>
-                                    <p className="font-[600] text-vulcan text-base break-all">
+                                    <p id='view_trust_details_issued_by_context' className="font-[600] text-vulcan text-base break-all">
                                         {viewCertDetails.issuedBy}
                                     </p>
                                 </div>
                             </div>
                             <div className="flex flex-wrap py-2 max-[450px]:flex-col">
                                 <div className={`w-[48%] max-[600px]:w-[100%] mb-1`}>
-                                    <p className="font-[600] text-suva-gray text-sm">
+                                    <p id='view_trust_details_cert_thumbprint_label' className="font-[600] text-suva-gray text-sm">
                                         {t("viewCertificateDetails.certThumbprint")}
                                     </p>
-                                    <p className="font-[600] text-vulcan text-base break-all">
+                                    <p id='view_trust_details_cert_thumbprint_context' className="font-[600] text-vulcan text-base break-all">
                                         {viewCertDetails.certThumbprint}
                                     </p>
                                 </div>
@@ -138,7 +138,7 @@ function ViewTrustDetails() {
                                                 <img id='file_upload_disabled' src={fileUploadDisabled} className="h-8" alt="" />
                                             }
                                             <div className="flex-col p-3 items-center">
-                                                <h6 className={`text-sm ${(viewCertDetails.status === true) ? 'font-bold text-black' : 'font-semibold text-charcoal-gray'}`}>
+                                                <h6 id='view_trust_details_certificate_title' className={`text-sm ${(viewCertDetails.status === true) ? 'font-bold text-black' : 'font-semibold text-charcoal-gray'}`}>
                                                     {viewCertPageHeaders.trustType === 'root' ? t('viewCertificateDetails.rootCaCertificate') : t('viewCertificateDetails.intermediateCaCertificate')}
                                                 </h6>
                                             </div>

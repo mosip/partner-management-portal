@@ -142,7 +142,7 @@ function GenerateApiKey() {
 
         fetchPolicyRequestsData();
         fetchData();
-    }, []);
+    }, [t]);
 
     const styles = {
         outerDiv: "!ml-0 !mb-0",

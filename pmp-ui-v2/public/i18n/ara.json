@@ -1001,9 +1001,9 @@
         "rootCertExpiryDescription": "شهادة CA الجذرية <span>{{certificateId}}</span> للنطاق <span>{{partnerDomain}}</span> من المقرر أن تنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات.",
         "intermediateCertExpiryDescription": "شهادة CA المتوسطة <span>{{certificateId}}</span> للنطاق <span>{{partnerDomain}}</span> من المقرر أن تنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات.",
         "partnerCertExpiryDescription": "من المقرر أن تنتهي صلاحية شهادة الشريك لنطاق <span>{{partnerDomain}}</span> في <span>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات.",
-        "ftmChipCertExpiryDescription": "شهادة شريحة FTM مع معرف FTM: <span>{{ftmId}}</span> من المقرر أن تنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. قم بتجديده الآن لتجنب أي انقطاع.",
-        "apiKeyExpiryDescription": "مفتاح API باسم:<span>{{apiKeyName}}</span> من المقرر أن تنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. قم بتجديده الآن لتجنب أي انقطاع.",
-        "sbiExpiryDescription": "بطاقة SBI ذات المعرف: <span>{{sbiId}}</span> مُعدّة للانتهاء في <span>{{expiryDateTime}}</span>. جدّدها الآن لتجنب أي انقطاع.",
+        "ftmChipCertExpiryDescription": "شهادة شريحة FTM مع معرف FTM: <span>{{ftmId}}</span> من المقرر أن تنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. قم بتحميل الشهادة الجديدة لتجنب أي انقطاع.",
+        "apiKeyExpiryDescription": "مفتاح API باسم:<span>{{apiKeyName}}</span> من المقرر أن تنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. قم بإنشاء مفتاح API جديد الآن لتجنب أي انقطاعات.",
+        "sbiExpiryDescription": "بطاقة SBI ذات المعرف: <span>{{sbiId}}</span> مُعدّة للانتهاء في <span>{{expiryDateTime}}</span>. قم بإنشاء SBI جديد الآن لتجنب أي انقطاعات.",
         "dismiss": "رفض",
         "viewAllNotification": "عرض جميع الإشعارات",
         "expiringItems": "ملخص أسبوعي للعناصر منتهية الصلاحية التي أنشأها الشريك",
@@ -1057,15 +1057,15 @@
         "partnerCertExpiryDescription": "شهادة الشريك <span>{{certificateId}}</span> الصادرة لـ <span>{{issuedTo}}</span> بواسطة <span>{{issuedBy}}</span> للنطاق <span>{{partnerDomain}}</span> من المقرر أن تنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات.",
         "weeklyPartnerCertExpiryTitle": "شهادة الشريك على وشك الانتهاء لمعرف الشريك: {{partnerId}}",
         "weeklyPartnerCertExpiryDescription": "شهادة الشريك <span>{{certificateId}}</span> الصادرة لـ <span>{{issuedTo}}</span> بواسطة <span>{{issuedBy}}</span> لـ <span>{{partnerId}}</span> من المقرر أن تنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات.",
-        "ftmChipCertExpiryDescription": "شهادة شريحة FTM لـ <span>النوع: {{make}}</span> - <span>الموديل: {{model}}</span> (معرف FTM: <span>{{ftmId}}</span>) ستنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. يرجى تجديدها الآن لتجنب أي انقطاع.",
-        "apiKeyExpiryDescription": "مفتاح API المسمى <span>{{apiKeyName}}</span> المرتبطة بالسياسة: <span>{{policyName}}</span> من المقرر أن تنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. قم بتجديده الآن لتجنب أي انقطاع.",
+        "ftmChipCertExpiryDescription": "شهادة شريحة FTM لـ <span>النوع: {{make}}</span> - <span>الموديل: {{model}}</span> (معرف FTM: <span>{{ftmId}}</span>) ستنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. قم بتحميل الشهادة الجديدة لتجنب أي انقطاع.",
+        "apiKeyExpiryDescription": "مفتاح API المسمى <span>{{apiKeyName}}</span> المرتبطة بالسياسة: <span>{{policyName}}</span> من المقرر أن تنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. قم بإنشاء مفتاح API جديد الآن لتجنب أي انقطاعات.",
         "weeklyFtmCertExpiryTitle": "شهادة شريحة FTM على وشك الانتهاء لمعرف الشريك: {{partnerId}}",
-        "weeklyFtmCertExpiryDescription": "شهادة شريحة FTM لـ <span>النوع: {{make}}</span> - <span>الموديل: {{model}}</span> (معرف FTM: <span>{{ftmId}}</span>) التي تم تحميلها بواسطة <span>{{partnerId}}</span> ستنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. يرجى تجديدها الآن لتجنب أي انقطاع.",
+        "weeklyFtmCertExpiryDescription": "شهادة شريحة FTM لـ <span>النوع: {{make}}</span> - <span>الموديل: {{model}}</span> (معرف FTM: <span>{{ftmId}}</span>) التي تم تحميلها بواسطة <span>{{partnerId}}</span> ستنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. قم بتحميل الشهادة الجديدة لتجنب أي انقطاع.",
         "weeklyApiKeyExpiryTitle": "مفتاح API على وشك الانتهاء لمعرف الشريك: {{partnerId}}",
-        "weeklyApiKeyExpiryDescription": "مفتاح API المسمى <span>{{apiKeyName}}</span> تم إنشاؤه بواسطة <span>{{partnerId}}</span> من المقرر أن تنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. قم بتجديده الآن لتجنب أي انقطاع.",
-        "sbiExpiryDescription": "بطاقة SBI ذات المعرف: <span>{{sbiId}}</span> والإصدار: <span>{{sbiVersion}}</span> مُعدّة للانتهاء في <span>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاع.",
+        "weeklyApiKeyExpiryDescription": "مفتاح API المسمى <span>{{apiKeyName}}</span> تم إنشاؤه بواسطة <span>{{partnerId}}</span> من المقرر أن تنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. قم بإنشاء مفتاح API جديد الآن لتجنب أي انقطاعات.",
+        "sbiExpiryDescription": "بطاقة SBI ذات المعرف: <span>{{sbiId}}</span> والإصدار: <span>{{sbiVersion}}</span> مُعدّة للانتهاء في <span>{{expiryDateTime}}</span>. قم بإنشاء SBI جديد الآن لتجنب أي انقطاعات.",
         "weeklySbiExpiryTitle": "تنتهي صلاحية SBI لمعرف الشريك: {{partnerId}}",
-        "weeklySbiExpiryDescription": "بطاقة SBI ذات مُعرِّف SBI: <span>{{sbiId}}</span> وإصدار SBI: <span>{{sbiVersion}}</span>، المُولَّدة بواسطة <span>{{partnerId}}</span>، مُعَدَّة لتنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. جَدِّدها الآن لتجنب أي انقطاع."
+        "weeklySbiExpiryDescription": "بطاقة SBI ذات مُعرِّف SBI: <span>{{sbiId}}</span> وإصدار SBI: <span>{{sbiVersion}}</span>، المُولَّدة بواسطة <span>{{partnerId}}</span>، مُعَدَّة لتنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. قم بإنشاء SBI جديد الآن لتجنب أي انقطاعات."
     },
     "serverError": {
         "PMS_COR_001": "معلمة الإدخال مفقودة",
@@ -1364,7 +1364,7 @@
         "PMS_NOTIFICATION_ERROR_013": "تم مواجهة خطأ أثناء استرداد عدد الشهادات منتهية الصلاحية.",
         "PMS_NOTIFICATION_ERROR_014": "سيحصل مسؤول الشريك فقط على عدد الشهادات الجذرية والوسيطة منتهية الصلاحية.",
         "PMS_NOTIFICATION_ERROR_015": "يجب تحديد نوع الإشعار للتصفية",
-        "PMS_NOTIFICATION_ERROR_016": "الرجاء إدخال تاريخ صالح",
+        "PMS_NOTIFICATION_ERROR_016": "يرجى إدخال تاريخ انتهاء صالح.",
         "PMS_NOTIFICATION_ERROR_017": "نوع الإشعار المُختار غير صالح. يُسمح فقط بنوع الإشعار الأسبوعي لهذا الفلتر.",
         "PMS_NOTIFICATION_ERROR_018": "يمكن فقط لمسؤول الشريك رفض هذا الإشعار",
         "PMS_NOTIFICATION_ERROR_019": "حالة الإخطار مطلوبة في الطلب",
@@ -1372,6 +1372,8 @@
         "PMS_NOTIFICATION_ERROR_021": "نوع الإشعار المُختار غير صالح. يُسمح فقط بأنواع 'الجذر' أو 'الوسيط' أو 'الشريك' لهذا الفلتر.",
         "PMS_NOTIFICATION_ERROR_022": "نوع الإشعار المُختار غير صالح. يُسمح فقط بنوع 'ftm-chip' لهذا الفلتر.",
         "PMS_NOTIFICATION_ERROR_023": "نوع الإشعار المُختار غير صالح. يُسمح فقط بنوع 'sbi' لهذا الفلتر.",
-        "PMS_NOTIFICATION_ERROR_024": "نوع الإشعار المُختار غير صالح. يُرجى اختيار نوع آخر غير 'أسبوعي'."
+        "PMS_NOTIFICATION_ERROR_024": "نوع الإشعار المُختار غير صالح. يُرجى اختيار نوع آخر غير 'أسبوعي'.",
+        "PMS_NOTIFICATION_ERROR_025": "يرجى إدخال تاريخ الإنشاء من صالح.",
+        "PMS_NOTIFICATION_ERROR_026": "يرجى إدخال تاريخ الإنشاء إلى صالح."
     }
 }

@@ -625,6 +625,7 @@ export const handleFileChange = (event, setErrorCode, setErrorMsg, setSuccessMsg
                 setPolicyData(JSON.stringify(data, null, 2));
                 setSuccessMsg(t('createPolicy.fileUploadSuccessMsg'));
             } catch (error) {
+                console.log(`Exception while parsing json: ${error}`);
                 setErrorMsg(t('createPolicy.jsonParseError'));
             }
         };
@@ -962,7 +963,7 @@ export const getNotificationDescription = (notification, isLoginLanguageRTL, t) 
                     partnerDomain: notification.notificationDetails.certificateDetails[0].partnerDomain,
                     expiryDateTime: formatDate(notification.notificationDetails.certificateDetails[0].expiryDateTime, 'dateInWords')
                 }}
-                components={{ span: <span className={`font-semibold`} /> }}
+                components={{ span: <span className={`font-semibold md:whitespace-nowrap md:break-words break-all`} /> }}
             />
         );
     } else if (notification.notificationType === 'INTERMEDIATE_CERT_EXPIRY') {
@@ -976,7 +977,7 @@ export const getNotificationDescription = (notification, isLoginLanguageRTL, t) 
                     partnerDomain: notification.notificationDetails.certificateDetails[0].partnerDomain,
                     expiryDateTime: formatDate(notification.notificationDetails.certificateDetails[0].expiryDateTime, 'dateInWords')
                 }}
-                components={{ span: <span className={`font-semibold`} /> }}
+                components={{ span: <span className={`font-semibold md:whitespace-nowrap md:break-words break-all`} /> }}
             />
         );
     } else if (notification.notificationType === 'PARTNER_CERT_EXPIRY') {
@@ -989,7 +990,7 @@ export const getNotificationDescription = (notification, isLoginLanguageRTL, t) 
                     partnerDomain: notification.notificationDetails.certificateDetails[0].partnerDomain,
                     expiryDateTime: formatDate(notification.notificationDetails.certificateDetails[0].expiryDateTime, 'dateInWords')
                 }}
-                components={{ span: <span className={`font-semibold`} /> }}
+                components={{ span: <span className={`font-semibold md:whitespace-nowrap md:break-words break-all`} /> }}
             />
         );
     } else if (notification.notificationType === 'FTM_CHIP_CERT_EXPIRY') {
@@ -1002,7 +1003,7 @@ export const getNotificationDescription = (notification, isLoginLanguageRTL, t) 
                     ftmId: notification.notificationDetails.ftmDetails[0].ftmId,
                     expiryDateTime: formatDate(notification.notificationDetails.ftmDetails[0].expiryDateTime, 'dateInWords')
                 }}
-                components={{ span: <span className={`font-semibold`} /> }}
+                components={{ span: <span className={`font-semibold md:whitespace-nowrap md:break-words break-all`} /> }}
             />
         );
     } else if (notification.notificationType === 'API_KEY_EXPIRY') {
@@ -1014,7 +1015,7 @@ export const getNotificationDescription = (notification, isLoginLanguageRTL, t) 
                     policyName: notification.notificationDetails.apiKeyDetails[0].policyName,
                     expiryDateTime: formatDate(notification.notificationDetails.apiKeyDetails[0].expiryDateTime, 'dateInWords')
                 }}
-                components={{ span: <span className={`font-semibold`} /> }}
+                components={{ span: <span className={`font-semibold md:whitespace-nowrap md:break-words break-all`} /> }}
             />
         );
     } else if (notification.notificationType === 'SBI_EXPIRY') {
@@ -1026,7 +1027,7 @@ export const getNotificationDescription = (notification, isLoginLanguageRTL, t) 
                     sbiVersion: notification.notificationDetails.sbiDetails[0].sbiVersion,
                     expiryDateTime: formatDate(notification.notificationDetails.sbiDetails[0].expiryDateTime, 'dateInWords')
                 }}
-                components={{ span: <span className={`font-semibold`} /> }}
+                components={{ span: <span className={`font-semibold md:whitespace-nowrap md:break-words break-all`} /> }}
             />
         );
     } else if (notification.notificationType === 'WEEKLY_SUMMARY') {

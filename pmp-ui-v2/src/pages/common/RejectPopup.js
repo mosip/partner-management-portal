@@ -6,6 +6,7 @@ import ErrorMessage from "./ErrorMessage";
 import close_icon from '../../svg/close_icon.svg';
 import { createRequest, getPartnerManagerUrl, handleEscapeKey, handleServiceErrors } from "../../utils/AppUtils";
 import { HttpService } from "../../services/HttpService";
+import PropTypes from 'prop-types';
 
 function RejectPopup({ popupData, closePopUp, rejectResponse, title }) {
     const { t } = useTranslation();
@@ -24,7 +25,7 @@ function RejectPopup({ popupData, closePopUp, rejectResponse, title }) {
     useEffect(() => {
         const removeListener = handleEscapeKey(() => closePopUp());
         return removeListener;
-    }, []);
+    }, [closePopUp]);
 
     const cancelErrorMsg = () => setErrorMsg("");
 
@@ -80,19 +81,19 @@ function RejectPopup({ popupData, closePopUp, rejectResponse, title }) {
                                 )}
                                 <>
                                     <div className="flex justify-between items-center px-[1rem] p-4 w-full border-b-2 border-gray-200">
-                                        <p className="text-sm font-bold">{title}</p>
+                                        <p id='reject_popup_title' className="text-sm font-bold">{title}</p>
                                         <button id="reject_popup_close_icon" onClick={() => closePopUp()} className="h-6 hover:cursor-pointer">
                                             <img src={close_icon} alt="close" />
                                         </button>
                                     </div>
                                     <div className="px-[1.5rem] py-3 text-center break-words border-b-2 border-gray-200">
-                                        <p className="text-base font-semibold text-black">{t('deviceApproveRejectPopup.rejectHeader')}</p>
-                                        <p className="my-4 text-sm font-medium text-[#8B6105] py-2 px-4 bg-[#FFF7E5] border-2 border-[#EDDCAF] rounded-md">
+                                        <p id='reject_popup_header' className="text-base font-semibold text-black">{t('deviceApproveRejectPopup.rejectHeader')}</p>
+                                        <p id='reject_popup_description' className="my-4 text-sm font-medium text-[#8B6105] py-2 px-4 bg-[#FFF7E5] border-2 border-[#EDDCAF] rounded-md">
                                             {t('deviceApproveRejectPopup.rejectDescription')}
                                         </p>
                                     </div>
                                     <div className="flex justify-end p-5">
-                                        <button onClick={onClickReject} className="w-36 h-10 border-[#1447B2] border rounded-md bg-tory-blue text-white">
+                                        <button id='reject_popup_reject_btn' onClick={onClickReject} className="w-36 h-10 border-[#1447B2] border rounded-md bg-tory-blue text-white">
                                             Reject
                                         </button>
                                     </div>
@@ -107,5 +108,12 @@ function RejectPopup({ popupData, closePopUp, rejectResponse, title }) {
     );
 
 }
+
+RejectPopup.propTypes = {
+    popupData: PropTypes.object.isRequired,
+    closePopUp: PropTypes.func.isRequired,
+    rejectResponse: PropTypes.func.isRequired,
+    title: PropTypes.string.isRequired,
+};
 
 export default RejectPopup;

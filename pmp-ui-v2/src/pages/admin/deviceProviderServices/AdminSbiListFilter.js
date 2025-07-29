@@ -11,16 +11,6 @@ function AdminSbiListFilter( {onApplyFilter} ) {
     const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [status, setStatus] = useState([]);
     const [sbiExpiryStatus, setSbiExpiryStatus] = useState([]);
-    const [statusDropdownData, setStatusDropdownData] = useState([
-        { status: 'approved' },
-        { status: 'rejected'},
-        { status: 'pending_approval'},
-        { status: 'deactivated'}
-    ]);
-    const [sbiExpiryStatusDropdownData, setSbiExpiryStatusDropdownData] = useState([
-        { sbiExpiryStatus: 'expired' },
-        { sbiExpiryStatus: 'valid'}
-      ]);
     const [filters, setFilters] = useState({
       partnerId: "",
       orgName: "",
@@ -36,7 +26,10 @@ function AdminSbiListFilter( {onApplyFilter} ) {
 
     useEffect(() => {
         const fetchData = async () => {
+            const statusDropdownData = [{ status: 'approved' },{ status: 'rejected'},{ status: 'pending_approval'},{ status: 'deactivated'}];
             setStatus(createDropdownData("status", "", true, statusDropdownData, t, t("partnerList.selectStatus")));
+            
+            const sbiExpiryStatusDropdownData = [{ sbiExpiryStatus: 'expired' },{ sbiExpiryStatus: 'valid'}];
             setSbiExpiryStatus(createDropdownData("sbiExpiryStatus", "", true, sbiExpiryStatusDropdownData, t, t("sbiList.selectSbiExpiryStatus")));
         };
         fetchData();

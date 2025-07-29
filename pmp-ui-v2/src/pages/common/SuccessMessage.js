@@ -30,6 +30,7 @@ function SuccessMessage({ id, successMsg, clickOnCancel, customStyle, successPar
 }
 
 SuccessMessage.propTypes = {
+    id: PropTypes.string.isRequired,
     successMsg: PropTypes.string.isRequired,
     clickOnCancel: PropTypes.func.isRequired,
     customStyle: PropTypes.object,

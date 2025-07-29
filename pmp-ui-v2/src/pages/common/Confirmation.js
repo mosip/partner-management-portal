@@ -1,4 +1,3 @@
-import React, { useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from '../../services/UserProfileService';
@@ -11,7 +10,7 @@ function Confirmation({ id, confirmationData, onClickFunction }) {
     const navigate = useNavigate();
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
-    const [style, setStyle] = useState(confirmationData.styleSet);
+    const style = confirmationData.styleSet;
 
     return (
         <div className="flex items-center justify-center w-[100%] h-[480px] bg-snow-white mt-[1.5%] rounded-lg shadow-md">
@@ -51,6 +50,7 @@ function Confirmation({ id, confirmationData, onClickFunction }) {
 }
 
 Confirmation.propTypes = {
+    id: PropTypes.string.isRequired,
     confirmationData: PropTypes.object.isRequired,
     onClickFunction: PropTypes.func,
 };

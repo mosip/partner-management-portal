@@ -548,14 +548,14 @@ function Dashboard() {
 
   const CountWithHover = ({ countLabel, descriptionKey, descriptionParams, isExpiryHover }) => (
     <div className={`absolute flex items-center ${isLoginLanguageRTL ? "-top-3 -left-3" : "-top-3 -right-3"} min-w-fit w-10 h-8 ${isExpiryHover ? 'bg-[#FAD6D1]' : 'bg-[#FEF1C6]'} rounded-md text-[#6D1C00] text-sm shadow-md`}>
-      <div role='button' onClick={(e) => e.stopPropagation()} className="relative group flex items-center justify-center w-full" tabIndex="0" 
+      <div id='hover_count_label' role='button' onClick={(e) => e.stopPropagation()} className="relative group flex items-center justify-center w-full" tabIndex="0" 
         onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); e.stopPropagation(); } }}>
         <span className="font-medium p-2 rounded">
           {countLabel ?? <LoadingCount />}
         </span>
 
         {countLabel !== null && countLabel !== undefined && (
-          <div className={`absolute hidden group-focus:block group-hover:block ${isExpiryHover ? 'bg-[#FAD6D1]' : 'bg-[#FEF1C6]'} text-xs text-center font-semibold p-2 w-40 mt-1 z-10 ${isLoginLanguageRTL ? "top-9 left-0" : "top-9 right-0"} rounded-md shadow-md`}>
+          <div id='hover_count_description' className={`absolute hidden group-focus:block group-hover:block ${isExpiryHover ? 'bg-[#FAD6D1]' : 'bg-[#FEF1C6]'} text-xs text-center font-semibold p-2 w-40 mt-1 z-10 ${isLoginLanguageRTL ? "top-9 left-0" : "top-9 right-0"} rounded-md shadow-md`}>
             {t(descriptionKey, descriptionParams)}
           </div>
         )}

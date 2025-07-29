@@ -31,7 +31,7 @@ function ClonePolicyPopup ({policyDetails, closePopUp}) {
     useEffect(() => {
         const removeListener = handleEscapeKey(() => closePopUp());
         return removeListener;
-    }, []);
+    }, [closePopUp]);
 
     const changePolicyGroupSelection = (fieldName, selectedValue) => {
         setSelectedPolicyGroup(selectedValue);
@@ -52,7 +52,7 @@ function ClonePolicyPopup ({policyDetails, closePopUp}) {
             setDataLoaded(true);
         };
         fetchData();
-    }, []);
+    }, [t]);
 
     const cancelPopUp = () => {
         closePopUp();
@@ -144,8 +144,8 @@ function ClonePolicyPopup ({policyDetails, closePopUp}) {
                     {dataLoaded && (
                         <div className="relative">
                             <div className="px-6 py-3 flex justify-between">
-                                <h3 className="text-lg font-bold text-[#333333]">{t('clonePolicyPopup.title')}</h3>
-                                <button onClick={cancelPopUp}><img className='h-[25px] w-[25px]' src={closeIcon} alt='closeIcon'/></button>
+                                <h3 id='clone_policy_popup_title' className="text-lg font-bold text-[#333333]">{t('clonePolicyPopup.title')}</h3>
+                                <button id='clone_policy_popup_cancel_btn' onClick={cancelPopUp}><img className='h-[25px] w-[25px]' src={closeIcon} alt='closeIcon'/></button>
                             </div> 
                             <div className="border-gray-200 border-opacity-75 border-t"></div>
                             {errorMsg && (
@@ -155,7 +155,7 @@ function ClonePolicyPopup ({policyDetails, closePopUp}) {
                                 <SuccessMessage id='clone_policy_popup_success_msg' successMsg={successMsg} clickOnCancel={cancelSuccessMsg} customStyle={customStyle}/>
                             )}
                             <div className="py-2 px-6">
-                                <p className="text-sm font-normal text-[#414141] break-words">{t('clonePolicyPopup.description1')} 
+                                <p id='clone_policy_popup_description' className="text-sm font-normal text-[#414141] break-words">{t('clonePolicyPopup.description1')} 
                                     <span className="font-bold"> {policyDetails.policyName}</span> {t('clonePolicyPopup.description2')}
                                 </p>
                             </div>
