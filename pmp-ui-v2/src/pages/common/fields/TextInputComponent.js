@@ -48,7 +48,7 @@ function TextInputComponent({ fieldName, fieldNameKey, placeHolderKey, textBoxVa
                     size={t(placeHolderKey).length}
                     {...(maxLength && { maxLength })}
                     readOnly={disableField}
-                    className={`${disableField ? 'bg-platinum-gray': 'bg-white'} ${isLoginLanguageRTL ? 'pl-7': 'pr-7'} rounded-[4px] h-9 p-2 focus:outline-none items-center ${styleSet?.inputField || ''}`}
+                    className={`${disableField ? 'bg-platinum-gray': 'bg-white'} ${isLoginLanguageRTL ? 'pl-7': 'pr-7'} w-full rounded-[4px] h-9 p-2 focus:outline-none items-center ${styleSet?.inputField || ''}`}
                 />
                 {inputValue && !disableField && (
                     <button
