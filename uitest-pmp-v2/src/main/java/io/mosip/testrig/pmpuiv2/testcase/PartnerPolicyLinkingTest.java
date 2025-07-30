@@ -325,10 +325,12 @@ public class PartnerPolicyLinkingTest extends BaseClass {
 				GlobalConstants.isApproveRejectButtonDisplayed);
 		assertTrue(partnerPolicyMappingPage.isApproveSubmitButtonDisplayed(),
 				GlobalConstants.isApproveSubmitButtonDisplayed);
-
-		partnerPolicyMappingPage.clickOnApproveSubmitButton();
+        partnerPolicyMappingPage.clickOnApproveSubmitButton();
+		
 		assertTrue(partnerPolicyMappingPage.isPartnerPolicyLinkingTitleDisplayed(),
 				GlobalConstants.isPartnerPolicyLinkingTitleDisplayed);
+		partnerPolicyMappingPage.clickOnFilterResetButton();
+		partnerPolicyMappingPage.clickOnFilterButton();
 		partnerPolicyMappingPage.enterpolicyGroupFilter(GlobalConstants.DEFAULTPOLICYGROUP);
 		partnerPolicyMappingPage.enterPendingPolicyNameInFilter(GlobalConstants.AUTHPOLICY_PARTLINK);
 		partnerPolicyMappingPage.clickOnApplyFilterButton();

@@ -131,17 +131,17 @@ public class AdminTestUtil extends BaseTestCaseFunc {
 					ConfigManager.getPMSDbPass(), ConfigManager.getIDADBSchema(),
 					TestRunner.getResourcePath() + "/" + "config/partnerUiv2DataDeleteQueriesForIDA.txt");
 			KeycloakUserManager.removeUser();
-			KeycloakUserManager.createUsers();
-			BaseTestCaseFunc.DefinePolicyGroup();
-			BaseTestCaseFunc.DefinePolicy();
-			BaseTestCaseFunc.CreateAdminPartner();
+//  	    KeycloakUserManager.createUsers();
+//			BaseTestCaseFunc.DefinePolicyGroup();
+//			BaseTestCaseFunc.DefinePolicy();
+//			BaseTestCaseFunc.CreateAdminPartner();
 //				BaseTestCaseFunc.CreateAuthPartner();   // need this code.
 //				BaseTestCaseFunc.UploadCaCertPartner();
 //				BaseTestCaseFunc.UploadSubCaCertPartner();
 
-			BaseTestCaseFunc.mapUserToZone(
-					BaseTestCaseFunc.currentModule + "-" + propsKernel.getProperty("admin_userName"), "CSB");
-			BaseTestCaseFunc.mapZone(BaseTestCaseFunc.currentModule + "-" + propsKernel.getProperty("admin_userName"));
+//			BaseTestCaseFunc.mapUserToZone(
+//					BaseTestCaseFunc.currentModule + "-" + propsKernel.getProperty("admin_userName"), "CSB");
+//			BaseTestCaseFunc.mapZone(BaseTestCaseFunc.currentModule + "-" + propsKernel.getProperty("admin_userName"));
 			initialized = true;
 		}
 	}

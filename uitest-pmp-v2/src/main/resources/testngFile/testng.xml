@@ -6,6 +6,7 @@
 	<test  name="PMP uiv2 UI TestRig"  preserve-order="true">
 	
 		<classes>
+			<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerAdminCreation" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.AuthPartnerTest" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.DeviceProviderTest" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.FTMDeviceTest" />

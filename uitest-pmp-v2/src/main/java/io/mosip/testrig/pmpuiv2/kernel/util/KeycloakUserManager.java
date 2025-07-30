@@ -248,5 +248,23 @@ public class KeycloakUserManager extends BaseTestCaseFunc {
 
 		return sb.toString();
 	}
+	
+	public static void assignRole(String username, String roleName) {
+	    Keycloak keycloak = getKeycloakInstance();
+	    RealmResource realm = keycloak.realm(ConfigManager.getIAMRealmId());
+
+	    List<UserRepresentation> users = realm.users().search(username);
+	    if (users.isEmpty()) {
+	        System.out.println("User not found: " + username);
+	        return;
+	    }
+
+	    UserResource user = realm.users().get(users.get(0).getId());
+
+	    RoleRepresentation role = realm.roles().get(roleName).toRepresentation();
+	    user.roles().realmLevel().add(List.of(role));
+
+	}
+
 
 }
