@@ -40,7 +40,7 @@ public class PoliciesPage extends BasePage {
 
 	@FindBy(xpath = "//p[text()='No Data Available.']")
 	private WebElement noDataAvailableText;
-	
+
 	@FindBy(id = "request_policies_policy_name_option1")
 	private WebElement requestPolicyNameOption;
 
@@ -79,10 +79,10 @@ public class PoliciesPage extends BasePage {
 
 	@FindBy(id = "policy_group_filter")
 	private WebElement policyGroupFilter;
-	
+
 	@FindBy(id = "policy_group_filter_option1")
 	private WebElement policyGroupFilterOption1;
-	
+
 	@FindBy(id = "policy_status_filter")
 	private WebElement policyStatusFilter;
 
@@ -151,118 +151,118 @@ public class PoliciesPage extends BasePage {
 
 	@FindBy(id = "status_asc_icon")
 	private WebElement status_asc_icon;
-	
+
 	@FindBy(id = "request_policy_partner_id_option1")
 	private WebElement requestPolicyPartnerIdOption1;
-	
+
 	@FindBy(id = "policies_auth_policy_tab")
 	private WebElement policiesAuthPolicyTab;
-	
+
 	@FindBy(id = "policies_data_share_policy_tab")
 	private WebElement policiesDataPolicyTab;
-	
+
 	@FindBy(id = "policy_data_box")
 	private WebElement policyDataBox;
-	
+
 	@FindBy(id = "policy_details_partner_id_label")
 	private WebElement policyDetailsPartnerIdLabel;
-	
+
 	@FindBy(id = "policy_details_policy_group_name_context")
 	private WebElement policyDetailsPolicyGroupNameContext;
-	
+
 	@FindBy(id = "policy_details_partner_type_label")
 	private WebElement policyDetailsPartnerTypeLabel;
-	
+
 	@FindBy(id = "policy_details_partner_type_context")
 	private WebElement policyDetailsPartnerTypeContext;
-	
+
 	@FindBy(id = "policy_details_policy_group_name_label")
 	private WebElement policyDetailsPolicyGroupNameLabel;
-	
+
 	@FindBy(id = "policy_details_policy_name_label")
 	private WebElement policyDetailsPolicyNameLabel;
-	
+
 	@FindBy(id = "policy_details_policy_name_context")
 	private WebElement policyDetailsPolicyNameContext;
-	
+
 	@FindBy(id = "policy_details_policy_group_description_label")
 	private WebElement policyDetailsPolicyGroupDescriptionLabel;
-	
+
 	@FindBy(id = "policy_details_policy_group_description_context")
 	private WebElement policyDetailsPolicyGroupDescriptionContext;
-	
+
 	@FindBy(id = "policy_details_policy_name_description_label")
 	private WebElement policyDetailsPolicyNameDescriptionLabel;
-	
+
 	@FindBy(id = "policy_details_policy_name_description_context")
 	private WebElement policyDetailsPolicyNameDescriptionContext;
-	
+
 	@FindBy(id = "policy_details_comments")
 	private WebElement policyDetailsComments;
-	
+
 	@FindBy(id = "request_policies_form_clear_btn")
 	private WebElement requestPoliciesFormClearButton;
-	
+
 	@FindBy(id = "request_policies_form_cancel_btn")
 	private WebElement requestPoliciesFormCancelButton;
-	
+
 	@FindBy(id = "policy_deactivate_btn")
 	private WebElement policyDeactivateButton;
-	
+
 	@FindBy(id = "filter_btn")
 	private WebElement filterButton;
-	
+
 	@FindBy(id = "policy_name_filter_option1")
 	private WebElement policyNameFilterOption1;
-	
+
 	@FindBy(id = "policy_name_filter")
 	private WebElement policyNameFilter;
 
 	@FindBy(id = "deactivate_policy_group__confirm_btn")
 	private WebElement deactivateConfirmButton;
-	
+
 	@FindBy(xpath = "//h1[text()='Policies']")
 	private WebElement titleOfPolicyPage;
-	
+
 	@FindBy(xpath = "//span[text()='authpolicy01']")
 	private WebElement policyName;
-	
+
 	@FindBy(xpath = "//p[text()='authpolicy 01']")
 	private WebElement policyDescription;
-	
+
 	@FindBy(xpath = "//p[text()='This policy is already pending for approval against your partner ID.']")
 	private WebElement policyPendingForApproval;
-	
+
 	@FindBy(xpath = "//p[text()='This policy has already been approved against your partner ID.']")
 	private WebElement policyAlreadyApproved;
-	
+
 	@FindBy(id = "error_close_btn")
 	private WebElement errorCloseButton;
-	
+
 	@FindBy(xpath = "//p[text()='Home']")
 	private WebElement sideNavigationHomeIcon;
-	
+
 	@FindBy(id = "policies_policy_group_tab")
 	private WebElement policiesPolicyGroupTab;
-	
+
 	@FindBy(id = "confirmation_go_back_btn")
 	private WebElement goBackButton;
-	
+
 	@FindBy(id = "create_auth_policy_btn")
 	private WebElement createAuthPolicyButton;
-	
+
 	@FindBy(id = "policy_status_filter_option3")
 	private WebElement rejectedStatus;
-	
+
 	@FindBy(xpath = "//div[text()='Approved']")
 	private WebElement statusApproved;
-	
+
 	@FindBy(xpath = "//div[text()='Rejected']")
 	private WebElement statusRejected;
-	
+
 	@FindBy(id = "block_messsage_proceed")
 	private WebElement dataLostProcceedButton;
-	
+
 	public PoliciesPage(WebDriver driver) {
 		super(driver);
 	}
@@ -292,7 +292,7 @@ public class PoliciesPage extends BasePage {
 
 	public void selectPolicyNameDropdown(String value) {
 		clickOnElement(policyNameDropdown);
-		enter(searchBoxForPolicyName,value);
+		enter(searchBoxForPolicyName, value);
 		clickOnElement(requestPolicyNameOption);
 	}
 
@@ -483,7 +483,7 @@ public class PoliciesPage extends BasePage {
 
 	public boolean isFilterButtonButtonEnabled() {
 		return isElementEnabled(filterButton);
-    }
+	}
 
 	public void clickOnCreateAuthPolicyButton() {
 		clickOnElement(createAuthPolicyButton);
@@ -492,90 +492,90 @@ public class PoliciesPage extends BasePage {
 	public boolean isPolicyDetailsPartnerIdLabelDisplayed() {
 		return isElementDisplayed(policyDetailsPartnerIdLabel);
 	}
-	
+
 	public boolean isPolicyDetailsPolicyGroupNameLabelDisplayed() {
 		return isElementDisplayed(policyDetailsPolicyGroupNameLabel);
 	}
-	
+
 	public boolean isPolicyDetailsPolicyGroupNameContextDisplayed() {
 		return isElementDisplayed(policyDetailsPolicyGroupNameContext);
 	}
-	
+
 	public boolean isPolicyDetailsPartnerTypeLabelDisplayed() {
 		return isElementDisplayed(policyDetailsPartnerTypeLabel);
 	}
-	
+
 	public boolean isPolicyDetailsPartnerTypeContextDisplayed() {
 		return isElementDisplayed(policyDetailsPartnerTypeContext);
 	}
-	
+
 	public boolean isPolicyDetailsPolicyNameLabelDisplayed() {
 		return isElementDisplayed(policyDetailsPolicyNameLabel);
 	}
-	
+
 	public boolean isPolicyDetailsPolicyNameContextDisplayed() {
 		return isElementDisplayed(policyDetailsPolicyNameContext);
 	}
-	
+
 	public boolean isPolicyDetailsPolicyGroupDescriptionLabelDisplayed() {
 		return isElementDisplayed(policyDetailsPolicyGroupDescriptionLabel);
 	}
-	
+
 	public boolean isPolicyDetailsPolicyGroupDescriptionContextDisplayed() {
 		return isElementDisplayed(policyDetailsPolicyGroupDescriptionContext);
 	}
-	
+
 	public boolean isPolicyDetailsPolicyNameDescriptionLabelDisplayed() {
 		return isElementDisplayed(policyDetailsPolicyNameDescriptionLabel);
 	}
-	
+
 	public boolean isPolicyDetailsPolicyNameDescriptionContextDisplayed() {
 		return isElementDisplayed(policyDetailsPolicyNameDescriptionContext);
 	}
-	
+
 	public boolean isPolicyDetailsCommentsDisplayed() {
 		return isElementDisplayed(policyDetailsComments);
 	}
-	
+
 	public void clickOnRequestPoliciesFormClearButton() {
 		clickOnElement(requestPoliciesFormClearButton);
 	}
-	
+
 	public String getThePolicyCommentBoxText() {
-		return getTextFromAttribute(commentsTextBox,"placeholder");
+		return getTextFromAttribute(commentsTextBox, "placeholder");
 	}
-	
+
 	public String getThepolicyNameDropdownBoxText() {
 		return getTextFromLocator(policyNameDropdown);
 	}
-	
+
 	public void clickOnRequestPoliciesFormCancelButton() {
 		clickOnElement(requestPoliciesFormCancelButton);
 	}
-	
+
 	public void clickOnSubTitleHomeButton() {
 		clickOnElement(subTitleHomeButton);
 	}
-	
+
 	public void enterPendingPolicyNameInFilter(String value) {
-		enter(policyNameFilter,value);
+		enter(policyNameFilter, value);
 	}
-	
+
 	public void enterInvalidPolicyNameDropdown(String value) {
 		clickOnElement(policyNameDropdown);
-		enter(searchBoxForPolicyName,value);
+		enter(searchBoxForPolicyName, value);
 	}
-	
+
 	public void enterValidPolicyNameDropdown(String value) {
 		clickOnElement(policyNameDropdown);
-		enter(searchBoxForPolicyName,value);
+		enter(searchBoxForPolicyName, value);
 		clickOnElement(requestPolicyNameOption);
 	}
-	
+
 	public void clickOnFilterButton() {
 		clickOnElement(filterButton);
 	}
-	
+
 	public void clickOnPolicyNameFilter() {
 		clickOnElement(policyNameFilter);
 		clickOnElement(policyNameFilterOption1);
@@ -584,65 +584,65 @@ public class PoliciesPage extends BasePage {
 	public void clickOnDeactivateButton() {
 		clickOnElement(policyDeactivateButton);
 	}
-	
+
 	public void clickOnDeactivateConfirmButton() {
 		clickOnElement(deactivateConfirmButton);
 	}
-	
+
 	public boolean isNoDataAvailableDisplayed() {
 		return isElementDisplayed(noDataAvailableText);
 	}
-	
+
 	public boolean isPolicyViewPageBackButtonEnabled() {
 		return isElementDisplayed(BackButton);
 	}
-	
+
 	public boolean isRequestPolicyButtonDisplayed() {
 		return isElementDisplayed(policies_request_btn);
 	}
-	
+
 	public boolean isTitleOfPolicyPageDisplayed() {
 		return isElementDisplayed(titleOfPolicyPage);
 	}
-	
+
 	public void clickOnPolicyNameDescendingBtn() {
 		clickOnElement(policyName_desc_icon);
 	}
-	
+
 	public void clickOnPolicyNameAscendingBtn() {
 		clickOnElement(policyName_asc_icon);
 	}
-	
+
 	public boolean isPolicyNameDisplayed() {
 		return isElementDisplayed(policyName);
 	}
-	
+
 	public boolean isPolicyDescriptionDisplayed() {
 		return isElementDisplayed(policyDescription);
 	}
-	
+
 	public void enterAuthPolicyNameDropdown(String authPolicyName) {
 		clickOnElement(policyNameDropdown);
-		enter(searchBoxForPolicyName,authPolicyName);
+		enter(searchBoxForPolicyName, authPolicyName);
 		clickOnElement(requestPolicyNameOption);
 	}
-	
+
 	public boolean isSubmitButtonEnabled() {
 		return isElementDisplayed(submitButton);
 	}
-	
+
 	public boolean isPolicyAlreadyApprovedMessageDisplayed() {
 		return isElementDisplayed(policyAlreadyApproved);
 	}
-	
+
 	public boolean isPolicyPendingForApprovalMessageDisplayed() {
 		return isElementDisplayed(policyPendingForApproval);
 	}
-	
+
 	public void clickOnErrorCloseButton() {
 		clickOnElement(errorCloseButton);
 	}
-	
+
 	public void clickOnTitleBackIcon() {
 		clickOnElement(titleBackIcon);
 	}
@@ -650,45 +650,45 @@ public class PoliciesPage extends BasePage {
 	public boolean isPoliciesPolicyGroupTabDisplayed() {
 		return isElementDisplayed(policiesPolicyGroupTab);
 	}
-	
+
 	public void clickOnGoBackButton() {
 		clickOnElement(goBackButton);
 	}
-	
+
 	public boolean isPoliciesAuthPolicyTabDisplayed() {
 		return isElementDisplayed(policiesAuthPolicyTab);
 	}
-	
+
 	public void clickOnPoliciesPolicyGroupTab() {
 		clickOnElement(policiesPolicyGroupTab);
 	}
-	
+
 	public void clickOnDataSharePolicyTab() {
 		clickOnElement(policiesDataPolicyTab);
 	}
-	
+
 	public void selectActivatedStatusInFilter() {
 		clickOnElement(policyStatusFilter);
 		clickOnElement(policy_status_filter_option1);
 	}
-	
+
 	public void selectRejectedStatusInFilter() {
 		clickOnElement(policyStatusFilter);
 		clickOnElement(rejectedStatus);
 	}
-	
+
 	public boolean isStatusApprovedDisplayed() {
 		return isElementDisplayed(statusApproved);
 	}
-	
+
 	public boolean isStatusRejectedDisplayed() {
 		return isElementDisplayed(statusRejected);
 	}
-	
+
 	public void clickOnDataLostProcceedButton() {
 		clickOnElement(dataLostProcceedButton);
 	}
-	
+
 	public void clickOnPolicyNameDropdown() {
 		clickOnElement(policyNameDropdown);
 	}

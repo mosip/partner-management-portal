@@ -302,7 +302,6 @@ public class PartnerPolicyLinkingTest extends BaseClass {
 		DashboardPage dashboardPage = new DashboardPage(driver);
 		PoliciesPage policiesPage = new PoliciesPage(driver);
 		PartnerPolicyMappingPage partnerPolicyMappingPage = new PartnerPolicyMappingPage(driver);
-		LoginPage loginPage = new LoginPage(driver);
 
 		dashboardPage.clickOnPartnerPolicyMappingTab();
 		partnerPolicyMappingPage.clickOnFilterButton();
@@ -326,10 +325,12 @@ public class PartnerPolicyLinkingTest extends BaseClass {
 				GlobalConstants.isApproveRejectButtonDisplayed);
 		assertTrue(partnerPolicyMappingPage.isApproveSubmitButtonDisplayed(),
 				GlobalConstants.isApproveSubmitButtonDisplayed);
-
-		partnerPolicyMappingPage.clickOnApproveSubmitButton();
+        partnerPolicyMappingPage.clickOnApproveSubmitButton();
+		
 		assertTrue(partnerPolicyMappingPage.isPartnerPolicyLinkingTitleDisplayed(),
 				GlobalConstants.isPartnerPolicyLinkingTitleDisplayed);
+		partnerPolicyMappingPage.clickOnFilterResetButton();
+		partnerPolicyMappingPage.clickOnFilterButton();
 		partnerPolicyMappingPage.enterpolicyGroupFilter(GlobalConstants.DEFAULTPOLICYGROUP);
 		partnerPolicyMappingPage.enterPendingPolicyNameInFilter(GlobalConstants.AUTHPOLICY_PARTLINK);
 		partnerPolicyMappingPage.clickOnApplyFilterButton();
@@ -421,7 +422,7 @@ public class PartnerPolicyLinkingTest extends BaseClass {
 	private void logoutFromPartner(DashboardPage dashboardPage) {
 		dashboardPage.clickOnProfileDropdown();
 		assertTrue(dashboardPage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
-		LoginPage loginPage = dashboardPage.clickOnLogoutButton();
+		dashboardPage.clickOnLogoutButton();
 
 	}
 

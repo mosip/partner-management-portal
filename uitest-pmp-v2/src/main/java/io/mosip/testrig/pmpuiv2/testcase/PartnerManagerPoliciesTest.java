@@ -1121,7 +1121,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		policiesPage.enterComments(GlobalConstants.ALPHANUMERIC);
 		policiesPage.clickSubmitButton();
 		policiesPage.clickOnGoBackButton();
-		
+
 		policiesPage.clickOnRequestPolicyButtonOfTabularPage();
 		policiesPage.selectPartnerIdDropdown();
 		policiesPage.selectPolicyNameDropdown(GlobalConstants.DATAPOLICY01);

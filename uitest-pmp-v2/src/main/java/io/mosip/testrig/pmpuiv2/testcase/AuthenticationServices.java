@@ -26,6 +26,8 @@ public class AuthenticationServices extends BaseClass {
 		DashboardPage dashboardPage = new DashboardPage(driver);
 		LoginPage loginPage = new LoginPage(driver);
 		OidcClientPage oidcClientPage = dashboardPage.clickOnAuthenticationServices();
+		
+		
 
 		oidcClientPage.clickOnFilterButton();
 		oidcClientPage.enterPartnerIdInFilter(GlobalConstants.AUTHPARTNER);
@@ -144,7 +146,7 @@ public class AuthenticationServices extends BaseClass {
 				GlobalConstants.isCreatedDateTimeDescISconDisplayed);
 		assertTrue(oidcClientPage.isCreatedDateTimeAscIconDisplayed(),
 				GlobalConstants.isCreatedDateTimeAscIconDisplayed);
-		
+
 		assertTrue(oidcClientPage.isStatusDescIconDisplayed(), GlobalConstants.isStatusDescIconDisplayed);
 		assertTrue(oidcClientPage.isStatusAscIconDisplayed(), GlobalConstants.isStatusAscIconDisplayed);
 		assertTrue(oidcClientPage.isOrgNameDescIconDisplayed(), GlobalConstants.isOrgNameDescIconDisplayed);
