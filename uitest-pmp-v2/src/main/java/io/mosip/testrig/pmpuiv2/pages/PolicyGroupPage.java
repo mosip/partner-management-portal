@@ -171,12 +171,6 @@ public class PolicyGroupPage extends BasePage {
 	@FindBy(id = "header_hamburger_open_sidenav")
 	private WebElement hamburgerOption;
 
-	@FindBy(xpath = "//p[normalize-space()='2024 © MOSIP - All rights reserved.']")
-	private WebElement mosipRightsText;
-
-	@FindBy(id = "footer_documentation_link")
-	private WebElement footerDocumentationLink;
-
 	@FindBy(id = "footer_contact_us_link")
 	private WebElement footerContactUsLink;
 
@@ -496,14 +490,6 @@ public class PolicyGroupPage extends BasePage {
 
 	public boolean isHamburgerOptionDisplayed() {
 		return isElementDisplayed(hamburgerOption);
-	}
-
-	public boolean isMosipRightsTextDisplayed() {
-		return isElementDisplayed(mosipRightsText);
-	}
-
-	public boolean isFooterDocumentationLinkDisplayed() {
-		return isElementDisplayed(footerDocumentationLink);
 	}
 
 	public boolean isFooterContactUsLinkDisplayed() {

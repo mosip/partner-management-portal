@@ -24,7 +24,7 @@ public class DatasharePolicyPage extends BasePage {
 	@FindBy(xpath = "//p[contains(text(), 'All fields marked with')]")
 	private WebElement datashareFormSubTitle;
 
-	@FindBy(id = "policy_group_dropdown")
+	@FindBy(id = "policy_group_dropdown_dropdown_btn")
 	private WebElement policyGroupDropdown;
 
 	@FindBy(id = "policy_group_dropdown_search_input")
@@ -282,7 +282,7 @@ public class DatasharePolicyPage extends BasePage {
 	@FindBy(id = "policy_group_filter")
 	private WebElement policyGroupFilter;
 
-	@FindBy(id = "status_filter")
+	@FindBy(id = "status_filter_dropdown_btn")
 	private WebElement policyStatusFilter;
 
 	@FindBy(id = "apply_filter__btn")
@@ -378,7 +378,7 @@ public class DatasharePolicyPage extends BasePage {
 	@FindBy(xpath = "//p[contains(text(), 'Select the policy group to nest the cloned policy')]")
 	private WebElement clonePolicyInfoMessage;
 
-	@FindBy(id = "clone_policy_group_dropdown")
+	@FindBy(id = "clone_policy_group_dropdown_dropdown_btn")
 	private WebElement clonePolicyGroupDropdown;
 
 	@FindBy(id = "clone_policy_group_dropdown_search_input")

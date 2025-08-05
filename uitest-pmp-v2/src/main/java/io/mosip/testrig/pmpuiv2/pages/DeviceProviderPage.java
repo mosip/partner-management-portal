@@ -24,7 +24,7 @@ public class DeviceProviderPage extends BasePage {
 	@FindBy(id = "sbi_list_add_sbi_btn")
 	private WebElement addSbiFromSbiListButton;
 
-	@FindBy(id = "add_sbi_partner_id")
+	@FindBy(id = "add_sbi_partner_id_dropdown_btn")
 	private WebElement addSbiPartnerId;
 
 	@FindBy(id = "add_sbi_partner_id_option1")
@@ -384,9 +384,9 @@ public class DeviceProviderPage extends BasePage {
 	}
 
 	public void enterDateManuallyInCreatedDate(String yearDateValue) {
-	    createdDate.sendKeys(Keys.chord(Keys.CONTROL, "a"));
-	    createdDate.sendKeys(Keys.BACK_SPACE);
-	    enter(createdDate, yearDateValue);
+		createdDate.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+		createdDate.sendKeys(Keys.BACK_SPACE);
+		enter(createdDate, yearDateValue);
 	}
 
 	public void enterDateManuallyInExpiryDate(String yearDateValue) {

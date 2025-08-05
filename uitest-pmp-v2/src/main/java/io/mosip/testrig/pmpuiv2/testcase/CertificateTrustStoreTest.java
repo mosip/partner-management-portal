@@ -22,6 +22,26 @@ public class CertificateTrustStoreTest extends BaseClass {
 		dashboardPage.clickOnCertificateTrustStore();
 		dashboardPage.clickOnRootCertificateUploadButton();
 
+		assertTrue(partnerCertificatePage.isPartnerCertificatePageDisplayed(),
+				GlobalConstants.isPartnerCertificatePageDisplayed);
+		assertTrue(partnerCertificatePage.isSubtitleHomeButtonDisplayed(),
+				GlobalConstants.isPartnerCertificatePageDisplayed);
+		assertTrue(partnerCertificatePage.isSubtitleButtonButtonDisplayed(),
+				GlobalConstants.isPartnerCertificatePageDisplayed);
+
+		assertTrue(partnerCertificatePage.isAdminCertUploadCancelButtonDisplayed(),
+				GlobalConstants.isPartnerCertificatePageDisplayed);
+
+		assertTrue(partnerCertificatePage.isUploadTrustCertificateTextDisplayed(),
+				GlobalConstants.isPartnerCertificatePageDisplayed);
+		assertTrue(partnerCertificatePage.isPartnerPageSubTitleTextDisplayed(),
+				GlobalConstants.isPartnerCertificatePageDisplayed);
+		assertTrue(partnerCertificatePage.isCertFormatesTextDisplayed(),
+				GlobalConstants.isPartnerCertificatePageDisplayed);
+		assertTrue(partnerCertificatePage.isUploadBoxHeaderTextDisplayed(),
+				GlobalConstants.isPartnerCertificatePageDisplayed);
+		assertTrue(partnerCertificatePage.isSubmitButtonForAdminDisplayed(), GlobalConstants.isSubmitButtonEnabled);
+
 		assertTrue(partnerCertificatePage.isPartnerAdminCertUploadTitleDisplayed(),
 				GlobalConstants.isPartnerAdminCertUploadTitleDisplayed);
 		assertTrue(partnerCertificatePage.isUploadInstructionMessageDisplayed(),
@@ -32,12 +52,12 @@ public class CertificateTrustStoreTest extends BaseClass {
 		partnerCertificatePage.clickOnpartnerDomainSelectorDropdown();
 		assertTrue(partnerCertificatePage.isPartnerDomainDropdownAuthDisplayed(),
 				GlobalConstants.isPartnerDomainDropdownAuthDisplayed);
-		partnerCertificatePage.clickOnpartnerpartnerDomainSelectorDropdownOptionAuth();
+		partnerCertificatePage.clickOnPartnerDomainSelectorDropdownOptionAuth();
 
 		assertTrue(partnerCertificatePage.isUploadCertInstructionTextDisplayed(),
 				GlobalConstants.isUploadCertInstructionTextDisplayed);
 		assertTrue(partnerCertificatePage.isCertFormatesTextDisplayed(), GlobalConstants.isCertFormatesTextDisplayed);
-		partnerCertificatePage.ClickonSubmitButtonForAdmin();
+		partnerCertificatePage.clickonSubmitButtonForAdmin();
 		assertFalse(partnerCertificatePage.isUploadedSuccessfullyMessageDisplayed(),
 				GlobalConstants.isUploadedSuccessfullyMessageDisplayed);
 
@@ -48,7 +68,7 @@ public class CertificateTrustStoreTest extends BaseClass {
 				GlobalConstants.isCertificateRemoveButtonDisplayed);
 		assertTrue(partnerCertificatePage.isSubmitButtonForAdminDisplayed(),
 				GlobalConstants.isSubmitButtonForAdminDisplayed);
-		partnerCertificatePage.ClickonSubmitButtonForAdmin();
+		partnerCertificatePage.clickonSubmitButtonForAdmin();
 		assertTrue(partnerCertificatePage.isCertificateDatesNotValidMessageDisplayed(),
 				GlobalConstants.isCertificateDatesNotValidMessageDisplayed);
 		partnerCertificatePage.clickOnErrorCloseButton();
@@ -178,7 +198,7 @@ public class CertificateTrustStoreTest extends BaseClass {
 		partnerCertificatePage.clickOnRootCADownloadButton();
 		assertTrue(partnerCertificatePage.isRootCACertificateDownloadedDisplayed(),
 				GlobalConstants.isRootCACertificateDownloadedDisplayed);
-		partnerCertificatePage.ClickOnSuccessMsgCloseButton();
+		partnerCertificatePage.clickOnSuccessMsgCloseButton();
 
 		partnerCertificatePage.clickOnCertificateList1();
 		assertTrue(partnerCertificatePage.isRootCACertificateDetailsPageDisplayed(),
@@ -188,7 +208,7 @@ public class CertificateTrustStoreTest extends BaseClass {
 		partnerCertificatePage.clickOnCertificateDownloadButton();
 		assertTrue(partnerCertificatePage.isRootCACertificateDownloadedDisplayed(),
 				GlobalConstants.isRootCACertificateDownloadedDisplayed);
-		partnerCertificatePage.ClickOnSuccessMsgCloseButton();
+		partnerCertificatePage.clickOnSuccessMsgCloseButton();
 
 	}
 
@@ -382,7 +402,7 @@ public class CertificateTrustStoreTest extends BaseClass {
 		partnerCertificatePage.clickOnDownloadCertificateChainButton();
 		assertTrue(partnerCertificatePage.isIntCACertDownloadedSuccessMsgDisplayed(),
 				GlobalConstants.isIntCACertDownloadedSuccessMsgDisplayed);
-		partnerCertificatePage.ClickOnSuccessMsgCloseButton();
+		partnerCertificatePage.clickOnSuccessMsgCloseButton();
 
 		partnerCertificatePage.clickOnCertificateList1();
 		assertTrue(partnerCertificatePage.isViewIntermediateCADetailsPageDisplayed(),
@@ -392,7 +412,7 @@ public class CertificateTrustStoreTest extends BaseClass {
 		partnerCertificatePage.clickOnCertificateDownloadButton();
 		assertTrue(partnerCertificatePage.isIntCACertDownloadedSuccessMsgDisplayed(),
 				GlobalConstants.isIntCACertDownloadedSuccessMsgDisplayed);
-		partnerCertificatePage.ClickOnSuccessMsgCloseButton();
+		partnerCertificatePage.clickOnSuccessMsgCloseButton();
 
 	}
 

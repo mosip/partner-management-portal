@@ -83,14 +83,14 @@ public class OidcClientPage extends BasePage {
 	@FindBy(xpath = "//p[text()='No Data Available.']")
 	private WebElement noDataAvailableText;
 
-	@FindBy(id = "create_oidc_partner_id")
-	private WebElement SelectPartneridForOidc;
+	@FindBy(id = "create_oidc_partner_id_dropdown_btn")
+	private WebElement selectPartneridForOidc;
 
 	@FindBy(id = "create_oidc_partner_id_option1")
 	private WebElement createOidcPartnerIdOption1;
 
-	@FindBy(id = "create_oidc_policy_name")
-	private WebElement SelectPolicyNameForOidc;
+	@FindBy(id = "create_oidc_policy_name_dropdown_btn")
+	private WebElement selectPolicyNameForOidc;
 
 	@FindBy(id = "create_oidc_policy_name_search_input")
 	private WebElement createOidcPolicyNameSearchInput;
@@ -176,31 +176,31 @@ public class OidcClientPage extends BasePage {
 	@FindBy(id = "status_asc_icon")
 	private WebElement status_asc_icon;
 
-	@FindBy(id = "oidc_select_partner_id_filter")
+	@FindBy(id = "oidc_select_partner_id_filter_dropdown_btn")
 	private WebElement oidcSelectPartnerIdFilter;
 
 	@FindBy(id = "oidc_select_partner_id_filter_option1")
 	private WebElement oidcSelectPartnerIdFilterOption1;
 
-	@FindBy(id = "oidc_select_policy_group_filter")
+	@FindBy(id = "oidc_select_policy_group_filter_dropdown_btn")
 	private WebElement oidcSelectPolicyGroupFilter;
 
 	@FindBy(id = "oidc_select_policy_group_filter_option1")
 	private WebElement oidcSelectPolicyGroupFilterOption1;
 
-	@FindBy(id = "oidc_select_policy_name_filter")
+	@FindBy(id = "oidc_select_policy_name_filter_dropdown_btn")
 	private WebElement oidcSelectPolicyNameFilter;
 
 	@FindBy(id = "oidc_select_policy_name_filter_option1")
 	private WebElement oidcSelectPolicyNameFilterOption1;
 
-	@FindBy(id = "oidc_select_client_name_filter")
+	@FindBy(id = "oidc_select_client_name_filter_dropdown_btn")
 	private WebElement oidcSelectClientNameFilter;
 
 	@FindBy(id = "oidc_select_client_name_filter_option1")
 	private WebElement oidcSelectClientNameFilterOption1;
 
-	@FindBy(id = "oidc_select_status_filter")
+	@FindBy(id = "oidc_select_status_filter_dropdown_btn")
 	private WebElement oidcSelectStatusFilter;
 
 	@FindBy(id = "oidc_select_status_filter_option1")
@@ -464,7 +464,7 @@ public class OidcClientPage extends BasePage {
 	@FindBy(id = "oidc_client_name_filter")
 	private WebElement oidcClientNameFilter;
 
-	@FindBy(id = "status_filter")
+	@FindBy(id = "status_filter_dropdown_btn")
 	private WebElement statusFilter;
 
 	@FindBy(id = "apply_filter__btn")
@@ -561,26 +561,26 @@ public class OidcClientPage extends BasePage {
 	}
 
 	public void selectPartnerIdDropdown() {
-		clickOnElement(SelectPartneridForOidc);
+		clickOnElement(selectPartneridForOidc);
 		clickOnElement(createOidcPartnerIdOption1);
 	}
 
 	public boolean isPartnerIdDropdownDisplayed() {
-		return isElementDisplayed(SelectPartneridForOidc);
+		return isElementDisplayed(selectPartneridForOidc);
 	}
 
 	public boolean isPolicyNameDropdownDisplayed() {
-		return isElementDisplayed(SelectPolicyNameForOidc);
+		return isElementDisplayed(selectPolicyNameForOidc);
 	}
 
 	public void selectPolicyNameDropdown(String policyNameValue) {
-		clickOnElement(SelectPolicyNameForOidc);
+		clickOnElement(selectPolicyNameForOidc);
 		enter(createOidcPolicyNameSearchInput, policyNameValue);
 		clickOnElement(createOidcPolicyNameOption1);
 	}
 
 	public void enterDeactivePolicyNameInDropdown(String policyNameValue) {
-		clickOnElement(SelectPolicyNameForOidc);
+		clickOnElement(selectPolicyNameForOidc);
 		enter(createOidcPolicyNameSearchInput, policyNameValue);
 	}
 
@@ -826,7 +826,7 @@ public class OidcClientPage extends BasePage {
 	}
 
 	public void clickOnPartnerIdDropdown() {
-		clickOnElement(SelectPartneridForOidc);
+		clickOnElement(selectPartneridForOidc);
 	}
 
 	public void clickOnAddNewRedirectUrlButton() {

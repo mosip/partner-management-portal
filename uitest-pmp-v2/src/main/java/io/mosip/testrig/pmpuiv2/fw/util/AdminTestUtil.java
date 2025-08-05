@@ -132,7 +132,7 @@ public class AdminTestUtil extends BaseTestCaseFunc {
 					TestRunner.getResourcePath() + "/" + "config/partnerUiv2DataDeleteQueriesForIDA.txt");
 			KeycloakUserManager.removeUser();
 //  	    KeycloakUserManager.createUsers();
-//			BaseTestCaseFunc.DefinePolicyGroup();
+//    		BaseTestCaseFunc.DefinePolicyGroup();
 //			BaseTestCaseFunc.DefinePolicy();
 //			BaseTestCaseFunc.CreateAdminPartner();
 //				BaseTestCaseFunc.CreateAuthPartner();   // need this code.

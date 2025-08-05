@@ -81,7 +81,7 @@ public class PartnerPolicyMappingPage extends BasePage {
 	@FindBy(id = "partner_id_filter")
 	private WebElement partnerIdFilter;
 
-	@FindBy(id = "partner_type_filter")
+	@FindBy(id = "partner_type_filter_dropdown_btn")
 	private WebElement partnerTypeFilter;
 
 	@FindBy(id = "partner_organisation_filter")
@@ -90,7 +90,7 @@ public class PartnerPolicyMappingPage extends BasePage {
 	@FindBy(id = "policy_id_filter")
 	private WebElement policyIdFilter;
 
-	@FindBy(id = "status_filter")
+	@FindBy(id = "status_filter_dropdown_btn")
 	private WebElement statusDropdown;
 
 	@FindBy(id = "status_filter_option1")
@@ -165,7 +165,7 @@ public class PartnerPolicyMappingPage extends BasePage {
 	@FindBy(xpath = "//h1[text()='View Partner-Policy Linking']")
 	private WebElement partnerPolicyDetailsPage;
 
-	@FindBy(id = "view_api_key_back_btn")
+	@FindBy(id = "view_partner_policy_request_back_btn")
 	private WebElement viewBackButton;
 
 	@FindBy(id = "partnerId_desc_icon")

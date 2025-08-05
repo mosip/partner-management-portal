@@ -9,112 +9,137 @@ import io.mosip.testrig.pmpuiv2.pages.BasePage;
 import io.mosip.testrig.pmpuiv2.pages.DashboardPage;
 import io.mosip.testrig.pmpuiv2.pages.LoginPage;
 import io.mosip.testrig.pmpuiv2.pages.PartnerCertificatePage;
+import io.mosip.testrig.pmpuiv2.pages.PoliciesPage;
+import io.mosip.testrig.pmpuiv2.pages.PolicyGroupPage;
 import io.mosip.testrig.pmpuiv2.pages.RegisterPage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
-public class PartnerAdminCreation extends BaseClass{
-	
+public class PartnerAdminCreation extends BaseClass {
+
 	private BasePage basePage;
 	private DashboardPage dashboardPage;
 	private LoginPage loginPage;
 	private PartnerCertificatePage partnerCertificatePage;
 
-	
 	@Test(priority = 1, description = "Creating Partner Admin")
 	public void partnerAdminCreation() {
-    dashboardPage = new DashboardPage(driver);
-	loginPage = new LoginPage(driver);
-	
-	RegisterPage registerPage = loginPage.clickRegisterButton();
-	assertTrue(loginPage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
-	loginPage.clickRegisterButton();
+		dashboardPage = new DashboardPage(driver);
+		loginPage = new LoginPage(driver);
 
-	registerPage.enterFirstName("pmpui-v2");
-	assertTrue(registerPage.isLastNameTextBoxDisplayed(), GlobalConstants.isLastNameTextBoxDisplayed);
-	registerPage.enterLastName("pmpui-v2");
+		RegisterPage registerPage = loginPage.clickRegisterButton();
+		assertTrue(loginPage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
+		loginPage.clickRegisterButton();
 
-	assertTrue(registerPage.isOrganizationNameDisplayed(), GlobalConstants.isOrganizationNameDisplayed);
-	registerPage.enterOrganizationName("AABBCC");
+		registerPage.enterFirstName("pmpui-v2");
+		assertTrue(registerPage.isLastNameTextBoxDisplayed(), GlobalConstants.isLastNameTextBoxDisplayed);
+		registerPage.enterLastName("pmpui-v2");
 
-	assertTrue(registerPage.isPartnerTypeDropdownDisplayed(), GlobalConstants.isPartnerTypeDropdownDisplayed);
-	registerPage.selectPartnerTypeDropdown(2);
+		assertTrue(registerPage.isOrganizationNameDisplayed(), GlobalConstants.isOrganizationNameDisplayed);
+		registerPage.enterOrganizationName("AABBCC");
 
-	assertTrue(registerPage.isAddressTextBoxDisplayed(), GlobalConstants.isAddressTextBoxDisplayed);
-	registerPage.enterAddress("0" + data);
+		assertTrue(registerPage.isPartnerTypeDropdownDisplayed(), GlobalConstants.isPartnerTypeDropdownDisplayed);
+		registerPage.selectDeviceProviderInPartnerTypeDropdown();
 
-	assertTrue(registerPage.isEmailTextBoxDisplayed(), GlobalConstants.isEmailTextBoxDisplayed);
-	registerPage.enterEmail("0" + data +"admin"+ "@gmail.com");
+		assertTrue(registerPage.isAddressTextBoxDisplayed(), GlobalConstants.isAddressTextBoxDisplayed);
+		registerPage.enterAddress("0" + data);
 
-	assertTrue(registerPage.isPhoneNumberTextboxDisplayed(), GlobalConstants.isPhoneNumberTextboxDisplayed);
-	registerPage.enterPhone("9876556789");
+		assertTrue(registerPage.isEmailTextBoxDisplayed(), GlobalConstants.isEmailTextBoxDisplayed);
+		registerPage.enterEmail("0" + data + "admin" + "@gmail.com");
 
-	assertTrue(registerPage.isNotificationLanguageDropdownDisplayed(),
-			GlobalConstants.isNotificationLanguageDropdownDisplayed);
-	registerPage.selectNotificationLanguageDropdown();
+		assertTrue(registerPage.isPhoneNumberTextboxDisplayed(), GlobalConstants.isPhoneNumberTextboxDisplayed);
+		registerPage.enterPhone("9876556789");
 
-	assertTrue(registerPage.isUsernameTextBoxDisplayed(), GlobalConstants.isUsernameTextBoxDisplayed);
-	registerPage.enterUsername("pmpui-v2");
+		assertTrue(registerPage.isNotificationLanguageDropdownDisplayed(),
+				GlobalConstants.isNotificationLanguageDropdownDisplayed);
+		registerPage.selectNotificationLanguageDropdown();
 
-	assertTrue(registerPage.isPasswordTextBoxDisplayed(), GlobalConstants.isPasswordTextBoxDisplayed);
-	registerPage.enterPassword("mosip123");
+		assertTrue(registerPage.isUsernameTextBoxDisplayed(), GlobalConstants.isUsernameTextBoxDisplayed);
+		registerPage.enterUsername("pmpui-v2");
 
-	assertTrue(registerPage.isPasswordConfirmTextBoxDisplayed(), GlobalConstants.isPasswordConfirmTextBoxDisplayed);
-	registerPage.enterPasswordConfirm("mosip123");
+		assertTrue(registerPage.isPasswordTextBoxDisplayed(), GlobalConstants.isPasswordTextBoxDisplayed);
+		registerPage.enterPassword("mosip123");
 
-	assertTrue(registerPage.isSubmitButtonDisplayed(), GlobalConstants.isSubmitButtonDisplayed);
-	dashboardPage = registerPage.clickSubmitButton();
-	
-	KeycloakUserManager.assignRole("pmpui-v2", "PARTNER_ADMIN");
-	
-	dashboardPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULTPOLICYGROUP);
-	assertTrue(dashboardPage.isSubmitButtonSelectPolicyGroupPopUpDisplayed(),
-			GlobalConstants.isSubmitButtonDisplayed);
-	dashboardPage.clickOnSubmitButton();
+		assertTrue(registerPage.isPasswordConfirmTextBoxDisplayed(), GlobalConstants.isPasswordConfirmTextBoxDisplayed);
+		registerPage.enterPasswordConfirm("mosip123");
 
-	assertTrue(dashboardPage.isTermsAndConditionsPopUppDisplayed(),
-			GlobalConstants.isTermsAndConditionsPopUppDisplayed);
-	dashboardPage.clickOnCheckbox();
-	assertTrue(dashboardPage.isProceedButtonDisplayed(), GlobalConstants.isProceedButtonDisplayed);
-	dashboardPage.clickOnProceedButton();
+		assertTrue(registerPage.isSubmitButtonDisplayed(), GlobalConstants.isSubmitButtonDisplayed);
+		dashboardPage = registerPage.clickSubmitButton();
 
-}
-	
+		KeycloakUserManager.assignRole("pmpui-v2", "PARTNER_ADMIN");
+
+//	dashboardPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULTPOLICYGROUP);
+//	assertTrue(dashboardPage.isSubmitButtonSelectPolicyGroupPopUpDisplayed(),
+//			GlobalConstants.isSubmitButtonDisplayed);
+//	dashboardPage.clickOnSubmitButton();
+
+		assertTrue(dashboardPage.isTermsAndConditionsPopUppDisplayed(),
+				GlobalConstants.isTermsAndConditionsPopUppDisplayed);
+		dashboardPage.clickOnCheckbox();
+		assertTrue(dashboardPage.isProceedButtonDisplayed(), GlobalConstants.isProceedButtonDisplayed);
+		dashboardPage.clickOnProceedButton();
+
+	}
+
 	@Test(priority = 2, description = "Uploading Trust Certificate")
 	public void uploadTrustCertificate() {
 
 		dashboardPage = new DashboardPage(driver);
 		partnerCertificatePage = new PartnerCertificatePage(driver);
-		
+
 		dashboardPage.clickOnCertificateTrustStore();
-		dashboardPage.clickOnRootCertificateUploadButton();
+		partnerCertificatePage.clickOnRootUploadTrustCertificateButtonInAdmin();
 		partnerCertificatePage.clickOnpartnerDomainSelectorDropdown();
-		partnerCertificatePage.clickOnpartnerpartnerDomainSelectorDropdownOptionAuth();
+		partnerCertificatePage.clickOnDeviceInPartnerDomainSelectorDropdown();
 
 		partnerCertificatePage.uploadCertificateSubCa();
-		partnerCertificatePage.ClickonSubmitButtonForAdmin();
+		partnerCertificatePage.clickonSubmitButtonForAdmin();
 		assertTrue(partnerCertificatePage.isUploadRootCertificateFirstErrorMessageDisplayed(),
 				GlobalConstants.isUploadRootCertificateFirstErrorMessageDisplayed);
 		partnerCertificatePage.clickOnErrorCloseButton();
 		partnerCertificatePage.clickOnRemoveCertificateButton();
 
 		partnerCertificatePage.uploadCertificateRootCa();
-		partnerCertificatePage.ClickonSubmitButtonForAdmin();
+		partnerCertificatePage.clickonSubmitButtonForAdmin();
 		assertTrue(partnerCertificatePage.isUploadedSuccessfullyMessageDisplayed(),
 				GlobalConstants.isUploadedSuccessfullyMessageDisplayed);
 		assertTrue(partnerCertificatePage.isSuccessIconDisplayed(), GlobalConstants.isSuccessIconDisplayed);
-		partnerCertificatePage.ClickOnGoBackButton();
+		partnerCertificatePage.clickOnGoBackButton();
 
-		dashboardPage.clickOnRootCertificateUploadButton();
+		partnerCertificatePage.clickOnIntermediateCACertTab();
+		partnerCertificatePage.clickOnIntermediateUploadTrustCertificateButtonInAdmin();
 		partnerCertificatePage.clickOnpartnerDomainSelectorDropdown();
-		partnerCertificatePage.clickOnpartnerpartnerDomainSelectorDropdownOptionAuth();
+		partnerCertificatePage.clickOnDeviceInPartnerDomainSelectorDropdown();
 		partnerCertificatePage.uploadCertificateSubCa();
-		partnerCertificatePage.ClickonSubmitButtonForAdmin();
-		partnerCertificatePage.ClickOnGoBackButton();
+		partnerCertificatePage.clickonSubmitButtonForAdmin();
+		partnerCertificatePage.clickOnGoBackButton();
 		dashboardPage.clickOnProfileDropdown();
 		assertTrue(dashboardPage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
 		dashboardPage.clickOnLogoutButton();
 	}
-	
-	
+
+	@Test(priority = 3, description = "Create Default Policy Group")
+	public void createDefaultPolicyGroup() {
+
+		DashboardPage dashboardPage = new DashboardPage(driver);
+		PoliciesPage policiesPage = new PoliciesPage(driver);
+		PolicyGroupPage policygroupPage = new PolicyGroupPage(driver);
+
+		dashboardPage.clickOnPolicyButton();
+		assertTrue(policiesPage.isPoliciesPolicyGroupTabDisplayed(), GlobalConstants.isPoliciesPolicyGroupTabDisplayed);
+
+		policygroupPage.clickOnCreatePolicyGroupButton();
+		assertTrue(policygroupPage.isPolicyGroupNameTextboxDisplayed(),
+				GlobalConstants.isPolicyGroupNameTextboxDisplayed);
+		policygroupPage.enterPolicyGroupName(GlobalConstants.DEFAULTPOLICYGROUP);
+		assertTrue(policygroupPage.isPolicyGroupNameDescriptionTextboxDisplayed(),
+				GlobalConstants.isPolicyGroupNameDescriptionTextboxDisplayed);
+		policygroupPage.enterPolicyGroupNameDescription(GlobalConstants.DEFAULTPOLICYGROUP_DESC);
+		policygroupPage.clickOnSubmitButton();
+		assertTrue(policygroupPage.isPolicyGroupSuccessMessageDisplayed(),
+				GlobalConstants.isPolicyGroupSuccessMessageDisplayed);
+		policygroupPage.clickOnSuccessHomeButton();
+
+	}
+
 }

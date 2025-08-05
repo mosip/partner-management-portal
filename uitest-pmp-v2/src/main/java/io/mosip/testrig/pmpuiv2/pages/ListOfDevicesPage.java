@@ -101,10 +101,10 @@ public class ListOfDevicesPage extends BasePage {
 	@FindBy(id = "filter_btn")
 	private WebElement filterButton;
 
-	@FindBy(id = "device_list_filter_status")
+	@FindBy(id = "device_list_filter_status_dropdown_btn")
 	private WebElement statusFilter;
 
-	@FindBy(id = "device_list_filter_device_type")
+	@FindBy(id = "device_list_filter_device_type_dropdown_btn")
 	private WebElement deviceTypeFilter;
 
 	@FindBy(id = "deactivate_submit_btn")
@@ -212,10 +212,10 @@ public class ListOfDevicesPage extends BasePage {
 	@FindBy(id = "approve_reject_popup_close_icon")
 	private WebElement approvePopupCloseIcon;
 
-	@FindBy(id = "device_list_filter_make")
+	@FindBy(id = "device_list_filter_make_dropdown_btn")
 	private WebElement deviceMakeFilter;
 
-	@FindBy(id = "device_list_filter_model")
+	@FindBy(id = "device_list_filter_model_dropdown_btn")
 	private WebElement deviceModelFilter;
 
 	@FindBy(id = "device_list_filter_make_search_input")

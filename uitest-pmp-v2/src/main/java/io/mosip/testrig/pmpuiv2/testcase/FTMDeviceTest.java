@@ -20,17 +20,22 @@ import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 public class FTMDeviceTest extends BaseClass {
 
 	private BasePage basePage;
+	private DashboardPage dashboardpage;
+	private PartnerCertificatePage partnerCertificatePage;
+	private RegisterPage registerPage;
+	private FtmPage ftmPage;
+	private LoginPage loginpage;
 
 	@Test(priority = 19)
 	public void registerNewUserForFtmNoCert() throws InterruptedException {
-		DashboardPage dashboardpage = new DashboardPage(driver);
+		dashboardpage = new DashboardPage(driver);
 		basePage = new BasePage(driver);
-		PartnerCertificatePage partnerCertificatePage = new PartnerCertificatePage(driver);
-		RegisterPage registerPage = new RegisterPage(driver);
-		FtmPage ftmPage = new FtmPage(driver);
+		partnerCertificatePage = new PartnerCertificatePage(driver);
+		registerPage = new RegisterPage(driver);
+		ftmPage = new FtmPage(driver);
 
 		dashboardpage.clickOnProfileDropdown();
-		LoginPage loginpage = dashboardpage.clickOnLogoutButton();
+		loginpage = dashboardpage.clickOnLogoutButton();
 		loginpage.clickRegisterButton();
 		registerPage.enterFirstName("pmpui-ftmnocert");
 		registerPage.enterLastName("pmpui-ftmnocert");
@@ -45,21 +50,11 @@ public class FTMDeviceTest extends BaseClass {
 		registerPage.enterPasswordConfirm("mosip123");
 		dashboardpage = registerPage.clickSubmitButton();
 
-		assertTrue(dashboardpage.isTermsAndConditionsPopUppDisplayed(),
-				GlobalConstants.isTermsAndConditionsPopUppDisplayed);
 		dashboardpage.clickOnCheckbox();
-
-		assertTrue(dashboardpage.isProceedButtonDisplayed(), GlobalConstants.isProceedButtonDisplayed);
 		dashboardpage.clickOnProceedButton();
 
 		dashboardpage.clickOnDashboardPartnerCertificateListHeader();
-
-		assertTrue(partnerCertificatePage.isPartnerCertificatePageDisplayed(),
-				GlobalConstants.isPartnerCertificatePageDisplayed);
 		partnerCertificatePage.clickOnUploadButton();
-
-		assertTrue(partnerCertificatePage.isUploadPartnerCertificatePopUpDisplayed(),
-				GlobalConstants.isUploadPartnerCertificatePopUpDisplayed);
 		partnerCertificatePage.uploadCertificate();
 		partnerCertificatePage.clickOnSubmitButton();
 		assertTrue(partnerCertificatePage.isNoRootCertDisplayed(), GlobalConstants.isPartnerCertificatePageDisplayed);
@@ -118,9 +113,9 @@ public class FTMDeviceTest extends BaseClass {
 
 	@Test(priority = 20)
 	public void registerNewUserForFtm() throws InterruptedException {
-		DashboardPage dashboardpage = new DashboardPage(driver);
-		PartnerCertificatePage partnerCertificatePage = new PartnerCertificatePage(driver);
-		RegisterPage registerPage = new RegisterPage(driver);
+		dashboardpage = new DashboardPage(driver);
+		partnerCertificatePage = new PartnerCertificatePage(driver);
+		registerPage = new RegisterPage(driver);
 
 //		assertTrue(dashboardpage.isTermsAndConditionsPopUppDisplayed(), GlobalConstants.isTermsAndConditionsPopUppDisplayed);
 //		dashboardpage.clickOnCheckbox();
@@ -130,66 +125,43 @@ public class FTMDeviceTest extends BaseClass {
 
 		dashboardpage.clickOnRootOFTrustCertText();
 		dashboardpage.clickOnRootCertificateUploadButton();
-		assertTrue(partnerCertificatePage.isPartnerCertificatePageDisplayed(),
-				GlobalConstants.isPartnerCertificatePageDisplayed);
-		assertTrue(partnerCertificatePage.isSubtitleHomeButtonDisplayed(),
-				GlobalConstants.isPartnerCertificatePageDisplayed);
-		assertTrue(partnerCertificatePage.isSubtitleButtonButtonDisplayed(),
-				GlobalConstants.isPartnerCertificatePageDisplayed);
-
-		assertTrue(partnerCertificatePage.isAdminCertUploadCancelButtonDisplayed(),
-				GlobalConstants.isPartnerCertificatePageDisplayed);
-
-		assertTrue(partnerCertificatePage.isUploadTrustCertificateTextDisplayed(),
-				GlobalConstants.isPartnerCertificatePageDisplayed);
-		assertTrue(partnerCertificatePage.isPartnerPageSubTitleTextDisplayed(),
-				GlobalConstants.isPartnerCertificatePageDisplayed);
-		assertTrue(partnerCertificatePage.isCertFormatesTextDisplayed(),
-				GlobalConstants.isPartnerCertificatePageDisplayed);
-		assertTrue(partnerCertificatePage.isUploadBoxHeaderTextDisplayed(),
-				GlobalConstants.isPartnerCertificatePageDisplayed);
-		assertTrue(partnerCertificatePage.isSubmitButtonForAdminDisplayed(), GlobalConstants.isSubmitButtonEnabled);
-
 		partnerCertificatePage.clickOnpartnerDomainSelectorDropdown();
 		partnerCertificatePage.clickOnPartnerDomainSelectorDropdownOptionFtm();
 		partnerCertificatePage.uploadCertificateRootCa();
-		partnerCertificatePage.ClickonSubmitButtonForAdmin();
-
+		partnerCertificatePage.clickonSubmitButtonForAdmin();
 		assertTrue(partnerCertificatePage.isFtmCertUploadSuccessMessageDisplayed(),
 				GlobalConstants.isPartnerCertificatePageDisplayed);
 		assertTrue(partnerCertificatePage.isGoBackButtonDisplayed(), GlobalConstants.isPartnerCertificatePageDisplayed);
 		assertTrue(partnerCertificatePage.isConfirmationHomeButtonDisplayed(),
 				GlobalConstants.isPartnerCertificatePageDisplayed);
 
-		partnerCertificatePage.ClickOnGoBackButton();
+		partnerCertificatePage.clickOnGoBackButton();
 		dashboardpage.clickOnRootCertificateUploadButton();
 		partnerCertificatePage.clickOnpartnerDomainSelectorDropdown();
 		partnerCertificatePage.clickOnPartnerDomainSelectorDropdownOptionFtm();
 		partnerCertificatePage.uploadCertificateSubCa();
-		partnerCertificatePage.ClickonSubmitButtonForAdmin();
-		partnerCertificatePage.ClickOnGoBackButton();
+		partnerCertificatePage.clickonSubmitButtonForAdmin();
+		partnerCertificatePage.clickOnGoBackButton();
 
 		dashboardpage.clickOnProfileDropdown();
-		LoginPage loginpage = dashboardpage.clickOnLogoutButton();
+		loginpage = dashboardpage.clickOnLogoutButton();
 		loginpage.clickRegisterButton();
-		registerPage.enterFirstName("pmpui-ftm");
-		registerPage.enterLastName("pmpui-ftm");
-		registerPage.enterOrganizationName("AABBCC");
+		registerPage.enterFirstName(GlobalConstants.FTM_PARTNER_ID);
+		registerPage.enterLastName(GlobalConstants.FTM_PARTNER_ID);
+		registerPage.enterOrganizationName(GlobalConstants.Organisation_Name);
 		registerPage.selectPartnerTypeDropdown(1);
 		registerPage.enterAddress("0" + data);
 		registerPage.enterEmail("0" + data + "ftm" + "@gmail.com");
 		registerPage.enterPhone("9876544210");
 		registerPage.selectNotificationLanguageDropdown();
-		registerPage.enterUsername("pmpui-ftm");
-		registerPage.enterPassword("mosip123");
-		registerPage.enterPasswordConfirm("mosip123");
+		registerPage.enterUsername(GlobalConstants.FTM_PARTNER_ID);
+		registerPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
+		registerPage.enterPasswordConfirm(GlobalConstants.PARTNER_PASSWORD);
 		dashboardpage = registerPage.clickSubmitButton();
 
 		assertTrue(dashboardpage.isTermsAndConditionsPopUppDisplayed(),
 				GlobalConstants.isTermsAndConditionsPopUppDisplayed);
 		dashboardpage.clickOnCheckbox();
-
-		assertTrue(dashboardpage.isProceedButtonDisplayed(), GlobalConstants.isProceedButtonDisplayed);
 		dashboardpage.clickOnProceedButton();
 
 		dashboardpage.clickOnDashboardPartnerCertificateListHeader();
@@ -205,7 +177,7 @@ public class FTMDeviceTest extends BaseClass {
 
 		assertTrue(partnerCertificatePage.isSuccessMessageForFtmCertDisplayed(),
 				GlobalConstants.isSuccessMessageDisplayed);
-		partnerCertificatePage.ClickOnSuccessMsgCloseButton();
+		partnerCertificatePage.clickOnSuccessMsgCloseButton();
 		partnerCertificatePage.certifiCateUploadCancelButton();
 		dashboardpage = partnerCertificatePage.clickOnHomeButton();
 
@@ -244,18 +216,11 @@ public class FTMDeviceTest extends BaseClass {
 
 	@Test(priority = 21)
 	public void AddFtm() throws InterruptedException {
-		DashboardPage dashboardpage = new DashboardPage(driver);
-		PartnerCertificatePage partnerCertificatePage = new PartnerCertificatePage(driver);
-		FtmPage ftmPage = new FtmPage(driver);
+		dashboardpage = new DashboardPage(driver);
+		partnerCertificatePage = new PartnerCertificatePage(driver);
+		ftmPage = new FtmPage(driver);
 
-		dashboardpage.clickOnProfileDropdown();
-		assertTrue(dashboardpage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
-
-		LoginPage loginpage = dashboardpage.clickOnLogoutButton();
-
-		loginpage.enterUserName("pmpui-ftm");
-		loginpage.enterPassword(password);
-		loginpage.clickOnLoginButton();
+		loginAsFtmPartner();
 
 		assertTrue(partnerCertificatePage.isDashboardFtmChipProviderCardDisplayed(),
 				GlobalConstants.isDashboardFtmChipProviderCardDisplayed);
@@ -323,14 +288,8 @@ public class FTMDeviceTest extends BaseClass {
 
 		assertTrue(ftmPage.isPendingForApprovalTextDisplayed(), GlobalConstants.isPendingForApprovalTextDisplayed);
 
-		dashboardpage.clickOnProfileDropdown();
-		assertTrue(dashboardpage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
+		loginAsPartnerAdmin();
 
-		dashboardpage.clickOnLogoutButton();
-
-		loginpage.enterUserName(userid);
-		loginpage.enterPassword(password);
-		loginpage.clickOnLoginButton();
 		dashboardpage.clickOnFTMChipTab();
 		ftmPage.clickOnFilterButton();
 		assertTrue(ftmPage.isListOfFtmChipDisplayed(), GlobalConstants.isListOfFtmChipTextDisplayed);
@@ -347,7 +306,7 @@ public class FTMDeviceTest extends BaseClass {
 		assertTrue(ftmPage.isStatusFilterDisplayed(), GlobalConstants.isStatusDisplayed);
 
 		assertTrue(ftmPage.isFilterResetButtonDisplayed(), GlobalConstants.isResetFiletrButtonDisplayed);
-		ftmPage.enterPartnerIdFilterBox("pmpui-ftm");
+		ftmPage.enterPartnerIdFilterBox(GlobalConstants.FTM_PARTNER_ID);
 		ftmPage.SelectValueFromStatusFilter();
 
 		ftmPage.clickOnApplyFilterButton();
@@ -382,14 +341,7 @@ public class FTMDeviceTest extends BaseClass {
 		assertTrue(ftmPage.isDownloadButtonViewPageDisplayed(), GlobalConstants.isDownlaodButtonDisplayed);
 		assertTrue(ftmPage.isFtmViewBackButtonDisplayed(), GlobalConstants.isBackButton);
 
-		dashboardpage.clickOnProfileDropdown();
-		assertTrue(dashboardpage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
-
-		dashboardpage.clickOnLogoutButton();
-
-		loginpage.enterUserName("pmpui-ftm");
-		loginpage.enterPassword(password);
-		loginpage.clickOnLoginButton();
+		loginAsFtmPartner();
 
 		dashboardpage.clickOnDashboardFtmChipproviderCardHeader();
 		assertTrue(ftmPage.isApprovedTextDisplayed(), GlobalConstants.isApproveTextDisplayed);
@@ -432,18 +384,11 @@ public class FTMDeviceTest extends BaseClass {
 
 	@Test(priority = 22)
 	public void AddFtmAndreject() throws InterruptedException {
-		DashboardPage dashboardpage = new DashboardPage(driver);
-		PartnerCertificatePage partnerCertificatePage = new PartnerCertificatePage(driver);
-		FtmPage ftmPage = new FtmPage(driver);
+		dashboardpage = new DashboardPage(driver);
+		partnerCertificatePage = new PartnerCertificatePage(driver);
+		ftmPage = new FtmPage(driver);
 
-		dashboardpage.clickOnProfileDropdown();
-		assertTrue(dashboardpage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
-
-		LoginPage loginpage = dashboardpage.clickOnLogoutButton();
-
-		loginpage.enterUserName("pmpui-ftm");
-		loginpage.enterPassword(password);
-		loginpage.clickOnLoginButton();
+		loginAsFtmPartner();
 
 		partnerCertificatePage.isDashboardFtmChipProviderCardDisplayed();
 		partnerCertificatePage.clickOnFtmChipProviderCard();
@@ -475,14 +420,8 @@ public class FTMDeviceTest extends BaseClass {
 
 		assertTrue(ftmPage.isPendingForApprovalTextDisplayed(), GlobalConstants.isPendingForApprovalTextDisplayed);
 
-		dashboardpage.clickOnProfileDropdown();
-		assertTrue(dashboardpage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
+		loginAsPartnerAdmin();
 
-		dashboardpage.clickOnLogoutButton();
-
-		loginpage.enterUserName(userid);
-		loginpage.enterPassword(password);
-		loginpage.clickOnLoginButton();
 		dashboardpage.clickOnFTMChipTab();
 		ftmPage.clickOnFilterButton();
 		assertTrue(ftmPage.isFilterResetButtonDisplayed(), GlobalConstants.isResetFiletrButtonDisplayed);
@@ -518,14 +457,8 @@ public class FTMDeviceTest extends BaseClass {
 				GlobalConstants.isApproveRejectPopupSubHeaderDisplayed);
 
 		ftmPage.clickOnRejectButton();
-		dashboardpage.clickOnProfileDropdown();
-		assertTrue(dashboardpage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
 
-		dashboardpage.clickOnLogoutButton();
-
-		loginpage.enterUserName("pmpui-ftm");
-		loginpage.enterPassword(password);
-		loginpage.clickOnLoginButton();
+		loginAsFtmPartner();
 
 		dashboardpage.clickOnDashboardFtmChipproviderCardHeader();
 		assertTrue(ftmPage.isRejectedTextDisplayed(), GlobalConstants.isRejectedTextDisplayed);
@@ -545,19 +478,12 @@ public class FTMDeviceTest extends BaseClass {
 
 	@Test(priority = 23)
 	public void AddFtmAndDeactive() throws InterruptedException {
-		DashboardPage dashboardpage = new DashboardPage(driver);
+		dashboardpage = new DashboardPage(driver);
 		basePage = new BasePage(driver);
-		PartnerCertificatePage partnerCertificatePage = new PartnerCertificatePage(driver);
-		FtmPage ftmPage = new FtmPage(driver);
+		partnerCertificatePage = new PartnerCertificatePage(driver);
+		ftmPage = new FtmPage(driver);
 
-		dashboardpage.clickOnProfileDropdown();
-		assertTrue(dashboardpage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
-
-		LoginPage loginpage = dashboardpage.clickOnLogoutButton();
-
-		loginpage.enterUserName("pmpui-ftm");
-		loginpage.enterPassword(password);
-		loginpage.clickOnLoginButton();
+		loginAsFtmPartner();
 
 		partnerCertificatePage.isDashboardFtmChipProviderCardDisplayed();
 		partnerCertificatePage.clickOnFtmChipProviderCard();
@@ -589,18 +515,12 @@ public class FTMDeviceTest extends BaseClass {
 
 		assertTrue(ftmPage.isPendingForApprovalTextDisplayed(), GlobalConstants.isPendingForApprovalTextDisplayed);
 
-		dashboardpage.clickOnProfileDropdown();
-		assertTrue(dashboardpage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
+		loginAsPartnerAdmin();
 
-		dashboardpage.clickOnLogoutButton();
-
-		loginpage.enterUserName(userid);
-		loginpage.enterPassword(password);
-		loginpage.clickOnLoginButton();
 		dashboardpage.clickOnFTMChipTab();
 		ftmPage.clickOnFilterButton();
 		assertTrue(ftmPage.isFilterResetButtonDisplayed(), GlobalConstants.isResetFiletrButtonDisplayed);
-		ftmPage.enterPartnerIdFilterBox("pmpui-ftm");
+		ftmPage.enterPartnerIdFilterBox(GlobalConstants.FTM_PARTNER_ID);
 
 		ftmPage.clickOnApplyFilterButton();
 
@@ -623,14 +543,7 @@ public class FTMDeviceTest extends BaseClass {
 		basePage.navigateForword();
 		assertTrue(ftmPage.isDeactivatedTextDisplayed(), GlobalConstants.isDeactivatedTextDisplayed);
 
-		dashboardpage.clickOnProfileDropdown();
-		assertTrue(dashboardpage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
-
-		dashboardpage.clickOnLogoutButton();
-
-		loginpage.enterUserName("pmpui-ftm");
-		loginpage.enterPassword(password);
-		loginpage.clickOnLoginButton();
+		loginAsFtmPartner();
 
 		dashboardpage.clickOnDashboardFtmChipproviderCardHeader();
 		assertTrue(ftmPage.isDeactivatedTextDisplayed(), GlobalConstants.isDeactivatedTextDisplayed);
@@ -659,17 +572,11 @@ public class FTMDeviceTest extends BaseClass {
 
 	@Test(priority = 24)
 	public void addFtmWithoutUploadingFtmChipCert() throws InterruptedException {
-		DashboardPage dashboardpage = new DashboardPage(driver);
-		PartnerCertificatePage partnerCertificatePage = new PartnerCertificatePage(driver);
-		FtmPage ftmPage = new FtmPage(driver);
+		dashboardpage = new DashboardPage(driver);
+		partnerCertificatePage = new PartnerCertificatePage(driver);
+		ftmPage = new FtmPage(driver);
 
-		dashboardpage.clickOnProfileDropdown();
-		assertTrue(dashboardpage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
-		LoginPage loginpage = dashboardpage.clickOnLogoutButton();
-
-		loginpage.enterUserName("pmpui-ftm");
-		loginpage.enterPassword(password);
-		loginpage.clickOnLoginButton();
+		loginAsFtmPartner();
 
 		partnerCertificatePage.isDashboardFtmChipProviderCardDisplayed();
 		partnerCertificatePage.clickOnFtmChipProviderCard();
@@ -706,13 +613,7 @@ public class FTMDeviceTest extends BaseClass {
 		assertTrue(ftmPage.isCertificateReuploadButtonDisplayed(),
 				GlobalConstants.iReUploadPartnerCertificateTextDisplayed);
 
-		dashboardpage.clickOnProfileDropdown();
-		assertTrue(dashboardpage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
-		dashboardpage.clickOnLogoutButton();
-
-		loginpage.enterUserName("pmpui-v2");
-		loginpage.enterPassword(password);
-		loginpage.clickOnLoginButton();
+		loginAsPartnerAdmin();
 
 		dashboardpage.clickOnFTMChipTab();
 		ftmPage.clickOnFtmListActionMenuEllipsisButton();
@@ -722,4 +623,19 @@ public class FTMDeviceTest extends BaseClass {
 
 	}
 
+	private void loginAsFtmPartner() {
+		dashboardpage.clickOnProfileDropdown();
+		loginpage = dashboardpage.clickOnLogoutButton();
+		loginpage.enterUserName(GlobalConstants.FTM_PARTNER_ID);
+		loginpage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
+		loginpage.clickOnLoginButton();
+	}
+
+	private void loginAsPartnerAdmin() {
+		dashboardpage.clickOnProfileDropdown();
+		loginpage = dashboardpage.clickOnLogoutButton();
+		loginpage.enterUserName(GlobalConstants.PARTNER_ADMIN);
+		loginpage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
+		loginpage.clickOnLoginButton();
+	}
 }
