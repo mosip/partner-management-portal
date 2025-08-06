@@ -12,7 +12,7 @@ public class AuthPolicyPage extends BasePage {
 	@FindBy(id = "create_auth_policy_btn")
 	private WebElement createAuthPolicyButton;
 
-	@FindBy(id = "policy_group_dropdown")
+	@FindBy(id = "policy_group_dropdown_dropdown_btn")
 	private WebElement policyGroupDropdown;
 
 	@FindBy(id = "policy_group_dropdown_search_input")
@@ -183,7 +183,7 @@ public class AuthPolicyPage extends BasePage {
 	@FindBy(xpath = "//span[text()='Select Status']")
 	private WebElement selectStatus;
 
-	@FindBy(id = "status_filter")
+	@FindBy(id = "status_filter_dropdown_btn")
 	private WebElement statusFilter;
 
 	@FindBy(id = "status_filter_option1")
@@ -357,7 +357,7 @@ public class AuthPolicyPage extends BasePage {
 	@FindBy(xpath = "//p[contains(text(), 'Select the policy group to nest the cloned policy')]")
 	private WebElement clonePolicyInfoMessage;
 
-	@FindBy(id = "clone_policy_group_dropdown")
+	@FindBy(id = "clone_policy_group_dropdown_dropdown_btn")
 	private WebElement clonePolicyGroupDropdown;
 
 	@FindBy(id = "clone_policy_group_dropdown_search_input")

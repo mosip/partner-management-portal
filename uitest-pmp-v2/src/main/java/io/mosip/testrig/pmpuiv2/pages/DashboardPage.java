@@ -81,7 +81,7 @@ public class DashboardPage extends BasePage {
 	@FindBy(xpath = "//h5[text()='Certificate Trust Store']")
 	private WebElement RootOFTrustCertText;
 
-	@FindBy(id = "rootTrustList.uploadRootCaTrust")
+	@FindBy(id = "root_upload_trust_certificate_btn")
 	private WebElement rootCertificateUploadButton;
 
 	@FindBy(xpath = "//h5[text()='Policies']")
@@ -137,6 +137,15 @@ public class DashboardPage extends BasePage {
 
 	@FindBy(xpath = "//button[contains(@class, 'bg-blue-50') and contains(@class, 'cursor-pointer')]")
 	private WebElement notificationIcon;
+
+	@FindBy(id = "root_upload_trust_certificate_btn")
+	private WebElement uploadTrustCertificate;
+
+	@FindBy(xpath = "//p[normalize-space()='2024 © MOSIP - All rights reserved.']")
+	private WebElement mosipRightsText;
+
+	@FindBy(id = "footer_documentation_link")
+	private WebElement footerDocumentationLink;
 
 	public DashboardPage(WebDriver driver) {
 		super(driver);
@@ -273,6 +282,10 @@ public class DashboardPage extends BasePage {
 		clickOnElement(rootCertificateUploadButton);
 	}
 
+	public void clickOnploadTrustCertificateButton() {
+		clickOnElement(uploadTrustCertificate);
+	}
+
 	public void clickOnPolicyButton() {
 		clickOnElement(policyButton);
 	}
@@ -394,5 +407,13 @@ public class DashboardPage extends BasePage {
 	public NotificationPage clickOnNotificationIcon() {
 		clickOnElement(notificationIcon);
 		return new NotificationPage(driver);
+	}
+
+	public boolean isMosipRightsTextDisplayed() {
+		return isElementDisplayed(mosipRightsText);
+	}
+
+	public boolean isFooterDocumentationLinkDisplayed() {
+		return isElementDisplayed(footerDocumentationLink);
 	}
 }

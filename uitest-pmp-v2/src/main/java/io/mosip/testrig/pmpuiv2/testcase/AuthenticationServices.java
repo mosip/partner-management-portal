@@ -11,23 +11,28 @@ import io.mosip.testrig.pmpuiv2.pages.ApiKeyPage;
 import io.mosip.testrig.pmpuiv2.pages.AuthPolicyPage;
 import io.mosip.testrig.pmpuiv2.pages.BasePage;
 import io.mosip.testrig.pmpuiv2.pages.DashboardPage;
+import io.mosip.testrig.pmpuiv2.pages.FtmPage;
 import io.mosip.testrig.pmpuiv2.pages.LoginPage;
 import io.mosip.testrig.pmpuiv2.pages.OidcClientPage;
-import io.mosip.testrig.pmpuiv2.pages.PoliciesPage;
-import io.mosip.testrig.pmpuiv2.pages.PolicyGroupPage;
+import io.mosip.testrig.pmpuiv2.pages.PartnerCertificatePage;
+import io.mosip.testrig.pmpuiv2.pages.RegisterPage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
 public class AuthenticationServices extends BaseClass {
+	private BasePage basePage;
+	private DashboardPage dashboardPage;
+	private ApiKeyPage apiKeyPage;
+	private AuthPolicyPage authPolicyPage;
+	private OidcClientPage oidcClientPage;
+	private LoginPage loginPage;
 
 	@Test(priority = 1, description = "Oidc Client Deactivate")
 	public void oidcClientDeactivate() {
 
-		DashboardPage dashboardPage = new DashboardPage(driver);
-		LoginPage loginPage = new LoginPage(driver);
-		OidcClientPage oidcClientPage = dashboardPage.clickOnAuthenticationServices();
-		
-		
+		dashboardPage = new DashboardPage(driver);
+		loginPage = new LoginPage(driver);
+		oidcClientPage = dashboardPage.clickOnAuthenticationServices();
 
 		oidcClientPage.clickOnFilterButton();
 		oidcClientPage.enterPartnerIdInFilter(GlobalConstants.AUTHPARTNER);
@@ -84,12 +89,7 @@ public class AuthenticationServices extends BaseClass {
 		assertTrue(oidcClientPage.isDeactivatedOidcClientIdElementDisplayed(),
 				GlobalConstants.isDeactivatedOidcClientIdElementDisplayed);
 
-		dashboardPage.clickOnProfileDropdown();
-		LoginPage loginpage = dashboardPage.clickOnLogoutButton();
-
-		loginPage.enterUserName("pmpui-auth");
-		loginPage.enterPassword(password);
-		loginPage.clickOnLoginButton();
+		loginAsAuthPartner();
 
 		dashboardPage.clickOnAuthenticationServicesTitle();
 		oidcClientPage.listPageCreateOidcClientButton();
@@ -110,8 +110,8 @@ public class AuthenticationServices extends BaseClass {
 	@Test(priority = 1, description = "Oidc Client Tabular View")
 	public void oidcClientTabularView() {
 
-		DashboardPage dashboardPage = new DashboardPage(driver);
-		AuthPolicyPage authPolicyPage = new AuthPolicyPage(driver);
+		dashboardPage = new DashboardPage(driver);
+		authPolicyPage = new AuthPolicyPage(driver);
 
 		assertTrue(dashboardPage.isAuthenticationServicesDisplayed(),
 				GlobalConstants.isAuthenticationServicesDisplayed);
@@ -298,9 +298,9 @@ public class AuthenticationServices extends BaseClass {
 	@Test(priority = 3, description = "Oidc Client View Details")
 	public void oidcClientViewDetails() {
 
-		DashboardPage dashboardpage = new DashboardPage(driver);
+		dashboardPage = new DashboardPage(driver);
 
-		OidcClientPage oidcClientPage = dashboardpage.clickOnAuthenticationServices();
+		oidcClientPage = dashboardPage.clickOnAuthenticationServices();
 		oidcClientPage.clickOnFilterButton();
 		oidcClientPage.enterPartnerIdInFilter(GlobalConstants.AUTHPARTNER);
 		oidcClientPage.enterPolicyGroupInFilter(GlobalConstants.DEFAULTPOLICYGROUP);
@@ -408,11 +408,11 @@ public class AuthenticationServices extends BaseClass {
 	@Test(priority = 4, description = "ApiKey Deactivate")
 	public void apiKeyDeactivate() {
 
-		DashboardPage dashboardPage = new DashboardPage(driver);
-		LoginPage loginPage = new LoginPage(driver);
-		ApiKeyPage apiKeyPage = new ApiKeyPage(driver);
-		OidcClientPage oidcClientPage = dashboardPage.clickOnAuthenticationServices();
-		BasePage basePage = new BasePage(driver);
+		dashboardPage = new DashboardPage(driver);
+		loginPage = new LoginPage(driver);
+		apiKeyPage = new ApiKeyPage(driver);
+		oidcClientPage = dashboardPage.clickOnAuthenticationServices();
+		basePage = new BasePage(driver);
 
 		assertTrue(oidcClientPage.isOidcClientTabDisplayed(), GlobalConstants.isOidcClientTabDisplayed);
 		assertTrue(oidcClientPage.isApiKeyTabDisplayed(), GlobalConstants.isApiKeyTabDisplayed);
@@ -420,7 +420,7 @@ public class AuthenticationServices extends BaseClass {
 		apiKeyPage.clickOnFilterButton();
 		apiKeyPage.enterPartnerIdInFilter(GlobalConstants.AUTHPARTNER);
 		apiKeyPage.enterPolicyGroupInFilter(GlobalConstants.DEFAULTPOLICYGROUP);
-		apiKeyPage.enterValidApiKeyNameInFilter(GlobalConstants.DEACTIVATE_APIKEY);
+		apiKeyPage.enterValidApiKeyNameInAdminFilter(GlobalConstants.DEACTIVATE_APIKEY);
 		apiKeyPage.clickOnApplyFilterButton();
 
 		apiKeyPage.clickOnActionButton();
@@ -443,7 +443,7 @@ public class AuthenticationServices extends BaseClass {
 
 		apiKeyPage.clickOnFilterButton();
 		apiKeyPage.enterPartnerIdInFilter(GlobalConstants.AUTHPARTNER);
-		apiKeyPage.enterValidApiKeyNameInFilter(GlobalConstants.DEACTIVATE_APIKEY);
+		apiKeyPage.enterValidApiKeyNameInAdminFilter(GlobalConstants.DEACTIVATE_APIKEY);
 		apiKeyPage.clickOnApplyFilterButton();
 
 		apiKeyPage.clickOnActionButton();
@@ -453,12 +453,7 @@ public class AuthenticationServices extends BaseClass {
 		basePage.navigateBack();
 		basePage.navigateForword();
 
-		dashboardPage.clickOnProfileDropdown();
-		LoginPage loginpage = dashboardPage.clickOnLogoutButton();
-
-		loginPage.enterUserName("pmpui-auth");
-		loginPage.enterPassword(password);
-		loginPage.clickOnLoginButton();
+		loginAsAuthPartner();
 
 		dashboardPage.clickOnAuthenticationServicesTitle();
 		oidcClientPage.clickOnApiKeyTab();
@@ -475,9 +470,9 @@ public class AuthenticationServices extends BaseClass {
 
 	@Test(priority = 5, description = "API Key Tabular View")
 	public void apiKeyTabularView() {
-		DashboardPage dashboardPage = new DashboardPage(driver);
-		AuthPolicyPage authPolicyPage = new AuthPolicyPage(driver);
-		ApiKeyPage apiKeyPage = new ApiKeyPage(driver);
+		dashboardPage = new DashboardPage(driver);
+		authPolicyPage = new AuthPolicyPage(driver);
+		apiKeyPage = new ApiKeyPage(driver);
 
 		assertTrue(dashboardPage.isAuthenticationServicesDisplayed(),
 				GlobalConstants.isAuthenticationServicesDisplayed);
@@ -568,7 +563,7 @@ public class AuthenticationServices extends BaseClass {
 		apiKeyPage.enterPartnerIdInFilter(GlobalConstants.AUTHPARTNER);
 		apiKeyPage.enterPolicyGroupInFilter(GlobalConstants.DEFAULTPOLICYGROUP);
 		apiKeyPage.clickOnFilterCloseButton();
-		apiKeyPage.enterValidApiKeyNameInFilter(GlobalConstants.ACTIVATE_ADMINAPIKEY);
+		apiKeyPage.enterValidApiKeyNameInAdminFilter(GlobalConstants.ACTIVATE_ADMINAPIKEY);
 		apiKeyPage.clickOnApplyFilterButton();
 
 		apiKeyPage.clickOnActivatedAdminApiKey();
@@ -578,7 +573,7 @@ public class AuthenticationServices extends BaseClass {
 		apiKeyPage.clickOnFilterButton();
 		apiKeyPage.enterPartnerIdInFilter(GlobalConstants.AUTHPARTNER);
 		apiKeyPage.enterPolicyGroupInFilter(GlobalConstants.DEFAULTPOLICYGROUP);
-		apiKeyPage.enterValidApiKeyNameInFilter(GlobalConstants.ACTIVATE_ADMINAPIKEY);
+		apiKeyPage.enterValidApiKeyNameInAdminFilter(GlobalConstants.ACTIVATE_ADMINAPIKEY);
 		apiKeyPage.clickOnApplyFilterButton();
 
 		apiKeyPage.clickOnActionButton();
@@ -587,7 +582,7 @@ public class AuthenticationServices extends BaseClass {
 
 		apiKeyPage.enterPartnerIdInFilter(GlobalConstants.AUTHPARTNER);
 		apiKeyPage.enterPolicyGroupInFilter(GlobalConstants.DEFAULTPOLICYGROUP);
-		apiKeyPage.enterValidApiKeyNameInFilter(GlobalConstants.DEACTIVATE_APIKEY);
+		apiKeyPage.enterValidApiKeyNameInAdminFilter(GlobalConstants.DEACTIVATE_APIKEY);
 		apiKeyPage.clickOnApplyFilterButton();
 
 		apiKeyPage.clickOnActionButton();
@@ -625,15 +620,15 @@ public class AuthenticationServices extends BaseClass {
 	@Test(priority = 6, description = "Api Key View Details")
 	public void apiKeyViewDetails() {
 
-		DashboardPage dashboardpage = new DashboardPage(driver);
-		ApiKeyPage apiKeyPage = new ApiKeyPage(driver);
+		dashboardPage = new DashboardPage(driver);
+		apiKeyPage = new ApiKeyPage(driver);
 
-		OidcClientPage oidcClientPage = dashboardpage.clickOnAuthenticationServices();
+		oidcClientPage = dashboardPage.clickOnAuthenticationServices();
 		oidcClientPage.clickOnApiKeyTab();
 		oidcClientPage.clickOnFilterButton();
 		apiKeyPage.enterPartnerIdInFilter(GlobalConstants.AUTHPARTNER);
 		apiKeyPage.enterPolicyGroupInFilter(GlobalConstants.DEFAULTPOLICYGROUP);
-		apiKeyPage.enterValidApiKeyNameInFilter(GlobalConstants.ACTIVATE_ADMINAPIKEY);
+		apiKeyPage.enterValidApiKeyNameInAdminFilter(GlobalConstants.ACTIVATE_ADMINAPIKEY);
 		apiKeyPage.clickOnApplyFilterButton();
 
 		apiKeyPage.clickOnActivatedAdminApiKey();
@@ -643,7 +638,7 @@ public class AuthenticationServices extends BaseClass {
 		oidcClientPage.clickOnFilterButton();
 		apiKeyPage.enterPartnerIdInFilter(GlobalConstants.AUTHPARTNER);
 		apiKeyPage.enterPolicyGroupInFilter(GlobalConstants.DEFAULTPOLICYGROUP);
-		apiKeyPage.enterValidApiKeyNameInFilter(GlobalConstants.ACTIVATE_ADMINAPIKEY);
+		apiKeyPage.enterValidApiKeyNameInAdminFilter(GlobalConstants.ACTIVATE_ADMINAPIKEY);
 		apiKeyPage.clickOnApplyFilterButton();
 		apiKeyPage.clickOnActionButton();
 		assertTrue(apiKeyPage.isViewButtonEnabled(), GlobalConstants.isViewButtonEnabled);
@@ -693,7 +688,7 @@ public class AuthenticationServices extends BaseClass {
 		apiKeyPage.clickOnFilterButton();
 		apiKeyPage.enterPartnerIdInFilter(GlobalConstants.AUTHPARTNER);
 		apiKeyPage.enterPolicyGroupInFilter(GlobalConstants.DEFAULTPOLICYGROUP);
-		apiKeyPage.enterValidApiKeyNameInFilter(GlobalConstants.DEACTIVATE_APIKEY);
+		apiKeyPage.enterValidApiKeyNameInAdminFilter(GlobalConstants.DEACTIVATE_APIKEY);
 		apiKeyPage.clickOnApplyFilterButton();
 
 		apiKeyPage.clickOnDeactivatedApiKeyRow();
@@ -706,6 +701,22 @@ public class AuthenticationServices extends BaseClass {
 		oidcClientPage.clickOnTitleBackButton();
 		assertTrue(oidcClientPage.isOidcClientTabDisplayed(), GlobalConstants.isOidcClientTabDisplayed);
 
+	}
+
+	private void loginAsAuthPartner() {
+		dashboardPage.clickOnProfileDropdown();
+		loginPage = dashboardPage.clickOnLogoutButton();
+		loginPage.enterUserName(GlobalConstants.AUTH_PARTNER_ID);
+		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
+		loginPage.clickOnLoginButton();
+	}
+
+	private void loginAsPartnerAdmin() {
+		dashboardPage.clickOnProfileDropdown();
+		loginPage = dashboardPage.clickOnLogoutButton();
+		loginPage.enterUserName(GlobalConstants.PARTNER_ADMIN);
+		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
+		loginPage.clickOnLoginButton();
 	}
 
 }

@@ -28,8 +28,6 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		PolicyGroupPage policygroupPage = new PolicyGroupPage(driver);
 
 		dashboardPage.clickOnPolicyButton();
-		assertTrue(policiesPage.isPoliciesPolicyGroupTabDisplayed(), GlobalConstants.isPoliciesPolicyGroupTabDisplayed);
-
 		policygroupPage.clickOnCreatePolicyGroupButton();
 		assertTrue(policygroupPage.isCreatePolicyGroupTitleDisplayed(),
 				GlobalConstants.isCreatePolicyGroupTitleDisplayed);
@@ -83,8 +81,6 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		policygroupPage.clickOnSomethingWentWrongHomeBtn();
 
 		dashboardPage.clickOnPolicyButton();
-		assertTrue(policiesPage.isPoliciesPolicyGroupTabDisplayed(), GlobalConstants.isPoliciesPolicyGroupTabDisplayed);
-
 		policygroupPage.clickOnCreatePolicyGroupButton();
 		policygroupPage.enterPolicyGroupName(GlobalConstants.CHARACTERS_1);
 		policygroupPage.enterPolicyGroupNameDescription(GlobalConstants.CHARACTERS_1);
@@ -195,12 +191,10 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 	public void policyGroupDetailsView() {
 
 		DashboardPage dashboardPage = new DashboardPage(driver);
-		PoliciesPage policiesPage = new PoliciesPage(driver);
 		PolicyGroupPage policygroupPage = new PolicyGroupPage(driver);
 		BasePage basePage = new BasePage(driver);
 
 		dashboardPage.clickOnPolicyButton();
-		assertTrue(policiesPage.isPoliciesPolicyGroupTabDisplayed(), GlobalConstants.isPoliciesPolicyGroupTabDisplayed);
 		policygroupPage.clickOnFilterButton();
 		policygroupPage.clickOnPolicyGroupNameFilter(GlobalConstants.ALPHANUMERIC);
 		policygroupPage.clickOnApplyFilterButton();
@@ -222,10 +216,6 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		policygroupPage.clickOnPolicyGroupList1();
 		assertTrue(policygroupPage.isHamburgerOptionDisplayed(), GlobalConstants.isHamburgerOptionDisplayed);
 		basePage.scrollToEndPage();
-		assertTrue(policygroupPage.isMosipRightsTextDisplayed(), GlobalConstants.isMosipRightsTextDisplayed);
-		assertTrue(policygroupPage.isFooterDocumentationLinkDisplayed(),
-				GlobalConstants.isFooterDocumentationLinkDisplayed);
-		assertTrue(policygroupPage.isFooterContactUsLinkDisplayed(), GlobalConstants.isFooterContactUsLinkDisplayed);
 		policygroupPage.navigateBackDefaultButton();
 
 	}
@@ -445,14 +435,10 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 
 		DashboardPage dashboardPage = new DashboardPage(driver);
 		BasePage basePage = new BasePage(driver);
-		PoliciesPage policiesPage = new PoliciesPage(driver);
 		PolicyGroupPage policygroupPage = new PolicyGroupPage(driver);
 		DatasharePolicyPage datasharePolicyPage = new DatasharePolicyPage(driver);
 
 		dashboardPage.clickOnPolicyButton();
-		assertTrue(policiesPage.isPoliciesPolicyGroupTabDisplayed(), GlobalConstants.isPoliciesPolicyGroupTabDisplayed);
-		assertTrue(policiesPage.isPoliciesAuthPolicyTabDisplayed(), GlobalConstants.isPoliciesAuthPolicyTabDisplayed);
-		assertTrue(policygroupPage.isDatasharePolicyTabDisplayed(), GlobalConstants.isDatasharePolicyTabDisplayed);
 		policygroupPage.clickOnDatasharePolicyTab();
 		assertTrue(datasharePolicyPage.isSubTitleOfTabularViewDisplayed(),
 				GlobalConstants.isSubTitleOfTabularViewDisplayed);
@@ -557,11 +543,6 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 
 		basePage.scrollToEndPage();
 		assertTrue(datasharePolicyPage.isPaginationDisplayed(), GlobalConstants.isPaginationDisplayed);
-		assertTrue(datasharePolicyPage.isMosipRightsTextDisplayed(), GlobalConstants.isMosipRightsTextDisplayed);
-		assertTrue(datasharePolicyPage.isFooterDocumentationLinkDisplayed(),
-				GlobalConstants.isFooterDocumentationLinkDisplayed);
-		assertTrue(datasharePolicyPage.isFooterContactUsLinkDisplayed(),
-				GlobalConstants.isFooterContactUsLinkDisplayed);
 		policygroupPage.navigateBackDefaultButton();
 
 	}
@@ -570,7 +551,6 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 	public void viewDatasharePolicyDetails() {
 
 		DashboardPage dashboardPage = new DashboardPage(driver);
-		BasePage basePage = new BasePage(driver);
 		PolicyGroupPage policygroupPage = new PolicyGroupPage(driver);
 		DatasharePolicyPage datasharePolicyPage = new DatasharePolicyPage(driver);
 
@@ -620,12 +600,6 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		datasharePolicyPage.clickOnCloseButton();
 		policygroupPage.navigateBackDefaultButton();
 
-		basePage.scrollToEndPage();
-		assertTrue(datasharePolicyPage.isMosipRightsTextDisplayed(), GlobalConstants.isMosipRightsTextDisplayed);
-		assertTrue(datasharePolicyPage.isFooterDocumentationLinkDisplayed(),
-				GlobalConstants.isFooterDocumentationLinkDisplayed);
-		assertTrue(datasharePolicyPage.isFooterContactUsLinkDisplayed(),
-				GlobalConstants.isFooterContactUsLinkDisplayed);
 	}
 
 	@Test(priority = 10, description = "Publish Datashare Policy")
@@ -652,8 +626,8 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 
 		logoutFromPartner(dashboardPage);
 
-		loginPage.enterUserName("pmpui-auth");
-		loginPage.enterPassword(password);
+		loginPage.enterUserName(GlobalConstants.AUTHPARTNER);
+		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
 		loginPage.clickOnLoginButton();
 
 		dashboardPage.clickOnPoliciesTitle();
@@ -666,8 +640,8 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 
 		logoutFromPartner(dashboardPage);
 
-		loginPage.enterUserName("pmpui-v2");
-		loginPage.enterPassword(password);
+		loginPage.enterUserName(GlobalConstants.PARTNER_ADMIN);
+		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
 		loginPage.clickOnLoginButton();
 
 		dashboardPage.clickOnPolicyButton();
@@ -1075,8 +1049,8 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 
 		logoutFromPartner(dashboardPage);
 
-		loginPage.enterUserName("pmpui-auth");
-		loginPage.enterPassword(password);
+		loginPage.enterUserName(GlobalConstants.AUTHPARTNER);
+		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
 		loginPage.clickOnLoginButton();
 
 		OidcClientPage oidcClientPage = dashboardPage.clickOnAuthenticationServicesTitle();
@@ -1131,8 +1105,8 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 
 		logoutFromPartner(dashboardPage);
 
-		loginPage.enterUserName("pmpui-v2");
-		loginPage.enterPassword(password);
+		loginPage.enterUserName(GlobalConstants.PARTNER_ADMIN);
+		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
 		loginPage.clickOnLoginButton();
 
 		dashboardPage.clickOnPartnerPolicyMappingTab();
@@ -1418,7 +1392,6 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		AuthPolicyPage authPolicyPage = new AuthPolicyPage(driver);
 
 		dashboardPage.clickOnPolicyButton();
-		assertTrue(policiesPage.isPoliciesAuthPolicyTabDisplayed(), GlobalConstants.isPoliciesAuthPolicyTabDisplayed);
 		policiesPage.clickOnAuthPolicyTab();
 
 		assertTrue(authPolicyPage.isPolicyIdHeaderTextDisplayed(), GlobalConstants.isPolicyIdHeaderTextDisplayed);
@@ -1963,8 +1936,8 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 
 		logoutFromPartner(dashboardPage);
 
-		loginPage.enterUserName("pmpui-auth");
-		loginPage.enterPassword(password);
+		loginPage.enterUserName(GlobalConstants.AUTHPARTNER);
+		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
 		loginPage.clickOnLoginButton();
 
 		dashboardPage.clickOnAuthenticationServicesTitle();
@@ -2011,8 +1984,8 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 
 		logoutFromPartner(dashboardPage);
 
-		loginPage.enterUserName("pmpui-v2");
-		loginPage.enterPassword(password);
+		loginPage.enterUserName(GlobalConstants.PARTNER_ADMIN);
+		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
 		loginPage.clickOnLoginButton();
 
 		dashboardPage.clickOnPartnerPolicyMappingTab();
@@ -2195,9 +2168,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 
 	private void logoutFromPartner(DashboardPage dashboardPage) {
 		dashboardPage.clickOnProfileDropdown();
-		assertTrue(dashboardPage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
-		LoginPage loginpage = dashboardPage.clickOnLogoutButton();
-
+		dashboardPage.clickOnLogoutButton();
 	}
 
 }

@@ -196,9 +196,10 @@ public class GlobalConstants {
 	public static final String DEVICE_PROVIDER = "Device Provider";
 	public static final String DEVICE_PARTNER_ID = "pmpui-device";
 	public static final String Organisation_Name = "AABBCC";
-	public static final String PARTNER_ADMIN = "pmpui-admin";
+	public static final String PARTNER_ADMIN = "pmpui-v2";
 	public static final String PARTNER_PASSWORD = "mosip123";
 	public static final String AUTH_PARTNER_ID = "pmpui-auth";
+	public static final String FTM_PARTNER_ID = "pmpui-ftm";
 	public static final String DEVICE_PROVIDER_TITLE = "Device Provider Services";
 	public static final String RELOAD_MESSAGE = "Changes you made may not be saved.";
 	public static final String INITIAL_SBI_VERSION = "Enter version of SBI";
@@ -897,7 +898,8 @@ public class GlobalConstants {
 	public static final String isDeviceSubTypePlaceHolderDisplayed = "Verify if device subtype placeholder Displayed";
 	public static final String isMakePlaceHolderDisplayed = "Verify if make placeholder Displayed";
 	public static final String isModelPlaceHolderDisplayed = "Verify if model placeholder Displayed";
-
+	public static final String isPoliciesEmptyTableDisplayed = "Verify if policies empty table Displayed";
+	
 	public static final String APPID = "appId";
 	public static final String PASSWORD = "password";
 	public static final String USER_NAME = "userName";
@@ -977,6 +979,7 @@ public class GlobalConstants {
 //  Policy Group
 	public static final String AUTHPARTNER = "pmpui-auth";
 	public static final String DEFAULTPOLICYGROUP = "automationui policy group";
+	public static final String DEFAULTPOLICYGROUP_DESC = "desc automationui policy group";
 	public static final String POLICYGROUP01 = "policygroup01";
 	public static final String POLICYGROUP01_DESCRIPTION = "policygroup 01";
 	public static final String POLICYGROUP02 = "policygroup02";

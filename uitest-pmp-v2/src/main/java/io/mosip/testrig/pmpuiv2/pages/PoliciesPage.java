@@ -20,10 +20,10 @@ public class PoliciesPage extends BasePage {
 	@FindBy(id = "policies_request_btn")
 	private WebElement policies_request_btn;
 
-	@FindBy(id = "request_policy_partner_id")
+	@FindBy(id = "request_policy_partner_id_dropdown_btn")
 	private WebElement partnerIdDropdown;
 
-	@FindBy(id = "request_policies_policy_name")
+	@FindBy(id = "request_policies_policy_name_dropdown_btn")
 	private WebElement policyNameDropdown;
 
 	@FindBy(id = "request_policies_policy_name_search_input")
@@ -65,10 +65,10 @@ public class PoliciesPage extends BasePage {
 	@FindBy(id = "view_policy_back_btn")
 	private WebElement BackButton;
 
-	@FindBy(id = "policy_partner_id_filter")
+	@FindBy(id = "policy_partner_id_filter_dropdown_btn")
 	private WebElement policyPartnerIdFilter;
 
-	@FindBy(id = "policy_partner_type_filter")
+	@FindBy(id = "policy_partner_type_filter_dropdown_btn")
 	private WebElement policyPartnerTypeFilter;
 
 	@FindBy(id = "policy_partner_type_filter_option1")
@@ -77,13 +77,13 @@ public class PoliciesPage extends BasePage {
 	@FindBy(id = "policy_status_filter_option1")
 	private WebElement policy_status_filter_option1;
 
-	@FindBy(id = "policy_group_filter")
+	@FindBy(id = "policy_group_filter_dropdown_btn")
 	private WebElement policyGroupFilter;
 
 	@FindBy(id = "policy_group_filter_option1")
 	private WebElement policyGroupFilterOption1;
 
-	@FindBy(id = "policy_status_filter")
+	@FindBy(id = "policy_status_filter_dropdown_btn")
 	private WebElement policyStatusFilter;
 
 	@FindBy(id = "filter_reset_btn")
@@ -215,7 +215,7 @@ public class PoliciesPage extends BasePage {
 	@FindBy(id = "policy_name_filter_option1")
 	private WebElement policyNameFilterOption1;
 
-	@FindBy(id = "policy_name_filter")
+	@FindBy(id = "policy_name_filter_dropdown_btn")
 	private WebElement policyNameFilter;
 
 	@FindBy(id = "deactivate_policy_group__confirm_btn")

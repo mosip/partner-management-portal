@@ -116,10 +116,10 @@ public class ListOfSbiPage extends BasePage {
 	@FindBy(id = "sbi_version_filter")
 	private WebElement sbiVersionFilter;
 
-	@FindBy(id = "sbi_expiry_status_filter")
+	@FindBy(id = "sbi_expiry_status_filter_dropdown_btn")
 	private WebElement sbiExpiryStatusFilter;
 
-	@FindBy(id = "status_filter")
+	@FindBy(id = "status_filter_dropdown_btn")
 	private WebElement statusFilter;
 
 	@FindBy(id = "status_filter_option3")

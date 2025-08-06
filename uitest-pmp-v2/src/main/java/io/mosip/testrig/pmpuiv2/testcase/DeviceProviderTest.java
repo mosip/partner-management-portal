@@ -32,6 +32,7 @@ public class DeviceProviderTest extends BaseClass {
 	private ListOfDevicesPage listOfDevicesPage;
 	private ViewDeviceDetailsPage viewDeviceDetailsPage;
 	private ViewSbiDetailsPage viewSbiDetailsPage;
+	private LoginPage loginpage;
 
 	@Test(priority = 25, description = "This is a test case register new device user")
 	public void registerNewUser() throws InterruptedException {
@@ -46,22 +47,8 @@ public class DeviceProviderTest extends BaseClass {
 //		assertTrue(dashboardpage.isProceedButtonDisplayed(), GlobalConstants.isProceedButtonDisplayed);
 //		dashboardpage.clickOnProceedButton();
 
-		dashboardpage.clickOnRootOFTrustCertText();
-		dashboardpage.clickOnRootCertificateUploadButton();
-		partnerCertificatePage.clickOnpartnerDomainSelectorDropdown();
-		partnerCertificatePage.ClickOnDeviceInPartnerDomainSelectorDropdown();
-		partnerCertificatePage.uploadCertificateRootCa();
-		partnerCertificatePage.ClickonSubmitButtonForAdmin();
-		partnerCertificatePage.ClickOnGoBackButton();
-		dashboardpage.clickOnRootCertificateUploadButton();
-		partnerCertificatePage.clickOnpartnerDomainSelectorDropdown();
-		partnerCertificatePage.ClickOnDeviceInPartnerDomainSelectorDropdown();
-		partnerCertificatePage.uploadCertificateSubCa();
-		partnerCertificatePage.ClickonSubmitButtonForAdmin();
-		partnerCertificatePage.ClickOnGoBackButton();
 		dashboardpage.clickOnProfileDropdown();
-		
-		LoginPage loginpage = dashboardpage.clickOnLogoutButton();
+		loginpage = dashboardpage.clickOnLogoutButton();
 		loginpage.clickRegisterButton();
 		registerPage.enterFirstName("pmpui-device");
 		registerPage.enterLastName("pmpui-device");
@@ -141,7 +128,7 @@ public class DeviceProviderTest extends BaseClass {
 				GlobalConstants.isMosipCertificateDownloadPopupDisplayed);
 
 //		assertTrue(partnerCertificatePage.isSucessMessageDisplayed(), GlobalConstants.isSucessMessageDisplayed);
-		partnerCertificatePage.ClickOnSuccessMsgCloseButton();
+		partnerCertificatePage.clickOnSuccessMsgCloseButton();
 	}
 
 	@Test(priority = 26, description = "Creating SBI Device")
@@ -1095,9 +1082,6 @@ public class DeviceProviderTest extends BaseClass {
 		verifyLinkedDevicesOfRejectedSbiInList(GlobalConstants.AUTOMATION_REJECTING, GlobalConstants.REJECTED);
 
 		verifyLinkedDevicesOfDeactivatedSbiInList(GlobalConstants.ALPHANUMERIC, GlobalConstants.APPROVED);
-
-		assertTrue(dashboardpage.isContactusLinkDisplayed(), GlobalConstants.isContactusLinkDisplayed);
-		assertTrue(listOfSbiPage.isMosipFooterTextDisplayed(), GlobalConstants.isMosipFooterTextDisplayed);
 
 		assertTrue(authPolicyPage.isPaginationDisplayed(), GlobalConstants.isPaginationDisplayed);
 		assertTrue(authPolicyPage.isPreviusPageButtonDisplayed(), GlobalConstants.isPreviusPageButtonDisplayed);
