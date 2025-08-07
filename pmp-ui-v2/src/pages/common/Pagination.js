@@ -75,7 +75,7 @@ function Pagination({ dataListLength, selectedRecordsPerPage, setSelectedRecords
                 pageRangeDisplayed={4}
                 marginPagesDisplayed={1}
                 breakLabel="..."
-                containerClassName="flex items-center justify-center space-x-3"
+                containerClassName={`flex items-center justify-center space-x-3 ${isLoginLanguageRTL && 'space-x-reverse'}`}
                 pageClassName="px-3 py-1.5 text-[#1447B2] cursor-pointer text-sm"
                 activeClassName="bg-[#1447B2] text-white text-sm p-1.5 rounded-md"
                 previousClassName={`p-1.5 border rounded-md ${isFirstPage ? greyBtn : blueBtn}`}
