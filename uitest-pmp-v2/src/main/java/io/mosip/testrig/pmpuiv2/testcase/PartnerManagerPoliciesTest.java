@@ -19,13 +19,22 @@ import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
 public class PartnerManagerPoliciesTest extends BaseClass {
 	private BasePage basePage;
+	private DashboardPage dashboardPage;
+	private PoliciesPage policiesPage;
+	private PolicyGroupPage policygroupPage;
+	private DatasharePolicyPage datasharePolicyPage;
+	private LoginPage loginPage;
+	private ApiKeyPage apiKeyPage;
+	private AuthPolicyPage authPolicyPage;
+	private PartnerPolicyMappingPage partnerPolicyMappingPage;
+	private OidcClientPage oidcClientPage;
 
 	@Test(priority = 1, description = "Create Policy Group")
 	public void createPolicyGroup() {
 
-		DashboardPage dashboardPage = new DashboardPage(driver);
-		PoliciesPage policiesPage = new PoliciesPage(driver);
-		PolicyGroupPage policygroupPage = new PolicyGroupPage(driver);
+		dashboardPage = new DashboardPage(driver);
+		policiesPage = new PoliciesPage(driver);
+		policygroupPage = new PolicyGroupPage(driver);
 
 		dashboardPage.clickOnPolicyButton();
 		policygroupPage.clickOnCreatePolicyGroupButton();
@@ -55,7 +64,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		policygroupPage.clickOnSuccessHomeButton();
 
 		dashboardPage.clickOnPolicyButton();
-		createPolicyGroup(policygroupPage, GlobalConstants.NUMERIC, GlobalConstants.NUMERIC);
+		createPolicyGroup(GlobalConstants.NUMERIC, GlobalConstants.NUMERIC);
 
 		policygroupPage.clickOnCreatePolicyGroupButton();
 		policygroupPage.enterPolicyGroupName(GlobalConstants.SPECIAL_CHARACTERS);
@@ -67,11 +76,10 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		policygroupPage.clickOnClearFormButton();
 		policygroupPage.clickOnTitleBackIconButton();
 
-		createPolicyGroup(policygroupPage, GlobalConstants.CHARACTERS_1, GlobalConstants.CHARACTERS_1);
-		createPolicyGroup(policygroupPage, GlobalConstants.POLICYGROUP07, GlobalConstants.POLICYGROUP07);
+		createPolicyGroup(GlobalConstants.CHARACTERS_1, GlobalConstants.CHARACTERS_1);
+		createPolicyGroup(GlobalConstants.POLICYGROUP07, GlobalConstants.POLICYGROUP07);
 
-		createPolicyGroup(policygroupPage, GlobalConstants.DEACTIVATE_POLICYGROUP,
-				GlobalConstants.DEACTIVATE_POLICYGROUP);
+		createPolicyGroup(GlobalConstants.DEACTIVATE_POLICYGROUP, GlobalConstants.DEACTIVATE_POLICYGROUP);
 
 		policygroupPage.clickOnCreatePolicyGroupButton();
 		policygroupPage.enterPolicyGroupName(GlobalConstants.SPACE);
@@ -114,9 +122,9 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 	@Test(priority = 2, description = "Policygroup Tabular View")
 	public void policyGroupTabularView() {
 
-		DashboardPage dashboardPage = new DashboardPage(driver);
-		PoliciesPage policiesPage = new PoliciesPage(driver);
-		PolicyGroupPage policygroupPage = new PolicyGroupPage(driver);
+		dashboardPage = new DashboardPage(driver);
+		policiesPage = new PoliciesPage(driver);
+		policygroupPage = new PolicyGroupPage(driver);
 
 		dashboardPage.clickOnPolicyButton();
 		assertTrue(policiesPage.isPoliciesPolicyGroupTabDisplayed(), GlobalConstants.isPoliciesPolicyGroupTabDisplayed);
@@ -190,9 +198,9 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 	@Test(priority = 3, description = "Policygroup Details View")
 	public void policyGroupDetailsView() {
 
-		DashboardPage dashboardPage = new DashboardPage(driver);
-		PolicyGroupPage policygroupPage = new PolicyGroupPage(driver);
-		BasePage basePage = new BasePage(driver);
+		dashboardPage = new DashboardPage(driver);
+		policygroupPage = new PolicyGroupPage(driver);
+		basePage = new BasePage(driver);
 
 		dashboardPage.clickOnPolicyButton();
 		policygroupPage.clickOnFilterButton();
@@ -223,13 +231,13 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 	@Test(priority = 4, description = "Create Datashare Policy")
 	public void createDatasharePolicy() {
 
-		DashboardPage dashboardpage = new DashboardPage(driver);
-		BasePage basePage = new BasePage(driver);
-		PoliciesPage policiesPage = new PoliciesPage(driver);
-		PolicyGroupPage policygroupPage = new PolicyGroupPage(driver);
-		DatasharePolicyPage datasharePolicyPage = new DatasharePolicyPage(driver);
+		dashboardPage = new DashboardPage(driver);
+		basePage = new BasePage(driver);
+		policiesPage = new PoliciesPage(driver);
+		policygroupPage = new PolicyGroupPage(driver);
+		datasharePolicyPage = new DatasharePolicyPage(driver);
 
-		dashboardpage.clickOnPolicyButton();
+		dashboardPage.clickOnPolicyButton();
 		assertTrue(policiesPage.isPoliciesPolicyGroupTabDisplayed(), GlobalConstants.isPoliciesPolicyGroupTabDisplayed);
 		assertTrue(policygroupPage.isDatasharePolicyTabDisplayed(), GlobalConstants.isDatasharePolicyTabDisplayed);
 		policygroupPage.clickOnDatasharePolicyTab();
@@ -248,7 +256,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		datasharePolicyPage.clickOnPolicyGroupDropdown();
 		assertTrue(datasharePolicyPage.isPolicyGroupDropdownSearchInputDisplayed(),
 				GlobalConstants.isPolicyGroupDropdownSearchInputDisplayed);
-		datasharePolicyPage.searchPolicyGroup(GlobalConstants.DEFAULTPOLICYGROUP);
+		datasharePolicyPage.searchPolicyGroup(GlobalConstants.DEFAULT_POLICYGROUP);
 		assertTrue(datasharePolicyPage.isPolicyGroupNameDisplayed(), GlobalConstants.isPolicyGroupNameDisplayed);
 		assertTrue(datasharePolicyPage.isPolicyGroupDescriptionDisplayed(),
 				GlobalConstants.isPolicyGroupDescriptionDisplayed);
@@ -270,7 +278,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 				GlobalConstants.isFileUploadPlaceHolderDisplayed);
 		assertFalse(datasharePolicyPage.isPolicyDataBoxEnabled(), GlobalConstants.isPolicyDataBoxEnabled);
 
-		datasharePolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULTPOLICYGROUP);
+		datasharePolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULT_POLICYGROUP);
 		datasharePolicyPage.enterPolicyName(GlobalConstants.ALPHANUMERIC);
 		datasharePolicyPage.enterpolicyDescription(GlobalConstants.ALPHANUMERIC);
 		datasharePolicyPage.uploadPolicyData();
@@ -295,10 +303,10 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 	@Test(priority = 5, description = "Create Multiple Datashare Policy")
 	public void createMultipleDatasharePolicy() {
 
-		DashboardPage dashboardPage = new DashboardPage(driver);
-		BasePage basePage = new BasePage(driver);
-		PolicyGroupPage policygroupPage = new PolicyGroupPage(driver);
-		DatasharePolicyPage datasharePolicyPage = new DatasharePolicyPage(driver);
+		dashboardPage = new DashboardPage(driver);
+		basePage = new BasePage(driver);
+		policygroupPage = new PolicyGroupPage(driver);
+		datasharePolicyPage = new DatasharePolicyPage(driver);
 
 		dashboardPage.clickOnPolicyButton();
 		policygroupPage.clickOnDatasharePolicyTab();
@@ -324,7 +332,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		datasharePolicyPage.clickOnPublishPolicyCloseButton();
 
 		datasharePolicyPage.clickOnDatasharePolicyCreateButton();
-		datasharePolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULTPOLICYGROUP);
+		datasharePolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULT_POLICYGROUP);
 		datasharePolicyPage.enterPolicyName(GlobalConstants.DATAPOLICYPUBLISH);
 		datasharePolicyPage.enterpolicyDescription(GlobalConstants.DATAPOLICYPUBLISH_DESCRIPTION);
 		datasharePolicyPage.uploadPolicyData();
@@ -333,7 +341,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		datasharePolicyPage.clickOnGoBackButton();
 
 		datasharePolicyPage.clickOnDatasharePolicyCreateButton();
-		datasharePolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULTPOLICYGROUP);
+		datasharePolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULT_POLICYGROUP);
 		datasharePolicyPage.enterPolicyName(GlobalConstants.DEACTIVATE_DATA1);
 		datasharePolicyPage.enterpolicyDescription(GlobalConstants.DEACTIVATE_DATA1_DESCRIPTION);
 		datasharePolicyPage.uploadPolicyData();
@@ -353,14 +361,14 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 	@Test(priority = 6, description = "Create Duplicate Datashare Policy")
 	public void createDuplicateDatasharePolicy() {
 
-		DashboardPage dashboardPage = new DashboardPage(driver);
-		PolicyGroupPage policygroupPage = new PolicyGroupPage(driver);
-		DatasharePolicyPage datasharePolicyPage = new DatasharePolicyPage(driver);
+		dashboardPage = new DashboardPage(driver);
+		policygroupPage = new PolicyGroupPage(driver);
+		datasharePolicyPage = new DatasharePolicyPage(driver);
 
 		dashboardPage.clickOnPolicyButton();
 		policygroupPage.clickOnDatasharePolicyTab();
 		datasharePolicyPage.clickOnDatasharePolicyCreateButton();
-		datasharePolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULTPOLICYGROUP);
+		datasharePolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULT_POLICYGROUP);
 		datasharePolicyPage.enterPolicyName(GlobalConstants.ALPHANUMERIC);
 		datasharePolicyPage.enterpolicyDescription(GlobalConstants.ALPHANUMERIC);
 		datasharePolicyPage.uploadPolicyData();
@@ -383,7 +391,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		assertFalse(datasharePolicyPage.isSaveAsDraftButtonEnabled(), GlobalConstants.isSaveAsDraftButtonEnabled);
 		assertTrue(datasharePolicyPage.isClearFormDisplayed(), GlobalConstants.isClearFormDisplayed);
 		datasharePolicyPage.clickOnClearForm();
-		datasharePolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULTPOLICYGROUP);
+		datasharePolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULT_POLICYGROUP);
 		datasharePolicyPage.enterPolicyName(GlobalConstants.SPACE);
 		datasharePolicyPage.enterpolicyDescription(GlobalConstants.SPACE);
 		datasharePolicyPage.uploadPolicyData();
@@ -403,21 +411,21 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 	@Test(priority = 7, description = "Upload Invalid Policy Data")
 	public void uploadInvalidPolicyData() {
 
-		DashboardPage dashboardPage = new DashboardPage(driver);
-		BasePage basepage = new BasePage(driver);
-		PolicyGroupPage policygroupPage = new PolicyGroupPage(driver);
-		DatasharePolicyPage datasharePolicyPage = new DatasharePolicyPage(driver);
+		dashboardPage = new DashboardPage(driver);
+		basePage = new BasePage(driver);
+		policygroupPage = new PolicyGroupPage(driver);
+		datasharePolicyPage = new DatasharePolicyPage(driver);
 
 		dashboardPage.clickOnPolicyButton();
 		policygroupPage.clickOnDatasharePolicyTab();
 		datasharePolicyPage.clickOnDatasharePolicyCreateButton();
-		datasharePolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULTPOLICYGROUP);
+		datasharePolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULT_POLICYGROUP);
 		datasharePolicyPage.enterPolicyName(GlobalConstants.AUTOMATION_LOWERUPPERCASE);
 		datasharePolicyPage.enterpolicyDescription(GlobalConstants.AUTOMATION_LOWERUPPERCASE);
 		datasharePolicyPage.uploadExceedPolicyData();
-		basepage.scrollToEndPage();
+		basePage.scrollToEndPage();
 		datasharePolicyPage.clickOnSaveAsDraftButton();
-		basepage.scrollToStartPage();
+		basePage.scrollToStartPage();
 		assertTrue(datasharePolicyPage.isPolicyDataExceedChractersMessageDisplayed(),
 				GlobalConstants.isPolicyDataExceedChractersMessageDisplayed);
 		datasharePolicyPage.clickOnErrorCloseButton();
@@ -433,10 +441,10 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 	@Test(priority = 8, description = "Datashare Policy Tabular View")
 	public void datasharePolicyTabularView() {
 
-		DashboardPage dashboardPage = new DashboardPage(driver);
-		BasePage basePage = new BasePage(driver);
-		PolicyGroupPage policygroupPage = new PolicyGroupPage(driver);
-		DatasharePolicyPage datasharePolicyPage = new DatasharePolicyPage(driver);
+		dashboardPage = new DashboardPage(driver);
+		basePage = new BasePage(driver);
+		policygroupPage = new PolicyGroupPage(driver);
+		datasharePolicyPage = new DatasharePolicyPage(driver);
 
 		dashboardPage.clickOnPolicyButton();
 		policygroupPage.clickOnDatasharePolicyTab();
@@ -476,7 +484,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		assertTrue(datasharePolicyPage.isFilterResetButtonEnabled(), GlobalConstants.isFilterResetButtonEnabled);
 		assertFalse(datasharePolicyPage.isFiletrButtonDisplayedOrEnabled(),
 				GlobalConstants.isFiletrButtonDisplayedOrEnabled);
-		datasharePolicyPage.clickOnPolicyGroupFilter(GlobalConstants.DEFAULTPOLICYGROUP);
+		datasharePolicyPage.clickOnPolicyGroupFilter(GlobalConstants.DEFAULT_POLICYGROUP);
 		datasharePolicyPage.enterPolicyNameInFilter(GlobalConstants.ALPHANUMERIC);
 		datasharePolicyPage.clickOnApplyFilterButton();
 		assertFalse(datasharePolicyPage.isPolicyStatusDeactivateDisplayed(),
@@ -489,7 +497,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		datasharePolicyPage.clickOnViewBackButton();
 
 		datasharePolicyPage.clickOnDatasharePolicyCreateButton();
-		datasharePolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULTPOLICYGROUP);
+		datasharePolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULT_POLICYGROUP);
 		datasharePolicyPage.enterPolicyName(GlobalConstants.DEACTIVATE_DATA2);
 		datasharePolicyPage.enterpolicyDescription(GlobalConstants.DEACTIVATE_DATA2_DESCRIPTION);
 		datasharePolicyPage.uploadPolicyData();
@@ -505,7 +513,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		datasharePolicyPage.clickOnDeactivateConfirmButton();
 
 		datasharePolicyPage.clickOnFilterButton();
-		datasharePolicyPage.clickOnPolicyGroupFilter(GlobalConstants.DEFAULTPOLICYGROUP);
+		datasharePolicyPage.clickOnPolicyGroupFilter(GlobalConstants.DEFAULT_POLICYGROUP);
 		datasharePolicyPage.selectDeactivateStatusFilter();
 		datasharePolicyPage.enterPolicyNameInFilter(GlobalConstants.DEACTIVATE_DATA2);
 		datasharePolicyPage.clickOnApplyFilterButton();
@@ -526,7 +534,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		datasharePolicyPage.clickOnApplyFilterButton();
 		assertTrue(datasharePolicyPage.isNoResultsFoundMessageDisplayed(),
 				GlobalConstants.isNoResultsFoundMessageDisplayed);
-		datasharePolicyPage.clickOnPolicyGroupFilter(GlobalConstants.DEFAULTPOLICYGROUP);
+		datasharePolicyPage.clickOnPolicyGroupFilter(GlobalConstants.DEFAULT_POLICYGROUP);
 		datasharePolicyPage.clickOnApplyFilterButton();
 		datasharePolicyPage.clickOnPolicyIdAscIcon();
 		datasharePolicyPage.clickOnPolicyIdDescIcon();
@@ -550,9 +558,9 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 	@Test(priority = 9, description = "View Datashare Policy Details")
 	public void viewDatasharePolicyDetails() {
 
-		DashboardPage dashboardPage = new DashboardPage(driver);
-		PolicyGroupPage policygroupPage = new PolicyGroupPage(driver);
-		DatasharePolicyPage datasharePolicyPage = new DatasharePolicyPage(driver);
+		dashboardPage = new DashboardPage(driver);
+		policygroupPage = new PolicyGroupPage(driver);
+		datasharePolicyPage = new DatasharePolicyPage(driver);
 
 		dashboardPage.clickOnPolicyButton();
 		policygroupPage.clickOnDatasharePolicyTab();
@@ -605,18 +613,17 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 	@Test(priority = 10, description = "Publish Datashare Policy")
 	public void publishDatasharePolicy() {
 
-		DashboardPage dashboardPage = new DashboardPage(driver);
+		dashboardPage = new DashboardPage(driver);
 		basePage = new BasePage(driver);
-
-		PolicyGroupPage policygroupPage = new PolicyGroupPage(driver);
-		DatasharePolicyPage datasharePolicyPage = new DatasharePolicyPage(driver);
-		PoliciesPage policiesPage = new PoliciesPage(driver);
-		LoginPage loginPage = new LoginPage(driver);
+		policygroupPage = new PolicyGroupPage(driver);
+		datasharePolicyPage = new DatasharePolicyPage(driver);
+		policiesPage = new PoliciesPage(driver);
+		loginPage = new LoginPage(driver);
 
 		dashboardPage.clickOnPolicyButton();
 		policygroupPage.clickOnDatasharePolicyTab();
 		datasharePolicyPage.clickOnFilterButton();
-		datasharePolicyPage.clickOnPolicyGroupFilter(GlobalConstants.DEFAULTPOLICYGROUP);
+		datasharePolicyPage.clickOnPolicyGroupFilter(GlobalConstants.DEFAULT_POLICYGROUP);
 		datasharePolicyPage.enterPolicyNameInFilter(GlobalConstants.DATAPOLICYPUBLISH);
 		datasharePolicyPage.clickOnApplyFilterButton();
 		datasharePolicyPage.clickOnActionButton();
@@ -624,11 +631,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		datasharePolicyPage.clickOnPublishPolicyButton();
 		datasharePolicyPage.clickOnPublishPolicyCloseButton();
 
-		logoutFromPartner(dashboardPage);
-
-		loginPage.enterUserName(GlobalConstants.AUTHPARTNER);
-		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
-		loginPage.clickOnLoginButton();
+		loginAsAuthPartner();
 
 		dashboardPage.clickOnPoliciesTitle();
 		policiesPage.clickOnRequestPolicyButtonOfTabularPage();
@@ -638,16 +641,12 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		policiesPage.clickOnHomeButton();
 		datasharePolicyPage.clickOnlostWarningProceedButton();
 
-		logoutFromPartner(dashboardPage);
-
-		loginPage.enterUserName(GlobalConstants.PARTNER_ADMIN);
-		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
-		loginPage.clickOnLoginButton();
+		loginAsPartnerAdmin();
 
 		dashboardPage.clickOnPolicyButton();
 		policygroupPage.clickOnDatasharePolicyTab();
 		datasharePolicyPage.clickOnDatasharePolicyCreateButton();
-		datasharePolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULTPOLICYGROUP);
+		datasharePolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULT_POLICYGROUP);
 		datasharePolicyPage.enterPolicyName(GlobalConstants.DATAPOLICY01);
 		datasharePolicyPage.enterpolicyDescription(GlobalConstants.DATAPOLICY01_DESCRIPTION);
 		datasharePolicyPage.uploadPolicyData();
@@ -665,20 +664,20 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 	@Test(priority = 11, description = "Edit Datashare Policy")
 	public void editDatasharePolicy() {
 
-		DashboardPage dashboardpage = new DashboardPage(driver);
-		BasePage basepage = new BasePage(driver);
-		PoliciesPage policiesPage = new PoliciesPage(driver);
-		DatasharePolicyPage datasharePolicyPage = new DatasharePolicyPage(driver);
+		dashboardPage = new DashboardPage(driver);
+		basePage = new BasePage(driver);
+		policiesPage = new PoliciesPage(driver);
+		datasharePolicyPage = new DatasharePolicyPage(driver);
 
-		dashboardpage.clickOnPolicyButton();
+		dashboardPage.clickOnPolicyButton();
 		policiesPage.clickOnDataSharePolicyTab();
 		datasharePolicyPage.clickOnDatasharePolicyCreateButton();
 
-		datasharePolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULTPOLICYGROUP);
+		datasharePolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULT_POLICYGROUP);
 		datasharePolicyPage.enterPolicyName(GlobalConstants.EDITDATAPOLICY);
 		datasharePolicyPage.enterpolicyDescription(GlobalConstants.EDITDATAPOLICY_DESCRIPTION);
 		datasharePolicyPage.uploadPolicyData();
-		basepage.scrollToEndPage();
+		basePage.scrollToEndPage();
 		datasharePolicyPage.clickOnSaveAsDraftButton();
 		datasharePolicyPage.clickOnGoBackButton();
 
@@ -758,15 +757,15 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 				GlobalConstants.isProvideValidJsonDataErrorMessageDisplayed);
 		datasharePolicyPage.clickOnErrorCloseButton();
 		datasharePolicyPage.uploadExceedPolicyData();
-		basepage.scrollToEndPage();
+		basePage.scrollToEndPage();
 		datasharePolicyPage.clickOnEditPolicyFormSubmitButton();
-		basepage.scrollToStartPage();
+		basePage.scrollToStartPage();
 		assertTrue(datasharePolicyPage.isInvalidInfoInPoliyDataMessageDisplayed(),
 				GlobalConstants.isPolicyDataExceedChractersMessageDisplayed);
 		datasharePolicyPage.clickOnErrorCloseButton();
 		datasharePolicyPage.uploadPolicyData();
 		datasharePolicyPage.clearTextBoxPolicyData();
-		basepage.scrollToEndPage();
+		basePage.scrollToEndPage();
 		assertTrue(datasharePolicyPage.isEditPolicySubmitButtonEnabled(), GlobalConstants.isSaveAsDraftButtonEnabled);
 		datasharePolicyPage.clickOnEditPolicyFormSubmitButton();
 		datasharePolicyPage.clickOnGoBackButton();
@@ -801,25 +800,25 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 				GlobalConstants.isProvideValidJsonDataErrorMessageDisplayed);
 		datasharePolicyPage.clickOnErrorCloseButton();
 		datasharePolicyPage.uploadPolicyData();
-		basepage.scrollToEndPage();
+		basePage.scrollToEndPage();
 		datasharePolicyPage.clickOnEditPolicyFormSubmitButton();
 		datasharePolicyPage.clickOnGoBackButton();
-		basepage.navigateBack();
+		basePage.navigateBack();
 
 	}
 
 	@Test(priority = 12, description = "Clone Datashare Policy")
 	public void cloneDatasharePolicy() {
 
-		DashboardPage dashboardPage = new DashboardPage(driver);
-		BasePage basePage = new BasePage(driver);
-		PolicyGroupPage policygroupPage = new PolicyGroupPage(driver);
-		DatasharePolicyPage datasharePolicyPage = new DatasharePolicyPage(driver);
+		dashboardPage = new DashboardPage(driver);
+		basePage = new BasePage(driver);
+		policygroupPage = new PolicyGroupPage(driver);
+		datasharePolicyPage = new DatasharePolicyPage(driver);
 
 		dashboardPage.clickOnPolicyButton();
 		policygroupPage.clickOnDatasharePolicyTab();
 		datasharePolicyPage.clickOnDatasharePolicyCreateButton();
-		datasharePolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULTPOLICYGROUP);
+		datasharePolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULT_POLICYGROUP);
 		datasharePolicyPage.enterPolicyName(GlobalConstants.DATAPOLICY02);
 		datasharePolicyPage.enterpolicyDescription(GlobalConstants.DATAPOLICY02);
 		datasharePolicyPage.uploadPolicyData();
@@ -835,7 +834,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		dashboardPage.clickOnPolicyButton();
 		policygroupPage.clickOnDatasharePolicyTab();
 		datasharePolicyPage.clickOnFilterButton();
-		datasharePolicyPage.clickOnPolicyGroupFilter(GlobalConstants.DEFAULTPOLICYGROUP);
+		datasharePolicyPage.clickOnPolicyGroupFilter(GlobalConstants.DEFAULT_POLICYGROUP);
 		datasharePolicyPage.enterPolicyNameInFilter(GlobalConstants.DEACTIVATE_DATA1);
 		datasharePolicyPage.clickOnApplyFilterButton();
 		datasharePolicyPage.clickOnActionButton();
@@ -845,7 +844,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		dashboardPage.clickOnPolicyButton();
 		policygroupPage.clickOnDatasharePolicyTab();
 		datasharePolicyPage.clickOnFilterButton();
-		datasharePolicyPage.clickOnPolicyGroupFilter(GlobalConstants.DEFAULTPOLICYGROUP);
+		datasharePolicyPage.clickOnPolicyGroupFilter(GlobalConstants.DEFAULT_POLICYGROUP);
 		datasharePolicyPage.enterPolicyNameInFilter(GlobalConstants.DATAPOLICY01);
 		datasharePolicyPage.clickOnApplyFilterButton();
 		datasharePolicyPage.clickOnActionButton();
@@ -901,7 +900,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		datasharePolicyPage.clickOnViewBackButton();
 
 		datasharePolicyPage.clickOnFilterButton();
-		datasharePolicyPage.clickOnPolicyGroupFilter(GlobalConstants.DEFAULTPOLICYGROUP);
+		datasharePolicyPage.clickOnPolicyGroupFilter(GlobalConstants.DEFAULT_POLICYGROUP);
 		datasharePolicyPage.enterPolicyNameInFilter(GlobalConstants.DATAPOLICY01);
 		datasharePolicyPage.clickOnApplyFilterButton();
 		datasharePolicyPage.clickOnActionButton();
@@ -912,7 +911,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 
 		datasharePolicyPage.clickOnFilterResetButton();
 		datasharePolicyPage.clickOnFilterButton();
-		datasharePolicyPage.clickOnPolicyGroupFilter(GlobalConstants.DEFAULTPOLICYGROUP);
+		datasharePolicyPage.clickOnPolicyGroupFilter(GlobalConstants.DEFAULT_POLICYGROUP);
 		datasharePolicyPage.enterPolicyNameInFilter(GlobalConstants.DATAPOLICY01);
 		datasharePolicyPage.clickOnApplyFilterButton();
 		datasharePolicyPage.clickOnActionButton();
@@ -927,7 +926,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 
 		datasharePolicyPage.clickOnFilterResetButton();
 		datasharePolicyPage.clickOnFilterButton();
-		datasharePolicyPage.clickOnPolicyGroupFilter(GlobalConstants.DEFAULTPOLICYGROUP);
+		datasharePolicyPage.clickOnPolicyGroupFilter(GlobalConstants.DEFAULT_POLICYGROUP);
 		datasharePolicyPage.enterPolicyNameInFilter(GlobalConstants.DATAPOLICY01);
 		datasharePolicyPage.clickOnApplyFilterButton();
 		datasharePolicyPage.clickOnActionButton();
@@ -942,12 +941,12 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 
 		datasharePolicyPage.clickOnFilterResetButton();
 		datasharePolicyPage.clickOnFilterButton();
-		datasharePolicyPage.clickOnPolicyGroupFilter(GlobalConstants.DEFAULTPOLICYGROUP);
+		datasharePolicyPage.clickOnPolicyGroupFilter(GlobalConstants.DEFAULT_POLICYGROUP);
 		datasharePolicyPage.enterPolicyNameInFilter(GlobalConstants.DATAPOLICY01);
 		datasharePolicyPage.clickOnApplyFilterButton();
 		datasharePolicyPage.clickOnActionButton();
 		datasharePolicyPage.clickOnCloneButton();
-		datasharePolicyPage.selectPolicyGroupForClone(GlobalConstants.DEFAULTPOLICYGROUP);
+		datasharePolicyPage.selectPolicyGroupForClone(GlobalConstants.DEFAULT_POLICYGROUP);
 		datasharePolicyPage.clickOnClonePolicyButton();
 		assertTrue(datasharePolicyPage.isAlreadyExistErrorMessageDisplayed(),
 				GlobalConstants.isAlreadyExistErrorMessageDisplayed);
@@ -957,7 +956,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 
 		datasharePolicyPage.clickOnFilterResetButton();
 		datasharePolicyPage.clickOnFilterButton();
-		datasharePolicyPage.clickOnPolicyGroupFilter(GlobalConstants.DEFAULTPOLICYGROUP);
+		datasharePolicyPage.clickOnPolicyGroupFilter(GlobalConstants.DEFAULT_POLICYGROUP);
 		datasharePolicyPage.enterPolicyNameInFilter(GlobalConstants.DATAPOLICY01);
 		datasharePolicyPage.clickOnApplyFilterButton();
 		datasharePolicyPage.clickOnActionButton();
@@ -971,19 +970,19 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 	@Test(priority = 13, description = "Deactivate Datashare Policy")
 	public void deactivateDatasharePolicy() {
 
-		DashboardPage dashboardPage = new DashboardPage(driver);
+		dashboardPage = new DashboardPage(driver);
 		basePage = new BasePage(driver);
-		PolicyGroupPage policygroupPage = new PolicyGroupPage(driver);
-		DatasharePolicyPage datasharePolicyPage = new DatasharePolicyPage(driver);
-		PoliciesPage policiesPage = new PoliciesPage(driver);
-		LoginPage loginPage = new LoginPage(driver);
-		ApiKeyPage apikeyPage = new ApiKeyPage(driver);
-		PartnerPolicyMappingPage partnerPolicyMappingPage = new PartnerPolicyMappingPage(driver);
+		policygroupPage = new PolicyGroupPage(driver);
+		datasharePolicyPage = new DatasharePolicyPage(driver);
+		policiesPage = new PoliciesPage(driver);
+		loginPage = new LoginPage(driver);
+		apiKeyPage = new ApiKeyPage(driver);
+		partnerPolicyMappingPage = new PartnerPolicyMappingPage(driver);
 
 		dashboardPage.clickOnPolicyButton();
 		policygroupPage.clickOnDatasharePolicyTab();
 		datasharePolicyPage.clickOnDatasharePolicyCreateButton();
-		datasharePolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULTPOLICYGROUP);
+		datasharePolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULT_POLICYGROUP);
 		datasharePolicyPage.enterPolicyName(GlobalConstants.EDITDATAPOLICY1);
 		datasharePolicyPage.enterpolicyDescription(GlobalConstants.EDITDATAPOLICY1);
 		datasharePolicyPage.uploadPolicyData();
@@ -1000,7 +999,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		datasharePolicyPage.clickOnFilterResetButton();
 
 		datasharePolicyPage.clickOnFilterButton();
-		datasharePolicyPage.clickOnPolicyGroupFilter(GlobalConstants.DEFAULTPOLICYGROUP);
+		datasharePolicyPage.clickOnPolicyGroupFilter(GlobalConstants.DEFAULT_POLICYGROUP);
 		datasharePolicyPage.enterPolicyNameInFilter(GlobalConstants.DATAPOLICY02);
 		datasharePolicyPage.clickOnApplyFilterButton();
 		datasharePolicyPage.clickOnActionButton();
@@ -1013,7 +1012,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		dashboardPage.clickOnPolicyButton();
 		policygroupPage.clickOnDatasharePolicyTab();
 		datasharePolicyPage.clickOnFilterButton();
-		datasharePolicyPage.clickOnPolicyGroupFilter(GlobalConstants.DEFAULTPOLICYGROUP);
+		datasharePolicyPage.clickOnPolicyGroupFilter(GlobalConstants.DEFAULT_POLICYGROUP);
 		datasharePolicyPage.enterPolicyNameInFilter(GlobalConstants.DEACTIVATE_DATA2);
 		datasharePolicyPage.clickOnApplyFilterButton();
 		datasharePolicyPage.clickOnActionButton();
@@ -1027,7 +1026,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		dashboardPage.clickOnPolicyButton();
 		policygroupPage.clickOnDatasharePolicyTab();
 		datasharePolicyPage.clickOnFilterButton();
-		datasharePolicyPage.clickOnPolicyGroupFilter(GlobalConstants.DEFAULTPOLICYGROUP);
+		datasharePolicyPage.clickOnPolicyGroupFilter(GlobalConstants.DEFAULT_POLICYGROUP);
 		datasharePolicyPage.enterPolicyNameInFilter(GlobalConstants.DATAPOLICY01);
 		datasharePolicyPage.clickOnApplyFilterButton();
 		datasharePolicyPage.clickOnActionButton();
@@ -1047,14 +1046,10 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		assertTrue(datasharePolicyPage.isSubTitleOfTabularViewDisplayed(),
 				GlobalConstants.isSubTitleOfTabularViewDisplayed);
 
-		logoutFromPartner(dashboardPage);
-
-		loginPage.enterUserName(GlobalConstants.AUTHPARTNER);
-		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
-		loginPage.clickOnLoginButton();
+		loginAsAuthPartner();
 
 		OidcClientPage oidcClientPage = dashboardPage.clickOnAuthenticationServicesTitle();
-		oidcClientPage.listPageCreateOidcClientButton();
+		oidcClientPage.clickOnListCreateOidcClientButton();
 		oidcClientPage.selectPartnerIdDropdown();
 		oidcClientPage.enterDeactivePolicyNameInDropdown(GlobalConstants.DEACTIVATE_DATA2);
 		assertTrue(oidcClientPage.isNoDataAvailableTextDisplayed(), GlobalConstants.isNoDataAvailableTextDisplayed);
@@ -1063,11 +1058,11 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 
 		dashboardPage.clickOnAuthenticationServicesTitle();
 		oidcClientPage.clickOnApiKeyTab();
-		apikeyPage.clickOnApiKeyListPageGenerateApiKeyBtn();
-		apikeyPage.selectPartnerIdDropdown();
-		apikeyPage.enterDeactivePolicyNameInDropdown(GlobalConstants.DEACTIVATE_DATA2);
-		assertTrue(apikeyPage.isNoDataAvailableTextDisplayed(), GlobalConstants.isNoDataAvailableTextDisplayed);
-		apikeyPage.clickOnClearButton();
+		apiKeyPage.clickOnApiKeyListPageGenerateApiKeyBtn();
+		apiKeyPage.selectPartnerIdDropdown();
+		apiKeyPage.enterDeactivePolicyNameInDropdown(GlobalConstants.DEACTIVATE_DATA2);
+		assertTrue(apiKeyPage.isNoDataAvailableTextDisplayed(), GlobalConstants.isNoDataAvailableTextDisplayed);
+		apiKeyPage.clickOnClearButton();
 		policiesPage.clickOnHomeButton();
 
 		dashboardPage.clickOnPoliciesTitle();
@@ -1103,15 +1098,11 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		policiesPage.clickSubmitButton();
 		policiesPage.clickOnGoBackButton();
 
-		logoutFromPartner(dashboardPage);
-
-		loginPage.enterUserName(GlobalConstants.PARTNER_ADMIN);
-		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
-		loginPage.clickOnLoginButton();
+		loginAsPartnerAdmin();
 
 		dashboardPage.clickOnPartnerPolicyMappingTab();
 		partnerPolicyMappingPage.clickOnFilterButton();
-		partnerPolicyMappingPage.enterpolicyGroupFilter(GlobalConstants.DEFAULTPOLICYGROUP);
+		partnerPolicyMappingPage.enterpolicyGroupFilter(GlobalConstants.DEFAULT_POLICYGROUP);
 		partnerPolicyMappingPage.enterPendingPolicyNameInFilter(GlobalConstants.ALPHANUMERIC);
 		partnerPolicyMappingPage.clickOnApplyFilterButton();
 		partnerPolicyMappingPage.clickOnPartnerListViewElipsisButton();
@@ -1119,7 +1110,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		partnerPolicyMappingPage.clickOnFilterResetButton();
 
 		partnerPolicyMappingPage.clickOnFilterButton();
-		partnerPolicyMappingPage.enterpolicyGroupFilter(GlobalConstants.DEFAULTPOLICYGROUP);
+		partnerPolicyMappingPage.enterpolicyGroupFilter(GlobalConstants.DEFAULT_POLICYGROUP);
 		partnerPolicyMappingPage.enterPendingPolicyNameInFilter(GlobalConstants.DATAPOLICY01);
 		partnerPolicyMappingPage.clickOnApplyFilterButton();
 		partnerPolicyMappingPage.clickOnPartnerListViewElipsisButton();
@@ -1130,7 +1121,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		dashboardPage.clickOnPolicyButton();
 		policygroupPage.clickOnDatasharePolicyTab();
 		datasharePolicyPage.clickOnFilterButton();
-		datasharePolicyPage.clickOnPolicyGroupFilter(GlobalConstants.DEFAULTPOLICYGROUP);
+		datasharePolicyPage.clickOnPolicyGroupFilter(GlobalConstants.DEFAULT_POLICYGROUP);
 		datasharePolicyPage.enterPolicyNameInFilter(GlobalConstants.ALPHANUMERIC);
 		datasharePolicyPage.clickOnApplyFilterButton();
 		datasharePolicyPage.clickOnActionButton();
@@ -1142,7 +1133,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		partnerPolicyMappingPage.clickOnFilterResetButton();
 
 		partnerPolicyMappingPage.clickOnFilterButton();
-		partnerPolicyMappingPage.enterpolicyGroupFilter(GlobalConstants.DEFAULTPOLICYGROUP);
+		partnerPolicyMappingPage.enterpolicyGroupFilter(GlobalConstants.DEFAULT_POLICYGROUP);
 		datasharePolicyPage.enterPolicyNameInFilter(GlobalConstants.EDITDATAPOLICY1);
 		datasharePolicyPage.clickOnApplyFilterButton();
 		datasharePolicyPage.clickOnActionButton();
@@ -1154,7 +1145,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		partnerPolicyMappingPage.clickOnFilterResetButton();
 
 		partnerPolicyMappingPage.clickOnFilterButton();
-		partnerPolicyMappingPage.enterpolicyGroupFilter(GlobalConstants.DEFAULTPOLICYGROUP);
+		partnerPolicyMappingPage.enterpolicyGroupFilter(GlobalConstants.DEFAULT_POLICYGROUP);
 		datasharePolicyPage.enterPolicyNameInFilter(GlobalConstants.DATAPOLICY01);
 		datasharePolicyPage.clickOnApplyFilterButton();
 		datasharePolicyPage.clickOnActionButton();
@@ -1164,14 +1155,14 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		basePage.navigateForword();
 
 		datasharePolicyPage.clickOnFilterButton();
-		datasharePolicyPage.clickOnPolicyGroupFilter(GlobalConstants.DEFAULTPOLICYGROUP);
+		datasharePolicyPage.clickOnPolicyGroupFilter(GlobalConstants.DEFAULT_POLICYGROUP);
 		datasharePolicyPage.enterPolicyNameInFilter(GlobalConstants.DATAPOLICY01);
 		datasharePolicyPage.clickOnApplyFilterButton();
 		assertTrue(datasharePolicyPage.isPolicyStatusDeactivateDisplayed(),
 				GlobalConstants.isPolicyStatusDeactivateDisplayed);
 
 		datasharePolicyPage.clickOnDatasharePolicyCreateButton();
-		datasharePolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULTPOLICYGROUP);
+		datasharePolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULT_POLICYGROUP);
 		datasharePolicyPage.enterPolicyName(GlobalConstants.DATAPOLICY01);
 		datasharePolicyPage.enterpolicyDescription(GlobalConstants.DATAPOLICY01_DESCRIPTION);
 		datasharePolicyPage.uploadPolicyData();
@@ -1185,10 +1176,10 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 	@Test(priority = 14, description = "Create Auth Policy")
 	public void createAuthPolicy() {
 
-		DashboardPage dashboardPage = new DashboardPage(driver);
-		BasePage basePage = new BasePage(driver);
-		PoliciesPage policiesPage = new PoliciesPage(driver);
-		AuthPolicyPage authPolicyPage = new AuthPolicyPage(driver);
+		dashboardPage = new DashboardPage(driver);
+		basePage = new BasePage(driver);
+		policiesPage = new PoliciesPage(driver);
+		authPolicyPage = new AuthPolicyPage(driver);
 
 		dashboardPage.clickOnPolicyButton();
 		policiesPage.clickOnAuthPolicyTab();
@@ -1211,13 +1202,13 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		assertTrue(authPolicyPage.isFileUploadPlaceHolderDisplayed(), GlobalConstants.isFileUploadPlaceHolderDisplayed);
 		assertFalse(authPolicyPage.isPolicyDataBoxEnabled(), GlobalConstants.isPolicyDataBoxEnabled);
 
-		authPolicyPage.selectPolicyGroup(GlobalConstants.DEFAULTPOLICYGROUP);
+		authPolicyPage.selectPolicyGroup(GlobalConstants.DEFAULT_POLICYGROUP);
 		assertTrue(authPolicyPage.isPolicyGroupNameDisplayed(), GlobalConstants.isPolicyGroupNameDisplayed);
 		assertTrue(authPolicyPage.isPolicyGroupDescriptionDisplayed(),
 				GlobalConstants.isPolicyGroupDescriptionDisplayed);
 		authPolicyPage.clickOnPolicyGroupDropdown();
 
-		authPolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULTPOLICYGROUP);
+		authPolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULT_POLICYGROUP);
 		authPolicyPage.enterPolicyName(GlobalConstants.AUTHPOLICY03);
 		authPolicyPage.enterpolicyDescription(GlobalConstants.AUTHPOLICY03_DESCRIPTION);
 		authPolicyPage.uploadPolicyData();
@@ -1238,7 +1229,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		authPolicyPage.clickOnPublishPolicyCloseButton();
 
 		authPolicyPage.clickOnCreateAuthPolicyButton();
-		authPolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULTPOLICYGROUP);
+		authPolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULT_POLICYGROUP);
 		authPolicyPage.enterPolicyName(GlobalConstants.AUTHPOLICY09);
 		authPolicyPage.enterpolicyDescription(GlobalConstants.AUTHPOLICY09_DESCRIPTION);
 		authPolicyPage.uploadPolicyData();
@@ -1254,7 +1245,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		authPolicyPage.clickOnPublishPolicyCloseButton();
 
 		authPolicyPage.clickOnCreateAuthPolicyButton();
-		authPolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULTPOLICYGROUP);
+		authPolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULT_POLICYGROUP);
 		authPolicyPage.enterPolicyName(GlobalConstants.DEACTIVATE_AUTH2);
 		authPolicyPage.enterpolicyDescription(GlobalConstants.DEACTIVATE_AUTH2_DESCRIPTION);
 		authPolicyPage.uploadPolicyData();
@@ -1276,7 +1267,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		authPolicyPage.selectPolicyGroup(GlobalConstants.DEACTIVATE_POLICYGROUP);
 		assertTrue(authPolicyPage.isNoDataAvailableDisplayed(), GlobalConstants.isNoDataAvailableDisplayed);
 		authPolicyPage.clickOnPolicyGroupDropdown();
-		authPolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULTPOLICYGROUP);
+		authPolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULT_POLICYGROUP);
 		authPolicyPage.enterPolicyName(GlobalConstants.SPECIAL_CHARACTERS);
 		assertTrue(authPolicyPage.isSpecialCharactersAreNotAllowedErrorMessageDisplayed(),
 				GlobalConstants.isPolicyDataUploadedSuccessMessageDisplayed);
@@ -1299,7 +1290,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		authPolicyPage.clickOnGoBackButton();
 
 		authPolicyPage.clickOnCreateAuthPolicyButton();
-		authPolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULTPOLICYGROUP);
+		authPolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULT_POLICYGROUP);
 		authPolicyPage.enterPolicyName(GlobalConstants.AUTHPOLICY03);
 		authPolicyPage.enterpolicyDescription(GlobalConstants.AUTHPOLICY03_DESCRIPTION);
 		authPolicyPage.uploadPolicyData();
@@ -1325,71 +1316,71 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 	@Test(priority = 15, description = "Upload Invalid auth Policy Data")
 	public void uploadInvalidAuthPolicyData() {
 
-		DashboardPage dashboardPage = new DashboardPage(driver);
-		BasePage basePage = new BasePage(driver);
-		PoliciesPage policiesPage = new PoliciesPage(driver);
-		AuthPolicyPage authpolicyPage = new AuthPolicyPage(driver);
+		dashboardPage = new DashboardPage(driver);
+		basePage = new BasePage(driver);
+		policiesPage = new PoliciesPage(driver);
+		authPolicyPage = new AuthPolicyPage(driver);
 
 		dashboardPage.clickOnPolicyButton();
 		policiesPage.clickOnAuthPolicyTab();
-		authpolicyPage.clickOnCreateAuthPolicyButton();
-		authpolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULTPOLICYGROUP);
-		authpolicyPage.enterPolicyName(GlobalConstants.DEACTIVATE_AUTH2);
-		authpolicyPage.enterpolicyDescription(GlobalConstants.DEACTIVATE_AUTH2_DESCRIPTION);
-		authpolicyPage.uploadBlankData();
-		assertTrue(authpolicyPage.isProvideValidJsonDataErrorMessageDisplayed(),
+		authPolicyPage.clickOnCreateAuthPolicyButton();
+		authPolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULT_POLICYGROUP);
+		authPolicyPage.enterPolicyName(GlobalConstants.DEACTIVATE_AUTH2);
+		authPolicyPage.enterpolicyDescription(GlobalConstants.DEACTIVATE_AUTH2_DESCRIPTION);
+		authPolicyPage.uploadBlankData();
+		assertTrue(authPolicyPage.isProvideValidJsonDataErrorMessageDisplayed(),
 				GlobalConstants.isProvideValidJsonDataErrorMessageDisplayed);
-		authpolicyPage.clickOnErrorCloseButton();
-		authpolicyPage.uploadInvalidPolicyData();
-		assertTrue(authpolicyPage.isProvideValidJsonDataErrorMessageDisplayed(),
+		authPolicyPage.clickOnErrorCloseButton();
+		authPolicyPage.uploadInvalidPolicyData();
+		assertTrue(authPolicyPage.isProvideValidJsonDataErrorMessageDisplayed(),
 				GlobalConstants.isProvideValidJsonDataErrorMessageDisplayed);
-		authpolicyPage.clickOnErrorCloseButton();
-		authpolicyPage.uploadExceedData();
+		authPolicyPage.clickOnErrorCloseButton();
+		authPolicyPage.uploadExceedData();
 		basePage.scrollToEndPage();
-		authpolicyPage.clickOnSaveAsDraftButton();
+		authPolicyPage.clickOnSaveAsDraftButton();
 		basePage.scrollToStartPage();
-		assertTrue(authpolicyPage.isPolicyDataExceedChractersMessageDisplayed(),
+		assertTrue(authPolicyPage.isPolicyDataExceedChractersMessageDisplayed(),
 				GlobalConstants.isPolicyDataExceedChractersMessageDisplayed);
-		authpolicyPage.clickOnErrorCloseButton();
-		authpolicyPage.uploadPolicyData();
-		authpolicyPage.clearTextBoxPolicyData();
+		authPolicyPage.clickOnErrorCloseButton();
+		authPolicyPage.uploadPolicyData();
+		authPolicyPage.clearTextBoxPolicyData();
 		basePage.scrollToEndPage();
-		assertTrue(authpolicyPage.isSaveAsDraftButtonEnabled(), GlobalConstants.isSaveAsDraftButtonEnabled);
-		authpolicyPage.uploadPolicyData();
-		authpolicyPage.clickOnSaveAsDraftButton();
-		assertTrue(authpolicyPage.isPolicyNameExistErrorMessageDisplayed(),
+		assertTrue(authPolicyPage.isSaveAsDraftButtonEnabled(), GlobalConstants.isSaveAsDraftButtonEnabled);
+		authPolicyPage.uploadPolicyData();
+		authPolicyPage.clickOnSaveAsDraftButton();
+		assertTrue(authPolicyPage.isPolicyNameExistErrorMessageDisplayed(),
 				GlobalConstants.isPolicyNameExistErrorMessageDisplayed);
-		authpolicyPage.clickOnErrorCloseButton();
+		authPolicyPage.clickOnErrorCloseButton();
 
-		authpolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULTPOLICYGROUP);
-		authpolicyPage.enterPolicyName(GlobalConstants.ALPHANUMERIC2);
-		authpolicyPage.enterpolicyDescription(GlobalConstants.ALPHANUMERIC2);
-		authpolicyPage.clickOnPolicyClearButton();
+		authPolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULT_POLICYGROUP);
+		authPolicyPage.enterPolicyName(GlobalConstants.ALPHANUMERIC2);
+		authPolicyPage.enterpolicyDescription(GlobalConstants.ALPHANUMERIC2);
+		authPolicyPage.clickOnPolicyClearButton();
 
-		authpolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULTPOLICYGROUP);
-		authpolicyPage.enterPolicyName(GlobalConstants.ALPHANUMERIC2);
-		authpolicyPage.enterpolicyDescription(GlobalConstants.ALPHANUMERIC2);
-		authpolicyPage.uploadPolicyData();
-		authpolicyPage.clickOnPolicyCancelButton();
-		authpolicyPage.clickOnProceedButton();
-		assertTrue(authpolicyPage.isListOfPoliciesPageDisplayed(), GlobalConstants.isListOfPoliciesPageDisplayed);
+		authPolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULT_POLICYGROUP);
+		authPolicyPage.enterPolicyName(GlobalConstants.ALPHANUMERIC2);
+		authPolicyPage.enterpolicyDescription(GlobalConstants.ALPHANUMERIC2);
+		authPolicyPage.uploadPolicyData();
+		authPolicyPage.clickOnPolicyCancelButton();
+		authPolicyPage.clickOnProceedButton();
+		assertTrue(authPolicyPage.isListOfPoliciesPageDisplayed(), GlobalConstants.isListOfPoliciesPageDisplayed);
 
-		authpolicyPage.clickOnCreateAuthPolicyButton();
-		authpolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULTPOLICYGROUP);
-		authpolicyPage.enterPolicyName(GlobalConstants.SPACE);
-		authpolicyPage.enterpolicyDescription(GlobalConstants.SPACE);
-		authpolicyPage.uploadPolicyData();
-		assertFalse(authpolicyPage.isSaveAsDraftButtonEnabled(), GlobalConstants.isSaveAsDraftButtonEnabled);
-		authpolicyPage.clickOnHomeButton();
+		authPolicyPage.clickOnCreateAuthPolicyButton();
+		authPolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULT_POLICYGROUP);
+		authPolicyPage.enterPolicyName(GlobalConstants.SPACE);
+		authPolicyPage.enterpolicyDescription(GlobalConstants.SPACE);
+		authPolicyPage.uploadPolicyData();
+		assertFalse(authPolicyPage.isSaveAsDraftButtonEnabled(), GlobalConstants.isSaveAsDraftButtonEnabled);
+		authPolicyPage.clickOnHomeButton();
 	}
 
 	@Test(priority = 16, description = "Auth Policy Tabular View")
 	public void authPolicyTabularView() {
 
-		DashboardPage dashboardPage = new DashboardPage(driver);
-		BasePage basePage = new BasePage(driver);
-		PoliciesPage policiesPage = new PoliciesPage(driver);
-		AuthPolicyPage authPolicyPage = new AuthPolicyPage(driver);
+		dashboardPage = new DashboardPage(driver);
+		basePage = new BasePage(driver);
+		policiesPage = new PoliciesPage(driver);
+		authPolicyPage = new AuthPolicyPage(driver);
 
 		dashboardPage.clickOnPolicyButton();
 		policiesPage.clickOnAuthPolicyTab();
@@ -1426,7 +1417,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		assertTrue(authPolicyPage.isStatusFilterPlaceHolderDisplayed(),
 				GlobalConstants.isStatusFilterPlaceHolderDisplayed);
 
-		authPolicyPage.enterPolicyGroupInFilterBox(GlobalConstants.DEFAULTPOLICYGROUP);
+		authPolicyPage.enterPolicyGroupInFilterBox(GlobalConstants.DEFAULT_POLICYGROUP);
 		authPolicyPage.selectActivateStatusFilter();
 		authPolicyPage.clickOnApplyFilterButton();
 		assertTrue(authPolicyPage.isPolicyStatusActivateDisplayed(), GlobalConstants.isPolicyStatusActivateDisplayed);
@@ -1435,7 +1426,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		authPolicyPage.clickOnViewBackButton();
 
 		authPolicyPage.clickOnFilterButton();
-		authPolicyPage.enterPolicyGroupInFilterBox(GlobalConstants.DEFAULTPOLICYGROUP);
+		authPolicyPage.enterPolicyGroupInFilterBox(GlobalConstants.DEFAULT_POLICYGROUP);
 		authPolicyPage.selectActivateStatusFilter();
 		authPolicyPage.clickOnApplyFilterButton();
 		authPolicyPage.clickOnActionButton();
@@ -1443,7 +1434,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		assertTrue(authPolicyPage.isCloneButtonDisplayed(), GlobalConstants.isCloneButtonDisplayed);
 		assertTrue(authPolicyPage.isDeactivateButtonDisplayed(), GlobalConstants.isDeactivateButtonDisplayed);
 
-		authPolicyPage.enterPolicyGroupInFilterBox(GlobalConstants.DEFAULTPOLICYGROUP);
+		authPolicyPage.enterPolicyGroupInFilterBox(GlobalConstants.DEFAULT_POLICYGROUP);
 		authPolicyPage.selectDeactivateStatusFilter();
 		authPolicyPage.enterPolicyNameInFilter(GlobalConstants.DEACTIVATE_AUTH2);
 		authPolicyPage.clickOnApplyFilterButton();
@@ -1487,14 +1478,14 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 	@Test(priority = 17, description = "Auth Policy Details View")
 	public void authPolicyDetailsView() {
 
-		DashboardPage dashboardPage = new DashboardPage(driver);
-		PoliciesPage policiesPage = new PoliciesPage(driver);
-		AuthPolicyPage authPolicyPage = new AuthPolicyPage(driver);
+		dashboardPage = new DashboardPage(driver);
+		policiesPage = new PoliciesPage(driver);
+		authPolicyPage = new AuthPolicyPage(driver);
 
 		dashboardPage.clickOnPolicyButton();
 		policiesPage.clickOnAuthPolicyTab();
 		authPolicyPage.clickOnFilterButton();
-		authPolicyPage.enterPolicyGroupInFilterBox(GlobalConstants.DEFAULTPOLICYGROUP);
+		authPolicyPage.enterPolicyGroupInFilterBox(GlobalConstants.DEFAULT_POLICYGROUP);
 		authPolicyPage.enterPolicyNameInFilter(GlobalConstants.AUTHPOLICY03);
 		authPolicyPage.clickOnApplyFilterButton();
 		authPolicyPage.clickOnActionButton();
@@ -1531,7 +1522,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		authPolicyPage.clickOnSubTitleButton();
 
 		authPolicyPage.clickOnFilterButton();
-		authPolicyPage.enterPolicyGroupInFilterBox(GlobalConstants.DEFAULTPOLICYGROUP);
+		authPolicyPage.enterPolicyGroupInFilterBox(GlobalConstants.DEFAULT_POLICYGROUP);
 		authPolicyPage.enterPolicyNameInFilter(GlobalConstants.DEACTIVATE_AUTH2);
 		authPolicyPage.clickOnApplyFilterButton();
 		authPolicyPage.clickOnActionButton();
@@ -1546,16 +1537,16 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 	@Test(priority = 18, description = "Edit Auth Policy")
 	public void editAuthPolicy() {
 
-		DashboardPage dashboardpage = new DashboardPage(driver);
-		BasePage basePage = new BasePage(driver);
-		PoliciesPage policiesPage = new PoliciesPage(driver);
-		AuthPolicyPage authPolicyPage = new AuthPolicyPage(driver);
+		dashboardPage = new DashboardPage(driver);
+		basePage = new BasePage(driver);
+		policiesPage = new PoliciesPage(driver);
+		authPolicyPage = new AuthPolicyPage(driver);
 
-		dashboardpage.clickOnPolicyButton();
+		dashboardPage.clickOnPolicyButton();
 		policiesPage.clickOnAuthPolicyTab();
 		authPolicyPage.clickOnCreateAuthPolicyButton();
 
-		authPolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULTPOLICYGROUP);
+		authPolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULT_POLICYGROUP);
 		authPolicyPage.enterPolicyName(GlobalConstants.EDITAUTHPOLICY);
 		authPolicyPage.enterpolicyDescription(GlobalConstants.EDITAUTHPOLICY_DESCRIPTION);
 		authPolicyPage.uploadPolicyData();
@@ -1689,16 +1680,16 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 	@Test(priority = 19, description = "Publish Auth Policy")
 	public void publishAuthPolicy() {
 
-		DashboardPage dashboardPage = new DashboardPage(driver);
-		PoliciesPage policiesPage = new PoliciesPage(driver);
-		AuthPolicyPage authPolicyPage = new AuthPolicyPage(driver);
-		PolicyGroupPage policygroupPage = new PolicyGroupPage(driver);
+		dashboardPage = new DashboardPage(driver);
+		policiesPage = new PoliciesPage(driver);
+		authPolicyPage = new AuthPolicyPage(driver);
+		policygroupPage = new PolicyGroupPage(driver);
 
 		dashboardPage.clickOnPolicyButton();
 		policiesPage.clickOnAuthPolicyTab();
 		authPolicyPage.clickOnCreateAuthPolicyButton();
 
-		authPolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULTPOLICYGROUP);
+		authPolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULT_POLICYGROUP);
 		authPolicyPage.enterPolicyName(GlobalConstants.AUTHPOLICY08);
 		authPolicyPage.enterpolicyDescription(GlobalConstants.AUTHPOLICY08_DESCRIPTION);
 		authPolicyPage.uploadPolicyData();
@@ -1751,14 +1742,14 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 	@Test(priority = 20, description = "Clone Auth Policy")
 	public void cloneAuthPolicy() {
 
-		DashboardPage dashboardPage = new DashboardPage(driver);
-		AuthPolicyPage authPolicyPage = new AuthPolicyPage(driver);
-		PoliciesPage policiesPage = new PoliciesPage(driver);
+		dashboardPage = new DashboardPage(driver);
+		authPolicyPage = new AuthPolicyPage(driver);
+		policiesPage = new PoliciesPage(driver);
 
 		dashboardPage.clickOnPolicyButton();
 		policiesPage.clickOnAuthPolicyTab();
 		authPolicyPage.clickOnCreateAuthPolicyButton();
-		authPolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULTPOLICYGROUP);
+		authPolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULT_POLICYGROUP);
 		authPolicyPage.enterPolicyName(GlobalConstants.AUTHPOLICY06);
 		authPolicyPage.enterpolicyDescription(GlobalConstants.AUTHPOLICY06_DESCRIPTION);
 		authPolicyPage.uploadPolicyData();
@@ -1771,7 +1762,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 				GlobalConstants.isClonePolicyPopupTitleDisplayed);
 
 		authPolicyPage.clickOnFilterButton();
-		authPolicyPage.enterPolicyGroupInFilterBox(GlobalConstants.DEFAULTPOLICYGROUP);
+		authPolicyPage.enterPolicyGroupInFilterBox(GlobalConstants.DEFAULT_POLICYGROUP);
 		authPolicyPage.selectDeactivateStatusFilter();
 		authPolicyPage.enterPolicyNameInFilter(GlobalConstants.DEACTIVATE_AUTH2);
 		authPolicyPage.clickOnApplyFilterButton();
@@ -1780,7 +1771,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 
 		authPolicyPage.clickOnFilterResetButton();
 		authPolicyPage.clickOnFilterButton();
-		authPolicyPage.enterPolicyGroupInFilterBox(GlobalConstants.DEFAULTPOLICYGROUP);
+		authPolicyPage.enterPolicyGroupInFilterBox(GlobalConstants.DEFAULT_POLICYGROUP);
 		authPolicyPage.enterPolicyNameInFilter(GlobalConstants.AUTHPOLICY06);
 		authPolicyPage.clickOnApplyFilterButton();
 		authPolicyPage.clickOnActionButton();
@@ -1842,7 +1833,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		authPolicyPage.clickOnViewBackButton();
 
 		authPolicyPage.clickOnFilterButton();
-		authPolicyPage.enterPolicyGroupInFilterBox(GlobalConstants.DEFAULTPOLICYGROUP);
+		authPolicyPage.enterPolicyGroupInFilterBox(GlobalConstants.DEFAULT_POLICYGROUP);
 		authPolicyPage.enterPolicyNameInFilter(GlobalConstants.AUTHPOLICY06);
 		authPolicyPage.clickOnApplyFilterButton();
 		authPolicyPage.clickOnActionButton();
@@ -1851,7 +1842,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 
 		authPolicyPage.clickOnFilterResetButton();
 		authPolicyPage.clickOnFilterButton();
-		authPolicyPage.enterPolicyGroupInFilterBox(GlobalConstants.DEFAULTPOLICYGROUP);
+		authPolicyPage.enterPolicyGroupInFilterBox(GlobalConstants.DEFAULT_POLICYGROUP);
 		authPolicyPage.enterPolicyNameInFilter(GlobalConstants.AUTHPOLICY06);
 		authPolicyPage.clickOnApplyFilterButton();
 		authPolicyPage.clickOnActionButton();
@@ -1863,19 +1854,19 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		authPolicyPage.clickOnCloseIcon();
 		assertTrue(authPolicyPage.isListOfPoliciesPageDisplayed(), GlobalConstants.isListOfPoliciesPageDisplayed);
 
-		authPolicyPage.enterPolicyGroupInFilterBox(GlobalConstants.DEFAULTPOLICYGROUP);
+		authPolicyPage.enterPolicyGroupInFilterBox(GlobalConstants.DEFAULT_POLICYGROUP);
 		authPolicyPage.enterPolicyNameInFilter(GlobalConstants.AUTHPOLICY06);
 		authPolicyPage.clickOnApplyFilterButton();
 		authPolicyPage.clickOnActionButton();
 		authPolicyPage.clickOnCloneButton();
-		authPolicyPage.selectPolicyGroupForClone(GlobalConstants.DEFAULTPOLICYGROUP);
+		authPolicyPage.selectPolicyGroupForClone(GlobalConstants.DEFAULT_POLICYGROUP);
 		authPolicyPage.clickOnClonePolicyButton();
 		assertTrue(authPolicyPage.isAlreadyExistErrorMessageDisplayed(),
 				GlobalConstants.isAlreadyExistErrorMessageDisplayed);
 		authPolicyPage.clickOnCloseIcon();
 		assertTrue(authPolicyPage.isListOfPoliciesPageDisplayed(), GlobalConstants.isListOfPoliciesPageDisplayed);
 
-		authPolicyPage.enterPolicyGroupInFilterBox(GlobalConstants.DEFAULTPOLICYGROUP);
+		authPolicyPage.enterPolicyGroupInFilterBox(GlobalConstants.DEFAULT_POLICYGROUP);
 		authPolicyPage.enterPolicyNameInFilter(GlobalConstants.AUTHPOLICY06);
 		authPolicyPage.clickOnApplyFilterButton();
 		authPolicyPage.clickOnActionButton();
@@ -1889,71 +1880,67 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 	@Test(priority = 21, description = "Deactivate Auth Policy")
 	public void deactivateAuthPolicy() {
 
-		DashboardPage dashboardPage = new DashboardPage(driver);
-		BasePage basePage = new BasePage(driver);
-		PolicyGroupPage policygroupPage = new PolicyGroupPage(driver);
-		PoliciesPage policiesPage = new PoliciesPage(driver);
-		LoginPage loginPage = new LoginPage(driver);
-		ApiKeyPage apikeyPage = new ApiKeyPage(driver);
-		AuthPolicyPage authpolicyPage = new AuthPolicyPage(driver);
-		PartnerPolicyMappingPage partnerPolicyMappingPage = new PartnerPolicyMappingPage(driver);
-		OidcClientPage oidcclientpage = new OidcClientPage(driver);
+		dashboardPage = new DashboardPage(driver);
+		basePage = new BasePage(driver);
+		policygroupPage = new PolicyGroupPage(driver);
+		policiesPage = new PoliciesPage(driver);
+		loginPage = new LoginPage(driver);
+		apiKeyPage = new ApiKeyPage(driver);
+		authPolicyPage = new AuthPolicyPage(driver);
+		partnerPolicyMappingPage = new PartnerPolicyMappingPage(driver);
+		oidcClientPage = new OidcClientPage(driver);
 
 		dashboardPage.clickOnPolicyButton();
 		policiesPage.clickOnAuthPolicyTab();
-		authpolicyPage.clickOnFilterButton();
-		authpolicyPage.enterPolicyGroupInFilterBox(GlobalConstants.DEFAULTPOLICYGROUP);
-		authpolicyPage.enterPolicyNameInFilter(GlobalConstants.DEACTIVATE_AUTH2);
-		authpolicyPage.clickOnApplyFilterButton();
-		authpolicyPage.clickOnActionButton();
-		assertTrue(authpolicyPage.isViewButtonEnabled(), GlobalConstants.isViewButtonEnabled);
-		assertTrue(authpolicyPage.isCloneButtonEnabled(), GlobalConstants.isCloneButtonEnabled);
-		authpolicyPage.clickOnDeactivateButton();
-		assertFalse(authpolicyPage.isDeactivatePolicyPopupDisplayed(),
+		authPolicyPage.clickOnFilterButton();
+		authPolicyPage.enterPolicyGroupInFilterBox(GlobalConstants.DEFAULT_POLICYGROUP);
+		authPolicyPage.enterPolicyNameInFilter(GlobalConstants.DEACTIVATE_AUTH2);
+		authPolicyPage.clickOnApplyFilterButton();
+		authPolicyPage.clickOnActionButton();
+		assertTrue(authPolicyPage.isViewButtonEnabled(), GlobalConstants.isViewButtonEnabled);
+		assertTrue(authPolicyPage.isCloneButtonEnabled(), GlobalConstants.isCloneButtonEnabled);
+		authPolicyPage.clickOnDeactivateButton();
+		assertFalse(authPolicyPage.isDeactivatePolicyPopupDisplayed(),
 				GlobalConstants.isDeactivatePolicyPopupDisplayed);
-		authpolicyPage.clickOnHomeButton();
+		authPolicyPage.clickOnHomeButton();
 
 		dashboardPage.clickOnPolicyButton();
 		policiesPage.clickOnAuthPolicyTab();
-		authpolicyPage.clickOnFilterButton();
-		authpolicyPage.enterPolicyGroupInFilterBox(GlobalConstants.DEFAULTPOLICYGROUP);
-		authpolicyPage.enterPolicyNameInFilter(GlobalConstants.AUTHPOLICY06);
-		authpolicyPage.clickOnApplyFilterButton();
-		authpolicyPage.clickOnActionButton();
-		assertTrue(authpolicyPage.isDeactivateButtonEnabled(), GlobalConstants.isDeactivateButtonEnabled);
-		authpolicyPage.clickOnDeactivateButton();
-		assertTrue(authpolicyPage.isDeactivatePolicyPopupDisplayed(), GlobalConstants.isDeactivatePolicyPopupDisplayed);
-		assertTrue(authpolicyPage.isDeactivatePolicyPopupTitleDisplayed(),
+		authPolicyPage.clickOnFilterButton();
+		authPolicyPage.enterPolicyGroupInFilterBox(GlobalConstants.DEFAULT_POLICYGROUP);
+		authPolicyPage.enterPolicyNameInFilter(GlobalConstants.AUTHPOLICY06);
+		authPolicyPage.clickOnApplyFilterButton();
+		authPolicyPage.clickOnActionButton();
+		assertTrue(authPolicyPage.isDeactivateButtonEnabled(), GlobalConstants.isDeactivateButtonEnabled);
+		authPolicyPage.clickOnDeactivateButton();
+		assertTrue(authPolicyPage.isDeactivatePolicyPopupDisplayed(), GlobalConstants.isDeactivatePolicyPopupDisplayed);
+		assertTrue(authPolicyPage.isDeactivatePolicyPopupTitleDisplayed(),
 				GlobalConstants.isDeactivatePolicyPopupTitleDisplayed);
-		assertTrue(authpolicyPage.isDeactivatePolicyInfoMessageDisplayed(),
+		assertTrue(authPolicyPage.isDeactivatePolicyInfoMessageDisplayed(),
 				GlobalConstants.isDeactivatePolicyInfoMessageDisplayed);
-		assertTrue(authpolicyPage.isDeactivateConfirmButtonAvailable(),
+		assertTrue(authPolicyPage.isDeactivateConfirmButtonAvailable(),
 				GlobalConstants.isDeactivateConfirmButtonAvailable);
-		assertTrue(authpolicyPage.isDeactivateCancelButtonAvailable(),
+		assertTrue(authPolicyPage.isDeactivateCancelButtonAvailable(),
 				GlobalConstants.isDeactivateCancelButtonAvailable);
-		authpolicyPage.clickOnDeactivateCancelButton();
-		assertTrue(authpolicyPage.isListOfPoliciesPageDisplayed(), GlobalConstants.isListOfPoliciesPageDisplayed);
+		authPolicyPage.clickOnDeactivateCancelButton();
+		assertTrue(authPolicyPage.isListOfPoliciesPageDisplayed(), GlobalConstants.isListOfPoliciesPageDisplayed);
 
-		logoutFromPartner(dashboardPage);
-
-		loginPage.enterUserName(GlobalConstants.AUTHPARTNER);
-		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
-		loginPage.clickOnLoginButton();
+		loginAsAuthPartner();
 
 		dashboardPage.clickOnAuthenticationServicesTitle();
-		oidcclientpage.listPageCreateOidcClientButton();
-		oidcclientpage.selectPartnerIdDropdown();
-		oidcclientpage.enterDeactivePolicyNameInDropdown(GlobalConstants.DEACTIVATE_AUTH2);
-		assertTrue(oidcclientpage.isNoDataAvailableTextDisplayed(), GlobalConstants.isNoDataAvailableTextDisplayed);
+		oidcClientPage.clickOnListCreateOidcClientButton();
+		oidcClientPage.selectPartnerIdDropdown();
+		oidcClientPage.enterDeactivePolicyNameInDropdown(GlobalConstants.DEACTIVATE_AUTH2);
+		assertTrue(oidcClientPage.isNoDataAvailableTextDisplayed(), GlobalConstants.isNoDataAvailableTextDisplayed);
 		policiesPage.clickOnHomeButton();
 		policiesPage.clickOnDataLostProcceedButton();
 
 		dashboardPage.clickOnAuthenticationServicesTitle();
-		oidcclientpage.clickOnApiKeyTab();
-		apikeyPage.clickOnApiKeyListPageGenerateApiKeyBtn();
-		apikeyPage.selectPartnerIdDropdown();
-		apikeyPage.enterDeactivePolicyNameInDropdown(GlobalConstants.DEACTIVATE_AUTH2);
-		assertTrue(apikeyPage.isNoDataAvailableTextDisplayed(), GlobalConstants.isNoDataAvailableTextDisplayed);
+		oidcClientPage.clickOnApiKeyTab();
+		apiKeyPage.clickOnApiKeyListPageGenerateApiKeyBtn();
+		apiKeyPage.selectPartnerIdDropdown();
+		apiKeyPage.enterDeactivePolicyNameInDropdown(GlobalConstants.DEACTIVATE_AUTH2);
+		assertTrue(apiKeyPage.isNoDataAvailableTextDisplayed(), GlobalConstants.isNoDataAvailableTextDisplayed);
 		policiesPage.clickOnHomeButton();
 		policiesPage.clickOnDataLostProcceedButton();
 
@@ -1982,15 +1969,11 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		policiesPage.clickSubmitButton();
 		policiesPage.clickOnGoBackButton();
 
-		logoutFromPartner(dashboardPage);
-
-		loginPage.enterUserName(GlobalConstants.PARTNER_ADMIN);
-		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
-		loginPage.clickOnLoginButton();
+		loginAsPartnerAdmin();
 
 		dashboardPage.clickOnPartnerPolicyMappingTab();
 		partnerPolicyMappingPage.clickOnFilterButton();
-		partnerPolicyMappingPage.enterpolicyGroupFilter(GlobalConstants.DEFAULTPOLICYGROUP);
+		partnerPolicyMappingPage.enterpolicyGroupFilter(GlobalConstants.DEFAULT_POLICYGROUP);
 		partnerPolicyMappingPage.enterPendingPolicyNameInFilter(GlobalConstants.ALPHANUMERIC2);
 		partnerPolicyMappingPage.clickOnApplyFilterButton();
 		partnerPolicyMappingPage.clickOnPartnerListViewElipsisButton();
@@ -1999,7 +1982,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		partnerPolicyMappingPage.clickOnFilterResetButton();
 
 		partnerPolicyMappingPage.clickOnFilterButton();
-		partnerPolicyMappingPage.enterpolicyGroupFilter(GlobalConstants.DEFAULTPOLICYGROUP);
+		partnerPolicyMappingPage.enterpolicyGroupFilter(GlobalConstants.DEFAULT_POLICYGROUP);
 		partnerPolicyMappingPage.enterPendingPolicyNameInFilter(GlobalConstants.AUTHPOLICY06);
 		partnerPolicyMappingPage.clickOnApplyFilterButton();
 		partnerPolicyMappingPage.clickOnPartnerListViewElipsisButton();
@@ -2009,64 +1992,64 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 
 		dashboardPage.clickOnPolicyButton();
 		policygroupPage.clickOnAuthPolicyTab();
-		authpolicyPage.clickOnFilterButton();
-		authpolicyPage.enterPolicyNameInFilter(GlobalConstants.ALPHANUMERIC2);
-		authpolicyPage.clickOnApplyFilterButton();
-		authpolicyPage.clickOnActionButton();
-		authpolicyPage.clickOnDeactivateButton();
-		authpolicyPage.clickOnDeactivateConfirmButton();
-		assertTrue(authpolicyPage.isPartnerPolicyLinkActivatedErrorDisplayed(),
+		authPolicyPage.clickOnFilterButton();
+		authPolicyPage.enterPolicyNameInFilter(GlobalConstants.ALPHANUMERIC2);
+		authPolicyPage.clickOnApplyFilterButton();
+		authPolicyPage.clickOnActionButton();
+		authPolicyPage.clickOnDeactivateButton();
+		authPolicyPage.clickOnDeactivateConfirmButton();
+		assertTrue(authPolicyPage.isPartnerPolicyLinkActivatedErrorDisplayed(),
 				GlobalConstants.isPartnerPolicyLinkActivatedErrorDisplayed);
-		authpolicyPage.clickOnAlertErrorOkButton();
+		authPolicyPage.clickOnAlertErrorOkButton();
 		partnerPolicyMappingPage.clickOnFilterResetButton();
 
 		partnerPolicyMappingPage.clickOnFilterButton();
-		partnerPolicyMappingPage.enterpolicyGroupFilter(GlobalConstants.DEFAULTPOLICYGROUP);
-		authpolicyPage.enterPolicyNameInFilter(GlobalConstants.AUTHPOLICY09);
-		authpolicyPage.clickOnApplyFilterButton();
-		authpolicyPage.clickOnActionButton();
-		authpolicyPage.clickOnDeactivateButton();
-		authpolicyPage.clickOnDeactivateConfirmButton();
-		assertTrue(authpolicyPage.isPartnerPolicyLinkPendingErrorDisplayed(),
+		partnerPolicyMappingPage.enterpolicyGroupFilter(GlobalConstants.DEFAULT_POLICYGROUP);
+		authPolicyPage.enterPolicyNameInFilter(GlobalConstants.AUTHPOLICY09);
+		authPolicyPage.clickOnApplyFilterButton();
+		authPolicyPage.clickOnActionButton();
+		authPolicyPage.clickOnDeactivateButton();
+		authPolicyPage.clickOnDeactivateConfirmButton();
+		assertTrue(authPolicyPage.isPartnerPolicyLinkPendingErrorDisplayed(),
 				GlobalConstants.isPartnerPolicyLinkPendingErrorDisplayed);
-		authpolicyPage.clickOnAlertErrorOkButton();
+		authPolicyPage.clickOnAlertErrorOkButton();
 		partnerPolicyMappingPage.clickOnFilterResetButton();
 
 		partnerPolicyMappingPage.clickOnFilterButton();
-		partnerPolicyMappingPage.enterpolicyGroupFilter(GlobalConstants.DEFAULTPOLICYGROUP);
-		authpolicyPage.enterPolicyNameInFilter(GlobalConstants.AUTHPOLICY06);
-		authpolicyPage.clickOnApplyFilterButton();
-		authpolicyPage.clickOnActionButton();
-		authpolicyPage.clickOnDeactivateButton();
-		authpolicyPage.clickOnDeactivateConfirmButton();
+		partnerPolicyMappingPage.enterpolicyGroupFilter(GlobalConstants.DEFAULT_POLICYGROUP);
+		authPolicyPage.enterPolicyNameInFilter(GlobalConstants.AUTHPOLICY06);
+		authPolicyPage.clickOnApplyFilterButton();
+		authPolicyPage.clickOnActionButton();
+		authPolicyPage.clickOnDeactivateButton();
+		authPolicyPage.clickOnDeactivateConfirmButton();
 		basePage.navigateBack();
 		basePage.navigateForword();
 
-		authpolicyPage.clickOnFilterButton();
-		partnerPolicyMappingPage.enterpolicyGroupFilter(GlobalConstants.DEFAULTPOLICYGROUP);
-		authpolicyPage.enterPolicyNameInFilter(GlobalConstants.AUTHPOLICY06);
-		authpolicyPage.clickOnApplyFilterButton();
-		assertTrue(authpolicyPage.isPolicyStatusDeactivatedDisplayed(),
+		authPolicyPage.clickOnFilterButton();
+		partnerPolicyMappingPage.enterpolicyGroupFilter(GlobalConstants.DEFAULT_POLICYGROUP);
+		authPolicyPage.enterPolicyNameInFilter(GlobalConstants.AUTHPOLICY06);
+		authPolicyPage.clickOnApplyFilterButton();
+		assertTrue(authPolicyPage.isPolicyStatusDeactivatedDisplayed(),
 				GlobalConstants.isPolicyStatusDeactivatedDisplayed);
 
-		authpolicyPage.clickOnCreateAuthPolicyButton();
-		authpolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULTPOLICYGROUP);
-		authpolicyPage.enterPolicyName(GlobalConstants.AUTHPOLICY06);
-		authpolicyPage.enterpolicyDescription(GlobalConstants.AUTHPOLICY06_DESCRIPTION);
-		authpolicyPage.uploadPolicyData();
+		authPolicyPage.clickOnCreateAuthPolicyButton();
+		authPolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULT_POLICYGROUP);
+		authPolicyPage.enterPolicyName(GlobalConstants.AUTHPOLICY06);
+		authPolicyPage.enterpolicyDescription(GlobalConstants.AUTHPOLICY06_DESCRIPTION);
+		authPolicyPage.uploadPolicyData();
 		basePage.scrollToEndPage();
-		authpolicyPage.clickOnSaveAsDraftButton();
-		assertTrue(authpolicyPage.isPolicyNameExistErrorMessageDisplayed(),
+		authPolicyPage.clickOnSaveAsDraftButton();
+		assertTrue(authPolicyPage.isPolicyNameExistErrorMessageDisplayed(),
 				GlobalConstants.isPolicyNameExistErrorMessageDisplayed);
 	}
 
 	@Test(priority = 22, description = "Deactivate Policy Group")
 	public void deactivatePolicyGroup() {
-		DashboardPage dashboardPage = new DashboardPage(driver);
-		PoliciesPage policiesPage = new PoliciesPage(driver);
-		PolicyGroupPage policygroupPage = new PolicyGroupPage(driver);
-		DatasharePolicyPage datasharePolicyPage = new DatasharePolicyPage(driver);
-		AuthPolicyPage authPolicyPage = new AuthPolicyPage(driver);
+		dashboardPage = new DashboardPage(driver);
+		policiesPage = new PoliciesPage(driver);
+		policygroupPage = new PolicyGroupPage(driver);
+		datasharePolicyPage = new DatasharePolicyPage(driver);
+		authPolicyPage = new AuthPolicyPage(driver);
 
 		dashboardPage.clickOnPolicyButton();
 		policygroupPage.clickOnFilterButton();
@@ -2100,7 +2083,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		assertFalse(policygroupPage.isDeactivatePolicyGroupPopupDisplayed(),
 				GlobalConstants.isDeactivatePolicyGroupPopupDisplayed);
 
-		policygroupPage.clickOnPolicyGroupNameFilter(GlobalConstants.DEFAULTPOLICYGROUP);
+		policygroupPage.clickOnPolicyGroupNameFilter(GlobalConstants.DEFAULT_POLICYGROUP);
 		policygroupPage.clickOnApplyFilterButton();
 		policygroupPage.clickOnPolicyGroupActionButton();
 		policygroupPage.clickOnDeactivateButton();
@@ -2156,8 +2139,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 
 	}
 
-	private void createPolicyGroup(PolicyGroupPage policygroupPage, String policyGroupNameValue,
-			String policyGroupDescValue) {
+	private void createPolicyGroup(String policyGroupNameValue, String policyGroupDescValue) {
 		policygroupPage.clickOnCreatePolicyGroupButton();
 		policygroupPage.enterPolicyGroupName(policyGroupNameValue);
 		policygroupPage.enterPolicyGroupNameDescription(policyGroupDescValue);
@@ -2166,9 +2148,20 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 
 	}
 
-	private void logoutFromPartner(DashboardPage dashboardPage) {
+	private void loginAsAuthPartner() {
 		dashboardPage.clickOnProfileDropdown();
-		dashboardPage.clickOnLogoutButton();
+		loginPage = dashboardPage.clickOnLogoutButton();
+		loginPage.enterUserName(GlobalConstants.AUTH_PARTNER_ID);
+		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
+		loginPage.clickOnLoginButton();
+	}
+
+	private void loginAsPartnerAdmin() {
+		dashboardPage.clickOnProfileDropdown();
+		loginPage = dashboardPage.clickOnLogoutButton();
+		loginPage.enterUserName(GlobalConstants.PARTNER_ADMIN);
+		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
+		loginPage.clickOnLoginButton();
 	}
 
 }

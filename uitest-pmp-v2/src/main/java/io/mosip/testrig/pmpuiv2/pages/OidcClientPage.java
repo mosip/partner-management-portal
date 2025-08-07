@@ -4,6 +4,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import java.time.Duration;
+
+
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
 
 public class OidcClientPage extends BasePage {
@@ -233,8 +238,8 @@ public class OidcClientPage extends BasePage {
 	@FindBy(id = "sub_title_home_btn")
 	private WebElement homeButton;
 
-	@FindBy(id = "create_oidc_btn")
-	private WebElement oidcClientListPageCreateOidcClientBtn;
+	@FindBy(xpath = "//button[@id='create_oidc_btn']")
+	private WebElement createOidcClientButton;
 
 	@FindBy(xpath = "//p[contains(text(), 'Your changes will be lost, are you sure you want to proceed?')]")
 	private WebElement browserConfirmationPopup;
@@ -865,8 +870,8 @@ public class OidcClientPage extends BasePage {
 		return isElementDisplayed(homeButton);
 	}
 
-	public void listPageCreateOidcClientButton() {
-		clickOnElement(oidcClientListPageCreateOidcClientBtn);
+	public void clickOnListCreateOidcClientButton() {
+		clickOnElement(createOidcClientButton);
 	}
 
 	public void navigateBackDefaultButton() {

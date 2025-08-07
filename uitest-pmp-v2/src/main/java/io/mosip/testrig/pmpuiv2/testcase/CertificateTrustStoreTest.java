@@ -20,7 +20,7 @@ public class CertificateTrustStoreTest extends BaseClass {
 
 		assertTrue(dashboardPage.isCertificateTrustStoreDisplayed(), GlobalConstants.isCertificateTrustStoreDisplayed);
 		dashboardPage.clickOnCertificateTrustStore();
-		dashboardPage.clickOnRootCertificateUploadButton();
+		partnerCertificatePage.clickOnRootUploadTrustCertificateButtonInAdmin();
 
 		assertTrue(partnerCertificatePage.isPartnerCertificatePageDisplayed(),
 				GlobalConstants.isPartnerCertificatePageDisplayed);
@@ -108,7 +108,7 @@ public class CertificateTrustStoreTest extends BaseClass {
 
 		assertTrue(partnerCertificatePage.isUploadTrustCertificateButtonDisplayed(),
 				GlobalConstants.isUploadTrustCertificateButtonDisplayed);
-		partnerCertificatePage.clickOnUploadTrustCertificateButton();
+		partnerCertificatePage.clickOnRootUploadTrustCertificateButtonInAdmin();
 		assertTrue(partnerCertificatePage.isCertificateUploadPopupDisplayed(),
 				GlobalConstants.isCertificateUploadPopupDisplayed);
 		partnerCertificatePage.clickOnTitleBackButton();
@@ -342,7 +342,7 @@ public class CertificateTrustStoreTest extends BaseClass {
 
 		assertTrue(partnerCertificatePage.isIntermediateUploadTrustCertificateButtonDisplayed(),
 				GlobalConstants.isUploadTrustCertificateButtonDisplayed);
-		partnerCertificatePage.clickOnUploadIntTrustCertificateButton();
+		partnerCertificatePage.clickOnIntermediateUploadTrustCertificateButtonInAdmin();
 		assertTrue(partnerCertificatePage.isCertificateUploadPopupDisplayed(),
 				GlobalConstants.isCertificateUploadPopupDisplayed);
 		partnerCertificatePage.clickOnTitleBackButton();

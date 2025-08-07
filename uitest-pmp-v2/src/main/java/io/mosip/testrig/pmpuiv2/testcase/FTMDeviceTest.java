@@ -4,15 +4,11 @@ import static org.testng.Assert.assertTrue;
 
 import org.testng.annotations.Test;
 
-import io.mosip.testrig.pmpuiv2.kernel.util.ConfigManager;
-import io.mosip.testrig.pmpuiv2.pages.ApiKeyPage;
 import io.mosip.testrig.pmpuiv2.pages.BasePage;
 import io.mosip.testrig.pmpuiv2.pages.DashboardPage;
 import io.mosip.testrig.pmpuiv2.pages.FtmPage;
 import io.mosip.testrig.pmpuiv2.pages.LoginPage;
-import io.mosip.testrig.pmpuiv2.pages.OidcClientPage;
 import io.mosip.testrig.pmpuiv2.pages.PartnerCertificatePage;
-import io.mosip.testrig.pmpuiv2.pages.PoliciesPage;
 import io.mosip.testrig.pmpuiv2.pages.RegisterPage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
@@ -124,19 +120,19 @@ public class FTMDeviceTest extends BaseClass {
 //		dashboardpage.clickOnProceedButton();
 
 		dashboardpage.clickOnRootOFTrustCertText();
-		dashboardpage.clickOnRootCertificateUploadButton();
+		assertTrue(partnerCertificatePage.isUploadTrustCertificateButtonDisplayed(),
+				GlobalConstants.isUploadTrustCertificateButtonDisplayed);
+		partnerCertificatePage.clickOnRootUploadTrustCertificateButtonInAdmin();
 		partnerCertificatePage.clickOnpartnerDomainSelectorDropdown();
 		partnerCertificatePage.clickOnPartnerDomainSelectorDropdownOptionFtm();
 		partnerCertificatePage.uploadCertificateRootCa();
 		partnerCertificatePage.clickonSubmitButtonForAdmin();
-		assertTrue(partnerCertificatePage.isFtmCertUploadSuccessMessageDisplayed(),
-				GlobalConstants.isPartnerCertificatePageDisplayed);
-		assertTrue(partnerCertificatePage.isGoBackButtonDisplayed(), GlobalConstants.isPartnerCertificatePageDisplayed);
-		assertTrue(partnerCertificatePage.isConfirmationHomeButtonDisplayed(),
-				GlobalConstants.isPartnerCertificatePageDisplayed);
-
 		partnerCertificatePage.clickOnGoBackButton();
-		dashboardpage.clickOnRootCertificateUploadButton();
+		
+		partnerCertificatePage.clickOnIntermediateCACertTab();
+		assertTrue(partnerCertificatePage.isIntermediateUploadTrustCertificateButtonDisplayed(),
+				GlobalConstants.isUploadTrustCertificateButtonDisplayed);
+		partnerCertificatePage.clickOnIntermediateUploadTrustCertificateButtonInAdmin();
 		partnerCertificatePage.clickOnpartnerDomainSelectorDropdown();
 		partnerCertificatePage.clickOnPartnerDomainSelectorDropdownOptionFtm();
 		partnerCertificatePage.uploadCertificateSubCa();
@@ -159,7 +155,7 @@ public class FTMDeviceTest extends BaseClass {
 		registerPage.enterPasswordConfirm(GlobalConstants.PARTNER_PASSWORD);
 		dashboardpage = registerPage.clickSubmitButton();
 
-		assertTrue(dashboardpage.isTermsAndConditionsPopUppDisplayed(),
+		assertTrue(dashboardpage.isTermsAndConditionsPopupDisplayed(),
 				GlobalConstants.isTermsAndConditionsPopUppDisplayed);
 		dashboardpage.clickOnCheckbox();
 		dashboardpage.clickOnProceedButton();

@@ -5,7 +5,6 @@ import static org.testng.Assert.assertTrue;
 import org.testng.annotations.Test;
 
 import io.mosip.testrig.pmpuiv2.kernel.util.KeycloakUserManager;
-import io.mosip.testrig.pmpuiv2.pages.BasePage;
 import io.mosip.testrig.pmpuiv2.pages.DashboardPage;
 import io.mosip.testrig.pmpuiv2.pages.LoginPage;
 import io.mosip.testrig.pmpuiv2.pages.PartnerCertificatePage;
@@ -17,7 +16,6 @@ import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
 public class PartnerAdminCreation extends BaseClass {
 
-	private BasePage basePage;
 	private DashboardPage dashboardPage;
 	private LoginPage loginPage;
 	private PartnerCertificatePage partnerCertificatePage;
@@ -68,12 +66,7 @@ public class PartnerAdminCreation extends BaseClass {
 
 		KeycloakUserManager.assignRole("pmpui-v2", "PARTNER_ADMIN");
 
-//	dashboardPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULTPOLICYGROUP);
-//	assertTrue(dashboardPage.isSubmitButtonSelectPolicyGroupPopUpDisplayed(),
-//			GlobalConstants.isSubmitButtonDisplayed);
-//	dashboardPage.clickOnSubmitButton();
-
-		assertTrue(dashboardPage.isTermsAndConditionsPopUppDisplayed(),
+		assertTrue(dashboardPage.isTermsAndConditionsPopupDisplayed(),
 				GlobalConstants.isTermsAndConditionsPopUppDisplayed);
 		dashboardPage.clickOnCheckbox();
 		assertTrue(dashboardPage.isProceedButtonDisplayed(), GlobalConstants.isProceedButtonDisplayed);
@@ -88,16 +81,11 @@ public class PartnerAdminCreation extends BaseClass {
 		partnerCertificatePage = new PartnerCertificatePage(driver);
 
 		dashboardPage.clickOnCertificateTrustStore();
+		assertTrue(partnerCertificatePage.isUploadTrustCertificateButtonDisplayed(),
+				GlobalConstants.isUploadTrustCertificateButtonDisplayed);
 		partnerCertificatePage.clickOnRootUploadTrustCertificateButtonInAdmin();
 		partnerCertificatePage.clickOnpartnerDomainSelectorDropdown();
 		partnerCertificatePage.clickOnDeviceInPartnerDomainSelectorDropdown();
-
-		partnerCertificatePage.uploadCertificateSubCa();
-		partnerCertificatePage.clickonSubmitButtonForAdmin();
-		assertTrue(partnerCertificatePage.isUploadRootCertificateFirstErrorMessageDisplayed(),
-				GlobalConstants.isUploadRootCertificateFirstErrorMessageDisplayed);
-		partnerCertificatePage.clickOnErrorCloseButton();
-		partnerCertificatePage.clickOnRemoveCertificateButton();
 
 		partnerCertificatePage.uploadCertificateRootCa();
 		partnerCertificatePage.clickonSubmitButtonForAdmin();
@@ -107,6 +95,8 @@ public class PartnerAdminCreation extends BaseClass {
 		partnerCertificatePage.clickOnGoBackButton();
 
 		partnerCertificatePage.clickOnIntermediateCACertTab();
+		assertTrue(partnerCertificatePage.isIntermediateUploadTrustCertificateButtonDisplayed(),
+				GlobalConstants.isUploadTrustCertificateButtonDisplayed);
 		partnerCertificatePage.clickOnIntermediateUploadTrustCertificateButtonInAdmin();
 		partnerCertificatePage.clickOnpartnerDomainSelectorDropdown();
 		partnerCertificatePage.clickOnDeviceInPartnerDomainSelectorDropdown();
@@ -131,10 +121,10 @@ public class PartnerAdminCreation extends BaseClass {
 		policygroupPage.clickOnCreatePolicyGroupButton();
 		assertTrue(policygroupPage.isPolicyGroupNameTextboxDisplayed(),
 				GlobalConstants.isPolicyGroupNameTextboxDisplayed);
-		policygroupPage.enterPolicyGroupName(GlobalConstants.DEFAULTPOLICYGROUP);
+		policygroupPage.enterPolicyGroupName(GlobalConstants.DEFAULT_POLICYGROUP);
 		assertTrue(policygroupPage.isPolicyGroupNameDescriptionTextboxDisplayed(),
 				GlobalConstants.isPolicyGroupNameDescriptionTextboxDisplayed);
-		policygroupPage.enterPolicyGroupNameDescription(GlobalConstants.DEFAULTPOLICYGROUP_DESC);
+		policygroupPage.enterPolicyGroupNameDescription(GlobalConstants.DEFAULT_POLICYGROUP_DESC);
 		policygroupPage.clickOnSubmitButton();
 		assertTrue(policygroupPage.isPolicyGroupSuccessMessageDisplayed(),
 				GlobalConstants.isPolicyGroupSuccessMessageDisplayed);

@@ -195,6 +195,8 @@ public class GlobalConstants {
 	public static final String INITIAL_PARTNER_TYPE = "Auto-populated based on Partner ID selected";
 	public static final String DEVICE_PROVIDER = "Device Provider";
 	public static final String DEVICE_PARTNER_ID = "pmpui-device";
+	public static final String DEFAULT_POLICYGROUP = "automationui policy group";
+	public static final String DEFAULT_POLICYGROUP_DESC = "desc automationui policy group";		
 	public static final String Organisation_Name = "AABBCC";
 	public static final String PARTNER_ADMIN = "pmpui-v2";
 	public static final String PARTNER_PASSWORD = "mosip123";
@@ -899,6 +901,7 @@ public class GlobalConstants {
 	public static final String isMakePlaceHolderDisplayed = "Verify if make placeholder Displayed";
 	public static final String isModelPlaceHolderDisplayed = "Verify if model placeholder Displayed";
 	public static final String isPoliciesEmptyTableDisplayed = "Verify if policies empty table Displayed";
+	public static final String isOidcClientListPageCreateOidcClientBtnDisplayed = "Verify if oidc client button Displayed";
 	
 	public static final String APPID = "appId";
 	public static final String PASSWORD = "password";
@@ -977,9 +980,6 @@ public class GlobalConstants {
 	public static final String INTERCAISSUEDBY = "CN=CA,OU=CA,O=CA,L=aa,ST=aa,C=aa";
 
 //  Policy Group
-	public static final String AUTHPARTNER = "pmpui-auth";
-	public static final String DEFAULTPOLICYGROUP = "automationui policy group";
-	public static final String DEFAULTPOLICYGROUP_DESC = "desc automationui policy group";
 	public static final String POLICYGROUP01 = "policygroup01";
 	public static final String POLICYGROUP01_DESCRIPTION = "policygroup 01";
 	public static final String POLICYGROUP02 = "policygroup02";
