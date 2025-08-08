@@ -11,11 +11,8 @@ import io.mosip.testrig.pmpuiv2.pages.ApiKeyPage;
 import io.mosip.testrig.pmpuiv2.pages.AuthPolicyPage;
 import io.mosip.testrig.pmpuiv2.pages.BasePage;
 import io.mosip.testrig.pmpuiv2.pages.DashboardPage;
-import io.mosip.testrig.pmpuiv2.pages.FtmPage;
 import io.mosip.testrig.pmpuiv2.pages.LoginPage;
 import io.mosip.testrig.pmpuiv2.pages.OidcClientPage;
-import io.mosip.testrig.pmpuiv2.pages.PartnerCertificatePage;
-import io.mosip.testrig.pmpuiv2.pages.RegisterPage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
@@ -35,8 +32,8 @@ public class AuthenticationServices extends BaseClass {
 		oidcClientPage = dashboardPage.clickOnAuthenticationServices();
 
 		oidcClientPage.clickOnFilterButton();
-		oidcClientPage.enterPartnerIdInFilter(GlobalConstants.AUTHPARTNER);
-		oidcClientPage.enterPolicyGroupInFilter(GlobalConstants.DEFAULTPOLICYGROUP);
+		oidcClientPage.enterPartnerIdInFilter(GlobalConstants.AUTH_PARTNER_ID);
+		oidcClientPage.enterPolicyGroupInFilter(GlobalConstants.DEFAULT_POLICYGROUP);
 		oidcClientPage.enterValidOidcClientNameInFilter(GlobalConstants.DEACTIVATE_OIDCPOLICY2);
 		oidcClientPage.clickOnApplyFilterButton();
 
@@ -60,7 +57,7 @@ public class AuthenticationServices extends BaseClass {
 		assertTrue(oidcClientPage.isSubTitleOfTabularViewDisplayed(), GlobalConstants.isSubTitleOfTabularViewDisplayed);
 
 		oidcClientPage.clickOnFilterButton();
-		oidcClientPage.enterPartnerIdInFilter(GlobalConstants.AUTHPARTNER);
+		oidcClientPage.enterPartnerIdInFilter(GlobalConstants.AUTH_PARTNER_ID);
 		oidcClientPage.enterValidOidcClientNameInFilter(GlobalConstants.DEACTIVATE_OIDCPOLICY2);
 		oidcClientPage.clickOnApplyFilterButton();
 
@@ -69,7 +66,7 @@ public class AuthenticationServices extends BaseClass {
 		oidcClientPage.clickOnDeactivateSubmitButtonButton();
 
 		oidcClientPage.clickOnFilterButton();
-		oidcClientPage.enterPartnerIdInFilter(GlobalConstants.AUTHPARTNER);
+		oidcClientPage.enterPartnerIdInFilter(GlobalConstants.AUTH_PARTNER_ID);
 		oidcClientPage.selectDeactivateStatusInFilter();
 		oidcClientPage.enterValidOidcClientNameInFilter(GlobalConstants.DEACTIVATE_OIDCPOLICY2);
 		oidcClientPage.clickOnApplyFilterButton();
@@ -92,7 +89,7 @@ public class AuthenticationServices extends BaseClass {
 		loginAsAuthPartner();
 
 		dashboardPage.clickOnAuthenticationServicesTitle();
-		oidcClientPage.listPageCreateOidcClientButton();
+		oidcClientPage.clickOnListCreateOidcClientButton();
 		oidcClientPage.selectPartnerIdDropdown();
 		oidcClientPage.selectPolicyNameDropdown(data);
 		oidcClientPage.enterNameOidcTextBox(GlobalConstants.AUTOMATION_LOWERCASE);
@@ -206,8 +203,8 @@ public class AuthenticationServices extends BaseClass {
 		assertFalse(oidcClientPage.isfilterResetButtonEnabled(), GlobalConstants.isfilterResetButtonEnabled);
 
 		oidcClientPage.clickOnFilterButton();
-		oidcClientPage.enterPartnerIdInFilter(GlobalConstants.AUTHPARTNER);
-		oidcClientPage.enterPolicyGroupInFilter(GlobalConstants.DEFAULTPOLICYGROUP);
+		oidcClientPage.enterPartnerIdInFilter(GlobalConstants.AUTH_PARTNER_ID);
+		oidcClientPage.enterPolicyGroupInFilter(GlobalConstants.DEFAULT_POLICYGROUP);
 		oidcClientPage.clickOnFilterCloseButton();
 		oidcClientPage.enterValidOidcClientNameInFilter(GlobalConstants.AUTOMATION_LOWERCASE);
 		oidcClientPage.clickOnApplyFilterButton();
@@ -230,8 +227,8 @@ public class AuthenticationServices extends BaseClass {
 		oidcClientPage.clickOidcClientDetailsBackButton();
 
 		oidcClientPage.clickOnFilterButton();
-		oidcClientPage.enterPartnerIdInFilter(GlobalConstants.AUTHPARTNER);
-		oidcClientPage.enterPolicyGroupInFilter(GlobalConstants.DEFAULTPOLICYGROUP);
+		oidcClientPage.enterPartnerIdInFilter(GlobalConstants.AUTH_PARTNER_ID);
+		oidcClientPage.enterPolicyGroupInFilter(GlobalConstants.DEFAULT_POLICYGROUP);
 		oidcClientPage.enterValidOidcClientNameInFilter(GlobalConstants.AUTOMATION_LOWERCASE);
 		oidcClientPage.clickOnApplyFilterButton();
 
@@ -253,8 +250,8 @@ public class AuthenticationServices extends BaseClass {
 		assertTrue(oidcClientPage.isCopyIdCloseButtonDisplayed(), GlobalConstants.isCopyIdCloseButtonDisplayed);
 		oidcClientPage.clickOnCopyIdCloseButton();
 
-		oidcClientPage.enterPartnerIdInFilter(GlobalConstants.AUTHPARTNER);
-		oidcClientPage.enterPolicyGroupInFilter(GlobalConstants.DEFAULTPOLICYGROUP);
+		oidcClientPage.enterPartnerIdInFilter(GlobalConstants.AUTH_PARTNER_ID);
+		oidcClientPage.enterPolicyGroupInFilter(GlobalConstants.DEFAULT_POLICYGROUP);
 		oidcClientPage.enterValidOidcClientNameInFilter(GlobalConstants.DEACTIVATE_OIDCPOLICY2);
 		oidcClientPage.clickOnApplyFilterButton();
 
@@ -302,8 +299,8 @@ public class AuthenticationServices extends BaseClass {
 
 		oidcClientPage = dashboardPage.clickOnAuthenticationServices();
 		oidcClientPage.clickOnFilterButton();
-		oidcClientPage.enterPartnerIdInFilter(GlobalConstants.AUTHPARTNER);
-		oidcClientPage.enterPolicyGroupInFilter(GlobalConstants.DEFAULTPOLICYGROUP);
+		oidcClientPage.enterPartnerIdInFilter(GlobalConstants.AUTH_PARTNER_ID);
+		oidcClientPage.enterPolicyGroupInFilter(GlobalConstants.DEFAULT_POLICYGROUP);
 		oidcClientPage.enterValidOidcClientNameInFilter(GlobalConstants.AUTOMATION_LOWERCASE);
 		oidcClientPage.clickOnApplyFilterButton();
 
@@ -383,8 +380,8 @@ public class AuthenticationServices extends BaseClass {
 		oidcClientPage.clickOidcClientDetailsBackButton();
 
 		oidcClientPage.clickOnFilterButton();
-		oidcClientPage.enterPartnerIdInFilter(GlobalConstants.AUTHPARTNER);
-		oidcClientPage.enterPolicyGroupInFilter(GlobalConstants.DEFAULTPOLICYGROUP);
+		oidcClientPage.enterPartnerIdInFilter(GlobalConstants.AUTH_PARTNER_ID);
+		oidcClientPage.enterPolicyGroupInFilter(GlobalConstants.DEFAULT_POLICYGROUP);
 		oidcClientPage.enterValidOidcClientNameInFilter(GlobalConstants.DEACTIVATE_OIDCPOLICY2);
 		oidcClientPage.clickOnApplyFilterButton();
 		oidcClientPage.clickOnActionButton();
@@ -418,8 +415,9 @@ public class AuthenticationServices extends BaseClass {
 		assertTrue(oidcClientPage.isApiKeyTabDisplayed(), GlobalConstants.isApiKeyTabDisplayed);
 		oidcClientPage.clickOnApiKeyTab();
 		apiKeyPage.clickOnFilterButton();
-		apiKeyPage.enterPartnerIdInFilter(GlobalConstants.AUTHPARTNER);
-		apiKeyPage.enterPolicyGroupInFilter(GlobalConstants.DEFAULTPOLICYGROUP);
+
+		apiKeyPage.enterPartnerIdInFilter(GlobalConstants.AUTH_PARTNER_ID);
+		apiKeyPage.enterPolicyGroupInFilter(GlobalConstants.DEFAULT_POLICYGROUP);
 		apiKeyPage.enterValidApiKeyNameInAdminFilter(GlobalConstants.DEACTIVATE_APIKEY);
 		apiKeyPage.clickOnApplyFilterButton();
 
@@ -442,7 +440,7 @@ public class AuthenticationServices extends BaseClass {
 		assertTrue(apiKeyPage.isSubTitleOfTabularViewDisplayed(), GlobalConstants.isSubTitleOfTabularViewDisplayed);
 
 		apiKeyPage.clickOnFilterButton();
-		apiKeyPage.enterPartnerIdInFilter(GlobalConstants.AUTHPARTNER);
+		apiKeyPage.enterPartnerIdInFilter(GlobalConstants.AUTH_PARTNER_ID);
 		apiKeyPage.enterValidApiKeyNameInAdminFilter(GlobalConstants.DEACTIVATE_APIKEY);
 		apiKeyPage.clickOnApplyFilterButton();
 
@@ -560,8 +558,8 @@ public class AuthenticationServices extends BaseClass {
 		assertFalse(apiKeyPage.isfilterResetButtonEnabled(), GlobalConstants.isfilterResetButtonEnabled);
 
 		apiKeyPage.clickOnFilterButton();
-		apiKeyPage.enterPartnerIdInFilter(GlobalConstants.AUTHPARTNER);
-		apiKeyPage.enterPolicyGroupInFilter(GlobalConstants.DEFAULTPOLICYGROUP);
+		apiKeyPage.enterPartnerIdInFilter(GlobalConstants.AUTH_PARTNER_ID);
+		apiKeyPage.enterPolicyGroupInFilter(GlobalConstants.DEFAULT_POLICYGROUP);
 		apiKeyPage.clickOnFilterCloseButton();
 		apiKeyPage.enterValidApiKeyNameInAdminFilter(GlobalConstants.ACTIVATE_ADMINAPIKEY);
 		apiKeyPage.clickOnApplyFilterButton();
@@ -571,8 +569,8 @@ public class AuthenticationServices extends BaseClass {
 		apiKeyPage.clickOnViewApiKeyBackButton();
 
 		apiKeyPage.clickOnFilterButton();
-		apiKeyPage.enterPartnerIdInFilter(GlobalConstants.AUTHPARTNER);
-		apiKeyPage.enterPolicyGroupInFilter(GlobalConstants.DEFAULTPOLICYGROUP);
+		apiKeyPage.enterPartnerIdInFilter(GlobalConstants.AUTH_PARTNER_ID);
+		apiKeyPage.enterPolicyGroupInFilter(GlobalConstants.DEFAULT_POLICYGROUP);
 		apiKeyPage.enterValidApiKeyNameInAdminFilter(GlobalConstants.ACTIVATE_ADMINAPIKEY);
 		apiKeyPage.clickOnApplyFilterButton();
 
@@ -580,8 +578,8 @@ public class AuthenticationServices extends BaseClass {
 		assertTrue(apiKeyPage.isViewButtonEnabled(), GlobalConstants.isViewButtonEnabled);
 		assertTrue(apiKeyPage.isDeactivateButtonEnabled(), GlobalConstants.isDeactivateButtonEnabled);
 
-		apiKeyPage.enterPartnerIdInFilter(GlobalConstants.AUTHPARTNER);
-		apiKeyPage.enterPolicyGroupInFilter(GlobalConstants.DEFAULTPOLICYGROUP);
+		apiKeyPage.enterPartnerIdInFilter(GlobalConstants.AUTH_PARTNER_ID);
+		apiKeyPage.enterPolicyGroupInFilter(GlobalConstants.DEFAULT_POLICYGROUP);
 		apiKeyPage.enterValidApiKeyNameInAdminFilter(GlobalConstants.DEACTIVATE_APIKEY);
 		apiKeyPage.clickOnApplyFilterButton();
 
@@ -626,8 +624,9 @@ public class AuthenticationServices extends BaseClass {
 		oidcClientPage = dashboardPage.clickOnAuthenticationServices();
 		oidcClientPage.clickOnApiKeyTab();
 		oidcClientPage.clickOnFilterButton();
-		apiKeyPage.enterPartnerIdInFilter(GlobalConstants.AUTHPARTNER);
-		apiKeyPage.enterPolicyGroupInFilter(GlobalConstants.DEFAULTPOLICYGROUP);
+
+		apiKeyPage.enterPartnerIdInFilter(GlobalConstants.AUTH_PARTNER_ID);
+		apiKeyPage.enterPolicyGroupInFilter(GlobalConstants.DEFAULT_POLICYGROUP);
 		apiKeyPage.enterValidApiKeyNameInAdminFilter(GlobalConstants.ACTIVATE_ADMINAPIKEY);
 		apiKeyPage.clickOnApplyFilterButton();
 
@@ -636,8 +635,8 @@ public class AuthenticationServices extends BaseClass {
 		apiKeyPage.clickOnBreadCombButton();
 
 		oidcClientPage.clickOnFilterButton();
-		apiKeyPage.enterPartnerIdInFilter(GlobalConstants.AUTHPARTNER);
-		apiKeyPage.enterPolicyGroupInFilter(GlobalConstants.DEFAULTPOLICYGROUP);
+		apiKeyPage.enterPartnerIdInFilter(GlobalConstants.AUTH_PARTNER_ID);
+		apiKeyPage.enterPolicyGroupInFilter(GlobalConstants.DEFAULT_POLICYGROUP);
 		apiKeyPage.enterValidApiKeyNameInAdminFilter(GlobalConstants.ACTIVATE_ADMINAPIKEY);
 		apiKeyPage.clickOnApplyFilterButton();
 		apiKeyPage.clickOnActionButton();
@@ -686,8 +685,8 @@ public class AuthenticationServices extends BaseClass {
 		apiKeyPage.clickOnViewApiKeyBackButton();
 
 		apiKeyPage.clickOnFilterButton();
-		apiKeyPage.enterPartnerIdInFilter(GlobalConstants.AUTHPARTNER);
-		apiKeyPage.enterPolicyGroupInFilter(GlobalConstants.DEFAULTPOLICYGROUP);
+		apiKeyPage.enterPartnerIdInFilter(GlobalConstants.AUTH_PARTNER_ID);
+		apiKeyPage.enterPolicyGroupInFilter(GlobalConstants.DEFAULT_POLICYGROUP);
 		apiKeyPage.enterValidApiKeyNameInAdminFilter(GlobalConstants.DEACTIVATE_APIKEY);
 		apiKeyPage.clickOnApplyFilterButton();
 
@@ -707,14 +706,6 @@ public class AuthenticationServices extends BaseClass {
 		dashboardPage.clickOnProfileDropdown();
 		loginPage = dashboardPage.clickOnLogoutButton();
 		loginPage.enterUserName(GlobalConstants.AUTH_PARTNER_ID);
-		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
-		loginPage.clickOnLoginButton();
-	}
-
-	private void loginAsPartnerAdmin() {
-		dashboardPage.clickOnProfileDropdown();
-		loginPage = dashboardPage.clickOnLogoutButton();
-		loginPage.enterUserName(GlobalConstants.PARTNER_ADMIN);
 		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
 		loginPage.clickOnLoginButton();
 	}

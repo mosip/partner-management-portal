@@ -18,10 +18,13 @@ public class DashboardPage extends BasePage {
 	@FindBy(xpath = "//h3[text()='Select Policy Group']")
 	private WebElement selectPolicyGroupPopUp;
 
-	@FindBy(xpath = "//div[@class='relative w-full']/button")
+	@FindBy(xpath = "//span[text()='Select Policy Group']")
+	private WebElement selectPolicyGroupDropdownForInvalid;
+
+	@FindBy(id = "select_policy_group_dropdown_dropdown_btn")
 	private WebElement selectPolicyGroupDropdown;
 
-	@FindBy(xpath = "//p[text()='No Data Available.']")
+	@FindBy(id = "select_policy_group_dropdown_no_data_available")
 	private WebElement noDataAvailableText;
 
 	@FindBy(id = "select_policy_group_dropdown_search_input")
@@ -34,7 +37,7 @@ public class DashboardPage extends BasePage {
 	private WebElement value;
 
 	@FindBy(xpath = "//*[text()='Terms and Conditions']")
-	private WebElement termsAndConditionsPopUp;
+	private WebElement termsAndConditionsPopup;
 
 	@FindBy(id = "default-checkbox")
 	private WebElement checkbox;
@@ -80,9 +83,6 @@ public class DashboardPage extends BasePage {
 
 	@FindBy(xpath = "//h5[text()='Certificate Trust Store']")
 	private WebElement RootOFTrustCertText;
-
-	@FindBy(id = "root_upload_trust_certificate_btn")
-	private WebElement rootCertificateUploadButton;
 
 	@FindBy(xpath = "//h5[text()='Policies']")
 	private WebElement policyButton;
@@ -138,9 +138,6 @@ public class DashboardPage extends BasePage {
 	@FindBy(xpath = "//button[contains(@class, 'bg-blue-50') and contains(@class, 'cursor-pointer')]")
 	private WebElement notificationIcon;
 
-	@FindBy(id = "root_upload_trust_certificate_btn")
-	private WebElement uploadTrustCertificate;
-
 	@FindBy(xpath = "//p[normalize-space()='2024 © MOSIP - All rights reserved.']")
 	private WebElement mosipRightsText;
 
@@ -174,28 +171,24 @@ public class DashboardPage extends BasePage {
 
 	public void selectPolicyGroupDropdown(String policyGroupValue) {
 		clickOnElement(selectPolicyGroupDropdown);
-		if (!isElementDisplayed(SearchBox)) {
-			clickOnElement(selectPolicyGroupDropdown);
-		}
 		enter(SearchBox, policyGroupValue);
-		String val = "'" + policyGroupValue + "'";
-//		click(By.xpath("//*[contains(text(),"+val+")]"));
 		clickOnElement(selectPolicyGrouDropdownOption1);
 	}
 
-	public void selectPolicyGroupDropdownForInvalid(String policyGroupValue) {
+	public void closePolicyGroupDropdown() {
 		clickOnElement(selectPolicyGroupDropdown);
-		enter(SearchBox, policyGroupValue);
-		String val = "'" + policyGroupValue + "'";
-//		clickOnElement(value);
 	}
 
 	public void clickOnSubmitButton() {
 		clickOnElement(submitButton);
 	}
 
-	public boolean isTermsAndConditionsPopUppDisplayed() {
-		return isElementDisplayed(termsAndConditionsPopUp);
+	public boolean isSubmitButtonEnabled() {
+		return isElementEnabled(submitButton);
+	}
+
+	public boolean isTermsAndConditionsPopupDisplayed() {
+		return isElementDisplayed(termsAndConditionsPopup);
 	}
 
 	public void clickOnCheckbox() {
@@ -276,14 +269,6 @@ public class DashboardPage extends BasePage {
 
 	public void clickOnRootOFTrustCertText() {
 		clickOnElement(RootOFTrustCertText);
-	}
-
-	public void clickOnRootCertificateUploadButton() {
-		clickOnElement(rootCertificateUploadButton);
-	}
-
-	public void clickOnploadTrustCertificateButton() {
-		clickOnElement(uploadTrustCertificate);
 	}
 
 	public void clickOnPolicyButton() {

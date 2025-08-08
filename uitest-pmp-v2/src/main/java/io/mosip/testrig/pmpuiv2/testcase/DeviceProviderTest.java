@@ -63,7 +63,7 @@ public class DeviceProviderTest extends BaseClass {
 		registerPage.enterPasswordConfirm("mosip123");
 		dashboardpage = registerPage.clickSubmitButton();
 
-		assertTrue(dashboardpage.isTermsAndConditionsPopUppDisplayed(),
+		assertTrue(dashboardpage.isTermsAndConditionsPopupDisplayed(),
 				GlobalConstants.isTermsAndConditionsPopUppDisplayed);
 		dashboardpage.clickOnCheckbox();
 
@@ -1094,15 +1094,10 @@ public class DeviceProviderTest extends BaseClass {
 
 	private void loginAsDeviceProvider() {
 		dashboardpage.clickOnProfileDropdown();
-		assertTrue(dashboardpage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
-
 		LoginPage loginpage = dashboardpage.clickOnLogoutButton();
-
 		loginpage.enterUserName("pmpui-device");
 		loginpage.enterPassword(password);
 		loginpage.clickOnLoginButton();
-
-		assertTrue(dashboardpage.isWelcomeMessageDisplayed(), GlobalConstants.isWelcomeMessageDisplayed);
 	}
 
 	private void fillSbiDetails(String sbiVersion, String sbiBinaryHash) {

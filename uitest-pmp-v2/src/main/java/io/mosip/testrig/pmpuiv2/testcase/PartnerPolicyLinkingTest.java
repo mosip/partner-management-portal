@@ -40,7 +40,7 @@ public class PartnerPolicyLinkingTest extends BaseClass {
 		dashboardPage.clickOnPolicyButton();
 		policiesPage.clickOnAuthPolicyTab();
 		authPolicyPage.clickOnCreateAuthPolicyButton();
-		authPolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULTPOLICYGROUP);
+		authPolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULT_POLICYGROUP);
 		authPolicyPage.enterPolicyName(GlobalConstants.AUTHPOLICY_PARTLINK);
 		authPolicyPage.enterpolicyDescription(GlobalConstants.AUTHPOLICY_PARTLINK);
 		authPolicyPage.uploadPolicyData();
@@ -57,7 +57,7 @@ public class PartnerPolicyLinkingTest extends BaseClass {
 		dashboardPage.clickOnPolicyButton();
 		policiesPage.clickOnAuthPolicyTab();
 		authPolicyPage.clickOnCreateAuthPolicyButton();
-		authPolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULTPOLICYGROUP);
+		authPolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULT_POLICYGROUP);
 		authPolicyPage.enterPolicyName(GlobalConstants.AUTHPOLICY_PARTLINK2);
 		authPolicyPage.enterpolicyDescription(GlobalConstants.AUTHPOLICY_PARTLINK2);
 		authPolicyPage.uploadPolicyData();
@@ -74,7 +74,7 @@ public class PartnerPolicyLinkingTest extends BaseClass {
 		dashboardPage.clickOnPolicyButton();
 		policygroupPage.clickOnDatasharePolicyTab();
 		datasharePolicyPage.clickOnDatasharePolicyCreateButton();
-		datasharePolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULTPOLICYGROUP);
+		datasharePolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULT_POLICYGROUP);
 		datasharePolicyPage.enterPolicyName(GlobalConstants.DATAPOLICY_PARTLINK);
 		datasharePolicyPage.enterpolicyDescription(GlobalConstants.DATAPOLICY_PARTLINK);
 		datasharePolicyPage.uploadPolicyData();
@@ -94,11 +94,7 @@ public class PartnerPolicyLinkingTest extends BaseClass {
 		policiesPage = new PoliciesPage(driver);
 		loginPage = new LoginPage(driver);
 
-		logoutFromPartner(dashboardPage);
-
-		loginPage.enterUserName(GlobalConstants.AUTHPARTNER);
-		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
-		loginPage.clickOnLoginButton();
+		loginAsAuthPartner();
 
 		dashboardPage.clickOnPoliciesTitle();
 
@@ -192,7 +188,7 @@ public class PartnerPolicyLinkingTest extends BaseClass {
 				GlobalConstants.isPendingForApprovalStatusDisplayed);
 		assertTrue(partnerPolicyMappingPage.isRejectedStatusDisplayed(), GlobalConstants.isRejectedStatusDisplayed);
 
-		partnerPolicyMappingPage.enterpolicyGroupFilter(GlobalConstants.DEFAULTPOLICYGROUP);
+		partnerPolicyMappingPage.enterpolicyGroupFilter(GlobalConstants.DEFAULT_POLICYGROUP);
 		partnerPolicyMappingPage.enterPendingPolicyNameInFilter(GlobalConstants.Random_DATA);
 		partnerPolicyMappingPage.clickOnApplyFilterButton();
 		assertTrue(partnerPolicyMappingPage.isNoResultsFoundMessageDisplayed(),
@@ -312,7 +308,7 @@ public class PartnerPolicyLinkingTest extends BaseClass {
 
 		dashboardPage.clickOnPartnerPolicyMappingTab();
 		partnerPolicyMappingPage.clickOnFilterButton();
-		partnerPolicyMappingPage.enterpolicyGroupFilter(GlobalConstants.DEFAULTPOLICYGROUP);
+		partnerPolicyMappingPage.enterpolicyGroupFilter(GlobalConstants.DEFAULT_POLICYGROUP);
 		partnerPolicyMappingPage.enterPendingPolicyNameInFilter(GlobalConstants.AUTHPOLICY_PARTLINK);
 		partnerPolicyMappingPage.clickOnApplyFilterButton();
 		partnerPolicyMappingPage.clickOnPartnerListViewElipsisButton();
@@ -338,7 +334,7 @@ public class PartnerPolicyLinkingTest extends BaseClass {
 				GlobalConstants.isPartnerPolicyLinkingTitleDisplayed);
 		partnerPolicyMappingPage.clickOnFilterResetButton();
 		partnerPolicyMappingPage.clickOnFilterButton();
-		partnerPolicyMappingPage.enterpolicyGroupFilter(GlobalConstants.DEFAULTPOLICYGROUP);
+		partnerPolicyMappingPage.enterpolicyGroupFilter(GlobalConstants.DEFAULT_POLICYGROUP);
 		partnerPolicyMappingPage.enterPendingPolicyNameInFilter(GlobalConstants.AUTHPOLICY_PARTLINK);
 		partnerPolicyMappingPage.clickOnApplyFilterButton();
 		assertTrue(partnerPolicyMappingPage.isStatusApprovedDisplayed(), GlobalConstants.isStatusApprovedDisplayed);
@@ -347,7 +343,7 @@ public class PartnerPolicyLinkingTest extends BaseClass {
 		assertFalse(partnerPolicyMappingPage.isApproveOrRejectConfirmationPopupDisplayed(),
 				GlobalConstants.isApproveOrRejectConfirmationPopupDisplayed);
 
-		partnerPolicyMappingPage.enterpolicyGroupFilter(GlobalConstants.DEFAULTPOLICYGROUP);
+		partnerPolicyMappingPage.enterpolicyGroupFilter(GlobalConstants.DEFAULT_POLICYGROUP);
 		partnerPolicyMappingPage.enterPendingPolicyNameInFilter(GlobalConstants.AUTHPOLICY_PARTLINK2);
 		partnerPolicyMappingPage.clickOnApplyFilterButton();
 		partnerPolicyMappingPage.clickOnPartnerListViewElipsisButton();
@@ -359,7 +355,7 @@ public class PartnerPolicyLinkingTest extends BaseClass {
 		assertFalse(partnerPolicyMappingPage.isApproveOrRejectConfirmationPopupDisplayed(),
 				GlobalConstants.isApproveOrRejectConfirmationPopupDisplayed);
 
-		loginAsAuthPartner(dashboardPage);
+		loginAsAuthPartner();
 
 		dashboardPage.clickOnPoliciesTitle();
 		policiesPage.clickOnFilterButton();
@@ -378,7 +374,7 @@ public class PartnerPolicyLinkingTest extends BaseClass {
 
 		dashboardPage.clickOnPartnerPolicyMappingTab();
 		partnerPolicyMappingPage.clickOnFilterButton();
-		partnerPolicyMappingPage.enterpolicyGroupFilter(GlobalConstants.DEFAULTPOLICYGROUP);
+		partnerPolicyMappingPage.enterpolicyGroupFilter(GlobalConstants.DEFAULT_POLICYGROUP);
 		partnerPolicyMappingPage.enterPendingPolicyNameInFilter(GlobalConstants.AUTHPOLICY_PARTLINK);
 		partnerPolicyMappingPage.clickOnApplyFilterButton();
 		partnerPolicyMappingPage.clickOnPartnerListViewElipsisButton();
@@ -426,16 +422,10 @@ public class PartnerPolicyLinkingTest extends BaseClass {
 
 	}
 
-	private void logoutFromPartner(DashboardPage dashboardPage) {
-		dashboardPage.clickOnProfileDropdown();
-		dashboardPage.clickOnLogoutButton();
-
-	}
-
-	private void loginAsAuthPartner(DashboardPage dashboardPage) {
+	private void loginAsAuthPartner() {
 		dashboardPage.clickOnProfileDropdown();
 		loginPage = dashboardPage.clickOnLogoutButton();
-		loginPage.enterUserName(GlobalConstants.AUTHPARTNER);
+		loginPage.enterUserName(GlobalConstants.AUTH_PARTNER_ID);
 		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
 		loginPage.clickOnLoginButton();
 

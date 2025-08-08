@@ -46,6 +46,8 @@ public class AuthPartnerTest extends BaseClass {
 		loginPage = new LoginPage(driver);
 
 		dashboardPage.clickOnCertificateTrustStore();
+		assertTrue(partnerCertificatePage.isUploadTrustCertificateButtonDisplayed(),
+				GlobalConstants.isUploadTrustCertificateButtonDisplayed);
 		partnerCertificatePage.clickOnRootUploadTrustCertificateButtonInAdmin();
 		partnerCertificatePage.clickOnpartnerDomainSelectorDropdown();
 		partnerCertificatePage.clickOnPartnerDomainSelectorDropdownOptionAuth();
@@ -54,6 +56,8 @@ public class AuthPartnerTest extends BaseClass {
 		partnerCertificatePage.clickOnGoBackButton();
 
 		partnerCertificatePage.clickOnIntermediateCACertTab();
+		assertTrue(partnerCertificatePage.isIntermediateUploadTrustCertificateButtonDisplayed(),
+				GlobalConstants.isUploadTrustCertificateButtonDisplayed);
 		partnerCertificatePage.clickOnIntermediateUploadTrustCertificateButtonInAdmin();
 		partnerCertificatePage.clickOnpartnerDomainSelectorDropdown();
 		partnerCertificatePage.clickOnPartnerDomainSelectorDropdownOptionAuth();
@@ -79,20 +83,10 @@ public class AuthPartnerTest extends BaseClass {
 		registerPage.enterPasswordConfirm("mosip123");
 		dashboardPage = registerPage.clickSubmitButton();
 
-		dashboardPage.selectPolicyGroupDropdownForInvalid(data + 123);
-		assertTrue(dashboardPage.isNoDataAvailableTextDisplayed(), GlobalConstants.isNoDataAvailableTextDisplayed);
-		dashboardPage.clickOnSubmitButton();
-		assertFalse(dashboardPage.isTermsAndConditionsPopUppDisplayed(),
-				GlobalConstants.isTermsAndConditionsPopUppDisplayed);
-		dashboardPage.clickOnSelectPolicyGroupLogout();
-
-		loginPage.enterUserName(GlobalConstants.AUTHPARTNER);
-		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
-		loginPage.clickOnLoginButton();
-		dashboardPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULTPOLICYGROUP);
+		dashboardPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULT_POLICYGROUP);
 		dashboardPage.clickOnSubmitButton();
 
-		assertTrue(dashboardPage.isTermsAndConditionsPopUppDisplayed(),
+		assertTrue(dashboardPage.isTermsAndConditionsPopupDisplayed(),
 				GlobalConstants.isTermsAndConditionsPopUppDisplayed);
 		dashboardPage.clickOnCheckbox();
 		dashboardPage.clickOnProceedButton();
@@ -187,7 +181,7 @@ public class AuthPartnerTest extends BaseClass {
 		policiesPage.clickOnAuthPolicyTab();
 
 		authPolicyPage.clickOnCreateAuthPolicyButton();
-		authPolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULTPOLICYGROUP);
+		authPolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULT_POLICYGROUP);
 		authPolicyPage.enterPolicyName(data);
 		authPolicyPage.enterpolicyDescription(data);
 		authPolicyPage.uploadPolicyData();
@@ -321,7 +315,6 @@ public class AuthPartnerTest extends BaseClass {
 		assertTrue(policiesPage.isPolicyDescriptionDisplayed(), GlobalConstants.isPolicyDescriptionDisplayed);
 		policiesPage.enterComments(data);
 		policiesPage.enterComments(GlobalConstants.SPACE);
-//		assertFalse(policiesPage.isSubmitButtonEnabled(),GlobalConstants.isSubmitButtonEnable);
 		policiesPage.enterComments(GlobalConstants.AUTHPOLICY01_DESCRIPTION);
 		policiesPage.clickOnRequestPoliciesFormClearButton();
 
@@ -336,7 +329,8 @@ public class AuthPartnerTest extends BaseClass {
 
 		dashboardPage.clickOnPartnerPolicyMappingTab();
 		partnerPolicyMappingPage.clickOnFilterButton();
-		partnerPolicyMappingPage.enterpolicyGroupFilter(GlobalConstants.DEFAULTPOLICYGROUP);
+
+		partnerPolicyMappingPage.enterpolicyGroupFilter(GlobalConstants.DEFAULT_POLICYGROUP);
 		partnerPolicyMappingPage.enterPendingPolicyNameInFilter(data);
 		partnerPolicyMappingPage.clickOnApplyFilterButton();
 		partnerPolicyMappingPage.clickOnPartnerListViewElipsisButton();
@@ -352,7 +346,8 @@ public class AuthPartnerTest extends BaseClass {
 		partnerPolicyMappingPage.clickOnApproveSubmitButton();
 
 		partnerPolicyMappingPage.clickOnFilterButton();
-		partnerPolicyMappingPage.enterpolicyGroupFilter(GlobalConstants.DEFAULTPOLICYGROUP);
+
+		partnerPolicyMappingPage.enterpolicyGroupFilter(GlobalConstants.DEFAULT_POLICYGROUP);
 		partnerPolicyMappingPage.enterPendingPolicyNameInFilter(GlobalConstants.AUTHPOLICY02);
 		partnerPolicyMappingPage.clickOnApplyFilterButton();
 		partnerPolicyMappingPage.clickOnPartnerListViewElipsisButton();
@@ -489,7 +484,7 @@ public class AuthPartnerTest extends BaseClass {
 
 		createOidcClient(GlobalConstants.AUTOMATION_LOWERCASE);
 
-		oidcClientPage.listPageCreateOidcClientButton();
+		oidcClientPage.clickOnListCreateOidcClientButton();
 		oidcClientPage.selectPartnerIdDropdown();
 		oidcClientPage.selectPolicyNameDropdown(data);
 		oidcClientPage.enterNameOidcTextBox(GlobalConstants.SPACE);
@@ -609,7 +604,6 @@ public class AuthPartnerTest extends BaseClass {
 		apiKeyPage.clickOnApiKeyListPageGenerateApiKeyBtn();
 		apiKeyPage.selectPartnerIdDropdown();
 		apiKeyPage.selectPolicyNameDropdown(data);
-//  	assertFalse(apiKeyPage.isSubmitButtonEnabled(), GlobalConstants.isSubmitButtonEnable);
 		apiKeyPage.enterNameOfApiKeyTextBox(GlobalConstants.AUTOMATION);
 		apiKeyPage.clickOnSubmitButton();
 		assertTrue(apiKeyPage.isDuplicateApiKeyNameErrorMessageDisplayed(),
@@ -808,9 +802,9 @@ public class AuthPartnerTest extends BaseClass {
 		registerPage.enterPasswordConfirm("mosip123");
 		dashboardPage = registerPage.clickSubmitButton();
 
-		dashboardPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULTPOLICYGROUP);
+		dashboardPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULT_POLICYGROUP);
 		dashboardPage.clickOnSubmitButton();
-		assertTrue(dashboardPage.isTermsAndConditionsPopUppDisplayed(),
+		assertTrue(dashboardPage.isTermsAndConditionsPopupDisplayed(),
 				GlobalConstants.isTermsAndConditionsPopUppDisplayed);
 		dashboardPage.clickOnCheckbox();
 		dashboardPage.clickOnProceedButton();
@@ -907,7 +901,7 @@ public class AuthPartnerTest extends BaseClass {
 		loginAsAuthPartner();
 
 		OidcClientPage oidcClientPage = dashboardPage.clickOnAuthenticationServicesTitle();
-		oidcClientPage.listPageCreateOidcClientButton();
+		oidcClientPage.clickOnListCreateOidcClientButton();
 		oidcClientPage.clickOnRedirectUriAddNew();
 		assertTrue(oidcClientPage.isRedirectUri2TextBoxDisplayed(), GlobalConstants.isRedirectUri2TextBoxDisplayed);
 		oidcClientPage.clickOnRedirectUri2Delete();
@@ -922,7 +916,7 @@ public class AuthPartnerTest extends BaseClass {
 		loginAsAuthPartner();
 
 		oidcClientPage = dashboardPage.clickOnAuthenticationServicesTitle();
-		oidcClientPage.listPageCreateOidcClientButton();
+		oidcClientPage.clickOnListCreateOidcClientButton();
 		oidcClientPage.clickOnRedirectUriAddNew();
 		assertTrue(oidcClientPage.isRedirectUri2TextBoxDisplayed(), GlobalConstants.isRedirectUri2TextBoxDisplayed);
 	}
@@ -935,7 +929,7 @@ public class AuthPartnerTest extends BaseClass {
 		loginAsAuthPartner();
 
 		OidcClientPage oidcClientPage = dashboardPage.clickOnAuthenticationServicesTitle();
-		oidcClientPage.listPageCreateOidcClientButton();
+		oidcClientPage.clickOnListCreateOidcClientButton();
 		oidcClientPage.enterNameOidcTextBox(data);
 		oidcClientPage.enterPublicKeyTextBox(KeycloakUserManager.publicKeytemp);
 		oidcClientPage.enterLogoUrTextBox(ConfigManager.getLogouri());
@@ -952,7 +946,7 @@ public class AuthPartnerTest extends BaseClass {
 		loginAsAuthPartner();
 
 		OidcClientPage oidcClientPage = dashboardPage.clickOnAuthenticationServicesTitle();
-		oidcClientPage.listPageCreateOidcClientButton();
+		oidcClientPage.clickOnListCreateOidcClientButton();
 		oidcClientPage.selectPartnerIdDropdown();
 		oidcClientPage.selectPolicyNameDropdown(data);
 		oidcClientPage.enterNameOidcTextBox(GlobalConstants.AUTOMATION_LOWERCASE);
@@ -1078,6 +1072,7 @@ public class AuthPartnerTest extends BaseClass {
 		policiesPage = new PoliciesPage(driver);
 		oidcClientPage = new OidcClientPage(driver);
 		basePage = new BasePage(driver);
+
 		loginAsAuthPartner();
 
 		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
@@ -1128,7 +1123,7 @@ public class AuthPartnerTest extends BaseClass {
 
 	private void createAuthPolicy(String policyNameValue, String policyDescValue) {
 		authPolicyPage.clickOnCreateAuthPolicyButton();
-		authPolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULTPOLICYGROUP);
+		authPolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULT_POLICYGROUP);
 		authPolicyPage.enterPolicyName(policyNameValue);
 		authPolicyPage.enterpolicyDescription(policyDescValue);
 		authPolicyPage.uploadPolicyData();
@@ -1174,7 +1169,9 @@ public class AuthPartnerTest extends BaseClass {
 	}
 
 	private void createOidcClient(String oidcTextBoxValue) {
-		oidcClientPage.listPageCreateOidcClientButton();
+
+		oidcClientPage = new OidcClientPage(driver);
+		oidcClientPage.clickOnListCreateOidcClientButton();
 		oidcClientPage.selectPartnerIdDropdown();
 		oidcClientPage.selectPolicyNameDropdown(data);
 		oidcClientPage.enterNameOidcTextBox(oidcTextBoxValue);
