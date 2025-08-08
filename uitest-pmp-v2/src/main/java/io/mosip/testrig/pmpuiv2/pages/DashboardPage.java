@@ -1,8 +1,13 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
+import java.time.Duration;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class DashboardPage extends BasePage {
 
@@ -312,8 +317,11 @@ public class DashboardPage extends BasePage {
 		clickOnElement(sbiDeviceHeader);
 	}
 
-	public void clickOnCertificateTrustStore() {
+	public PartnerCertificatePage clickOnCertificateTrustStore() {
 		clickOnElement(certificateTrustStore);
+		new WebDriverWait(driver, Duration.ofSeconds(10))
+			.until(ExpectedConditions.visibilityOfElementLocated(By.id("root_upload_trust_certificate_btn"))); // adjust locator
+		return new PartnerCertificatePage(driver);
 	}
 
 	public boolean isAuthenticationServiceInfoTextDisplayed() {

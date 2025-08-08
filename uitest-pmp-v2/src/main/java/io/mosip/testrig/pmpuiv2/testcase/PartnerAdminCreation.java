@@ -80,10 +80,10 @@ public class PartnerAdminCreation extends BaseClass {
 		dashboardPage = new DashboardPage(driver);
 		partnerCertificatePage = new PartnerCertificatePage(driver);
 
-		dashboardPage.clickOnCertificateTrustStore();
-		assertTrue(partnerCertificatePage.isUploadTrustCertificateButtonDisplayed(),
-				GlobalConstants.isUploadTrustCertificateButtonDisplayed);
-		partnerCertificatePage.clickOnRootUploadTrustCertificateButtonInAdmin();
+		partnerCertificatePage=dashboardPage.clickOnCertificateTrustStore();
+//		assertTrue(partnerCertificatePage.isUploadTrustCertificateButtonDisplayed(),
+//				GlobalConstants.isUploadTrustCertificateButtonDisplayed);
+        partnerCertificatePage.clickOnRootUploadTrustCertificateButtonInAdmin();
 		partnerCertificatePage.clickOnpartnerDomainSelectorDropdown();
 		partnerCertificatePage.clickOnDeviceInPartnerDomainSelectorDropdown();
 
