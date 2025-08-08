@@ -357,7 +357,7 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(id = "root_of_trust_certificates_tab")
 	private WebElement rootCACertTab;
 
-	@FindBy(id = "intermediate_root_of_trust_certificates_tab")
+	@FindBy(xpath = "//h6[text()='Intermediate CA']")
 	private WebElement intermediateCACertTab;
 
 	@FindBy(xpath = "//p[contains(text(), 'List of Intermediate CA Certificates')]")
@@ -1202,28 +1202,12 @@ public class PartnerCertificatePage extends BasePage {
 	}
 
 	public void clickOnRootUploadTrustCertificateButtonInAdmin() {
-		try {
-			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-			wait.until(ExpectedConditions.elementToBeClickable(rootUploadTrustCertificateButtonInAdmin));
-
-			scrollIntoView(rootUploadTrustCertificateButtonInAdmin);
-			rootUploadTrustCertificateButtonInAdmin.click();
-		} catch (Exception e) {
-			throw e;
-		}
+		clickOnElement(rootUploadTrustCertificateButtonInAdmin);
 	}
 
 
 	public void clickOnIntermediateUploadTrustCertificateButtonInAdmin() {
-		try {
-			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-			wait.until(ExpectedConditions.elementToBeClickable(intermediateUploadTrustCertificateButtonInAdmin));
-			
-			scrollIntoView(intermediateUploadTrustCertificateButtonInAdmin);
-			intermediateUploadTrustCertificateButtonInAdmin.click();
-		} catch (Exception e) {
-			throw e;
-		}
+		clickOnElement(intermediateUploadTrustCertificateButtonInAdmin);
 	}
 
 

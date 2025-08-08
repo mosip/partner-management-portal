@@ -83,7 +83,7 @@ public class PartnerAdminCreation extends BaseClass {
 		partnerCertificatePage = new PartnerCertificatePage(driver);
 
 		dashboardPage.clickOnCertificateTrustStore();
-       partnerCertificatePage.clickOnRootUploadTrustCertificateButtonInAdmin();
+		partnerCertificatePage.clickOnRootUploadTrustCertificateButtonInAdmin();
 		partnerCertificatePage.clickOnpartnerDomainSelectorDropdown();
 		partnerCertificatePage.clickOnDeviceInPartnerDomainSelectorDropdown();
 		partnerCertificatePage.uploadCertificateRootCa();
