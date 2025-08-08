@@ -127,6 +127,13 @@ function CreatePolicy() {
                     setPolicyDescriptionPlaceHolderKey('createPolicy.authPolicyDescription');
                     setConfirmationMessage('createPolicy.authPolicyConfirmationMessage');
                     setBackLink('/partnermanagement/policy-manager/auth-policies-list');
+                } else if (storedPolicyType === 'MISP') {
+                    setTitle('createPolicy.createMispPolicyTitle');
+                    setSubTitle('policiesList.listOfMispPolicies');
+                    setPolicyNamePlaceHolderKey('createPolicy.enterMispPolicyName');
+                    setPolicyDescriptionPlaceHolderKey('createPolicy.mispPolicyDescription');
+                    setConfirmationMessage('createPolicy.mispPolicyConfirmationMessage');
+                    setBackLink('/partnermanagement/policy-manager/misp-policies-list');
                 }
                 await getPolicyGroupList(HttpService, setPolicyGroupDropdownData, setErrorCode, setErrorMsg, t);
             } catch (err) {

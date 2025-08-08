@@ -57,6 +57,7 @@ import ViewPartnerCertificateNotifications from './pages/partner/notifications/V
 import ViewApiKeyNotifications from './pages/partner/notifications/ViewApiKeyNotifications.js';
 import ViewFtmCertificateNotifications from './pages/partner/notifications/ViewFtmCertificateNotifications.js';
 import ViewSbiNotifications from './pages/partner/notifications/ViewSbiNotifications.js';
+import MispPoliciesList from './pages/admin/policyManager/MispPoliciesList.js';
 
 function AppRoutes() {
 
@@ -206,11 +207,19 @@ function AppRoutes() {
           element: <GuardedRoute><MainLayout><DataSharePoliciesList /></MainLayout></GuardedRoute>
         },
         {
+          path: 'policy-manager/misp-policies-list',
+          element: <GuardedRoute><MainLayout><MispPoliciesList /></MainLayout></GuardedRoute>
+        },
+        {
           path: 'policy-manager/create-auth-policy',
           element: <GuardedRoute><MainLayout><CreatePolicy /></MainLayout></GuardedRoute>
         },
         {
           path: 'policy-manager/create-data-share-policy',
+          element: <GuardedRoute><MainLayout><CreatePolicy /></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'policy-manager/create-misp-policy',
           element: <GuardedRoute><MainLayout><CreatePolicy /></MainLayout></GuardedRoute>
         },
         {
@@ -227,6 +236,14 @@ function AppRoutes() {
         },
         {
           path: 'policy-manager/edit-data-share-policy',
+          element: <GuardedRoute><MainLayout><EditPolicy /></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'policy-manager/view-misp-policy',
+          element: <GuardedRoute><MainLayout><ViewPolicy /></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'policy-manager/edit-misp-policy',
           element: <GuardedRoute><MainLayout><EditPolicy /></MainLayout></GuardedRoute>
         },
         {
