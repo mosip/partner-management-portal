@@ -317,11 +317,8 @@ public class DashboardPage extends BasePage {
 		clickOnElement(sbiDeviceHeader);
 	}
 
-	public PartnerCertificatePage clickOnCertificateTrustStore() {
-		clickOnElement(certificateTrustStore);
-		new WebDriverWait(driver, Duration.ofSeconds(10))
-			.until(ExpectedConditions.visibilityOfElementLocated(By.id("root_upload_trust_certificate_btn"))); // adjust locator
-		return new PartnerCertificatePage(driver);
+	public void clickOnCertificateTrustStore() {
+		clickOnElement(certificateTrustStore);		
 	}
 
 	public boolean isAuthenticationServiceInfoTextDisplayed() {

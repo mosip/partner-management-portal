@@ -383,4 +383,10 @@ public class BasePage {
 		}
 		
 	}
+	
+	public void scrollIntoView(WebElement element) {
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("arguments[0].scrollIntoView(true);", element);
+	}
+
 }

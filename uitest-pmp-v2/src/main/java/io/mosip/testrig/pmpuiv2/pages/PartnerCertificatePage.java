@@ -1,5 +1,6 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -7,6 +8,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
 
 public class PartnerCertificatePage extends BasePage {
@@ -823,10 +827,6 @@ public class PartnerCertificatePage extends BasePage {
 		return isElementDisplayed(actionHeader);
 	}
 
-	public boolean isUploadTrustCertificateButtonDisplayed() {
-		return isElementDisplayed(rootUploadTrustCertificateButtonInAdmin);
-	}
-
 	public boolean isCertificateUploadPopupDisplayed() {
 		return isElementDisplayed(certificateUploadPopup);
 	}
@@ -1197,20 +1197,34 @@ public class PartnerCertificatePage extends BasePage {
 		clickOnElement(certificateClearButton);
 	}
 
-	public boolean isIntermediateUploadTrustCertificateButtonDisplayed() {
-		return isElementDisplayed(intermediateUploadTrustCertificateButtonInAdmin);
-	}
-
 	public void clickOnIntCACertBreadcumb() {
 		clickOnElement(intCACertBreadcumb);
 	}
 
 	public void clickOnRootUploadTrustCertificateButtonInAdmin() {
-		clickOnElement(rootUploadTrustCertificateButtonInAdmin);
+		try {
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+			wait.until(ExpectedConditions.elementToBeClickable(rootUploadTrustCertificateButtonInAdmin));
+
+			scrollIntoView(rootUploadTrustCertificateButtonInAdmin);
+			rootUploadTrustCertificateButtonInAdmin.click();
+		} catch (Exception e) {
+			throw e;
+		}
 	}
 
+
 	public void clickOnIntermediateUploadTrustCertificateButtonInAdmin() {
-		clickOnElement(intermediateUploadTrustCertificateButtonInAdmin);
+		try {
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+			wait.until(ExpectedConditions.elementToBeClickable(intermediateUploadTrustCertificateButtonInAdmin));
+			
+			scrollIntoView(intermediateUploadTrustCertificateButtonInAdmin);
+			intermediateUploadTrustCertificateButtonInAdmin.click();
+		} catch (Exception e) {
+			throw e;
+		}
 	}
+
 
 }
