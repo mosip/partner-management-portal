@@ -2162,6 +2162,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		loginPage.enterUserName(GlobalConstants.PARTNER_ADMIN);
 		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
 		loginPage.clickOnLoginButton();
+
 	}
 
 }

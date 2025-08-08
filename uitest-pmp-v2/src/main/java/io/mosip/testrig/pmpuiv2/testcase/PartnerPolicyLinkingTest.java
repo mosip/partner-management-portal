@@ -95,7 +95,7 @@ public class PartnerPolicyLinkingTest extends BaseClass {
 		loginPage = new LoginPage(driver);
 
 		loginAsAuthPartner();
-		
+
 		dashboardPage.clickOnPoliciesTitle();
 
 		requestPolicy(policiesPage, GlobalConstants.AUTHPOLICY_PARTLINK);
@@ -428,6 +428,7 @@ public class PartnerPolicyLinkingTest extends BaseClass {
 		loginPage.enterUserName(GlobalConstants.AUTH_PARTNER_ID);
 		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
 		loginPage.clickOnLoginButton();
+
 	}
 
 	private void requestPolicy(PoliciesPage policiesPage, String authPolicyName) {

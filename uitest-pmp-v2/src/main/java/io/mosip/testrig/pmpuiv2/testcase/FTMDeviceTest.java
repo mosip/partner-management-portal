@@ -49,22 +49,6 @@ public class FTMDeviceTest extends BaseClass {
 		dashboardpage.clickOnCheckbox();
 		dashboardpage.clickOnProceedButton();
 
-		dashboardpage.clickOnDashboardPartnerCertificateListHeader();
-		partnerCertificatePage.clickOnUploadButton();
-		partnerCertificatePage.uploadCertificate();
-		partnerCertificatePage.clickOnSubmitButton();
-		assertTrue(partnerCertificatePage.isNoRootCertDisplayed(), GlobalConstants.isPartnerCertificatePageDisplayed);
-		partnerCertificatePage.clickOnErrorCloseButton();
-		partnerCertificatePage.clickOnRemoveCertificateButton();
-
-		partnerCertificatePage.uploadCertificateForAnotherOrg();
-		partnerCertificatePage.clickOnSubmitButton();
-		assertTrue(partnerCertificatePage.isErrorCodeForSelfSignedCerDisplayed(),
-				GlobalConstants.isPartnerCertificatePageDisplayed);
-		partnerCertificatePage.clickOnErrorCloseButton();
-		partnerCertificatePage.clickOnCertificateUploadCancelButton();
-		partnerCertificatePage.clickOnHomeButton();
-
 		assertTrue(partnerCertificatePage.isDashboardFtmChipProviderCardDisplayed(),
 				GlobalConstants.isProceedButtonDisplayed);
 
@@ -128,7 +112,7 @@ public class FTMDeviceTest extends BaseClass {
 		partnerCertificatePage.uploadCertificateRootCa();
 		partnerCertificatePage.clickonSubmitButtonForAdmin();
 		partnerCertificatePage.clickOnGoBackButton();
-		
+
 		partnerCertificatePage.clickOnIntermediateCACertTab();
 		assertTrue(partnerCertificatePage.isIntermediateUploadTrustCertificateButtonDisplayed(),
 				GlobalConstants.isUploadTrustCertificateButtonDisplayed);

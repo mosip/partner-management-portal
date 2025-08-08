@@ -82,7 +82,7 @@ public class AuthPartnerTest extends BaseClass {
 		registerPage.enterPassword("mosip123");
 		registerPage.enterPasswordConfirm("mosip123");
 		dashboardPage = registerPage.clickSubmitButton();
-		
+
 		dashboardPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULT_POLICYGROUP);
 		dashboardPage.clickOnSubmitButton();
 
@@ -329,6 +329,7 @@ public class AuthPartnerTest extends BaseClass {
 
 		dashboardPage.clickOnPartnerPolicyMappingTab();
 		partnerPolicyMappingPage.clickOnFilterButton();
+
 		partnerPolicyMappingPage.enterpolicyGroupFilter(GlobalConstants.DEFAULT_POLICYGROUP);
 		partnerPolicyMappingPage.enterPendingPolicyNameInFilter(data);
 		partnerPolicyMappingPage.clickOnApplyFilterButton();
@@ -345,6 +346,7 @@ public class AuthPartnerTest extends BaseClass {
 		partnerPolicyMappingPage.clickOnApproveSubmitButton();
 
 		partnerPolicyMappingPage.clickOnFilterButton();
+
 		partnerPolicyMappingPage.enterpolicyGroupFilter(GlobalConstants.DEFAULT_POLICYGROUP);
 		partnerPolicyMappingPage.enterPendingPolicyNameInFilter(GlobalConstants.AUTHPOLICY02);
 		partnerPolicyMappingPage.clickOnApplyFilterButton();
@@ -1070,7 +1072,7 @@ public class AuthPartnerTest extends BaseClass {
 		policiesPage = new PoliciesPage(driver);
 		oidcClientPage = new OidcClientPage(driver);
 		basePage = new BasePage(driver);
-		
+
 		loginAsAuthPartner();
 
 		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
@@ -1167,6 +1169,7 @@ public class AuthPartnerTest extends BaseClass {
 	}
 
 	private void createOidcClient(String oidcTextBoxValue) {
+
 		oidcClientPage = new OidcClientPage(driver);
 		oidcClientPage.clickOnListCreateOidcClientButton();
 		oidcClientPage.selectPartnerIdDropdown();

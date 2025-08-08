@@ -159,7 +159,7 @@ public class DatasharePolicyPage extends BasePage {
 	@FindBy(id = "policyDescription_asc_icon")
 	private WebElement policyDescriptionAscIcon;
 
-	@FindBy(id = "policyDescription_desc_icon")
+	@FindBy(id = "Polygon_4")
 	private WebElement policyDescriptionDescIcon;
 
 	@FindBy(id = "policyGroupName_asc_icon")

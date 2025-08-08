@@ -42,6 +42,26 @@ public class CertificateTrustStoreTest extends BaseClass {
 				GlobalConstants.isPartnerCertificatePageDisplayed);
 		assertTrue(partnerCertificatePage.isSubmitButtonForAdminDisplayed(), GlobalConstants.isSubmitButtonEnabled);
 
+		assertTrue(partnerCertificatePage.isPartnerCertificatePageDisplayed(),
+				GlobalConstants.isPartnerCertificatePageDisplayed);
+		assertTrue(partnerCertificatePage.isSubtitleHomeButtonDisplayed(),
+				GlobalConstants.isPartnerCertificatePageDisplayed);
+		assertTrue(partnerCertificatePage.isSubtitleButtonButtonDisplayed(),
+				GlobalConstants.isPartnerCertificatePageDisplayed);
+
+		assertTrue(partnerCertificatePage.isAdminCertUploadCancelButtonDisplayed(),
+				GlobalConstants.isPartnerCertificatePageDisplayed);
+
+		assertTrue(partnerCertificatePage.isUploadTrustCertificateTextDisplayed(),
+				GlobalConstants.isPartnerCertificatePageDisplayed);
+		assertTrue(partnerCertificatePage.isPartnerPageSubTitleTextDisplayed(),
+				GlobalConstants.isPartnerCertificatePageDisplayed);
+		assertTrue(partnerCertificatePage.isCertFormatesTextDisplayed(),
+				GlobalConstants.isPartnerCertificatePageDisplayed);
+		assertTrue(partnerCertificatePage.isUploadBoxHeaderTextDisplayed(),
+				GlobalConstants.isPartnerCertificatePageDisplayed);
+		assertTrue(partnerCertificatePage.isSubmitButtonForAdminDisplayed(), GlobalConstants.isSubmitButtonEnabled);
+
 		assertTrue(partnerCertificatePage.isPartnerAdminCertUploadTitleDisplayed(),
 				GlobalConstants.isPartnerAdminCertUploadTitleDisplayed);
 		assertTrue(partnerCertificatePage.isUploadInstructionMessageDisplayed(),

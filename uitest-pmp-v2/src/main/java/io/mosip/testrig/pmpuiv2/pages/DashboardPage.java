@@ -17,7 +17,7 @@ public class DashboardPage extends BasePage {
 
 	@FindBy(xpath = "//h3[text()='Select Policy Group']")
 	private WebElement selectPolicyGroupPopUp;
-	
+
 	@FindBy(xpath = "//span[text()='Select Policy Group']")
 	private WebElement selectPolicyGroupDropdownForInvalid;
 
@@ -25,7 +25,7 @@ public class DashboardPage extends BasePage {
 	private WebElement selectPolicyGroupDropdown;
 
 	@FindBy(id = "select_policy_group_dropdown_no_data_available")
-    private WebElement noDataAvailableText;
+	private WebElement noDataAvailableText;
 
 	@FindBy(id = "select_policy_group_dropdown_search_input")
 	private WebElement SearchBox;
@@ -174,7 +174,7 @@ public class DashboardPage extends BasePage {
 		enter(SearchBox, policyGroupValue);
 		clickOnElement(selectPolicyGrouDropdownOption1);
 	}
-	
+
 	public void closePolicyGroupDropdown() {
 		clickOnElement(selectPolicyGroupDropdown);
 	}
@@ -182,7 +182,7 @@ public class DashboardPage extends BasePage {
 	public void clickOnSubmitButton() {
 		clickOnElement(submitButton);
 	}
-	
+
 	public boolean isSubmitButtonEnabled() {
 		return isElementEnabled(submitButton);
 	}

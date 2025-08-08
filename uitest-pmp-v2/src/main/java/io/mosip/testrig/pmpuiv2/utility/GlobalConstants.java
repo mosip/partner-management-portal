@@ -901,7 +901,6 @@ public class GlobalConstants {
 	public static final String isMakePlaceHolderDisplayed = "Verify if make placeholder Displayed";
 	public static final String isModelPlaceHolderDisplayed = "Verify if model placeholder Displayed";
 	public static final String isPoliciesEmptyTableDisplayed = "Verify if policies empty table Displayed";
-	public static final String isOidcClientListPageCreateOidcClientBtnDisplayed = "Verify if oidc client button Displayed";
 	
 	public static final String APPID = "appId";
 	public static final String PASSWORD = "password";

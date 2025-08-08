@@ -415,6 +415,7 @@ public class AuthenticationServices extends BaseClass {
 		assertTrue(oidcClientPage.isApiKeyTabDisplayed(), GlobalConstants.isApiKeyTabDisplayed);
 		oidcClientPage.clickOnApiKeyTab();
 		apiKeyPage.clickOnFilterButton();
+
 		apiKeyPage.enterPartnerIdInFilter(GlobalConstants.AUTH_PARTNER_ID);
 		apiKeyPage.enterPolicyGroupInFilter(GlobalConstants.DEFAULT_POLICYGROUP);
 		apiKeyPage.enterValidApiKeyNameInAdminFilter(GlobalConstants.DEACTIVATE_APIKEY);
@@ -623,6 +624,7 @@ public class AuthenticationServices extends BaseClass {
 		oidcClientPage = dashboardPage.clickOnAuthenticationServices();
 		oidcClientPage.clickOnApiKeyTab();
 		oidcClientPage.clickOnFilterButton();
+
 		apiKeyPage.enterPartnerIdInFilter(GlobalConstants.AUTH_PARTNER_ID);
 		apiKeyPage.enterPolicyGroupInFilter(GlobalConstants.DEFAULT_POLICYGROUP);
 		apiKeyPage.enterValidApiKeyNameInAdminFilter(GlobalConstants.ACTIVATE_ADMINAPIKEY);
