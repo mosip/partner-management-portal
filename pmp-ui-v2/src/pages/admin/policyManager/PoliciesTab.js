@@ -25,6 +25,11 @@ function PoliciesTab() {
         navigate('/partnermanagement/policy-manager/data-share-policies-list')
     };
 
+    const changeToMispPolicy = () => {
+        localStorage.setItem('activeTab', 'MISP');
+        navigate('/partnermanagement/policy-manager/misp-policies-list')
+    };
+
     return (
         <div className='flex text-xs bg-[#FCFCFC] font-bold space-x-16 items-start rounded-lg px-[1.5%] pt-[2%] overflow-x-auto'>
             <div className={`flex-col justify-center`}>
@@ -47,6 +52,13 @@ function PoliciesTab() {
                 </button>
 
                 <div className={`h-1 w-full ${activeTab === "DataShare" ? "bg-tory-blue" : "bg-transparent"} rounded-t-md`}></div>
+            </div>
+            <div className={`flex-col justify-center`}>
+                <button id='policies_misp_policy_tab' onClick={changeToMispPolicy} className={`${activeTab === "MISP" ? "text-[#1447b2]" : "text-[#031640]"} mb-[12%] cursor-pointer text-sm`}>
+                    <h6> {t('policyGroupList.mispPolicy')}</h6>
+                </button>
+
+                <div className={`h-1 w-full ${activeTab === "MISP" ? "bg-tory-blue" : "bg-transparent"} rounded-t-md`}></div>
             </div>
         </div>
     )

@@ -332,7 +332,7 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
                                                                     <tr>
                                                                         {tableHeaders.map((header, index) => {
                                                                             return (
-                                                                                <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[20%]">
+                                                                                <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[17%]">
                                                                                     <div id={`${header.headerNameKey}_header`} className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
                                                                                         {t(header.headerNameKey)}
                                                                                         {header.id !== "action" && (

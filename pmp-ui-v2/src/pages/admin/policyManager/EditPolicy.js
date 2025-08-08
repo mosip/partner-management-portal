@@ -81,6 +81,14 @@ function EditPolicy() {
                     setConfirmationHeader('editPolicy.authPolicyConfirmationHeader');
                     setConfirmationMessage('editPolicy.authPolicyConfirmationMessage');
                     setBackLink('/partnermanagement/policy-manager/auth-policies-list');
+                } else if (storedPolicyType === 'MISP') {
+                    setTitle('editPolicy.editMispPolicyTitle');
+                    setSubTitle('policiesList.listOfMispPolicies');
+                    setPolicyNamePlaceHolderKey('createPolicy.enterMispPolicyName');
+                    setPolicyDescriptionPlaceHolderKey('createPolicy.mispPolicyDescription');
+                    setConfirmationHeader('editPolicy.mispPolicyConfirmationHeader');
+                    setConfirmationMessage('editPolicy.mispPolicyConfirmationMessage');
+                    setBackLink('/partnermanagement/policy-manager/misp-policies-list');
                 }
                 const selectedPolicyId = localStorage.getItem('policyId');
                 if (selectedPolicyId) {
