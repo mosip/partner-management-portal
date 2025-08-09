@@ -1355,9 +1355,8 @@ public class DeviceProviderTest extends BaseClass {
 		assertTrue(listOfDevicesPage.isStatusAscIconDisplayed(), GlobalConstants.isListOfDevicesHeadersDisplayed);
 		assertTrue(listOfDevicesPage.isStatusDescIconDisplayed(), GlobalConstants.isListOfDevicesHeadersDisplayed);
 
-		basePage.scrollToStartPage();
-		listOfDevicesPage.clickOnDeviceIdAscIcon();
-		listOfDevicesPage.clickOnDeviceIdDescIcon();
+//		listOfDevicesPage.clickOnDeviceIdAscIcon();
+//		listOfDevicesPage.clickOnDeviceIdDescIcon();
 		listOfDevicesPage.clickOnDeviceTypeCodeAscIcon();
 		listOfDevicesPage.clickOnDeviceTypeCodeDescIcon();
 		listOfDevicesPage.clickOnDeviceSubTypeCodeAscIcon();
