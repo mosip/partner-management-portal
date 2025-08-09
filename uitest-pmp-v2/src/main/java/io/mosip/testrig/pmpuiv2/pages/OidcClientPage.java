@@ -145,7 +145,7 @@ public class OidcClientPage extends BasePage {
 	@FindBy(id = "filter_btn")
 	private WebElement filterButton;
 
-	@FindBy(id = "partnerId_desc_icon")
+	@FindBy(xpath = "(//path[@id='Polygon_4']/parent::*[name()='svg'])[1]")
 	private WebElement partnerId_desc_icon;
 
 	@FindBy(id = "partnerId_asc_icon")
