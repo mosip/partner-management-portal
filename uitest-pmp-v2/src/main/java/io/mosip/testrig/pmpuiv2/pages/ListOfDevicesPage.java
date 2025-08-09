@@ -149,7 +149,7 @@ public class ListOfDevicesPage extends BasePage {
 	@FindBy(xpath = "//button[text()='32']")
 	private WebElement recordCount32;
 
-	@FindBy(xpath = "//*[name()='svg' and @id='deviceId_asc_icon']//*[name()='path']")
+	@FindBy(id = "deviceId_asc_icon")
 	private WebElement deviceIdAscIcon;
 
 	@FindBy(id = "deviceId_desc_icon")

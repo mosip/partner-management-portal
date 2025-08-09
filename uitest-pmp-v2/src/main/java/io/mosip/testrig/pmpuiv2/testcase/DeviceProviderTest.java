@@ -33,6 +33,7 @@ public class DeviceProviderTest extends BaseClass {
 	private ViewDeviceDetailsPage viewDeviceDetailsPage;
 	private ViewSbiDetailsPage viewSbiDetailsPage;
 	private LoginPage loginpage;
+	private BasePage basePage;
 
 	@Test(priority = 25, description = "This is a test case register new device user")
 	public void registerNewUser() throws InterruptedException {
@@ -1354,6 +1355,7 @@ public class DeviceProviderTest extends BaseClass {
 		assertTrue(listOfDevicesPage.isStatusAscIconDisplayed(), GlobalConstants.isListOfDevicesHeadersDisplayed);
 		assertTrue(listOfDevicesPage.isStatusDescIconDisplayed(), GlobalConstants.isListOfDevicesHeadersDisplayed);
 
+		basePage.scrollToStartPage();
 		listOfDevicesPage.clickOnDeviceIdAscIcon();
 		listOfDevicesPage.clickOnDeviceIdDescIcon();
 		listOfDevicesPage.clickOnDeviceTypeCodeAscIcon();

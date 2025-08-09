@@ -147,9 +147,6 @@ public class OidcClientPage extends BasePage {
 
 	@FindBy(id = "partnerId_desc_icon")
 	private WebElement partnerIdDescIcon;
-	
-	@FindBy(xpath = "(//path[@id='Polygon_4']/parent::*[name()='svg'])[1]")
-	private WebElement partnerId_desc_icon;
 
 	@FindBy(id = "partnerId_asc_icon")
 	private WebElement partnerId_asc_icon;
@@ -1324,7 +1321,7 @@ public class OidcClientPage extends BasePage {
 	}
 
 	public void clickOnPartnerIdDescIcon() {
-		clickOnElement(partnerId_desc_icon);
+		clickOnElement(partnerIdDescIcon);
 	}
 
 	public void clickOnPartnerIdAscIcon() {
