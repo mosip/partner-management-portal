@@ -17,12 +17,13 @@ import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
 public class AuthenticationServices extends BaseClass {
-	private BasePage basePage;
+	
 	private DashboardPage dashboardPage;
 	private ApiKeyPage apiKeyPage;
 	private AuthPolicyPage authPolicyPage;
 	private OidcClientPage oidcClientPage;
 	private LoginPage loginPage;
+	private BasePage basePage;
 
 	@Test(priority = 1, description = "Oidc Client Deactivate")
 	public void oidcClientDeactivate() {
@@ -109,6 +110,7 @@ public class AuthenticationServices extends BaseClass {
 
 		dashboardPage = new DashboardPage(driver);
 		authPolicyPage = new AuthPolicyPage(driver);
+		basePage = new BasePage(driver);
 
 		assertTrue(dashboardPage.isAuthenticationServicesDisplayed(),
 				GlobalConstants.isAuthenticationServicesDisplayed);
