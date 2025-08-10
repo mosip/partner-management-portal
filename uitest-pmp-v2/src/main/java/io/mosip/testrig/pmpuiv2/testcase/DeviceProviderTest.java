@@ -33,7 +33,6 @@ public class DeviceProviderTest extends BaseClass {
 	private ViewDeviceDetailsPage viewDeviceDetailsPage;
 	private ViewSbiDetailsPage viewSbiDetailsPage;
 	private LoginPage loginpage;
-	private BasePage basePage;
 
 	@Test(priority = 25, description = "This is a test case register new device user")
 	public void registerNewUser() throws InterruptedException {
@@ -1334,6 +1333,8 @@ public class DeviceProviderTest extends BaseClass {
 	}
 
 	private void verifySortingOfListOfDevices() {
+		BasePage basePage = new BasePage(driver);
+		
 		assertTrue(listOfDevicesPage.isDeviceIdAscIconDisplayed(), GlobalConstants.isListOfDevicesHeadersDisplayed);
 		assertTrue(listOfDevicesPage.isDeviceIdDescIconDisplayed(), GlobalConstants.isListOfDevicesHeadersDisplayed);
 		assertTrue(listOfDevicesPage.isDeviceTypeCodeAscIconDisplayed(),
@@ -1355,8 +1356,10 @@ public class DeviceProviderTest extends BaseClass {
 		assertTrue(listOfDevicesPage.isStatusAscIconDisplayed(), GlobalConstants.isListOfDevicesHeadersDisplayed);
 		assertTrue(listOfDevicesPage.isStatusDescIconDisplayed(), GlobalConstants.isListOfDevicesHeadersDisplayed);
 
-//		listOfDevicesPage.clickOnDeviceIdAscIcon();
-//		listOfDevicesPage.clickOnDeviceIdDescIcon();
+		basePage.scrollToEndPage();
+		basePage.scrollToStartPage();	
+		listOfDevicesPage.clickOnDeviceIdAscIcon();
+		listOfDevicesPage.clickOnDeviceIdDescIcon();
 		listOfDevicesPage.clickOnDeviceTypeCodeAscIcon();
 		listOfDevicesPage.clickOnDeviceTypeCodeDescIcon();
 		listOfDevicesPage.clickOnDeviceSubTypeCodeAscIcon();

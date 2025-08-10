@@ -148,9 +148,11 @@ public class AuthenticationServices extends BaseClass {
 		assertTrue(oidcClientPage.isStatusAscIconDisplayed(), GlobalConstants.isStatusAscIconDisplayed);
 		assertTrue(oidcClientPage.isOrgNameDescIconDisplayed(), GlobalConstants.isOrgNameDescIconDisplayed);
 		assertTrue(oidcClientPage.isOrgNameAscIconDisplayed(), GlobalConstants.isOrgNameAscIconDisplayed);
-
-//		oidcClientPage.clickOnPartnerIdDescIcon();
-//		oidcClientPage.clickOnPartnerIdAscIcon();
+    
+		basePage.scrollToEndPage();
+		basePage.scrollToStartPage();
+		oidcClientPage.clickOnPartnerIdDescIcon();
+		oidcClientPage.clickOnPartnerIdAscIcon();
 		oidcClientPage.clickOnOrgNameDescIcon();
 		oidcClientPage.clickOnOrgNameAscIcon();
 		oidcClientPage.clickOnPolicyGroupNameDescIcon();
