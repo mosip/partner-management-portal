@@ -420,7 +420,7 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(id = "root_upload_trust_certificate_btn")
 	private WebElement rootUploadTrustCertificateButtonInAdmin;
 
-	@FindBy(xpath = "//button[@id='intermediate_upload_trust_certificate_btn']")
+	@FindBy(id = "intermediate_upload_trust_certificate_btn")
 	private WebElement intermediateUploadTrustCertificateButtonInAdmin;
 
 	@FindBy(id = "upload_trust_certificate_confirmation_header")

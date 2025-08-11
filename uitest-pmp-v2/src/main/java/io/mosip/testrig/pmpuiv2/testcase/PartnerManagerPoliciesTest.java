@@ -1603,6 +1603,8 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		authPolicyPage.clickOnApplyFilterButton();
 		authPolicyPage.clickOnActionButton();
 		authPolicyPage.clickOnEditButton();
+		basePage.scrollToEndPage();
+		basePage.scrollToStartPage();
 		authPolicyPage.enterPolicyName(GlobalConstants.AUTOMATION);
 		authPolicyPage.enterpolicyDescription(GlobalConstants.AUTOMATION);
 		basePage.scrollToEndPage();
