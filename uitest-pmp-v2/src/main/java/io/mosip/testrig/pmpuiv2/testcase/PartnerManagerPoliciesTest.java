@@ -1555,6 +1555,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		authPolicyPage.clickOnGoBackButton();
 
 		authPolicyPage.clickOnFilterButton();
+		authPolicyPage.enterPolicyGroupInFilterBox(GlobalConstants.DEFAULT_POLICYGROUP);
 		authPolicyPage.enterPolicyNameInFilter(GlobalConstants.EDITAUTHPOLICY);
 		authPolicyPage.clickOnApplyFilterButton();
 		authPolicyPage.clickOnActionButton();
@@ -1599,12 +1600,11 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		authPolicyPage.clickOnGoBackButton();
 
 		authPolicyPage.clickOnFilterButton();
+		authPolicyPage.enterPolicyGroupInFilterBox(GlobalConstants.DEFAULT_POLICYGROUP);
 		authPolicyPage.enterPolicyNameInFilter(GlobalConstants.Single_CHARACTERS);
 		authPolicyPage.clickOnApplyFilterButton();
 		authPolicyPage.clickOnActionButton();
 		authPolicyPage.clickOnEditButton();
-		basePage.scrollToEndPage();
-		basePage.scrollToStartPage();
 		authPolicyPage.enterPolicyName(GlobalConstants.AUTOMATION);
 		authPolicyPage.enterpolicyDescription(GlobalConstants.AUTOMATION);
 		basePage.scrollToEndPage();
@@ -1613,6 +1613,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 
 //		authPolicyPage.clickOnFilterResetButton();
 		authPolicyPage.clickOnFilterButton();
+		authPolicyPage.enterPolicyGroupInFilterBox(GlobalConstants.DEFAULT_POLICYGROUP);
 		authPolicyPage.enterPolicyNameInFilter(GlobalConstants.AUTOMATION);
 		authPolicyPage.clickOnApplyFilterButton();
 		authPolicyPage.clickOnActionButton();
@@ -1642,12 +1643,14 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		authPolicyPage.clickOnGoBackButton();
 
 		authPolicyPage.clickOnFilterButton();
+		authPolicyPage.enterPolicyGroupInFilterBox(GlobalConstants.DEFAULT_POLICYGROUP);
 		authPolicyPage.enterPolicyNameInFilter(GlobalConstants.NUMERIC2);
 		authPolicyPage.clickOnApplyFilterButton();
 		authPolicyPage.clickOnActionButton();
 		authPolicyPage.clickOnEditButton();
 		authPolicyPage.clickOnEditPolicyFormCancelButton();
 		authPolicyPage.clickOnFilterButton();
+		authPolicyPage.enterPolicyGroupInFilterBox(GlobalConstants.DEFAULT_POLICYGROUP);
 		authPolicyPage.enterPolicyNameInFilter(GlobalConstants.NUMERIC2);
 		authPolicyPage.clickOnApplyFilterButton();
 		authPolicyPage.clickOnActionButton();
@@ -1699,6 +1702,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		authPolicyPage.clickOnGoBackButton();
 
 		authPolicyPage.clickOnFilterButton();
+		authPolicyPage.enterPolicyGroupInFilterBox(GlobalConstants.DEFAULT_POLICYGROUP);
 		authPolicyPage.enterPolicyNameInFilter(GlobalConstants.AUTHPOLICY08);
 		authPolicyPage.clickOnApplyFilterButton();
 		authPolicyPage.clickOnActionButton();
@@ -1712,6 +1716,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		authPolicyPage.clickOnPublishCancelButton();
 		assertTrue(authPolicyPage.isListOfPoliciesPageDisplayed(), GlobalConstants.isListOfPoliciesPageDisplayed);
 
+		authPolicyPage.enterPolicyGroupInFilterBox(GlobalConstants.DEFAULT_POLICYGROUP);
 		authPolicyPage.enterPolicyNameInFilter(GlobalConstants.AUTHPOLICY08);
 		authPolicyPage.clickOnApplyFilterButton();
 		authPolicyPage.clickOnActionButton();
@@ -1721,6 +1726,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		authPolicyPage.clickOnPublishPolicyCloseButton();
 		assertTrue(authPolicyPage.isListOfPoliciesPageDisplayed(), GlobalConstants.isListOfPoliciesPageDisplayed);
 
+		authPolicyPage.enterPolicyGroupInFilterBox(GlobalConstants.DEFAULT_POLICYGROUP);
 		authPolicyPage.enterPolicyNameInFilter(GlobalConstants.ALPHANUMERIC2);
 		authPolicyPage.clickOnApplyFilterButton();
 		authPolicyPage.clickOnActionButton();
@@ -1730,6 +1736,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		assertTrue(authPolicyPage.isListOfPoliciesPageDisplayed(), GlobalConstants.isListOfPoliciesPageDisplayed);
 
 		authPolicyPage.clickOnFilterButton();
+		authPolicyPage.enterPolicyGroupInFilterBox(GlobalConstants.DEFAULT_POLICYGROUP);
 		authPolicyPage.enterPolicyNameInFilter(GlobalConstants.AUTHPOLICY08);
 		authPolicyPage.clickOnApplyFilterButton();
 		authPolicyPage.clickOnActionButton();
@@ -1785,6 +1792,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 
 		authPolicyPage.clickOnFilterResetButton();
 		authPolicyPage.clickOnFilterButton();
+		authPolicyPage.enterPolicyGroupInFilterBox(GlobalConstants.DEFAULT_POLICYGROUP);
 		authPolicyPage.enterPolicyNameInFilter(GlobalConstants.AUTHPOLICY06);
 		authPolicyPage.clickOnApplyFilterButton();
 		authPolicyPage.clickOnActionButton();
