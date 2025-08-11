@@ -46,6 +46,8 @@ public class AuthPartnerTest extends BaseClass {
 		loginPage = new LoginPage(driver);
 
 		dashboardPage.clickOnCertificateTrustStore();
+		assertTrue(partnerCertificatePage.isUploadTrustCertificateButtonDisplayed(),
+				GlobalConstants.isUploadTrustCertificateButtonDisplayed);
 		partnerCertificatePage.clickOnRootUploadTrustCertificateButtonInAdmin();
 		partnerCertificatePage.clickOnpartnerDomainSelectorDropdown();
 		partnerCertificatePage.clickOnPartnerDomainSelectorDropdownOptionAuth();
@@ -54,6 +56,8 @@ public class AuthPartnerTest extends BaseClass {
 		partnerCertificatePage.clickOnGoBackButton();
 
 		partnerCertificatePage.clickOnIntermediateCACertTab();
+		assertTrue(partnerCertificatePage.isIntermediateUploadTrustCertificateButtonDisplayed(),
+				GlobalConstants.isUploadTrustCertificateButtonDisplayed);
 		partnerCertificatePage.clickOnIntermediateUploadTrustCertificateButtonInAdmin();
 		partnerCertificatePage.clickOnpartnerDomainSelectorDropdown();
 		partnerCertificatePage.clickOnPartnerDomainSelectorDropdownOptionAuth();

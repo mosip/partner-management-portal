@@ -5,7 +5,6 @@ import static org.testng.Assert.assertTrue;
 import org.testng.annotations.Test;
 
 import io.mosip.testrig.pmpuiv2.kernel.util.KeycloakUserManager;
-import io.mosip.testrig.pmpuiv2.pages.BasePage;
 import io.mosip.testrig.pmpuiv2.pages.DashboardPage;
 import io.mosip.testrig.pmpuiv2.pages.LoginPage;
 import io.mosip.testrig.pmpuiv2.pages.PartnerCertificatePage;
@@ -20,7 +19,6 @@ public class PartnerAdminCreation extends BaseClass {
 	private DashboardPage dashboardPage;
 	private LoginPage loginPage;
 	private PartnerCertificatePage partnerCertificatePage;
-	private BasePage basePage;
 
 	@Test(priority = 1, description = "Creating Partner Admin")
 	public void partnerAdminCreation() {
@@ -83,9 +81,12 @@ public class PartnerAdminCreation extends BaseClass {
 		partnerCertificatePage = new PartnerCertificatePage(driver);
 
 		dashboardPage.clickOnCertificateTrustStore();
+		assertTrue(partnerCertificatePage.isUploadTrustCertificateButtonDisplayed(),
+				GlobalConstants.isUploadTrustCertificateButtonDisplayed);
 		partnerCertificatePage.clickOnRootUploadTrustCertificateButtonInAdmin();
 		partnerCertificatePage.clickOnpartnerDomainSelectorDropdown();
 		partnerCertificatePage.clickOnDeviceInPartnerDomainSelectorDropdown();
+
 		partnerCertificatePage.uploadCertificateRootCa();
 		partnerCertificatePage.clickonSubmitButtonForAdmin();
 		assertTrue(partnerCertificatePage.isUploadedSuccessfullyMessageDisplayed(),
@@ -94,6 +95,8 @@ public class PartnerAdminCreation extends BaseClass {
 		partnerCertificatePage.clickOnGoBackButton();
 
 		partnerCertificatePage.clickOnIntermediateCACertTab();
+		assertTrue(partnerCertificatePage.isIntermediateUploadTrustCertificateButtonDisplayed(),
+				GlobalConstants.isUploadTrustCertificateButtonDisplayed);
 		partnerCertificatePage.clickOnIntermediateUploadTrustCertificateButtonInAdmin();
 		partnerCertificatePage.clickOnpartnerDomainSelectorDropdown();
 		partnerCertificatePage.clickOnDeviceInPartnerDomainSelectorDropdown();

@@ -420,7 +420,7 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(id = "root_upload_trust_certificate_btn")
 	private WebElement rootUploadTrustCertificateButtonInAdmin;
 
-	@FindBy(id = "intermediate_upload_trust_certificate_btn")
+	@FindBy(xpath = "//button[@id='intermediate_upload_trust_certificate_btn']")
 	private WebElement intermediateUploadTrustCertificateButtonInAdmin;
 
 	@FindBy(id = "upload_trust_certificate_confirmation_header")
@@ -827,6 +827,10 @@ public class PartnerCertificatePage extends BasePage {
 		return isElementDisplayed(actionHeader);
 	}
 
+	public boolean isUploadTrustCertificateButtonDisplayed() {
+		return isElementDisplayed(rootUploadTrustCertificateButtonInAdmin);
+	}
+
 	public boolean isCertificateUploadPopupDisplayed() {
 		return isElementDisplayed(certificateUploadPopup);
 	}
@@ -1195,6 +1199,10 @@ public class PartnerCertificatePage extends BasePage {
 
 	public void clickOnCertificateClearButton() {
 		clickOnElement(certificateClearButton);
+	}
+
+	public boolean isIntermediateUploadTrustCertificateButtonDisplayed() {
+		return isElementDisplayed(intermediateUploadTrustCertificateButtonInAdmin);
 	}
 
 	public void clickOnIntCACertBreadcumb() {
