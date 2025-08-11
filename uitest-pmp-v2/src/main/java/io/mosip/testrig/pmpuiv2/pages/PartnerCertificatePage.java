@@ -1,5 +1,6 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -7,6 +8,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
 
 public class PartnerCertificatePage extends BasePage {
@@ -353,7 +357,7 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(id = "root_of_trust_certificates_tab")
 	private WebElement rootCACertTab;
 
-	@FindBy(id = "intermediate_root_of_trust_certificates_tab")
+	@FindBy(xpath = "//h6[text()='Intermediate CA']")
 	private WebElement intermediateCACertTab;
 
 	@FindBy(xpath = "//p[contains(text(), 'List of Intermediate CA Certificates')]")
@@ -413,7 +417,7 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(id = "upload_trust_certificate_clear")
 	private WebElement certificateClearButton;
 
-	@FindBy(xpath = "//button[@id='root_upload_trust_certificate_btn']")
+	@FindBy(id = "root_upload_trust_certificate_btn")
 	private WebElement rootUploadTrustCertificateButtonInAdmin;
 
 	@FindBy(xpath = "//button[@id='intermediate_upload_trust_certificate_btn']")
@@ -1209,8 +1213,10 @@ public class PartnerCertificatePage extends BasePage {
 		clickOnElement(rootUploadTrustCertificateButtonInAdmin);
 	}
 
+
 	public void clickOnIntermediateUploadTrustCertificateButtonInAdmin() {
 		clickOnElement(intermediateUploadTrustCertificateButtonInAdmin);
 	}
+
 
 }

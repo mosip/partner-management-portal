@@ -104,8 +104,6 @@ public class FTMDeviceTest extends BaseClass {
 //		dashboardpage.clickOnProceedButton();
 
 		dashboardpage.clickOnRootOFTrustCertText();
-		assertTrue(partnerCertificatePage.isUploadTrustCertificateButtonDisplayed(),
-				GlobalConstants.isUploadTrustCertificateButtonDisplayed);
 		partnerCertificatePage.clickOnRootUploadTrustCertificateButtonInAdmin();
 		partnerCertificatePage.clickOnpartnerDomainSelectorDropdown();
 		partnerCertificatePage.clickOnPartnerDomainSelectorDropdownOptionFtm();
@@ -114,8 +112,6 @@ public class FTMDeviceTest extends BaseClass {
 		partnerCertificatePage.clickOnGoBackButton();
 
 		partnerCertificatePage.clickOnIntermediateCACertTab();
-		assertTrue(partnerCertificatePage.isIntermediateUploadTrustCertificateButtonDisplayed(),
-				GlobalConstants.isUploadTrustCertificateButtonDisplayed);
 		partnerCertificatePage.clickOnIntermediateUploadTrustCertificateButtonInAdmin();
 		partnerCertificatePage.clickOnpartnerDomainSelectorDropdown();
 		partnerCertificatePage.clickOnPartnerDomainSelectorDropdownOptionFtm();

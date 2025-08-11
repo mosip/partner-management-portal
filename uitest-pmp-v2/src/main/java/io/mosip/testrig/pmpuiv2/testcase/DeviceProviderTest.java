@@ -1333,6 +1333,8 @@ public class DeviceProviderTest extends BaseClass {
 	}
 
 	private void verifySortingOfListOfDevices() {
+		BasePage basePage = new BasePage(driver);
+		
 		assertTrue(listOfDevicesPage.isDeviceIdAscIconDisplayed(), GlobalConstants.isListOfDevicesHeadersDisplayed);
 		assertTrue(listOfDevicesPage.isDeviceIdDescIconDisplayed(), GlobalConstants.isListOfDevicesHeadersDisplayed);
 		assertTrue(listOfDevicesPage.isDeviceTypeCodeAscIconDisplayed(),
@@ -1354,6 +1356,8 @@ public class DeviceProviderTest extends BaseClass {
 		assertTrue(listOfDevicesPage.isStatusAscIconDisplayed(), GlobalConstants.isListOfDevicesHeadersDisplayed);
 		assertTrue(listOfDevicesPage.isStatusDescIconDisplayed(), GlobalConstants.isListOfDevicesHeadersDisplayed);
 
+		basePage.scrollToEndPage();
+		basePage.scrollToStartPage();	
 		listOfDevicesPage.clickOnDeviceIdAscIcon();
 		listOfDevicesPage.clickOnDeviceIdDescIcon();
 		listOfDevicesPage.clickOnDeviceTypeCodeAscIcon();

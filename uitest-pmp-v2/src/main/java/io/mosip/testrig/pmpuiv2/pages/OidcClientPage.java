@@ -146,7 +146,7 @@ public class OidcClientPage extends BasePage {
 	private WebElement filterButton;
 
 	@FindBy(id = "partnerId_desc_icon")
-	private WebElement partnerId_desc_icon;
+	private WebElement partnerIdDescIcon;
 
 	@FindBy(id = "partnerId_asc_icon")
 	private WebElement partnerId_asc_icon;
@@ -726,7 +726,7 @@ public class OidcClientPage extends BasePage {
 	}
 
 	public boolean isPartnerIdDescIconDisplayed() {
-		return isElementDisplayed(partnerId_desc_icon);
+		return isElementDisplayed(partnerIdDescIcon);
 	}
 
 	public boolean isPartnerIdAscIconDisplayed() {
@@ -1321,7 +1321,7 @@ public class OidcClientPage extends BasePage {
 	}
 
 	public void clickOnPartnerIdDescIcon() {
-		clickOnElement(partnerId_desc_icon);
+		clickOnElement(partnerIdDescIcon);
 	}
 
 	public void clickOnPartnerIdAscIcon() {
