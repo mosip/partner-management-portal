@@ -55,7 +55,7 @@ public class FtmPage extends BasePage {
 	@FindBy(id = "ftmId")
 	private WebElement ftmIdCoulumeHeader;
 
-	@FindBy(id = "add_ftm_partner_id")
+	@FindBy(id = "add_ftm_partner_id_dropdown_btn")
 	private WebElement addFtmPartnerId;
 
 	@FindBy(id = "add_ftm_partner_id_option1")
@@ -181,7 +181,7 @@ public class FtmPage extends BasePage {
 	@FindBy(id = "ftm_certificate_expiry_filter_option1")
 	private WebElement ftmCertificateExpiryFilterOption1;
 
-	@FindBy(id = "ftm_status_filter")
+	@FindBy(id = "ftm_status_filter_dropdown_btn")
 	private WebElement ftmStatusFilter;
 
 	@FindBy(xpath = "//button[text()='Pending For Approval']")
@@ -325,7 +325,7 @@ public class FtmPage extends BasePage {
 	@FindBy(id = "model_filter")
 	private WebElement modelFilter;
 
-	@FindBy(id = "status_filter")
+	@FindBy(id = "status_filter_dropdown_btn")
 	private WebElement statusFilter;
 
 	@FindBy(id = "status_filter_option3")

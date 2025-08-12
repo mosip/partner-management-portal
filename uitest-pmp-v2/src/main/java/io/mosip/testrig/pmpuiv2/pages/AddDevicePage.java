@@ -50,10 +50,10 @@ public class AddDevicePage extends BasePage {
 	@FindBy(id = "header_user_profile_title")
 	private WebElement headerUserProfile;
 
-	@FindBy(id = "add_device_device_type")
+	@FindBy(id = "add_device_device_type_dropdown_btn")
 	private WebElement addDeviceTypeSelectDropdown;
 
-	@FindBy(id = "add_device_device_sub_type")
+	@FindBy(id = "add_device_device_sub_type_dropdown_btn")
 	private WebElement addDeviceSubTypeSelectDropdown;
 
 	@FindBy(id = "add_device_device_type_option1")
@@ -229,7 +229,7 @@ public class AddDevicePage extends BasePage {
 
 	public void selectAddDeviceTypeWithPosition(String value, int position) {
 		WebElement addDeviceTypeSelectDropdown = driver
-				.findElement(By.xpath("(//button[@id='add_device_device_type'])[" + position + "]"));
+				.findElement(By.xpath("(//button[@id='add_device_device_type_dropdown_btn'])[" + position + "]"));
 		try {
 			dropdownWithPosition(addDeviceTypeSelectDropdown, value, position);
 		} catch (IOException e) {
@@ -239,7 +239,7 @@ public class AddDevicePage extends BasePage {
 
 	public void selectDeviceSubTypeWithPosition(String value, int position) {
 		WebElement addDeviceSubTypeSelectDropdown = driver
-				.findElement(By.xpath("(//button[@id='add_device_device_sub_type'])[" + position + "]"));
+				.findElement(By.xpath("(//button[@id='add_device_device_sub_type_dropdown_btn'])[" + position + "]"));
 		try {
 			dropdownWithPosition(addDeviceSubTypeSelectDropdown, value, position);
 		} catch (IOException e) {
@@ -262,7 +262,7 @@ public class AddDevicePage extends BasePage {
 	public boolean isSubmitEnabled() {
 		return isElementEnabled(submitButton);
 	}
-	
+
 	public boolean isSubmitDisabled() {
 		return isElementDisabled(submitButton);
 	}
@@ -270,7 +270,7 @@ public class AddDevicePage extends BasePage {
 	public boolean isDeviceSubTypeEnabled() {
 		return isElementEnabled(addDeviceSubTypeSelectDropdown);
 	}
-	
+
 	public boolean isDeviceSubTypeDisabled() {
 		return isElementDisabled(addDeviceSubTypeSelectDropdown);
 	}
@@ -278,7 +278,7 @@ public class AddDevicePage extends BasePage {
 	public boolean isAddDeviceEnabled() {
 		return isElementEnabled(addDeviceButton);
 	}
-	
+
 	public boolean isAddDeviceDisabled() {
 		return isElementDisabled(addDeviceButton);
 	}
@@ -286,7 +286,7 @@ public class AddDevicePage extends BasePage {
 	public boolean isDeleteButtonEnabled() {
 		return isElementEnabled(deleteButton);
 	}
-	
+
 	public boolean isDeleteButtonDisabled() {
 		return isElementDisabled(deleteButton);
 	}
@@ -384,4 +384,8 @@ public class AddDevicePage extends BasePage {
 		return getTextFromLocator(duplicateDeviceErrorMessage);
 	}
 
+	public void selectAddDeviceTypeForReject() {
+		clickOnElement(addDeviceTypeSelectDropdown);
+		clickOnElement(addDeviceTypeOption);
+	}
 }
