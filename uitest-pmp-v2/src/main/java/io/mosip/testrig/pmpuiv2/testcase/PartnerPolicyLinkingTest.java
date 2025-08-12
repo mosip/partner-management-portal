@@ -47,6 +47,11 @@ public class PartnerPolicyLinkingTest extends BaseClass {
 		basePage.scrollToEndPage();
 		authPolicyPage.clickOnSaveAsDraftButton();
 		authPolicyPage.clickOnGoBackButton();
+		
+		authPolicyPage.clickOnFilterButton();
+		authPolicyPage.enterPolicyGroupInFilterBox(GlobalConstants.DEFAULT_POLICYGROUP);
+		authPolicyPage.enterPolicyNameInFilter(GlobalConstants.AUTHPOLICY_PARTLINK);
+		authPolicyPage.clickOnApplyFilterButton();
 		authPolicyPage.clickOnActionButton();
 		authPolicyPage.clickOnPolicyPublishButton();
 		authPolicyPage.clickOnPublishPolicyButton();
@@ -64,6 +69,11 @@ public class PartnerPolicyLinkingTest extends BaseClass {
 		basePage.scrollToEndPage();
 		authPolicyPage.clickOnSaveAsDraftButton();
 		authPolicyPage.clickOnGoBackButton();
+		
+		authPolicyPage.clickOnFilterButton();
+		authPolicyPage.enterPolicyGroupInFilterBox(GlobalConstants.DEFAULT_POLICYGROUP);
+		authPolicyPage.enterPolicyNameInFilter(GlobalConstants.AUTHPOLICY_PARTLINK2);
+		authPolicyPage.clickOnApplyFilterButton();
 		authPolicyPage.clickOnActionButton();
 		authPolicyPage.clickOnPolicyPublishButton();
 		authPolicyPage.clickOnPublishPolicyButton();
@@ -81,6 +91,11 @@ public class PartnerPolicyLinkingTest extends BaseClass {
 		basePage.scrollToEndPage();
 		datasharePolicyPage.clickOnSaveAsDraftButton();
 		datasharePolicyPage.clickOnGoBackButton();
+		
+		authPolicyPage.clickOnFilterButton();
+		authPolicyPage.enterPolicyGroupInFilterBox(GlobalConstants.DEFAULT_POLICYGROUP);
+		authPolicyPage.enterPolicyNameInFilter(GlobalConstants.DATAPOLICY_PARTLINK);
+		authPolicyPage.clickOnApplyFilterButton();
 		datasharePolicyPage.clickOnActionButton();
 		datasharePolicyPage.clickOnPublishButton();
 		datasharePolicyPage.clickOnPublishPolicyButton();

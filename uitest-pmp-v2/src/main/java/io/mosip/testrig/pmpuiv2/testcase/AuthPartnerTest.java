@@ -498,6 +498,7 @@ public class AuthPartnerTest extends BaseClass {
 				GlobalConstants.isEnterRedirectUriTextDisplayed);
 		oidcClientPage.clickOnCreateOidcClearForm();
 
+		basePage.refreshThePage();
 		oidcClientPage.selectPartnerIdDropdown();
 		oidcClientPage.selectPolicyNameDropdown(data);
 		oidcClientPage.enterNameOidcTextBox(GlobalConstants.OIDCNAME);

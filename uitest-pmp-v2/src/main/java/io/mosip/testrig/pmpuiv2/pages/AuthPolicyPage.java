@@ -351,7 +351,7 @@ public class AuthPolicyPage extends BasePage {
 	@FindBy(id = "block_messsage_proceed")
 	private WebElement proceedButton;
 
-	@FindBy(xpath = "//h3[text()='Clone Policy']")
+	@FindBy(id = "clone_policy_popup_title")
 	private WebElement clonePolicyTitle;
 
 	@FindBy(xpath = "//p[contains(text(), 'Select the policy group to nest the cloned policy')]")
