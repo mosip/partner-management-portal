@@ -319,7 +319,7 @@ public class NotificationPage extends BasePage {
 	}
 
 	public void enterInvalidExpiryDateInFilter(String value) {
-		enter(certExpiryDateFilterTextbox,value);
+		enter(certExpiryDateFilterTextbox, value);
 	}
 
 	public void clickOnApplyFilterButton() {
@@ -340,11 +340,11 @@ public class NotificationPage extends BasePage {
 	}
 
 	public void enterCertIssuedToInFilter(String value) {
-		enter(certIssuedToFilterTextbox,value);
+		enter(certIssuedToFilterTextbox, value);
 	}
 
 	public void enterCertIssuedByInFilter(String value) {
-		enter(certIssuedByFilterTextbox,value);
+		enter(certIssuedByFilterTextbox, value);
 	}
 
 	public void clickOnTextBoxCloseButton() {
@@ -412,11 +412,11 @@ public class NotificationPage extends BasePage {
 	}
 
 	public void enterCreationFromDateInFilter(String value) {
-		enter(creationDateFromTextbox,value);
+		enter(creationDateFromTextbox, value);
 	}
 
 	public void enterCreationToDateInFilter(String value) {
-		enter(creationDateToTextbox,value);
+		enter(creationDateToTextbox, value);
 	}
 
 	public boolean isCreationFromDateFilterLabelDisplayed() {

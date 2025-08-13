@@ -1,22 +1,24 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
+import java.time.Duration;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
-import io.mosip.testrig.pmpuiv2.utility.TestRunner;
 
 public class PartnerCertificatePage extends BasePage {
 
 	@FindBy(id = "title_back_icon")
 	private WebElement titleBackButton;
 
-	@FindBy(xpath = "//*[text()='Upload']")
+	@FindBy(id = "partner_certificate_upload_btn1")
 	private WebElement uploadButton;
 
 	@FindBy(xpath = "//*[text()='Upload Partner Certificate']")
@@ -100,7 +102,7 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(id = "certificate_upload_cancel_btn")
 	private WebElement certificateUploadCancelButton;
 
-	@FindBy(id = "partnerDomain_selector_dropdown")
+	@FindBy(id = "partnerDomain_selector_dropdown_dropdown_btn")
 	private WebElement partnerDomainSelectorDropdown;
 
 	@FindBy(id = "partnerDomain_selector_dropdown_option1")
@@ -110,7 +112,7 @@ public class PartnerCertificatePage extends BasePage {
 	private WebElement partnerDomainSelectorDropdownOptionFtm;
 
 	@FindBy(id = "partnerDomain_selector_dropdown_option3")
-	private WebElement deviceInPartnerDomainSelectorDropdown3;
+	private WebElement partnerDomainSelectorDropdownOptionDevice;
 
 	@FindBy(id = "upload_trust_certificate_submit_btn")
 	private WebElement SubmitButtonForAdmin;
@@ -126,9 +128,6 @@ public class PartnerCertificatePage extends BasePage {
 
 	@FindBy(id = "error_close_btn")
 	private WebElement errorCloseButton;
-
-	@FindBy(id = "partnerDomain_selector_dropdown_option3")
-	private WebElement deviceInPartnerDomainSelectorDropdown;
 
 	@FindBy(xpath = "//p[text()='Root CA/Intermediate CA Certificates not found.']")
 	private WebElement noRootCert;
@@ -247,9 +246,6 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(xpath = "//div[text()='Action']")
 	private WebElement actionHeader;
 
-	@FindBy(id = "rootTrustList.uploadRootCaTrust")
-	private WebElement uploadTrustCertificateButton;
-
 	@FindBy(xpath = "//h1[text()='Upload Trust Certificate']")
 	private WebElement certificateUploadPopup;
 
@@ -307,7 +303,7 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(id = "cert_id_filter")
 	private WebElement certIdFilter;
 
-	@FindBy(id = "cert_partner_domain_filter")
+	@FindBy(id = "cert_partner_domain_filter_dropdown_btn")
 	private WebElement partnerDomainFilter;
 
 	@FindBy(id = "cert_issued_to_filter")
@@ -361,7 +357,7 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(id = "root_of_trust_certificates_tab")
 	private WebElement rootCACertTab;
 
-	@FindBy(id = "intermediate_root_of_trust_certificates_tab")
+	@FindBy(xpath = "//h6[text()='Intermediate CA']")
 	private WebElement intermediateCACertTab;
 
 	@FindBy(xpath = "//p[contains(text(), 'List of Intermediate CA Certificates')]")
@@ -406,9 +402,6 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(xpath = "//h5[contains(text(), 'Please tap to select the Root CA / Intermediate CA Certificate')]")
 	private WebElement uploadCertInstructionText;
 
-	@FindBy(xpath = "//h1[contains(text(), 'Trust Certificate for AUTH is uploaded successfully!')]")
-	private WebElement uploadedSuccessfullyMessage;
-
 	@FindBy(xpath = "//img[@id='confirmation_success_icon']")
 	private WebElement successIcon;
 
@@ -423,9 +416,15 @@ public class PartnerCertificatePage extends BasePage {
 
 	@FindBy(id = "upload_trust_certificate_clear")
 	private WebElement certificateClearButton;
-	
-	@FindBy(id = "intermediateTrustList.uploadIntermediateCaTrust")
-	private WebElement intermediateUploadTrustCertificateButton;
+
+	@FindBy(id = "root_upload_trust_certificate_btn")
+	private WebElement rootUploadTrustCertificateButtonInAdmin;
+
+	@FindBy(id = "intermediate_upload_trust_certificate_btn")
+	private WebElement intermediateUploadTrustCertificateButtonInAdmin;
+
+	@FindBy(id = "upload_trust_certificate_confirmation_header")
+	private WebElement uploadedSuccessfullyMessage;
 
 	public PartnerCertificatePage(WebDriver driver) {
 		super(driver);
@@ -552,23 +551,23 @@ public class PartnerCertificatePage extends BasePage {
 		clickOnElement(partnerDomainSelectorDropdown);
 	}
 
-	public void clickOnpartnerpartnerDomainSelectorDropdownOptionAuth() {
+	public void clickOnPartnerDomainSelectorDropdownOptionAuth() {
 		clickOnElement(partnerDomainSelectorDropdownOptionAuth);
 	}
 
-	public void ClickOnDeviceInPartnerDomainSelectorDropdown() {
-		clickOnElement(deviceInPartnerDomainSelectorDropdown);
+	public void clickOnDeviceInPartnerDomainSelectorDropdown() {
+		clickOnElement(partnerDomainSelectorDropdownOptionDevice);
 	}
 
-	public void ClickonSubmitButtonForAdmin() {
+	public void clickonSubmitButtonForAdmin() {
 		clickOnElement(SubmitButtonForAdmin);
 	}
 
-	public void ClickOnGoBackButton() {
+	public void clickOnGoBackButton() {
 		clickOnElement(GoBackButton);
 	}
 
-	public void ClickOnSuccessMsgCloseButton() {
+	public void clickOnSuccessMsgCloseButton() {
 		clickOnElement(successMsgCloseButton);
 	}
 
@@ -829,11 +828,7 @@ public class PartnerCertificatePage extends BasePage {
 	}
 
 	public boolean isUploadTrustCertificateButtonDisplayed() {
-		return isElementDisplayed(uploadTrustCertificateButton);
-	}
-
-	public void clickOnUploadTrustCertificateButton() {
-		clickOnElement(uploadTrustCertificateButton);
+		return isElementDisplayed(rootUploadTrustCertificateButtonInAdmin);
 	}
 
 	public boolean isCertificateUploadPopupDisplayed() {
@@ -1205,15 +1200,23 @@ public class PartnerCertificatePage extends BasePage {
 	public void clickOnCertificateClearButton() {
 		clickOnElement(certificateClearButton);
 	}
+
 	public boolean isIntermediateUploadTrustCertificateButtonDisplayed() {
-		return isElementDisplayed(intermediateUploadTrustCertificateButton);
+		return isElementDisplayed(intermediateUploadTrustCertificateButtonInAdmin);
 	}
 
-	public void clickOnUploadIntTrustCertificateButton() {
-		clickOnElement(intermediateUploadTrustCertificateButton);
-	}
 	public void clickOnIntCACertBreadcumb() {
 		clickOnElement(intCACertBreadcumb);
 	}
+
+	public void clickOnRootUploadTrustCertificateButtonInAdmin() {
+		clickOnElement(rootUploadTrustCertificateButtonInAdmin);
+	}
+
+
+	public void clickOnIntermediateUploadTrustCertificateButtonInAdmin() {
+		clickOnElement(intermediateUploadTrustCertificateButtonInAdmin);
+	}
+
 
 }

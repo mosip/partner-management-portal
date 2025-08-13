@@ -14,10 +14,10 @@ public class ApiKeyPage extends BasePage {
 	@FindBy(id = "generate_submit_btn")
 	private WebElement submitButton;
 
-	@FindBy(id = "generate_partner_id")
+	@FindBy(id = "generate_partner_id_dropdown_btn")
 	private WebElement partnerIdDropdown;
 
-	@FindBy(id = "generate_policy_name")
+	@FindBy(id = "generate_policy_name_dropdown_btn")
 	private WebElement policyNameDropdown;
 
 	@FindBy(id = "generate_policy_name_search_input")
@@ -122,31 +122,34 @@ public class ApiKeyPage extends BasePage {
 	@FindBy(id = "filter_reset_btn")
 	private WebElement filterResetButton;
 
-	@FindBy(id = "api_key_partner_id_filter")
+	@FindBy(id = "api_key_partner_id_filter_dropdown_btn")
 	private WebElement apiKeyPartnerIdFilter;
 
 	@FindBy(id = "api_key_partner_id_filter_option1")
 	private WebElement apiKeyPartnerIdFilterOption1;
 
-	@FindBy(id = "api_key_policy_group_filter")
+	@FindBy(id = "api_key_policy_group_filter_dropdown_btn")
 	private WebElement apiKeyPolicyGroupFilter;
 
 	@FindBy(id = "api_key_policy_group_filter_option1")
 	private WebElement apiKeyPolicyGroupFilterOption1;
 
-	@FindBy(id = "api_key_policy_name_filter")
+	@FindBy(id = "api_key_policy_name_filter_dropdown_btn")
 	private WebElement apiKeyPolicyNameFilter;
 
 	@FindBy(id = "api_key_policy_name_filter_option1")
 	private WebElement apiKeyPolicyNameFilterOption1;
 
-	@FindBy(id = "api_key_name_filter")
+	@FindBy(id = "api_key_name_filter_dropdown_btn")
 	private WebElement apiKeyNameFilter;
+
+	@FindBy(id = "api_key_name_filter")
+	private WebElement apiKeyNameFilterInAdmin;
 
 	@FindBy(id = "api_key_name_filter_option1")
 	private WebElement apiKeyNameFilterOption1;
 
-	@FindBy(id = "api_key_status_filter")
+	@FindBy(id = "api_key_status_filter_dropdown_btn")
 	private WebElement apiKeyStatusFilter;
 
 	@FindBy(id = "api_key_status_filter_option2")
@@ -353,7 +356,7 @@ public class ApiKeyPage extends BasePage {
 	@FindBy(id = "status_filter_option2")
 	private WebElement deactivatedStatusInFilter;
 
-	@FindBy(id = "status_filter")
+	@FindBy(id = "status_filter_dropdown_btn")
 	private WebElement statusFilter;
 
 	@FindBy(id = "policy_group_filter")
@@ -1022,6 +1025,10 @@ public class ApiKeyPage extends BasePage {
 		enter(apiKeyNameFilter, value);
 	}
 
+	public void enterValidApiKeyNameInAdminFilter(String value) {
+		enter(apiKeyNameFilterInAdmin, value);
+	}
+
 	public void enterPartnerIdInFilter(String value) {
 		enter(partnerIdFilter, value);
 	}
@@ -1122,7 +1129,7 @@ public class ApiKeyPage extends BasePage {
 	}
 
 	public void enterInvalidDataInAdminApiKeyNameFilter(String value) {
-		enter(apiKeyNameFilter, value);
+		enter(apiKeyNameFilterInAdmin, value);
 	}
 
 	public void clickOnActivatedAdminApiKey() {

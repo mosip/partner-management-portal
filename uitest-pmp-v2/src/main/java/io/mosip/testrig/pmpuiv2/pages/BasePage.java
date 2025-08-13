@@ -31,10 +31,10 @@ public class BasePage {
 	public static String appendDate = getPreAppend() + getDateTime();
 	private static final Logger logger = Logger.getLogger(BasePage.class);
 
-	public BasePage(WebDriver driver) {
-		this.driver = driver;
-		PageFactory.initElements(driver, this);
-	}
+	 public BasePage(WebDriver driver) {
+	        this.driver = driver;
+	        PageFactory.initElements(driver, this);
+	    }
 
 	public static String getDateTime() {
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("mmHHddMMyyyy");
@@ -233,7 +233,6 @@ public class BasePage {
 		}
 	}
 
-
 	protected boolean isElementDisabled(WebElement element) {
 		LogUtil.verify("Checking is element is disabled: ", element);
 		try {
@@ -382,5 +381,12 @@ public class BasePage {
 		} catch (IOException e) {
 			logger.error("Failed to take screenshot", e);
 		}
+		
 	}
+	
+	public void scrollIntoView(WebElement element) {
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("arguments[0].scrollIntoView(true);", element);
+	}
+
 }

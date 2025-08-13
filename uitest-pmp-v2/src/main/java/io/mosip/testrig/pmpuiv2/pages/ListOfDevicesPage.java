@@ -1,6 +1,9 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -9,6 +12,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
 public class ListOfDevicesPage extends BasePage {
@@ -19,8 +23,11 @@ public class ListOfDevicesPage extends BasePage {
 	@FindBy(id = "device_list_add_device_btn")
 	private WebElement addDeviceButtonFromDeviceList;
 
-	@FindBy(id = "list_of_devices")
+	@FindBy(xpath = "//h1[text()='List of Devices']")
 	private WebElement listOfDevicesTitle;
+
+	@FindBy(xpath = "//div[@id='list_of_devices']//p")
+	private WebElement listOfDevicesText;
 
 	@FindBy(id = "sub_title_btn")
 	private WebElement listOfSbiButton;
@@ -94,10 +101,10 @@ public class ListOfDevicesPage extends BasePage {
 	@FindBy(id = "filter_btn")
 	private WebElement filterButton;
 
-	@FindBy(id = "device_list_filter_status")
+	@FindBy(id = "device_list_filter_status_dropdown_btn")
 	private WebElement statusFilter;
 
-	@FindBy(id = "device_list_filter_device_type")
+	@FindBy(id = "device_list_filter_device_type_dropdown_btn")
 	private WebElement deviceTypeFilter;
 
 	@FindBy(id = "deactivate_submit_btn")
@@ -184,6 +191,60 @@ public class ListOfDevicesPage extends BasePage {
 	@FindBy(id = "status_desc_icon")
 	private WebElement statusDescIcon;
 
+	@FindBy(id = "device_list_view_option")
+	private WebElement deviceListViewOption;
+
+	@FindBy(id = "device_list_deactivate_option")
+	private WebElement deviceListDeactivateOption;
+
+	@FindBy(xpath = "//p[@id='device_list_approve_reject_option' and contains(@class, 'text-[#A5A5A5]')]")
+	private WebElement approveRejectWithGreyedOut;
+
+	@FindBy(xpath = "//div[contains(@class, 'flex-col') and .//p[text()='AutomationDeactivating1 | AutomationDeactivating1']]")
+	private WebElement approvePopupTitle;
+
+	@FindBy(xpath = "//p[text()='Do you want to Approve or Reject the Device?']")
+	private WebElement approvePopupSubTitle;
+
+	@FindBy(xpath = "//p[text()='Please review the Device details carefully before taking appropriate action.']")
+	private WebElement approvePopupDescription;
+
+	@FindBy(id = "approve_reject_popup_close_icon")
+	private WebElement approvePopupCloseIcon;
+
+	@FindBy(id = "device_list_filter_make_dropdown_btn")
+	private WebElement deviceMakeFilter;
+
+	@FindBy(id = "device_list_filter_model_dropdown_btn")
+	private WebElement deviceModelFilter;
+
+	@FindBy(id = "device_list_filter_make_search_input")
+	private WebElement deviceMakeFilterSearchBar;
+
+	@FindBy(id = "device_list_filter_model_search_input")
+	private WebElement deviceModelFilterSearchBar;
+
+	@FindBy(xpath = "//p[text()='No Data Available.']")
+	private WebElement noDataAvailableMessage;
+
+	@FindBy(xpath = "//span[text()='Select Device ID']")
+	private WebElement deviceIdPlaceHolder;
+
+	@FindBy(xpath = "//span[text()='Select Device Type']")
+	private WebElement deviceTypePlaceHolder;
+
+	@FindBy(xpath = "//span[text()='Select Device Sub Type']")
+	private WebElement deviceSubTypePlaceHolder;
+
+	@FindBy(xpath = "//span[text()='Select Make Name']")
+	private WebElement makePlaceHolder;
+
+	@FindBy(xpath = "//span[text()='Select Model Name']")
+	private WebElement modelPlaceHolder;
+
+	@FindBy(xpath = "//span[text()='Select Status']")
+	private WebElement statusPlaceHolder;
+
 	public ListOfDevicesPage(WebDriver driver) {
 		super(driver);
 	}
@@ -212,8 +273,12 @@ public class ListOfDevicesPage extends BasePage {
 		return isElementDisabled(addDeviceButtonFromDeviceList);
 	}
 
-	public String getListOFDevicesTitle() {
-		return getTextFromLocator(listOfDevicesTitle);
+	public boolean isListOfDevicesTitleDisplayed() {
+		return isElementDisplayed(listOfDevicesTitle);
+	}
+
+	public String getListOfDevicesTitle() {
+		return getTextFromLocator(listOfDevicesText);
 	}
 
 	public boolean isDeviceDisplayed(String deviceType, String deviceSubType, String make, String model) {
@@ -233,7 +298,7 @@ public class ListOfDevicesPage extends BasePage {
 		clickOnElement(addedDeviceThreeDots);
 	}
 
-	public void clickOnDevice(String deviceType, String deviceSubType, String make, String model) {
+	public void clickOnDevice(String deviceType, String deviceSubType, String make, String model, String status) {
 		WebElement addedDevice = driver.findElement(By.xpath("//td[text()='" + deviceType + "']/..//td[text()='"
 				+ deviceSubType + "']/..//td[text()='" + make + "']/..//td[text()='" + model + "']"));
 		clickOnElement(addedDevice);
@@ -395,7 +460,6 @@ public class ListOfDevicesPage extends BasePage {
 		try {
 			dropdown(deviceTypeFilter, deviceType);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -556,6 +620,133 @@ public class ListOfDevicesPage extends BasePage {
 
 	public void clickOnStatusDescIcon() {
 		clickOnElement(statusDescIcon);
+	}
+
+	public boolean isApproveRejectOptionDisplayed() {
+		return isElementDisplayed(approveRejectButton);
+	}
+
+	public boolean isViewOptionDisplayed() {
+		return isElementDisplayed(deviceListViewOption);
+	}
+
+	public boolean isDeactivateOptionDisplayed() {
+		return isElementDisplayed(deviceListDeactivateOption);
+	}
+
+	public boolean isApproceRejectDeviceDisabled() {
+		if (isElementDisplayed(approveRejectWithGreyedOut)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public void clickOnDeactivateButton() {
+		clickOnElement(deviceListDeactivateOption);
+	}
+
+	public boolean isApproceRejectpopupDisplayed() {
+		return isElementDisplayed(approvePopupTitle);
+	}
+
+	public boolean isApprovePopupTitleDisplayed() {
+		return isElementDisplayed(approvePopupTitle);
+	}
+
+	public boolean isApprovePopupSubTitleDisplayed() {
+		return isElementDisplayed(approvePopupSubTitle);
+	}
+
+	public boolean isApprovePopupDescriptionDisplayed() {
+		return isElementDisplayed(approvePopupDescription);
+	}
+
+	public boolean isApprovePopupCloseIconDisplayed() {
+		return isElementDisplayed(approvePopupCloseIcon);
+	}
+
+	public void clickOnApprovePopupCloseIcon() {
+		clickOnElement(approvePopupCloseIcon);
+	}
+
+	public boolean isFilterButtonDisabled() {
+		return isElementDisabled(filterButton);
+	}
+
+	public boolean isResetFilterDisplayed() {
+		return isElementDisplayed(resetFilter);
+	}
+
+	public void clickOnDeviceMakeFilter() {
+		clickOnElement(deviceMakeFilter);
+	}
+
+	public void clickOnDeviceModelFilter() {
+		clickOnElement(deviceModelFilter);
+	}
+
+	public boolean isDeviceMakeFilterSearchBarDisplayed() {
+		return isElementDisplayed(deviceMakeFilterSearchBar);
+	}
+
+	public boolean isDeviceModelFilterSearchBarDisplayed() {
+		return isElementDisplayed(deviceModelFilterSearchBar);
+	}
+
+	public void enterInvalidValueInDeviceMakeFilter(String invalidMake) {
+		enter(deviceMakeFilterSearchBar, invalidMake);
+	}
+
+	public void enterInvalidValueInDeviceModelFilter(String invalidModel) {
+		enter(deviceModelFilterSearchBar, invalidModel);
+	}
+
+	public boolean isMakeDropdownNoDataAvailableDisplayed() {
+		return isElementDisplayed(noDataAvailableMessage);
+	}
+
+	public boolean isModelDropdownNoDataAvailableDisplayed() {
+		return isElementDisplayed(noDataAvailableMessage);
+	}
+
+	public boolean isDeviceIdPlaceHolderDisplayed() {
+		return isElementDisplayed(deviceIdPlaceHolder);
+	}
+
+	public boolean isDeviceTypePlaceHolderDisplayed() {
+		return isElementDisplayed(deviceTypePlaceHolder);
+	}
+
+	public boolean isDeviceSubTypePlaceHolderDisplayed() {
+		return isElementDisplayed(deviceSubTypePlaceHolder);
+	}
+
+	public boolean isMakePlaceHolderDisplayed() {
+		return isElementDisplayed(makePlaceHolder);
+	}
+
+	public boolean isModelPlaceHolderDisplayed() {
+		return isElementDisplayed(modelPlaceHolder);
+	}
+
+	public boolean isStatusPlaceHolderDisplayed() {
+		return isElementDisplayed(statusPlaceHolder);
+	}
+
+	public boolean isDeviceCreationDateSameAsBrowserDateFormat() {
+
+		WebElement dateCell = driver.findElement(By.xpath("//tr[@id='device_list_device_item1']/td[6]"));
+		String browserTime = dateCell.getText().trim();
+
+		DateTimeFormatter dateFormatter = PmpTestUtil.nonZeroPadderDateFormatter;
+		try {
+			LocalDate.parse(browserTime, dateFormatter);
+			return true;
+		} catch (DateTimeParseException e) {
+			return false;
+		}
+
 	}
 
 }
