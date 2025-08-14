@@ -17,7 +17,7 @@ RUN npm install
 COPY . ./
 RUN npm run build
 
-FROM nginx:1.28
+FROM nginx:1.29-alpine3.22-slim
 
 ARG SOURCE
 ARG COMMIT_HASH
