@@ -1245,6 +1245,7 @@
         "PMS_POL_072": "The selected policy is not in activated status",
         "PMS_POL_073": "Request status should be De-Activate",
         "PMS_POL_074": "Unable to generate a unique ID after multiple attempts. Please try again or contact administrator.",
+        "PMS_POL_075": "A policy with the same Policy ID already exists",
         "KER-PCM-006": "Root CA/Intermediate CA Certificates not found.",
         "KER-PCM-015": "Self Signed Certificate not allowed as partner.",
         "KER-PCM-003": "The certificate already exists. Please upload another certificate",
