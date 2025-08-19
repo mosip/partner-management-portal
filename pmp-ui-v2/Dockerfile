@@ -1,4 +1,4 @@
-FROM node:21.7.3-alpine as build_pmp_ui_v2
+FROM node:21.7.3-alpine as build_pmp_uiv2
 
 ENV NODE_ENV production
 
@@ -17,7 +17,7 @@ RUN npm install
 COPY . ./
 RUN npm run build
 
-FROM nginx:1.29-alpine3.22-slim
+FROM nginx:1.28
 
 ARG SOURCE
 ARG COMMIT_HASH
@@ -56,7 +56,9 @@ ENV i18n_path=${work_dir}/i18n
 WORKDIR /home/${container_user}
 
 # install packages and create user
-RUN apk add --no-cache unzip wget shadow \
+RUN apt-get update \
+    && apt-get install -y unzip wget \
+    && rm -rf /var/lib/apt/lists/* \
     && touch /var/run/nginx.pid \
     && groupadd -g ${container_user_gid} ${container_user_group} \
     && useradd -u ${container_user_uid} -g ${container_user_group} -s /bin/sh -m ${container_user} \
@@ -70,7 +72,7 @@ RUN chmod +x configure_start.sh
 COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
 
 # copy build files to nginx html directory
-COPY --from=build_pmp_ui_v2 /build  ${work_dir}
+COPY --from=build_pmp_uiv2 /build  ${work_dir}
 
 RUN echo "REACT_APP_PARTNER_MANAGER_API_BASE_URL=$REACT_APP_PARTNER_MANAGER_API_BASE_URL" >> ${work_dir}/env.env
 RUN echo "REACT_APP_POLICY_MANAGER_API_BASE_URL=$REACT_APP_POLICY_MANAGER_API_BASE_URL" >> ${work_dir}/env.env
