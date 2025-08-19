@@ -17,7 +17,7 @@ RUN npm install
 COPY . ./
 RUN npm run build
 
-FROM nginx:1.29-alpine3.22-slim
+FROM nginx:1.28
 
 ARG SOURCE
 ARG COMMIT_HASH
@@ -56,7 +56,9 @@ ENV i18n_path=${work_dir}/i18n
 WORKDIR /home/${container_user}
 
 # install packages and create user
-RUN apk add --no-cache unzip wget shadow \
+RUN apt-get update \
+    && apt-get install -y unzip wget \
+    && rm -rf /var/lib/apt/lists/* \
     && touch /var/run/nginx.pid \
     && groupadd -g ${container_user_gid} ${container_user_group} \
     && useradd -u ${container_user_uid} -g ${container_user_group} -s /bin/sh -m ${container_user} \
