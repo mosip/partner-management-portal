@@ -5,7 +5,7 @@ FROM eclipse-temurin:21-jre-alpine
 USER root
 
 RUN apk update && \
-    apk add --no-cache wget curl unzip xvfb libxi gconf chromium chromium-chromedriver
+    apk add --no-cache wget curl unzip xvfb libxi chromium chromium-chromedriver bash shadow
 
 # Install kubectl
 RUN curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" && \
