@@ -13,11 +13,11 @@ ENV PUBLIC_URL=_PUBLIC_URL_
 
 COPY package*.json ./
 RUN npm install
-#Copy the working directory
+# Copy the working directory
 COPY . ./
 RUN npm run build
 
-FROM nginx:1.28
+FROM nginx:1.29-alpine3.22-slim
 
 ARG SOURCE
 ARG COMMIT_HASH
@@ -56,12 +56,10 @@ ENV i18n_path=${work_dir}/i18n
 WORKDIR /home/${container_user}
 
 # install packages and create user
-RUN apt-get update \
-    && apt-get install -y unzip wget \
-    && rm -rf /var/lib/apt/lists/* \
+RUN apk add --no-cache unzip wget \
     && touch /var/run/nginx.pid \
-    && groupadd -g ${container_user_gid} ${container_user_group} \
-    && useradd -u ${container_user_uid} -g ${container_user_group} -s /bin/sh -m ${container_user} \
+    && addgroup -g ${container_user_gid} ${container_user_group} \
+    && adduser -D -u ${container_user_uid} -G ${container_user_group} -s /bin/sh ${container_user} \
     && mkdir -p /var/run/nginx /var/tmp/nginx ${i18n_path} \
     && chown -R ${container_user}:${container_user} /usr/share/nginx /var/run/nginx /var/tmp/nginx ${i18n_path} /var/cache/nginx /var/log/nginx /var/run/nginx.pid
 
