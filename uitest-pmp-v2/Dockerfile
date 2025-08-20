@@ -1,11 +1,11 @@
-# Start with a base image that includes Java 21
+# Start with a base image that includes Java 21 (Alpine)
 FROM eclipse-temurin:21-jre-alpine
 
 # Install additional dependencies, such as Selenium, Chrome, and kubectl
 USER root
 
-RUN apt-get update && \
-    apt-get install -y wget curl unzip xvfb libxi6 libgconf-2-4 chromium chromium-driver
+RUN apk update && \
+    apk add --no-cache wget curl unzip xvfb libxi gconf chromium chromium-chromedriver
 
 # Install kubectl
 RUN curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" && \
