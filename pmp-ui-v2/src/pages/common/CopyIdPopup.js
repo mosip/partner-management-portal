@@ -39,9 +39,9 @@ function CopyIdPopUp({ closePopUp, policyName, partnerId, id, header, alertMsg, 
     return (
         <div className={`fixed inset-0 flex items-center justify-center bg-black ${(styleSet && styleSet.outerDiv) ? styleSet.outerDiv : ''} z-50 font-inter cursor-default !ml-0`}>
             <FocusTrap focusTrapOptions={{ initialFocus: false, allowOutsideClick: true }}>
-                <div className={`bg-white md:w-[378px] w-[40%] mx-auto rounded-lg shadow-lg h-fit`}>
+                <div className={`bg-white md:w-[378px] w-[50%] mx-auto rounded-lg shadow-lg h-fit`}>
                     <header className={`flex justify-between p-[5%]`}>
-                        <div className={`flex-col w-[19rem]`}>
+                        <div className={`flex-col w-[19rem] break-all md:break-normal`}>
                             <h1 id='copy_id_popup_tile' className={`font-bold text-base text-[#333333] break-words`}>{policyName}</h1>
                             <p id='copy_id_popup_sub_title' className={`text-xs font-bold text-[#717171] ${isLoginLanguageRTL ? "text-right" : "text-left"}`}># {partnerId}</p>
                         </div>
