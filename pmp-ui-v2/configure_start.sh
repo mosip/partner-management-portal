@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 #installs the pre-requisites.
 set -e

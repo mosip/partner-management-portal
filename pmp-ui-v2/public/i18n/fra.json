@@ -1249,6 +1249,7 @@
         "PMS_POL_072": "La politique sélectionnée n'est pas en statut activé",
         "PMS_POL_073": "Le statut de la demande doit être Désactiver",
         "PMS_POL_074": "Impossible de générer un identifiant unique après plusieurs tentatives. Veuillez réessayer ou contacter l'administrateur.",
+        "PMS_POL_075": "Une politique avec le même ID de politique existe déjà",
         "KER-PCM-006": "Certificats d'autorité de certification racine/autorité de certification intermédiaire introuvables.",
         "KER-PCM-015": "Certificat auto-signé non autorisé en tant que partenaire.",
         "KER-PCM-003": "Le certificat existe déjà. Veuillez télécharger un autre certificat.",
