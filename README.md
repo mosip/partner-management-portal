@@ -9,17 +9,17 @@
     ```
 ### Install
   ```
-    $ cd deploy
+    $ cd deploy/pmp-ui-v2
     $ ./install.sh
    ```
 ### Delete
   ```
-    $ cd deploy
+    $ cd deploy/pmp-ui-v2
     $ ./delete.sh
    ```
 ### Restart
   ```
-    $ cd deploy
+    $ cd deploy/pmp-ui-v2
     $ ./restart.sh
    ```
 
