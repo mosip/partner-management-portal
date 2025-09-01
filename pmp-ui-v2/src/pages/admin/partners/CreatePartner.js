@@ -175,7 +175,7 @@ function CreatePartner() {
             try {
                 // Fetch supported languages from app config
                 const appConfig = await getAppConfig();
-                const supportedLanguages = appConfig && appConfig.oidcSupportedLanguages;
+                const supportedLanguages = appConfig && appConfig.supportedNotificationLanguages;
 
                 let languageCodes = [];
                 if (Array.isArray(supportedLanguages)) {
@@ -338,7 +338,7 @@ function CreatePartner() {
                                                         fieldName='langCode'
                                                         dropdownDataList={languageDropdownData}
                                                         onDropDownChangeEvent={onChangeNotificationLanguage}
-                                                        fieldNameKey='createPartner.langCode*'
+                                                        fieldNameKey='createPartner.notificationLanguage*'
                                                         placeHolderKey='createPartner.selectLanguage'
                                                         selectedDropdownValue={notificationLanguage}
                                                         searchKey='commons.search'

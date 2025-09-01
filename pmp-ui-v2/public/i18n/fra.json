@@ -313,7 +313,7 @@
         "contactNumber": "Numéro de contact",
         "emailId": "Adresse e-mail",
         "username": "Nom d’utilisateur",
-        "langCode": "Code de langue",
+        "notificationLanguage": "Langue des notifications",
         "selectPolicyGroup": "Sélectionner un groupe de politiques",
         "enterAddress": "Saisir l’adresse",
         "enterOrganizationName": "Saisir le nom de l’organisation",

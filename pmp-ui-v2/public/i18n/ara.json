@@ -313,7 +313,7 @@
         "contactNumber": "رقم الاتصال",
         "emailId": "البريد الإلكتروني",
         "username": "اسم المستخدم",
-        "langCode": "رمز اللغة",
+        "notificationLanguage": "لغة الإشعارات",
         "selectPolicyGroup": "اختر مجموعة السياسات",
         "enterAddress": "أدخل العنوان",
         "enterOrganizationName": "أدخل اسم المؤسسة",

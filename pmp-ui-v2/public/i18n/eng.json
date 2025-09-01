@@ -314,7 +314,7 @@
         "contactNumber": "Contact Number",
         "emailId": "Email ID",
         "username": "Username",
-        "langCode": "Language Code",
+        "notificationLanguage": "Notification Language",
         "selectPolicyGroup": "Select Policy Group",
         "enterAddress": "Enter Address",
         "enterOrganizationName": "Enter Organization Name",
