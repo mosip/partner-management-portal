@@ -129,7 +129,7 @@ function CreatePartner() {
                 setEmail(value);
                 validateInputRegex(value, setInvalidEmailError, t);
                 break;
-            case 'partnerId':
+            case 'username':
                 setUsername(value);
                 validateInputRegex(value, setInvalidUsernameError, t);
                 break;
@@ -322,9 +322,9 @@ function CreatePartner() {
                                             <div className="flex flex-row justify-between space-x-4 my-[1%] max-[450px]:flex-col">
                                                 <div className="flex flex-col w-[48%] max-[450px]:w-full">
                                                     <TextInputComponent
-                                                        fieldName='partnerId'
-                                                        fieldNameKey='createPartner.partnerId*'
-                                                        placeHolderKey='createPartner.enterPartnerId'
+                                                        fieldName='username'
+                                                        fieldNameKey='createPartner.username*'
+                                                        placeHolderKey='createPartner.enterUsername'
                                                         textBoxValue={username}
                                                         onTextChange={handleTextChange}
                                                         styleSet={textInputStyles}
