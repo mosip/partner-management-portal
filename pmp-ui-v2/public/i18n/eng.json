@@ -92,7 +92,22 @@
         "apiKeyExpiryCountDesc1": "{{expiringApiKeyCount}} API Keys are expiring soon",
         "apiKeyExpiryCountDesc2": "{{expiringApiKeyCount}} API Key is expiring soon",
         "sbiExpiryCountDesc1": "{{expiringSbiCount}} SBIs are expiring soon",
-        "sbiExpiryCountDesc2": "{{expiringSbiCount}} SBI is expiring soon"
+        "sbiExpiryCountDesc2": "{{expiringSbiCount}} SBI is expiring soon",
+        "mispPartnerServices": "MISP Partner Services"
+    },
+    "mispPartnerServicesList": {
+        "partnerId": "Partner ID",
+        "policyGroup": "Policy Group",
+        "policyName": "Policy Name",
+        "mispLicenseKey": "MISP License Key",
+        "licenseKeyCreationDate": "License Key Creation Date",
+        "status": "Status",
+        "action": "Action",
+        "listOfMispPartnerKeys": "List of MISP Partner Keys",
+        "createMispPartner": "Create MISP Partner",
+        "errorInMispPartnerServicesList": "Error occurred while fetching MISP Partner Services list",
+        "generateMispLicenseKey": "Generate MISP License Key",
+        "mispPartnerServices": "MISP Partner Services"
     },
     "header": {
         "userProfile": "User Profile",
@@ -286,6 +301,49 @@
         "apiKey": "API Key",
         "apiKeyLable": "API Key Label",
         "generateApiKeyBtn": "Generate API Key"
+    },
+    "createPartner": {
+        "createPartner": "Create Partner",
+        "listOfPartners": "List of Partners",
+        "mandatoryFieldsMsg1": "All fields marked with",
+        "mandatoryFieldsMsg2": "are mandatory.",
+        "partnerType": "Partner Type",
+        "policyGroup": "Policy Group",
+        "address": "Address",
+        "organizationName": "Organization Name",
+        "contactNumber": "Contact Number",
+        "emailId": "Email ID",
+        "partnerId": "Partner ID",
+        "langCode": "Language Code",
+        "selectPolicyGroup": "Select Policy Group",
+        "enterAddress": "Enter Address",
+        "enterOrganizationName": "Enter Organization Name",
+        "enterContactNumber": "Enter Contact Number",
+        "enterEmailId": "Enter Email ID",
+        "enterPartnerId": "Enter Partner ID",
+        "selectLanguage": "Select Language",
+        "clearForm": "Clear Form",
+        "cancel": "Cancel",
+        "submit": "Submit",
+        "addressRequired": "Address is required",
+        "organizationNameRequired": "Organization Name is required",
+        "contactNumberRequired": "Contact Number is required",
+        "contactNumberInvalid": "Contact Number should contain only digits, spaces, hyphens, plus signs, and parentheses",
+        "emailIdRequired": "Email ID is required",
+        "emailIdInvalid": "Please enter a valid email address",
+        "partnerIdRequired": "Partner ID is required",
+        "partnerIdInvalid": "Partner ID should contain only letters, numbers, and underscores",
+        "errorInCreatingPartner": "Error occurred while creating partner",
+        "partnerSuccessHeader": "Partner Created Successfully!",
+        "partnerSuccessMsg": "MISP Partner has been successfully created and is pending admin approval."
+    },
+    "languages": {
+        "english": "English",
+        "hindi": "Hindi",
+        "arabic": "Arabic",
+        "french": "French",
+        "tamil": "Tamil",
+        "kannada": "Kannada"
     },
     "createOidcClient": {
         "createOidcClient": "Create OIDC Client",
@@ -695,7 +753,8 @@
         "searchOrganisation": "Search Organisation",
         "searchEmailAddress": "Search Full Email Address",
         "searchPolicyGroup": "Search Policy Group",
-        "emailAddressToolTip": "Note: This filter performs an exact match. Please enter the full email address (e.g., user@example.com) to find results."
+        "emailAddressToolTip": "Note: This filter performs an exact match. Please enter the full email address (e.g., user@example.com) to find results.",
+        "createPartner": "Create Partner"
     },
     "viewPartnerDetails": {
         "viewPartnerDetails": "View Partner Details",

@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { SideNavMenuItem } from './SideNavMenuItem';
 import { useTranslation } from 'react-i18next';
 import { getUserProfile } from '../services/UserProfileService';
-import { isLangRTL } from '../utils/AppUtils';
+import { isLangRTL, moveToMispPartnerServices } from '../utils/AppUtils';
 import PropTypes from 'prop-types';
 
 function SideNav({ open, policyRequiredPartnerTypes }) {
@@ -41,10 +41,12 @@ function SideNav({ open, policyRequiredPartnerTypes }) {
             setActiveIcon('ftmChipProviderServices');
         } else if (selectedPath.includes('admin/certificates')) {
             setActiveIcon("rootOfTrustCertificate");
-        } else if (selectedPath.includes('partners-list') || selectedPath.includes('view-partner-details')) {
+        } else if (selectedPath.includes('partners-list') || selectedPath.includes('view-partner-details') || selectedPath.includes('create-partner')) {
             setActiveIcon("partner");
         } else if (selectedPath.includes('policy-requests-list') || selectedPath.includes('view-policy-request')) {
             setActiveIcon("partnerPolicyMapping");
+        } else if (selectedPath.includes('misp-partner-services')) {
+            setActiveIcon("mispPartnerServices");
         }
         else {
             setActiveIcon("home");
@@ -101,7 +103,7 @@ function SideNav({ open, policyRequiredPartnerTypes }) {
         navigate('/partnermanagement/admin/certificates/root-ca-certificate-list');
     };
     const showPartner = () => {
-        navigate('/partnermanagement/admin/partners-list');
+        navigate('/partnermanagement/admin/partners/partners-list');
     };
     const showAdminPolicies = () => {
         navigate('/partnermanagement/policy-manager/policy-group-list');
@@ -184,6 +186,10 @@ function SideNav({ open, policyRequiredPartnerTypes }) {
                             
                             <button id='side_nav_authenticationServices_icon' className="duration-700 cursor-pointer" onClick={() => showAdminAuthenticationServices()}>
                                 <SideNavMenuItem title={t('dashboard.authenticationServices')} id='authenticationServices' isExpanded={open} activeIcon={activeIcon} />
+                            </button>
+
+                            <button id='side_nav_mispServices_icon' className="duration-700 cursor-pointer" onClick={() => moveToMispPartnerServices(navigate)}>
+                                <SideNavMenuItem title={t('dashboard.mispPartnerServices')} id='mispPartnerServices' isExpanded={open} activeIcon={activeIcon} />
                             </button>
 
                         </>
