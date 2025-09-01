@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { useNavigate, useBlocker } from "react-router-dom";
+import { useNavigate, useBlocker, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../../services/UserProfileService";
 import { isLangRTL, getPartnerManagerUrl, getPolicyManagerUrl, handleServiceErrors, moveToPolicies, getPartnerTypeDescription, createDropdownData, createRequest, validateInputRegex } from '../../../utils/AppUtils';
@@ -14,6 +14,7 @@ import Confirmation from "../../common/Confirmation";
 
 function RequestPolicy() {
     const navigate = useNavigate();
+    const location = useLocation();
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [dataLoaded, setDataLoaded] = useState(true);
@@ -78,7 +79,13 @@ function RequestPolicy() {
         const fetchData = async () => {
             try {
                 setDataLoaded(false);
-                const response = await HttpService.get(getPartnerManagerUrl('/partners/v3?status=approved&policyGroupAvailable=true', process.env.NODE_ENV));
+                // Check if URL contains 'admin'
+                const isAdmin = location.pathname.includes('admin');
+                let apiUrl = '/partners/v3?status=approved&policyGroupAvailable=true';
+                if (isAdmin) {
+                    apiUrl += '&partnerType=MISP_Partner';
+                }
+                const response = await HttpService.get(getPartnerManagerUrl(apiUrl, process.env.NODE_ENV));
                 if (response) {
                     const responseData = response.data;
                     if (responseData && responseData.response) {
@@ -162,8 +169,13 @@ function RequestPolicy() {
         setInputError("");
     };
 
+    // Determine backUrl and cancelUrl based on admin path
+    const isAdminPath = location.pathname.includes('admin');
+    const backUrl = isAdminPath ? '/partnermanagement/admin/policy-requests-list' : '/partnermanagement/policies/policies-list';
+    const cancelUrl = backUrl;
+
     const clickOnCancel = () => {
-        moveToPolicies(navigate);
+        navigate(cancelUrl);
     }
     const clickOnSubmit = async () => {
         setIsSubmitClicked(true);
@@ -182,7 +194,7 @@ function RequestPolicy() {
                     const resData = responseData.response;
                     const requiredData = {
                         title: "requestPolicy.requestPolicy",
-                        backUrl: "/partnermanagement/policies/policies-list",
+                        backUrl: backUrl,
                         header: "requestPolicy.policySuccessHeader",
                         description: "requestPolicy.policySuccessMsg",
                         subNavigation: "requestPolicy.policies",
@@ -252,7 +264,7 @@ function RequestPolicy() {
                         <ErrorMessage id='request_policy_error_msg' errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
                     <div className="flex-col mt-5">
-                        <Title title='requestPolicy.requestPolicy' subTitle='requestPolicy.policies' backLink='/partnermanagement/policies/policies-list' />
+                        <Title title='requestPolicy.requestPolicy' subTitle='requestPolicy.policies' backLink={backUrl} />
                         {!requestPolicySuccess ?
                             <div className="w-[100%] bg-snow-white mt-[1%] rounded-lg shadow-md">
                                 <div className="p-7">

@@ -209,6 +209,10 @@ function PolicyRequestsList() {
     }
   };
 
+  const requestPolicy = () => {
+    navigate('/partnermanagement/admin/request-policy');
+  };
+
   const styles = {
     loadingDiv: "!py-[20%]"
   }
@@ -224,6 +228,12 @@ function PolicyRequestsList() {
           <div className="flex-col mt-5">
             <div className="flex justify-between mb-3">
               <Title title='partnerPolicyMappingRequestList.partnerPolicyMappingRequestTitle' backLink='/partnermanagement' />
+              {isFilterApplied || policyRequestsData.length > 0 ?
+                <button onClick={requestPolicy} id='request_policy_btn' type="button" className="h-10 text-sm font-semibold px-7 text-white bg-tory-blue rounded-md max-330:h-fit">
+                    {t('policies.requestPolicyBtn')}
+                </button>
+                : null
+              }
             </div>
             <div className="flex-col justify-center ml-3 h-full">
               {!isFilterApplied && policyRequestsData.length === 0 ? (
@@ -246,7 +256,13 @@ function PolicyRequestsList() {
                       </button>
                     </div>
                   </div>
-                  <EmptyList tableHeaders={tableHeaders} showCustomButton={false} />
+                  <EmptyList
+                    tableHeaders={tableHeaders}
+                    showCustomButton={!isApplyFilterClicked}
+                    customButtonName='policies.requestPolicyBtn'
+                    buttonId='request_policy_btn'
+                    onClickButton={requestPolicy}
+                  />
                 </div>
               ) : (
                 <>

@@ -255,6 +255,10 @@ function AppRoutes() {
           element: <GuardedRoute><MainLayout><ViewPolicyRequestDetails /></MainLayout></GuardedRoute>
         },
         {
+          path: 'admin/request-policy',
+          element: <GuardedRoute><MainLayout><RequestPolicy /></MainLayout></GuardedRoute>
+        },
+        {
           path: 'admin/authentication-services/oidc-clients-list',
           element: <GuardedRoute><MainLayout><AdminOidcClientsList /></MainLayout></GuardedRoute>
         },
