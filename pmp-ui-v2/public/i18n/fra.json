@@ -267,7 +267,10 @@
         "policySuccessHeader": "Politique soumise avec succès !",
         "policySuccessMsg": "Le processus de demande de politique a été soumis avec succès. L'approbation est en attente auprès de l'administrateur.",
         "info": "Seuls les ID de partenaire dont le certificat de partenaire est téléchargé sont disponibles dans la liste déroulante. Si vous ne trouvez pas votre identifiant de partenaire, veuillez d'abord télécharger le certificat de partenaire",
-        "commentTooLong": "Les commentaires ne doivent pas contenir plus de 500 caractères."
+        "mispPartnerInfo": "Seuls les identifiants partenaires MISP dont le certificat est téléchargé sont disponibles dans la liste déroulante. Si vous ne trouvez pas votre identifiant partenaire, veuillez d'abord télécharger le certificat.",
+        "commentTooLong": "Les commentaires ne doivent pas contenir plus de 500 caractères.",
+        "policyGroupNotAvailable": "Aucun groupe de stratégies n'est associé à votre ID de partenaire.",
+        "guidenceForMispPartner": "Remarque : Si vous êtes partenaire MISP, les champs Groupe de politiques et Nom de la politique sont facultatifs. Nous vous recommandons néanmoins de sélectionner un nom de politique pour garantir la cohérence et la clarté de la gestion des politiques."
     },
     "authenticationServices": {
         "authenticationServices": "Services d'authentification",

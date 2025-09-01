@@ -83,7 +83,7 @@ function RequestPolicy() {
                 const isAdmin = location.pathname.includes('admin');
                 let apiUrl = '/partners/v3?status=approved&policyGroupAvailable=true';
                 if (isAdmin) {
-                    apiUrl += '&partnerType=MISP_Partner';
+                    apiUrl = '/partners/v3?status=approved&partnerType=MISP_Partner';
                 }
                 const response = await HttpService.get(getPartnerManagerUrl(apiUrl, process.env.NODE_ENV));
                 if (response) {
@@ -114,10 +114,17 @@ function RequestPolicy() {
         setPolicyName("");
         // Find the selected partner data
         const selectedPartner = partnerData.find(item => item.partnerId === selectedValue);
+        console.log("Selected Partner Data: ", selectedPartner);
         if (selectedPartner) {
             setPartnerType(getPartnerTypeDescription(selectedPartner.partnerType, t));
-            setPolicyGroupName(selectedPartner.policyGroupName);
-            await getListofPolicies(selectedPartner.policyGroupName);
+            if (selectedPartner.partnerType === 'MISP_Partner' && isAdminPath) {
+                setPolicyGroupName(selectedPartner.policyGroupName || t('requestPolicy.policyGroupNotAvailable'));
+            } else {
+                setPolicyGroupName(selectedPartner.policyGroupName);
+            }
+            if (selectedPartner.policyGroupName) {
+                await getListofPolicies(selectedPartner.policyGroupName);
+            }
         }
     };
 
@@ -273,24 +280,40 @@ function RequestPolicy() {
                                         <div className="flex flex-col w-full">
                                             <div className="flex flex-row justify-between space-x-4 my-[1%] max-[450px]:flex-col">
                                                 <div className="flex flex-col w-[48%] max-[450px]:w-full">
-                                                    <DropdownComponent
-                                                        fieldName='partnerId'
-                                                        dropdownDataList={partnerIdDropdownData}
-                                                        onDropDownChangeEvent={onChangePartnerId}
-                                                        fieldNameKey='requestPolicy.partnerId*'
-                                                        placeHolderKey='requestPolicy.partnerIdHelpText'
-                                                        selectedDropdownValue={partnerId}
-                                                        styleSet={styles}
-                                                        addInfoIcon
-                                                        infoKey='requestPolicy.info'
-                                                        id='request_policy_partner_id'>
-                                                    </DropdownComponent>
+                                                    {isAdminPath ?
+                                                        <DropdownWithSearchComponent
+                                                            fieldName='partnerId'
+                                                            dropdownDataList={partnerIdDropdownData}
+                                                            onDropDownChangeEvent={onChangePartnerId}
+                                                            fieldNameKey='requestPolicy.partnerId*'
+                                                            placeHolderKey='requestPolicy.partnerIdHelpText'
+                                                            selectedDropdownValue={partnerId}
+                                                            searchKey='commons.search'
+                                                            styleSet={styleForSearch}
+                                                            addInfoIcon
+                                                            infoKey='requestPolicy.mispPartnerInfo'
+                                                            id='request_policy_partner_id'>
+                                                        </DropdownWithSearchComponent>
+                                                    :
+                                                        <DropdownComponent
+                                                            fieldName='partnerId'
+                                                            dropdownDataList={partnerIdDropdownData}
+                                                            onDropDownChangeEvent={onChangePartnerId}
+                                                            fieldNameKey='requestPolicy.partnerId*'
+                                                            placeHolderKey='requestPolicy.partnerIdHelpText'
+                                                            selectedDropdownValue={partnerId}
+                                                            styleSet={styles}
+                                                            addInfoIcon
+                                                            infoKey='requestPolicy.info'
+                                                            id='request_policy_partner_id'>
+                                                        </DropdownComponent>
+                                                    }
                                                 </div>
                                                 <div className="flex flex-col w-[48%] max-[450px]:w-full">
                                                     <label id='request_policy_partner_type_label' className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('requestPolicy.partnerType')}<span className="text-crimson-red">*</span></label>
                                                     <button id='request_policy_partner_type' disabled className="flex items-center justify-between w-full h-auto px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-dark-blue bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
                                                 overflow-x-auto whitespace-normal no-scrollbar" type="button">
-                                                        <span className={`w-full break-words ${partnerType ? 'text-dark-blue' : 'text-gray-400'} text-wrap text-start`}>{partnerType || t('commons.partnersHelpText')}</span>
+                                                        <span className={`w-full break-words ${(partnerType || isAdminPath) ? 'text-dark-blue' : 'text-gray-400'} text-wrap text-start`}>{isAdminPath ? t('partnerTypes.mispPartner') : partnerType || t('commons.partnersHelpText')}</span>
                                                         <svg className={`w-3 h-2 ml-3 transform 'rotate-0' text-gray-500 text-base`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
                                                         </svg>
@@ -299,7 +322,9 @@ function RequestPolicy() {
                                             </div>
                                             <div className="flex flex-row justify-between space-x-4 max-[450px]:flex-col">
                                                 <div className="flex flex-col w-[48%] max-[450px]:w-full">
-                                                    <label id='request_policy_policy_group_label' className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('requestPolicy.policyGroup')}<span className="text-crimson-red">*</span></label>
+                                                    <label id='request_policy_policy_group_label' className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('requestPolicy.policyGroup')}
+                                                        {!isAdminPath && <span className="text-crimson-red">*</span>}
+                                                    </label>
                                                     <button id='request_policy_policy_group' disabled className="flex items-center justify-between w-full h-auto px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-dark-blue bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
                                                 overflow-x-auto whitespace-normal no-scrollbar" type="button">
                                                         <span className={`w-full break-words ${partnerType ? 'text-dark-blue' : 'text-gray-400'} text-wrap text-start`}>{policyGroupName || t('commons.partnersHelpText')}</span>
@@ -313,7 +338,7 @@ function RequestPolicy() {
                                                         fieldName='policyName'
                                                         dropdownDataList={policiesDropdownData}
                                                         onDropDownChangeEvent={onChangePolicyName}
-                                                        fieldNameKey='requestPolicy.policyName*'
+                                                        fieldNameKey={isAdminPath ? 'requestPolicy.policyName' : 'requestPolicy.policyName*'}
                                                         placeHolderKey='requestPolicy.selectPolicyName'
                                                         selectedDropdownValue={policyName}
                                                         searchKey='commons.search'
@@ -322,6 +347,13 @@ function RequestPolicy() {
                                                     </DropdownWithSearchComponent>
                                                 </div>
                                             </div>
+                                            {isAdminPath && (
+                                                <div className="flex items-center justify-center my-4">
+                                                    <div className="p-2 bg-[#FFF7E5] border-2 border-[#EDDCAF] rounded-md w-full">
+                                                        <p id='request_policy_guidence' className="text-sm font-medium text-[#8B6105]">{t('requestPolicy.guidenceForMispPartner')}</p>
+                                                    </div>
+                                                </div>
+                                            )}
                                             <div className="flex my-[1%]">
                                                 <div className="flex flex-col w-full">
                                                     <label id='request_policy_comment_label' className={`block text-dark-blue text-sm font-semibold mb-1  ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
