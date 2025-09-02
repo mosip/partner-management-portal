@@ -91,7 +91,8 @@
         "apiKeyExpiryCountDesc2": "{{expiringApiKeyCount}} clé API va bientôt expirer",
         "sbiExpiryCountDesc1": "{{expiringSbiCount}} SBI vont bientôt expirer",
         "sbiExpiryCountDesc2": "{{expiringSbiCount}} SBI va bientôt expirer",
-        "mispPartnerServices": "Services partenaires MISP"
+        "mispPartnerServices": "Services partenaires MISP",
+        "mispPartnerServicesDesc": "Services Partenaire MISP"
     },
     "mispPartnerServicesList": {
         "partnerId": "ID partenaire",

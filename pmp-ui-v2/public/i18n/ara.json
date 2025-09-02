@@ -91,7 +91,8 @@
         "apiKeyExpiryCountDesc2": "{{expiringApiKeyCount}} مفاتيح API ستنتهي قريبًا",
         "sbiExpiryCountDesc1": "{{expiringSbiCount}} من شهادات SBI ستنتهي صلاحيتها قريبًا",
         "sbiExpiryCountDesc2": "{{expiringSbiCount}} شهادة SBI ستنتهي صلاحيتها قريبًا",
-        "mispPartnerServices": "خدمات شريك MISP"
+        "mispPartnerServices": "خدمات شريك MISP",
+        "mispPartnerServicesDesc": "خدمات شريك MISP"
     },
     "mispPartnerServicesList": {
         "partnerId": "معرف الشريك",

@@ -93,7 +93,8 @@
         "apiKeyExpiryCountDesc2": "{{expiringApiKeyCount}} API Key is expiring soon",
         "sbiExpiryCountDesc1": "{{expiringSbiCount}} SBIs are expiring soon",
         "sbiExpiryCountDesc2": "{{expiringSbiCount}} SBI is expiring soon",
-        "mispPartnerServices": "MISP Partner Services"
+        "mispPartnerServices": "MISP Partner Services",
+        "mispPartnerServicesDesc": "MISP Partner Services"
     },
     "mispPartnerServicesList": {
         "partnerId": "Partner ID",
@@ -335,7 +336,8 @@
         "partnerIdInvalid": "Partner ID should contain only letters, numbers, and underscores",
         "errorInCreatingPartner": "Error occurred while creating partner",
         "partnerSuccessHeader": "Partner Created Successfully!",
-        "partnerSuccessMsg": "MISP Partner has been successfully created and is pending admin approval."
+        "partnerSuccessMsg": "MISP Partner has been successfully created.",
+        "uploadCertificate": "Upload Certificate"
     },
     "languages": {
         "english": "English",
