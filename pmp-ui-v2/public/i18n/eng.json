@@ -268,7 +268,10 @@
         "policySuccessHeader": "Policy Submitted Successfully!",
         "policySuccessMsg": "Policy request process has been successfully submitted. Approval is pending with admin.",
         "info": "Only those partner IDs whose partner certificate is uploaded is available in the dropdown. If you don't find your partner ID, please upload partner certificate first",
-        "commentTooLong": "Comments should not allow more than 500 characters."
+        "mispPartnerInfo": "Only those MISP partner IDs whose partner certificate is uploaded is available in the dropdown. If you don't find your partner ID, please upload partner certificate first",
+        "commentTooLong": "Comments should not allow more than 500 characters.",
+        "policyGroupNotAvailable": "No policy group is mapped to your partner ID.",
+        "guidenceForMispPartner": "Note: If you are a MISP Partner, the Policy Group and Policy Name fields are optional. We still recommend selecting a Policy Name to help maintain consistency and clarity in policy management."
     },
     "authenticationServices": {
         "authenticationServices": "Authentication Services",
