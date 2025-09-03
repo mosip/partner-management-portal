@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { getUserProfile } from '../../services/UserProfileService.js';
 import { useTranslation } from "react-i18next";
-import { isLangRTL, onPressEnterKey, getPartnerManagerUrl, createRequest, handleServiceErrors, moveToOidcClientsList } from '../../utils/AppUtils.js';
+import { isLangRTL, onPressEnterKey, getPartnerManagerUrl, createRequest, handleServiceErrors, moveToOidcClientsList, moveToMispPartnerServices } from '../../utils/AppUtils.js';
 import { HttpService } from '../../services/HttpService.js';
 import ErrorMessage from '../common/ErrorMessage.js';
 import LoadingIcon from "../common/LoadingIcon.js";
@@ -18,6 +18,7 @@ import ftmServicesIcon from "../../svg/ftm_services_icon.svg";
 import partner_admin_icon from '../../svg/partner_admin_icon.svg';
 import admin_policies_icon from '../../svg/admin_policies_icon.svg';
 import partner_policy_mapping_icon from '../../svg/partner_policy_mapping_icon.svg';
+import adminMispPartnerServicesIcon from '../../svg/admin_misp_partner_services_icon.svg';
 import ConsentPopup from './ConsentPopup.js';
 import { getAppConfig } from '../../services/ConfigService.js';
 import MissingAttributesPopup from './MissingAttributesPopup.js';
@@ -519,7 +520,7 @@ function Dashboard() {
   }
 
   const partnersList = () => {
-    navigate('/partnermanagement/admin/partners-list')
+    navigate('/partnermanagement/admin/partners/partners-list')
   }
 
   const policiesInAdmin = () => {
@@ -867,10 +868,42 @@ function Dashboard() {
                       <p id='dashboard_admin_authentication_services_card_description' className="mb-3 text-xs font-normal text-gray-400">
                         {t('dashboard.adminAuthenticationServicesDesc')}
                       </p>
-                    </div>
                   </div>
-                </>
-              )}
+                </div>
+
+                <div
+                  role='button'
+                  id='misp_partner_services_card'
+                  onClick={() => moveToMispPartnerServices(navigate)}
+                  className="w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer text-center rounded-xl"
+                  tabIndex="0"
+                  onKeyDown={(e) => onPressEnterKey(e, () => moveToMispPartnerServices(navigate))}
+                >
+                  <div className="flex justify-center mb-5">
+                    <img
+                      id='admin_misp_partner_services_icon'
+                      src={adminMispPartnerServicesIcon}
+                      alt="Admin MISP Partner Services Icon"
+                      className="w-8 h-8"
+                    />
+                  </div>
+                  <div>
+                    <h5
+                      id='admin_misp_partner_services_card_header'
+                      className="mb-2 text-sm font-semibold tracking-tight text-gray-600"
+                    >
+                      {t('dashboard.mispPartnerServices')}
+                    </h5>
+                    <p
+                      id='admin_misp_partner_services_card_description'
+                      className="mb-3 text-xs font-normal text-gray-400"
+                    >
+                      {t('dashboard.mispPartnerServicesDesc')}
+                    </p>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
           {showPopup && (
             <SelectPolicyPopup />

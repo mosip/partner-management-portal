@@ -152,7 +152,7 @@ function PartnersList() {
 
   const viewPartnerDetails = (selectedPartnerData) => {
     localStorage.setItem('selectedPartnerId', selectedPartnerData.partnerId);
-    navigate('/partnermanagement/admin/view-partner-details')
+    navigate('/partnermanagement/admin/partners/view-partner-details')
   };
 
   const cancelErrorMsg = () => {
@@ -216,6 +216,10 @@ function PartnersList() {
     }
   };
 
+  const createPartner = () => {
+    navigate('/partnermanagement/admin/partners/create-partner');
+  };
+
   const styles = {
     loadingDiv: "!py-[20%]"
   }
@@ -231,6 +235,12 @@ function PartnersList() {
           <div className="flex-col mt-5">
             <div className="flex justify-between mb-3">
               <Title title="partnerList.partnerTitle" backLink="/partnermanagement" styleSet={style} />
+              {partnersData.length > 0 || isFilterApplied ?
+                <button id='create_partner_btn' onClick={() => createPartner()} type="button" className={`h-10 text-sm font-semibold text-white px-7 rounded-md bg-tory-blue`}>
+                  {t('partnerList.createPartner')}
+                </button>
+                : null
+              }
             </div>
             <div className="flex-col justify-center ml-3 h-full">
               {!isFilterApplied && partnersData.length === 0 ? (
@@ -253,7 +263,13 @@ function PartnersList() {
                       </button>
                     </div>
                   </div>
-                  <EmptyList tableHeaders={tableHeaders} showCustomButton={false} />
+                  <EmptyList
+                    tableHeaders={tableHeaders}
+                    showCustomButton={true}
+                    customButtonName='partnerList.createMispPartner'
+                    buttonId='create_partner_empty_btn'
+                    onClickButton={createPartner}
+                    disableBtn={false} />
                 </div>
               ) : (
                 <>

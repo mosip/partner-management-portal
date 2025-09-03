@@ -90,7 +90,23 @@
         "apiKeyExpiryCountDesc1": "{{expiringApiKeyCount}} clés API vont bientôt expirer",
         "apiKeyExpiryCountDesc2": "{{expiringApiKeyCount}} clé API va bientôt expirer",
         "sbiExpiryCountDesc1": "{{expiringSbiCount}} SBI vont bientôt expirer",
-        "sbiExpiryCountDesc2": "{{expiringSbiCount}} SBI va bientôt expirer"
+        "sbiExpiryCountDesc2": "{{expiringSbiCount}} SBI va bientôt expirer",
+        "mispPartnerServices": "Services partenaires MISP",
+        "mispPartnerServicesDesc": "Services Partenaire MISP"
+    },
+    "mispPartnerServicesList": {
+        "partnerId": "ID partenaire",
+        "policyGroup": "Groupe de politiques",
+        "policyName": "Nom de la politique",
+        "mispLicenseKey": "Clé de licence MISP",
+        "licenseKeyCreationDate": "Date de création de la clé de licence",
+        "status": "Statut",
+        "action": "Action",
+        "listOfMispPartnerKeys": "Liste des clés partenaires MISP",
+        "createMispPartner": "Créer un partenaire MISP",
+        "errorInMispPartnerServicesList": "Une erreur s'est produite lors de la récupération de la liste des services partenaires MISP",
+        "generateMispLicenseKey": "Générer une clé de licence MISP",
+        "mispPartnerServices": "Services partenaires MISP"
     },
     "header": {
         "userProfile": "Profil de l'utilisateur",
@@ -288,6 +304,49 @@
         "apiKey": "clé API",
         "apiKeyLable": "Étiquette de clé API",
         "generateApiKeyBtn": "Générer une clé API"
+    },
+    "createPartner": {
+        "createPartner": "Créer un partenaire",
+        "listOfPartners": "Liste des partenaires",
+        "mandatoryFieldsMsg1": "Tous les champs marqués avec",
+        "mandatoryFieldsMsg2": "sont obligatoires.",
+        "partnerType": "Type de partenaire",
+        "policyGroup": "Groupe de politiques",
+        "address": "Adresse",
+        "organizationName": "Nom de l’organisation",
+        "contactNumber": "Numéro de contact",
+        "emailId": "Adresse e-mail",
+        "username": "Nom d’utilisateur",
+        "notificationLanguage": "Langue des notifications",
+        "selectPolicyGroup": "Sélectionner un groupe de politiques",
+        "enterAddress": "Saisir l’adresse",
+        "enterOrganizationName": "Saisir le nom de l’organisation",
+        "enterContactNumber": "Saisir le numéro de contact",
+        "enterEmailId": "Saisir l’adresse e-mail",
+        "enterUsername": "Entrez le nom d’utilisateur",
+        "selectLanguage": "Sélectionner la langue",
+        "clearForm": "Effacer le formulaire",
+        "cancel": "Annuler",
+        "submit": "Soumettre",
+        "addressRequired": "L’adresse est obligatoire",
+        "organizationNameRequired": "Le nom de l’organisation est obligatoire",
+        "contactNumberRequired": "Le numéro de contact est obligatoire",
+        "contactNumberInvalid": "Le numéro de contact ne doit contenir que des chiffres, espaces, traits d’union, signes plus et parenthèses",
+        "emailIdRequired": "L’adresse e-mail est obligatoire",
+        "emailIdInvalid": "Veuillez saisir une adresse e-mail valide",
+        "partnerIdRequired": "L’ID partenaire est obligatoire",
+        "partnerIdInvalid": "L’ID partenaire ne doit contenir que des lettres, chiffres et underscores",
+        "errorInCreatingPartner": "Une erreur est survenue lors de la création du partenaire",
+        "partnerSuccessHeader": "Partenaire créé avec succès !",
+        "partnerSuccessMsg": "Le partenaire MISP a été créé avec succès et est en attente d’approbation par l’administrateur."
+    },
+    "languages": {
+        "english": "Anglais",
+        "hindi": "Hindi",
+        "arabic": "Arabe",
+        "french": "Français",
+        "tamil": "Tamoul",
+        "kannada": "Kannada"
     },
     "createOidcClient": {
         "createOidcClient": "Créer un client OIDC",
@@ -702,7 +761,8 @@
         "searchOrganisation": "Rechercher une organisation",
         "searchEmailAddress": "Rechercher l'adresse e-mail complète",
         "searchPolicyGroup": "Rechercher le groupe de politiques",
-        "emailAddressToolTip": "Remarque : Ce filtre effectue une correspondance exacte. Veuillez saisir l'adresse e-mail complète (ex : user@example.com) pour obtenir des résultats."
+        "emailAddressToolTip": "Remarque : Ce filtre effectue une correspondance exacte. Veuillez saisir l'adresse e-mail complète (ex : user@example.com) pour obtenir des résultats.",
+        "createPartner": "Créer un partenaire"
     },
     "viewPartnerDetails": {
         "viewPartnerDetails": "Afficher les détails du partenaire",

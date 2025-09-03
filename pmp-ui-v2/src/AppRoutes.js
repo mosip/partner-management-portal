@@ -58,6 +58,8 @@ import ViewApiKeyNotifications from './pages/partner/notifications/ViewApiKeyNot
 import ViewFtmCertificateNotifications from './pages/partner/notifications/ViewFtmCertificateNotifications.js';
 import ViewSbiNotifications from './pages/partner/notifications/ViewSbiNotifications.js';
 import MispPoliciesList from './pages/admin/policyManager/MispPoliciesList.js';
+import CreatePartner from './pages/admin/partners/CreatePartner.js';
+import AdminMispPartnersList from './pages/admin/mispPartnerServices/AdminMispPartnersList.js';
 
 function AppRoutes() {
 
@@ -179,11 +181,11 @@ function AppRoutes() {
           element: <GuardedRoute><MainLayout><UploadTrustCertificate /></MainLayout></GuardedRoute>
         },
         {
-          path: 'admin/partners-list',
+          path: 'admin/partners/partners-list',
           element: <GuardedRoute><MainLayout><PartnersList /></MainLayout></GuardedRoute>
         },
         {
-          path: 'admin/view-partner-details',
+          path: 'admin/partners/view-partner-details',
           element: <GuardedRoute><MainLayout><ViewPartnerDetails /></MainLayout></GuardedRoute>
         },
         {
@@ -301,6 +303,14 @@ function AppRoutes() {
         {
           path: 'admin/device-provider-services/view-device-details',
           element: <GuardedRoute><MainLayout><ViewAdminDeviceDetails /></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'admin/partners/create-partner',
+          element: <GuardedRoute><MainLayout><CreatePartner /></MainLayout></GuardedRoute>,
+        },
+        {
+          path: 'admin/misp-partner-services/misp-partner-list',
+          element: <GuardedRoute><MainLayout><AdminMispPartnersList /></MainLayout></GuardedRoute>,
         },
         {
           path: 'admin/notifications/view-root-certificate-expiry',

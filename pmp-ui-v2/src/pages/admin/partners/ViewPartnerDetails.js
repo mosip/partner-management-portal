@@ -71,7 +71,7 @@ function ViewPartnerDetails() {
     }, [t]);
 
     const moveToPartnersList = () => {
-        navigate('/partnermanagement/admin/partners-list');
+        navigate('/partnermanagement/admin/partners/partners-list');
     };
 
     const getOriginalCertificate = async (partner) => {
@@ -149,7 +149,7 @@ function ViewPartnerDetails() {
     }
 
     return (
-        <div className={`w-full p-4 bg-anti-flash-white font-inter break-words max-[450px]:text-sm mb-[2%] ${isLoginLanguageRTL ? "mr-24 ml-1" : "ml-24 mr-1"} overflow-x-scroll`}>
+        <div className={`w-full p-4 bg-anti-flash-white font-inter break-words max-[450px]:text-sm mb-[2%] ${isLoginLanguageRTL ? "mr-24 ml-1" : "ml-24 mr-1"} `}>
             {!dataLoaded && (
                 <LoadingIcon/>
             )}
@@ -163,7 +163,7 @@ function ViewPartnerDetails() {
                     )}
                     <div className={`flex-col mt-5 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm mb-[2%]`}>
                         <div className="flex justify-between mb-3">
-                            <Title title={'viewPartnerDetails.viewPartnerDetails'} subTitle='viewPartnerDetails.listOfPartners' backLink='/partnermanagement/admin/partners-list' />
+                            <Title title={'viewPartnerDetails.viewPartnerDetails'} subTitle='viewPartnerDetails.listOfPartners' backLink='/partnermanagement/admin/partners/partners-list' />
                         </div>
 
                         {unexpectedError && (
