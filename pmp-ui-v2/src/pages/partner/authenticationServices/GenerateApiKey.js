@@ -330,7 +330,7 @@ function GenerateApiKey() {
                                         <button id="generate_cancel_btn" onClick={() => clickOnCancel()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.cancel')}</button>
                                         <button id="generate_submit_btn" disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>{t('requestPolicy.submit')}</button>
                                         {(showPopup && !errorMsg) && (
-                                            <CopyIdPopUp closePopUp={closePopUp} partnerId={partnerId} policyName={policyName} id={apiKeyId}
+                                            <CopyIdPopUp closePopUp={closePopUp} subtitle={partnerId} title={policyName} id={apiKeyId}
                                                 header='apiKeysList.apiKey' alertMsg='apiKeysList.apiKeyIdAlertMsg' styleSet={copyIdPopupStyle} />
                                         )}
                                     </div>

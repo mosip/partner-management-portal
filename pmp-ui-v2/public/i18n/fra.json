@@ -94,19 +94,23 @@
         "mispPartnerServices": "Services partenaires MISP",
         "mispPartnerServicesDesc": "Services Partenaire MISP"
     },
-    "mispPartnerServicesList": {
+    "mispLicenseList": {
         "partnerId": "ID partenaire",
         "policyGroup": "Groupe de politiques",
         "policyName": "Nom de la politique",
+        "licenseKeyName": "Nom de la clé de licence",
         "mispLicenseKey": "Clé de licence MISP",
-        "licenseKeyCreationDate": "Date de création de la clé de licence",
+        "creationDate": "Date de création",
+        "expirationDate": "Date d'expiration",
         "status": "Statut",
         "action": "Action",
-        "listOfMispPartnerKeys": "Liste des clés partenaires MISP",
-        "createMispPartner": "Créer un partenaire MISP",
-        "errorInMispPartnerServicesList": "Une erreur s'est produite lors de la récupération de la liste des services partenaires MISP",
+        "listOfMispLicenseKeys": "Liste des clés de licence MISP",
+        "errorInMispLicenseList": "Une erreur s'est produite lors de la récupération de la liste des licences MISP",
         "generateMispLicenseKey": "Générer une clé de licence MISP",
-        "mispPartnerServices": "Services partenaires MISP"
+        "mispPartnerServices": "Services partenaires MISP",
+        "searchLicenseKeyName": "Rechercher le nom de la clé de licence",
+        "renewMispLicenseKey": "Renouveler la clé de licence MISP",
+        "viewMispLicenseKey": "Afficher la clé de licence MISP"
     },
     "header": {
         "userProfile": "Profil de l'utilisateur",

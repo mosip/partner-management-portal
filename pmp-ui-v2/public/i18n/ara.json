@@ -94,19 +94,23 @@
         "mispPartnerServices": "خدمات شريك MISP",
         "mispPartnerServicesDesc": "خدمات شريك MISP"
     },
-    "mispPartnerServicesList": {
+    "mispLicenseList": {
         "partnerId": "معرف الشريك",
         "policyGroup": "مجموعة السياسة",
         "policyName": "اسم السياسة",
+        "licenseKeyName": "اسم مفتاح الترخيص",
         "mispLicenseKey": "مفتاح ترخيص MISP",
-        "licenseKeyCreationDate": "تاريخ إنشاء مفتاح الترخيص",
+        "creationDate": "تاريخ الإنشاء",
+        "expirationDate": "تاريخ انتهاء الصلاحية",
         "status": "الحالة",
         "action": "إجراء",
-        "listOfMispPartnerKeys": "قائمة مفاتيح شريك MISP",
-        "createMispPartner": "إنشاء شريك MISP",
-        "errorInMispPartnerServicesList": "حدث خطأ أثناء جلب قائمة خدمات شريك MISP",
+        "listOfMispLicenseKeys": "قائمة مفاتيح ترخيص MISP",
+        "errorInMispLicenseList": "حدث خطأ أثناء جلب قائمة تراخيص MISP",
         "generateMispLicenseKey": "إنشاء مفتاح ترخيص MISP",
-        "mispPartnerServices": "خدمات شريك MISP"
+        "mispPartnerServices": "خدمات شريك MISP",
+        "searchLicenseKeyName": "البحث عن اسم مفتاح الترخيص",
+        "renewMispLicenseKey": "تجديد مفتاح ترخيص MISP",
+        "viewMispLicenseKey": "عرض مفتاح ترخيص MISP"
     },
     "header": {
         "userProfile": "ملف تعريفي للمستخدم",

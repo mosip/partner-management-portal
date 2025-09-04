@@ -216,7 +216,7 @@ export const moveToSbisList = (navigate) => {
 };
 
 export const moveToMispPartnerServices = (navigate) => {
-    navigate('/partnermanagement/admin/misp-partner-services/misp-partner-list');
+    navigate('/partnermanagement/admin/misp-partner-services/misp-license-list');
 };
 
 export const logout = async () => {
