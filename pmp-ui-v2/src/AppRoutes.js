@@ -59,7 +59,9 @@ import ViewFtmCertificateNotifications from './pages/partner/notifications/ViewF
 import ViewSbiNotifications from './pages/partner/notifications/ViewSbiNotifications.js';
 import MispPoliciesList from './pages/admin/policyManager/MispPoliciesList.js';
 import CreatePartner from './pages/admin/partners/CreatePartner.js';
-import AdminMispPartnersList from './pages/admin/mispPartnerServices/AdminMispPartnersList.js';
+import MispLicenseList from './pages/admin/mispPartnerServices/MispLicenseList.js';
+import GenerateMispLicenseKey from './pages/admin/mispPartnerServices/GenerateMispLicenseKey.js';
+import ViewMispLicenseKey from './pages/admin/mispPartnerServices/ViewMispLicenseKey.js';
 
 function AppRoutes() {
 
@@ -309,8 +311,16 @@ function AppRoutes() {
           element: <GuardedRoute><MainLayout><CreatePartner /></MainLayout></GuardedRoute>,
         },
         {
-          path: 'admin/misp-partner-services/misp-partner-list',
-          element: <GuardedRoute><MainLayout><AdminMispPartnersList /></MainLayout></GuardedRoute>,
+          path: 'admin/misp-partner-services/misp-license-list',
+          element: <GuardedRoute><MainLayout><MispLicenseList /></MainLayout></GuardedRoute>,
+        },
+        {
+          path: 'admin/misp-partner-services/generate-misp-license-key',
+          element: <GuardedRoute><MainLayout><GenerateMispLicenseKey /></MainLayout></GuardedRoute>,
+        },
+        {
+          path: 'admin/misp-partner-services/view-misp-license-key',
+          element: <GuardedRoute><MainLayout><ViewMispLicenseKey /></MainLayout></GuardedRoute>,
         },
         {
           path: 'admin/notifications/view-root-certificate-expiry',

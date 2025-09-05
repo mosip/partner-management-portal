@@ -96,19 +96,23 @@
         "mispPartnerServices": "MISP Partner Services",
         "mispPartnerServicesDesc": "MISP Partner Services"
     },
-    "mispPartnerServicesList": {
+    "mispLicenseList": {
         "partnerId": "Partner ID",
         "policyGroup": "Policy Group",
         "policyName": "Policy Name",
+        "licenseKeyName": "License Key Name",
         "mispLicenseKey": "MISP License Key",
-        "licenseKeyCreationDate": "License Key Creation Date",
+        "creationDate": "Creation Date",
+        "expirationDate": "Expiration Date",
         "status": "Status",
         "action": "Action",
-        "listOfMispPartnerKeys": "List of MISP Partner Keys",
-        "createMispPartner": "Create MISP Partner",
-        "errorInMispPartnerServicesList": "Error occurred while fetching MISP Partner Services list",
+        "listOfMispLicenseKeys": "List of MISP License Keys",
+        "errorInMispLicenseList": "Error occurred while fetching MISP License list",
         "generateMispLicenseKey": "Generate MISP License Key",
-        "mispPartnerServices": "MISP Partner Services"
+        "mispPartnerServices": "MISP Partner Services",
+        "searchLicenseKeyName": "Search License Key Name",
+        "renewMispLicenseKey": "Renew MISP License Key",
+        "viewMispLicenseKey": "View MISP License Key"
     },
     "header": {
         "userProfile": "User Profile",
