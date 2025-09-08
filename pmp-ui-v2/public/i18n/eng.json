@@ -200,6 +200,11 @@
         "errorWhileUploadingCertificate": "Due to an error, we were unable to upload the certificate. Please try again.",
         "errorWhileGettingCertOrgName": "Unable to get the certificate organisation name"
     },
+    "uploadMispPartnerCertificate": {
+        "uploadMispPartnerCertificate": "Upload MISP Partner Certificate",
+        "reUploadMispPartnerCertificate": "Re-Upload MISP Partner Certificate",
+        "successMsg": "MISP Partner certificate is uploaded successfully."
+    },
     "partnerTypes": {
         "deviceProvider": "Device Provider",
         "ftmProvider": "FTM Chip Provider",
@@ -342,9 +347,9 @@
         "partnerIdRequired": "Partner ID is required",
         "partnerIdInvalid": "Partner ID should contain only letters, numbers, and underscores",
         "errorInCreatingPartner": "Error occurred while creating partner",
-        "partnerSuccessHeader": "Partner Created Successfully!",
-        "partnerSuccessMsg": "MISP Partner has been successfully created.",
-        "uploadCertificate": "Upload Certificate"
+        "mispPartnerSuccessHeader": "MISP Partner Created Successfully!",
+        "mispPartnerSuccessMsg": "MISP Partner has been successfully created.",
+        "uploadMispPartnerCertificate": "Upload MISP Partner Certificate"
     },
     "languages": {
         "english": "English",
@@ -763,7 +768,8 @@
         "searchEmailAddress": "Search Full Email Address",
         "searchPolicyGroup": "Search Policy Group",
         "emailAddressToolTip": "Note: This filter performs an exact match. Please enter the full email address (e.g., user@example.com) to find results.",
-        "createPartner": "Create Partner"
+        "createPartner": "Create Partner",
+        "uploadOrReuploadCertificate": "Upload / Re upload Certificate"
     },
     "viewPartnerDetails": {
         "viewPartnerDetails": "View Partner Details",
