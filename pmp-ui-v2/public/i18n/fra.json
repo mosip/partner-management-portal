@@ -198,6 +198,11 @@
         "errorWhileUploadingCertificate": "En raison d'une erreur, nous n'avons pas pu télécharger le certificat. Veuillez réessayer.",
         "errorWhileGettingCertOrgName": "Impossible d'obtenir le nom de l'organisation du certificat"
     },
+    "uploadMispPartnerCertificate": {
+        "uploadMispPartnerCertificate": "Télécharger le certificat du partenaire MISP",
+        "reUploadMispPartnerCertificate": "Re-télécharger le certificat du partenaire MISP",
+        "successMsg": "Le certificat du partenaire MISP a été téléchargé avec succès."
+    },
     "partnerTypes": {
         "deviceProvider": "Fournisseur d'appareil",
         "ftmProvider": "Fournisseur de puces FTM",
@@ -342,7 +347,10 @@
         "partnerIdInvalid": "L’ID partenaire ne doit contenir que des lettres, chiffres et underscores",
         "errorInCreatingPartner": "Une erreur est survenue lors de la création du partenaire",
         "partnerSuccessHeader": "Partenaire créé avec succès !",
-        "partnerSuccessMsg": "Le partenaire MISP a été créé avec succès et est en attente d’approbation par l’administrateur."
+        "partnerSuccessMsg": "Le partenaire MISP a été créé avec succès et est en attente d’approbation par l’administrateur.",
+        "mispPartnerSuccessHeader": "Partenaire MISP créé avec succès !",
+        "mispPartnerSuccessMsg": "Le partenaire MISP a été créé avec succès.",
+        "uploadMispPartnerCertificate": "Téléverser le certificat du partenaire MISP"
     },
     "languages": {
         "english": "Anglais",
@@ -766,7 +774,8 @@
         "searchEmailAddress": "Rechercher l'adresse e-mail complète",
         "searchPolicyGroup": "Rechercher le groupe de politiques",
         "emailAddressToolTip": "Remarque : Ce filtre effectue une correspondance exacte. Veuillez saisir l'adresse e-mail complète (ex : user@example.com) pour obtenir des résultats.",
-        "createPartner": "Créer un partenaire"
+        "createPartner": "Créer un partenaire",
+        "uploadOrReuploadCertificate": "Téléverser / Re-téléverser le certificat"
     },
     "viewPartnerDetails": {
         "viewPartnerDetails": "Afficher les détails du partenaire",

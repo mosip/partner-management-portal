@@ -497,7 +497,7 @@ export const getPartnerDomainType = (partnerType) => {
         else if (partnerType === "FTM_Provider".toUpperCase()) {
             return 'FTM';
         }
-        else if (partnerType === "MISP_type".toUpperCase()) {
+        else if (partnerType === "MISP_Partner".toUpperCase()) {
             return 'MISP';
         }
         else {

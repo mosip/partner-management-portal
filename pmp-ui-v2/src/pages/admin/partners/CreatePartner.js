@@ -3,7 +3,7 @@ import { useNavigate, useBlocker } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../../services/UserProfileService";
 import { isLangRTL, onPressEnterKey, validateInputRegex } from "../../../utils/AppUtils";
-import { getPartnerManagerUrl, handleServiceErrors, createDropdownData, createRequest, getPolicyGroupList, getPartnerTypeDescription, getLanguageLabel } from '../../../utils/AppUtils';
+import { getPartnerManagerUrl, handleServiceErrors, createDropdownData, createRequest, getPolicyGroupList, getPartnerTypeDescription, getLanguageLabel, getPartnerDomainType } from '../../../utils/AppUtils';
 import { getAppConfig } from '../../../services/ConfigService';
 import { HttpService } from '../../../services/HttpService';
 import LoadingIcon from "../../common/LoadingIcon";
@@ -14,6 +14,7 @@ import DropdownComponent from "../../common/fields/DropdownComponent";
 import BlockerPrompt from "../../common/BlockerPrompt";
 import Title from "../../common/Title";
 import Confirmation from "../../common/Confirmation";
+import UploadCertificate from "../../partner/certificates/UploadCertificate";
 
 function CreatePartner() {
     const navigate = useNavigate();
@@ -43,6 +44,9 @@ function CreatePartner() {
     const [invalidUsernameError, setInvalidUsernameError] = useState("");
     const [policyGroupsLoaded, setPolicyGroupsLoaded] = useState(false);
     const [policyGroupLoading, setPolicyGroupLoading] = useState(false);
+    const [uploadCertificateData, setUploadCertificateData] = useState({});
+    const [showPopup, setShowPopup] = useState(false);
+    const [uploadCertificateRequest, setUploadCertificateRequest] = useState({});
 
     const cancelErrorMsg = () => {
         setErrorMsg("");
@@ -161,6 +165,23 @@ function CreatePartner() {
         setPartnerTypeValue("MISP_PARTNER");
     };
 
+    const clickOnUpload = () => {
+        const request = {
+            partnerId: username.trim(),
+            partnerDomain: getPartnerDomainType("MISP_Partner"),
+        };
+        setUploadCertificateRequest(request);
+        setShowPopup(true);
+    };
+
+    const closePopup = (state, btnName) => {
+        if (state && btnName === 'cancel') {
+            setShowPopup(false);
+        } else if (state && btnName === 'close') {
+            navigate('/partnermanagement/admin/partners/partners-list');
+        }
+    };
+
     const clickOnCancel = () => {
         moveToPartnersList(navigate);
     };
@@ -227,11 +248,23 @@ function CreatePartner() {
                     const requiredData = {
                         title: "createPartner.createPartner",
                         backUrl: "/partnermanagement/admin/partners/partners-list",
-                        header: "createPartner.partnerSuccessHeader",
-                        description: "createPartner.partnerSuccessMsg",
+                        header: "createPartner.mispPartnerSuccessHeader",
+                        description: "createPartner.mispPartnerSuccessMsg",
                         subNavigation: "createPartner.listOfPartners",
-                    }
+                        customBtnName: "createPartner.uploadMispPartnerCertificate",
+                        showHome: true,
+                    };
                     setConfirmationData(requiredData);
+                    
+                    // Set upload certificate data
+                    const requiredDataForCertUpload = {
+                        partnerType: "MISP_Partner",
+                        uploadHeader: 'uploadMispPartnerCertificate.uploadMispPartnerCertificate',
+                        successMessage: 'uploadMispPartnerCertificate.successMsg',
+                        isUploadPartnerCertificate: true,
+                    }
+                    setUploadCertificateData(requiredDataForCertUpload);
+                    
                     setCreatePartnerSuccess(true);
                     console.log(`Response data: ${resData.length}`);
                 } else {
@@ -420,7 +453,14 @@ function CreatePartner() {
                                     </div>
                                 </div>
                             </div>
-                            : <Confirmation id='create_partner_confirmation' confirmationData={confirmationData} />
+                            : <>
+                                <Confirmation id='create_partner_confirmation' confirmationData={confirmationData} onClickFunction={clickOnUpload} />
+                                {
+                                    showPopup && (
+                                        <UploadCertificate header={t('createPartner.uploadCertificate')} closePopup={closePopup} popupData={uploadCertificateData} request={uploadCertificateRequest} />
+                                    )
+                                }
+                            </>
                         }
                     </div>
                 </>
