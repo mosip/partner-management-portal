@@ -60,6 +60,25 @@ export const getPartnerTypeDescription = (partnerType, t) => {
     }
 }
 
+export const getLanguageLabel = (languageCode, t) => {
+    const languageMap = {
+        "eng": 'languages.english',
+        "hin": 'languages.hindi',
+        "ara": 'languages.arabic',
+        "fra": 'languages.french',
+        "tam": 'languages.tamil',
+        "kan": 'languages.kannada'
+    };
+
+    if (languageCode) {
+        const languageLabel = languageMap[languageCode.toLowerCase()];
+        if (languageLabel) {
+            return t(languageLabel);
+        }
+    }
+    return languageCode; // fallback to code if no translation found
+}
+
 export const getStatusCode = (status, t) => {
     if (status) {
         status = status.toLowerCase();
@@ -194,6 +213,10 @@ export const moveToApiKeysList = (navigate) => {
 
 export const moveToSbisList = (navigate) => {
     navigate('/partnermanagement/device-provider-services/sbi-list');
+};
+
+export const moveToMispPartnerServices = (navigate) => {
+    navigate('/partnermanagement/admin/misp-partner-services/misp-license-list');
 };
 
 export const logout = async () => {
@@ -378,6 +401,12 @@ export const createDropdownData = (
                     fieldCode: getStatusCode(item[fieldName], t) || item[fieldName],
                     fieldValue: item[fieldName]
                 });
+            } else if (fieldName === "languageCode") {
+                // Language dropdown variant using languageCode
+                dataArr.push({
+                    fieldCode: item.name,
+                    fieldValue: item.languageCode
+                });
             } else {
                 if (fieldDesc) {
                     dataArr.push({
@@ -468,7 +497,7 @@ export const getPartnerDomainType = (partnerType) => {
         else if (partnerType === "FTM_Provider".toUpperCase()) {
             return 'FTM';
         }
-        else if (partnerType === "MISP_type".toUpperCase()) {
+        else if (partnerType === "MISP_Partner".toUpperCase()) {
             return 'MISP';
         }
         else {

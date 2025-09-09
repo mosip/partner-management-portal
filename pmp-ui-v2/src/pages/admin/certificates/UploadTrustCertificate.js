@@ -233,6 +233,7 @@ function UploadTrustCertificate() {
                                                                 { fieldValue: 'AUTH', fieldCode: 'AUTH' },
                                                                 { fieldValue: 'FTM', fieldCode: 'FTM' },
                                                                 { fieldValue: 'DEVICE', fieldCode: 'DEVICE' },
+                                                                { fieldValue: 'MISP', fieldCode: 'MISP' },
                                                             ]}
                                                             placeHolderKey={'uploadTrustCertificate.dropdownPlaceholder'}
                                                             selectedDropdownValue={selectedDomain}

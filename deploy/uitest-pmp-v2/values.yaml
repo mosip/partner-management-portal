@@ -3,5 +3,5 @@ modules:
     enabled: true
     image:
       registry: docker.io
-      repository: mosipqa/pmptest
+      repository: mosipqa/uitest-pmp-v2
       tag: develop

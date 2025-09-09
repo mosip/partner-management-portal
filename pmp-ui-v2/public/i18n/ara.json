@@ -90,7 +90,27 @@
         "apiKeyExpiryCountDesc1": "{{expiringApiKeyCount}} مفتاح API سينتهي قريبًا",
         "apiKeyExpiryCountDesc2": "{{expiringApiKeyCount}} مفاتيح API ستنتهي قريبًا",
         "sbiExpiryCountDesc1": "{{expiringSbiCount}} من شهادات SBI ستنتهي صلاحيتها قريبًا",
-        "sbiExpiryCountDesc2": "{{expiringSbiCount}} شهادة SBI ستنتهي صلاحيتها قريبًا"
+        "sbiExpiryCountDesc2": "{{expiringSbiCount}} شهادة SBI ستنتهي صلاحيتها قريبًا",
+        "mispPartnerServices": "خدمات شريك MISP",
+        "mispPartnerServicesDesc": "خدمات شريك MISP"
+    },
+    "mispLicenseList": {
+        "partnerId": "معرف الشريك",
+        "policyGroup": "مجموعة السياسة",
+        "policyName": "اسم السياسة",
+        "licenseKeyName": "اسم مفتاح الترخيص",
+        "mispLicenseKey": "مفتاح ترخيص MISP",
+        "creationDate": "تاريخ الإنشاء",
+        "expirationDate": "تاريخ انتهاء الصلاحية",
+        "status": "الحالة",
+        "action": "إجراء",
+        "listOfMispLicenseKeys": "قائمة مفاتيح ترخيص MISP",
+        "errorInMispLicenseList": "حدث خطأ أثناء جلب قائمة تراخيص MISP",
+        "generateMispLicenseKey": "إنشاء مفتاح ترخيص MISP",
+        "mispPartnerServices": "خدمات شريك MISP",
+        "searchLicenseKeyName": "البحث عن اسم مفتاح الترخيص",
+        "renewMispLicenseKey": "تجديد مفتاح ترخيص MISP",
+        "viewMispLicenseKey": "عرض مفتاح ترخيص MISP"
     },
     "header": {
         "userProfile": "ملف تعريفي للمستخدم",
@@ -177,6 +197,11 @@
         "unableToUploadCertificate": "غير قادر على تحميل شهادة الشريك",
         "errorWhileUploadingCertificate": "بسبب حدوث خطأ، لم نتمكن من تحميل الشهادة. يرجى المحاولة مرة أخرى.",
         "errorWhileGettingCertOrgName": "غير قادر على الحصول على اسم منظمة الشهادة"
+    },
+    "uploadMispPartnerCertificate": {
+        "uploadMispPartnerCertificate": "تحميل شهادة شريك MISP",
+        "reUploadMispPartnerCertificate": "إعادة تحميل شهادة شريك MISP",
+        "successMsg": "تم تحميل شهادة شريك MISP بنجاح."
     },
     "partnerTypes": {
         "deviceProvider": "مزود الجهاز",
@@ -267,7 +292,10 @@
         "policySuccessHeader": "تم إرسال السياسة بنجاح!",
         "policySuccessMsg": "تم إرسال عملية طلب السياسة بنجاح. الموافقة في انتظار المشرف.",
         "info": "تتوفر فقط معرفات الشركاء التي تم تحميل شهادة الشريك الخاصة بها في القائمة المنسدلة. إذا لم تجد معرف الشريك الخاص بك، فيرجى تحميل شهادة الشريك أولاً",
-        "commentTooLong": "يجب ألا تسمح التعليقات بأكثر من 500 حرف."
+        "mispPartnerInfo": "تتوفر فقط معرفات شركاء MISP الذين تم تحميل شهادة شريكهم في القائمة المنسدلة. إذا لم تجد معرف شريكك، يُرجى تحميل شهادة الشريك أولًا.",
+        "commentTooLong": "يجب ألا تسمح التعليقات بأكثر من 500 حرف.",
+        "policyGroupNotAvailable": "لم يتم تعيين أي مجموعة سياسات لمعرف الشريك الخاص بك.",
+        "guidenceForMispPartner": "ملاحظة: إذا كنت شريكًا في MISP، فإن حقلي مجموعة السياسات واسم السياسات اختياريان. مع ذلك، نوصي باختيار اسم سياسة للمساعدة في الحفاظ على الاتساق والوضوح في إدارة السياسات."
     },
     "authenticationServices": {
         "authenticationServices": "خدمات المصادقة",
@@ -285,6 +313,52 @@
         "apiKey": "مفتاح API",
         "apiKeyLable": "تسمية مفتاح API",
         "generateApiKeyBtn": "إنشاء مفتاح API"
+    },
+    "createPartner": {
+        "createPartner": "إنشاء شريك",
+        "listOfPartners": "قائمة الشركاء",
+        "mandatoryFieldsMsg1": "جميع الحقول المعلمة بـ",
+        "mandatoryFieldsMsg2": "إلزامية.",
+        "partnerType": "نوع الشريك",
+        "policyGroup": "مجموعة السياسات",
+        "address": "العنوان",
+        "organizationName": "اسم المؤسسة",
+        "contactNumber": "رقم الاتصال",
+        "emailId": "البريد الإلكتروني",
+        "username": "اسم المستخدم",
+        "notificationLanguage": "لغة الإشعارات",
+        "selectPolicyGroup": "اختر مجموعة السياسات",
+        "enterAddress": "أدخل العنوان",
+        "enterOrganizationName": "أدخل اسم المؤسسة",
+        "enterContactNumber": "أدخل رقم الاتصال",
+        "enterEmailId": "أدخل البريد الإلكتروني",
+        "enterUsername": "أدخل اسم المستخدم",
+        "selectLanguage": "اختر اللغة",
+        "clearForm": "مسح النموذج",
+        "cancel": "إلغاء",
+        "submit": "إرسال",
+        "addressRequired": "العنوان مطلوب",
+        "organizationNameRequired": "اسم المؤسسة مطلوب",
+        "contactNumberRequired": "رقم الاتصال مطلوب",
+        "contactNumberInvalid": "يجب أن يحتوي رقم الاتصال على أرقام أو مسافات أو شرطات أو علامات زائد أو أقواس فقط",
+        "emailIdRequired": "البريد الإلكتروني مطلوب",
+        "emailIdInvalid": "يرجى إدخال عنوان بريد إلكتروني صالح",
+        "partnerIdRequired": "معرّف الشريك مطلوب",
+        "partnerIdInvalid": "يجب أن يحتوي معرّف الشريك على أحرف أو أرقام أو شرطات سفلية فقط",
+        "errorInCreatingPartner": "حدث خطأ أثناء إنشاء الشريك",
+        "partnerSuccessHeader": "تم إنشاء الشريك بنجاح!",
+        "partnerSuccessMsg": "تم إنشاء شريك MISP بنجاح وهو قيد موافقة المسؤول.",
+        "mispPartnerSuccessHeader": "تم إنشاء شريك MISP بنجاح!",
+        "mispPartnerSuccessMsg": "تم إنشاء شريك MISP بنجاح.",
+        "uploadMispPartnerCertificate": "تحميل شهادة شريك MISP"
+    },
+    "languages": {
+        "english": "الإنجليزية",
+        "hindi": "الهندية",
+        "arabic": "العربية",
+        "french": "الفرنسية",
+        "tamil": "التاميلية",
+        "kannada": "الكانادا"
     },
     "createOidcClient": {
         "createOidcClient": "إنشاء عميل OIDC",
@@ -699,7 +773,9 @@
         "searchOrganisation": "منظمة البحث",
         "searchEmailAddress": "ابحث عن عنوان البريد الإلكتروني الكامل",
         "searchPolicyGroup": "ابحث عن مجموعة السياسات",
-        "emailAddressToolTip": "ملاحظة: يقوم هذا الفلتر بمطابقة تامة. الرجاء إدخال عنوان البريد الإلكتروني الكامل (مثل: user@example.com) للعثور على النتائج."
+        "emailAddressToolTip": "ملاحظة: يقوم هذا الفلتر بمطابقة تامة. الرجاء إدخال عنوان البريد الإلكتروني الكامل (مثل: user@example.com) للعثور على النتائج.",
+        "createPartner": "إنشاء شريك",
+        "uploadOrReuploadCertificate": "تحميل / إعادة تحميل الشهادة"
     },
     "viewPartnerDetails": {
         "viewPartnerDetails": "عرض تفاصيل الشريك",

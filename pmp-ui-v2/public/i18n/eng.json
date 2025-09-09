@@ -92,7 +92,27 @@
         "apiKeyExpiryCountDesc1": "{{expiringApiKeyCount}} API Keys are expiring soon",
         "apiKeyExpiryCountDesc2": "{{expiringApiKeyCount}} API Key is expiring soon",
         "sbiExpiryCountDesc1": "{{expiringSbiCount}} SBIs are expiring soon",
-        "sbiExpiryCountDesc2": "{{expiringSbiCount}} SBI is expiring soon"
+        "sbiExpiryCountDesc2": "{{expiringSbiCount}} SBI is expiring soon",
+        "mispPartnerServices": "MISP Partner Services",
+        "mispPartnerServicesDesc": "MISP Partner Services"
+    },
+    "mispLicenseList": {
+        "partnerId": "Partner ID",
+        "policyGroup": "Policy Group",
+        "policyName": "Policy Name",
+        "licenseKeyName": "License Key Name",
+        "mispLicenseKey": "MISP License Key",
+        "creationDate": "Creation Date",
+        "expirationDate": "Expiration Date",
+        "status": "Status",
+        "action": "Action",
+        "listOfMispLicenseKeys": "List of MISP License Keys",
+        "errorInMispLicenseList": "Error occurred while fetching MISP License list",
+        "generateMispLicenseKey": "Generate MISP License Key",
+        "mispPartnerServices": "MISP Partner Services",
+        "searchLicenseKeyName": "Search License Key Name",
+        "renewMispLicenseKey": "Renew MISP License Key",
+        "viewMispLicenseKey": "View MISP License Key"
     },
     "header": {
         "userProfile": "User Profile",
@@ -179,6 +199,11 @@
         "unableToUploadCertificate": "Unable to upload partner certificate",
         "errorWhileUploadingCertificate": "Due to an error, we were unable to upload the certificate. Please try again.",
         "errorWhileGettingCertOrgName": "Unable to get the certificate organisation name"
+    },
+    "uploadMispPartnerCertificate": {
+        "uploadMispPartnerCertificate": "Upload MISP Partner Certificate",
+        "reUploadMispPartnerCertificate": "Re-Upload MISP Partner Certificate",
+        "successMsg": "MISP Partner certificate is uploaded successfully."
     },
     "partnerTypes": {
         "deviceProvider": "Device Provider",
@@ -268,7 +293,10 @@
         "policySuccessHeader": "Policy Submitted Successfully!",
         "policySuccessMsg": "Policy request process has been successfully submitted. Approval is pending with admin.",
         "info": "Only those partner IDs whose partner certificate is uploaded is available in the dropdown. If you don't find your partner ID, please upload partner certificate first",
-        "commentTooLong": "Comments should not allow more than 500 characters."
+        "mispPartnerInfo": "Only those MISP partner IDs whose partner certificate is uploaded is available in the dropdown. If you don't find your partner ID, please upload partner certificate first",
+        "commentTooLong": "Comments should not allow more than 500 characters.",
+        "policyGroupNotAvailable": "No policy group is mapped to your partner ID.",
+        "guidenceForMispPartner": "Note: If you are a MISP Partner, the Policy Group and Policy Name fields are optional. We still recommend selecting a Policy Name to help maintain consistency and clarity in policy management."
     },
     "authenticationServices": {
         "authenticationServices": "Authentication Services",
@@ -286,6 +314,50 @@
         "apiKey": "API Key",
         "apiKeyLable": "API Key Label",
         "generateApiKeyBtn": "Generate API Key"
+    },
+    "createPartner": {
+        "createPartner": "Create Partner",
+        "listOfPartners": "List of Partners",
+        "mandatoryFieldsMsg1": "All fields marked with",
+        "mandatoryFieldsMsg2": "are mandatory.",
+        "partnerType": "Partner Type",
+        "policyGroup": "Policy Group",
+        "address": "Address",
+        "organizationName": "Organization Name",
+        "contactNumber": "Contact Number",
+        "emailId": "Email ID",
+        "username": "Username",
+        "notificationLanguage": "Notification Language",
+        "selectPolicyGroup": "Select Policy Group",
+        "enterAddress": "Enter Address",
+        "enterOrganizationName": "Enter Organization Name",
+        "enterContactNumber": "Enter Contact Number",
+        "enterEmailId": "Enter Email ID",
+        "enterUsername": "Enter Username",
+        "selectLanguage": "Select Language",
+        "clearForm": "Clear Form",
+        "cancel": "Cancel",
+        "submit": "Submit",
+        "addressRequired": "Address is required",
+        "organizationNameRequired": "Organization Name is required",
+        "contactNumberRequired": "Contact Number is required",
+        "contactNumberInvalid": "Contact Number should contain only digits, spaces, hyphens, plus signs, and parentheses",
+        "emailIdRequired": "Email ID is required",
+        "emailIdInvalid": "Please enter a valid email address",
+        "partnerIdRequired": "Partner ID is required",
+        "partnerIdInvalid": "Partner ID should contain only letters, numbers, and underscores",
+        "errorInCreatingPartner": "Error occurred while creating partner",
+        "mispPartnerSuccessHeader": "MISP Partner Created Successfully!",
+        "mispPartnerSuccessMsg": "MISP Partner has been successfully created.",
+        "uploadMispPartnerCertificate": "Upload MISP Partner Certificate"
+    },
+    "languages": {
+        "english": "English",
+        "hindi": "Hindi",
+        "arabic": "Arabic",
+        "french": "French",
+        "tamil": "Tamil",
+        "kannada": "Kannada"
     },
     "createOidcClient": {
         "createOidcClient": "Create OIDC Client",
@@ -695,7 +767,9 @@
         "searchOrganisation": "Search Organisation",
         "searchEmailAddress": "Search Full Email Address",
         "searchPolicyGroup": "Search Policy Group",
-        "emailAddressToolTip": "Note: This filter performs an exact match. Please enter the full email address (e.g., user@example.com) to find results."
+        "emailAddressToolTip": "Note: This filter performs an exact match. Please enter the full email address (e.g., user@example.com) to find results.",
+        "createPartner": "Create Partner",
+        "uploadOrReuploadCertificate": "Upload / Re upload Certificate"
     },
     "viewPartnerDetails": {
         "viewPartnerDetails": "View Partner Details",
