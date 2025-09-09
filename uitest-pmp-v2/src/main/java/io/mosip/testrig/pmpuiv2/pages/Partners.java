@@ -140,6 +140,12 @@ public class Partners extends BasePage {
 
 	@FindBy(xpath = "//p[contains(text(), 'Do you want to deactivate partner')]")
 	private WebElement partnerDeactivatePopup;
+	
+	@FindBy(xpath = "//p[contains(text(), 'Upon clicking ‘Confirm’, the selected partner will be deactivated and will no longer have access to perform any operations in the PMS portal.')]")
+	private WebElement partnerDeactivateSubPopup;
+	
+	@FindBy(xpath = "//*[contains(text(),'Partner ID:') and contains(text(),'Organisation :')]")
+	private WebElement partnerIDAndOrganisationInPopup;
 
 	@FindBy(xpath = "//p[text()='No Results Found']")
 	private WebElement noResultsFound;
@@ -218,6 +224,13 @@ public class Partners extends BasePage {
 
 	@FindBy(id = "footer_contact_us_link")
 	private WebElement footerContactUs;
+	
+	@FindBy(id = "deactivate_cancel_btn")
+	private WebElement deactivateCancelButton;
+	
+	@FindBy(id = "deactivate_submit_btn")
+	private WebElement deactivateSubmitButton;
+
 
 	public Partners(WebDriver driver) {
 		super(driver);
@@ -322,6 +335,10 @@ public class Partners extends BasePage {
 	public void clickOnApplyFilterBtn() {
 		clickOnElement(applyFilterBtn);
 	}
+	
+	public void clickOnSubmitPopupBtn() {
+		clickOnElement(deactivateSubmitButton);
+	}
 
 	public boolean isActivatedPartnerDisplayed() {
 		return isElementDisplayed(partnerList1);
@@ -359,6 +376,10 @@ public class Partners extends BasePage {
 
 	public boolean isDeactivateButtonDisplayed() {
 		return isElementDisplayed(deactivateButton);
+	}
+	
+	public boolean isDeactivateButtonDisabled() {
+		return isElementDisabled(deactivateButton);
 	}
 
 	public boolean isViewPartnerDetailsPageDisplayed() {
@@ -427,6 +448,14 @@ public class Partners extends BasePage {
 
 	public boolean isPartnerDeactivatePopupDisplayed() {
 		return isElementDisplayed(partnerDeactivatePopup);
+	}
+	
+	public boolean isPartnerDeactivateSubPopupDisplayed() {
+		return isElementDisplayed(partnerDeactivateSubPopup);
+	}
+	
+	public boolean isPartnerIDAndOrganisationInPopupDisplayed() {
+		return isElementDisplayed(partnerIDAndOrganisationInPopup);
 	}
 
 	public void clickOnPartnerIdDescIcon() {
@@ -589,6 +618,18 @@ public class Partners extends BasePage {
 
 	public boolean isFooterContactUsDisplayed() {
 		return isElementDisplayed(footerContactUs);
+	}
+	
+	public boolean isDeactivateCancelButtonDisplayed() {
+		return isElementDisplayed(deactivateCancelButton);
+	}
+	
+	public boolean isDeactivateSubmitButtonDisplayed() {
+		return isElementDisplayed(deactivateSubmitButton);
+	}
+	
+	public void clickOnCancelPopupBtn() {
+		clickOnElement(deactivateCancelButton);
 	}
 
 }

@@ -17,6 +17,7 @@ import io.mosip.testrig.pmpuiv2.pages.LoginPage;
 import io.mosip.testrig.pmpuiv2.pages.OidcClientPage;
 import io.mosip.testrig.pmpuiv2.pages.PartnerCertificatePage;
 import io.mosip.testrig.pmpuiv2.pages.PartnerPolicyMappingPage;
+import io.mosip.testrig.pmpuiv2.pages.Partners;
 import io.mosip.testrig.pmpuiv2.pages.PoliciesPage;
 import io.mosip.testrig.pmpuiv2.pages.ProfilePage;
 import io.mosip.testrig.pmpuiv2.pages.RegisterPage;
@@ -27,6 +28,7 @@ public class AuthPartnerTest extends BaseClass {
 
 	private BasePage basePage;
 	private DashboardPage dashboardPage;
+	private Partners partners;
 	private LoginPage loginPage;
 	private ApiKeyPage apiKeyPage;
 	private PartnerCertificatePage partnerCertificatePage;
@@ -1107,6 +1109,65 @@ public class AuthPartnerTest extends BaseClass {
 				GlobalConstants.isFooterDocumentationLinkDisplayed);
 		assertTrue(dashboardPage.isWelcomeMessageDisplayed(), GlobalConstants.isWelcomeMessageDisplayed);
 
+	}
+	
+	@Test(priority = 20, description = "Partners details (Partner Admin) : Deactivate Partner")
+	public void partnerDeactivate() {
+
+		dashboardPage = new DashboardPage(driver);
+		partnerCertificatePage = new PartnerCertificatePage(driver);
+		policiesPage = new PoliciesPage(driver);
+		oidcClientPage = new OidcClientPage(driver);
+		partners = new Partners(driver);
+		basePage = new BasePage(driver);
+
+		assertTrue(dashboardPage.isPartnersDisplayed(), GlobalConstants.isPartnersTitleDisplayed);
+		dashboardPage.clickOnPartners();
+//		assertTrue(partners.isFilterButtonDisabled(), GlobalConstants.isFilterButtonDisabled);
+		partners.clickOnFilterbtn();
+		assertTrue(partners.isPartnerIdFilterDisplayed(), GlobalConstants.isPartnerIdFilterDisplayed);
+		partners.enterPartnerIdInFilter(GlobalConstants.AUTH_PARTNER_ID);
+		partners.clickOnApplyFilterBtn();
+		partners.clickOnActionButton();
+		assertTrue(partners.isDeactivateButtonDisplayed(),
+				GlobalConstants.isPolicyGroupDeactivateButtonDisplayed);
+		partners.clickOnDeactivateButton();
+		assertTrue(partners.isPartnerDeactivatePopupDisplayed(),
+				GlobalConstants.isPartnerDeactivatePopupDisplayed);
+		assertTrue(partners.isPartnerDeactivateSubPopupDisplayed(),
+				GlobalConstants.isPartnerDeactivateSubPopupDisplayed);
+		assertTrue(partners.isPartnerIDAndOrganisationInPopupDisplayed(),
+				GlobalConstants.isPartnerIDAndOrganisationInPopupDisplayed);
+		assertTrue(partners.isDeactivateCancelButtonDisplayed(),
+				GlobalConstants.isDeactivateCancelButtonDisplayed);	
+		assertTrue(partners.isDeactivateSubmitButtonDisplayed(),
+				GlobalConstants.isDeactivateSubmitButtonDisplayed);
+		partners.clickOnCancelPopupBtn();
+		partners.clickOnActionButton();
+		assertTrue(partners.isDeactivateButtonDisplayed(),
+				GlobalConstants.isPolicyGroupDeactivateButtonDisplayed);
+		partners.clickOnDeactivateButton();
+		assertTrue(partners.isPartnerDeactivatePopupDisplayed(),
+				GlobalConstants.isPartnerDeactivatePopupDisplayed);
+		assertTrue(partners.isPartnerDeactivateSubPopupDisplayed(),
+				GlobalConstants.isPartnerDeactivateSubPopupDisplayed);
+		assertTrue(partners.isPartnerIDAndOrganisationInPopupDisplayed(),
+				GlobalConstants.isPartnerIDAndOrganisationInPopupDisplayed);
+		assertTrue(partners.isDeactivateCancelButtonDisplayed(),
+				GlobalConstants.isDeactivateCancelButtonDisplayed);	
+		assertTrue(partners.isDeactivateSubmitButtonDisplayed(),
+				GlobalConstants.isDeactivateSubmitButtonDisplayed);
+		partners.clickOnSubmitPopupBtn();
+		assertTrue(partners.isDeactivatedStatusDisplayed(), GlobalConstants.isStatusDisplayed);
+		partners.clickOnActionButton();
+		assertTrue(partners.isDeactivateButtonDisabled(), GlobalConstants.isDeactiveteButtonDisabled);
+		partners.clickOnViewButton();
+		assertTrue(partners.isDownloadPartnerCertBtnDisabled(), GlobalConstants.isDownloadPartnerCertBtnDisabled);
+
+
+		
+		
+		
 	}
 
 	private void logoutFromPartner() {
