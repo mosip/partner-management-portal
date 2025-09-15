@@ -98,7 +98,7 @@
         "partnerId": "معرف الشريك",
         "policyGroup": "مجموعة السياسة",
         "policyName": "اسم السياسة",
-        "licenseKeyName": "اسم مفتاح الترخيص",
+        "mispLicenseKeyName": "اسم مفتاح ترخيص MISP",
         "mispLicenseKey": "مفتاح ترخيص MISP",
         "creationDate": "تاريخ الإنشاء",
         "expirationDate": "تاريخ انتهاء الصلاحية",
@@ -108,8 +108,8 @@
         "errorInMispLicenseList": "حدث خطأ أثناء جلب قائمة تراخيص MISP",
         "generateMispLicenseKey": "إنشاء مفتاح ترخيص MISP",
         "mispPartnerServices": "خدمات شريك MISP",
-        "searchLicenseKeyName": "البحث عن اسم مفتاح الترخيص",
-        "renewMispLicenseKey": "تجديد مفتاح ترخيص MISP",
+        "searchMispLicenseKeyName": "ابحث عن اسم مفتاح ترخيص MISP",
+        "regenerate": "تجدد",
         "viewMispLicenseKey": "عرض مفتاح ترخيص MISP"
     },
     "header": {
@@ -294,8 +294,11 @@
         "info": "تتوفر فقط معرفات الشركاء التي تم تحميل شهادة الشريك الخاصة بها في القائمة المنسدلة. إذا لم تجد معرف الشريك الخاص بك، فيرجى تحميل شهادة الشريك أولاً",
         "mispPartnerInfo": "تتوفر فقط معرفات شركاء MISP الذين تم تحميل شهادة شريكهم في القائمة المنسدلة. إذا لم تجد معرف شريكك، يُرجى تحميل شهادة الشريك أولًا.",
         "commentTooLong": "يجب ألا تسمح التعليقات بأكثر من 500 حرف.",
-        "policyGroupNotAvailable": "لم يتم تعيين أي مجموعة سياسات لمعرف الشريك الخاص بك.",
-        "guidenceForMispPartner": "ملاحظة: إذا كنت شريكًا في MISP، فإن حقلي مجموعة السياسات واسم السياسات اختياريان. مع ذلك، نوصي باختيار اسم سياسة للمساعدة في الحفاظ على الاتساق والوضوح في إدارة السياسات."
+        "policyGroupNotAvailable": "لا توجد مجموعة سياسات مرتبطة بمعرف الشريك المحدد.",
+        "guidenceForMispPartner": "ملاحظة: إذا كنت شريكًا في MISP، فإن حقلي مجموعة السياسات واسم السياسات اختياريان. مع ذلك، نوصي باختيار اسم سياسة للمساعدة في الحفاظ على الاتساق والوضوح في إدارة السياسات.",
+        "policySuccessMsgForAdmin": "تم تقديم طلب السياسة بنجاح. وافق على طلب تفعيل ربط سياسة الشريك.",
+        "approvePopupTitle": "هل تريد الموافقة على طلب سياسة الشريك؟",
+        "approvePopupDesc": "عند النقر فوق تأكيد، سيتم الموافقة على ربط سياسة الشريك."
     },
     "authenticationServices": {
         "authenticationServices": "خدمات المصادقة",

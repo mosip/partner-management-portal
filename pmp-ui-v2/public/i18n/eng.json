@@ -100,7 +100,7 @@
         "partnerId": "Partner ID",
         "policyGroup": "Policy Group",
         "policyName": "Policy Name",
-        "licenseKeyName": "License Key Name",
+        "mispLicenseKeyName": "MISP License Key Name",
         "mispLicenseKey": "MISP License Key",
         "creationDate": "Creation Date",
         "expirationDate": "Expiration Date",
@@ -110,8 +110,8 @@
         "errorInMispLicenseList": "Error occurred while fetching MISP License list",
         "generateMispLicenseKey": "Generate MISP License Key",
         "mispPartnerServices": "MISP Partner Services",
-        "searchLicenseKeyName": "Search License Key Name",
-        "renewMispLicenseKey": "Renew MISP License Key",
+        "searchMispLicenseKeyName": "Search MISP License Key Name",
+        "regenerate": "Regenerate",
         "viewMispLicenseKey": "View MISP License Key"
     },
     "header": {
@@ -295,8 +295,11 @@
         "info": "Only those partner IDs whose partner certificate is uploaded is available in the dropdown. If you don't find your partner ID, please upload partner certificate first",
         "mispPartnerInfo": "Only those MISP partner IDs whose partner certificate is uploaded is available in the dropdown. If you don't find your partner ID, please upload partner certificate first",
         "commentTooLong": "Comments should not allow more than 500 characters.",
-        "policyGroupNotAvailable": "No policy group is mapped to your partner ID.",
-        "guidenceForMispPartner": "Note: If you are a MISP Partner, the Policy Group and Policy Name fields are optional. We still recommend selecting a Policy Name to help maintain consistency and clarity in policy management."
+        "policyGroupNotAvailable": "No policy group linked to the given Partner ID.",
+        "guidenceForMispPartner": "Note: If you are a MISP Partner, the Policy Group and Policy Name fields are optional. We still recommend selecting a Policy Name to help maintain consistency and clarity in policy management.",
+        "policySuccessMsgForAdmin": "Policy request has been successfully submitted. Approve the request for the partner policy linking to be activated.",
+        "approvePopupTitle": "Do you want to approve Partner- Policy Request?",
+        "approvePopupDesc": "On clicking Confirm, the Partner Policy Linking will be approved."
     },
     "authenticationServices": {
         "authenticationServices": "Authentication Services",
