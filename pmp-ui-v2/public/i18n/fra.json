@@ -98,7 +98,7 @@
         "partnerId": "ID partenaire",
         "policyGroup": "Groupe de politiques",
         "policyName": "Nom de la politique",
-        "licenseKeyName": "Nom de la clé de licence",
+        "mispLicenseKeyName": "Nom de la clé de licence MISP",
         "mispLicenseKey": "Clé de licence MISP",
         "creationDate": "Date de création",
         "expirationDate": "Date d'expiration",
@@ -108,9 +108,19 @@
         "errorInMispLicenseList": "Une erreur s'est produite lors de la récupération de la liste des licences MISP",
         "generateMispLicenseKey": "Générer une clé de licence MISP",
         "mispPartnerServices": "Services partenaires MISP",
-        "searchLicenseKeyName": "Rechercher le nom de la clé de licence",
-        "renewMispLicenseKey": "Renouveler la clé de licence MISP",
+        "searchMispLicenseKeyName": "Rechercher le nom de la clé de licence MISP",
+        "regenerate": "Régénérer",
         "viewMispLicenseKey": "Afficher la clé de licence MISP"
+    },
+    "generateLicenseKey": {
+        "errorInResponse": "Lors de la récupération de toutes les politiques de partenaires MISP approuvées, nous avons rencontré une erreur",
+        "mispLicenseKeyName": "Nom de la clé de licence MISP",
+        "enterLicenseKeyName": "Entrez un nom pour la clé de licence MISP",
+        "expirationDuration": "Durée d'expiration (en jours)",
+        "generateLicenseKeySuccessHeader": "Détails soumis avec succès !",
+        "generateLicenseKeySuccessMsg": "Les détails de la clé de licence MISP ont été soumis avec succès",
+        "errorInGenerateLicenseKey": "Lors de la génération de la clé de licence MISP, nous avons rencontré une erreur",
+        "licenseKeyAlertMsg": "La clé de licence MISP contient des informations sensibles. Assurez-vous de la copier avant de fermer cette fenêtre, car elle ne sera plus visible une fois la fenêtre fermée."
     },
     "header": {
         "userProfile": "Profil de l'utilisateur",
@@ -294,8 +304,11 @@
         "info": "Seuls les ID de partenaire dont le certificat de partenaire est téléchargé sont disponibles dans la liste déroulante. Si vous ne trouvez pas votre identifiant de partenaire, veuillez d'abord télécharger le certificat de partenaire",
         "mispPartnerInfo": "Seuls les identifiants partenaires MISP dont le certificat est téléchargé sont disponibles dans la liste déroulante. Si vous ne trouvez pas votre identifiant partenaire, veuillez d'abord télécharger le certificat.",
         "commentTooLong": "Les commentaires ne doivent pas contenir plus de 500 caractères.",
-        "policyGroupNotAvailable": "Aucun groupe de stratégies n'est associé à votre ID de partenaire.",
-        "guidenceForMispPartner": "Remarque : Si vous êtes partenaire MISP, les champs Groupe de politiques et Nom de la politique sont facultatifs. Nous vous recommandons néanmoins de sélectionner un nom de politique pour garantir la cohérence et la clarté de la gestion des politiques."
+        "policyGroupNotAvailable": "Aucun groupe de politiques n'est lié à l'ID de partenaire donné.",
+        "guidenceForMispPartner": "Remarque : Si vous êtes partenaire MISP, les champs Groupe de politiques et Nom de la politique sont facultatifs. Nous vous recommandons néanmoins de sélectionner un nom de politique pour garantir la cohérence et la clarté de la gestion des politiques.",
+        "policySuccessMsgForAdmin": "La demande de politique a été soumise avec succès. Veuillez approuver la demande d'activation du lien de politique partenaire.",
+        "approvePopupTitle": "Voulez-vous approuver la demande de politique du partenaire ?",
+        "approvePopupDesc": "En cliquant sur Confirmer, la liaison de la politique de partenariat sera approuvée."
     },
     "authenticationServices": {
         "authenticationServices": "Services d'authentification",

@@ -11,9 +11,6 @@ function CopyIdPopUp({ closePopUp, title, subtitle, id, header, alertMsg, styleS
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
 
-    // Mask ID if removeCopyBtn is true
-    const maskedId = removeCopyBtn ? `${'*'.repeat(id.length - 4)}${id.slice(-4)}` : id;
-
     const copyId = () => {
         navigator.clipboard.writeText(id).then(() => {
             setCopied(true);
@@ -64,7 +61,7 @@ function CopyIdPopUp({ closePopUp, title, subtitle, id, header, alertMsg, styleS
                             </div>
                         )}
                         <h1 id='copy_id_popup_header' className={`text-[#6A6A6A] text-sm opacity-8 mb-[0.5%]`}>{t(header)}</h1>
-                        <p id='copy_id_popup_id' className={`font-bold text-sm text-black break-words px-6`}>{maskedId}</p>
+                        <p id='copy_id_popup_id' className={`font-bold text-sm text-black break-words px-6`}>{id}</p>
                         {!removeCopyBtn &&
                             <button id='copy_id_btn' type="button" onClick={() => copyId()} className={`flex items-center justify-center gap-x-2 my-[4%] border-2 py-[3%] w-[40%] rounded-2xl ${copied ? "text-[#FFFFFF] bg-[#1447B2] border-0" : "text-[#1447B2] border-[#1447B2]"} ${isLoginLanguageRTL ? "mr-[31%]" : "ml-[31%]"} cursor-pointer`}>
                                 <svg xmlns="http://www.w3.org/2000/svg"

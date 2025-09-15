@@ -12,6 +12,7 @@ import LoadingIcon from '../../common/LoadingIcon.js';
 import EmptyList from '../../common/EmptyList.js';
 import Title from '../../common/Title.js';
 import viewIcon from "../../../svg/view_icon.svg";
+import regenerateIcon from "../../../svg/regenerate_icon.svg";
 import eyeIcon from "../../../svg/eye_icon.svg";
 import disabledEyeIcon from "../../../svg/disable_eye_icon.svg";
 import deactivateIcon from "../../../svg/deactivate_icon.svg";
@@ -53,7 +54,7 @@ function MispLicenseList() {
         partnerId: null,
         policyGroupName: null,
         policyName: null,
-        licenseKeyName: null,
+        mispLicenseKeyName: null,
         status: null,
     });
     const submenuRef = useRef([]);
@@ -66,7 +67,7 @@ function MispLicenseList() {
         { id: "partnerId", headerNameKey: 'mispLicenseList.partnerId' },
         { id: "policyGroupName", headerNameKey: "mispLicenseList.policyGroup" },
         { id: "policyName", headerNameKey: "mispLicenseList.policyName" },
-        { id: "licenseKeyName", headerNameKey: "mispLicenseList.licenseKeyName" },
+        { id: "mispLicenseKeyName", headerNameKey: "mispLicenseList.mispLicenseKeyName" },
         { id: "createdDateTime", headerNameKey: "mispLicenseList.creationDate" },
         { id: "expiryDateTime", headerNameKey: "mispLicenseList.expirationDate" },
         { id: "status", headerNameKey: "mispLicenseList.status" },
@@ -88,7 +89,7 @@ function MispLicenseList() {
         if (filterAttributes.partnerId) queryParams.append('partnerId', filterAttributes.partnerId);
         if (filterAttributes.policyGroupName) queryParams.append('policyGroupName', filterAttributes.policyGroupName);
         if (filterAttributes.policyName) queryParams.append('policyName', filterAttributes.policyName);
-        if (filterAttributes.licenseKeyName) queryParams.append('licenseKeyName', filterAttributes.licenseKeyName);
+        if (filterAttributes.mispLicenseKeyName) queryParams.append('mispLicenseKeyName', filterAttributes.mispLicenseKeyName);
         if (filterAttributes.status) queryParams.append('status', filterAttributes.status);
 
         const url = `${getPartnerManagerUrl('/misp-licenses', process.env.NODE_ENV)}?${queryParams.toString()}`;
@@ -274,7 +275,7 @@ function MispLicenseList() {
                                                                             <td onClick={() => license.status === "activated" && viewMispLicenseDetails(license)} className="px-2">{license.partnerId}</td>
                                                                             <td onClick={() => license.status === "activated" && viewMispLicenseDetails(license)} className="px-2">{license.policyGroupName ? license.policyGroupName : '-'}</td>
                                                                             <td onClick={() => license.status === "activated" && viewMispLicenseDetails(license)} className="px-2">{license.policyName ? license.policyName : '-'}</td>
-                                                                            <td onClick={() => license.status === "activated" && viewMispLicenseDetails(license)} className="px-2">{license.licenseKeyName ? license.licenseKeyName : '-'}</td>
+                                                                            <td onClick={() => license.status === "activated" && viewMispLicenseDetails(license)} className="px-2">{license.mispLicenseKeyName ? license.mispLicenseKeyName : '-'}</td>
                                                                             <td onClick={() => license.status === "activated" && viewMispLicenseDetails(license)} className="px-2">{formatDate(license.createdDateTime, "date")}</td>
                                                                             <td onClick={() => license.status === "activated" && viewMispLicenseDetails(license)} className="px-2">{formatDate(license.expiryDateTime, "date")}</td>
                                                                             <td onClick={() => license.status === "activated" && viewMispLicenseDetails(license)}>
@@ -302,7 +303,8 @@ function MispLicenseList() {
                                                                                     {actionId === index && (
                                                                                         <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-10 text-right" : "right-11 text-left"}`}>
                                                                                             <div role='button' className={`flex justify-between hover:bg-gray-100 ${license.status === 'activated' ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => renewMispLicenseKey(license, index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => renewMispLicenseKey(license, index))}>
-                                                                                                <p id="misp_license_list_renew_misp_license_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${license.status === "activated" ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("mispLicenseList.renewMispLicenseKey")}</p>
+                                                                                                <p id="misp_license_list_renew_misp_license_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${license.status === "activated" ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("mispLicenseList.regenerate")}</p>
+                                                                                                <img src={regenerateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-3" : "pr-3"}`} />
                                                                                             </div>
                                                                                             <hr className="h-px bg-gray-100 border-0 mx-1" />
                                                                                             <div role='button' className="flex justify-between hover:bg-gray-100" onClick={() => viewMispLicenseDetails(license)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => viewMispLicenseDetails(license))}>

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, useBlocker } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../../services/UserProfileService";
-import { isLangRTL, onPressEnterKey, validateInputRegex } from "../../../utils/AppUtils";
+import { isLangRTL, moveToHome, onPressEnterKey, validateInputRegex } from "../../../utils/AppUtils";
 import { getPartnerManagerUrl, handleServiceErrors, createDropdownData, createRequest, getPolicyGroupList, getPartnerTypeDescription, getLanguageLabel, getPartnerDomainType } from '../../../utils/AppUtils';
 import { getAppConfig } from '../../../services/ConfigService';
 import { HttpService } from '../../../services/HttpService';
@@ -251,8 +251,8 @@ function CreatePartner() {
                         header: "createPartner.mispPartnerSuccessHeader",
                         description: "createPartner.mispPartnerSuccessMsg",
                         subNavigation: "createPartner.listOfPartners",
-                        customBtnName: "createPartner.uploadMispPartnerCertificate",
-                        showHome: true,
+                        customBtnName1: "createPartner.uploadMispPartnerCertificate",
+                        customBtnName2: "commons.home",
                     };
                     setConfirmationData(requiredData);
                     
@@ -454,7 +454,7 @@ function CreatePartner() {
                                 </div>
                             </div>
                             : <>
-                                <Confirmation id='create_partner_confirmation' confirmationData={confirmationData} onClickFunction={clickOnUpload} />
+                                <Confirmation id='create_partner_confirmation' confirmationData={confirmationData} onClickCustomBtn1={clickOnUpload} onClickCustomBtn2={() => moveToHome(navigate)} />
                                 {
                                     showPopup && (
                                         <UploadCertificate header={t('createPartner.uploadCertificate')} closePopup={closePopup} popupData={uploadCertificateData} request={uploadCertificateRequest} />
