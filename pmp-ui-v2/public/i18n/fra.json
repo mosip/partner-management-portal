@@ -112,6 +112,16 @@
         "regenerate": "Régénérer",
         "viewMispLicenseKey": "Afficher la clé de licence MISP"
     },
+    "generateLicenseKey": {
+        "errorInResponse": "Lors de la récupération de toutes les politiques de partenaires MISP approuvées, nous avons rencontré une erreur",
+        "mispLicenseKeyName": "Nom de la clé de licence MISP",
+        "enterLicenseKeyName": "Entrez un nom pour la clé de licence MISP",
+        "expirationDuration": "Durée d'expiration (en jours)",
+        "generateLicenseKeySuccessHeader": "Détails soumis avec succès !",
+        "generateLicenseKeySuccessMsg": "Les détails de la clé de licence MISP ont été soumis avec succès",
+        "errorInGenerateLicenseKey": "Lors de la génération de la clé de licence MISP, nous avons rencontré une erreur",
+        "licenseKeyAlertMsg": "La clé de licence MISP contient des informations sensibles. Assurez-vous de la copier avant de fermer cette fenêtre, car elle ne sera plus visible une fois la fenêtre fermée."
+    },
     "header": {
         "userProfile": "Profil de l'utilisateur",
         "changePassword": "Changer le mot de passe"

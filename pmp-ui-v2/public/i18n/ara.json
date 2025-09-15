@@ -112,6 +112,16 @@
         "regenerate": "تجدد",
         "viewMispLicenseKey": "عرض مفتاح ترخيص MISP"
     },
+    "generateLicenseKey": {
+        "errorInResponse": "أثناء جلب جميع سياسات شركاء MISP المعتمدة، واجهنا خطأً",
+        "mispLicenseKeyName": "اسم مفتاح ترخيص MISP",
+        "enterLicenseKeyName": "أدخل اسمًا لمفتاح ترخيص MISP",
+        "expirationDuration": "مدة انتهاء الصلاحية (بالأيام)",
+        "generateLicenseKeySuccessHeader": "تم إرسال التفاصيل بنجاح!",
+        "generateLicenseKeySuccessMsg": "تم إرسال تفاصيل مفتاح ترخيص MISP بنجاح",
+        "errorInGenerateLicenseKey": "أثناء إنشاء مفتاح ترخيص MISP، واجهنا خطأً",
+        "licenseKeyAlertMsg": "يحتوي مفتاح ترخيص MISP على معلومات حساسة. تأكد من نسخ مفتاح ترخيص MISP قبل إغلاق هذه النافذة، لأنه لن يكون مرئيًا بعد إغلاقها."
+    },
     "header": {
         "userProfile": "ملف تعريفي للمستخدم",
         "changePassword": "تغيير كلمة المرور"

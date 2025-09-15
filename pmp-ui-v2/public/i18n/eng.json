@@ -114,6 +114,16 @@
         "regenerate": "Regenerate",
         "viewMispLicenseKey": "View MISP License Key"
     },
+    "generateLicenseKey": {
+        "errorInResponse": "While fetching all approved MISP partner policies, we have encountered with an error",
+        "mispLicenseKeyName": "MISP License Key Name",
+        "enterLicenseKeyName": "Enter a name for MISP License key",
+        "expirationDuration": "Expiration Duration (in days)",
+        "generateLicenseKeySuccessHeader": "Details submitted successfully!",
+        "generateLicenseKeySuccessMsg": "MISP License Key details has been submitted successfully",
+        "errorInGenerateLicenseKey": "While generating MISP License Key, we have encountered with an error",
+        "licenseKeyAlertMsg": "MISP License Key contains sensitive information. Make sure to copy the MISP License key before closing this window because the MISP License key will not be visible anymore once the window is closed."
+    },
     "header": {
         "userProfile": "User Profile",
         "changePassword": "Change Password"
