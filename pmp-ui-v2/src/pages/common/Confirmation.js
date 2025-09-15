@@ -58,6 +58,7 @@ Confirmation.propTypes = {
     id: PropTypes.string.isRequired,
     confirmationData: PropTypes.object.isRequired,
     onClickCustomBtn1: PropTypes.func,
+    onClickCustomBtn2: PropTypes.func,
 };
 
 export default Confirmation;
