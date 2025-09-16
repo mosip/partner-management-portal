@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, useBlocker } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../../services/UserProfileService";
-import { isLangRTL, moveToHome, onPressEnterKey, validateInputRegex } from "../../../utils/AppUtils";
+import { isLangRTL, moveToHome, onPressEnterKey, validateInputRegex, validateEmailRegex, validateContactNumberRegex } from "../../../utils/AppUtils";
 import { getPartnerManagerUrl, handleServiceErrors, createDropdownData, createRequest, getPolicyGroupList, getPartnerTypeDescription, getLanguageLabel, getPartnerDomainType } from '../../../utils/AppUtils';
 import { getAppConfig } from '../../../services/ConfigService';
 import { HttpService } from '../../../services/HttpService';
@@ -23,7 +23,6 @@ function CreatePartner() {
     const [dataLoaded, setDataLoaded] = useState(true);
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
-    const [partnerType, setPartnerType] = useState(getPartnerTypeDescription("MISP_PARTNER", t));
     const [partnerTypeValue, setPartnerTypeValue] = useState("MISP_PARTNER");
     const [policyGroup, setPolicyGroup] = useState("");
     const [address, setAddress] = useState("");
@@ -32,6 +31,7 @@ function CreatePartner() {
     const [email, setEmail] = useState("");
     const [username, setUsername] = useState("");
     const [notificationLanguage, setNotificationLanguage] = useState("");
+    const [partnerTypeDropdownData, setPartnerTypeDropdownData] = useState([]);
     const [policyGroupDropdownData, setPolicyGroupDropdownData] = useState([]);
     const [languageDropdownData, setLanguageDropdownData] = useState([]);
     const [createPartnerSuccess, setCreatePartnerSuccess] = useState(false);
@@ -86,6 +86,10 @@ function CreatePartner() {
         };
     }, [address, organizationName, phoneNumber, email, username, policyGroup, notificationLanguage, isSubmitClicked]);
 
+    const onChangePartnerType = async (fieldName, selectedValue) => {
+        setPartnerTypeValue(selectedValue);
+    };
+
     const onChangePolicyGroup = async (fieldName, selectedValue) => {
         setPolicyGroup(selectedValue);
     };
@@ -94,9 +98,9 @@ function CreatePartner() {
         if (!policyGroupsLoaded) {
             setPolicyGroupLoading(true);
             try {
-                const policyGroupResponse = await getPolicyGroupList(HttpService, setPolicyGroupDropdownData, setErrorCode, setErrorMsg, t);
-                if (policyGroupResponse && policyGroupResponse.data && policyGroupResponse.data.response) {
-                    setPolicyGroupDropdownData(createDropdownData('name', 'description', false, policyGroupResponse.data.response, t));
+                const policyGroupData = await getPolicyGroupList(HttpService, setErrorCode, setErrorMsg, t);
+                if (policyGroupData) {
+                    setPolicyGroupDropdownData(createDropdownData('name', 'description', false, policyGroupData, t));
                 }
                 setPolicyGroupsLoaded(true);
             } catch (err) {
@@ -127,11 +131,17 @@ function CreatePartner() {
                 break;
             case 'contactNumber':
                 setPhoneNumber(value);
-                validateInputRegex(value, setInvalidPhoneNumberError, t);
+                // Clear error message when user starts typing again
+                if (invalidPhoneNumberError) {
+                    setInvalidPhoneNumberError("");
+                }
                 break;
             case 'emailId':
                 setEmail(value);
-                validateInputRegex(value, setInvalidEmailError, t);
+                // Clear error message when user starts typing again
+                if (invalidEmailError) {
+                    setInvalidEmailError("");
+                }
                 break;
             case 'username':
                 setUsername(value);
@@ -140,6 +150,14 @@ function CreatePartner() {
             default:
                 break;
         }
+    };
+
+    const handleEmailBlur = () => {
+        validateEmailRegex(email, setInvalidEmailError, t);
+    };
+
+    const handleContactNumberBlur = () => {
+        validateContactNumberRegex(phoneNumber, setInvalidPhoneNumberError, t);
     };
 
     const clearForm = () => {
@@ -161,7 +179,6 @@ function CreatePartner() {
         setPolicyGroupLoading(false);
         setPolicyGroupDropdownData([]);
         setLanguageDropdownData([]);
-        setPartnerType(getPartnerTypeDescription("MISP_PARTNER", t));
         setPartnerTypeValue("MISP_PARTNER");
     };
 
@@ -194,6 +211,13 @@ function CreatePartner() {
         const fetchData = async () => {
             setDataLoaded(false);
             try {
+                // Initialize partner type dropdown data with only MISP Partner
+                const partnerTypeData = [{
+                    partnerType: "MISP_PARTNER",
+                    description: getPartnerTypeDescription("MISP_PARTNER", t)
+                }];
+                setPartnerTypeDropdownData(createDropdownData('partnerType', 'description', false, partnerTypeData, t));
+
                 // Fetch supported languages from app config
                 const appConfig = await getAppConfig();
                 const supportedLanguages = appConfig && appConfig.supportedNotificationLanguages;
@@ -249,7 +273,6 @@ function CreatePartner() {
                         title: "createPartner.createPartner",
                         backUrl: "/partnermanagement/admin/partners/partners-list",
                         header: "createPartner.mispPartnerSuccessHeader",
-                        description: "createPartner.mispPartnerSuccessMsg",
                         subNavigation: "createPartner.listOfPartners",
                         customBtnName1: "createPartner.uploadMispPartnerCertificate",
                         customBtnName2: "commons.home",
@@ -259,9 +282,9 @@ function CreatePartner() {
                     // Set upload certificate data
                     const requiredDataForCertUpload = {
                         partnerType: "MISP_Partner",
-                        uploadHeader: 'uploadMispPartnerCertificate.uploadMispPartnerCertificate',
-                        successMessage: 'uploadMispPartnerCertificate.successMsg',
+                        uploadHeader: 'uploadCertificate.uploadPartnerCertificate',
                         isUploadPartnerCertificate: true,
+                        isMispPartnerCertificate: true,
                     }
                     setUploadCertificateData(requiredDataForCertUpload);
                     
@@ -325,16 +348,17 @@ function CreatePartner() {
                                         <div className="flex flex-col w-full">
                                             <div className="flex flex-row justify-between space-x-4 my-[1%] max-[450px]:flex-col">
                                                 <div className="flex flex-col w-[48%] max-[450px]:w-full">
-                                                    <label id='create_partner_partner_type_label' className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
-                                                        {t('createPartner.partnerType')}
-                                                    </label>
-                                                    <input
-                                                        id='create_partner_partner_type'
-                                                        type="text"
-                                                        value={partnerType}
-                                                        disabled={true}
-                                                        className="w-full min-h-10 p-3 border border-[#707070] rounded-md text-base text-dark-blue bg-gray-100 leading-tight focus:outline-none focus:shadow-outline"
-                                                    />
+                                                    <DropdownComponent
+                                                        fieldName='partnerType'
+                                                        dropdownDataList={partnerTypeDropdownData}
+                                                        onDropDownChangeEvent={onChangePartnerType}
+                                                        fieldNameKey='createPartner.partnerType*'
+                                                        placeHolderKey='createPartner.selectPartnerType'
+                                                        selectedDropdownValue={partnerTypeValue}
+                                                        searchKey='commons.search'
+                                                        styleSet={styles}
+                                                        id='create_partner_partner_type'>
+                                                    </DropdownComponent>
                                                 </div>
                                                 <div className="flex flex-col w-[48%] max-[450px]:w-full">
                                                     <DropdownWithSearchComponent
@@ -353,6 +377,66 @@ function CreatePartner() {
                                                 </div>
                                             </div>
                                             <div className="flex flex-row justify-between space-x-4 my-[1%] max-[450px]:flex-col">
+                                            <div className="flex flex-col w-[48%] max-[450px]:w-full">
+                                                    <TextInputComponent
+                                                        fieldName='address'
+                                                        fieldNameKey='createPartner.address*'
+                                                        placeHolderKey='createPartner.enterAddress'
+                                                        textBoxValue={address}
+                                                        onTextChange={handleTextChange}
+                                                        styleSet={textInputStyles}
+                                                        id='create_partner_address'
+                                                        maxLength={2000}
+                                                        inputError={invalidAddressError}
+                                                    />
+                                                </div>
+                                                <div className="flex flex-col w-[48%] max-[450px]:w-full">
+                                                    <TextInputComponent
+                                                        fieldName='organizationName'
+                                                        fieldNameKey='createPartner.organizationName*'
+                                                        placeHolderKey='createPartner.enterOrganizationName'
+                                                        textBoxValue={organizationName}
+                                                        onTextChange={handleTextChange}
+                                                        styleSet={textInputStyles}
+                                                        id='create_partner_organization_name'
+                                                        maxLength={128}
+                                                        inputError={invalidOrganizationNameError}
+                                                        addInfoIcon={true}
+                                                        infoKey='createPartner.organizationNameInfo'
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className="flex flex-row justify-between space-x-4 my-[1%] max-[450px]:flex-col">
+                                                <div className="flex flex-col w-[48%] max-[450px]:w-full">
+                                                    <TextInputComponent
+                                                        fieldName='contactNumber'
+                                                        fieldNameKey='createPartner.contactNumber*'
+                                                        placeHolderKey='createPartner.enterContactNumber'
+                                                        textBoxValue={phoneNumber}
+                                                        onTextChange={handleTextChange}
+                                                        onBlur={handleContactNumberBlur}
+                                                        styleSet={textInputStyles}
+                                                        id='create_partner_contact_number'
+                                                        maxLength={16}
+                                                        inputError={invalidPhoneNumberError}
+                                                    />
+                                                </div>
+                                                <div className="flex flex-col w-[48%] max-[450px]:w-full">
+                                                    <TextInputComponent
+                                                        fieldName='emailId'
+                                                        fieldNameKey='createPartner.emailId*'
+                                                        placeHolderKey='createPartner.enterEmailId'
+                                                        textBoxValue={email}
+                                                        onTextChange={handleTextChange}
+                                                        onBlur={handleEmailBlur}
+                                                        styleSet={textInputStyles}
+                                                        id='create_partner_email_id'
+                                                        maxLength={254}
+                                                        inputError={invalidEmailError}
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className="flex flex-row justify-between space-x-4 my-[1%] max-[450px]:flex-col">
                                                 <div className="flex flex-col w-[48%] max-[450px]:w-full">
                                                     <TextInputComponent
                                                         fieldName='username'
@@ -362,7 +446,7 @@ function CreatePartner() {
                                                         onTextChange={handleTextChange}
                                                         styleSet={textInputStyles}
                                                         id='create_partner_partner_id'
-                                                        maxLength={128}
+                                                        maxLength={36}
                                                         inputError={invalidUsernameError}
                                                     />
                                                 </div>
@@ -378,62 +462,6 @@ function CreatePartner() {
                                                         styleSet={styles}
                                                         id='create_partner_lang_code'>
                                                     </DropdownComponent>
-                                                </div>
-                                            </div>
-                                            <div className="flex flex-row justify-between space-x-4 my-[1%] max-[450px]:flex-col">
-                                                <div className="flex flex-col w-[48%] max-[450px]:w-full">
-                                                    <TextInputComponent
-                                                        fieldName='organizationName'
-                                                        fieldNameKey='createPartner.organizationName*'
-                                                        placeHolderKey='createPartner.enterOrganizationName'
-                                                        textBoxValue={organizationName}
-                                                        onTextChange={handleTextChange}
-                                                        styleSet={textInputStyles}
-                                                        id='create_partner_organization_name'
-                                                        maxLength={128}
-                                                        inputError={invalidOrganizationNameError}
-                                                    />
-                                                </div>
-                                                <div className="flex flex-col w-[48%] max-[450px]:w-full">
-                                                    <TextInputComponent
-                                                        fieldName='address'
-                                                        fieldNameKey='createPartner.address*'
-                                                        placeHolderKey='createPartner.enterAddress'
-                                                        textBoxValue={address}
-                                                        onTextChange={handleTextChange}
-                                                        styleSet={textInputStyles}
-                                                        id='create_partner_address'
-                                                        maxLength={256}
-                                                        inputError={invalidAddressError}
-                                                    />
-                                                </div>
-                                            </div>
-                                            <div className="flex flex-row justify-between space-x-4 my-[1%] max-[450px]:flex-col">
-                                                <div className="flex flex-col w-[48%] max-[450px]:w-full">
-                                                    <TextInputComponent
-                                                        fieldName='emailId'
-                                                        fieldNameKey='createPartner.emailId*'
-                                                        placeHolderKey='createPartner.enterEmailId'
-                                                        textBoxValue={email}
-                                                        onTextChange={handleTextChange}
-                                                        styleSet={textInputStyles}
-                                                        id='create_partner_email_id'
-                                                        maxLength={128}
-                                                        inputError={invalidEmailError}
-                                                    />
-                                                </div>
-                                                <div className="flex flex-col w-[48%] max-[450px]:w-full">
-                                                    <TextInputComponent
-                                                        fieldName='contactNumber'
-                                                        fieldNameKey='createPartner.contactNumber*'
-                                                        placeHolderKey='createPartner.enterContactNumber'
-                                                        textBoxValue={phoneNumber}
-                                                        onTextChange={handleTextChange}
-                                                        styleSet={textInputStyles}
-                                                        id='create_partner_contact_number'
-                                                        maxLength={20}
-                                                        inputError={invalidPhoneNumberError}
-                                                    />
                                                 </div>
                                             </div>
                                         </div>

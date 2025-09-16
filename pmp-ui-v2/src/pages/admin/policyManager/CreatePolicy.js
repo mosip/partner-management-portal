@@ -3,7 +3,7 @@ import { useNavigate, useBlocker } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../../services/UserProfileService";
 import { isLangRTL, onPressEnterKey, validateInputRegex } from "../../../utils/AppUtils";
-import { getPolicyManagerUrl, handleServiceErrors, getPolicyGroupList, createRequest, trimAndReplace, handleFileChange } from '../../../utils/AppUtils';
+import { getPolicyManagerUrl, handleServiceErrors, getPolicyGroupList, createRequest, trimAndReplace, handleFileChange, createDropdownData } from '../../../utils/AppUtils';
 import { HttpService } from '../../../services/HttpService';
 import LoadingIcon from "../../common/LoadingIcon";
 import ErrorMessage from "../../common/ErrorMessage";
@@ -135,7 +135,10 @@ function CreatePolicy() {
                     setConfirmationMessage('createPolicy.mispPolicyConfirmationMessage');
                     setBackLink('/partnermanagement/policy-manager/misp-policies-list');
                 }
-                await getPolicyGroupList(HttpService, setPolicyGroupDropdownData, setErrorCode, setErrorMsg, t);
+                const policyGroupData = await getPolicyGroupList(HttpService, setErrorCode, setErrorMsg, t);
+                if (policyGroupData) {
+                    setPolicyGroupDropdownData(createDropdownData('name', 'description', false, policyGroupData, t));
+                }
             } catch (err) {
                 console.error('Error fetching data:', err);
                 if (err.response?.status && err.response.status !== 401) {

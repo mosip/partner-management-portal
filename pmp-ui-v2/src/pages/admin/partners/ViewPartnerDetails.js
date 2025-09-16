@@ -3,10 +3,10 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { getUserProfile } from '../../../services/UserProfileService';
 import {
-    downloadFile, formatDate, getPartnerManagerUrl, getCertificate,
+    downloadFile, formatDate, getCertificate,
     handleMouseClickForDropdown, handleServiceErrors, isLangRTL, getErrorMessage, getPartnerTypeDescription,
     isCaSignedPartnerCertificateAvailable,
-    checkCertificateExpired
+    checkCertificateExpired, fetchPartnerDetails
 } from '../../../utils/AppUtils';
 import SuccessMessage from '../../common/SuccessMessage';
 import ErrorMessage from '../../common/ErrorMessage';
@@ -46,18 +46,11 @@ function ViewPartnerDetails() {
         const fetchData = async () => {
             try {
                 setDataLoaded(false);
-                const response = await HttpService.get(getPartnerManagerUrl(`/admin-partners/${selectedPartnerId}`, process.env.NODE_ENV));
-                if (response) {
-                    const responseData = response.data;
-                    if (responseData && responseData.response) {
-                        const resData = responseData.response;
-                        setPartnerDetails(resData);
-                    } else {
-                        setUnexpectedError(true);
-                        handleServiceErrors(responseData, setErrorCode, setErrorMsg);
-                    }
+                const resData = await fetchPartnerDetails(HttpService, selectedPartnerId, setErrorCode, setErrorMsg, t);
+                if (resData) {
+                    setPartnerDetails(resData);
                 } else {
-                    setErrorMsg(t('viewPartnerDetails.errorInPartnerList'));
+                    setUnexpectedError(true);
                 }
                 setDataLoaded(true);
             } catch (err) {
@@ -65,6 +58,7 @@ function ViewPartnerDetails() {
                 if (err.response?.status && err.response.status !== 401) {
                     setErrorMsg(err.toString());
                 }
+                setDataLoaded(true);
             }
         };
         fetchData();
