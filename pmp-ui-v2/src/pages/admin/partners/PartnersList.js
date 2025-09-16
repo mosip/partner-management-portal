@@ -332,6 +332,7 @@ function PartnersList() {
       reUploadHeader: "uploadCertificate.reUploadPartnerCertificate",
       isCertificateAvailable: isUploaded,
       certificateUploadDateTime: certificateUploadDateTime,
+      isMispPartnerCertificate: true
     };
 
     // Update UI state
