@@ -784,7 +784,8 @@
         "searchPolicyGroup": "Rechercher le groupe de politiques",
         "emailAddressToolTip": "Remarque : Ce filtre effectue une correspondance exacte. Veuillez saisir l'adresse e-mail complète (ex : user@example.com) pour obtenir des résultats.",
         "createPartner": "Créer un partenaire",
-        "uploadOrReuploadCertificate": "Téléverser / Re-téléverser le certificat"
+        "uploadOrReuploadCertificate": "Téléverser / Re-téléverser le certificat",
+        "policyGroupLinkedSuccessMsg": "Le groupe de politiques a été lié avec succès au partenaire {{partnerId}}"
     },
     "viewPartnerDetails": {
         "viewPartnerDetails": "Afficher les détails du partenaire",

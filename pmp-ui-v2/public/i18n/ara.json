@@ -784,7 +784,8 @@
         "searchPolicyGroup": "ابحث عن مجموعة السياسات",
         "emailAddressToolTip": "ملاحظة: يقوم هذا الفلتر بمطابقة تامة. الرجاء إدخال عنوان البريد الإلكتروني الكامل (مثل: user@example.com) للعثور على النتائج.",
         "createPartner": "إنشاء شريك",
-        "uploadOrReuploadCertificate": "تحميل / إعادة تحميل الشهادة"
+        "uploadOrReuploadCertificate": "تحميل / إعادة تحميل الشهادة",
+        "policyGroupLinkedSuccessMsg": "تم ربط مجموعة السياسات بالشريك {{partnerId}} بنجاح!"
     },
     "viewPartnerDetails": {
         "viewPartnerDetails": "عرض تفاصيل الشريك",

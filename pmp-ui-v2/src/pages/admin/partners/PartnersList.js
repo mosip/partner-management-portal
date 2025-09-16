@@ -15,6 +15,7 @@ import {
 } from "../../../utils/AppUtils";
 import LoadingIcon from "../../common/LoadingIcon";
 import ErrorMessage from "../../common/ErrorMessage";
+import SuccessMessage from "../../common/SuccessMessage";
 import Title from "../../common/Title";
 import FilterButtons from "../../common/FilterButtons";
 import PartnerListFilter from "./PartnersListFilter";
@@ -40,6 +41,7 @@ function PartnersList() {
   const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
   const [errorCode, setErrorCode] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
   const [dataLoaded, setDataLoaded] = useState(false);
   const [partnersData, setPartnersData] = useState([]);
   const [order, setOrder] = useState("DESC");
@@ -158,14 +160,17 @@ function PartnersList() {
   }, [isApplyFilterClicked]);
 
   const onApplyFilter = (filters) => {
+    setSuccessMsg("");
     onClickApplyFilter(filters, setIsFilterApplied, setResetPageNo, setTriggerServerMethod, setFilters, setIsApplyFilterClicked);
   };
 
   const getPaginationValues = (recordsPerPage, pageIndex) => {
+    setSuccessMsg("");
     setPageNumberAndPageSize(recordsPerPage, pageIndex, pageNo, setPageNo, pageSize, setPageSize, setTriggerServerMethod);
   }
 
   const viewPartnerDetails = (selectedPartnerData) => {
+    setSuccessMsg("");
     localStorage.setItem('selectedPartnerId', selectedPartnerData.partnerId);
     navigate('/partnermanagement/admin/partners/view-partner-details')
   };
@@ -174,9 +179,14 @@ function PartnersList() {
     setErrorMsg("");
   };
 
+  const cancelSuccessMsg = () => {
+    setSuccessMsg("");
+  };
+
   //This part is related to Sorting
   const sortAscOrder = (header) => {
     if (order !== 'ASC' || activeSortAsc !== header) {
+      setSuccessMsg("");
       setTriggerServerMethod(true);
       setSortFieldName((header === 'status') ? 'isActive' : header);
       setSortType("asc");
@@ -188,6 +198,7 @@ function PartnersList() {
 
   const sortDescOrder = (header) => {
     if (order !== 'DESC' || activeSortDesc !== header) {
+      setSuccessMsg("");
       setTriggerServerMethod(true);
       setSortFieldName((header === 'status') ? 'isActive' : header);
       setSortType("desc");
@@ -204,6 +215,7 @@ function PartnersList() {
   const showDeactivatePartner = (selectedPartnerdata, index) => {
     // Deactivate is only enabled for Active partners
     if (selectedPartnerdata.isActive === true) {
+      setSuccessMsg("");
       const request = createRequest({
         status: "De-Active"
       });
@@ -278,6 +290,7 @@ function PartnersList() {
   };
 
   const createPartner = () => {
+    setSuccessMsg("");
     navigate('/partnermanagement/admin/partners/create-partner');
   };
 
@@ -285,6 +298,7 @@ function PartnersList() {
   const handleUploadCertificate = async (partner, index) => {
     if (!isUploadCertificateEnabled(partner)) return;
 
+    setSuccessMsg("");
     const isUploaded = partner.certificateUploadStatus === "uploaded";
 
     // Default to null; only fetch details if already uploaded
@@ -330,6 +344,7 @@ function PartnersList() {
   // Select Policy Group
   const handleSelectPolicyGroup = (partner, index) => {
     if (isSelectPolicyGroupEnabled(partner)) {
+      setSuccessMsg("");
       setSelectedPartnerForPolicyGroup(partner);
       setShowActiveindexSelectPolicyGroupPopup(index);
       setViewPartnersId(-1);
@@ -370,6 +385,9 @@ function PartnersList() {
       setShowActiveindexSelectPolicyGroupPopup(null);
       setSelectedPartnerForPolicyGroup({});
       
+      // Show success message with partner ID
+      setSuccessMsg(t('partnerList.policyGroupLinkedSuccessMsg', { partnerId: selectedPartnerData.partnerId }));
+      
       // Update the specific row in the state with the new policy group name
       setPartnersData((prevList) =>
         prevList.map(partner =>
@@ -389,6 +407,12 @@ function PartnersList() {
     loadingDiv: "!py-[20%]"
   }
 
+  const successCustomStyle = {
+    outerDiv: `flex justify-end w-full max-w-md my-3 absolute ${isLoginLanguageRTL ? "left-4" : "right-4"}`,
+    innerDiv: "flex justify-between items-center rounded-xl w-full max-w-md min-h-14 min-w-72 p-4",
+    cancelIcon: "!mt-3 !top-1"
+  }
+
   return (
     <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll font-inter`}>
       {!dataLoaded && <LoadingIcon />}
@@ -396,6 +420,9 @@ function PartnersList() {
         <>
           {errorMsg && (
             <ErrorMessage id='partners_list_error_msg' errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
+          )}
+          {successMsg && (
+            <SuccessMessage id='partners_list_success_msg' successMsg={successMsg} clickOnCancel={cancelSuccessMsg} customStyle={successCustomStyle} />
           )}
           <div className="flex-col mt-5">
             <div className="flex justify-between mb-3">

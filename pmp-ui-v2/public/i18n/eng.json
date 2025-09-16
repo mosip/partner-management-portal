@@ -780,7 +780,8 @@
         "searchPolicyGroup": "Search Policy Group",
         "emailAddressToolTip": "Note: This filter performs an exact match. Please enter the full email address (e.g., user@example.com) to find results.",
         "createPartner": "Create Partner",
-        "uploadOrReuploadCertificate": "Upload / Re upload Certificate"
+        "uploadOrReuploadCertificate": "Upload / Re upload Certificate",
+        "policyGroupLinkedSuccessMsg": "Policy group has been successfully linked to partner {{partnerId}}"
     },
     "viewPartnerDetails": {
         "viewPartnerDetails": "View Partner Details",
