@@ -5,7 +5,7 @@ import LoadingIcon from '../../common/LoadingIcon.js';
 import DropdownWithSearchComponent from '../../common/fields/DropdownWithSearchComponent.js';
 import FocusTrap from 'focus-trap-react';
 import { HttpService } from '../../../services/HttpService.js';
-import { getPolicyGroupList, getPolicyManagerUrl, createRequest, getPolicyDetails, handleEscapeKey } from '../../../utils/AppUtils.js';
+import { getPolicyGroupList, getPolicyManagerUrl, createRequest, getPolicyDetails, handleEscapeKey, createDropdownData } from '../../../utils/AppUtils.js';
 import SuccessMessage from '../../common/SuccessMessage.js';
 import closeIcon from "../../../svg/close_icon.svg";
 import PropTypes from 'prop-types';
@@ -48,7 +48,10 @@ function ClonePolicyPopup ({policyDetails, closePopUp}) {
     useEffect(() => {
         const fetchData = async () => {
             setDataLoaded(false);
-            await getPolicyGroupList(HttpService, setPolicyGroupList, setErrorCode, setErrorMsg, t);
+            const policyGroupData = await getPolicyGroupList(HttpService, setErrorCode, setErrorMsg, t);
+            if (policyGroupData) {
+                setPolicyGroupList(createDropdownData('name', 'description', false, policyGroupData, t));
+            }
             setDataLoaded(true);
         };
         fetchData();

@@ -588,7 +588,7 @@ export const onResetFilter = () => {
     window.location.reload();
 };
 
-export const getPolicyGroupList = async (HttpService, setPolicyGroupList, setErrorCode, setErrorMsg, t) => {
+export const getPolicyGroupList = async (HttpService, setErrorCode, setErrorMsg, t) => {
     try {
         const response = await HttpService({
             url: getPolicyManagerUrl('/policies/policy-groups', process.env.NODE_ENV),
@@ -598,19 +598,21 @@ export const getPolicyGroupList = async (HttpService, setPolicyGroupList, setErr
         if (response) {
             const responseData = response.data;
             if (responseData && responseData.response) {
-                const resData = responseData.response;
-                setPolicyGroupList(createDropdownData('name', 'description', false, resData, t));
+                return responseData.response;
             } else {
                 handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+                return null;
             }
         } else {
             setErrorMsg(t('selectPolicyPopup.policyGroupError'));
+            return null;
         }
     } catch (err) {
         console.error('Error fetching data:', err);
         if (err.response?.status && err.response.status !== 401) {
             setErrorMsg(err.toString());
         }
+        return null;
     }
 };
 
@@ -1244,6 +1246,38 @@ export const validateInput = (input) => {
     return allowedPattern.test(input);
 }
 
+export const validateEmailRegex = (email, setEmailError, t) => {
+    if (email === '') {
+        setEmailError("");
+        return;
+    }
+    
+    // Email validation: alphanumeric characters and symbols ( . _ ) are allowed. @ is mandatory
+    const emailPattern = /^[a-zA-Z0-9._]+@[a-zA-Z0-9._]+\.[a-zA-Z]{2,}$/;
+    
+    if (emailPattern.test(email)) {
+        setEmailError("");
+    } else {
+        setEmailError(t('createPartner.enterValidEmailAddress'));
+    }
+};
+
+export const validateContactNumberRegex = (contactNumber, setContactNumberError, t) => {
+    if (contactNumber === '') {
+        setContactNumberError("");
+        return;
+    }
+    
+    // Contact number validation: only digits, spaces, hyphens, plus signs, and parentheses are allowed
+    const contactNumberPattern = /^[0-9\s\-+()]+$/;
+    
+    if (contactNumberPattern.test(contactNumber)) {
+        setContactNumberError("");
+    } else {
+        setContactNumberError(t('createPartner.enterValidContactNumber'));
+    }
+};
+
 export const getFilterDropdownStyle = () => {
     const style = {
         dropdownButton: "min-w-64",
@@ -1259,3 +1293,28 @@ export const getFilterTextFieldStyle = () => {
     };
     return styleSet;
 }
+
+export const fetchPartnerDetails = async (HttpService, partnerId, setErrorCode, setErrorMsg, t) => {
+    try {
+        const response = await HttpService.get(getPartnerManagerUrl(`/admin-partners/${partnerId}`, process.env.NODE_ENV));
+        if (response) {
+            const responseData = response.data;
+            if (responseData && responseData.response) {
+                const resData = responseData.response;
+                return resData;
+            } else {
+                handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+                return null;
+            }
+        } else {
+            setErrorMsg(t('viewPartnerDetails.errorInPartnerList'));
+            return null;
+        }
+    } catch (err) {
+        console.error('Error fetching data:', err);
+        if (err.response?.status && err.response.status !== 401) {
+            setErrorMsg(err.toString());
+        }
+        return null;
+    }
+};

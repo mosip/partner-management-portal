@@ -210,11 +210,6 @@
         "errorWhileUploadingCertificate": "Due to an error, we were unable to upload the certificate. Please try again.",
         "errorWhileGettingCertOrgName": "Unable to get the certificate organisation name"
     },
-    "uploadMispPartnerCertificate": {
-        "uploadMispPartnerCertificate": "Upload MISP Partner Certificate",
-        "reUploadMispPartnerCertificate": "Re-Upload MISP Partner Certificate",
-        "successMsg": "MISP Partner certificate is uploaded successfully."
-    },
     "partnerTypes": {
         "deviceProvider": "Device Provider",
         "ftmProvider": "FTM Chip Provider",
@@ -235,6 +230,7 @@
         "rejected": "Rejected",
         "deactivated": "Deactivated",
         "activated": "Activated",
+        "inactive": "Inactive",
         "pendingCertUpload": "Pending For Certificate Upload",
         "expired": "Expired",
         "uploaded": "Uploaded",
@@ -337,15 +333,16 @@
         "policyGroup": "Policy Group",
         "address": "Address",
         "organizationName": "Organization Name",
+        "organizationNameInfo": "Enter the organization name as mentioned in the ORGANIZATION attribute of CERTIFICATE subject in the CA Signed Certificate.",
         "contactNumber": "Contact Number",
         "emailId": "Email ID",
         "username": "Username",
         "notificationLanguage": "Notification Language",
         "selectPolicyGroup": "Select Policy Group",
         "enterAddress": "Enter Address",
-        "enterOrganizationName": "Enter Organization Name",
-        "enterContactNumber": "Enter Contact Number",
-        "enterEmailId": "Enter Email ID",
+        "enterOrganizationName": "Enter Partner Organization Name",
+        "enterContactNumber": "Enter Phone Number",
+        "enterEmailId": "Enter Email Address",
         "enterUsername": "Enter Username",
         "selectLanguage": "Select Language",
         "clearForm": "Clear Form",
@@ -357,12 +354,13 @@
         "contactNumberInvalid": "Contact Number should contain only digits, spaces, hyphens, plus signs, and parentheses",
         "emailIdRequired": "Email ID is required",
         "emailIdInvalid": "Please enter a valid email address",
+        "enterValidEmailAddress": "Enter valid email address and try again",
+        "enterValidContactNumber": "Enter valid contact number and try again",
         "partnerIdRequired": "Partner ID is required",
         "partnerIdInvalid": "Partner ID should contain only letters, numbers, and underscores",
         "errorInCreatingPartner": "Error occurred while creating partner",
-        "mispPartnerSuccessHeader": "MISP Partner Created Successfully!",
-        "mispPartnerSuccessMsg": "MISP Partner has been successfully created.",
-        "uploadMispPartnerCertificate": "Upload MISP Partner Certificate"
+        "mispPartnerSuccessHeader": "Partner Created Successfully!",
+        "uploadMispPartnerCertificate": "Upload Partner Certificate"
     },
     "languages": {
         "english": "English",
@@ -834,7 +832,9 @@
         "errorInPolicyGroupList": "While fetching policy groups list, we have encountered with an error.",
         "searchPolicyGroupId": "Search Policy Group ID",
         "searchPolicyGroupName": "Search Policy Group Name",
-        "searchPolicyGroupDescription": "Search Policy Group Description"
+        "searchPolicyGroupDescription": "Search Policy Group Description",
+        "noPolicyGroupsFound": "No policy groups found",
+        "noDescription": "No description available"
     },
     "policiesList": {
         "createAuthPolicy": "Create Authentication Policy",
@@ -1201,7 +1201,7 @@
         "PMS_PRT_005": "Partner does not exist",
         "PMS_PRT_006": "No api key req exist",
         "PMS_PRT_105": "Partner API KEY is not Created",
-        "PMS_PRT_011": " Email is already exists.",
+        "PMS_PRT_011": "The provided email address is already registered. Please provide a different email address.",
         "PMS_PRT_012": " Invalid emailId.",
         "PMS_PRT_013": " Invalid mobile number.Length should be less than .",
         "PMS_ATH_401": "Authentication Failed",

@@ -1,22 +1,30 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { HttpService } from "../../services/HttpService.js";
 import {
     getPartnerTypeDescription, createRequest,
-    getPolicyGroupList, getPartnerManagerUrl, handleServiceErrors, logout
+    getPartnerManagerUrl, handleServiceErrors, logout, isLangRTL
 } from '../../utils/AppUtils.js';
 import { useTranslation } from 'react-i18next';
 import { getUserProfile } from '../../services/UserProfileService.js';
 import ErrorMessage from "../common/ErrorMessage.js";
 import LoadingIcon from '../common/LoadingIcon.js';
-import DropdownWithSearchComponent from '../common/fields/DropdownWithSearchComponent.js';
+import SuccessMessage from '../common/SuccessMessage.js';
+import PolicyGroupSelector from '../common/PolicyGroupSelector.js';
 import FocusTrap from 'focus-trap-react';
 
-function SelectPolicyPopup() {
-    const [selectedPolicyGroup, setSelectedPolicyGroup] = useState("");
-    const [policyGroupList, setPolicyGroupList] = useState([]);
+function SelectPolicyPopup({ 
+    onClose, 
+    onSubmit, 
+    isLinkPolicyGroupPopup = false, 
+    partnerId = null,
+    partnerType = null
+}) {
+    const [selectedPolicyGroup, setSelectedPolicyGroup] = useState(null);
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
+    const [successMsg, setSuccessMsg] = useState("");
     const [dataLoaded, setDataLoaded] = useState(true);
+    const [linkPolicyGroupResponse] = useState(null);
     const { t } = useTranslation();
     const userprofile = getUserProfile();
     const [isExpanded, setIsExpanded] = useState(false);
@@ -24,6 +32,7 @@ function SelectPolicyPopup() {
     const descriptionText = t('selectPolicyPopup.description');
     const maxWords = 20;
     const displayText = isExpanded ? descriptionText : `${descriptionText.split(' ').slice(0, maxWords).join(' ')}...`;
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
 
     useEffect(() => {
         document.body.style.overflow = "hidden";
@@ -33,28 +42,62 @@ function SelectPolicyPopup() {
         };
     }, []);
 
+    const handleClose = () => {
+        if (onClose) {
+            onClose();
+        }
+    };
+
     const expandDescription = () => {
         setIsExpanded(!isExpanded);
     };
 
-    useEffect(() => {
-        const fetchData = async () => {
-            setDataLoaded(false);
-            await getPolicyGroupList(HttpService, setPolicyGroupList, setErrorCode, setErrorMsg, t);
-            setDataLoaded(true);
-        };
-        fetchData();
-    }, [t]);
+    // Remove the useEffect for fetching policy group data as it's now handled by PolicyGroupDropdown
 
-    const changePolicyGroupSelection = (fieldName, policyGrpId) => {
-        setSelectedPolicyGroup(policyGrpId);
-    };
-    const cancelErrorMsg = () => {
+    const handlePolicyGroupSelect = useCallback((policyGroup) => {
+        setSelectedPolicyGroup(policyGroup);
+    }, []);
+
+    const cancelErrorMsg = useCallback(() => {
         setErrorMsg("");
+    }, []);
+
+    const cancelSuccessMsg = useCallback(() => {
+        setSuccessMsg("");
+    }, []);
+
+    // Handle linking policy group to existing user
+    const handleLinkPolicyGroup = async () => {
+        const policyGroupId = selectedPolicyGroup ? selectedPolicyGroup.id : null;
+        
+        const linkPolicyGroupRequest = createRequest({
+            policyGroupId: policyGroupId
+        }, "mosip.pms.link.policy.group.post", true);
+        
+        const linkPolicyGroupResponse = await HttpService.post(
+            getPartnerManagerUrl(`/${partnerId}/policy-group`, process.env.NODE_ENV), 
+            linkPolicyGroupRequest
+        );
+        
+        const linkPolicyGroupResponseData = linkPolicyGroupResponse.data;
+        
+        if (linkPolicyGroupResponseData && linkPolicyGroupResponseData.response) {
+            setDataLoaded(true);
+            // Directly close popup and call onSubmit when linking is successful
+            if (onSubmit) {
+                onSubmit(linkPolicyGroupResponseData);
+            }
+            if (onClose) {
+                onClose();
+            }
+        } else {
+            setDataLoaded(true);
+            handleServiceErrors(linkPolicyGroupResponseData, setErrorCode, setErrorMsg);
+        }
     };
 
-    const clickOnSubmit = async () => {
-        setDataLoaded(false);
+    // Handle new user registration
+    const handleUserRegistration = async () => {
         const userProfile = getUserProfile();
         const registerUserRequest = createRequest({
             partnerId: userProfile.userName,
@@ -63,17 +106,60 @@ function SelectPolicyPopup() {
             contactNumber: userProfile.phoneNumber,
             emailId: userProfile.email,
             partnerType: userProfile.partnerType,
-            policyGroup: selectedPolicyGroup,
+            policyGroup: selectedPolicyGroup ? selectedPolicyGroup.name : "",
             langCode: userProfile.langCode,
         });
-        const registerUserResponse = await HttpService.post(getPartnerManagerUrl('/partners', process.env.NODE_ENV), registerUserRequest);
+        
+        const registerUserResponse = await HttpService.post(
+            getPartnerManagerUrl('/partners', process.env.NODE_ENV), 
+            registerUserRequest
+        );
+        
         const registerUserResponseData = registerUserResponse.data;
+        
         if (registerUserResponseData && registerUserResponseData.response) {
             setDataLoaded(true);
+            if (onSubmit) {
+                onSubmit(registerUserResponseData);
+            }
             window.location.reload();
         } else {
             setDataLoaded(true);
             handleServiceErrors(registerUserResponseData, setErrorCode, setErrorMsg);
+        }
+    };
+
+    const clickOnSubmit = async () => {
+        setSuccessMsg("");
+        setErrorCode("");
+        setErrorMsg("");
+        
+        if (successMsg && !isLinkPolicyGroupPopup) {
+            // Close popup when success message is shown and close button is clicked (only for user registration)
+            if (onSubmit && linkPolicyGroupResponse) {
+                onSubmit(linkPolicyGroupResponse);
+            }
+            if (onClose) {
+                onClose();
+            }
+        } else {
+            setDataLoaded(false);
+            
+            try {
+                if (isLinkPolicyGroupPopup) {
+                    await handleLinkPolicyGroup();
+                } else {
+                    await handleUserRegistration();
+                }
+            } catch (error) {
+                setDataLoaded(true);
+                console.error('Error in clickOnSubmit:', error);
+                if (error.response?.data) {
+                    handleServiceErrors(error.response.data, setErrorCode, setErrorMsg);
+                } else {
+                    setErrorMsg(t('commons.errorOccurred'));
+                }
+            }
         }
     }
 
@@ -82,7 +168,7 @@ function SelectPolicyPopup() {
         dropdownLabel: "!text-sm !my-2 mb-0",
         dropdownButton: "!w-full min-w-fit !h-10 !rounded-md !text-sm !text-dark-blue",
         selectionBox: "",
-        loadingDiv: "!py-[50%]"
+        loadingDiv: "!py-[30%]"
     }
 
     const customStyle = {
@@ -90,20 +176,34 @@ function SelectPolicyPopup() {
         innerDiv: "!flex !justify-between !items-center !w-full !min-h-14 !px-3 !py-2"
     }
 
+    const successcustomStyle = {
+        outerDiv: "!flex !justify-center !inset-0",
+        innerDiv: "!flex !justify-between !items-center !rounded-none !md:w-[25rem] !w-full !min-h-[3.2rem] !h-fit !px-4 !py-[10px]",
+        cancelIcon: "!mt-3 !top-1"
+    }
+
     return (
-        <div className="fixed inset-0 w-full flex items-center justify-center bg-black bg-opacity-35 z-50 font-inter -mt-[2rem]">
+        <div className="fixed inset-0 w-full overflow-y-auto flex items-start justify-center bg-black bg-opacity-40 z-50 font-inter pt-1 pb-1">
             <FocusTrap focusTrapOptions={{ initialFocus: false, allowOutsideClick: true }}>
-                <div className={`bg-white w-1/3 h-fit rounded-xl shadow-lg`}>
+                <div className={`bg-white w-full max-w-4xl h-fit rounded-xl shadow-lg mt-8 mb-8`}>
                     {!dataLoaded && (
                         <LoadingIcon styleSet={styles} />
                     )}
                     {dataLoaded && (
                         <>
                             <div className="px-4 py-2">
-                                <h3 id='select_policy_group_popup_title' className="text-base font-bold text-[#333333]">{t('selectPolicyPopup.title')}</h3>
+                                <h3 id='select_policy_group_popup_title' className="text-base font-bold text-[#333333]">
+                                    {t('selectPolicyPopup.title')}
+                                </h3>
+                                {isLinkPolicyGroupPopup && (
+                                  <p id='select_policy_group_popup_subtitle' className={`text-xs font-bold text-[#717171] ${isLoginLanguageRTL ? "text-right" : "text-left"}`}># {partnerId}</p>
+                                )}
                             </div>
                             {errorMsg && (
                                 <ErrorMessage id='select_policy_popup_error_msg' errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} customStyle={customStyle} />
+                            )}
+                            {successMsg && !isLinkPolicyGroupPopup && (
+                                <SuccessMessage id='select_policy_popup_success_msg' successMsg={successMsg} clickOnCancel={cancelSuccessMsg} customStyle={successcustomStyle} />
                             )}
                             <div className="border-gray-200 border-opacity-75 border-t"></div>
                             <div className="py-3 px-4 text-sm text-[#414141]">
@@ -117,43 +217,51 @@ function SelectPolicyPopup() {
                                 )}
                                 <form>
                                     <div className="pt-2 w-full mb-1 flex flex-col">
-                                        <div className="flex flex-col">
+                                        <div className="flex flex-col mb-3">
                                             <label id="select_policy_group_partner_type_label" className="block text-dark-blue text-sm font-semibold mb-2">
                                                 {t('selectPolicyPopup.partnerTypeLabel')}<span className="text-red-500 pl-1">*</span>
                                             </label>
                                             <button id='select_policyPopup_partner_type' disabled className="flex items-center justify-between w-full h-10 px-2 py-2 border border-gray-300 rounded-md text-sm text-dark-blue bg-gray-200 leading-tight focus:outline-none focus:shadow-outline" type="button">
-                                                <span>{getPartnerTypeDescription(userprofile.partnerType, t)}</span>
+                                                <span>{getPartnerTypeDescription(isLinkPolicyGroupPopup ? partnerType : userprofile.partnerType, t)}</span>
                                             </button>
                                         </div>
                                         <div className="flex flex-col">
-                                            <DropdownWithSearchComponent
-                                                fieldName='policyGroup'
-                                                dropdownDataList={policyGroupList}
-                                                onDropDownChangeEvent={changePolicyGroupSelection}
-                                                fieldNameKey='selectPolicyPopup.policyGroup*'
-                                                placeHolderKey='selectPolicyPopup.title'
-                                                searchKey='commons.search'
-                                                selectPolicyPopup
+                                            <PolicyGroupSelector
+                                                id="select_policy_group_list"
+                                                onPolicyGroupSelect={handlePolicyGroupSelect}
+                                                selectedPolicyGroup={selectedPolicyGroup}
                                                 styleSet={styles}
-                                                id="select_policy_group_dropdown">
-                                            </DropdownWithSearchComponent>
+                                                required={true}
+                                            />
                                         </div>
                                     </div>
                                 </form>
                             </div>
                             <div className="border-[#E5EBFA] border-t mx-2"></div>
-                            <div className="p-3 flex justify-between relative">
-                                <p className="text-[#333333] text-sm font-semibold ml-2">{t('selectPolicyPopup.logoutMsg')}
-                                    <button id="select_policy_group_logout" className="text-tory-blue font-semibold cursor-pointer" onClick={logout}>
-                                        <span> {t('commons.logout')}</span>
+                            <div className={`p-3 flex relative ${isLinkPolicyGroupPopup ? 'justify-end' : 'justify-between'}`}>
+                                {!isLinkPolicyGroupPopup && (
+                                    <p className="text-[#333333] text-sm font-semibold ml-2">{t('selectPolicyPopup.logoutMsg')}
+                                        <button id="select_policy_group_logout" className="text-tory-blue font-semibold cursor-pointer" onClick={logout}>
+                                            <span> {t('commons.logout')}</span>
+                                        </button>
+                                    </p>
+                                )}
+                                {isLinkPolicyGroupPopup && (
+                                    <button 
+                                        id="select_policy_group_cancel" 
+                                        className={`${isLoginLanguageRTL ? "ml-5" : "mr-5"} border-[#1447B2] bg-white text-tory-blue border rounded-md w-36 h-10 text-sm font-semibold`}
+                                        onClick={handleClose}
+                                    >
+                                        {t('commons.cancel')}
                                     </button>
-                                </p>
+                                )}
                                 <button
-                                    className={`w-40 h-10 m-1 border-[#1447B2] border rounded-lg text-white text-sm font-semibold relative z-60 
-                                ${selectedPolicyGroup ? 'bg-tory-blue cursor-pointer' : 'bg-gray-400 cursor-not-allowed opacity-55'}`}
+                                    className={`w-36 h-10 border-[#1447B2] border bg-tory-blue rounded-md text-white text-sm font-semibold relative ${
+                                        !selectedPolicyGroup ? 'opacity-50 cursor-not-allowed' : ''
+                                    }`}
                                     onClick={clickOnSubmit}
                                     disabled={!selectedPolicyGroup}
-                                    id="select_policy_group_submit"
+                                    id="select_policy_group_submit_btn"
                                 >
                                     {t('selectPolicyPopup.submit')}
                                 </button>

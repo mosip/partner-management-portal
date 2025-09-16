@@ -10,7 +10,8 @@ import {
   handleMouseClickForDropdown,
   getPartnerTypeDescription,
   getPartnerDomainType,
-  resetPageNumber, onClickApplyFilter, setPageNumberAndPageSize, onResetFilter, setSubmenuRef
+  resetPageNumber, onClickApplyFilter, setPageNumberAndPageSize, onResetFilter, setSubmenuRef,
+  fetchPartnerDetails
 } from "../../../utils/AppUtils";
 import LoadingIcon from "../../common/LoadingIcon";
 import ErrorMessage from "../../common/ErrorMessage";
@@ -22,12 +23,15 @@ import Pagination from "../../common/Pagination";
 import { HttpService } from "../../../services/HttpService";
 import DeactivatePopup from "../../common/DeactivatePopup";
 import UploadCertificate from "../../partner/certificates/UploadCertificate";
+import SelectPolicyPopup from "../../dashboard/SelectPolicyPopup";
 import viewIcon from "../../../svg/view_icon.svg";
 import deactivateIcon from "../../../svg/deactivate_icon.svg";
 import disableDeactivateIcon from "../../../svg/disable_deactivate_icon.svg";
 import EmptyList from "../../common/EmptyList";
-import selectPolicyGroupIcon from "../../../svg/admin_misp_partner_select_policy_group_icon.svg";
+import selectPolicyGroupIcon from "../../../svg/admin_select_policy_group_icon.svg";
 import uploadOrReuploadIcon from "../../../svg/admin_partner_certicate_upload_or_reupload_icon.svg";
+import disableUploadOrReuploadIcon from "../../../svg/admin_disabled_upload_or_reupload_icon.svg";
+import disableSelectPolicyGroupIcon from "../../../svg/admin_disabled_select_policy_group_icon.svg";
 
 function PartnersList() {
   const { t } = useTranslation();
@@ -67,11 +71,12 @@ function PartnersList() {
   });
   const submenuRef = useRef([]);
 
-  const [showSelectPolicyGroupPopup, setShowSelectPolicyGroupPopup] = useState(false);
   const [uploadCertificateData, setUploadCertificateData] = useState({});
   const [uploadCertificateRequest, setUploadCertificateRequest] = useState({});
   const [showActiveindexUploadCertificatePopup, setShowActiveindexUploadCertificatePopup] = useState(null);
-  const [showSelectPolicyGroupPopupIndex, setShowSelectPolicyGroupPopupIndex] = useState(null);
+  const [showActiveindexSelectPolicyGroupPopup, setShowActiveindexSelectPolicyGroupPopup] = useState(null);
+  const [fetchingPartnerDetails, setFetchingPartnerDetails] = useState(null);
+  const [selectedPartnerForPolicyGroup, setSelectedPartnerForPolicyGroup] = useState({});
 
   useEffect(() => {
     handleMouseClickForDropdown(submenuRef, () => setViewPartnersId(-1));
@@ -197,6 +202,7 @@ function PartnersList() {
   };
 
   const showDeactivatePartner = (selectedPartnerdata, index) => {
+    // Deactivate is only enabled for Active partners
     if (selectedPartnerdata.isActive === true) {
       const request = createRequest({
         status: "De-Active"
@@ -205,6 +211,51 @@ function PartnersList() {
       setViewPartnersId(-1);
       setDeactivateRequest(request);
       setShowActiveIndexDeactivatePopup(index);
+    }
+  };
+
+  const isDeactivateEnabled = (partner) => {
+    return partner.isActive === true;
+  };
+
+  const isUploadCertificateEnabled = (partner) => {
+    // Upload certificate is enabled for MISP_Partner when active and inactive state
+    // Disabled for deactivated state:
+    return partner.partnerType === "MISP_Partner" && 
+           !(partner.isActive === false && partner.status === "approved");
+  };
+
+  const isSelectPolicyGroupEnabled = (partner) => {
+    // Select policy group is enabled for MISP_Partner when:
+    // 1. Active (isActive: true) + No Policy Group
+    // 2. Inactive (isActive: false, status: InProgress) + No Policy Group
+    // Disabled for Deactivated partners or when policy group is already selected
+    return partner.partnerType === "MISP_Partner" && 
+           partner.policyGroupId === null && 
+           !(partner.isActive === false && partner.status === "approved");
+  };
+
+  const getPartnerStatusBgColor = (partner) => {
+    if (partner.isActive === false && partner.status === "InProgress") {
+      return 'bg-[#DFE9FF] text-[#384B75]';
+    } 
+    else if (partner.isActive === true) {
+      return 'bg-[#D1FADF] text-[#155E3E]';
+    } 
+    else if (partner.isActive === false && partner.status === "approved") {
+      return 'bg-[#EAECF0] text-[#525252]';
+    }
+  };
+
+  const getPartnerStatusText = (partner, t) => {
+    if (partner.isActive === false && partner.status === "InProgress") {
+      return t('statusCodes.inactive');
+    } 
+    else if (partner.isActive === true) {
+      return t('statusCodes.activated');
+    } 
+    else if (partner.isActive === false && partner.status === "approved") {
+      return t('statusCodes.deactivated');
     }
   };
 
@@ -231,33 +282,57 @@ function PartnersList() {
   };
 
   // Upload/Reupload Certificate
-  const handleUploadCertificate = (partner, index) => {
-      const request = {
-        partnerId: partner.partnerId,
-        partnerDomain: getPartnerDomainType("MISP_Partner"),
-      };
-      
-      const certificateData = {
-        partnerType: "MISP_Partner",
-        uploadHeader: partner.certificateUploadStatus === 'uploaded' 
-          ? 'uploadMispPartnerCertificate.reUploadMispPartnerCertificate'
-          : 'uploadMispPartnerCertificate.uploadMispPartnerCertificate',
-        successMessage: 'uploadMispPartnerCertificate.successMsg',
-        isUploadPartnerCertificate: true
-      };
+  const handleUploadCertificate = async (partner, index) => {
+    if (!isUploadCertificateEnabled(partner)) return;
 
-      setShowActiveindexUploadCertificatePopup(index);
-      setUploadCertificateRequest(request);
-      setUploadCertificateData(certificateData);
-      setViewPartnersId(-1);
+    const isUploaded = partner.certificateUploadStatus === "uploaded";
+
+    // Default to null; only fetch details if already uploaded
+    let certificateUploadDateTime = null;
+    if (isUploaded) {
+      // Set loading state for this specific partner
+      setFetchingPartnerDetails(index);
+
+      const partnerDetails = await fetchPartnerDetails(
+        HttpService,
+        partner.partnerId,
+        setErrorCode,
+        setErrorMsg,
+        t
+      );
+      certificateUploadDateTime = partnerDetails?.certificateUploadDateTime;
+      setFetchingPartnerDetails(null);
+    }
+
+    // Prepare request payload
+    const request = {
+      partnerId: partner.partnerId,
+      partnerDomain: getPartnerDomainType("MISP_Partner"),
+    };
+
+    // Prepare certificate popup data
+    const certificateData = {
+      partnerType: "MISP_Partner",
+      uploadHeader: "uploadCertificate.uploadPartnerCertificate",
+      isUploadPartnerCertificate: true,
+      reUploadHeader: "uploadCertificate.reUploadPartnerCertificate",
+      isCertificateAvailable: isUploaded,
+      certificateUploadDateTime: certificateUploadDateTime,
+    };
+
+    // Update UI state
+    setShowActiveindexUploadCertificatePopup(index);
+    setUploadCertificateRequest(request);
+    setUploadCertificateData(certificateData);
+    setViewPartnersId(-1);
   };
 
   // Select Policy Group
   const handleSelectPolicyGroup = (partner, index) => {
-    if (partner.partnerType === "MISP_Partner") {
-      setShowSelectPolicyGroupPopupIndex(index);
+    if (isSelectPolicyGroupEnabled(partner)) {
+      setSelectedPartnerForPolicyGroup(partner);
+      setShowActiveindexSelectPolicyGroupPopup(index);
       setViewPartnersId(-1);
-      setShowSelectPolicyGroupPopup(true);
     }
   };
 
@@ -285,8 +360,29 @@ function PartnersList() {
 
   // Close Select Policy Group Popup
   const closeSelectPolicyGroupPopup = () => {
-    setShowSelectPolicyGroupPopup(false);
-    setShowSelectPolicyGroupPopupIndex(null);
+    setShowActiveindexSelectPolicyGroupPopup(null);
+    setSelectedPartnerForPolicyGroup({});
+  };
+
+  // Handle Select Policy Group Submit
+  const onClickConfirmSelectPolicyGroup = (policyGroupResponse, selectedPartnerData) => {
+    if (policyGroupResponse && policyGroupResponse.response) {
+      setShowActiveindexSelectPolicyGroupPopup(null);
+      setSelectedPartnerForPolicyGroup({});
+      
+      // Update the specific row in the state with the new policy group name
+      setPartnersData((prevList) =>
+        prevList.map(partner =>
+          partner.partnerId === selectedPartnerData.partnerId 
+            ? { 
+                ...partner, 
+                policyGroupName: policyGroupResponse.response.policyGroupName,
+                policyGroupId: policyGroupResponse.response.policyGroupId
+              } 
+            : partner
+        )
+      );
+    }
   };
 
   const styles = {
@@ -405,8 +501,8 @@ function PartnersList() {
                                               {getStatusCode(partner.certificateUploadStatus, t)}
                                             </td>
                                             <td onClick={() => partner.isActive && viewPartnerDetails(partner)}>
-                                              <div className={`${partner.isActive ? 'bg-[#D1FADF] text-[#155E3E]' : 'bg-[#EAECF0] text-[#525252]'} flex w-fit py-1.5 px-2 mx-2 my-3 text-xs font-semibold rounded-md`}>
-                                                {partner.isActive ? t('statusCodes.activated') : t('statusCodes.deactivated')}
+                                              <div className={`${getPartnerStatusBgColor(partner)} flex w-fit py-1.5 px-2 mx-2 my-3 text-xs font-semibold rounded-md`}>
+                                                {getPartnerStatusText(partner, t)}
                                               </div>
                                             </td>
                                             <td className="flex justify-center items-center cursor-default my-3">
@@ -420,30 +516,28 @@ function PartnersList() {
                                                       <p id="partner_details_view_btn" className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerList.view")}</p>
                                                       <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                     </div>
-                                                    
-                                                    {partner.partnerType === "MISP_Partner" && (
-                                                      <>
-                                                        <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                        <div role='button' className="flex justify-between hover:bg-gray-100 cursor-pointer" onClick={() => handleUploadCertificate(partner, index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => handleUploadCertificate(partner, index))}>
-                                                          <p id="partner_upload_certificate_btn" className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>
-                                                            {t("partnerList.uploadOrReuploadCertificate")}
-                                                          </p>
-                                                          <img src={uploadOrReuploadIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
-                                                        </div>
-                                                        <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                        <div role='button' className="flex justify-between hover:bg-gray-100 cursor-pointer" onClick={() => handleSelectPolicyGroup(partner, index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => handleSelectPolicyGroup(partner, index))}>
-                                                          <p id="partner_select_policy_group_btn" className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>
-                                                            {t("partnerList.selectPolicyGroup")}
-                                                          </p>
-                                                          <img src={selectPolicyGroupIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
-                                                        </div>
-                                                      </>
-                                                    )}
-                                                    
                                                     <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                    <div role='button' className={`flex justify-between hover:bg-gray-100 ${partner.isActive === true ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => showDeactivatePartner(partner, index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => showDeactivatePartner(partner, index))}>
-                                                      <p id="partner_deactive_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${partner.isActive === true ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("partnerList.deActivate")}</p>
-                                                      <img src={partner.isActive === true ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
+                                                    <div role='button' className={`flex justify-between hover:bg-gray-100 ${isUploadCertificateEnabled(partner) && fetchingPartnerDetails !== index ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => handleUploadCertificate(partner, index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => handleUploadCertificate(partner, index))}>
+                                                      <p id="partner_upload_certificate_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${isUploadCertificateEnabled(partner) && fetchingPartnerDetails !== index ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>
+                                                        {t("partnerList.uploadOrReuploadCertificate")}
+                                                      </p>
+                                                      {fetchingPartnerDetails === index ? (
+                                                        <LoadingIcon inline={true} styleSet={{ loadingDiv: `${isLoginLanguageRTL ? "pl-2" : "pr-2"}` }} />
+                                                      ) : (
+                                                        <img src={isUploadCertificateEnabled(partner) ? uploadOrReuploadIcon : disableUploadOrReuploadIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
+                                                      )}
+                                                    </div>
+                                                    <hr className="h-px bg-gray-100 border-0 mx-1" />
+                                                    <div role='button' className={`flex justify-between hover:bg-gray-100 ${isSelectPolicyGroupEnabled(partner) ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => handleSelectPolicyGroup(partner, index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => handleSelectPolicyGroup(partner, index))}>
+                                                      <p id="partner_select_policy_group_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${isSelectPolicyGroupEnabled(partner) ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>
+                                                        {t("partnerList.selectPolicyGroup")}
+                                                      </p>
+                                                      <img src={isSelectPolicyGroupEnabled(partner) ? selectPolicyGroupIcon : disableSelectPolicyGroupIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
+                                                    </div>
+                                                    <hr className="h-px bg-gray-100 border-0 mx-1" />
+                                                    <div role='button' className={`flex justify-between hover:bg-gray-100 ${isDeactivateEnabled(partner) ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => showDeactivatePartner(partner, index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => showDeactivatePartner(partner, index))}>
+                                                      <p id="partner_deactive_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${isDeactivateEnabled(partner) ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("partnerList.deActivate")}</p>
+                                                      <img src={isDeactivateEnabled(partner) ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                     </div>
                                                   </div>
                                                 )}
@@ -463,6 +557,15 @@ function PartnersList() {
                                                     closePopup={closeUploadCertificatePopup} 
                                                     popupData={uploadCertificateData} 
                                                     request={uploadCertificateRequest} 
+                                                  />
+                                                )}
+                                                {showActiveindexSelectPolicyGroupPopup === index && (
+                                                  <SelectPolicyPopup
+                                                    isLinkPolicyGroupPopup={true}
+                                                    partnerId={selectedPartnerForPolicyGroup.partnerId}
+                                                    partnerType={selectedPartnerForPolicyGroup.partnerType}
+                                                    onClose={closeSelectPolicyGroupPopup}
+                                                    onSubmit={(policyGroupResponse) => onClickConfirmSelectPolicyGroup(policyGroupResponse, selectedPartnerForPolicyGroup)}
                                                   />
                                                 )}
                                               </div>
