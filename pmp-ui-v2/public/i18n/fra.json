@@ -1505,6 +1505,8 @@
         "PMS_MSP_422": "Nom de clé de licence non valide.",
         "PMS_MSP_423": "ID partenaire non valide.",
         "PMS_MSP_424": "Le nom de la clé de licence MISP existe déjà.",
-        "PMS_MSP_425": "La date d'expiration doit être supérieure à aujourd'hui."
+        "PMS_MSP_425": "La date d'expiration doit être supérieure à aujourd'hui.",
+        "PMS_MSP_426": "Erreur lors de la récupération des détails de la licence MISP.",
+        "PMS_MSP_427": "La licence MISP n'existe pas pour le fournisseur donné."
     }
 }
