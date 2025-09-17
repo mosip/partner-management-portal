@@ -12,12 +12,14 @@ function MispLicenseFilter ({ onApplyFilter }) {
     const [status, setStatus] = useState([]);
     const [filters, setFilters] = useState({
       partnerId: "",
+      orgName: "",
       policyGroupName: "",
       policyName: "",
       mispLicenseKeyName: "",
       status: "",
     });
     const [invalidPartnerId, setInvalidPartnerId] = useState("");
+    const [invalidOrgName, setInvalidOrgName] = useState("");
     const [invalidPolicyGroupName, setInvalidPolicyGroupName] = useState("");
     const [invalidPolicyName, setInvalidPolicyName] = useState("");
     const [invalidMispLicenseKeyName, setInvalidMispLicenseKeyName] = useState("");
@@ -38,13 +40,14 @@ function MispLicenseFilter ({ onApplyFilter }) {
           [fieldName]: selectedFilter
         }));
         if (fieldName === 'partnerId') { validateInputRegex(selectedFilter, setInvalidPartnerId, t); }
+        if (fieldName === 'orgName') { validateInputRegex(selectedFilter, setInvalidOrgName, t); }
         if (fieldName === 'policyGroupName') { validateInputRegex(selectedFilter, setInvalidPolicyGroupName, t); }
         if (fieldName === 'policyName') { validateInputRegex(selectedFilter, setInvalidPolicyName, t); }
         if (fieldName === 'mispLicenseKeyName') { validateInputRegex(selectedFilter, setInvalidMispLicenseKeyName, t); }
     };
 
     const areFiltersEmpty = () => {
-        return Object.values(filters).every(value => value === "") || invalidPartnerId
+        return Object.values(filters).every(value => value === "") || invalidPartnerId || invalidOrgName
         || invalidPolicyGroupName || invalidPolicyName || invalidMispLicenseKeyName;
     };
 
@@ -58,6 +61,15 @@ function MispLicenseFilter ({ onApplyFilter }) {
                 styleSet={getFilterTextFieldStyle()}
                 id="misp_partner_id_filter"
                 inputError={invalidPartnerId}
+            />
+            <TextInputComponent
+                fieldName="orgName"
+                onTextChange={onFilterChangeEvent}
+                fieldNameKey="oidcClientsList.orgName"
+                placeHolderKey="partnerList.searchOrganisation"
+                styleSet={getFilterTextFieldStyle()}
+                id="misp_org_name_filter"
+                inputError={invalidOrgName}
             />
             <TextInputComponent
                 fieldName="policyGroupName"

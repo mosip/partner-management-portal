@@ -12,6 +12,7 @@ import CalendarInput from "../../common/CalendarInput";
 import { useBlocker, useNavigate } from "react-router-dom";
 import CopyIdPopUp from "../../common/CopyIdPopup";
 import BlockerPrompt from "../../common/BlockerPrompt";
+import Information from "../../common/fields/Information";
 
 function GenerateMispLicenseKey() {
     const { t } = useTranslation();
@@ -115,7 +116,7 @@ function GenerateMispLicenseKey() {
         console.log("Selected Partner Data: ", selectedPartner);
         if (selectedPartner) {
             setPartnerType(getPartnerTypeDescription(selectedPartner.partnerType, t));
-            setPolicyGroupName(selectedPartner.policyGroupName);
+            setPolicyGroupName(selectedPartner.policyGroupName || t('generateLicenseKey.noPolicyGroupSelected'));
             if (selectedPartner.policyGroupName) {
                 await getListofPolicies(selectedPartner);
             }
@@ -220,7 +221,6 @@ function GenerateMispLicenseKey() {
                         title: "mispLicenseList.generateMispLicenseKey",
                         backUrl: "/partnermanagement/admin/misp-partner-services/misp-license-list",
                         header: "generateLicenseKey.generateLicenseKeySuccessHeader",
-                        description: "generateLicenseKey.generateLicenseKeySuccessMsg",
                         subNavigation: "mispLicenseList.mispPartnerServices",
                     }
                     setConfirmationData(requireData);
@@ -315,7 +315,10 @@ function GenerateMispLicenseKey() {
                                         </div>
                                         <div className="flex flex-row justify-between space-x-4 my-2 max-[450px]:flex-col">
                                             <div className="flex flex-col w-[48%] max-[450px]:w-full">
-                                                <label id='generate_license_key_policy_group_label' className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('requestPolicy.policyGroup')}</label>
+                                                <label id='generate_license_key_policy_group_label' className={`flex items-center text-dark-blue text-sm font-semibold mb-2 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+                                                    {t('requestPolicy.policyGroup')}
+                                                    <Information infoKey="generateLicenseKey.policyGroupInfoMsg" id="generate_license_key_policy_group_info"/>
+                                                </label>
                                                 <button id='generate_license_key_policy_group' disabled className="flex items-center justify-between w-full h-auto px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-dark-blue bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
                                             overflow-x-auto whitespace-normal no-scrollbar" type="button">
                                                     <span className={`w-full break-words ${partnerType ? 'text-dark-blue' : 'text-gray-400'} text-wrap text-start`}>{policyGroupName || t('commons.partnersHelpText')}</span>
@@ -330,15 +333,20 @@ function GenerateMispLicenseKey() {
                                                     dropdownDataList={policiesDropdownData}
                                                     onDropDownChangeEvent={onChangePolicyName}
                                                     fieldNameKey='requestPolicy.policyName'
-                                                    placeHolderKey='requestPolicy.selectPolicyName'
+                                                    placeHolderKey='generateLicenseKey.selectPolicyPlaceHolder'
                                                     selectedDropdownValue={policyName}
                                                     searchKey='commons.search'
                                                     styleSet={styleForSearch}
                                                     addInfoIcon={true}
                                                     disabled={!partnerId}
-                                                    infoKey={t('createOidcClient.policyNameToolTip')} 
+                                                    infoKey={t('generateLicenseKey.policyInfo')} 
                                                     id='generate_license_key_policy_name'>
                                                 </DropdownWithSearchComponent>
+                                            </div>
+                                        </div>
+                                        <div className="flex items-center justify-center my-4">
+                                            <div className="p-2 bg-[#FFF7E5] border-2 border-[#EDDCAF] rounded-md w-full">
+                                                <p id='generate_misp_license_key_guidence' className="text-sm font-medium text-[#8B6105]">{t('generateLicenseKey.guidence')}</p>
                                             </div>
                                         </div>
                                         <div className="flex flex-row justify-between space-x-4 my-2 max-[450px]:flex-col">
@@ -356,6 +364,8 @@ function GenerateMispLicenseKey() {
                                                 onChange={onHandleChangeExpiryDate}
                                                 selectedDateStr={expiryDate}
                                                 containsAsterisk
+                                                addInfoIcon
+                                                infoKey='generateLicenseKey.dateFormatInfoKey'
                                                 id='generate_license_key_expiry_date_calender'
                                                 styleSet={calenderStyleSet}
                                                 isUsedAsFilter={false}
