@@ -52,6 +52,7 @@ function MispLicenseList() {
     const [currentLicense, setCurrentLicense] = useState(null);
     const [filterAttributes, setFilterAttributes] = useState({
         partnerId: null,
+        orgName: null,
         policyGroupName: null,
         policyName: null,
         mispLicenseKeyName: null,
@@ -65,6 +66,7 @@ function MispLicenseList() {
 
     const tableHeaders = [
         { id: "partnerId", headerNameKey: 'mispLicenseList.partnerId' },
+        { id: "orgName", headerNameKey: 'mispLicenseList.orgName' },
         { id: "policyGroupName", headerNameKey: "mispLicenseList.policyGroup" },
         { id: "policyName", headerNameKey: "mispLicenseList.policyName" },
         { id: "mispLicenseKeyName", headerNameKey: "mispLicenseList.mispLicenseKeyName" },
@@ -87,6 +89,7 @@ function MispLicenseList() {
         setResetPageNo(false);
 
         if (filterAttributes.partnerId) queryParams.append('partnerId', filterAttributes.partnerId);
+        if (filterAttributes.orgName) queryParams.append('orgName', filterAttributes.orgName);
         if (filterAttributes.policyGroupName) queryParams.append('policyGroupName', filterAttributes.policyGroupName);
         if (filterAttributes.policyName) queryParams.append('policyName', filterAttributes.policyName);
         if (filterAttributes.mispLicenseKeyName) queryParams.append('mispLicenseKeyName', filterAttributes.mispLicenseKeyName);
@@ -273,6 +276,7 @@ function MispLicenseList() {
                                                                         <tr id={"misp_license_list_item" + (index + 1)} key={index}
                                                                             className={`border-t border-[#E5EBFA] ${license.status === "activated" ? 'cursor-pointer' : 'cursor-default'} text-[0.8rem] text-[#191919] font-semibold break-words ${license.status === "deactivated" ? "text-[#969696]" : "text-[#191919]"}`}>
                                                                             <td onClick={() => license.status === "activated" && viewMispLicenseDetails(license)} className="px-2">{license.partnerId}</td>
+                                                                            <td onClick={() => license.status === "activated" && viewMispLicenseDetails(license)} className="px-2">{license.orgName ? license.orgName : '-'}</td>
                                                                             <td onClick={() => license.status === "activated" && viewMispLicenseDetails(license)} className="px-2">{license.policyGroupName ? license.policyGroupName : '-'}</td>
                                                                             <td onClick={() => license.status === "activated" && viewMispLicenseDetails(license)} className="px-2">{license.policyName ? license.policyName : '-'}</td>
                                                                             <td onClick={() => license.status === "activated" && viewMispLicenseDetails(license)} className="px-2">{license.mispLicenseKeyName ? license.mispLicenseKeyName : '-'}</td>
@@ -291,7 +295,7 @@ function MispLicenseList() {
                                                                                         <img src={disabledEyeIcon} alt="" />
                                                                                     }
                                                                                     {showActiveIndexLicenseKeyPopup === index && (
-                                                                                        <CopyIdPopUp closePopUp={() => setShowActiveIndexLicenseKeyPopup(null)} subtitle={currentLicense.partnerId} title={currentLicense.licenseKeyName} id={currentLicense.mispLicenseKey} header='mispLicenseList.mispLicenseKey' styleSet={styles} removeCopyBtn={true} />
+                                                                                        <CopyIdPopUp closePopUp={() => setShowActiveIndexLicenseKeyPopup(null)} subtitle={currentLicense.partnerId} title={currentLicense.mispLicenseKeyName} id={currentLicense.mispLicenseKey} header='mispLicenseList.mispLicenseKey' styleSet={styles} removeCopyBtn={true} />
                                                                                     )}
                                                                                 </div>
                                                                             </td>

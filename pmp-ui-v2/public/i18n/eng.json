@@ -98,6 +98,7 @@
     },
     "mispLicenseList": {
         "partnerId": "Partner ID",
+        "orgName": "Organisation",
         "policyGroup": "Policy Group",
         "policyName": "Policy Name",
         "mispLicenseKeyName": "MISP License Key Name",
@@ -118,11 +119,17 @@
         "errorInResponse": "While fetching all approved MISP partner policies, we have encountered with an error",
         "mispLicenseKeyName": "MISP License Key Name",
         "enterLicenseKeyName": "Enter a name for MISP License key",
-        "expirationDuration": "Expiration Duration (in days)",
-        "generateLicenseKeySuccessHeader": "Details submitted successfully!",
+        "expirationDuration": "Expiry Date",
+        "generateLicenseKeySuccessHeader": "MISP License Key is generated successfully!",
         "generateLicenseKeySuccessMsg": "MISP License Key details has been submitted successfully",
         "errorInGenerateLicenseKey": "While generating MISP License Key, we have encountered with an error",
-        "licenseKeyAlertMsg": "MISP License Key contains sensitive information. Make sure to copy the MISP License key before closing this window because the MISP License key will not be visible anymore once the window is closed."
+        "licenseKeyAlertMsg": "MISP License Key contains sensitive information. Ensure to copy the license key before closing this window as it will be masked after closure, with only the last 4 characters remaining visible.",
+        "noPolicyGroupSelected": "No Policy Group selected",
+        "policyGroupInfoMsg": "Only the policy group linked through the Partner-Policy Linking screen will be pre-selected. Ensure that the relevant policy group is linked before proceeding further.",
+        "selectPolicyPlaceHolder": "Select MISP policy for which MISP License Key is required",
+        "policyInfo": "Request a policy for the given Partner ID in the Partner-Policy Linking screen first. Only policies with Approved status will be available in the dropdown.",
+        "guidence": "Note: As a MISP Partner, the Policy Group and Policy Name fields are optional. We still recommend selecting a Policy Group and Policy Name before generating MISP License Key to help maintain consistency.",
+        "dateFormatInfoKey": "Date Format: mm/dd/yyyy. Ensure that you provide a valid future date, as the license key will be automatically deactivated once this date is reached."
     },
     "header": {
         "userProfile": "User Profile",
@@ -296,7 +303,7 @@
         "errorInResponse": "There is some error in fetching the details for all approved policy groups. Try again later!",
         "errorInFetchingPolicyNames": "There is some error in fetching the policy names. Try again later!",
         "errorInMapPolicy": "While requesting a policy, we have encountered with an error",
-        "policySuccessHeader": "Policy Submitted Successfully!",
+        "policySuccessHeader": "Policy Request has been submitted successfully!",
         "policySuccessMsg": "Policy request process has been successfully submitted. Approval is pending with admin.",
         "info": "Only those partner IDs whose partner certificate is uploaded is available in the dropdown. If you don't find your partner ID, please upload partner certificate first",
         "mispPartnerInfo": "Only those MISP partner IDs whose partner certificate is uploaded is available in the dropdown. If you don't find your partner ID, please upload partner certificate first",
@@ -1234,6 +1241,8 @@
         "PMS_PM_062": "Error while fetching all partner policy mapping requests",
         "PMS_PM_063": "The selected partner has already been deactivated.",
         "PMS_PM_064": "Error while fetching all api key requests",
+        "PMS_PM_065": "Invalid partnerIdSearchType. Allowed values are 'contains' and 'equals'.",
+        "PMS_PM_066": "PartnerId is mandatory when partnerIdSearchType is 'equals'.",
         "PMS_PMP_010": "Policy does not belong to the Policy Group of the Partner Manger",
         "PMS_PMP_015": "No Partner api key requests for the Policy Group",
         "PMS_PMP_007": "Partner api key does not exist",
@@ -1476,7 +1485,21 @@
         "PMS_NOTIFICATION_ERROR_023": "The selected notification type is invalid. Only 'sbi' type is allowed for this filter.",
         "PMS_NOTIFICATION_ERROR_024": "The selected notification type is invalid. Please select a type other than 'weekly'.",
         "PMS_NOTIFICATION_ERROR_025": "Please enter a valid created from date.",
-	    "PMS_NOTIFICATION_ERROR_026": "Please enter a valid created to date."
-	
+	    "PMS_NOTIFICATION_ERROR_026": "Please enter a valid created to date.",
+        "PMS_MSP_005": "MISP Partner does not exist",
+        "PMS_MSP_009": "Given provider is not valid",
+        "PMS_MSP_408": "MISP Partner and License key combintaion not exists.",
+        "PMS_MSP_405": "MISP partner is not active.",
+        "PMS_MSP_407": "MISP Status either Active or De-active.",
+        "PMS_MSP_416": "License key exists for the given provider.",
+        "PMS_MSP_417": "Policy not mapped.",
+        "PMS_MSP_418": "Policy not approved.",
+        "PMS_MSP_419": "Policy not exists.",
+        "PMS_MSP_420": "Error while fetching all MISP Licence details.",
+        "PMS_MSP_421": "Error while generating MISP license key.",
+        "PMS_MSP_422": "Invalid license key name.",
+        "PMS_MSP_423": "Invalid Partner ID.",
+        "PMS_MSP_424": "MISP License key name already exists.",
+        "PMS_MSP_425": "ExpiryDate should be greater than today."
     }
 }

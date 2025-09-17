@@ -324,7 +324,7 @@ function RequestPolicy() {
                                                                 searchKey='commons.search'
                                                                 styleSet={styleForSearch}
                                                                 addInfoIcon
-                                                                infoKey='requestPolicy.mispPartnerInfo'
+                                                                infoKey='requestPolicy.info'
                                                                 id='request_policy_partner_id'>
                                                             </DropdownWithSearchComponent>
                                                         </div>
@@ -352,7 +352,7 @@ function RequestPolicy() {
                                             <div className="flex flex-row justify-between space-x-4 max-[450px]:flex-col">
                                                 <div className="flex flex-col w-[48%] max-[450px]:w-full">
                                                     <label id='request_policy_policy_group_label' className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('requestPolicy.policyGroup')}
-                                                        {!isAdminPath && <span className="text-crimson-red">*</span>}
+                                                        <span className="text-crimson-red">*</span>
                                                     </label>
                                                     <button id='request_policy_policy_group' disabled className="flex items-center justify-between w-full h-auto px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-dark-blue bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
                                                 overflow-x-auto whitespace-normal no-scrollbar" type="button">
@@ -367,7 +367,7 @@ function RequestPolicy() {
                                                         fieldName='policyName'
                                                         dropdownDataList={policiesDropdownData}
                                                         onDropDownChangeEvent={onChangePolicyName}
-                                                        fieldNameKey={isAdminPath ? 'requestPolicy.policyName' : 'requestPolicy.policyName*'}
+                                                        fieldNameKey='requestPolicy.policyName*'
                                                         placeHolderKey='requestPolicy.selectPolicyName'
                                                         selectedDropdownValue={policyName}
                                                         searchKey='commons.search'
@@ -376,13 +376,6 @@ function RequestPolicy() {
                                                     </DropdownWithSearchComponent>
                                                 </div>
                                             </div>
-                                            {isAdminPath && (
-                                                <div className="flex items-center justify-center my-4">
-                                                    <div className="p-2 bg-[#FFF7E5] border-2 border-[#EDDCAF] rounded-md w-full">
-                                                        <p id='request_policy_guidence' className="text-sm font-medium text-[#8B6105]">{t('requestPolicy.guidenceForMispPartner')}</p>
-                                                    </div>
-                                                </div>
-                                            )}
                                             <div className="flex my-[1%]">
                                                 <div className="flex flex-col w-full">
                                                     <label id='request_policy_comment_label' className={`block text-dark-blue text-sm font-semibold mb-1  ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
