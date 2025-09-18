@@ -171,6 +171,10 @@ function SelectPolicyPopup({
         loadingDiv: "!py-[30%]"
     }
 
+    const policyGroupSelectorStyles = {
+        listboxheight: "max-h-36",
+    }
+
     const customStyle = {
         outerDiv: "!flex !justify-end !relative !items-center !w-full",
         innerDiv: "!flex !justify-between !items-center !w-full !min-h-14 !px-3 !py-2"
@@ -183,9 +187,9 @@ function SelectPolicyPopup({
     }
 
     return (
-        <div className="fixed inset-0 w-full overflow-y-auto flex items-start justify-center bg-black bg-opacity-40 z-50 font-inter pt-1 pb-1">
+        <div className="fixed inset-0 w-full overflow-y-auto flex items-center justify-center bg-black bg-opacity-40 z-50 font-inter pt-1 pb-1">
             <FocusTrap focusTrapOptions={{ initialFocus: false, allowOutsideClick: true }}>
-                <div className={`bg-white w-full max-w-4xl h-fit rounded-xl shadow-lg mt-8 mb-8`}>
+                <div className={`bg-white w-full max-w-2xl h-fit rounded-xl shadow-lg mt-6 mb-6`}>
                     {!dataLoaded && (
                         <LoadingIcon styleSet={styles} />
                     )}
@@ -230,8 +234,8 @@ function SelectPolicyPopup({
                                                 id="select_policy_group_list"
                                                 onPolicyGroupSelect={handlePolicyGroupSelect}
                                                 selectedPolicyGroup={selectedPolicyGroup}
-                                                styleSet={styles}
-                                                required={true}
+                                                style={policyGroupSelectorStyles}
+                                                containsAsterisk={true}
                                             />
                                         </div>
                                     </div>

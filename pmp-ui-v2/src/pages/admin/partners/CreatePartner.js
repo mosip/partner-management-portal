@@ -3,13 +3,13 @@ import { useNavigate, useBlocker } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../../services/UserProfileService";
 import { isLangRTL, moveToHome, onPressEnterKey, validateInputRegex, validateEmailRegex, validateContactNumberRegex } from "../../../utils/AppUtils";
-import { getPartnerManagerUrl, handleServiceErrors, createDropdownData, createRequest, getPolicyGroupList, getPartnerTypeDescription, getLanguageLabel, getPartnerDomainType } from '../../../utils/AppUtils';
+import { getPartnerManagerUrl, handleServiceErrors, createDropdownData, createRequest, getPartnerTypeDescription, getLanguageLabel, getPartnerDomainType } from '../../../utils/AppUtils';
 import { getAppConfig } from '../../../services/ConfigService';
 import { HttpService } from '../../../services/HttpService';
 import LoadingIcon from "../../common/LoadingIcon";
 import ErrorMessage from "../../common/ErrorMessage";
 import TextInputComponent from "../../common/fields/TextInputComponent";
-import DropdownWithSearchComponent from "../../common/fields/DropdownWithSearchComponent";
+import PolicyGroupSelector from "../../common/PolicyGroupSelector";
 import DropdownComponent from "../../common/fields/DropdownComponent";
 import BlockerPrompt from "../../common/BlockerPrompt";
 import Title from "../../common/Title";
@@ -24,7 +24,6 @@ function CreatePartner() {
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [partnerTypeValue, setPartnerTypeValue] = useState("MISP_PARTNER");
-    const [policyGroup, setPolicyGroup] = useState("");
     const [address, setAddress] = useState("");
     const [organizationName, setOrganizationName] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
@@ -32,7 +31,7 @@ function CreatePartner() {
     const [username, setUsername] = useState("");
     const [notificationLanguage, setNotificationLanguage] = useState("");
     const [partnerTypeDropdownData, setPartnerTypeDropdownData] = useState([]);
-    const [policyGroupDropdownData, setPolicyGroupDropdownData] = useState([]);
+    const [selectedPolicyGroup, setSelectedPolicyGroup] = useState(null);
     const [languageDropdownData, setLanguageDropdownData] = useState([]);
     const [createPartnerSuccess, setCreatePartnerSuccess] = useState(false);
     const [confirmationData, setConfirmationData] = useState({});
@@ -42,8 +41,7 @@ function CreatePartner() {
     const [invalidPhoneNumberError, setInvalidPhoneNumberError] = useState("");
     const [invalidEmailError, setInvalidEmailError] = useState("");
     const [invalidUsernameError, setInvalidUsernameError] = useState("");
-    const [policyGroupsLoaded, setPolicyGroupsLoaded] = useState(false);
-    const [policyGroupLoading, setPolicyGroupLoading] = useState(false);
+    
     const [uploadCertificateData, setUploadCertificateData] = useState({});
     const [showPopup, setShowPopup] = useState(false);
     const [uploadCertificateRequest, setUploadCertificateRequest] = useState({});
@@ -61,7 +59,7 @@ function CreatePartner() {
 
         return (
             (address !== "" || organizationName !== "" || phoneNumber !== "" || 
-                email !== "" || username !== "" || policyGroup !== "" || notificationLanguage !== "") &&
+                email !== "" || username !== "" || selectedPolicyGroup !== "" || notificationLanguage !== "") &&
             currentLocation.pathname !== nextLocation.pathname
         );
     });
@@ -69,7 +67,7 @@ function CreatePartner() {
     useEffect(() => {
         const shouldWarnBeforeUnload = () => {
             return address !== "" || organizationName !== "" || phoneNumber !== "" || 
-                email !== "" || username !== "" || policyGroup !== "" || notificationLanguage !== "";
+                email !== "" || username !== "" || selectedPolicyGroup !== "" || notificationLanguage !== "";
         };
 
         const handleBeforeUnload = (event) => {
@@ -84,33 +82,14 @@ function CreatePartner() {
         return () => {
             window.removeEventListener('beforeunload', handleBeforeUnload);
         };
-    }, [address, organizationName, phoneNumber, email, username, policyGroup, notificationLanguage, isSubmitClicked]);
+    }, [address, organizationName, phoneNumber, email, username, selectedPolicyGroup, notificationLanguage, isSubmitClicked]);
 
     const onChangePartnerType = async (fieldName, selectedValue) => {
         setPartnerTypeValue(selectedValue);
     };
 
-    const onChangePolicyGroup = async (fieldName, selectedValue) => {
-        setPolicyGroup(selectedValue);
-    };
-
-    const onPolicyGroupDropdownClick = async () => {
-        if (!policyGroupsLoaded) {
-            setPolicyGroupLoading(true);
-            try {
-                const policyGroupData = await getPolicyGroupList(HttpService, setErrorCode, setErrorMsg, t);
-                if (policyGroupData) {
-                    setPolicyGroupDropdownData(createDropdownData('name', 'description', false, policyGroupData, t));
-                }
-                setPolicyGroupsLoaded(true);
-            } catch (err) {
-                console.error('Error fetching policy groups:', err);
-                if (err.response?.status && err.response.status !== 401) {
-                    setErrorMsg(err.toString());
-                }
-            }
-            setPolicyGroupLoading(false);
-        }
+    const onChangePolicyGroup = (policyGroup) => {
+        setSelectedPolicyGroup(policyGroup);
     };
 
     const onChangeNotificationLanguage = async (fieldName, selectedValue) => {
@@ -166,7 +145,6 @@ function CreatePartner() {
         setPhoneNumber("");
         setEmail("");
         setUsername("");
-        setPolicyGroup("");
         setNotificationLanguage("");
         setErrorCode("");
         setErrorMsg("");
@@ -175,9 +153,7 @@ function CreatePartner() {
         setInvalidPhoneNumberError("");
         setInvalidEmailError("");
         setInvalidUsernameError("");
-        setPolicyGroupsLoaded(false);
-        setPolicyGroupLoading(false);
-        setPolicyGroupDropdownData([]);
+        setSelectedPolicyGroup(null);
         setLanguageDropdownData([]);
         setPartnerTypeValue("MISP_PARTNER");
     };
@@ -255,7 +231,7 @@ function CreatePartner() {
         let request = createRequest({
             partnerId: username.trim(),
             partnerType: partnerTypeValue,
-            policyGroup: policyGroup,
+            policyGroup: selectedPolicyGroup ? selectedPolicyGroup.name : "",
             organizationName: organizationName.trim(),
             address: address.trim(),
             contactNumber: phoneNumber.trim(),
@@ -361,19 +337,12 @@ function CreatePartner() {
                                                     </DropdownComponent>
                                                 </div>
                                                 <div className="flex flex-col w-[48%] max-[450px]:w-full">
-                                                    <DropdownWithSearchComponent
-                                                        fieldName='policyGroup'
-                                                        dropdownDataList={policyGroupDropdownData}
-                                                        onDropDownChangeEvent={onChangePolicyGroup}
-                                                        fieldNameKey='createPartner.policyGroup'
-                                                        placeHolderKey='createPartner.selectPolicyGroup'
-                                                        selectedDropdownValue={policyGroup}
-                                                        searchKey='commons.search'
-                                                        styleSet={styles}
-                                                        id='create_partner_policy_group'
-                                                        onDropdownClick={onPolicyGroupDropdownClick}
-                                                        loading={policyGroupLoading}>
-                                                    </DropdownWithSearchComponent>
+                                                    <PolicyGroupSelector
+                                                        onPolicyGroupSelect={onChangePolicyGroup}
+                                                        selectedPolicyGroup={selectedPolicyGroup}
+                                                        placeholderKey='createPartner.selectPolicyGroup'
+                                                        isPlaceHolderPresent={true}
+                                                    />
                                                 </div>
                                             </div>
                                             <div className="flex flex-row justify-between space-x-4 my-[1%] max-[450px]:flex-col">

@@ -1,64 +1,60 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
     createRequest, getPolicyManagerUrl,
-    handleServiceErrors, resetPageNumber, setPageNumberAndPageSize, isLangRTL
+    handleServiceErrors, resetPageNumber
 } from '../../utils/AppUtils';
-import ErrorMessage from './ErrorMessage';
 import LoadingIcon from "./LoadingIcon";
-import Pagination from './Pagination.js';
 import { HttpService } from '../../services/HttpService.js';
 import searchIcon from '../../svg/policy_group_selector_search_icon.svg';
 import { getUserProfile } from '../../services/UserProfileService';
 
-function PolicyGroupSelector({ onPolicyGroupSelect, selectedPolicyGroup, required = false }) {
+function PolicyGroupSelector({ onPolicyGroupSelect, selectedPolicyGroup, containsAsterisk = false, isPlaceHolderPresent, style }) {
     const { t } = useTranslation();
-    const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
-    const [dataLoaded, setDataLoaded] = useState(false);
     const [policyGroupList, setPolicyGroupList] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
-    const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(5);
     const [pageNo, setPageNo] = useState(0);
-    const [pageSize, setPageSize] = useState(5);
+    const [pageSize] = useState(5); // number of items per fetch
     const [fetchData, setFetchData] = useState(false);
     const [tableDataLoaded, setTableDataLoaded] = useState(true);
     const [totalRecords, setTotalRecords] = useState(0);
-    const [resetPageNo, setResetPageNo] = useState(false);
-    const [isSearchFilterClicked, setIsSearchFilterClicked] = useState(false);
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const dropdownButtonRef = useRef(null);
+    const dropdownPanelRef = useRef(null);
+    const dropdownListRef = useRef(null);
+    const isLoginLanguageRTL = getUserProfile ? getUserProfile().locale === 'ar' : false;
 
-    // Handle policy group selection
+    // placeholder
+    const placeholderOption = {
+        id: '__placeholder__',
+        name: t('selectPolicyPopup.title'),
+        desc: ''
+    };
+    const displayedPolicyGroupList = isPlaceHolderPresent
+        ? [placeholderOption, ...policyGroupList]
+        : policyGroupList;
+
     const handlePolicyGroupSelect = (policyGroup) => {
-        if (onPolicyGroupSelect) {
-            onPolicyGroupSelect(policyGroup);
-        }
+        if (onPolicyGroupSelect) onPolicyGroupSelect(policyGroup);
+        closeDropdown();
     };
 
-    // Handle search functionality
-    const handleSearch = (event) => {
-        setSearchTerm(event.target.value);
-    };
-
-    // Debounce search term
+    // Debounce search input
     useEffect(() => {
         const timer = setTimeout(() => {
             setDebouncedSearchTerm(searchTerm);
             setPageNo(0);
             setFetchData(true);
-            setIsSearchFilterClicked(true);
         }, 500);
-
         return () => clearTimeout(timer);
     }, [searchTerm]);
 
+    // Fetch policy groups 
     const fetchPolicyGroupListData = async () => {
-        //reset page number to 0 if filter applied or page number is out of bounds
-        const effectivePageNo = resetPageNumber(totalRecords, pageNo, pageSize, resetPageNo);
-        setResetPageNo(false);
+        const effectivePageNo = resetPageNumber(totalRecords, pageNo, pageSize, false);
 
-        // Create search filter
         let filterRequest = [];
         if (debouncedSearchTerm.trim()) {
             filterRequest.push({
@@ -71,179 +67,182 @@ function PolicyGroupSelector({ onPolicyGroupSelect, selectedPolicyGroup, require
         const request = createRequest({
             filters: filterRequest,
             sort: [{ sortField: "crDtimes", sortType: "desc" }],
-            pagination: {
-                pageStart: effectivePageNo,
-                pageFetch: pageSize
-            }
+            pagination: { pageStart: effectivePageNo, pageFetch: pageSize }
         });
 
         try {
-            fetchData ? setTableDataLoaded(false) : setDataLoaded(false);
+            setTableDataLoaded(false);
             const response = await HttpService({
                 url: getPolicyManagerUrl('/policies/group/search', process.env.NODE_ENV),
                 method: 'post',
                 baseURL: process.env.NODE_ENV !== 'production' ? '' : window._env_.REACT_APP_POLICY_MANAGER_API_BASE_URL,
                 data: request
             });
-            if (response) {
-                const responseData = response.data;
-                if (responseData && responseData.response) {
-                    const resData = responseData.response.data;
-                    setTotalRecords(responseData.response.totalRecord);
-                    if (resData !== null) setPolicyGroupList(resData);
-                    else setPolicyGroupList([]);
-                } else {
-                    handleServiceErrors(responseData, setErrorCode, setErrorMsg);
-                }
+
+            if (response?.data?.response) {
+                const resData = response.data.response.data || [];
+                setTotalRecords(response.data.response.totalRecord || 0);
+
+                // Append new items if scrolling, replace if new search
+                setPolicyGroupList(effectivePageNo > 0 ? [...policyGroupList, ...resData] : resData);
             } else {
-                setErrorMsg(t('policyGroupList.errorInPolicyGroupList'));
+                handleServiceErrors(response.data, null, setErrorMsg);
             }
-            fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
+
+            setTableDataLoaded(true);
             setFetchData(false);
         } catch (err) {
-            console.error('Error fetching data:', err);
-            if (err.response?.status && err.response.status !== 401) {
-                setErrorMsg(err.toString());
-            }
+            console.error(err);
+            setErrorMsg(err.toString());
+            setTableDataLoaded(true);
             setFetchData(false);
-            fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
         }
     };
 
+    // Fetch data
     useEffect(() => {
-        fetchPolicyGroupListData();
-    }, [pageNo, pageSize, debouncedSearchTerm, t]);
+        if (isDropdownOpen) fetchPolicyGroupListData();
+    }, [pageNo, debouncedSearchTerm, isDropdownOpen]);
 
-    useEffect(() => {
-        if (isSearchFilterClicked && pageNo === 0) {
-            setIsSearchFilterClicked(false);
-        }
-    }, [isSearchFilterClicked]);
+    const toggleDropdown = () => setIsDropdownOpen(prev => {
+        if (!prev) setPageNo(0); // reset page on open
+        return !prev;
+    });
 
-    const getPaginationValues = (recordsPerPage, pageIndex) => {
-        setPageNumberAndPageSize(recordsPerPage, pageIndex, pageNo, setPageNo, pageSize, setPageSize, setFetchData);
-    }
-
-    const cancelErrorMsg = () => {
-        setErrorMsg("");
+    const closeDropdown = () => {
+        setIsDropdownOpen(false);
     };
 
-    const styles = {
-        loadingDiv: "py-20"
-    }
+    // Close dropdown when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (!isDropdownOpen) return;
+            if (
+                dropdownButtonRef.current?.contains(event.target) ||
+                dropdownPanelRef.current?.contains(event.target) ||
+                dropdownListRef.current?.contains(event.target)
+            ) return;
+            closeDropdown();
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, [isDropdownOpen]);
+
+
+    // Infinite scroll
+    const onDropdownScroll = (event) => {
+        const target = event.currentTarget;
+        const threshold = 48;
+        const nearBottom = target.scrollTop + target.clientHeight >= target.scrollHeight - threshold;
+        if (nearBottom && policyGroupList.length < totalRecords && tableDataLoaded && !fetchData) {
+            setPageNo(prev => prev + 1);
+            setFetchData(true);
+        }
+    };
 
     return (
         <div className="w-full mx-auto">
-            {/* Label */}
             <label className="flex items-center text-dark-blue text-sm mb-2 ml-1">
                 <p className="font-semibold">
                     {t('selectPolicyPopup.policyGroup')}
-                    {required && <span className="text-crimson-red mx-1">*</span>}
+                    {containsAsterisk && <span className="text-crimson-red mx-1">*</span>}
                 </p>
             </label>
 
-            <div className="bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden">
-                {!dataLoaded && (
-                    <LoadingIcon styleSet={styles} />
-                )}
-                {dataLoaded && (
-                    <>
-                        {errorMsg && (
-                            <ErrorMessage
-                                id='policy_group_selector_error_msg'
-                                errorCode={errorCode}
-                                errorMessage={errorMsg}
-                                clickOnCancel={cancelErrorMsg}
-                            />
-                        )}
+            <div className="relative w-full">
+                <button
+                    id="policy_group_selector_dropdown_button"
+                    type="button"
+                    className="flex items-center justify-between w-full h-10 px-2 border border-[#707070] bg-white rounded-[4px] text-[15px] focus:shadow-none"
+                    aria-haspopup="listbox"
+                    aria-expanded={isDropdownOpen}
+                    aria-controls="policy_group_selector_dropdown_listbox"
+                    onClick={toggleDropdown}
+                    ref={dropdownButtonRef}
+                >
+                    <span className={`truncate max-w-full text-left ${selectedPolicyGroup?.name ? 'text-[#343434]' : 'text-grayish-blue'}`}>
+                        {selectedPolicyGroup?.name || t('selectPolicyPopup.title')}
+                    </span>
+                    <svg className={`w-3 h-2 ${isLoginLanguageRTL ? 'mr-3' :'ml-3'} transform ${isDropdownOpen ? 'rotate-180' : 'rotate-0'} text-gray-500 text-sm`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
+                    </svg>
+                </button>
 
-                        {/* Header */}
-                        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 p-3 sm:p-2 border-b border-gray-200">
-                            <h2 id="policy_group_selector_title" className="text-sm sm:text-sm font-semibold text-gray-800">
-                                {t('policyGroupList.listOfPolicyGroups')} ({totalRecords})
-                            </h2>
-
-                            {/* Search Bar */}
-                            <div className="relative w-full sm:w-auto">
-                                <div className={`absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none`}>
+                {isDropdownOpen && (
+                    <div ref={dropdownPanelRef} className="absolute z-10 left-0 mt-2 w-full bg-white border border-gray-400 rounded-md shadow-lg cursor-pointer">
+                        <div className="p-2 border-b border-gray-200">
+                            <div className="relative">
+                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <img src={searchIcon} alt="" className="h-4 w-4 text-gray-400" />
                                 </div>
                                 <input
-                                    id="policy_group_selector_search_input"
                                     type="text"
                                     placeholder={t('commons.search')}
                                     value={searchTerm}
-                                    onChange={handleSearch}
-                                    className={`block w-full sm:w-64 pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm`}
+                                    onChange={(e) => { setSearchTerm(e.target.value); }}
+                                    className="block w-full pl-10 pr-3 py-2 border border-gray-400 rounded-md leading-5 bg-white placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:ring-0"
                                 />
                             </div>
                         </div>
 
-                        {/* Policy Group List */}
-                        {!tableDataLoaded ? (
-                            <LoadingIcon styleSet={styles} />
+                        {!tableDataLoaded && policyGroupList.length === 0 ? (
+                            <div className="py-6"><LoadingIcon /></div>
                         ) : (
-                            <div className='overflow-y-auto max-h-[12.5rem]'>
-                                {policyGroupList.length === 0 ? (
-                                    <div id="policy_group_selector_empty_state" className="p-6 sm:p-8 text-center text-gray-500">
-                                        <p className="text-sm sm:text-base">{t('policyGroupList.noPolicyGroupsFound')}</p>
-                                    </div>
-                                ) : (
-                                    policyGroupList.map((policyGroup, index) => (
-                                        <div key={policyGroup.id} >
-                                            <div
-
-                                                id={`policy_group_selector_item_${index + 1}`}
-                                                className="p-2 hover:bg-gray-50 cursor-pointer transition-colors duration-150"
-                                                onClick={() => handlePolicyGroupSelect(policyGroup)}
+                            <ul
+                                id="policy_group_selector_dropdown_listbox"
+                                role="listbox"
+                                aria-label={t('policyGroupList.listOfPolicyGroups')}
+                                className={`${style?.listboxheight || 'max-h-44'} overflow-auto focus:outline-none`}
+                                onScroll={onDropdownScroll}
+                                ref={dropdownListRef}
+                            >
+                                {displayedPolicyGroupList.length === 0 ? (
+                                    <li className="px-3 py-3 text-sm text-gray-500">
+                                        {t('policyGroupList.noPolicyGroupsFound')}
+                                    </li>
+                                ) : displayedPolicyGroupList.map((policyGroup, index) => {
+                                    const isPlaceholder = policyGroup.id === '__placeholder__';
+                                    const isSelected = !isPlaceholder && selectedPolicyGroup?.id === policyGroup.id;
+                                    return (
+                                        <li
+                                            id={isPlaceHolderPresent ? (index > 0 ? `policy_group_selector_option_${index}` : undefined) : `policy_group_selector_option_${index + 1}`}
+                                            key={isPlaceholder ? 'placeholder' : policyGroup.id}
+                                            role="option"
+                                            aria-selected={isSelected}
+                                            className="px-0 py-0"
+                                        >
+                                            <button
+                                                type="button"
+                                                className={`block w-full ${policyGroup.desc ? 'min-h-16' : 'min-h-8'} px-4 py-2 text-sm text-dark-blue text-left ${isSelected ? 'bg-gray-100' : 'bg-white hover:bg-gray-50'}`}
+                                                onClick={() => handlePolicyGroupSelect(isPlaceholder ? null : policyGroup)}
                                             >
-                                                <div className="flex items-start">
-                                                    {/* Radio Button */}
-                                                    <div className={`flex items-center justify-center h-12 ${isLoginLanguageRTL ? 'pl-3' : 'pr-3'}`}>
-                                                        <input
-                                                            id={`policy_group_selector_radio_${index + 1}`}
-                                                            type="radio"
-                                                            name="policyGroup"
-                                                            value={policyGroup.id}
-                                                            checked={selectedPolicyGroup?.id === policyGroup.id}
-                                                            onChange={() => handlePolicyGroupSelect(policyGroup)}
-                                                            className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
-                                                        />
-                                                    </div>
-
-                                                    {/* Policy Group Info */}
-                                                    <div className="flex-1 min-w-0">
-                                                        <h3 id={`policy_group_selector_name_${index + 1}`} className="text-sm sm:text-sm font-semibold text-gray-900 leading-tight">
-                                                            {policyGroup.name}
-                                                        </h3>
-                                                        <p id={`policy_group_selector_description_${index + 1}`} className="mt-1 text-xs sm:text-sm text-gray-500 leading-relaxed">
-                                                            {policyGroup.desc || t('policyGroupList.noDescription')}
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <hr className="mx-3 sm:mx-4" />
-                                        </div>
-                                    ))
+                                                <span className={`${policyGroup.desc ? 'font-semibold' : 'font-normal'} ${isPlaceholder ? 'text-gray-500' : 'text-dark-blue'}`}>
+                                                    {policyGroup.name}
+                                                </span>
+                                                {!isPlaceholder && policyGroup.desc && (
+                                                    <>
+                                                        <br />
+                                                        <span className="text-xs text-[#727272]">{policyGroup.desc || t('policyGroupList.noDescription')}</span>
+                                                    </>
+                                                )}
+                                                {!isPlaceholder && !policyGroup.desc && (
+                                                    <></>
+                                                )}
+                                            </button>
+                                            <div className="border-gray-200 border-t mx-2"></div>
+                                        </li>
+                                    );
+                                })}
+                                {fetchData && policyGroupList.length > 0 && (
+                                    <li className="px-3 py-2"><LoadingIcon inline={true} /></li>
                                 )}
-                            </div>
+                            </ul>
                         )}
-
-                        {/* Pagination */}
-                        <Pagination
-                            dataListLength={totalRecords}
-                            selectedRecordsPerPage={selectedRecordsPerPage}
-                            setSelectedRecordsPerPage={setSelectedRecordsPerPage}
-                            isServerSideFilter={true}
-                            getPaginationValues={getPaginationValues}
-                            isApplyFilterClicked={isSearchFilterClicked}
-                            setIsApplyFilterClicked={setIsSearchFilterClicked}
-                        />
-                    </>
+                    </div>
                 )}
             </div>
         </div>
-    )
-
+    );
 }
+
 export default PolicyGroupSelector;
