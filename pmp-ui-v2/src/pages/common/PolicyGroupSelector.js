@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
     createRequest, getPolicyManagerUrl,
-    handleServiceErrors, resetPageNumber
+    handleServiceErrors, resetPageNumber, isLangRTL
 } from '../../utils/AppUtils';
 import LoadingIcon from "./LoadingIcon";
 import { HttpService } from '../../services/HttpService.js';
@@ -24,7 +24,7 @@ function PolicyGroupSelector({ onPolicyGroupSelect, selectedPolicyGroup, contain
     const dropdownButtonRef = useRef(null);
     const dropdownPanelRef = useRef(null);
     const dropdownListRef = useRef(null);
-    const isLoginLanguageRTL = getUserProfile ? getUserProfile().locale === 'ar' : false;
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
 
     // placeholder
     const placeholderOption = {
@@ -160,7 +160,7 @@ function PolicyGroupSelector({ onPolicyGroupSelect, selectedPolicyGroup, contain
                     onClick={toggleDropdown}
                     ref={dropdownButtonRef}
                 >
-                    <span className={`truncate max-w-full text-left ${selectedPolicyGroup?.name ? 'text-[#343434]' : 'text-grayish-blue'}`}>
+                    <span className={`truncate max-w-full ${isLoginLanguageRTL ? 'text-right' : 'text-left'} ${selectedPolicyGroup?.name ? 'text-[#343434]' : 'text-grayish-blue'}`}>
                         {selectedPolicyGroup?.name || t('selectPolicyPopup.title')}
                     </span>
                     <svg className={`w-3 h-2 ${isLoginLanguageRTL ? 'mr-3' :'ml-3'} transform ${isDropdownOpen ? 'rotate-180' : 'rotate-0'} text-gray-500 text-sm`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
@@ -169,10 +169,10 @@ function PolicyGroupSelector({ onPolicyGroupSelect, selectedPolicyGroup, contain
                 </button>
 
                 {isDropdownOpen && (
-                    <div ref={dropdownPanelRef} className="absolute z-10 left-0 mt-2 w-full bg-white border border-gray-400 rounded-md shadow-lg cursor-pointer">
+                    <div ref={dropdownPanelRef} className={`absolute z-10 ${isLoginLanguageRTL ? 'right-0' : 'left-0'} mt-2 w-full bg-white border border-gray-400 rounded-md shadow-lg cursor-pointer`}>
                         <div className="p-2 border-b border-gray-200">
                             <div className="relative">
-                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <div className={`absolute inset-y-0 ${isLoginLanguageRTL ? 'right-0 pr-3' : 'left-0 pl-3'} flex items-center pointer-events-none`}>
                                     <img src={searchIcon} alt="" className="h-4 w-4 text-gray-400" />
                                 </div>
                                 <input
@@ -180,7 +180,7 @@ function PolicyGroupSelector({ onPolicyGroupSelect, selectedPolicyGroup, contain
                                     placeholder={t('commons.search')}
                                     value={searchTerm}
                                     onChange={(e) => { setSearchTerm(e.target.value); }}
-                                    className="block w-full pl-10 pr-3 py-2 border border-gray-400 rounded-md leading-5 bg-white placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:ring-0"
+                                    className={`block w-full ${isLoginLanguageRTL ? 'pr-10 pl-3 text-right' : 'pl-10 pr-3'} py-2 border border-gray-400 rounded-md leading-5 bg-white placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:ring-0`}
                                 />
                             </div>
                         </div>
@@ -213,7 +213,7 @@ function PolicyGroupSelector({ onPolicyGroupSelect, selectedPolicyGroup, contain
                                         >
                                             <button
                                                 type="button"
-                                                className={`block w-full ${policyGroup.desc ? 'min-h-16' : 'min-h-8'} px-4 py-2 text-sm text-dark-blue text-left ${isSelected ? 'bg-gray-100' : 'bg-white hover:bg-gray-50'}`}
+                                                className={`block w-full ${policyGroup.desc ? 'min-h-16' : 'min-h-8'} px-4 py-2 text-sm text-dark-blue ${isLoginLanguageRTL ? 'text-right' : 'text-left'} ${isSelected ? 'bg-gray-100' : 'bg-white hover:bg-gray-50'}`}
                                                 onClick={() => handlePolicyGroupSelect(isPlaceholder ? null : policyGroup)}
                                             >
                                                 <span className={`${policyGroup.desc ? 'font-semibold' : 'font-normal'} ${isPlaceholder ? 'text-gray-500' : 'text-dark-blue'}`}>
