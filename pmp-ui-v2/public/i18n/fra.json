@@ -91,8 +91,8 @@
         "apiKeyExpiryCountDesc2": "{{expiringApiKeyCount}} clé API va bientôt expirer",
         "sbiExpiryCountDesc1": "{{expiringSbiCount}} SBI vont bientôt expirer",
         "sbiExpiryCountDesc2": "{{expiringSbiCount}} SBI va bientôt expirer",
-        "mispPartnerServices": "Services partenaires MISP",
-        "mispPartnerServicesDesc": "Services Partenaire MISP"
+        "mispPartnerServices": "Services MISP",
+        "mispPartnerServicesDesc": "Générer, régénérer, afficher ou désactiver les clés de licence MISP"
     },
     "mispLicenseList": {
         "partnerId": "ID partenaire",
@@ -108,7 +108,7 @@
         "listOfMispLicenseKeys": "Liste des clés de licence MISP",
         "errorInMispLicenseList": "Une erreur s'est produite lors de la récupération de la liste des licences MISP",
         "generateMispLicenseKey": "Générer une clé de licence MISP",
-        "mispPartnerServices": "Services partenaires MISP",
+        "mispPartnerServices": "Services MISP",
         "searchMispLicenseKeyName": "Rechercher le nom de la clé de licence MISP",
         "regenerate": "Régénérer",
         "viewMispLicenseKey": "Afficher la clé de licence MISP",
@@ -124,9 +124,9 @@
         "errorInGenerateLicenseKey": "Lors de la génération de la clé de licence MISP, nous avons rencontré une erreur",
         "licenseKeyAlertMsg": "La clé de licence MISP contient des informations sensibles. Assurez-vous de copier la clé de licence avant de fermer cette fenêtre, car elle sera masquée après la fermeture, seuls les quatre derniers caractères restant visibles.",
         "noPolicyGroupSelected": "Aucun groupe de politiques sélectionné",
-        "policyGroupInfoMsg": "Seul le groupe de politiques lié via l'écran « Liaison entre partenaires et politiques » sera présélectionné. Assurez-vous que le groupe de politiques concerné est lié avant de continuer.",
+        "policyGroupInfoMsg": "Seul le groupe de politiques sélectionné lors de la création du partenaire ou via la fenêtre contextuelle « Sélectionner un groupe de politiques » dans la section Partenaires sera renseigné automatiquement. Veuillez vous assurer que le groupe de politiques concerné est sélectionné avant de poursuivre.",
         "selectPolicyPlaceHolder": "Sélectionnez la politique MISP pour laquelle la clé de licence MISP est requise",
-        "policyInfo": "Demandez d'abord une politique pour l'ID partenaire donné dans l'écran de liaison entre partenaires et politiques. Seules les politiques approuvées seront disponibles dans la liste déroulante.",
+        "policyInfo": "Demandez d'abord une politique pour l'ID partenaire donné dans l'écran « Lien entre partenaires et politiques ». Seules les demandes de politique approuvées seront disponibles dans le menu déroulant.",
         "guidence": "Remarque : En tant que partenaire MISP, les champs Groupe de politiques et Nom de la politique sont facultatifs. Nous vous recommandons néanmoins de sélectionner un Groupe de politiques et un Nom de politique avant de générer la clé de licence MISP afin de garantir la cohérence.",
         "dateFormatInfoKey": "Format de date : jj/mm/aaaa. Assurez-vous de fournir une date future valide, car la clé de licence sera automatiquement désactivée une fois cette date atteinte."
     },
