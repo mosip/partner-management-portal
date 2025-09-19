@@ -113,7 +113,8 @@
         "mispPartnerServices": "MISP Partner Services",
         "searchMispLicenseKeyName": "Search MISP License Key Name",
         "regenerate": "Regenerate",
-        "viewMispLicenseKey": "View MISP License Key"
+        "viewMispLicenseKey": "View MISP License Key",
+        "errorWhileGettingMispDetails": "Error while getting MISP License Key details"
     },
     "generateLicenseKey": {
         "errorInResponse": "While fetching all approved MISP partner policies, we have encountered with an error",
@@ -1500,6 +1501,12 @@
         "PMS_MSP_422": "Invalid license key name.",
         "PMS_MSP_423": "Invalid Partner ID.",
         "PMS_MSP_424": "MISP License key name already exists.",
-        "PMS_MSP_425": "ExpiryDate should be greater than today."
+        "PMS_MSP_425": "ExpiryDate should be greater than today.",
+        "PMS_MSP_426": "Error while fetching MISP Licence details.",
+        "PMS_MSP_427": "No matching MISP License Key exists for the specified Partner ID, Policy ID, and MISP License Key Name.",
+        "PMS_MSP_428": "Unable to fetch MISP License Key details because multiple matches were found for the provided Partner ID, Policy ID, and MISP License Key Name. Please use the correct MISP License Key Name and Policy ID to filter.",
+        "PMS_MSP_429": "Partner ID does not exist.",
+        "PMS_MSP_430": "Partner is not active.",
+        "PMS_MSP_431": "Invalid Partner Type. The Partner Type should be MISP_Partner."
     }
 }
