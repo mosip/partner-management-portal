@@ -381,8 +381,8 @@ function GenerateMispLicenseKey() {
                                     <button id="generate_license_key_cancel_btn" onClick={() => clickOnCancel()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.cancel')}</button>
                                     <button id="generate_license_key_submit_btn" disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>{t('requestPolicy.submit')}</button>
                                     {(showPopup && !errorMsg) && (
-                                        <CopyIdPopUp closePopUp={closePopUp} subtitle={policyName} title={partnerId} id={mispLicenseKey}
-                                            header='generateLicenseKey.mispLicenseKeyName' alertMsg='generateLicenseKey.licenseKeyAlertMsg' styleSet={copyIdPopupStyle} />
+                                        <CopyIdPopUp closePopUp={closePopUp} subtitle={partnerId} title={licenseKeyName} id={mispLicenseKey}
+                                            header='mispLicenseList.mispLicenseKey' alertMsg='generateLicenseKey.licenseKeyAlertMsg' styleSet={copyIdPopupStyle} />
                                     )}
                                 </div>
                             </div>

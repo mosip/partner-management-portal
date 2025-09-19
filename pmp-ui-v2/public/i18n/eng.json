@@ -93,8 +93,8 @@
         "apiKeyExpiryCountDesc2": "{{expiringApiKeyCount}} API Key is expiring soon",
         "sbiExpiryCountDesc1": "{{expiringSbiCount}} SBIs are expiring soon",
         "sbiExpiryCountDesc2": "{{expiringSbiCount}} SBI is expiring soon",
-        "mispPartnerServices": "MISP Partner Services",
-        "mispPartnerServicesDesc": "MISP Partner Services"
+        "mispPartnerServices": "MISP Services",
+        "mispPartnerServicesDesc": "Generate, Regenerate, View or Deactivate MISP License Keys"
     },
     "mispLicenseList": {
         "partnerId": "Partner ID",
@@ -110,7 +110,7 @@
         "listOfMispLicenseKeys": "List of MISP License Keys",
         "errorInMispLicenseList": "Error occurred while fetching MISP License list",
         "generateMispLicenseKey": "Generate MISP License Key",
-        "mispPartnerServices": "MISP Partner Services",
+        "mispPartnerServices": "MISP Services",
         "searchMispLicenseKeyName": "Search MISP License Key Name",
         "regenerate": "Regenerate",
         "viewMispLicenseKey": "View MISP License Key",
@@ -126,9 +126,9 @@
         "errorInGenerateLicenseKey": "While generating MISP License Key, we have encountered with an error",
         "licenseKeyAlertMsg": "MISP License Key contains sensitive information. Ensure to copy the license key before closing this window as it will be masked after closure, with only the last 4 characters remaining visible.",
         "noPolicyGroupSelected": "No Policy Group selected",
-        "policyGroupInfoMsg": "Only the policy group linked through the Partner-Policy Linking screen will be pre-selected. Ensure that the relevant policy group is linked before proceeding further.",
+        "policyGroupInfoMsg": "Only the policy group chosen during partner creation or through ‘Select Policy Group’ popup in the Partners section will be auto-populated. Please ensure the relevant policy group is selected before proceeding further.",
         "selectPolicyPlaceHolder": "Select MISP policy for which MISP License Key is required",
-        "policyInfo": "Request a policy for the given Partner ID in the Partner-Policy Linking screen first. Only policies with Approved status will be available in the dropdown.",
+        "policyInfo": "Request a policy for the given Partner ID in the Partner-Policy Linking screen first. Only policy requests with Approved status will be available in the dropdown.",
         "guidence": "Note: As a MISP Partner, the Policy Group and Policy Name fields are optional. We still recommend selecting a Policy Group and Policy Name before generating MISP License Key to help maintain consistency.",
         "dateFormatInfoKey": "Date Format: mm/dd/yyyy. Ensure that you provide a valid future date, as the license key will be automatically deactivated once this date is reached."
     },
