@@ -1215,7 +1215,6 @@
         "PMS_PRT_006": "Aucune clé API requise n'existe",
         "PMS_PRT_105": "La clé API du partenaire n'est pas créée",
         "PMS_PRT_011": "L’adresse e-mail fournie est déjà enregistrée. Veuillez fournir une autre adresse e-mail.",
-        "PMS_PRT_011": "L'e-mail existe déjà.",
         "PMS_PRT_012": " Id email invalide.",
         "PMS_PRT_013": "Numéro de mobile non valide. La longueur doit être inférieure à .",
         "PMS_ATH_401": "Authentification échouée",
@@ -1247,7 +1246,7 @@
         "PMS_PM_062": "Erreur lors de la récupération de toutes les demandes de mappage des politiques partenaires",
         "PMS_PM_063": "Le partenaire sélectionné a déjà été désactivé.",
         "PMS_PM_064": "Erreur lors de la récupération de toutes les demandes de clé API",
-        "PMS_PM_065": "PartnerIdSearchType non valide. Les valeurs autorisées sont « contient » et « égal à ».",
+        "PMS_PM_065": "PartnerIdSearchType non valide. Les valeurs autorisées sont «contient» et «égal à».",
         "PMS_PM_066": "L'ID du partenaire est obligatoire lorsque le type de recherche du partenaire est « égal ».",
         "PMS_PMP_010": "La politique n'appartient pas au groupe de politiques du gestionnaire de partenaires",
         "PMS_PMP_015": "Aucune demande de clé API partenaire pour le groupe de règles",
@@ -1509,6 +1508,9 @@
         "PMS_MSP_425": "La date d'expiration doit être supérieure à aujourd'hui.",
         "PMS_MSP_426": "Erreur lors de la récupération des détails de la licence MISP.",
         "PMS_MSP_427": "La licence MISP n'existe pas pour le fournisseur donné.",
-        "PMS_MSP_428": "Plusieurs clés de licence MISP ont été trouvées pour le fournisseur donné. Veuillez donc filtrer par nom de clé de licence et identifiant de politique."
+        "PMS_MSP_428": "Plusieurs clés de licence MISP ont été trouvées pour le fournisseur donné. Veuillez donc filtrer par nom de clé de licence et identifiant de politique.",
+        "PMS_MSP_429": "L'ID partenaire n'existe pas.",
+        "PMS_MSP_430": "Le partenaire n'est pas actif.",
+        "PMS_MSP_431": "Type de partenaire non valide. Le type de partenaire doit être MISP_Partner."
     }
 }

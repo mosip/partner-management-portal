@@ -1504,6 +1504,9 @@
         "PMS_MSP_425": "ExpiryDate should be greater than today.",
         "PMS_MSP_426": "Error while fetching MISP Licence details.",
         "PMS_MSP_427": "MISP License does not exist for the given provider.",
-        "PMS_MSP_428": "Multiple MISP license keys found for the given provider. So please filter with license key name and policy id."
+        "PMS_MSP_428": "Multiple MISP license keys found for the given provider. So please filter with license key name and policy id.",
+        "PMS_MSP_429": "Partner ID does not exist.",
+        "PMS_MSP_430": "Partner is not active.",
+        "PMS_MSP_431": "Invalid Partner Type. Partner Type should be MISP_Partner."
     }
 }
