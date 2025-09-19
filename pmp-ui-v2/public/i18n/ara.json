@@ -111,7 +111,8 @@
         "mispPartnerServices": "خدمات شريك MISP",
         "searchMispLicenseKeyName": "ابحث عن اسم مفتاح ترخيص MISP",
         "regenerate": "تجدد",
-        "viewMispLicenseKey": "عرض مفتاح ترخيص MISP"
+        "viewMispLicenseKey": "عرض مفتاح ترخيص MISP",
+        "errorWhileGettingMispDetails": "حدث خطأ أثناء الحصول على تفاصيل مفتاح ترخيص MISP"
     },
     "generateLicenseKey": {
         "errorInResponse": "أثناء جلب جميع سياسات شركاء MISP المعتمدة، واجهنا خطأً",
@@ -1506,6 +1507,7 @@
         "PMS_MSP_424": "اسم مفتاح ترخيص MISP موجود بالفعل.",
         "PMS_MSP_425": "يجب أن يكون تاريخ انتهاء الصلاحية أكبر من اليوم.",
         "PMS_MSP_426": "حدث خطأ أثناء جلب تفاصيل ترخيص MISP.",
-        "PMS_MSP_427": "لا يوجد ترخيص MISP للمزود المذكور."
+        "PMS_MSP_427": "لا يوجد ترخيص MISP للمزود المذكور.",
+        "PMS_MSP_428": "تم العثور على مفاتيح ترخيص MISP متعددة للمزود المذكور. لذا، يُرجى تصفية البيانات باستخدام اسم مفتاح الترخيص ومعرف السياسة."
     }
 }

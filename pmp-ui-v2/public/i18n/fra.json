@@ -111,7 +111,8 @@
         "mispPartnerServices": "Services partenaires MISP",
         "searchMispLicenseKeyName": "Rechercher le nom de la clé de licence MISP",
         "regenerate": "Régénérer",
-        "viewMispLicenseKey": "Afficher la clé de licence MISP"
+        "viewMispLicenseKey": "Afficher la clé de licence MISP",
+        "errorWhileGettingMispDetails": "Erreur lors de l'obtention des détails de la clé de licence MISP"
     },
     "generateLicenseKey": {
         "errorInResponse": "Lors de la récupération de toutes les politiques de partenaires MISP approuvées, nous avons rencontré une erreur",
@@ -1507,6 +1508,7 @@
         "PMS_MSP_424": "Le nom de la clé de licence MISP existe déjà.",
         "PMS_MSP_425": "La date d'expiration doit être supérieure à aujourd'hui.",
         "PMS_MSP_426": "Erreur lors de la récupération des détails de la licence MISP.",
-        "PMS_MSP_427": "La licence MISP n'existe pas pour le fournisseur donné."
+        "PMS_MSP_427": "La licence MISP n'existe pas pour le fournisseur donné.",
+        "PMS_MSP_428": "Plusieurs clés de licence MISP ont été trouvées pour le fournisseur donné. Veuillez donc filtrer par nom de clé de licence et identifiant de politique."
     }
 }

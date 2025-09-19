@@ -113,7 +113,8 @@
         "mispPartnerServices": "MISP Partner Services",
         "searchMispLicenseKeyName": "Search MISP License Key Name",
         "regenerate": "Regenerate",
-        "viewMispLicenseKey": "View MISP License Key"
+        "viewMispLicenseKey": "View MISP License Key",
+        "errorWhileGettingMispDetails": "Error while getting MISP License Key details"
     },
     "generateLicenseKey": {
         "errorInResponse": "While fetching all approved MISP partner policies, we have encountered with an error",
@@ -1502,6 +1503,7 @@
         "PMS_MSP_424": "MISP License key name already exists.",
         "PMS_MSP_425": "ExpiryDate should be greater than today.",
         "PMS_MSP_426": "Error while fetching MISP Licence details.",
-        "PMS_MSP_427": "MISP License does not exist for the given provider."
+        "PMS_MSP_427": "MISP License does not exist for the given provider.",
+        "PMS_MSP_428": "Multiple MISP license keys found for the given provider. So please filter with license key name and policy id."
     }
 }
