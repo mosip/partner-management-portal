@@ -44,28 +44,28 @@ public class partnersAdmin extends BasePage {
 	private WebElement actionHeaderTag;
 
 	@FindBy(id = "partnerId_desc_icon")
-	private WebElement partnerId_desc_icon_trigger;
+	private WebElement partnerId_desc_icon;
 
 	@FindBy(id = "partnerId_asc_icon")
-	private WebElement partnerId_asc_icon_trigger;
+	private WebElement partnerId_asc_icon;
 
 	@FindBy(id = "policyGroupName_desc_icon")
-	private WebElement policyGroupName_desc_icon_trigger;
+	private WebElement policyGroupName_desc_icon;
 
 	@FindBy(id = "policyGroupName_asc_icon")
-	private WebElement policyGroupName_asc_icon_trigger;
+	private WebElement policyGroupName_asc_icon;
 
 	@FindBy(id = "orgName_asc_icon")
-	private WebElement orgName_asc_icon_trigger;
+	private WebElement orgName_asc_icon;
 
 	@FindBy(id = "orgName_desc_icon")
-	private WebElement orgName_desc_icon_trigger;
+	private WebElement orgName_desc_icon;
 
 	@FindBy(id = "certificateUploadStatus_desc_icon")
-	private WebElement certificateUploadStatus_desc_icon_trigger;
+	private WebElement certificateUploadStatus_desc_icon;
 
 	@FindBy(id = "certificateUploadStatus_asc_icon")
-	private WebElement certificateUploadStatus_asc_icon_trigger;
+	private WebElement certificateUploadStatus_asc_icon;
 
 	@FindBy(id = "filter_btn")
 	private WebElement filterbtnTrigger;
@@ -190,8 +190,60 @@ public class partnersAdmin extends BasePage {
 	@FindBy(id = "footer_contact_us_link")
 	private WebElement footersContactUs;
 
+	@FindBy(id = "view_partner_details_partner_id")
+	private WebElement partnerIdInViewPartnerDetailsPage;
+
+	@FindBy(id = "view_partner_details_partner_status")
+	private WebElement partnerStatusInViewPartnerPage;
+
+	@FindBy(id = "view_partner_details_partner_created_on")
+	private WebElement partnerCreatedDateInViewPartnerPage;
+
+	@FindBy(id = "deactivate_popup_header")
+	private WebElement deactivatePartnerHeader;
+
+	@FindBy(id = "deactivate_popup_description")
+	private WebElement deactivatePartnerDescription;
+
+	@FindBy(id = "deactivate_cancel_btn")
+	private WebElement deactivateCancelButton;
+
+	@FindBy(id = "deactivate_submit_btn")
+	private WebElement deactivateConfirmButton;
+
+	@FindBy(xpath = "//tr[@id='partner_list_item2']/td[7]/div")
+	private WebElement deactivateColorCodeButton;
+
+	@FindBy(id = "view_partner_details_partner_certificate_title")
+	private WebElement partnerCertificateInViewPartnerDetailsPage;
+
+	@FindBy(id = "view_expiry_date_label")
+	private WebElement expiryDateTimeInViewPartnerPage;
+
+	@FindBy(id = "view_certificate_upload_date_label")
+	private WebElement timeOfUploadInViewPartnerPage;
+
+	@FindBy(id = "download_partner_cer_btn")
+	private WebElement downloadCertificateButtonInViewPartnerPage;
+
 	public partnersAdmin(WebDriver driver) {
 		super(driver);
+	}
+
+	public boolean isPartnerCertificateDisplayed() {
+		return isElementDisplayed(partnerCertificateInViewPartnerDetailsPage);
+	}
+
+	public boolean isExpiryDateTimeDisplayed() {
+		return isElementDisplayed(expiryDateTimeInViewPartnerPage);
+	}
+
+	public boolean isTimeOfUploadDisplayed() {
+		return isElementDisplayed(timeOfUploadInViewPartnerPage);
+	}
+
+	public boolean isDownloadCertificateButtonDisplayed() {
+		return isElementDisplayed(downloadCertificateButtonInViewPartnerPage);
 	}
 
 	public boolean isSubTitleListDisplayed() {
@@ -238,35 +290,35 @@ public class partnersAdmin extends BasePage {
 	}
 
 	public boolean isPartnersIdDescIconDisplayed() {
-		return isElementDisplayed(partnerId_desc_icon_trigger);
+		return isElementDisplayed(partnerId_desc_icon);
 	}
 
 	public boolean isPartnersIdAscIconDisplayed() {
-		return isElementDisplayed(partnerId_asc_icon_trigger);
+		return isElementDisplayed(partnerId_asc_icon);
 	}
 
 	public boolean isPolicyGroupNamesDescIconDisplayed() {
-		return isElementDisplayed(policyGroupName_desc_icon_trigger);
+		return isElementDisplayed(policyGroupName_desc_icon);
 	}
 
 	public boolean isPolicyGroupNamesAscIconDisplayed() {
-		return isElementDisplayed(policyGroupName_asc_icon_trigger);
+		return isElementDisplayed(policyGroupName_asc_icon);
 	}
 
 	public boolean isOrganizationAscIconDisplayed() {
-		return isElementDisplayed(orgName_asc_icon_trigger);
+		return isElementDisplayed(orgName_asc_icon);
 	}
 
 	public boolean isOrganizationDescIconDisplayed() {
-		return isElementDisplayed(orgName_desc_icon_trigger);
+		return isElementDisplayed(orgName_desc_icon);
 	}
 
 	public boolean isCertificatesUploadStatusDescIconDisplayed() {
-		return isElementDisplayed(certificateUploadStatus_desc_icon_trigger);
+		return isElementDisplayed(certificateUploadStatus_desc_icon);
 	}
 
 	public boolean isCertificateUploadsStatusAscIconDisplayed() {
-		return isElementDisplayed(certificateUploadStatus_desc_icon_trigger);
+		return isElementDisplayed(certificateUploadStatus_desc_icon);
 	}
 
 	public boolean isFilterButtonsDisplayed() {
@@ -274,19 +326,19 @@ public class partnersAdmin extends BasePage {
 	}
 
 	public void clickOnrowInPartnerDetailsScreen() {
-		rowInPartnerDetailsScreen.click();
+		clickOnElement(rowInPartnerDetailsScreen);
 	}
 
 	public boolean isUserNavigatedToPartnerDetailsPage() {
-		return navigateToPartnerDetailsPage.isDisplayed();
+		return isElementDisplayed(navigateToPartnerDetailsPage);
 	}
 
 	public void clickOngobackButtonInPartnerDetailsPage() {
-		gobackButtonInPartnerDetailsPage.click();
+		clickOnElement(gobackButtonInPartnerDetailsPage);
 	}
 
 	public void clickOnFilterButton() {
-		filterbtnTrigger.click();
+		clickOnElement(filterbtnTrigger);
 	}
 
 	public boolean isPartnersIdFilterDisplayed() {
@@ -326,16 +378,15 @@ public class partnersAdmin extends BasePage {
 	}
 
 	public void clickOnPartnerTypeDropdown() {
-		partnerTypeDropdown.click();
+		clickOnElement(partnerTypeDropdown);
 	}
 
 	public void clickOnAuthenticationPartner() {
-		authenticationPartner.click();
+		clickOnElement(authenticationPartner);
 	}
 
 	public void enterOrganisationName(String organisationName) {
-		partnersOrganisationFilter.clear();
-		partnersOrganisationFilter.sendKeys("mosip");
+		enter(partnersOrganisationFilter,organisationName);
 	}
 
 	public void enterPartnerIds(String partnerId) {
@@ -371,7 +422,7 @@ public class partnersAdmin extends BasePage {
 	}
 
 	public void clickActivatedButton() {
-		activatedButton.click();
+		clickOnElement(activatedButton);
 	}
 
 	public boolean isFiltersButtonDisabled() {
@@ -407,15 +458,15 @@ public class partnersAdmin extends BasePage {
 	}
 
 	public void clickOnStatusFilter() {
-		statusFilters.click();
+		clickOnElement(statusFilters);
 	}
 
 	public void clickOnDeActivatedStatusInFilters() {
-		deActivatedStatusInFilters.click();
+		clickOnElement(deActivatedStatusInFilters);
 	}
 
 	public boolean isDeactivatedPartnerRowDisplayed() {
-		return deactivatedPartnerRow.isDisplayed();
+		return isElementDisplayed(deactivatedPartnerRow);
 	}
 
 	public boolean isViewButtonsEnabled() {
@@ -423,7 +474,7 @@ public class partnersAdmin extends BasePage {
 	}
 
 	public boolean isDeactivateButtonDisabled() {
-		return !deactivateButtons.isEnabled();
+		return isElementDisabled(deactivateButtons);
 	}
 
 	public void clickOnPartnerTypeAscIcons() {
@@ -431,7 +482,7 @@ public class partnersAdmin extends BasePage {
 	}
 
 	public boolean isRowDisplayed() {
-		return rowInPartnerDetailsScreen.isDisplayed();
+		return isElementDisplayed(rowInPartnerDetailsScreen);
 	}
 
 	public void enterInvalidPartnerId(String invalidId) {
@@ -454,7 +505,7 @@ public class partnersAdmin extends BasePage {
 	}
 
 	public boolean isNoResultsFoundsDisplayed() {
-		return noResultsFoundMessages.isDisplayed();
+		return isElementDisplayed(noResultsFoundMessages);
 	}
 
 	public boolean isSubTitleOfTabularViewsDisplayed() {
@@ -466,7 +517,7 @@ public class partnersAdmin extends BasePage {
 	}
 
 	public void clickOnBreadcrumb() {
-		breadcrumbs.click();
+		clickOnElement(breadcrumbs);
 	}
 
 	public boolean isPartnersButtonDisplayed() {
@@ -474,7 +525,7 @@ public class partnersAdmin extends BasePage {
 	}
 
 	public void clickOnPartnersButton() {
-		partnersTab.click();
+		clickOnElement(partnersTab);
 	}
 
 	public boolean isBackButtonAccessible() {
@@ -486,7 +537,7 @@ public class partnersAdmin extends BasePage {
 	}
 
 	public boolean isBreadcrumbsDisplayed() {
-		return breadcrumbs.isDisplayed();
+		return isElementDisplayed(breadcrumbs);
 	}
 
 	public boolean isMosipIconsDisplayed() {
@@ -510,7 +561,51 @@ public class partnersAdmin extends BasePage {
 	}
 
 	public void clickOnViewPartnerDetailsScreen() {
-		viewButtons.click();
+		clickOnElement(viewButtons);
+	}
+
+	public boolean isPartnerIdDisplayed() {
+		return isElementDisplayed(partnerIdInViewPartnerDetailsPage);
+	}
+
+	public boolean isPartnerStatusInViewPartnerPageDisplayed() {
+		return isElementDisplayed(partnerStatusInViewPartnerPage);
+	}
+
+	public boolean isPartnerCreatedDateInViewPartnerPageDisplayed() {
+		return isElementDisplayed(partnerCreatedDateInViewPartnerPage);
+	}
+
+	public void clickOnDeactivateButton() {
+		clickOnElement(deactivateButtons);
+	}
+
+	public boolean isDeactivatePartnerHeaderDisplayed() {
+		return isElementDisplayed(deactivatePartnerHeader);
+	}
+
+	public boolean isDeactivatePartnerDescriptionDisplayed() {
+		return isElementDisplayed(deactivatePartnerDescription);
+	}
+
+	public boolean isDeactivateCancelButtonDisplayed() {
+		return isElementDisplayed(deactivateCancelButton);
+	}
+
+	public boolean isDeactivateConfirmButtonDisplayed() {
+		return isElementDisplayed(deactivateConfirmButton);
+	}
+
+	public void clickOnConfirmButton() {
+		clickOnElement(deactivateConfirmButton);
+	}
+
+	public boolean isDeactivateColorCodeButtonDisplayed() {
+		return isElementDisplayed(deactivateColorCodeButton);
+	}
+
+	public boolean isPartnerCertificateInViewPartnerDetailsPageDisplayed() {
+		return isElementDisplayed(partnerCertificateInViewPartnerDetailsPage);
 	}
 
 }

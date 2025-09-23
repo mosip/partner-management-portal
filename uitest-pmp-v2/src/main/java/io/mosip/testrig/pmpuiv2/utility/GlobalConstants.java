@@ -959,6 +959,30 @@ public class GlobalConstants {
 	public static final String isFooterMosipTextsDisplayed = "Verify if footer mosip text displayed";
 	public static final String isFooterDocumentationsDisplayed = "Verify if footer documentation displayed";
 	public static final String isFootersContactUsDisplayed = "Verify if footer contact us displayed";
+	public static final String isPartnerIdDisplayed = "Verify if partner id displayed in view partner page";
+	public static final String isPartnerStatusInViewPartnerPageDisplayed = "Verify if partner status in view partner details page displayed";
+	public static final String isPartnerCreatedDateInViewPartnerPageDisplayed = "Verify if ceated date in view partner details page displayed";
+	public static final String isDeactivatePartnerHeaderDisplayed = "Verify if deactivated header displayed";
+	public static final String isDeactivatePartnerDescriptionDisplayed = "Verify deactivate description displayed";
+	public static final String isDeactivateCancelButtonDisplayed = "Verify if cancel button displayed";
+	public static final String isDeactivateConfirmButtonDisplayed = "Verify if confirm button displayed";
+	public static final String isDeactivateColorCodeButtonDisplayed = "Verify if deactivate status displayed";
+	public static final String isPartnerCertificateInViewPartnerDetailsPageDisplayed = "Verify if partner certificate in view partnerdetails displayed";
+	public static final String isPartnerCertificateDisplayed = "Verify if partner certificate is displayed";
+	public static final String isExpiryDateTimeDisplayed = "Verify if expiry date time isdisplayed";
+	public static final String isTimeOfUploadDisplayed = "Verify if time of upload isdisplayed";
+	public static final String isDownloadCertificateButtonDisplayed = "Verify if down certificate isdisplayed";
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	public static final String APPID = "appId";
 	public static final String PASSWORD = "password";
