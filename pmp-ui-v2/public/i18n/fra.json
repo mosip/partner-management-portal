@@ -130,6 +130,10 @@
         "guidence": "Remarque : En tant que partenaire MISP, les champs Groupe de politiques et Nom de la politique sont facultatifs. Nous vous recommandons néanmoins de sélectionner un Groupe de politiques et un Nom de politique avant de générer la clé de licence MISP afin de garantir la cohérence.",
         "dateFormatInfoKey": "Format de date : jj/mm/aaaa. Assurez-vous de fournir une date future valide, car la clé de licence sera automatiquement désactivée une fois cette date atteinte."
     },
+    "deactivateMispLicense": {
+        "title": "Voulez-vous désactiver la clé de licence MISP",
+        "description": "En cliquant sur Confirmer, vous ne pourrez plus utiliser la clé de licence MISP pour authentifier les demandes."
+    },
     "header": {
         "userProfile": "Profil de l'utilisateur",
         "changePassword": "Changer le mot de passe"
@@ -1508,9 +1512,12 @@
         "PMS_MSP_425": "La date d'expiration doit être supérieure à aujourd'hui.",
         "PMS_MSP_426": "Erreur lors de la récupération des détails de la licence MISP.",
         "PMS_MSP_427": "Aucune clé de licence MISP correspondante n'existe pour l'ID de partenaire, l'ID de stratégie et le nom de clé de licence MISP spécifiés.",
-        "PMS_MSP_428": "Impossible de récupérer les informations de la clé de licence MISP, car plusieurs correspondances ont été trouvées pour l'ID partenaire, l'ID de politique et le nom de la clé de licence MISP fournis. Veuillez utiliser le nom de la clé de licence MISP et l'ID de politique corrects pour filtrer.",
+        "PMS_MSP_428": "Plusieurs correspondances de clés de licence MISP ont été trouvées pour l'ID partenaire, l'ID de politique et le nom de clé de licence MISP fournis. Veuillez utiliser le nom de clé de licence MISP et l'ID de politique corrects.",
         "PMS_MSP_429": "L'ID partenaire n'existe pas.",
         "PMS_MSP_430": "Le partenaire n'est pas actif.",
-        "PMS_MSP_431": "Type de partenaire non valide. Le type de partenaire doit être MISP_Partner."
+        "PMS_MSP_431": "Type de partenaire non valide. Le type de partenaire doit être MISP_Partner.",
+        "PMS_MSP_432": "Erreur lors de la désactivation de la clé de licence MISP.",
+        "PMS_MSP_433": "Le statut de la demande doit être Désactiver",
+        "PMS_MSP_434": "La clé de licence MISP est déjà désactivée."
     }
 }

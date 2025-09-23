@@ -132,6 +132,10 @@
         "guidence": "Note: As a MISP Partner, the Policy Group and Policy Name fields are optional. We still recommend selecting a Policy Group and Policy Name before generating MISP License Key to help maintain consistency.",
         "dateFormatInfoKey": "Date Format: mm/dd/yyyy. Ensure that you provide a valid future date, as the license key will be automatically deactivated once this date is reached."
     },
+    "deactivateMispLicense": {
+        "title": "Do you want to Deactivate MISP License Key",
+        "description": "On clicking Confirm, you will not be able to use the MISP License Key for authenticating requests anymore."
+    },
     "header": {
         "userProfile": "User Profile",
         "changePassword": "Change Password"
@@ -1504,9 +1508,12 @@
         "PMS_MSP_425": "ExpiryDate should be greater than today.",
         "PMS_MSP_426": "Error while fetching MISP Licence details.",
         "PMS_MSP_427": "No matching MISP License Key exists for the specified Partner ID, Policy ID, and MISP License Key Name.",
-        "PMS_MSP_428": "Unable to fetch MISP License Key details because multiple matches were found for the provided Partner ID, Policy ID, and MISP License Key Name. Please use the correct MISP License Key Name and Policy ID to filter.",
+        "PMS_MSP_428": "Multiple MISP License key matches were found for the provided Partner ID, Policy ID, and MISP License Key Name. Please use the correct MISP License Key Name and Policy ID.",
         "PMS_MSP_429": "Partner ID does not exist.",
         "PMS_MSP_430": "Partner is not active.",
-        "PMS_MSP_431": "Invalid Partner Type. The Partner Type should be MISP_Partner."
+        "PMS_MSP_431": "Invalid Partner Type. The Partner Type should be MISP_Partner.",
+        "PMS_MSP_432": "Error while deactivating MISP license key.",
+        "PMS_MSP_433": "Request status should be De-Activate",
+        "PMS_MSP_434": "MISP License key is already deactivated."
     }
 }
