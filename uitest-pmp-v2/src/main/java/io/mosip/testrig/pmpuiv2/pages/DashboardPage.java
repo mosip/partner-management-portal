@@ -318,7 +318,7 @@ public class DashboardPage extends BasePage {
 	}
 
 	public void clickOnCertificateTrustStore() {
-		clickOnElement(certificateTrustStore);		
+		clickOnElement(certificateTrustStore);
 	}
 
 	public boolean isAuthenticationServiceInfoTextDisplayed() {

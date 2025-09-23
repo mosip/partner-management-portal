@@ -386,7 +386,7 @@ public class partnersAdmin extends BasePage {
 	}
 
 	public void enterOrganisationName(String organisationName) {
-		enter(partnersOrganisationFilter,organisationName);
+		enter(partnersOrganisationFilter, organisationName);
 	}
 
 	public void enterPartnerIds(String partnerId) {
