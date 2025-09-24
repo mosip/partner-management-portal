@@ -44,28 +44,28 @@ public class partnersAdmin extends BasePage {
 	private WebElement actionHeaderTag;
 
 	@FindBy(id = "partnerId_desc_icon")
-	private WebElement partnerId_desc_icon;
+	private WebElement partnerIdDescIcon;
 
 	@FindBy(id = "partnerId_asc_icon")
-	private WebElement partnerId_asc_icon;
+	private WebElement partnerIdAscIcon;
 
 	@FindBy(id = "policyGroupName_desc_icon")
-	private WebElement policyGroupName_desc_icon;
+	private WebElement policyGroupNameDescIcon;
 
 	@FindBy(id = "policyGroupName_asc_icon")
-	private WebElement policyGroupName_asc_icon;
+	private WebElement policyGroupNameAscIcon;
 
 	@FindBy(id = "orgName_asc_icon")
-	private WebElement orgName_asc_icon;
+	private WebElement orgNameAscIcon;
 
 	@FindBy(id = "orgName_desc_icon")
-	private WebElement orgName_desc_icon;
+	private WebElement orgNameDescIcon;
 
 	@FindBy(id = "certificateUploadStatus_desc_icon")
-	private WebElement certificateUploadStatus_desc_icon;
+	private WebElement certificateUploadStatusDescIcon;
 
 	@FindBy(id = "certificateUploadStatus_asc_icon")
-	private WebElement certificateUploadStatus_asc_icon;
+	private WebElement certificateUploadStatusAscIcon;
 
 	@FindBy(id = "filter_btn")
 	private WebElement filterbtnTrigger;
@@ -308,35 +308,35 @@ public class partnersAdmin extends BasePage {
 	}
 
 	public boolean isPartnersIdDescIconDisplayed() {
-		return isElementDisplayed(partnerId_desc_icon);
+		return isElementDisplayed(partnerIdDescIcon);
 	}
 
 	public boolean isPartnersIdAscIconDisplayed() {
-		return isElementDisplayed(partnerId_asc_icon);
+		return isElementDisplayed(partnerIdAscIcon);
 	}
 
 	public boolean isPolicyGroupNamesDescIconDisplayed() {
-		return isElementDisplayed(policyGroupName_desc_icon);
+		return isElementDisplayed(policyGroupNameDescIcon);
 	}
 
 	public boolean isPolicyGroupNamesAscIconDisplayed() {
-		return isElementDisplayed(policyGroupName_asc_icon);
+		return isElementDisplayed(policyGroupNameAscIcon);
 	}
 
 	public boolean isOrganizationAscIconDisplayed() {
-		return isElementDisplayed(orgName_asc_icon);
+		return isElementDisplayed(orgNameAscIcon);
 	}
 
 	public boolean isOrganizationDescIconDisplayed() {
-		return isElementDisplayed(orgName_desc_icon);
+		return isElementDisplayed(orgNameDescIcon);
 	}
 
 	public boolean isCertificatesUploadStatusDescIconDisplayed() {
-		return isElementDisplayed(certificateUploadStatus_desc_icon);
+		return isElementDisplayed(certificateUploadStatusDescIcon);
 	}
 
 	public boolean isCertificateUploadsStatusAscIconDisplayed() {
-		return isElementDisplayed(certificateUploadStatus_desc_icon);
+		return isElementDisplayed(certificateUploadStatusDescIcon);
 	}
 
 	public boolean isFilterButtonsDisplayed() {
