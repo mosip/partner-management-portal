@@ -141,15 +141,15 @@ function PolicyGroupSelector({ onPolicyGroupSelect, selectedPolicyGroup, contain
     };
 
     return (
-        <div className="w-full mx-auto">
-            <label className="flex items-center text-dark-blue text-sm mb-2 ml-1">
-                <p className="font-semibold">
+        <div id="policy_group_selector_container" className="w-full mx-auto">
+            <label id="policy_group_selector_label" className="flex items-center text-dark-blue text-sm mb-2 ml-1">
+                <p id="policy_group_selector_label_text" className="font-semibold">
                     {t('selectPolicyPopup.policyGroup')}
-                    {containsAsterisk && <span className="text-crimson-red mx-1">*</span>}
+                    {containsAsterisk && <span id="policy_group_selector_asterisk" className="text-crimson-red mx-1">*</span>}
                 </p>
             </label>
 
-            <div className="relative w-full">
+            <div id="policy_group_selector_dropdown_container" className="relative w-full">
                 <button
                     id="policy_group_selector_dropdown_button"
                     type="button"
@@ -160,22 +160,23 @@ function PolicyGroupSelector({ onPolicyGroupSelect, selectedPolicyGroup, contain
                     onClick={toggleDropdown}
                     ref={dropdownButtonRef}
                 >
-                    <span className={`truncate max-w-full ${isLoginLanguageRTL ? 'text-right' : 'text-left'} ${selectedPolicyGroup?.name ? 'text-[#343434]' : 'text-grayish-blue'}`}>
+                    <span id="policy_group_selector_dropdown_button_text" className={`truncate max-w-full ${isLoginLanguageRTL ? 'text-right' : 'text-left'} ${selectedPolicyGroup?.name ? 'text-[#343434]' : 'text-grayish-blue'}`}>
                         {selectedPolicyGroup?.name || t('selectPolicyPopup.title')}
                     </span>
-                    <svg className={`w-3 h-2 ${isLoginLanguageRTL ? 'mr-3' :'ml-3'} transform ${isDropdownOpen ? 'rotate-180' : 'rotate-0'} text-gray-500 text-sm`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                    <svg id="policy_group_selector_dropdown_arrow" className={`w-3 h-2 ${isLoginLanguageRTL ? 'mr-3' :'ml-3'} transform ${isDropdownOpen ? 'rotate-180' : 'rotate-0'} text-gray-500 text-sm`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
                     </svg>
                 </button>
 
                 {isDropdownOpen && (
-                    <div ref={dropdownPanelRef} className={`absolute z-10 ${isLoginLanguageRTL ? 'right-0' : 'left-0'} mt-2 w-full bg-white border border-gray-400 rounded-md shadow-lg cursor-pointer`}>
-                        <div className="p-2 border-b border-gray-200">
-                            <div className="relative">
-                                <div className={`absolute inset-y-0 ${isLoginLanguageRTL ? 'right-0 pr-3' : 'left-0 pl-3'} flex items-center pointer-events-none`}>
-                                    <img src={searchIcon} alt="" className="h-4 w-4 text-gray-400" />
+                    <div id="policy_group_selector_dropdown_panel" ref={dropdownPanelRef} className={`absolute z-10 ${isLoginLanguageRTL ? 'right-0' : 'left-0'} mt-2 w-full bg-white border border-gray-400 rounded-md shadow-lg cursor-pointer`}>
+                        <div id="policy_group_selector_search_container" className="p-2 border-b border-gray-200">
+                            <div id="policy_group_selector_search_input_container" className="relative">
+                                <div id="policy_group_selector_search_icon_container" className={`absolute inset-y-0 ${isLoginLanguageRTL ? 'right-0 pr-3' : 'left-0 pl-3'} flex items-center pointer-events-none`}>
+                                    <img id="policy_group_selector_search_icon" src={searchIcon} alt="" className="h-4 w-4 text-gray-400" />
                                 </div>
                                 <input
+                                    id="policy_group_selector_search_input"
                                     type="text"
                                     placeholder={t('commons.search')}
                                     value={searchTerm}
@@ -212,29 +213,30 @@ function PolicyGroupSelector({ onPolicyGroupSelect, selectedPolicyGroup, contain
                                             className="px-0 py-0"
                                         >
                                             <button
+                                                id={`policy_group_selector_option_button_${index + 1}`}
                                                 type="button"
                                                 className={`block w-full ${policyGroup.desc ? 'min-h-16' : 'min-h-8'} px-4 py-2 text-sm text-dark-blue ${isLoginLanguageRTL ? 'text-right' : 'text-left'} ${isSelected ? 'bg-gray-100' : 'bg-white hover:bg-gray-50'}`}
                                                 onClick={() => handlePolicyGroupSelect(isPlaceholder ? null : policyGroup)}
                                             >
-                                                <span className={`${policyGroup.desc ? 'font-semibold' : 'font-normal'} ${isPlaceholder ? 'text-gray-500' : 'text-dark-blue'}`}>
+                                                <span id={`policy_group_selector_option_name_${index + 1}`} className={`${policyGroup.desc ? 'font-semibold' : 'font-normal'} ${isPlaceholder ? 'text-gray-500' : 'text-dark-blue'}`}>
                                                     {policyGroup.name}
                                                 </span>
                                                 {!isPlaceholder && policyGroup.desc && (
                                                     <>
                                                         <br />
-                                                        <span className="text-xs text-[#727272]">{policyGroup.desc || t('policyGroupList.noDescription')}</span>
+                                                        <span id={`policy_group_selector_option_desc_${index + 1}`} className="text-xs text-[#727272]">{policyGroup.desc || t('policyGroupList.noDescription')}</span>
                                                     </>
                                                 )}
                                                 {!isPlaceholder && !policyGroup.desc && (
                                                     <></>
                                                 )}
                                             </button>
-                                            <div className="border-gray-200 border-t mx-2"></div>
+                                            <div id={`policy_group_selector_option_separator_${index + 1}`} className="border-gray-200 border-t mx-2"></div>
                                         </li>
                                     );
                                 })}
                                 {fetchData && policyGroupList.length > 0 && (
-                                    <li className="px-3 py-2"><LoadingIcon inline={true} /></li>
+                                    <li id="policy_group_selector_loading_more" className="px-3 py-2"><LoadingIcon inline={true} /></li>
                                 )}
                             </ul>
                         )}
