@@ -5,7 +5,8 @@ import { getUserProfile } from '../../../services/UserProfileService.js';
 import {
     isLangRTL, handleMouseClickForDropdown, resetPageNumber, onClickApplyFilter, setPageNumberAndPageSize,
     getPartnerManagerUrl, handleServiceErrors, onResetFilter, formatDate, bgOfStatus, getStatusCode, onPressEnterKey,
-    setSubmenuRef
+    setSubmenuRef,
+    createRequest
 } from '../../../utils/AppUtils.js';
 import ErrorMessage from '../../common/ErrorMessage.js';
 import LoadingIcon from '../../common/LoadingIcon.js';
@@ -23,6 +24,7 @@ import Pagination from '../../common/Pagination.js';
 import CopyIdPopUp from '../../common/CopyIdPopup.js';
 import { HttpService } from '../../../services/HttpService.js';
 import MispLicenseFilter from './MispLicenseFilter.js';
+import DeactivatePopup from '../../common/DeactivatePopup.js';
 
 function MispLicenseList() {
     const navigate = useNavigate('');
@@ -31,7 +33,7 @@ function MispLicenseList() {
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [dataLoaded, setDataLoaded] = useState(true);
-    const [mispLicenseList, setmispLicenseList] = useState([]);
+    const [mispLicenseList, setMispLicenseList] = useState([]);
     const [expandFilter, setExpandFilter] = useState(false);
     const [order, setOrder] = useState("DESC");
     const [activeAscIcon, setActiveAscIcon] = useState("");
@@ -50,6 +52,9 @@ function MispLicenseList() {
     const [isApplyFilterClicked, setIsApplyFilterClicked] = useState(false);
     const [showActiveIndexLicenseKeyPopup, setShowActiveIndexLicenseKeyPopup] = useState(null);
     const [currentLicense, setCurrentLicense] = useState(null);
+    const [selectedLicenseKey, setSelectedLicenseKey] = useState(null);
+    const [deactivateLicenseRequest, setDeactivateLicenseRequest] = useState(null);
+    const [showActiveIndexDeactivatePopup, setShowActiveIndexDeactivatePopup] = useState(null);
     const [filterAttributes, setFilterAttributes] = useState({
         partnerId: null,
         orgName: null,
@@ -104,7 +109,7 @@ function MispLicenseList() {
                 if (responseData && responseData.response) {
                     const resData = responseData.response.data;
                     setTotalRecords(responseData.response.totalResults);
-                    setmispLicenseList(resData);
+                    setMispLicenseList(resData);
                 } else {
                     handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                 }
@@ -180,7 +185,37 @@ function MispLicenseList() {
         navigate('/partnermanagement/admin/misp-partner-services/generate-misp-license-key');
     };
 
-    const deactivateLicenseKey = (license, index) => {};
+    const deactivateLicenseKey = (license, index) => {
+        if (license.status === "activated") {
+            const request = createRequest({
+                policyId: license.policyId,
+                licenseKeyName: license.mispLicenseKeyName,
+                status: "De-Activate"
+            }, "mosip.pms.deactivate.misp.license.patch", true);
+            setSelectedLicenseKey(license);
+            setDeactivateLicenseRequest(request);
+            setShowActiveIndexDeactivatePopup(index);
+            document.body.style.overflow = "hidden";
+        }
+    };
+
+    const closeDeactivatePopup = () => {
+        setSelectedLicenseKey({});
+        setShowActiveIndexDeactivatePopup(null);
+        document.body.style.overflow = "auto";
+    };
+
+    const onClickConfirmDeactivate = (deactivationResponse, licenseKey) => {
+        if (deactivationResponse !== "") {
+            setSelectedLicenseKey({});
+            setShowActiveIndexDeactivatePopup(null);
+            setMispLicenseList((prevList) =>
+                prevList.map(misp =>
+                    (misp.partnerId === licenseKey.partnerId && misp.policyId === licenseKey.policyId && misp.mispLicenseKeyName === licenseKey.mispLicenseKeyName) ? { ...misp, status: "deactivated" } : misp
+                )
+            );
+        }
+    };
 
     const renewMispLicenseKey = (license, index) => {};
 
@@ -322,7 +357,17 @@ function MispLicenseList() {
                                                                                             </div>
                                                                                         </div>
                                                                                     )}
-                                                                                    
+                                                                                    {showActiveIndexDeactivatePopup === index && (
+                                                                                        <DeactivatePopup
+                                                                                            closePopUp={closeDeactivatePopup}
+                                                                                            onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, selectedLicenseKey)}
+                                                                                            popupData={{ ...selectedLicenseKey, isDeactivateMispLicense: true }}
+                                                                                            request={deactivateLicenseRequest}
+                                                                                            headerMsg="deactivateMispLicense.title"
+                                                                                            descriptionMsg="deactivateMispLicense.description"
+                                                                                            headerKeyName={selectedLicenseKey.mispLicenseKeyName ? selectedLicenseKey.mispLicenseKeyName : '-'}
+                                                                                        />
+                                                                                    )}
                                                                                 </div>
                                                                             </td>
                                                                         </tr>
