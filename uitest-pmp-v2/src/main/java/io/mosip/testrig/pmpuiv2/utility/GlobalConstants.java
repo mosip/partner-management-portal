@@ -979,13 +979,10 @@ public class GlobalConstants {
 	public static final String isSuccessMassageInOriginalCertificateDisplayed = "Verify if success massage in original certificate isdisplayed";
 	public static final String isSuccessMassageInMosipSignedCertificateDisplayed = "Verify if success massage  in mosip signed certificate isdisplayed";
 	public static final String isGobackButtonInViewPatnerPageDisplayed = "Verify if go back button isdisplayed";
-	
-	
-	
-	
-	
-	
-	
+	public static final String isPartnerIdSearchBarDisplayed = "Verify if go back button isdisplayed";
+	public static final String isOrganisationSearchBarDisplayed = "Verify if go back button isdisplayed";
+	public static final String isPolicyGroupSearchBarDisplayed = "Verify if go back button isdisplayed";
+	public static final String isEmailAddressSearchBarDisplayed = "Verify if go back button isdisplayed";
 
 	public static final String APPID = "appId";
 	public static final String PASSWORD = "password";

@@ -97,7 +97,7 @@ public class partnersAdmin extends BasePage {
 	@FindBy(xpath = "//span[normalize-space()='Select Cert. Upload Status']")
 	private WebElement certUploadsStatusFilter;
 
-	@FindBy(xpath = "//*[@id='status_filter_dropdown_btn']/span")
+	@FindBy(xpath = "//button[@id='status_filter_dropdown_btn']/span")
 	private WebElement statusFilters;
 
 	@FindBy(id = "policy_group_filter")
@@ -158,7 +158,7 @@ public class partnersAdmin extends BasePage {
 	private WebElement deactivatedPartnerRow;
 
 	@FindBy(id = "partnerType_asc_icon")
-	private WebElement partnerType_asc_icons;
+	private WebElement partnerTypeAscIcons;
 
 	@FindBy(xpath = "//p[text()='No Results Found']")
 	private WebElement noResultsFoundMessages;
@@ -225,26 +225,24 @@ public class partnersAdmin extends BasePage {
 
 	@FindBy(id = "download_partner_cer_btn")
 	private WebElement downloadCertificateButtonInViewPartnerPage;
-	
+
 	@FindBy(id = "view_partner_type_label")
 	private WebElement partnerTypeInViewPartnerPage;
-	
+
 	@FindBy(id = "view_partner_type_context")
 	private WebElement deviceProviderInViewPartnerPage;
-	
+
 	@FindBy(id = "original_certificate_download_partner_cer_btn")
 	private WebElement originalCertificateDropdown;
-	
+
 	@FindBy(id = "mosip_signed_certificate_download_partner_cer_btn")
 	private WebElement mosipSignedCertificateDropdown;
-	
+
 	@FindBy(id = "view_partner_details_success_msg")
 	private WebElement successMassageInOriginalCertificate;
-	
+
 	@FindBy(id = "view_partner_details_success_msg")
 	private WebElement successMassageInMosipSignedCertificate;
-	
-	
 
 	public partnersAdmin(WebDriver driver) {
 		super(driver);
@@ -421,24 +419,20 @@ public class partnersAdmin extends BasePage {
 		return isElementDisplayed(authenticationPartnerCell);
 	}
 
-	public boolean isPartnerIdSearchBar() {
-		return partnersIdPlaceHolder.getTagName().equals("input")
-				&& partnersIdPlaceHolder.getAttribute("type").equals("text");
+	public boolean isPartnerIdSearchBarDisplayed() {
+		return isElementDisplayed(partnersIdPlaceHolder);
 	}
 
-	public boolean isOrganisationSearchBar() {
-		return organisationsPlaceHolder.getTagName().equals("input")
-				&& organisationsPlaceHolder.getAttribute("type").equals("text");
+	public boolean isOrganisationSearchBarDisplayed() {
+		return isElementDisplayed(organisationsPlaceHolder);
 	}
 
-	public boolean isPolicyGroupsSearchBar() {
-		return policyGroupsPlaceHolder.getTagName().equals("input")
-				&& policyGroupsPlaceHolder.getAttribute("type").equals("text");
+	public boolean isPolicyGroupSearchBarDisplayed() {
+		return isElementDisplayed(policyGroupsPlaceHolder);
 	}
 
-	public boolean isEmailAddressSearchBar() {
-		return emailsAddressPlaceHolder.getTagName().equals("input")
-				&& emailsAddressPlaceHolder.getAttribute("type").equals("text");
+	public boolean isEmailAddressSearchBarDisplayed() {
+		return isElementDisplayed(emailsAddressPlaceHolder);
 	}
 
 	public void clickActivatedButton() {
@@ -498,7 +492,7 @@ public class partnersAdmin extends BasePage {
 	}
 
 	public void clickOnPartnerTypeAscIcons() {
-		clickOnElement(partnerType_asc_icons);
+		clickOnElement(partnerTypeAscIcons);
 	}
 
 	public void enterInvalidPartnerIdFilter(String invalidId) {
@@ -623,47 +617,45 @@ public class partnersAdmin extends BasePage {
 	public boolean isPartnerCertificateInViewPartnerDetailsPageDisplayed() {
 		return isElementDisplayed(partnerCertificateInViewPartnerDetailsPage);
 	}
-	
+
 	public boolean isPartnerTypeInViewPartnerPageDisplayed() {
 		return isElementDisplayed(partnerTypeInViewPartnerPage);
 	}
-	
+
 	public boolean isDeviceProviderInViewPartnerPageDisplayed() {
 		return isElementDisplayed(deviceProviderInViewPartnerPage);
 	}
-	
+
 	public void clickOnDownloadCertificateButtonInViewPartnerPage() {
 		clickOnElement(downloadCertificateButtonInViewPartnerPage);
 	}
-	
+
 	public boolean isOriginalCertificateDropdownDisplayed() {
 		return isElementDisplayed(originalCertificateDropdown);
 	}
-	
+
 	public boolean isMosipSignedCertificateDropdownDisplayed() {
 		return isElementDisplayed(mosipSignedCertificateDropdown);
 	}
-	
+
 	public void clickOnOriginnalCertificateInViewPartnerPage() {
 		clickOnElement(originalCertificateDropdown);
 	}
-	
+
 	public void clickOnMosipSignedCertificateInViewPartnerPage() {
 		clickOnElement(mosipSignedCertificateDropdown);
 	}
-	
+
 	public boolean isSuccessMassageInOriginalCertificateDisplayed() {
 		return isElementDisplayed(successMassageInOriginalCertificate);
 	}
-	
+
 	public boolean isSuccessMassageInMosipSignedCertificateDisplayed() {
 		return isElementDisplayed(successMassageInMosipSignedCertificate);
 	}
-	
+
 	public boolean isGobackButtonInViewPatnerPageDisplayed() {
 		return isElementDisplayed(gobackButtonInPartnerDetailsPage);
 	}
-	
-	
 
 }

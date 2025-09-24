@@ -81,10 +81,10 @@ public class PartnerDetailsTest extends BaseClass {
 		partnerAdmin.clickOnApplyFiltersBtn();
 		assertTrue(partnerAdmin.isAuthenticationPartnerCellDisplayed(),
 				GlobalConstants.isauthenticationPartnerCellDisplayed);
-		assertTrue(partnerAdmin.isPartnerIdSearchBar(), GlobalConstants.isPartnerIdSearchBar);
-		assertTrue(partnerAdmin.isOrganisationSearchBar(), GlobalConstants.isOrganisationSearchBar);
-		assertTrue(partnerAdmin.isPolicyGroupsSearchBar(), GlobalConstants.isPolicyGroupsSearchBar);
-		assertTrue(partnerAdmin.isEmailAddressSearchBar(), GlobalConstants.isEmailAddressSearchBar);
+		assertTrue(partnerAdmin.isPartnerIdSearchBarDisplayed(), GlobalConstants.isPartnerIdSearchBarDisplayed);
+		assertTrue(partnerAdmin.isOrganisationSearchBarDisplayed(), GlobalConstants.isOrganisationSearchBarDisplayed);
+		assertTrue(partnerAdmin.isPolicyGroupSearchBarDisplayed(), GlobalConstants.isPolicyGroupSearchBarDisplayed);
+		assertTrue(partnerAdmin.isEmailAddressSearchBarDisplayed(), GlobalConstants.isEmailAddressSearchBarDisplayed);
 		partnerAdmin.clickOnFilterResetButton();
 
 		partnerAdmin.clickOnFilterButton();
@@ -151,5 +151,4 @@ public class PartnerDetailsTest extends BaseClass {
 
 	}
 
-	
 }
