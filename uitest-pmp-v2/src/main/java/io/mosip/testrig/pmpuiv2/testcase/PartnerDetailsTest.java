@@ -93,7 +93,7 @@ public class PartnerDetailsTest extends BaseClass {
 		partnerAdmin.clickOnDeActivatedStatusInFilters();
 		partnerAdmin.clickOnApplyFiltersBtn();
 		assertTrue(partnerAdmin.isFiltersButtonDisabled(), GlobalConstants.isFiltersButtonDisabled);
-		partnerAdmin.enterPartnerIds("pmpui-auth");
+		partnerAdmin.enterPartnerIdsFilter(GlobalConstants.AUTH_PARTNER_ID);
 		partnerAdmin.clickOnStatusFilter();
 		partnerAdmin.clickActivatedButton();
 		partnerAdmin.clickOnApplyFiltersBtn();
@@ -134,10 +134,10 @@ public class PartnerDetailsTest extends BaseClass {
 		partnerAdmin.clickOnAuthenticationPartner();
 		partnerAdmin.clickOnApplyFiltersBtn();
 
-		partnerAdmin.enterInvalidPartnerId("123e");
-		partnerAdmin.enterInvalidOrganisationName("asd");
-		partnerAdmin.enterInvalidPolicyGroup("101e");
-		partnerAdmin.enterInvalidEmail("asz@11");
+		partnerAdmin.enterInvalidPartnerIdFilter(GlobalConstants.INVALID_DATA);
+		partnerAdmin.enterInvalidOrganisationNameFilter(GlobalConstants.INVALID_DATA);
+		partnerAdmin.enterInvalidPolicyGroupFilter(GlobalConstants.INVALID_DATA);
+		partnerAdmin.enterInvalidEmailFilter(GlobalConstants.INVALID_DATA);
 		partnerAdmin.clickOnApplyFiltersBtn();
 		assertTrue(partnerAdmin.isNoResultsFoundsDisplayed(), GlobalConstants.isNoResultsFoundsDisplayed);
 		partnerAdmin.clickOnFilterResetButton();

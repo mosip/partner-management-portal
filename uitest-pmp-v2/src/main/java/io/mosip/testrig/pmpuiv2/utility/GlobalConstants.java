@@ -972,10 +972,13 @@ public class GlobalConstants {
 	public static final String isExpiryDateTimeDisplayed = "Verify if expiry date time isdisplayed";
 	public static final String isTimeOfUploadDisplayed = "Verify if time of upload isdisplayed";
 	public static final String isDownloadCertificateButtonDisplayed = "Verify if down certificate isdisplayed";
-	
-	
-	
-	
+	public static final String isPartnerTypeInViewPartnerPageDisplayed = "Verify if partner type page isdisplayed";
+	public static final String isDeviceProviderInViewPartnerPageDisplayed = "Verify if device peovider isdisplayed";
+	public static final String isOriginalCertificateDropdownDisplayed = "Verify if original certificate dropdown isdisplayed";
+	public static final String isMosipSignedCertificateDropdownDisplayed = "Verify if mosip signed certificate dropdown isdisplayed";
+	public static final String isSuccessMassageInOriginalCertificateDisplayed = "Verify if success massage in original certificate isdisplayed";
+	public static final String isSuccessMassageInMosipSignedCertificateDisplayed = "Verify if success massage  in mosip signed certificate isdisplayed";
+	public static final String isGobackButtonInViewPatnerPageDisplayed = "Verify if go back button isdisplayed";
 	
 	
 	

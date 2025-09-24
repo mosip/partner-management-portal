@@ -225,6 +225,26 @@ public class partnersAdmin extends BasePage {
 
 	@FindBy(id = "download_partner_cer_btn")
 	private WebElement downloadCertificateButtonInViewPartnerPage;
+	
+	@FindBy(id = "view_partner_type_label")
+	private WebElement partnerTypeInViewPartnerPage;
+	
+	@FindBy(id = "view_partner_type_context")
+	private WebElement deviceProviderInViewPartnerPage;
+	
+	@FindBy(id = "original_certificate_download_partner_cer_btn")
+	private WebElement originalCertificateDropdown;
+	
+	@FindBy(id = "mosip_signed_certificate_download_partner_cer_btn")
+	private WebElement mosipSignedCertificateDropdown;
+	
+	@FindBy(id = "view_partner_details_success_msg")
+	private WebElement successMassageInOriginalCertificate;
+	
+	@FindBy(id = "view_partner_details_success_msg")
+	private WebElement successMassageInMosipSignedCertificate;
+	
+	
 
 	public partnersAdmin(WebDriver driver) {
 		super(driver);
@@ -385,11 +405,11 @@ public class partnersAdmin extends BasePage {
 		clickOnElement(authenticationPartner);
 	}
 
-	public void enterOrganisationName(String organisationName) {
+	public void enterOrganisationNameFilter(String organisationName) {
 		enter(partnersOrganisationFilter, organisationName);
 	}
 
-	public void enterPartnerIds(String partnerId) {
+	public void enterPartnerIdsFilter(String partnerId) {
 		enter(partnersIdFilter, partnerId);
 	}
 
@@ -481,25 +501,21 @@ public class partnersAdmin extends BasePage {
 		clickOnElement(partnerType_asc_icons);
 	}
 
-	public boolean isRowDisplayed() {
-		return isElementDisplayed(rowInPartnerDetailsScreen);
-	}
-
-	public void enterInvalidPartnerId(String invalidId) {
+	public void enterInvalidPartnerIdFilter(String invalidId) {
 		enter(partnersIdFilter, invalidId);
 	}
 
-	public void enterInvalidOrganisationName(String invalidOrg) {
+	public void enterInvalidOrganisationNameFilter(String invalidOrg) {
 		enter(partnersOrganisationFilter, invalidOrg);
 
 	}
 
-	public void enterInvalidPolicyGroup(String invalidPolicy) {
+	public void enterInvalidPolicyGroupFilter(String invalidPolicy) {
 		enter(policyGroupsFilter, invalidPolicy);
 
 	}
 
-	public void enterInvalidEmail(String invalidEmail) {
+	public void enterInvalidEmailFilter(String invalidEmail) {
 		enter(emailsAddressFilter, invalidEmail);
 
 	}
@@ -607,5 +623,47 @@ public class partnersAdmin extends BasePage {
 	public boolean isPartnerCertificateInViewPartnerDetailsPageDisplayed() {
 		return isElementDisplayed(partnerCertificateInViewPartnerDetailsPage);
 	}
+	
+	public boolean isPartnerTypeInViewPartnerPageDisplayed() {
+		return isElementDisplayed(partnerTypeInViewPartnerPage);
+	}
+	
+	public boolean isDeviceProviderInViewPartnerPageDisplayed() {
+		return isElementDisplayed(deviceProviderInViewPartnerPage);
+	}
+	
+	public void clickOnDownloadCertificateButtonInViewPartnerPage() {
+		clickOnElement(downloadCertificateButtonInViewPartnerPage);
+	}
+	
+	public boolean isOriginalCertificateDropdownDisplayed() {
+		return isElementDisplayed(originalCertificateDropdown);
+	}
+	
+	public boolean isMosipSignedCertificateDropdownDisplayed() {
+		return isElementDisplayed(mosipSignedCertificateDropdown);
+	}
+	
+	public void clickOnOriginnalCertificateInViewPartnerPage() {
+		clickOnElement(originalCertificateDropdown);
+	}
+	
+	public void clickOnMosipSignedCertificateInViewPartnerPage() {
+		clickOnElement(mosipSignedCertificateDropdown);
+	}
+	
+	public boolean isSuccessMassageInOriginalCertificateDisplayed() {
+		return isElementDisplayed(successMassageInOriginalCertificate);
+	}
+	
+	public boolean isSuccessMassageInMosipSignedCertificateDisplayed() {
+		return isElementDisplayed(successMassageInMosipSignedCertificate);
+	}
+	
+	public boolean isGobackButtonInViewPatnerPageDisplayed() {
+		return isElementDisplayed(gobackButtonInPartnerDetailsPage);
+	}
+	
+	
 
 }
