@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getUserProfile } from "../../../services/UserProfileService";
-import { bgOfStatus, formatDate, getPartnerManagerUrl, getStatusCode, handleServiceErrors, isLangRTL } from "../../../utils/AppUtils";
+import { bgOfStatus, formatDate, getPartnerManagerUrl, getStatusCode, isLangRTL } from "../../../utils/AppUtils";
 import ErrorMessage from "../../common/ErrorMessage";
 import LoadingIcon from "../../common/LoadingIcon";
 import Title from "../../common/Title";
@@ -47,8 +47,7 @@ function ViewMispLicenseKey() {
                         const resData = responseData.response;
                         setMispLicenseKeyDetails(resData);
                     } else {
-                        setUnexpectedError(true);
-                        handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+                        setMispLicenseKeyDetails(mispKeyData);
                     }
                 } else {
                     setErrorMsg(t('mispLicenseList.errorWhileGettingMispDetails'))
@@ -157,7 +156,7 @@ function ViewMispLicenseKey() {
                                             {t("viewAdminOidcClientDetails.organisation")}
                                         </p>
                                         <p id='misp_license_key_details_organisation_context' className="font-[600] text-vulcan text-base">
-                                            {mispLicenseKeyDetails.orgName}
+                                            {mispLicenseKeyDetails.orgName ? mispLicenseKeyDetails.orgName : '-'}
                                         </p>
                                     </div>
                                 </div>
