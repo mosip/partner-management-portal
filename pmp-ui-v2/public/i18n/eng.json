@@ -169,6 +169,16 @@
         ],
         "logout": "Logout & Re-register"
     },
+    "verificationErrorPopup": {
+        "title": "Account Verification Error",
+        "description": "The given username/email already exists in PMS. As a result, we are unable to onboard you into the PMS portal.",
+        "instructionsTitle": "<strong>To resolve this:</strong>",
+        "instructionsList": [
+            "Contact the Keycloak administrator to delete the existing Keycloak account.",
+            "Re-register via the PMS portal self-registration using a different email/username."
+        ],
+        "logout": "Logout"
+    },
     "selectPolicyPopup": {
         "title": "Select Policy Group",
         "description": "Select policy group applicable to your organisation to proceed with enrolled partner type flow. Please ensure you go through the policy group description to confirm the policy group. After your selection is saved, you will not be able to modify the policy group again. Only one policy group is allowed per partner ID.",

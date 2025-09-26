@@ -4,7 +4,7 @@ import { logout, isLangRTL } from '../../utils/AppUtils.js';
 import FocusTrap from 'focus-trap-react';
 import { getUserProfile } from '../../services/UserProfileService.js';
 
-function MissingAttributesPopup() {
+function AccountErrorPopup({ errorType = 'missingAttributes' }) {
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
 
@@ -20,8 +20,8 @@ function MissingAttributesPopup() {
             <FocusTrap focusTrapOptions={{ initialFocus: false, allowOutsideClick: true }}>
                 <div className={`bg-white w-2/5 mx-auto rounded-xl shadow-lg -mt-3 ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>
                     <div className="p-4 border-b border-gray-300">
-                        <h3 id='missing_attributes_popup_title' className="text-lg font-bold text-[#333333]">
-                            {t('missingAttributesPopup.title')}
+                        <h3 id='account_error_popup_title' className="text-lg font-bold text-[#333333]">
+                            {t(errorType === 'missingAttributes' ? 'missingAttributesPopup.title' : 'verificationErrorPopup.title')}
                         </h3>
                     </div>
 
@@ -29,9 +29,9 @@ function MissingAttributesPopup() {
                         <div className="bg-[#FCFCFC] w-full items-center mb-2">
                             <div className="flex items-center justify-center">
                                 <div className="p-2 bg-[#FFF7E5] border-2 border-[#EDDCAF] rounded-md w-full">
-                                    <p id='missing_attributes_popup_description' className="text-sm font-medium text-[#8B6105]">
+                                    <p id='account_error_popup_description' className="text-sm font-medium text-[#8B6105]">
                                         <Trans
-                                            i18nKey="missingAttributesPopup.description"
+                                            i18nKey={errorType === 'missingAttributes' ? 'missingAttributesPopup.description' : 'verificationErrorPopup.description'}
                                             components={{ br: <br /> }}
                                         />
                                     </p>
@@ -40,16 +40,16 @@ function MissingAttributesPopup() {
                         </div>
                         <div className='text-base'>
                             <Trans
-                                i18nKey="missingAttributesPopup.instructionsTitle"
+                                i18nKey={errorType === 'missingAttributes' ? 'missingAttributesPopup.instructionsTitle' : 'verificationErrorPopup.instructionsTitle'}
                                 components={{ strong: <strong /> }}
                             />
                         </div>
                         <div>
                             <ul className={`list-disc mt-2 text-sm space-y-1 ${isLoginLanguageRTL ? 'mr-5' : 'ml-5'}`}>
-                                {t('missingAttributesPopup.instructionsList', { returnObjects: true }).map((item, index) => (
+                                {t(errorType === 'missingAttributes' ? 'missingAttributesPopup.instructionsList' : 'verificationErrorPopup.instructionsList', { returnObjects: true }).map((item, index) => (
                                     <li key={index} className="px-1">
                                         <Trans
-                                            i18nKey={`missingAttributesPopup.instructionsList.${index}`}
+                                            i18nKey={`${errorType === 'missingAttributes' ? 'missingAttributesPopup' : 'verificationErrorPopup'}.instructionsList.${index}`}
                                             components={{ strong: <strong /> }}
                                         />
                                     </li>
@@ -59,7 +59,7 @@ function MissingAttributesPopup() {
                     </div>
                     <div className="p-4 flex justify-end items-center">
                         <p className="text-[#333333] text-sm font-semibold">
-                            <button id='missing_attributes_popup_logout'
+                            <button id='account_error_popup_logout'
                                 className="flex justify-center w-fit h-10 py-2 px-3 rounded-md bg-[#1447B2] text-white text-sm font-semibold"
                                 onClick={logout}
                             >
@@ -73,4 +73,4 @@ function MissingAttributesPopup() {
     );
 }
 
-export default MissingAttributesPopup;
+export default AccountErrorPopup;

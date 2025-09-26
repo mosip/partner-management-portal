@@ -21,7 +21,7 @@ import partner_policy_mapping_icon from '../../svg/partner_policy_mapping_icon.s
 import adminMispPartnerServicesIcon from '../../svg/admin_misp_partner_services_icon.svg';
 import ConsentPopup from './ConsentPopup.js';
 import { getAppConfig } from '../../services/ConfigService.js';
-import MissingAttributesPopup from './MissingAttributesPopup.js';
+import AccountErrorPopup from './AccountErrorPopup.js';
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -47,7 +47,8 @@ function Dashboard() {
   const [partnerCertExpiryCount, setPartnerCertExpiryCount] = useState();
   const [expiringApiKeyCount, setExpiringApiKeyCount] = useState();
   const [expiringSbiCount, setExpiringSbiCount] = useState();
-  const [showMissingAttributesPopup, setShowMissingAttributesPopup] = useState(false);
+  const [showAccountErrorPopup, setShowAccountErrorPopup] = useState(false);
+  const [accountErrorType, setAccountErrorType] = useState(null);
   const [isEmailVerified, setIsEmailVerified] = useState(false);
   const [configData, setConfigData] = useState(null);
   let isSelectPolicyPopupVisible = false;
@@ -103,33 +104,43 @@ function Dashboard() {
         if (roles.includes('POLICYMANAGER')) {
           setIsPolicyManager(true);
         }
-        //1. verify that the logged in user's email is registered in PMS table or not
+        // 1.check if any required attributes are missing
+        const requiredFields = ['userName', 'orgName', 'address', 'phoneNumber', 'email', 'partnerType'];
+
+        const isAttributeMissing = requiredFields.some(field => {
+          const value = userProfile[field];
+
+          // Check if value is null, undefined, or an empty/whitespace-only string
+          return value == null || (typeof value === 'string' && value.trim() === '');
+        });
+
+        if (isAttributeMissing) {
+          setAccountErrorType('missingAttributes');
+          setShowAccountErrorPopup(true);
+          setDataLoaded(true);
+          return;
+        }
+        //2. verify that the logged in user is registered in PMS table or not
         // using the email id
         const verifyEmailRequest = createRequest({
-          "emailId": userProfile.email
-        });
-        const response = await HttpService.put(getPartnerManagerUrl('/partners/email/verify', process.env.NODE_ENV), verifyEmailRequest);
+          "emailId": userProfile.email,
+          "partnerId": userProfile.userName,
+          "partnerType": userProfile.partnerType
+        }, "mosip.pms.partner.exists.post", true);
+        const response = await HttpService.put(getPartnerManagerUrl('/partners/exists', process.env.NODE_ENV), verifyEmailRequest);
         if (response && response.data && response.data.response) {
           const resData = response.data.response;
-          console.log(`user's email exist in db: ${resData.emailExists}`);
-          setIsEmailVerified(resData.emailExists);
-          if (!resData.emailExists) {
-            // 2. If email does not exist, check if any required attributes are missing
-            const requiredFields = ['userName', 'orgName', 'address', 'phoneNumber', 'email', 'partnerType'];
+          console.log(`user's email exist in db: ${resData.partnerExists}`);
 
-            const isAttributeMissing = requiredFields.some(field => {
-              const value = userProfile[field];
-
-              // Check if value is null, undefined, or an empty/whitespace-only string
-              return value == null || (typeof value === 'string' && value.trim() === '');
-            });
-
-            if (isAttributeMissing) {
-              setShowMissingAttributesPopup(true);
+          //check if duplicate exists then show the account error popup
+          if(resData.duplicateExists){
+              setAccountErrorType('verificationError');
+              setShowAccountErrorPopup(true);
               setDataLoaded(true);
               return;
-            }
-
+          }
+          setIsEmailVerified(resData.partnerExists);
+          if (!resData.partnerExists) {
             //3. if email does not exist then check if Policy Group selection is required for this Partner Type or not
             if (
               (userRoles.some(role => resData.policyRequiredPartnerTypes.includes(role))) && !roles.includes('PARTNER_ADMIN') && !roles.includes('POLICYMANAGER')) {
@@ -166,7 +177,7 @@ function Dashboard() {
             setShowPolicies(true);
           }
         } else {
-          setErrorMsg(t('dashboard.verifyEmailError'));
+            setErrorMsg(t('dashboard.verifyEmailError'));
         }
         setDataLoaded(true);
       } catch (err) {
@@ -911,8 +922,10 @@ function Dashboard() {
           {showConsentPopup && (
             <ConsentPopup />
           )}
-          {showMissingAttributesPopup && (
-            <MissingAttributesPopup />
+          {showAccountErrorPopup && (
+            <AccountErrorPopup 
+              errorType={accountErrorType}
+            />
           )}
         </>)
       }
