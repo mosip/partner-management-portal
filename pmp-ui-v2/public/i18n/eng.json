@@ -136,6 +136,12 @@
         "title": "Do you want to Deactivate MISP License Key",
         "description": "On clicking Confirm, you will not be able to use the MISP License Key for authenticating requests anymore."
     },
+    "regenerateMispLicenseKey": {
+        "regenerateMispLicenseKey": "Regenerate MISP License Key",
+        "regenerateLicenseKeySuccessHeader": "MISP License Key is regenerated successfully!",
+        "errorInRegenerateMispLicenseKey": "While regenerating MISP License Key, we have encountered with an error",
+        "noPolicySelected": "No Policy Name selected"
+    },
     "header": {
         "userProfile": "User Profile",
         "changePassword": "Change Password"
@@ -1514,6 +1520,7 @@
         "PMS_MSP_431": "Invalid Partner Type. The Partner Type should be MISP_Partner.",
         "PMS_MSP_432": "Error while deactivating MISP license key.",
         "PMS_MSP_433": "Request status should be De-Activate",
-        "PMS_MSP_434": "MISP License key is already deactivated."
+        "PMS_MSP_434": "MISP License key is already deactivated.",
+        "PMS_MSP_435": "Error while regenerating MISP License key."
     }
 }

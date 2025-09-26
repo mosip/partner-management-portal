@@ -134,6 +134,12 @@
         "title": "هل تريد إلغاء تنشيط مفتاح ترخيص MISP؟",
         "description": "عند النقر فوق تأكيد، لن تتمكن من استخدام مفتاح ترخيص MISP لطلبات المصادقة بعد الآن."
     },
+    "regenerateMispLicenseKey": {
+        "regenerateMispLicenseKey": "تجديد مفتاح ترخيص MISP",
+        "regenerateLicenseKeySuccessHeader": "تم تجديد مفتاح ترخيص MISP بنجاح!",
+        "errorInRegenerateMispLicenseKey": "أثناء إعادة إنشاء مفتاح ترخيص MISP، واجهنا خطأً",
+        "noPolicySelected": "لم يتم تحديد اسم السياسة"
+    },
     "header": {
         "userProfile": "ملف تعريفي للمستخدم",
         "changePassword": "تغيير كلمة المرور"
@@ -1518,6 +1524,7 @@
         "PMS_MSP_431": "نوع الشريك غير صالح. يجب أن يكون نوع الشريك MISP_Partner.",
         "PMS_MSP_432": "حدث خطأ أثناء إلغاء تنشيط مفتاح ترخيص MISP.",
         "PMS_MSP_433": "يجب أن تكون حالة الطلب إلغاء التنشيط",
-        "PMS_MSP_434": "تم إلغاء تنشيط مفتاح ترخيص MISP بالفعل."
+        "PMS_MSP_434": "تم إلغاء تنشيط مفتاح ترخيص MISP بالفعل.",
+        "PMS_MSP_435": "حدث خطأ أثناء إعادة إنشاء مفتاح ترخيص MISP."
     }
 }

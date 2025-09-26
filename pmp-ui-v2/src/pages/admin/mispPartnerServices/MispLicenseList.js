@@ -14,6 +14,7 @@ import EmptyList from '../../common/EmptyList.js';
 import Title from '../../common/Title.js';
 import viewIcon from "../../../svg/view_icon.svg";
 import regenerateIcon from "../../../svg/regenerate_icon.svg";
+import disabledRegenerateIcon from "../../../svg/disabled_regenerate_icon.svg";
 import eyeIcon from "../../../svg/eye_icon.svg";
 import disabledEyeIcon from "../../../svg/disable_eye_icon.svg";
 import deactivateIcon from "../../../svg/deactivate_icon.svg";
@@ -217,7 +218,12 @@ function MispLicenseList() {
         }
     };
 
-    const renewMispLicenseKey = (license, index) => {};
+    const renewMispLicenseKey = (license, index) => {
+        if (license.status === "activated") {
+            localStorage.setItem('selectedMispLicenseKey', JSON.stringify(license));
+            navigate('/partnermanagement/admin/misp-partner-services/regenerate-misp-license-key');
+        }
+    };
 
     const cancelErrorMsg = () => {
         setErrorMsg("");
@@ -343,7 +349,7 @@ function MispLicenseList() {
                                                                                         <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-10 text-right" : "right-11 text-left"}`}>
                                                                                             <div role='button' className={`flex justify-between hover:bg-gray-100 ${license.status === 'activated' ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => renewMispLicenseKey(license, index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => renewMispLicenseKey(license, index))}>
                                                                                                 <p id="misp_license_list_renew_misp_license_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${license.status === "activated" ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("mispLicenseList.regenerate")}</p>
-                                                                                                <img src={regenerateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-3" : "pr-3"}`} />
+                                                                                                <img src={license.status === "activated" ? regenerateIcon : disabledRegenerateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-3" : "pr-3"}`} />
                                                                                             </div>
                                                                                             <hr className="h-px bg-gray-100 border-0 mx-1" />
                                                                                             <div role='button' className="flex justify-between hover:bg-gray-100" onClick={() => viewMispLicenseDetails(license)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => viewMispLicenseDetails(license))}>
