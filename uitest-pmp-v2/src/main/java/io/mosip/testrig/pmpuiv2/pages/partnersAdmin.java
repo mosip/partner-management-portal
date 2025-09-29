@@ -19,7 +19,7 @@ public class partnersAdmin extends BasePage {
 	@FindBy(id = "page_title")
 	private WebElement titlePartner;
 
-	@FindBy(xpath = "//h5[text()='Partners']")
+	@FindBy(id = "dashboard_partner_card_header")
 	private WebElement partnersTab;
 
 	@FindBy(xpath = "//div[text()='Partner ID']")
@@ -133,6 +133,9 @@ public class partnersAdmin extends BasePage {
 	@FindBy(id = "partner_list_item1")
 	private WebElement partnersList1;
 
+	@FindBy(id = "partner_list_item1")
+	private WebElement listOfPartnerRowGreyedOut;
+
 	@FindBy(id = "status_filter_option1")
 	private WebElement activatedButton;
 
@@ -145,8 +148,20 @@ public class partnersAdmin extends BasePage {
 	@FindBy(id = "partner_list_view1")
 	private WebElement actionsButton;
 
+	@FindBy(id = "partner_list_view1")
+	private WebElement actionButtonInActivatedPartner;
+
 	@FindBy(id = "partner_details_view_btn")
 	private WebElement viewButtons;
+
+	@FindBy(id = "partner_details_view_btn")
+	private WebElement viewButtonsInListOfPartnersPage;
+
+	@FindBy(id = "view_partner_details_org_name_label")
+	private WebElement organisationNameInViewPartnerPage;
+
+	@FindBy(xpath = "//tr[@id=\"partner_list_item4\"]/td[7]/div")
+	private WebElement disabledDeactivateButtonInListOfPartner;
 
 	@FindBy(id = "partner_deactive_btn")
 	private WebElement deactivateButtons;
@@ -177,6 +192,9 @@ public class partnersAdmin extends BasePage {
 
 	@FindBy(id = "title_back_icon")
 	private WebElement listOfPartnerBackButton;
+
+	@FindBy(id = "title_back_icon")
+	private WebElement listOfViewPartnerBackButton;
 
 	@FindBy(id = "hamburger_close_icon")
 	private WebElement hamburgersIcon;
@@ -214,6 +232,9 @@ public class partnersAdmin extends BasePage {
 	@FindBy(xpath = "//tr[@id='partner_list_item2']/td[7]/div")
 	private WebElement deactivateColorCodeButton;
 
+	@FindBy(xpath = "//td[contains(text(),'Authentication Partner')]")
+	private WebElement authPartnerId;
+
 	@FindBy(id = "view_partner_details_partner_certificate_title")
 	private WebElement partnerCertificateInViewPartnerDetailsPage;
 
@@ -225,6 +246,9 @@ public class partnersAdmin extends BasePage {
 
 	@FindBy(id = "download_partner_cer_btn")
 	private WebElement downloadCertificateButtonInViewPartnerPage;
+
+	@FindBy(id = "download_partner_cer_btn")
+	private WebElement downloadCertificateButtonDisabledStateInViewPartnerPage;
 
 	@FindBy(id = "view_partner_type_label")
 	private WebElement partnerTypeInViewPartnerPage;
@@ -244,6 +268,12 @@ public class partnersAdmin extends BasePage {
 	@FindBy(id = "view_partner_details_success_msg")
 	private WebElement successMassageInMosipSignedCertificate;
 
+	@FindBy(id = "partner_list_item6")
+	private WebElement nonEditableInListOfPartner;
+
+	@FindBy(id = "partnerList.certUploadStatus_header")
+	private WebElement certUploadStatusHeader;
+
 	public partnersAdmin(WebDriver driver) {
 		super(driver);
 	}
@@ -256,12 +286,25 @@ public class partnersAdmin extends BasePage {
 		return isElementDisplayed(expiryDateTimeInViewPartnerPage);
 	}
 
+	public boolean isDisabledDeactivateButtonInListOfPartnerDisplayed() {
+		return isElementDisplayed(disabledDeactivateButtonInListOfPartner);
+	}
+
+	public void clickOnDeactivateButtonInListOfPartnerPage() {
+		clickOnElement(disabledDeactivateButtonInListOfPartner);
+
+	}
+
 	public boolean isTimeOfUploadDisplayed() {
 		return isElementDisplayed(timeOfUploadInViewPartnerPage);
 	}
 
 	public boolean isDownloadCertificateButtonDisplayed() {
 		return isElementDisplayed(downloadCertificateButtonInViewPartnerPage);
+	}
+
+	public boolean isDisabledDownloadCertificateButtonDisplayed() {
+		return isElementDisplayed(downloadCertificateButtonDisabledStateInViewPartnerPage);
 	}
 
 	public boolean isSubTitleListDisplayed() {
@@ -281,6 +324,10 @@ public class partnersAdmin extends BasePage {
 
 	public boolean isPartnerIdHeaderTagDisplayed() {
 		return isElementDisplayed(partnerIdHeaderTag);
+	}
+
+	public boolean isListOfPartnerRowGreyedOutDisplayed() {
+		return isElementDisplayed(listOfPartnerRowGreyedOut);
 	}
 
 	public boolean isPartnerTypeHeaderTagDisplayed() {
@@ -455,12 +502,20 @@ public class partnersAdmin extends BasePage {
 		return isElementDisplayed(viewPartnersDetailsPage);
 	}
 
+	public boolean isOrganisationNameInViewPartnerPageDisplayed() {
+		return isElementDisplayed(organisationNameInViewPartnerPage);
+	}
+
 	public void clickOnlistOfPartners() {
 		clickOnElement(listOfPartners);
 	}
 
 	public void clickOnActionsButton() {
 		clickOnElement(actionsButton);
+	}
+
+	public void clickOnActionsButtonInActivatedPartner() {
+		clickOnElement(actionButtonInActivatedPartner);
 	}
 
 	public boolean isViewButtonsDisplayed() {
@@ -546,6 +601,10 @@ public class partnersAdmin extends BasePage {
 		clickOnElement(listOfPartnerBackButton);
 	}
 
+	public void clickOnVuewPartnerBackButton() {
+		clickOnElement(listOfViewPartnerBackButton);
+	}
+
 	public boolean isBreadcrumbsDisplayed() {
 		return isElementDisplayed(breadcrumbs);
 	}
@@ -572,6 +631,10 @@ public class partnersAdmin extends BasePage {
 
 	public void clickOnViewPartnerDetailsScreen() {
 		clickOnElement(viewButtons);
+	}
+
+	public void clickOnViewButtonInListOfPartnerDetailsScreen() {
+		clickOnElement(viewButtonsInListOfPartnersPage);
 	}
 
 	public boolean isPartnerIdDisplayed() {
@@ -608,6 +671,10 @@ public class partnersAdmin extends BasePage {
 
 	public void clickOnConfirmButton() {
 		clickOnElement(deactivateConfirmButton);
+	}
+
+	public void clickOnCancelButton() {
+		clickOnElement(deactivateCancelButton);
 	}
 
 	public boolean isDeactivateColorCodeButtonDisplayed() {
@@ -656,6 +723,22 @@ public class partnersAdmin extends BasePage {
 
 	public boolean isGobackButtonInViewPatnerPageDisplayed() {
 		return isElementDisplayed(gobackButtonInPartnerDetailsPage);
+	}
+
+	public void clickOnAuthId() {
+		clickOnElement(authPartnerId);
+	}
+
+	public boolean isNoneditableInListOfPartnerDisplayed() {
+		return isElementDisplayed(nonEditableInListOfPartner);
+	}
+
+	public boolean isCertificateUploadStatusHeaderTagDisplayed() {
+		return isElementDisplayed(certUploadStatusHeader);
+	}
+
+	public void clickOnCertificateUploadascIcon() {
+		clickOnElement(certificateUploadStatusAscIcon);
 	}
 
 }

@@ -983,6 +983,12 @@ public class GlobalConstants {
 	public static final String isOrganisationSearchBarDisplayed = "Verify if go back button isdisplayed";
 	public static final String isPolicyGroupSearchBarDisplayed = "Verify if go back button isdisplayed";
 	public static final String isEmailAddressSearchBarDisplayed = "Verify if go back button isdisplayed";
+	public static final String isNoneditableInListOfPartnerDisplayed = "Verify if nonneditable row isdisplayed";
+	public static final String isCertificateUploadStatusHeaderTagDisplayed = "Verify if certificate upload status header isdisplayed";
+	public static final String isDisabledDownloadCertificateButtonDisplayed = "Verify if disabled download button isdisplayed";
+	public static final String isOrganisationNameInViewPartnerPageDisplayed = "Verify if organisation name in view partner  isdisplayed";
+	public static final String isListOfPartnerRowGreyedOutDisplayed = "Verify if list of partner row grey out row  isdisplayed";
+	public static final String isDisabledDeactivateButtonInListOfPartnerDisplayed = "Verify if deactivated button list  isdisplayed";
 
 	public static final String APPID = "appId";
 	public static final String PASSWORD = "password";
