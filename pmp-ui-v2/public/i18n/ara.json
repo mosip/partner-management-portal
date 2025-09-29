@@ -258,7 +258,7 @@
         "inProgress": "في انتظار لموافقة",
         "rejected": "مرفوض",
         "deactivated": "معطل",
-        "activated": "نشط",
+        "active": "نشط",
         "inactive": "غير نشط",
         "pendingCertUpload": "في انتظار تحميل الشهادة",
         "expired": "منتهي الصلاحية",

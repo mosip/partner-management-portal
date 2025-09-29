@@ -258,7 +258,7 @@
         "inProgress": "En attente d'approbation",
         "rejected": "Rejetée",
         "deactivated": "Désactivé",
-        "activated": "Actif",
+        "active": "Actif",
         "inactive": "Inactif",
         "pendingCertUpload": "En attente de téléchargement du certificat",
         "expired": "Expiré",

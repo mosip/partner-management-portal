@@ -260,7 +260,7 @@
         "inProgress": "Pending For Approval",
         "rejected": "Rejected",
         "deactivated": "Deactivated",
-        "activated": "Activated",
+        "active": "Active",
         "inactive": "Inactive",
         "pendingCertUpload": "Pending For Certificate Upload",
         "expired": "Expired",

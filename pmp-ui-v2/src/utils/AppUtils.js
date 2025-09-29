@@ -122,7 +122,7 @@ export const getStatusCode = (status, t) => {
         } else if (status === "deactivated" || status === "inactive") {
             return t('statusCodes.deactivated');
         } else if (status === "active" || status === "activated") {
-            return t('statusCodes.activated');
+            return t('statusCodes.active');
         } else if (status === "pending_cert_upload") {
             return t('statusCodes.pendingCertUpload');
         } else if (status === "expired") {
