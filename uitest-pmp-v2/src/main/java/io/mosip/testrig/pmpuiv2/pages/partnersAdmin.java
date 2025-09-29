@@ -44,22 +44,22 @@ public class partnersAdmin extends BasePage {
 	private WebElement actionHeaderTag;
 
 	@FindBy(id = "partnerId_desc_icon")
-	private WebElement partnerIdDescIcon;
+	private WebElement partnerIdDescendingIcon;
 
 	@FindBy(id = "partnerId_asc_icon")
-	private WebElement partnerIdAscIcon;
+	private WebElement partnerIdAscendingIcon;
 
 	@FindBy(id = "policyGroupName_desc_icon")
-	private WebElement policyGroupNameDescIcon;
+	private WebElement policyGroupNameDescendingIcon;
 
 	@FindBy(id = "policyGroupName_asc_icon")
-	private WebElement policyGroupNameAscIcon;
+	private WebElement policyGroupNameAscendingIcon;
 
 	@FindBy(id = "orgName_asc_icon")
-	private WebElement orgNameAscIcon;
+	private WebElement orgNameAscendingIcon;
 
 	@FindBy(id = "orgName_desc_icon")
-	private WebElement orgNameDescIcon;
+	private WebElement orgNameDescendingIcon;
 
 	@FindBy(id = "certificateUploadStatus_desc_icon")
 	private WebElement certificateUploadStatusDescIcon;
@@ -131,7 +131,7 @@ public class partnersAdmin extends BasePage {
 	private WebElement dropDownBox;
 
 	@FindBy(id = "partner_list_item1")
-	private WebElement partnersList1;
+	private WebElement listOfPartnerPageRow;
 
 	@FindBy(id = "partner_list_item1")
 	private WebElement listOfPartnerRowGreyedOut;
@@ -158,7 +158,7 @@ public class partnersAdmin extends BasePage {
 	private WebElement viewButtonsInListOfPartnersPage;
 
 	@FindBy(id = "view_partner_details_org_name_label")
-	private WebElement organisationNameInViewPartnerPage;
+	private WebElement organisationNameInViewDetailsPage;
 
 	@FindBy(xpath = "//tr[@id=\"partner_list_item4\"]/td[7]/div")
 	private WebElement disabledDeactivateButtonInListOfPartner;
@@ -167,13 +167,13 @@ public class partnersAdmin extends BasePage {
 	private WebElement deactivateButtons;
 
 	@FindBy(id = "status_filter_option2")
-	private WebElement deActivatedStatusInFilters;
+	private WebElement deactivatedStatusInFilters;
 
 	@FindBy(id = "partner_list_item2")
 	private WebElement deactivatedPartnerRow;
 
 	@FindBy(id = "partnerType_asc_icon")
-	private WebElement partnerTypeAscIcons;
+	private WebElement partnerTypeAscendingIcons;
 
 	@FindBy(xpath = "//p[text()='No Results Found']")
 	private WebElement noResultsFoundMessages;
@@ -266,7 +266,7 @@ public class partnersAdmin extends BasePage {
 	private WebElement successMassageInOriginalCertificate;
 
 	@FindBy(id = "view_partner_details_success_msg")
-	private WebElement successMassageInMosipSignedCertificate;
+	private WebElement successMessageInMosipSignedCertificate;
 
 	@FindBy(id = "partner_list_item6")
 	private WebElement nonEditableInListOfPartner;
@@ -355,27 +355,27 @@ public class partnersAdmin extends BasePage {
 	}
 
 	public boolean isPartnersIdDescIconDisplayed() {
-		return isElementDisplayed(partnerIdDescIcon);
+		return isElementDisplayed(partnerIdDescendingIcon);
 	}
 
 	public boolean isPartnersIdAscIconDisplayed() {
-		return isElementDisplayed(partnerIdAscIcon);
+		return isElementDisplayed(partnerIdAscendingIcon);
 	}
 
 	public boolean isPolicyGroupNamesDescIconDisplayed() {
-		return isElementDisplayed(policyGroupNameDescIcon);
+		return isElementDisplayed(policyGroupNameDescendingIcon);
 	}
 
 	public boolean isPolicyGroupNamesAscIconDisplayed() {
-		return isElementDisplayed(policyGroupNameAscIcon);
+		return isElementDisplayed(policyGroupNameAscendingIcon);
 	}
 
 	public boolean isOrganizationAscIconDisplayed() {
-		return isElementDisplayed(orgNameAscIcon);
+		return isElementDisplayed(orgNameAscendingIcon);
 	}
 
 	public boolean isOrganizationDescIconDisplayed() {
-		return isElementDisplayed(orgNameDescIcon);
+		return isElementDisplayed(orgNameDescendingIcon);
 	}
 
 	public boolean isCertificatesUploadStatusDescIconDisplayed() {
@@ -491,11 +491,11 @@ public class partnersAdmin extends BasePage {
 	}
 
 	public boolean isActivatedPartnersDisplayed() {
-		return isElementDisplayed(partnersList1);
+		return isElementDisplayed(listOfPartnerPageRow);
 	}
 
 	public void clickOnActivatedPartner() {
-		clickOnElement(partnersList1);
+		clickOnElement(listOfPartnerPageRow);
 	}
 
 	public boolean isViewPartnersDetailsPageDisplayed() {
@@ -503,7 +503,7 @@ public class partnersAdmin extends BasePage {
 	}
 
 	public boolean isOrganisationNameInViewPartnerPageDisplayed() {
-		return isElementDisplayed(organisationNameInViewPartnerPage);
+		return isElementDisplayed(organisationNameInViewDetailsPage);
 	}
 
 	public void clickOnlistOfPartners() {
@@ -531,7 +531,7 @@ public class partnersAdmin extends BasePage {
 	}
 
 	public void clickOnDeActivatedStatusInFilters() {
-		clickOnElement(deActivatedStatusInFilters);
+		clickOnElement(deactivatedStatusInFilters);
 	}
 
 	public boolean isDeactivatedPartnerRowDisplayed() {
@@ -547,7 +547,7 @@ public class partnersAdmin extends BasePage {
 	}
 
 	public void clickOnPartnerTypeAscIcons() {
-		clickOnElement(partnerTypeAscIcons);
+		clickOnElement(partnerTypeAscendingIcons);
 	}
 
 	public void enterInvalidPartnerIdFilter(String invalidId) {
@@ -601,7 +601,7 @@ public class partnersAdmin extends BasePage {
 		clickOnElement(listOfPartnerBackButton);
 	}
 
-	public void clickOnVuewPartnerBackButton() {
+	public void clickOnViewPartnerBackButton() {
 		clickOnElement(listOfViewPartnerBackButton);
 	}
 
@@ -681,7 +681,7 @@ public class partnersAdmin extends BasePage {
 		return isElementDisplayed(deactivateColorCodeButton);
 	}
 
-	public boolean isPartnerCertificateInViewPartnerDetailsPageDisplayed() {
+	public boolean isPartnerCertificateInViewPartnerDetailsDisplayed() {
 		return isElementDisplayed(partnerCertificateInViewPartnerDetailsPage);
 	}
 
@@ -718,7 +718,7 @@ public class partnersAdmin extends BasePage {
 	}
 
 	public boolean isSuccessMassageInMosipSignedCertificateDisplayed() {
-		return isElementDisplayed(successMassageInMosipSignedCertificate);
+		return isElementDisplayed(successMessageInMosipSignedCertificate);
 	}
 
 	public boolean isGobackButtonInViewPatnerPageDisplayed() {
