@@ -177,6 +177,15 @@
         ],
         "logout": "Se déconnecter"
     },
+    "invalidPartnerTypeError": {
+        "title": "Configuration du compte requise",
+        "description": "Nous n’avons pas pu terminer votre inscription. Votre compte ne possède pas le rôle requis.",
+        "instructionsTitle": "<strong>Pour résoudre ce problème :</strong>",
+        "instructionsList": [
+            "Contactez votre administrateur Keycloak pour attribuer le rôle requis à votre compte."
+        ],
+        "logout": "Se déconnecter"
+    },
     "selectPolicyPopup": {
         "title": "Sélectionnez un groupe de stratégies",
         "description": "Sélectionnez le groupe de stratégies applicable à votre organisation pour poursuivre le flux de type de partenaire inscrit. Veuillez vous assurer de parcourir la description du groupe de stratégies pour confirmer le groupe de stratégies. Une fois votre sélection enregistrée, vous ne pourrez plus modifier le groupe de stratégies. Un seul groupe de stratégies est autorisé par ID de partenaire.",

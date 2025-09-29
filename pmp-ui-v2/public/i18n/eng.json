@@ -179,6 +179,15 @@
         ],
         "logout": "Logout"
     },
+    "invalidPartnerTypeError": {
+        "title": "Account Setup Required",
+        "description": "We couldn’t complete your registration. Your account is missing a required role.",
+        "instructionsTitle": "<strong>To resolve this:</strong>",
+        "instructionsList": [
+            "Contact your Keycloak administrator to assign the required role to your account."
+        ],
+        "logout": "Logout"
+    },
     "selectPolicyPopup": {
         "title": "Select Policy Group",
         "description": "Select policy group applicable to your organisation to proceed with enrolled partner type flow. Please ensure you go through the policy group description to confirm the policy group. After your selection is saved, you will not be able to modify the policy group again. Only one policy group is allowed per partner ID.",

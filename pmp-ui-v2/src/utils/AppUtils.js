@@ -87,9 +87,9 @@ export const getPartnerType = (userProfile) => {
         .map(role => role.trim())  // remove extra spaces from each role
         .filter(role => role);     // drop empty entries
 
-    // Return first role that is a valid partner type, fallback to DEVICE_PROVIDER
-    return userRoles.find(role => validPartnerTypes.has(role)) ?? 'DEVICE_PROVIDER';
-  };  
+    // Return first role that is a valid partner type
+    return userRoles.find(role => validPartnerTypes.has(role)) ?? null;
+  }; 
 
 export const getLanguageLabel = (languageCode, t) => {
     const languageMap = {

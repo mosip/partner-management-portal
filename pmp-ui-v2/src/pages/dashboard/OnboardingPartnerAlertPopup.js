@@ -8,6 +8,20 @@ function OnboardingPartnerAlertPopup({ errorType = 'missingAttributes' }) {
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
 
+    // Helper method for error type handling
+    const getErrorKey = (key) => {
+        const errorKeys = {
+            'missingAttributes': 'missingAttributesError',
+            'verificationError': 'verificationError',
+            'invalidPartnerTypeError': 'invalidPartnerTypeError'
+        };
+        return errorKeys[errorType] || 'missingAttributesError';
+    };
+
+    const getTranslationKey = (key) => {
+        return `${getErrorKey()}.${key}`;
+    };
+
     useEffect(() => {
         document.body.style.overflow = "hidden";
         return () => {
@@ -21,7 +35,7 @@ function OnboardingPartnerAlertPopup({ errorType = 'missingAttributes' }) {
                 <div className={`bg-white w-2/5 mx-auto rounded-xl shadow-lg -mt-3 ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>
                     <div className="p-4 border-b border-gray-300">
                         <h3 id='onboarding_partner_alert_popup_title' className="text-lg font-bold text-[#333333]">
-                            {t(errorType === 'missingAttributes' ? 'missingAttributesError.title' : 'verificationError.title')}
+                            {t(getTranslationKey('title'))}
                         </h3>
                     </div>
 
@@ -31,7 +45,7 @@ function OnboardingPartnerAlertPopup({ errorType = 'missingAttributes' }) {
                                 <div className="p-2 bg-[#FFF7E5] border-2 border-[#EDDCAF] rounded-md w-full">
                                     <p id='onboarding_partner_alert_popup_description' className="text-sm font-medium text-[#8B6105]">
                                         <Trans
-                                            i18nKey={errorType === 'missingAttributes' ? 'missingAttributesError.description' : 'verificationError.description'}
+                                            i18nKey={getTranslationKey('description')}
                                             components={{ br: <br /> }}
                                         />
                                     </p>
@@ -40,16 +54,16 @@ function OnboardingPartnerAlertPopup({ errorType = 'missingAttributes' }) {
                         </div>
                         <div className='text-base'>
                             <Trans
-                                i18nKey={errorType === 'missingAttributes' ? 'missingAttributesError.instructionsTitle' : 'verificationError.instructionsTitle'}
+                                i18nKey={getTranslationKey('instructionsTitle')}
                                 components={{ strong: <strong /> }}
                             />
                         </div>
                         <div>
                             <ul className={`list-disc mt-2 text-sm space-y-1 ${isLoginLanguageRTL ? 'mr-5' : 'ml-5'}`}>
-                                {t(errorType === 'missingAttributes' ? 'missingAttributesError.instructionsList' : 'verificationError.instructionsList', { returnObjects: true }).map((item, index) => (
+                                {t(getTranslationKey('instructionsList'), { returnObjects: true }).map((item, index) => (
                                     <li key={index} className="px-1">
                                         <Trans
-                                            i18nKey={`${errorType === 'missingAttributes' ? 'missingAttributesError' : 'verificationError'}.instructionsList.${index}`}
+                                            i18nKey={`${getErrorKey()}.instructionsList.${index}`}
                                             components={{ strong: <strong /> }}
                                         />
                                     </li>
@@ -63,7 +77,7 @@ function OnboardingPartnerAlertPopup({ errorType = 'missingAttributes' }) {
                                 className="flex justify-center w-fit h-10 py-2 px-3 rounded-md bg-[#1447B2] text-white text-sm font-semibold"
                                 onClick={logout}
                             >
-                                {t('missingAttributesError.logout')}
+                                {t(getTranslationKey('logout'))}
                             </button>
                         </p>
                     </div>

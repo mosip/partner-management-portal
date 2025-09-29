@@ -108,6 +108,14 @@ function Dashboard() {
         // Extract partnerType from roles if not present in userProfile
         const partnerType = getPartnerType(userProfile);
 
+        // Check if no valid partner type is found
+        if (!partnerType) {
+          setOnboardingPartnerAlertType('invalidPartnerTypeError');
+          setShowOnboardingPartnerAlertPopup(true);
+          setDataLoaded(true);
+          return;
+        }
+
         //1. verify that the logged in user is registered in PMS table or not
         // using the email id
         const verifyEmailRequest = createRequest({
