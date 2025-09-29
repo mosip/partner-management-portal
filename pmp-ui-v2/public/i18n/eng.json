@@ -159,7 +159,7 @@
         "mosipCommunity": "MOSIP Community",
         "contactUs": "Contact Us"
     },
-    "missingAttributesPopup": {
+    "missingAttributesError": {
         "title": "Account Setup Required",
         "description": "Your Keycloak user account has not been created via the PMS Portal self-registration. As a result, we are unable to onboard you into the PMS Portal.",
         "instructionsTitle": "<strong>To resolve this, you can do the below steps:</strong>",
@@ -169,7 +169,7 @@
         ],
         "logout": "Logout & Re-register"
     },
-    "verificationErrorPopup": {
+    "verificationError": {
         "title": "Account Verification Error",
         "description": "The given username/email already exists in PMS. As a result, we are unable to onboard you into the PMS portal.",
         "instructionsTitle": "<strong>To resolve this:</strong>",

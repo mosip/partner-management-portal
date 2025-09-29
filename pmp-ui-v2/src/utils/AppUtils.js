@@ -60,6 +60,37 @@ export const getPartnerTypeDescription = (partnerType, t) => {
     }
 }
 
+export const getPartnerType = (userProfile) => {
+    // Return partnerType if already present
+    if (userProfile.partnerType) {
+      return userProfile.partnerType;
+    }
+  
+    // if partnertype is not present in userProfile then extract it from roles
+    // allowed partner types (same as roles)
+    const validPartnerTypes = new Set([
+      'AUTH_PARTNER',
+      'DEVICE_PROVIDER',
+      'FTM_PROVIDER',
+      'CREDENTIAL_PARTNER',
+      'ONLINE_VERIFICATION_PARTNER',
+      'ABIS_PARTNER',
+      'MISP_PARTNER',
+      'SDK_PARTNER',
+      'PRINT_PARTNER',
+      'INTERNAL_PARTNER',
+      'MANUAL_ADJUDICATION',
+    ]);
+
+    const userRoles = (userProfile.roles ?? '')
+        .split(',')                // turn "A,B,C" into ["A", "B", "C"]
+        .map(role => role.trim())  // remove extra spaces from each role
+        .filter(role => role);     // drop empty entries
+
+    // Return first role that is a valid partner type, fallback to DEVICE_PROVIDER
+    return userRoles.find(role => validPartnerTypes.has(role)) ?? 'DEVICE_PROVIDER';
+  };  
+
 export const getLanguageLabel = (languageCode, t) => {
     const languageMap = {
         "eng": 'languages.english',

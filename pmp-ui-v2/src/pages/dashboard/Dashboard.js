@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { getUserProfile } from '../../services/UserProfileService.js';
 import { useTranslation } from "react-i18next";
-import { isLangRTL, onPressEnterKey, getPartnerManagerUrl, createRequest, handleServiceErrors, moveToOidcClientsList, moveToMispPartnerServices } from '../../utils/AppUtils.js';
+import { isLangRTL, onPressEnterKey, getPartnerManagerUrl, createRequest, handleServiceErrors, moveToOidcClientsList, moveToMispPartnerServices, getPartnerType } from '../../utils/AppUtils.js';
 import { HttpService } from '../../services/HttpService.js';
 import ErrorMessage from '../common/ErrorMessage.js';
 import LoadingIcon from "../common/LoadingIcon.js";
@@ -21,7 +21,7 @@ import partner_policy_mapping_icon from '../../svg/partner_policy_mapping_icon.s
 import adminMispPartnerServicesIcon from '../../svg/admin_misp_partner_services_icon.svg';
 import ConsentPopup from './ConsentPopup.js';
 import { getAppConfig } from '../../services/ConfigService.js';
-import AccountErrorPopup from './AccountErrorPopup.js';
+import OnboardingPartnerAlertPopup from './OnboardingPartnerAlertPopup.js';
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -47,8 +47,8 @@ function Dashboard() {
   const [partnerCertExpiryCount, setPartnerCertExpiryCount] = useState();
   const [expiringApiKeyCount, setExpiringApiKeyCount] = useState();
   const [expiringSbiCount, setExpiringSbiCount] = useState();
-  const [showAccountErrorPopup, setShowAccountErrorPopup] = useState(false);
-  const [accountErrorType, setAccountErrorType] = useState(null);
+  const [showOnboardingPartnerAlertPopup, setShowOnboardingPartnerAlertPopup] = useState(false);
+  const [onboardingPartnerAlertType, setOnboardingPartnerAlertType] = useState(null);
   const [isEmailVerified, setIsEmailVerified] = useState(false);
   const [configData, setConfigData] = useState(null);
   let isSelectPolicyPopupVisible = false;
@@ -104,28 +104,16 @@ function Dashboard() {
         if (roles.includes('POLICYMANAGER')) {
           setIsPolicyManager(true);
         }
-        // 1.check if any required attributes are missing
-        const requiredFields = ['userName', 'orgName', 'address', 'phoneNumber', 'email', 'partnerType'];
 
-        const isAttributeMissing = requiredFields.some(field => {
-          const value = userProfile[field];
+        // Extract partnerType from roles if not present in userProfile
+        const partnerType = getPartnerType(userProfile);
 
-          // Check if value is null, undefined, or an empty/whitespace-only string
-          return value == null || (typeof value === 'string' && value.trim() === '');
-        });
-
-        if (isAttributeMissing) {
-          setAccountErrorType('missingAttributes');
-          setShowAccountErrorPopup(true);
-          setDataLoaded(true);
-          return;
-        }
-        //2. verify that the logged in user is registered in PMS table or not
+        //1. verify that the logged in user is registered in PMS table or not
         // using the email id
         const verifyEmailRequest = createRequest({
           "emailId": userProfile.email,
           "partnerId": userProfile.userName,
-          "partnerType": userProfile.partnerType
+          "partnerType": partnerType
         }, "mosip.pms.partner.exists.post", true);
         const response = await HttpService.put(getPartnerManagerUrl('/partners/exists', process.env.NODE_ENV), verifyEmailRequest);
         if (response && response.data && response.data.response) {
@@ -134,13 +122,31 @@ function Dashboard() {
 
           //check if duplicate exists then show the account error popup
           if(resData.duplicateExists){
-              setAccountErrorType('verificationError');
-              setShowAccountErrorPopup(true);
+              setOnboardingPartnerAlertType('verificationError');
+              setShowOnboardingPartnerAlertPopup(true);
               setDataLoaded(true);
               return;
           }
           setIsEmailVerified(resData.partnerExists);
           if (!resData.partnerExists) {
+            console.log('user email does not exist in PMS');
+            // 2. If email does not exist, check if any required attributes are missing
+            const requiredFields = ['userName', 'orgName', 'address', 'phoneNumber', 'email', 'partnerType'];
+
+            const isAttributeMissing = requiredFields.some(field => {
+              const value = userProfile[field];
+
+              // Check if value is null, undefined, or an empty/whitespace-only string
+              return value == null || (typeof value === 'string' && value.trim() === '');
+            });
+
+            if (isAttributeMissing) {
+              setOnboardingPartnerAlertType('missingAttributes');
+              setShowOnboardingPartnerAlertPopup(true);
+              setDataLoaded(true);
+              return;
+            }
+
             //3. if email does not exist then check if Policy Group selection is required for this Partner Type or not
             if (
               (userRoles.some(role => resData.policyRequiredPartnerTypes.includes(role))) && !roles.includes('PARTNER_ADMIN') && !roles.includes('POLICYMANAGER')) {
@@ -158,7 +164,7 @@ function Dashboard() {
                 address: userProfile.address,
                 contactNumber: userProfile.phoneNumber,
                 emailId: userProfile.email,
-                partnerType: userProfile.partnerType,
+                partnerType: partnerType,
                 langCode: userProfile.langCode,
               });
               const registerUserResponse = await HttpService.post(getPartnerManagerUrl('/partners', process.env.NODE_ENV), registerUserRequest);
@@ -922,9 +928,9 @@ function Dashboard() {
           {showConsentPopup && (
             <ConsentPopup />
           )}
-          {showAccountErrorPopup && (
-            <AccountErrorPopup 
-              errorType={accountErrorType}
+          {showOnboardingPartnerAlertPopup && (
+            <OnboardingPartnerAlertPopup 
+              errorType={onboardingPartnerAlertType}
             />
           )}
         </>)

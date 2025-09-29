@@ -4,7 +4,7 @@ import { logout, isLangRTL } from '../../utils/AppUtils.js';
 import FocusTrap from 'focus-trap-react';
 import { getUserProfile } from '../../services/UserProfileService.js';
 
-function AccountErrorPopup({ errorType = 'missingAttributes' }) {
+function OnboardingPartnerAlertPopup({ errorType = 'missingAttributes' }) {
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
 
@@ -20,8 +20,8 @@ function AccountErrorPopup({ errorType = 'missingAttributes' }) {
             <FocusTrap focusTrapOptions={{ initialFocus: false, allowOutsideClick: true }}>
                 <div className={`bg-white w-2/5 mx-auto rounded-xl shadow-lg -mt-3 ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>
                     <div className="p-4 border-b border-gray-300">
-                        <h3 id='account_error_popup_title' className="text-lg font-bold text-[#333333]">
-                            {t(errorType === 'missingAttributes' ? 'missingAttributesPopup.title' : 'verificationErrorPopup.title')}
+                        <h3 id='onboarding_partner_alert_popup_title' className="text-lg font-bold text-[#333333]">
+                            {t(errorType === 'missingAttributes' ? 'missingAttributesError.title' : 'verificationError.title')}
                         </h3>
                     </div>
 
@@ -29,9 +29,9 @@ function AccountErrorPopup({ errorType = 'missingAttributes' }) {
                         <div className="bg-[#FCFCFC] w-full items-center mb-2">
                             <div className="flex items-center justify-center">
                                 <div className="p-2 bg-[#FFF7E5] border-2 border-[#EDDCAF] rounded-md w-full">
-                                    <p id='account_error_popup_description' className="text-sm font-medium text-[#8B6105]">
+                                    <p id='onboarding_partner_alert_popup_description' className="text-sm font-medium text-[#8B6105]">
                                         <Trans
-                                            i18nKey={errorType === 'missingAttributes' ? 'missingAttributesPopup.description' : 'verificationErrorPopup.description'}
+                                            i18nKey={errorType === 'missingAttributes' ? 'missingAttributesError.description' : 'verificationError.description'}
                                             components={{ br: <br /> }}
                                         />
                                     </p>
@@ -40,16 +40,16 @@ function AccountErrorPopup({ errorType = 'missingAttributes' }) {
                         </div>
                         <div className='text-base'>
                             <Trans
-                                i18nKey={errorType === 'missingAttributes' ? 'missingAttributesPopup.instructionsTitle' : 'verificationErrorPopup.instructionsTitle'}
+                                i18nKey={errorType === 'missingAttributes' ? 'missingAttributesError.instructionsTitle' : 'verificationError.instructionsTitle'}
                                 components={{ strong: <strong /> }}
                             />
                         </div>
                         <div>
                             <ul className={`list-disc mt-2 text-sm space-y-1 ${isLoginLanguageRTL ? 'mr-5' : 'ml-5'}`}>
-                                {t(errorType === 'missingAttributes' ? 'missingAttributesPopup.instructionsList' : 'verificationErrorPopup.instructionsList', { returnObjects: true }).map((item, index) => (
+                                {t(errorType === 'missingAttributes' ? 'missingAttributesError.instructionsList' : 'verificationError.instructionsList', { returnObjects: true }).map((item, index) => (
                                     <li key={index} className="px-1">
                                         <Trans
-                                            i18nKey={`${errorType === 'missingAttributes' ? 'missingAttributesPopup' : 'verificationErrorPopup'}.instructionsList.${index}`}
+                                            i18nKey={`${errorType === 'missingAttributes' ? 'missingAttributesError' : 'verificationError'}.instructionsList.${index}`}
                                             components={{ strong: <strong /> }}
                                         />
                                     </li>
@@ -59,11 +59,11 @@ function AccountErrorPopup({ errorType = 'missingAttributes' }) {
                     </div>
                     <div className="p-4 flex justify-end items-center">
                         <p className="text-[#333333] text-sm font-semibold">
-                            <button id='account_error_popup_logout'
+                            <button id='onboarding_partner_alert_popup_logout'
                                 className="flex justify-center w-fit h-10 py-2 px-3 rounded-md bg-[#1447B2] text-white text-sm font-semibold"
                                 onClick={logout}
                             >
-                                {t('missingAttributesPopup.logout')}
+                                {t('missingAttributesError.logout')}
                             </button>
                         </p>
                     </div>
@@ -73,4 +73,4 @@ function AccountErrorPopup({ errorType = 'missingAttributes' }) {
     );
 }
 
-export default AccountErrorPopup;
+export default OnboardingPartnerAlertPopup;

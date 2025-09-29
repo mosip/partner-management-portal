@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { HttpService } from "../../services/HttpService.js";
 import {
     getPartnerTypeDescription, createRequest,
-    getPartnerManagerUrl, handleServiceErrors, logout, isLangRTL
+    getPartnerManagerUrl, handleServiceErrors, logout, isLangRTL, extractPartnerTypeFromRoles
 } from '../../utils/AppUtils.js';
 import { useTranslation } from 'react-i18next';
 import { getUserProfile } from '../../services/UserProfileService.js';
@@ -99,13 +99,14 @@ function SelectPolicyPopup({
     // Handle new user registration
     const handleUserRegistration = async () => {
         const userProfile = getUserProfile();
+        const partnerType = extractPartnerTypeFromRoles(userProfile);
         const registerUserRequest = createRequest({
             partnerId: userProfile.userName,
             organizationName: userProfile.orgName,
             address: userProfile.address,
             contactNumber: userProfile.phoneNumber,
             emailId: userProfile.email,
-            partnerType: userProfile.partnerType,
+            partnerType: partnerType,
             policyGroup: selectedPolicyGroup ? selectedPolicyGroup.name : "",
             langCode: userProfile.langCode,
         });

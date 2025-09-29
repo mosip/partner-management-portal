@@ -157,7 +157,7 @@
         "mosipCommunity": "Communauté MOSIP",
         "contactUs": "Contactez-nous"
     },
-    "missingAttributesPopup": {
+    "missingAttributesError": {
         "title": "Configuration du compte requise",
         "description": "Votre compte utilisateur Keycloak n'a pas été créé via l'auto-inscription sur le portail PMS. Par conséquent, nous ne pouvons pas vous intégrer au portail PMS.",
         "instructionsTitle": "<strong>Pour résoudre ce problème, vous pouvez suivre les étapes suivantes :</strong>",
@@ -167,7 +167,7 @@
         ],
         "logout": "Se déconnecter et se réinscrire"
     },
-    "verificationErrorPopup": {
+    "verificationError": {
         "title": "Erreur de vérification du compte",
         "description": "Le nom d’utilisateur/email fourni existe déjà dans le système PMS. En conséquence, nous ne pouvons pas vous inscrire sur le portail PMS.",
         "instructionsTitle": "<strong>Pour résoudre ce problème :</strong>",
