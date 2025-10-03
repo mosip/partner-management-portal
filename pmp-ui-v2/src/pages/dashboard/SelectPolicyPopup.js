@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { HttpService } from "../../services/HttpService.js";
 import {
     getPartnerTypeDescription, createRequest,
-    getPartnerManagerUrl, handleServiceErrors, logout, isLangRTL
+    getPartnerManagerUrl, handleServiceErrors, logout, isLangRTL,
 } from '../../utils/AppUtils.js';
 import { useTranslation } from 'react-i18next';
 import { getUserProfile } from '../../services/UserProfileService.js';

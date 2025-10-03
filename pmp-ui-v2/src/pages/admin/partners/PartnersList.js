@@ -264,7 +264,7 @@ function PartnersList() {
       return t('statusCodes.inactive');
     } 
     else if (partner.isActive === true) {
-      return t('statusCodes.activated');
+      return t('statusCodes.active');
     } 
     else if (partner.isActive === false && partner.status === "approved") {
       return t('statusCodes.deactivated');

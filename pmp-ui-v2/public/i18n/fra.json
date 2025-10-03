@@ -157,7 +157,7 @@
         "mosipCommunity": "Communauté MOSIP",
         "contactUs": "Contactez-nous"
     },
-    "missingAttributesPopup": {
+    "missingAttributesError": {
         "title": "Configuration du compte requise",
         "description": "Votre compte utilisateur Keycloak n'a pas été créé via l'auto-inscription sur le portail PMS. Par conséquent, nous ne pouvons pas vous intégrer au portail PMS.",
         "instructionsTitle": "<strong>Pour résoudre ce problème, vous pouvez suivre les étapes suivantes :</strong>",
@@ -166,6 +166,25 @@
             "Inscrivez-vous à nouveau via <strong>l'auto-inscription sur le portail PMS.</strong>"
         ],
         "logout": "Se déconnecter et se réinscrire"
+    },
+    "verificationError": {
+        "title": "Erreur de vérification du compte",
+        "description": "Le nom d’utilisateur/email fourni existe déjà dans le système PMS. En conséquence, nous ne pouvons pas vous inscrire sur le portail PMS.",
+        "instructionsTitle": "<strong>Pour résoudre ce problème :</strong>",
+        "instructionsList": [
+            "Contactez l’administrateur Keycloak pour supprimer le compte Keycloak existant.",
+            "Réinscrivez-vous via le portail PMS en utilisant un autre email/nom d’utilisateur."
+        ],
+        "logout": "Se déconnecter"
+    },
+    "invalidPartnerTypeError": {
+        "title": "Configuration du compte requise",
+        "description": "Nous n’avons pas pu terminer votre inscription. Votre compte ne possède pas le rôle requis.",
+        "instructionsTitle": "<strong>Pour résoudre ce problème :</strong>",
+        "instructionsList": [
+            "Contactez votre administrateur Keycloak pour attribuer le rôle requis à votre compte."
+        ],
+        "logout": "Se déconnecter"
     },
     "selectPolicyPopup": {
         "title": "Sélectionnez un groupe de stratégies",
@@ -239,7 +258,7 @@
         "inProgress": "En attente d'approbation",
         "rejected": "Rejetée",
         "deactivated": "Désactivé",
-        "activated": "Actif",
+        "active": "Actif",
         "inactive": "Inactif",
         "pendingCertUpload": "En attente de téléchargement du certificat",
         "expired": "Expiré",

@@ -159,7 +159,7 @@
         "mosipCommunity": "MOSIP Community",
         "contactUs": "Contact Us"
     },
-    "missingAttributesPopup": {
+    "missingAttributesError": {
         "title": "Account Setup Required",
         "description": "Your Keycloak user account has not been created via the PMS Portal self-registration. As a result, we are unable to onboard you into the PMS Portal.",
         "instructionsTitle": "<strong>To resolve this, you can do the below steps:</strong>",
@@ -168,6 +168,25 @@
             "Register again via <strong>PMS portal self registration.</strong>"
         ],
         "logout": "Logout & Re-register"
+    },
+    "verificationError": {
+        "title": "Account Verification Error",
+        "description": "The given username/email already exists in PMS. As a result, we are unable to onboard you into the PMS portal.",
+        "instructionsTitle": "<strong>To resolve this:</strong>",
+        "instructionsList": [
+            "Contact the Keycloak administrator to delete the existing Keycloak account.",
+            "Re-register via the PMS portal self-registration using a different email/username."
+        ],
+        "logout": "Logout"
+    },
+    "invalidPartnerTypeError": {
+        "title": "Account Setup Required",
+        "description": "We couldn’t complete your registration. Your account is missing a required role.",
+        "instructionsTitle": "<strong>To resolve this:</strong>",
+        "instructionsList": [
+            "Contact your Keycloak administrator to assign the required role to your account."
+        ],
+        "logout": "Logout"
     },
     "selectPolicyPopup": {
         "title": "Select Policy Group",
@@ -241,7 +260,7 @@
         "inProgress": "Pending For Approval",
         "rejected": "Rejected",
         "deactivated": "Deactivated",
-        "activated": "Activated",
+        "active": "Active",
         "inactive": "Inactive",
         "pendingCertUpload": "Pending For Certificate Upload",
         "expired": "Expired",
