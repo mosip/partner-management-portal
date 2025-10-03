@@ -134,6 +134,12 @@
         "title": "Voulez-vous désactiver la clé de licence MISP",
         "description": "En cliquant sur Confirmer, vous ne pourrez plus utiliser la clé de licence MISP pour authentifier les demandes."
     },
+    "regenerateMispLicenseKey": {
+        "regenerateMispLicenseKey": "Régénérer la clé de licence MISP",
+        "regenerateLicenseKeySuccessHeader": "La clé de licence MISP a été régénérée avec succès !",
+        "errorInRegenerateMispLicenseKey": "Lors de la régénération de la clé de licence MISP, nous avons rencontré une erreur",
+        "noPolicySelected": "Aucun nom de politique sélectionné"
+    },
     "header": {
         "userProfile": "Profil de l'utilisateur",
         "changePassword": "Changer le mot de passe"
@@ -1537,6 +1543,7 @@
         "PMS_MSP_431": "Type de partenaire non valide. Le type de partenaire doit être MISP_Partner.",
         "PMS_MSP_432": "Erreur lors de la désactivation de la clé de licence MISP.",
         "PMS_MSP_433": "Le statut de la demande doit être Désactiver",
-        "PMS_MSP_434": "La clé de licence MISP est déjà désactivée."
+        "PMS_MSP_434": "La clé de licence MISP est déjà désactivée.",
+        "PMS_MSP_435": "Erreur lors de la régénération de la clé de licence MISP."
     }
 }
