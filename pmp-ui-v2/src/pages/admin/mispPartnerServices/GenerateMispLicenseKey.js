@@ -344,7 +344,7 @@ function GenerateMispLicenseKey() {
                                                 </DropdownWithSearchComponent>
                                             </div>
                                         </div>
-                                        <div className="flex items-center justify-center my-4">
+                                        <div className="flex items-center justify-center my-5">
                                             <div className="p-2 bg-[#FFF7E5] border-2 border-[#EDDCAF] rounded-md w-full">
                                                 <p id='generate_misp_license_key_guidence' className="text-sm font-medium text-[#8B6105]">{t('generateLicenseKey.guidence')}</p>
                                             </div>
@@ -370,6 +370,11 @@ function GenerateMispLicenseKey() {
                                                 styleSet={calenderStyleSet}
                                                 isUsedAsFilter={false}
                                             />
+                                        </div>
+                                        <div className="flex items-center justify-center my-5">
+                                            <div className="p-2 bg-[#FFF7E5] border-2 border-[#EDDCAF] rounded-md w-full">
+                                                <p id='generate_misp_license_key_important_note' className="text-sm font-medium text-[#8B6105]">{t('generateLicenseKey.importantNote')}</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </form>
