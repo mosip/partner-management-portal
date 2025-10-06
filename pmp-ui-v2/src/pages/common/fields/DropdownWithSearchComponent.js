@@ -3,10 +3,11 @@ import { useTranslation } from 'react-i18next';
 import { handleMouseClickForDropdown, isLangRTL } from '../../../utils/AppUtils';
 import { getUserProfile } from '../../../services/UserProfileService';
 import Information from './Information';
+import LoadingIcon from '../LoadingIcon';
 import PropTypes from 'prop-types';
 
 function DropdownWithSearchComponent({ fieldName, dropdownDataList, onDropDownChangeEvent, fieldNameKey,
-    placeHolderKey, searchKey, selectedDropdownValue, styleSet, addInfoIcon, infoKey, disabled, selectPolicyPopup, isPlaceHolderPresent, id }) {
+    placeHolderKey, searchKey, selectedDropdownValue, styleSet, addInfoIcon, infoKey, disabled, selectPolicyPopup, isPlaceHolderPresent, id, onDropdownClick, loading }) {
 
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
@@ -37,9 +38,14 @@ function DropdownWithSearchComponent({ fieldName, dropdownDataList, onDropDownCh
         onDropDownChangeEvent(fieldName, selectedid);
     };
     const openDropdown = () => {
-        if (!disabled) {
+        if (!disabled && !loading) {
             setSearchItem("");
             setIsDropdownOpen(!isDropdownOpen);
+            
+            // Call onDropdownClick callback if provided and dropdown is opening
+            if (onDropdownClick && !isDropdownOpen) {
+                onDropdownClick();
+            }
         };
     };
 
@@ -70,47 +76,57 @@ function DropdownWithSearchComponent({ fieldName, dropdownDataList, onDropDownCh
                     </svg>
                 </button>
                 {isDropdownOpen && (
-                    <div className={`${!selectPolicyPopup && 'absolute'}mt-auto left-0 w-full ${(styleSet && styleSet.selectionBox) ? styleSet.selectionBox : ''}`}>
-                        <div className="absolute z-10 border border-gray-400 bg-white rounded-md shadow-lg w-full cursor-pointer">
-                            <div className="p-2 border-b border-gray-200 shadow-sm relative">
-                                <span className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-4 text-black mx-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 18a8 8 0 100-16 8 8 0 000 16zM21 21l-5.2-5.2" />
-                                    </svg>
-                                </span>
-                                <input id={id + "_search_input"} type="text" placeholder={t(searchKey)} value={searchItem} onChange={(e) => setSearchItem(e.target.value)} onKeyDown={handleKeyDown}
-                                    className="w-full h-8 pl-8 py-1 text-sm text-gray-300 border border-gray-400 rounded-md focus:outline-none focus:text focus:text-gray-800" />
-                            </div>
-                            {filteredPolicyGroupList.length === 0 && (
-                                <div className="min-h-3 p-4 cursor-auto">
-                                    <p id={id + '_no_data_available'} className="text-sm text-dark-blue font-semibold">{t('commons.emptyMsg')}</p>
+                    loading ? (
+                        <div className={`${!selectPolicyPopup && 'absolute'}mt-auto left-0 w-full ${(styleSet && styleSet.selectionBox) ? styleSet.selectionBox : ''}`}>
+                            <div className="absolute z-10 border border-gray-400 bg-white rounded-md shadow-lg w-full">
+                                <div className="flex items-center justify-center p-8">
+                                    <LoadingIcon />
                                 </div>
-                            )}
-                            <div className="max-h-32 overflow-y-auto">
-                                {filteredPolicyGroupList.map((dropdownItem, index) => {
-                                    return (
-                                        <div key={index} className="min-h-2">
-                                            <button id={isPlaceHolderPresent ? (index > 0 ? id + '_option' + (index) : undefined) : id + '_option' + (index + 1)}
-                                                className={`block ${dropdownItem.fieldDescription ? 'min-h-16' : 'min-h-8'} w-full px-4 py-1 text-sm text-dark-blue overflow-x-auto whitespace-normal no-scrollbar break-words
-                                                    ${selectedDropdownEntry === dropdownItem.fieldValue ? 'bg-gray-100' : 'hover:bg-gray-100'} ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}
-                                                onClick={() => changeDropdownSelection(dropdownItem.fieldValue)}>
-                                                <span className={` ${dropdownItem.fieldDescription ? 'font-semibold' : 'font-normal'} 
-                                                    ${isPlaceHolderPresent && index === 0 && searchItem === "" ? 'text-gray-500' : 'text-dark-blue'}
-                                                `}>{dropdownItem.fieldCode}</span>
-                                                {dropdownItem.fieldDescription && (
-                                                    <>
-                                                        <br />
-                                                        <p id={id + '_description_' + (index + 1)} className="text-xs text-[#727272]">{dropdownItem.fieldDescription}</p>
-                                                    </>
-                                                )}
-                                            </button>
-                                            <div className="border-gray-200 border-t mx-2"></div>
-                                        </div>
-                                    )
-                                })}
                             </div>
                         </div>
-                    </div>
+                    ) : (
+                        <div className={`${!selectPolicyPopup && 'absolute'}mt-auto left-0 w-full ${(styleSet && styleSet.selectionBox) ? styleSet.selectionBox : ''}`}>
+                            <div className="absolute z-10 border border-gray-400 bg-white rounded-md shadow-lg w-full cursor-pointer">
+                                <div className="p-2 border-b border-gray-200 shadow-sm relative">
+                                    <span className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-4 text-black mx-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 18a8 8 0 100-16 8 8 0 000 16zM21 21l-5.2-5.2" />
+                                        </svg>
+                                    </span>
+                                    <input id={id + "_search_input"} type="text" placeholder={t(searchKey)} value={searchItem} onChange={(e) => setSearchItem(e.target.value)} onKeyDown={handleKeyDown}
+                                        className="w-full h-8 pl-8 py-1 text-sm text-gray-300 border border-gray-400 rounded-md focus:outline-none focus:text focus:text-gray-800" />
+                                </div>
+                                {filteredPolicyGroupList.length === 0 && (
+                                    <div className="min-h-3 p-4 cursor-auto">
+                                        <p id={id + '_no_data_available'} className="text-sm text-dark-blue font-semibold">{t('commons.emptyMsg')}</p>
+                                    </div>
+                                )}
+                                <div className="max-h-32 overflow-y-auto">
+                                    {filteredPolicyGroupList.map((dropdownItem, index) => {
+                                        return (
+                                            <div key={index} className="min-h-2">
+                                                <button id={isPlaceHolderPresent ? (index > 0 ? id + '_option' + (index) : undefined) : id + '_option' + (index + 1)}
+                                                    className={`block ${dropdownItem.fieldDescription ? 'min-h-16' : 'min-h-8'} w-full px-4 py-1 text-sm text-dark-blue overflow-x-auto whitespace-normal no-scrollbar break-words
+                                                        ${selectedDropdownEntry === dropdownItem.fieldValue ? 'bg-gray-100' : 'hover:bg-gray-100'} ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}
+                                                    onClick={() => changeDropdownSelection(dropdownItem.fieldValue)}>
+                                                    <span className={` ${dropdownItem.fieldDescription ? 'font-semibold' : 'font-normal'} 
+                                                        ${isPlaceHolderPresent && index === 0 && searchItem === "" ? 'text-gray-500' : 'text-dark-blue'}
+                                                    `}>{dropdownItem.fieldCode}</span>
+                                                    {dropdownItem.fieldDescription && (
+                                                        <>
+                                                            <br />
+                                                            <p id={id + '_description_' + (index + 1)} className="text-xs text-[#727272]">{dropdownItem.fieldDescription}</p>
+                                                        </>
+                                                    )}
+                                                </button>
+                                                <div className="border-gray-200 border-t mx-2"></div>
+                                            </div>
+                                        )
+                                    })}
+                                </div>
+                            </div>
+                        </div>
+                    )
                 )}
             </div>
         </div>
@@ -132,6 +148,8 @@ DropdownWithSearchComponent.propTypes = {
     isPlaceHolderPresent: PropTypes.bool,
     selectPolicyPopup: PropTypes.bool,
     id: PropTypes.string.isRequired,
+    onDropdownClick: PropTypes.func,
+    loading: PropTypes.bool,
 };
 
 export default DropdownWithSearchComponent;

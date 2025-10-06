@@ -60,6 +60,56 @@ export const getPartnerTypeDescription = (partnerType, t) => {
     }
 }
 
+export const getPartnerType = (userProfile) => {
+    // Return partnerType if already present
+    if (userProfile.partnerType) {
+      return userProfile.partnerType;
+    }
+  
+    // if partnertype is not present in userProfile then extract it from roles
+    // allowed partner types (same as roles)
+    const validPartnerTypes = new Set([
+      'AUTH_PARTNER',
+      'DEVICE_PROVIDER',
+      'FTM_PROVIDER',
+      'CREDENTIAL_PARTNER',
+      'ONLINE_VERIFICATION_PARTNER',
+      'ABIS_PARTNER',
+      'MISP_PARTNER',
+      'SDK_PARTNER',
+      'PRINT_PARTNER',
+      'INTERNAL_PARTNER',
+      'MANUAL_ADJUDICATION',
+    ]);
+
+    const userRoles = (userProfile.roles ?? '')
+        .split(',')                // turn "A,B,C" into ["A", "B", "C"]
+        .map(role => role.trim())  // remove extra spaces from each role
+        .filter(role => role);     // drop empty entries
+
+    // Return first role that is a valid partner type
+    return userRoles.find(role => validPartnerTypes.has(role)) ?? null;
+  }; 
+
+export const getLanguageLabel = (languageCode, t) => {
+    const languageMap = {
+        "eng": 'languages.english',
+        "hin": 'languages.hindi',
+        "ara": 'languages.arabic',
+        "fra": 'languages.french',
+        "tam": 'languages.tamil',
+        "kan": 'languages.kannada'
+    };
+
+    if (languageCode) {
+        const languageLabel = languageMap[languageCode.toLowerCase()];
+        if (languageLabel) {
+            return t(languageLabel);
+        }
+    }
+    return languageCode; // fallback to code if no translation found
+}
+
 export const getStatusCode = (status, t) => {
     if (status) {
         status = status.toLowerCase();
@@ -72,7 +122,7 @@ export const getStatusCode = (status, t) => {
         } else if (status === "deactivated" || status === "inactive") {
             return t('statusCodes.deactivated');
         } else if (status === "active" || status === "activated") {
-            return t('statusCodes.activated');
+            return t('statusCodes.active');
         } else if (status === "pending_cert_upload") {
             return t('statusCodes.pendingCertUpload');
         } else if (status === "expired") {
@@ -194,6 +244,10 @@ export const moveToApiKeysList = (navigate) => {
 
 export const moveToSbisList = (navigate) => {
     navigate('/partnermanagement/device-provider-services/sbi-list');
+};
+
+export const moveToMispPartnerServices = (navigate) => {
+    navigate('/partnermanagement/admin/misp-partner-services/misp-license-list');
 };
 
 export const logout = async () => {
@@ -378,6 +432,12 @@ export const createDropdownData = (
                     fieldCode: getStatusCode(item[fieldName], t) || item[fieldName],
                     fieldValue: item[fieldName]
                 });
+            } else if (fieldName === "languageCode") {
+                // Language dropdown variant using languageCode
+                dataArr.push({
+                    fieldCode: item.name,
+                    fieldValue: item.languageCode
+                });
             } else {
                 if (fieldDesc) {
                     dataArr.push({
@@ -468,7 +528,7 @@ export const getPartnerDomainType = (partnerType) => {
         else if (partnerType === "FTM_Provider".toUpperCase()) {
             return 'FTM';
         }
-        else if (partnerType === "MISP_type".toUpperCase()) {
+        else if (partnerType === "MISP_Partner".toUpperCase()) {
             return 'MISP';
         }
         else {
@@ -559,7 +619,7 @@ export const onResetFilter = () => {
     window.location.reload();
 };
 
-export const getPolicyGroupList = async (HttpService, setPolicyGroupList, setErrorCode, setErrorMsg, t) => {
+export const getPolicyGroupList = async (HttpService, setErrorCode, setErrorMsg, t) => {
     try {
         const response = await HttpService({
             url: getPolicyManagerUrl('/policies/policy-groups', process.env.NODE_ENV),
@@ -569,19 +629,21 @@ export const getPolicyGroupList = async (HttpService, setPolicyGroupList, setErr
         if (response) {
             const responseData = response.data;
             if (responseData && responseData.response) {
-                const resData = responseData.response;
-                setPolicyGroupList(createDropdownData('name', 'description', false, resData, t));
+                return responseData.response;
             } else {
                 handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+                return null;
             }
         } else {
             setErrorMsg(t('selectPolicyPopup.policyGroupError'));
+            return null;
         }
     } catch (err) {
         console.error('Error fetching data:', err);
         if (err.response?.status && err.response.status !== 401) {
             setErrorMsg(err.toString());
         }
+        return null;
     }
 };
 
@@ -1215,6 +1277,38 @@ export const validateInput = (input) => {
     return allowedPattern.test(input);
 }
 
+export const validateEmailRegex = (email, setEmailError, t) => {
+    if (email === '') {
+        setEmailError("");
+        return;
+    }
+    
+    // Email validation: alphanumeric characters and symbols ( . _ ) are allowed. @ is mandatory
+    const emailPattern = /^[a-zA-Z0-9._]+@[a-zA-Z0-9._]+\.[a-zA-Z]{2,}$/;
+    
+    if (emailPattern.test(email)) {
+        setEmailError("");
+    } else {
+        setEmailError(t('createPartner.enterValidEmailAddress'));
+    }
+};
+
+export const validateContactNumberRegex = (contactNumber, setContactNumberError, t) => {
+    if (contactNumber === '') {
+        setContactNumberError("");
+        return;
+    }
+    
+    // Contact number validation: only digits, spaces, hyphens, plus signs, and parentheses are allowed
+    const contactNumberPattern = /^[0-9\s\-+()]+$/;
+    
+    if (contactNumberPattern.test(contactNumber)) {
+        setContactNumberError("");
+    } else {
+        setContactNumberError(t('createPartner.enterValidContactNumber'));
+    }
+};
+
 export const getFilterDropdownStyle = () => {
     const style = {
         dropdownButton: "min-w-64",
@@ -1230,3 +1324,28 @@ export const getFilterTextFieldStyle = () => {
     };
     return styleSet;
 }
+
+export const fetchPartnerDetails = async (HttpService, partnerId, setErrorCode, setErrorMsg, t) => {
+    try {
+        const response = await HttpService.get(getPartnerManagerUrl(`/admin-partners/${partnerId}`, process.env.NODE_ENV));
+        if (response) {
+            const responseData = response.data;
+            if (responseData && responseData.response) {
+                const resData = responseData.response;
+                return resData;
+            } else {
+                handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+                return null;
+            }
+        } else {
+            setErrorMsg(t('viewPartnerDetails.errorInPartnerList'));
+            return null;
+        }
+    } catch (err) {
+        console.error('Error fetching data:', err);
+        if (err.response?.status && err.response.status !== 401) {
+            setErrorMsg(err.toString());
+        }
+        return null;
+    }
+};

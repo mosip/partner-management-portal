@@ -92,7 +92,55 @@
         "apiKeyExpiryCountDesc1": "{{expiringApiKeyCount}} API Keys are expiring soon",
         "apiKeyExpiryCountDesc2": "{{expiringApiKeyCount}} API Key is expiring soon",
         "sbiExpiryCountDesc1": "{{expiringSbiCount}} SBIs are expiring soon",
-        "sbiExpiryCountDesc2": "{{expiringSbiCount}} SBI is expiring soon"
+        "sbiExpiryCountDesc2": "{{expiringSbiCount}} SBI is expiring soon",
+        "mispPartnerServices": "MISP Services",
+        "mispPartnerServicesDesc": "Generate, Regenerate, View or Deactivate MISP License Keys"
+    },
+    "mispLicenseList": {
+        "partnerId": "Partner ID",
+        "orgName": "Organisation",
+        "policyGroup": "Policy Group",
+        "policyName": "Policy Name",
+        "mispLicenseKeyName": "MISP License Key Name",
+        "mispLicenseKey": "MISP License Key",
+        "creationDate": "Creation Date",
+        "expirationDate": "Expiration Date",
+        "status": "Status",
+        "action": "Action",
+        "listOfMispLicenseKeys": "List of MISP License Keys",
+        "errorInMispLicenseList": "Error occurred while fetching MISP License list",
+        "generateMispLicenseKey": "Generate MISP License Key",
+        "mispPartnerServices": "MISP Services",
+        "searchMispLicenseKeyName": "Search MISP License Key Name",
+        "regenerate": "Regenerate",
+        "viewMispLicenseKey": "View MISP License Key",
+        "errorWhileGettingMispDetails": "Error while getting MISP License Key details"
+    },
+    "generateLicenseKey": {
+        "errorInResponse": "While fetching all approved MISP partner policies, we have encountered with an error",
+        "mispLicenseKeyName": "MISP License Key Name",
+        "enterLicenseKeyName": "Enter a name for MISP License key",
+        "expirationDuration": "Expiry Date",
+        "generateLicenseKeySuccessHeader": "MISP License Key is generated successfully!",
+        "generateLicenseKeySuccessMsg": "MISP License Key details has been submitted successfully",
+        "errorInGenerateLicenseKey": "While generating MISP License Key, we have encountered with an error",
+        "licenseKeyAlertMsg": "MISP License Key contains sensitive information. Ensure to copy the license key before closing this window as it will be masked after closure, with only the last 4 characters remaining visible.",
+        "noPolicyGroupSelected": "No Policy Group selected",
+        "policyGroupInfoMsg": "Only the policy group chosen during partner creation or through ‘Select Policy Group’ popup in the Partners section will be auto-populated. Please ensure the relevant policy group is selected before proceeding further.",
+        "selectPolicyPlaceHolder": "Select MISP policy for which MISP License Key is required",
+        "policyInfo": "Request a policy for the given Partner ID in the Partner-Policy Linking screen first. Only policy requests with Approved status will be available in the dropdown.",
+        "guidence": "Note: As a MISP Partner, the Policy Group and Policy Name fields are optional. We still recommend selecting a Policy Group and Policy Name before generating MISP License Key to help maintain consistency.",
+        "dateFormatInfoKey": "Date Format: mm/dd/yyyy. Ensure that you provide a valid future date, as the license key will be automatically deactivated once this date is reached."
+    },
+    "deactivateMispLicense": {
+        "title": "Do you want to Deactivate MISP License Key",
+        "description": "On clicking Confirm, you will not be able to use the MISP License Key for authenticating requests anymore."
+    },
+    "regenerateMispLicenseKey": {
+        "regenerateMispLicenseKey": "Regenerate MISP License Key",
+        "regenerateLicenseKeySuccessHeader": "MISP License Key is regenerated successfully!",
+        "errorInRegenerateMispLicenseKey": "While regenerating MISP License Key, we have encountered with an error",
+        "noPolicySelected": "No Policy Name selected"
     },
     "header": {
         "userProfile": "User Profile",
@@ -117,7 +165,7 @@
         "mosipCommunity": "MOSIP Community",
         "contactUs": "Contact Us"
     },
-    "missingAttributesPopup": {
+    "missingAttributesError": {
         "title": "Account Setup Required",
         "description": "Your Keycloak user account has not been created via the PMS Portal self-registration. As a result, we are unable to onboard you into the PMS Portal.",
         "instructionsTitle": "<strong>To resolve this, you can do the below steps:</strong>",
@@ -126,6 +174,25 @@
             "Register again via <strong>PMS portal self registration.</strong>"
         ],
         "logout": "Logout & Re-register"
+    },
+    "verificationError": {
+        "title": "Account Verification Error",
+        "description": "The given username/email already exists in PMS. As a result, we are unable to onboard you into the PMS portal.",
+        "instructionsTitle": "<strong>To resolve this:</strong>",
+        "instructionsList": [
+            "Contact the Keycloak administrator to delete the existing Keycloak account.",
+            "Re-register via the PMS portal self-registration using a different email/username."
+        ],
+        "logout": "Logout"
+    },
+    "invalidPartnerTypeError": {
+        "title": "Account Setup Required",
+        "description": "We couldn’t complete your registration. Your account is missing a required role.",
+        "instructionsTitle": "<strong>To resolve this:</strong>",
+        "instructionsList": [
+            "Contact your Keycloak administrator to assign the required role to your account."
+        ],
+        "logout": "Logout"
     },
     "selectPolicyPopup": {
         "title": "Select Policy Group",
@@ -199,7 +266,8 @@
         "inProgress": "Pending For Approval",
         "rejected": "Rejected",
         "deactivated": "Deactivated",
-        "activated": "Activated",
+        "active": "Active",
+        "inactive": "Inactive",
         "pendingCertUpload": "Pending For Certificate Upload",
         "expired": "Expired",
         "uploaded": "Uploaded",
@@ -265,10 +333,16 @@
         "errorInResponse": "There is some error in fetching the details for all approved policy groups. Try again later!",
         "errorInFetchingPolicyNames": "There is some error in fetching the policy names. Try again later!",
         "errorInMapPolicy": "While requesting a policy, we have encountered with an error",
-        "policySuccessHeader": "Policy Submitted Successfully!",
+        "policySuccessHeader": "Policy Request has been submitted successfully!",
         "policySuccessMsg": "Policy request process has been successfully submitted. Approval is pending with admin.",
         "info": "Only those partner IDs whose partner certificate is uploaded is available in the dropdown. If you don't find your partner ID, please upload partner certificate first",
-        "commentTooLong": "Comments should not allow more than 500 characters."
+        "mispPartnerInfo": "Only those MISP partner IDs whose partner certificate is uploaded is available in the dropdown. If you don't find your partner ID, please upload partner certificate first",
+        "commentTooLong": "Comments should not allow more than 500 characters.",
+        "policyGroupNotAvailable": "No policy group linked to the given Partner ID.",
+        "guidenceForMispPartner": "Note: If you are a MISP Partner, the Policy Group and Policy Name fields are optional. We still recommend selecting a Policy Name to help maintain consistency and clarity in policy management.",
+        "policySuccessMsgForAdmin": "Policy request has been successfully submitted. Approve the request for the partner policy linking to be activated.",
+        "approvePopupTitle": "Do you want to approve Partner- Policy Request?",
+        "approvePopupDesc": "On clicking Confirm, the Partner Policy Linking will be approved."
     },
     "authenticationServices": {
         "authenticationServices": "Authentication Services",
@@ -286,6 +360,52 @@
         "apiKey": "API Key",
         "apiKeyLable": "API Key Label",
         "generateApiKeyBtn": "Generate API Key"
+    },
+    "createPartner": {
+        "createPartner": "Create Partner",
+        "listOfPartners": "List of Partners",
+        "mandatoryFieldsMsg1": "All fields marked with",
+        "mandatoryFieldsMsg2": "are mandatory.",
+        "partnerType": "Partner Type",
+        "policyGroup": "Policy Group",
+        "address": "Address",
+        "organizationName": "Organization Name",
+        "organizationNameInfo": "Enter the organization name as mentioned in the ORGANIZATION attribute of CERTIFICATE subject in the CA Signed Certificate.",
+        "contactNumber": "Contact Number",
+        "emailId": "Email ID",
+        "username": "Username",
+        "notificationLanguage": "Notification Language",
+        "selectPolicyGroup": "Select Policy Group",
+        "enterAddress": "Enter Address",
+        "enterOrganizationName": "Enter Partner Organization Name",
+        "enterContactNumber": "Enter Phone Number",
+        "enterEmailId": "Enter Email Address",
+        "enterUsername": "Enter Username",
+        "selectLanguage": "Select Language",
+        "clearForm": "Clear Form",
+        "cancel": "Cancel",
+        "submit": "Submit",
+        "addressRequired": "Address is required",
+        "organizationNameRequired": "Organization Name is required",
+        "contactNumberRequired": "Contact Number is required",
+        "contactNumberInvalid": "Contact Number should contain only digits, spaces, hyphens, plus signs, and parentheses",
+        "emailIdRequired": "Email ID is required",
+        "emailIdInvalid": "Please enter a valid email address",
+        "enterValidEmailAddress": "Enter valid email address and try again",
+        "enterValidContactNumber": "Enter valid contact number and try again",
+        "partnerIdRequired": "Partner ID is required",
+        "partnerIdInvalid": "Partner ID should contain only letters, numbers, and underscores",
+        "errorInCreatingPartner": "Error occurred while creating partner",
+        "mispPartnerSuccessHeader": "Partner Created Successfully!",
+        "uploadMispPartnerCertificate": "Upload Partner Certificate"
+    },
+    "languages": {
+        "english": "English",
+        "hindi": "Hindi",
+        "arabic": "Arabic",
+        "french": "French",
+        "tamil": "Tamil",
+        "kannada": "Kannada"
     },
     "createOidcClient": {
         "createOidcClient": "Create OIDC Client",
@@ -695,7 +815,10 @@
         "searchOrganisation": "Search Organisation",
         "searchEmailAddress": "Search Full Email Address",
         "searchPolicyGroup": "Search Policy Group",
-        "emailAddressToolTip": "Note: This filter performs an exact match. Please enter the full email address (e.g., user@example.com) to find results."
+        "emailAddressToolTip": "Note: This filter performs an exact match. Please enter the full email address (e.g., user@example.com) to find results.",
+        "createPartner": "Create Partner",
+        "uploadOrReuploadCertificate": "Upload / Re upload Certificate",
+        "policyGroupLinkedSuccessMsg": "Policy group has been successfully linked to partner {{partnerId}}"
     },
     "viewPartnerDetails": {
         "viewPartnerDetails": "View Partner Details",
@@ -735,6 +858,7 @@
         "policyGroup": "Policy Groups",
         "authPolicy": "Authentication Policy",
         "dataSharePolicy": "Datashare Policy",
+        "mispPolicy": "MISP Policy",
         "createPolicyGroup": "Create Policy Group",
         "policyGroupId": "Policy Group ID",
         "policyGroupName": "Policy Group Name",
@@ -746,11 +870,14 @@
         "errorInPolicyGroupList": "While fetching policy groups list, we have encountered with an error.",
         "searchPolicyGroupId": "Search Policy Group ID",
         "searchPolicyGroupName": "Search Policy Group Name",
-        "searchPolicyGroupDescription": "Search Policy Group Description"
+        "searchPolicyGroupDescription": "Search Policy Group Description",
+        "noPolicyGroupsFound": "No policy groups found",
+        "noDescription": "No description available"
     },
     "policiesList": {
         "createAuthPolicy": "Create Authentication Policy",
         "createDataSharePolicy": "Create Datashare Policy",
+        "createMispPolicy": "Create MISP Policy",
         "policyId": "Policy ID",
         "policyName": "Policy Name",
         "policyDescription": "Policy Description",
@@ -760,8 +887,10 @@
         "action": "Action",
         "listOfAuthPolicies": "List of Authentication Policies",
         "listOfDataSharePolicies": "List of Datashare Policies",
+        "listOfMispPolicies": "List of MISP Policies",
         "errorInAuthPolicies": "While fetching authentication policies, we have encountered with an error.",
         "errorInDataSharePolicies": "While fetching data share policies, we have encountered with an error.",
+        "errorInMispPolicies": "While fetching MISP policies, we have encountered with an error.",
         "searchPolicyId": "Search Policy ID",
         "searchPolicyName": "Search Policy Name",
         "searchPolicyDescription": "Search Policy Description",
@@ -808,10 +937,13 @@
         "edit": "Edit",
         "editAuthPolicyTitle": "Edit Authentication Policy",
         "editDataSharePolicyTitle": "Edit Datashare Policy",
+        "editMispPolicyTitle": "Edit MISP Policy",
         "authPolicyConfirmationHeader": "Authentication Policy updated and submitted successfully!",
         "dataSharePolicyConfirmationHeader": "Data-Share Policy updated and submitted successfully!",
+        "mispPolicyConfirmationHeader": "MISP Policy updated and submitted successfully!",
         "authPolicyConfirmationMessage": "The Authentication Policy for Policy Group: {{policyGroupName}} has been successfully updated and submitted. To publish the policy, select the 'Publish' option from the action menu on the 'List of Authentication Policies' screen.",
         "dataSharePolicyConfirmationMessage": "The Data-Share Policy for Policy Group: {{policyGroupName}} has been successfully updated and submitted. To publish the policy, select the 'Publish' option from the action menu on the 'List of Data Share Policies' screen.",
+        "mispPolicyConfirmationMessage": "The MISP Policy for Policy Group: {{policyGroupName}} has been successfully updated and submitted. To publish the policy, select the 'Publish' option from the action menu on the 'List of MISP Policies' screen.",
         "errorInEditPolicy": "While editing policy, we have encountered with an error.",
         "reUploadPolicyData": "Re-Upload Policy Data",
         "reuploadBtn": "Re-Upload",
@@ -820,6 +952,10 @@
     "viewDataSharePoliciesList": {
         "viewDataSharePolicy": "View Datashare Policy",
         "listOfDataSharePolicies": "List of Datashare Policies"
+    },
+    "viewMispPoliciesList": {
+        "viewMispPolicy": "View MISP Policy",
+        "listOfMispPolicies": "List of MISP Policies"
     },
     "createPolicy": {
         "policyGroup": "Policy Group",
@@ -836,13 +972,17 @@
         "fileUploadSuccessMsg": "Policy data has been uploaded successfully",
         "createAuthPolicyTitle": "Create Authentication Policy",
         "createDataSharePolicyTitle": "Create Datashare Policy",
+        "createMispPolicyTitle": "Create MISP Policy",
         "enterAuthPolicyName": "Enter name for Authentication Policy",
         "enterDataSharePolicyName": "Enter name for Datashare Policy",
+        "enterMispPolicyName": "Enter name for MISP Policy",
         "authPolicyDescription": "Enter description about Authentication Policy",
         "dataSharePolicyDescription": "Enter description about Datashare Policy",
+        "mispPolicyDescription": "Enter description about MISP Policy",
         "policyConfirmationHeader": "Policy saved as Draft",
         "authPolicyConfirmationMessage": "This Authentication Policy is currently in draft mode. You can publish it to make it active, or continue editing if additional modifications are needed by navigating to 'List of Authentication Policies' page",
         "dataSharePolicyConfirmationMessage": "This Datashare Policy is currently in draft mode. You can publish it to make it active, or continue editing if additional modifications are needed by navigating to 'List of Datashare Policies' page",
+        "mispPolicyConfirmationMessage": "This MISP Policy is currently in draft mode. You can publish it to make it active, or continue editing if additional modifications are needed by navigating to 'List of MISP Policies' page",
         "errorInCreatePolicy": "While creating policy, we have encountered with an error.",
         "saveAsDraft": "Save as Draft"
     },
@@ -1099,7 +1239,7 @@
         "PMS_PRT_005": "Partner does not exist",
         "PMS_PRT_006": "No api key req exist",
         "PMS_PRT_105": "Partner API KEY is not Created",
-        "PMS_PRT_011": " Email is already exists.",
+        "PMS_PRT_011": "The provided email address is already registered. Please provide a different email address.",
         "PMS_PRT_012": " Invalid emailId.",
         "PMS_PRT_013": " Invalid mobile number.Length should be less than .",
         "PMS_ATH_401": "Authentication Failed",
@@ -1131,6 +1271,8 @@
         "PMS_PM_062": "Error while fetching all partner policy mapping requests",
         "PMS_PM_063": "The selected partner has already been deactivated.",
         "PMS_PM_064": "Error while fetching all api key requests",
+        "PMS_PM_065": "Invalid partnerIdSearchType. Allowed values are 'contains' and 'equals'.",
+        "PMS_PM_066": "PartnerId is mandatory when partnerIdSearchType is 'equals'.",
         "PMS_PMP_010": "Policy does not belong to the Policy Group of the Partner Manger",
         "PMS_PMP_015": "No Partner api key requests for the Policy Group",
         "PMS_PMP_007": "Partner api key does not exist",
@@ -1241,6 +1383,7 @@
         "PMS_AUT_001": "Reg Device Sub Type Code not found in the list of Reg Device Sub Types",
         "PMS_PRT_053": "This policy is already pending for approval against your partner ID.",
         "PMS_PRT_060": "This policy has already been approved against your partner ID.",
+        "PMS_PRT_100": "Unable to generate a unique ID after multiple attempts. Please try again or contact administrator.",
         "PMS_AUT_028": "Device details for id $ID are rejected. Can't use same details for mapping.",
         "PMS_CERTIFICATE_ERROR_001": "Error while fetching partner certificates.",
         "PMS_CERTIFICATE_ERROR_002": "User ID does not exists.",
@@ -1372,7 +1515,31 @@
         "PMS_NOTIFICATION_ERROR_023": "The selected notification type is invalid. Only 'sbi' type is allowed for this filter.",
         "PMS_NOTIFICATION_ERROR_024": "The selected notification type is invalid. Please select a type other than 'weekly'.",
         "PMS_NOTIFICATION_ERROR_025": "Please enter a valid created from date.",
-	    "PMS_NOTIFICATION_ERROR_026": "Please enter a valid created to date."
-	
+	    "PMS_NOTIFICATION_ERROR_026": "Please enter a valid created to date.",
+        "PMS_MSP_005": "MISP Partner does not exist",
+        "PMS_MSP_009": "Given provider is not valid",
+        "PMS_MSP_408": "MISP Partner and License key combintaion not exists.",
+        "PMS_MSP_405": "MISP partner is not active.",
+        "PMS_MSP_407": "MISP Status either Active or De-active.",
+        "PMS_MSP_416": "License key exists for the given provider.",
+        "PMS_MSP_417": "Policy not mapped.",
+        "PMS_MSP_418": "Policy not approved.",
+        "PMS_MSP_419": "Policy not exists.",
+        "PMS_MSP_420": "Error while fetching all MISP Licence details.",
+        "PMS_MSP_421": "Error while generating MISP license key.",
+        "PMS_MSP_422": "Invalid license key name.",
+        "PMS_MSP_423": "Invalid Partner ID.",
+        "PMS_MSP_424": "MISP License key name already exists.",
+        "PMS_MSP_425": "ExpiryDate should be greater than today.",
+        "PMS_MSP_426": "Error while fetching MISP Licence details.",
+        "PMS_MSP_427": "No matching MISP License Key exists for the specified Partner ID, Policy ID, and MISP License Key Name.",
+        "PMS_MSP_428": "Multiple MISP License key matches were found for the provided Partner ID, Policy ID, and MISP License Key Name. Please use the correct MISP License Key Name and Policy ID.",
+        "PMS_MSP_429": "Partner ID does not exist.",
+        "PMS_MSP_430": "Partner is not active.",
+        "PMS_MSP_431": "Invalid Partner Type. The Partner Type should be MISP_Partner.",
+        "PMS_MSP_432": "Error while deactivating MISP license key.",
+        "PMS_MSP_433": "Request status should be De-Activate",
+        "PMS_MSP_434": "MISP License key is already deactivated.",
+        "PMS_MSP_435": "Error while regenerating MISP License key."
     }
 }
