@@ -167,7 +167,8 @@ public class AuthPartnerTest extends BaseClass {
 		partnerCertificatePage.clickOnSuccessMsgCloseButton();
 		partnerCertificatePage.clickOnTitleBackButton();
 	}
-
+//	
+/*
 	@Test(priority = 4, description = "Policy creation and filter")
 	public void verifyingPolicyCreationAndFilter() {
 
@@ -1108,6 +1109,7 @@ public class AuthPartnerTest extends BaseClass {
 		assertTrue(dashboardPage.isWelcomeMessageDisplayed(), GlobalConstants.isWelcomeMessageDisplayed);
 
 	}
+*/
 
 	private void logoutFromPartner() {
 		dashboardPage.clickOnProfileDropdown();

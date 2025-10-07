@@ -989,6 +989,13 @@ public class GlobalConstants {
 	public static final String isOrganisationNameInViewPartnerPageDisplayed = "Verify if organisation name in view partner  isdisplayed";
 	public static final String isListOfPartnerRowGreyedOutDisplayed = "Verify if list of partner row grey out row  isdisplayed";
 	public static final String isDisabledDeactivateButtonInListOfPartnerDisplayed = "Verify if deactivated button list  isdisplayed";
+	public static final String isCertificateSectionInViewDetailsGrayMarkedDisplayed = "Verify if certificate section  isdisplayed";
+	public static final String isDeactivateButtonInViewDetailsDisplayed = "Verify if deactivate button in viewdetails page  isdisplayed";
+	public static final String isStausAscendingIconDisplayed = "Verify if status ascending icon  isdisplayed";
+	public static final String isDisabledPartnercertificateInViewDetailsDisplayed = "Verify if disabled partner certificate  isdisplayed";
+	public static final String isDisabledPolicyGroupInViewDetailsDisplayed = "Verify if disabled policy goup in view details page  isdisplayed";
+	public static final String isListOfSbiDisplayed = "Verify if list of sbi in sbi page isdisplayed";
+	public static final String isFtmTitleDisplayed = "Verify if ftm list title isdisplayed";
 
 	public static final String APPID = "appId";
 	public static final String PASSWORD = "password";

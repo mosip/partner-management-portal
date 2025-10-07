@@ -16,6 +16,9 @@ public class partnersAdmin extends BasePage {
 	@FindBy(id = "undefined_title")
 	private WebElement subTitleList;
 
+	@FindBy(id = "undefined_title")
+	private WebElement listOfSbiNavigate;
+
 	@FindBy(id = "page_title")
 	private WebElement titlePartner;
 
@@ -65,7 +68,10 @@ public class partnersAdmin extends BasePage {
 	private WebElement certificateUploadStatusDescIcon;
 
 	@FindBy(id = "certificateUploadStatus_asc_icon")
-	private WebElement certificateUploadStatusAscIcon;
+	private WebElement certificateUploadStatusAscendingIcon;
+
+	@FindBy(id = "status_asc_icon")
+	private WebElement statusAscendingIcon;
 
 	@FindBy(id = "filter_btn")
 	private WebElement filterbtnTrigger;
@@ -97,7 +103,7 @@ public class partnersAdmin extends BasePage {
 	@FindBy(xpath = "//span[normalize-space()='Select Cert. Upload Status']")
 	private WebElement certUploadsStatusFilter;
 
-	@FindBy(xpath = "//button[@id='status_filter_dropdown_btn']/span")
+	@FindBy(id = "status_filter_dropdown_btn")
 	private WebElement statusFilters;
 
 	@FindBy(id = "policy_group_filter")
@@ -150,6 +156,9 @@ public class partnersAdmin extends BasePage {
 
 	@FindBy(id = "partner_list_view1")
 	private WebElement actionButtonInActivatedPartner;
+
+	@FindBy(id = "partner_list_view1")
+	private WebElement actionButtonInDeactivatedPartner;
 
 	@FindBy(id = "partner_details_view_btn")
 	private WebElement viewButtons;
@@ -214,6 +223,9 @@ public class partnersAdmin extends BasePage {
 	@FindBy(id = "view_partner_details_partner_status")
 	private WebElement partnerStatusInViewPartnerPage;
 
+	@FindBy(id = "view_partner_details_partner_status")
+	private WebElement deactivatedPopupInViewDetails;
+
 	@FindBy(id = "view_partner_details_partner_created_on")
 	private WebElement partnerCreatedDateInViewPartnerPage;
 
@@ -235,8 +247,14 @@ public class partnersAdmin extends BasePage {
 	@FindBy(xpath = "//td[contains(text(),'Authentication Partner')]")
 	private WebElement authPartnerId;
 
+	@FindBy(xpath = "//div[@class='flex items-center p-5 bg-white rounded-lg']")
+	private WebElement certificateSectionInViewDetailsGrayMarked;
+
 	@FindBy(id = "view_partner_details_partner_certificate_title")
 	private WebElement partnerCertificateInViewPartnerDetailsPage;
+
+	@FindBy(id = "view_partner_details_partner_certificate_title")
+	private WebElement disabledPartnerCertificateInViewPartnerDetailsPage;
 
 	@FindBy(id = "view_expiry_date_label")
 	private WebElement expiryDateTimeInViewPartnerPage;
@@ -249,6 +267,9 @@ public class partnersAdmin extends BasePage {
 
 	@FindBy(id = "download_partner_cer_btn")
 	private WebElement downloadCertificateButtonDisabledStateInViewPartnerPage;
+
+	@FindBy(id = "view_partner_details_policy_group_label")
+	private WebElement disabledPolicyGroupInViewDetail;
 
 	@FindBy(id = "view_partner_type_label")
 	private WebElement partnerTypeInViewPartnerPage;
@@ -274,6 +295,15 @@ public class partnersAdmin extends BasePage {
 	@FindBy(id = "partnerList.certUploadStatus_header")
 	private WebElement certUploadStatusHeader;
 
+	@FindBy(id = "memory_24dp_5F6368_FILL0_wght300_GRAD0_opsz24")
+	private WebElement ftmChipIcon;
+
+	@FindBy(id = "tv_options_input_settings_24dp_FILL0_wght300_GRAD0_opsz24")
+	private WebElement sbiDeviceStatus;
+
+	@FindBy(id = "list_of_ftm_chip_title")
+	private WebElement ftmTitle;
+
 	public partnersAdmin(WebDriver driver) {
 		super(driver);
 	}
@@ -282,12 +312,28 @@ public class partnersAdmin extends BasePage {
 		return isElementDisplayed(partnerCertificateInViewPartnerDetailsPage);
 	}
 
+	public boolean isListOfSbiDisplayed() {
+		return isElementDisplayed(listOfSbiNavigate);
+	}
+
+	public boolean isDeactivatePartnerDisplayed() {
+		return isElementDisplayed(actionButtonInDeactivatedPartner);
+	}
+
 	public boolean isExpiryDateTimeDisplayed() {
 		return isElementDisplayed(expiryDateTimeInViewPartnerPage);
 	}
 
 	public boolean isDisabledDeactivateButtonInListOfPartnerDisplayed() {
 		return isElementDisplayed(disabledDeactivateButtonInListOfPartner);
+	}
+
+	public boolean isDisabledPartnercertificateInViewDetailsDisplayed() {
+		return isElementDisplayed(disabledPartnerCertificateInViewPartnerDetailsPage);
+	}
+
+	public boolean isDisabledPolicyGroupInViewDetailsDisplayed() {
+		return isElementDisplayed(disabledPolicyGroupInViewDetail);
 	}
 
 	public void clickOnDeactivateButtonInListOfPartnerPage() {
@@ -322,8 +368,36 @@ public class partnersAdmin extends BasePage {
 
 	}
 
+	public void clickOnSbiIcon() {
+		clickOnElement(sbiDeviceStatus);
+
+	}
+
+	public void clickOnFtmChipIcon() {
+		clickOnElement(ftmChipIcon);
+
+	}
+
+	public void clickOnActionInDeactivateButton() {
+		clickOnElement(actionButtonInDeactivatedPartner);
+
+	}
+
 	public boolean isPartnerIdHeaderTagDisplayed() {
 		return isElementDisplayed(partnerIdHeaderTag);
+	}
+
+	public boolean isStausAscendingIconDisplayed() {
+		return isElementDisplayed(statusAscendingIcon);
+	}
+
+	public boolean isFtmTitleDisplayed() {
+		return isElementDisplayed(ftmTitle);
+	}
+
+	public void clickOnStatusAscendingIcon() {
+		clickOnElement(statusAscendingIcon);
+
 	}
 
 	public boolean isListOfPartnerRowGreyedOutDisplayed() {
@@ -738,7 +812,23 @@ public class partnersAdmin extends BasePage {
 	}
 
 	public void clickOnCertificateUploadascIcon() {
-		clickOnElement(certificateUploadStatusAscIcon);
+		clickOnElement(certificateUploadStatusAscendingIcon);
+	}
+
+	public boolean isCertificateSectionInViewDetailsGrayMarkedDisplayed() {
+		return isElementDisplayed(certificateSectionInViewDetailsGrayMarked);
+	}
+
+	public void clickBrowserBackButton() {
+		navigateBack();
+	}
+
+	public void clickBrowserForwardButton() {
+		navigateForword();
+	}
+
+	public boolean isDeactivateButtonInViewDetailsDisplayed() {
+		return isElementDisplayed(deactivatedPopupInViewDetails);
 	}
 
 }
