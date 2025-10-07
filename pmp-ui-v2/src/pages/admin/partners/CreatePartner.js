@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, useBlocker } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../../services/UserProfileService";
-import { isLangRTL, moveToHome, onPressEnterKey, validateInputRegex, validateEmailRegex, validateContactNumberRegex } from "../../../utils/AppUtils";
+import { isLangRTL, moveToHome, onPressEnterKey, validateInputRegex, validateUsernameRegex, validateEmailRegex, validateContactNumberRegex } from "../../../utils/AppUtils";
 import { getPartnerManagerUrl, handleServiceErrors, createDropdownData, createRequest, getPartnerTypeDescription, getLanguageLabel, getPartnerDomainType } from '../../../utils/AppUtils';
 import { getAppConfig } from '../../../services/ConfigService';
 import { HttpService } from '../../../services/HttpService';
@@ -59,7 +59,7 @@ function CreatePartner() {
 
         return (
             (address !== "" || organizationName !== "" || phoneNumber !== "" || 
-                email !== "" || username !== "" || selectedPolicyGroup !== "" || notificationLanguage !== "") &&
+                email !== "" || username !== "" || selectedPolicyGroup !== null || notificationLanguage !== "") &&
             currentLocation.pathname !== nextLocation.pathname
         );
     });
@@ -67,7 +67,7 @@ function CreatePartner() {
     useEffect(() => {
         const shouldWarnBeforeUnload = () => {
             return address !== "" || organizationName !== "" || phoneNumber !== "" || 
-                email !== "" || username !== "" || selectedPolicyGroup !== "" || notificationLanguage !== "";
+                email !== "" || username !== "" || selectedPolicyGroup !== null || notificationLanguage !== "";
         };
 
         const handleBeforeUnload = (event) => {
@@ -124,7 +124,7 @@ function CreatePartner() {
                 break;
             case 'username':
                 setUsername(value);
-                validateInputRegex(value, setInvalidUsernameError, t);
+                validateUsernameRegex(value, setInvalidUsernameError, t);
                 break;
             default:
                 break;
