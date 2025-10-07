@@ -90,7 +90,55 @@
         "apiKeyExpiryCountDesc1": "{{expiringApiKeyCount}} clés API vont bientôt expirer",
         "apiKeyExpiryCountDesc2": "{{expiringApiKeyCount}} clé API va bientôt expirer",
         "sbiExpiryCountDesc1": "{{expiringSbiCount}} SBI vont bientôt expirer",
-        "sbiExpiryCountDesc2": "{{expiringSbiCount}} SBI va bientôt expirer"
+        "sbiExpiryCountDesc2": "{{expiringSbiCount}} SBI va bientôt expirer",
+        "mispPartnerServices": "Services MISP",
+        "mispPartnerServicesDesc": "Générer, régénérer, afficher ou désactiver les clés de licence MISP"
+    },
+    "mispLicenseList": {
+        "partnerId": "ID partenaire",
+        "orgName": "Organisation",
+        "policyGroup": "Groupe de politiques",
+        "policyName": "Nom de la politique",
+        "mispLicenseKeyName": "Nom de la clé de licence MISP",
+        "mispLicenseKey": "Clé de licence MISP",
+        "creationDate": "Date de création",
+        "expirationDate": "Date d'expiration",
+        "status": "Statut",
+        "action": "Action",
+        "listOfMispLicenseKeys": "Liste des clés de licence MISP",
+        "errorInMispLicenseList": "Une erreur s'est produite lors de la récupération de la liste des licences MISP",
+        "generateMispLicenseKey": "Générer une clé de licence MISP",
+        "mispPartnerServices": "Services MISP",
+        "searchMispLicenseKeyName": "Rechercher le nom de la clé de licence MISP",
+        "regenerate": "Régénérer",
+        "viewMispLicenseKey": "Afficher la clé de licence MISP",
+        "errorWhileGettingMispDetails": "Erreur lors de l'obtention des détails de la clé de licence MISP"
+    },
+    "generateLicenseKey": {
+        "errorInResponse": "Lors de la récupération de toutes les politiques de partenaires MISP approuvées, nous avons rencontré une erreur",
+        "mispLicenseKeyName": "Nom de la clé de licence MISP",
+        "enterLicenseKeyName": "Entrez un nom pour la clé de licence MISP",
+        "expirationDuration": "Date d'expiration",
+        "generateLicenseKeySuccessHeader": "La clé de licence MISP a été générée avec succès !",
+        "generateLicenseKeySuccessMsg": "Les détails de la clé de licence MISP ont été soumis avec succès",
+        "errorInGenerateLicenseKey": "Lors de la génération de la clé de licence MISP, nous avons rencontré une erreur",
+        "licenseKeyAlertMsg": "La clé de licence MISP contient des informations sensibles. Assurez-vous de copier la clé de licence avant de fermer cette fenêtre, car elle sera masquée après la fermeture, seuls les quatre derniers caractères restant visibles.",
+        "noPolicyGroupSelected": "Aucun groupe de politiques sélectionné",
+        "policyGroupInfoMsg": "Seul le groupe de politiques sélectionné lors de la création du partenaire ou via la fenêtre contextuelle « Sélectionner un groupe de politiques » dans la section Partenaires sera renseigné automatiquement. Veuillez vous assurer que le groupe de politiques concerné est sélectionné avant de poursuivre.",
+        "selectPolicyPlaceHolder": "Sélectionnez la politique MISP pour laquelle la clé de licence MISP est requise",
+        "policyInfo": "Demandez d'abord une politique pour l'ID partenaire donné dans l'écran « Lien entre partenaires et politiques ». Seules les demandes de politique approuvées seront disponibles dans le menu déroulant.",
+        "guidence": "Remarque : En tant que partenaire MISP, les champs Groupe de politiques et Nom de la politique sont facultatifs. Nous vous recommandons néanmoins de sélectionner un Groupe de politiques et un Nom de politique avant de générer la clé de licence MISP afin de garantir la cohérence.",
+        "dateFormatInfoKey": "Format de date : jj/mm/aaaa. Assurez-vous de fournir une date future valide, car la clé de licence sera automatiquement désactivée une fois cette date atteinte."
+    },
+    "deactivateMispLicense": {
+        "title": "Voulez-vous désactiver la clé de licence MISP",
+        "description": "En cliquant sur Confirmer, vous ne pourrez plus utiliser la clé de licence MISP pour authentifier les demandes."
+    },
+    "regenerateMispLicenseKey": {
+        "regenerateMispLicenseKey": "Régénérer la clé de licence MISP",
+        "regenerateLicenseKeySuccessHeader": "La clé de licence MISP a été régénérée avec succès !",
+        "errorInRegenerateMispLicenseKey": "Lors de la régénération de la clé de licence MISP, nous avons rencontré une erreur",
+        "noPolicySelected": "Aucun nom de politique sélectionné"
     },
     "header": {
         "userProfile": "Profil de l'utilisateur",
@@ -115,7 +163,7 @@
         "mosipCommunity": "Communauté MOSIP",
         "contactUs": "Contactez-nous"
     },
-    "missingAttributesPopup": {
+    "missingAttributesError": {
         "title": "Configuration du compte requise",
         "description": "Votre compte utilisateur Keycloak n'a pas été créé via l'auto-inscription sur le portail PMS. Par conséquent, nous ne pouvons pas vous intégrer au portail PMS.",
         "instructionsTitle": "<strong>Pour résoudre ce problème, vous pouvez suivre les étapes suivantes :</strong>",
@@ -124,6 +172,25 @@
             "Inscrivez-vous à nouveau via <strong>l'auto-inscription sur le portail PMS.</strong>"
         ],
         "logout": "Se déconnecter et se réinscrire"
+    },
+    "verificationError": {
+        "title": "Erreur de vérification du compte",
+        "description": "Le nom d’utilisateur/email fourni existe déjà dans le système PMS. En conséquence, nous ne pouvons pas vous inscrire sur le portail PMS.",
+        "instructionsTitle": "<strong>Pour résoudre ce problème :</strong>",
+        "instructionsList": [
+            "Contactez l’administrateur Keycloak pour supprimer le compte Keycloak existant.",
+            "Réinscrivez-vous via le portail PMS en utilisant un autre email/nom d’utilisateur."
+        ],
+        "logout": "Se déconnecter"
+    },
+    "invalidPartnerTypeError": {
+        "title": "Configuration du compte requise",
+        "description": "Nous n’avons pas pu terminer votre inscription. Votre compte ne possède pas le rôle requis.",
+        "instructionsTitle": "<strong>Pour résoudre ce problème :</strong>",
+        "instructionsList": [
+            "Contactez votre administrateur Keycloak pour attribuer le rôle requis à votre compte."
+        ],
+        "logout": "Se déconnecter"
     },
     "selectPolicyPopup": {
         "title": "Sélectionnez un groupe de stratégies",
@@ -197,7 +264,8 @@
         "inProgress": "En attente d'approbation",
         "rejected": "Rejetée",
         "deactivated": "Désactivé",
-        "activated": "Actif",
+        "active": "Actif",
+        "inactive": "Inactif",
         "pendingCertUpload": "En attente de téléchargement du certificat",
         "expired": "Expiré",
         "uploaded": "Téléchargé",
@@ -264,10 +332,16 @@
         "errorInResponse": "Une erreur s'est produite lors de la récupération des détails de tous les groupes de stratégies approuvés. Réessayez plus tard!",
         "errorInFetchingPolicyNames": "Une erreur s'est produite lors de la récupération des noms de stratégie. Réessayez plus tard!",
         "errorInMapPolicy": "Lors de la demande d'une politique, nous avons rencontré une erreur",
-        "policySuccessHeader": "Politique soumise avec succès !",
+        "policySuccessHeader": "La demande de politique a été soumise avec succès !",
         "policySuccessMsg": "Le processus de demande de politique a été soumis avec succès. L'approbation est en attente auprès de l'administrateur.",
         "info": "Seuls les ID de partenaire dont le certificat de partenaire est téléchargé sont disponibles dans la liste déroulante. Si vous ne trouvez pas votre identifiant de partenaire, veuillez d'abord télécharger le certificat de partenaire",
-        "commentTooLong": "Les commentaires ne doivent pas contenir plus de 500 caractères."
+        "mispPartnerInfo": "Seuls les identifiants partenaires MISP dont le certificat est téléchargé sont disponibles dans la liste déroulante. Si vous ne trouvez pas votre identifiant partenaire, veuillez d'abord télécharger le certificat.",
+        "commentTooLong": "Les commentaires ne doivent pas contenir plus de 500 caractères.",
+        "policyGroupNotAvailable": "Aucun groupe de politiques n'est lié à l'ID de partenaire donné.",
+        "guidenceForMispPartner": "Remarque : Si vous êtes partenaire MISP, les champs Groupe de politiques et Nom de la politique sont facultatifs. Nous vous recommandons néanmoins de sélectionner un nom de politique pour garantir la cohérence et la clarté de la gestion des politiques.",
+        "policySuccessMsgForAdmin": "La demande de politique a été soumise avec succès. Veuillez approuver la demande d'activation du lien de politique partenaire.",
+        "approvePopupTitle": "Voulez-vous approuver la demande de politique du partenaire ?",
+        "approvePopupDesc": "En cliquant sur Confirmer, la liaison de la politique de partenariat sera approuvée."
     },
     "authenticationServices": {
         "authenticationServices": "Services d'authentification",
@@ -285,6 +359,52 @@
         "apiKey": "clé API",
         "apiKeyLable": "Étiquette de clé API",
         "generateApiKeyBtn": "Générer une clé API"
+    },
+    "createPartner": {
+        "createPartner": "Créer un partenaire",
+        "listOfPartners": "Liste des partenaires",
+        "mandatoryFieldsMsg1": "Tous les champs marqués par",
+        "mandatoryFieldsMsg2": "sont obligatoires.",
+        "partnerType": "Type de partenaire",
+        "policyGroup": "Groupe de politiques",
+        "address": "Adresse",
+        "organizationName": "Nom de l’organisation",
+        "organizationNameInfo": "Saisissez le nom de l’organisation tel qu’indiqué dans l’attribut ORGANIZATION du sujet du certificat signé par l’AC.",
+        "contactNumber": "Numéro de contact",
+        "emailId": "Adresse e-mail",
+        "username": "Nom d’utilisateur",
+        "notificationLanguage": "Langue de notification",
+        "selectPolicyGroup": "Sélectionner un groupe de politiques",
+        "enterAddress": "Saisir l’adresse",
+        "enterOrganizationName": "Saisir le nom de l’organisation partenaire",
+        "enterContactNumber": "Saisir le numéro de téléphone",
+        "enterEmailId": "Saisir l’adresse e-mail",
+        "enterUsername": "Saisir le nom d’utilisateur",
+        "selectLanguage": "Sélectionner la langue",
+        "clearForm": "Effacer le formulaire",
+        "cancel": "Annuler",
+        "submit": "Soumettre",
+        "addressRequired": "L’adresse est obligatoire",
+        "organizationNameRequired": "Le nom de l’organisation est obligatoire",
+        "contactNumberRequired": "Le numéro de contact est obligatoire",
+        "contactNumberInvalid": "Le numéro de contact ne doit contenir que des chiffres, espaces, tirets, signes plus et parenthèses",
+        "emailIdRequired": "L’adresse e-mail est obligatoire",
+        "emailIdInvalid": "Veuillez saisir une adresse e-mail valide",
+        "enterValidEmailAddress": "Saisissez une adresse e-mail valide et réessayez",
+        "enterValidContactNumber": "Saisissez un numéro de contact valide et réessayez",
+        "partnerIdRequired": "L’ID du partenaire est obligatoire",
+        "partnerIdInvalid": "L’ID du partenaire ne doit contenir que des lettres, chiffres et traits de soulignement",
+        "errorInCreatingPartner": "Une erreur est survenue lors de la création du partenaire",
+        "mispPartnerSuccessHeader": "Partenaire créé avec succès !",
+        "uploadMispPartnerCertificate": "Télécharger le certificat du partenaire"
+    },
+    "languages": {
+        "english": "Anglais",
+        "hindi": "Hindi",
+        "arabic": "Arabe",
+        "french": "Français",
+        "tamil": "Tamoul",
+        "kannada": "Kannada"
     },
     "createOidcClient": {
         "createOidcClient": "Créer un client OIDC",
@@ -699,7 +819,10 @@
         "searchOrganisation": "Rechercher une organisation",
         "searchEmailAddress": "Rechercher l'adresse e-mail complète",
         "searchPolicyGroup": "Rechercher le groupe de politiques",
-        "emailAddressToolTip": "Remarque : Ce filtre effectue une correspondance exacte. Veuillez saisir l'adresse e-mail complète (ex : user@example.com) pour obtenir des résultats."
+        "emailAddressToolTip": "Remarque : Ce filtre effectue une correspondance exacte. Veuillez saisir l'adresse e-mail complète (ex : user@example.com) pour obtenir des résultats.",
+        "createPartner": "Créer un partenaire",
+        "uploadOrReuploadCertificate": "Téléverser / Re-téléverser le certificat",
+        "policyGroupLinkedSuccessMsg": "Le groupe de politiques a été lié avec succès au partenaire {{partnerId}}"
     },
     "viewPartnerDetails": {
         "viewPartnerDetails": "Afficher les détails du partenaire",
@@ -739,6 +862,7 @@
         "policyGroup": "Groupes de politiques",
         "authPolicy": "Politique d'authentification",
         "dataSharePolicy": "Politique de partage des données",
+        "mispPolicy": "Politique MISP",
         "createPolicyGroup": "Créer un groupe de politiques",
         "policyGroupId": "ID du groupe de politiques",
         "policyGroupName": "Nom du groupe de politiques",
@@ -750,11 +874,14 @@
         "errorInPolicyGroupList": "Lors de la récupération de la liste des groupes de stratégies, nous avons rencontré une erreur.",
         "searchPolicyGroupId": "ID de groupe de politiques de recherche",
         "searchPolicyGroupName": "Rechercher le nom du groupe de politiques",
-        "searchPolicyGroupDescription": "Description du groupe de politiques de recherche"
+        "searchPolicyGroupDescription": "Description du groupe de politiques de recherche",
+        "noPolicyGroupsFound": "Aucun groupe de politiques trouvé",
+        "noDescription": "Aucune description disponible"
     },
     "policiesList": {
         "createAuthPolicy": "Créer une politique d'authentification",
         "createDataSharePolicy": "Créer une politique de partage de données",
+        "createMispPolicy": "Créer une politique MISP",
         "policyId": "ID de la politique",
         "policyName": "Nom de la politique",
         "policyDescription": "Description de la politique",
@@ -764,8 +891,10 @@
         "action": "Action",
         "listOfAuthPolicies": "Liste des politiques d'authentification",
         "listOfDataSharePolicies": "Liste des politiques de partage de données",
+        "listOfMispPolicies": "Liste des politiques MISP",
         "errorInAuthPolicies": "Lors de la récupération des politiques d’authentification, nous avons rencontré une erreur.",
         "errorInDataSharePolicies": "Lors de la récupération des politiques de partage de données, nous avons rencontré une erreur.",
+        "errorInMispPolicies": "Lors de la récupération des politiques MISP, nous avons rencontré une erreur.",
         "searchPolicyId": "Rechercher l'ID de la politique",
         "searchPolicyName": "Rechercher le nom de la politique",
         "searchPolicyDescription": "Description de la politique de recherche",
@@ -812,10 +941,13 @@
         "edit": "Modifier",
         "editAuthPolicyTitle": "Modifier la politique d'authentification",
         "editDataSharePolicyTitle": "Modifier la politique de partage de données",
+        "editMispPolicyTitle": "Modifier la politique MISP",
         "authPolicyConfirmationHeader": "Politique d'authentification mise à jour et soumise avec succès!",
         "dataSharePolicyConfirmationHeader": "Politique de partage de données mise à jour et soumise avec succès !",
+        "mispPolicyConfirmationHeader": "La politique MISP a été mise à jour et soumise avec succès !",
         "authPolicyConfirmationMessage": "La stratégie d'authentification pour le groupe de stratégies : {{policyGroupName}} a été mise à jour et soumise avec succès. Pour publier la politique, sélectionnez l'option « Publier » dans le menu d'action de l'écran « Liste des politiques d'authentification'.",
         "dataSharePolicyConfirmationMessage": "La stratégie de partage de données pour le groupe de stratégies : {{policyGroupName}} a été mise à jour et soumise avec succès. Pour publier la politique, sélectionnez l'option « Publier » dans le menu d'action de l'écran 'Liste des politiques de partage de données'.",
+        "mispPolicyConfirmationMessage": "La politique MISP du groupe de politiques: {{policyGroupName}} a été mise à jour et soumise. Pour la publier, sélectionnez l'option « Publier » dans le menu d'actions de l'écran « Liste des politiques MISP ».",
         "errorInEditPolicy": "Lors de l'édition de la politique, nous avons rencontré une erreur.",
         "reUploadPolicyData": "Re-télécharger les données de politique",
         "reuploadBtn": "Re-télécharger",
@@ -824,6 +956,10 @@
     "viewDataSharePoliciesList": {
         "viewDataSharePolicy": "Afficher la politique de partage de données",
         "listOfDataSharePolicies": "Liste des politiques de partage de données"
+    },
+    "viewMispPoliciesList": {
+        "viewMispPolicy": "Voir la politique MISP",
+        "listOfMispPolicies": "Liste des politiques MISP"
     },
     "createPolicy": {
         "policyGroup": "Groupe de Politique",
@@ -840,13 +976,17 @@
         "fileUploadSuccessMsg": "Les données de la politique ont été téléchargées avec succès",
         "createAuthPolicyTitle": "Créer une Politique d'Authentification",
         "createDataSharePolicyTitle": "Créer une Politique de Partage de Données",
+        "createMispPolicyTitle": "Créer une politique MISP",
         "enterAuthPolicyName": "Entrer un nom pour la Politique d'Authentification",
         "enterDataSharePolicyName": "Entrer un nom pour la Politique de Partage de Données",
+        "enterMispPolicyName": "Entrez le nom de la politique MISP",
         "authPolicyDescription": "Entrer une description pour la Politique d'Authentification",
         "dataSharePolicyDescription": "Entrer une description pour la Politique de Partage de Données",
+        "mispPolicyDescription": "Entrez une description de la politique MISP",
         "policyConfirmationHeader": "Politique enregistrée en tant que brouillon",
         "authPolicyConfirmationMessage": "Cette politique d'authentification est actuellement en mode brouillon. Vous pouvez la publier pour la rendre active, ou continuer à la modifier si des modifications supplémentaires sont nécessaires en accédant à la page 'Liste des politiques d'authentification'",
         "dataSharePolicyConfirmationMessage": "Cette politique de partage de données est actuellement en mode brouillon. Vous pouvez la publier pour la rendre active, ou continuer à la modifier si des modifications supplémentaires sont nécessaires en accédant à la page 'Liste des politiques de partage de données'",
+        "mispPolicyConfirmationMessage": "Cette politique MISP est actuellement en version préliminaire. Vous pouvez la publier pour la rendre active ou la modifier si nécessaire en accédant à la page « Liste des politiques MISP ».",
         "errorInCreatePolicy": "Lors de la création de la politique, nous avons rencontré une erreur.",
         "saveAsDraft": "Enregistrer en tant que brouillon"
     },
@@ -1103,7 +1243,7 @@
         "PMS_PRT_005": "Le partenaire n'existe pas",
         "PMS_PRT_006": "Aucune clé API requise n'existe",
         "PMS_PRT_105": "La clé API du partenaire n'est pas créée",
-        "PMS_PRT_011": "L'e-mail existe déjà.",
+        "PMS_PRT_011": "L’adresse e-mail fournie est déjà enregistrée. Veuillez fournir une autre adresse e-mail.",
         "PMS_PRT_012": " Id email invalide.",
         "PMS_PRT_013": "Numéro de mobile non valide. La longueur doit être inférieure à .",
         "PMS_ATH_401": "Authentification échouée",
@@ -1135,6 +1275,8 @@
         "PMS_PM_062": "Erreur lors de la récupération de toutes les demandes de mappage des politiques partenaires",
         "PMS_PM_063": "Le partenaire sélectionné a déjà été désactivé.",
         "PMS_PM_064": "Erreur lors de la récupération de toutes les demandes de clé API",
+        "PMS_PM_065": "PartnerIdSearchType non valide. Les valeurs autorisées sont «contient» et «égal à».",
+        "PMS_PM_066": "L'ID du partenaire est obligatoire lorsque le type de recherche du partenaire est « égal ».",
         "PMS_PMP_010": "La politique n'appartient pas au groupe de politiques du gestionnaire de partenaires",
         "PMS_PMP_015": "Aucune demande de clé API partenaire pour le groupe de règles",
         "PMS_PMP_007": "La clé API du partenaire n'existe pas",
@@ -1246,6 +1388,7 @@
         "PMS_AUT_001": "Code de sous-type de périphérique Reg introuvable dans la liste des sous-types de périphérique Reg",
         "PMS_PRT_053": "Cette politique est déjà en attente d'approbation par rapport à votre identifiant de partenaire.",
         "PMS_PRT_060": "Cette politique a déjà été approuvée par rapport à votre identifiant de partenaire.",
+        "PMS_PRT_100": "Impossible de générer un identifiant unique après plusieurs tentatives. Veuillez réessayer ou contacter l'administrateur.",
         "PMS_AUT_028": "Les détails de l'appareil pour l'identifiant $ID sont rejetés. Impossible d'utiliser les mêmes détails pour le mappage.",
         "PMS_CERTIFICATE_ERROR_001": "Erreur lors de la récupération des certificats partenaires.",
         "PMS_CERTIFICATE_ERROR_002": "L'ID utilisateur n'existe pas.",
@@ -1376,6 +1519,31 @@
         "PMS_NOTIFICATION_ERROR_023": "Le type de notification sélectionné n'est pas valide. Seul le type « sbi » est autorisé pour ce filtre.",
         "PMS_NOTIFICATION_ERROR_024": "Le type de notification sélectionné n'est pas valide. Veuillez sélectionner un type autre que « hebdomadaire ».",
         "PMS_NOTIFICATION_ERROR_025": "Veuillez saisir une date de début de création valide.",
-        "PMS_NOTIFICATION_ERROR_026": "Veuillez saisir une date de fin de création valide."
+        "PMS_NOTIFICATION_ERROR_026": "Veuillez saisir une date de fin de création valide.",
+        "PMS_MSP_005": "Le partenaire MISP n'existe pas",
+        "PMS_MSP_009": "Le fournisseur donné n'est pas valide",
+        "PMS_MSP_408": "La combinaison de clé de partenaire et de licence MISP n'existe pas.",
+        "PMS_MSP_405": "Le partenaire MISP n'est pas actif.",
+        "PMS_MSP_407": "Statut MISP soit actif soit désactivé.",
+        "PMS_MSP_416": "La clé de licence existe pour le fournisseur donné.",
+        "PMS_MSP_417": "Politique non cartographiée.",
+        "PMS_MSP_418": "Politique non approuvée.",
+        "PMS_MSP_419": "La politique n'existe pas..",
+        "PMS_MSP_420": "Erreur lors de la récupération de tous les détails de la licence MISP.",
+        "PMS_MSP_421": "Erreur lors de la génération de la clé de licence MISP.",
+        "PMS_MSP_422": "Nom de clé de licence non valide.",
+        "PMS_MSP_423": "ID partenaire non valide.",
+        "PMS_MSP_424": "Le nom de la clé de licence MISP existe déjà.",
+        "PMS_MSP_425": "La date d'expiration doit être supérieure à aujourd'hui.",
+        "PMS_MSP_426": "Erreur lors de la récupération des détails de la licence MISP.",
+        "PMS_MSP_427": "Aucune clé de licence MISP correspondante n'existe pour l'ID de partenaire, l'ID de stratégie et le nom de clé de licence MISP spécifiés.",
+        "PMS_MSP_428": "Plusieurs correspondances de clés de licence MISP ont été trouvées pour l'ID partenaire, l'ID de politique et le nom de clé de licence MISP fournis. Veuillez utiliser le nom de clé de licence MISP et l'ID de politique corrects.",
+        "PMS_MSP_429": "L'ID partenaire n'existe pas.",
+        "PMS_MSP_430": "Le partenaire n'est pas actif.",
+        "PMS_MSP_431": "Type de partenaire non valide. Le type de partenaire doit être MISP_Partner.",
+        "PMS_MSP_432": "Erreur lors de la désactivation de la clé de licence MISP.",
+        "PMS_MSP_433": "Le statut de la demande doit être Désactiver",
+        "PMS_MSP_434": "La clé de licence MISP est déjà désactivée.",
+        "PMS_MSP_435": "Erreur lors de la régénération de la clé de licence MISP."
     }
 }

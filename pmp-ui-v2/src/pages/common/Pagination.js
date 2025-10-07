@@ -75,16 +75,18 @@ function Pagination({ dataListLength, selectedRecordsPerPage, setSelectedRecords
                 pageRangeDisplayed={4}
                 marginPagesDisplayed={1}
                 breakLabel="..."
-                containerClassName="flex items-center justify-center space-x-3"
-                pageClassName="px-3 py-1.5 text-[#1447B2] cursor-pointer text-sm"
+                containerClassName={`flex items-center justify-center space-x-3 ${isLoginLanguageRTL && 'space-x-reverse'}`}
+                pageClassName="px-3 py-1.5 text-[#1447B2]  text-sm"
                 activeClassName="bg-[#1447B2] text-white text-sm p-1.5 rounded-md"
-                previousClassName={`p-1.5 border rounded-md ${isFirstPage ? greyBtn : blueBtn}`}
-                nextClassName={`p-1.5 border rounded-md ${isLastPage ? greyBtn : blueBtn}`}
+                previousClassName={`border rounded-md ${isFirstPage ? greyBtn : blueBtn}`}
+                nextClassName={`border rounded-md ${isLastPage ? greyBtn : blueBtn}`}
+                previousLinkClassName="flex items-center justify-center w-7 h-7 block"
+                nextLinkClassName="flex items-center justify-center w-7 h-7 block"
                 breakClassName="px-2 py-1 text-[#1447B2]"
-                previousLabel={<FiChevronLeft />}
-                nextLabel={<FiChevronRight />}
+                previousLabel={isLoginLanguageRTL ? <FiChevronRight /> : <FiChevronLeft />}
+                nextLabel={isLoginLanguageRTL ? <FiChevronLeft /> : <FiChevronRight />}
             />
-            <div className="flex items-center gap-x-3">
+            <div className="flex items-center gap-x-3 w-">
                 <h6 id='items_per_page' className="text-gray-500 text-xs">{t('commons.itemsPerPage')}</h6>
                 <div ref={itemsCountSelectionRef} className='relative min-w-fit w-10'
                     role='button' id='pagination_select_record_per_page' onClick={() => setIsItemsPerPageOpen(!isItemsPerPageOpen)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => setIsItemsPerPageOpen(!isItemsPerPageOpen))}>

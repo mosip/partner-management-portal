@@ -374,33 +374,35 @@ function ViewAllNotifications({ notificationType }) {
                                     removeFilter={showExpiringItems ? true : false}
                                     listSubTitle={showExpiringItems ? t('notificationPopup.expiringItems') + " (" + formatDate(notificationCreatedDateTime, 'dateInWords') + t('notificationPopup.to') + formatDate(getWeeklySummaryDate(notificationCreatedDateTime), 'dateInWords') + ")" : undefined}
                                 />
-                                <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
-                                {!showExpiringItems && filter && (
-                                    <>
-                                        {(notificationType === "root" || notificationType === "intermediate") && (
-                                            <CertificateNotificationsFilter onApplyFilter={onApplyFilter} />
+                                    <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
+                                    <div className={showExpiringItems ? "hidden" : "block"}>
+                                        {filter && (
+                                            <>
+                                                {(notificationType === "root" || notificationType === "intermediate") && (
+                                                    <CertificateNotificationsFilter onApplyFilter={onApplyFilter} />
+                                                )}
+                                                {(notificationType === "weekly") && (
+                                                    <WeeklyNotificationsFilter onApplyFilter={onApplyFilter} />
+                                                )}
+                                                {(notificationType === "partner") && (
+                                                    <PartnerCertificateNotificationsFilter onApplyFilter={onApplyFilter} />
+                                                )}
+                                                {(notificationType === "ftm-chip") && (
+                                                    <FtmChipCertNotificationFilter onApplyFilter={onApplyFilter} />
+                                                )}
+                                                {(notificationType === "apikey") && (
+                                                    <ApiKeyNotificationFilter onApplyFilter={onApplyFilter} setErrorCode={setErrorCode} setErrorMsg={setErrorMsg} />
+                                                )}
+                                                {(notificationType === "sbi") && (
+                                                    <SbiNotificationFilter onApplyFilter={onApplyFilter} />
+                                                )}
+                                            </>
                                         )}
-                                        {(notificationType === "weekly") && (
-                                            <WeeklyNotificationsFilter onApplyFilter={onApplyFilter} />
-                                        )}
-                                        {(notificationType === "partner") && (
-                                            <PartnerCertificateNotificationsFilter onApplyFilter={onApplyFilter} />
-                                        )}
-                                        {(notificationType === "ftm-chip") && (
-                                            <FtmChipCertNotificationFilter onApplyFilter={onApplyFilter} />
-                                        )}
-                                        {(notificationType === "apikey") && (
-                                            <ApiKeyNotificationFilter onApplyFilter={onApplyFilter} setErrorCode={setErrorCode} setErrorMsg={setErrorMsg} />
-                                        )}
-                                        {(notificationType === "sbi") && (
-                                            <SbiNotificationFilter onApplyFilter={onApplyFilter} />
-                                        )}
-                                    </>
-                                )}
-                                {!notificationDataLoaded ? (
-                                    <LoadingIcon styleSet={styles} />
-                                ) : (
-                                    <>
+                                    </div>
+                                    {!notificationDataLoaded ? (
+                                        <LoadingIcon styleSet={styles} />
+                                    ) : (
+                                        <>
                                         {isFilterApplied && notificationsList.length === 0 ? (
                                             <div className="flex flex-col items-center py-20 px-2 border-b border-gray-200">
                                                 <img src={noNotificationIcon} alt='' id='noNotificationIcon' />
