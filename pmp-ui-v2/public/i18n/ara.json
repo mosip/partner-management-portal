@@ -392,12 +392,13 @@
         "emailIdRequired": "البريد الإلكتروني مطلوب",
         "emailIdInvalid": "الرجاء إدخال بريد إلكتروني صالح",
         "enterValidEmailAddress": "أدخل بريدًا إلكترونيًا صالحًا وحاول مرة أخرى",
-        "enterValidContactNumber": "أدخل رقم اتصال صالحًا وحاول مرة أخرى",
+        "enterValidContactNumber": "الرجاء إدخال رقم هاتف صالح والمحاولة مرة أخرى",
         "partnerIdRequired": "معرّف الشريك مطلوب",
         "partnerIdInvalid": "يجب أن يحتوي معرّف الشريك على أحرف وأرقام وشرطات سفلية فقط",
+        "usernameMustStartWithLetter": "يجب أن يبدأ اسم المستخدم بحرف",
         "errorInCreatingPartner": "حدث خطأ أثناء إنشاء الشريك",
         "mispPartnerSuccessHeader": "تم إنشاء الشريك بنجاح!",
-        "uploadMispPartnerCertificate": "قم بتحميل شهادة الشريك"
+        "uploadMispPartnerCertificate": "تحميل شهادة شريك MISP"
     },
     "languages": {
         "english": "الإنجليزية",
@@ -1226,7 +1227,7 @@
         "PMS_PRT_361": "حجم الصفحة غير صالح",
         "KER_PRT_390": "قيمة التصفية غير صالح",
         "PMS_PRT_001": "تم تسجيل الشريك بنفس الاسم بالفعل",
-        "PMS_PRT_051": " تم تسجيل الشريك بالفعل بنفس المعرف",
+        "PMS_PRT_051": "اسم المستخدم موجود بالفعل. أدخل اسم مستخدم مختلفًا",
         "PMS_PRT_052": "يجب أن يكون الحد الأقصى لطول معرف الشريك 36",
         "PMS_ATH_053": " حدث استثناء IO أثناء تمرير طلب الترحيل",
         "PMS_ATH_054": " لم يتم العثور على المستخد",
