@@ -26,7 +26,8 @@ function TrustFilter({ onApplyFilter }) {
             const partnerDomainDropdownData = [
                 { partnerDomain: 'AUTH' },
                 { partnerDomain: 'DEVICE' },
-                { partnerDomain: 'FTM' }
+                { partnerDomain: 'FTM' },
+                { partnerDomain: 'MISP' }
             ];
             setPartnerDomainData(
                 createDropdownData("partnerDomain", "", true, partnerDomainDropdownData, t, t("trustList.selectPartnerDomain"))

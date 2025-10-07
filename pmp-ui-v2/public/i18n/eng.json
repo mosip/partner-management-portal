@@ -275,7 +275,7 @@
         "notUploaded": "Not Uploaded",
         "draft": "Draft",
         "valid": "Valid",
-        "notAvailable":"Not available"
+        "notAvailable": "Not available"
     },
     "policies": {
         "policies": "Policies",
@@ -393,9 +393,10 @@
         "emailIdRequired": "Email ID is required",
         "emailIdInvalid": "Please enter a valid email address",
         "enterValidEmailAddress": "Enter valid email address and try again",
-        "enterValidContactNumber": "Enter valid contact number and try again",
+        "enterValidContactNumber": "Please enter a valid phone number and try again",
         "partnerIdRequired": "Partner ID is required",
         "partnerIdInvalid": "Partner ID should contain only letters, numbers, and underscores",
+        "usernameMustStartWithLetter": "Username must start with a letter",
         "errorInCreatingPartner": "Error occurred while creating partner",
         "mispPartnerSuccessHeader": "Partner Created Successfully!",
         "uploadMispPartnerCertificate": "Upload Partner Certificate"
@@ -465,7 +466,7 @@
         "selectStatus": "Select Status",
         "searchOidcClientName": "Search OIDC Client Name",
         "errorInOidcClientsList": "While fetching OIDC Clients List, we have encountered with an error.",
-        "compatibilityMsg":"Note: <italic>OIDC Client-related features</italic> are not supported in the current version of MOSIP Platform."
+        "compatibilityMsg": "Note: <italic>OIDC Client-related features</italic> are not supported in the current version of MOSIP Platform."
     },
     "viewOidcClientDetails": {
         "viewOidcClientDetails": "View OIDC Client Details",
@@ -1088,7 +1089,7 @@
     },
     "viewAdminFtmDetails": {
         "errorWhileGettingFtmDetails": "While fetching Certificate details, we have encountered with an error.",
-        "compatibilityMsg":"<italic>Download of FTM Certificate</italic> is not supported in the current version of MOSIP Platform."
+        "compatibilityMsg": "<italic>Download of FTM Certificate</italic> is not supported in the current version of MOSIP Platform."
     },
     "viewSbiDetails": {
         "viewSbiDetails": "View SBI Details",
@@ -1106,7 +1107,7 @@
         "header": "Do you want to Approve or Reject the Device?",
         "description": "Please review the Device details carefully before taking appropriate action.",
         "rejectHeader": "Confirm Device Rejection",
-        "rejectDescription":"This device is not associated with any SBI, so it must be rejected."
+        "rejectDescription": "This device is not associated with any SBI, so it must be rejected."
     },
     "consentPopup": {
         "title": "Terms and Conditions",
@@ -1164,11 +1165,11 @@
         "intermediateCertExpiryDescription": "Intermediate CA Certificate <span>{{certificateId}}</span> issued to <span>{{issuedTo}}</span> by <span>{{issuedBy}}</span> for the <span>{{partnerDomain}}</span> domain is set to expire on <span>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions."
     },
     "partnerNotificationsTab": {
-        "partnerCertificate":"Partner Certificate",
+        "partnerCertificate": "Partner Certificate",
         "apikey": "API Key",
         "ftmCertificate": "FTM Chip Certificate",
         "sbi": "SBI",
-        "partnerCertExpiryDescription":"Partner Certificate issued to <span>{{issuedTo}}</span> by <span>{{issuedBy}}</span> for the <span>{{partnerDomain}}</span> domain is set to expire on <span>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions."
+        "partnerCertExpiryDescription": "Partner Certificate issued to <span>{{issuedTo}}</span> by <span>{{issuedBy}}</span> for the <span>{{partnerDomain}}</span> domain is set to expire on <span>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions."
     },
     "viewAllNotifications": {
         "listOfNotifications": "List of Notifications",
@@ -1223,7 +1224,7 @@
         "KER_PRT_390": " Invalid filter value",
         "KER-PCM-008": "The organization name in the uploaded certificate does not match the name provided during partner registration.",
         "PMS_PRT_001": "  A Partner is already registered with the same Name",
-        "PMS_PRT_051": " A Partner is already registered with the same ID",
+        "PMS_PRT_051": "Username already exists. Enter a different username",
         "PMS_PRT_052": "PartnerId max length should be 36",
         "PMS_ATH_053": " IO Exception occured while passing paging request",
         "PMS_ATH_054": " User not found",
@@ -1516,7 +1517,7 @@
         "PMS_NOTIFICATION_ERROR_023": "The selected notification type is invalid. Only 'sbi' type is allowed for this filter.",
         "PMS_NOTIFICATION_ERROR_024": "The selected notification type is invalid. Please select a type other than 'weekly'.",
         "PMS_NOTIFICATION_ERROR_025": "Please enter a valid created from date.",
-	    "PMS_NOTIFICATION_ERROR_026": "Please enter a valid created to date.",
+        "PMS_NOTIFICATION_ERROR_026": "Please enter a valid created to date.",
         "PMS_MSP_005": "MISP Partner does not exist",
         "PMS_MSP_009": "Given provider is not valid",
         "PMS_MSP_408": "MISP Partner and License key combintaion not exists.",
