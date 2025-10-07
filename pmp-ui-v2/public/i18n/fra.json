@@ -392,12 +392,13 @@
         "emailIdRequired": "L’adresse e-mail est obligatoire",
         "emailIdInvalid": "Veuillez saisir une adresse e-mail valide",
         "enterValidEmailAddress": "Saisissez une adresse e-mail valide et réessayez",
-        "enterValidContactNumber": "Saisissez un numéro de contact valide et réessayez",
+        "enterValidContactNumber": "Veuillez saisir un numéro de téléphone valide et réessayez",
         "partnerIdRequired": "L’ID du partenaire est obligatoire",
-        "partnerIdInvalid": "L’ID du partenaire ne doit contenir que des lettres, chiffres et traits de soulignement",
+        "partnerIdInvalid": "L'ID du partenaire ne doit contenir que des lettres, chiffres et traits de soulignement",
+        "usernameMustStartWithLetter": "Le nom d'utilisateur doit commencer par une lettre",
         "errorInCreatingPartner": "Une erreur est survenue lors de la création du partenaire",
         "mispPartnerSuccessHeader": "Partenaire créé avec succès !",
-        "uploadMispPartnerCertificate": "Télécharger le certificat du partenaire"
+        "uploadMispPartnerCertificate": "Télécharger le certificat partenaire MISP"
     },
     "languages": {
         "english": "Anglais",
@@ -1227,7 +1228,7 @@
         "KER_PRT_390": "Valeur de filtre non valide",
         "KER-PCM-008": "Le nom de l'organisation dans le certificat téléchargé ne correspond pas au nom fourni lors de l'inscription du partenaire.",
         "PMS_PRT_001": " Un partenaire est déjà enregistré avec le même nom",
-        "PMS_PRT_051": " Un partenaire est déjà enregistré avec le même identifiant",
+        "PMS_PRT_051": "Le nom d’utilisateur existe déjà. Entrez un autre nom d’utilisateur",
         "PMS_PRT_052": "La longueur maximale du PartnerId doit être 36",
         "PMS_ATH_053": "Une exception d'E/S s'est produite lors de la transmission de la demande de pagination",
         "PMS_ATH_054": "Utilisateur non trouvé",

@@ -1277,6 +1277,30 @@ export const validateInput = (input) => {
     return allowedPattern.test(input);
 }
 
+export const validateUsernameRegex = (input, setInputError, t) => {
+    if (input === '') {
+        setInputError("");
+        return;
+    }
+    
+    // Check if username starts with a letter (any language)
+    const startsWithLetter = /^[\p{L}]/u.test(input);
+    
+    if (!startsWithLetter) {
+        setInputError(t('createPartner.usernameMustStartWithLetter'));
+        return;
+    }
+    
+    // Check if the rest of the username contains only valid characters
+    const validPattern = /^[\p{L}][\p{L}\p{N}\p{M}._-]*$/u;
+    
+    if (validPattern.test(input)) {
+        setInputError("");
+    } else {
+        setInputError(t('commons.inputError'));
+    }
+}
+
 export const validateEmailRegex = (email, setEmailError, t) => {
     if (email === '') {
         setEmailError("");
