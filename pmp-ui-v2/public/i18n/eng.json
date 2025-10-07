@@ -399,7 +399,7 @@
         "usernameMustStartWithLetter": "Username must start with a letter",
         "errorInCreatingPartner": "Error occurred while creating partner",
         "mispPartnerSuccessHeader": "Partner Created Successfully!",
-        "uploadMispPartnerCertificate": "Upload Partner Certificate"
+        "uploadMispPartnerCertificate": "Upload MISP Partner Certificate"
     },
     "languages": {
         "english": "English",
