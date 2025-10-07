@@ -128,7 +128,8 @@
         "selectPolicyPlaceHolder": "Sélectionnez la politique MISP pour laquelle la clé de licence MISP est requise",
         "policyInfo": "Demandez d'abord une politique pour l'ID partenaire donné dans l'écran « Lien entre partenaires et politiques ». Seules les demandes de politique approuvées seront disponibles dans le menu déroulant.",
         "guidence": "Remarque : En tant que partenaire MISP, les champs Groupe de politiques et Nom de la politique sont facultatifs. Nous vous recommandons néanmoins de sélectionner un Groupe de politiques et un Nom de politique avant de générer la clé de licence MISP afin de garantir la cohérence.",
-        "dateFormatInfoKey": "Format de date : jj/mm/aaaa. Assurez-vous de fournir une date future valide, car la clé de licence sera automatiquement désactivée une fois cette date atteinte."
+        "dateFormatInfoKey": "Format de date : jj/mm/aaaa. Assurez-vous de fournir une date future valide, car la clé de licence sera automatiquement désactivée une fois cette date atteinte.",
+        "importantNote": "Remarque importante : Si plusieurs clés de licence MISP sont générées pour le même identifiant partenaire, seule la dernière clé MISP restera active dans le module d'authentification (IDA). Les anciennes clés seront écrasées. Soyez prudent lorsque vous créez plusieurs clés de licence pour le même partenaire."
     },
     "deactivateMispLicense": {
         "title": "Voulez-vous désactiver la clé de licence MISP",

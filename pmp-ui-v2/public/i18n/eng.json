@@ -130,7 +130,8 @@
         "selectPolicyPlaceHolder": "Select MISP policy for which MISP License Key is required",
         "policyInfo": "Request a policy for the given Partner ID in the Partner-Policy Linking screen first. Only policy requests with Approved status will be available in the dropdown.",
         "guidence": "Note: As a MISP Partner, the Policy Group and Policy Name fields are optional. We still recommend selecting a Policy Group and Policy Name before generating MISP License Key to help maintain consistency.",
-        "dateFormatInfoKey": "Date Format: mm/dd/yyyy. Ensure that you provide a valid future date, as the license key will be automatically deactivated once this date is reached."
+        "dateFormatInfoKey": "Date Format: mm/dd/yyyy. Ensure that you provide a valid future date, as the license key will be automatically deactivated once this date is reached.",
+        "importantNote": "Important Note: If multiple MISP license keys are generated for the same Partner ID, only the latest MISP license key will remain active in the ID Authentication (IDA) module. Older license keys will be overwritten. Please exercise caution when creating multiple license keys for the same Partner."
     },
     "deactivateMispLicense": {
         "title": "Do you want to Deactivate MISP License Key",

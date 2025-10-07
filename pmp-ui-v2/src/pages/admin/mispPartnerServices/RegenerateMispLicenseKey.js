@@ -258,6 +258,11 @@ function RegenerateMispLicenseKey() {
                                                         isUsedAsFilter={false}
                                                     />
                                                 </div>
+                                                <div className="flex items-center justify-center my-5">
+                                                    <div className="p-2 bg-[#FFF7E5] border-2 border-[#EDDCAF] rounded-md w-full">
+                                                        <p id='regenerate_misp_license_key_important_note' className="text-sm font-medium text-[#8B6105]">{t('generateLicenseKey.importantNote')}</p>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </form>
                                     </div>
