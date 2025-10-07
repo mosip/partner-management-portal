@@ -167,7 +167,7 @@ public class AuthPartnerTest extends BaseClass {
 		partnerCertificatePage.clickOnSuccessMsgCloseButton();
 		partnerCertificatePage.clickOnTitleBackButton();
 	}
-//	
+
 /*
 	@Test(priority = 4, description = "Policy creation and filter")
 	public void verifyingPolicyCreationAndFilter() {
@@ -1097,7 +1097,7 @@ public class AuthPartnerTest extends BaseClass {
 		dashboardPage.clickOnHomeOptionOfHamburger();
 		dashboardPage.clickOnPartnerCertificateOfHamburger();
 		dashboardPage.clickOnPoliciesOfHamburger();
-		dashboardPage.clickOnAuthenticationServiceOfHamburger();
+		dashboardPage.clickOnAuthenticationServiceOfHamburger();	
 		dashboardPage.clickOnHamburgerClose();
 		oidcClientPage.clickOnTitleBackButton();
 		assertTrue(dashboardPage.isOrganizationIconWithNameDisplayed(),
