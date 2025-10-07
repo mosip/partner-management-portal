@@ -1535,7 +1535,7 @@
         "PMS_MSP_422": "Nom de clé de licence non valide.",
         "PMS_MSP_423": "ID partenaire non valide.",
         "PMS_MSP_424": "Le nom de la clé de licence MISP existe déjà.",
-        "PMS_MSP_425": "La date d'expiration doit être supérieure à aujourd'hui.",
+        "PMS_MSP_425": "La date d'expiration ne peut pas être identique ou antérieure à la date actuelle.",
         "PMS_MSP_426": "Erreur lors de la récupération des détails de la licence MISP.",
         "PMS_MSP_427": "Aucune clé de licence MISP correspondante n'existe pour l'ID de partenaire, l'ID de stratégie et le nom de clé de licence MISP spécifiés.",
         "PMS_MSP_428": "Plusieurs correspondances de clés de licence MISP ont été trouvées pour l'ID partenaire, l'ID de politique et le nom de clé de licence MISP fournis. Veuillez utiliser le nom de clé de licence MISP et l'ID de politique corrects.",

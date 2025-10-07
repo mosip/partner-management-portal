@@ -1531,7 +1531,7 @@
         "PMS_MSP_422": "Invalid license key name.",
         "PMS_MSP_423": "Invalid Partner ID.",
         "PMS_MSP_424": "MISP License key name already exists.",
-        "PMS_MSP_425": "ExpiryDate should be greater than today.",
+        "PMS_MSP_425": "Expiry date cannot be the same or earlier than the current date.",
         "PMS_MSP_426": "Error while fetching MISP Licence details.",
         "PMS_MSP_427": "No matching MISP License Key exists for the specified Partner ID, Policy ID, and MISP License Key Name.",
         "PMS_MSP_428": "Multiple MISP License key matches were found for the provided Partner ID, Policy ID, and MISP License Key Name. Please use the correct MISP License Key Name and Policy ID.",
