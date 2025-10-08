@@ -56,6 +56,11 @@ function PolicyGroupSelector({ onPolicyGroupSelect, selectedPolicyGroup, contain
         const effectivePageNo = resetPageNumber(totalRecords, pageNo, pageSize, false);
 
         let filterRequest = [];
+        filterRequest.push({
+            value: "true",
+            columnName: "isActive",
+            type: "equals"
+        });
         if (debouncedSearchTerm.trim()) {
             filterRequest.push({
                 value: debouncedSearchTerm.trim(),
