@@ -1242,7 +1242,7 @@
         "PMS_PRT_006": "No api key req exist",
         "PMS_PRT_105": "Partner API KEY is not Created",
         "PMS_PRT_011": "The provided email address is already registered. Please provide a different email address.",
-        "PMS_PRT_012": " Invalid emailId.",
+        "PMS_PRT_012": "Enter valid email address and try again",
         "PMS_PRT_013": " Invalid mobile number.Length should be less than .",
         "PMS_ATH_401": "Authentication Failed",
         "PMS_PRT_106": "APIKeyReqID status is In_progress",
