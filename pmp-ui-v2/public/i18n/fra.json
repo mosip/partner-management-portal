@@ -371,7 +371,7 @@
         "address": "Adresse",
         "organizationName": "Nom de l’organisation",
         "organizationNameInfo": "Saisissez le nom de l’organisation tel qu’indiqué dans l’attribut ORGANIZATION du sujet du certificat signé par l’AC.",
-        "contactNumber": "Numéro de contact",
+        "contactNumber": "Numéro de téléphone",
         "emailId": "Adresse e-mail",
         "username": "Nom d’utilisateur",
         "notificationLanguage": "Langue de notification",
