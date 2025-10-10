@@ -1533,8 +1533,8 @@
         "PMS_MSP_419": "La politique n'existe pas..",
         "PMS_MSP_420": "Erreur lors de la récupération de tous les détails de la licence MISP.",
         "PMS_MSP_421": "Erreur lors de la génération de la clé de licence MISP.",
-        "PMS_MSP_422": "Nom de clé de licence non valide.",
-        "PMS_MSP_423": "ID partenaire non valide.",
+        "PMS_MSP_422": "Nom de clé de licence non valide fourni.",
+        "PMS_MSP_423": "ID de partenaire non valide fourni.",
         "PMS_MSP_424": "Le nom de la clé de licence MISP existe déjà.",
         "PMS_MSP_425": "La date d'expiration ne peut pas être identique ou antérieure à la date actuelle.",
         "PMS_MSP_426": "Erreur lors de la récupération des détails de la licence MISP.",
@@ -1546,6 +1546,9 @@
         "PMS_MSP_432": "Erreur lors de la désactivation de la clé de licence MISP.",
         "PMS_MSP_433": "Le statut de la demande doit être Désactiver",
         "PMS_MSP_434": "La clé de licence MISP est déjà désactivée.",
-        "PMS_MSP_435": "Erreur lors de la régénération de la clé de licence MISP."
+        "PMS_MSP_435": "Erreur lors de la régénération de la clé de licence MISP.",
+        "PMS_MSP_436": "La date d'expiration ne peut pas être vide ou nulle.",
+        "PMS_MSP_437": "L'ID de politique saisi n'est pas valide ou n'existe pas dans la base de données.",
+        "PMS_MSP_438": "L'ID de politique fourni n'a pas été approuvé pour la liaison de politique partenaire."
     }
 }
