@@ -1529,8 +1529,8 @@
         "PMS_MSP_419": "Policy not exists.",
         "PMS_MSP_420": "Error while fetching all MISP Licence details.",
         "PMS_MSP_421": "Error while generating MISP license key.",
-        "PMS_MSP_422": "Invalid license key name.",
-        "PMS_MSP_423": "Invalid Partner ID.",
+        "PMS_MSP_422": "Invalid license key name provided.",
+        "PMS_MSP_423": "Invalid Partner ID provided.",
         "PMS_MSP_424": "MISP License key name already exists.",
         "PMS_MSP_425": "Expiry date cannot be the same or earlier than the current date.",
         "PMS_MSP_426": "Error while fetching MISP Licence details.",
@@ -1542,6 +1542,9 @@
         "PMS_MSP_432": "Error while deactivating MISP license key.",
         "PMS_MSP_433": "Request status should be De-Activate",
         "PMS_MSP_434": "MISP License key is already deactivated.",
-        "PMS_MSP_435": "Error while regenerating MISP License key."
+        "PMS_MSP_435": "Error while regenerating MISP License key.",
+        "PMS_MSP_436": "Expiry date cannot be empty or null.",
+        "PMS_MSP_437": "The entered policy ID is invalid or does not exist in the database.",
+        "PMS_MSP_438": "The policy ID provided has not been approved for partner policy linking."
     }
 }
