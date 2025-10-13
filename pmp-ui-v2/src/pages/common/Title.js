@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../../services/UserProfileService';
 import { isLangRTL, moveToHome, getStatusCode, bgOfStatus } from '../../utils/AppUtils';
 import backArrow from '../../svg/back_arrow.svg';
+import backArrowReversed from '../../svg/back_arrow_reversed.svg';
 import PropTypes from 'prop-types';
 
 function Title({ title, subTitle, subTitle2, backLink, backLink2, status, version }) {
@@ -21,8 +22,8 @@ function Title({ title, subTitle, subTitle2, backLink, backLink2, status, versio
     return (
         <div className="flex-col items-start">
             <div className={`flex gap-x-2 ${isLoginLanguageRTL ? 'pr-[0.1rem]' : 'pl-[0.1rem]'}`}>
-                <button id='title_back_icon' onClick={goBack} className={`mt-1 cursor-pointer ${isLoginLanguageRTL ? "rotate-180" : null}`} >
-                    <img src={backArrow} alt="" />
+                <button id='title_back_icon' onClick={goBack} className={`mt-1 cursor-pointer`} >
+                    <img src={isLoginLanguageRTL ? backArrowReversed : backArrow} alt=""/>
                 </button>
                 <h1 id='page_title' className="font-semibold text-lg text-dark-blue">{t(title)}</h1>
             </div>

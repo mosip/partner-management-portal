@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from "react";
-import { useNavigate, useBlocker } from "react-router-dom";
+import { useNavigate, useBlocker, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../../services/UserProfileService";
-import { isLangRTL, getPartnerManagerUrl, getPolicyManagerUrl, handleServiceErrors, moveToPolicies, getPartnerTypeDescription, createDropdownData, createRequest, validateInputRegex } from '../../../utils/AppUtils';
+import { isLangRTL, getPartnerManagerUrl, getPolicyManagerUrl, handleServiceErrors, getPartnerTypeDescription, createDropdownData, createRequest, validateInputRegex } from '../../../utils/AppUtils';
 import { HttpService } from '../../../services/HttpService';
 import LoadingIcon from "../../common/LoadingIcon";
 import ErrorMessage from "../../common/ErrorMessage";
@@ -11,9 +11,11 @@ import DropdownWithSearchComponent from "../../common/fields/DropdownWithSearchC
 import BlockerPrompt from "../../common/BlockerPrompt";
 import Title from "../../common/Title";
 import Confirmation from "../../common/Confirmation";
+import ApprovePopup from "../../common/ApprovePopup";
 
 function RequestPolicy() {
     const navigate = useNavigate();
+    const location = useLocation();
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [dataLoaded, setDataLoaded] = useState(true);
@@ -33,6 +35,9 @@ function RequestPolicy() {
     const [confirmationData, setConfirmationData] = useState({});
     const [isSubmitClicked, setIsSubmitClicked] = useState(false);
     const [inputError, setInputError] = useState("");
+    const [showApprovePopup, setShowApprovePopup] = useState(false);
+    const [approveRequest, setApproveRequest] = useState({});
+    const [popupData, setPopupData] = useState({});
 
     const cancelErrorMsg = () => {
         setErrorMsg("");
@@ -78,7 +83,13 @@ function RequestPolicy() {
         const fetchData = async () => {
             try {
                 setDataLoaded(false);
-                const response = await HttpService.get(getPartnerManagerUrl('/partners/v3?status=approved&policyGroupAvailable=true', process.env.NODE_ENV));
+                // Check if URL contains 'admin'
+                const isAdmin = location.pathname.includes('admin');
+                let apiUrl = '/partners/v3?status=approved&policyGroupAvailable=true';
+                if (isAdmin) {
+                    apiUrl = '/partners/v3?status=approved&partnerType=MISP_Partner';
+                }
+                const response = await HttpService.get(getPartnerManagerUrl(apiUrl, process.env.NODE_ENV));
                 if (response) {
                     const responseData = response.data;
                     if (responseData && responseData.response) {
@@ -107,10 +118,17 @@ function RequestPolicy() {
         setPolicyName("");
         // Find the selected partner data
         const selectedPartner = partnerData.find(item => item.partnerId === selectedValue);
+        console.log("Selected Partner Data: ", selectedPartner);
         if (selectedPartner) {
             setPartnerType(getPartnerTypeDescription(selectedPartner.partnerType, t));
-            setPolicyGroupName(selectedPartner.policyGroupName);
-            await getListofPolicies(selectedPartner.policyGroupName);
+            if (selectedPartner.partnerType === 'MISP_Partner' && isAdminPath) {
+                setPolicyGroupName(selectedPartner.policyGroupName || t('requestPolicy.policyGroupNotAvailable'));
+            } else {
+                setPolicyGroupName(selectedPartner.policyGroupName);
+            }
+            if (selectedPartner.policyGroupName) {
+                await getListofPolicies(selectedPartner.policyGroupName);
+            }
         }
     };
 
@@ -162,8 +180,13 @@ function RequestPolicy() {
         setInputError("");
     };
 
+    // Determine backUrl and cancelUrl based on admin path
+    const isAdminPath = location.pathname.includes('admin');
+    const backUrl = isAdminPath ? '/partnermanagement/admin/policy-requests-list' : '/partnermanagement/policies/policies-list';
+    const cancelUrl = backUrl;
+
     const clickOnCancel = () => {
-        moveToPolicies(navigate);
+        navigate(cancelUrl);
     }
     const clickOnSubmit = async () => {
         setIsSubmitClicked(true);
@@ -180,16 +203,18 @@ function RequestPolicy() {
                 const responseData = response.data;
                 if (responseData && responseData.response) {
                     const resData = responseData.response;
+                    setPopupData(isAdminPath ? {id: resData.mappingkey} : {});
                     const requiredData = {
                         title: "requestPolicy.requestPolicy",
-                        backUrl: "/partnermanagement/policies/policies-list",
+                        backUrl: backUrl,
                         header: "requestPolicy.policySuccessHeader",
-                        description: "requestPolicy.policySuccessMsg",
-                        subNavigation: "requestPolicy.policies",
+                        description: isAdminPath ? "requestPolicy.policySuccessMsgForAdmin" : "requestPolicy.policySuccessMsg",
+                        subNavigation: isAdminPath ? "viewPolicyRequest.listOfPolicyRequests" : "requestPolicy.policies",
+                        customBtnName1: isAdminPath ? "approveRejectPopup.approve" : undefined,
+                        customBtnName2: isAdminPath ? "commons.goBack" : undefined,
                     }
                     setConfirmationData(requiredData);
                     setRequestPolicySuccess(true);
-                    console.log(`Response data: ${resData.length}`);
                 } else {
                     handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                 }
@@ -241,6 +266,31 @@ function RequestPolicy() {
         selectionBox: "!top-10"
     }
 
+    const PartnerTypeLabel = ({ isAdmin }) => (
+        <div className="flex flex-col w-[48%] max-[450px]:w-full">
+            <label id='request_policy_partner_type_label' className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('requestPolicy.partnerType')}<span className="text-crimson-red">*</span></label>
+            <button id='request_policy_partner_type' disabled className="flex items-center justify-between w-full h-auto px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-dark-blue bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
+        overflow-x-auto whitespace-normal no-scrollbar" type="button">
+                <span className={`w-full break-words ${(partnerType || isAdmin) ? 'text-dark-blue' : 'text-gray-400'} text-wrap text-start`}>{isAdmin ? t('partnerTypes.mispPartner') : partnerType || t('commons.partnersHelpText')}</span>
+                <svg className={`w-3 h-2 ml-3 transform 'rotate-0' text-gray-500 text-base`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
+                </svg>
+            </button>
+        </div>
+    );
+
+    const clickOnApprove = () => {
+        const request = createRequest({
+            status: "approved"
+        });
+        setApproveRequest(request);
+        setShowApprovePopup(!showApprovePopup);
+    };
+
+    const backToPolicyRequestList = async () => {
+        navigate('/partnermanagement/admin/policy-requests-list');
+    };
+
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll relative font-inter`}>
             {!dataLoaded && (
@@ -252,7 +302,7 @@ function RequestPolicy() {
                         <ErrorMessage id='request_policy_error_msg' errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
                     <div className="flex-col mt-5">
-                        <Title title='requestPolicy.requestPolicy' subTitle='requestPolicy.policies' backLink='/partnermanagement/policies/policies-list' />
+                        <Title title='requestPolicy.requestPolicy' subTitle={isAdminPath ? "viewPolicyRequest.listOfPolicyRequests" : 'requestPolicy.policies'} backLink={backUrl} />
                         {!requestPolicySuccess ?
                             <div className="w-[100%] bg-snow-white mt-[1%] rounded-lg shadow-md">
                                 <div className="p-7">
@@ -260,34 +310,50 @@ function RequestPolicy() {
                                     <form>
                                         <div className="flex flex-col w-full">
                                             <div className="flex flex-row justify-between space-x-4 my-[1%] max-[450px]:flex-col">
-                                                <div className="flex flex-col w-[48%] max-[450px]:w-full">
-                                                    <DropdownComponent
-                                                        fieldName='partnerId'
-                                                        dropdownDataList={partnerIdDropdownData}
-                                                        onDropDownChangeEvent={onChangePartnerId}
-                                                        fieldNameKey='requestPolicy.partnerId*'
-                                                        placeHolderKey='requestPolicy.partnerIdHelpText'
-                                                        selectedDropdownValue={partnerId}
-                                                        styleSet={styles}
-                                                        addInfoIcon
-                                                        infoKey='requestPolicy.info'
-                                                        id='request_policy_partner_id'>
-                                                    </DropdownComponent>
-                                                </div>
-                                                <div className="flex flex-col w-[48%] max-[450px]:w-full">
-                                                    <label id='request_policy_partner_type_label' className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('requestPolicy.partnerType')}<span className="text-crimson-red">*</span></label>
-                                                    <button id='request_policy_partner_type' disabled className="flex items-center justify-between w-full h-auto px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-dark-blue bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
-                                                overflow-x-auto whitespace-normal no-scrollbar" type="button">
-                                                        <span className={`w-full break-words ${partnerType ? 'text-dark-blue' : 'text-gray-400'} text-wrap text-start`}>{partnerType || t('commons.partnersHelpText')}</span>
-                                                        <svg className={`w-3 h-2 ml-3 transform 'rotate-0' text-gray-500 text-base`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
-                                                        </svg>
-                                                    </button>
-                                                </div>
+                                                {isAdminPath ?
+                                                    <>
+                                                        <PartnerTypeLabel isAdmin={true} />
+                                                        <div className="flex flex-col w-[48%] max-[450px]:w-full">
+                                                            <DropdownWithSearchComponent
+                                                                fieldName='partnerId'
+                                                                dropdownDataList={partnerIdDropdownData}
+                                                                onDropDownChangeEvent={onChangePartnerId}
+                                                                fieldNameKey='requestPolicy.partnerId*'
+                                                                placeHolderKey='requestPolicy.partnerIdHelpText'
+                                                                selectedDropdownValue={partnerId}
+                                                                searchKey='commons.search'
+                                                                styleSet={styleForSearch}
+                                                                addInfoIcon
+                                                                infoKey='requestPolicy.info'
+                                                                id='request_policy_partner_id'>
+                                                            </DropdownWithSearchComponent>
+                                                        </div>
+                                                    </>
+                                                :
+                                                    <>
+                                                        <div className="flex flex-col w-[48%] max-[450px]:w-full">
+                                                            <DropdownComponent
+                                                                fieldName='partnerId'
+                                                                dropdownDataList={partnerIdDropdownData}
+                                                                onDropDownChangeEvent={onChangePartnerId}
+                                                                fieldNameKey='requestPolicy.partnerId*'
+                                                                placeHolderKey='requestPolicy.partnerIdHelpText'
+                                                                selectedDropdownValue={partnerId}
+                                                                styleSet={styles}
+                                                                addInfoIcon
+                                                                infoKey='requestPolicy.info'
+                                                                id='request_policy_partner_id'>
+                                                            </DropdownComponent>
+                                                        </div>
+                                                        <PartnerTypeLabel isAdmin={false} />
+                                                    </>
+                                                }
                                             </div>
                                             <div className="flex flex-row justify-between space-x-4 max-[450px]:flex-col">
                                                 <div className="flex flex-col w-[48%] max-[450px]:w-full">
-                                                    <label id='request_policy_policy_group_label' className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('requestPolicy.policyGroup')}<span className="text-crimson-red">*</span></label>
+                                                    <label id='request_policy_policy_group_label' className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('requestPolicy.policyGroup')}
+                                                        <span className="text-crimson-red">*</span>
+                                                    </label>
                                                     <button id='request_policy_policy_group' disabled className="flex items-center justify-between w-full h-auto px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-dark-blue bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
                                                 overflow-x-auto whitespace-normal no-scrollbar" type="button">
                                                         <span className={`w-full break-words ${partnerType ? 'text-dark-blue' : 'text-gray-400'} text-wrap text-start`}>{policyGroupName || t('commons.partnersHelpText')}</span>
@@ -333,7 +399,13 @@ function RequestPolicy() {
                                     </div>
                                 </div>
                             </div>
-                            : <Confirmation id='request_policy_confirmation' confirmationData={confirmationData} />
+                            : 
+                            <>
+                                <Confirmation id='request_policy_confirmation' confirmationData={confirmationData} onClickCustomBtn1={clickOnApprove} onClickCustomBtn2={backToPolicyRequestList} />
+                                {showApprovePopup && 
+                                    <ApprovePopup closePopUp={() => setShowApprovePopup(false)} onClickConfirm={backToPolicyRequestList} title={t('requestPolicy.approvePopupTitle')} description={t('requestPolicy.approvePopupDesc')} request={approveRequest} popupData={popupData} />
+                                }
+                            </>
                         }
                     </div>
                 </>

@@ -185,7 +185,7 @@ function AddFtm() {
             description: "addFtm.addFtmSuccessMsg",
             description1: "addFtm.addFtmSuccessMsg1",
             subNavigation: 'ftmList.ftmChipProviderServices',
-            customBtnName: "addFtm.uploadFtmCertificate",
+            customBtnName1: "addFtm.uploadFtmCertificate",
           }
           setConfirmationData(requiredData);
           setAddFtmSuccess(true);
@@ -301,7 +301,7 @@ function AddFtm() {
                 </div>
               </div>
               : <>
-                <Confirmation id='add_ftm_confirmation' confirmationData={confirmationData} onClickFunction={clickOnUpload} />
+                <Confirmation id='add_ftm_confirmation' confirmationData={confirmationData} onClickCustomBtn1={clickOnUpload} />
                 {
                   showPopup && (
                     <UploadCertificate header={t('addFtm.uploadFtmCertificate')} closePopup={closePopup} popupData={uploadCertificateData} request={uploadCertificateRequest} />

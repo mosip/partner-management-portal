@@ -3,10 +3,10 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { getUserProfile } from '../../../services/UserProfileService';
 import {
-    downloadFile, formatDate, getPartnerManagerUrl, getCertificate,
+    downloadFile, formatDate, getCertificate,
     handleMouseClickForDropdown, handleServiceErrors, isLangRTL, getErrorMessage, getPartnerTypeDescription,
     isCaSignedPartnerCertificateAvailable,
-    checkCertificateExpired
+    checkCertificateExpired, fetchPartnerDetails
 } from '../../../utils/AppUtils';
 import SuccessMessage from '../../common/SuccessMessage';
 import ErrorMessage from '../../common/ErrorMessage';
@@ -46,18 +46,11 @@ function ViewPartnerDetails() {
         const fetchData = async () => {
             try {
                 setDataLoaded(false);
-                const response = await HttpService.get(getPartnerManagerUrl(`/admin-partners/${selectedPartnerId}`, process.env.NODE_ENV));
-                if (response) {
-                    const responseData = response.data;
-                    if (responseData && responseData.response) {
-                        const resData = responseData.response;
-                        setPartnerDetails(resData);
-                    } else {
-                        setUnexpectedError(true);
-                        handleServiceErrors(responseData, setErrorCode, setErrorMsg);
-                    }
+                const resData = await fetchPartnerDetails(HttpService, selectedPartnerId, setErrorCode, setErrorMsg, t);
+                if (resData) {
+                    setPartnerDetails(resData);
                 } else {
-                    setErrorMsg(t('viewPartnerDetails.errorInPartnerList'));
+                    setUnexpectedError(true);
                 }
                 setDataLoaded(true);
             } catch (err) {
@@ -65,13 +58,14 @@ function ViewPartnerDetails() {
                 if (err.response?.status && err.response.status !== 401) {
                     setErrorMsg(err.toString());
                 }
+                setDataLoaded(true);
             }
         };
         fetchData();
     }, [t]);
 
     const moveToPartnersList = () => {
-        navigate('/partnermanagement/admin/partners-list');
+        navigate('/partnermanagement/admin/partners/partners-list');
     };
 
     const getOriginalCertificate = async (partner) => {
@@ -149,7 +143,7 @@ function ViewPartnerDetails() {
     }
 
     return (
-        <div className={`w-full p-4 bg-anti-flash-white font-inter break-words max-[450px]:text-sm mb-[2%] ${isLoginLanguageRTL ? "mr-24 ml-1" : "ml-24 mr-1"} overflow-x-scroll`}>
+        <div className={`w-full p-4 bg-anti-flash-white font-inter break-words max-[450px]:text-sm mb-[2%] ${isLoginLanguageRTL ? "mr-24 ml-1" : "ml-24 mr-1"} `}>
             {!dataLoaded && (
                 <LoadingIcon/>
             )}
@@ -163,7 +157,7 @@ function ViewPartnerDetails() {
                     )}
                     <div className={`flex-col mt-5 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm mb-[2%]`}>
                         <div className="flex justify-between mb-3">
-                            <Title title={'viewPartnerDetails.viewPartnerDetails'} subTitle='viewPartnerDetails.listOfPartners' backLink='/partnermanagement/admin/partners-list' />
+                            <Title title={'viewPartnerDetails.viewPartnerDetails'} subTitle='viewPartnerDetails.listOfPartners' backLink='/partnermanagement/admin/partners/partners-list' />
                         </div>
 
                         {unexpectedError && (
@@ -190,7 +184,7 @@ function ViewPartnerDetails() {
                                         </p>
                                         <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
                                             <div id='view_partner_details_partner_status' className={`${partnerDetails.isActive ? 'bg-[#D1FADF] text-[#155E3E]' : 'bg-[#EAECF0] text-[#525252]'} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
-                                                {partnerDetails.isActive ? t('statusCodes.activated') : t('statusCodes.deactivated')}
+                                                {partnerDetails.isActive ? t('statusCodes.active') : t('statusCodes.deactivated')}
                                             </div>
                                             <div id='view_partner_details_partner_created_on' className={`font-semibold ${isLoginLanguageRTL ? "mr-[1.4rem]" : "ml-[0.75rem]"} text-sm text-dark-blue`}>
                                                 {t("viewPartnerDetails.createdOn") + ' ' +

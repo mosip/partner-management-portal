@@ -5,7 +5,7 @@ import { getUserProfile } from '../../../services/UserProfileService';
 import Information from './Information';
 import PropTypes from 'prop-types';
 
-function TextInputComponent({ fieldName, fieldNameKey, placeHolderKey, textBoxValue, onTextChange, styleSet, id, maxLength, addInfoIcon, infoKey, disableField, inputError }) {
+function TextInputComponent({ fieldName, fieldNameKey, placeHolderKey, textBoxValue, onTextChange, styleSet, id, maxLength, addInfoIcon, infoKey, disableField, inputError, onBlur }) {
     const { t } = useTranslation();
     const [inputValue, setInputValue] = useState("");
     const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
@@ -44,6 +44,7 @@ function TextInputComponent({ fieldName, fieldNameKey, placeHolderKey, textBoxVa
                     type="text"
                     value={inputValue}
                     onChange={handleInputChange}
+                    onBlur={onBlur}
                     placeholder={t(placeHolderKey)}
                     size={t(placeHolderKey).length}
                     {...(maxLength && { maxLength })}
@@ -80,6 +81,7 @@ TextInputComponent.propTypes = {
     infoKey: PropTypes.string,
     disableField: PropTypes.bool,
     inputError: PropTypes.string,
+    onBlur: PropTypes.func,
 };
 
 export default TextInputComponent;
