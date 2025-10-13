@@ -425,6 +425,12 @@ public class PartnerCertificatePage extends BasePage {
 
 	@FindBy(id = "upload_trust_certificate_confirmation_header")
 	private WebElement uploadedSuccessfullyMessage;
+	
+	@FindBy(id = "partnerDomain_selector_dropdown_option4")
+	private WebElement partnerDomainSelectorDropdownOptionMisp;
+	
+	@FindBy(id = "upload_certificate_popup_title")
+	private WebElement mispPartnerCertificatePopup;
 
 	public PartnerCertificatePage(WebDriver driver) {
 		super(driver);
@@ -1217,6 +1223,13 @@ public class PartnerCertificatePage extends BasePage {
 	public void clickOnIntermediateUploadTrustCertificateButtonInAdmin() {
 		clickOnElement(intermediateUploadTrustCertificateButtonInAdmin);
 	}
+	
+	public void clickOnPartnerDomainSelectorDropdownOptionMisp() {
+		clickOnElement(partnerDomainSelectorDropdownOptionMisp);
+	}
 
+	public boolean isMispPartnerCertificatePopupDisplayed() {
+		return isElementDisplayed(mispPartnerCertificatePopup);
+	}
 
 }

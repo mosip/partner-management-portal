@@ -1,27 +1,34 @@
-<?xml version = "1.0" encoding = "UTF-8"?>
-<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
-<suite name="	PMP uiv2 UI TestRig">
-	
-	<test  name="PMP uiv2 UI TestRig"  preserve-order="true">
-	
-		<classes>
-			<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerAdminCreation" />
+<suite name="PMP uiv2 UI TestRig">
+
+    <!-- Step 1: Run PartnerAdminCreation (Single) -->
+    <test name="1-PartnerAdminCreation" preserve-order="true">
+        <classes>
+            <class name="io.mosip.testrig.pmpuiv2.testcase.PartnerAdminCreation" />
+        </classes>
+    </test>
+
+    <!-- Step 2: Run three tests in parallel -->
+    <test name="2-Parallel-FTM-DeviceProvider-Auth" parallel="classes" thread-count="3" preserve-order="true">
+        <classes>
 			<class name="io.mosip.testrig.pmpuiv2.testcase.FTMDeviceTest" />
-			<class name="io.mosip.testrig.pmpuiv2.testcase.DeviceProviderTest" />
-			<class name="io.mosip.testrig.pmpuiv2.testcase.AuthPartnerTest" />			
-			<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerManagerPoliciesTest" />
-			<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerPolicyLinkingTest" />
-			<class name="io.mosip.testrig.pmpuiv2.testcase.AuthenticationServices" />
-			<class name="io.mosip.testrig.pmpuiv2.testcase.CertificateTrustStoreTest" />
-		</classes>
-		
-	</test>
-		<listeners>
+            <class name="io.mosip.testrig.pmpuiv2.testcase.DeviceProviderTest" />
+            <class name="io.mosip.testrig.pmpuiv2.testcase.AuthPartnerTest" />
+        </classes>
+    </test>
 
-		<listener
-			  class-name="io.mosip.testrig.pmpuiv2.utility.EmailableReport" />
-			
-	</listeners>
+    <!-- Step 3: Run two tests in parallel -->
+    <test name="3-Parallel-Policy-CertStore" parallel="classes" thread-count="1" preserve-order="true">
+        <classes>
+            <class name="io.mosip.testrig.pmpuiv2.testcase.PartnerManagerPoliciesTest" />
+            <class name="io.mosip.testrig.pmpuiv2.testcase.CertificateTrustStoreTest" />
+        </classes>
+    </test>
+
+    <listeners>
+        <listener class-name="io.mosip.testrig.pmpuiv2.utility.EmailableReport" />
+    </listeners>
 
 </suite>

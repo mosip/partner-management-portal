@@ -1,9 +1,13 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
 
@@ -63,7 +67,7 @@ public class ViewDeviceDetailsPage extends BasePage {
 	@FindBy(id = "view_device_details_back_btn")
 	private WebElement backButton;
 
-	@FindBy(xpath = "//h1[text()='View Device Details']")
+	@FindBy(id = "page_title")
 	private WebElement viewDeviceDetailsTitle;
 
 	@FindBy(xpath = "//div[contains(@class, 'bg-[#FEF1C6] text-[#6D1C00]') and text()='Pending For Approval']")
@@ -77,6 +81,39 @@ public class ViewDeviceDetailsPage extends BasePage {
 
 	@FindBy(xpath = "//div[contains(@class, 'bg-[#EAECF0] text-[#525252]') and text()='Deactivated']")
 	private WebElement deactivated;
+
+	@FindBy(id = "sub_title_btn")
+	private WebElement listOfDevicesInAdmin;
+
+	@FindBy(id = "view_admin_device_details_partner_id_context")
+	private WebElement partnerIdContextInAdmin;
+
+	@FindBy(id = "view_admin_device_details_partner_type_context")
+	private WebElement partnerTypeContextInAdmin;
+
+	@FindBy(id = "view_admin_device_details_device_type_context")
+	private WebElement deviceTypeContextInAdmin;
+
+	@FindBy(id = "view_admin_device_details_device_sub_type_context")
+	private WebElement deviceSubTypeContextInAdmin;
+
+	@FindBy(id = "view_admin_device_details_make_context")
+	private WebElement makeContextInAdmin;
+
+	@FindBy(id = "view_admin_device_details_model_context")
+	private WebElement modelContextInAdmin;
+
+	@FindBy(id = "view_admin_device_details_org_name_context")
+	private WebElement orgNameContextInAdmin;
+
+	@FindBy(id = "view_admin_device_details_sbi_id_context")
+	private WebElement sbiIdContextInAdmin;
+
+	@FindBy(id = "view_admin_device_details_back_btn")
+	private WebElement backButtonInAdminDeviceDetails;
+	
+	@FindBy(id = "view_admin_device_details_sub_title_id")
+	private WebElement deviceIdContextInAdmin;
 
 	public ViewDeviceDetailsPage(WebDriver driver) {
 		super(driver);
@@ -187,5 +224,72 @@ public class ViewDeviceDetailsPage extends BasePage {
 
 	public boolean isBackButtonDisplayed() {
 		return isElementDisplayed(backButton);
+	}
+
+	public String getPartnerIdContextInAdmin() {
+		return getTextFromLocator(partnerIdContextInAdmin);
+	}
+
+	public String getPartnerTypeContextInAdmin() {
+		return getTextFromLocator(partnerTypeContextInAdmin);
+	}
+
+	public String getDeviceTypeContextInAdmin() {
+		return getTextFromLocator(deviceTypeContextInAdmin);
+	}
+
+	public String getDeviceSubTypeContextInAdmin() {
+		return getTextFromLocator(deviceSubTypeContextInAdmin);
+	}
+
+	public String getMakeContextInAdmin() {
+		return getTextFromLocator(makeContextInAdmin);
+	}
+
+	public String getModelContextInAdmin() {
+		return getTextFromLocator(modelContextInAdmin);
+	}
+
+	public String getOrgNameContextInAdmin() {
+		return getTextFromLocator(orgNameContextInAdmin);
+	}
+
+	public boolean isSbiIdContextInAdminDisplayed() {
+		return isElementDisplayed(sbiIdContextInAdmin);
+	}
+
+	public boolean isBackButtonInAdminDeviceDetailsDisplayed() {
+		return isElementDisplayed(backButtonInAdminDeviceDetails);
+	}
+
+	public boolean isDeviceIdContextInAdminDisplayed() {
+		return isElementDisplayed(deviceIdContextInAdmin);
+	}
+
+	public boolean isCreationDateInAdminSameAsBrowserDateFormat() {
+	    WebElement dateCell = driver.findElement(By.xpath("//div[@id='view_admin_device_details_created_on']"));
+	    String browserTime = dateCell.getText().trim();
+	    String dateText = browserTime.replace("Created On ", "").trim();
+	    java.time.format.DateTimeFormatter dateFormatter = PmpTestUtil.nonZeroPadderDateFormatter;
+	    try {
+	        LocalDate.parse(dateText, dateFormatter);
+	        return true;
+	    } catch (DateTimeParseException e) {
+	        return false;
+	    }
+	}
+
+
+	public void clickOnBackButtonInAdminDeviceDetails() {
+		clickOnElement(backButtonInAdminDeviceDetails);
+	}
+
+	public void clickOnListOfDevicesBreadCumbInAdmin() {
+		clickOnElement(listOfDevicesInAdmin);
+	}
+	
+	public String getBreadcrumbTextOfDeviceDetailsInAdmin() {
+		return getTextFromLocator(homeButton) 
+				+ getTextFromLocator(listOfDevicesInAdmin);
 	}
 }
