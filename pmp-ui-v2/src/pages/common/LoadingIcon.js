@@ -31,6 +31,7 @@ function LoadingIcon({ styleSet, inline = false }) {
 
 LoadingIcon.propTypes = {
     styleSet: PropTypes.object,
+    inline: PropTypes.bool
 };
 
 export default LoadingIcon;

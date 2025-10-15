@@ -12,6 +12,7 @@ import BlockerPrompt from "../../common/BlockerPrompt";
 import Title from "../../common/Title";
 import Confirmation from "../../common/Confirmation";
 import ApprovePopup from "../../common/ApprovePopup";
+import PropTypes from 'prop-types';
 
 function RequestPolicy() {
     const navigate = useNavigate();
@@ -415,5 +416,9 @@ function RequestPolicy() {
 
     )
 }
+
+RequestPolicy.propTypes = {
+    isAdminPath: PropTypes.bool
+};
 
 export default RequestPolicy;

@@ -112,12 +112,12 @@ function UploadCertificate({ closePopup, popupData, request }) {
 
     const decodeCertificate = (certificateData) => {
         const certBase64 = certificateData
-            .replace("-----BEGIN CERTIFICATE-----", "")
-            .replace("-----END CERTIFICATE-----", "")
+            .replaceAll("-----BEGIN CERTIFICATE-----", "")
+            .replaceAll("-----END CERTIFICATE-----", "")
             .replace(/\s+/g, "");
 
         // Convert the base64 string to a Uint8Array
-        const certBinary = Uint8Array.from(atob(certBase64), (c) => c.charCodeAt(0));
+        const certBinary = Uint8Array.from(atob(certBase64), (c) => c.codePointAt(0));
 
         // Parse the certificate using asn1js and pkijs
         const asn1 = fromBER(certBinary.buffer);

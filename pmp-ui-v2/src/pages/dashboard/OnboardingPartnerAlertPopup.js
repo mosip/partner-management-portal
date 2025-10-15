@@ -3,6 +3,7 @@ import { useTranslation, Trans } from 'react-i18next';
 import { logout, isLangRTL } from '../../utils/AppUtils.js';
 import FocusTrap from 'focus-trap-react';
 import { getUserProfile } from '../../services/UserProfileService.js';
+import PropTypes from 'prop-types';
 
 function OnboardingPartnerAlertPopup({ errorType = 'missingAttributes' }) {
     const { t } = useTranslation();
@@ -86,5 +87,9 @@ function OnboardingPartnerAlertPopup({ errorType = 'missingAttributes' }) {
         </div>
     );
 }
+
+OnboardingPartnerAlertPopup.propTypes = {
+    errorType: PropTypes.string
+};
 
 export default OnboardingPartnerAlertPopup;
