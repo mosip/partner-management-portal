@@ -22,6 +22,9 @@ public class partnersAdmin extends BasePage {
 	@FindBy(id = "page_title")
 	private WebElement titlePartner;
 
+	@FindBy(id = "page_title")
+	private WebElement titlepartnerInRequestPolicy;
+
 	@FindBy(id = "dashboard_partner_card_header")
 	private WebElement partnersTab;
 
@@ -75,6 +78,9 @@ public class partnersAdmin extends BasePage {
 
 	@FindBy(id = "filter_btn")
 	private WebElement filterbtnTrigger;
+
+	@FindBy(id = "filter_btn")
+	private WebElement filterButtonInListOfPolicyRequestScreen;
 
 	@FindBy(xpath = "//td[normalize-space()='pmpui-auth']")
 	private WebElement rowInPartnerDetailsScreen;
@@ -151,6 +157,9 @@ public class partnersAdmin extends BasePage {
 	@FindBy(id = "sub_title_btn")
 	private WebElement listOfPartners;
 
+	@FindBy(id = "sub_title_btn")
+	private WebElement policesButtonInRequestPolicy;
+
 	@FindBy(id = "partner_list_view1")
 	private WebElement actionsButton;
 
@@ -174,6 +183,9 @@ public class partnersAdmin extends BasePage {
 
 	@FindBy(id = "partner_deactive_btn")
 	private WebElement deactivateButtons;
+
+	@FindBy(xpath = "//div[contains(@class,'bg-[#EAECF0]') and contains(@class,'rounded-md')]")
+	private WebElement disableButton;
 
 	@FindBy(id = "status_filter_option2")
 	private WebElement deactivatedStatusInFilters;
@@ -304,12 +316,85 @@ public class partnersAdmin extends BasePage {
 	@FindBy(id = "list_of_ftm_chip_title")
 	private WebElement ftmTitle;
 
+	@FindBy(id = "create_policy_group_btn")
+	private WebElement createPolicyGroupBtn;
+
+	@FindBy(id = "dashboard_policies_card_header")
+	private WebElement polices;
+
+	@FindBy(id = "show_request_policy")
+	private WebElement requestPolicyBtn;
+
+	@FindBy(id = "request_policy_partner_id_dropdown_btn")
+	private WebElement partnerIdDropdownInRequestPolicyPage;
+
+	@FindBy(id = "request_policy_partner_id_no_data_available")
+	private WebElement noDataAvailabel;
+
+	@FindBy(id = "request_policies_policy_name_dropdown_btn")
+	private WebElement testPolicyInRequestPolicyScreen;
+
+	@FindBy(id = "request_policy_comment_box")
+	private WebElement commentBoxInRequestPolicy;
+
+	@FindBy(id = "request_policies_form_cancel_btn")
+	private WebElement cancelButtonInRequestPolicyScreen;
+
+	@FindBy(id = "request_policies_form_submit_btn")
+	private WebElement submitButtonInRequestPolicyScreen;
+
+	@FindBy(id = "list_of_policies_title")
+	private WebElement listOfPolicyRequestTitle;
+
+	@FindBy(id = "policies.partnerId_header")
+	private WebElement partnerIdInListOfPolicyRequestScreen;
+
+	@FindBy(id = "policies.partnerType_header")
+	private WebElement partnerTypeInListOfPolicyRequestScreen;
+
+	@FindBy(id = "policies.policyGroupName_header")
+	private WebElement policyGroupInListOfPolicyRequestScreen;
+
+	@FindBy(id = "policies.policyName_header")
+	private WebElement policyNameInListOfPolicyRequestScreen;
+
+	@FindBy(id = "policies.status_header")
+	private WebElement statusInListOfPolicyRequestScreen;
+
 	public partnersAdmin(WebDriver driver) {
 		super(driver);
 	}
 
 	public boolean isPartnerCertificateDisplayed() {
 		return isElementDisplayed(partnerCertificateInViewPartnerDetailsPage);
+	}
+
+	public boolean isPolicyNameInListOfPolicyScrreenDisplayed() {
+		return isElementDisplayed(policyNameInListOfPolicyRequestScreen);
+	}
+
+	public boolean isStatusInListOfPartnerScreenDisplayed() {
+		return isElementDisplayed(statusInListOfPolicyRequestScreen);
+	}
+
+	public boolean isPartnerTypeInListOfPartnerScreenDisplayed() {
+		return isElementDisplayed(partnerTypeInListOfPolicyRequestScreen);
+	}
+
+	public boolean isPartnerIdInRequestPartnerScreenDisplayed() {
+		return isElementDisplayed(partnerIdInListOfPolicyRequestScreen);
+	}
+
+	public boolean isSubmitButtonoInRequestPolicyScreenDisplayed() {
+		return isElementDisplayed(submitButtonInRequestPolicyScreen);
+	}
+
+	public boolean isListOfPolicyRequestTiteDisplayed() {
+		return isElementDisplayed(listOfPolicyRequestTitle);
+	}
+
+	public boolean isCancelButtonInRequestPolicyScreenDisplayed() {
+		return isElementDisplayed(cancelButtonInRequestPolicyScreen);
 	}
 
 	public boolean isListOfSbiDisplayed() {
@@ -322,6 +407,14 @@ public class partnersAdmin extends BasePage {
 
 	public boolean isExpiryDateTimeDisplayed() {
 		return isElementDisplayed(expiryDateTimeInViewPartnerPage);
+	}
+
+	public boolean isDisabledButtonDisplayed() {
+		return isElementDisplayed(disableButton);
+	}
+
+	public boolean isNoDataAvailabelsDisplayed() {
+		return isElementDisplayed(noDataAvailabel);
 	}
 
 	public boolean isDisabledDeactivateButtonInListOfPartnerDisplayed() {
@@ -345,6 +438,10 @@ public class partnersAdmin extends BasePage {
 		return isElementDisplayed(timeOfUploadInViewPartnerPage);
 	}
 
+	public boolean isrequestPolicyBtnDisplayed() {
+		return isElementDisplayed(requestPolicyBtn);
+	}
+
 	public boolean isDownloadCertificateButtonDisplayed() {
 		return isElementDisplayed(downloadCertificateButtonInViewPartnerPage);
 	}
@@ -365,6 +462,29 @@ public class partnersAdmin extends BasePage {
 
 	public void clickOnPartnersTab() {
 		clickOnElement(partnersTab);
+
+	}
+
+	public boolean isPartnerIdDropdownInRequestPolicyPageDisplayed() {
+		return isElementDisplayed(partnerIdDropdownInRequestPolicyPage);
+	}
+
+	public void clickOnPartnerIdDropdownInRequestPolicyPage() {
+		clickOnElement(partnerIdDropdownInRequestPolicyPage);
+
+	}
+
+	public void clickOnRequestPolicyBtn() {
+		clickOnElement(requestPolicyBtn);
+
+	}
+
+	public boolean isFilterButtonInListOfPolicyRequestScreenDisplayed() {
+		return isElementDisplayed(filterButtonInListOfPolicyRequestScreen);
+	}
+
+	public void clickOnFilterButtonInListOfPolicyRequestScreen() {
+		clickOnElement(filterButtonInListOfPolicyRequestScreen);
 
 	}
 
@@ -402,6 +522,10 @@ public class partnersAdmin extends BasePage {
 
 	public boolean isListOfPartnerRowGreyedOutDisplayed() {
 		return isElementDisplayed(listOfPartnerRowGreyedOut);
+	}
+
+	public boolean isTtlepartnerInRequestPolicyDisplayed() {
+		return isElementDisplayed(titlepartnerInRequestPolicy);
 	}
 
 	public boolean isPartnerTypeHeaderTagDisplayed() {
@@ -446,6 +570,14 @@ public class partnersAdmin extends BasePage {
 
 	public boolean isOrganizationAscIconDisplayed() {
 		return isElementDisplayed(orgNameAscendingIcon);
+	}
+
+	public void clickOnPolicesButtonInRequestPolicy() {
+		clickOnElement(policesButtonInRequestPolicy);
+	}
+
+	public boolean isPolicyButtonInRequestPolicyScreenDisplayed() {
+		return isElementDisplayed(policesButtonInRequestPolicy);
 	}
 
 	public boolean isOrganizationDescIconDisplayed() {
@@ -628,6 +760,22 @@ public class partnersAdmin extends BasePage {
 		enter(partnersIdFilter, invalidId);
 	}
 
+	public void enterPartnerIdInRequestPolicy(String invalidId) {
+		enter(partnerIdDropdownInRequestPolicyPage, invalidId);
+	}
+
+	public void enterPolicyNameInRequestPolicyScreen(String invalidId) {
+		enter(partnerIdDropdownInRequestPolicyPage, invalidId);
+	}
+
+	public void enterTestPolicyInRequestPolicyScreen(String invalidId) {
+		enter(testPolicyInRequestPolicyScreen, invalidId);
+	}
+
+	public void enterCommentBoxInRequestPolicy(String invalidId) {
+		enter(commentBoxInRequestPolicy, invalidId);
+	}
+
 	public void enterInvalidOrganisationNameFilter(String invalidOrg) {
 		enter(partnersOrganisationFilter, invalidOrg);
 
@@ -779,6 +927,14 @@ public class partnersAdmin extends BasePage {
 		return isElementDisplayed(mosipSignedCertificateDropdown);
 	}
 
+	public boolean isPolicyButtonsDisplayed() {
+		return isElementDisplayed(polices);
+	}
+
+	public void clickOnPolicyButton() {
+		clickOnElement(polices);
+	}
+
 	public void clickOnOriginnalCertificateInViewPartnerPage() {
 		clickOnElement(originalCertificateDropdown);
 	}
@@ -829,6 +985,10 @@ public class partnersAdmin extends BasePage {
 
 	public boolean isDeactivateButtonInViewDetailsDisplayed() {
 		return isElementDisplayed(deactivatedPopupInViewDetails);
+	}
+
+	public boolean isCreatePolicyButtonsDisplayed() {
+		return isElementDisplayed(createPolicyGroupBtn);
 	}
 
 }

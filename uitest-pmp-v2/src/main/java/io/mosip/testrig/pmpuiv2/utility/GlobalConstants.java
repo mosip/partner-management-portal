@@ -996,6 +996,22 @@ public class GlobalConstants {
 	public static final String isDisabledPolicyGroupInViewDetailsDisplayed = "Verify if disabled policy goup in view details page  isdisplayed";
 	public static final String isListOfSbiDisplayed = "Verify if list of sbi in sbi page isdisplayed";
 	public static final String isFtmTitleDisplayed = "Verify if ftm list title isdisplayed";
+	public static final String isDisabledButtonDisplayed = "Verify if disabled button isdisplayed";
+
+	public static final String isPolicyButtonsDisplayed = "Verify if policy button isdisplayed";
+	public static final String isrequestPolicyBtnDisplayed = "Verify if request policy isdisplayed";
+	public static final String isPartnerIdDropdownInRequestPolicyPageDisplayed = "Verify if partner id dropdown isdisplayed";
+	public static final String isNoDataAvailabeslDisplayed = "Verify if no data availaibles  isdisplayed";
+	public static final String isCancelButtonInRequestPolicyScreenDisplayed = "Verify if cancel button isdisplayed";
+	public static final String isSubmitButtonoInRequestPolicyScreenDisplayed = "Verify if submit button isdisplayed";
+	public static final String isTtlepartnerInRequestPolicyDisplayed = "Verify if title partner isdisplayed";
+	public static final String isPolicyButtonInRequestPolicyScreenDisplayed = "Verify if policy button in request policy screen isdisplayed";
+	public static final String isListOfPolicyRequestTiteDisplayed = "Verify if list of policy request title isdisplayed";
+	public static final String isFilterButtonInListOfPolicyRequestScreenDisplayed = "Verify if filter isdisplayed";
+	public static final String isPartnerIdInRequestPartnerScreenDisplayed = "Verify if partner id header isdisplayed";
+	public static final String isPartnerTypeInListOfPartnerScreenDisplayed = "Verify if partner type isdisplayed";
+	public static final String isPolicyNameInListOfPolicyScrreenDisplayed = "Verify if policy name in list of parrtner isdisplayed";
+	public static final String isStatusInListOfPartnerScreenDisplayed = "Verify if status screen isdisplayed";
 
 	public static final String APPID = "appId";
 	public static final String PASSWORD = "password";
@@ -1058,6 +1074,9 @@ public class GlobalConstants {
 	public static final String YYYY_MM_DD_FORMATTER2 = "2020.08.23";
 
 	public static final String PARTNER_ID = "Partner ID";
+	public static final String Policy_ID = "auth-core";
+	public static final String Policy_Name = "test policy";
+	public static final String Comments = "policy group";
 	public static final String PARTNER_TYPE = "Partner Type";
 	public static final String DEVICE_ID = "Device ID";
 	public static final String DEVICE_TYPE = "Device Type";

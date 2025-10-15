@@ -150,184 +150,135 @@ public class PartnerDetailsTest extends BaseClass {
 //		assertTrue(partnerAdmin.isPartnersButtonDisplayed(), GlobalConstants.isPartnersButtonDisplayed);
 //
 //	}
+//
+//	@Test(priority = 2, description = "view individual partner details in tabular form")
+//	public void partnerIndividualDetailsVerification() {
+//		dashboardPage = new DashboardPage(driver);
+//		basePage = new BasePage(driver);
+//		loginPage = new LoginPage(driver);
+//		partnerAdmin = new partnersAdmin(driver);
+//
+//		assertTrue(partnerAdmin.isPartnersButtonDisplayed(), GlobalConstants.isPartnersButtonDisplayed);
+//		partnerAdmin.clickOnPartnersTab();
+//		assertTrue(partnerAdmin.isSubTitleOfTabularViewsDisplayed(), GlobalConstants.isSubTitleOfTabularViewsDisplayed);
+//		assertTrue(partnerAdmin.isBreadcrumbsDisplayed(), GlobalConstants.isBreadcrumbsDisplayed);
+//		assertTrue(partnerAdmin.isTitlePartnerDisplayed(), GlobalConstants.isTitlePartnerDisplayed);
+//		assertTrue(partnerAdmin.isOrganisationNameHeaderTagDisplayed(),
+//				GlobalConstants.isOrganisationNameHeaderTagDisplayed);
+//		assertTrue(partnerAdmin.isPolicyGroupHeaderTagDisplayed(), GlobalConstants.isPolicyGroupHeaderTagDisplayed);
+//		assertTrue(partnerAdmin.isEmailAddressHeaderTagDisplayed(), GlobalConstants.isEmailAddressHeaderTagDisplayed);
+//		assertTrue(partnerAdmin.isBackButtonAccessible(), GlobalConstants.isBackButtonAccessible);
+//		assertTrue(partnerAdmin.isMosipIconsDisplayed(), GlobalConstants.isMosipIconsDisplayed);
+//		assertTrue(partnerAdmin.isHamburgersIconDisplayed(), GlobalConstants.isHamburgersIconDisplayed);
+//		assertTrue(partnerAdmin.isFooterMosipTextsDisplayed(), GlobalConstants.isFooterMosipTextsDisplayed);
+//		assertTrue(partnerAdmin.isFooterDocumentationsDisplayed(), GlobalConstants.isFooterDocumentationsDisplayed);
+//		assertTrue(partnerAdmin.isFootersContactUsDisplayed(), GlobalConstants.isFootersContactUsDisplayed);
+//		partnerAdmin.clickOnActionsButton();
+//		assertTrue(partnerAdmin.isViewButtonsDisplayed(), GlobalConstants.isViewButtonsDisplayed);
+//		partnerAdmin.clickOnViewPartnerDetailsScreen();
+//		assertTrue(partnerAdmin.isViewPartnersDetailsPageDisplayed(),
+//				GlobalConstants.isViewPartnersDetailsPageDisplayed);
+//		assertTrue(partnerAdmin.isBreadcrumbsDisplayed(), GlobalConstants.isBreadcrumbsDisplayed);
+//		assertTrue(partnerAdmin.isPartnerIdDisplayed(), GlobalConstants.isPartnerIdDisplayed);
+//		assertTrue(partnerAdmin.isPartnerStatusInViewPartnerPageDisplayed(),
+//				GlobalConstants.isPartnerStatusInViewPartnerPageDisplayed);
+//		assertTrue(partnerAdmin.isPartnerCreatedDateInViewPartnerPageDisplayed(),
+//				GlobalConstants.isPartnerCreatedDateInViewPartnerPageDisplayed);
+//		assertTrue(partnerAdmin.isPartnerCertificateDisplayed(), GlobalConstants.isPartnerCertificateDisplayed);
+//		assertTrue(partnerAdmin.isPartnerTypeInViewPartnerPageDisplayed(),
+//				GlobalConstants.isPartnerTypeInViewPartnerPageDisplayed);
+//		assertTrue(partnerAdmin.isDeviceProviderInViewPartnerPageDisplayed(),
+//				GlobalConstants.isDeviceProviderInViewPartnerPageDisplayed);
+//		assertTrue(partnerAdmin.isExpiryDateTimeDisplayed(), GlobalConstants.isExpiryDateTimeDisplayed);
+//		assertTrue(partnerAdmin.isTimeOfUploadDisplayed(), GlobalConstants.isTimeOfUploadDisplayed);
+//		assertTrue(partnerAdmin.isDownloadCertificateButtonDisplayed(),
+//				GlobalConstants.isDownloadCertificateButtonDisplayed);
+//		partnerAdmin.clickOnDownloadCertificateButtonInViewPartnerPage();
+//		assertTrue(partnerAdmin.isOriginalCertificateDropdownDisplayed(),
+//				GlobalConstants.isOriginalCertificateDropdownDisplayed);
+//		assertTrue(partnerAdmin.isMosipSignedCertificateDropdownDisplayed(),
+//				GlobalConstants.isMosipSignedCertificateDropdownDisplayed);
+//		partnerAdmin.clickOnOriginnalCertificateInViewPartnerPage();
+//		assertTrue(partnerAdmin.isSuccessMassageInOriginalCertificateDisplayed(),
+//				GlobalConstants.isSuccessMassageInOriginalCertificateDisplayed);
+//		partnerAdmin.clickOnMosipSignedCertificateInViewPartnerPage();
+//		assertTrue(partnerAdmin.isSuccessMassageInMosipSignedCertificateDisplayed(),
+//				GlobalConstants.isSuccessMassageInMosipSignedCertificateDisplayed);
+//		assertTrue(partnerAdmin.isGobackButtonInViewPatnerPageDisplayed(),
+//				GlobalConstants.isGobackButtonInViewPatnerPageDisplayed);
+//		partnerAdmin.clickOngobackButtonInPartnerDetailsPage();
+//		assertTrue(partnerAdmin.isSubTitleListDisplayed(), GlobalConstants.isSubTitleListDisplayed);
+//		partnerAdmin.clickOnAuthId();
+//		partnerAdmin.clickOnViewPartnerBackButton();
+//		assertTrue(partnerAdmin.isNoneditableInListOfPartnerDisplayed(),
+//				GlobalConstants.isNoneditableInListOfPartnerDisplayed);
+//		partnerAdmin.clickOnActionsButton();
+//		partnerAdmin.clickOnDeactivateButton();
+//		assertTrue(partnerAdmin.isDeactivatePartnerHeaderDisplayed(),
+//				GlobalConstants.isDeactivatePartnerHeaderDisplayed);
+//		assertTrue(partnerAdmin.isDeactivatePartnerDescriptionDisplayed(),
+//				GlobalConstants.isDeactivatePartnerDescriptionDisplayed);
+//		assertTrue(partnerAdmin.isDeactivateCancelButtonDisplayed(), GlobalConstants.isDeactivateCancelButtonDisplayed);
+//		assertTrue(partnerAdmin.isDeactivateConfirmButtonDisplayed(),
+//				GlobalConstants.isDeactivateConfirmButtonDisplayed);
+//		partnerAdmin.clickOnConfirmButton();
+//		assertTrue(partnerAdmin.isDeactivateColorCodeButtonDisplayed(),
+//				GlobalConstants.isDeactivateColorCodeButtonDisplayed);
+//		assertTrue(partnerAdmin.isCertificateUploadStatusHeaderTagDisplayed(),
+//				GlobalConstants.isCertificateUploadStatusHeaderTagDisplayed);
+//
+//		partnerAdmin.clickOnActionsButton();
+//		partnerAdmin.clickOnViewButtonInListOfPartnerDetailsScreen();
+//		assertTrue(partnerAdmin.isViewPartnersDetailsPageDisplayed(),
+//				GlobalConstants.isViewPartnersDetailsPageDisplayed);
+//
+//		assertTrue(partnerAdmin.isDisabledDownloadCertificateButtonDisplayed(),
+//				GlobalConstants.isDisabledDownloadCertificateButtonDisplayed);
+//
+//	}
 
-	@Test(priority = 2, description = "view individual partner details in tabular form")
-	public void partnerIndividualDetailsVerification() {
-		dashboardPage = new DashboardPage(driver);
-		basePage = new BasePage(driver);
-		loginPage = new LoginPage(driver);
-		partnerAdmin = new partnersAdmin(driver);
-
-		assertTrue(partnerAdmin.isPartnersButtonDisplayed(), GlobalConstants.isPartnersButtonDisplayed);
-		partnerAdmin.clickOnPartnersTab();
-		assertTrue(partnerAdmin.isSubTitleOfTabularViewsDisplayed(), GlobalConstants.isSubTitleOfTabularViewsDisplayed);
-		assertTrue(partnerAdmin.isBreadcrumbsDisplayed(), GlobalConstants.isBreadcrumbsDisplayed);
-		assertTrue(partnerAdmin.isTitlePartnerDisplayed(), GlobalConstants.isTitlePartnerDisplayed);
-		assertTrue(partnerAdmin.isOrganisationNameHeaderTagDisplayed(),
-				GlobalConstants.isOrganisationNameHeaderTagDisplayed);
-		assertTrue(partnerAdmin.isPolicyGroupHeaderTagDisplayed(), GlobalConstants.isPolicyGroupHeaderTagDisplayed);
-		assertTrue(partnerAdmin.isEmailAddressHeaderTagDisplayed(), GlobalConstants.isEmailAddressHeaderTagDisplayed);
-		assertTrue(partnerAdmin.isBackButtonAccessible(), GlobalConstants.isBackButtonAccessible);
-		assertTrue(partnerAdmin.isMosipIconsDisplayed(), GlobalConstants.isMosipIconsDisplayed);
-		assertTrue(partnerAdmin.isHamburgersIconDisplayed(), GlobalConstants.isHamburgersIconDisplayed);
-		assertTrue(partnerAdmin.isFooterMosipTextsDisplayed(), GlobalConstants.isFooterMosipTextsDisplayed);
-		assertTrue(partnerAdmin.isFooterDocumentationsDisplayed(), GlobalConstants.isFooterDocumentationsDisplayed);
-		assertTrue(partnerAdmin.isFootersContactUsDisplayed(), GlobalConstants.isFootersContactUsDisplayed);
-		partnerAdmin.clickOnActionsButton();
-		assertTrue(partnerAdmin.isViewButtonsDisplayed(), GlobalConstants.isViewButtonsDisplayed);
-		partnerAdmin.clickOnViewPartnerDetailsScreen();
-		assertTrue(partnerAdmin.isViewPartnersDetailsPageDisplayed(),
-				GlobalConstants.isViewPartnersDetailsPageDisplayed);
-		assertTrue(partnerAdmin.isBreadcrumbsDisplayed(), GlobalConstants.isBreadcrumbsDisplayed);
-		assertTrue(partnerAdmin.isPartnerIdDisplayed(), GlobalConstants.isPartnerIdDisplayed);
-		assertTrue(partnerAdmin.isPartnerStatusInViewPartnerPageDisplayed(),
-				GlobalConstants.isPartnerStatusInViewPartnerPageDisplayed);
-		assertTrue(partnerAdmin.isPartnerCreatedDateInViewPartnerPageDisplayed(),
-				GlobalConstants.isPartnerCreatedDateInViewPartnerPageDisplayed);
-		assertTrue(partnerAdmin.isPartnerCertificateDisplayed(), GlobalConstants.isPartnerCertificateDisplayed);
-		assertTrue(partnerAdmin.isPartnerTypeInViewPartnerPageDisplayed(),
-				GlobalConstants.isPartnerTypeInViewPartnerPageDisplayed);
-		assertTrue(partnerAdmin.isDeviceProviderInViewPartnerPageDisplayed(),
-				GlobalConstants.isDeviceProviderInViewPartnerPageDisplayed);
-		assertTrue(partnerAdmin.isExpiryDateTimeDisplayed(), GlobalConstants.isExpiryDateTimeDisplayed);
-		assertTrue(partnerAdmin.isTimeOfUploadDisplayed(), GlobalConstants.isTimeOfUploadDisplayed);
-		assertTrue(partnerAdmin.isDownloadCertificateButtonDisplayed(),
-				GlobalConstants.isDownloadCertificateButtonDisplayed);
-		partnerAdmin.clickOnDownloadCertificateButtonInViewPartnerPage();
-		assertTrue(partnerAdmin.isOriginalCertificateDropdownDisplayed(),
-				GlobalConstants.isOriginalCertificateDropdownDisplayed);
-		assertTrue(partnerAdmin.isMosipSignedCertificateDropdownDisplayed(),
-				GlobalConstants.isMosipSignedCertificateDropdownDisplayed);
-		partnerAdmin.clickOnOriginnalCertificateInViewPartnerPage();
-		assertTrue(partnerAdmin.isSuccessMassageInOriginalCertificateDisplayed(),
-				GlobalConstants.isSuccessMassageInOriginalCertificateDisplayed);
-		partnerAdmin.clickOnMosipSignedCertificateInViewPartnerPage();
-		assertTrue(partnerAdmin.isSuccessMassageInMosipSignedCertificateDisplayed(),
-				GlobalConstants.isSuccessMassageInMosipSignedCertificateDisplayed);
-		assertTrue(partnerAdmin.isGobackButtonInViewPatnerPageDisplayed(),
-				GlobalConstants.isGobackButtonInViewPatnerPageDisplayed);
-		partnerAdmin.clickOngobackButtonInPartnerDetailsPage();
-		assertTrue(partnerAdmin.isSubTitleListDisplayed(), GlobalConstants.isSubTitleListDisplayed);
-		partnerAdmin.clickOnAuthId();
-		partnerAdmin.clickOnViewPartnerBackButton();
-		assertTrue(partnerAdmin.isNoneditableInListOfPartnerDisplayed(),
-				GlobalConstants.isNoneditableInListOfPartnerDisplayed);
-		partnerAdmin.clickOnActionsButton();
-		partnerAdmin.clickOnDeactivateButton();
-		assertTrue(partnerAdmin.isDeactivatePartnerHeaderDisplayed(),
-				GlobalConstants.isDeactivatePartnerHeaderDisplayed);
-		assertTrue(partnerAdmin.isDeactivatePartnerDescriptionDisplayed(),
-				GlobalConstants.isDeactivatePartnerDescriptionDisplayed);
-		assertTrue(partnerAdmin.isDeactivateCancelButtonDisplayed(), GlobalConstants.isDeactivateCancelButtonDisplayed);
-		assertTrue(partnerAdmin.isDeactivateConfirmButtonDisplayed(),
-				GlobalConstants.isDeactivateConfirmButtonDisplayed);
-		partnerAdmin.clickOnConfirmButton();
-		assertTrue(partnerAdmin.isDeactivateColorCodeButtonDisplayed(),
-				GlobalConstants.isDeactivateColorCodeButtonDisplayed);
-		assertTrue(partnerAdmin.isCertificateUploadStatusHeaderTagDisplayed(),
-				GlobalConstants.isCertificateUploadStatusHeaderTagDisplayed);
-
-		partnerAdmin.clickOnActionsButton();
-		partnerAdmin.clickOnViewButtonInListOfPartnerDetailsScreen();
-		assertTrue(partnerAdmin.isViewPartnersDetailsPageDisplayed(),
-				GlobalConstants.isViewPartnersDetailsPageDisplayed);
-
-		assertTrue(partnerAdmin.isDisabledDownloadCertificateButtonDisplayed(),
-				GlobalConstants.isDisabledDownloadCertificateButtonDisplayed);
-
-	}
-
-	@Test(priority = 3, description = "partners details on deactivate partner")
+	@Test(priority = 3, description = "tabular view of policy request")
 	public void deactivatePartnerDetails() {
 		dashboardPage = new DashboardPage(driver);
 		basePage = new BasePage(driver);
 		loginPage = new LoginPage(driver);
 		partnerAdmin = new partnersAdmin(driver);
 
-		assertTrue(partnerAdmin.isPartnersButtonDisplayed(), GlobalConstants.isPartnersButtonDisplayed);
-		partnerAdmin.clickOnPartnersTab();
-		assertTrue(partnerAdmin.isSubTitleOfTabularViewsDisplayed(), GlobalConstants.isSubTitleOfTabularViewsDisplayed);
-		partnerAdmin.clickOnFilterButton();
-		partnerAdmin.enterPartnerIdsFilter(GlobalConstants.AUTH_PARTNER_ID);
-		partnerAdmin.clickOnActionsButtonInActivatedPartner();
-		assertTrue(partnerAdmin.isDeactivateButtonsDisplayed(), GlobalConstants.isDeactivateButtonsDisplayed);
-		partnerAdmin.clickOnDeactivateButton();
-		assertTrue(partnerAdmin.isDeactivatePartnerHeaderDisplayed(),
-				GlobalConstants.isDeactivatePartnerHeaderDisplayed);
-		assertTrue(partnerAdmin.isDeactivatePartnerDescriptionDisplayed(),
-				GlobalConstants.isDeactivatePartnerDescriptionDisplayed);
-		partnerAdmin.clickOnConfirmButton();
-		assertTrue(partnerAdmin.isDeactivateButtonDisabled(), GlobalConstants.isDeactivateButtonDisabled);
-		partnerAdmin.clickOnActionsButton();
-		partnerAdmin.clickOnViewButtonInListOfPartnerDetailsScreen();
-		assertTrue(partnerAdmin.isPartnerIdDisplayed(), GlobalConstants.isPartnerIdDisplayed);
-		assertTrue(partnerAdmin.isOrganisationNameInViewPartnerPageDisplayed(),
-				GlobalConstants.isOrganisationNameInViewPartnerPageDisplayed);
-		partnerAdmin.clickOngobackButtonInPartnerDetailsPage();
-		assertTrue(partnerAdmin.isSubTitleOfTabularViewsDisplayed(), GlobalConstants.isSubTitleOfTabularViewsDisplayed);
-		partnerAdmin.clickOnActionsButtonInActivatedPartner();
-		assertTrue(partnerAdmin.isDeactivateButtonsDisplayed(), GlobalConstants.isDeactivateButtonsDisplayed);
-		partnerAdmin.clickOnDeactivateButton();
-		assertTrue(partnerAdmin.isDeactivateCancelButtonDisplayed(), GlobalConstants.isDeactivateCancelButtonDisplayed);
-		assertTrue(partnerAdmin.isDeactivateConfirmButtonDisplayed(),
-				GlobalConstants.isDeactivateConfirmButtonDisplayed);
-		assertTrue(partnerAdmin.isDeactivateCancelButtonDisplayed(), GlobalConstants.isDeactivateCancelButtonDisplayed);
-		partnerAdmin.clickOnCancelButton();
-		assertTrue(partnerAdmin.isSubTitleOfTabularViewsDisplayed(), GlobalConstants.isSubTitleOfTabularViewsDisplayed);
-		partnerAdmin.clickOnActionsButtonInActivatedPartner();
-		assertTrue(partnerAdmin.isDeactivateButtonsDisplayed(), GlobalConstants.isDeactivateButtonsDisplayed);
-		partnerAdmin.clickOnDeactivateButton();
-		partnerAdmin.clickOnConfirmButton();
-		assertTrue(partnerAdmin.isListOfPartnerRowGreyedOutDisplayed(),
-				GlobalConstants.isListOfPartnerRowGreyedOutDisplayed);
-		assertTrue(partnerAdmin.isDeactivateColorCodeButtonDisplayed(),
-				GlobalConstants.isDeactivateColorCodeButtonDisplayed);
-		partnerAdmin.clickOnDeactivateButtonInListOfPartnerPage();
-		assertTrue(partnerAdmin.isDisabledDeactivateButtonInListOfPartnerDisplayed(),
-				GlobalConstants.isDisabledDeactivateButtonInListOfPartnerDisplayed);
-		partnerAdmin.clickOnActionsButton();
-		partnerAdmin.clickOnViewButtonInListOfPartnerDetailsScreen();
-		assertTrue(partnerAdmin.isPartnerStatusInViewPartnerPageDisplayed(),
-				GlobalConstants.isPartnerStatusInViewPartnerPageDisplayed);
-		assertTrue(partnerAdmin.isPartnerCertificateDisplayed(), GlobalConstants.isPartnerCertificateDisplayed);
-		assertTrue(partnerAdmin.isCertificateSectionInViewDetailsGrayMarkedDisplayed(), GlobalConstants.isCertificateSectionInViewDetailsGrayMarkedDisplayed);
-		assertTrue(partnerAdmin.isDisabledDownloadCertificateButtonDisplayed(),
-				GlobalConstants.isDisabledDownloadCertificateButtonDisplayed);
-		partnerAdmin.clickOnlistOfPartners();
-		partnerAdmin.clickOnActionsButtonInActivatedPartner();
-		assertTrue(partnerAdmin.isDeactivateButtonsDisplayed(), GlobalConstants.isDeactivateButtonsDisplayed);
-		partnerAdmin.clickOnDeactivateButton();
-		partnerAdmin.clickOnConfirmButton();
-		partnerAdmin.clickBrowserBackButton();
-		assertTrue(dashboardPage.isPartnersDisplayed(), GlobalConstants.isPartnersButtonDisplayed);
-		partnerAdmin.clickBrowserForwardButton();
-		assertTrue(partnerAdmin.isDeactivateButtonDisabled(), GlobalConstants.isDeactivateButtonDisabled);
-		partnerAdmin.clickOnViewButtonInListOfPartnerDetailsScreen();
-		assertTrue(partnerAdmin.isDeactivateButtonInViewDetailsDisplayed(), GlobalConstants.isDeactivateButtonDisabled);
-		partnerAdmin.clickBrowserBackButton();
-		partnerAdmin.clickOnFilterButton();
-		assertTrue(partnerAdmin.isStatusFiltersDisplayed(), GlobalConstants.isStatusFiltersDisplayed);
-		partnerAdmin.clickOnStatusFilter();
-		partnerAdmin.clickOnDeActivatedStatusInFilters();
-		partnerAdmin.clickOnApplyFiltersBtn();
-		assertTrue(partnerAdmin.isDeactivateButtonsDisplayed(), GlobalConstants.isDeactivateButtonsDisplayed);
-		assertTrue(partnerAdmin.isStausAscendingIconDisplayed(), GlobalConstants.isStausAscendingIconDisplayed);
-		partnerAdmin.clickOnStatusAscendingIcon();
-		partnerAdmin.clickOnActionsButtonInActivatedPartner();
-		assertTrue(partnerAdmin.isDeactivateButtonsDisplayed(), GlobalConstants.isDeactivateButtonsDisplayed);
-		partnerAdmin.clickOnActionInDeactivateButton();
-		partnerAdmin.clickOnViewButtonInListOfPartnerDetailsScreen();
-		assertTrue(partnerAdmin.isDisabledPartnercertificateInViewDetailsDisplayed(), GlobalConstants.isDisabledPartnercertificateInViewDetailsDisplayed);
-		assertTrue(partnerAdmin.isDisabledDownloadCertificateButtonDisplayed(),
-				GlobalConstants.isDisabledDownloadCertificateButtonDisplayed);
-		assertTrue(partnerAdmin.isDisabledPolicyGroupInViewDetailsDisplayed(), GlobalConstants.isDisabledPolicyGroupInViewDetailsDisplayed);
-		partnerAdmin.clickOnSbiIcon();
-		assertTrue(partnerAdmin.isListOfSbiDisplayed(), GlobalConstants.isListOfSbiDisplayed);
-		assertTrue(partnerAdmin.isDeactivateButtonsDisplayed(), GlobalConstants.isDeactivateButtonsDisplayed);
-		partnerAdmin.clickOnFtmChipIcon();
-		assertTrue(partnerAdmin.isFtmTitleDisplayed(), GlobalConstants.isFtmTitleDisplayed);
-		assertTrue(partnerAdmin.isDeactivateButtonsDisplayed(), GlobalConstants.isDeactivateButtonsDisplayed);
+		assertTrue(partnerAdmin.isPolicyButtonsDisplayed(), GlobalConstants.isPolicyButtonsDisplayed);
+		partnerAdmin.clickOnPolicyButton();
+		assertTrue(partnerAdmin.isrequestPolicyBtnDisplayed(), GlobalConstants.isrequestPolicyBtnDisplayed);
+		partnerAdmin.clickOnRequestPolicyBtn();
+		assertTrue(partnerAdmin.isPartnerIdDropdownInRequestPolicyPageDisplayed(),
+				GlobalConstants.isPartnerIdDropdownInRequestPolicyPageDisplayed);
+		partnerAdmin.clickOnPartnerIdDropdownInRequestPolicyPage();
+		assertTrue(partnerAdmin.isNoDataAvailabelsDisplayed(), GlobalConstants.isNoDataAvailabeslDisplayed);
+		partnerAdmin.clickOnPolicesButtonInRequestPolicy();
+		partnerAdmin.enterPartnerIdInRequestPolicy(GlobalConstants.Policy_ID);
+		partnerAdmin.enterTestPolicyInRequestPolicyScreen(GlobalConstants.Policy_Name);
+		partnerAdmin.enterCommentBoxInRequestPolicy(GlobalConstants.Comments);
+		assertTrue(partnerAdmin.isCancelButtonInRequestPolicyScreenDisplayed(),
+				GlobalConstants.isCancelButtonInRequestPolicyScreenDisplayed);
+		assertTrue(partnerAdmin.isSubmitButtonoInRequestPolicyScreenDisplayed(),
+				GlobalConstants.isSubmitButtonoInRequestPolicyScreenDisplayed);
+		assertTrue(partnerAdmin.isTtlepartnerInRequestPolicyDisplayed(),
+				GlobalConstants.isTtlepartnerInRequestPolicyDisplayed);
+		assertTrue(partnerAdmin.isPolicyButtonInRequestPolicyScreenDisplayed(),
+				GlobalConstants.isPolicyButtonInRequestPolicyScreenDisplayed);
+		partnerAdmin.clickOnPolicesButtonInRequestPolicy();
+		assertTrue(partnerAdmin.isListOfPolicyRequestTiteDisplayed(),
+				GlobalConstants.isListOfPolicyRequestTiteDisplayed);
+		assertTrue(partnerAdmin.isFilterButtonInListOfPolicyRequestScreenDisplayed(),
+				GlobalConstants.isFilterButtonInListOfPolicyRequestScreenDisplayed);
+		partnerAdmin.clickOnFilterButtonInListOfPolicyRequestScreen();
+		assertTrue(partnerAdmin.isPartnerIdInRequestPartnerScreenDisplayed(),
+				GlobalConstants.isPartnerIdInRequestPartnerScreenDisplayed);
+		assertTrue(partnerAdmin.isPartnerTypeInListOfPartnerScreenDisplayed(),
+				GlobalConstants.isFilterButtonInListOfPolicyRequestScreenDisplayed);
+		assertTrue(partnerAdmin.isPolicyNameInListOfPolicyScrreenDisplayed(),
+				GlobalConstants.isPolicyNameInListOfPolicyScrreenDisplayed);
+		assertTrue(partnerAdmin.isStatusInListOfPartnerScreenDisplayed(),
+				GlobalConstants.isStatusInListOfPartnerScreenDisplayed);
 
-}
-	
+	}
+
 }
