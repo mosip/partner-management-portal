@@ -176,7 +176,7 @@ function CreatePartner() {
     };
 
     const clickOnCancel = () => {
-        moveToPartnersList(navigate);
+        moveToPartnersList();
     };
 
     const moveToPartnersList = () => {

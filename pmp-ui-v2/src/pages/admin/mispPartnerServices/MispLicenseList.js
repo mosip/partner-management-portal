@@ -331,7 +331,9 @@ function MispLicenseList() {
                                                                             <td className="px-2 cursor-default">
                                                                                 <div className="flex">
                                                                                     {license.status === "activated" ? 
-                                                                                        <img src={eyeIcon} className='cursor-pointer' alt="" id={'misp_license_show_copy_popup_btn' + (index + 1)} onClick={() => openLicenseKeyPopUp(license, index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => openLicenseKeyPopUp(license, index))}/>
+                                                                                        <button className='cursor-pointer bg-transparent border-none p-0' id={'misp_license_show_copy_popup_btn' + (index + 1)} onClick={() => openLicenseKeyPopUp(license, index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => openLicenseKeyPopUp(license, index))}>
+                                                                                            <img src={eyeIcon} alt="" />
+                                                                                        </button>
                                                                                         :
                                                                                         <img src={disabledEyeIcon} alt="" />
                                                                                     }
