@@ -346,9 +346,11 @@ function AdminOidcClientsList() {
                                                                             <td className="px-2 mx-2 cursor-default">
                                                                                 <div className="flex items-center justify-center">
                                                                                     {client.status === 'ACTIVE' ? 
-                                                                                        <img src={eyeIcon} className='cursor-pointer' alt="" id={'oidc_show_copy_popup_btn' + (index + 1)} onClick={() => openClientIdPopUp(client, index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => openClientIdPopUp(client, index))}/>
+                                                                                        <button className='cursor-pointer bg-transparent border-none p-0' id={'oidc_show_copy_popup_btn' + (index + 1)} onClick={() => openClientIdPopUp(client, index)} onKeyDown={(e) => onPressEnterKey(e, () => openClientIdPopUp(client, index))}>
+                                                                                            <img src={eyeIcon} alt="View client ID" />
+                                                                                        </button>
                                                                                         :
-                                                                                        <img src={disabledEyeIcon} alt="" />
+                                                                                        <img src={disabledEyeIcon} alt="View client ID (disabled)" />
                                                                                     }
                                                                                     {showActiveIndexClientIdPopup === index && (
                                                                                         <CopyIdPopUp closePopUp={() => setShowActiveIndexClientIdPopup(null)} subtitle={currentClient.partnerId} title={currentClient.policyName} id={currentClient.clientId} header='oidcClientsList.oidcClientId' styleSet={styles} />
