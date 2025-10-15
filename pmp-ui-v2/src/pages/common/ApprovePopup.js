@@ -6,6 +6,7 @@ import FocusTrap from "focus-trap-react";
 import LoadingIcon from "./LoadingIcon";
 import ErrorMessage from "./ErrorMessage";
 import { HttpService } from "../../services/HttpService";
+import PropTypes from "prop-types";
 
 function ApprovePopup({ closePopUp, title, description, request, popupData, onClickConfirm }) {
     const { t } = useTranslation();
@@ -100,5 +101,16 @@ function ApprovePopup({ closePopUp, title, description, request, popupData, onCl
         </div>
     )
 }
+
+ApprovePopup.propTypes = {
+    closePopUp: PropTypes.func.isRequired,
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    request: PropTypes.object.isRequired,
+    popupData: PropTypes.shape({
+        id: PropTypes.string.isRequired
+    }).isRequired,
+    onClickConfirm: PropTypes.func.isRequired
+};
 
 export default ApprovePopup;
