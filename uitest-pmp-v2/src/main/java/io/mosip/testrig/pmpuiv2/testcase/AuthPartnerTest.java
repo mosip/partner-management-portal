@@ -710,7 +710,7 @@ public class AuthPartnerTest extends BaseClass {
 		assertTrue(apiKeyPage.isBreadcombDisplayed(), GlobalConstants.isBreadcombDisplayed);
 		apiKeyPage.clickOnBreadcomb();
 	}
-/*
+
 	@Test(priority = 7, description = "Search with invalid policy name")
 
 	public void searchWithInvalidPolicyName() {
@@ -2199,7 +2199,7 @@ public class AuthPartnerTest extends BaseClass {
 		assertTrue(oidcClientPage.isOidcClientTabDisplayed(), GlobalConstants.isOidcClientTabDisplayed);
 
 	}
-*/
+
 	private void logoutFromPartner() {
 		dashboardPage.clickOnProfileDropdown();
 		dashboardPage.clickOnLogoutButton();

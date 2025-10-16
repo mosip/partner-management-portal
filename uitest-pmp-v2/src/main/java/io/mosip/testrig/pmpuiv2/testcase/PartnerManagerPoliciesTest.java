@@ -227,7 +227,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		policygroupPage.navigateBackDefaultButton();
 
 	}
-/*
+
 	@Test(priority = 4, description = "Create Datashare Policy")
 	public void createDatasharePolicy() {
 
@@ -916,7 +916,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		datasharePolicyPage.clickOnApplyFilterButton();
 		datasharePolicyPage.clickOnActionButton();
 		datasharePolicyPage.clickOnCloneButton();
-		datasharePolicyPage.selectPolicyGroupForClone(GlobalConstants.CHARACTERS_1);
+		datasharePolicyPage.selectValidPolicyGroupForClone(GlobalConstants.CHARACTERS_1);
 		datasharePolicyPage.clickOnClonePolicyButton();
 		assertTrue(datasharePolicyPage.isAlreadyExistErrorMessageDisplayed(),
 				GlobalConstants.isAlreadyExistErrorMessageDisplayed);
@@ -1172,7 +1172,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 				GlobalConstants.isPolicyNameExistErrorMessageDisplayed);
 
 	}
-*/
+
 	@Test(priority = 14, description = "Create Auth Policy")
 	public void createAuthPolicy() {
 

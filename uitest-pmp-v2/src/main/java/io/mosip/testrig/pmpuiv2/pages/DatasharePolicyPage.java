@@ -1207,6 +1207,16 @@ public class DatasharePolicyPage extends BasePage {
 		enter(clonePolicyGroupDropdownSearchInput, value);
 		clickOnElement(clonePolicyGroupDropdownOption1);
 	}
+	
+	public void selectValidPolicyGroupForClone(String value) {
+	    clickOnElement(clonePolicyGroupDropdown);
+	    clickOnElement(clonePolicyGroupDropdownSearchInput);
+	    enter(clonePolicyGroupDropdownSearchInput, value);	    
+	    WebElement policyGroupOption = driver.findElement(
+	        By.xpath("//span[@id='policy_group_selector_option_name_1' and normalize-space(text())='" + value + "']")
+	    );    
+	    clickOnElement(policyGroupOption);
+	}
 
 	public boolean isClonePolicyButtonAvailable() {
 		return isElementDisplayed(clonePolicyButton);

@@ -58,6 +58,11 @@ import ViewApiKeyNotifications from './pages/partner/notifications/ViewApiKeyNot
 import ViewFtmCertificateNotifications from './pages/partner/notifications/ViewFtmCertificateNotifications.js';
 import ViewSbiNotifications from './pages/partner/notifications/ViewSbiNotifications.js';
 import MispPoliciesList from './pages/admin/policyManager/MispPoliciesList.js';
+import CreatePartner from './pages/admin/partners/CreatePartner.js';
+import MispLicenseList from './pages/admin/mispPartnerServices/MispLicenseList.js';
+import GenerateMispLicenseKey from './pages/admin/mispPartnerServices/GenerateMispLicenseKey.js';
+import ViewMispLicenseKey from './pages/admin/mispPartnerServices/ViewMispLicenseKey.js';
+import RegenerateMispLicenseKey from './pages/admin/mispPartnerServices/RegenerateMispLicenseKey.js';
 
 function AppRoutes() {
 
@@ -179,11 +184,11 @@ function AppRoutes() {
           element: <GuardedRoute><MainLayout><UploadTrustCertificate /></MainLayout></GuardedRoute>
         },
         {
-          path: 'admin/partners-list',
+          path: 'admin/partners/partners-list',
           element: <GuardedRoute><MainLayout><PartnersList /></MainLayout></GuardedRoute>
         },
         {
-          path: 'admin/view-partner-details',
+          path: 'admin/partners/view-partner-details',
           element: <GuardedRoute><MainLayout><ViewPartnerDetails /></MainLayout></GuardedRoute>
         },
         {
@@ -255,6 +260,10 @@ function AppRoutes() {
           element: <GuardedRoute><MainLayout><ViewPolicyRequestDetails /></MainLayout></GuardedRoute>
         },
         {
+          path: 'admin/request-policy',
+          element: <GuardedRoute><MainLayout><RequestPolicy /></MainLayout></GuardedRoute>
+        },
+        {
           path: 'admin/authentication-services/oidc-clients-list',
           element: <GuardedRoute><MainLayout><AdminOidcClientsList /></MainLayout></GuardedRoute>
         },
@@ -297,6 +306,26 @@ function AppRoutes() {
         {
           path: 'admin/device-provider-services/view-device-details',
           element: <GuardedRoute><MainLayout><ViewAdminDeviceDetails /></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'admin/partners/create-partner',
+          element: <GuardedRoute><MainLayout><CreatePartner /></MainLayout></GuardedRoute>,
+        },
+        {
+          path: 'admin/misp-partner-services/misp-license-list',
+          element: <GuardedRoute><MainLayout><MispLicenseList /></MainLayout></GuardedRoute>,
+        },
+        {
+          path: 'admin/misp-partner-services/generate-misp-license-key',
+          element: <GuardedRoute><MainLayout><GenerateMispLicenseKey /></MainLayout></GuardedRoute>,
+        },
+        {
+          path: 'admin/misp-partner-services/view-misp-license-key',
+          element: <GuardedRoute><MainLayout><ViewMispLicenseKey /></MainLayout></GuardedRoute>,
+        },
+        {
+          path: 'admin/misp-partner-services/regenerate-misp-license-key',
+          element: <GuardedRoute><MainLayout><RegenerateMispLicenseKey /></MainLayout></GuardedRoute>,
         },
         {
           path: 'admin/notifications/view-root-certificate-expiry',

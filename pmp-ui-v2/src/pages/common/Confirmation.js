@@ -5,7 +5,7 @@ import { isLangRTL, moveToHome } from '../../utils/AppUtils';
 import successIcon from '../../svg/success_message_icon.svg';
 import PropTypes from 'prop-types';
 
-function Confirmation({ id, confirmationData, onClickFunction }) {
+function Confirmation({ id, confirmationData, onClickCustomBtn1, onClickCustomBtn2 }) {
 
     const navigate = useNavigate();
     const { t } = useTranslation();
@@ -14,7 +14,7 @@ function Confirmation({ id, confirmationData, onClickFunction }) {
 
     return (
         <div className="flex items-center justify-center w-[100%] h-[480px] bg-snow-white mt-[1.5%] rounded-lg shadow-md">
-            <div className="flex flex-col justify-center items-center w-[50%]">
+            <div className="flex flex-col justify-center items-center w-[50%] min-w-fit">
                 <img id="confirmation_success_icon" src={successIcon} alt="" className={`${isLoginLanguageRTL ? (style && style.imgIconRtl ? style.imgIconRtl : "") : (style && style.imgIconLtr ? style.imgIconLtr : "")} h-40`} />
                 <div className={`text-center space-y-2`}>
                     <h1 id={id + '_header'} className="font-bold text-black text-lg max-[450px]:text-sm">
@@ -26,7 +26,7 @@ function Confirmation({ id, confirmationData, onClickFunction }) {
                             <span className="text-[#666666] text-sm font-semibold max-[450px]:text-xs">{t(confirmationData.description1)}</span>
                         )}
                     </p>
-                    {!confirmationData.customBtnName &&
+                    {!confirmationData.customBtnName1 &&
                         <div className={`flex gap-x-3 p-2 max-[450px]:flex-col max-[450px]:gap-x-0 justify-center`}>
                             <button id='confirmation_go_back_btn' onClick={() => navigate(confirmationData.backUrl)} type="button" className="text-white font-semibold bg-tory-blue rounded-md text-sm px-12 py-4 max-[450px]:text-xs max-[450px]:mx-6 max-[450px]:mb-2">
                                 {t('commons.goBack')}
@@ -36,11 +36,16 @@ function Confirmation({ id, confirmationData, onClickFunction }) {
                             </button>
                         </div>
                     }
-                    {confirmationData.customBtnName &&
-                        <div>
-                            <button id='confirmation_custom_btn' onClick={onClickFunction} type="button" className="text-white font-semibold bg-tory-blue rounded-md text-sm px-3 py-4 max-[450px]:text-xs max-[450px]:mx-6 max-[450px]:mb-2">
-                                {t(confirmationData.customBtnName)}
+                    {confirmationData.customBtnName1 &&
+                        <div className={confirmationData.customBtnName2 ? `flex gap-x-3 p-2 max-[450px]:flex-col max-[450px]:gap-x-0 justify-center` : ''}>
+                            <button id='confirmation_custom_btn' onClick={onClickCustomBtn1} type="button" className={`text-white font-semibold bg-tory-blue rounded-md mt-1 text-sm ${confirmationData.customBtnName2 ? 'px-12' : 'px-3'} py-4 max-[450px]:text-xs max-[450px]:mx-6 max-[450px]:mb-2`}>
+                                {t(confirmationData.customBtnName1)}
                             </button>
+                            {confirmationData.customBtnName2 && (
+                                <button id="confirmation_custom_btn_2" onClick={onClickCustomBtn2} type="button" className="text-[#1447b2] mx-4 mt-1 font-semibold bg-white border border-[#1447b2] rounded-md text-sm px-12 py-4 max-[450px]:text-xs max-[450px]:mx-6">
+                                    {t(confirmationData.customBtnName2)}
+                                </button>
+                            )}
                         </div>
                     }
                 </div>
@@ -52,7 +57,8 @@ function Confirmation({ id, confirmationData, onClickFunction }) {
 Confirmation.propTypes = {
     id: PropTypes.string.isRequired,
     confirmationData: PropTypes.object.isRequired,
-    onClickFunction: PropTypes.func,
+    onClickCustomBtn1: PropTypes.func,
+    onClickCustomBtn2: PropTypes.func,
 };
 
 export default Confirmation;
