@@ -1307,8 +1307,8 @@ export const validateEmailRegex = (email, setEmailError, t) => {
         return;
     }
     
-    // Email validation: alphanumeric characters and symbols ( . _ ) are allowed. @ is mandatory
-    const emailPattern = /^[a-zA-Z0-9._]+@[a-zA-Z0-9._]+\.[a-zA-Z]{2,}$/;
+    // Email validation: alphanumeric characters and symbols ( . _ - +) are allowed. @ is mandatory
+    const emailPattern = /^[\w-+]+(\.[\w]+)*@[\w-]+(\.[\w]+)*(\.[a-z]{2,})$/;
     
     if (emailPattern.test(email)) {
         setEmailError("");

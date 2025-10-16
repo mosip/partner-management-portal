@@ -1545,6 +1545,7 @@
         "PMS_MSP_435": "Error while regenerating MISP License key.",
         "PMS_MSP_436": "Expiry date cannot be empty or null.",
         "PMS_MSP_437": "The entered policy ID is invalid or does not exist in the database.",
-        "PMS_MSP_438": "The policy ID provided has not been approved for partner policy linking."
+        "PMS_MSP_438": "The policy ID provided has not been approved for partner policy linking.",
+        "PMS_MSP_439": "No Active MISP License key found for the given Partner ID and Policy ID."
     }
 }

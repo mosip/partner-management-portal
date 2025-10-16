@@ -35,8 +35,8 @@ function CalendarInput({ isUsedAsFilter, showCalendar, addInfoIcon, infoKey, inf
   
   return (
     <div className={`flex flex-col ${styleSet?.outerDiv || ''} overflow-x-auto`}>
-      <label id={id + '_label'} className={`flex items-center text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
-        <p className={`mb-0.5`}>{label}{containsAsterisk && <span className={`text-crimson-red mx-1`}>*</span>}</p>
+      <label id={id + '_label'} className={`flex items-center text-dark-blue text-sm mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+        <p className={`mb-0.5 font-semibold`}>{label}{containsAsterisk && <span className={`text-crimson-red mx-1`}>*</span>}</p>
         {addInfoIcon && (
           <Information infoKey={infoKey} infoKey1={infoKey1} id={id + '_info'}/>
         )}
