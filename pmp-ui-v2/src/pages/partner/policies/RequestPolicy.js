@@ -280,6 +280,10 @@ function RequestPolicy() {
         </div>
     );
 
+    PartnerTypeLabel.propTypes = {
+        isAdmin: PropTypes.bool.isRequired
+    };
+
     const clickOnApprove = () => {
         const request = createRequest({
             status: "approved"
