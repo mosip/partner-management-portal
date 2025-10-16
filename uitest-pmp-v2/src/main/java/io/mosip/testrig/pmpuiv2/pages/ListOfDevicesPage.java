@@ -25,7 +25,7 @@ public class ListOfDevicesPage extends BasePage {
 
 	@FindBy(id = "list_of_device_details_title")
 	private WebElement listOfDevicesTitle;
-	
+
 	@FindBy(id = "list_of_devices_title")
 	private WebElement isListOfDevicesTitleInPartner;
 
@@ -313,10 +313,10 @@ public class ListOfDevicesPage extends BasePage {
 
 	@FindBy(id = "no_results_found")
 	private WebElement noResultsFoundInAdmin;
-	
+
 	@FindBy(xpath = "//tr[@id='device_list_item1']/td[1]")
 	private WebElement partnerIdInFirstColumn;
-	
+
 	@FindBy(xpath = "//tr[@id='device_list_device_item1']/td[1]")
 	private WebElement partnerIdInFirstColumnInPartner;
 
@@ -821,225 +821,144 @@ public class ListOfDevicesPage extends BasePage {
 		} catch (DateTimeParseException e) {
 			return false;
 		}
-
 	}
 
 	public boolean isDeactivateDevicePopupDisplayed() {
-
 		return isElementDisplayed(deactivateDeviceText);
-
 	}
 
 	public boolean isDeactivateDevicePopupTitleDisplayed() {
-
 		return isElementDisplayed(deactivateDeviceText);
-
 	}
 
 	public boolean isDeactivateDeviceSubtitleDisplayed() {
-
 		return isElementDisplayed(deactivateDeviceSubtitle);
-
 	}
 
 	public boolean isDeactivateSubmitButtonDisplayed() {
-
 		return isElementDisplayed(deactivateSubmit);
-
 	}
 
 	public boolean isDeactivateCancelButtonDisplayed() {
-
 		return isElementDisplayed(deactivateCancel);
-
 	}
 
 	public void enterInvalidSbiVersionInFilter(String value) {
-
 		enter(sbiVersionFilter, value);
-
 	}
 
 	public void clickOnApplyFilterButton() {
-
 		clickOnElement(applyFilter);
-
 	}
 
 	public boolean isNoResultsFoundDisplayed() {
-
 		return isElementDisplayed(noResultsFound);
-
 	}
 
 	public void enterSbiVersionInFilter(String value) {
-
 		clickOnElement(sbiVersionFilter);
-
 		clickOnElement(cancelButtonInFilter);
-
 		enter(sbiVersionFilter, value);
-
 	}
 
 	public boolean isCreationDateSameAsBrowserDateFormat() {
-
 		WebElement dateCell = driver.findElement(By.xpath("//tr[@id='device_list_item1']/td[10]"));
-
 		String browserTime = dateCell.getText().trim();
-
 		DateTimeFormatter dateFormatter = PmpTestUtil.nonZeroPadderDateFormatter;
-
 		try {
-
 			LocalDate.parse(browserTime, dateFormatter);
-
 			return true;
-
 		} catch (DateTimeParseException e) {
-
 			return false;
-
 		}
-
 	}
 
 	public void clickOnDeviceThreeDotsInAdmin(String deviceType, String deviceSubType, String make, String model) {
-
-		WebElement addedDeviceThreeDots = driver.findElement(
-
-				By.xpath("//td[text()='" + deviceType + "']/..//td[text()='" + deviceSubType + "']/..//td[text()='"
-
-						+ make + "']/..//td[text()='" + model
-						+ "']/..//button[contains(@id, 'device_list_action_menu')]"));
-
+		WebElement addedDeviceThreeDots = driver.findElement(By
+				.xpath("//td[text()='" + deviceType + "']/..//td[text()='" + deviceSubType + "']/..//td[text()='" + make
+						+ "']/..//td[text()='" + model + "']/..//button[contains(@id, 'device_list_action_menu')]"));
 		clickOnElement(addedDeviceThreeDots);
-
 	}
 
 	public void clickOnViewDeviceOfTabularInAdmin() {
-
 		clickOnElement(viewDeviceInAdmin);
-
 	}
 
 	public void enterPartnerIdInFilterInAdmin(String value) {
-
 		enter(partnerIdFilterInAdmin, value);
-
 	}
 
 	public boolean isListOfDevicesTitleDisplayed(String count) {
-
 		WebElement deviceList = driver.findElement(
 				By.xpath("//p[@id='list_of_device_details_title' and text()='List of Devices (" + count + ")']"));
-
 		return isElementDisplayed(deviceList);
-
 	}
 
 	public boolean isDeactivateDevicePopupInAdminDisplayed() {
-
 		return isElementDisplayed(deactivateDevicePopupInAdmin);
-
 	}
 
 	public boolean isDeactivateDevicePopupTitleInAdminDisplayed(String device) {
-
 		WebElement title = driver.findElement(By.xpath(
 				"//p[@id='deactivate_popup_header' and contains(normalize-space(text()), \"Do you want to deactivate Device  - '"
 						+ device + "'\")]"));
-
 		return isElementDisplayed(title);
-
 	}
 
 	public boolean isDeactivateDevicePopupDescInAdminDisplayed() {
-
 		return isElementDisplayed(deactivateDevicePopupDescInAdmin);
-
 	}
 
 	public boolean isDeactivateDeviceEnabledInAdmin() {
-
 		if (isElementDisplayed(deactivateDeviceEnabledButtonInAdmin)) {
-
 			return true;
-
 		} else {
-
 			return false;
-
 		}
-
 	}
 
 	public boolean isDeactivateDeviceDisabledInAdmin() {
-
 		if (isElementDisplayed(deactivateDeviceWithGreyedOutInAdmin)) {
-
 			return true;
-
 		} else {
-
 			return false;
-
 		}
-
 	}
 
 	public boolean isListOfDeviceInAdminDisplayed() {
-
 		return isElementDisplayed(listOfDeviceInAdmin);
-
 	}
 
 	public boolean isDeviceIdPlaceHolderInAdminDisplayed() {
-
 		return isElementDisplayed(deviceIdFilterPlaceHolderInAdmin);
-
 	}
 
 	public boolean isDeviceTypePlaceHolderInAdminDisplayed() {
-
 		return isElementDisplayed(deviceTypePlaceHolder);
-
 	}
 
 	public boolean isDeviceSubTypePlaceHolderInAdminDisplayed() {
-
 		return isElementDisplayed(deviceSubTypePlaceHolder);
-
 	}
 
 	public boolean isMakePlaceHolderInAdminDisplayed() {
-
 		return isElementDisplayed(makeFilterPlaceHolderInAdmin);
-
 	}
 
 	public boolean isModelPlaceHolderInAdminDisplayed() {
-
 		return isElementDisplayed(modelFilterPlaceHolderInAdmin);
-
 	}
 
 	public boolean isStatusPlaceHolderInAdminDisplayed() {
-
 		return isElementDisplayed(statusPlaceHolder);
-
 	}
 
 	public boolean isPartneIdPlaceHolderInAdminDisplayed() {
-
 		return isElementDisplayed(partnerIdFilterPlaceHolderInAdmin);
-
 	}
 
 	public boolean isOrganisationPlaceHolderInAdminDisplayed() {
-
 		return isElementDisplayed(organisationFilterPlaceHolderInAdmin);
-
 	}
 
 	public boolean isSbiIdPlaceHolderInAdminDisplayed() {
@@ -1070,19 +989,19 @@ public class ListOfDevicesPage extends BasePage {
 				.findElement(By.xpath("//button[contains(@id, 'status_filter_option') and text()='" + status + "']"));
 		clickOnElement(statusOption);
 	}
-	
+
 	public boolean isHomeBreadcumbDisplayed() {
 		return isElementDisplayed(homeButton);
 	}
-	
+
 	public boolean isListOfDevicesTitleInPartnerDisplayed() {
 		return isElementDisplayed(isListOfDevicesTitleInPartner);
 	}
-	
+
 	public boolean isPartnerIdInFirstColumnDisplayed() {
 		return isElementDisplayed(partnerIdInFirstColumn);
 	}
-	
+
 	public boolean isPartnerIdInFirstColumnInPartnerDisplayed() {
 		return isElementDisplayed(partnerIdInFirstColumnInPartner);
 	}
