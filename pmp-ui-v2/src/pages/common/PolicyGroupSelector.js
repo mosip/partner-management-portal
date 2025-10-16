@@ -210,7 +210,7 @@ function PolicyGroupSelector({ onPolicyGroupSelect, selectedPolicyGroup, contain
                                     const isPlaceholder = policyGroup.id === '__placeholder__';
                                     const isSelected = !isPlaceholder && selectedPolicyGroup?.id === policyGroup.id;
                                     return (
-                                        <li
+                                        <div
                                             id={isPlaceHolderPresent ? (index > 0 ? `policy_group_selector_option_${index}` : undefined) : `policy_group_selector_option_${index + 1}`}
                                             key={isPlaceholder ? 'placeholder' : policyGroup.id}
                                             aria-selected={isSelected}
@@ -236,7 +236,7 @@ function PolicyGroupSelector({ onPolicyGroupSelect, selectedPolicyGroup, contain
                                                 )}
                                             </button>
                                             <div id={`policy_group_selector_option_separator_${index + 1}`} className="border-gray-200 border-t mx-2"></div>
-                                        </li>
+                                        </div>
                                     );
                                 })}
                                 {fetchData && policyGroupList.length > 0 && (
