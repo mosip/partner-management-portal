@@ -971,7 +971,6 @@ public class GlobalConstants {
 	public static final String isPartnerCreatedDateInViewPartnerPageDisplayed = "Verify if ceated date in view partner details page displayed";
 	public static final String isDeactivatePartnerHeaderDisplayed = "Verify if deactivated header displayed";
 	public static final String isDeactivatePartnerDescriptionDisplayed = "Verify deactivate description displayed";
-	public static final String isDeactivateCancelButtonDisplayed = "Verify if cancel button displayed";
 	public static final String isDeactivateConfirmButtonDisplayed = "Verify if confirm button displayed";
 	public static final String isDeactivateColorCodeButtonDisplayed = "Verify if deactivate status displayed";
 	public static final String isPartnerCertificateInViewPartnerDetailsPageDisplayed = "Verify if partner certificate in view partnerdetails displayed";
