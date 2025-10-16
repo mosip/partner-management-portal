@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { getUserProfile } from '../../services/UserProfileService.js';
 import { useTranslation } from "react-i18next";
-import { isLangRTL, onPressEnterKey, getPartnerManagerUrl, createRequest, handleServiceErrors, moveToOidcClientsList, moveToMispPartnerServices } from '../../utils/AppUtils.js';
+import { isLangRTL, onPressEnterKey, getPartnerManagerUrl, createRequest, handleServiceErrors, moveToOidcClientsList, moveToMispPartnerServices, getPartnerType } from '../../utils/AppUtils.js';
 import { HttpService } from '../../services/HttpService.js';
 import ErrorMessage from '../common/ErrorMessage.js';
 import LoadingIcon from "../common/LoadingIcon.js";
@@ -21,7 +21,7 @@ import partner_policy_mapping_icon from '../../svg/partner_policy_mapping_icon.s
 import adminMispPartnerServicesIcon from '../../svg/admin_misp_partner_services_icon.svg';
 import ConsentPopup from './ConsentPopup.js';
 import { getAppConfig } from '../../services/ConfigService.js';
-import MissingAttributesPopup from './MissingAttributesPopup.js';
+import OnboardingPartnerAlertPopup from './OnboardingPartnerAlertPopup.js';
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -47,7 +47,8 @@ function Dashboard() {
   const [partnerCertExpiryCount, setPartnerCertExpiryCount] = useState();
   const [expiringApiKeyCount, setExpiringApiKeyCount] = useState();
   const [expiringSbiCount, setExpiringSbiCount] = useState();
-  const [showMissingAttributesPopup, setShowMissingAttributesPopup] = useState(false);
+  const [showOnboardingPartnerAlertPopup, setShowOnboardingPartnerAlertPopup] = useState(false);
+  const [onboardingPartnerAlertType, setOnboardingPartnerAlertType] = useState(null);
   const [isEmailVerified, setIsEmailVerified] = useState(false);
   const [configData, setConfigData] = useState(null);
   let isSelectPolicyPopupVisible = false;
@@ -103,17 +104,40 @@ function Dashboard() {
         if (roles.includes('POLICYMANAGER')) {
           setIsPolicyManager(true);
         }
-        //1. verify that the logged in user's email is registered in PMS table or not
+
+        // Extract partnerType from roles if not present in userProfile
+        const partnerType = getPartnerType(userProfile);
+
+        // Check if no valid partner type is found
+        if (!partnerType) {
+          setOnboardingPartnerAlertType('invalidPartnerTypeError');
+          setShowOnboardingPartnerAlertPopup(true);
+          setDataLoaded(true);
+          return;
+        }
+
+        //1. verify that the logged in user is registered in PMS table or not
         // using the email id
         const verifyEmailRequest = createRequest({
-          "emailId": userProfile.email
-        });
-        const response = await HttpService.put(getPartnerManagerUrl('/partners/email/verify', process.env.NODE_ENV), verifyEmailRequest);
+          "emailId": userProfile.email,
+          "partnerId": userProfile.userName,
+          "partnerType": partnerType
+        }, "mosip.pms.partner.exists.post", true);
+        const response = await HttpService.put(getPartnerManagerUrl('/partners/exists', process.env.NODE_ENV), verifyEmailRequest);
         if (response && response.data && response.data.response) {
           const resData = response.data.response;
-          console.log(`user's email exist in db: ${resData.emailExists}`);
-          setIsEmailVerified(resData.emailExists);
-          if (!resData.emailExists) {
+          console.log(`user's email exist in db: ${resData.partnerExists}`);
+
+          //check if duplicate exists then show the account error popup
+          if(resData.duplicateExists){
+              setOnboardingPartnerAlertType('verificationError');
+              setShowOnboardingPartnerAlertPopup(true);
+              setDataLoaded(true);
+              return;
+          }
+          setIsEmailVerified(resData.partnerExists);
+          if (!resData.partnerExists) {
+            console.log('user email does not exist in PMS');
             // 2. If email does not exist, check if any required attributes are missing
             const requiredFields = ['userName', 'orgName', 'address', 'phoneNumber', 'email', 'partnerType'];
 
@@ -125,7 +149,8 @@ function Dashboard() {
             });
 
             if (isAttributeMissing) {
-              setShowMissingAttributesPopup(true);
+              setOnboardingPartnerAlertType('missingAttributes');
+              setShowOnboardingPartnerAlertPopup(true);
               setDataLoaded(true);
               return;
             }
@@ -147,7 +172,7 @@ function Dashboard() {
                 address: userProfile.address,
                 contactNumber: userProfile.phoneNumber,
                 emailId: userProfile.email,
-                partnerType: userProfile.partnerType,
+                partnerType: partnerType,
                 langCode: userProfile.langCode,
               });
               const registerUserResponse = await HttpService.post(getPartnerManagerUrl('/partners', process.env.NODE_ENV), registerUserRequest);
@@ -166,7 +191,7 @@ function Dashboard() {
             setShowPolicies(true);
           }
         } else {
-          setErrorMsg(t('dashboard.verifyEmailError'));
+            setErrorMsg(t('dashboard.verifyEmailError'));
         }
         setDataLoaded(true);
       } catch (err) {
@@ -911,8 +936,10 @@ function Dashboard() {
           {showConsentPopup && (
             <ConsentPopup />
           )}
-          {showMissingAttributesPopup && (
-            <MissingAttributesPopup />
+          {showOnboardingPartnerAlertPopup && (
+            <OnboardingPartnerAlertPopup 
+              errorType={onboardingPartnerAlertType}
+            />
           )}
         </>)
       }

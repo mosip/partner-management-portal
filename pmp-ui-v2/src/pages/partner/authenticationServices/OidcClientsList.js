@@ -368,7 +368,9 @@ function OidcClientsList() {
                                                                     <td className="px-2 mx-2 cursor-default">
                                                                         <div className="flex items-center justify-center">
                                                                             {client.status === 'ACTIVE' ? 
-                                                                                <img src={eyeIcon} className='cursor-pointer' alt="" id={'oidc_show_copy_popup_btn' + (index + 1)} onClick={() => showCopyPopUp(client, index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => showCopyPopUp(client, index))}/>
+                                                                                <button className='cursor-pointer bg-transparent border-none p-0' id={'oidc_show_copy_popup_btn' + (index + 1)} onClick={() => showCopyPopUp(client, index)} onKeyDown={(e) => onPressEnterKey(e, () => showCopyPopUp(client, index))}>
+                                                                                    <img src={eyeIcon} alt="" />
+                                                                                </button>
                                                                                 :
                                                                                 <img src={disabledEyeIcon} alt="" />
                                                                             }

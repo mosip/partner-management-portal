@@ -12,15 +12,17 @@ function MispLicenseFilter ({ onApplyFilter }) {
     const [status, setStatus] = useState([]);
     const [filters, setFilters] = useState({
       partnerId: "",
+      orgName: "",
       policyGroupName: "",
       policyName: "",
-      licenseKeyName: "",
+      mispLicenseKeyName: "",
       status: "",
     });
     const [invalidPartnerId, setInvalidPartnerId] = useState("");
+    const [invalidOrgName, setInvalidOrgName] = useState("");
     const [invalidPolicyGroupName, setInvalidPolicyGroupName] = useState("");
     const [invalidPolicyName, setInvalidPolicyName] = useState("");
-    const [invalidLicenseKeyName, setInvalidLicenseKeyName] = useState("");
+    const [invalidMispLicenseKeyName, setInvalidMispLicenseKeyName] = useState("");
 
     useEffect(() => {
         const fetchData = async () => {
@@ -38,14 +40,15 @@ function MispLicenseFilter ({ onApplyFilter }) {
           [fieldName]: selectedFilter
         }));
         if (fieldName === 'partnerId') { validateInputRegex(selectedFilter, setInvalidPartnerId, t); }
+        if (fieldName === 'orgName') { validateInputRegex(selectedFilter, setInvalidOrgName, t); }
         if (fieldName === 'policyGroupName') { validateInputRegex(selectedFilter, setInvalidPolicyGroupName, t); }
         if (fieldName === 'policyName') { validateInputRegex(selectedFilter, setInvalidPolicyName, t); }
-        if (fieldName === 'licenseKeyName') { validateInputRegex(selectedFilter, setInvalidLicenseKeyName, t); }
+        if (fieldName === 'mispLicenseKeyName') { validateInputRegex(selectedFilter, setInvalidMispLicenseKeyName, t); }
     };
 
     const areFiltersEmpty = () => {
-        return Object.values(filters).every(value => value === "") || invalidPartnerId
-        || invalidPolicyGroupName || invalidPolicyName || invalidLicenseKeyName;
+        return Object.values(filters).every(value => value === "") || invalidPartnerId || invalidOrgName
+        || invalidPolicyGroupName || invalidPolicyName || invalidMispLicenseKeyName;
     };
 
     return (
@@ -58,6 +61,15 @@ function MispLicenseFilter ({ onApplyFilter }) {
                 styleSet={getFilterTextFieldStyle()}
                 id="misp_partner_id_filter"
                 inputError={invalidPartnerId}
+            />
+            <TextInputComponent
+                fieldName="orgName"
+                onTextChange={onFilterChangeEvent}
+                fieldNameKey="oidcClientsList.orgName"
+                placeHolderKey="partnerList.searchOrganisation"
+                styleSet={getFilterTextFieldStyle()}
+                id="misp_org_name_filter"
+                inputError={invalidOrgName}
             />
             <TextInputComponent
                 fieldName="policyGroupName"
@@ -78,13 +90,13 @@ function MispLicenseFilter ({ onApplyFilter }) {
                 inputError={invalidPolicyName}
             />
             <TextInputComponent
-                fieldName="licenseKeyName"
+                fieldName="mispLicenseKeyName"
                 onTextChange={onFilterChangeEvent}
-                fieldNameKey="mispLicenseList.licenseKeyName"
-                placeHolderKey="mispLicenseList.searchLicenseKeyName"
+                fieldNameKey="mispLicenseList.mispLicenseKeyName"
+                placeHolderKey="mispLicenseList.searchMispLicenseKeyName"
                 styleSet={getFilterTextFieldStyle()}
                 id="misp_license_key_name_filter"
-                inputError={invalidLicenseKeyName}
+                inputError={invalidMispLicenseKeyName}
             />
             <DropdownComponent
                 fieldName="status"

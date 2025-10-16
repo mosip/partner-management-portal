@@ -3,11 +3,11 @@ import { useNavigate, useBlocker } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../../services/UserProfileService";
 import { isLangRTL, onPressEnterKey, validateInputRegex } from "../../../utils/AppUtils";
-import { getPolicyManagerUrl, handleServiceErrors, getPolicyGroupList, createRequest, trimAndReplace, handleFileChange } from '../../../utils/AppUtils';
+import { getPolicyManagerUrl, handleServiceErrors, createRequest, trimAndReplace, handleFileChange } from '../../../utils/AppUtils';
 import { HttpService } from '../../../services/HttpService';
 import LoadingIcon from "../../common/LoadingIcon";
 import ErrorMessage from "../../common/ErrorMessage";
-import DropdownWithSearchComponent from "../../common/fields/DropdownWithSearchComponent";
+import PolicyGroupSelector from "../../common/PolicyGroupSelector";
 import BlockerPrompt from "../../common/BlockerPrompt";
 import Title from "../../common/Title";
 import Confirmation from "../../common/Confirmation";
@@ -24,10 +24,10 @@ function CreatePolicy() {
     const [errorMsg, setErrorMsg] = useState("");
     const [successMsg, setSuccessMsg] = useState("");
     const [policyName, setPolicyName] = useState("");
-    const [policyGroup, setPolicyGroup] = useState("");
+    const [selectedPolicyGroup, setSelectedPolicyGroup] = useState(null);
     const [policyDescription, setPolicyDescription] = useState("");
     const [policyData, setPolicyData] = useState("");
-    const [policyGroupDropdownData, setPolicyGroupDropdownData] = useState([]);
+    // PolicyGroupSelector handles its own data fetching
     const [createPolicySuccess, setCreatePolicySuccess] = useState(false);
     const [confirmationData, setConfirmationData] = useState({});
     const [isSubmitClicked, setIsSubmitClicked] = useState(false);
@@ -57,14 +57,14 @@ function CreatePolicy() {
         }
 
         return (
-            (policyGroup !== "" || policyName !== "" || policyDescription !== "" || policyData !== "") &&
+            ((selectedPolicyGroup?.name || "") !== "" || policyName !== "" || policyDescription !== "" || policyData !== "") &&
             currentLocation.pathname !== nextLocation.pathname
         );
     });
 
     useEffect(() => {
         const shouldWarnBeforeUnload = () => {
-            return policyGroup !== "" || policyName !== "" || policyDescription !== "" || policyData !== "";
+            return (selectedPolicyGroup?.name || "") !== "" || policyName !== "" || policyDescription !== "" || policyData !== "";
         }
 
         const handleBeforeUnload = (event) => {
@@ -79,16 +79,15 @@ function CreatePolicy() {
         return () => {
             window.removeEventListener('beforeunload', handleBeforeUnload);
         };
-    }, [policyGroup, policyName, policyDescription, policyData, isSubmitClicked]);
+    }, [selectedPolicyGroup, policyName, policyDescription, policyData, isSubmitClicked]);
 
-
-    const onChangePolicyGroup = async (fieldName, selectedValue) => {
-        setPolicyGroup(selectedValue);
+    const onPolicyGroupSelect = (policyGroupObj) => {
+        setSelectedPolicyGroup(policyGroupObj);
     };
 
     const clearForm = () => {
         setPolicyName("");
-        setPolicyGroup("");
+        setSelectedPolicyGroup(null);
         setPolicyDescription("");
         setPolicyData("");
         setErrorCode("");
@@ -135,7 +134,6 @@ function CreatePolicy() {
                     setConfirmationMessage('createPolicy.mispPolicyConfirmationMessage');
                     setBackLink('/partnermanagement/policy-manager/misp-policies-list');
                 }
-                await getPolicyGroupList(HttpService, setPolicyGroupDropdownData, setErrorCode, setErrorMsg, t);
             } catch (err) {
                 console.error('Error fetching data:', err);
                 if (err.response?.status && err.response.status !== 401) {
@@ -176,7 +174,7 @@ function CreatePolicy() {
         }
         let request = createRequest({
             name: trimAndReplace(policyName),
-            policyGroupName: policyGroup,
+            policyGroupName: selectedPolicyGroup?.name,
             policyType: policyType,
             desc: trimAndReplace(policyDescription),
             policies: parsedPolicyData,
@@ -216,7 +214,7 @@ function CreatePolicy() {
     }
 
     const isFormValid = () => {
-        return policyGroup && policyName && policyDescription.trim() && policyData.trim() && !invalidPolicyNameError && !invalidPolicyDescError;
+        return (selectedPolicyGroup?.name) && policyName && policyDescription.trim() && policyData.trim() && !invalidPolicyNameError && !invalidPolicyDescError;
     };
 
     const handlePolicyDescriptionChange = (e) => {
@@ -247,12 +245,6 @@ function CreatePolicy() {
         adjustTextareaHeight(policyDataRef);
     }, [policyData]);
 
-    const styles = {
-        outerDiv: "!ml-0 !mb-0",
-        dropdownLabel: "!text-sm !mb-1",
-        dropdownButton: "!w-full min-h-10 !rounded-md !text-base !text-start",
-        selectionBox: "!top-10"
-    }
 
     const onTextChange = (fieldName, fieldValue) => {
         setPolicyName(fieldValue);
@@ -301,17 +293,12 @@ function CreatePolicy() {
                                         <div className="flex flex-col w-full">
                                             <div className="flex flex-row justify-between my-4 max-[450px]:flex-col">
                                                 <div className="flex flex-col w-2/4">
-                                                    <DropdownWithSearchComponent
-                                                        fieldName='policyGroup'
-                                                        dropdownDataList={policyGroupDropdownData}
-                                                        onDropDownChangeEvent={onChangePolicyGroup}
-                                                        fieldNameKey='createPolicy.policyGroup*'
-                                                        placeHolderKey='createPolicy.selectPolicyGroup'
-                                                        searchKey='commons.search'
-                                                        selectedDropdownValue={policyGroup}
-                                                        styleSet={styles}
-                                                        id='policy_group_dropdown'>
-                                                    </DropdownWithSearchComponent>
+                                                    <PolicyGroupSelector
+                                                        onPolicyGroupSelect={onPolicyGroupSelect}
+                                                        selectedPolicyGroup={selectedPolicyGroup}
+                                                        containsAsterisk
+                                                        style={{ listboxheight: 'max-h-52' }}
+                                                    />
                                                 </div>
                                                 <div className={`flex flex-col w-2/4 ${isLoginLanguageRTL ? "mr-4" : "ml-4"}`}>
                                                     <TextInputComponent

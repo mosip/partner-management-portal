@@ -5,13 +5,16 @@ import { getUserProfile } from '../../../services/UserProfileService.js';
 import {
     isLangRTL, handleMouseClickForDropdown, resetPageNumber, onClickApplyFilter, setPageNumberAndPageSize,
     getPartnerManagerUrl, handleServiceErrors, onResetFilter, formatDate, bgOfStatus, getStatusCode, onPressEnterKey,
-    setSubmenuRef
+    setSubmenuRef,
+    createRequest
 } from '../../../utils/AppUtils.js';
 import ErrorMessage from '../../common/ErrorMessage.js';
 import LoadingIcon from '../../common/LoadingIcon.js';
 import EmptyList from '../../common/EmptyList.js';
 import Title from '../../common/Title.js';
 import viewIcon from "../../../svg/view_icon.svg";
+import regenerateIcon from "../../../svg/regenerate_icon.svg";
+import disabledRegenerateIcon from "../../../svg/disabled_regenerate_icon.svg";
 import eyeIcon from "../../../svg/eye_icon.svg";
 import disabledEyeIcon from "../../../svg/disable_eye_icon.svg";
 import deactivateIcon from "../../../svg/deactivate_icon.svg";
@@ -22,6 +25,7 @@ import Pagination from '../../common/Pagination.js';
 import CopyIdPopUp from '../../common/CopyIdPopup.js';
 import { HttpService } from '../../../services/HttpService.js';
 import MispLicenseFilter from './MispLicenseFilter.js';
+import DeactivatePopup from '../../common/DeactivatePopup.js';
 
 function MispLicenseList() {
     const navigate = useNavigate('');
@@ -30,7 +34,7 @@ function MispLicenseList() {
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [dataLoaded, setDataLoaded] = useState(true);
-    const [mispLicenseList, setmispLicenseList] = useState([]);
+    const [mispLicenseList, setMispLicenseList] = useState([]);
     const [expandFilter, setExpandFilter] = useState(false);
     const [order, setOrder] = useState("DESC");
     const [activeAscIcon, setActiveAscIcon] = useState("");
@@ -49,11 +53,15 @@ function MispLicenseList() {
     const [isApplyFilterClicked, setIsApplyFilterClicked] = useState(false);
     const [showActiveIndexLicenseKeyPopup, setShowActiveIndexLicenseKeyPopup] = useState(null);
     const [currentLicense, setCurrentLicense] = useState(null);
+    const [selectedLicenseKey, setSelectedLicenseKey] = useState(null);
+    const [deactivateLicenseRequest, setDeactivateLicenseRequest] = useState(null);
+    const [showActiveIndexDeactivatePopup, setShowActiveIndexDeactivatePopup] = useState(null);
     const [filterAttributes, setFilterAttributes] = useState({
         partnerId: null,
+        orgName: null,
         policyGroupName: null,
         policyName: null,
-        licenseKeyName: null,
+        mispLicenseKeyName: null,
         status: null,
     });
     const submenuRef = useRef([]);
@@ -64,9 +72,10 @@ function MispLicenseList() {
 
     const tableHeaders = [
         { id: "partnerId", headerNameKey: 'mispLicenseList.partnerId' },
+        { id: "orgName", headerNameKey: 'mispLicenseList.orgName' },
         { id: "policyGroupName", headerNameKey: "mispLicenseList.policyGroup" },
         { id: "policyName", headerNameKey: "mispLicenseList.policyName" },
-        { id: "licenseKeyName", headerNameKey: "mispLicenseList.licenseKeyName" },
+        { id: "mispLicenseKeyName", headerNameKey: "mispLicenseList.mispLicenseKeyName" },
         { id: "createdDateTime", headerNameKey: "mispLicenseList.creationDate" },
         { id: "expiryDateTime", headerNameKey: "mispLicenseList.expirationDate" },
         { id: "status", headerNameKey: "mispLicenseList.status" },
@@ -86,9 +95,10 @@ function MispLicenseList() {
         setResetPageNo(false);
 
         if (filterAttributes.partnerId) queryParams.append('partnerId', filterAttributes.partnerId);
+        if (filterAttributes.orgName) queryParams.append('orgName', filterAttributes.orgName);
         if (filterAttributes.policyGroupName) queryParams.append('policyGroupName', filterAttributes.policyGroupName);
         if (filterAttributes.policyName) queryParams.append('policyName', filterAttributes.policyName);
-        if (filterAttributes.licenseKeyName) queryParams.append('licenseKeyName', filterAttributes.licenseKeyName);
+        if (filterAttributes.mispLicenseKeyName) queryParams.append('mispLicenseKeyName', filterAttributes.mispLicenseKeyName);
         if (filterAttributes.status) queryParams.append('status', filterAttributes.status);
 
         const url = `${getPartnerManagerUrl('/misp-licenses', process.env.NODE_ENV)}?${queryParams.toString()}`;
@@ -100,7 +110,7 @@ function MispLicenseList() {
                 if (responseData && responseData.response) {
                     const resData = responseData.response.data;
                     setTotalRecords(responseData.response.totalResults);
-                    setmispLicenseList(resData);
+                    setMispLicenseList(resData);
                 } else {
                     handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                 }
@@ -176,9 +186,44 @@ function MispLicenseList() {
         navigate('/partnermanagement/admin/misp-partner-services/generate-misp-license-key');
     };
 
-    const deactivateLicenseKey = (license, index) => {};
+    const deactivateLicenseKey = (license, index) => {
+        if (license.status === "activated") {
+            const request = createRequest({
+                policyId: license.policyId,
+                licenseKeyName: license.mispLicenseKeyName,
+                status: "De-Activate"
+            }, "mosip.pms.deactivate.misp.license.patch", true);
+            setSelectedLicenseKey(license);
+            setDeactivateLicenseRequest(request);
+            setShowActiveIndexDeactivatePopup(index);
+            document.body.style.overflow = "hidden";
+        }
+    };
 
-    const renewMispLicenseKey = (license, index) => {};
+    const closeDeactivatePopup = () => {
+        setSelectedLicenseKey({});
+        setShowActiveIndexDeactivatePopup(null);
+        document.body.style.overflow = "auto";
+    };
+
+    const onClickConfirmDeactivate = (deactivationResponse, licenseKey) => {
+        if (deactivationResponse !== "") {
+            setSelectedLicenseKey({});
+            setShowActiveIndexDeactivatePopup(null);
+            setMispLicenseList((prevList) =>
+                prevList.map(misp =>
+                    (misp.partnerId === licenseKey.partnerId && misp.policyId === licenseKey.policyId && misp.mispLicenseKeyName === licenseKey.mispLicenseKeyName) ? { ...misp, status: "deactivated" } : misp
+                )
+            );
+        }
+    };
+
+    const renewMispLicenseKey = (license, index) => {
+        if (license.status === "activated") {
+            localStorage.setItem('selectedMispLicenseKey', JSON.stringify(license));
+            navigate('/partnermanagement/admin/misp-partner-services/regenerate-misp-license-key');
+        }
+    };
 
     const cancelErrorMsg = () => {
         setErrorMsg("");
@@ -272,9 +317,10 @@ function MispLicenseList() {
                                                                         <tr id={"misp_license_list_item" + (index + 1)} key={index}
                                                                             className={`border-t border-[#E5EBFA] ${license.status === "activated" ? 'cursor-pointer' : 'cursor-default'} text-[0.8rem] text-[#191919] font-semibold break-words ${license.status === "deactivated" ? "text-[#969696]" : "text-[#191919]"}`}>
                                                                             <td onClick={() => license.status === "activated" && viewMispLicenseDetails(license)} className="px-2">{license.partnerId}</td>
+                                                                            <td onClick={() => license.status === "activated" && viewMispLicenseDetails(license)} className="px-2">{license.orgName ? license.orgName : '-'}</td>
                                                                             <td onClick={() => license.status === "activated" && viewMispLicenseDetails(license)} className="px-2">{license.policyGroupName ? license.policyGroupName : '-'}</td>
                                                                             <td onClick={() => license.status === "activated" && viewMispLicenseDetails(license)} className="px-2">{license.policyName ? license.policyName : '-'}</td>
-                                                                            <td onClick={() => license.status === "activated" && viewMispLicenseDetails(license)} className="px-2">{license.licenseKeyName ? license.licenseKeyName : '-'}</td>
+                                                                            <td onClick={() => license.status === "activated" && viewMispLicenseDetails(license)} className="px-2">{license.mispLicenseKeyName ? license.mispLicenseKeyName : '-'}</td>
                                                                             <td onClick={() => license.status === "activated" && viewMispLicenseDetails(license)} className="px-2">{formatDate(license.createdDateTime, "date")}</td>
                                                                             <td onClick={() => license.status === "activated" && viewMispLicenseDetails(license)} className="px-2">{formatDate(license.expiryDateTime, "date")}</td>
                                                                             <td onClick={() => license.status === "activated" && viewMispLicenseDetails(license)}>
@@ -285,12 +331,14 @@ function MispLicenseList() {
                                                                             <td className="px-2 cursor-default">
                                                                                 <div className="flex">
                                                                                     {license.status === "activated" ? 
-                                                                                        <img src={eyeIcon} className='cursor-pointer' alt="" id={'misp_license_show_copy_popup_btn' + (index + 1)} onClick={() => openLicenseKeyPopUp(license, index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => openLicenseKeyPopUp(license, index))}/>
+                                                                                        <button className='cursor-pointer bg-transparent border-none p-0' id={'misp_license_show_copy_popup_btn' + (index + 1)} onClick={() => openLicenseKeyPopUp(license, index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => openLicenseKeyPopUp(license, index))}>
+                                                                                            <img src={eyeIcon} alt="" />
+                                                                                        </button>
                                                                                         :
                                                                                         <img src={disabledEyeIcon} alt="" />
                                                                                     }
                                                                                     {showActiveIndexLicenseKeyPopup === index && (
-                                                                                        <CopyIdPopUp closePopUp={() => setShowActiveIndexLicenseKeyPopup(null)} subtitle={currentLicense.partnerId} title={currentLicense.licenseKeyName} id={currentLicense.mispLicenseKey} header='mispLicenseList.mispLicenseKey' styleSet={styles} removeCopyBtn={true} />
+                                                                                        <CopyIdPopUp closePopUp={() => setShowActiveIndexLicenseKeyPopup(null)} subtitle={currentLicense.partnerId} title={currentLicense.mispLicenseKeyName} id={currentLicense.mispLicenseKey} header='mispLicenseList.mispLicenseKey' styleSet={styles} removeCopyBtn={true} />
                                                                                     )}
                                                                                 </div>
                                                                             </td>
@@ -302,7 +350,8 @@ function MispLicenseList() {
                                                                                     {actionId === index && (
                                                                                         <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-10 text-right" : "right-11 text-left"}`}>
                                                                                             <div role='button' className={`flex justify-between hover:bg-gray-100 ${license.status === 'activated' ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => renewMispLicenseKey(license, index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => renewMispLicenseKey(license, index))}>
-                                                                                                <p id="misp_license_list_renew_misp_license_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${license.status === "activated" ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("mispLicenseList.renewMispLicenseKey")}</p>
+                                                                                                <p id="misp_license_list_renew_misp_license_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${license.status === "activated" ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("mispLicenseList.regenerate")}</p>
+                                                                                                <img src={license.status === "activated" ? regenerateIcon : disabledRegenerateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-3" : "pr-3"}`} />
                                                                                             </div>
                                                                                             <hr className="h-px bg-gray-100 border-0 mx-1" />
                                                                                             <div role='button' className="flex justify-between hover:bg-gray-100" onClick={() => viewMispLicenseDetails(license)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => viewMispLicenseDetails(license))}>
@@ -316,7 +365,17 @@ function MispLicenseList() {
                                                                                             </div>
                                                                                         </div>
                                                                                     )}
-                                                                                    
+                                                                                    {showActiveIndexDeactivatePopup === index && (
+                                                                                        <DeactivatePopup
+                                                                                            closePopUp={closeDeactivatePopup}
+                                                                                            onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, selectedLicenseKey)}
+                                                                                            popupData={{ ...selectedLicenseKey, isDeactivateMispLicense: true }}
+                                                                                            request={deactivateLicenseRequest}
+                                                                                            headerMsg="deactivateMispLicense.title"
+                                                                                            descriptionMsg="deactivateMispLicense.description"
+                                                                                            headerKeyName={selectedLicenseKey.mispLicenseKeyName ? selectedLicenseKey.mispLicenseKeyName : '-'}
+                                                                                        />
+                                                                                    )}
                                                                                 </div>
                                                                             </td>
                                                                         </tr>
