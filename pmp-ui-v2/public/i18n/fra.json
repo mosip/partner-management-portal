@@ -988,7 +988,7 @@
         "policyConfirmationHeader": "Politique enregistrée en tant que brouillon",
         "authPolicyConfirmationMessage": "Cette politique d'authentification est actuellement en mode brouillon. Vous pouvez la publier pour la rendre active, ou continuer à la modifier si des modifications supplémentaires sont nécessaires en accédant à la page 'Liste des politiques d'authentification'",
         "dataSharePolicyConfirmationMessage": "Cette politique de partage de données est actuellement en mode brouillon. Vous pouvez la publier pour la rendre active, ou continuer à la modifier si des modifications supplémentaires sont nécessaires en accédant à la page 'Liste des politiques de partage de données'",
-        "mispPolicyConfirmationMessage": "Cette politique MISP est actuellement en version préliminaire. Vous pouvez la publier pour la rendre active ou la modifier si nécessaire en accédant à la page « Liste des politiques MISP ».",
+        "mispPolicyConfirmationMessage": "Cette politique MISP est actuellement en version préliminaire. Vous pouvez la publier pour la rendre active ou la modifier si nécessaire en accédant à la page 'Liste des politiques MISP'.",
         "errorInCreatePolicy": "Lors de la création de la politique, nous avons rencontré une erreur.",
         "saveAsDraft": "Enregistrer en tant que brouillon"
     },
@@ -1423,7 +1423,7 @@
         "PMS_ESI_006": "Le partenaire n'a pas de référence de contexte d'authentification",
         "PMS_ESI_007": "Entrez une clé publique valide",
         "PMS_ESI_008": "Client déjà désactivé.",
-        "PMS_PRT_056": "La langue sélectionnée n’est pas prise en charge.",
+        "PMS_PRT_056": "Étant donné que langCode n'est pas pris en charge",
         "PMS_PRT_057": "Incompatibilité des types de stratégie. Seule la stratégie d'authentification peut être utilisée pour créer un client OIDC.",
         "PMS_PRT_058": "Le partenaire d'authentification n'existe pas avec cet identifiant",
         "PMS_PRT_059": "Seul Auth_partner peut créer un client OIDC. Les autres types de partenaires ne sont pas autorisés à créer un client OIDC.",
