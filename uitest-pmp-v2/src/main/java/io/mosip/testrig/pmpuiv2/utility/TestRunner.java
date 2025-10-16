@@ -31,82 +31,106 @@ public class TestRunner {
 	}
 
 	public static void startTestRunner() throws Exception {
-		File homeDir = null;
-		TestNG runner = new TestNG();
-		if (!ConfigManager.gettestcases().equals("")) {
+	    File homeDir = null;
+	    TestNG runner = new TestNG();
+	    if (!ConfigManager.gettestcases().equals("")) {
 
-			XmlSuite suite = new XmlSuite();
-			suite.setName("MySuite");
-			suite.addListener("io.mosip.testrig.pmpuiv2.utility.EmailableReport");
-			XmlClass AuthPartnerTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.AuthPartnerTest");
-			XmlClass devicePartnerTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.DevicePartnerTest");
-			XmlClass FTMDeviceTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.FTMDeviceTest");
+	        XmlSuite suite = new XmlSuite();
+	        suite.setName("MySuite");
+	        suite.addListener("io.mosip.testrig.pmpuiv2.utility.EmailableReport");
 
-			List<XmlClass> classes = new ArrayList<>();
-			String[] Scenarioname = ConfigManager.gettestcases().split(",");
-			for (String test : Scenarioname) {
+	        // Define all available XmlClasses
+	        XmlClass partnerAdminCreation = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.PartnerAdminCreation");
+	        XmlClass ftmDeviceTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.FTMDeviceTest");
+	        XmlClass deviceProviderTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.DeviceProviderTest");
+	        XmlClass authPartnerTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.AuthPartnerTest");
+	        XmlClass partnerManagerPoliciesTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.PartnerManagerPoliciesTest");
+	        XmlClass partnerPolicyLinkingTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.PartnerPolicyLinkingTest");
+	        XmlClass authenticationServices = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.AuthenticationServices");
+	        XmlClass certificateTrustStoreTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.CertificateTrustStoreTest");
 
-				if (test.equals("AuthPartnerTest")) {
-					classes.add(AuthPartnerTest);
-				}else if (test.equals("devicePartnerTest")) {
-					classes.add(devicePartnerTest);
-				}
-				if (test.equals("FTMDeviceTest")) {
-					classes.add(FTMDeviceTest);
-				}
+	        List<XmlClass> classes = new ArrayList<>();
+	        String[] scenarioNames = ConfigManager.gettestcases().split(",");
+	        for (String test : scenarioNames) {
+	            switch (test.trim()) {
+	                case "PartnerAdminCreation":
+	                    classes.add(partnerAdminCreation);
+	                    break;
+	                case "FTMDeviceTest":
+	                    classes.add(ftmDeviceTest);
+	                    break;
+	                case "DeviceProviderTest":
+	                    classes.add(deviceProviderTest);
+	                    break;
+	                case "AuthPartnerTest":
+	                	classes.add(partnerAdminCreation);
+	                    classes.add(authPartnerTest);
+	                    break;
+	                case "PartnerManagerPoliciesTest":
+	                    classes.add(partnerManagerPoliciesTest);
+	                    break;
+	                case "PartnerPolicyLinkingTest":
+	                    classes.add(partnerPolicyLinkingTest);
+	                    break;
+	                case "AuthenticationServices":
+	                    classes.add(authenticationServices);
+	                    break;
+	                case "CertificateTrustStoreTest":
+	                    classes.add(certificateTrustStoreTest);
+	                    break;
+	            }
+	        }
 
-			}
+	        XmlTest test = new XmlTest(suite);
+	        test.setName("MyTest");
+	        test.setXmlClasses(classes);
 
-			XmlTest test = new XmlTest(suite);
-			test.setName("MyTest");
-			test.setXmlClasses(classes);
+	        List<XmlSuite> suites = new ArrayList<>();
+	        suites.add(suite);
 
-			List<XmlSuite> suites = new ArrayList<>();
-			suites.add(suite);
+	        runner.setXmlSuites(suites);
 
-			runner.setXmlSuites(suites);
+	    } else {
+	        List<String> suitefiles = new ArrayList<>();
+	        String os = System.getProperty("os.name");
+	        if (checkRunType().contains("IDE") || os.toLowerCase().contains("windows")) {
+	            homeDir = new File(getResourcePath() + "/testngFile");
+	        } else {
+	            homeDir = new File(getResourcePath() + "/testngFile");
+	        }
 
-		} else {
-			List<String> suitefiles = new ArrayList<String>();
-			String os = System.getProperty("os.name");
-			if (checkRunType().contains("IDE") || os.toLowerCase().contains("windows") == true) {
-				homeDir = new File(getResourcePath() + "/testngFile");
+	        for (File file : homeDir.listFiles()) {
+	            if (file.getName().toLowerCase() != null) {
+	                suitefiles.add(file.getAbsolutePath());
+	            }
+	        }
 
-			} else {
-				homeDir = new File(getResourcePath() + "/testngFile");
+	        runner.setTestSuites(suitefiles);
+	    }
 
-			}
+	    System.getProperties().setProperty("testng.outpur.dir", "testng-report");
+	    runner.setOutputDirectory("testng-report");
+	    System.getProperties().setProperty("emailable.report2.name",
+	            "PMPUI-" + BaseTestCaseFunc.environment + "-run-" + BaseClass.Date() + "-report.html");
 
-			for (File file : homeDir.listFiles()) {
-				if (file.getName().toLowerCase() != null) {
-					suitefiles.add(file.getAbsolutePath());
-				}
-			}
+	    runner.run();
 
-			runner.setTestSuites(suitefiles);
+	    // DB cleanup
+	    DBManager.executeDBQueries(ConfigManager.getPMSDbUrl(), ConfigManager.getPMSDbUser(),
+	            ConfigManager.getPMSDbPass(), ConfigManager.getPMSDbSchema(),
+	            TestRunner.getResourcePath() + "/" + "config/partnerUiv2DataDeleteQueries.txt");
 
-		}
+	    DBManager.executeDBQueries(ConfigManager.getKMDbUrl(), ConfigManager.getMasterDbUser(),
+	            ConfigManager.getMasterDbPass(), ConfigManager.getMasterDbSchema(),
+	            TestRunner.getResourcePath() + "/" + "config/partnerUiv2DataDeleteQueriesForKeyMgr.txt");
 
-		System.getProperties().setProperty("testng.outpur.dir", "testng-report");
-		runner.setOutputDirectory("testng-report");
-		System.getProperties().setProperty("emailable.report2.name",
-				"PMPUI-" + BaseTestCaseFunc.environment + "-run-" + BaseClass.Date() + "-report.html");
+	    DBManager.executeDBQueries(ConfigManager.getIdaDbUrl(), ConfigManager.getMasterDbUser(),
+	            ConfigManager.getPMSDbPass(), ConfigManager.getIDADBSchema(),
+	            TestRunner.getResourcePath() + "/" + "config/partnerUiv2DataDeleteQueriesForIDA.txt");
 
-		runner.run();
-		DBManager.executeDBQueries(ConfigManager.getPMSDbUrl(), ConfigManager.getPMSDbUser(),
-				ConfigManager.getPMSDbPass(), ConfigManager.getPMSDbSchema(),
-				TestRunner.getResourcePath() + "/" + "config/partnerUiv2DataDeleteQueries.txt");
-
-		DBManager.executeDBQueries(ConfigManager.getKMDbUrl(), ConfigManager.getMasterDbUser(),
-				ConfigManager.getMasterDbPass(), ConfigManager.getMasterDbSchema(),
-				TestRunner.getResourcePath() + "/" + "config/partnerUiv2DataDeleteQueriesForKeyMgr.txt");
-
-		DBManager.executeDBQueries(ConfigManager.getIdaDbUrl(), ConfigManager.getMasterDbUser(),
-				ConfigManager.getPMSDbPass(), ConfigManager.getIDADBSchema(),
-				TestRunner.getResourcePath() + "/" + "config/partnerUiv2DataDeleteQueriesForIDA.txt");
-		System.exit(0);
-
+	    System.exit(0);
 	}
+
 
 	public static String getGlobalResourcePath() {
 		if (checkRunType().equalsIgnoreCase("JAR")) {
