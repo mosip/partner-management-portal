@@ -988,7 +988,7 @@
         "policyConfirmationHeader": "Politique enregistrée en tant que brouillon",
         "authPolicyConfirmationMessage": "Cette politique d'authentification est actuellement en mode brouillon. Vous pouvez la publier pour la rendre active, ou continuer à la modifier si des modifications supplémentaires sont nécessaires en accédant à la page 'Liste des politiques d'authentification'",
         "dataSharePolicyConfirmationMessage": "Cette politique de partage de données est actuellement en mode brouillon. Vous pouvez la publier pour la rendre active, ou continuer à la modifier si des modifications supplémentaires sont nécessaires en accédant à la page 'Liste des politiques de partage de données'",
-        "mispPolicyConfirmationMessage": "Cette politique MISP est actuellement en version préliminaire. Vous pouvez la publier pour la rendre active ou la modifier si nécessaire en accédant à la page « Liste des politiques MISP ».",
+        "mispPolicyConfirmationMessage": "Cette politique MISP est actuellement en version préliminaire. Vous pouvez la publier pour la rendre active ou la modifier si nécessaire en accédant à la page 'Liste des politiques MISP'.",
         "errorInCreatePolicy": "Lors de la création de la politique, nous avons rencontré une erreur.",
         "saveAsDraft": "Enregistrer en tant que brouillon"
     },
