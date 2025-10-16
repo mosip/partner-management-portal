@@ -202,6 +202,7 @@ function RegenerateMispLicenseKey() {
                             {!regenerateLicenseKeySuccess ? (
                                 <div className="w-[100%] bg-snow-white mt-[1%] rounded-lg shadow-md">
                                     <div className="p-7">
+                                        <p id='generate_license_key_mandantory_msg' className="text-base mb-2 text-[#3D4468]">{t('requestPolicy.mandatoryFieldsMsg1')} <span className="text-crimson-red">*</span> {t('requestPolicy.mandatoryFieldsMsg2')}</p>
                                         <form>
                                             <div className="flex flex-col w-full">
                                                 <div className="flex flex-row justify-between space-x-4 my-2 max-[450px]:flex-col">
