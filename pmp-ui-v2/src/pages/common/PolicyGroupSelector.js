@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import PropTypes from 'prop-types';
 import {
     createRequest, getPolicyManagerUrl,
     handleServiceErrors, resetPageNumber, isLangRTL
@@ -196,7 +197,6 @@ function PolicyGroupSelector({ onPolicyGroupSelect, selectedPolicyGroup, contain
                         ) : (
                             <ul
                                 id="policy_group_selector_dropdown_listbox"
-                                role="listbox"
                                 aria-label={t('policyGroupList.listOfPolicyGroups')}
                                 className={`${style?.listboxheight || 'max-h-44'} overflow-auto focus:outline-none`}
                                 onScroll={onDropdownScroll}
@@ -213,7 +213,6 @@ function PolicyGroupSelector({ onPolicyGroupSelect, selectedPolicyGroup, contain
                                         <li
                                             id={isPlaceHolderPresent ? (index > 0 ? `policy_group_selector_option_${index}` : undefined) : `policy_group_selector_option_${index + 1}`}
                                             key={isPlaceholder ? 'placeholder' : policyGroup.id}
-                                            role="option"
                                             aria-selected={isSelected}
                                             className="px-0 py-0"
                                         >
@@ -251,5 +250,19 @@ function PolicyGroupSelector({ onPolicyGroupSelect, selectedPolicyGroup, contain
         </div>
     );
 }
+
+PolicyGroupSelector.propTypes = {
+    onPolicyGroupSelect: PropTypes.func,
+    selectedPolicyGroup: PropTypes.shape({
+        id: PropTypes.string,
+        name: PropTypes.string,
+        desc: PropTypes.string
+    }),
+    containsAsterisk: PropTypes.bool,
+    isPlaceHolderPresent: PropTypes.bool,
+    style: PropTypes.shape({
+        listboxheight: PropTypes.string
+    })
+};
 
 export default PolicyGroupSelector;

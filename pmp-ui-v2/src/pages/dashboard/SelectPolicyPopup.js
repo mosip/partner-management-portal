@@ -11,6 +11,7 @@ import LoadingIcon from '../common/LoadingIcon.js';
 import SuccessMessage from '../common/SuccessMessage.js';
 import PolicyGroupSelector from '../common/PolicyGroupSelector.js';
 import FocusTrap from 'focus-trap-react';
+import PropTypes from 'prop-types';
 
 function SelectPolicyPopup({ 
     onClose, 
@@ -278,5 +279,13 @@ function SelectPolicyPopup({
 
     );
 }
+
+SelectPolicyPopup.propTypes = {
+    onClose: PropTypes.func,
+    onSubmit: PropTypes.func,
+    isLinkPolicyGroupPopup: PropTypes.bool,
+    partnerId: PropTypes.string,
+    partnerType: PropTypes.string
+};
 
 export default SelectPolicyPopup;

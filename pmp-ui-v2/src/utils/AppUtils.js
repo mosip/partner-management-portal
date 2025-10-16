@@ -538,7 +538,7 @@ export const getPartnerDomainType = (partnerType) => {
 };
 
 export const trimAndReplace = (str) => {
-    return str.trim().replace(/\s+/g, ' ');
+    return str.trim().replaceAll(/\s+/g, ' ');
 };
 
 export const getErrorMessage = (errorCode, t, errorMessage) => {
