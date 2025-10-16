@@ -198,6 +198,8 @@ public class GlobalConstants {
 	public static final String isUserProfileIconDisplayed = "Verify if user profile icon is displayed";
 	public static final String isCreatedSbiDisplayed = "Verify if created SBI is displayed";
 	public static final String isStatusDisplayed = "Verify if correct status is displayed";
+	public static final String isDeactiveteButtonDisabled = "Verify if deactivate button disabled";
+	public static final String isDownloadPartnerCertBtnDisabled = "Verify if Download Partner Cert Btn id Disabled";
 	public static final String isDeviceDisplayed = "Verify if device is displayed";
 	public static final String isMandatoryMessageDisplayed = "Verify if mandatory message is displayed";
 	public static final String isCopyrightsMessageDisplayed = "Verify if copyrights message is displayed";
@@ -887,6 +889,10 @@ public class GlobalConstants {
 	public static final String isDeactivatedPartnerDisplayed = "Verify if deactivated partner Displayed";
 	public static final String isDeactivatedStatusDisplayed = "Verify if deactivated status Displayed";
 	public static final String isPartnerDeactivatePopupDisplayed = "Verify if partner deactivate popup Displayed";
+	public static final String isPartnerDeactivateSubPopupDisplayed = "Verify if partner deactivate popup Displayed";
+	public static final String isPartnerIDAndOrganisationInPopupDisplayed = "Verify if partner ID And Organisation in partner deactivate popup Displayed";
+	public static final String isDeactivateCancelButtonDisplayed = "Verify if deactivete cancel in partner deactivate popup Displayed";
+	public static final String isDeactivateSubmitButtonDisplayed = "Verify if deactivete submit in partner deactivate popup Displayed";
 	public static final String isActivatedStatusDisplayed = "Verify if activated status Displayed";
 	public static final String isTitleOfPartnerCertificateInPartnerDetailsDisplayed = "Verify if title of partner certificate in partner details Displayed";
 	public static final String isExpiryDateTimeLabelInCertificateDisplayed = "Verify if expiry date time label in certificicate Displayed";
@@ -933,6 +939,7 @@ public class GlobalConstants {
 	public static final String isMakePlaceHolderDisplayed = "Verify if make placeholder Displayed";
 	public static final String isModelPlaceHolderDisplayed = "Verify if model placeholder Displayed";
 	public static final String isPoliciesEmptyTableDisplayed = "Verify if policies empty table Displayed";
+	public static final String isPartnersTitleDisplayed = "Verify if partner title on dashboard page Displayed";
 	public static final String isauthenticationPartnerCellDisplayed = "Verify if authentication title Displayed";
 	public static final String isPartnerIdSearchBar = "Verify if partner id title Displayed";
 	public static final String isOrganisationSearchBar = "Verify if organization placeholder Displayed";
@@ -964,7 +971,6 @@ public class GlobalConstants {
 	public static final String isPartnerCreatedDateInViewPartnerPageDisplayed = "Verify if ceated date in view partner details page displayed";
 	public static final String isDeactivatePartnerHeaderDisplayed = "Verify if deactivated header displayed";
 	public static final String isDeactivatePartnerDescriptionDisplayed = "Verify deactivate description displayed";
-	public static final String isDeactivateCancelButtonDisplayed = "Verify if cancel button displayed";
 	public static final String isDeactivateConfirmButtonDisplayed = "Verify if confirm button displayed";
 	public static final String isDeactivateColorCodeButtonDisplayed = "Verify if deactivate status displayed";
 	public static final String isPartnerCertificateInViewPartnerDetailsPageDisplayed = "Verify if partner certificate in view partnerdetails displayed";
