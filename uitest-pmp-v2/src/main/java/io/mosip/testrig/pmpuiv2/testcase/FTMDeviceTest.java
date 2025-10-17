@@ -124,7 +124,7 @@ public class FTMDeviceTest extends BaseClass {
 		loginpage.clickRegisterButton();
 		registerPage.enterFirstName(GlobalConstants.FTM_PARTNER_ID);
 		registerPage.enterLastName(GlobalConstants.FTM_PARTNER_ID);
-		registerPage.enterOrganizationName(GlobalConstants.Organisation_Name);
+		registerPage.enterOrganizationName(GlobalConstants.ORGANISATION_NAME);
 		registerPage.selectPartnerTypeDropdown(1);
 		registerPage.enterAddress("0" + data);
 		registerPage.enterEmail("0" + data + "ftm" + "@gmail.com");

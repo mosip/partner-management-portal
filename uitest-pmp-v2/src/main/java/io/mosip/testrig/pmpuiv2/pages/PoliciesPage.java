@@ -35,7 +35,7 @@ public class PoliciesPage extends BasePage {
 	@FindBy(id = "request_policies_form_submit_btn")
 	private WebElement submitButton;
 
-	@FindBy(xpath = "//h1[text()='Policy Submitted Successfully!']")
+	@FindBy(id = "request_policy_confirmation_header")
 	private WebElement policySubmittedSuccessfully;
 
 	@FindBy(xpath = "//p[text()='No Data Available.']")

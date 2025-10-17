@@ -23,8 +23,11 @@ public class ListOfDevicesPage extends BasePage {
 	@FindBy(id = "device_list_add_device_btn")
 	private WebElement addDeviceButtonFromDeviceList;
 
-	@FindBy(xpath = "//h1[text()='List of Devices']")
+	@FindBy(id = "list_of_device_details_title")
 	private WebElement listOfDevicesTitle;
+
+	@FindBy(id = "list_of_devices_title")
+	private WebElement isListOfDevicesTitleInPartner;
 
 	@FindBy(xpath = "//div[@id='list_of_devices']//p")
 	private WebElement listOfDevicesText;
@@ -155,16 +158,16 @@ public class ListOfDevicesPage extends BasePage {
 	@FindBy(id = "deviceId_desc_icon")
 	private WebElement deviceIdDescIcon;
 
-	@FindBy(id = "deviceTypeCode_asc_icon")
+	@FindBy(id = "deviceType_asc_icon")
 	private WebElement deviceTypeCodeAscIcon;
 
-	@FindBy(id = "deviceTypeCode_desc_icon")
+	@FindBy(id = "deviceType_desc_icon")
 	private WebElement deviceTypeCodeDescIcon;
 
-	@FindBy(id = "deviceSubTypeCode_asc_icon")
+	@FindBy(id = "deviceSubType_asc_icon")
 	private WebElement deviceSubTypeCodeAscIcon;
 
-	@FindBy(id = "deviceSubTypeCode_desc_icon")
+	@FindBy(id = "deviceSubType_desc_icon")
 	private WebElement deviceSubTypeCodeDescIcon;
 
 	@FindBy(id = "make_asc_icon")
@@ -244,6 +247,78 @@ public class ListOfDevicesPage extends BasePage {
 
 	@FindBy(xpath = "//span[text()='Select Status']")
 	private WebElement statusPlaceHolder;
+
+	@FindBy(xpath = "//p[starts-with(normalize-space(), 'Do you want to deactivate Device')]")
+	private WebElement deactivateDeviceText;
+
+	@FindBy(xpath = "//p[normalize-space()='On clicking Confirm, your device details will be deactivated.']")
+	private WebElement deactivateDeviceSubtitle;
+
+	@FindBy(id = "sbi_version_filter")
+	private WebElement sbiVersionFilter;
+
+	@FindBy(xpath = "//p[text()='No Results Found']")
+	private WebElement noResultsFound;
+
+	@FindBy(xpath = "//button[text()='x']")
+	private WebElement cancelButtonInFilter;
+
+	@FindBy(id = "device_list_view_option")
+	private WebElement viewDeviceInAdmin;
+
+	@FindBy(id = "status_filter_dropdown_btn")
+	private WebElement deviceStatusFilterInAdmin;
+
+	@FindBy(id = "partner_id_filter")
+	private WebElement partnerIdFilterInAdmin;
+
+	@FindBy(id = "deactivate_popup_header")
+	private WebElement deactivateDevicePopupInAdmin;
+
+	@FindBy(id = "deactivate_popup_description")
+	private WebElement deactivateDevicePopupDescInAdmin;
+
+	@FindBy(xpath = "//p[@id='device_list_deactivate_option' and contains(@class, 'text-[#A5A5A5]')]")
+	private WebElement deactivateDeviceWithGreyedOutInAdmin;
+
+	@FindBy(xpath = "//p[@id='device_list_deactivate_option' and contains(@class, 'text-[#3E3E3E]')]")
+	private WebElement deactivateDeviceEnabledButtonInAdmin;
+
+	@FindBy(id = "list_of_device_details_title")
+	private WebElement listOfDeviceInAdmin;
+
+	@FindBy(xpath = "//input[@placeholder='Search Make']")
+	private WebElement makeFilterPlaceHolderInAdmin;
+
+	@FindBy(xpath = "//input[@placeholder='Search Partner ID']")
+	private WebElement partnerIdFilterPlaceHolderInAdmin;
+
+	@FindBy(xpath = "//input[@placeholder='Search Organisation']")
+	private WebElement organisationFilterPlaceHolderInAdmin;
+
+	@FindBy(xpath = "//input[@placeholder='Search SBI ID']")
+	private WebElement sbiIdFilterPlaceHolderInAdmin;
+
+	@FindBy(xpath = "//input[@placeholder='Search SBI Version']")
+	private WebElement sbiVersionFilterPlaceHolderInAdmin;
+
+	@FindBy(xpath = "//input[@placeholder='Search Device ID']")
+	private WebElement deviceIdFilterPlaceHolderInAdmin;
+
+	@FindBy(xpath = "//input[@placeholder='Search Model']")
+	private WebElement modelFilterPlaceHolderInAdmin;
+
+	@FindBy(id = "model_filter")
+	private WebElement adminModelFilter;
+
+	@FindBy(id = "no_results_found")
+	private WebElement noResultsFoundInAdmin;
+
+	@FindBy(xpath = "//tr[@id='device_list_item1']/td[1]")
+	private WebElement partnerIdInFirstColumn;
+
+	@FindBy(xpath = "//tr[@id='device_list_device_item1']/td[1]")
+	private WebElement partnerIdInFirstColumnInPartner;
 
 	public ListOfDevicesPage(WebDriver driver) {
 		super(driver);
@@ -746,7 +821,189 @@ public class ListOfDevicesPage extends BasePage {
 		} catch (DateTimeParseException e) {
 			return false;
 		}
+	}
 
+	public boolean isDeactivateDevicePopupDisplayed() {
+		return isElementDisplayed(deactivateDeviceText);
+	}
+
+	public boolean isDeactivateDevicePopupTitleDisplayed() {
+		return isElementDisplayed(deactivateDeviceText);
+	}
+
+	public boolean isDeactivateDeviceSubtitleDisplayed() {
+		return isElementDisplayed(deactivateDeviceSubtitle);
+	}
+
+	public boolean isDeactivateSubmitButtonDisplayed() {
+		return isElementDisplayed(deactivateSubmit);
+	}
+
+	public boolean isDeactivateCancelButtonDisplayed() {
+		return isElementDisplayed(deactivateCancel);
+	}
+
+	public void enterInvalidSbiVersionInFilter(String value) {
+		enter(sbiVersionFilter, value);
+	}
+
+	public void clickOnApplyFilterButton() {
+		clickOnElement(applyFilter);
+	}
+
+	public boolean isNoResultsFoundDisplayed() {
+		return isElementDisplayed(noResultsFound);
+	}
+
+	public void enterSbiVersionInFilter(String value) {
+		clickOnElement(sbiVersionFilter);
+		clickOnElement(cancelButtonInFilter);
+		enter(sbiVersionFilter, value);
+	}
+
+	public boolean isCreationDateSameAsBrowserDateFormat() {
+		WebElement dateCell = driver.findElement(By.xpath("//tr[@id='device_list_item1']/td[10]"));
+		String browserTime = dateCell.getText().trim();
+		DateTimeFormatter dateFormatter = PmpTestUtil.nonZeroPadderDateFormatter;
+		try {
+			LocalDate.parse(browserTime, dateFormatter);
+			return true;
+		} catch (DateTimeParseException e) {
+			return false;
+		}
+	}
+
+	public void clickOnDeviceThreeDotsInAdmin(String deviceType, String deviceSubType, String make, String model) {
+		WebElement addedDeviceThreeDots = driver.findElement(By
+				.xpath("//td[text()='" + deviceType + "']/..//td[text()='" + deviceSubType + "']/..//td[text()='" + make
+						+ "']/..//td[text()='" + model + "']/..//button[contains(@id, 'device_list_action_menu')]"));
+		clickOnElement(addedDeviceThreeDots);
+	}
+
+	public void clickOnViewDeviceOfTabularInAdmin() {
+		clickOnElement(viewDeviceInAdmin);
+	}
+
+	public void enterPartnerIdInFilterInAdmin(String value) {
+		enter(partnerIdFilterInAdmin, value);
+	}
+
+	public boolean isListOfDevicesTitleDisplayed(String count) {
+		WebElement deviceList = driver.findElement(
+				By.xpath("//p[@id='list_of_device_details_title' and text()='List of Devices (" + count + ")']"));
+		return isElementDisplayed(deviceList);
+	}
+
+	public boolean isDeactivateDevicePopupInAdminDisplayed() {
+		return isElementDisplayed(deactivateDevicePopupInAdmin);
+	}
+
+	public boolean isDeactivateDevicePopupTitleInAdminDisplayed(String device) {
+		WebElement title = driver.findElement(By.xpath(
+				"//p[@id='deactivate_popup_header' and contains(normalize-space(text()), \"Do you want to deactivate Device  - '"
+						+ device + "'\")]"));
+		return isElementDisplayed(title);
+	}
+
+	public boolean isDeactivateDevicePopupDescInAdminDisplayed() {
+		return isElementDisplayed(deactivateDevicePopupDescInAdmin);
+	}
+
+	public boolean isDeactivateDeviceEnabledInAdmin() {
+		if (isElementDisplayed(deactivateDeviceEnabledButtonInAdmin)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public boolean isDeactivateDeviceDisabledInAdmin() {
+		if (isElementDisplayed(deactivateDeviceWithGreyedOutInAdmin)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public boolean isListOfDeviceInAdminDisplayed() {
+		return isElementDisplayed(listOfDeviceInAdmin);
+	}
+
+	public boolean isDeviceIdPlaceHolderInAdminDisplayed() {
+		return isElementDisplayed(deviceIdFilterPlaceHolderInAdmin);
+	}
+
+	public boolean isDeviceTypePlaceHolderInAdminDisplayed() {
+		return isElementDisplayed(deviceTypePlaceHolder);
+	}
+
+	public boolean isDeviceSubTypePlaceHolderInAdminDisplayed() {
+		return isElementDisplayed(deviceSubTypePlaceHolder);
+	}
+
+	public boolean isMakePlaceHolderInAdminDisplayed() {
+		return isElementDisplayed(makeFilterPlaceHolderInAdmin);
+	}
+
+	public boolean isModelPlaceHolderInAdminDisplayed() {
+		return isElementDisplayed(modelFilterPlaceHolderInAdmin);
+	}
+
+	public boolean isStatusPlaceHolderInAdminDisplayed() {
+		return isElementDisplayed(statusPlaceHolder);
+	}
+
+	public boolean isPartneIdPlaceHolderInAdminDisplayed() {
+		return isElementDisplayed(partnerIdFilterPlaceHolderInAdmin);
+	}
+
+	public boolean isOrganisationPlaceHolderInAdminDisplayed() {
+		return isElementDisplayed(organisationFilterPlaceHolderInAdmin);
+	}
+
+	public boolean isSbiIdPlaceHolderInAdminDisplayed() {
+		return isElementDisplayed(sbiIdFilterPlaceHolderInAdmin);
+	}
+
+	public boolean isSbiVersionPlaceHolderInAdminDisplayed() {
+		return isElementDisplayed(sbiVersionFilterPlaceHolderInAdmin);
+	}
+
+	public void enterInvalidValueInDeviceMakeFilterInAdmin(String invalidMake) {
+		clickOnElement(adminMakeFilter);
+		enter(adminMakeFilter, invalidMake);
+	}
+
+	public void enterInvalidValueInDeviceModelFilterInAdmin(String invalidModel) {
+		clickOnElement(adminModelFilter);
+		enter(adminModelFilter, invalidModel);
+	}
+
+	public boolean isNoResultsFoundInAdminDisplayed() {
+		return isElementDisplayed(noResultsFoundInAdmin);
+	}
+
+	public void selectDeviceStatusFilterInAdmin(String status) {
+		clickOnElement(deviceStatusFilterInAdmin);
+		WebElement statusOption = driver
+				.findElement(By.xpath("//button[contains(@id, 'status_filter_option') and text()='" + status + "']"));
+		clickOnElement(statusOption);
+	}
+
+	public boolean isHomeBreadcumbDisplayed() {
+		return isElementDisplayed(homeButton);
+	}
+
+	public boolean isListOfDevicesTitleInPartnerDisplayed() {
+		return isElementDisplayed(isListOfDevicesTitleInPartner);
+	}
+
+	public boolean isPartnerIdInFirstColumnDisplayed() {
+		return isElementDisplayed(partnerIdInFirstColumn);
+	}
+
+	public boolean isPartnerIdInFirstColumnInPartnerDisplayed() {
+		return isElementDisplayed(partnerIdInFirstColumnInPartner);
 	}
 
 }
