@@ -41,6 +41,8 @@ function CreatePartner() {
     const [invalidPhoneNumberError, setInvalidPhoneNumberError] = useState("");
     const [invalidEmailError, setInvalidEmailError] = useState("");
     const [invalidUsernameError, setInvalidUsernameError] = useState("");
+    const [partnerIdMaxLength, setPartnerIdMaxLength] = useState(36);
+    const [phoneNumberMaxLength, setPhoneNumberMaxLength] = useState(16);
     
     const [uploadCertificateData, setUploadCertificateData] = useState({});
     const [showPopup, setShowPopup] = useState(false);
@@ -211,6 +213,15 @@ function CreatePartner() {
                 }));
 
                 setLanguageDropdownData(createDropdownData('languageCode', 'name', false, languageData, t));
+
+                // Set configurable limits from app config
+                const configData = await getAppConfig();
+                if (configData && configData.partnerIdMaxLength) {
+                    setPartnerIdMaxLength(parseInt(configData.partnerIdMaxLength, 10));
+                }
+                if (configData && configData.phoneNumberMaxLength) {
+                    setPhoneNumberMaxLength(parseInt(configData.phoneNumberMaxLength, 10));
+                }
             } catch (err) {
                 console.error('Error fetching data:', err);
                 if (err.response?.status && err.response.status !== 401) {
@@ -386,7 +397,7 @@ function CreatePartner() {
                                                         onBlur={handleContactNumberBlur}
                                                         styleSet={textInputStyles}
                                                         id='create_partner_contact_number'
-                                                        maxLength={16}
+                                                        maxLength={phoneNumberMaxLength}
                                                         inputError={invalidPhoneNumberError}
                                                     />
                                                 </div>
@@ -415,7 +426,7 @@ function CreatePartner() {
                                                         onTextChange={handleTextChange}
                                                         styleSet={textInputStyles}
                                                         id='create_partner_partner_id'
-                                                        maxLength={36}
+                                                        maxLength={partnerIdMaxLength}
                                                         inputError={invalidUsernameError}
                                                     />
                                                 </div>
