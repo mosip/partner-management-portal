@@ -175,12 +175,11 @@ public class DashboardPage extends BasePage {
 	}
 
 	public void selectPolicyGroupDropdown(String policyGroupValue) {
-	    clickOnElement(selectPolicyGroupDropdown);
-	    enter(SearchBox, policyGroupValue);
-	    WebElement policyGroupOption = driver.findElement(
-	        By.xpath("//span[@id='policy_group_selector_option_name_1' and text()='" + policyGroupValue + "']")
-	    );
-	    clickOnElement(policyGroupOption);
+		clickOnElement(selectPolicyGroupDropdown);
+		enter(SearchBox, policyGroupValue);
+		WebElement policyGroupOption = driver.findElement(
+				By.xpath("//span[@id='policy_group_selector_option_name_1' and text()='" + policyGroupValue + "']"));
+		clickOnElement(policyGroupOption);
 	}
 
 	public void closePolicyGroupDropdown() {

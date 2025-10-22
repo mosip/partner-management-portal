@@ -13,11 +13,13 @@ import io.mosip.testrig.pmpuiv2.pages.ApiKeyPage;
 import io.mosip.testrig.pmpuiv2.pages.AuthPolicyPage;
 import io.mosip.testrig.pmpuiv2.pages.BasePage;
 import io.mosip.testrig.pmpuiv2.pages.DashboardPage;
+import io.mosip.testrig.pmpuiv2.pages.DatasharePolicyPage;
 import io.mosip.testrig.pmpuiv2.pages.LoginPage;
 import io.mosip.testrig.pmpuiv2.pages.OidcClientPage;
 import io.mosip.testrig.pmpuiv2.pages.PartnerCertificatePage;
 import io.mosip.testrig.pmpuiv2.pages.PartnerPolicyMappingPage;
 import io.mosip.testrig.pmpuiv2.pages.PoliciesPage;
+import io.mosip.testrig.pmpuiv2.pages.PolicyGroupPage;
 import io.mosip.testrig.pmpuiv2.pages.ProfilePage;
 import io.mosip.testrig.pmpuiv2.pages.RegisterPage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
@@ -36,6 +38,8 @@ public class AuthPartnerTest extends BaseClass {
 	private PartnerPolicyMappingPage partnerPolicyMappingPage;
 	private OidcClientPage oidcClientPage;
 	private ProfilePage profilePage;
+	private PolicyGroupPage policygroupPage;
+	private DatasharePolicyPage datasharePolicyPage;
 
 	@Test(priority = 3, description = "This is a test case register new user")
 	public void RegisterNewUser() {
@@ -1106,6 +1110,1093 @@ public class AuthPartnerTest extends BaseClass {
 		assertTrue(dashboardPage.isFooterDocumentationLinkDisplayed(),
 				GlobalConstants.isFooterDocumentationLinkDisplayed);
 		assertTrue(dashboardPage.isWelcomeMessageDisplayed(), GlobalConstants.isWelcomeMessageDisplayed);
+	}
+
+	@Test(priority = 20, description = "Create Auth DataShare Policy")
+	public void creatAuthPolicyDataSharePolicy() {
+
+		dashboardPage = new DashboardPage(driver);
+		basePage = new BasePage(driver);
+		policygroupPage = new PolicyGroupPage(driver);
+		datasharePolicyPage = new DatasharePolicyPage(driver);
+		policiesPage = new PoliciesPage(driver);
+		authPolicyPage = new AuthPolicyPage(driver);
+
+		dashboardPage.clickOnPolicyButton();
+		policiesPage.clickOnAuthPolicyTab();
+		authPolicyPage.clickOnCreateAuthPolicyButton();
+		authPolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULT_POLICYGROUP);
+		authPolicyPage.enterPolicyName(GlobalConstants.AUTHPOLICY_PARTLINK);
+		authPolicyPage.enterpolicyDescription(GlobalConstants.AUTHPOLICY_PARTLINK);
+		authPolicyPage.uploadPolicyData();
+		basePage.scrollToEndPage();
+		authPolicyPage.clickOnSaveAsDraftButton();
+		authPolicyPage.clickOnGoBackButton();
+
+		authPolicyPage.clickOnFilterButton();
+		authPolicyPage.enterPolicyGroupInFilterBox(GlobalConstants.DEFAULT_POLICYGROUP);
+		authPolicyPage.enterPolicyNameInFilter(GlobalConstants.AUTHPOLICY_PARTLINK);
+		authPolicyPage.clickOnApplyFilterButton();
+		authPolicyPage.clickOnActionButton();
+		authPolicyPage.clickOnPolicyPublishButton();
+		authPolicyPage.clickOnPublishPolicyButton();
+		authPolicyPage.clickOnSuccessMsgCloseButton();
+		authPolicyPage.clickOnPublishPolicyCloseButton();
+		authPolicyPage.clickOnHomeButton();
+
+		dashboardPage.clickOnPolicyButton();
+		policiesPage.clickOnAuthPolicyTab();
+		authPolicyPage.clickOnCreateAuthPolicyButton();
+		authPolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULT_POLICYGROUP);
+		authPolicyPage.enterPolicyName(GlobalConstants.AUTHPOLICY_PARTLINK2);
+		authPolicyPage.enterpolicyDescription(GlobalConstants.AUTHPOLICY_PARTLINK2);
+		authPolicyPage.uploadPolicyData();
+		basePage.scrollToEndPage();
+		authPolicyPage.clickOnSaveAsDraftButton();
+		authPolicyPage.clickOnGoBackButton();
+
+		authPolicyPage.clickOnFilterButton();
+		authPolicyPage.enterPolicyGroupInFilterBox(GlobalConstants.DEFAULT_POLICYGROUP);
+		authPolicyPage.enterPolicyNameInFilter(GlobalConstants.AUTHPOLICY_PARTLINK2);
+		authPolicyPage.clickOnApplyFilterButton();
+		authPolicyPage.clickOnActionButton();
+		authPolicyPage.clickOnPolicyPublishButton();
+		authPolicyPage.clickOnPublishPolicyButton();
+		authPolicyPage.clickOnSuccessMsgCloseButton();
+		authPolicyPage.clickOnPublishPolicyCloseButton();
+		authPolicyPage.clickOnHomeButton();
+
+		dashboardPage.clickOnPolicyButton();
+		policygroupPage.clickOnDatasharePolicyTab();
+		datasharePolicyPage.clickOnDatasharePolicyCreateButton();
+		datasharePolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULT_POLICYGROUP);
+		datasharePolicyPage.enterPolicyName(GlobalConstants.DATAPOLICY_PARTLINK);
+		datasharePolicyPage.enterpolicyDescription(GlobalConstants.DATAPOLICY_PARTLINK);
+		datasharePolicyPage.uploadPolicyData();
+		basePage.scrollToEndPage();
+		datasharePolicyPage.clickOnSaveAsDraftButton();
+		datasharePolicyPage.clickOnGoBackButton();
+
+		authPolicyPage.clickOnFilterButton();
+		authPolicyPage.enterPolicyGroupInFilterBox(GlobalConstants.DEFAULT_POLICYGROUP);
+		authPolicyPage.enterPolicyNameInFilter(GlobalConstants.DATAPOLICY_PARTLINK);
+		authPolicyPage.clickOnApplyFilterButton();
+		datasharePolicyPage.clickOnActionButton();
+		datasharePolicyPage.clickOnPublishButton();
+		datasharePolicyPage.clickOnPublishPolicyButton();
+		datasharePolicyPage.clickOnPublishPolicyCloseButton();
+	}
+
+	@Test(priority = 21, description = "Request Auth DataShare Policy")
+	public void RequestAuthDataSharePolicy() {
+
+		dashboardPage = new DashboardPage(driver);
+		policiesPage = new PoliciesPage(driver);
+		loginPage = new LoginPage(driver);
+
+		loginAsAuthPartner();
+
+		dashboardPage.clickOnPoliciesTitle();
+
+		requestPolicy(GlobalConstants.AUTHPOLICY_PARTLINK);
+
+		requestPolicy(GlobalConstants.AUTHPOLICY_PARTLINK2);
+
+		requestPolicy(GlobalConstants.DATAPOLICY_PARTLINK);
+
+	}
+
+	@Test(priority = 22, description = "Tabular View Of Partner Policy")
+	public void tabularViewOfPartnerPolicy() {
+
+		dashboardPage = new DashboardPage(driver);
+		authPolicyPage = new AuthPolicyPage(driver);
+		partnerPolicyMappingPage = new PartnerPolicyMappingPage(driver);
+
+		dashboardPage.clickOnPartnerPolicyMappingTab();
+		assertTrue(partnerPolicyMappingPage.isPartnerPolicyLinkingTitleDisplayed(),
+				GlobalConstants.isPartnerPolicyLinkingTitleDisplayed);
+		assertTrue(partnerPolicyMappingPage.isPartnerPolicyLinkingSubTitleDisplayed(),
+				GlobalConstants.isPartnerPolicyLinkingSubTitleDisplayed);
+		assertTrue(partnerPolicyMappingPage.isPartnerIdHeaderDisplayed(), GlobalConstants.isPartnerIdHeaderDisplayed);
+		assertTrue(partnerPolicyMappingPage.isPartnerTypeHeaderDisplayed(),
+				GlobalConstants.isPartnerTypeHeaderDisplayed);
+		assertTrue(partnerPolicyMappingPage.isOrganisationNameHeaderDisplayed(),
+				GlobalConstants.isOrganisationNameHeaderDisplayed);
+		assertTrue(partnerPolicyMappingPage.isPolicyIdHeaderDisplayed(), GlobalConstants.isPolicyIdHeaderDisplayed);
+		assertTrue(partnerPolicyMappingPage.isPolicyGroupHeaderDisplayed(),
+				GlobalConstants.isPolicyGroupHeaderDisplayed);
+		assertTrue(partnerPolicyMappingPage.isPolicyNameHeaderDisplayed(), GlobalConstants.isPolicyNameHeaderDisplayed);
+		assertTrue(partnerPolicyMappingPage.isCreationDateHeaderDisplayed(),
+				GlobalConstants.isCreationDateHeaderDisplayed);
+		assertTrue(partnerPolicyMappingPage.isStatusHeaderDisplayed(), GlobalConstants.isStatusHeaderDisplayed);
+		assertTrue(partnerPolicyMappingPage.isActionHeaderDisplayed(), GlobalConstants.isActionHeaderDisplayed);
+		assertTrue(partnerPolicyMappingPage.isHomeButtonDisplayed(), GlobalConstants.isHomeButtonDisplayed);
+
+		assertFalse(partnerPolicyMappingPage.isFilterResetButtonDisplayed(),
+				GlobalConstants.isFilterResetButtonDisplayed);
+		assertTrue(partnerPolicyMappingPage.isFilterButtonDisplayed(), GlobalConstants.isFilterButtonDisplayed);
+		partnerPolicyMappingPage.clickOnFilterButton();
+		assertTrue(partnerPolicyMappingPage.isFilterButtonDisabled(), GlobalConstants.isFilterButtonDisabled);
+		assertTrue(partnerPolicyMappingPage.isFilterResetButtonEnabled(), GlobalConstants.isFilterResetButtonEnabled);
+		assertTrue(partnerPolicyMappingPage.isApplyFilterButtonDisabled(), GlobalConstants.isApplyFilterButtonDisabled);
+		partnerPolicyMappingPage.clickOnFilterButton();
+		assertFalse(partnerPolicyMappingPage.isFilterButtonEnabled(), GlobalConstants.isFilterButtonEnabled);
+
+		assertTrue(partnerPolicyMappingPage.isPartnerIdFilterDisplayed(), GlobalConstants.isPartnerIdFilterDisplayed);
+		assertTrue(partnerPolicyMappingPage.isPartnerTypeFilterDisplayed(),
+				GlobalConstants.isPartnerTypeFilterDisplayed);
+		assertTrue(partnerPolicyMappingPage.isOrganisationFilterDisplayed(),
+				GlobalConstants.isOrganisationFilterDisplayed);
+		assertTrue(partnerPolicyMappingPage.isPolicyIdFilterDisplayed(), GlobalConstants.isPolicyIdFilterDisplayed);
+		assertTrue(partnerPolicyMappingPage.isPolicyNameFilterDisplayed(), GlobalConstants.isPolicyNameFilterDisplayed);
+		assertTrue(partnerPolicyMappingPage.isPolicyGroupFilterDisplayed(),
+				GlobalConstants.isPolicyGroupFilterDisplayed);
+		assertTrue(partnerPolicyMappingPage.isStatusDropdownDisplayed(), GlobalConstants.isStatusDropdownDisplayed);
+
+		assertTrue(partnerPolicyMappingPage.isPolicyIdFilterLabelDisplayed(),
+				GlobalConstants.isPolicyIdFilterLabelDisplayed);
+		assertTrue(partnerPolicyMappingPage.isPolicyNameFilterLabelDisplayed(),
+				GlobalConstants.isPolicyNameFilterLabelDisplayed);
+		assertTrue(partnerPolicyMappingPage.isPolicyGroupFilterLabelDisplayed(),
+				GlobalConstants.isPolicyGroupFilterLabelDisplayed);
+		assertTrue(partnerPolicyMappingPage.isStatusFilterLabelDisplayed(),
+				GlobalConstants.isStatusFilterLabelDisplayed);
+		assertTrue(partnerPolicyMappingPage.isOrganisationLabelDisplayed(),
+				GlobalConstants.isOrganisationLabelDisplayed);
+		assertTrue(partnerPolicyMappingPage.isPartnerIdLabelDisplayed(), GlobalConstants.isPartnerIdLabelDisplayed);
+		assertTrue(partnerPolicyMappingPage.isPartnerTypeLabelDisplayed(), GlobalConstants.isPartnerTypeLabelDisplayed);
+
+		assertTrue(partnerPolicyMappingPage.isPolicyIdFilterPlaceHolderDisplayed(),
+				GlobalConstants.isPolicyIdFilterPlaceHolderDisplayed);
+		assertTrue(partnerPolicyMappingPage.isPolicyNameFilterPlaceHolderDisplayed(),
+				GlobalConstants.isPolicyNameFilterPlaceHolderDisplayed);
+		assertTrue(partnerPolicyMappingPage.isPolicyGroupFilterPlaceHolderDisplayed(),
+				GlobalConstants.isPolicyGroupFilterPlaceHolderDisplayed);
+		assertTrue(partnerPolicyMappingPage.isStatusFilterPlaceHolderDisplayed(),
+				GlobalConstants.isStatusFilterPlaceHolderDisplayed);
+		assertTrue(partnerPolicyMappingPage.isPartnerIdFilterPlaceHolderDisplayed(),
+				GlobalConstants.isPartnerIdFilterPlaceHolderDisplayed);
+		assertTrue(partnerPolicyMappingPage.isPartnerTypeFilterPlaceHolderDisplayed(),
+				GlobalConstants.isPartnerTypeFilterPlaceHolderDisplayed);
+		assertTrue(partnerPolicyMappingPage.isOrganisationFilterPlaceHolderDisplayed(),
+				GlobalConstants.isOrganisationFilterPlaceHolderDisplayed);
+
+		partnerPolicyMappingPage.clickOnStatusFilterDropdown();
+		assertTrue(partnerPolicyMappingPage.isApprovedStatusDisplayed(), GlobalConstants.isApprovedStatusDisplayed);
+		assertTrue(partnerPolicyMappingPage.isPendingForApprovalStatusDisplayed(),
+				GlobalConstants.isPendingForApprovalStatusDisplayed);
+		assertTrue(partnerPolicyMappingPage.isRejectedStatusDisplayed(), GlobalConstants.isRejectedStatusDisplayed);
+
+		partnerPolicyMappingPage.enterpolicyGroupFilter(GlobalConstants.DEFAULT_POLICYGROUP);
+		partnerPolicyMappingPage.enterPendingPolicyNameInFilter(GlobalConstants.Random_DATA);
+		partnerPolicyMappingPage.clickOnApplyFilterButton();
+		assertTrue(partnerPolicyMappingPage.isNoResultsFoundMessageDisplayed(),
+				GlobalConstants.isNoResultsFoundMessageDisplayed);
+		assertTrue(partnerPolicyMappingPage.isCancelButtonOfTextBoxDisplayed(),
+				GlobalConstants.isCancelButtonOfTextBoxDisplayed);
+		partnerPolicyMappingPage.clickOnCancelButtonOfTextBox();
+		partnerPolicyMappingPage.enterPendingPolicyNameInFilter("authPollink");
+		partnerPolicyMappingPage.clickOnFilterResetButton();
+
+		partnerPolicyMappingPage.clickOnFilterButton();
+		assertTrue(partnerPolicyMappingPage.isPartnerIdDescIconDisplayed(), GlobalConstants.isPartnerIdDescAscIcon);
+		assertTrue(partnerPolicyMappingPage.isPartnerIdAscIconDisplayed(), GlobalConstants.isPartnerIdDescAscIcon);
+		assertTrue(partnerPolicyMappingPage.isPartnerTypeDescIconDisplayed(),
+				GlobalConstants.isPartnerTypeDescIconDisplayed);
+		assertTrue(partnerPolicyMappingPage.isPartnerTypeAscIconDisplayed(),
+				GlobalConstants.isPartnerTypeAscIconDisplayed);
+		assertTrue(partnerPolicyMappingPage.isPolicyGroupNameDescIconDisplayed(),
+				GlobalConstants.isPolicyGroupNameDescAscIcon);
+		assertTrue(partnerPolicyMappingPage.isPolicyGroupNameAscIconDisplayed(),
+				GlobalConstants.isPolicyGroupNameDescAscIcon);
+		assertTrue(partnerPolicyMappingPage.isPolicyNameDescIconDisplayed(), GlobalConstants.isPolicyNameDescAscIcon);
+		assertTrue(partnerPolicyMappingPage.isPolicyNameAscIconDisplayed(), GlobalConstants.isPolicyNameDescAscIcon);
+		assertTrue(partnerPolicyMappingPage.isCreatedDateTimeDescISconDisplayed(),
+				GlobalConstants.isCreatedDateTimeDescAscIcon);
+		assertTrue(partnerPolicyMappingPage.isCreatedDateTimeAscIconDisplayed(),
+				GlobalConstants.isCreatedDateTimeDescAscIcon);
+
+		partnerPolicyMappingPage.clickOnPartnerIdDescIcon();
+		partnerPolicyMappingPage.clickOnPartnerIdAscIcon();
+		partnerPolicyMappingPage.clickOnOrgNameDescIcon();
+		partnerPolicyMappingPage.clickOnOrgNameAscIcon();
+		partnerPolicyMappingPage.clickOnPolicyGroupNameDescIcon();
+		partnerPolicyMappingPage.clickOnPolicyGroupNameAscIcon();
+		partnerPolicyMappingPage.clickOnPolicyNameDescIcon();
+		partnerPolicyMappingPage.clickOnPolicyNameAscIcon();
+		partnerPolicyMappingPage.clickOnCreatedDateTimeDescIcon();
+		partnerPolicyMappingPage.clickOnCreatedDateTimeAscIcon();
+		partnerPolicyMappingPage.clickOnStatusDescIcon();
+		partnerPolicyMappingPage.clickOnStatusAscIcon();
+
+		partnerPolicyMappingPage.clickOnStatusFilterDropdown();
+		partnerPolicyMappingPage.clickOnPendingForApprovalStatus();
+		partnerPolicyMappingPage.clickOnApplyFilterButton();
+		partnerPolicyMappingPage.clickOnPartnerListViewElipsisButton();
+		assertTrue(partnerPolicyMappingPage.isApproveRejectButtonEnabled(),
+				GlobalConstants.isApproveRejectButtonEnabled);
+		assertTrue(partnerPolicyMappingPage.isViewButtoEnabled(), GlobalConstants.isViewButtoEnabled);
+		partnerPolicyMappingPage.clickOnPendingForApprovalPolicy();
+		assertTrue(partnerPolicyMappingPage.isPartnerPolicyDetailsPageDisplayed(),
+				GlobalConstants.isPartnerPolicyDetailsPageDisplayed);
+		assertTrue(partnerPolicyMappingPage.isStatusPendingForApprovalDisplayed(),
+				GlobalConstants.isStatusPendingForApprovalDisplayed);
+		assertTrue(partnerPolicyMappingPage.isPartnerStatusActivatedDisplayed(),
+				GlobalConstants.isPartnerStatusActivatedDisplayed);
+		partnerPolicyMappingPage.clickOnViewBackButton();
+
+		partnerPolicyMappingPage.clickOnFilterButton();
+		partnerPolicyMappingPage.clickOnStatusFilterDropdown();
+		partnerPolicyMappingPage.clickOnApprovedStatus();
+		partnerPolicyMappingPage.clickOnApplyFilterButton();
+		partnerPolicyMappingPage.clickOnPartnerListViewElipsisButton();
+		partnerPolicyMappingPage.clickOnApproveOrRejectButton();
+		assertFalse(partnerPolicyMappingPage.isApproveOrRejectConfirmationPopupDisplayed(),
+				GlobalConstants.isApproveOrRejectConfirmationPopupDisplayed);
+		assertTrue(partnerPolicyMappingPage.isViewButtoEnabled(), GlobalConstants.isViewButtoEnabled);
+		partnerPolicyMappingPage.clickOnApprovedPolicy();
+		assertTrue(partnerPolicyMappingPage.isPartnerPolicyDetailsPageDisplayed(),
+				GlobalConstants.isPartnerPolicyDetailsPageDisplayed);
+		assertTrue(partnerPolicyMappingPage.isStatusApprovedDisplayed(), GlobalConstants.isStatusApprovedDisplayed);
+		assertTrue(partnerPolicyMappingPage.isPartnerStatusActivatedDisplayed(),
+				GlobalConstants.isPartnerStatusActivatedDisplayed);
+		partnerPolicyMappingPage.clickOnViewBackButton();
+
+		partnerPolicyMappingPage.clickOnFilterButton();
+		partnerPolicyMappingPage.clickOnStatusFilterDropdown();
+		partnerPolicyMappingPage.clickOnRejectedStatus();
+		partnerPolicyMappingPage.clickOnApplyFilterButton();
+		partnerPolicyMappingPage.clickOnPartnerListViewElipsisButton();
+		partnerPolicyMappingPage.clickOnApproveOrRejectButton();
+		assertFalse(partnerPolicyMappingPage.isApproveOrRejectConfirmationPopupDisplayed(),
+				GlobalConstants.isApproveOrRejectConfirmationPopupDisplayed);
+		assertTrue(partnerPolicyMappingPage.isViewButtoEnabled(), GlobalConstants.isViewButtoEnabled);
+		partnerPolicyMappingPage.clickOnRejectedPolicy();
+		assertTrue(partnerPolicyMappingPage.isPartnerPolicyDetailsPageDisplayed(),
+				GlobalConstants.isPartnerPolicyDetailsPageDisplayed);
+		assertTrue(partnerPolicyMappingPage.isStatusRejectedDisplayed(), GlobalConstants.isStatusRejectedDisplayed);
+		assertTrue(partnerPolicyMappingPage.isPartnerStatusActivatedDisplayed(),
+				GlobalConstants.isPartnerStatusActivatedDisplayed);
+		partnerPolicyMappingPage.clickOnViewBackButton();
+
+		assertTrue(authPolicyPage.isPaginationDisplayed(), GlobalConstants.isPaginationDisplayed);
+		assertTrue(authPolicyPage.isPreviusPageButtonDisplayed(), GlobalConstants.isPreviusPageButtonDisplayed);
+		assertTrue(authPolicyPage.isNextPageButtonDisplayed(), GlobalConstants.isNextPageButtonDisplayed);
+		assertTrue(authPolicyPage.isPage1Displayed(), GlobalConstants.isPage1Displayed);
+		authPolicyPage.clickOnNextPageButton();
+		assertTrue(authPolicyPage.isPage2Displayed(), GlobalConstants.isPage2Displayed);
+		authPolicyPage.clickOnPreviusPageButton();
+		assertTrue(authPolicyPage.isPage1Displayed(), GlobalConstants.isPage1Displayed);
+
+		assertTrue(authPolicyPage.isPrefixOfPageDisplayed(), GlobalConstants.isPrefixOfPageDisplayed);
+		assertTrue(authPolicyPage.isRecordPerPageDisplayed(), GlobalConstants.isRecordPerPageDisplayed);
+		assertTrue(authPolicyPage.isItemPerPage8Displayed(), GlobalConstants.isItemPerPage8Displayed);
+		assertTrue(authPolicyPage.isexpandIconDisplayed(), GlobalConstants.isexpandIconDisplayed);
+		authPolicyPage.selectItemPerPageNumber();
+		assertTrue(authPolicyPage.isItemPerPage16Displayed(), GlobalConstants.isItemPerPage16Displayed);
+		partnerPolicyMappingPage.clickOnTitleBackIcon();
+
+	}
+
+	@Test(priority = 23, description = "Approve Reject Requested Policies")
+	public void approveRejectRequestedPolicies() {
+
+		dashboardPage = new DashboardPage(driver);
+		policiesPage = new PoliciesPage(driver);
+		partnerPolicyMappingPage = new PartnerPolicyMappingPage(driver);
+
+		dashboardPage.clickOnPartnerPolicyMappingTab();
+		partnerPolicyMappingPage.clickOnFilterButton();
+		partnerPolicyMappingPage.enterpolicyGroupFilter(GlobalConstants.DEFAULT_POLICYGROUP);
+		partnerPolicyMappingPage.enterPendingPolicyNameInFilter(GlobalConstants.AUTHPOLICY_PARTLINK);
+		partnerPolicyMappingPage.clickOnApplyFilterButton();
+		partnerPolicyMappingPage.clickOnPartnerListViewElipsisButton();
+		assertTrue(partnerPolicyMappingPage.isApproveRejectButtonEnabled(),
+				GlobalConstants.isApproveRejectButtonEnabled);
+		partnerPolicyMappingPage.clickOnApproveOrRejectButton();
+
+		assertTrue(partnerPolicyMappingPage.isApproveOrRejectConfirmationPopupDisplayed(),
+				GlobalConstants.isApproveOrRejectConfirmationPopupDisplayed);
+		assertTrue(partnerPolicyMappingPage.isPolicyNameInPopupDisplayed(),
+				GlobalConstants.isPolicyNameInPopupDisplayed);
+		assertTrue(partnerPolicyMappingPage.isPolicyPopupSubtitleDisplayed(),
+				GlobalConstants.isPolicyPopupSubtitleDisplayed);
+		assertTrue(partnerPolicyMappingPage.isConfirmationPopupDetailedMessageDisplayed(),
+				GlobalConstants.isConfirmationPopupDetailedMessageDisplayed);
+		assertTrue(partnerPolicyMappingPage.isApproveRejectButtonDisplayed(),
+				GlobalConstants.isApproveRejectButtonDisplayed);
+		assertTrue(partnerPolicyMappingPage.isApproveSubmitButtonDisplayed(),
+				GlobalConstants.isApproveSubmitButtonDisplayed);
+		partnerPolicyMappingPage.clickOnApproveSubmitButton();
+
+		assertTrue(partnerPolicyMappingPage.isPartnerPolicyLinkingTitleDisplayed(),
+				GlobalConstants.isPartnerPolicyLinkingTitleDisplayed);
+		partnerPolicyMappingPage.clickOnFilterResetButton();
+		partnerPolicyMappingPage.clickOnFilterButton();
+		partnerPolicyMappingPage.enterpolicyGroupFilter(GlobalConstants.DEFAULT_POLICYGROUP);
+		partnerPolicyMappingPage.enterPendingPolicyNameInFilter(GlobalConstants.AUTHPOLICY_PARTLINK);
+		partnerPolicyMappingPage.clickOnApplyFilterButton();
+		assertTrue(partnerPolicyMappingPage.isStatusApprovedDisplayed(), GlobalConstants.isStatusApprovedDisplayed);
+		partnerPolicyMappingPage.clickOnPartnerListViewElipsisButton();
+		partnerPolicyMappingPage.clickOnApproveOrRejectButton();
+		assertFalse(partnerPolicyMappingPage.isApproveOrRejectConfirmationPopupDisplayed(),
+				GlobalConstants.isApproveOrRejectConfirmationPopupDisplayed);
+
+		partnerPolicyMappingPage.enterpolicyGroupFilter(GlobalConstants.DEFAULT_POLICYGROUP);
+		partnerPolicyMappingPage.enterPendingPolicyNameInFilter(GlobalConstants.AUTHPOLICY_PARTLINK2);
+		partnerPolicyMappingPage.clickOnApplyFilterButton();
+		partnerPolicyMappingPage.clickOnPartnerListViewElipsisButton();
+		partnerPolicyMappingPage.clickOnApproveOrRejectButton();
+		partnerPolicyMappingPage.clickOnRejectButton();
+		assertTrue(partnerPolicyMappingPage.isStatusRejectedDisplayed(), GlobalConstants.isStatusRejectedDisplayed);
+		partnerPolicyMappingPage.clickOnPartnerListViewElipsisButton();
+		partnerPolicyMappingPage.clickOnApproveOrRejectButton();
+		assertFalse(partnerPolicyMappingPage.isApproveOrRejectConfirmationPopupDisplayed(),
+				GlobalConstants.isApproveOrRejectConfirmationPopupDisplayed);
+
+		loginAsAuthPartner();
+
+		dashboardPage.clickOnPoliciesTitle();
+		policiesPage.clickOnFilterButton();
+		policiesPage.selectActivatedStatusInFilter();
+		assertTrue(policiesPage.isStatusApprovedDisplayed(), GlobalConstants.isStatusApprovedDisplayed);
+		policiesPage.selectRejectedStatusInFilter();
+		assertTrue(policiesPage.isStatusRejectedDisplayed(), GlobalConstants.isStatusRejectedDisplayed);
+
+	}
+
+	@Test(priority = 24, description = "View Requested Policie Details")
+	public void viewRequestedPolicieDetails() {
+
+		dashboardPage = new DashboardPage(driver);
+		partnerPolicyMappingPage = new PartnerPolicyMappingPage(driver);
+
+		dashboardPage.clickOnPartnerPolicyMappingTab();
+		partnerPolicyMappingPage.clickOnFilterButton();
+		partnerPolicyMappingPage.enterpolicyGroupFilter(GlobalConstants.DEFAULT_POLICYGROUP);
+		partnerPolicyMappingPage.enterPendingPolicyNameInFilter(GlobalConstants.AUTHPOLICY_PARTLINK);
+		partnerPolicyMappingPage.clickOnApplyFilterButton();
+		partnerPolicyMappingPage.clickOnPartnerListViewElipsisButton();
+		assertTrue(partnerPolicyMappingPage.isViewButtoEnabled(), GlobalConstants.isViewButtoEnabled);
+		partnerPolicyMappingPage.clickOnviewButton();
+
+		assertTrue(partnerPolicyMappingPage.isPartnerPolicyDetailsPageDisplayed(),
+				GlobalConstants.isPartnerPolicyDetailsPageDisplayed);
+		assertTrue(partnerPolicyMappingPage.isHomeButtonDisplayed(), GlobalConstants.isHomeButtonDisplayed);
+		assertTrue(partnerPolicyMappingPage.isListOfPartnerPolicyLinkagesDisplayed(),
+				GlobalConstants.isListOfPartnerPolicyLinkagesDisplayed);
+
+		assertTrue(partnerPolicyMappingPage.isPartnerIdLabelDisplayed(), GlobalConstants.isPartnerIdLabelDisplayed);
+		assertTrue(partnerPolicyMappingPage.isPartnerIdContextDisplayed(), GlobalConstants.isPartnerIdContextDisplayed);
+		assertTrue(partnerPolicyMappingPage.isStatusApprovedDisplayed(), GlobalConstants.isStatusApprovedDisplayed);
+		assertTrue(partnerPolicyMappingPage.isCreatedOnLabelDisplayed(), GlobalConstants.isCreatedOnLabelDisplayed);
+		assertTrue(partnerPolicyMappingPage.isCreatedDateDisplayed(), GlobalConstants.isCreatedDateDisplayed);
+		assertTrue(partnerPolicyMappingPage.isPolicyIdLabelDisplayed(), GlobalConstants.isPolicyIdLabelDisplayed);
+		assertTrue(partnerPolicyMappingPage.isPolicyNameLabelDisplayed(), GlobalConstants.isPolicyNameLabelDisplayed);
+		assertTrue(partnerPolicyMappingPage.isPolicyNameContextDisplayed(),
+				GlobalConstants.isPolicyNameContextDisplayed);
+		assertTrue(partnerPolicyMappingPage.isPolicyGroupLabelDisplayed(), GlobalConstants.isPolicyGroupLabelDisplayed);
+		assertTrue(partnerPolicyMappingPage.isPolicyGroupContextDisplayed(),
+				GlobalConstants.isPolicyGroupContextDisplayed);
+		assertTrue(partnerPolicyMappingPage.isPartnerTypeLabelDisplayed(), GlobalConstants.isPartnerTypeLabelDisplayed);
+		assertTrue(partnerPolicyMappingPage.isPartnerTypeContextDisplayed(),
+				GlobalConstants.isPartnerTypeContextDisplayed);
+		assertTrue(partnerPolicyMappingPage.isOrgNameLabelDisplayed(), GlobalConstants.isOrgNameLabelDisplayed);
+		assertTrue(partnerPolicyMappingPage.isOrgNameContextDisplayed(), GlobalConstants.isOrgNameContextDisplayed);
+		assertTrue(partnerPolicyMappingPage.isPartnerStatusLabelDisplayed(),
+				GlobalConstants.isPartnerStatusLabelDisplayed);
+		assertTrue(partnerPolicyMappingPage.isPartnerStatusActivatedDisplayed(),
+				GlobalConstants.isPartnerStatusActivatedDisplayed);
+
+		assertTrue(partnerPolicyMappingPage.isCommentsLabelDisplayed(), GlobalConstants.isCommentsLabelDisplayed);
+		assertTrue(partnerPolicyMappingPage.isAdminCommentsLabelDisplayed(),
+				GlobalConstants.isAdminCommentsLabelDisplayed);
+		assertTrue(partnerPolicyMappingPage.isPartnerCommentsLabelDisplayed(),
+				GlobalConstants.isPartnerCommentsLabelDisplayed);
+		assertTrue(partnerPolicyMappingPage.isStatusApprovedDisplayed(), GlobalConstants.isStatusApprovedDisplayed);
+		assertTrue(partnerPolicyMappingPage.isCommentsCreatedDateDisplayed(), GlobalConstants.isCreatedDateDisplayed);
+		assertTrue(partnerPolicyMappingPage.isPartnerCommentsContextDisplayed(),
+				GlobalConstants.isPartnerCommentsContextDisplayed);
+		partnerPolicyMappingPage.clickOnTitleBackIcon();
+
+	}
+
+	@Test(priority = 25, description = "Oidc Client Deactivate")
+	public void oidcClientDeactivate() {
+
+		dashboardPage = new DashboardPage(driver);
+		loginPage = new LoginPage(driver);
+		oidcClientPage = dashboardPage.clickOnAuthenticationServices();
+
+		oidcClientPage.clickOnFilterButton();
+		oidcClientPage.enterPartnerIdInFilter(GlobalConstants.AUTH_PARTNER_ID);
+		oidcClientPage.enterPolicyGroupInFilter(GlobalConstants.DEFAULT_POLICYGROUP);
+		oidcClientPage.enterValidOidcClientNameInFilter(GlobalConstants.DEACTIVATE_OIDCPOLICY2);
+		oidcClientPage.clickOnApplyFilterButton();
+
+		oidcClientPage.clickOnActionButton();
+		assertTrue(oidcClientPage.isViewButtonEnabled(), GlobalConstants.isViewButtonEnabled);
+		assertTrue(oidcClientPage.isDeactivateButtonEnabled(), GlobalConstants.isDeactivateButtonEnabled);
+
+		oidcClientPage.clickOnDeactivateButton();
+		assertTrue(oidcClientPage.isDeactivateOidcClientPopupDisplayed(),
+				GlobalConstants.isDeactivateOidcClientPopupDisplayed);
+		assertTrue(oidcClientPage.isDeactivateOidcClientTitleDisplayed(),
+				GlobalConstants.isDeactivateOidcClientTitleDisplayed);
+		assertTrue(oidcClientPage.isDeactivateOidcClientSubtitleDisplayed(),
+				GlobalConstants.isDeactivateOidcClientSubtitleDisplayed);
+		assertTrue(oidcClientPage.isDeactivateSubmitButtonAvailable(),
+				GlobalConstants.isDeactivateSubmitButtonAvailable);
+		assertTrue(oidcClientPage.isDeactivateCancelButtonAvailable(),
+				GlobalConstants.isDeactivateCancelButtonAvailable);
+
+		oidcClientPage.clickOnDeactivateCancelButton();
+		assertTrue(oidcClientPage.isSubTitleOfTabularViewDisplayed(), GlobalConstants.isSubTitleOfTabularViewDisplayed);
+
+		oidcClientPage.clickOnFilterButton();
+		oidcClientPage.enterPartnerIdInFilter(GlobalConstants.AUTH_PARTNER_ID);
+		oidcClientPage.enterValidOidcClientNameInFilter(GlobalConstants.DEACTIVATE_OIDCPOLICY2);
+		oidcClientPage.clickOnApplyFilterButton();
+
+		oidcClientPage.clickOnActionButton();
+		oidcClientPage.clickOnDeactivateButton();
+		oidcClientPage.clickOnDeactivateSubmitButtonButton();
+
+		oidcClientPage.clickOnFilterButton();
+		oidcClientPage.enterPartnerIdInFilter(GlobalConstants.AUTH_PARTNER_ID);
+		oidcClientPage.selectDeactivateStatusInFilter();
+		oidcClientPage.enterValidOidcClientNameInFilter(GlobalConstants.DEACTIVATE_OIDCPOLICY2);
+		oidcClientPage.clickOnApplyFilterButton();
+
+		oidcClientPage.clickOnDeactivatedOidcRow();
+		assertFalse(oidcClientPage.isOidcClientDetailsPageDisplayed(),
+				GlobalConstants.isOidcClientDetailsPageDisplayed);
+		assertTrue(oidcClientPage.isStatusDeavtivatedDisplayed(), GlobalConstants.isStatusDeavtivatedDisplayed);
+
+		oidcClientPage.clickOnActionButton();
+		oidcClientPage.clickOnViewButton();
+		assertTrue(oidcClientPage.isOidcClientDetailsPageDisplayed(), GlobalConstants.isOidcClientDetailsPageDisplayed);
+		assertTrue(oidcClientPage.isOidcDetailsPageStatusDeactivatedDisplayed(),
+				GlobalConstants.isOidcDetailsPageStatusDeactivatedDisplayed);
+		assertTrue(oidcClientPage.isDeactivatedOidcClientIdElementDisplayed(),
+				GlobalConstants.isDeactivatedOidcClientIdElementDisplayed);
+
+		loginAsAuthPartner();
+
+		dashboardPage.clickOnAuthenticationServicesTitle();
+		oidcClientPage.clickOnListCreateOidcClientButton();
+		oidcClientPage.selectPartnerIdDropdown();
+		oidcClientPage.selectPolicyNameDropdown(data);
+		oidcClientPage.enterNameOidcTextBox(GlobalConstants.AUTOMATION_LOWERCASE);
+		String publicKeytemp = PmpTestUtil.generateJWKPublicKey();
+		oidcClientPage.enterPublicKeyTextBox(publicKeytemp);
+		oidcClientPage.enterLogoUrTextBox(ConfigManager.getLogouri());
+		oidcClientPage.enterRedirectUriTextBox(ConfigManager.getRedirectUri());
+		oidcClientPage.clickOnSubmitButton();
+		assertTrue(oidcClientPage.isOidcSubmittedSuccessfullyDisplayed(),
+				GlobalConstants.isOidcSubmittedSuccessfullyDisplayed);
+		oidcClientPage.clickConfirmationGoBackButton();
+
+	}
+
+	@Test(priority = 26, description = "Oidc Client Tabular View")
+	public void oidcClientTabularView() {
+
+		dashboardPage = new DashboardPage(driver);
+		authPolicyPage = new AuthPolicyPage(driver);
+		basePage = new BasePage(driver);
+
+		assertTrue(dashboardPage.isAuthenticationServicesDisplayed(),
+				GlobalConstants.isAuthenticationServicesDisplayed);
+		OidcClientPage oidcClientPage = dashboardPage.clickOnAuthenticationServices();
+		assertTrue(oidcClientPage.isOidcClientTabDisplayed(), GlobalConstants.isOidcClientTabDisplayed);
+
+		assertTrue(oidcClientPage.isSubTitleOfTabularViewDisplayed(), GlobalConstants.isSubTitleOfTabularViewDisplayed);
+		assertTrue(oidcClientPage.isHomeButtonDisplayed(), GlobalConstants.isHomeButtonDisplayed);
+		assertTrue(oidcClientPage.isFilterButtonEnabled(), GlobalConstants.isFilterButtonEnabled);
+
+		assertTrue(oidcClientPage.isPartnerIdHeaderDisplayed(), GlobalConstants.isPartnerIdHeaderDisplayed);
+		assertTrue(oidcClientPage.isOrganisationHeaderDisplayed(), GlobalConstants.isOrganisationHeaderDisplayed);
+		assertTrue(oidcClientPage.isPolicyGroupHeaderDisplayed(), GlobalConstants.isPolicyGroupHeaderDisplayed);
+		assertTrue(oidcClientPage.isPolicyNameHeaderDisplayed(), GlobalConstants.isPolicyNameHeaderDisplayed);
+		assertTrue(oidcClientPage.isOidcClientNameHeaderwDisplayed(), GlobalConstants.isOidcClientNameHeaderwDisplayed);
+		assertTrue(oidcClientPage.isCreationDateHeaderDisplayed(), GlobalConstants.isCreationDateHeaderDisplayed);
+		assertTrue(oidcClientPage.isStatusHeaderDisplayed(), GlobalConstants.isStatusHeaderDisplayed);
+		assertTrue(oidcClientPage.isOidcClientIdHeaderDisplayed(), GlobalConstants.isOidcClientIdHeaderDisplayed);
+		assertTrue(oidcClientPage.isActionHeaderDisplayed(), GlobalConstants.isActionHeaderDisplayed);
+
+		assertTrue(oidcClientPage.isPartnerIdDescIconDisplayed(), GlobalConstants.isPartnerIdDescIconDisplayed);
+		assertTrue(oidcClientPage.isPartnerIdAscIconDisplayed(), GlobalConstants.isPartnerIdAscIconDisplayed);
+//		assertTrue(oidcClientPage.isOidcClientNameDescIconDisplayed(), GlobalConstants.isOidcClientNameDescIconDisplayed);
+//		assertTrue(oidcClientPage.isOidcClientNameAscIconDisplayed(), GlobalConstants.isActionHeaderDisplayed);
+		assertTrue(oidcClientPage.isPolicyGroupNameDescIconDisplayed(),
+				GlobalConstants.isPolicyGroupNameDescIconDisplayed);
+		assertTrue(oidcClientPage.isPolicyGroupNameAscIconDisplayed(),
+				GlobalConstants.isPolicyGroupNameAscIconDisplayed);
+		assertTrue(oidcClientPage.isPolicyNameDescIconDisplayed(), GlobalConstants.isPolicyNameDescIconDisplayed);
+		assertTrue(oidcClientPage.isPolicyNameAscIconDisplayed(), GlobalConstants.isPolicyNameAscIconDisplayed);
+		assertTrue(oidcClientPage.isCreatedDateTimeDescISconDisplayed(),
+				GlobalConstants.isCreatedDateTimeDescISconDisplayed);
+		assertTrue(oidcClientPage.isCreatedDateTimeAscIconDisplayed(),
+				GlobalConstants.isCreatedDateTimeAscIconDisplayed);
+
+		assertTrue(oidcClientPage.isStatusDescIconDisplayed(), GlobalConstants.isStatusDescIconDisplayed);
+		assertTrue(oidcClientPage.isStatusAscIconDisplayed(), GlobalConstants.isStatusAscIconDisplayed);
+		assertTrue(oidcClientPage.isOrgNameDescIconDisplayed(), GlobalConstants.isOrgNameDescIconDisplayed);
+		assertTrue(oidcClientPage.isOrgNameAscIconDisplayed(), GlobalConstants.isOrgNameAscIconDisplayed);
+
+		basePage.scrollToEndPage();
+		basePage.scrollToStartPage();
+		oidcClientPage.clickOnPartnerIdDescIcon();
+		oidcClientPage.clickOnPartnerIdAscIcon();
+		oidcClientPage.clickOnOrgNameDescIcon();
+		oidcClientPage.clickOnOrgNameAscIcon();
+		oidcClientPage.clickOnPolicyGroupNameDescIcon();
+		oidcClientPage.clickOnPolicyGroupNameAscIcon();
+		oidcClientPage.clickOnPolicyNameDescIcon();
+		oidcClientPage.clickOnPolicyNameAscIcon();
+		oidcClientPage.clickOnCreatedDateTimeDescIcon();
+		oidcClientPage.clickOnCreatedDateTimeAscIcon();
+		oidcClientPage.clickOnStatusDescIcon();
+		oidcClientPage.clickOnStatusAscIcon();
+
+		oidcClientPage.clickOnFilterButton();
+		assertTrue(oidcClientPage.isfilterResetButtonEnabled(), GlobalConstants.isfilterResetButtonEnabled);
+		assertFalse(oidcClientPage.isFilterButtonEnabled(), GlobalConstants.isFilterButtonEnabled);
+
+		assertTrue(oidcClientPage.isPartnerIdFilterHeaderDisplayed(), GlobalConstants.isPartnerIdFilterHeaderDisplayed);
+		assertTrue(oidcClientPage.isOrganisationFilterHeaderDisplayed(),
+				GlobalConstants.isOrganisationFilterHeaderDisplayed);
+		assertTrue(oidcClientPage.isPolicyGroupFilterHeaderDisplayed(),
+				GlobalConstants.isPolicyGroupFilterHeaderDisplayed);
+		assertTrue(oidcClientPage.isPolicyNameFilterHeaderDisplayed(),
+				GlobalConstants.isPolicyNameFilterHeaderDisplayed);
+		assertTrue(oidcClientPage.isOidcClientNameFilterHeaderDisplayed(),
+				GlobalConstants.isOidcClientNameFilterHeaderDisplayed);
+		assertTrue(oidcClientPage.isStatusFilterHeaderDisplayed(), GlobalConstants.isStatusFilterHeaderDisplayed);
+
+		assertTrue(oidcClientPage.isPartnerIdPlaceHolderDisplayed(), GlobalConstants.isPartnerIdPlaceHolderDisplayed);
+		assertTrue(oidcClientPage.isOrganisationPlaceHolderDisplayed(),
+				GlobalConstants.isOrganisationPlaceHolderDisplayed);
+		assertTrue(oidcClientPage.isPolicyGroupPlaceHolderDisplayed(),
+				GlobalConstants.isPolicyGroupPlaceHolderDisplayed);
+		assertTrue(oidcClientPage.isPolicyNamePlaceHolderDisplayed(), GlobalConstants.isPolicyNamePlaceHolderDisplayed);
+		assertTrue(oidcClientPage.isOidcClientNamePlaceHolderDisplayed(),
+				GlobalConstants.isOidcClientNamePlaceHolderDisplayed);
+		assertTrue(oidcClientPage.isStatusPlaceHolderDisplayed(), GlobalConstants.isStatusPlaceHolderDisplayed);
+
+		assertFalse(oidcClientPage.isApplyFilterButtonEnabled(), GlobalConstants.isApplyFilterButtonEnabled);
+		oidcClientPage.enterInvalidOidcClientNameInFilter(GlobalConstants.Random_DATA);
+		assertTrue(oidcClientPage.isApplyFilterButtonEnabled(), GlobalConstants.isApplyFilterButtonEnabled);
+		oidcClientPage.clickOnApplyFilterButton();
+		assertTrue(oidcClientPage.isNoResultFoundDisplayed(), GlobalConstants.isNoResultFoundDisplayed);
+
+		oidcClientPage.clickOnStatusFilter();
+		assertTrue(oidcClientPage.isActivatedStatusInFilterDisplayed(),
+				GlobalConstants.isActivatedStatusInFilterDisplayed);
+		assertTrue(oidcClientPage.isActivatedStatusInFilterDisplayed(),
+				GlobalConstants.isActivatedStatusInFilterDisplayed);
+		oidcClientPage.clickOnStatusFilter();
+		oidcClientPage.clickOnFilterResetButton();
+		assertFalse(oidcClientPage.isfilterResetButtonEnabled(), GlobalConstants.isfilterResetButtonEnabled);
+
+		oidcClientPage.clickOnFilterButton();
+		oidcClientPage.enterPartnerIdInFilter(GlobalConstants.AUTH_PARTNER_ID);
+		oidcClientPage.enterPolicyGroupInFilter(GlobalConstants.DEFAULT_POLICYGROUP);
+		oidcClientPage.clickOnFilterCloseButton();
+		oidcClientPage.enterValidOidcClientNameInFilter(GlobalConstants.AUTOMATION_LOWERCASE);
+		oidcClientPage.clickOnApplyFilterButton();
+
+		oidcClientPage.clickOnPartnerIdDescIcon();
+		oidcClientPage.clickOnPartnerIdAscIcon();
+		oidcClientPage.clickOnOrgNameDescIcon();
+		oidcClientPage.clickOnOrgNameAscIcon();
+		oidcClientPage.clickOnPolicyGroupNameDescIcon();
+		oidcClientPage.clickOnPolicyGroupNameAscIcon();
+		oidcClientPage.clickOnPolicyNameDescIcon();
+		oidcClientPage.clickOnPolicyNameAscIcon();
+		oidcClientPage.clickOnCreatedDateTimeDescIcon();
+		oidcClientPage.clickOnCreatedDateTimeAscIcon();
+		oidcClientPage.clickOnStatusDescIcon();
+		oidcClientPage.clickOnStatusAscIcon();
+
+		oidcClientPage.clickOnActivatedOidcClient();
+		assertTrue(oidcClientPage.isOidcClientDetailsPageDisplayed(), GlobalConstants.isOidcClientDetailsPageDisplayed);
+		oidcClientPage.clickOidcClientDetailsBackButton();
+
+		oidcClientPage.clickOnFilterButton();
+		oidcClientPage.enterPartnerIdInFilter(GlobalConstants.AUTH_PARTNER_ID);
+		oidcClientPage.enterPolicyGroupInFilter(GlobalConstants.DEFAULT_POLICYGROUP);
+		oidcClientPage.enterValidOidcClientNameInFilter(GlobalConstants.AUTOMATION_LOWERCASE);
+		oidcClientPage.clickOnApplyFilterButton();
+
+		oidcClientPage.clickOnActionButton();
+		assertTrue(oidcClientPage.isViewButtonEnabled(), GlobalConstants.isViewButtonEnabled);
+		assertTrue(oidcClientPage.isDeactivateButtonEnabled(), GlobalConstants.isDeactivateButtonEnabled);
+
+		oidcClientPage.clickOnActionButton();
+		assertTrue(oidcClientPage.isOidcClientIdEyeIconDisplayed(), GlobalConstants.isOidcClientIdEyeIconDisplayed);
+		oidcClientPage.clickOnOidcClientIdEyeIcon();
+		assertTrue(oidcClientPage.isPolicyNameAsTitleDisplayed(), GlobalConstants.isPolicyNameAsTitleDisplayed);
+		assertTrue(oidcClientPage.isPartnerIdAsSubTitleDisplayed(), GlobalConstants.isPartnerIdAsSubTitleDisplayed);
+		assertTrue(oidcClientPage.isOidcClientIdLabelInEyeIconPopupDisplayed(),
+				GlobalConstants.isOidcClientIdLabelInEyeIconPopupDisplayed);
+		assertTrue(oidcClientPage.iscopyIdButtonDisplayed(), GlobalConstants.iscopyIdButtonDisplayed);
+		assertTrue(oidcClientPage.isCopyIdCloseButtonDisplayed(), GlobalConstants.isCopyIdCloseButtonDisplayed);
+
+		oidcClientPage.clickOnCopyIdButton();
+		assertTrue(oidcClientPage.isCopyIdCloseButtonDisplayed(), GlobalConstants.isCopyIdCloseButtonDisplayed);
+		oidcClientPage.clickOnCopyIdCloseButton();
+
+		oidcClientPage.enterPartnerIdInFilter(GlobalConstants.AUTH_PARTNER_ID);
+		oidcClientPage.enterPolicyGroupInFilter(GlobalConstants.DEFAULT_POLICYGROUP);
+		oidcClientPage.enterValidOidcClientNameInFilter(GlobalConstants.DEACTIVATE_OIDCPOLICY2);
+		oidcClientPage.clickOnApplyFilterButton();
+
+		oidcClientPage.clickOnActionButton();
+		assertTrue(oidcClientPage.isViewButtonEnabled(), GlobalConstants.isViewButtonEnabled);
+		oidcClientPage.clickOnDeactivateButton();
+		assertFalse(oidcClientPage.isDeactivateOidcClientPopupDisplayed(),
+				GlobalConstants.isDeactivateOidcClientPopupDisplayed);
+
+		oidcClientPage.clickOnDeactivatedOidcRow();
+		assertFalse(oidcClientPage.isOidcClientDetailsPageDisplayed(),
+				GlobalConstants.isOidcClientDetailsPageDisplayed);
+		assertTrue(oidcClientPage.isStatusDeavtivatedDisplayed(), GlobalConstants.isStatusDeavtivatedDisplayed);
+
+		oidcClientPage.clickOnFilterResetButton();
+		assertTrue(authPolicyPage.isPaginationDisplayed(), GlobalConstants.isPaginationDisplayed);
+		assertTrue(authPolicyPage.isPreviusPageButtonDisplayed(), GlobalConstants.isPreviusPageButtonDisplayed);
+		assertTrue(authPolicyPage.isNextPageButtonDisplayed(), GlobalConstants.isNextPageButtonDisplayed);
+		assertTrue(authPolicyPage.isPage1Displayed(), GlobalConstants.isPage1Displayed);
+		authPolicyPage.clickOnNextPageButton();
+		assertTrue(authPolicyPage.isPage2Displayed(), GlobalConstants.isPage2Displayed);
+		authPolicyPage.clickOnPreviusPageButton();
+		assertTrue(authPolicyPage.isPage1Displayed(), GlobalConstants.isPage1Displayed);
+
+		assertTrue(authPolicyPage.isPrefixOfPageDisplayed(), GlobalConstants.isPrefixOfPageDisplayed);
+		assertTrue(authPolicyPage.isRecordPerPageDisplayed(), GlobalConstants.isRecordPerPageDisplayed);
+		assertTrue(authPolicyPage.isItemPerPage8Displayed(), GlobalConstants.isItemPerPage8Displayed);
+		assertTrue(authPolicyPage.isexpandIconDisplayed(), GlobalConstants.isexpandIconDisplayed);
+		authPolicyPage.selectItemPerPageNumber();
+		assertTrue(authPolicyPage.isItemPerPage16Displayed(), GlobalConstants.isItemPerPage16Displayed);
+
+		oidcClientPage.clickOnTitleBackButton();
+		assertTrue(dashboardPage.isAuthenticationServicesDisplayed(),
+				GlobalConstants.isAuthenticationServicesDisplayed);
+
+	}
+
+	@Test(priority = 27, description = "Oidc Client View Details")
+	public void oidcClientViewDetails() {
+
+		dashboardPage = new DashboardPage(driver);
+
+		oidcClientPage = dashboardPage.clickOnAuthenticationServices();
+		oidcClientPage.clickOnFilterButton();
+		oidcClientPage.enterPartnerIdInFilter(GlobalConstants.AUTH_PARTNER_ID);
+		oidcClientPage.enterPolicyGroupInFilter(GlobalConstants.DEFAULT_POLICYGROUP);
+		oidcClientPage.enterValidOidcClientNameInFilter(GlobalConstants.AUTOMATION_LOWERCASE);
+		oidcClientPage.clickOnApplyFilterButton();
+
+		oidcClientPage.clickOnActionButton();
+		assertTrue(oidcClientPage.isViewButtonEnabled(), GlobalConstants.isViewButtonEnabled);
+		oidcClientPage.clickOnViewButton();
+
+		assertTrue(oidcClientPage.isOidcClientDetailsPageDisplayed(), GlobalConstants.isOidcClientDetailsPageDisplayed);
+		assertTrue(oidcClientPage.isViewOidcClientDetailsPageTitleDisplayed(),
+				GlobalConstants.isViewOidcClientDetailsPageTitleDisplayed);
+		assertTrue(oidcClientPage.isHomeButtonDisplayed(), GlobalConstants.isHomeButtonDisplayed);
+		assertTrue(oidcClientPage.isActivatedOidcClientIdElementDisplayed(),
+				GlobalConstants.isActivatedOidcClientIdElementDisplayed);
+
+		assertTrue(oidcClientPage.isOidcClientNameLabelDisplayed(), GlobalConstants.isOidcClientNameLabelDisplayed);
+		assertTrue(oidcClientPage.isOidcClientIdLabelDisplayed(), GlobalConstants.isOidcClientIdLabelDisplayed);
+		assertTrue(oidcClientPage.isOidcClientDetailsPartnerIdLabelDisplayed(),
+				GlobalConstants.isOidcClientDetailsPartnerIdLabelDisplayed);
+		assertTrue(oidcClientPage.isOidcClientDetailsPartnerIdContextDisplayed(),
+				GlobalConstants.isOidcClientDetailsPartnerIdContextDisplayed);
+		assertTrue(oidcClientPage.isOidcClientDetailsPartnerTypeLabelDisplayed(),
+				GlobalConstants.isOidcClientDetailsPartnerTypeLabelDisplayed);
+		assertTrue(oidcClientPage.isOidcClientDetailsPartnerTypeContextDisplayed(),
+				GlobalConstants.isOidcClientDetailsPartnerTypeContextDisplayed);
+		assertTrue(oidcClientPage.isOidcClientDetailsOrgNameLabelDisplayed(),
+				GlobalConstants.isOidcClientDetailsOrgNameLabelDisplayed);
+		assertTrue(oidcClientPage.isOidcClientDetailsOrgNameContextDisplayed(),
+				GlobalConstants.isOidcClientDetailsOrgNameContextDisplayed);
+		assertTrue(oidcClientPage.isOidcClientDetailsPolicyGroupLabelDisplayed(),
+				GlobalConstants.isOidcClientDetailsPolicyGroupLabelDisplayed);
+		assertTrue(oidcClientPage.isOidcClientDetailsPolicyGroupNameContextDisplayed(),
+				GlobalConstants.isOidcClientDetailsPolicyGroupNameContextDisplayed);
+		assertTrue(oidcClientPage.isOidcClientDetailsPolicyGoupDescriptionLabelDisplayed(),
+				GlobalConstants.isOidcClientDetailsPolicyGoupDescriptionLabelDisplayed);
+		assertTrue(oidcClientPage.isOidcClientDetailsPolicyGroupDescriptionContextDisplayed(),
+				GlobalConstants.isOidcClientDetailsPolicyGroupDescriptionContextDisplayed);
+		assertTrue(oidcClientPage.isOidcClientDetailsPolicyNameLabelDisplayed(),
+				GlobalConstants.isOidcClientDetailsPolicyNameLabelDisplayed);
+		assertTrue(oidcClientPage.isOidcClientDetailsPolicyNameContextDisplayed(),
+				GlobalConstants.isOidcClientDetailsPolicyNameContextDisplayed);
+		assertTrue(oidcClientPage.isOidcClientDetailsPolicyNameDescriptionLabelDisplayed(),
+				GlobalConstants.isOidcClientDetailsPolicyNameDescriptionLabelDisplayed);
+		assertTrue(oidcClientPage.isOidcClientDetailsPolicyDescriptionContextDisplayed(),
+				GlobalConstants.isOidcClientDetailsPolicyDescriptionContextDisplayed);
+		assertTrue(oidcClientPage.isOidcClientDetailsPublicKeyLabelDisplayed(),
+				GlobalConstants.isOidcClientDetailsPublicKeyLabelDisplayed);
+		assertTrue(oidcClientPage.isOidcClientDetailsPublicKeyContextDisplayed(),
+				GlobalConstants.isOidcClientDetailsPublicKeyContextDisplayed);
+		assertTrue(oidcClientPage.isOidcClientDetailsLogoUriLabelDisplayed(),
+				GlobalConstants.isOidcClientDetailsLogoUriLabelDisplayed);
+		assertTrue(oidcClientPage.isOidcClientDetailsLogoUriContextDisplayed(),
+				GlobalConstants.isOidcClientDetailsLogoUriContextDisplayed);
+		assertTrue(oidcClientPage.isOidcClientDetailsRedirectUrisLabelDisplayed(),
+				GlobalConstants.isOidcClientDetailsRedirectUrisLabelDisplayed);
+		assertTrue(oidcClientPage.isOidcClientDetailsRedirectUrisContextDisplayed(),
+				GlobalConstants.isOidcClientDetailsRedirectUrisContextDisplayed);
+		assertTrue(oidcClientPage.isOidcClientDetailsGrantTypesLabelDisplayed(),
+				GlobalConstants.isOidcClientDetailsGrantTypesLabelDisplayed);
+		assertTrue(oidcClientPage.isOidcClientDetailsGrantTypesContextDisplayed(),
+				GlobalConstants.isOidcClientDetailsGrantTypesContextDisplayed);
+		assertTrue(oidcClientPage.isOidcClientDetailsActivatedStatusDisplayed(),
+				GlobalConstants.isOidcClientDetailsActivatedStatusDisplayed);
+		assertTrue(oidcClientPage.isCreatedOnLabelDisplayed(), GlobalConstants.isCreatedOnLabelDisplayed);
+		assertTrue(oidcClientPage.isCreatedDateDisplayed(), GlobalConstants.isCreatedDateDisplayed);
+
+		assertTrue(oidcClientPage.isOidcClientDetailsCopyIdDisplayed(),
+				GlobalConstants.isOidcClientDetailsCopyIdDisplayed);
+		oidcClientPage.clickOnOidcClientDetailsCopyId();
+		assertTrue(oidcClientPage.isCopiedTextDisplayed(), GlobalConstants.isCopiedTextDisplayed);
+		oidcClientPage.clickOnOidcClientDetailsCopyId();
+		assertTrue(oidcClientPage.isCopiedTextDisplayed(), GlobalConstants.isCopiedTextDisplayed);
+		oidcClientPage.clickOnOidcClientDetailsCopyId();
+		assertTrue(oidcClientPage.isCopiedTextDisplayed(), GlobalConstants.isCopiedTextDisplayed);
+
+		assertTrue(oidcClientPage.isOidcClientDetailsBackButtonDisplayed(),
+				GlobalConstants.isOidcClientDetailsBackButtonDisplayed);
+		oidcClientPage.clickOidcClientDetailsBackButton();
+
+		oidcClientPage.clickOnFilterButton();
+		oidcClientPage.enterPartnerIdInFilter(GlobalConstants.AUTH_PARTNER_ID);
+		oidcClientPage.enterPolicyGroupInFilter(GlobalConstants.DEFAULT_POLICYGROUP);
+		oidcClientPage.enterValidOidcClientNameInFilter(GlobalConstants.DEACTIVATE_OIDCPOLICY2);
+		oidcClientPage.clickOnApplyFilterButton();
+		oidcClientPage.clickOnActionButton();
+
+		oidcClientPage.clickOnViewButton();
+		assertTrue(oidcClientPage.isOidcClientDetailsPageDisplayed(), GlobalConstants.isOidcClientDetailsPageDisplayed);
+		assertTrue(oidcClientPage.isOidcDetailsPageStatusDeactivatedDisplayed(),
+				GlobalConstants.isOidcDetailsPageStatusDeactivatedDisplayed);
+		assertTrue(oidcClientPage.isDeactivatedOidcClientIdElementDisplayed(),
+				GlobalConstants.isDeactivatedOidcClientIdElementDisplayed);
+
+		assertTrue(oidcClientPage.isOidcClientDetailsCopyIdDisplayed(),
+				GlobalConstants.isOidcClientDetailsCopyIdDisplayed);
+		oidcClientPage.clickOnOidcClientDetailsCopyId();
+		assertFalse(oidcClientPage.isCopiedTextDisplayed(), GlobalConstants.isCopiedTextDisplayed);
+		oidcClientPage.clickOnTitleBackButton();
+		assertTrue(oidcClientPage.isOidcClientTabDisplayed(), GlobalConstants.isOidcClientTabDisplayed);
+
+	}
+
+	@Test(priority = 28, description = "ApiKey Deactivate")
+	public void apiKeyDeactivate() {
+
+		dashboardPage = new DashboardPage(driver);
+		loginPage = new LoginPage(driver);
+		apiKeyPage = new ApiKeyPage(driver);
+		oidcClientPage = dashboardPage.clickOnAuthenticationServices();
+		basePage = new BasePage(driver);
+
+		assertTrue(oidcClientPage.isOidcClientTabDisplayed(), GlobalConstants.isOidcClientTabDisplayed);
+		assertTrue(oidcClientPage.isApiKeyTabDisplayed(), GlobalConstants.isApiKeyTabDisplayed);
+		oidcClientPage.clickOnApiKeyTab();
+		apiKeyPage.clickOnFilterButton();
+
+		apiKeyPage.enterPartnerIdInFilter(GlobalConstants.AUTH_PARTNER_ID);
+		apiKeyPage.enterPolicyGroupInFilter(GlobalConstants.DEFAULT_POLICYGROUP);
+		apiKeyPage.enterValidApiKeyNameInAdminFilter(GlobalConstants.DEACTIVATE_APIKEY);
+		apiKeyPage.clickOnApplyFilterButton();
+
+		apiKeyPage.clickOnActionButton();
+		assertTrue(apiKeyPage.isViewButtonEnabled(), GlobalConstants.isViewButtonEnabled);
+		assertTrue(apiKeyPage.isDeactivateButtonEnabled(), GlobalConstants.isDeactivateButtonEnabled);
+
+		apiKeyPage.clickOnApiKeyDeactivateButton();
+		assertTrue(apiKeyPage.isApiKeyInAdminDeactivatePopupDisplayed(),
+				GlobalConstants.isApiKeyDeactivatePopupDisplayed);
+		assertTrue(apiKeyPage.isApiKeyInAdminDeactivateTitleDisplayed(),
+				GlobalConstants.isApiKeyDeactivateTitleDisplayed);
+		assertTrue(apiKeyPage.isApiKeyInAdminDeactivateInfoTextDisplayed(),
+				GlobalConstants.isApiKeyDeactivationInfoTextDisplayed);
+		assertTrue(apiKeyPage.isDeactivateSubmitButtonAvailable(), GlobalConstants.isDeactivateSubmitButtonAvailable);
+		assertTrue(apiKeyPage.isDeactivateCancelButtonAvailable(), GlobalConstants.isDeactivateCancelButtonAvailable);
+
+		apiKeyPage.clickOnDeactivateCancelButton();
+		apiKeyPage.clickOnFilterResetButton();
+		assertTrue(apiKeyPage.isSubTitleOfTabularViewDisplayed(), GlobalConstants.isSubTitleOfTabularViewDisplayed);
+
+		apiKeyPage.clickOnFilterButton();
+		apiKeyPage.enterPartnerIdInFilter(GlobalConstants.AUTH_PARTNER_ID);
+		apiKeyPage.enterValidApiKeyNameInAdminFilter(GlobalConstants.DEACTIVATE_APIKEY);
+		apiKeyPage.clickOnApplyFilterButton();
+
+		apiKeyPage.clickOnActionButton();
+		apiKeyPage.clickOnApiKeyDeactivateButton();
+		apiKeyPage.clickOnDeactivateSubmitButton();
+
+		basePage.navigateBack();
+		basePage.navigateForword();
+
+		loginAsAuthPartner();
+
+		dashboardPage.clickOnAuthenticationServicesTitle();
+		oidcClientPage.clickOnApiKeyTab();
+		apiKeyPage.clickOnApiKeyListPageGenerateApiKeyBtn();
+		apiKeyPage.selectPartnerIdDropdown();
+		apiKeyPage.selectPolicyNameDropdown(data);
+		apiKeyPage.enterNameOfApiKeyTextBox(GlobalConstants.DEACTIVATE_APIKEY);
+		apiKeyPage.clickOnSubmitButton();
+		assertTrue(apiKeyPage.isDuplicateApiKeyNameErrorMessageDisplayed(),
+				GlobalConstants.isDuplicateApiKeyNameErrorMessageDisplayed);
+		apiKeyPage.clickOnDuplicateApiKeyNameErrorMessageCloseButton();
+
+	}
+
+	@Test(priority = 29, description = "API Key Tabular View")
+	public void apiKeyTabularView() {
+		dashboardPage = new DashboardPage(driver);
+		authPolicyPage = new AuthPolicyPage(driver);
+		apiKeyPage = new ApiKeyPage(driver);
+
+		assertTrue(dashboardPage.isAuthenticationServicesDisplayed(),
+				GlobalConstants.isAuthenticationServicesDisplayed);
+		OidcClientPage oidcClientPage = dashboardPage.clickOnAuthenticationServices();
+		assertTrue(oidcClientPage.isOidcClientTabDisplayed(), GlobalConstants.isOidcClientTabDisplayed);
+		assertTrue(oidcClientPage.isApiKeyTabDisplayed(), GlobalConstants.isApiKeyTabDisplayed);
+		oidcClientPage.clickOnApiKeyTab();
+
+		assertTrue(apiKeyPage.isSubTitleOfTabularViewDisplayed(), GlobalConstants.isSubTitleOfTabularViewDisplayed);
+		assertTrue(apiKeyPage.isHomeButtonDisplayed(), GlobalConstants.isHomeButtonDisplayed);
+		assertTrue(apiKeyPage.isFilterButtonEnabled(), GlobalConstants.isFilterButtonEnabled);
+
+		assertTrue(apiKeyPage.isPartnerIdHeaderDisplayed(), GlobalConstants.isPartnerIdHeaderDisplayed);
+		assertTrue(apiKeyPage.isOrganisationHeaderDisplayed(), GlobalConstants.isOrganisationHeaderDisplayed);
+		assertTrue(apiKeyPage.isPolicyGroupHeaderDisplayed(), GlobalConstants.isPolicyGroupHeaderDisplayed);
+		assertTrue(apiKeyPage.isPolicyNameHeaderDisplayed(), GlobalConstants.isPolicyNameHeaderDisplayed);
+		assertTrue(apiKeyPage.isApiKeyNameHeaderDisplayed(), GlobalConstants.isApiKeyNameHeaderDisplayed);
+		assertTrue(apiKeyPage.isCreationDateHeaderDisplayed(), GlobalConstants.isCreationDateHeaderDisplayed);
+		assertTrue(apiKeyPage.isStatusHeaderDisplayed(), GlobalConstants.isStatusHeaderDisplayed);
+		assertTrue(apiKeyPage.isActionHeaderDisplayed(), GlobalConstants.isActionHeaderDisplayed);
+
+		assertTrue(apiKeyPage.isPartnerIdDescIconDisplayed(), GlobalConstants.isPartnerIdDescIconDisplayed);
+		assertTrue(apiKeyPage.isPartnerIdAscIconDisplayed(), GlobalConstants.isPartnerIdAscIconDisplayed);
+		assertTrue(apiKeyPage.isApiKeyNameDescIconDisplayed(), GlobalConstants.isApiKeyNameDescIconDisplayed);
+		assertTrue(apiKeyPage.isApiKeyNameAscIconDisplayed(), GlobalConstants.isActionHeaderDisplayed);
+		assertTrue(apiKeyPage.isPolicyGroupNameDescIconDisplayed(), GlobalConstants.isPolicyGroupNameDescIconDisplayed);
+		assertTrue(apiKeyPage.isPolicyGroupNameAscIconDisplayed(), GlobalConstants.isPolicyGroupNameAscIconDisplayed);
+		assertTrue(apiKeyPage.isPolicyNameDescIconDisplayed(), GlobalConstants.isPolicyNameDescIconDisplayed);
+		assertTrue(apiKeyPage.isPolicyNameAscIconDisplayed(), GlobalConstants.isPolicyNameAscIconDisplayed);
+		assertTrue(apiKeyPage.isCreatedDateTimeDescISconDisplayed(),
+				GlobalConstants.isCreatedDateTimeDescISconDisplayed);
+		assertTrue(apiKeyPage.isCreatedDateTimeAscIconDisplayed(), GlobalConstants.isCreatedDateTimeAscIconDisplayed);
+		assertTrue(apiKeyPage.isStatusDescIconDisplayed(), GlobalConstants.isStatusDescIconDisplayed);
+		assertTrue(apiKeyPage.isStatusAscIconDisplayed(), GlobalConstants.isStatusAscIconDisplayed);
+		assertTrue(apiKeyPage.isOrgNameDescIconDisplayed(), GlobalConstants.isOrgNameDescIconDisplayed);
+		assertTrue(apiKeyPage.isOrgNameAscIconDisplayed(), GlobalConstants.isOrgNameAscIconDisplayed);
+
+		apiKeyPage.clickOnPartnerIdDescIcon();
+		apiKeyPage.clickOnPartnerIdAscIcon();
+		apiKeyPage.clickOnOrgNameDescIcon();
+		apiKeyPage.clickOnOrgNameAscIcon();
+		apiKeyPage.clickOnPolicyGroupNameDescIcon();
+		apiKeyPage.clickOnPolicyGroupNameAscIcon();
+		apiKeyPage.clickOnPolicyNameDescIcon();
+		apiKeyPage.clickOnPolicyNameAscIcon();
+		apiKeyPage.clickOnCreatedDateTimeDescIcon();
+		apiKeyPage.clickOnCreatedDateTimeAscIcon();
+		apiKeyPage.clickOnStatusDescIcon();
+		apiKeyPage.clickOnStatusAscIcon();
+
+		apiKeyPage.clickOnFilterButton();
+		assertTrue(apiKeyPage.isfilterResetButtonEnabled(), GlobalConstants.isfilterResetButtonEnabled);
+		assertFalse(apiKeyPage.isFilterButtonEnabled(), GlobalConstants.isFilterButtonEnabled);
+
+		assertTrue(apiKeyPage.isPartnerIdFilterHeaderDisplayed(), GlobalConstants.isPartnerIdFilterHeaderDisplayed);
+		assertTrue(apiKeyPage.isOrganisationFilterHeaderDisplayed(),
+				GlobalConstants.isOrganisationFilterHeaderDisplayed);
+		assertTrue(apiKeyPage.isPolicyGroupFilterHeaderDisplayed(), GlobalConstants.isPolicyGroupFilterHeaderDisplayed);
+		assertTrue(apiKeyPage.isPolicyNameFilterHeaderDisplayed(), GlobalConstants.isPolicyNameFilterHeaderDisplayed);
+		assertTrue(apiKeyPage.isApiKeyNameFilterHeaderDisplayed(),
+				GlobalConstants.isOidcClientNameFilterHeaderDisplayed);
+		assertTrue(apiKeyPage.isStatusFilterHeaderDisplayed(), GlobalConstants.isStatusFilterHeaderDisplayed);
+
+		assertTrue(apiKeyPage.isPartnerIdPlaceHolderDisplayed(), GlobalConstants.isPartnerIdPlaceHolderDisplayed);
+		assertTrue(apiKeyPage.isOrganisationPlaceHolderDisplayed(), GlobalConstants.isOrganisationPlaceHolderDisplayed);
+		assertTrue(apiKeyPage.isPolicyGroupPlaceHolderDisplayed(), GlobalConstants.isPolicyGroupPlaceHolderDisplayed);
+		assertTrue(apiKeyPage.isPolicyNamePlaceHolderDisplayed(), GlobalConstants.isPolicyNamePlaceHolderDisplayed);
+		assertTrue(apiKeyPage.isApiKeyNamePlaceHolderDisplayed(), GlobalConstants.isApiKeyNamePlaceHolderDisplayed);
+		assertTrue(apiKeyPage.isStatusPlaceHolderDisplayed(), GlobalConstants.isStatusPlaceHolderDisplayed);
+
+		assertFalse(apiKeyPage.isApplyFilterButtonEnabled(), GlobalConstants.isApplyFilterButtonEnabled);
+		apiKeyPage.enterInvalidDataInAdminApiKeyNameFilter(GlobalConstants.Random_DATA);
+		assertTrue(apiKeyPage.isApplyFilterButtonEnabled(), GlobalConstants.isApplyFilterButtonEnabled);
+		apiKeyPage.clickOnApplyFilterButton();
+		assertTrue(apiKeyPage.isNoResultFoundDisplayed(), GlobalConstants.isNoResultFoundDisplayed);
+
+		apiKeyPage.clickOnFilterResetButton();
+		apiKeyPage.clickOnFilterButton();
+		apiKeyPage.clickOnStatusFilter();
+		assertTrue(apiKeyPage.isActivatedStatusInFilterDisplayed(), GlobalConstants.isActivatedStatusInFilterDisplayed);
+		assertTrue(apiKeyPage.isDeactivatedStatusInFilterDisplayed(),
+				GlobalConstants.isDeactivatedStatusInFilterDisplayed);
+		apiKeyPage.clickOnStatusFilter();
+		apiKeyPage.clickOnFilterResetButton();
+		assertFalse(apiKeyPage.isfilterResetButtonEnabled(), GlobalConstants.isfilterResetButtonEnabled);
+
+		apiKeyPage.clickOnFilterButton();
+		apiKeyPage.enterPartnerIdInFilter(GlobalConstants.AUTH_PARTNER_ID);
+		apiKeyPage.enterPolicyGroupInFilter(GlobalConstants.DEFAULT_POLICYGROUP);
+		apiKeyPage.clickOnFilterCloseButton();
+		apiKeyPage.enterValidApiKeyNameInAdminFilter(GlobalConstants.ACTIVATE_ADMINAPIKEY);
+		apiKeyPage.clickOnApplyFilterButton();
+
+		assertTrue(apiKeyPage.isApiKeyCreationDateSameAsBrowserDateFormat(),
+				GlobalConstants.isCreationDateSameAsBrowserDateFormat);
+		apiKeyPage.clickOnActivatedAdminApiKey();
+		assertTrue(apiKeyPage.isApiKeyDetailsPageDisplayed(), GlobalConstants.isOidcClientDetailsPageDisplayed);
+		apiKeyPage.clickOnViewApiKeyBackButton();
+
+		apiKeyPage.clickOnFilterButton();
+		apiKeyPage.enterPartnerIdInFilter(GlobalConstants.AUTH_PARTNER_ID);
+		apiKeyPage.enterPolicyGroupInFilter(GlobalConstants.DEFAULT_POLICYGROUP);
+		apiKeyPage.enterValidApiKeyNameInAdminFilter(GlobalConstants.ACTIVATE_ADMINAPIKEY);
+		apiKeyPage.clickOnApplyFilterButton();
+
+		apiKeyPage.clickOnActionButton();
+		assertTrue(apiKeyPage.isViewButtonEnabled(), GlobalConstants.isViewButtonEnabled);
+		assertTrue(apiKeyPage.isDeactivateButtonEnabled(), GlobalConstants.isDeactivateButtonEnabled);
+
+		apiKeyPage.enterPartnerIdInFilter(GlobalConstants.AUTH_PARTNER_ID);
+		apiKeyPage.enterPolicyGroupInFilter(GlobalConstants.DEFAULT_POLICYGROUP);
+		apiKeyPage.enterValidApiKeyNameInAdminFilter(GlobalConstants.DEACTIVATE_APIKEY);
+		apiKeyPage.clickOnApplyFilterButton();
+
+		apiKeyPage.clickOnActionButton();
+		assertTrue(apiKeyPage.isViewButtonEnabled(), GlobalConstants.isViewButtonEnabled);
+		apiKeyPage.clickOnApiKeyDeactivateButton();
+		assertFalse(apiKeyPage.isApiKeyDeactivatePopupDisplayed(), GlobalConstants.isApiKeyDeactivatePopupDisplayed);
+
+		apiKeyPage.clickOnDeactivatedApiKeyRow();
+		assertFalse(apiKeyPage.isApiKeyDetailsPageDisplayed(), GlobalConstants.isApiKeyDetailsPageDisplayed);
+		assertTrue(apiKeyPage.isStatusDeavtivatedDisplayed(), GlobalConstants.isStatusDeavtivatedDisplayed);
+
+		apiKeyPage.clickOnFilterResetButton();
+		assertTrue(authPolicyPage.isPaginationDisplayed(), GlobalConstants.isPaginationDisplayed);
+		assertTrue(authPolicyPage.isPreviusPageButtonDisplayed(), GlobalConstants.isPreviusPageButtonDisplayed);
+		assertTrue(authPolicyPage.isNextPageButtonDisplayed(), GlobalConstants.isNextPageButtonDisplayed);
+		assertTrue(authPolicyPage.isPage1Displayed(), GlobalConstants.isPage1Displayed);
+		authPolicyPage.clickOnNextPageButton();
+		assertTrue(authPolicyPage.isPage2Displayed(), GlobalConstants.isPage2Displayed);
+		authPolicyPage.clickOnPreviusPageButton();
+		assertTrue(authPolicyPage.isPage1Displayed(), GlobalConstants.isPage1Displayed);
+
+		assertTrue(authPolicyPage.isPrefixOfPageDisplayed(), GlobalConstants.isPrefixOfPageDisplayed);
+		assertTrue(authPolicyPage.isRecordPerPageDisplayed(), GlobalConstants.isRecordPerPageDisplayed);
+		assertTrue(authPolicyPage.isItemPerPage8Displayed(), GlobalConstants.isItemPerPage8Displayed);
+		assertTrue(authPolicyPage.isexpandIconDisplayed(), GlobalConstants.isexpandIconDisplayed);
+		authPolicyPage.selectItemPerPageNumber();
+		assertTrue(authPolicyPage.isItemPerPage16Displayed(), GlobalConstants.isItemPerPage16Displayed);
+
+		apiKeyPage.clickOnTitleBackButton();
+		assertTrue(dashboardPage.isAuthenticationServicesDisplayed(),
+				GlobalConstants.isAuthenticationServicesDisplayed);
+
+	}
+
+	@Test(priority = 30, description = "Api Key View Details")
+	public void apiKeyViewDetails() {
+
+		dashboardPage = new DashboardPage(driver);
+		apiKeyPage = new ApiKeyPage(driver);
+
+		oidcClientPage = dashboardPage.clickOnAuthenticationServices();
+		oidcClientPage.clickOnApiKeyTab();
+		oidcClientPage.clickOnFilterButton();
+
+		apiKeyPage.enterPartnerIdInFilter(GlobalConstants.AUTH_PARTNER_ID);
+		apiKeyPage.enterPolicyGroupInFilter(GlobalConstants.DEFAULT_POLICYGROUP);
+		apiKeyPage.enterValidApiKeyNameInAdminFilter(GlobalConstants.ACTIVATE_ADMINAPIKEY);
+		apiKeyPage.clickOnApplyFilterButton();
+
+		apiKeyPage.clickOnActivatedAdminApiKey();
+		assertTrue(apiKeyPage.isApiKeyDetailsPageDisplayed(), GlobalConstants.isApiKeyDetailsPageDisplayed);
+		apiKeyPage.clickOnBreadCombButton();
+
+		oidcClientPage.clickOnFilterButton();
+		apiKeyPage.enterPartnerIdInFilter(GlobalConstants.AUTH_PARTNER_ID);
+		apiKeyPage.enterPolicyGroupInFilter(GlobalConstants.DEFAULT_POLICYGROUP);
+		apiKeyPage.enterValidApiKeyNameInAdminFilter(GlobalConstants.ACTIVATE_ADMINAPIKEY);
+		apiKeyPage.clickOnApplyFilterButton();
+		apiKeyPage.clickOnActionButton();
+		assertTrue(apiKeyPage.isViewButtonEnabled(), GlobalConstants.isViewButtonEnabled);
+		apiKeyPage.clickOnViewButton();
+
+		assertTrue(apiKeyPage.isApiKeyDetailsPageDisplayed(), GlobalConstants.isApiKeyDetailsPageDisplayed);
+		assertTrue(apiKeyPage.isApiKeyDetailsPageTitleDisplayed(), GlobalConstants.isApiKeyDetailsPageTitleDisplayed);
+		assertTrue(apiKeyPage.isHomeButtonDisplayed(), GlobalConstants.isHomeButtonDisplayed);
+		assertTrue(apiKeyPage.isListOfApiKeysButtonDisplayed(), GlobalConstants.isListOfApiKeysButtonDisplayed);
+
+		assertTrue(apiKeyPage.isApiKeyNameLabelDisplayed(), GlobalConstants.isApiKeyNameLabelDisplayed);
+		assertTrue(apiKeyPage.isApiKeyDetailsPartnerIdLabelDisplayed(),
+				GlobalConstants.isApiKeyDetailsPartnerIdLabelDisplayed);
+		assertTrue(apiKeyPage.isApiKeyDetailsPartnerIdContextDisplayed(),
+				GlobalConstants.isApiKeyDetailsPartnerIdContextDisplayed);
+		assertTrue(apiKeyPage.isApiKeyDetailsPartnerTypeLabelDisplayed(),
+				GlobalConstants.isApiKeyDetailsPartnerTypeLabelDisplayed);
+		assertTrue(apiKeyPage.isApiKeyDetailsPartnerTypeContextDisplayed(),
+				GlobalConstants.isApiKeyDetailsPartnerTypeContextDisplayed);
+		assertTrue(apiKeyPage.isApiKeyDetailsOrgNameLabelDisplayed(),
+				GlobalConstants.isApiKeyDetailsOrgNameLabelDisplayed);
+		assertTrue(apiKeyPage.isApiKeyDetailsOrgNameContextDisplayed(),
+				GlobalConstants.isApiKeyDetailsOrgNameContextDisplayed);
+		assertTrue(apiKeyPage.isApiKeyDetailsPolicyGroupLabelDisplayed(),
+				GlobalConstants.isApiKeyDetailsPolicyGroupLabelDisplayed);
+		assertTrue(apiKeyPage.isApiKeyDetailsPolicyGroupNameContextDisplayed(),
+				GlobalConstants.isApiKeyDetailsPolicyGroupNameContextDisplayed);
+		assertTrue(apiKeyPage.isApiKeyDetailsPolicyGoupDescriptionLabelDisplayed(),
+				GlobalConstants.isApiKeyDetailsPolicyGoupDescriptionLabelDisplayed);
+		assertTrue(apiKeyPage.isApiKeyDetailsPolicyGroupDescriptionContextDisplayed(),
+				GlobalConstants.isApiKeyDetailsPolicyGroupDescriptionContextDisplayed);
+		assertTrue(apiKeyPage.isApiKeyDetailsPolicyNameLabelDisplayed(),
+				GlobalConstants.isApiKeyDetailsPolicyNameLabelDisplayed);
+		assertTrue(apiKeyPage.isApiKeyDetailsPolicyNameContextDisplayed(),
+				GlobalConstants.isApiKeyDetailsPolicyNameContextDisplayed);
+		assertTrue(apiKeyPage.isApiKeyDetailsPolicyNameDescriptionLabelDisplayed(),
+				GlobalConstants.isApiKeyDetailsPolicyNameDescriptionLabelDisplayed);
+		assertTrue(apiKeyPage.isApiKeyDetailsPolicyDescriptionContextDisplayed(),
+				GlobalConstants.isApiKeyDetailsPolicyDescriptionContextDisplayed);
+		assertTrue(apiKeyPage.isApiKeyStatusActivatedDisplayed(), GlobalConstants.isApiKeyStatusActivatedDisplayed);
+		assertTrue(apiKeyPage.isCreatedOnLabelDisplayed(), GlobalConstants.isCreatedOnLabelDisplayed);
+		assertTrue(apiKeyPage.isCreatedDateDisplayed(), GlobalConstants.isCreatedDateDisplayed);
+
+		assertTrue(apiKeyPage.isViewApiKeyBackButtonDisplayed(), GlobalConstants.isViewApiKeyBackButtonDisplayed);
+		apiKeyPage.clickOnViewApiKeyBackButton();
+
+		apiKeyPage.clickOnFilterButton();
+		apiKeyPage.enterPartnerIdInFilter(GlobalConstants.AUTH_PARTNER_ID);
+		apiKeyPage.enterPolicyGroupInFilter(GlobalConstants.DEFAULT_POLICYGROUP);
+		apiKeyPage.enterValidApiKeyNameInAdminFilter(GlobalConstants.DEACTIVATE_APIKEY);
+		apiKeyPage.clickOnApplyFilterButton();
+
+		apiKeyPage.clickOnDeactivatedApiKeyRow();
+		assertFalse(apiKeyPage.isApiKeyDetailsPageDisplayed(), GlobalConstants.isApiKeyDetailsPageDisplayed);
+
+		apiKeyPage.clickOnActionButton();
+		apiKeyPage.clickOnViewButton();
+		assertTrue(apiKeyPage.isApiKeyDetailsPageDisplayed(), GlobalConstants.isApiKeyDetailsPageDisplayed);
+		assertTrue(apiKeyPage.isApiKeyStatusDeactivatedDisplayed(), GlobalConstants.isApiKeyStatusDeactivatedDisplayed);
+		oidcClientPage.clickOnTitleBackButton();
+		assertTrue(oidcClientPage.isOidcClientTabDisplayed(), GlobalConstants.isOidcClientTabDisplayed);
 
 	}
 

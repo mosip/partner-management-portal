@@ -1145,8 +1145,7 @@ public class GlobalConstants {
 	public static final String YYYY_MM_DD_FORMATTER2 = "2020.08.23";
 
 	public static final String PARTNER_ID = "Partner ID";
-	public static final String POLICY_ID = "auth-core";
-	public static final String POLICY_NAME = "test policy";
+
 	public static final String COMMENTS = "policy group";
 	public static final String PARTNER_TYPE = "Partner Type";
 	public static final String DEVICE_ID = "Device ID";
