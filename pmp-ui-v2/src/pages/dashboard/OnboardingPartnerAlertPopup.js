@@ -3,10 +3,25 @@ import { useTranslation, Trans } from 'react-i18next';
 import { logout, isLangRTL } from '../../utils/AppUtils.js';
 import FocusTrap from 'focus-trap-react';
 import { getUserProfile } from '../../services/UserProfileService.js';
+import PropTypes from 'prop-types';
 
-function MissingAttributesPopup() {
+function OnboardingPartnerAlertPopup({ errorType = 'missingAttributes' }) {
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
+
+    // Helper method for error type handling
+    const getErrorKey = (key) => {
+        const errorKeys = {
+            'missingAttributes': 'missingAttributesError',
+            'verificationError': 'verificationError',
+            'invalidPartnerTypeError': 'invalidPartnerTypeError'
+        };
+        return errorKeys[errorType] || 'missingAttributesError';
+    };
+
+    const getTranslationKey = (key) => {
+        return `${getErrorKey()}.${key}`;
+    };
 
     useEffect(() => {
         document.body.style.overflow = "hidden";
@@ -20,8 +35,8 @@ function MissingAttributesPopup() {
             <FocusTrap focusTrapOptions={{ initialFocus: false, allowOutsideClick: true }}>
                 <div className={`bg-white w-2/5 mx-auto rounded-xl shadow-lg -mt-3 ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>
                     <div className="p-4 border-b border-gray-300">
-                        <h3 id='missing_attributes_popup_title' className="text-lg font-bold text-[#333333]">
-                            {t('missingAttributesPopup.title')}
+                        <h3 id='onboarding_partner_alert_popup_title' className="text-lg font-bold text-[#333333]">
+                            {t(getTranslationKey('title'))}
                         </h3>
                     </div>
 
@@ -29,9 +44,9 @@ function MissingAttributesPopup() {
                         <div className="bg-[#FCFCFC] w-full items-center mb-2">
                             <div className="flex items-center justify-center">
                                 <div className="p-2 bg-[#FFF7E5] border-2 border-[#EDDCAF] rounded-md w-full">
-                                    <p id='missing_attributes_popup_description' className="text-sm font-medium text-[#8B6105]">
+                                    <p id='onboarding_partner_alert_popup_description' className="text-sm font-medium text-[#8B6105]">
                                         <Trans
-                                            i18nKey="missingAttributesPopup.description"
+                                            i18nKey={getTranslationKey('description')}
                                             components={{ br: <br /> }}
                                         />
                                     </p>
@@ -40,16 +55,16 @@ function MissingAttributesPopup() {
                         </div>
                         <div className='text-base'>
                             <Trans
-                                i18nKey="missingAttributesPopup.instructionsTitle"
+                                i18nKey={getTranslationKey('instructionsTitle')}
                                 components={{ strong: <strong /> }}
                             />
                         </div>
                         <div>
                             <ul className={`list-disc mt-2 text-sm space-y-1 ${isLoginLanguageRTL ? 'mr-5' : 'ml-5'}`}>
-                                {t('missingAttributesPopup.instructionsList', { returnObjects: true }).map((item, index) => (
+                                {t(getTranslationKey('instructionsList'), { returnObjects: true }).map((item, index) => (
                                     <li key={index} className="px-1">
                                         <Trans
-                                            i18nKey={`missingAttributesPopup.instructionsList.${index}`}
+                                            i18nKey={`${getErrorKey()}.instructionsList.${index}`}
                                             components={{ strong: <strong /> }}
                                         />
                                     </li>
@@ -59,11 +74,11 @@ function MissingAttributesPopup() {
                     </div>
                     <div className="p-4 flex justify-end items-center">
                         <p className="text-[#333333] text-sm font-semibold">
-                            <button id='missing_attributes_popup_logout'
+                            <button id='onboarding_partner_alert_popup_logout'
                                 className="flex justify-center w-fit h-10 py-2 px-3 rounded-md bg-[#1447B2] text-white text-sm font-semibold"
                                 onClick={logout}
                             >
-                                {t('missingAttributesPopup.logout')}
+                                {t(getTranslationKey('logout'))}
                             </button>
                         </p>
                     </div>
@@ -73,4 +88,8 @@ function MissingAttributesPopup() {
     );
 }
 
-export default MissingAttributesPopup;
+OnboardingPartnerAlertPopup.propTypes = {
+    errorType: PropTypes.string
+};
+
+export default OnboardingPartnerAlertPopup;

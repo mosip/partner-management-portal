@@ -25,19 +25,19 @@ public class ViewSbiDetailsPage extends BasePage {
 	@FindBy(xpath = "//p[@class='text-lg text-dark-blue mb-2']")
 	private WebElement sbiIdWithValue;
 
-	@FindBy(xpath = "(//p[contains(@class, 'text-vulcan')])[1]")
+	@FindBy(id = "view_admin_sbi_partner_id_context")
 	private WebElement partnerIdText;
 
-	@FindBy(xpath = "(//p[contains(@class, 'text-vulcan')])[2]")
+	@FindBy(id = "view_admin_sbi_partner_type_context")
 	private WebElement partnerTypeText;
 
-	@FindBy(xpath = "(//p[contains(@class, 'text-vulcan')])[3]")
+	@FindBy(id = "view_admin_sbi_organisation_context")
 	private WebElement organisationText;
 
-	@FindBy(xpath = "(//p[contains(@class, 'text-vulcan')])[4]")
+	@FindBy(id = "view_admin_sbi_linked_devices_context")
 	private WebElement linkedDeviceText;
 
-	@FindBy(xpath = "(//p[contains(@class, 'text-vulcan')])[7]")
+	@FindBy(id = "view_admin_sbi_version_context")
 	private WebElement sbiVersionText;
 
 	@FindBy(id = "view_admin_sbi_details_back_btn")
@@ -104,7 +104,7 @@ public class ViewSbiDetailsPage extends BasePage {
 
 	public boolean isSbiCreationDateSameAsBrowserDateFormat() {
 
-		WebElement createdDateCell = driver.findElement(By.xpath("(//p[contains(@class, 'text-vulcan')])[5]"));
+		WebElement createdDateCell = driver.findElement(By.id("view_admin_sbi_created_date_context"));
 		String browserTime = createdDateCell.getText().trim();
 
 		DateTimeFormatter dateFormatter = PmpTestUtil.nonZeroPadderDateFormatter;
@@ -118,7 +118,7 @@ public class ViewSbiDetailsPage extends BasePage {
 
 	public boolean isSbiExpirationDateSameAsBrowserDateFormat() {
 
-		WebElement expiryDateCell = driver.findElement(By.xpath("(//p[contains(@class, 'text-vulcan')])[6]"));
+		WebElement expiryDateCell = driver.findElement(By.id("view_admin_sbi_expiry_date_context"));
 		String browserTime = expiryDateCell.getText().trim();
 
 		DateTimeFormatter dateFormatter = PmpTestUtil.nonZeroPadderDateFormatter;

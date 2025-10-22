@@ -5,7 +5,7 @@ import { isLangRTL, moveToHome } from '../../utils/AppUtils';
 import successIcon from '../../svg/success_message_icon.svg';
 import PropTypes from 'prop-types';
 
-function Confirmation({ id, confirmationData, onClickFunction }) {
+function Confirmation({ id, confirmationData, onClickCustomBtn1, onClickCustomBtn2 }) {
 
     const navigate = useNavigate();
     const { t } = useTranslation();
@@ -26,7 +26,7 @@ function Confirmation({ id, confirmationData, onClickFunction }) {
                             <span className="text-[#666666] text-sm font-semibold max-[450px]:text-xs">{t(confirmationData.description1)}</span>
                         )}
                     </p>
-                    {!confirmationData.customBtnName &&
+                    {!confirmationData.customBtnName1 &&
                         <div className={`flex gap-x-3 p-2 max-[450px]:flex-col max-[450px]:gap-x-0 justify-center`}>
                             <button id='confirmation_go_back_btn' onClick={() => navigate(confirmationData.backUrl)} type="button" className="text-white font-semibold bg-tory-blue rounded-md text-sm px-12 py-4 max-[450px]:text-xs max-[450px]:mx-6 max-[450px]:mb-2">
                                 {t('commons.goBack')}
@@ -36,19 +36,14 @@ function Confirmation({ id, confirmationData, onClickFunction }) {
                             </button>
                         </div>
                     }
-                    {confirmationData.customBtnName &&
-                        <div className="mt-5">
-                            <button id='confirmation_custom_btn' onClick={onClickFunction} type="button" className="text-white font-semibold bg-tory-blue rounded-md mt-1 text-sm px-3 py-4 max-[450px]:text-xs max-[450px]:mx-6 max-[450px]:mb-2">
-                                {t(confirmationData.customBtnName)}
+                    {confirmationData.customBtnName1 &&
+                        <div className={confirmationData.customBtnName2 ? `flex gap-x-3 p-2 max-[450px]:flex-col max-[450px]:gap-x-0 justify-center` : ''}>
+                            <button id='confirmation_custom_btn' onClick={onClickCustomBtn1} type="button" className={`text-white font-semibold bg-tory-blue rounded-md mt-1 text-sm ${confirmationData.customBtnName2 ? 'px-12' : 'px-3'} py-4 max-[450px]:text-xs max-[450px]:mx-6 max-[450px]:mb-2`}>
+                                {t(confirmationData.customBtnName1)}
                             </button>
-                            {confirmationData.showHome && (
-                                <button
-                                    id="confirmation_home_btn"
-                                    onClick={() => moveToHome(navigate)}
-                                    type="button"
-                                    className="text-[#1447b2] mx-4 mt-1 font-semibold bg-white border border-[#1447b2] rounded-md text-sm px-12 py-4 max-[450px]:text-xs max-[450px]:mx-6"
-                                >
-                                    {t('commons.home')}
+                            {confirmationData.customBtnName2 && (
+                                <button id="confirmation_custom_btn_2" onClick={onClickCustomBtn2} type="button" className="text-[#1447b2] mx-4 mt-1 font-semibold bg-white border border-[#1447b2] rounded-md text-sm px-12 py-4 max-[450px]:text-xs max-[450px]:mx-6">
+                                    {t(confirmationData.customBtnName2)}
                                 </button>
                             )}
                         </div>
@@ -62,7 +57,8 @@ function Confirmation({ id, confirmationData, onClickFunction }) {
 Confirmation.propTypes = {
     id: PropTypes.string.isRequired,
     confirmationData: PropTypes.object.isRequired,
-    onClickFunction: PropTypes.func,
+    onClickCustomBtn1: PropTypes.func,
+    onClickCustomBtn2: PropTypes.func,
 };
 
 export default Confirmation;

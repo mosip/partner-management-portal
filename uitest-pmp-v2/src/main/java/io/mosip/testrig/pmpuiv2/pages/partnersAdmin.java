@@ -76,6 +76,8 @@ public class partnersAdmin extends BasePage {
 	@FindBy(id = "status_asc_icon")
 	private WebElement statusAscendingIcon;
 
+	private WebElement certificateUploadStatusAscIcon;
+
 	@FindBy(id = "filter_btn")
 	private WebElement filterbtnTrigger;
 
@@ -109,7 +111,7 @@ public class partnersAdmin extends BasePage {
 	@FindBy(xpath = "//span[normalize-space()='Select Cert. Upload Status']")
 	private WebElement certUploadsStatusFilter;
 
-	@FindBy(id = "status_filter_dropdown_btn")
+	@FindBy(xpath = "//button[@id='status_filter_dropdown_btn']/span")
 	private WebElement statusFilters;
 
 	@FindBy(id = "policy_group_filter")
@@ -968,6 +970,7 @@ public class partnersAdmin extends BasePage {
 	}
 
 	public void clickOnCertificateUploadascIcon() {
+
 		clickOnElement(certificateUploadStatusAscendingIcon);
 	}
 
@@ -989,6 +992,7 @@ public class partnersAdmin extends BasePage {
 
 	public boolean isCreatePolicyButtonsDisplayed() {
 		return isElementDisplayed(createPolicyGroupBtn);
+
 	}
 
 }

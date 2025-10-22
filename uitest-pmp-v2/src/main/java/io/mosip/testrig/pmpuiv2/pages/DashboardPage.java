@@ -32,7 +32,7 @@ public class DashboardPage extends BasePage {
 	@FindBy(id = "select_policy_group_dropdown_no_data_available")
 	private WebElement noDataAvailableText;
 
-	@FindBy(xpath = "//input[@placeholder='Search']")
+	@FindBy(id = "policy_group_selector_search_input")
 	private WebElement SearchBox;
 
 	@FindBy(id = "select_policy_group_submit_btn")
@@ -175,9 +175,12 @@ public class DashboardPage extends BasePage {
 	}
 
 	public void selectPolicyGroupDropdown(String policyGroupValue) {
-		clickOnElement(selectPolicyGroupDropdown);
-		enter(SearchBox, policyGroupValue);
-		clickOnElement(selectPolicyGrouDropdownOption1);
+	    clickOnElement(selectPolicyGroupDropdown);
+	    enter(SearchBox, policyGroupValue);
+	    WebElement policyGroupOption = driver.findElement(
+	        By.xpath("//span[@id='policy_group_selector_option_name_1' and text()='" + policyGroupValue + "']")
+	    );
+	    clickOnElement(policyGroupOption);
 	}
 
 	public void closePolicyGroupDropdown() {

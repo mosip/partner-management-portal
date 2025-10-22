@@ -88,6 +88,12 @@ function DeactivatePopup({ onClickConfirm, closePopUp, popupData, request, heade
                         'Content-Type': 'application/json'
                     }
                 });
+            } else if (popupData.isDeactivateMispLicense) {
+                response = await HttpService.patch(getPartnerManagerUrl(`/misp-licenses/${popupData.partnerId}`, process.env.NODE_ENV), request, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
             }
             const responseData = response.data;
             if (responseData && responseData.response) {

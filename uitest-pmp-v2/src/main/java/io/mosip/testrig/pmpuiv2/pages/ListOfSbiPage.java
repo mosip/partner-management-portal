@@ -248,6 +248,30 @@ public class ListOfSbiPage extends BasePage {
 	@FindBy(id = "subtitle_back_icon")
 	private WebElement backIconOfLinkedDevices;
 
+	@FindBy(id = "sbi_list_deactivate_btn")
+	private WebElement deactivateSbiButtonInAdmin;
+
+	@FindBy(xpath = "//p[@id='sbi_list_deactivate_btn' and contains(@class, 'text-[#A5A5A5]')]")
+	private WebElement deactivateSbiButtonWithGreyedOutInAdmin;
+
+	@FindBy(id = "deactivate_popup_header")
+	private WebElement deactivatePopupInAdmin;
+
+	@FindBy(xpath = "//p[@id='deactivate_popup_header' and contains(text(), 'Do you want to deactivate SBI Version')]")
+	private WebElement deactivateSbiPopupTitleInAdmin;
+
+	@FindBy(xpath = "//p[@id='deactivate_popup_description' and contains(text(), 'On clicking Confirm')]")
+	private WebElement deactivatePopupDescriptionInAdmin;
+
+	@FindBy(id = "deactivate_popup_description_for_sbi")
+	private WebElement deactivatePopupSbiConfInAdmin;
+	
+	@FindBy(id = "undefined_title")
+	private WebElement listOfSbiText;
+	
+	@FindBy(xpath = "//tr[@id='sbi_list_item1']/td[1]")
+	private WebElement partnerIdInFirstColumn;
+
 	public ListOfSbiPage(WebDriver driver) {
 		super(driver);
 	}
@@ -772,6 +796,62 @@ public class ListOfSbiPage extends BasePage {
 		WebElement linkedDeviceElement = driver
 				.findElement(By.xpath("//tr[.//div[text()='" + statusText + "']]//button//p[text()='" + count + "']"));
 		clickOnElement(linkedDeviceElement);
+	}
+
+	public void clickOnDeactivateSbiButtonAsAdmin() {
+		clickOnElement(deactivateSbiButtonInAdmin);
+	}
+
+	public boolean isDeactivateOptionEnabledInAdmin() {
+		if (isElementDisplayed(deactivateSbiButtonWithGreyedOutInAdmin)) {
+			return false;
+		}
+		return isElementDisplayed(deactivateSbiButtonInAdmin);
+	}
+
+	public boolean isDeactivatePopupInAdminDisplayed() {
+		return isElementDisplayed(deactivatePopupInAdmin);
+	}
+
+	public boolean isDeactivateSbiPopupTitleInAdminDisplayed() {
+		return isElementDisplayed(deactivateSbiPopupTitleInAdmin);
+	}
+
+	public boolean isDeactivatePopupDescriptionInAdminDisplayed() {
+		return isElementDisplayed(deactivatePopupDescriptionInAdmin);
+	}
+
+	public boolean isDeactivatePopupSbiConfMsgInAdminDisplayed() {
+		return isElementDisplayed(deactivatePopupSbiConfInAdmin);
+	}
+
+	public boolean isDeactivateCancelDisplayed() {
+		return isElementDisplayed(deactivateCancel);
+	}
+
+	public boolean isDeactivateSubmitButtonDisplayed() {
+		return isElementDisplayed(deactivateSubmitButton);
+	}
+
+	public void selectSbiStatusFilterInAdmin(String status) {
+		clickOnElement(statusFilter);
+		WebElement statusOption = driver
+				.findElement(By.xpath("//button[contains(@id, 'status_filter_option') and text()='" + status + "']"));
+		clickOnElement(statusOption);
+	}
+
+	public String getListOfSbisTitle() {
+		return getTextFromLocator(listOfSbiText);
+	}
+
+	public boolean isDeactivatedStatusDisplayedInAdminPage(String sbiVersion) {
+		WebElement status = driver
+				.findElement(By.xpath("//td[text()='" + sbiVersion + "']/..//div[text()='Deactivated']"));
+		return isElementDisplayed(status);
+	}
+	
+	public boolean isPartnerIdInFirstColumnDisplayed() {
+		return isElementDisplayed(partnerIdInFirstColumn);
 	}
 
 }
