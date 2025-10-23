@@ -77,7 +77,7 @@ function ViewMispLicenseKey() {
     }
 
     return (
-        <div className={`w-full p-4 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm mb-[2%] ${isLoginLanguageRTL ? "mr-24 ml-1" : "ml-24 mr-1"} overflow-x-scroll`}>
+        <div className={`w-full p-4 bg-anti-flash-white h-full font-inter break-words max-450:text-sm mb-[2%] ${isLoginLanguageRTL ? "mr-24 ml-1" : "ml-24 mr-1"} overflow-x-scroll`}>
             {!dataLoaded && (
                 <LoadingIcon styleSet={styles} />
             )}
@@ -86,7 +86,7 @@ function ViewMispLicenseKey() {
                     {errorMsg && (
                         <ErrorMessage id='view_admin_oidc_client_details_error_msg' errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
-                    <div className={`flex-col mt-5 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm mb-[2%]`}>
+                    <div className={`flex-col mt-5 bg-anti-flash-white h-full font-inter break-words max-450:text-sm mb-[2%]`}>
                         <div className="flex justify-between mb-3">
                             <Title title='mispLicenseList.viewMispLicenseKey' subTitle='mispLicenseList.mispPartnerServices' backLink={'/partnermanagement/admin/misp-partner-services/misp-license-list'} />
                         </div>
@@ -107,12 +107,12 @@ function ViewMispLicenseKey() {
                     )}
                     {!unexpectedError && (
                         <div className="bg-snow-white h-fit mt-1 rounded-t-xl shadow-lg font-inter">
-                            <div className="flex justify-between px-7 pt-3 border-b max-[450px]:flex-col">
-                                <div className="flex-col">
-                                    <p id='view_misp_license_key_details_sub_title_id' className="text-lg text-dark-blue mb-2">
+                            <div className="flex flex-wrap justify-between px-7 pt-3 border-b max-450:flex-col">
+                                <div className="flex flex-col flex-wrap max-w-full">
+                                    <p id='view_misp_license_key_details_sub_title_id' className="text-lg text-dark-blue mb-2 break-words whitespace-normal max-w-full">
                                         {t('mispLicenseList.mispLicenseKeyName')}: <span className="font-semibold">{mispLicenseKeyDetails.mispLicenseKeyName ? mispLicenseKeyDetails.mispLicenseKeyName : "-"}</span>
                                     </p>
-                                    <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
+                                    <div className="flex flex-wrap items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
                                         <div id='view_misp_license_key_details_status' className={`${bgOfStatus(mispLicenseKeyDetails.status)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
                                             {getStatusCode(mispLicenseKeyDetails.status, t)}
                                         </div>
@@ -126,7 +126,7 @@ function ViewMispLicenseKey() {
                                         </div>
                                     </div>
                                 </div>
-                                <button id="view_misp_license_key_details_copy_id" className={`${mispLicenseKeyDetails.status === "ACTIVE" ? 'bg-[#F0F5FF] border-[#BED3FF] cursor-pointer hover:shadow-md' : 'bg-gray-200 border-gray-400 cursor-default'}  border h-[4%] w-[14%] max-[450px]:w-[40%] max-[800px]:w-[25%] ${isLoginLanguageRTL ? "pl-[1.5%] text-left" : "pr-[1%] text-right"} py-[0.5%] rounded-md`}>
+                                <button id="view_misp_license_key_details_copy_id" className={`${mispLicenseKeyDetails.status === "ACTIVE" ? 'bg-[#F0F5FF] border-[#BED3FF] cursor-pointer hover:shadow-md' : 'bg-gray-200 border-gray-400 cursor-default'}  border h-[4%] w-[14%] max-450:w-[40%] max-850:w-[25%] ${isLoginLanguageRTL ? "pl-[1.5%] text-left" : "pr-[1%] text-right"} py-[0.5%] rounded-md mb-1`}>
                                     <p id='view_misp_license_key_details_id_label' className="text-sm font-semibold text-[#333333]">{t('mispLicenseList.mispLicenseKey')}</p>
                                     <p id="view_misp_license_key_details_id" className={`text-base font-bold ${mispLicenseKeyDetails.status === "ACTIVE" ? "text-tory-blue"  : "text-gray-400" }`}>
                                         ...{getMaskedLicenseKey(mispLicenseKeyDetails.mispLicenseKey)}
@@ -134,7 +134,7 @@ function ViewMispLicenseKey() {
                                 </button>
                             </div>
                             <div className={`${isLoginLanguageRTL ? "pr-8 ml-8" : "pl-8 mr-8"} pt-3 mb-2`}>
-                                <div className="flex flex-wrap py-1 max-[450px]:flex-col">
+                                <div className="flex flex-wrap py-1 max-450:flex-col">
                                     <div className={`w-[49%] max-[600px]:w-[100%] mb-3 ${isLoginLanguageRTL ? "ml-[1%]" : "mr-[1%]"}`}>
                                         <p id='misp_license_key_details_partner_id_label' className="font-[600] text-suva-gray text-sm">
                                             {t("viewOidcClientDetails.partnerId")}
