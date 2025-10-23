@@ -148,6 +148,9 @@ public class DashboardPage extends BasePage {
 
 	@FindBy(id = "footer_documentation_link")
 	private WebElement footerDocumentationLink;
+	
+	@FindBy(id = "dashboard_policies_card_header")
+	private WebElement policiesButtonInAdmin;
 
 	public DashboardPage(WebDriver driver) {
 		super(driver);
@@ -164,6 +167,10 @@ public class DashboardPage extends BasePage {
 
 	public boolean isLogoutButtonDisplayed() {
 		return isElementDisplayed(logoutButton);
+	}
+	
+	public boolean isPoliciesButtonDisplayed() {
+		return isElementDisplayed(policiesButtonInAdmin);
 	}
 
 	public boolean isSelectPolicyGroupPopUpDisplayed() {
@@ -216,6 +223,10 @@ public class DashboardPage extends BasePage {
 
 	public boolean isPoliciesTitleDisplayed() {
 		return isElementDisplayed(policiesTitle);
+	}
+	
+	public void clickOnPoliciesButton() {
+		clickOnElement(policiesButtonInAdmin);
 	}
 
 	public boolean isAuthenticationServicesTitleDisplayed() {
