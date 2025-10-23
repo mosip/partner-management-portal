@@ -109,7 +109,7 @@ function ViewMispLicenseKey() {
                         <div className="bg-snow-white h-fit mt-1 rounded-t-xl shadow-lg font-inter">
                             <div className="flex flex-wrap justify-between px-7 pt-3 border-b max-450:flex-col">
                                 <div className="flex flex-col flex-wrap max-w-full">
-                                    <p id='view_misp_license_key_details_sub_title_id' className="text-lg text-dark-blue mb-2 break-words whitespace-normal max-w-full">
+                                    <p id='view_misp_license_key_details_sub_title_id' className="text-lg text-dark-blue mb-2 break-words whitespace-normal max-w-full ">
                                         {t('mispLicenseList.mispLicenseKeyName')}: <span className="font-semibold">{mispLicenseKeyDetails.mispLicenseKeyName ? mispLicenseKeyDetails.mispLicenseKeyName : "-"}</span>
                                     </p>
                                     <div className="flex flex-wrap items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
