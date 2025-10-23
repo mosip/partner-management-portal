@@ -73,7 +73,7 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
         createDropdownData("partnerType", "", true, partnerTypeDropdownData, t, t("partnerList.selectPartnerType"))
       );
 
-      const statusDropdownData = [{ status: 'active' },{ status: 'deactivated' }];
+      const statusDropdownData = [{ status: 'active' },{ status: 'deactivated' }, { status: 'partner_inactive' }];
       setStatus(
         createDropdownData("status", "", true, statusDropdownData, t, t("partnerList.selectStatus"))
       );
