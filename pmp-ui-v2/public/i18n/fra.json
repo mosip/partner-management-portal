@@ -176,7 +176,7 @@
     },
     "verificationError": {
         "title": "Erreur de vérification du compte",
-        "description": "Le nom d’utilisateur/email fourni existe déjà dans le système PMS. En conséquence, nous ne pouvons pas vous inscrire sur le portail PMS.",
+        "description": "L'adresse e-mail/nom d'utilisateur indiqué existe déjà dans PMS. Par conséquent, nous ne pouvons pas vous intégrer au portail PMS.",
         "instructionsTitle": "<strong>Pour résoudre ce problème :</strong>",
         "instructionsList": [
             "Contactez l’administrateur Keycloak pour supprimer le compte Keycloak existant.",
