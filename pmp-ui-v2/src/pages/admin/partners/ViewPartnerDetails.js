@@ -138,6 +138,27 @@ function ViewPartnerDetails() {
         setSuccessMsg("");
     };
 
+    const getPartnerStatus = ({ approvalStatus, isActive }) => {
+        if (approvalStatus === 'InProgress' && !isActive) {
+            return 'inactive';
+        } else if (approvalStatus === 'approved' && !isActive) {
+            return 'deactivated';
+        } else {
+            return 'active';
+        }
+    };    
+    
+    const getPartnerStatusText = (partner, t) => t(`statusCodes.${getPartnerStatus(partner)}`);
+    
+    const statusColors = {
+        inactive: 'bg-[#DFE9FF] text-[#384B75]',
+        active: 'bg-[#D1FADF] text-[#155E3E]',
+        deactivated: 'bg-[#EAECF0] text-[#525252]',
+    };
+    
+    const getPartnerStatusBgColor = (partner) => statusColors[getPartnerStatus(partner)];
+    
+
     const dropdownStyle = {
         outerDiv: `w-[18%] min-w-fit absolute py-2 px-1  ${isLoginLanguageRTL ? "origin-bottom-right left-[6rem]" : "origin-bottom-left right-[6rem]"} rounded-md bg-white shadow-lg ring-gray-50 border duration-700`
     }
@@ -183,8 +204,8 @@ function ViewPartnerDetails() {
                                             {t('partnerList.partnerId')}: <span className="font-semibold">{partnerDetails.partnerId}</span>
                                         </p>
                                         <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
-                                            <div id='view_partner_details_partner_status' className={`${partnerDetails.isActive ? 'bg-[#D1FADF] text-[#155E3E]' : 'bg-[#EAECF0] text-[#525252]'} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
-                                                {partnerDetails.isActive ? t('statusCodes.active') : t('statusCodes.deactivated')}
+                                            <div id='view_partner_details_partner_status' className={`${getPartnerStatusBgColor(partnerDetails)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
+                                                {getPartnerStatusText(partnerDetails, t)}
                                             </div>
                                             <div id='view_partner_details_partner_created_on' className={`font-semibold ${isLoginLanguageRTL ? "mr-[1.4rem]" : "ml-[0.75rem]"} text-sm text-dark-blue`}>
                                                 {t("viewPartnerDetails.createdOn") + ' ' +
