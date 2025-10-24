@@ -30,6 +30,9 @@ public class MispPartnerPage extends BasePage {
 	@FindBy(id = "sub_title_btn")
 	private WebElement listOfAuthenticationPolicesTitle;
 
+	@FindBy(id = "sub_title_btn")
+	private WebElement listOfDataSharePolicesTitle;
+
 	@FindBy(id = "create_partner_mandatory_msg")
 	private WebElement createPartnerMandatoryMsg;
 
@@ -111,6 +114,9 @@ public class MispPartnerPage extends BasePage {
 	@FindBy(id = "undefined_title")
 	private WebElement listOfPolicyGroupsTitle;
 
+	@FindBy(id = "undefined_title")
+	private WebElement listOfPoliciesTitleInMispPolicy;
+
 	@FindBy(id = "side_nav_policy_icon")
 	private WebElement policyOverlayMenu;
 
@@ -174,20 +180,44 @@ public class MispPartnerPage extends BasePage {
 	@FindBy(id = "create_auth_policy_btn")
 	private WebElement createAuthPolicyHeader;
 
+	@FindBy(id = "create_auth_policy_btn")
+	private WebElement createDataSharePolicyHeader;
+
+	@FindBy(id = "create_auth_policy_btn")
+	private WebElement createMispPolicyHeader;
+
 	@FindBy(id = "create_policy_mandatory_field_msg")
 	private WebElement authPolicyMandatoryMessage;
+
+	@FindBy(id = "create_policy_mandatory_field_msg")
+	private WebElement dataSharePolicyMandatoryMessage;
 
 	@FindBy(id = "policy_group_selector_dropdown_button")
 	private WebElement authPolicygroupDropdownField;
 
+	@FindBy(id = "policy_group_selector_dropdown_button")
+	private WebElement dataSharePolicygroupDropdownField;
+
 	@FindBy(id = "upload_policy_data_file_btn")
 	private WebElement uploadButtonInAuthPolicy;
+
+	@FindBy(id = "upload_policy_data_file_btn")
+	private WebElement uploadButtonInMispPolicy;
 
 	@FindBy(id = "create_policy_form_cancel_btn")
 	private WebElement cancelButtonInAuthPolicy;
 
+	@FindBy(id = "create_policy_form_cancel_btn")
+	private WebElement cancelButtonInDataSharePolicy;
+
 	@FindBy(id = "create_policy_form_submit_btn")
 	private WebElement saveAsDraftButton;
+
+	@FindBy(id = "create_policy_form_submit_btn")
+	private WebElement saveAsDraftButtonInDataSharePolicies;
+
+	@FindBy(id = "create_policy_form_submit_btn")
+	private WebElement saveAsDraftButtonInMispPolicies;
 
 	@FindBy(id = "policiesList.policyId_header")
 	private WebElement policyIdHeaderInAuthPolicy;
@@ -206,6 +236,36 @@ public class MispPartnerPage extends BasePage {
 
 	@FindBy(id = "policiesList.action_header")
 	private WebElement actionHeaderInAuthPolicy;
+
+	@FindBy(id = "policy_description_box")
+	private WebElement policyDescriptionInDataSharePolicy;
+
+	@FindBy(id = "policiesList.policyId_header")
+	private WebElement policyIdHeaderInDataSharePolicy;
+
+	@FindBy(id = "policiesList.policyName_header")
+	private WebElement policyNameHeaderInDataSharePolicy;
+
+	@FindBy(id = "policiesList.policyDescription_header")
+	private WebElement policiesDescriptionInDataSharePolicy;
+
+	@FindBy(id = "policiesList.creationDate_header")
+	private WebElement creationDateInDataSharePolicy;
+
+	@FindBy(id = "policiesList.status_header")
+	private WebElement statusHeaderInDataSharePolicy;
+
+	@FindBy(id = "policiesList.action_header")
+	private WebElement actionHeaderInDataSharePolicy;
+
+	@FindBy(id = "policy_name_box")
+	private WebElement policyNameInMispPolicy;
+
+	@FindBy(id = "policy_description_box")
+	private WebElement policyDescriptionInMispPolicy;
+
+	@FindBy(id = "create_policy_form_clear_btn")
+	private WebElement clearBtnInMispPartner;
 
 	public MispPartnerPage(WebDriver driver) {
 		super(driver);
@@ -367,6 +427,58 @@ public class MispPartnerPage extends BasePage {
 		return isElementDisplayed(actionHeaderInAuthPolicy);
 	}
 
+	public boolean isListOfDataSharePolicesTitleDisplayed() {
+		return isElementDisplayed(listOfDataSharePolicesTitle);
+	}
+
+	public boolean isMandatoryMessageInDatasharePoliciesDisplayed() {
+		return isElementDisplayed(dataSharePolicyMandatoryMessage);
+	}
+
+	public boolean isPolicyGroupInDataSharePolicyDisplayed() {
+		return isElementDisplayed(dataSharePolicygroupDropdownField);
+	}
+
+	public boolean isPolicyDescriptionInDataSharePolicyDisplayed() {
+		return isElementDisplayed(policyDescriptionInDataSharePolicy);
+	}
+
+	public boolean isCancelButtonInDataSharePolicyDisplayed() {
+		return isElementDisplayed(cancelButtonInDataSharePolicy);
+	}
+
+	public boolean isSaveAsDraftButtonInDataSharePoliciesDisplayed() {
+		return isElementDisplayed(saveAsDraftButtonInDataSharePolicies);
+	}
+
+	public boolean isCreateMispPolicyHeaderDisplayed() {
+		return isElementDisplayed(createMispPolicyHeader);
+	}
+
+	public boolean listOfPoliciesTitleInMispPolicyDisplayed() {
+		return isElementDisplayed(listOfPoliciesTitleInMispPolicy);
+	}
+
+	public boolean policyNameInMispPolicyDisplayed() {
+		return isElementDisplayed(policyNameInMispPolicy);
+	}
+
+	public boolean PolicyDescriptionInMispPolicyDisplayed() {
+		return isElementDisplayed(policyDescriptionInMispPolicy);
+	}
+
+	public boolean submitBtnInMispPoliciesDisabledDisplayed() {
+		return isElementDisplayed(saveAsDraftButtonInMispPolicies);
+	}
+
+	public boolean uploadBtnInMispPolicyDisplayed() {
+		return isElementDisplayed(uploadButtonInMispPolicy);
+	}
+
+	public boolean clearBtnInMispPartnerDisplayed() {
+		return isElementDisplayed(clearBtnInMispPartner);
+	}
+
 	public void clickOnPoliciesButton() {
 		clickOnElement(policiesButtonInAdmin);
 	}
@@ -397,6 +509,34 @@ public class MispPartnerPage extends BasePage {
 
 	public void clickOnListOfAuthPoliciesTitle() {
 		clickOnElement(listOfAuthenticationPolicesTitle);
+	}
+
+	public void clickOnDatasharePolicyTitle() {
+		clickOnElement(datasharePolicyTabInCreatePolicyGroup);
+	}
+
+	public void clickOnCreateDatasharePolicyTitle() {
+		clickOnElement(createDataSharePolicyHeader);
+	}
+
+	public void clickOnListOfDataSharePoliciesTitle() {
+		clickOnElement(listOfDataSharePolicesTitle);
+	}
+
+	public void clickOnMispPolicyTitle() {
+		clickOnElement(mispPolicyTabInCreatePolicyGroup);
+	}
+
+	public void clickOnCreateMispPolicyTitle() {
+		clickOnElement(createMispPolicyHeader);
+	}
+
+	public void clickOnUploadBtnInMispPolicy() {
+		clickOnElement(uploadButtonInMispPolicy);
+	}
+
+	public void clickOnCancelButtonInMispPartner() {
+		clickOnElement(clearBtnInMispPartner);
 	}
 
 	public String getBreadcrumbTextOfCreatePartnerPage() {

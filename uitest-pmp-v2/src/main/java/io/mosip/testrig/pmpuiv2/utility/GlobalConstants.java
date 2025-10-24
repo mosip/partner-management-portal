@@ -1120,6 +1120,19 @@ public class GlobalConstants {
 	public static final String isCreationDateHeaderInAuthPolicyDisplayed = "Verify if creationdate header auth policy button isdisplayed";
 	public static final String isStatusHeaderInAuthPolicyDisplayed = "Verify if status header auth policy button isdisplayed";
 	public static final String isActionHeaderInAuthPolicyDisplayed = "Verify if action header in auth policy button isdisplayed";
+	public static final String isListOfDataSharePolicesTitleDisplayed = "Verify if list of data share policy title isdisplayed";
+	public static final String isMandatoryMessageInDatasharePoliciesDisplayed = "Verify if mandatory message of data share policy title isdisplayed";
+	public static final String isPolicyGroupInDataSharePolicyDisplayed = "Verify if policy group dropdown of data share policy title isdisplayed";
+	public static final String isPolicyDescriptionInDataSharePolicyDisplayed = "Verify if policy description data share policy title isdisplayed";
+	public static final String isCancelButtonInDataSharePolicyDisplayed = "Verify if cancel button in  data share policy title isdisplayed";
+	public static final String isSaveAsDraftButtonInDataSharePoliciesDisplayed = "Verify if save as draft button in data share policy title isdisplayed";
+	public static final String isCreateMispPolicyHeaderDisplayed = "Verify if create policy header in data share policy title isdisplayed";
+	public static final String listOfPoliciesTitleInMispPolicyDisplayed = "Verify if list of policy title in data share policy title isdisplayed";
+	public static final String policyNameInMispPolicyDisplayed = "Verify if  policy name in misp policy isdisplayed";
+	public static final String PolicyDescriptionInMispPolicyDisplayed = "Verify if  policy description in misp policy isdisplayed";
+	public static final String submitBtnInMispPoliciesDisabledDisplayed = "Verify if  submit btn in misp policy disabled isdisplayed";
+	public static final String uploadBtnInMispPolicyDisplayed = "Verify if upload btn in misp policy isdisplayed";
+	public static final String clearBtnInMispPartnerDisplayed = "Verify if clear btn in misp policy isdisplayed";
 
 	public static final String APPID = "appId";
 	public static final String PASSWORD = "password";

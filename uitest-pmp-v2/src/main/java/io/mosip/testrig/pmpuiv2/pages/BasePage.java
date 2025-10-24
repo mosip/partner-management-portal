@@ -68,6 +68,7 @@ public class BasePage {
 			}
 		}
 	}
+	
 
 	public void enter(WebElement element, String value) {
 		LogUtil.action("Entering value '" + value + "' into element: ", element);

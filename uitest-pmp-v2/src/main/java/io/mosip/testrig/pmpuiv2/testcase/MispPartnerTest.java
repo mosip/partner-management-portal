@@ -109,5 +109,44 @@ public class MispPartnerTest extends BaseClass {
 		assertTrue(mispPartnerPage.isActionHeaderInAuthPolicyDisplayed(),
 				GlobalConstants.isActionHeaderInAuthPolicyDisplayed);
 
+		assertTrue(mispPartnerPage.isDataSharePolicyTabInCreatePolicyGroupDisplayed(),
+				GlobalConstants.isDataSharePolicyTabInCreatePolicyGroupDisplayed);
+		mispPartnerPage.clickOnDatasharePolicyTitle();
+		mispPartnerPage.clickOnCreateDatasharePolicyTitle();
+		assertTrue(mispPartnerPage.isListOfDataSharePolicesTitleDisplayed(),
+				GlobalConstants.isListOfDataSharePolicesTitleDisplayed);
+		assertTrue(mispPartnerPage.isMandatoryMessageInDatasharePoliciesDisplayed(),
+				GlobalConstants.isMandatoryMessageInDatasharePoliciesDisplayed);
+		assertTrue(mispPartnerPage.isPolicyGroupInDataSharePolicyDisplayed(),
+				GlobalConstants.isPolicyGroupInDataSharePolicyDisplayed);
+		assertTrue(mispPartnerPage.isPolicyDescriptionInDataSharePolicyDisplayed(),
+				GlobalConstants.isPolicyDescriptionInDataSharePolicyDisplayed);
+		assertTrue(mispPartnerPage.isCancelButtonInDataSharePolicyDisplayed(),
+				GlobalConstants.isCancelButtonInDataSharePolicyDisplayed);
+		assertTrue(mispPartnerPage.isSaveAsDraftButtonInDataSharePoliciesDisplayed(),
+				GlobalConstants.isSaveAsDraftButtonInDataSharePoliciesDisplayed);
+		assertTrue(mispPartnerPage.policyNameInMispPolicyDisplayed(), GlobalConstants.policyNameInMispPolicyDisplayed);
+		mispPartnerPage.clickOnListOfDataSharePoliciesTitle();
+
+		assertTrue(mispPartnerPage.isMispPolicyabInCreatePolicyGroupDisplayed(),
+				GlobalConstants.isMispPolicyabInCreatePolicyGroupDisplayed);
+		mispPartnerPage.clickOnMispPolicyTitle();
+		assertTrue(mispPartnerPage.isCreateMispPolicyHeaderDisplayed(),
+				GlobalConstants.isCreateMispPolicyHeaderDisplayed);
+		assertTrue(mispPartnerPage.listOfPoliciesTitleInMispPolicyDisplayed(),
+				GlobalConstants.listOfPoliciesTitleInMispPolicyDisplayed);
+		mispPartnerPage.clickOnCreateMispPolicyTitle();
+		assertTrue(mispPartnerPage.policyNameInMispPolicyDisplayed(), GlobalConstants.policyNameInMispPolicyDisplayed);
+		assertTrue(mispPartnerPage.PolicyDescriptionInMispPolicyDisplayed(),
+				GlobalConstants.PolicyDescriptionInMispPolicyDisplayed);
+		assertTrue(mispPartnerPage.submitBtnInMispPoliciesDisabledDisplayed(),
+				GlobalConstants.submitBtnInMispPoliciesDisabledDisplayed);
+		assertTrue(mispPartnerPage.uploadBtnInMispPolicyDisplayed(), GlobalConstants.uploadBtnInMispPolicyDisplayed);
+		mispPartnerPage.clickOnUploadBtnInMispPolicy();
+
+		assertTrue(mispPartnerPage.clearBtnInMispPartnerDisplayed(), GlobalConstants.clearBtnInMispPartnerDisplayed);
+		mispPartnerPage.clickOnCancelButtonInMispPartner();
+
 	}
+
 }
