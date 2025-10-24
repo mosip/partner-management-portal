@@ -137,7 +137,10 @@ export const getStatusCode = (status, t) => {
             return t('statusCodes.valid');
         } else if (status === "not_available") {
             return t('statusCodes.notAvailable');
-        } else if (status === "-") {
+        } else if (status === "partner_inactive") {
+            return t('statusCodes.inactive');
+        }
+        else if (status === "-") {
             return "-"
         }
     }
