@@ -66,38 +66,40 @@ function Pagination({ dataListLength, selectedRecordsPerPage, setSelectedRecords
     const blueBtn = "text-[#1447B2] border-[#1447B2] cursor-pointer";
 
     return (
-        <div id='pagination_card' className="relative flex justify-between bg-[#FCFCFC] items-center h-9  mt-0.5 p-8 rounded-b-md shadow-md max-640:flex-col max-640:h-fit">
-            <div></div>
-            <div className="absolute left-1/2 -translate-x-1/2">
+        <div id='pagination_card' className="flex flex-col md:flex-row justify-center items-center bg-[#FCFCFC] mt-0.5 p-3 sm:p-4 md:p-6 lg:p-8 rounded-b-md shadow-md gap-3 md:gap-4">
+            {/* ReactPaginate*/}
+            <div className="flex justify-center w-full overflow-x-auto px-2">
                 <ReactPaginate
                     forcePage={selectedPage}
                     onPageChange={handlePageChange}
                     pageCount={Math.ceil(dataListLength / selectedRecordsPerPage)}
-                    pageRangeDisplayed={4}
+                    pageRangeDisplayed={3}
                     marginPagesDisplayed={1}
                     breakLabel="..."
-                    containerClassName={`flex items-center justify-center space-x-3 ${isLoginLanguageRTL && 'space-x-reverse'}`}
-                    pageClassName="px-3 py-1.5 text-[#1447B2]  text-sm"
-                    activeClassName="bg-[#1447B2] text-white text-sm p-1.5 rounded-md"
+                    containerClassName={`flex items-center justify-center space-x-1 sm:space-x-2 md:space-x-3 min-w-fit ${isLoginLanguageRTL && 'space-x-reverse'}`}
+                    pageClassName="px-2 sm:px-3 py-1.5 text-[#1447B2] text-xs sm:text-sm"
+                    activeClassName="bg-[#1447B2] text-white text-xs sm:text-sm p-1 sm:p-1.5 rounded-md"
                     previousClassName={`border rounded-md ${isFirstPage ? greyBtn : blueBtn}`}
                     nextClassName={`border rounded-md ${isLastPage ? greyBtn : blueBtn}`}
-                    previousLinkClassName="flex items-center justify-center w-7 h-7 block"
-                    nextLinkClassName="flex items-center justify-center w-7 h-7 block"
-                    breakClassName="px-2 py-1 text-[#1447B2]"
+                    previousLinkClassName="flex items-center justify-center w-6 h-6 sm:w-7 sm:h-7 block"
+                    nextLinkClassName="flex items-center justify-center w-6 h-6 sm:w-7 sm:h-7 block"
+                    breakClassName="px-1 sm:px-2 py-1.5 text-[#1447B2] text-xs sm:text-sm flex items-center justify-center"
                     previousLabel={isLoginLanguageRTL ? <FiChevronRight /> : <FiChevronLeft />}
                     nextLabel={isLoginLanguageRTL ? <FiChevronLeft /> : <FiChevronRight />}
                 />
             </div>
-            <div className="flex items-center gap-x-3">
-                <h6 id='items_per_page' className="text-gray-500 text-xs">{t('commons.itemsPerPage')}</h6>
+            
+            {/* Items per page*/}
+            <div className="flex items-center gap-x-2 sm:gap-x-3 flex-shrink-0">
+                <h6 id='items_per_page' className="text-gray-500 text-xs whitespace-nowrap">{t('commons.itemsPerPage')}</h6>
                 <div ref={itemsCountSelectionRef} className='relative min-w-fit w-10'
                     role='button' id='pagination_select_record_per_page' onClick={() => setIsItemsPerPageOpen(!isItemsPerPageOpen)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => setIsItemsPerPageOpen(!isItemsPerPageOpen))}>
                     {isItemsPerPageOpen && (
-                        <div className={`absolute bg-white text-xs text-tory-blue font-semibold rounded-lg border-[2px] bottom-6 duration-700`}>
+                        <div className={`absolute bg-white text-xs text-tory-blue font-semibold rounded-lg border-[2px] bottom-6 duration-700 z-10`}>
                             {itemsPerPageOptions.map((num, i) => {
                                 return (
                                     <button id={'pagination_each_num_option' + (i + 1)} key={i} onClick={() => changeItemsPerPage(num)}
-                                        className={`px-3 py-2 w-full cursor-pointer ${selectedRecordsPerPage === num ? 'bg-[#F2F5FC]' : 'hover:bg-[#F2F5FC]'}`}>
+                                        className={`px-3 py-2 w-full cursor-pointer text-center ${selectedRecordsPerPage === num ? 'bg-[#F2F5FC]' : 'hover:bg-[#F2F5FC]'}`}>
                                         {num}
                                     </button>
                                 )
