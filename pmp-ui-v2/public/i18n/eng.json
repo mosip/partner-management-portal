@@ -178,7 +178,7 @@
     },
     "verificationError": {
         "title": "Account Verification Error",
-        "description": "The given username/email already exists in PMS. As a result, we are unable to onboard you into the PMS portal.",
+        "description": "The given email/username already exists in PMS. As a result, we are unable to onboard you into the PMS portal.",
         "instructionsTitle": "<strong>To resolve this:</strong>",
         "instructionsList": [
             "Contact the Keycloak administrator to delete the existing Keycloak account.",

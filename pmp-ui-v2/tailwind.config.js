@@ -50,7 +50,8 @@ module.exports = {
         'max-470': {'max': '470px'},
         'max-330': {'max': '330px'},
         'min-560': {'min': '560px'},
-        'min-736': {'min': '736px'}
+        'min-736': {'min': '736px'},
+        'max-450': {'max': '450px'},
       },
     },
   },
