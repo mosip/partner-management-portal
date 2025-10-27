@@ -66,9 +66,10 @@ function Pagination({ dataListLength, selectedRecordsPerPage, setSelectedRecords
     const blueBtn = "text-[#1447B2] border-[#1447B2] cursor-pointer";
 
     return (
-        <div id='pagination_card' className="flex flex-col md:flex-row justify-center items-center bg-[#FCFCFC] mt-0.5 p-3 sm:p-4 md:p-6 lg:p-8 rounded-b-md shadow-md gap-3 md:gap-4">
-            {/* ReactPaginate*/}
-            <div className="flex justify-center w-full overflow-x-auto px-2">
+        <div id='pagination_card' className="relative flex justify-between bg-[#FCFCFC] items-center h-9 mt-0.5 p-8 rounded-b-md shadow-md 
+             max-870:flex-col max-870:items-center max-870:gap-y-12 max-870:h-fit">
+            <div></div>
+            <div className="absolute left-1/2 -translate-x-1/2">
                 <ReactPaginate
                     forcePage={selectedPage}
                     onPageChange={handlePageChange}
