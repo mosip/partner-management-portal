@@ -217,10 +217,10 @@ function CreatePartner() {
                 // Set configurable limits from app config
                 const configData = await getAppConfig();
                 if (configData && configData.partnerIdMaxLength) {
-                    setPartnerIdMaxLength(parseInt(configData.partnerIdMaxLength, 10));
+                    setPartnerIdMaxLength(Number.parseInt(configData.partnerIdMaxLength, 10));
                 }
                 if (configData && configData.phoneNumberMaxLength) {
-                    setPhoneNumberMaxLength(parseInt(configData.phoneNumberMaxLength, 10));
+                    setPhoneNumberMaxLength(Number.parseInt(configData.phoneNumberMaxLength, 10));
                 }
             } catch (err) {
                 console.error('Error fetching data:', err);
