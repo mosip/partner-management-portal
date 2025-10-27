@@ -316,8 +316,8 @@ function GenerateMispLicenseKey() {
                                             </div>
                                             <div className="flex flex-row justify-between space-x-4 my-2 max-[450px]:flex-col">
                                                 <div className="flex flex-col w-[48%] max-[450px]:w-full">
-                                                    <label id='generate_license_key_policy_group_label' className={`flex items-center text-dark-blue text-sm font-semibold mb-2 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
-                                                        {t('requestPolicy.policyGroup')}
+                                                    <label id='generate_license_key_policy_group_label' className={`flex items-center text-dark-blue text-sm mb-2 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+                                                        <p className="font-semibold">{t('requestPolicy.policyGroup')}</p>
                                                         <Information infoKey="generateLicenseKey.policyGroupInfoMsg" id="generate_license_key_policy_group_info" />
                                                     </label>
                                                     <button id='generate_license_key_policy_group' disabled className="flex items-center justify-between w-full h-auto px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-dark-blue bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
