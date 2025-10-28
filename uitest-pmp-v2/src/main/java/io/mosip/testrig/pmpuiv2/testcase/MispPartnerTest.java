@@ -84,6 +84,7 @@ public class MispPartnerTest extends BaseClass {
 
 		mispPartnerPage.selectPolicyGroup("mosip policy group20");
 		mispPartnerPage.enterPolicyName("Authentication policy");
+		mispPartnerPage.enterPolicyDescription("policy data");
 
 	}
 

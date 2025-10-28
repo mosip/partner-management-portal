@@ -34,14 +34,12 @@ import io.mosip.testrig.pmpuiv2.utility.TestRunner;
 public class KeycloakUserManager extends BaseTestCaseFunc {
 	public static String moduleSpecificUser = null;
 	public static String passwordCred;
-	public static String publicKeytemp=PmpTestUtil.generateJWKPublicKey();
+	public static String publicKeytemp = PmpTestUtil.generateJWKPublicKey();
 
 	private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(KeycloakUserManager.class);
 
 	public static Properties propsKernel = getproperty(
 			TestRunner.getResourcePath() + "/" + "config/" + TestRunner.GetKernalFilename());
-
-
 
 	private static Keycloak getKeycloakInstance() {
 		Keycloak key = null;
@@ -85,16 +83,13 @@ public class KeycloakUserManager extends BaseTestCaseFunc {
 				moduleSpecificUser = needsToBeCreatedUser;
 			} else if (needsToBeCreatedUser.equals("nocert")) {
 				moduleSpecificUser = needsToBeCreatedUser;
-			}else if (needsToBeCreatedUser.equals("device")) {
+			} else if (needsToBeCreatedUser.equals("device")) {
+				moduleSpecificUser = needsToBeCreatedUser;
+			} else if (needsToBeCreatedUser.equals("ftm")) {
+				moduleSpecificUser = needsToBeCreatedUser;
+			} else if (needsToBeCreatedUser.equals("ftmnocert")) {
 				moduleSpecificUser = needsToBeCreatedUser;
 			}
-			else if (needsToBeCreatedUser.equals("ftm")) {
-				moduleSpecificUser = needsToBeCreatedUser;
-			}else if (needsToBeCreatedUser.equals("ftmnocert")) {
-				moduleSpecificUser = needsToBeCreatedUser;
-			}
-			
-			
 
 			else {
 				moduleSpecificUser = BaseTestCaseFunc.currentModule + "-" + needsToBeCreatedUser;
@@ -248,29 +243,22 @@ public class KeycloakUserManager extends BaseTestCaseFunc {
 
 		return sb.toString();
 	}
-	
+
 	public static void assignRole(String username, String roleName) {
-	    Keycloak keycloak = getKeycloakInstance();
-	    RealmResource realm = keycloak.realm(ConfigManager.getIAMRealmId());
+		Keycloak keycloak = getKeycloakInstance();
+		RealmResource realm = keycloak.realm(ConfigManager.getIAMRealmId());
 
-	    List<UserRepresentation> users = realm.users().search(username);
-	    if (users.isEmpty()) {
-	        System.out.println("User not found: " + username);
-	        return;
-	    }
+		List<UserRepresentation> users = realm.users().search(username);
+		if (users.isEmpty()) {
+			System.out.println("User not found: " + username);
+			return;
+		}
 
-	    UserResource user = realm.users().get(users.get(0).getId());
+		UserResource user = realm.users().get(users.get(0).getId());
 
-	    RoleRepresentation role = realm.roles().get(roleName).toRepresentation();
-	    user.roles().realmLevel().add(List.of(role));
+		RoleRepresentation role = realm.roles().get(roleName).toRepresentation();
+		user.roles().realmLevel().add(List.of(role));
 
 	}
 
-
 }
-
-
-
-
-
-

@@ -403,6 +403,11 @@ public class MispPartnerPage extends BasePage {
 	public void enterPolicyName(String address) {
 		enter(policyNameInMispPolicy, address);
 	}
+	
+	public void enterPolicyDescription(String address) {
+		enter(policyDescriptionInMispPolicy, address);
+	}
+
 
 	public void enterPartnerOrganisation(String organisation) {
 		enter(partnerOrganisationNameTextBox, organisation);
