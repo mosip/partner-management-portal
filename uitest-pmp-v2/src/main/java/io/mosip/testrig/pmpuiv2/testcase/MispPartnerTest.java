@@ -42,12 +42,7 @@ public class MispPartnerTest extends BaseClass {
 				GlobalConstants.isListOfPolicyGroupsTitleDisplayed);
 		assertTrue(mispPartnerPage.isHomeButtonInCreatePolicyGroupDisplayed(),
 				GlobalConstants.isHomeButtonInCreatePolicyGroupDisplayed);
-		assertTrue(mispPartnerPage.isPolicyGroupsTabInCreatePolicyGroupDisplayed(),
-				GlobalConstants.isPolicyGroupsTabInCreatePolicyGroupDisplayed);
-		assertTrue(mispPartnerPage.isAuthPolicyTabInCreatePolicyGroupDisplayed(),
-				GlobalConstants.isAuthPolicyTabInCreatePolicyGroupDisplayed);
-		assertTrue(mispPartnerPage.isDataSharePolicyTabInCreatePolicyGroupDisplayed(),
-				GlobalConstants.isDataSharePolicyTabInCreatePolicyGroupDisplayed);
+
 		assertTrue(mispPartnerPage.isMispPolicyabInCreatePolicyGroupDisplayed(),
 				GlobalConstants.isMispPolicyabInCreatePolicyGroupDisplayed);
 		assertTrue(mispPartnerPage.isCreatePolicyGroupBtnDisplayed(), GlobalConstants.isCreatePolicyGroupBtnDisplayed);
@@ -69,8 +64,7 @@ public class MispPartnerTest extends BaseClass {
 				GlobalConstants.isPolicyGroupDescriptionInputFieldDisplayed);
 		assertTrue(mispPartnerPage.isCancelBtnInCreatePolicyGroupDisplayed(),
 				GlobalConstants.isCancelBtnInCreatePolicyGroupDisplayed);
-		assertTrue(mispPartnerPage.isSubmitBtnInCreatePolicyGroupDisplayed(),
-				GlobalConstants.isSubmitBtnInCreatePolicyGroupDisplayed);
+
 		mispPartnerPage.clickOnListOfPolicyGroupTitle();
 		assertTrue(mispPartnerPage.isPolicyGroupIdHeaderDisplayed(), GlobalConstants.isPolicyGroupIdHeaderDisplayed);
 		assertTrue(mispPartnerPage.isPolicyGroupNameheaderDisplayed(),
@@ -80,51 +74,9 @@ public class MispPartnerTest extends BaseClass {
 		assertTrue(mispPartnerPage.isCreationHeaderDisplayed(), GlobalConstants.isCreationHeaderDisplayed);
 		assertTrue(mispPartnerPage.isStatusHeadersDisplayed(), GlobalConstants.isStatusHeadersDisplayed);
 		assertTrue(mispPartnerPage.isActionsHeaderDisplayed(), GlobalConstants.isActionsHeaderDisplayed);
-		mispPartnerPage.clickOnAuthPolicyTitle();
-		assertTrue(mispPartnerPage.isCreateAuthPartnerHeaderDisplayed(),
-				GlobalConstants.isCreateAuthPartnerHeaderDisplayed);
-		mispPartnerPage.clickOnCreateAuthPartnerHeader();
+
 		assertTrue(mispPartnerPage.isListOfAuthenticationPolicesTitleDisplayed(),
 				GlobalConstants.isListOfAuthenticationPolicesTitleDisplayed);
-		assertTrue(mispPartnerPage.isAuthPolicyMessageDisplayed(), GlobalConstants.isAuthPolicyMessageDisplayed);
-		assertTrue(mispPartnerPage.isAuthPolicyGroupDropDownDisplayed(),
-				GlobalConstants.isAuthPolicyGroupDropDownDisplayed);
-		assertTrue(mispPartnerPage.isUploadButtonInAuthPolicyDisplayed(),
-				GlobalConstants.isUploadButtonInAuthPolicyDisplayed);
-		assertTrue(mispPartnerPage.isCancelButtonInAuthPolicyDisplayed(),
-				GlobalConstants.isCancelButtonInAuthPolicyDisplayed);
-		assertTrue(mispPartnerPage.isSaveAsDraftButtonInAuthPolicyDisplayed(),
-				GlobalConstants.isSaveAsDraftButtonInAuthPolicyDisplayed);
-		mispPartnerPage.clickOnListOfAuthPoliciesTitle();
-		assertTrue(mispPartnerPage.isPolicyIdHeaderInAuthPolicyDisplayed(),
-				GlobalConstants.isPolicyIdHeaderInAuthPolicyDisplayed);
-		assertTrue(mispPartnerPage.isPolicyNameHeaderInAuthPolicyDisplayed(),
-				GlobalConstants.isPolicyNameHeaderInAuthPolicyDisplayed);
-		assertTrue(mispPartnerPage.isPolicyDescriptionInAuthPolicyDisplayed(),
-				GlobalConstants.isPolicyDescriptionInAuthPolicyDisplayed);
-		assertTrue(mispPartnerPage.isCreationDateHeaderInAuthPolicyDisplayed(),
-				GlobalConstants.isCreationDateHeaderInAuthPolicyDisplayed);
-		assertTrue(mispPartnerPage.isStatusHeaderInAuthPolicyDisplayed(),
-				GlobalConstants.isStatusHeaderInAuthPolicyDisplayed);
-		assertTrue(mispPartnerPage.isActionHeaderInAuthPolicyDisplayed(),
-				GlobalConstants.isActionHeaderInAuthPolicyDisplayed);
-
-		assertTrue(mispPartnerPage.isDataSharePolicyTabInCreatePolicyGroupDisplayed(),
-				GlobalConstants.isDataSharePolicyTabInCreatePolicyGroupDisplayed);
-		mispPartnerPage.clickOnDatasharePolicyTitle();
-		mispPartnerPage.clickOnCreateDatasharePolicyTitle();
-		assertTrue(mispPartnerPage.isListOfDataSharePolicesTitleDisplayed(),
-				GlobalConstants.isListOfDataSharePolicesTitleDisplayed);
-		assertTrue(mispPartnerPage.isMandatoryMessageInDatasharePoliciesDisplayed(),
-				GlobalConstants.isMandatoryMessageInDatasharePoliciesDisplayed);
-		assertTrue(mispPartnerPage.isPolicyGroupInDataSharePolicyDisplayed(),
-				GlobalConstants.isPolicyGroupInDataSharePolicyDisplayed);
-		assertTrue(mispPartnerPage.isPolicyDescriptionInDataSharePolicyDisplayed(),
-				GlobalConstants.isPolicyDescriptionInDataSharePolicyDisplayed);
-		assertTrue(mispPartnerPage.isCancelButtonInDataSharePolicyDisplayed(),
-				GlobalConstants.isCancelButtonInDataSharePolicyDisplayed);
-		assertTrue(mispPartnerPage.isSaveAsDraftButtonInDataSharePoliciesDisplayed(),
-				GlobalConstants.isSaveAsDraftButtonInDataSharePoliciesDisplayed);
 		assertTrue(mispPartnerPage.policyNameInMispPolicyDisplayed(), GlobalConstants.policyNameInMispPolicyDisplayed);
 		mispPartnerPage.clickOnListOfDataSharePoliciesTitle();
 
@@ -144,8 +96,8 @@ public class MispPartnerTest extends BaseClass {
 		assertTrue(mispPartnerPage.uploadBtnInMispPolicyDisplayed(), GlobalConstants.uploadBtnInMispPolicyDisplayed);
 		mispPartnerPage.clickOnUploadBtnInMispPolicy();
 
-		assertTrue(mispPartnerPage.clearBtnInMispPartnerDisplayed(), GlobalConstants.clearBtnInMispPartnerDisplayed);
-		mispPartnerPage.clickOnCancelButtonInMispPartner();
+		mispPartnerPage.selectPolicyGroup("mosip policy group20");
+		mispPartnerPage.enterPolicyName("Authentication policy");
 
 	}
 

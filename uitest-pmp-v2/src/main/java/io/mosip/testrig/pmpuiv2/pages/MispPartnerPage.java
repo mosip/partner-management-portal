@@ -120,15 +120,6 @@ public class MispPartnerPage extends BasePage {
 	@FindBy(id = "side_nav_policy_icon")
 	private WebElement policyOverlayMenu;
 
-	@FindBy(id = "policies_policy_group_tab")
-	private WebElement policyGroupsTabInCreatePolicyGroup;
-
-	@FindBy(id = "policies_auth_policy_tab")
-	private WebElement authPolicyTabInCreatePolicyGroup;
-
-	@FindBy(id = "policies_data_share_policy_tab")
-	private WebElement datasharePolicyTabInCreatePolicyGroup;
-
 	@FindBy(id = "policies_misp_policy_tab")
 	private WebElement mispPolicyTabInCreatePolicyGroup;
 
@@ -154,10 +145,7 @@ public class MispPartnerPage extends BasePage {
 	private WebElement policyGroupDescriptionInputField;
 
 	@FindBy(id = "createPolicy_cancel_btn")
-	private WebElement cancelBtnInCreatePolicyGroup;
-
-	@FindBy(id = "createPolicy_submit_btn")
-	private WebElement submitBtnInCreatePolicyGroup;
+	private WebElement cancelBtnInMispPartnerPage;
 
 	@FindBy(id = "policyGroupList.policyGroupId_header")
 	private WebElement policyGroupIdHeader;
@@ -178,94 +166,19 @@ public class MispPartnerPage extends BasePage {
 	private WebElement actionsHeader;
 
 	@FindBy(id = "create_auth_policy_btn")
-	private WebElement createAuthPolicyHeader;
-
-	@FindBy(id = "create_auth_policy_btn")
-	private WebElement createDataSharePolicyHeader;
-
-	@FindBy(id = "create_auth_policy_btn")
 	private WebElement createMispPolicyHeader;
-
-	@FindBy(id = "create_policy_mandatory_field_msg")
-	private WebElement authPolicyMandatoryMessage;
-
-	@FindBy(id = "create_policy_mandatory_field_msg")
-	private WebElement dataSharePolicyMandatoryMessage;
-
-	@FindBy(id = "policy_group_selector_dropdown_button")
-	private WebElement authPolicygroupDropdownField;
-
-	@FindBy(id = "policy_group_selector_dropdown_button")
-	private WebElement dataSharePolicygroupDropdownField;
-
-	@FindBy(id = "upload_policy_data_file_btn")
-	private WebElement uploadButtonInAuthPolicy;
 
 	@FindBy(id = "upload_policy_data_file_btn")
 	private WebElement uploadButtonInMispPolicy;
 
-	@FindBy(id = "create_policy_form_cancel_btn")
-	private WebElement cancelButtonInAuthPolicy;
-
-	@FindBy(id = "create_policy_form_cancel_btn")
-	private WebElement cancelButtonInDataSharePolicy;
-
-	@FindBy(id = "create_policy_form_submit_btn")
-	private WebElement saveAsDraftButton;
-
-	@FindBy(id = "create_policy_form_submit_btn")
-	private WebElement saveAsDraftButtonInDataSharePolicies;
-
 	@FindBy(id = "create_policy_form_submit_btn")
 	private WebElement saveAsDraftButtonInMispPolicies;
-
-	@FindBy(id = "policiesList.policyId_header")
-	private WebElement policyIdHeaderInAuthPolicy;
-
-	@FindBy(id = "policiesList.policyName_header")
-	private WebElement policyNameHeaderInAuthPolicy;
-
-	@FindBy(id = "policiesList.policyDescription_header")
-	private WebElement policyDescriptionInAuthPolicy;
-
-	@FindBy(id = "policiesList.creationDate_header")
-	private WebElement creationDateInAuthPolicy;
-
-	@FindBy(id = "policiesList.status_header")
-	private WebElement statusHeaderInAuthPolicy;
-
-	@FindBy(id = "policiesList.action_header")
-	private WebElement actionHeaderInAuthPolicy;
-
-	@FindBy(id = "policy_description_box")
-	private WebElement policyDescriptionInDataSharePolicy;
-
-	@FindBy(id = "policiesList.policyId_header")
-	private WebElement policyIdHeaderInDataSharePolicy;
-
-	@FindBy(id = "policiesList.policyName_header")
-	private WebElement policyNameHeaderInDataSharePolicy;
-
-	@FindBy(id = "policiesList.policyDescription_header")
-	private WebElement policiesDescriptionInDataSharePolicy;
-
-	@FindBy(id = "policiesList.creationDate_header")
-	private WebElement creationDateInDataSharePolicy;
-
-	@FindBy(id = "policiesList.status_header")
-	private WebElement statusHeaderInDataSharePolicy;
-
-	@FindBy(id = "policiesList.action_header")
-	private WebElement actionHeaderInDataSharePolicy;
 
 	@FindBy(id = "policy_name_box")
 	private WebElement policyNameInMispPolicy;
 
 	@FindBy(id = "policy_description_box")
 	private WebElement policyDescriptionInMispPolicy;
-
-	@FindBy(id = "create_policy_form_clear_btn")
-	private WebElement clearBtnInMispPartner;
 
 	public MispPartnerPage(WebDriver driver) {
 		super(driver);
@@ -293,18 +206,6 @@ public class MispPartnerPage extends BasePage {
 
 	public boolean isHomeButtonInCreatePolicyGroupDisplayed() {
 		return isElementDisplayed(homeButtonInCreatePolicyGroup);
-	}
-
-	public boolean isPolicyGroupsTabInCreatePolicyGroupDisplayed() {
-		return isElementDisplayed(policyGroupsTabInCreatePolicyGroup);
-	}
-
-	public boolean isAuthPolicyTabInCreatePolicyGroupDisplayed() {
-		return isElementDisplayed(authPolicyTabInCreatePolicyGroup);
-	}
-
-	public boolean isDataSharePolicyTabInCreatePolicyGroupDisplayed() {
-		return isElementDisplayed(datasharePolicyTabInCreatePolicyGroup);
 	}
 
 	public boolean isMispPolicyabInCreatePolicyGroupDisplayed() {
@@ -344,11 +245,7 @@ public class MispPartnerPage extends BasePage {
 	}
 
 	public boolean isCancelBtnInCreatePolicyGroupDisplayed() {
-		return isElementDisplayed(cancelBtnInCreatePolicyGroup);
-	}
-
-	public boolean isSubmitBtnInCreatePolicyGroupDisplayed() {
-		return isElementDisplayed(submitBtnInCreatePolicyGroup);
+		return isElementDisplayed(cancelBtnInMispPartnerPage);
 	}
 
 	public boolean isPolicyGroupIdHeaderDisplayed() {
@@ -375,80 +272,12 @@ public class MispPartnerPage extends BasePage {
 		return isElementDisplayed(actionsHeader);
 	}
 
-	public boolean isCreateAuthPartnerHeaderDisplayed() {
-		return isElementDisplayed(createAuthPolicyHeader);
-	}
-
 	public boolean isListOfAuthenticationPolicesTitleDisplayed() {
 		return isElementDisplayed(listOfAuthenticationPolicesTitle);
 	}
 
-	public boolean isAuthPolicyMessageDisplayed() {
-		return isElementDisplayed(authPolicyMandatoryMessage);
-	}
-
-	public boolean isAuthPolicyGroupDropDownDisplayed() {
-		return isElementDisplayed(authPolicygroupDropdownField);
-	}
-
-	public boolean isUploadButtonInAuthPolicyDisplayed() {
-		return isElementDisplayed(uploadButtonInAuthPolicy);
-	}
-
-	public boolean isCancelButtonInAuthPolicyDisplayed() {
-		return isElementDisplayed(cancelButtonInAuthPolicy);
-	}
-
-	public boolean isSaveAsDraftButtonInAuthPolicyDisplayed() {
-		return isElementDisplayed(saveAsDraftButton);
-	}
-
-	public boolean isPolicyIdHeaderInAuthPolicyDisplayed() {
-		return isElementDisplayed(policyIdHeaderInAuthPolicy);
-	}
-
-	public boolean isPolicyNameHeaderInAuthPolicyDisplayed() {
-		return isElementDisplayed(policyNameHeaderInAuthPolicy);
-	}
-
-	public boolean isPolicyDescriptionInAuthPolicyDisplayed() {
-		return isElementDisplayed(policyDescriptionInAuthPolicy);
-	}
-
-	public boolean isCreationDateHeaderInAuthPolicyDisplayed() {
-		return isElementDisplayed(creationDateInAuthPolicy);
-	}
-
-	public boolean isStatusHeaderInAuthPolicyDisplayed() {
-		return isElementDisplayed(statusHeaderInAuthPolicy);
-	}
-
-	public boolean isActionHeaderInAuthPolicyDisplayed() {
-		return isElementDisplayed(actionHeaderInAuthPolicy);
-	}
-
 	public boolean isListOfDataSharePolicesTitleDisplayed() {
 		return isElementDisplayed(listOfDataSharePolicesTitle);
-	}
-
-	public boolean isMandatoryMessageInDatasharePoliciesDisplayed() {
-		return isElementDisplayed(dataSharePolicyMandatoryMessage);
-	}
-
-	public boolean isPolicyGroupInDataSharePolicyDisplayed() {
-		return isElementDisplayed(dataSharePolicygroupDropdownField);
-	}
-
-	public boolean isPolicyDescriptionInDataSharePolicyDisplayed() {
-		return isElementDisplayed(policyDescriptionInDataSharePolicy);
-	}
-
-	public boolean isCancelButtonInDataSharePolicyDisplayed() {
-		return isElementDisplayed(cancelButtonInDataSharePolicy);
-	}
-
-	public boolean isSaveAsDraftButtonInDataSharePoliciesDisplayed() {
-		return isElementDisplayed(saveAsDraftButtonInDataSharePolicies);
 	}
 
 	public boolean isCreateMispPolicyHeaderDisplayed() {
@@ -475,10 +304,6 @@ public class MispPartnerPage extends BasePage {
 		return isElementDisplayed(uploadButtonInMispPolicy);
 	}
 
-	public boolean clearBtnInMispPartnerDisplayed() {
-		return isElementDisplayed(clearBtnInMispPartner);
-	}
-
 	public void clickOnPoliciesButton() {
 		clickOnElement(policiesButtonInAdmin);
 	}
@@ -499,24 +324,8 @@ public class MispPartnerPage extends BasePage {
 		clickOnElement(listOfPolicyGroupTitle);
 	}
 
-	public void clickOnAuthPolicyTitle() {
-		clickOnElement(authPolicyTabInCreatePolicyGroup);
-	}
-
-	public void clickOnCreateAuthPartnerHeader() {
-		clickOnElement(createAuthPolicyHeader);
-	}
-
 	public void clickOnListOfAuthPoliciesTitle() {
 		clickOnElement(listOfAuthenticationPolicesTitle);
-	}
-
-	public void clickOnDatasharePolicyTitle() {
-		clickOnElement(datasharePolicyTabInCreatePolicyGroup);
-	}
-
-	public void clickOnCreateDatasharePolicyTitle() {
-		clickOnElement(createDataSharePolicyHeader);
 	}
 
 	public void clickOnListOfDataSharePoliciesTitle() {
@@ -533,10 +342,6 @@ public class MispPartnerPage extends BasePage {
 
 	public void clickOnUploadBtnInMispPolicy() {
 		clickOnElement(uploadButtonInMispPolicy);
-	}
-
-	public void clickOnCancelButtonInMispPartner() {
-		clickOnElement(clearBtnInMispPartner);
 	}
 
 	public String getBreadcrumbTextOfCreatePartnerPage() {
@@ -593,6 +398,14 @@ public class MispPartnerPage extends BasePage {
 
 	public void enterPartnerAddress(String address) {
 		enter(partnerAddressTextbox, address);
+	}
+
+	public void enterPolicyName(String address) {
+		enter(policyNameInMispPolicy, address);
+	}
+
+	public void enterPolicyDescription(String address) {
+		enter(policyNameInMispPolicy, address);
 	}
 
 	public void enterPartnerOrganisation(String organisation) {

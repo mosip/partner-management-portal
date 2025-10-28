@@ -18,7 +18,7 @@
         </classes>
     </test>
     <!-- Step 3: Run three tests in parallel, after Step 2 -->
-    <test name="3-Parallel-Policy-CertStore-PartnerDetails" parallel="classes" thread-count="4" preserve-order="true">
+    <test name="3-Parallel-Policy-CertStore-PartnerDetails" parallel="classes" thread-count="3" preserve-order="true">
         <classes>
             <class name="io.mosip.testrig.pmpuiv2.testcase.PartnerManagerPoliciesTest" />
             <class name="io.mosip.testrig.pmpuiv2.testcase.CertificateTrustStoreTest" />
