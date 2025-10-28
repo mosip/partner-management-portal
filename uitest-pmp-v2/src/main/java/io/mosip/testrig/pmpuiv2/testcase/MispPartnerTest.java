@@ -62,29 +62,51 @@ public class MispPartnerTest extends BaseClass {
 				GlobalConstants.isPolicyGroupNameInputFieldDisplayed);
 		assertTrue(mispPartnerPage.isPolicyGroupDescriptionInputFieldDisplayed(),
 				GlobalConstants.isPolicyGroupDescriptionInputFieldDisplayed);
-		
-		assertTrue(mispPartnerPage.policyNameInMispPolicyDisplayed(), GlobalConstants.policyNameInMispPolicyDisplayed);
-		mispPartnerPage.clickOnListOfDataSharePoliciesTitle();
-
-		assertTrue(mispPartnerPage.isMispPolicyabInCreatePolicyGroupDisplayed(),
-				GlobalConstants.isMispPolicyabInCreatePolicyGroupDisplayed);
+		mispPartnerPage.clickOnListOfPolicyButton();
 		mispPartnerPage.clickOnMispPolicyTitle();
-		assertTrue(mispPartnerPage.isCreateMispPolicyHeaderDisplayed(),
-				GlobalConstants.isCreateMispPolicyHeaderDisplayed);
-		assertTrue(mispPartnerPage.listOfPoliciesTitleInMispPolicyDisplayed(),
-				GlobalConstants.listOfPoliciesTitleInMispPolicyDisplayed);
-		mispPartnerPage.clickOnCreateMispPolicyTitle();
-		assertTrue(mispPartnerPage.policyNameInMispPolicyDisplayed(), GlobalConstants.policyNameInMispPolicyDisplayed);
-		assertTrue(mispPartnerPage.PolicyDescriptionInMispPolicyDisplayed(),
-				GlobalConstants.PolicyDescriptionInMispPolicyDisplayed);
-		assertTrue(mispPartnerPage.submitBtnInMispPoliciesDisabledDisplayed(),
-				GlobalConstants.submitBtnInMispPoliciesDisabledDisplayed);
-		assertTrue(mispPartnerPage.uploadBtnInMispPolicyDisplayed(), GlobalConstants.uploadBtnInMispPolicyDisplayed);
-		mispPartnerPage.clickOnUploadBtnInMispPolicy();
 
-		mispPartnerPage.selectPolicyGroup("mosip policy group20");
+		mispPartnerPage.clickOnCreateMispPolicyTitle();
+
+		assertTrue(mispPartnerPage.isPolicyDescriptionInMispPolicyDisplayed(),
+				GlobalConstants.isPolicyDescriptionInMispPolicyDisplayed);
+		assertTrue(mispPartnerPage.isSubmitBtnInMispPoliciesDisabledDisplayed(),
+				GlobalConstants.isSubmitBtnInMispPoliciesDisabledDisplayed);
+		assertTrue(mispPartnerPage.isUploadBtnInMispPolicyDisplayed(),
+				GlobalConstants.isUploadBtnInMispPolicyDisplayed);
+
+		mispPartnerPage.clickOnPolicyGroupDropDownInMispPolicies();
+		mispPartnerPage.clickOnPolicyGroupDropDownField();
+		mispPartnerPage.clickOnPolicyGroupDropDownInMispPolicies();
 		mispPartnerPage.enterPolicyName("Authentication policy");
 		mispPartnerPage.enterPolicyDescription("policy data");
+		mispPartnerPage.uploadPolicyData();
+		mispPartnerPage.clickOnSaveAsDraftButtonInMispPolicy();
+		assertTrue(mispPartnerPage.isSuccessMessageInMispPolicyDisplayed(),
+				GlobalConstants.isSuccessMessageInMispPolicyDisplayed);
+		mispPartnerPage.clickOnBackButtonInMispPolicySuccessPage();
+		assertTrue(mispPartnerPage.isMispPolicyabInCreatePolicyGroupDisplayed(),
+				GlobalConstants.isMispPolicyabInCreatePolicyGroupDisplayed);
+		mispPartnerPage.clickOnActionButtonMispPolicy();
+		assertTrue(mispPartnerPage.isViewButtonInMispPolicyDisplayed(),
+				GlobalConstants.isViewButtonInMispPolicyDisplayed);
+		mispPartnerPage.clickOnMispPolicyButton();
+		assertTrue(mispPartnerPage.isViewMispPolicyDisplayed(), GlobalConstants.isViewMispPolicyDisplayed);
+		mispPartnerPage.clickOnBackButtonInViewMispPolicyMispPolicy();
+		mispPartnerPage.clickOnActionButtonMispPolicy();
+		assertTrue(mispPartnerPage.isDeactivatePopUpDisplayed(), GlobalConstants.isDeactivatePopUpDisplayed);
+		assertTrue(mispPartnerPage.isEditBtnInActionTabDisplayed(), GlobalConstants.isEditBtnInActionTabDisplayed);
+		assertTrue(mispPartnerPage.isDraftBtnInEditPageDisplayed(), GlobalConstants.isDraftBtnInEditPageDisplayed);
+		assertTrue(mispPartnerPage.isPublishBtnInActionTabDisplayed(),
+				GlobalConstants.isPublishBtnInActionTabDisplayed);
+		mispPartnerPage.clickOnActionButtonMispPolicy();
+		assertTrue(mispPartnerPage.isPublishBtnInActionTabDisplayed(),
+				GlobalConstants.isPublishBtnInActionTabDisplayed);
+		mispPartnerPage.clickOnActionInPublishBtn();
+		assertTrue(mispPartnerPage.isPopUpInPublishBtnDisplayed(), GlobalConstants.isPopUpInPublishBtnDisplayed);
+		assertTrue(mispPartnerPage.isPublishBtnDisplayed(), GlobalConstants.isPublishBtnDisplayed);
+		assertTrue(mispPartnerPage.isCancelBtnInPublishTabDisplayed(),
+				GlobalConstants.isCancelBtnInPublishTabDisplayed);
+		mispPartnerPage.clickOnCancelBtnInPublishTab();
 
 	}
 

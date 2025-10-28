@@ -8,6 +8,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
+
 public class MispPartnerPage extends BasePage {
 
 	private static final Logger logger = Logger.getLogger(MispPartnerPage.class);
@@ -105,6 +107,9 @@ public class MispPartnerPage extends BasePage {
 	@FindBy(xpath = "//span[text()='Select Policy Group']")
 	private WebElement noPolicyGroup;
 
+	@FindBy(xpath = "//tr[starts-with(@id, 'policies_list_item')]/td[6]/div")
+	private WebElement draftButton;
+
 	@FindBy(id = "dashboard_policies_card_header")
 	private WebElement policiesButtonInAdmin;
 
@@ -179,6 +184,48 @@ public class MispPartnerPage extends BasePage {
 
 	@FindBy(id = "policy_description_box")
 	private WebElement policyDescriptionInMispPolicy;
+
+	@FindBy(id = "policy_group_selector_option_name_1")
+	private WebElement policyGroupDropDownInMispPolicies;
+
+	@FindBy(id = "fileInput")
+	private WebElement uploadFile;
+
+	@FindBy(id = "create_policy_confirmation_description")
+	private WebElement messageDisplayInCreateMispPolicy;
+
+	@FindBy(id = "confirmation_go_back_btn")
+	private WebElement backButtonInMispPolicySuccessPage;
+
+	@FindBy(id = "policies_list_view1")
+	private WebElement actionTabInMispPartner;
+
+	@FindBy(id = "policy_details_view_btn")
+	private WebElement viewButtonInMispPolicy;
+
+	@FindBy(id = "page_title")
+	private WebElement viewMispPolicyInViewPage;
+
+	@FindBy(id = "auth_Policy_view_back_btn")
+	private WebElement backButtonInViewMispPolicy;
+
+	@FindBy(id = "policy_deactivate_btn")
+	private WebElement deactivatePopUp;
+
+	@FindBy(id = "policy_edit_btn")
+	private WebElement editButtonInMispPolicy;
+
+	@FindBy(id = "policy_publish_btn")
+	private WebElement publishBtnInActionTab;
+
+	@FindBy(id = "publish_policy_popup_policy_name")
+	private WebElement popUpInPublishBtn;
+
+	@FindBy(id = "publish_policy_button")
+	private WebElement publishBtn;
+
+	@FindBy(id = "publish_policy_cancel")
+	private WebElement cancelBtnInPublishTab;
 
 	public MispPartnerPage(WebDriver driver) {
 		super(driver);
@@ -284,28 +331,80 @@ public class MispPartnerPage extends BasePage {
 		return isElementDisplayed(createMispPolicyHeader);
 	}
 
-	public boolean listOfPoliciesTitleInMispPolicyDisplayed() {
+	public boolean isListOfPoliciesTitleInMispPolicyDisplayed() {
 		return isElementDisplayed(listOfPoliciesTitleInMispPolicy);
 	}
 
-	public boolean policyNameInMispPolicyDisplayed() {
+	public boolean isPolicyNameInMispPolicyDisplayed() {
 		return isElementDisplayed(policyNameInMispPolicy);
 	}
 
-	public boolean PolicyDescriptionInMispPolicyDisplayed() {
+	public boolean isPolicyDescriptionInMispPolicyDisplayed() {
 		return isElementDisplayed(policyDescriptionInMispPolicy);
 	}
 
-	public boolean submitBtnInMispPoliciesDisabledDisplayed() {
+	public boolean isSubmitBtnInMispPoliciesDisabledDisplayed() {
 		return isElementDisplayed(saveAsDraftButtonInMispPolicies);
 	}
 
-	public boolean uploadBtnInMispPolicyDisplayed() {
+	public boolean isUploadBtnInMispPolicyDisplayed() {
 		return isElementDisplayed(uploadButtonInMispPolicy);
+	}
+
+	public boolean isSuccessMessageInMispPolicyDisplayed() {
+		return isElementDisplayed(messageDisplayInCreateMispPolicy);
+	}
+
+	public boolean isViewButtonInMispPolicyDisplayed() {
+		return isElementDisplayed(viewButtonInMispPolicy);
+	}
+
+	public boolean isViewMispPolicyDisplayed() {
+		return isElementDisplayed(viewMispPolicyInViewPage);
+	}
+
+	public boolean isDeactivatePopUpDisplayed() {
+		return isElementDisplayed(deactivatePopUp);
+	}
+
+	public boolean isEditBtnInActionTabDisplayed() {
+		return isElementDisplayed(editButtonInMispPolicy);
+	}
+
+	public boolean isDraftBtnInEditPageDisplayed() {
+		return isElementDisplayed(editButtonInMispPolicy);
+	}
+
+	public boolean isPublishBtnInActionTabDisplayed() {
+		return isElementDisplayed(publishBtnInActionTab);
+	}
+
+	public boolean isPopUpInPublishBtnDisplayed() {
+		return isElementDisplayed(popUpInPublishBtn);
+	}
+
+	public boolean isPublishBtnDisplayed() {
+		return isElementDisplayed(publishBtn);
+	}
+
+	public boolean isCancelBtnInPublishTabDisplayed() {
+		return isElementDisplayed(cancelBtnInPublishTab);
 	}
 
 	public void clickOnPoliciesButton() {
 		clickOnElement(policiesButtonInAdmin);
+	}
+
+	public void clickOnMispPolicyButton() {
+		clickOnElement(viewButtonInMispPolicy);
+	}
+
+	public void clickOnBackButtonInMispPolicySuccessPage() {
+		clickOnElement(backButtonInMispPolicySuccessPage);
+	}
+
+	public void clickOnListOfPolicyButton() {
+		clickOnElement(listOfPartnerButton);
 	}
 
 	public void clickOnHomeButtonInCreatePolicyGroup() {
@@ -344,6 +443,34 @@ public class MispPartnerPage extends BasePage {
 		clickOnElement(uploadButtonInMispPolicy);
 	}
 
+	public void clickOnPolicyGroupDropDownField() {
+		clickOnElement(policyGroupDropdown);
+	}
+
+	public void clickOnPolicyGroupDropDownInMispPolicies() {
+		clickOnElement(policyGroupDropDownInMispPolicies);
+	}
+
+	public void clickOnSaveAsDraftButtonInMispPolicy() {
+		clickOnElement(saveAsDraftButtonInMispPolicies);
+	}
+
+	public void clickOnActionButtonMispPolicy() {
+		clickOnElement(actionTabInMispPartner);
+	}
+
+	public void clickOnBackButtonInViewMispPolicyMispPolicy() {
+		clickOnElement(backButtonInViewMispPolicy);
+	}
+
+	public void clickOnCancelBtnInPublishTab() {
+		clickOnElement(cancelBtnInPublishTab);
+	}
+
+	public void uploadPolicyData() {
+		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "mispPolicy.json"));
+	}
+
 	public String getBreadcrumbTextOfCreatePartnerPage() {
 		return getTextFromLocator(homeButton) + getTextFromLocator(listOfPartnerButton);
 	}
@@ -360,6 +487,10 @@ public class MispPartnerPage extends BasePage {
 
 	public void clickOnPartnerTypeDropdown() {
 		clickOnElement(partnerTypeDropdown);
+	}
+
+	public void clickOnActionInPublishBtn() {
+		clickOnElement(publishBtnInActionTab);
 	}
 
 	public boolean isMispPartnerOnlyDisplayedInDropdown(String partnerName) {
@@ -403,11 +534,10 @@ public class MispPartnerPage extends BasePage {
 	public void enterPolicyName(String address) {
 		enter(policyNameInMispPolicy, address);
 	}
-	
+
 	public void enterPolicyDescription(String address) {
 		enter(policyDescriptionInMispPolicy, address);
 	}
-
 
 	public void enterPartnerOrganisation(String organisation) {
 		enter(partnerOrganisationNameTextBox, organisation);
