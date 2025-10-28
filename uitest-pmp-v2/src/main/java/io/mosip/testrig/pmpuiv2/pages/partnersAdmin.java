@@ -375,36 +375,12 @@ public class partnersAdmin extends BasePage {
 
 	}
 
-	public void clickOnSbiIcon() {
-		clickOnElement(sbiDeviceStatus);
-
-	}
-
-	public void clickOnFtmChipIcon() {
-		clickOnElement(ftmChipIcon);
-
-	}
-
-	public void clickOnActionInDeactivateButton() {
-		clickOnElement(actionButtonInDeactivatedPartner);
-
-	}
-
 	public boolean isPartnerIdHeaderTagDisplayed() {
 		return isElementDisplayed(partnerIdHeaderTag);
 	}
 
-	public boolean isStausAscendingIconDisplayed() {
-		return isElementDisplayed(statusAscendingIcon);
-	}
-
 	public boolean isFtmTitleDisplayed() {
 		return isElementDisplayed(ftmTitle);
-	}
-
-	public void clickOnStatusAscendingIcon() {
-		clickOnElement(statusAscendingIcon);
-
 	}
 
 	public boolean isListOfPartnerRowGreyedOutDisplayed() {

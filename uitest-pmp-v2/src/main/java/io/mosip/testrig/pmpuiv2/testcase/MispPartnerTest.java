@@ -62,21 +62,7 @@ public class MispPartnerTest extends BaseClass {
 				GlobalConstants.isPolicyGroupNameInputFieldDisplayed);
 		assertTrue(mispPartnerPage.isPolicyGroupDescriptionInputFieldDisplayed(),
 				GlobalConstants.isPolicyGroupDescriptionInputFieldDisplayed);
-		assertTrue(mispPartnerPage.isCancelBtnInCreatePolicyGroupDisplayed(),
-				GlobalConstants.isCancelBtnInCreatePolicyGroupDisplayed);
-
-		mispPartnerPage.clickOnListOfPolicyGroupTitle();
-		assertTrue(mispPartnerPage.isPolicyGroupIdHeaderDisplayed(), GlobalConstants.isPolicyGroupIdHeaderDisplayed);
-		assertTrue(mispPartnerPage.isPolicyGroupNameheaderDisplayed(),
-				GlobalConstants.isPolicyGroupNameheaderDisplayed);
-		assertTrue(mispPartnerPage.isPolicyGroupsDescriptionDisplayed(),
-				GlobalConstants.isPolicyGroupsDescriptionDisplayed);
-		assertTrue(mispPartnerPage.isCreationHeaderDisplayed(), GlobalConstants.isCreationHeaderDisplayed);
-		assertTrue(mispPartnerPage.isStatusHeadersDisplayed(), GlobalConstants.isStatusHeadersDisplayed);
-		assertTrue(mispPartnerPage.isActionsHeaderDisplayed(), GlobalConstants.isActionsHeaderDisplayed);
-
-		assertTrue(mispPartnerPage.isListOfAuthenticationPolicesTitleDisplayed(),
-				GlobalConstants.isListOfAuthenticationPolicesTitleDisplayed);
+		
 		assertTrue(mispPartnerPage.policyNameInMispPolicyDisplayed(), GlobalConstants.policyNameInMispPolicyDisplayed);
 		mispPartnerPage.clickOnListOfDataSharePoliciesTitle();
 

@@ -421,11 +421,6 @@ public class PoliciesPage extends BasePage {
 		enter(testPolicyInRequestPolicyScreen, invalidId);
 	}
 
-	public void clickOnPolicyRowItem() {
-		clickOnElement(policyRowItem);
-
-	}
-
 	public boolean isSubmitButtonoInRequestPolicyScreenDisplayed() {
 		return isElementDisplayed(submitButtonInRequestPolicyScreen);
 	}
@@ -442,9 +437,6 @@ public class PoliciesPage extends BasePage {
 		return isElementDisplayed(navigateToViewPolicyDetails);
 
 	}
-
-	@FindBy(xpath = "//td[normalize-space(text())='auth-core']")
-	private WebElement policyRowItem;
 
 	public boolean isPartnerIdInRequestPartnerScreenDisplayed() {
 		return isElementDisplayed(partnerIdInListOfPolicyRequestScreen);
