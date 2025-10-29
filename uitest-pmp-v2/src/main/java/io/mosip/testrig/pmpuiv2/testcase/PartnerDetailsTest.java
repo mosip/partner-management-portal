@@ -101,9 +101,12 @@ public class PartnerDetailsTest extends BaseClass {
 		partnerAdmin.clickOnActivatedPartner();
 		assertTrue(partnerAdmin.isViewPartnersDetailsPageDisplayed(),
 				GlobalConstants.isViewPartnersDetailsPageDisplayed);
+		partnerAdmin.clickOnlistOfPartners();
 
 		assertTrue(partnerAdmin.isSubTitleListDisplayed(), GlobalConstants.isSubTitleListDisplayed);
 		partnerAdmin.clickOnActionsButton();
+		assertTrue(partnerAdmin.isViewButtonsDisplayed(), GlobalConstants.isViewButtonsDisplayed);
+		assertTrue(partnerAdmin.isDeactivateButtonsDisplayed(), GlobalConstants.isDeactivateButtonsDisplayed);
 		assertTrue(partnerAdmin.isViewButtonsDisplayed(), GlobalConstants.isViewButtonsDisplayed);
 
 		assertTrue(partnerAdmin.isPartnersIdDescIconDisplayed(), GlobalConstants.isPartnersIdDescIconDisplayed);
@@ -123,6 +126,8 @@ public class PartnerDetailsTest extends BaseClass {
 		partnerAdmin.clickOnStatusFilter();
 		partnerAdmin.clickOnDeActivatedStatusInFilters();
 		partnerAdmin.clickOnApplyFiltersBtn();
+		assertTrue(partnerAdmin.isDeactivatedPartnerRowDisplayed(), GlobalConstants.isDeactivatedPartnerRowDisplayed);
+		partnerAdmin.clickOnActionsButton();
 
 		partnerAdmin.clickOnFilterResetButton();
 		partnerAdmin.clickOnFilterButton();

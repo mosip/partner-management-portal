@@ -279,7 +279,7 @@ public class PoliciesPage extends BasePage {
 	private WebElement submitButtonInRequestPolicyScreen;
 
 	@FindBy(id = "page_title")
-	private WebElement titelpartnerInRequestPolicy;
+	private WebElement titlepartnerInRequestPolicy;
 
 	@FindBy(id = "sub_title_btn")
 	private WebElement policesButtonInRequestPolicy;
@@ -397,12 +397,10 @@ public class PoliciesPage extends BasePage {
 
 	public void clickOnRequestPolicyBtn() {
 		clickOnElement(requestPolicyBtn);
-
 	}
 
 	public void clickOnPartnerIdDropdownInRequestPolicyPage() {
 		clickOnElement(partnerIdDropdownInRequestPolicyPage);
-
 	}
 
 	public boolean isPartnerTypeInListOfPartnerScreenDisplayed() {
@@ -471,8 +469,8 @@ public class PoliciesPage extends BasePage {
 		return isElementDisplayed(noDataAvailabel);
 	}
 
-	public boolean isTitelpartnerInRequestPolicyDisplayed() {
-		return isElementDisplayed(titelpartnerInRequestPolicy);
+	public boolean isTitlepartnerInRequestPolicyDisplayed() {
+		return isElementDisplayed(titlepartnerInRequestPolicy);
 	}
 
 	public boolean isFilterButtonInListOfPolicyRequestScreenDisplayed() {

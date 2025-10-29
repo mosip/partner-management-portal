@@ -1022,7 +1022,6 @@ public class GlobalConstants {
 	public static final String isPartnerCreatedDateInViewPartnerPageDisplayed = "Verify if ceated date in view partner details page displayed";
 	public static final String isDeactivatePartnerHeaderDisplayed = "Verify if deactivated header displayed";
 	public static final String isDeactivatePartnerDescriptionDisplayed = "Verify deactivate description displayed";
-
 	public static final String isDeactivateConfirmButtonDisplayed = "Verify if confirm button is displayed";
 	public static final String isDeactivateColorCodeButtonDisplayed = "Verify if deactivate status displayed";
 	public static final String isPartnerCertificateInViewPartnerDetailsPageDisplayed = "Verify if partner certificate in view partnerdetails displayed";
@@ -1057,7 +1056,6 @@ public class GlobalConstants {
 	public static final String isDisabledButtonDisplayed = "Verify if disabled button isdisplayed";
 	public static final String isDisabledDeactivateButtonDisplayed = "Verify if disabled deactivate button isdisplayed";
 	public static final String isViewButtonInPartnerDetailsScreenDisplayed = "Verify if enabled view button isdisplayed";
-
 	public static final String isPolicyButtonsDisplayed = "Verify if policy button isdisplayed";
 	public static final String isrequestPolicyBtnDisplayed = "Verify if request policy isdisplayed";
 	public static final String isPartnerIdDropdownInRequestPolicyPageDisplayed = "Verify if partner id dropdown isdisplayed";
@@ -1083,7 +1081,6 @@ public class GlobalConstants {
 	public static final String isROwItemsPerPageDisplayed = "Verify if row iteam isdisplayed";
 	public static final String isTitelpartnerInRequestPolicyDisplayed = "Verify if title partner isdisplayed";
 	public static final String isSubTitleHomeButtonDisplayed = "Verify if subtitle home button isdisplayed";
-
 	public static final String isPoliciesButtonDisplayed = "Verify if policy button isdisplayed";
 	public static final String isListOfPolicyGroupsTitleDisplayed = "Verify if list of policy group title isdisplayed";
 	public static final String isPolicyOverlayMenuDisplayed = "Verify if list of policy overlay menu isdisplayed";
@@ -1180,7 +1177,6 @@ public class GlobalConstants {
 	public static final String YYYY_MM_DD_FORMATTER2 = "2020.08.23";
 
 	public static final String PARTNER_ID = "Partner ID";
-
 	public static final String COMMENTS = "policy group";
 	public static final String PARTNER_TYPE = "Partner Type";
 	public static final String DEVICE_ID = "Device ID";
@@ -1199,7 +1195,7 @@ public class GlobalConstants {
 
 //  Policy Group
 	public static final String POLICYGROUP01 = "policygroup01";
-	public static final String POLICYGROUPNAME = "policygroup01";
+	public static final String POLICYGROUPNAME = "policygroup";
 	public static final String POLICYGROUP01_DESCRIPTION = "policygroup 01";
 	public static final String POLICYGROUP02 = "policygroup02";
 	public static final String POLICYGROUP02_DESCRIPTION = "policygroup 02";

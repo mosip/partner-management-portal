@@ -155,7 +155,7 @@ public class partnersAdmin extends BasePage {
 	private WebElement actionsButton;
 
 	@FindBy(id = "partner_list_view1")
-	private WebElement actionButtonInActivatedPartner;
+	private WebElement actionButtonInActivePartner;
 
 	@FindBy(id = "partner_list_view1")
 	private WebElement actionButtonInDeactivatedPartner;
@@ -577,7 +577,7 @@ public class partnersAdmin extends BasePage {
 	}
 
 	public void clickOnActionsButtonInActivatedPartner() {
-		clickOnElement(actionButtonInActivatedPartner);
+		clickOnElement(actionButtonInActivePartner);
 	}
 
 	public boolean isViewButtonsDisplayed() {
@@ -804,7 +804,6 @@ public class partnersAdmin extends BasePage {
 	}
 
 	public void clickOnCertificateUploadascIcon() {
-
 		clickOnElement(certificateUploadStatusAscendingIcon);
 	}
 
