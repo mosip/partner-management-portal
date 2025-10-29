@@ -62,10 +62,7 @@ public class MispPartnerTest extends BaseClass {
 				GlobalConstants.isPolicyGroupNameInputFieldDisplayed);
 		assertTrue(mispPartnerPage.isPolicyGroupDescriptionInputFieldDisplayed(),
 				GlobalConstants.isPolicyGroupDescriptionInputFieldDisplayed);
-		mispPartnerPage.clickOnListOfPolicyButton();
-		mispPartnerPage.clickOnMispPolicyTitle();
-
-		mispPartnerPage.clickOnCreateMispPolicyTitle();
+		mispPartnerPage.isMispPartnerOnlyDisplayedInDropdown(GlobalConstants.MISP_POLICY_TITLE);
 
 		assertTrue(mispPartnerPage.isPolicyDescriptionInMispPolicyDisplayed(),
 				GlobalConstants.isPolicyDescriptionInMispPolicyDisplayed);
@@ -77,8 +74,8 @@ public class MispPartnerTest extends BaseClass {
 		mispPartnerPage.clickOnPolicyGroupDropDownInMispPolicies();
 		mispPartnerPage.clickOnPolicyGroupDropDownField();
 		mispPartnerPage.clickOnPolicyGroupDropDownInMispPolicies();
-		mispPartnerPage.enterPolicyName("Authentication policy");
-		mispPartnerPage.enterPolicyDescription("policy data");
+		mispPartnerPage.enterPolicyName(GlobalConstants.POLICY_NAME);
+		mispPartnerPage.enterPolicyDescription(GlobalConstants.POLICY_DESCRIPTION);
 		mispPartnerPage.uploadPolicyData();
 		mispPartnerPage.clickOnSaveAsDraftButtonInMispPolicy();
 		assertTrue(mispPartnerPage.isSuccessMessageInMispPolicyDisplayed(),

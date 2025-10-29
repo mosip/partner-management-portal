@@ -1023,7 +1023,7 @@ public class GlobalConstants {
 	public static final String isDeactivatePartnerHeaderDisplayed = "Verify if deactivated header displayed";
 	public static final String isDeactivatePartnerDescriptionDisplayed = "Verify deactivate description displayed";
 
-	public static final String isDeactivateConfirmButtonDisplayed = "Verify if confirm button displayed";
+	public static final String isDeactivateConfirmButtonDisplayed = "Verify if confirm button is displayed";
 	public static final String isDeactivateColorCodeButtonDisplayed = "Verify if deactivate status displayed";
 	public static final String isPartnerCertificateInViewPartnerDetailsPageDisplayed = "Verify if partner certificate in view partnerdetails displayed";
 	public static final String isPartnerCertificateDisplayed = "Verify if partner certificate is displayed";
@@ -1055,6 +1055,8 @@ public class GlobalConstants {
 	public static final String isListOfSbiDisplayed = "Verify if list of sbi in sbi page isdisplayed";
 	public static final String isFtmTitleDisplayed = "Verify if ftm list title isdisplayed";
 	public static final String isDisabledButtonDisplayed = "Verify if disabled button isdisplayed";
+	public static final String isDisabledDeactivateButtonDisplayed = "Verify if disabled deactivate button isdisplayed";
+	public static final String isViewButtonInPartnerDetailsScreenDisplayed = "Verify if enabled view button isdisplayed";
 
 	public static final String isPolicyButtonsDisplayed = "Verify if policy button isdisplayed";
 	public static final String isrequestPolicyBtnDisplayed = "Verify if request policy isdisplayed";
@@ -1285,5 +1287,8 @@ public class GlobalConstants {
 	public static final String MISP_CONTACT_NUMBER = "9898767676";
 	public static final String MISP_EMAIL_ID = "misppmpui@gmail.com";
 	public static final String INVALID_EMAIL_ID = "mi12#sp.34@gmail@com";
+	public static final String MISP_POLICY_TITLE = "mosip policy group MISP";
+	public static final String POLICY_NAME = "authentication policy";
+	public static final String POLICY_DESCRIPTION = "policy data";
 
 }

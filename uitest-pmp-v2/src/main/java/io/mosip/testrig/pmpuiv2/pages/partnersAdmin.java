@@ -76,7 +76,7 @@ public class partnersAdmin extends BasePage {
 	@FindBy(id = "filter_btn")
 	private WebElement filterbtnTrigger;
 
-	@FindBy(xpath = "//td[normalize-space()='pmpui-auth']")
+	@FindBy(id = "partner_list_item1")
 	private WebElement rowInPartnerDetailsScreen;
 
 	@FindBy(xpath = "//h1[text()='View Partner Details']")
@@ -176,7 +176,7 @@ public class partnersAdmin extends BasePage {
 	private WebElement deactivateButtons;
 
 	@FindBy(xpath = "//div[contains(@class,'bg-[#EAECF0]') and contains(@class,'rounded-md')]")
-	private WebElement disableButton;
+	private WebElement disableDeactiveButton;
 
 	@FindBy(id = "status_filter_option2")
 	private WebElement deactivatedStatusInFilters;
@@ -327,8 +327,8 @@ public class partnersAdmin extends BasePage {
 		return isElementDisplayed(expiryDateTimeInViewPartnerPage);
 	}
 
-	public boolean isDisabledButtonDisplayed() {
-		return isElementDisplayed(disableButton);
+	public boolean isDisabledDeactivateButtonDisplayed() {
+		return isElementDisplayed(disableDeactiveButton);
 	}
 
 	public boolean isDisabledDeactivateButtonInListOfPartnerDisplayed() {
@@ -345,6 +345,11 @@ public class partnersAdmin extends BasePage {
 
 	public void clickOnDeactivateButtonInListOfPartnerPage() {
 		clickOnElement(disabledDeactivateButtonInListOfPartner);
+
+	}
+
+	public void clickOnDeactivateDisabledButton() {
+		clickOnElement(disableDeactiveButton);
 
 	}
 
@@ -695,6 +700,10 @@ public class partnersAdmin extends BasePage {
 	}
 
 	public boolean isPartnerIdDisplayed() {
+		return isElementDisplayed(partnerIdInViewPartnerDetailsPage);
+	}
+
+	public boolean isViewButtonInPartnerDetailsScreenDisplayed() {
 		return isElementDisplayed(partnerIdInViewPartnerDetailsPage);
 	}
 

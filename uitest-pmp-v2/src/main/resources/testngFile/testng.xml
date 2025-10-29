@@ -14,7 +14,7 @@
             <class name="io.mosip.testrig.pmpuiv2.testcase.FTMDeviceTest" />
             <class name="io.mosip.testrig.pmpuiv2.testcase.DeviceProviderTest" />
             <class name="io.mosip.testrig.pmpuiv2.testcase.AuthPartnerTest" />
-            <class name="io.mosip.testrig.pmpuiv2.testcase.MispPartnerTest" />
+            <class name="io.mosip.testrig.pmpuiv2.testcase.PartnerDetailsTest" />
         </classes>
     </test>
     <!-- Step 3: Run three tests in parallel, after Step 2 -->
