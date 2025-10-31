@@ -63,6 +63,7 @@ import MispLicenseList from './pages/admin/mispPartnerServices/MispLicenseList.j
 import GenerateMispLicenseKey from './pages/admin/mispPartnerServices/GenerateMispLicenseKey.js';
 import ViewMispLicenseKey from './pages/admin/mispPartnerServices/ViewMispLicenseKey.js';
 import RegenerateMispLicenseKey from './pages/admin/mispPartnerServices/RegenerateMispLicenseKey.js';
+import ViewMispLicenseKeyNotifications from './pages/admin/notifications/ViewMispLicenseKeyNotifications.js';
 
 function AppRoutes() {
 
@@ -334,6 +335,10 @@ function AppRoutes() {
         {
           path: 'admin/notifications/view-intermediate-certificate-expiry',
           element: <GuardedRoute><MainLayout><ViewIntermediateTrustNotifications /></MainLayout></GuardedRoute>,
+        },
+        {
+          path: 'admin/notifications/view-misp-license-key-expiry',
+          element: <GuardedRoute><MainLayout><ViewMispLicenseKeyNotifications /></MainLayout></GuardedRoute>,
         },
         {
           path: 'admin/notifications/view-partner-created-items-expiry',

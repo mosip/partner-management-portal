@@ -4,7 +4,7 @@ import { isLangRTL } from "../../../utils/AppUtils";
 import { getUserProfile } from "../../../services/UserProfileService";
 import PropTypes from 'prop-types';
 
-function AdminNotificationsTab({ activeRootCA, rootCaPath, activeIntermediateCA, intermediateCaPath, activePartner, partnerCertPath }) {
+function AdminNotificationsTab({ activeRootCA, rootCaPath, activeIntermediateCA, intermediateCaPath, activeMispLicenseKey, mispLicenseKeyPath, activePartner, partnerCertPath }) {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
@@ -16,6 +16,10 @@ function AdminNotificationsTab({ activeRootCA, rootCaPath, activeIntermediateCA,
     const changeToIntermediateCA = () => {
         navigate(intermediateCaPath)
     };
+
+    const changeToMispLicenseKey = () => {
+        navigate(mispLicenseKeyPath)
+    }
 
     const changeToPartnerCert = () => {
         navigate(partnerCertPath)
@@ -35,6 +39,13 @@ function AdminNotificationsTab({ activeRootCA, rootCaPath, activeIntermediateCA,
                     <h6> {t('notificationsTab.intermediateCaCertificate')}</h6>
                 </button>
                 <div className={`h-1 w-full ${activeIntermediateCA ? "bg-tory-blue" : "bg-transparent"} rounded-t-md`}></div>
+            </div>
+            <div id='misp_license_key_notifications_tab' className={`flex-col justify-center text-center w-full sm:w-auto`}>
+                <button onClick={changeToMispLicenseKey} className={`${activeMispLicenseKey ? "text-[#1447b2]" : "text-[#031640]"} py-4 cursor-pointer text-base`}>
+                    <h6> {t('notificationsTab.mispLicenseKey')} </h6>
+                </button>
+
+                <div className={`h-1 w-full ${activeMispLicenseKey ? "bg-tory-blue" : "bg-transparent"}  rounded-t-md`}></div>
             </div>
             <div id='partner_notifications_tab' className={`flex-col justify-center text-center w-full sm:w-auto`}>
                 <button onClick={changeToPartnerCert} className={`${activePartner ? "text-[#1447b2]" : "text-[#031640]"} py-4 cursor-pointer text-base`}>
