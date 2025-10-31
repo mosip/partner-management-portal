@@ -77,7 +77,7 @@ function Pagination({ dataListLength, selectedRecordsPerPage, setSelectedRecords
                     pageRangeDisplayed={3}
                     marginPagesDisplayed={1}
                     breakLabel="..."
-                    containerClassName={`flex items-center justify-center space-x-1 sm:space-x-2 md:space-x-3 min-w-fit ${isLoginLanguageRTL && 'space-x-reverse'}`}
+                    containerClassName={`flex items-center justify-center gap-1 sm:gap-2 md:gap-3 min-w-fit`}
                     pageClassName="px-2 sm:px-3 py-1.5 text-[#1447B2] text-xs sm:text-sm"
                     activeClassName="bg-[#1447B2] text-white text-xs sm:text-sm p-1 sm:p-1.5 rounded-md"
                     previousClassName={`border rounded-md ${isFirstPage ? greyBtn : blueBtn}`}

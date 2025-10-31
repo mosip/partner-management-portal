@@ -64,6 +64,8 @@ AdminNotificationsTab.propTypes = {
     intermediateCaPath: PropTypes.string.isRequired,
     activePartner: PropTypes.bool.isRequired,
     partnerCertPath: PropTypes.string.isRequired,
+    activeMispLicenseKey: PropTypes.bool.isRequired,
+    mispLicenseKeyPath: PropTypes.string.isRequired,
 };
 
 export default AdminNotificationsTab;
