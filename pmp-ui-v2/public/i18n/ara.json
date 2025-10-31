@@ -1159,11 +1159,14 @@
         "filterNoNotificationTitle": "لم يتم العثور على إشعارات",
         "errorInNotifcations": "خطأ أثناء جلب الإشعارات",
         "errorWhileUpdatingNotificationSeenTime": "حدث خطأ أثناء تحديث الإشعارات التي تظهر التاريخ والوقت.",
-        "errorInDismiss": "خطأ أثناء رفض الإشعار"
+        "errorInDismiss": "خطأ أثناء رفض الإشعار",
+        "mispLicenseKeyExpiry": "انتهاء صلاحية مفتاح ترخيص MISP",
+        "mispLicenseKeyExpiryDescription": "مفتاح ترخيص MISP باسم: <span>{{mispLicenseKeyName}}</span> للشريك <span>{{mispPartnerId}}</span> من المقرر أن تنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاع."
     },
     "notificationsTab": {
         "rootCaCertificate": "شهادة CA الجذرية",
         "intermediateCaCertificate": "شهادة CA متوسطة",
+        "mispLicenseKey": "مفتاح ترخيص MISP",
         "partner": "الملخص الأسبوعي - الشريك",
         "rootCertExpiryDescription": "شهادة CA الجذرية <span>{{certificateId}}</span> الصادرة لـ <span>{{issuedTo}}</span> بواسطة <span>{{issuedBy}}</span> للنطاق <span>{{partnerDomain}}</span> من المقرر أن تنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات.",
         "intermediateCertExpiryDescription": "شهادة CA المتوسطة <span>{{certificateId}}</span> الصادرة لـ <span>{{issuedTo}}</span> من قِبل <span>{{issuedBy}}</span> لنطاق <span>{{partnerDomain}}</span> من المقرر أن تنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات."
@@ -1501,7 +1504,7 @@
         "PMS_NOTIFICATION_ERROR_003": "تفاصيل المستخدم غير موجودة.",
         "PMS_NOTIFICATION_ERROR_004": "حدث خطأ أثناء جلب تاريخ ووقت ظهور الإشعارات.",
         "PMS_NOTIFICATION_ERROR_005": "حدث خطأ أثناء جلب الإشعارات.",
-        "PMS_NOTIFICATION_ERROR_006": "سيحصل مسؤول الشريك فقط على إشعارات حول انتهاء صلاحية شهادة الجذر/الوسيطة والملخص الأسبوعي.",
+        "PMS_NOTIFICATION_ERROR_006": "سيحصل مسؤول الشريك فقط على إشعارات حول انتهاء صلاحية شهادة الجذر/الوسيطة والملخص الأسبوعي وانتهاء صلاحية مفتاح ترخيص MISP.",
         "PMS_NOTIFICATION_ERROR_007": "حدث خطأ في تحليل تفاصيل الإشعارات بتنسيق JSON.",
         "PMS_NOTIFICATION_ERROR_008": "الإشعار غير موجود.",
         "PMS_NOTIFICATION_ERROR_009": "تم رفض الإشعار مسبقًا.",
@@ -1522,6 +1525,8 @@
         "PMS_NOTIFICATION_ERROR_024": "نوع الإشعار المُختار غير صالح. يُرجى اختيار نوع آخر غير 'أسبوعي'.",
         "PMS_NOTIFICATION_ERROR_025": "يرجى إدخال تاريخ الإنشاء من صالح.",
         "PMS_NOTIFICATION_ERROR_026": "يرجى إدخال تاريخ الإنشاء إلى صالح.",
+        "PMS_NOTIFICATION_ERROR_027": "نوع الإشعار المُختار غير صالح. يُسمح فقط بنوع 'misp' لهذا الفلتر.",
+        "PMS_NOTIFICATION_ERROR_028": "نوع الإشعار المُختار غير صالح. يُسمح باستخدام نوع 'apikey' أو 'misp' لهذا الفلتر.",
         "PMS_MSP_005": "شريك MISP غير موجود",
         "PMS_MSP_009": "المزود المذكور غير صالح",
         "PMS_MSP_408": "لا يوجد مزيج بين شريك MISP ومفتاح الترخيص.",
