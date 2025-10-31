@@ -94,7 +94,9 @@
         "sbiExpiryCountDesc1": "{{expiringSbiCount}} SBIs are expiring soon",
         "sbiExpiryCountDesc2": "{{expiringSbiCount}} SBI is expiring soon",
         "mispPartnerServices": "MISP Services",
-        "mispPartnerServicesDesc": "Generate, Regenerate, View or Deactivate MISP License Keys"
+        "mispPartnerServicesDesc": "Generate, Regenerate, View or Deactivate MISP License Keys",
+        "mispLicenseKeyExpiryCountDesc1": "{{expiringMispLicenseKeyCount}} MISP License Keys are expiring soon",
+        "mispLicenseKeyExpiryCountDesc2": "{{expiringMispLicenseKeyCount}} MISP License Key is expiring soon"
     },
     "mispLicenseList": {
         "partnerId": "Partner ID",
