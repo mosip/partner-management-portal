@@ -113,7 +113,7 @@
         "mispPartnerServices": "Services MISP",
         "searchMispLicenseKeyName": "Rechercher le nom de la clé de licence MISP",
         "regenerate": "Régénérer",
-        "viewMispLicenseKey": "Afficher la clé de licence MISP",
+        "viewMispLicenseKey": "Afficher les détails de la clé de licence MISP",
         "errorWhileGettingMispDetails": "Erreur lors de l'obtention des détails de la clé de licence MISP"
     },
     "generateLicenseKey": {
@@ -1542,7 +1542,7 @@
         "PMS_MSP_421": "Erreur lors de la génération de la clé de licence MISP.",
         "PMS_MSP_422": "Nom de clé de licence non valide fourni.",
         "PMS_MSP_423": "ID de partenaire non valide fourni.",
-        "PMS_MSP_424": "Le nom de la clé de licence MISP existe déjà.",
+        "PMS_MSP_424": "Le nom saisi existe déjà. Veuillez fournir un nom unique et valider.",
         "PMS_MSP_425": "La date d'expiration ne peut pas être identique ou antérieure à la date actuelle.",
         "PMS_MSP_426": "Erreur lors de la récupération des détails de la licence MISP.",
         "PMS_MSP_427": "Aucune clé de licence MISP correspondante n'existe pour l'ID de partenaire, l'ID de stratégie et le nom de clé de licence MISP spécifiés.",
