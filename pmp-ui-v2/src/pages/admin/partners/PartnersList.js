@@ -529,9 +529,9 @@ function PartnersList() {
                                                 {getPartnerStatusText(partner, t)}
                                               </div>
                                             </td>
-                                            <td className="flex justify-center items-center cursor-default my-3">
+                                            <td className="text-center cursor-default my-3">
                                               <div ref={setSubmenuRef(submenuRef, index)}>
-                                                <button id={"partner_list_view" + (index + 1)} onClick={() => setViewPartnersId(index === viewPartnerId ? null : index)} className={`font-semibold mb-0.5 cursor-pointer text-center text-[#191919]`}>
+                                                <button id={"partner_list_view" + (index + 1)} onClick={() => setViewPartnersId(index === viewPartnerId ? null : index)} className={`font-semibold mb-0.5 text-[#191919] cursor-pointer text-center`}>
                                                   ...
                                                 </button>
                                                 {viewPartnerId === index && (
