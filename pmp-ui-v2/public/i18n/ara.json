@@ -92,7 +92,9 @@
         "sbiExpiryCountDesc1": "{{expiringSbiCount}} من شهادات SBI ستنتهي صلاحيتها قريبًا",
         "sbiExpiryCountDesc2": "{{expiringSbiCount}} شهادة SBI ستنتهي صلاحيتها قريبًا",
         "mispPartnerServices": "خدمات MISP",
-        "mispPartnerServicesDesc": "إنشاء أو إعادة إنشاء أو عرض أو إلغاء تنشيط مفاتيح ترخيص MISP"
+        "mispPartnerServicesDesc": "إنشاء أو إعادة إنشاء أو عرض أو إلغاء تنشيط مفاتيح ترخيص MISP",
+        "mispLicenseKeyExpiryCountDesc1": "{{expiringMispLicenseKeyCount}} مفاتيح ترخيص MISP تنتهي صلاحيتها قريبًا",
+        "mispLicenseKeyExpiryCountDesc2": "{{expiringMispLicenseKeyCount}} مفتاح ترخيص MISP سينتهي قريبًا"
     },
     "mispLicenseList": {
         "partnerId": "معرف الشريك",

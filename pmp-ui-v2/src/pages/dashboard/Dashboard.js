@@ -47,6 +47,7 @@ function Dashboard() {
   const [partnerCertExpiryCount, setPartnerCertExpiryCount] = useState();
   const [expiringApiKeyCount, setExpiringApiKeyCount] = useState();
   const [expiringSbiCount, setExpiringSbiCount] = useState();
+  const [expiringMispLicenseKeyCount, setExpiringMispLicenseKeyCount] = useState();
   const [showOnboardingPartnerAlertPopup, setShowOnboardingPartnerAlertPopup] = useState(false);
   const [onboardingPartnerAlertType, setOnboardingPartnerAlertType] = useState(null);
   const [isEmailVerified, setIsEmailVerified] = useState(false);
@@ -489,6 +490,34 @@ function Dashboard() {
       }
     };
 
+    const fetchExpiringMispLicenseKeyCount = async () => {
+      const queryParams = new URLSearchParams();
+      queryParams.append('expiryPeriod', 30)
+      queryParams.append('status', 'activated');
+      queryParams.append('pageSize', '1');
+      queryParams.append('pageNo', '0');
+
+      const url = `${getPartnerManagerUrl('/misp-licenses', process.env.NODE_ENV)}?${queryParams.toString()}`;
+      try {
+        const response = await HttpService.get(url);
+        if (response) {
+          const responseData = response.data;
+          if (responseData && responseData.response) {
+            setExpiringMispLicenseKeyCount(responseData.response.totalResults);
+          } else {
+            handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+          }
+        } else {
+          setErrorMsg(t('dashboard.requestCountFetchError'));
+        }
+      } catch (err) {
+        if (err.response?.status && err.response.status !== 401) {
+          setErrorMsg(t('dashboard.requestCountFetchError'));
+        }
+        console.error("Error fetching data:", err);
+      }
+    };
+
     async function init() {
       if (!isPartnerAdmin && isEmailVerified) {
         fetchPartnerCertExpiryCount();
@@ -511,6 +540,7 @@ function Dashboard() {
           fetchTrustCertExpiryCount('ROOT');
           fetchTrustCertExpiryCount('INTERMEDIATE');
         }
+        fetchExpiringMispLicenseKeyCount();
 
         setTimeout(() => {
           fetchPartnerPolicyMappingRequestCount();
@@ -896,36 +926,26 @@ function Dashboard() {
                   </div>
                 </div>
 
-                <div
-                  role='button'
-                  id='misp_partner_services_card'
-                  onClick={() => moveToMispPartnerServices(navigate)}
-                  className="w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer text-center rounded-xl"
-                  tabIndex="0"
-                  onKeyDown={(e) => onPressEnterKey(e, () => moveToMispPartnerServices(navigate))}
-                >
+                <div role='button' id='misp_partner_services_card' onClick={() => moveToMispPartnerServices(navigate)} className="relative w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer text-center rounded-xl" tabIndex="0" expiringMispLicenseKeyCountonKeyDown={(e) => onPressEnterKey(e, () => moveToMispPartnerServices(navigate))}>
                   <div className="flex justify-center mb-5">
-                    <img
-                      id='admin_misp_partner_services_icon'
-                      src={adminMispPartnerServicesIcon}
-                      alt="Admin MISP Partner Services Icon"
-                      className="w-8 h-8"
-                    />
+                    <img id='admin_misp_partner_services_icon' src={adminMispPartnerServicesIcon} alt="Admin MISP Partner Services Icon" expiringMispLicenseKeyCountclassName="w-8 h-8" />
                   </div>
                   <div>
-                    <h5
-                      id='admin_misp_partner_services_card_header'
-                      className="mb-2 text-sm font-semibold tracking-tight text-gray-600"
-                    >
+                    <h5 id='admin_misp_partner_services_card_header' className="mb-2 text-sm font-semibold tracking-tight text-gray-600" >
                       {t('dashboard.mispPartnerServices')}
                     </h5>
-                    <p
-                      id='admin_misp_partner_services_card_description'
-                      className="mb-3 text-xs font-normal text-gray-400"
-                    >
+                    <p id='admin_misp_partner_services_card_description' className="mb-3 text-xs font-normal text-gray-400" >
                       {t('dashboard.mispPartnerServicesDesc')}
                     </p>
                   </div>
+                  {expiringMispLicenseKeyCount > 0 && (
+                    <CountWithHover
+                      countLabel={expiringMispLicenseKeyCount}
+                      descriptionKey={expiringMispLicenseKeyCount > 1 ? "dashboard.mispLicenseKeyExpiryCountDesc1" : "dashboard.mispLicenseKeyExpiryCountDesc2"}
+                      descriptionParams={{ expiringMispLicenseKeyCount }}
+                      isExpiryHover={true}
+                    />
+                  )}
                 </div>
               </>
             )}
