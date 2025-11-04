@@ -43,7 +43,7 @@ function Confirmation({ id, confirmationData, onClickCustomBtn1, onClickCustomBt
                         </div>
                     )}
                     {confirmationData.customBtnName1 &&
-                        <div className={confirmationData.customBtnName2 ? `flex justify-center items-center p-2 max-450:flex max-450:flex-col max-450:items-center` : ''}>
+                        <div className={confirmationData.customBtnName2 ? `flex justify-center items-center p-2 max-640:flex max-640:flex-col max-640:items-center max-640:gap-y-2` : ''}>
                             <div className={confirmationData.customBtnName2 ? `flex justify-end` : 'flex justify-center'}>
                                 <button id='confirmation_custom_btn' onClick={onClickCustomBtn1} type="button" className={`text-white font-semibold bg-tory-blue rounded-md mt-1 text-sm ${confirmationData.customBtnName2 ? 'px-12' : 'px-3'} py-4 mx-2`}>
                                     {t(confirmationData.customBtnName1)}
