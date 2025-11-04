@@ -92,7 +92,9 @@
         "sbiExpiryCountDesc1": "{{expiringSbiCount}} SBI vont bientôt expirer",
         "sbiExpiryCountDesc2": "{{expiringSbiCount}} SBI va bientôt expirer",
         "mispPartnerServices": "Services MISP",
-        "mispPartnerServicesDesc": "Générer, régénérer, afficher ou désactiver les clés de licence MISP"
+        "mispPartnerServicesDesc": "Générer, régénérer, afficher ou désactiver les clés de licence MISP",
+        "mispLicenseKeyExpiryCountDesc1": "{{expiringMispLicenseKeyCount}} Les clés de licence MISP expirent bientôt",
+        "mispLicenseKeyExpiryCountDesc2": "{{expiringMispLicenseKeyCount}} La clé de licence MISP expire bientôt"
     },
     "mispLicenseList": {
         "partnerId": "ID partenaire",
@@ -111,7 +113,7 @@
         "mispPartnerServices": "Services MISP",
         "searchMispLicenseKeyName": "Rechercher le nom de la clé de licence MISP",
         "regenerate": "Régénérer",
-        "viewMispLicenseKey": "Afficher la clé de licence MISP",
+        "viewMispLicenseKey": "Afficher les détails de la clé de licence MISP",
         "errorWhileGettingMispDetails": "Erreur lors de l'obtention des détails de la clé de licence MISP"
     },
     "generateLicenseKey": {
@@ -176,7 +178,7 @@
     },
     "verificationError": {
         "title": "Erreur de vérification du compte",
-        "description": "Le nom d’utilisateur/email fourni existe déjà dans le système PMS. En conséquence, nous ne pouvons pas vous inscrire sur le portail PMS.",
+        "description": "L'adresse e-mail/nom d'utilisateur indiqué existe déjà dans PMS. Par conséquent, nous ne pouvons pas vous intégrer au portail PMS.",
         "instructionsTitle": "<strong>Pour résoudre ce problème :</strong>",
         "instructionsList": [
             "Contactez l’administrateur Keycloak pour supprimer le compte Keycloak existant.",
@@ -988,7 +990,7 @@
         "policyConfirmationHeader": "Politique enregistrée en tant que brouillon",
         "authPolicyConfirmationMessage": "Cette politique d'authentification est actuellement en mode brouillon. Vous pouvez la publier pour la rendre active, ou continuer à la modifier si des modifications supplémentaires sont nécessaires en accédant à la page 'Liste des politiques d'authentification'",
         "dataSharePolicyConfirmationMessage": "Cette politique de partage de données est actuellement en mode brouillon. Vous pouvez la publier pour la rendre active, ou continuer à la modifier si des modifications supplémentaires sont nécessaires en accédant à la page 'Liste des politiques de partage de données'",
-        "mispPolicyConfirmationMessage": "Cette politique MISP est actuellement en version préliminaire. Vous pouvez la publier pour la rendre active ou la modifier si nécessaire en accédant à la page « Liste des politiques MISP ».",
+        "mispPolicyConfirmationMessage": "Cette politique MISP est actuellement en version préliminaire. Vous pouvez la publier pour la rendre active ou la modifier si nécessaire en accédant à la page 'Liste des politiques MISP'.",
         "errorInCreatePolicy": "Lors de la création de la politique, nous avons rencontré une erreur.",
         "saveAsDraft": "Enregistrer en tant que brouillon"
     },
@@ -1159,11 +1161,14 @@
         "filterNoNotificationTitle": "Aucune notification trouvée",
         "errorInNotifcations": "Erreur lors de la récupération des notifications",
         "errorWhileUpdatingNotificationSeenTime": "Erreur lors de la mise à jour des notifications vues date et heure.",
-        "errorInDismiss": "Erreur lors de la suppression de la notification"
+        "errorInDismiss": "Erreur lors de la suppression de la notification",
+        "mispLicenseKeyExpiry": "Expiration de la clé de licence MISP",
+        "mispLicenseKeyExpiryDescription": "La clé de licence MISP nommée <span>{{mispLicenseKeyName}}</span> pour le partenaire <span>{{mispPartnerId}}</span> expire le <span>{{expiryDateTime}}</span>. Veuillez la renouveler dès maintenant pour éviter toute interruption de service."
     },
     "notificationsTab": {
         "rootCaCertificate": "Certificat racine CA",
         "intermediateCaCertificate": "Certificat CA intermédiaire",
+        "mispLicenseKey": "Clé de licence MISP",
         "partner": "Résumé hebdomadaire - Partenaire",
         "rootCertExpiryDescription": "Le certificat CA racine <span>{{certificateId}}</span> délivré à <span>{{issuedTo}}</span> par <span>{{issuedBy}}</span> pour le domaine <span>{{partnerDomain}}</span> expirera le <span>{{expiryDateTime}}</span>. Renouvelez-le dès maintenant pour éviter toute interruption.",
         "intermediateCertExpiryDescription": "Le certificat CA intermédiaire <span>{{certificateId}}</span> délivré à <span>{{issuedTo}}</span> par <span>{{issuedBy}}</span> pour le domaine <span>{{partnerDomain}}</span> expirera le <span>{{expiryDateTime}}</span>. Renouvelez-le dès maintenant pour éviter toute interruption."
@@ -1501,7 +1506,7 @@
         "PMS_NOTIFICATION_ERROR_003": "Les informations utilisateur n'existent pas pour cet utilisateur.",
         "PMS_NOTIFICATION_ERROR_004": "Erreur lors de la récupération des notifications date et heure.",
         "PMS_NOTIFICATION_ERROR_005": "Erreur lors de la récupération des notifications.",
-        "PMS_NOTIFICATION_ERROR_006": "Seul l'administrateur partenaire recevra des notifications concernant l'expiration du certificat racine/intermédiaire et le résumé hebdomadaire.",
+        "PMS_NOTIFICATION_ERROR_006": "Seul l'administrateur partenaire recevra les notifications d'expiration des certificats racine/intermédiaires, le résumé hebdomadaire et l'expiration de la clé de licence MISP.",
         "PMS_NOTIFICATION_ERROR_007": "Erreur lors de l'analyse des informations de notification au format JSON.",
         "PMS_NOTIFICATION_ERROR_008": "La notification ne s'affiche pas. existe.",
         "PMS_NOTIFICATION_ERROR_009": "La notification a déjà été rejetée.",
@@ -1522,6 +1527,8 @@
         "PMS_NOTIFICATION_ERROR_024": "Le type de notification sélectionné n'est pas valide. Veuillez sélectionner un type autre que « hebdomadaire ».",
         "PMS_NOTIFICATION_ERROR_025": "Veuillez saisir une date de début de création valide.",
         "PMS_NOTIFICATION_ERROR_026": "Veuillez saisir une date de fin de création valide.",
+        "PMS_NOTIFICATION_ERROR_027": "Le type de notification sélectionné est invalide. Seul le type 'misp' est autorisé pour ce filtre.",
+        "PMS_NOTIFICATION_ERROR_028": "Le type de notification sélectionné est invalide. Seuls les types 'apikey' ou 'misp' sont autorisés pour ce filtre.",
         "PMS_MSP_005": "Le partenaire MISP n'existe pas",
         "PMS_MSP_009": "Le fournisseur donné n'est pas valide",
         "PMS_MSP_408": "La combinaison de clé de partenaire et de licence MISP n'existe pas.",
@@ -1535,7 +1542,7 @@
         "PMS_MSP_421": "Erreur lors de la génération de la clé de licence MISP.",
         "PMS_MSP_422": "Nom de clé de licence non valide fourni.",
         "PMS_MSP_423": "ID de partenaire non valide fourni.",
-        "PMS_MSP_424": "Le nom de la clé de licence MISP existe déjà.",
+        "PMS_MSP_424": "Le nom saisi existe déjà. Veuillez fournir un nom unique et valider.",
         "PMS_MSP_425": "La date d'expiration ne peut pas être identique ou antérieure à la date actuelle.",
         "PMS_MSP_426": "Erreur lors de la récupération des détails de la licence MISP.",
         "PMS_MSP_427": "Aucune clé de licence MISP correspondante n'existe pour l'ID de partenaire, l'ID de stratégie et le nom de clé de licence MISP spécifiés.",

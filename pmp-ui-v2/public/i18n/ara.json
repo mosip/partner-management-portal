@@ -92,7 +92,9 @@
         "sbiExpiryCountDesc1": "{{expiringSbiCount}} من شهادات SBI ستنتهي صلاحيتها قريبًا",
         "sbiExpiryCountDesc2": "{{expiringSbiCount}} شهادة SBI ستنتهي صلاحيتها قريبًا",
         "mispPartnerServices": "خدمات MISP",
-        "mispPartnerServicesDesc": "إنشاء أو إعادة إنشاء أو عرض أو إلغاء تنشيط مفاتيح ترخيص MISP"
+        "mispPartnerServicesDesc": "إنشاء أو إعادة إنشاء أو عرض أو إلغاء تنشيط مفاتيح ترخيص MISP",
+        "mispLicenseKeyExpiryCountDesc1": "{{expiringMispLicenseKeyCount}} مفاتيح ترخيص MISP تنتهي صلاحيتها قريبًا",
+        "mispLicenseKeyExpiryCountDesc2": "{{expiringMispLicenseKeyCount}} مفتاح ترخيص MISP سينتهي قريبًا"
     },
     "mispLicenseList": {
         "partnerId": "معرف الشريك",
@@ -111,7 +113,7 @@
         "mispPartnerServices": "خدمات MISP",
         "searchMispLicenseKeyName": "ابحث عن اسم مفتاح ترخيص MISP",
         "regenerate": "تجدد",
-        "viewMispLicenseKey": "عرض مفتاح ترخيص MISP",
+        "viewMispLicenseKey": "عرض تفاصيل مفتاح ترخيص MISP",
         "errorWhileGettingMispDetails": "حدث خطأ أثناء الحصول على تفاصيل مفتاح ترخيص MISP"
     },
     "generateLicenseKey": {
@@ -176,7 +178,7 @@
     },
     "verificationError": {
         "title": "خطأ في التحقق من الحساب",
-        "description": "اسم المستخدم/البريد الإلكتروني المُدخل موجود بالفعل في نظام PMS. ونتيجة لذلك، لا يمكننا تسجيلك في بوابة PMS.",
+        "description": "البريد الإلكتروني/اسم المستخدم المذكور موجود مسبقًا في نظام إدارة الممتلكات (PMS). نتيجةً لذلك، لن نتمكن من تسجيلك في بوابة نظام إدارة الممتلكات.",
         "instructionsTitle": "<strong>لحل هذه المشكلة:</strong>",
         "instructionsList": [
             "تواصل مع مسؤول Keycloak لحذف حساب Keycloak الموجود.",
@@ -949,7 +951,7 @@
         "mispPolicyConfirmationHeader": "تم تحديث سياسة MISP وإرسالها بنجاح!",
         "authPolicyConfirmationMessage": "تم تحديث سياسة المصادقة لمجموعة السياسات: {{policyGroupName}} بنجاح وإرسالها. لنشر السياسة، حدد خيار النشر من قائمة الإجراءات في شاشة قائمة سياسات المصادقة",
         "dataSharePolicyConfirmationMessage": "تم تحديث سياسة مشاركة البيانات لمجموعة السياسات: {{policyGroupName}} بنجاح وإرسالها. لنشر السياسة، حدد خيار النشر من قائمة الإجراءات في شاشة قائمة سياسات مشاركة البيانات",
-        "mispPolicyConfirmationMessage": "تم تحديث سياسة MISP لمجموعة السياسات: {{policyGroupName}} بنجاح وتم إرسالها. لنشر السياسة، حدد خيار النشر من قائمة الإجراءات على شاشة قائمة سياسات MISP.",
+        "mispPolicyConfirmationMessage": "سياسة MISP هذه حاليًا في وضع المسودة. يمكنك نشرها لتفعيلها، أو مواصلة تحريرها إذا لزم الأمر، بالانتقال إلى صفحة 'قائمة سياسات MISP'.",
         "errorInEditPolicy": "أثناء تحرير السياسة، واجهنا خطأً.",
         "reUploadPolicyData": "إعادة تحميل بيانات السياسة",
         "reuploadBtn": "إعادة التحميل",
@@ -988,7 +990,7 @@
         "policyConfirmationHeader": "تم حفظ السياسة كمسودة",
         "authPolicyConfirmationMessage": "هذه السياسة الخاصة بالمصادقة حاليًا في وضع المسودة. يمكنك نشرها لتصبح نشطة، أو متابعة التعديل إذا كانت هناك حاجة إلى تعديلات إضافية بالانتقال إلى صفحة 'قائمة سياسات المصادقة'",
         "dataSharePolicyConfirmationMessage": "هذه السياسة الخاصة بمشاركة البيانات حاليًا في وضع المسودة. يمكنك نشرها لتصبح نشطة، أو متابعة التعديل إذا كانت هناك حاجة إلى تعديلات إضافية بالانتقال إلى صفحة 'قائمة سياسات مشاركة البيانات'",
-        "mispPolicyConfirmationMessage": "سياسة MISP هذه حاليًا في وضع المسودة. يمكنك نشرها لتفعيلها، أو مواصلة تحريرها إذا لزم الأمر، بالانتقال إلى صفحة قائمة سياسات MISP.",
+        "mispPolicyConfirmationMessage": "سياسة MISP هذه حاليًا في وضع المسودة. يمكنك نشرها لتفعيلها، أو مواصلة تحريرها إذا لزم الأمر، بالانتقال إلى صفحة 'قائمة سياسات MISP'.",
         "errorInCreatePolicy": "أثناء إنشاء السياسة، واجهنا خطأً.",
         "saveAsDraft": "حفظ كمسودة"
     },
@@ -1159,11 +1161,14 @@
         "filterNoNotificationTitle": "لم يتم العثور على إشعارات",
         "errorInNotifcations": "خطأ أثناء جلب الإشعارات",
         "errorWhileUpdatingNotificationSeenTime": "حدث خطأ أثناء تحديث الإشعارات التي تظهر التاريخ والوقت.",
-        "errorInDismiss": "خطأ أثناء رفض الإشعار"
+        "errorInDismiss": "خطأ أثناء رفض الإشعار",
+        "mispLicenseKeyExpiry": "انتهاء صلاحية مفتاح ترخيص MISP",
+        "mispLicenseKeyExpiryDescription": "مفتاح ترخيص MISP باسم: <span>{{mispLicenseKeyName}}</span> للشريك <span>{{mispPartnerId}}</span> من المقرر أن تنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاع."
     },
     "notificationsTab": {
         "rootCaCertificate": "شهادة CA الجذرية",
         "intermediateCaCertificate": "شهادة CA متوسطة",
+        "mispLicenseKey": "مفتاح ترخيص MISP",
         "partner": "الملخص الأسبوعي - الشريك",
         "rootCertExpiryDescription": "شهادة CA الجذرية <span>{{certificateId}}</span> الصادرة لـ <span>{{issuedTo}}</span> بواسطة <span>{{issuedBy}}</span> للنطاق <span>{{partnerDomain}}</span> من المقرر أن تنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات.",
         "intermediateCertExpiryDescription": "شهادة CA المتوسطة <span>{{certificateId}}</span> الصادرة لـ <span>{{issuedTo}}</span> من قِبل <span>{{issuedBy}}</span> لنطاق <span>{{partnerDomain}}</span> من المقرر أن تنتهي صلاحيتها في <span>{{expiryDateTime}}</span>. جددها الآن لتجنب أي انقطاعات."
@@ -1501,7 +1506,7 @@
         "PMS_NOTIFICATION_ERROR_003": "تفاصيل المستخدم غير موجودة.",
         "PMS_NOTIFICATION_ERROR_004": "حدث خطأ أثناء جلب تاريخ ووقت ظهور الإشعارات.",
         "PMS_NOTIFICATION_ERROR_005": "حدث خطأ أثناء جلب الإشعارات.",
-        "PMS_NOTIFICATION_ERROR_006": "سيحصل مسؤول الشريك فقط على إشعارات حول انتهاء صلاحية شهادة الجذر/الوسيطة والملخص الأسبوعي.",
+        "PMS_NOTIFICATION_ERROR_006": "سيحصل مسؤول الشريك فقط على إشعارات حول انتهاء صلاحية شهادة الجذر/الوسيطة والملخص الأسبوعي وانتهاء صلاحية مفتاح ترخيص MISP.",
         "PMS_NOTIFICATION_ERROR_007": "حدث خطأ في تحليل تفاصيل الإشعارات بتنسيق JSON.",
         "PMS_NOTIFICATION_ERROR_008": "الإشعار غير موجود.",
         "PMS_NOTIFICATION_ERROR_009": "تم رفض الإشعار مسبقًا.",
@@ -1522,6 +1527,8 @@
         "PMS_NOTIFICATION_ERROR_024": "نوع الإشعار المُختار غير صالح. يُرجى اختيار نوع آخر غير 'أسبوعي'.",
         "PMS_NOTIFICATION_ERROR_025": "يرجى إدخال تاريخ الإنشاء من صالح.",
         "PMS_NOTIFICATION_ERROR_026": "يرجى إدخال تاريخ الإنشاء إلى صالح.",
+        "PMS_NOTIFICATION_ERROR_027": "نوع الإشعار المُختار غير صالح. يُسمح فقط بنوع 'misp' لهذا الفلتر.",
+        "PMS_NOTIFICATION_ERROR_028": "نوع الإشعار المُختار غير صالح. يُسمح باستخدام نوع 'apikey' أو 'misp' لهذا الفلتر.",
         "PMS_MSP_005": "شريك MISP غير موجود",
         "PMS_MSP_009": "المزود المذكور غير صالح",
         "PMS_MSP_408": "لا يوجد مزيج بين شريك MISP ومفتاح الترخيص.",
@@ -1535,7 +1542,7 @@
         "PMS_MSP_421": "حدث خطأ أثناء إنشاء مفتاح ترخيص MISP.",
         "PMS_MSP_422": "تم تقديم اسم مفتاح الترخيص غير صالح.",
         "PMS_MSP_423": "تم تقديم معرف شريك غير صالح.",
-        "PMS_MSP_424": "اسم مفتاح ترخيص MISP موجود بالفعل.",
+        "PMS_MSP_424": "الاسم المُدخل موجود بالفعل. أدخل اسمًا فريدًا وأرسله.",
         "PMS_MSP_425": "لا يمكن أن يكون تاريخ انتهاء الصلاحية هو نفسه أو أقدم من التاريخ الحالي.",
         "PMS_MSP_426": "حدث خطأ أثناء جلب تفاصيل ترخيص MISP.",
         "PMS_MSP_427": "لا يوجد مفتاح ترخيص MISP مطابق لمعرف الشريك ومعرف السياسة واسم مفتاح ترخيص MISP المحددين.",

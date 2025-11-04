@@ -94,7 +94,9 @@
         "sbiExpiryCountDesc1": "{{expiringSbiCount}} SBIs are expiring soon",
         "sbiExpiryCountDesc2": "{{expiringSbiCount}} SBI is expiring soon",
         "mispPartnerServices": "MISP Services",
-        "mispPartnerServicesDesc": "Generate, Regenerate, View or Deactivate MISP License Keys"
+        "mispPartnerServicesDesc": "Generate, Regenerate, View or Deactivate MISP License Keys",
+        "mispLicenseKeyExpiryCountDesc1": "{{expiringMispLicenseKeyCount}} MISP License Keys are expiring soon",
+        "mispLicenseKeyExpiryCountDesc2": "{{expiringMispLicenseKeyCount}} MISP License Key is expiring soon"
     },
     "mispLicenseList": {
         "partnerId": "Partner ID",
@@ -113,7 +115,7 @@
         "mispPartnerServices": "MISP Services",
         "searchMispLicenseKeyName": "Search MISP License Key Name",
         "regenerate": "Regenerate",
-        "viewMispLicenseKey": "View MISP License Key",
+        "viewMispLicenseKey": "View MISP License Key Details",
         "errorWhileGettingMispDetails": "Error while getting MISP License Key details"
     },
     "generateLicenseKey": {
@@ -178,7 +180,7 @@
     },
     "verificationError": {
         "title": "Account Verification Error",
-        "description": "The given username/email already exists in PMS. As a result, we are unable to onboard you into the PMS portal.",
+        "description": "The given email/username already exists in PMS. As a result, we are unable to onboard you into the PMS portal.",
         "instructionsTitle": "<strong>To resolve this:</strong>",
         "instructionsList": [
             "Contact the Keycloak administrator to delete the existing Keycloak account.",
@@ -1155,11 +1157,14 @@
         "filterNoNotificationTitle": "No Notifications Found",
         "errorInNotifcations": "Error while fetching notifications",
         "errorWhileUpdatingNotificationSeenTime": "Error while updating notifications seen date and time.",
-        "errorInDismiss": "Error while dismissing notifcation"
+        "errorInDismiss": "Error while dismissing notifcation",
+        "mispLicenseKeyExpiry": "MISP License Key Expiration",
+        "mispLicenseKeyExpiryDescription": "MISP License Key with name: <span>{{mispLicenseKeyName}}</span> for partner <span>{{mispPartnerId}}</span> is set to expire on <span>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions."
     },
     "notificationsTab": {
         "rootCaCertificate": "Root CA Certificate",
         "intermediateCaCertificate": "Intermediate CA Certificate",
+        "mispLicenseKey": "MISP License Key",
         "partner": "Weekly Summary - Partner",
         "rootCertExpiryDescription": "Root CA Certificate <span>{{certificateId}}</span> issued to <span>{{issuedTo}}</span> by <span>{{issuedBy}}</span> for the <span>{{partnerDomain}}</span> domain is set to expire on <span>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions.",
         "intermediateCertExpiryDescription": "Intermediate CA Certificate <span>{{certificateId}}</span> issued to <span>{{issuedTo}}</span> by <span>{{issuedBy}}</span> for the <span>{{partnerDomain}}</span> domain is set to expire on <span>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions."
@@ -1497,7 +1502,7 @@
         "PMS_NOTIFICATION_ERROR_003": "User details does not exist for the user.",
         "PMS_NOTIFICATION_ERROR_004": "Error while fetching notifications seen date time.",
         "PMS_NOTIFICATION_ERROR_005": "Error while fetching notifications.",
-        "PMS_NOTIFICATION_ERROR_006": "Only partner admin will get notifications for root/intermediate certificate expiry and the weekly summary.",
+        "PMS_NOTIFICATION_ERROR_006": "Only partner admin will get notifications for root/intermediate certificate expiry, Weekly Summary and MISP License Key expiry.",
         "PMS_NOTIFICATION_ERROR_007": "Error parsing notification details JSON.",
         "PMS_NOTIFICATION_ERROR_008": "Notification does not exist.",
         "PMS_NOTIFICATION_ERROR_009": "Notification has already been dismissed.",
@@ -1518,6 +1523,8 @@
         "PMS_NOTIFICATION_ERROR_024": "The selected notification type is invalid. Please select a type other than 'weekly'.",
         "PMS_NOTIFICATION_ERROR_025": "Please enter a valid created from date.",
         "PMS_NOTIFICATION_ERROR_026": "Please enter a valid created to date.",
+        "PMS_NOTIFICATION_ERROR_027": "The selected notification type is invalid. Only 'misp' type is allowed for this filter.",
+        "PMS_NOTIFICATION_ERROR_028": "The selected notification type is invalid. Either 'apikey' or 'misp' type is allowed for this filter.",
         "PMS_MSP_005": "MISP Partner does not exist",
         "PMS_MSP_009": "Given provider is not valid",
         "PMS_MSP_408": "MISP Partner and License key combintaion not exists.",
@@ -1531,7 +1538,7 @@
         "PMS_MSP_421": "Error while generating MISP license key.",
         "PMS_MSP_422": "Invalid license key name provided.",
         "PMS_MSP_423": "Invalid Partner ID provided.",
-        "PMS_MSP_424": "MISP License key name already exists.",
+        "PMS_MSP_424": "Entered name already exists. Provide a unique name and submit.",
         "PMS_MSP_425": "Expiry date cannot be the same or earlier than the current date.",
         "PMS_MSP_426": "Error while fetching MISP Licence details.",
         "PMS_MSP_427": "No matching MISP License Key exists for the specified Partner ID, Policy ID, and MISP License Key Name.",

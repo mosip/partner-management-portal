@@ -137,7 +137,10 @@ export const getStatusCode = (status, t) => {
             return t('statusCodes.valid');
         } else if (status === "not_available") {
             return t('statusCodes.notAvailable');
-        } else if (status === "-") {
+        } else if (status === "partner_inactive") {
+            return t('statusCodes.inactive');
+        }
+        else if (status === "-") {
             return "-"
         }
     }
@@ -1094,6 +1097,18 @@ export const getNotificationDescription = (notification, isLoginLanguageRTL, t) 
         );
     } else if (notification.notificationType === 'WEEKLY_SUMMARY') {
         return getWeeklySummaryDescription(notification, isLoginLanguageRTL, t);
+    } else if (notification.notificationType === 'MISP_LICENSE_KEY_EXPIRY') {
+        return (
+            <Trans 
+                i18nKey="notificationPopup.mispLicenseKeyExpiryDescription"
+                values={{
+                    mispLicenseKeyName: notification.notificationDetails.mispLicenseKeyDetails[0].mispLicenseKeyName ? notification.notificationDetails.mispLicenseKeyDetails[0].mispLicenseKeyName : '-',
+                    mispPartnerId: notification.notificationDetails.mispLicenseKeyDetails[0].mispPartnerId,
+                    expiryDateTime: formatDate(notification.notificationDetails.mispLicenseKeyDetails[0].expiryDateTime, 'dateInWords')
+                }}
+                components={{ span: <span className={`font-semibold ${isLoginLanguageRTL && 'whitespace-nowrap'}`} /> }}
+            />
+        );  
     }
 };
 
@@ -1168,6 +1183,18 @@ export const getNotificationPanelDescription = (notification, isLoginLanguageRTL
         );
     } else if (notification.notificationType === 'WEEKLY_SUMMARY') {
         return getWeeklySummaryDescription (notification, isLoginLanguageRTL, t);
+    } else if (notification.notificationType === 'MISP_LICENSE_KEY_EXPIRY') {
+        return (
+            <Trans 
+                i18nKey="notificationPopup.mispLicenseKeyExpiryDescription"
+                values={{
+                    mispLicenseKeyName: notification.notificationDetails.mispLicenseKeyDetails[0].mispLicenseKeyName ? notification.notificationDetails.mispLicenseKeyDetails[0].mispLicenseKeyName : '-',
+                    mispPartnerId: notification.notificationDetails.mispLicenseKeyDetails[0].mispPartnerId,
+                    expiryDateTime: formatDate(notification.notificationDetails.mispLicenseKeyDetails[0].expiryDateTime, 'dateInWords')
+                }}
+                components={{ span: <span className={`font-semibold ${isLoginLanguageRTL && 'whitespace-nowrap'}`} /> }}
+            />
+        );  
     }
 };
 
@@ -1186,6 +1213,8 @@ export const getNotificationTitle = (notification, t) => {
         return t('notificationPopup.sbiExpiry');
     } else if (notification.notificationType === 'WEEKLY_SUMMARY') {
         return t('notificationPopup.expiringItems') + " (" + formatDate(notification.createdDateTime, 'dateInWords') + t('notificationPopup.to') + formatDate(getWeeklySummaryDate(notification.createdDateTime), 'dateInWords') + ")";
+    } else if (notification.notificationType === 'MISP_LICENSE_KEY_EXPIRY') {
+        return t('notificationPopup.mispLicenseKeyExpiry');
     }
 };
 
