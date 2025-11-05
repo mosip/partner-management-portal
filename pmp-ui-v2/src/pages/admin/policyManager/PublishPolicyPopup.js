@@ -97,7 +97,7 @@ function PublishPolicyPopup ({policyDetails, closePopUp, onClickPublish}) {
                     {dataLoaded && (
                         <div className="relative">
                             <div className="px-6 py-3">
-                                <h3 id='publish_policy_popup_title' className="text-lg font-bold text-[#333333]">{t('publishPolicyPopup.title')}</h3>
+                                <h3 id='publish_policy_popup_title' className="text-lg font-bold text-[#333333] text-center">{t('publishPolicyPopup.title')}</h3>
                             </div>
                             <div className="border-gray-200 border-opacity-75 border-t"></div>
                             {errorMsg && (
@@ -107,7 +107,7 @@ function PublishPolicyPopup ({policyDetails, closePopUp, onClickPublish}) {
                                 <SuccessMessage id='publish_policy_popup_success_msg' successParam={policyDetails.policyName} successMsg={successMsg} clickOnCancel={cancelSuccessMsg} customStyle={customStyle}/>
                             )}
                             <div className="py-4 px-6">
-                            <p id='publish_policy_popup_policy_name' className="text-sm font-normal text-[#414141] break-words">{t('publishPolicyPopup.description1')} 
+                            <p id='publish_policy_popup_policy_name' className="text-sm text-center font-normal text-[#414141] break-words">{t('publishPolicyPopup.description1')} 
                                 <span className="font-bold"> {policyDetails.policyName}</span> {t('publishPolicyPopup.description2')}
                             </p>
                             </div>
