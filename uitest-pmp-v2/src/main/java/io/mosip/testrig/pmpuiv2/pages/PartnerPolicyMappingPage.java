@@ -270,8 +270,11 @@ public class PartnerPolicyMappingPage extends BasePage {
 	@FindBy(xpath = "//h4[text()=\"Partner's Comments\"]")
 	private WebElement partnerCommentsLabel;
 
-	@FindBy(xpath = "//span[text()='request']")
+	@FindBy(id = "partner_policy_request_partner_comment")
 	private WebElement partnerCommentsContext;
+
+	@FindBy(id = "view_partner_policy_request_status")
+	private WebElement partnerPolicyRequestStatus;
 
 	public PartnerPolicyMappingPage(WebDriver driver) {
 		super(driver);
@@ -748,7 +751,7 @@ public class PartnerPolicyMappingPage extends BasePage {
 	}
 
 	public boolean isPartnerStatusActivatedDisplayed() {
-		return isElementDisplayed(partnerStatusActivated);
+		return isElementDisplayed(partnerPolicyRequestStatus);
 	}
 
 	public boolean isCommentsLabelDisplayed() {

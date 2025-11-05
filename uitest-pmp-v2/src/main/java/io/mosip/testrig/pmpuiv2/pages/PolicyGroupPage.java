@@ -153,7 +153,7 @@ public class PolicyGroupPage extends BasePage {
 	@FindBy(xpath = "//p[text()='Policy Group ID']")
 	private WebElement policyGroupIdLabel;
 
-	@FindBy(xpath = "//div[text()='Activated']")
+	@FindBy(xpath = "//div[text()='Active']")
 	private WebElement statusOfPolicyGroup;
 
 	@FindBy(xpath = "//p[text()='Policy Group Name']")

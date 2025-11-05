@@ -870,11 +870,13 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 				GlobalConstants.isClonePolicyGroupNameDisplayed);
 		assertTrue(datasharePolicyPage.isClonePolicyGroupDescriptionDisplayed(),
 				GlobalConstants.isClonePolicyGroupDescriptionDisplayed);
+		datasharePolicyPage.clearClonePolicyGroupDropdownValue();
 
 		datasharePolicyPage.searchPolicyGroupForClone(GlobalConstants.DEACTIVATE_DATA1);
-		assertTrue(datasharePolicyPage.isNoDataAvailableDisplayed(), GlobalConstants.isNoDataAvailableDisplayed);
-		datasharePolicyPage.clickOnClonePolicyGroupDropdown();
-		datasharePolicyPage.selectPolicyGroupForClone(GlobalConstants.CHARACTERS_1);
+		assertTrue(datasharePolicyPage.isNoPolicyGroupFoundDisplayed(), GlobalConstants.isNoDataAvailableDisplayed);
+		datasharePolicyPage.clearClonePolicyGroupDropdownValue();
+
+		datasharePolicyPage.selectPolicyGroupForClonePolicy(GlobalConstants.CHARACTERS_1);
 		assertTrue(datasharePolicyPage.isClonePolicyButtonEnabled(), GlobalConstants.isClonePolicyButtonEnabled);
 		datasharePolicyPage.clickOnClonePolicyButton();
 		assertTrue(datasharePolicyPage.isClonedSuccessMessageDisplayed(),
@@ -916,7 +918,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		datasharePolicyPage.clickOnApplyFilterButton();
 		datasharePolicyPage.clickOnActionButton();
 		datasharePolicyPage.clickOnCloneButton();
-		datasharePolicyPage.selectPolicyGroupForClone(GlobalConstants.CHARACTERS_1);
+		datasharePolicyPage.selectValidPolicyGroupForClone(GlobalConstants.CHARACTERS_1);
 		datasharePolicyPage.clickOnClonePolicyButton();
 		assertTrue(datasharePolicyPage.isAlreadyExistErrorMessageDisplayed(),
 				GlobalConstants.isAlreadyExistErrorMessageDisplayed);
@@ -931,7 +933,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		datasharePolicyPage.clickOnApplyFilterButton();
 		datasharePolicyPage.clickOnActionButton();
 		datasharePolicyPage.clickOnCloneButton();
-		datasharePolicyPage.selectPolicyGroupForClone(GlobalConstants.CHARACTERS_1);
+		datasharePolicyPage.selectValidPolicyGroupForClone(GlobalConstants.CHARACTERS_1);
 		datasharePolicyPage.clickOnClonePolicyButton();
 		assertTrue(datasharePolicyPage.isAlreadyExistErrorMessageDisplayed(),
 				GlobalConstants.isAlreadyExistErrorMessageDisplayed);
@@ -946,7 +948,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		datasharePolicyPage.clickOnApplyFilterButton();
 		datasharePolicyPage.clickOnActionButton();
 		datasharePolicyPage.clickOnCloneButton();
-		datasharePolicyPage.selectPolicyGroupForClone(GlobalConstants.DEFAULT_POLICYGROUP);
+		datasharePolicyPage.selectValidPolicyGroupForClone(GlobalConstants.DEFAULT_POLICYGROUP);
 		datasharePolicyPage.clickOnClonePolicyButton();
 		assertTrue(datasharePolicyPage.isAlreadyExistErrorMessageDisplayed(),
 				GlobalConstants.isAlreadyExistErrorMessageDisplayed);
@@ -1264,9 +1266,11 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		authPolicyPage.clickOnDeactivateConfirmButton();
 
 		authPolicyPage.clickOnCreateAuthPolicyButton();
-		authPolicyPage.selectPolicyGroup(GlobalConstants.DEACTIVATE_POLICYGROUP);
-		assertTrue(authPolicyPage.isNoDataAvailableDisplayed(), GlobalConstants.isNoDataAvailableDisplayed);
-		authPolicyPage.clickOnPolicyGroupDropdown();
+		authPolicyPage.selectDeactivatePolicyGroupInDropdown(GlobalConstants.DEACTIVATE_POLICYGROUP);
+		assertTrue(authPolicyPage.isNoPolicyGroupFoundDisplayed(), GlobalConstants.isNoPolicyGroupFoundDisplayed);
+		authPolicyPage.clickOnPolicyCancelButton();
+
+		authPolicyPage.clickOnCreateAuthPolicyButton();
 		authPolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULT_POLICYGROUP);
 		authPolicyPage.enterPolicyName(GlobalConstants.SPECIAL_CHARACTERS);
 		assertTrue(authPolicyPage.isSpecialCharactersAreNotAllowedErrorMessageDisplayed(),
@@ -1815,12 +1819,13 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		assertTrue(authPolicyPage.isClonePolicyGroupNameDisplayed(), GlobalConstants.isClonePolicyGroupNameDisplayed);
 		assertTrue(authPolicyPage.isClonePolicyGroupDescriptionDisplayed(),
 				GlobalConstants.isClonePolicyGroupDescriptionDisplayed);
+		authPolicyPage.clearClonePolicyGroupDropdownValue();
 
 		authPolicyPage.searchPolicyGroupForClone(GlobalConstants.DEACTIVATE_DATA1);
-		assertTrue(authPolicyPage.isNoDataAvailableDisplayed(), GlobalConstants.isNoDataAvailableDisplayed);
-		authPolicyPage.clickOnClonePolicyGroupDropdown();
+		assertTrue(authPolicyPage.isNoPolicyGroupFoundDisplayed(), GlobalConstants.isNoDataAvailableDisplayed);
+		authPolicyPage.clearClonePolicyGroupDropdownValue();
 
-		authPolicyPage.selectPolicyGroupForClone(GlobalConstants.CHARACTERS_1);
+		authPolicyPage.selectPolicyGroupForClonePolicy(GlobalConstants.CHARACTERS_1);
 		assertTrue(authPolicyPage.isClonePolicyButtonEnabled(), GlobalConstants.isClonePolicyButtonEnabled);
 		authPolicyPage.clickOnClonePolicyButton();
 		assertTrue(authPolicyPage.isClonedSuccessMessageDisplayed(), GlobalConstants.isClonedSuccessPopupDisplayed);
@@ -1857,7 +1862,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		authPolicyPage.clickOnApplyFilterButton();
 		authPolicyPage.clickOnActionButton();
 		authPolicyPage.clickOnCloneButton();
-		authPolicyPage.selectPolicyGroupForClone(GlobalConstants.CHARACTERS_1);
+		authPolicyPage.selectValidPolicyGroupForClone(GlobalConstants.CHARACTERS_1);
 		authPolicyPage.clickOnClonePolicyButton();
 		assertTrue(authPolicyPage.isAlreadyExistErrorMessageDisplayed(),
 				GlobalConstants.isAlreadyExistErrorMessageDisplayed);
@@ -1869,7 +1874,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		authPolicyPage.clickOnApplyFilterButton();
 		authPolicyPage.clickOnActionButton();
 		authPolicyPage.clickOnCloneButton();
-		authPolicyPage.selectPolicyGroupForClone(GlobalConstants.DEFAULT_POLICYGROUP);
+		authPolicyPage.selectValidPolicyGroupForClone(GlobalConstants.DEFAULT_POLICYGROUP);
 		authPolicyPage.clickOnClonePolicyButton();
 		assertTrue(authPolicyPage.isAlreadyExistErrorMessageDisplayed(),
 				GlobalConstants.isAlreadyExistErrorMessageDisplayed);
@@ -2106,18 +2111,6 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		assertTrue(policygroupPage.isErrorPopupOkayBtnDisplayed(), GlobalConstants.isErrorPopupOkayBtnDisplayed);
 		policygroupPage.clickOnErrorPopupOkayBtn();
 		assertTrue(policiesPage.isPoliciesPolicyGroupTabDisplayed(), GlobalConstants.isPoliciesPolicyGroupTabDisplayed);
-
-		policygroupPage.clickOnDatasharePolicyTab();
-		datasharePolicyPage.clickOnDatasharePolicyCreateButton();
-		datasharePolicyPage.enterDeactivatedPolicyGroup(GlobalConstants.DEACTIVATE_POLICYGROUP);
-		assertTrue(datasharePolicyPage.isNoDataAvailableDisplayed(), GlobalConstants.isNoDataAvailableDisplayed);
-		datasharePolicyPage.clickOnTitleBackIcon();
-
-		policiesPage.clickOnAuthPolicyTab();
-		authPolicyPage.clickOnCreateAuthPolicyButton();
-		authPolicyPage.enterDeactivatedPolicyGroup(GlobalConstants.DEACTIVATE_POLICYGROUP);
-		assertTrue(authPolicyPage.isNoDataAvailableDisplayed(), GlobalConstants.isNoDataAvailableDisplayed);
-		policygroupPage.navigateBackDefaultButton();
 
 		policiesPage.clickOnAuthPolicyTab();
 		authPolicyPage.clickOnCreateAuthPolicyButton();

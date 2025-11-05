@@ -1,8 +1,14 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
 import io.mosip.testrig.pmpuiv2.utility.TestRunner;
@@ -24,13 +30,13 @@ public class DatasharePolicyPage extends BasePage {
 	@FindBy(xpath = "//p[contains(text(), 'All fields marked with')]")
 	private WebElement datashareFormSubTitle;
 
-	@FindBy(id = "policy_group_dropdown_dropdown_btn")
+	@FindBy(id = "policy_group_selector_dropdown_button")
 	private WebElement policyGroupDropdown;
 
-	@FindBy(id = "policy_group_dropdown_search_input")
+	@FindBy(id = "policy_group_selector_search_input")
 	private WebElement policyGroupDropdownSearchInput;
 
-	@FindBy(id = "policy_group_dropdown_option1")
+	@FindBy(id = "policy_group_selector_option_1")
 	private WebElement policyGroupDropdownOption1;
 
 	@FindBy(id = "policy_name_box")
@@ -45,7 +51,7 @@ public class DatasharePolicyPage extends BasePage {
 	@FindBy(id = "create_policy_form_submit_btn")
 	private WebElement policySaveAsDraftButton;
 
-	@FindBy(xpath = "//span[text()='Select policy group']")
+	@FindBy(xpath = "//span[text()='Select Policy Group']")
 	private WebElement policyGroupPlaceHolder;
 
 	@FindBy(xpath = "//span[text()='automationui policy group']")
@@ -75,7 +81,7 @@ public class DatasharePolicyPage extends BasePage {
 	@FindBy(id = "confirmation_go_back_btn")
 	private WebElement goBackButton;
 
-	@FindBy(xpath = "//p[text()='desc automationui policy group']")
+	@FindBy(xpath = "//span[text()='desc automationui policy group']")
 	private WebElement policyGroupDescription;
 
 	@FindBy(xpath = "//p[text()='Policy data has been uploaded successfully']")
@@ -300,7 +306,7 @@ public class DatasharePolicyPage extends BasePage {
 	@FindBy(xpath = "//div[text()='Deactivated']")
 	private WebElement deactivateStatus;
 
-	@FindBy(xpath = "//div[text()='Activated']")
+	@FindBy(xpath = "//div[text()='Active']")
 	private WebElement activateStatus;
 
 	@FindBy(xpath = "//p[text()='No Results Found']")
@@ -378,19 +384,19 @@ public class DatasharePolicyPage extends BasePage {
 	@FindBy(xpath = "//p[contains(text(), 'Select the policy group to nest the cloned policy')]")
 	private WebElement clonePolicyInfoMessage;
 
-	@FindBy(id = "clone_policy_group_dropdown_dropdown_btn")
+	@FindBy(id = "policy_group_selector_dropdown_button")
 	private WebElement clonePolicyGroupDropdown;
 
-	@FindBy(id = "clone_policy_group_dropdown_search_input")
+	@FindBy(id = "policy_group_selector_search_input")
 	private WebElement clonePolicyGroupDropdownSearchInput;
 
 	@FindBy(xpath = "//span[normalize-space(text())='@#A#@']")
 	private WebElement clonePolicyGroupName;
 
-	@FindBy(xpath = "//p[text()='@#A#@']")
+	@FindBy(id = "policy_group_selector_option_desc_1")
 	private WebElement clonePolicyGroupDescription;
 
-	@FindBy(id = "clone_policy_group_dropdown_option1")
+	@FindBy(id = "policy_group_selector_option_button_1")
 	private WebElement clonePolicyGroupDropdownOption1;
 
 	@FindBy(id = "clone_policy_cancel")
@@ -494,6 +500,9 @@ public class DatasharePolicyPage extends BasePage {
 
 	@FindBy(xpath = "//span[text()='Re-Upload']")
 	private WebElement reUploadButton;
+
+	@FindBy(xpath = "//li[text()='No policy groups found']")
+	private WebElement noPolicyGroupFound;
 
 	public DatasharePolicyPage(WebDriver driver) {
 		super(driver);
@@ -789,7 +798,14 @@ public class DatasharePolicyPage extends BasePage {
 	public void selectPolicyGroupDropdown(String value) {
 		clickOnElement(policyGroupDropdown);
 		enter(policyGroupDropdownSearchInput, value);
-		clickOnElement(policyGroupDropdownOption1);
+		String xpath = "//span[contains(@class,'font-semibold') and contains(@class,'text-dark-blue') and normalize-space(text())='"
+				+ value + "']";
+		try {
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(8));
+			WebElement policyGroupOption = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
+			clickOnElement(policyGroupOption);
+		} catch (TimeoutException e) {
+		}
 	}
 
 	public void enterDeactivatedPolicyGroup(String value) {
@@ -1202,6 +1218,15 @@ public class DatasharePolicyPage extends BasePage {
 		clickOnElement(clonePolicyGroupDropdownOption1);
 	}
 
+	public void selectValidPolicyGroupForClone(String value) {
+		clickOnElement(clonePolicyGroupDropdown);
+		clickOnElement(clonePolicyGroupDropdownSearchInput);
+		enter(clonePolicyGroupDropdownSearchInput, value);
+		WebElement policyGroupOption = driver.findElement(By.xpath(
+				"//span[@id='policy_group_selector_option_name_1' and normalize-space(text())='" + value + "']"));
+		clickOnElement(policyGroupOption);
+	}
+
 	public boolean isClonePolicyButtonAvailable() {
 		return isElementDisplayed(clonePolicyButton);
 	}
@@ -1403,4 +1428,16 @@ public class DatasharePolicyPage extends BasePage {
 		clickOnElement(editPolicyFormSubmitButton);
 	}
 
+	public boolean isNoPolicyGroupFoundDisplayed() {
+		return isElementDisplayed(noPolicyGroupFound);
+	}
+
+	public void clearClonePolicyGroupDropdownValue() {
+		clearTextBox(clonePolicyGroupDropdownSearchInput);
+	}
+
+	public void selectPolicyGroupForClonePolicy(String value) {
+		enter(clonePolicyGroupDropdownSearchInput, value);
+		clickOnElement(clonePolicyGroupDropdownOption1);
+	}
 }
