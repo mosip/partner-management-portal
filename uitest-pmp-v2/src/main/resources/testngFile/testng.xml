@@ -1,27 +1,29 @@
-<?xml version = "1.0" encoding = "UTF-8"?>
-<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
-<suite name="	PMP uiv2 UI TestRig">
-	
-	<test  name="PMP uiv2 UI TestRig"  preserve-order="true">
-	
-		<classes>
-			<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerAdminCreation" />
-			<class name="io.mosip.testrig.pmpuiv2.testcase.FTMDeviceTest" />
-			<class name="io.mosip.testrig.pmpuiv2.testcase.DeviceProviderTest" />
-			<class name="io.mosip.testrig.pmpuiv2.testcase.AuthPartnerTest" />			
-			<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerManagerPoliciesTest" />
-			<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerPolicyLinkingTest" />
-			<class name="io.mosip.testrig.pmpuiv2.testcase.AuthenticationServices" />
-			<class name="io.mosip.testrig.pmpuiv2.testcase.CertificateTrustStoreTest" />
-		</classes>
-		
-	</test>
-		<listeners>
-
-		<listener
-			  class-name="io.mosip.testrig.pmpuiv2.utility.EmailableReport" />
-			
-	</listeners>
-
+<!--  The suite defines no global parallelism; each test defines its own  -->
+<suite name="PMP uiv2 UI TestRig" preserve-order="true" parallel="tests" thread-count="1">
+<!--  Step 1: Run PartnerAdminCreation (single)  -->
+<test name="1-PartnerAdminCreation" preserve-order="true" parallel="none">
+<classes>
+<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerAdminCreation"/>
+</classes>
+</test>
+<!--  Step 2: Run three tests in parallel  -->
+<test name="2-Parallel-FTM-DeviceProvider-Auth" parallel="classes" thread-count="3" preserve-order="true">
+<classes>
+<class name="io.mosip.testrig.pmpuiv2.testcase.FTMDeviceTest"/>
+<class name="io.mosip.testrig.pmpuiv2.testcase.DeviceProviderTest"/>
+<class name="io.mosip.testrig.pmpuiv2.testcase.AuthPartnerTest"/>
+</classes>
+</test>
+<!--  Step 3: Run three tests in parallel, after Step 2  -->
+<test name="3-Parallel-Policy-CertStore-PartnerDetails" parallel="classes" thread-count="3" preserve-order="true">
+<classes>
+<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerManagerPoliciesTest"/>
+<class name="io.mosip.testrig.pmpuiv2.testcase.CertificateTrustStoreTest"/>
+<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerDetailsTest"/>
+</classes>
+</test>
+<listeners>
+<listener class-name="io.mosip.testrig.pmpuiv2.utility.EmailableReport"/>
+</listeners>
 </suite>
