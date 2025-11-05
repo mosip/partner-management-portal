@@ -111,7 +111,7 @@ public class ViewDeviceDetailsPage extends BasePage {
 
 	@FindBy(id = "view_admin_device_details_back_btn")
 	private WebElement backButtonInAdminDeviceDetails;
-	
+
 	@FindBy(id = "view_admin_device_details_sub_title_id")
 	private WebElement deviceIdContextInAdmin;
 
@@ -267,18 +267,17 @@ public class ViewDeviceDetailsPage extends BasePage {
 	}
 
 	public boolean isCreationDateInAdminSameAsBrowserDateFormat() {
-	    WebElement dateCell = driver.findElement(By.xpath("//div[@id='view_admin_device_details_created_on']"));
-	    String browserTime = dateCell.getText().trim();
-	    String dateText = browserTime.replace("Created On ", "").trim();
-	    java.time.format.DateTimeFormatter dateFormatter = PmpTestUtil.nonZeroPadderDateFormatter;
-	    try {
-	        LocalDate.parse(dateText, dateFormatter);
-	        return true;
-	    } catch (DateTimeParseException e) {
-	        return false;
-	    }
+		WebElement dateCell = driver.findElement(By.xpath("//div[@id='view_admin_device_details_created_on']"));
+		String browserTime = dateCell.getText().trim();
+		String dateText = browserTime.replace("Created On ", "").trim();
+		java.time.format.DateTimeFormatter dateFormatter = PmpTestUtil.nonZeroPadderDateFormatter;
+		try {
+			LocalDate.parse(dateText, dateFormatter);
+			return true;
+		} catch (DateTimeParseException e) {
+			return false;
+		}
 	}
-
 
 	public void clickOnBackButtonInAdminDeviceDetails() {
 		clickOnElement(backButtonInAdminDeviceDetails);
@@ -287,9 +286,8 @@ public class ViewDeviceDetailsPage extends BasePage {
 	public void clickOnListOfDevicesBreadCumbInAdmin() {
 		clickOnElement(listOfDevicesInAdmin);
 	}
-	
+
 	public String getBreadcrumbTextOfDeviceDetailsInAdmin() {
-		return getTextFromLocator(homeButton) 
-				+ getTextFromLocator(listOfDevicesInAdmin);
+		return getTextFromLocator(homeButton) + getTextFromLocator(listOfDevicesInAdmin);
 	}
 }

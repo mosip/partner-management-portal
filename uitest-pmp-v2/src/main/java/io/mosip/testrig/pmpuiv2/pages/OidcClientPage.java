@@ -8,7 +8,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
-
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
 
 public class OidcClientPage extends BasePage {

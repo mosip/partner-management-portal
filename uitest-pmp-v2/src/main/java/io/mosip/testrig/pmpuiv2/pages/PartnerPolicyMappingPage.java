@@ -272,7 +272,7 @@ public class PartnerPolicyMappingPage extends BasePage {
 
 	@FindBy(id = "partner_policy_request_partner_comment")
 	private WebElement partnerCommentsContext;
-	
+
 	@FindBy(id = "view_partner_policy_request_status")
 	private WebElement partnerPolicyRequestStatus;
 

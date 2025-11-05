@@ -11,7 +11,7 @@ import org.openqa.selenium.support.FindBy;
 
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
 
-public class partnersAdmin extends BasePage {
+public class PartnerAdmin extends BasePage {
 
 	@FindBy(id = "undefined_title")
 	private WebElement subTitleList;
@@ -274,7 +274,7 @@ public class partnersAdmin extends BasePage {
 	@FindBy(id = "partnerList.certUploadStatus_header")
 	private WebElement certUploadStatusHeader;
 
-	public partnersAdmin(WebDriver driver) {
+	public PartnerAdmin(WebDriver driver) {
 		super(driver);
 	}
 

@@ -241,7 +241,7 @@ public class GlobalConstants {
 	public static final String DEVICE_DETAIL_PAGE_BREADCUMB = "Home/ List of SBI/ List of Devices";
 	public static final String LIST_OF_SBI_PAGE_BREADCUMB2 = "Home/ List of SBI";
 	public static final String LIST_OF_SBI_PAGE_BREADCUMB = "Home/ List of SBIs";
-	public static final String DEVICE_DETAIL_PAGE_BREADCUMB2 = "Home/ List of Devices";	
+	public static final String DEVICE_DETAIL_PAGE_BREADCUMB2 = "Home/ List of Devices";
 	public static final String INITIAL_DEVICE_TYPE = "Select Device Type";
 	public static final String INITIAL_DEVICE_SUB_TYPE = "Select Device Sub Type";
 	public static final String LIST_OF_DEVICES_TITLE_COUNT_1 = "List of Devices (1)";
@@ -258,7 +258,7 @@ public class GlobalConstants {
 	public static final String LIST_OF_LINKED_DEVICES_COUNT_31 = "List of Linked Devices (4)";
 	public static final String BREADCUMB_TEXT_OF_CREATE_PARTNER = "Home/ List of Partners";
 	public static final String LIST_OF_SBIS_TITLE_COUNT_29 = "List of SBIs (29)";
-	
+
 	public static final String isApiKeyListPageGenerateApiKeyBtnDisplayed = "Verify if api key list page generate api key button displayed";
 	public static final String isPartnerIdHelpTextDisplayed = "Verify if partner ID help text displayed";
 	public static final String isPolicyNameHelpTextDisplayed = "Verify if policy name help text displayed";
@@ -1109,7 +1109,6 @@ public class GlobalConstants {
 	public static final String YYYY_MM_DD_FORMATTER = "2020/11/23";
 	public static final String YYYY_MMM_DD_FORMATTER = "2020-Aug-23";
 	public static final String YYYY_MM_DD_FORMATTER2 = "2020.08.23";
-	
 
 	public static final String PARTNER_ID = "Partner ID";
 	public static final String PARTNER_TYPE = "Partner Type";
@@ -1209,13 +1208,12 @@ public class GlobalConstants {
 	public static final String DEACTIVATE_APIKEY = "deactivateapikey";
 	public static final String ACTIVATE_ADMINAPIKEY = "activateadminapikey";
 	public static final String VIEW_DEVICE_TITLE = "View Device Details";
-	
+
 	// MISP Partner
 	public static final String MISP_NOTIFICATION_LANGUAGE = "English";
 	public static final String MISP_ADDRESS = "mispaddress";
 	public static final String MISP_CONTACT_NUMBER = "9898767676";
 	public static final String MISP_EMAIL_ID = "misppmpui@gmail.com";
 	public static final String INVALID_EMAIL_ID = "mi12#sp.34@gmail@com";
-	
 
 }

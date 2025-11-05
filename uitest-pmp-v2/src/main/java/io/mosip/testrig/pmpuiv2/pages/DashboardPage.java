@@ -38,10 +38,7 @@ public class DashboardPage extends BasePage {
 	@FindBy(id = "select_policy_group_submit_btn")
 	private WebElement submitButton;
 
-	@FindBy(xpath = "//*[@class='min-h-2']")
-	private WebElement value;
-
-	@FindBy(xpath = "//*[text()='Terms and Conditions']")
+	@FindBy(id = "consent_popup_title")
 	private WebElement termsAndConditionsPopup;
 
 	@FindBy(id = "default-checkbox")
@@ -175,12 +172,11 @@ public class DashboardPage extends BasePage {
 	}
 
 	public void selectPolicyGroupDropdown(String policyGroupValue) {
-	    clickOnElement(selectPolicyGroupDropdown);
-	    enter(SearchBox, policyGroupValue);
-	    WebElement policyGroupOption = driver.findElement(
-	        By.xpath("//span[@id='policy_group_selector_option_name_1' and text()='" + policyGroupValue + "']")
-	    );
-	    clickOnElement(policyGroupOption);
+		clickOnElement(selectPolicyGroupDropdown);
+		enter(SearchBox, policyGroupValue);
+		WebElement policyGroupOption = driver.findElement(
+				By.xpath("//span[@id='policy_group_selector_option_name_1' and text()='" + policyGroupValue + "']"));
+		clickOnElement(policyGroupOption);
 	}
 
 	public void closePolicyGroupDropdown() {

@@ -265,10 +265,10 @@ public class ListOfSbiPage extends BasePage {
 
 	@FindBy(id = "deactivate_popup_description_for_sbi")
 	private WebElement deactivatePopupSbiConfInAdmin;
-	
+
 	@FindBy(id = "undefined_title")
 	private WebElement listOfSbiText;
-	
+
 	@FindBy(xpath = "//tr[@id='sbi_list_item1']/td[1]")
 	private WebElement partnerIdInFirstColumn;
 
@@ -849,7 +849,7 @@ public class ListOfSbiPage extends BasePage {
 				.findElement(By.xpath("//td[text()='" + sbiVersion + "']/..//div[text()='Deactivated']"));
 		return isElementDisplayed(status);
 	}
-	
+
 	public boolean isPartnerIdInFirstColumnDisplayed() {
 		return isElementDisplayed(partnerIdInFirstColumn);
 	}

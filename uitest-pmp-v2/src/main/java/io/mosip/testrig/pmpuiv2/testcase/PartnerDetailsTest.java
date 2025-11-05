@@ -13,7 +13,7 @@ import io.mosip.testrig.pmpuiv2.pages.BasePage;
 import io.mosip.testrig.pmpuiv2.pages.DashboardPage;
 import io.mosip.testrig.pmpuiv2.pages.LoginPage;
 
-import io.mosip.testrig.pmpuiv2.pages.partnersAdmin;
+import io.mosip.testrig.pmpuiv2.pages.PartnerAdmin;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
@@ -22,14 +22,14 @@ public class PartnerDetailsTest extends BaseClass {
 	private DashboardPage dashboardPage;
 	private LoginPage loginPage;
 	private BasePage basePage;
-	private partnersAdmin partnerAdmin;
+	private PartnerAdmin partnerAdmin;
 
 	@Test(priority = 1, description = "verifying the partner details in tabular form")
 	public void partnerDetailsVerification() {
 		dashboardPage = new DashboardPage(driver);
 		basePage = new BasePage(driver);
 		loginPage = new LoginPage(driver);
-		partnerAdmin = new partnersAdmin(driver);
+		partnerAdmin = new PartnerAdmin(driver);
 
 		assertTrue(dashboardPage.isPartnersDisplayed(), GlobalConstants.isPartnersButtonDisplayed);
 		dashboardPage.clickOnPartners();
@@ -89,7 +89,7 @@ public class PartnerDetailsTest extends BaseClass {
 		partnerAdmin.clickOnApplyFiltersBtn();
 		assertTrue(partnerAdmin.isFiltersButtonDisabled(), GlobalConstants.isFiltersButtonDisabled);
 		partnerAdmin.clickOnFilterResetButton();
-		
+
 		partnerAdmin.clickOnFilterButton();
 		partnerAdmin.enterPartnerIdInFilter(GlobalConstants.AUTH_PARTNER_ID);
 		partnerAdmin.clickOnStatusFilter();
@@ -139,7 +139,7 @@ public class PartnerDetailsTest extends BaseClass {
 		partnerAdmin.clickOnApplyFiltersBtn();
 		assertTrue(partnerAdmin.isNoResultsFoundsDisplayed(), GlobalConstants.isNoResultsFoundsDisplayed);
 		partnerAdmin.clickOnFilterResetButton();
-		
+
 		partnerAdmin.clickOnFilterButton();
 		assertTrue(partnerAdmin.isFiltersButtonDisabled(), GlobalConstants.isFiltersButtonDisabled);
 		partnerAdmin.clickOnFilterResetButton();
