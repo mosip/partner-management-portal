@@ -29,12 +29,18 @@ function Information({ infoKey, infoKey1, id }) {
                     <img src={infoIcon} alt="info" />
                 </div>
                 {showTooltip && (
-                    <div className={`absolute z-20 p-4 w-[20vw] max-w-[300px] max-h-[20vh] overflow-y-auto max-800:h-32 max-800:w-32 shadow-lg bg-white border border-gray-300 rounded ${isLoginLanguageRTL ? 'right-6' : 'left-6'} mt-2 
-                        max-750:-left-full max-750:right-auto max-750:transform max-750:-translate-x-1/2 
-                        max-750:top-3 max-750:mt-0 max-750:w-[80vw] max-750:max-w-none`}>
+                    <div
+                        className={`
+                        absolute z-20 p-4 
+                        w-[20vw] max-w-[300px] max-h-[20vh] overflow-y-auto
+                        shadow-lg bg-white border border-gray-300 rounded
+                        ${isLoginLanguageRTL ? 'right-6 max-800:-right-[800%]' : 'max-800:left-1/2  left-6'} mt-2
+                        max-800:-translate-x-1/2 max-800:top-full max-800:mt-3
+                        `}
+                    >
                         <p id={id + '_info_description'} className="text-black text-sm">{t(infoKey)}</p>
                         {infoKey1 && (
-                            <p id={id + '_info_description1'} className="text-black text-sm">{t(infoKey1)}</p>
+                        <p id={id + '_info_description1'} className="text-black text-sm">{t(infoKey1)}</p>
                         )}
                     </div>
                 )}
