@@ -454,7 +454,7 @@ public class partnersAdmin extends BasePage {
 		enter(partnersOrganisationFilter, organisationName);
 	}
 
-	public void enterPartnerIdsFilter(String partnerId) {
+	public void enterPartnerIdInFilter(String partnerId) {
 		enter(partnersIdFilter, partnerId);
 	}
 

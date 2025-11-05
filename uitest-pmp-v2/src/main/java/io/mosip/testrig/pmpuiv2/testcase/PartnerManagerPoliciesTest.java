@@ -870,11 +870,14 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 				GlobalConstants.isClonePolicyGroupNameDisplayed);
 		assertTrue(datasharePolicyPage.isClonePolicyGroupDescriptionDisplayed(),
 				GlobalConstants.isClonePolicyGroupDescriptionDisplayed);
+		datasharePolicyPage.clearClonePolicyGroupDropdownValue();
+		
 
 		datasharePolicyPage.searchPolicyGroupForClone(GlobalConstants.DEACTIVATE_DATA1);
 		assertTrue(datasharePolicyPage.isNoPolicyGroupFoundDisplayed(), GlobalConstants.isNoDataAvailableDisplayed);
-		datasharePolicyPage.clickOnClonePolicyGroupDropdown();
-		datasharePolicyPage.selectPolicyGroupForClone(GlobalConstants.CHARACTERS_1);
+		datasharePolicyPage.clearClonePolicyGroupDropdownValue();
+		
+		datasharePolicyPage.selectPolicyGroupForClonePolicy(GlobalConstants.CHARACTERS_1);
 		assertTrue(datasharePolicyPage.isClonePolicyButtonEnabled(), GlobalConstants.isClonePolicyButtonEnabled);
 		datasharePolicyPage.clickOnClonePolicyButton();
 		assertTrue(datasharePolicyPage.isClonedSuccessMessageDisplayed(),
@@ -931,7 +934,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		datasharePolicyPage.clickOnApplyFilterButton();
 		datasharePolicyPage.clickOnActionButton();
 		datasharePolicyPage.clickOnCloneButton();
-		datasharePolicyPage.selectPolicyGroupForClone(GlobalConstants.CHARACTERS_1);
+		datasharePolicyPage.selectValidPolicyGroupForClone(GlobalConstants.CHARACTERS_1);
 		datasharePolicyPage.clickOnClonePolicyButton();
 		assertTrue(datasharePolicyPage.isAlreadyExistErrorMessageDisplayed(),
 				GlobalConstants.isAlreadyExistErrorMessageDisplayed);
@@ -946,7 +949,7 @@ public class PartnerManagerPoliciesTest extends BaseClass {
 		datasharePolicyPage.clickOnApplyFilterButton();
 		datasharePolicyPage.clickOnActionButton();
 		datasharePolicyPage.clickOnCloneButton();
-		datasharePolicyPage.selectPolicyGroupForClone(GlobalConstants.DEFAULT_POLICYGROUP);
+		datasharePolicyPage.selectValidPolicyGroupForClone(GlobalConstants.DEFAULT_POLICYGROUP);
 		datasharePolicyPage.clickOnClonePolicyButton();
 		assertTrue(datasharePolicyPage.isAlreadyExistErrorMessageDisplayed(),
 				GlobalConstants.isAlreadyExistErrorMessageDisplayed);
