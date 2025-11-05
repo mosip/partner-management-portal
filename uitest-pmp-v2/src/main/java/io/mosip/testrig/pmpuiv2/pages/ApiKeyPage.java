@@ -1,5 +1,9 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -383,7 +387,7 @@ public class ApiKeyPage extends BasePage {
 	@FindBy(xpath = "//div[text()='Deactivated']")
 	private WebElement deactivatedStatus;
 
-	@FindBy(xpath = "//div[text()='Activated']")
+	@FindBy(xpath = "//div[text()='Active']")
 	private WebElement activatedStatus;
 
 	@FindBy(xpath = "//p[text()='API Key Name']")
@@ -1138,5 +1142,20 @@ public class ApiKeyPage extends BasePage {
 
 	public void clickOnViewButton() {
 		clickOnElement(viewButton);
+	}
+	
+	public boolean isApiKeyCreationDateSameAsBrowserDateFormat() {
+
+		WebElement dateCell = driver.findElement(By.xpath("//tr[@id='api_key_list_item1']/td[6]"));
+		String browserTime = dateCell.getText().trim();
+
+		DateTimeFormatter dateFormatter = PmpTestUtil.nonZeroPadderDateFormatter;
+		try {
+			LocalDate.parse(browserTime, dateFormatter);
+			return true;
+		} catch (DateTimeParseException e) {
+			return false;
+		}
+
 	}
 }

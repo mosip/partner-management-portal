@@ -26,16 +26,16 @@ public class DashboardPage extends BasePage {
 	@FindBy(xpath = "//span[text()='Select Policy Group']")
 	private WebElement selectPolicyGroupDropdownForInvalid;
 
-	@FindBy(id = "select_policy_group_dropdown_dropdown_btn")
+	@FindBy(id = "policy_group_selector_dropdown_button")
 	private WebElement selectPolicyGroupDropdown;
 
 	@FindBy(id = "select_policy_group_dropdown_no_data_available")
 	private WebElement noDataAvailableText;
 
-	@FindBy(id = "select_policy_group_dropdown_search_input")
+	@FindBy(id = "policy_group_selector_search_input")
 	private WebElement SearchBox;
 
-	@FindBy(id = "select_policy_group_submit")
+	@FindBy(id = "select_policy_group_submit_btn")
 	private WebElement submitButton;
 
 	@FindBy(xpath = "//*[@class='min-h-2']")
@@ -83,7 +83,7 @@ public class DashboardPage extends BasePage {
 	@FindBy(id = "select_policy_group_submit")
 	private WebElement selectPolicyGroupSubmit;
 
-	@FindBy(id = "select_policy_group_dropdown_option1")
+	@FindBy(id = "policy_group_selector_option_1")
 	private WebElement selectPolicyGrouDropdownOption1;
 
 	@FindBy(xpath = "//h5[text()='Certificate Trust Store']")
@@ -175,9 +175,12 @@ public class DashboardPage extends BasePage {
 	}
 
 	public void selectPolicyGroupDropdown(String policyGroupValue) {
-		clickOnElement(selectPolicyGroupDropdown);
-		enter(SearchBox, policyGroupValue);
-		clickOnElement(selectPolicyGrouDropdownOption1);
+	    clickOnElement(selectPolicyGroupDropdown);
+	    enter(SearchBox, policyGroupValue);
+	    WebElement policyGroupOption = driver.findElement(
+	        By.xpath("//span[@id='policy_group_selector_option_name_1' and text()='" + policyGroupValue + "']")
+	    );
+	    clickOnElement(policyGroupOption);
 	}
 
 	public void closePolicyGroupDropdown() {
@@ -318,7 +321,7 @@ public class DashboardPage extends BasePage {
 	}
 
 	public void clickOnCertificateTrustStore() {
-		clickOnElement(certificateTrustStore);		
+		clickOnElement(certificateTrustStore);
 	}
 
 	public boolean isAuthenticationServiceInfoTextDisplayed() {

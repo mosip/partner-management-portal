@@ -301,7 +301,7 @@ public class OidcClientPage extends BasePage {
 	@FindBy(xpath = "//div[text()='Deactivated']")
 	private WebElement deactivatedStatus;
 
-	@FindBy(id = "oidc_show_copy_popup_btn1")
+	@FindBy(xpath = "//img[contains(@src,'disable_eye_icon')]")
 	private WebElement deactivatedEyeIcon;
 
 	@FindBy(id = "oidc_details1")
@@ -376,7 +376,7 @@ public class OidcClientPage extends BasePage {
 	@FindBy(id = "oidc_client_grant_types")
 	private WebElement oidcClientDetailsGrantTypesContext;
 
-	@FindBy(xpath = "//div[text()='Activated']")
+	@FindBy(xpath = "//div[text()='Active']")
 	private WebElement activatedStatus;
 
 	@FindBy(xpath = "//p[text()='OIDC Client Name']")

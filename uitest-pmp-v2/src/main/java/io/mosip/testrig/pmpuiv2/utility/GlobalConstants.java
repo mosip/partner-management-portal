@@ -3,8 +3,30 @@ package io.mosip.testrig.pmpuiv2.utility;
 public class GlobalConstants {
 
 	public static final String isLogoutButtonDisplayed = "Verify if logout button is display on dashboard screen.";
+	public static final String isElementDisplayed = "Verify if Partners option shown in dashboard screen.";
 	public static final String isLoginPageDisplayed = "Verify if login page is displayed after clicking on logout button in dashboard page.";
 	public static final String isRegisterPageTitleDisplayed = "Verify if register page is displayed after clicking on register button in login page.";
+	public static final String isPartnerIdHeaderTagDisplayed = "Verify if partner header is display in register page.";
+	public static final String isPartnerTypeHeaderTagDisplayed = "Verify if partner type display in register page.";
+	public static final String isOrganisationNameHeaderTagDisplayed = "Verify if organization name display in register page.";
+	public static final String isPolicyGroupHeaderTagDisplayed = "Verify if policy header tag display in register page.";
+	public static final String isEmailAddressHeaderTagDisplayed = "Verify if emailaddress header display in register page.";
+	public static final String isStatusHeaderTagDisplayed = "Verify if status header tag display in register page.";
+	public static final String isActionHeaderTagDisplayed = "Verify if action header display in register page.";
+	public static final String isPartnersIdDescIconDisplayed = "Verify if partner id descending icon display in register page.";
+	public static final String isPartnersIdAscIconDisplayed = "Verify if partner id acending register page.";
+	public static final String isPolicyGroupNamesDescIconDisplayed = "Verify if policy group name descending display in register page.";
+	public static final String isPolicyGroupNamesAscIconDisplayed = "Verify if policy group name ascending in register page.";
+	public static final String isOrganizationAscIconDisplayed = "Verify if organization asc display in register page.";
+	public static final String isOrganizationDescIconDisplayed = "Verify if organization desc display in register page.";
+	public static final String isCertificatesUploadStatusDescIconDisplayed = "Verify if certificate upload display in register page.";
+	public static final String isCertificateUploadsStatusAscIconDisplayed = "Verify if certificate upload display in register page.";
+	public static final String isFilterButtonsDisplayed = "Verify if filter button display in register page.";
+	public static final String isUserNavigatedToPartnerDetailsPage = "Verify if user navigated to partner details page display in register page.";
+	public static final String isFilterButtonsExtremeRightCornerDisplayed = "Verify if filter button display in extreme right in register page.";
+	public static final String isPartnersIdFilterDisplayed = "Verify if filter button display in partner page.";
+	public static final String isPartnersIdFilterDisplayedisPartnersIdFilterDisplayed = "Verify if partnerid filter display in register page.";
+
 	public static final String isFirstNameTextBoxDisplayed = "Verify if first name textbox is displayed in register page.";
 	public static final String isLastNameTextBoxDisplayed = "Verify if last name textbox is displayed in register page.";
 	public static final String isOrganizationNameDisplayed = "Verify if organization name textbox is displayed in register page.";
@@ -176,6 +198,8 @@ public class GlobalConstants {
 	public static final String isUserProfileIconDisplayed = "Verify if user profile icon is displayed";
 	public static final String isCreatedSbiDisplayed = "Verify if created SBI is displayed";
 	public static final String isStatusDisplayed = "Verify if correct status is displayed";
+	public static final String isDeactiveteButtonDisabled = "Verify if deactivate button disabled";
+	public static final String isDownloadPartnerCertBtnDisabled = "Verify if Download Partner Cert Btn id Disabled";
 	public static final String isDeviceDisplayed = "Verify if device is displayed";
 	public static final String isMandatoryMessageDisplayed = "Verify if mandatory message is displayed";
 	public static final String isCopyrightsMessageDisplayed = "Verify if copyrights message is displayed";
@@ -196,12 +220,14 @@ public class GlobalConstants {
 	public static final String DEVICE_PROVIDER = "Device Provider";
 	public static final String DEVICE_PARTNER_ID = "pmpui-device";
 	public static final String DEFAULT_POLICYGROUP = "automationui policy group";
-	public static final String DEFAULT_POLICYGROUP_DESC = "desc automationui policy group";		
-	public static final String Organisation_Name = "AABBCC";
+	public static final String DEFAULT_POLICYGROUP_DESC = "desc automationui policy group";
+	public static final String ORGANISATION_NAME = "AABBCC";
 	public static final String PARTNER_ADMIN = "pmpui-v2";
 	public static final String PARTNER_PASSWORD = "mosip123";
 	public static final String AUTH_PARTNER_ID = "pmpui-auth";
 	public static final String FTM_PARTNER_ID = "pmpui-ftm";
+	public static final String MISP_PARTNER = "MISP Partner";
+	public static final String MISP_PARTNER_USER = "pmpui-misp";
 	public static final String DEVICE_PROVIDER_TITLE = "Device Provider Services";
 	public static final String RELOAD_MESSAGE = "Changes you made may not be saved.";
 	public static final String INITIAL_SBI_VERSION = "Enter version of SBI";
@@ -215,6 +241,7 @@ public class GlobalConstants {
 	public static final String DEVICE_DETAIL_PAGE_BREADCUMB = "Home/ List of SBI/ List of Devices";
 	public static final String LIST_OF_SBI_PAGE_BREADCUMB2 = "Home/ List of SBI";
 	public static final String LIST_OF_SBI_PAGE_BREADCUMB = "Home/ List of SBIs";
+	public static final String DEVICE_DETAIL_PAGE_BREADCUMB2 = "Home/ List of Devices";	
 	public static final String INITIAL_DEVICE_TYPE = "Select Device Type";
 	public static final String INITIAL_DEVICE_SUB_TYPE = "Select Device Sub Type";
 	public static final String LIST_OF_DEVICES_TITLE_COUNT_1 = "List of Devices (1)";
@@ -226,7 +253,12 @@ public class GlobalConstants {
 	public static final String INITIAL_MAKE = "Enter Make";
 	public static final String INITIAL_MODEL = "Enter Model";
 	public static final String DEACTIVATED_BACKGROUND = "bg-[#EAECF0] text-[#525252]";
-
+	public static final String ORGANISATION = "Organisation";
+	public static final String SBI_ID = "SBI ID";
+	public static final String LIST_OF_LINKED_DEVICES_COUNT_31 = "List of Linked Devices (4)";
+	public static final String BREADCUMB_TEXT_OF_CREATE_PARTNER = "Home/ List of Partners";
+	public static final String LIST_OF_SBIS_TITLE_COUNT_29 = "List of SBIs (29)";
+	
 	public static final String isApiKeyListPageGenerateApiKeyBtnDisplayed = "Verify if api key list page generate api key button displayed";
 	public static final String isPartnerIdHelpTextDisplayed = "Verify if partner ID help text displayed";
 	public static final String isPolicyNameHelpTextDisplayed = "Verify if policy name help text displayed";
@@ -654,6 +686,16 @@ public class GlobalConstants {
 	public static final String isPartnerIdFilterDisplayed = "Verify if partner Id filter displayed";
 	public static final String isPartnerTypeFilterDisplayed = "Verify if partner type filter displayed";
 	public static final String isOrganisationFilterDisplayed = "Verify if organisation filter displayed";
+	public static final String isEmailsAddressFilterDisplayed = "Verify if email address filter displayed";
+	public static final String isCertUploadsStatusFilterDisplayed = "Verify if certificate status filter displayed";
+	public static final String isStatusFiltersDisplayed = "Verify if status filter is  displayed";
+	public static final String isPolicyGroupsFilterDisplayed = "Verify if policy group filter displayed";
+	public static final String isTabularFieldDisplayed = "Verify if tabular field displayed";
+	public static final String isDropDownBoxDisplayed = "Verify if dropdown box displayed";
+	public static final String isFiltersButtonDisabled = "Verify if filter button disabled";
+	public static final String isActivatedPartnersDisplayed = "Verify if activated partner displayed";
+	public static final String isViewPartnersDetailsPageDisplayed = "Verify if view partner displayed";
+
 	public static final String isPolicyIdFilterDisplayed = "Verify if policy id filter displayed";
 	public static final String isPolicyNameFilterDisplayed = "Verify if policy name filter displayed";
 	public static final String isPolicyGroupFilterDisplayed = "Verify if policy group filter displayed";
@@ -855,6 +897,10 @@ public class GlobalConstants {
 	public static final String isDeactivatedPartnerDisplayed = "Verify if deactivated partner Displayed";
 	public static final String isDeactivatedStatusDisplayed = "Verify if deactivated status Displayed";
 	public static final String isPartnerDeactivatePopupDisplayed = "Verify if partner deactivate popup Displayed";
+	public static final String isPartnerDeactivateSubPopupDisplayed = "Verify if partner deactivate popup Displayed";
+	public static final String isPartnerIDAndOrganisationInPopupDisplayed = "Verify if partner ID And Organisation in partner deactivate popup Displayed";
+	public static final String isDeactivateCancelButtonDisplayed = "Verify if deactivete cancel in partner deactivate popup Displayed";
+	public static final String isDeactivateSubmitButtonDisplayed = "Verify if deactivete submit in partner deactivate popup Displayed";
 	public static final String isActivatedStatusDisplayed = "Verify if activated status Displayed";
 	public static final String isTitleOfPartnerCertificateInPartnerDetailsDisplayed = "Verify if title of partner certificate in partner details Displayed";
 	public static final String isExpiryDateTimeLabelInCertificateDisplayed = "Verify if expiry date time label in certificicate Displayed";
@@ -901,7 +947,107 @@ public class GlobalConstants {
 	public static final String isMakePlaceHolderDisplayed = "Verify if make placeholder Displayed";
 	public static final String isModelPlaceHolderDisplayed = "Verify if model placeholder Displayed";
 	public static final String isPoliciesEmptyTableDisplayed = "Verify if policies empty table Displayed";
-	
+	public static final String isDeactivateDeviceSubtitleDisplayed = "Verify if deactivate device subtitle Displayed";
+	public static final String isDeactivateDevicePopupTitleDisplayed = "Verify if deactivate device popup title Displayed";
+	public static final String isDeactivateDevicePopupDisplayed = "Verify if deactivate device popup Displayed";
+	public static final String isSbiIdContextDisplayed = "Verify if sbi id context in details page Displayed";
+	public static final String isDeviceIdContextDisplayed = "Verify if device id context in details page Displayed";
+	public static final String isCreationDateSameAsBrowserDateFormat = "Verify if creation date same as browser format";
+	public static final String isSbiIdPlaceHolderDisplayed = "Verify if sbi id placeholder displayed";
+	public static final String isSbiVersionPlaceHolderDisplayed = "Verify if Sbi Version PlaceHolder Displayed";
+	public static final String isPartnerIdFilterLabelDisplayed = "Verify if partner id filter label Displayed";
+	public static final String isOrganisationFilterLabelDisplayed = "Verify if organisation Filter Label Displayed";
+	public static final String isDeviceIdFilterLabelDisplayed = "Verify if device Id Filter Label Displayed";
+	public static final String isDeviceTypeFilterLabelDisplayed = "Verify if device type Filter Label Displayed";
+	public static final String isDeviceSubTypeFilterLabelDisplayed = "Verify if device subtype Filter Label Displayed";
+	public static final String isDeviceIdFilterDisplayed = "Verify if Device Id Filter Displayed";
+	public static final String isDeviceTypeFilterDropdownDisplayed = "Verify if device type filter dropdown Displayed";
+	public static final String isDeviceSubTypeFilterDropdownDisplayed = "Verify if device subtype filter dropdown Displayed";
+	public static final String isMakeFilterDisplayed = "Verify if make filter Displayed";
+	public static final String isModelFilterDisplayed = "Verify if model filter Displayed";
+	public static final String isStatusFilterDropdownDisplayed = "Verify if status filter dropdown Displayed";
+	public static final String isLinkedDeviceListTitleDisplayed = "Verify if linked device list title Displayed";
+	public static final String isHomeBreadcumbDisplayed = "Verify if home breadcumb Displayed";
+	public static final String isSbiIdAndSbiVersionDisplayed = "Verify if sbi id and sbi version Displayed";
+	public static final String isMakeFilterLabelDisplayed = "Verify if make Filter Label Displayed";
+	public static final String isModelFilterLabelDisplayed = "Verify if model Filter Label Displayed";
+	public static final String isDeviceIdHeaderDisplayed = "Verify if device Id header Displayed";
+	public static final String isDeviceTypeHeaderDisplayed = "Verify if device Id header Displayed";
+	public static final String isMakeHeaderDisplayed = "Verify if make header Displayed";
+	public static final String isModelHeaderDisplayed = "Verify if model header Displayed";
+	public static final String isActiondHeaderDisplayed = "Verify if action header Displayed";
+	public static final String isPartnerIdInFirstColoumnDisplayed = "Verify if partner id in first coloumn Displayed";
+	public static final String isPolicyGroupNotActiveErrorDisplayed = "Verify if policy group not active error Displayed";
+	public static final String isDeviceIdAscIconDisplayed = "Verify if device id asc icon Displayed";
+	public static final String isDeviceIdDescIconDisplayed = "Verify if device id asc icon Displayed";
+	public static final String isDeviceTypeCodeAscIconDisplayed = "Verify if device type asc icon Displayed";
+	public static final String isDeviceTypeCodeDescIconDisplayed = "Verify if device type desc icon Displayed";
+	public static final String isDeviceSubTypeCodeAscIconDisplayed = "Verify if device subtype code asc icon Displayed";
+	public static final String isDeviceSubTypeCodeDescIconDisplayed = "Verify if device subtype code desc icon Displayed";
+	public static final String isMakeAscIconDisplayed = "Verify if make asc icon Displayed";
+	public static final String isMakeDescIconDisplayed = "Verify if make desc icon Displayed";
+	public static final String isModelAscIconDisplayed = "Verify if model asc icon Displayed";
+	public static final String isModelDescIconDisplayed = "Verify if model desc icon Displayed";
+	public static final String isNoPolicyGroupFoundDisplayed = "Verify if no policy group found Displayed";
+	public static final String isPartnersTitleDisplayed = "Verify if partner title on dashboard page Displayed";
+	public static final String isauthenticationPartnerCellDisplayed = "Verify if authentication title Displayed";
+	public static final String isPartnerIdSearchBar = "Verify if partner id title Displayed";
+	public static final String isOrganisationSearchBar = "Verify if organization placeholder Displayed";
+	public static final String isPolicyGroupsSearchBar = "Verify if policy group header Displayed";
+	public static final String isEmailAddressSearchBar = "Verify if email address Displayed";
+	public static final String isViewButtonsDisplayed = "Verify if view button Displayed";
+	public static final String isDeactivateButtonsDisplayed = "Verify deactivate button Displayed";
+	public static final String isPartnerIdDescIconsDisplayed = "Verify partner desc icon Displayed";
+	public static final String isPartnerIdAscIconsDisplayed = "Verify partner asc icon Displayed";
+	public static final String isDeactivatedPartnerRowDisplayed = "Verify deactivated patner row Displayed";
+	public static final String isViewButtonsEnabled = "Verify if view buttons enabled";
+	public static final String isDeactivateButtonDisabled = "Verify if deactivate button in disabled state";
+	public static final String isRowDisplayed = "Verify is row displayed";
+	public static final String isNoResultsFoundsDisplayed = "Verify if no result displayed";
+	public static final String isSubTitleOfTabularViewsDisplayed = "Verify if subtitle button displayed";
+	public static final String isPrefixOfPagesDisplayed = "Verify if prefix of pages displayed";
+	public static final String isBackButtonAccessible = "Verify is backbutton displayed";
+	public static final String isPartnersButtonDisplayed = "Verify if partners button displayed";
+	public static final String isBreadcrumbsDisplayed = "Verify if breadcrumb displayed";
+	public static final String isTitlePartnerDisplayed = "Verify title partner displayed";
+	public static final String isSubTitleListDisplayed = "Verify subtitle list displayed";
+	public static final String isMosipIconsDisplayed = "Verify if mosip icon displayed";
+	public static final String isHamburgersIconDisplayed = "Verify if hamburgers icon displayed";
+	public static final String isFooterMosipTextsDisplayed = "Verify if footer mosip text displayed";
+	public static final String isFooterDocumentationsDisplayed = "Verify if footer documentation displayed";
+	public static final String isFootersContactUsDisplayed = "Verify if footer contact us displayed";
+	public static final String isPartnerIdDisplayed = "Verify if partner id displayed in view partner page";
+	public static final String isPartnerStatusInViewPartnerPageDisplayed = "Verify if partner status in view partner details page displayed";
+	public static final String isPartnerCreatedDateInViewPartnerPageDisplayed = "Verify if ceated date in view partner details page displayed";
+	public static final String isDeactivatePartnerHeaderDisplayed = "Verify if deactivated header displayed";
+	public static final String isDeactivatePartnerDescriptionDisplayed = "Verify deactivate description displayed";
+	public static final String isDeactivateConfirmButtonDisplayed = "Verify if confirm button displayed";
+	public static final String isDeactivateColorCodeButtonDisplayed = "Verify if deactivate status displayed";
+	public static final String isPartnerCertificateInViewPartnerDetailsPageDisplayed = "Verify if partner certificate in view partnerdetails displayed";
+	public static final String isPartnerCertificateDisplayed = "Verify if partner certificate is displayed";
+	public static final String isExpiryDateTimeDisplayed = "Verify if expiry date time isdisplayed";
+	public static final String isTimeOfUploadDisplayed = "Verify if time of upload isdisplayed";
+	public static final String isDownloadCertificateButtonDisplayed = "Verify if down certificate isdisplayed";
+	public static final String isPartnerTypeInViewPartnerPageDisplayed = "Verify if partner type page isdisplayed";
+	public static final String isDeviceProviderInViewPartnerPageDisplayed = "Verify if device peovider isdisplayed";
+	public static final String isOriginalCertificateDropdownDisplayed = "Verify if original certificate dropdown isdisplayed";
+	public static final String isMosipSignedCertificateDropdownDisplayed = "Verify if mosip signed certificate dropdown isdisplayed";
+	public static final String isSuccessMassageInOriginalCertificateDisplayed = "Verify if success massage in original certificate isdisplayed";
+	public static final String isSuccessMassageInMosipSignedCertificateDisplayed = "Verify if success massage  in mosip signed certificate isdisplayed";
+	public static final String isGobackButtonInViewPatnerPageDisplayed = "Verify if go back button isdisplayed";
+	public static final String isPartnerIdSearchBarDisplayed = "Verify if go back button isdisplayed";
+	public static final String isOrganisationSearchBarDisplayed = "Verify if go back button isdisplayed";
+	public static final String isPolicyGroupSearchBarDisplayed = "Verify if go back button isdisplayed";
+	public static final String isEmailAddressSearchBarDisplayed = "Verify if go back button isdisplayed";
+	public static final String isNoneditableInListOfPartnerDisplayed = "Verify if nonneditable row isdisplayed";
+	public static final String isCertificateUploadStatusHeaderTagDisplayed = "Verify if certificate upload status header isdisplayed";
+	public static final String isDisabledDownloadCertificateButtonDisplayed = "Verify if disabled download button isdisplayed";
+	public static final String isOrganisationNameInViewPartnerPageDisplayed = "Verify if organisation name in view partner  isdisplayed";
+	public static final String isListOfPartnerRowGreyedOutDisplayed = "Verify if list of partner row grey out row  isdisplayed";
+	public static final String isDisabledDeactivateButtonInListOfPartnerDisplayed = "Verify if deactivated button list  isdisplayed";
+	public static final String isSbiVersionAscIconDisplayed = "Verify if sbi version asc icon Displayed";
+	public static final String isSbiVersionDescIconDisplayed = "Verify if sbi version desc icon Displayed";
+
 	public static final String APPID = "appId";
 	public static final String PASSWORD = "password";
 	public static final String USER_NAME = "userName";
@@ -916,6 +1062,7 @@ public class GlobalConstants {
 	public static final String AUTOMATION_2 = "Automation2";
 	public static final String AUTOMATION_TEMP = "AutomationTemp";
 	public static final String AUTOMATION_25 = "Automation25";
+	public static final String AUTOMATION_9 = "Automation9";
 	public static final String AUTOMATION_UPPERCASE = "AUTOMATION";
 	public static final String AUTOMATION_LOWERCASE = "automation";
 	public static final String AUTOMATION_LOWERUPPERCASE = "autOMAtion";
@@ -931,6 +1078,7 @@ public class GlobalConstants {
 	public static final String AUTOMATION_DEACTIVATING_3 = "AutomationDeactivating3";
 	public static final String AUTOMATION_DEACTIVATING_4 = "AutomationDeactivating4";
 	public static final String AUTOMATION_DEACTIVATING_5 = "AutomationDeactivating5";
+	public static final String DEACTIVATE_SBI_ASADMIN = "Deactivatesbiinadmin";
 
 	public static final String ALPHANUMERIC_AND_SYMBOLS = "Automation@123#";
 	public static final String SPECIAL_CHARACTERS = "!@#$%^&";
@@ -961,6 +1109,7 @@ public class GlobalConstants {
 	public static final String YYYY_MM_DD_FORMATTER = "2020/11/23";
 	public static final String YYYY_MMM_DD_FORMATTER = "2020-Aug-23";
 	public static final String YYYY_MM_DD_FORMATTER2 = "2020.08.23";
+	
 
 	public static final String PARTNER_ID = "Partner ID";
 	public static final String PARTNER_TYPE = "Partner Type";
@@ -1059,5 +1208,14 @@ public class GlobalConstants {
 	public static final String DEACTIVATE_OIDCPOLICY2 = "deactivateoidcpolicy";
 	public static final String DEACTIVATE_APIKEY = "deactivateapikey";
 	public static final String ACTIVATE_ADMINAPIKEY = "activateadminapikey";
+	public static final String VIEW_DEVICE_TITLE = "View Device Details";
+	
+	// MISP Partner
+	public static final String MISP_NOTIFICATION_LANGUAGE = "English";
+	public static final String MISP_ADDRESS = "mispaddress";
+	public static final String MISP_CONTACT_NUMBER = "9898767676";
+	public static final String MISP_EMAIL_ID = "misppmpui@gmail.com";
+	public static final String INVALID_EMAIL_ID = "mi12#sp.34@gmail@com";
+	
 
 }
