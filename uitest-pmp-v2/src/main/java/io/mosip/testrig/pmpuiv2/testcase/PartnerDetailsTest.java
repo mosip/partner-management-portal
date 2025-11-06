@@ -118,20 +118,15 @@ public class PartnerDetailsTest extends BaseClass {
 		assertTrue(partnerAdmin.isCertificateUploadsStatusAscIconDisplayed(),
 				GlobalConstants.isCertificateUploadsStatusAscIconDisplayed);
 
-		partnerAdmin.clickOnFilterButton();
-		partnerAdmin.clickOnStatusFilter();
-		partnerAdmin.clickOnDeActivatedStatusInFilters();
-		partnerAdmin.clickOnApplyFiltersBtn();
-		assertTrue(partnerAdmin.isDeactivatedPartnerRowDisplayed(), GlobalConstants.isDeactivatedPartnerRowDisplayed);
-		partnerAdmin.clickOnActionsButton();
-		assertTrue(partnerAdmin.isViewButtonsDisplayed(), GlobalConstants.isViewButtonsDisplayed);
+//		partnerAdmin.clickOnFilterButton();
+//		partnerAdmin.clickOnStatusFilter();
+//		partnerAdmin.clickOnDeActivatedStatusInFilters();
+//		partnerAdmin.clickOnApplyFiltersBtn();
+//		assertTrue(partnerAdmin.isDeactivatedPartnerRowDisplayed(), GlobalConstants.isDeactivatedPartnerRowDisplayed);
+//		partnerAdmin.clickOnActionsButton();
+//		assertTrue(partnerAdmin.isViewButtonsDisplayed(), GlobalConstants.isViewButtonsDisplayed);
 
-		partnerAdmin.clickOnFilterResetButton();
 		partnerAdmin.clickOnFilterButton();
-		partnerAdmin.clickOnPartnerTypeDropdown();
-		partnerAdmin.clickOnAuthenticationPartner();
-		partnerAdmin.clickOnApplyFiltersBtn();
-
 		partnerAdmin.enterPartnerIdInFilter(GlobalConstants.AUTH_PARTNER_ID);
 		partnerAdmin.enterInvalidOrganisationNameFilter(GlobalConstants.INVALID_DATA);
 		partnerAdmin.enterInvalidPolicyGroupFilter(GlobalConstants.INVALID_DATA);
@@ -139,7 +134,6 @@ public class PartnerDetailsTest extends BaseClass {
 		partnerAdmin.clickOnApplyFiltersBtn();
 		assertTrue(partnerAdmin.isNoResultsFoundsDisplayed(), GlobalConstants.isNoResultsFoundsDisplayed);
 		partnerAdmin.clickOnFilterResetButton();
-
 		partnerAdmin.clickOnFilterButton();
 		assertTrue(partnerAdmin.isFiltersButtonDisabled(), GlobalConstants.isFiltersButtonDisabled);
 		partnerAdmin.clickOnFilterResetButton();

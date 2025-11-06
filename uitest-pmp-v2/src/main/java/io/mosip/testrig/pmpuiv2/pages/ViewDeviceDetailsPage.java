@@ -289,5 +289,6 @@ public class ViewDeviceDetailsPage extends BasePage {
 
 	public String getBreadcrumbTextOfDeviceDetailsInAdmin() {
 		return getTextFromLocator(homeButton) + getTextFromLocator(listOfDevicesInAdmin);
+
 	}
 }

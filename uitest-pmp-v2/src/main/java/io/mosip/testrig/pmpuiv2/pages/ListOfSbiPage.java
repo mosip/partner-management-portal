@@ -849,7 +849,7 @@ public class ListOfSbiPage extends BasePage {
 				.findElement(By.xpath("//td[text()='" + sbiVersion + "']/..//div[text()='Deactivated']"));
 		return isElementDisplayed(status);
 	}
-
+	
 	public boolean isPartnerIdInFirstColumnDisplayed() {
 		return isElementDisplayed(partnerIdInFirstColumn);
 	}
