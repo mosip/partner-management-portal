@@ -134,6 +134,7 @@ public class PartnerDetailsTest extends BaseClass {
 		partnerAdmin.clickOnApplyFiltersBtn();
 		assertTrue(partnerAdmin.isNoResultsFoundsDisplayed(), GlobalConstants.isNoResultsFoundsDisplayed);
 		partnerAdmin.clickOnFilterResetButton();
+		
 		partnerAdmin.clickOnFilterButton();
 		assertTrue(partnerAdmin.isFiltersButtonDisabled(), GlobalConstants.isFiltersButtonDisabled);
 		partnerAdmin.clickOnFilterResetButton();

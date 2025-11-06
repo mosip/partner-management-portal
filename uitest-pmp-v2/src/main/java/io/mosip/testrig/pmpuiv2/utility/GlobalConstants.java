@@ -1109,7 +1109,6 @@ public class GlobalConstants {
 	public static final String YYYY_MM_DD_FORMATTER = "2020/11/23";
 	public static final String YYYY_MMM_DD_FORMATTER = "2020-Aug-23";
 	public static final String YYYY_MM_DD_FORMATTER2 = "2020.08.23";
-	
 
 	public static final String PARTNER_ID = "Partner ID";
 	public static final String PARTNER_TYPE = "Partner Type";
@@ -1216,5 +1215,6 @@ public class GlobalConstants {
 	public static final String MISP_CONTACT_NUMBER = "9898767676";
 	public static final String MISP_EMAIL_ID = "misppmpui@gmail.com";
 	public static final String INVALID_EMAIL_ID = "mi12#sp.34@gmail@com";
+
 }
 
