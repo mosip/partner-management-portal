@@ -24,10 +24,14 @@ function EditExpiryDatePopup({ onClickConfirm, closePopUp, popupData }) {
 
     useEffect(() => {
         document.body.style.overflow = "hidden";
-        // Initialize with today's date as default
-        const today = new Date();
-        today.setHours(23, 59, 59, 999);
-        setSelectedDateStr(today.toISOString());
+        if (popupData?.apiKeyExpiryDateTime) {
+            setSelectedDateStr(popupData.apiKeyExpiryDateTime);
+        } else {
+            // Initialize with today's date as default
+            const today = new Date();
+            today.setHours(23, 59, 59, 999);
+            setSelectedDateStr(today.toISOString());
+        }
 
         return () => {
             document.body.style.overflow = "auto";
