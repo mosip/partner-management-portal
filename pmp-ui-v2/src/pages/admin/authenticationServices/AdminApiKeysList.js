@@ -18,8 +18,10 @@ import Pagination from '../../common/Pagination.js';
 import viewIcon from "../../../svg/view_icon.svg";
 import deactivateIcon from "../../../svg/deactivate_icon.svg";
 import disableDeactivateIcon from "../../../svg/disable_deactivate_icon.svg";
+import editIcon from "../../../svg/edit_policy_icon.svg";
 import { useNavigate } from 'react-router-dom';
 import DeactivatePopup from '../../common/DeactivatePopup.js';
+import EditExpiryDatePopup from '../../common/EditExpiryDatePopup.js';
 
 function AdminApiKeysList() {
     const { t } = useTranslation();
@@ -46,6 +48,7 @@ function AdminApiKeysList() {
     const [applyFilter, setApplyFilter] = useState(false);
     const [isApplyFilterClicked, setIsApplyFilterClicked] = useState(false);
     const [showActiveIndexDeactivatePopup, setShowActiveIndexDeactivatePopup] = useState(null);
+    const [showActiveIndexEditExpiryPopup, setShowActiveIndexEditExpiryPopup] = useState(null);
     const [selectedApiKey, setSelectedApiKey] = useState({});
     const [deactivateRequest, setDeactivateRequest] = useState({});
     const [filterAttributes, setFilterAttributes] = useState({
@@ -183,6 +186,21 @@ function AdminApiKeysList() {
         document.body.style.overflow = "auto";
     };
 
+    const editExpiryDate = (selectedApiKeyData, index) => {
+        if (selectedApiKeyData.status !== "deactivated") {
+            setActionId(-1);
+            setSelectedApiKey(selectedApiKeyData);
+            setShowActiveIndexEditExpiryPopup(index);
+            document.body.style.overflow = "hidden";
+        }
+    };
+
+    const closeEditExpiryDatePopup = () => {
+        setSelectedApiKey({});
+        setShowActiveIndexEditExpiryPopup(null);
+        document.body.style.overflow = "auto";
+    };
+
     const onClickConfirmDeactivate = (deactivationResponse, selectedApiKey) => {
         if (deactivationResponse !== "") {
             setSelectedApiKey({});
@@ -192,6 +210,17 @@ function AdminApiKeysList() {
                     (apiKey.apiKeyLabel === selectedApiKey.apiKeyLabel && apiKey.policyId === selectedApiKey.policyId && apiKey.partnerId === selectedApiKey.partnerId) ? { ...apiKey, status: "deactivated" } : apiKey
                 )
             );
+        }
+    };
+
+    const onClickConfirmEditExpiryDate = (editExpiryResponse, selectedApiKey) => {
+        if (editExpiryResponse !== "") {
+            setSelectedApiKey({});
+            setShowActiveIndexEditExpiryPopup(null);
+            // Refresh the data to get updated information
+            setFetchData(true);
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+            fetchApiKeysListData();
         }
     };
 
@@ -309,6 +338,11 @@ function AdminApiKeysList() {
                                                                                                 <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                             </div>
                                                                                             <hr className="h-px bg-gray-100 border-0 mx-1" />
+                                                                                            <div role='button' className={`flex justify-between hover:bg-gray-100 ${apiKey.status !== 'deactivated' ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => editExpiryDate(apiKey, index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => editExpiryDate(apiKey, index))}>
+                                                                                                <p id="api_key_list_edit_expiry_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${apiKey.status !== 'deactivated' ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("apiKeysList.editExpiryDate") || "Edit Expiry Date"}</p>
+                                                                                                <img src={editIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
+                                                                                            </div>
+                                                                                            <hr className="h-px bg-gray-100 border-0 mx-1" />
                                                                                             <div role='button' className={`flex justify-between hover:bg-gray-100 ${apiKey.status === 'activated' ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => deactivateApiKey(apiKey, index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => deactivateApiKey(apiKey, index))}>
                                                                                                 <p id="api_key_list_deactivate_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${apiKey.status === 'activated' ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("partnerList.deActivate")}</p>
                                                                                                 <img src={apiKey.status === 'activated' ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
@@ -324,6 +358,13 @@ function AdminApiKeysList() {
                                                                                             headerMsg="adminDeactivateApiKey.title"
                                                                                             descriptionMsg="adminDeactivateApiKey.description"
                                                                                             headerKeyName={selectedApiKey.apiKeyLabel}
+                                                                                        />
+                                                                                    )}
+                                                                                    {showActiveIndexEditExpiryPopup === index && (
+                                                                                        <EditExpiryDatePopup
+                                                                                            closePopUp={closeEditExpiryDatePopup}
+                                                                                            onClickConfirm={(editExpiryResponse) => onClickConfirmEditExpiryDate(editExpiryResponse, selectedApiKey)}
+                                                                                            popupData={selectedApiKey}
                                                                                         />
                                                                                     )}
                                                                                 </div>

@@ -525,7 +525,19 @@
         "apiKeyIdAlertMsg": "La clé API contient des informations sensibles. Assurez-vous de copier la clé API avant de fermer cette fenêtre car la clé API ne sera plus visible une fois la fenêtre fermée.",
         "errorInApiKeysList": "Lors de la récupération des demandes de clé API, nous avons rencontré une erreur.",
         "expirationDate": "Date d'expiration",
-        "noExpiry": "Aucune expiration"
+        "noExpiry": "Aucune expiration",
+        "editExpiryDate": "Modifier la date d'expiration",
+        "editApiKeyExpiry": "Modifier l'expiration de la clé API",
+        "expiryDate": "Date d'expiration",
+        "selectExpiryDate": "Sélectionner la date d'expiration",
+        "selectExpiryDatePlaceholder": "Sélectionner la date d'expiration (AAAA-MM-JJ)",
+        "save": "Enregistrer",
+        "update": "Mettre à jour",
+        "expiryDateRequired": "La date d'expiration est requise",
+        "expiryDateMustBeFuture": "La date d'expiration doit être une date future.",
+        "expiryDateCannotBeInPast": "La date d'expiration ne peut pas être dans le passé",
+        "expiryDateUpdatedSuccessfully": "Date d'expiration mise à jour. La clé API expirera le {{date}}.",
+        "editExpiryDateDescription": "Modifier la date d'expiration de la clé API {{apiKeyName}}. La clé sera désactivée automatiquement à la date sélectionnée."
     },
     "generateApiKey": {
         "generateApiKey": "Générer une clé API",

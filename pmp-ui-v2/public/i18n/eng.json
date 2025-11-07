@@ -525,7 +525,19 @@
         "apiKeyIdAlertMsg": "API Key contains sensitive information. Make sure to copy the API key before closing this window because the API key will not be visible anymore once the window is closed.",
         "errorInApiKeysList": "While fetching API Key Requests, we have encountered with an error.",
         "expirationDate": "Expiration Date",
-        "noExpiry": "No Expiry"
+        "noExpiry": "No Expiry",
+        "editExpiryDate": "Edit Expiry Date",
+        "editApiKeyExpiry": "Edit API key expiry",
+        "expiryDate": "Expiry Date",
+        "selectExpiryDate": "Select expiry date",
+        "selectExpiryDatePlaceholder": "Select expiry date (YYYY-MM-DD)",
+        "save": "Save",
+        "update": "Update",
+        "expiryDateRequired": "Expiry date is required",
+        "expiryDateMustBeFuture": "Expiry date must be a future date.",
+        "expiryDateCannotBeInPast": "Expiry date cannot be in the past",
+        "expiryDateUpdatedSuccessfully": "Expiry date updated. API Key will expire on {{date}}.",
+        "editExpiryDateDescription": "Change the expiry date for API Key {{apiKeyName}}. The key will be deactivated automatically on the selected date."
     },
     "generateApiKey": {
         "generateApiKey": "Generate API Key",
