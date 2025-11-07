@@ -88,6 +88,12 @@ function EditExpiryDatePopup({ onClickConfirm, closePopUp, popupData }) {
             return;
         }
 
+        // Validate required popupData fields
+        if (!popupData?.partnerId || !popupData?.policyId || !popupData?.apiKeyLabel) {
+            setErrorMsg(t('commons.invalidPopupData') || 'Required data is missing. Please close and try again.');
+            return;
+        }
+
         // Validate that the date is not in the past (compare dates only, not time)
         const today = new Date();
         today.setHours(0, 0, 0, 0);
