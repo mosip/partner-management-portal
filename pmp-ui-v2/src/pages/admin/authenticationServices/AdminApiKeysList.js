@@ -213,14 +213,20 @@ function AdminApiKeysList() {
         }
     };
 
-    const onClickConfirmEditExpiryDate = (editExpiryResponse, selectedApiKey) => {
+    const onClickConfirmEditExpiryDate = (editExpiryResponse, selectedApiKey, updatedExpiryDate) => {
         if (editExpiryResponse !== "") {
             setSelectedApiKey({});
             setShowActiveIndexEditExpiryPopup(null);
-            // Refresh the data to get updated information
-            setFetchData(true);
-            // eslint-disable-next-line react-hooks/exhaustive-deps
-            fetchApiKeysListData();
+            // Update api key data
+            if (updatedExpiryDate) {
+                setApiKeysList((prevList) =>
+                    prevList.map(apiKey =>
+                        (apiKey.apiKeyLabel === selectedApiKey.apiKeyLabel && apiKey.policyId === selectedApiKey.policyId && apiKey.partnerId === selectedApiKey.partnerId) 
+                            ? { ...apiKey, apiKeyExpiryDateTime: updatedExpiryDate } 
+                            : apiKey
+                    )
+                );
+            }
         }
     };
 
@@ -363,7 +369,7 @@ function AdminApiKeysList() {
                                                                                     {showActiveIndexEditExpiryPopup === index && (
                                                                                         <EditExpiryDatePopup
                                                                                             closePopUp={closeEditExpiryDatePopup}
-                                                                                            onClickConfirm={(editExpiryResponse) => onClickConfirmEditExpiryDate(editExpiryResponse, selectedApiKey)}
+                                                                                            onClickConfirm={(editExpiryResponse, popupData, updatedExpiryDate) => onClickConfirmEditExpiryDate(editExpiryResponse, selectedApiKey, updatedExpiryDate)}
                                                                                             popupData={selectedApiKey}
                                                                                         />
                                                                                     )}

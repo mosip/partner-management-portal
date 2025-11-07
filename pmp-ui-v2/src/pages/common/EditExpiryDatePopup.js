@@ -57,7 +57,8 @@ function EditExpiryDatePopup({ onClickConfirm, closePopUp, popupData }) {
 
     const clickOnClose = () => {
         if (responseData && responseData.response) {
-            onClickConfirm(responseData.response, popupData);
+            // Pass the updated expiry date along with the response
+            onClickConfirm(responseData.response, popupData, selectedDateStr);
         } else {
             closePopUp();
         }
@@ -114,7 +115,6 @@ function EditExpiryDatePopup({ onClickConfirm, closePopUp, popupData }) {
         setResponseData(null);
         
         try {
-            // Use the ISO string directly from CalendarInput (same as AddSbi.js)
             const isoString = selectedDateStr === "" ? new Date().toISOString() : selectedDateStr;
             
             const request = createRequest({
