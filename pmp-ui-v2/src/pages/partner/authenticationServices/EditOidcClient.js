@@ -114,12 +114,12 @@ function EditOidcClient() {
     }, [t]);
     
   useEffect(() => {
-         const clientData = localStorage.getItem('selectedClientData');
+         const clientData = sessionStorage.getItem('selectedClientData');
          if (!clientData) {
              setUnexpectedError(true);
              return;
          }
-        const config = localStorage.getItem('appConfig');
+        const config = sessionStorage.getItem('appConfig');
         if (config) {
             const configData = JSON.parse(config);
             const configGrantTypes = configData.grantTypes.split(',').map(item => item.trim());

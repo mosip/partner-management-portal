@@ -525,7 +525,21 @@
         "apiKeyIdAlertMsg": "يحتوي مفتاح API على معلومات حساسة. تأكد من نسخ مفتاح API قبل إغلاق هذه النافذة لأن مفتاح API لن يكون مرئيًا بعد الآن بمجرد إغلاق النافذة.",
         "errorInApiKeysList": "أثناء جلب طلبات مفتاح API، واجهنا خطأ.",
         "expirationDate": "تاريخ انتهاء الصلاحية",
-        "noExpiry": "لا يوجد تاريخ انتهاء الصلاحية"
+        "noExpiry": "لا يوجد تاريخ انتهاء الصلاحية",
+        "editExpiryDate": "تعديل تاريخ انتهاء الصلاحية",
+        "editApiKeyExpiry": "تعديل انتهاء صلاحية مفتاح API",
+        "expiryDate": "تاريخ انتهاء الصلاحية",
+        "selectExpiryDate": "حدد تاريخ انتهاء الصلاحية",
+        "selectExpiryDatePlaceholder": "حدد تاريخ انتهاء الصلاحية (YYYY-MM-DD)",
+        "save": "حفظ",
+        "update": "تحديث",
+        "expiryDateRequired": "تاريخ انتهاء الصلاحية مطلوب",
+        "expiryDateMustBeFuture": "يجب أن يكون تاريخ انتهاء الصلاحية تاريخًا مستقبليًا.",
+        "expiryDateCannotBeInPast": "لا يمكن أن يكون تاريخ انتهاء الصلاحية في الماضي",
+        "expiryDateUpdatedSuccessfully": "تم تحديث تاريخ انتهاء الصلاحية. سينتهي مفتاح API في {{date}}.",
+        "expiryDateUpdatedForApiKey": "تم تحديث تاريخ انتهاء الصلاحية لمفتاح API {{apiKeyName}} بنجاح.",
+        "updateExpiryDate": "تحديث تاريخ انتهاء الصلاحية",
+        "editExpiryDateDescription": "تغيير تاريخ انتهاء الصلاحية لمفتاح API {{apiKeyName}}. سيتم إلغاء تنشيط المفتاح تلقائيًا في التاريخ المحدد."
     },
     "generateApiKey": {
         "generateApiKey": "إنشاء مفتاح API",

@@ -28,7 +28,7 @@ function ViewOidcClientDetails() {
     const copyToolTipRef = useRef(null)
 
     useEffect(() => {
-        const clientData = localStorage.getItem('selectedClientData');
+        const clientData = sessionStorage.getItem('selectedClientData');
         handleMouseClickForDropdown(copyToolTipRef, () => setCopied(false));
         if (!clientData) {
             setUnexpectedError(true);

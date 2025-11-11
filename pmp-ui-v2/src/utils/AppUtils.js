@@ -254,7 +254,6 @@ export const moveToMispPartnerServices = (navigate) => {
 };
 
 export const logout = async () => {
-    localStorage.clear();
     sessionStorage.clear();
     let redirectUrl = process.env.NODE_ENV !== 'production' ? '' : window._env_.REACT_APP_PARTNER_MANAGER_API_BASE_URL;
 

@@ -30,7 +30,7 @@ function ApiKeysList() {
     const [errorMsg, setErrorMsg] = useState("");
     const [dataLoaded, setDataLoaded] = useState(false);
     const [filter, setFilter] = useState(false);
-    const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
+    const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(sessionStorage.getItem('itemsPerPage') ? Number(sessionStorage.getItem('itemsPerPage')) : 8);
     const [order, setOrder] = useState("DESC");
     const [activeSortAsc, setActiveSortAsc] = useState("");
     const [activeSortDesc, setActiveSortDesc] = useState("createdDateTime");
@@ -103,13 +103,15 @@ function ApiKeysList() {
 
     const showViewApiKeyDetails = (selectedApiKeyData) => {
         if (selectedApiKeyData.status === "activated") {
-            localStorage.setItem('selectedApiKeyData', JSON.stringify(selectedApiKeyData));
+            // codeql[js/stored-xss]: Data stored in sessionStorage does not contain sensitive information
+            sessionStorage.setItem('selectedApiKeyData', JSON.stringify(selectedApiKeyData));
             navigate('/partnermanagement/authentication-services/view-api-key-details')
         }
     };
 
     const onClickView = (selectedApiKeyData) => {
-        localStorage.setItem('selectedApiKeyData', JSON.stringify(selectedApiKeyData));
+        // codeql[js/stored-xss]: Data stored in sessionStorage does not contain sensitive information
+        sessionStorage.setItem('selectedApiKeyData', JSON.stringify(selectedApiKeyData));
         navigate('/partnermanagement/authentication-services/view-api-key-details')
     };
 

@@ -31,7 +31,7 @@ function UploadTrustCertificate() {
     const [isSubmitClicked, setIsSubmitClicked] = useState(false);
 
     useEffect(() => {
-        const data = localStorage.getItem('uploadTrustAttributes');
+        const data = sessionStorage.getItem('uploadTrustAttributes');
         if (!data) {
             setUnexpectedError(true);
             return;

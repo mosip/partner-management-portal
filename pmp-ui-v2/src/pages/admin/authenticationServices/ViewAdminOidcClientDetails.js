@@ -32,7 +32,7 @@ function ViewAdminOidcClientDetails() {
     }, [copyToolTipRef]);
 
     useEffect(() => {
-        const data = localStorage.getItem('selectedOidcClientAttributes');
+        const data = sessionStorage.getItem('selectedOidcClientAttributes');
         if (!data) {
             setDataLoaded(true);
             setUnexpectedError(true);

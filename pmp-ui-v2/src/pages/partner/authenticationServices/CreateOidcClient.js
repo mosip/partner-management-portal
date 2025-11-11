@@ -129,7 +129,7 @@ function CreateOidcClient() {
   }, [grantTypes]);
 
   useEffect(() => {
-    const config = localStorage.getItem('appConfig');
+    const config = sessionStorage.getItem('appConfig');
     if (config) {
       try {
         const configData = JSON.parse(config);

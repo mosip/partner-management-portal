@@ -16,7 +16,7 @@ function ViewAdminSbiDetails() {
     const [showApproveRejectPopup, setShowApproveRejectPopup] = useState(false);
 
     useEffect(() => {
-        const selectedSbiAttributes = localStorage.getItem('selectedSbiAttributes');
+        const selectedSbiAttributes = sessionStorage.getItem('selectedSbiAttributes');
         if (!selectedSbiAttributes) {
             setUnexpectedError(true);
             return;
@@ -40,7 +40,7 @@ function ViewAdminSbiDetails() {
             setShowApproveRejectPopup(false);
             const updatedSbiDetails = {...sbiDetails, status: getApproveRejectStatus(status), isActive: updateActiveState(status)};
             setSbiDetails(updatedSbiDetails);
-            localStorage.setItem('selectedSbiAttributes', JSON.stringify(updatedSbiDetails));
+            sessionStorage.setItem('selectedSbiAttributes', JSON.stringify(updatedSbiDetails));
         }
     }
 

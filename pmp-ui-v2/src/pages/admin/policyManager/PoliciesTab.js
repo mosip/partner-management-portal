@@ -7,26 +7,26 @@ import { isLangRTL } from '../../../utils/AppUtils';
 function PoliciesTab() {
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
-    const activeTab = localStorage.getItem('activeTab') ? localStorage.getItem('activeTab') : 'policyGroup';
+    const activeTab = sessionStorage.getItem('activeTab') ? sessionStorage.getItem('activeTab') : 'policyGroup';
     const navigate = useNavigate();
 
     const changeToPolicyGroup = () => {
-        localStorage.setItem('activeTab', 'policyGroup');
+        sessionStorage.setItem('activeTab', 'policyGroup');
         navigate('/partnermanagement/policy-manager/policy-group-list')
     };
 
     const changeToAuthPolicy = () => {
-        localStorage.setItem('activeTab', 'Auth');
+        sessionStorage.setItem('activeTab', 'Auth');
         navigate('/partnermanagement/policy-manager/auth-policies-list')
     };
 
     const changeToDataSharePolicy = () => {
-        localStorage.setItem('activeTab', 'DataShare');
+        sessionStorage.setItem('activeTab', 'DataShare');
         navigate('/partnermanagement/policy-manager/data-share-policies-list')
     };
 
     const changeToMispPolicy = () => {
-        localStorage.setItem('activeTab', 'MISP');
+        sessionStorage.setItem('activeTab', 'MISP');
         navigate('/partnermanagement/policy-manager/misp-policies-list')
     };
 
