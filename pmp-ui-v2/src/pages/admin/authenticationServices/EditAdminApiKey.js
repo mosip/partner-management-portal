@@ -145,11 +145,9 @@ function EditAdminApiKey() {
         setDataLoaded(false);
 
         try {
-            const isoString = selectedDateStr === "" ? new Date().toISOString() : selectedDateStr;
-            
             const request = createRequest({
                 apiKeyName: apiKeyDetails.apiKeyLabel,
-                apiKeyExpiryDateTime: isoString
+                apiKeyExpiryDateTime: selectedDateStr
             }, "mosip.pms.update.api.key.expiry.patch", true);
 
             const response = await HttpService.patch(
