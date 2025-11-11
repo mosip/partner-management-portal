@@ -7,7 +7,7 @@ import Information from './fields/Information';
 import { format } from 'date-fns';
 import PropTypes from 'prop-types';
 
-function CalendarInput({ isUsedAsFilter, showCalendar, addInfoIcon, infoKey, infoKey1, setShowCalender, placeholderText, label, onChange, styleSet, selectedDateStr, containsAsterisk, id, disabled}) {
+function CalendarInput({ isUsedAsFilter, showCalendar, addInfoIcon, infoKey, infoKey1, setShowCalender, placeholderText, label, onChange, styleSet, selectedDateStr, containsAsterisk, id}) {
   const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
 
   const calendarRef = useRef(null);
@@ -48,10 +48,9 @@ function CalendarInput({ isUsedAsFilter, showCalendar, addInfoIcon, infoKey, inf
           onChange={(date) => onDateChange(date)}
           placeholderText={placeholderText}
           dateFormat="MM/dd/yyyy"
-          className={`${styleSet?.datePicker || ''} w-full px-2 py-3 border border-[#707070] rounded-[4px] text-base text-dark-blue ${disabled ? 'bg-platinum-gray cursor-not-allowed' : 'bg-white'} leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar`}
+          className={`${styleSet?.datePicker || ''} w-full px-2 py-3 border border-[#707070] rounded-[4px] text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar`}
           wrapperClassName="w-full"
           isClearable={isUsedAsFilter? true : false}
-          disabled={disabled}
         />
       </div>
     </div>
@@ -72,7 +71,6 @@ CalendarInput.propTypes = {
   selectedDateStr: PropTypes.string.isRequired,
   containsAsterisk: PropTypes.bool,
   id: PropTypes.string.isRequired,
-  disabled: PropTypes.bool,
 };
 
 export default CalendarInput;
