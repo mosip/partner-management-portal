@@ -21,7 +21,6 @@ import disableDeactivateIcon from "../../../svg/disable_deactivate_icon.svg";
 import editIcon from "../../../svg/edit_policy_icon.svg";
 import { useNavigate } from 'react-router-dom';
 import DeactivatePopup from '../../common/DeactivatePopup.js';
-import EditExpiryDatePopup from '../../common/EditExpiryDatePopup.js';
 
 function AdminApiKeysList() {
     const { t } = useTranslation();
@@ -48,7 +47,6 @@ function AdminApiKeysList() {
     const [applyFilter, setApplyFilter] = useState(false);
     const [isApplyFilterClicked, setIsApplyFilterClicked] = useState(false);
     const [showActiveIndexDeactivatePopup, setShowActiveIndexDeactivatePopup] = useState(null);
-    const [showActiveIndexEditExpiryPopup, setShowActiveIndexEditExpiryPopup] = useState(null);
     const [selectedApiKey, setSelectedApiKey] = useState({});
     const [deactivateRequest, setDeactivateRequest] = useState({});
     const [filterAttributes, setFilterAttributes] = useState({
@@ -189,16 +187,9 @@ function AdminApiKeysList() {
     const editExpiryDate = (selectedApiKeyData, index) => {
         if (selectedApiKeyData.status !== "deactivated") {
             setActionId(-1);
-            setSelectedApiKey(selectedApiKeyData);
-            setShowActiveIndexEditExpiryPopup(index);
-            document.body.style.overflow = "hidden";
+            localStorage.setItem('selectedApiKeyAttributes', JSON.stringify(selectedApiKeyData));
+            navigate('/partnermanagement/admin/authentication-services/edit-api-key');
         }
-    };
-
-    const closeEditExpiryDatePopup = () => {
-        setSelectedApiKey({});
-        setShowActiveIndexEditExpiryPopup(null);
-        document.body.style.overflow = "auto";
     };
 
     const onClickConfirmDeactivate = (deactivationResponse, selectedApiKey) => {
@@ -210,23 +201,6 @@ function AdminApiKeysList() {
                     (apiKey.apiKeyLabel === selectedApiKey.apiKeyLabel && apiKey.policyId === selectedApiKey.policyId && apiKey.partnerId === selectedApiKey.partnerId) ? { ...apiKey, status: "deactivated" } : apiKey
                 )
             );
-        }
-    };
-
-    const onClickConfirmEditExpiryDate = (editExpiryResponse, selectedApiKey, updatedExpiryDate) => {
-        if (editExpiryResponse !== "") {
-            setSelectedApiKey({});
-            setShowActiveIndexEditExpiryPopup(null);
-            // Update api key data
-            if (updatedExpiryDate) {
-                setApiKeysList((prevList) =>
-                    prevList.map(apiKey =>
-                        (apiKey.apiKeyLabel === selectedApiKey.apiKeyLabel && apiKey.policyId === selectedApiKey.policyId && apiKey.partnerId === selectedApiKey.partnerId) 
-                            ? { ...apiKey, apiKeyExpiryDateTime: updatedExpiryDate } 
-                            : apiKey
-                    )
-                );
-            }
         }
     };
 
@@ -364,13 +338,6 @@ function AdminApiKeysList() {
                                                                                             headerMsg="adminDeactivateApiKey.title"
                                                                                             descriptionMsg="adminDeactivateApiKey.description"
                                                                                             headerKeyName={selectedApiKey.apiKeyLabel}
-                                                                                        />
-                                                                                    )}
-                                                                                    {showActiveIndexEditExpiryPopup === index && (
-                                                                                        <EditExpiryDatePopup
-                                                                                            closePopUp={closeEditExpiryDatePopup}
-                                                                                            onClickConfirm={(editExpiryResponse, popupData, updatedExpiryDate) => onClickConfirmEditExpiryDate(editExpiryResponse, selectedApiKey, updatedExpiryDate)}
-                                                                                            popupData={selectedApiKey}
                                                                                         />
                                                                                     )}
                                                                                 </div>

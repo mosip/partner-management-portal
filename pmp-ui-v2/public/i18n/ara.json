@@ -537,6 +537,8 @@
         "expiryDateMustBeFuture": "يجب أن يكون تاريخ انتهاء الصلاحية تاريخًا مستقبليًا.",
         "expiryDateCannotBeInPast": "لا يمكن أن يكون تاريخ انتهاء الصلاحية في الماضي",
         "expiryDateUpdatedSuccessfully": "تم تحديث تاريخ انتهاء الصلاحية. سينتهي مفتاح API في {{date}}.",
+        "expiryDateUpdatedForApiKey": "تم تحديث تاريخ انتهاء الصلاحية لمفتاح API {{apiKeyName}} بنجاح.",
+        "updateExpiryDate": "تحديث تاريخ انتهاء الصلاحية",
         "editExpiryDateDescription": "تغيير تاريخ انتهاء الصلاحية لمفتاح API {{apiKeyName}}. سيتم إلغاء تنشيط المفتاح تلقائيًا في التاريخ المحدد."
     },
     "generateApiKey": {

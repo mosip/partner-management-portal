@@ -537,6 +537,8 @@
         "expiryDateMustBeFuture": "Expiry date must be a future date.",
         "expiryDateCannotBeInPast": "Expiry date cannot be in the past",
         "expiryDateUpdatedSuccessfully": "Expiry date updated. API Key will expire on {{date}}.",
+        "expiryDateUpdatedForApiKey": "Expiry date for API key {{apiKeyName}} has been updated successfully.",
+        "updateExpiryDate": "Update Expiry Date",
         "editExpiryDateDescription": "Change the expiry date for API Key {{apiKeyName}}. The key will be deactivated automatically on the selected date."
     },
     "generateApiKey": {

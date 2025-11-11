@@ -40,6 +40,7 @@ import AdminOidcClientsList from './pages/admin/authenticationServices/AdminOidc
 import AdminApiKeysList from './pages/admin/authenticationServices/AdminApiKeysList.js';
 import ViewAdminOidcClientDetails from './pages/admin/authenticationServices/ViewAdminOidcClientDetails.js';
 import ViewAdminApiKeyDetails from './pages/admin/authenticationServices/ViewAdminApiKeyDetails.js';
+import EditAdminApiKey from './pages/admin/authenticationServices/EditAdminApiKey.js';
 import AdminFtmList from './pages/admin/ftmProviderServices/AdminFtmList.js';
 import ViewAdminFtmChipDetails from './pages/admin/ftmProviderServices/ViewAdminFtmChipDetails.js';
 import AdminSbiList from './pages/admin/deviceProviderServices/AdminSbiList.js';
@@ -279,6 +280,10 @@ function AppRoutes() {
         {
           path: 'admin/authentication-services/view-api-key-details',
           element: <GuardedRoute><MainLayout><ViewAdminApiKeyDetails /></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'admin/authentication-services/edit-api-key',
+          element: <GuardedRoute><MainLayout><EditAdminApiKey /></MainLayout></GuardedRoute>
         },
         {
           path: 'admin/ftm-chip-provider-services/ftm-list',
