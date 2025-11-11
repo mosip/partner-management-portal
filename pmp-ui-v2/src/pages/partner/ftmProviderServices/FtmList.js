@@ -34,7 +34,7 @@ function FtmList() {
   const [errorMsg, setErrorMsg] = useState("");
   const [dataLoaded, setDataLoaded] = useState(true);
   const [filter, setFilter] = useState(false);
-  const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
+  const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(sessionStorage.getItem('itemsPerPage') ? Number(sessionStorage.getItem('itemsPerPage')) : 8);
   const [order, setOrder] = useState("DESC");
   const [activeSortAsc, setActiveSortAsc] = useState("");
   const [activeSortDesc, setActiveSortDesc] = useState("createdDateTime");
@@ -182,7 +182,7 @@ function FtmList() {
         title: 'viewFtmChipDetails.viewFtmChipDetails',
         isViewFtmChipDetails: true
       }
-      localStorage.setItem('selectedFtmData', JSON.stringify(selectedFtmData));
+      sessionStorage.setItem('selectedFtmData', JSON.stringify(selectedFtmData));
       navigate('/partnermanagement/ftm-chip-provider-services/view-ftm-chip-details');
     }
   }
@@ -193,7 +193,7 @@ function FtmList() {
       title: 'viewFtmChipDetails.viewFtmChipDetails',
       isViewFtmChipDetails: true
     }
-    localStorage.setItem('selectedFtmData', JSON.stringify(selectedFtmData));
+    sessionStorage.setItem('selectedFtmData', JSON.stringify(selectedFtmData));
     navigate('/partnermanagement/ftm-chip-provider-services/view-ftm-chip-details');
   }
 
@@ -221,7 +221,7 @@ function FtmList() {
         title: 'manageFtmChipCertificate.manageFtmChipCertificate',
         isManageFtmCertificate: true
       }
-      localStorage.setItem('selectedFtmData', JSON.stringify(selectedFtmData));
+      sessionStorage.setItem('selectedFtmData', JSON.stringify(selectedFtmData));
       navigate('/partnermanagement/ftm-chip-provider-services/manage-ftm-chip-certificate');
     }
   };

@@ -35,11 +35,11 @@ function AdminApiKeysList() {
     const [activeAscIcon, setActiveAscIcon] = useState("");
     const [activeDescIcon, setActiveDescIcon] = useState("createdDateTime");
     const [actionId, setActionId] = useState(-1);
-    const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
+    const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(sessionStorage.getItem('itemsPerPage') ? Number(sessionStorage.getItem('itemsPerPage')) : 8);
     const [sortFieldName, setSortFieldName] = useState("createdDateTime");
     const [sortType, setSortType] = useState("desc");
     const [pageNo, setPageNo] = useState(0);
-    const [pageSize, setPageSize] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
+    const [pageSize, setPageSize] = useState(sessionStorage.getItem('itemsPerPage') ? Number(sessionStorage.getItem('itemsPerPage')) : 8);
     const [fetchData, setFetchData] = useState(false);
     const [tableDataLoaded, setTableDataLoaded] = useState(true);
     const [totalRecords, setTotalRecords] = useState(0);
@@ -187,7 +187,7 @@ function AdminApiKeysList() {
     const editExpiryDate = (selectedApiKeyData, index) => {
         if (selectedApiKeyData.status !== "deactivated") {
             setActionId(-1);
-            localStorage.setItem('selectedApiKeyAttributes', JSON.stringify(selectedApiKeyData));
+            sessionStorage.setItem('selectedApiKeyAttributes', JSON.stringify(selectedApiKeyData));
             navigate('/partnermanagement/admin/authentication-services/edit-api-key');
         }
     };
@@ -205,7 +205,7 @@ function AdminApiKeysList() {
     };
 
     const viewApiKeyRequestDetails = (selectedApiKey) => {
-        localStorage.setItem('selectedApiKeyAttributes', JSON.stringify(selectedApiKey));
+        sessionStorage.setItem('selectedApiKeyAttributes', JSON.stringify(selectedApiKey));
         navigate('/partnermanagement/admin/authentication-services/view-api-key-details');
     };
 

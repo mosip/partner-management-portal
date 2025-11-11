@@ -41,7 +41,7 @@ function OidcClientsList() {
     const [dataLoaded, setDataLoaded] = useState(false);
     const [tableDataLoaded, setTableDataLoaded] = useState(true);
     const [filter, setFilter] = useState(false);
-    const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
+    const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(sessionStorage.getItem('itemsPerPage') ? Number(sessionStorage.getItem('itemsPerPage')) : 8);
     const [order, setOrder] = useState("DESC");
     const [activeSortAsc, setActiveSortAsc] = useState("");
     const [activeSortDesc, setActiveSortDesc] = useState("createdDateTime");
@@ -130,19 +130,19 @@ function OidcClientsList() {
 
     const showViewOidcClientDetails = (selectedClientdata) => {
         if (selectedClientdata.status === "ACTIVE") {
-            localStorage.setItem('selectedClientData', JSON.stringify(selectedClientdata));
+            sessionStorage.setItem('selectedClientData', JSON.stringify(selectedClientdata));
             navigate('/partnermanagement/authentication-services/view-oidc-client-details')
         }
     };
 
     const onClickView = (selectedClientdata) => {
-        localStorage.setItem('selectedClientData', JSON.stringify(selectedClientdata));
+        sessionStorage.setItem('selectedClientData', JSON.stringify(selectedClientdata));
         navigate('/partnermanagement/authentication-services/view-oidc-client-details')
     };
 
     const showEditOidcClient = (selectedClientdata) => {
         if (selectedClientdata.status === "ACTIVE") {
-            localStorage.setItem('selectedClientData', JSON.stringify(selectedClientdata));
+            sessionStorage.setItem('selectedClientData', JSON.stringify(selectedClientdata));
             navigate('/partnermanagement/authentication-services/edit-oidc-client')
         }
     };

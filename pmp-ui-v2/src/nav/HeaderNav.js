@@ -92,9 +92,9 @@ function HeaderNav({ open, setOpen }) {
             }
         }
     
-        // Fetch refresh time from localStorage before setting interval
+        // Fetch refresh time from sessionStorage before setting interval
         let refreshTime = 300; // Default to 5 min(300seconds)
-        const config = localStorage.getItem("appConfig");
+        const config = sessionStorage.getItem("appConfig");
     
         try {
             if (config) {

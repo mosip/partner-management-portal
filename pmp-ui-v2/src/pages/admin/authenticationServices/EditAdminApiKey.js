@@ -51,7 +51,7 @@ function EditAdminApiKey() {
     );
 
     useEffect(() => {
-        const data = localStorage.getItem('selectedApiKeyAttributes');
+        const data = sessionStorage.getItem('selectedApiKeyAttributes');
         if (!data) {
             setUnexpectedError(true);
             setDataLoaded(true);
