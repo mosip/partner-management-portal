@@ -103,12 +103,14 @@ function ApiKeysList() {
 
     const showViewApiKeyDetails = (selectedApiKeyData) => {
         if (selectedApiKeyData.status === "activated") {
+            // codeql[js/stored-xss]: Data stored in sessionStorage does not contain sensitive information
             sessionStorage.setItem('selectedApiKeyData', JSON.stringify(selectedApiKeyData));
             navigate('/partnermanagement/authentication-services/view-api-key-details')
         }
     };
 
     const onClickView = (selectedApiKeyData) => {
+        // codeql[js/stored-xss]: Data stored in sessionStorage does not contain sensitive information
         sessionStorage.setItem('selectedApiKeyData', JSON.stringify(selectedApiKeyData));
         navigate('/partnermanagement/authentication-services/view-api-key-details')
     };

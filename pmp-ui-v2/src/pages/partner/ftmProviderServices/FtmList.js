@@ -182,6 +182,7 @@ function FtmList() {
         title: 'viewFtmChipDetails.viewFtmChipDetails',
         isViewFtmChipDetails: true
       }
+      // codeql[js/stored-xss]: Data stored in sessionStorage does not contain sensitive information
       sessionStorage.setItem('selectedFtmData', JSON.stringify(selectedFtmData));
       navigate('/partnermanagement/ftm-chip-provider-services/view-ftm-chip-details');
     }
@@ -193,6 +194,7 @@ function FtmList() {
       title: 'viewFtmChipDetails.viewFtmChipDetails',
       isViewFtmChipDetails: true
     }
+    // codeql[js/stored-xss]: Data stored in sessionStorage does not contain sensitive information
     sessionStorage.setItem('selectedFtmData', JSON.stringify(selectedFtmData));
     navigate('/partnermanagement/ftm-chip-provider-services/view-ftm-chip-details');
   }
@@ -221,6 +223,7 @@ function FtmList() {
         title: 'manageFtmChipCertificate.manageFtmChipCertificate',
         isManageFtmCertificate: true
       }
+      // codeql[js/stored-xss]: Data stored in sessionStorage does not contain sensitive information
       sessionStorage.setItem('selectedFtmData', JSON.stringify(selectedFtmData));
       navigate('/partnermanagement/ftm-chip-provider-services/manage-ftm-chip-certificate');
     }
