@@ -76,7 +76,7 @@ function EditAdminApiKey() {
     }, []);
 
     useEffect(() => {
-        const shouldWarnBeforeUnload = () => selectedDateStr !== originalExpiryDate;
+        const shouldWarnBeforeUnload = () => selectedDateStr !== originalExpiryDate && !editExpirySuccess;
 
         const handleBeforeUnload = (event) => {
             if (shouldWarnBeforeUnload() && !isSubmitClicked) {
@@ -90,7 +90,7 @@ function EditAdminApiKey() {
         return () => {
             window.removeEventListener('beforeunload', handleBeforeUnload);
         };
-    }, [selectedDateStr, originalExpiryDate, isSubmitClicked]);
+    }, [selectedDateStr, originalExpiryDate, isSubmitClicked, editExpirySuccess]);
 
     const handleDateChange = (dateStr) => {
         setSelectedDateStr(dateStr);
