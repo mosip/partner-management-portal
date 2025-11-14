@@ -450,6 +450,7 @@
         "consentExpiryDuration": "Durée d'expiration du consentement (en minutes)",
         "consentExpiryDurationTooltip": "Durée (en minutes) pendant laquelle le consentement de l'utilisateur reste valide avant une nouvelle demande.",
         "consentExpiryValidation": "Veuillez entrer une valeur d'au moins 10 minutes.",
+        "consentExpiryRequired": "La durée d'expiration du consentement est requise.",
         "mins": "minutes",
         "userInfoResponseType": "Type de réponse d'informations utilisateur",
         "selectUserInfoResponseType": "Sélectionnez le type de réponse d'informations utilisateur",
@@ -502,7 +503,12 @@
         "addSubtitle": "Ajouter un sous-titre",
         "addTitleHelperText": "Cliquez sur ajouter un titre pour ajouter un titre multilingue",
         "addSubtitleHelperText": "Cliquez sur ajouter un sous-titre pour ajouter un sous-titre multilingue",
-        "defaultLanguageRequired": "La langue par défaut est requise lorsque des entrées sont ajoutées"
+        "defaultLanguageRequired": "La langue par défaut est requise lorsque des entrées sont ajoutées",
+        "clientNamePlaceholder": "Entrez le nom du client OIDC",
+        "clientNameMultilanguage": "Nom du client OIDC multilingue",
+        "clientNameMultilanguageTooltip": "Entrez le nom du client en plusieurs langues. Ceci est facultatif et sera envoyé comme un objet vide si aucune entrée n'est ajoutée.",
+        "addClientNameLangMap": "Ajouter une langue de nom de client",
+        "addClientNameLangMapHelperText": "Cliquez sur ajouter une langue de nom de client pour ajouter un nom de client multilingue"
     },
     "oidcClientsList": {
         "partnerId": "ID partenaire",

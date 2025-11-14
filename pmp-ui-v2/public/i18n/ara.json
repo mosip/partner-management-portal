@@ -450,6 +450,7 @@
         "consentExpiryDuration": "مدة انتهاء الموافقة (بالدقائق)",
         "consentExpiryDurationTooltip": "المدة (بالدقائق) التي تظل فيها موافقة المستخدم صالحة قبل إعادة المطالبة.",
         "consentExpiryValidation": "الرجاء إدخال قيمة لا تقل عن 10 دقائق.",
+        "consentExpiryRequired": "مدة انتهاء الموافقة مطلوبة.",
         "mins": "دقائق",
         "userInfoResponseType": "نوع استجابة معلومات المستخدم",
         "selectUserInfoResponseType": "حدد نوع استجابة معلومات المستخدم",
@@ -502,7 +503,12 @@
         "addSubtitle": "إضافة عنوان فرعي",
         "addTitleHelperText": "انقر على إضافة عنوان لإضافة عنوان متعدد اللغات",
         "addSubtitleHelperText": "انقر على إضافة عنوان فرعي لإضافة عنوان فرعي متعدد اللغات",
-        "defaultLanguageRequired": "اللغة الافتراضية مطلوبة عند إضافة الإدخالات"
+        "defaultLanguageRequired": "اللغة الافتراضية مطلوبة عند إضافة الإدخالات",
+        "clientNamePlaceholder": "أدخل اسم عميل OIDC",
+        "clientNameMultilanguage": "اسم عميل OIDC متعدد اللغات",
+        "clientNameMultilanguageTooltip": "أدخل اسم العميل بلغات متعددة. هذا اختياري وسيتم إرساله ككائن فارغ إذا لم تتم إضافة إدخالات.",
+        "addClientNameLangMap": "إضافة لغة اسم العميل",
+        "addClientNameLangMapHelperText": "انقر على إضافة لغة اسم العميل لإضافة اسم عميل متعدد اللغات"
     },
     "oidcClientsList": {
         "partnerId": "معرف الشريك",

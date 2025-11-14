@@ -62,10 +62,13 @@ function CreateOidcClient() {
   const [invalidLogoUrl, setInvalidLogoUrl] = useState("");
   const [invalidRedirectUrl, setInvalidRedirectUrl] = useState("");
 
-  // Multi-language client name states
-  const [clientNameEntries, setClientNameEntries] = useState([{ id: 'default_0', language: 'default', text: '' }]);
-  const [clientNameErrors, setClientNameErrors] = useState({});
-  const [isClientNameInitialized, setIsClientNameInitialized] = useState(false);
+  // Client name states
+  const [clientName, setClientName] = useState("");
+  const [clientNameError, setClientNameError] = useState("");
+
+  // Multi-language client name lang map states
+  const [clientNameLangMapEntries, setClientNameLangMapEntries] = useState([]);
+  const [clientNameLangMapErrors, setClientNameLangMapErrors] = useState({});
 
   // Additional Information states
   const [isMandatoryInfoExpanded, setIsMandatoryInfoExpanded] = useState(true);
@@ -93,9 +96,8 @@ function CreateOidcClient() {
         return false;
       }
 
-      const hasClientName = clientNameEntries.some(entry => entry.text && entry.text.trim() !== '');
       const hasFormData = partnerId !== "" ||
-        hasClientName ||
+        clientName !== "" ||
         publicKey !== "" ||
         logoUrl !== "" ||
         policyName !== "" ||
@@ -107,9 +109,8 @@ function CreateOidcClient() {
 
   useEffect(() => {
     const shouldWarnBeforeUnload = () => {
-      const hasClientName = clientNameEntries.some(entry => entry.text && entry.text.trim() !== '');
       return partnerId !== "" ||
-        hasClientName ||
+        clientName !== "" ||
         publicKey !== "" ||
         logoUrl !== "" ||
         policyName !== "" ||
@@ -128,7 +129,7 @@ function CreateOidcClient() {
     return () => {
       window.removeEventListener('beforeunload', handleBeforeUnload);
     };
-  }, [partnerId, clientNameEntries, publicKey, logoUrl, policyId, policyName, redirectUrls, isSubmitClicked]);
+  }, [partnerId, clientName, publicKey, logoUrl, policyId, policyName, redirectUrls, isSubmitClicked]);
 
   const cancelErrorMsg = () => {
     setErrorMsg("");
@@ -181,19 +182,37 @@ function CreateOidcClient() {
 
   // Initialize User Info Response Type dropdown
   useEffect(() => {
-    setUserInfoResponseTypeDropdownData([
+    const userInfoResponseTypeData = [
       { fieldCode: t('createOidcClient.jws'), fieldValue: 'JWS' },
       { fieldCode: t('createOidcClient.jwe'), fieldValue: 'JWE' }
-    ]);
+    ];
+    // Add blank entry at the beginning using createDropdownData pattern
+    const dropdownData = createDropdownData("fieldValue", "", true, userInfoResponseTypeData, t, t("createOidcClient.selectUserInfoResponseType"));
+    // Restore translated fieldCode values (createDropdownData overwrites them)
+    const finalData = dropdownData.map(item => {
+      if (item.fieldValue === '') return item; // Keep blank entry as is
+      const originalItem = userInfoResponseTypeData.find(d => d.fieldValue === item.fieldValue);
+      return originalItem ? { ...item, fieldCode: originalItem.fieldCode } : item;
+    });
+    setUserInfoResponseTypeDropdownData(finalData);
   }, [t]);
 
   // Initialize Purpose Type dropdown
   useEffect(() => {
-    setPurposeTypeDropdownData([
+    const purposeTypeData = [
       { fieldCode: t('createOidcClient.login'), fieldValue: 'login' },
       { fieldCode: t('createOidcClient.link'), fieldValue: 'link' },
       { fieldCode: t('createOidcClient.verify'), fieldValue: 'verify' }
-    ]);
+    ];
+    // Add blank entry at the beginning using createDropdownData pattern
+    const dropdownData = createDropdownData("fieldValue", "", true, purposeTypeData, t, t("createOidcClient.selectPurposeType"));
+    // Restore translated fieldCode values (createDropdownData overwrites them)
+    const finalData = dropdownData.map(item => {
+      if (item.fieldValue === '') return item; // Keep blank entry as is
+      const originalItem = purposeTypeData.find(d => d.fieldValue === item.fieldValue);
+      return originalItem ? { ...item, fieldCode: originalItem.fieldCode } : item;
+    });
+    setPurposeTypeDropdownData(finalData);
   }, [t]);
 
   // Initialize Language dropdown
@@ -229,19 +248,6 @@ function CreateOidcClient() {
     fetchLanguages();
   }, [t]);
 
-  // Initialize client name entries with default + first language entry
-  useEffect(() => {
-    if (languageDropdownData.length > 0 && !isClientNameInitialized) {
-      // Find first non-default language
-      const firstLanguage = languageDropdownData.find(lang => lang.fieldValue !== 'default');
-      if (firstLanguage) {
-        const defaultEntry = { id: 'default_0', language: 'default', text: '' };
-        const firstLangEntry = createNewEntry(firstLanguage.fieldValue, 1);
-        setClientNameEntries([defaultEntry, firstLangEntry]);
-        setIsClientNameInitialized(true);
-      }
-    }
-  }, [languageDropdownData, isClientNameInitialized]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -319,13 +325,34 @@ function CreateOidcClient() {
     return languageDropdownData.find(lang => !usedLanguages.includes(lang.fieldValue));
   };
 
-  // Multi-language client name handlers
-  const addClientNameEntry = () => {
-    const usedLanguages = clientNameEntries.map(e => e.language).filter(lang => lang);
-    const availableLang = findAvailableLanguage(usedLanguages);
-    const newIndex = clientNameEntries.length;
+  // Client name handler
+  const handleClientNameChange = (value) => {
+    setClientName(value);
+    let inputError = "";
+    validateInputRegex(value, (error) => {
+      inputError = error;
+    }, t);
+    
+    if (value.trim() === '' && value !== '') {
+      setClientNameError(t('createOidcClient.clientNameRequired'));
+    } else if (inputError) {
+      setClientNameError(inputError);
+    } else {
+      setClientNameError("");
+    }
+  };
+
+  // Multi-language client name lang map handlers
+  const addClientNameLangMapEntry = () => {
+    const usedLanguages = clientNameLangMapEntries.map(e => e.language).filter(lang => lang);
+    // Exclude 'default' from available languages for lang map
+    const availableLangs = languageDropdownData.filter(lang => 
+      lang.fieldValue !== 'default' && !usedLanguages.includes(lang.fieldValue)
+    );
+    const availableLang = availableLangs[0];
+    const newIndex = clientNameLangMapEntries.length;
     const newEntry = createNewEntry(availableLang?.fieldValue, newIndex);
-    setClientNameEntries([...clientNameEntries, newEntry]);
+    setClientNameLangMapEntries([...clientNameLangMapEntries, newEntry]);
   };
 
   // Generic validation function for entry text fields
@@ -348,45 +375,35 @@ function CreateOidcClient() {
     setErrors(newErrors);
   };
 
-  const updateClientNameEntry = (id, field, value) => {
-    const updated = clientNameEntries.map(entry =>
+  const updateClientNameLangMapEntry = (id, field, value) => {
+    const updated = clientNameLangMapEntries.map(entry =>
       entry.id === id ? { ...entry, [field]: value } : entry
     );
-    setClientNameEntries(updated);
+    setClientNameLangMapEntries(updated);
 
     if (field === 'text') {
       const entry = updated.find(e => e.id === id);
-      validateEntryText(value, entry, 'createOidcClient.clientNameRequired', clientNameErrors, setClientNameErrors);
+      validateEntryText(value, entry, 'createOidcClient.clientNameRequired', clientNameLangMapErrors, setClientNameLangMapErrors);
     }
   };
 
-  const deleteClientNameEntry = (id) => {
-    const entryToDelete = clientNameEntries.find(entry => entry.id === id);
-    // Don't allow deleting default language entry
-    if (entryToDelete && entryToDelete.language === 'default') {
-      return;
-    }
-    // Don't allow deleting if it's the only non-default entry (minimum 2 entries: default + one language)
-    const nonDefaultEntries = clientNameEntries.filter(entry => entry.language !== 'default');
-    if (nonDefaultEntries.length <= 1) {
-      return;
-    }
-    if (clientNameEntries.length > 2) {
-      setClientNameEntries(clientNameEntries.filter(entry => entry.id !== id));
-      const errors = { ...clientNameErrors };
-      delete errors[id];
-      setClientNameErrors(errors);
-    }
+  const deleteClientNameLangMapEntry = (id) => {
+    const updated = clientNameLangMapEntries.filter(entry => entry.id !== id);
+    setClientNameLangMapEntries(updated);
+    const errors = { ...clientNameLangMapErrors };
+    delete errors[id];
+    setClientNameLangMapErrors(errors);
   };
 
-  const getAvailableLanguagesForClientName = (currentEntryId) => {
-    const currentEntry = clientNameEntries.find(e => e.id === currentEntryId);
+  const getAvailableLanguagesForClientNameLangMap = (currentEntryId) => {
+    const currentEntry = clientNameLangMapEntries.find(e => e.id === currentEntryId);
     const currentLanguage = currentEntry ? currentEntry.language : '';
-    const usedLanguages = clientNameEntries
+    const usedLanguages = clientNameLangMapEntries
       .filter(e => e.id !== currentEntryId && e.language)
       .map(e => e.language);
+    // Filter out 'default' from available languages for lang map
     return languageDropdownData.filter(lang =>
-      !usedLanguages.includes(lang.fieldValue) || lang.fieldValue === currentLanguage
+      lang.fieldValue !== 'default' && (!usedLanguages.includes(lang.fieldValue) || lang.fieldValue === currentLanguage)
     );
   };
 
@@ -405,22 +422,15 @@ function CreateOidcClient() {
     return placeholder;
   };
 
-  // Build client name lang map - default is NOT added to lang map, it's used as the name field
+  // Build client name lang map - returns empty object {} if no entries
   const buildClientNameLangMap = (entries) => {
     const langMap = {};
     entries.forEach(entry => {
-      // Skip default language - it's used for the name field, not in lang map
-      if (entry.language && entry.language !== 'default' && entry.text && entry.text.trim() !== '') {
+      if (entry.language && entry.text && entry.text.trim() !== '') {
         langMap[entry.language] = trimAndReplace(entry.text);
       }
     });
-    return Object.keys(langMap).length > 0 ? langMap : undefined;
-  };
-
-  // Get the default name (from default language entry)
-  const getDefaultClientName = (entries) => {
-    const defaultEntry = entries.find(entry => entry.language === 'default' && entry.text && entry.text.trim() !== '');
-    return defaultEntry ? trimAndReplace(defaultEntry.text) : '';
+    return langMap;
   };
 
   const handleGrantTypesChange = (fieldName, selectedValue) => {
@@ -502,7 +512,9 @@ function CreateOidcClient() {
   const handleConsentExpiryChange = (value) => {
     const numValue = value.replace(/[^0-9]/g, '');
     setConsentExpiry(numValue);
-    if (numValue && (isNaN(numValue) || parseInt(numValue) < 10)) {
+    if (!numValue || numValue.trim() === '') {
+      setConsentExpiryError(t('createOidcClient.consentExpiryRequired'));
+    } else if (isNaN(numValue) || parseInt(numValue) < 10) {
       setConsentExpiryError(t('createOidcClient.consentExpiryValidation'));
     } else {
       setConsentExpiryError("");
@@ -678,11 +690,10 @@ function CreateOidcClient() {
       additionalConfig.consent_expire_in_mins = parseInt(consentExpiry);
     }
 
-    const clientNameLangMap = buildClientNameLangMap(clientNameEntries);
-    const defaultClientName = getDefaultClientName(clientNameEntries);
+    const clientNameLangMap = buildClientNameLangMap(clientNameLangMapEntries);
 
     const requestData = {
-      name: defaultClientName || Object.values(clientNameLangMap || {})[0] || '',
+      name: trimAndReplace(clientName),
       policyId: policyId,
       publicKey: publicKeyInJson,
       authPartnerId: partnerId,
@@ -747,17 +758,10 @@ function CreateOidcClient() {
     setPolicyGroupName("");
     setPoliciesDropdownData([]);
     setPolicyName("");
-    // Reset to default + first language entry
-    const firstLanguage = languageDropdownData.find(lang => lang.fieldValue !== 'default');
-    if (firstLanguage) {
-      const defaultEntry = { id: 'default_0', language: 'default', text: '' };
-      const firstLangEntry = createNewEntry(firstLanguage.fieldValue, 1);
-      setClientNameEntries([defaultEntry, firstLangEntry]);
-    } else {
-      setClientNameEntries([{ id: 'default_0', language: 'default', text: '' }]);
-    }
-    setClientNameErrors({});
-    setIsClientNameInitialized(false);
+    setClientName("");
+    setClientNameError("");
+    setClientNameLangMapEntries([]);
+    setClientNameLangMapErrors({});
     setPublicKey("");
     setLogoUrl("");
     setRedirectUrls(['']);
@@ -791,14 +795,14 @@ function CreateOidcClient() {
   };
 
   const isFormValid = () => {
-    const hasClientName = clientNameEntries.some(entry => entry.text && entry.text.trim() !== '');
-    const hasClientNameErrors = Object.keys(clientNameErrors).length > 0;
+    const hasClientName = clientName && clientName.trim() !== '';
+    const hasClientNameLangMapErrors = Object.keys(clientNameLangMapErrors).length > 0;
     const hasPurposeErrors = Object.keys(purposeTitleErrors).length > 0 || Object.keys(purposeSubtitleErrors).length > 0;
     const hasPurposeDefaultErrors = purposeTitleDefaultError !== "" || purposeSubtitleDefaultError !== "";
     
-    // Validate that all client name entries have non-blank text if entries exist
-    const clientNameEntriesValid = clientNameEntries.length === 0 || 
-      clientNameEntries.every(entry => entry.text && entry.text.trim() !== '');
+    // Validate that all client name lang map entries have non-blank text if entries exist
+    const clientNameLangMapEntriesValid = clientNameLangMapEntries.length === 0 || 
+      clientNameLangMapEntries.every(entry => entry.text && entry.text.trim() !== '');
     
     // Validate that all purpose title entries have non-blank text if purpose type is selected and entries exist
     const purposeTitleEntriesValid = !purposeType || purposeTitleEntries.length === 0 || 
@@ -808,9 +812,11 @@ function CreateOidcClient() {
     const purposeSubtitleEntriesValid = !purposeType || purposeSubtitleEntries.length === 0 || 
       purposeSubtitleEntries.every(entry => entry.text && entry.text.trim() !== '');
     
-    return partnerId && policyName && hasClientName && publicKey.trim() && logoUrl && redirectUrlsNotEmpty() && grantTypes
-      && !jsonError && !invalidLogoUrl && !invalidRedirectUrl && !consentExpiryError && !hasClientNameErrors && !hasPurposeErrors && !hasPurposeDefaultErrors
-      && clientNameEntriesValid && purposeTitleEntriesValid && purposeSubtitleEntriesValid;
+    const hasConsentExpiry = consentExpiry && consentExpiry.trim() !== '';
+    
+    return partnerId && policyName && hasClientName && publicKey.trim() && logoUrl && redirectUrlsNotEmpty() && grantTypes && hasConsentExpiry
+      && !jsonError && !invalidLogoUrl && !invalidRedirectUrl && !consentExpiryError && !clientNameError && !hasClientNameLangMapErrors && !hasPurposeErrors && !hasPurposeDefaultErrors
+      && clientNameLangMapEntriesValid && purposeTitleEntriesValid && purposeSubtitleEntriesValid;
   };
 
   const styles = {
@@ -908,60 +914,22 @@ function CreateOidcClient() {
                                   id='create_oidc_policy_name' />
                               </div>
                             </div>
-                            {/* Multi-language Client Name */}
-                            <div className="flex flex-col my-2">
-                              <label id='create_oidc_client_name_label' className={`flex items-center text-dark-blue text-sm font-semibold mb-2 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
-                                {t('authenticationServices.oidcClientName')}<span className="text-crimson-red mx-1">*</span>
-                                <Information infoKey={t('createOidcClient.clientNameTooltip')} id='client_name_info' />
-                              </label>
-                              <div className="bg-white border border-neutral-300 shadow-sm rounded-md p-4">
-                                {clientNameEntries.map((entry, index) => {
-                                  const availableLangs = getAvailableLanguagesForClientName(entry.id);
-                                  return (
-                                    <div key={index} className="flex mb-2">
-                                      <div className="w-1/3">
-                                        <DropdownComponent
-                                          fieldName={`clientNameLang_${index + 1}`}
-                                          dropdownDataList={availableLangs}
-                                          onDropDownChangeEvent={(field, value) => updateClientNameEntry(entry.id, 'language', value)}
-                                          fieldNameKey=""
-                                          placeHolderKey="createOidcClient.selectLanguage"
-                                          selectedDropdownValue={entry.language}
-                                          styleSet={styles}
-                                          id={`client_name_lang_${index + 1}`} />
-                                      </div>
-                                      <div className={`w-full mt-1 ${isLoginLanguageRTL ? 'mr-5' : 'ml-5'}`}>
-                                        <TextInputComponentWithDeleteButton
-                                          value={entry.text}
-                                          onChange={(e) => {
-                                            const value = e.target.value;
-                                            updateClientNameEntry(entry.id, 'text', value);
-                                          }}
-                                          onDelete={() => deleteClientNameEntry(entry.id)}
-                                          placeholder={getPlaceholderForLanguage(entry.language, 'NameForOidcClient')}
-                                          id={`client_name_text_${index + 1}`}
-                                          maxLength={256}
-                                          showDelete={clientNameEntries.length > 2 && entry.language !== 'default'}
-                                          errorMessage={clientNameErrors[entry.id]}
-                                          isRTL={isLoginLanguageRTL}
-                                        />
-                                      </div>
-                                    </div>
-                                  );
-                                })}
-                                {clientNameEntries.length < languageDropdownData.length && (
-                                  <div
-                                    role="button"
-                                    id="add_client_name_language"
-                                    className="text-[#1447b2] font-bold text-xs w-fit cursor-pointer mt-2"
-                                    tabIndex="0"
-                                    onKeyDown={(e) => onPressEnterKey(e, addClientNameEntry)}
-                                    onClick={addClientNameEntry}
-                                  >
-                                    <span className="text-lg text-center">+</span>
-                                    <span>{t('createOidcClient.addNew')}</span>
-                                  </div>
-                                )}
+                            {/* OIDC Client Name */}
+                            <div className="flex my-[1%]">
+                              <div className="flex flex-col w-full">
+                                <label id='create_oidc_client_name_label' className={`flex items-center text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+                                  {t('authenticationServices.oidcClientName')}<span className="text-crimson-red mx-1">*</span>
+                                  <Information infoKey={t('createOidcClient.clientNameTooltip')} id='client_name_info' />
+                                </label>
+                                <input
+                                  id="create_oidc_client_name"
+                                  value={clientName}
+                                  onChange={(e) => handleClientNameChange(e.target.value)}
+                                  className="h-10 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline w-full"
+                                  placeholder={t('createOidcClient.clientNamePlaceholder')}
+                                  maxLength={256}
+                                />
+                                {clientNameError && <span id="create_oidc_client_name_error" className="text-sm text-crimson-red font-semibold mt-1">{clientNameError}</span>}
                               </div>
                             </div>
                             <div className="flex my-[1%]">
@@ -1118,7 +1086,7 @@ function CreateOidcClient() {
                             {/* Consent Expiry Duration */}
                             <div className="flex flex-col w-[48%]">
                               <label id="consent_expiry_label" className={`flex items-center text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
-                                {t('createOidcClient.consentExpiryDuration')}
+                                {t('createOidcClient.consentExpiryDuration')}<span className="text-crimson-red mx-1">*</span>
                                 <Information infoKey={t('createOidcClient.consentExpiryDurationTooltip')} id='consent_expiry_info' />
                               </label>
                               <input
@@ -1143,8 +1111,81 @@ function CreateOidcClient() {
                                 styleSet={styles}
                                 addInfoIcon={true}
                                 infoKey={t('createOidcClient.userInfoResponseTypeTooltip')}
+                                isPlaceHolderPresent={true}
                                 id='user_info_response_type' />
                             </div>
+                          </div>
+
+                          {/* OIDC Client Name Multilanguage */}
+                          <div className="flex flex-col my-2">
+                            <label id='create_oidc_client_name_multilang_label' className={`flex items-center text-dark-blue text-sm font-semibold mb-2 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+                              {t('createOidcClient.clientNameMultilanguage')}
+                              <Information infoKey={t('createOidcClient.clientNameMultilanguageTooltip')} id='client_name_multilang_info' />
+                            </label>
+                            {clientNameLangMapEntries.length === 0 ? (
+                              <div className="bg-white border border-neutral-200 rounded-md p-8 flex flex-col items-center justify-center min-h-[120px]">
+                                <button
+                                  type="button"
+                                  id="add_client_name_lang_map_entry"
+                                  className="bg-[#1447b2] text-white font-semibold text-sm px-6 py-2 rounded-md cursor-pointer hover:bg-[#0f3a8a] transition-colors"
+                                  tabIndex="0"
+                                  onKeyDown={(e) => onPressEnterKey(e, addClientNameLangMapEntry)}
+                                  onClick={addClientNameLangMapEntry}
+                                >
+                                  {t('createOidcClient.addClientNameLangMap')}
+                                </button>
+                                <p className="text-gray-400 text-sm mt-2 text-center">
+                                  {t('createOidcClient.addClientNameLangMapHelperText')}
+                                </p>
+                              </div>
+                            ) : (
+                              <div className="bg-white border border-neutral-300 shadow-sm rounded-md p-4">
+                                {clientNameLangMapEntries.map((entry, index) => {
+                                  const availableLangs = getAvailableLanguagesForClientNameLangMap(entry.id);
+                                  return (
+                                    <div key={index} className="flex mb-2">
+                                      <div className="w-1/3">
+                                        <DropdownComponent
+                                          fieldName={`clientNameLangMapLang_${index + 1}`}
+                                          dropdownDataList={availableLangs}
+                                          onDropDownChangeEvent={(field, value) => updateClientNameLangMapEntry(entry.id, 'language', value)}
+                                          fieldNameKey=""
+                                          placeHolderKey="createOidcClient.selectLanguage"
+                                          selectedDropdownValue={entry.language}
+                                          styleSet={styles}
+                                          id={`client_name_lang_map_lang_${index + 1}`} />
+                                      </div>
+                                      <div className={`w-full mt-1 ${isLoginLanguageRTL ? 'mr-5' : 'ml-5'}`}>
+                                        <TextInputComponentWithDeleteButton
+                                          value={entry.text}
+                                          onChange={(e) => updateClientNameLangMapEntry(entry.id, 'text', e.target.value)}
+                                          onDelete={() => deleteClientNameLangMapEntry(entry.id)}
+                                          placeholder={getPlaceholderForLanguage(entry.language, 'NameForOidcClient')}
+                                          id={`client_name_lang_map_text_${index + 1}`}
+                                          maxLength={256}
+                                          showDelete={clientNameLangMapEntries.length > 0}
+                                          errorMessage={clientNameLangMapErrors[entry.id]}
+                                          isRTL={isLoginLanguageRTL}
+                                        />
+                                      </div>
+                                    </div>
+                                  );
+                                })}
+                                {clientNameLangMapEntries.length < languageDropdownData.filter(lang => lang.fieldValue !== 'default').length && (
+                                  <div
+                                    role="button"
+                                    id="add_client_name_lang_map_entry"
+                                    className="text-[#1447b2] font-bold text-xs w-fit cursor-pointer"
+                                    tabIndex="0"
+                                    onKeyDown={(e) => onPressEnterKey(e, addClientNameLangMapEntry)}
+                                    onClick={addClientNameLangMapEntry}
+                                  >
+                                    <span className="text-lg text-center">+</span>
+                                    <span>{t('createOidcClient.addNew')}</span>
+                                  </div>
+                                )}
+                              </div>
+                            )}
                           </div>
 
                           {/* Purpose Type - Full Width */}
@@ -1159,6 +1200,7 @@ function CreateOidcClient() {
                               styleSet={styles}
                               addInfoIcon={true}
                               infoKey={t('createOidcClient.purposeTypeTooltip')}
+                              isPlaceHolderPresent={true}
                               id='purpose_type' />
                           </div>
 

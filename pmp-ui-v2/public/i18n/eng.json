@@ -450,6 +450,7 @@
         "consentExpiryDuration": "Consent Expiry Duration (in Minutes)",
         "consentExpiryDurationTooltip": "Duration (in minutes) for which user consent remains valid before re-prompt.",
         "consentExpiryValidation": "Please enter a value of at least 10 minutes.",
+        "consentExpiryRequired": "Consent Expiry Duration is required.",
         "mins": "mins",
         "userInfoResponseType": "User Info Response Type",
         "selectUserInfoResponseType": "Select user info response type",
@@ -502,7 +503,12 @@
         "addSubtitle": "Add Subtitle",
         "addTitleHelperText": "Click on add title to add multi language title",
         "addSubtitleHelperText": "Click on add subtitle to add multi language subtitle",
-        "defaultLanguageRequired": "Default language is required when entries are added"
+        "defaultLanguageRequired": "Default language is required when entries are added",
+        "clientNamePlaceholder": "Enter OIDC Client Name",
+        "clientNameMultilanguage": "OIDC Client Name Multilanguage",
+        "clientNameMultilanguageTooltip": "Enter the client name in multiple languages. This is optional and will be sent as an empty object if no entries are added.",
+        "addClientNameLangMap": "Add Client Name Language",
+        "addClientNameLangMapHelperText": "Click on add client name language to add multi language client name"
     },
     "oidcClientsList": {
         "partnerId": "Partner ID",
