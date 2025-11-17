@@ -220,7 +220,7 @@ function CreateOidcClient() {
     const fetchLanguages = async () => {
       try {
         const appConfig = await getAppConfig();
-        const supportedLanguages = appConfig && appConfig.supportedNotificationLanguages;
+        const supportedLanguages = appConfig && appConfig.supportedOidcLanguages;
         let languageCodes = [];
         if (Array.isArray(supportedLanguages)) {
           languageCodes = supportedLanguages;
@@ -314,11 +314,31 @@ function CreateOidcClient() {
   };
 
   // Helper function to create a new entry
-  const createNewEntry = (language, index) => ({
-    id: `${language || ''}_${index}`,
-    language: language,
-    text: ''
-  });
+  const createNewEntry = (language, index, type) => {
+    let uniqueId;
+    const langCode = language || 'default';
+    
+    switch (type) {
+      case 'clientName':
+        uniqueId = `oidc_name_${langCode}_${index}`;
+        break;
+      case 'purposeTitle':
+        uniqueId = `purpose_title_${langCode}_${index}`;
+        break;
+      case 'purposeSubtitle':
+        uniqueId = `purpose_subtitle_${langCode}_${index}`;
+        break;
+      default:
+        // Fallback for any other type
+        uniqueId = `entry_${type}_${langCode}_${index}`;
+    }
+    
+    return {
+      id: uniqueId,
+      language: language,
+      text: ''
+    };
+  };
 
   // Helper function to find available language
   const findAvailableLanguage = (usedLanguages) => {
@@ -351,7 +371,7 @@ function CreateOidcClient() {
     );
     const availableLang = availableLangs[0];
     const newIndex = clientNameLangMapEntries.length;
-    const newEntry = createNewEntry(availableLang?.fieldValue, newIndex);
+    const newEntry = createNewEntry(availableLang?.fieldValue, newIndex, 'clientName');
     setClientNameLangMapEntries([...clientNameLangMapEntries, newEntry]);
   };
 
@@ -553,7 +573,7 @@ function CreateOidcClient() {
       ? languageDropdownData.find(lang => lang.fieldValue === 'default')
       : findAvailableLanguage(usedLanguages);
     const newIndex = purposeTitleEntries.length;
-    const newEntry = createNewEntry(availableLang?.fieldValue, newIndex);
+    const newEntry = createNewEntry(availableLang?.fieldValue, newIndex, 'purposeTitle');
     const updated = [...purposeTitleEntries, newEntry];
     setPurposeTitleEntries(updated);
     validatePurposeDefaultRequirement(updated, 'title');
@@ -566,7 +586,7 @@ function CreateOidcClient() {
       ? languageDropdownData.find(lang => lang.fieldValue === 'default')
       : findAvailableLanguage(usedLanguages);
     const newIndex = purposeSubtitleEntries.length;
-    const newEntry = createNewEntry(availableLang?.fieldValue, newIndex);
+    const newEntry = createNewEntry(availableLang?.fieldValue, newIndex, 'purposeSubtitle');
     const updated = [...purposeSubtitleEntries, newEntry];
     setPurposeSubtitleEntries(updated);
     validatePurposeDefaultRequirement(updated, 'subtitle');
