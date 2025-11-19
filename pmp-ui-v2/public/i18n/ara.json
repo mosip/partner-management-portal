@@ -441,7 +441,7 @@
         "invalidJwkFormat": "أدخل مفتاحًا عامًا صالحًا بتنسيق JWK",
         "duplicateUrl": "غير مسموح بعناوين URI المكررة",
         "partnerIdTooltip": "تتوفر فقط معرفات شركاء المصادقة التي تم تحميل شهادة الشريك الخاصة بها في القائمة المنسدلة. إذا لم تجد معرف الشريك الخاص بك، فيرجى تحميل شهادة الشريك أولاً",
-        "mandatoryInformation": "معلومات إلزامية",
+        "primaryInformation": "معلومات أساسية",
         "additionalInformation": "معلومات إضافية",
         "forgotPasswordBanner": "لافتة نسيت كلمة المرور مطلوبة",
         "forgotPasswordBannerTooltip": "قم بتمكين هذا الخيار لعرض رابط 'نسيت كلمة المرور' على شاشة مصادقة eSignet.",
@@ -505,7 +505,7 @@
         "addSubtitleHelperText": "انقر على إضافة عنوان فرعي لإضافة عنوان فرعي متعدد اللغات",
         "defaultLanguageRequired": "اللغة الافتراضية مطلوبة عند إضافة الإدخالات",
         "clientNamePlaceholder": "أدخل اسم عميل OIDC",
-        "clientNameMultilanguage": "اسم عميل OIDC متعدد اللغات",
+        "clientNameMultilanguage": "اسم عميل OIDC (دعم متعدد اللغات)",
         "clientNameMultilanguageTooltip": "أدخل اسم العميل بلغات متعددة. هذا اختياري وسيتم إرساله ككائن فارغ إذا لم تتم إضافة إدخالات.",
         "addClientNameLangMap": "إضافة لغة اسم العميل",
         "addClientNameLangMapHelperText": "انقر على إضافة لغة اسم العميل لإضافة اسم عميل متعدد اللغات"

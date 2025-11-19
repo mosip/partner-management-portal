@@ -441,7 +441,7 @@
         "invalidJwkFormat": "Enter valid public key in JWK format",
         "duplicateUrl": "Duplicate URIs are not allowed",
         "partnerIdTooltip": "Only those Authentication Partner IDs whose partner certificate is uploaded is available in the dropdown. If you don't find your partner ID, please upload partner certificate first",
-        "mandatoryInformation": "Mandatory Information",
+        "primaryInformation": "Primary Information",
         "additionalInformation": "Additional Information",
         "forgotPasswordBanner": "Forgot Password Banner Required",
         "forgotPasswordBannerTooltip": "Enable this option to display 'Forgot Password' link on the eSignet authentication screen.",
@@ -505,7 +505,7 @@
         "addSubtitleHelperText": "Click on add subtitle to add multi language subtitle",
         "defaultLanguageRequired": "Default language is required when entries are added",
         "clientNamePlaceholder": "Enter OIDC Client Name",
-        "clientNameMultilanguage": "OIDC Client Name Multilanguage",
+        "clientNameMultilanguage": "OIDC Client Name (Multilingual Support)",
         "clientNameMultilanguageTooltip": "Enter the client name in multiple languages. This is optional and will be sent as an empty object if no entries are added.",
         "addClientNameLangMap": "Add Client Name Language",
         "addClientNameLangMapHelperText": "Click on add client name language to add multi language client name"
