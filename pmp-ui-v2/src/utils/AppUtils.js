@@ -1099,7 +1099,7 @@ export const getNotificationDescription = (notification, isLoginLanguageRTL, t) 
     } else if (notification.notificationType === 'MISP_LICENSE_KEY_EXPIRY') {
         return (
             <Trans 
-                i18nKey="notificationPopup.mispLicenseKeyExpiryDescription"
+                i18nKey="viewAllNotifications.mispLicenseKeyExpiryDescription"
                 values={{
                     mispLicenseKeyName: notification.notificationDetails.mispLicenseKeyDetails[0].mispLicenseKeyName ? notification.notificationDetails.mispLicenseKeyDetails[0].mispLicenseKeyName : '-',
                     mispPartnerId: notification.notificationDetails.mispLicenseKeyDetails[0].mispPartnerId,

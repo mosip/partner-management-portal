@@ -1061,7 +1061,7 @@ function CreateOidcClient() {
                                   </label>
                                   <Information infoKey={t('createOidcClient.forgotPasswordBannerTooltip')} id='forgot_password_banner_info' />
                                 </div>
-                                <label className="relative inline-flex items-center cursor-pointer flex-shrink-0">
+                                <label className={`relative inline-flex items-center cursor-pointer flex-shrink-0 ${isLoginLanguageRTL ? "mr-7" : "ml-7"}`}>
                                   <input
                                     type="checkbox"
                                     checked={forgotPasswordBanner}
@@ -1085,7 +1085,7 @@ function CreateOidcClient() {
                                   </label>
                                   <Information infoKey={t('createOidcClient.signUpBannerTooltip')} id='signup_banner_info' />
                                 </div>
-                                <label className="relative inline-flex items-center cursor-pointer flex-shrink-0">
+                                <label className={`relative inline-flex items-center cursor-pointer flex-shrink-0 ${isLoginLanguageRTL ? "mr-7" : "ml-7"}`}>
                                   <input
                                     type="checkbox"
                                     checked={signUpBanner}
@@ -1106,7 +1106,7 @@ function CreateOidcClient() {
                             {/* Consent Expiry Duration */}
                             <div className="flex flex-col w-[48%]">
                               <label id="consent_expiry_label" className={`flex items-center text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
-                                {t('createOidcClient.consentExpiryDuration')}<span className="text-crimson-red mx-1">*</span>
+                                {t('createOidcClient.consentExpiryDuration')}
                                 <Information infoKey={t('createOidcClient.consentExpiryDurationTooltip')} id='consent_expiry_info' />
                               </label>
                               <input

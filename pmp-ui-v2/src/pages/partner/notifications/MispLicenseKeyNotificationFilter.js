@@ -13,12 +13,10 @@ function MispLicenseKeyNotificationFilter({ onApplyFilter }) {
     const [filters, setFilters] = useState({
         mispLicenseKeyName: "",
         mispPartnerId: "",
-        policyName: "",
         expiryDate: ""
     });
     const [invalidMispLicenseKeyName, setInvalidMispLicenseKeyName] = useState("");
     const [invalidMispPartnerId, setInvalidMispPartnerId] = useState("");
-    const [invalidPolicyName, setInvalidPolicyName] = useState("");
 
     const onFilterChangeEvent = (fieldName, selectedFilter) => {
         setFilters((prevFilters) => ({
@@ -27,7 +25,6 @@ function MispLicenseKeyNotificationFilter({ onApplyFilter }) {
         }));
         if (fieldName === 'mispLicenseKeyName') { validateInputRegex(selectedFilter, setInvalidMispLicenseKeyName, t); }
         if (fieldName === 'mispPartnerId') { validateInputRegex(selectedFilter, setInvalidMispPartnerId, t); }
-        if (fieldName === 'policyName') { validateInputRegex(selectedFilter, setInvalidPolicyName, t); }
     };
 
     const handleExpiryDateChange = (newDateStr) => {
@@ -35,7 +32,7 @@ function MispLicenseKeyNotificationFilter({ onApplyFilter }) {
     };
         
     const areFiltersEmpty = () => {
-        return Object.values(filters).every(value => value === "") || invalidMispLicenseKeyName || invalidMispLicenseKeyName || invalidPolicyName;
+        return Object.values(filters).every(value => value === "") || invalidMispLicenseKeyName || invalidMispLicenseKeyName;
     };
 
     const calenderStyleSet = {
@@ -63,15 +60,6 @@ function MispLicenseKeyNotificationFilter({ onApplyFilter }) {
                     styleSet={getFilterTextFieldStyle()}
                     id='misp_expiry_partner_id_filter'
                     inputError={invalidMispPartnerId}
-                />
-                <TextInputComponent
-                    fieldName='policyName'
-                    onTextChange={onFilterChangeEvent}
-                    fieldNameKey='mispLicenseList.policyName'
-                    placeHolderKey='policiesList.searchPolicyName'
-                    styleSet={getFilterTextFieldStyle()}
-                    id='misp_expiry_policy_name_filter'
-                    inputError={invalidPolicyName}
                 />
                 <CalendarInput
                     fieldName='expiryDate'
