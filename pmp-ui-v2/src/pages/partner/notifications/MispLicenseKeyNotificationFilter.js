@@ -32,7 +32,7 @@ function MispLicenseKeyNotificationFilter({ onApplyFilter }) {
     };
         
     const areFiltersEmpty = () => {
-        return Object.values(filters).every(value => value === "") || invalidMispLicenseKeyName || invalidMispLicenseKeyName;
+        return Object.values(filters).every(value => value === "") || invalidMispLicenseKeyName || invalidMispPartnerId;
     };
 
     const calenderStyleSet = {
