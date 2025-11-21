@@ -36,7 +36,9 @@
         "inputError": "Invalid character. Allowed special characters are: @ # & ( ) \\ - ' ? ! \" : ; = _",
         "networkError": "Network Error",
         "networkErrorDesc": "Please check your internet connection and try again.",
-        "retry": "Retry"
+        "retry": "Retry",
+        "yes": "Yes",
+        "no": "No"
     },
     "dashboard": {
         "welcomeMsg": "Welcome {{firstName}} {{lastName}}",

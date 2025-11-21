@@ -34,14 +34,14 @@ function TextInputComponentWithDeleteButton({
           onChange={onChange}
           maxLength={maxLength}
           placeholder={placeholder}
-          className={`h-10 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline w-full ${showDelete ? 'pr-28' : ''} ${className}`}
+          className={`h-10 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline w-full ${showDelete ? (isLoginLanguageRTL ? 'pl-28' : 'pr-28') : ''} ${className}`}
           id={id}
         />
         {showDelete && (
           <div
             role='button'
             id={`${id}_delete`}
-            className="absolute right-2 top-1/2 -translate-y-1/2 flex flex-row items-center"
+            className={`absolute ${isLoginLanguageRTL ? 'left-2' : 'right-2'} top-1/2 -translate-y-1/2 flex flex-row items-center`}
             onClick={handleDelete}
             tabIndex="0"
             onKeyDown={(e) => onPressEnterKey(e, handleDelete)}

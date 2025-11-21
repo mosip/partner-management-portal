@@ -36,7 +36,9 @@
         "inputError": "Caractère non valide. Les caractères spéciaux autorisés sont : @ # & ( ) \\ - ' ? ! \" : ; = _",
         "networkError": "Erreur réseau",
         "networkErrorDesc": "Veuillez vérifier votre connexion Internet et réessayer.",
-        "retry": "Réessayer"
+        "retry": "Réessayer",
+        "yes": "Oui",
+        "no": "Non"
     },
     "dashboard": {
         "welcomeMsg": "Bienvenue {{firstName}} {{lastName}}",
