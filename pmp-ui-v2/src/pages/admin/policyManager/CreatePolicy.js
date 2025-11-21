@@ -200,7 +200,8 @@ function CreatePolicy() {
                         header: confirmationHeader,
                         description: confirmationMessage,
                         customBtnName1: "policiesList.publish",
-                        customBtnName2: "commons.goBack"
+                        customBtnName2: "commons.goBack",
+                        customBtn2Id: "confirmation_go_back_btn"
                     }
                     setConfirmationData(requiredData);
                     setCreatePolicySuccess(true);
