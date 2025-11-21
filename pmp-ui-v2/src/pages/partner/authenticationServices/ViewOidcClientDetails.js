@@ -41,7 +41,15 @@ function ViewOidcClientDetails() {
             setUnexpectedError(true);
             return;
         }
-        const clientData = JSON.parse(data);
+        let clientData;
+        try {
+            clientData = JSON.parse(data);
+        } catch (err) {
+            console.error('Error parsing sessionStorage data:', err);
+            setDataLoaded(true);
+            setUnexpectedError(true);
+            return;
+        }
         setSelectedClientData(clientData);
 
         const fetchData = async () => {
@@ -155,7 +163,7 @@ function ViewOidcClientDetails() {
                                         <p id='view_oidc_clients_sub_title_id' className="text-lg text-dark-blue mb-2">{t('authenticationServices.oidcClientName')}: <span className="font-semibold">{oidcClientDetails.name || selectedClientData.clientNameEng}</span></p>
                                         <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
                                             <div id='view_oidc_clients_status' className={`${bgOfStatus(oidcClientDetails.status)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
-                                                {getStatusCode(selectedClientData.status, t)}
+                                                {getStatusCode(oidcClientDetails.status, t)}
                                             </div>
                                             <div id='view_oidc_clients_created_on' className={`font-semibold ${isLoginLanguageRTL ? "mr-[1.4rem]" : "ml-[0.75rem]"} text-sm text-dark-blue`}>
                                                 {t("viewOidcClientDetails.createdOn") + ' ' +
@@ -169,13 +177,13 @@ function ViewOidcClientDetails() {
                                     </div>
 
                                     <button id="oidc_client_details_copy_id" className={`${oidcClientDetails.status === "ACTIVE" ? 'bg-[#F0F5FF] border-[#BED3FF] cursor-pointer hover:shadow-md' : 'bg-gray-200 border-gray-400 cursor-default'}  border h-[4%] w-[15%] max-[450px]:w-[40%] max-[800px]:w-[25%] ${isLoginLanguageRTL ? "pr-[3%] pl-[1.5%]" : "pl-[3%] pr-[1%]"} py-[0.5%] rounded-md text-right`}
-                                         onClick={() => copyClientId(selectedClientData, selectedClientData.clientId, setCopied)} tabIndex={oidcClientDetails.status === "ACTIVE" && "0"}>
+                                         onClick={() => copyClientId({...selectedClientData, status: oidcClientDetails.status}, selectedClientData.clientId, setCopied)} tabIndex={oidcClientDetails.status === "ACTIVE" && "0"}>
                                         <p id='view_oidc_client_id_label' className="text-sm font-semibold text-[#333333]">{t('viewOidcClientDetails.oidcClientId')}</p>
                                         <div className="flex space-x-1 items-center">
-                                            <p id='view_oidc_client_id' className={`text-base font-bold ${selectedClientData.status === "ACTIVE" ? 'text-[#1447B2]' : 'text-gray-400'} truncate`}>
+                                            <p id='view_oidc_client_id' className={`text-base font-bold ${oidcClientDetails.status === "ACTIVE" ? 'text-[#1447B2]' : 'text-gray-400'} truncate`}>
                                                 {selectedClientData.clientId}
                                             </p>
-                                            {selectedClientData.status === "ACTIVE" ? (
+                                            {oidcClientDetails.status === "ACTIVE" ? (
                                                 <img id="oidc_client_details_copy_id_icon" src={content_copy_icon} alt=""/>
                                             ) : (
                                                 <img src={disabled_copy_icon} alt="" />
