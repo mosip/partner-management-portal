@@ -7,7 +7,8 @@ import {
   getPartnerManagerUrl, handleServiceErrors, getPartnerTypeDescription,
   moveToOidcClientsList, getGrantTypes, getApprovedAuthPartners,
   isLangRTL, createDropdownData, validateUrl, getPartnerPolicyRequests,
-  onPressEnterKey, trimAndReplace, validateInputRegex, getLanguageLabel
+  onPressEnterKey, trimAndReplace, validateInputRegex, getLanguageLabel,
+  createRequest
 } from '../../../utils/AppUtils';
 import { HttpService } from '../../../services/HttpService';
 import DropdownWithSearchComponent from "../../common/fields/DropdownWithSearchComponent";
@@ -727,12 +728,7 @@ function CreateOidcClient() {
       requestData.additionalConfig = additionalConfig;
     }
 
-    const request = {
-      id: "mosip.pms.create.oidc.client.post",
-      version: "1.0",
-      requestTime: new Date().toISOString(),
-      request: requestData
-    };
+    const request = createRequest(requestData, "mosip.pms.create.oidc.client.post", true);
     try {
       const response = await HttpService.post(getPartnerManagerUrl(`/oidc-clients`, process.env.NODE_ENV), request, {
         headers: {
