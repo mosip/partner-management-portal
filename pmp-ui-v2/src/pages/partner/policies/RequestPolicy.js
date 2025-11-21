@@ -213,6 +213,7 @@ function RequestPolicy() {
                         subNavigation: isAdminPath ? "viewPolicyRequest.listOfPolicyRequests" : "requestPolicy.policies",
                         customBtnName1: isAdminPath ? "approveRejectPopup.approve" : undefined,
                         customBtnName2: isAdminPath ? "commons.goBack" : undefined,
+                        customBtn2Id: isAdminPath ? "confirmation_go_back_btn": undefined
                     }
                     setConfirmationData(requiredData);
                     setRequestPolicySuccess(true);

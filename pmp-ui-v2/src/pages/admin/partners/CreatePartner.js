@@ -263,6 +263,7 @@ function CreatePartner() {
                         subNavigation: "createPartner.listOfPartners",
                         customBtnName1: "createPartner.uploadMispPartnerCertificate",
                         customBtnName2: "commons.home",
+                        customBtn2Id: "confirmation_home_btn"
                     };
                     setConfirmationData(requiredData);
                     
