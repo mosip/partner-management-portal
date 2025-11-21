@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { bgOfStatus, copyClientId, formatDate, formatPublicKey, getErrorMessage, getGrantTypes, getPartnerManagerUrl, getStatusCode, handleMouseClickForDropdown, handleServiceErrors, isLangRTL, getLanguageLabel, createRequest } from '../../../utils/AppUtils';
+import { bgOfStatus, copyClientId, formatDate, formatPublicKey, getErrorMessage, getGrantTypes, getPartnerManagerUrl, getStatusCode, handleMouseClickForDropdown, handleServiceErrors, isLangRTL, getLanguageLabel } from '../../../utils/AppUtils';
 import { getUserProfile } from '../../../services/UserProfileService';
 import Title from '../../common/Title';
 import { useNavigate } from 'react-router-dom';
@@ -30,8 +30,9 @@ function ViewOidcClientDetails() {
     const copyToolTipRef = useRef(null);
 
     useEffect(() => {
-        handleMouseClickForDropdown(copyToolTipRef, () => setCopied(false));
-    }, [copyToolTipRef]);
+        const cleanup = handleMouseClickForDropdown(copyToolTipRef, () => setCopied(false));
+        return cleanup;
+    }, [copyToolTipRef, setCopied]);
 
     useEffect(() => {
         const data = sessionStorage.getItem('selectedClientData');
@@ -48,13 +49,7 @@ function ViewOidcClientDetails() {
                 setDataLoaded(false);
                 // Use clientId from sessionStorage for the GET request
                 const clientId = clientData.clientId;
-                const request = createRequest({}, "mosip.pms.oidc.client.details.get", true);
-                const response = await HttpService.get(getPartnerManagerUrl(`/oidc-clients/${clientId}`, process.env.NODE_ENV), {
-                    data: request,
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                });
+                const response = await HttpService.get(getPartnerManagerUrl(`/oidc-clients/${clientId}`, process.env.NODE_ENV));
                 if (response) {
                     const responseData = response.data;
                     if (responseData && responseData.response) {
