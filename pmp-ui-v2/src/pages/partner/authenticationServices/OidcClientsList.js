@@ -72,7 +72,7 @@ function OidcClientsList() {
         const fetchData = async () => {
             try {
                 setDataLoaded(false);
-                const response = await HttpService.get(getPartnerManagerUrl('/oauth/client', process.env.NODE_ENV));
+                const response = await HttpService.get(getPartnerManagerUrl('/oidc-clients', process.env.NODE_ENV));
                 if (response) {
                     const responseData = response.data;
                     if (responseData && responseData.response) {
@@ -151,7 +151,7 @@ function OidcClientsList() {
         if (selectedClientdata.status === "ACTIVE") {
             setTableDataLoaded(false);
             try {
-                const response = await HttpService.get(getPartnerManagerUrl(`/oauth/client/${selectedClientdata.clientId}`, process.env.NODE_ENV));
+                const response = await HttpService.get(getPartnerManagerUrl(`/oidc-clients/${selectedClientdata.clientId}`, process.env.NODE_ENV));
                 if (response) {
                     const responseData = response.data;
                     if (responseData && responseData.response) {

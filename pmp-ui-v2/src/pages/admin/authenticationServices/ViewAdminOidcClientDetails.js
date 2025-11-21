@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { bgOfStatus, copyClientId, formatDate, formatPublicKey, getErrorMessage, getGrantTypes, getPartnerManagerUrl, getStatusCode, handleMouseClickForDropdown, handleServiceErrors, isLangRTL } from '../../../utils/AppUtils';
+import { bgOfStatus, copyClientId, formatDate, formatPublicKey, getErrorMessage, getGrantTypes, getPartnerManagerUrl, getStatusCode, handleMouseClickForDropdown, handleServiceErrors, isLangRTL, getLanguageLabel } from '../../../utils/AppUtils';
 import { getUserProfile } from '../../../services/UserProfileService';
 import Title from '../../common/Title';
 import { useNavigate } from 'react-router-dom';
@@ -25,11 +25,14 @@ function ViewAdminOidcClientDetails() {
         redirectUris: [],
         grantTypes: [],
     });
+    const [clientNameLangMap, setClientNameLangMap] = useState({});
+    const [additionalConfig, setAdditionalConfig] = useState({});
     const copyToolTipRef = useRef(null);
 
     useEffect(() => {
-        handleMouseClickForDropdown(copyToolTipRef, () => setCopied(false));
-    }, [copyToolTipRef]);
+        const cleanup = handleMouseClickForDropdown(copyToolTipRef, () => setCopied(false));
+        return cleanup;
+    }, [copyToolTipRef, setCopied]);
 
     useEffect(() => {
         const data = sessionStorage.getItem('selectedOidcClientAttributes');
@@ -44,12 +47,22 @@ function ViewAdminOidcClientDetails() {
         const fetchData = async () => {
             try {
                 setDataLoaded(false);
-                const response = await HttpService.get(getPartnerManagerUrl(`/oauth/client/${clientData.clientId}`, process.env.NODE_ENV));
+                const response = await HttpService.get(getPartnerManagerUrl(`/oidc-clients/${clientData.clientId}`, process.env.NODE_ENV));
                 if (response) {
                     const responseData = response.data;
                     if (responseData && responseData.response) {
                         const resData = responseData.response;
                         setOidcClientDetails(resData);
+
+                        // Initialize client name lang map
+                        if (resData.clientNameLangMap && typeof resData.clientNameLangMap === 'object') {
+                            setClientNameLangMap(resData.clientNameLangMap);
+                        }
+
+                        // Initialize additionalConfig
+                        if (resData.additionalConfig) {
+                            setAdditionalConfig(resData.additionalConfig);
+                        }
                     } else {
                         setUnexpectedError(true);
                         handleServiceErrors(responseData, setErrorCode, setErrorMsg);
@@ -63,6 +76,7 @@ function ViewAdminOidcClientDetails() {
                 if (err.response?.status && err.response.status !== 401) {
                     setErrorMsg(err.toString());
                 }
+                setDataLoaded(true);
             }
         };
         fetchData();
@@ -76,10 +90,37 @@ function ViewAdminOidcClientDetails() {
         setErrorMsg("");
     };
 
+    // Get language label for display
+    const getLanguageDisplayName = (languageCode) => {
+        if (languageCode === '@none' || languageCode === 'default') {
+            return t('createOidcClient.default');
+        }
+        return getLanguageLabel(languageCode, t);
+    };
+
+    // Format public key for display
+    const getFormattedPublicKey = () => {
+        if (!oidcClientDetails.publicKey) return '';
+        try {
+            if (typeof oidcClientDetails.publicKey === 'string') {
+                return formatPublicKey(oidcClientDetails.publicKey);
+            } else if (typeof oidcClientDetails.publicKey === 'object') {
+                return JSON.stringify(oidcClientDetails.publicKey, null, 2);
+            }
+            return '';
+        } catch (error) {
+            return JSON.stringify(oidcClientDetails.publicKey, null, 2);
+        }
+    };
+
+    const styles = {
+        loadingDiv: "!py-[30%]"
+      }
+
     return (
         <div className={`w-full p-4 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm mb-[2%] ${isLoginLanguageRTL ? "mr-24 ml-1" : "ml-24 mr-1"} overflow-x-scroll`}>
             {!dataLoaded && (
-                <LoadingIcon />
+                <LoadingIcon styleSet={styles}/>
             )}
             {dataLoaded && (
                 <>
@@ -109,10 +150,10 @@ function ViewAdminOidcClientDetails() {
                             <div className="bg-snow-white h-fit mt-1 rounded-t-xl shadow-lg font-inter">
                                 <div className="flex justify-between px-7 pt-3 border-b max-[450px]:flex-col">
                                     <div className="flex-col">
-                                        <p id='view_admin_oidc_clients_sub_title_id' className="text-lg text-dark-blue mb-2">{t('authenticationServices.oidcClientName')}: <span className="font-semibold">{selectedClientData.clientNameEng}</span></p>
+                                        <p id='view_admin_oidc_clients_sub_title_id' className="text-lg text-dark-blue mb-2">{t('authenticationServices.oidcClientName')}: <span className="font-semibold">{oidcClientDetails.name || selectedClientData.clientNameEng}</span></p>
                                         <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
                                             <div id='view_admin_oidc_clients_status' className={`${bgOfStatus(oidcClientDetails.status)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
-                                                {getStatusCode(selectedClientData.status, t)}
+                                                {getStatusCode(oidcClientDetails.status, t)}
                                             </div>
                                             <div id='view_admin_oidc_clients_created_on' className={`font-semibold ${isLoginLanguageRTL ? "mr-[1.4rem]" : "ml-[0.75rem]"} text-sm text-dark-blue`}>
                                                 {t("viewOidcClientDetails.createdOn") + ' ' +
@@ -126,13 +167,13 @@ function ViewAdminOidcClientDetails() {
                                     </div>
 
                                     <button id="oidc_client_details_copy_id" className={`${oidcClientDetails.status === "ACTIVE" ? 'bg-[#F0F5FF] border-[#BED3FF] cursor-pointer hover:shadow-md' : 'bg-gray-200 border-gray-400 cursor-default'}  border h-[4%] w-[15%] max-[450px]:w-[40%] max-[800px]:w-[25%] ${isLoginLanguageRTL ? "pr-[3%] pl-[1.5%]" : "pl-[3%] pr-[1%]"} py-[0.5%] rounded-md text-right`}
-                                         onClick={() => copyClientId(selectedClientData, selectedClientData.clientId, setCopied)} tabIndex={oidcClientDetails.status === "ACTIVE" && "0"}>
+                                         onClick={() => copyClientId({...selectedClientData, status: oidcClientDetails.status}, selectedClientData.clientId, setCopied)} tabIndex={oidcClientDetails.status === "ACTIVE" && "0"}>
                                         <p id='view_admin_oidc_client_id_label' className="text-sm font-semibold text-[#333333]">{t('viewOidcClientDetails.oidcClientId')}</p>
                                         <div className="flex space-x-1 items-center">
-                                            <p id='view_admin_oidc_client_id' className={`text-base font-bold ${selectedClientData.status === "ACTIVE" ? 'text-[#1447B2]' : 'text-gray-400'} truncate`}>
+                                            <p id='view_admin_oidc_client_id' className={`text-base font-bold ${oidcClientDetails.status === "ACTIVE" ? 'text-[#1447B2]' : 'text-gray-400'} truncate`}>
                                                 {selectedClientData.clientId}
                                             </p>
-                                            {selectedClientData.status === "ACTIVE" ? (
+                                            {oidcClientDetails.status === "ACTIVE" ? (
                                                 <img id="oidc_client_details_copy_id_icon" src={content_copy_icon} alt=""/>
                                             ) : (
                                                 <img src={disabled_copy_icon} alt="" />
@@ -155,7 +196,7 @@ function ViewAdminOidcClientDetails() {
                                                 {t("viewOidcClientDetails.partnerId")}
                                             </p>
                                             <p id='oidc_client_details_partner_id_context' className="font-[600] text-vulcan text-base">
-                                                {selectedClientData.partnerId}
+                                                {oidcClientDetails.relyingPartyId || selectedClientData.partnerId}
                                             </p>
                                         </div>
                                         <div className="mb-3 max-[600px]:w-[100%] w-[49%]">
@@ -176,38 +217,44 @@ function ViewAdminOidcClientDetails() {
                                         </div>
                                     </div>
                                     <hr className={`h-px w-full bg-gray-200 border-0`} />
-                                    <div className={`flex flex-wrap pt-3`}>
-                                        <div className={`w-[49%] max-[600px]:w-[100%] ${isLoginLanguageRTL ? "ml[1%]" : "mr-[1%]"}`}>
-                                            <p id='oidc_client_details_policy_group_label' className="font-[600] text-suva-gray text-sm">
-                                                {t("viewOidcClientDetails.policyGroup")}
-                                            </p>
-                                            <p id='oidc_client_details_policy_group_name_context' className="font-[600] text-vulcan text-base">
-                                                {selectedClientData.policyGroupName}
-                                            </p>
+                                    <div className={`flex flex-wrap pt-3 max-[600px]:flex-col`}>
+                                        {/* Policy Group Section */}
+                                        <div className={`w-[49%] max-[600px]:w-[100%] mb-3 ${isLoginLanguageRTL ? "ml-[1%]" : "mr-[1%]"}`}>
+                                            <div className="mb-3">
+                                                <p id='oidc_client_details_policy_group_label' className="font-[600] text-suva-gray text-sm">
+                                                    {t("viewOidcClientDetails.policyGroup")}
+                                                </p>
+                                                <p id='oidc_client_details_policy_group_name_context' className="font-[600] text-vulcan text-base">
+                                                    {oidcClientDetails.policyGroupName || selectedClientData.policyGroupName || ' - '}
+                                                </p>
+                                            </div>
+                                            <div>
+                                                <p id='oidc_client_details_policy_group_description_label' className="font-[600] text-suva-gray text-sm">
+                                                    {t("viewOidcClientDetails.policyGroupDescription")}
+                                                </p>
+                                                <p id='oidc_client_details_policy_group_description_context' className="font-[600] text-vulcan text-base">
+                                                    {oidcClientDetails.policyGroupDescription || selectedClientData.policyGroupDescription || ' - '}
+                                                </p>
+                                            </div>
                                         </div>
-                                        <div className={`w-[50%] max-[600px]:w-[100%]`}>
-                                            <p id='oidc_client_details_policy_name_label' className="font-[600] text-suva-gray text-sm">
-                                                {t("viewOidcClientDetails.policyName")}
-                                            </p>
-                                            <p id='oidc_client_details_policy_name_context' className="font-[600] text-vulcan text-base">
-                                                {selectedClientData.policyName ? selectedClientData.policyName : ' - '}
-                                            </p>
-                                        </div>
-                                        <div className={`w-[49%] max-[600px]:w-[100%] my-3 ${isLoginLanguageRTL ? "ml[1%]" : "mr-[1%]"}`}>
-                                            <p id='oidc_client_details_policy_group_description_label' className="font-[600] text-suva-gray text-sm">
-                                                {t("viewOidcClientDetails.policyGroupDescription")}
-                                            </p>
-                                            <p id='oidc_client_details_policy_group_description_context' className="font-[600] text-vulcan text-base">
-                                                {selectedClientData.policyGroupDescription}
-                                            </p>
-                                        </div>
-                                        <div className={`w-[50%] max-[600px]:w-[100%] my-3`}>
-                                            <p id='oidc_client_details_policy_name_description_label' className="font-[600] text-suva-gray text-sm">
-                                                {t("viewOidcClientDetails.policyNameDescription")}
-                                            </p>
-                                            <p id='oidc_client_details_policy_description_context' className="font-[600] text-vulcan text-base">
-                                                {selectedClientData.policyDescription ? selectedClientData.policyDescription : ' - '}
-                                            </p>
+                                        {/* Policy Name Section */}
+                                        <div className={`w-[50%] max-[600px]:w-[100%] mb-3`}>
+                                            <div className="mb-3">
+                                                <p id='oidc_client_details_policy_name_label' className="font-[600] text-suva-gray text-sm">
+                                                    {t("viewOidcClientDetails.policyName")}
+                                                </p>
+                                                <p id='oidc_client_details_policy_name_context' className="font-[600] text-vulcan text-base">
+                                                    {oidcClientDetails.policyName || selectedClientData.policyName || ' - '}
+                                                </p>
+                                            </div>
+                                            <div>
+                                                <p id='oidc_client_details_policy_name_description_label' className="font-[600] text-suva-gray text-sm">
+                                                    {t("viewOidcClientDetails.policyNameDescription")}
+                                                </p>
+                                                <p id='oidc_client_details_policy_description_context' className="font-[600] text-vulcan text-base">
+                                                    {oidcClientDetails.policyDescription || selectedClientData.policyDescription || ' - '}
+                                                </p>
+                                            </div>
                                         </div>
                                     </div>
                                     <hr className="h-px w-full bg-gray-200 border-0" />
@@ -217,7 +264,7 @@ function ViewAdminOidcClientDetails() {
                                                 {t("viewOidcClientDetails.publicKey")}
                                             </p>
                                             <pre id="oidc_client_details_public_key_context" className="font-[600] text-vulcan text-sm w-full bg-snow-white focus:outline-none focus:ring-0 h-fit overflow-x-auto">
-                                                {formatPublicKey(oidcClientDetails.publicKey)}
+                                                {getFormattedPublicKey()}
                                             </pre>
                                         </div>
                                         <div className="my-4 space-y-1">
@@ -235,16 +282,22 @@ function ViewAdminOidcClientDetails() {
                                                 </p>
                                                 <div id='oidc_client_redirect_uris' className="flex-col">
                                                     <ul>
-                                                        {oidcClientDetails.redirectUris.map((uri, index) => (
-                                                            <li key={index + uri} className={`space-y-3 mt-2 ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
-                                                                <p className="text-base  font-[600] text-[#36393E] py-1">
-                                                                    {uri}
-                                                                </p>
-                                                                {oidcClientDetails.redirectUris.length > 1 && (
-                                                                    <hr className="h-px w-[72%] max-[800px]:w-[140%] border-[1px] bg-[#707070]" />
-                                                                )}
+                                                        {oidcClientDetails.redirectUris && oidcClientDetails.redirectUris.length > 0 ? (
+                                                            oidcClientDetails.redirectUris.map((uri, index) => (
+                                                                <li key={index + uri} className={`space-y-3 mt-2 ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
+                                                                    <p className="text-base  font-[600] text-[#36393E] py-1">
+                                                                        {uri}
+                                                                    </p>
+                                                                    {oidcClientDetails.redirectUris.length > 1 && (
+                                                                        <hr className="h-px w-[72%] max-[800px]:w-[140%] border-[1px] bg-[#707070]" />
+                                                                    )}
+                                                                </li>
+                                                            ))
+                                                        ) : (
+                                                            <li className={`${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
+                                                                <p className="text-base font-[600] text-[#36393E] py-1">-</p>
                                                             </li>
-                                                        ))}
+                                                        )}
                                                     </ul>
                                                 </div>
                                             </div>
@@ -254,22 +307,168 @@ function ViewAdminOidcClientDetails() {
                                                 </p>
                                                 <div id='oidc_client_grant_types' className="flex-col">
                                                     <ul>
-                                                        {oidcClientDetails.grantTypes.map((type, index) => (
-                                                            <li key={index + type} className={`space-y-4 ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
-                                                                <p className="text-base font-[600] text-[#36393E] py-1">
-                                                                    {getGrantTypes(type, t)}
-                                                                </p>
-                                                                {oidcClientDetails.grantTypes.length > 1 && (
-                                                                    <hr className="h-px w-[72%] bg-[#707070] border-[1px]" />
-                                                                )}
+                                                        {oidcClientDetails.grantTypes && oidcClientDetails.grantTypes.length > 0 ? (
+                                                            oidcClientDetails.grantTypes.map((type, index) => (
+                                                                <li key={index + type} className={`space-y-4 ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
+                                                                    <p className="text-base font-[600] text-[#36393E] py-1">
+                                                                        {getGrantTypes(type, t)}
+                                                                    </p>
+                                                                    {oidcClientDetails.grantTypes.length > 1 && (
+                                                                        <hr className="h-px w-[72%] bg-[#707070] border-[1px]" />
+                                                                    )}
+                                                                </li>
+                                                            ))
+                                                        ) : (
+                                                            <li className={`${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
+                                                                <p className="text-base font-[600] text-[#36393E] py-1">-</p>
                                                             </li>
-                                                        ))}
+                                                        )}
                                                     </ul>
                                                 </div>
                                             </div>
                                         </div>
+
+                                        {/* Client Name Multilanguage */}
+                                        {clientNameLangMap && Object.keys(clientNameLangMap).length > 0 && (
+                                            <div className="my-3 space-y-1">
+                                                <p id='oidc_client_details_client_name_multilang_label' className="font-[600] text-suva-gray text-sm">
+                                                    {t("createOidcClient.clientNameMultilanguage")}
+                                                </p>
+                                                <div id='oidc_client_client_name_multilang' className="flex flex-wrap gap-3 max-[600px]:flex-col">
+                                                    {Object.entries(clientNameLangMap).map(([language, text], index) => (
+                                                        <div key={index + language} className={`flex flex-col w-[calc(33.333%-0.5rem)] max-[600px]:w-full ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
+                                                            <p className="text-sm font-[600] text-suva-gray">
+                                                                {getLanguageDisplayName(language)}:
+                                                            </p>
+                                                            <p className="text-base font-[600] text-vulcan py-1">
+                                                                {text}
+                                                            </p>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
+
+                                {/* Additional Information Section */}
+                                {additionalConfig && Object.keys(additionalConfig).length > 0 && (
+                                    <>
+                                        <hr className="h-px w-full bg-gray-200 border-0 mt-6" />
+                                        <div className={`${isLoginLanguageRTL ? "pr-8 ml-8" : "pl-8 mr-8"} pt-3 mb-2`}>
+                                            {/* Toggles */}
+                                            <div className="flex flex-wrap max-[600px]:flex-col">
+                                                {additionalConfig.forgot_pwd_link_required !== undefined && (
+                                                    <div className={`w-[49%] max-[600px]:w-[100%] mb-3 ${isLoginLanguageRTL ? "ml-[1%]" : "mr-[1%]"}`}>
+                                                        <p className="font-[600] text-suva-gray text-sm">
+                                                            {t('createOidcClient.forgotPasswordBanner')}
+                                                        </p>
+                                                        <p className="font-[600] text-vulcan text-base">
+                                                            {additionalConfig.forgot_pwd_link_required ? t('commons.yes') : t('commons.no')}
+                                                        </p>
+                                                    </div>
+                                                )}
+                                                {additionalConfig.signup_banner_required !== undefined && (
+                                                    <div className="w-[50%] max-[600px]:w-[100%] mb-3">
+                                                        <p className="font-[600] text-suva-gray text-sm">
+                                                            {t('createOidcClient.signUpBanner')}
+                                                        </p>
+                                                        <p className="font-[600] text-vulcan text-base">
+                                                            {additionalConfig.signup_banner_required ? t('commons.yes') : t('commons.no')}
+                                                        </p>
+                                                    </div>
+                                                )}
+                                            </div>
+
+                                            {/* Consent Expiry and User Info Response Type */}
+                                            <div className="flex flex-wrap max-[600px]:flex-col pt-3">
+                                                {additionalConfig.consent_expire_in_mins !== undefined && (
+                                                    <div className={`w-[49%] max-[600px]:w-[100%] mb-3 ${isLoginLanguageRTL ? "ml-[1%]" : "mr-[1%]"}`}>
+                                                        <p className="font-[600] text-suva-gray text-sm">
+                                                            {t('createOidcClient.consentExpiryDuration')}
+                                                        </p>
+                                                        <p className="font-[600] text-vulcan text-base">
+                                                            {additionalConfig.consent_expire_in_mins} {t('createOidcClient.mins')}
+                                                        </p>
+                                                    </div>
+                                                )}
+                                                {additionalConfig.userinfo_response_type && (
+                                                    <div className="w-[50%] max-[600px]:w-[100%] mb-3">
+                                                        <p className="font-[600] text-suva-gray text-sm">
+                                                            {t('createOidcClient.userInfoResponseType')}
+                                                        </p>
+                                                        <p className="font-[600] text-vulcan text-base">
+                                                            {additionalConfig.userinfo_response_type === 'JWS' ? t('createOidcClient.jws') : t('createOidcClient.jwe')}
+                                                        </p>
+                                                    </div>
+                                                )}
+                                            </div>
+
+                                            {/* Purpose Type */}
+                                            {additionalConfig.purpose && additionalConfig.purpose.type && (
+                                                <div className="mb-3 pt-3">
+                                                    <p className="font-[600] text-suva-gray text-sm">
+                                                        {t('createOidcClient.purposeType')}
+                                                    </p>
+                                                    <p className="font-[600] text-vulcan text-base">
+                                                        {additionalConfig.purpose.type === 'login' ? t('createOidcClient.login') : 
+                                                         additionalConfig.purpose.type === 'link' ? t('createOidcClient.link') : 
+                                                         additionalConfig.purpose.type === 'verify' ? t('createOidcClient.verify') : 
+                                                         additionalConfig.purpose.type}
+                                                    </p>
+                                                </div>
+                                            )}
+
+                                            {/* Purpose Title and Subtitle Side by Side */}
+                                            {(additionalConfig.purpose && additionalConfig.purpose.title && Object.keys(additionalConfig.purpose.title).length > 0) || 
+                                             (additionalConfig.purpose && additionalConfig.purpose.subTitle && Object.keys(additionalConfig.purpose.subTitle).length > 0) ? (
+                                                <div className="flex flex-wrap gap-3 my-3 max-[600px]:flex-col">
+                                                    {/* Purpose Title */}
+                                                    {additionalConfig.purpose && additionalConfig.purpose.title && Object.keys(additionalConfig.purpose.title).length > 0 && (
+                                                        <div className={`flex flex-col space-y-1 ${(additionalConfig.purpose.subTitle && Object.keys(additionalConfig.purpose.subTitle).length > 0) ? 'w-[calc(50%-0.375rem)] max-[600px]:w-full' : 'w-full'}`}>
+                                                            <p className="font-[600] text-suva-gray text-sm">
+                                                                {t('createOidcClient.purposeTitle')}
+                                                            </p>
+                                                            <div className="flex flex-wrap gap-3 max-[600px]:flex-col">
+                                                                {Object.entries(additionalConfig.purpose.title).map(([langKey, text], index) => (
+                                                                    <div key={index + langKey} className={`flex flex-col w-[calc(50%-0.375rem)] max-[600px]:w-full ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
+                                                                        <p className="text-sm font-[600] text-suva-gray">
+                                                                            {getLanguageDisplayName(langKey)}:
+                                                                        </p>
+                                                                        <p className="text-base font-[600] text-vulcan py-1">
+                                                                            {text}
+                                                                        </p>
+                                                                    </div>
+                                                                ))}
+                                                            </div>
+                                                        </div>
+                                                    )}
+
+                                                    {/* Purpose Subtitle */}
+                                                    {additionalConfig.purpose && additionalConfig.purpose.subTitle && Object.keys(additionalConfig.purpose.subTitle).length > 0 && (
+                                                        <div className={`flex flex-col space-y-1 ${(additionalConfig.purpose.title && Object.keys(additionalConfig.purpose.title).length > 0) ? 'w-[calc(50%-0.375rem)] max-[600px]:w-full' : 'w-full'}`}>
+                                                            <p className="font-[600] text-suva-gray text-sm">
+                                                                {t('createOidcClient.purposeSubtitle')}
+                                                            </p>
+                                                            <div className="flex flex-wrap gap-3 max-[600px]:flex-col">
+                                                                {Object.entries(additionalConfig.purpose.subTitle).map(([langKey, text], index) => (
+                                                                    <div key={index + langKey} className={`flex flex-col w-[calc(50%-0.375rem)] max-[600px]:w-full ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
+                                                                        <p className="text-sm font-[600] text-suva-gray">
+                                                                            {getLanguageDisplayName(langKey)}:
+                                                                        </p>
+                                                                        <p className="text-base font-[600] text-vulcan py-1">
+                                                                            {text}
+                                                                        </p>
+                                                                    </div>
+                                                                ))}
+                                                            </div>
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            ) : null}
+                                        </div>
+                                    </>
+                                )}
 
                                 <hr className="h-px w-full bg-gray-200 border-0 mt-6" />
                                 <div className={`flex justify-end py-5 ${isLoginLanguageRTL ? "ml-8" : "mr-8"}`}>

@@ -231,13 +231,7 @@ function EditOidcClient() {
                 const selectedOidcClientData = JSON.parse(clientData);
                 // Use clientId from sessionStorage for the GET request
                 const clientId = selectedOidcClientData.clientId;
-                 const request = createRequest({}, "mosip.pms.oidc.client.details.get", true);
-                 const response = await HttpService.get(getPartnerManagerUrl(`/oidc-clients/${clientId}`, process.env.NODE_ENV), {
-                     data: request,
-                     headers: {
-                         'Content-Type': 'application/json'
-                     }
-                 });
+                 const response = await HttpService.get(getPartnerManagerUrl(`/oidc-clients/${clientId}`, process.env.NODE_ENV));
                 if (response) {
                     const responseData = response.data;
                     if (responseData && responseData.response) {
