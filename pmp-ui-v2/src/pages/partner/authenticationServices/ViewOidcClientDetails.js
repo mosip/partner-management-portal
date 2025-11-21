@@ -366,7 +366,7 @@ function ViewOidcClientDetails() {
                                                             {t('createOidcClient.forgotPasswordBanner')}
                                                         </p>
                                                         <p className="font-[600] text-vulcan text-base">
-                                                            {additionalConfig.forgot_pwd_link_required ? 'Yes' : 'No'}
+                                                            {additionalConfig.forgot_pwd_link_required ? t('commons.yes') : t('commons.no')}
                                                         </p>
                                                     </div>
                                                 )}
@@ -376,7 +376,7 @@ function ViewOidcClientDetails() {
                                                             {t('createOidcClient.signUpBanner')}
                                                         </p>
                                                         <p className="font-[600] text-vulcan text-base">
-                                                            {additionalConfig.signup_banner_required ? 'Yes' : 'No'}
+                                                            {additionalConfig.signup_banner_required ? t('commons.yes') : t('commons.no')}
                                                         </p>
                                                     </div>
                                                 )}
@@ -390,7 +390,7 @@ function ViewOidcClientDetails() {
                                                             {t('createOidcClient.consentExpiryDuration')}
                                                         </p>
                                                         <p className="font-[600] text-vulcan text-base">
-                                                            {additionalConfig.consent_expire_in_mins} minutes
+                                                            {additionalConfig.consent_expire_in_mins} {t('createOidcClient.mins')}
                                                         </p>
                                                     </div>
                                                 )}
