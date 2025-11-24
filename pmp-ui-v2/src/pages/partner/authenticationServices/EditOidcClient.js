@@ -9,7 +9,7 @@ import {
     getErrorMessage,
     formatPublicKey,
     validateInputRegex,
-    getLanguageLabel,
+    getLanguageDisplayName,
     createDropdownData,
     createRequest
 } from "../../../utils/AppUtils";
@@ -196,7 +196,7 @@ function EditOidcClient() {
 
                 const languageData = languageCodes.map(langCode => ({
                     languageCode: langCode,
-                    name: getLanguageLabel(langCode, t)
+                    name: getLanguageDisplayName(langCode, t)
                 }));
 
                 const defaultOption = { languageCode: 'default', name: t('createOidcClient.default') };
@@ -231,13 +231,7 @@ function EditOidcClient() {
                 const selectedOidcClientData = JSON.parse(clientData);
                 // Use clientId from sessionStorage for the GET request
                 const clientId = selectedOidcClientData.clientId;
-                 const request = createRequest({}, "mosip.pms.oidc.client.details.get", true);
-                 const response = await HttpService.get(getPartnerManagerUrl(`/oidc-clients/${clientId}`, process.env.NODE_ENV), {
-                     data: request,
-                     headers: {
-                         'Content-Type': 'application/json'
-                     }
-                 });
+                 const response = await HttpService.get(getPartnerManagerUrl(`/oidc-clients/${clientId}`, process.env.NODE_ENV));
                 if (response) {
                     const responseData = response.data;
                     if (responseData && responseData.response) {
@@ -437,14 +431,23 @@ function EditOidcClient() {
 
     // Get placeholder based on language code and field type
     const getPlaceholderForLanguage = (languageCode, fieldType) => {
-        const langCode = languageCode ? languageCode.toLowerCase() : 'default';
-        const placeholderKey = `createOidcClient.enter${fieldType}${langCode.charAt(0).toUpperCase() + langCode.slice(1)}`;
-        const fallbackKey = `createOidcClient.enter${fieldType}Default`;
-        
-        const placeholder = t(placeholderKey);
-        if (placeholder === placeholderKey) {
+        if (!languageCode || languageCode === 'default') {
+            const fallbackKey = `createOidcClient.enter${fieldType}Default`;
             return t(fallbackKey);
         }
+        
+        const langCode = languageCode.toLowerCase();
+        
+        // Use the new translation keys that have text in the target language
+        const placeholderKey = `createOidcClient.enter${fieldType}In${langCode.charAt(0).toUpperCase() + langCode.slice(1)}`;
+        const fallbackKey = `createOidcClient.enter${fieldType}Default`;
+        
+        // Get translation (all translation files have the same keys with target language text)
+        let placeholder = t(placeholderKey);
+        if (placeholder === placeholderKey) {
+            placeholder = t(fallbackKey);
+        }
+        
         return placeholder;
     };
 
@@ -1118,7 +1121,8 @@ function EditOidcClient() {
                                                                                                 maxLength={256}
                                                                                                 showDelete={clientNameLangMapEntries.length > 0}
                                                                                                 errorMessage={clientNameLangMapErrors[entry.id]}
-                                                                                                isRTL={isLoginLanguageRTL}
+                                                                                                isRTL={isLangRTL(entry.language)}
+                                                                                                languageCode={entry.language}
                                                                                             />
                                                                                         </div>
                                                                                     </div>
@@ -1386,7 +1390,8 @@ function EditOidcClient() {
                                                                                                 id={`purpose_title_text_${index + 1}`}
                                                                                                 showDelete={purposeTitleEntries.length > 0}
                                                                                                 errorMessage={purposeTitleErrors[entry.id]}
-                                                                                                isRTL={isLoginLanguageRTL}
+                                                                                                isRTL={isLangRTL(entry.language)}
+                                                                                                languageCode={entry.language}
                                                                                             />
                                                                                         </div>
                                                                                     </div>
@@ -1462,7 +1467,8 @@ function EditOidcClient() {
                                                                                                 id={`purpose_subtitle_text_${index + 1}`}
                                                                                                 showDelete={purposeSubtitleEntries.length > 0}
                                                                                                 errorMessage={purposeSubtitleErrors[entry.id]}
-                                                                                                isRTL={isLoginLanguageRTL}
+                                                                                                isRTL={isLangRTL(entry.language)}
+                                                                                                languageCode={entry.language}
                                                                                             />
                                                                                         </div>
                                                                                     </div>

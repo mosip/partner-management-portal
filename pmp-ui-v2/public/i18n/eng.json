@@ -491,6 +491,24 @@
         "enterPurposeSubtitleFra": "Enter the Purpose Subtitle in French",
         "enterPurposeSubtitleTam": "Enter the Purpose Subtitle in Tamil",
         "enterPurposeSubtitleKan": "Enter the Purpose Subtitle in Kannada",
+        "enterNameForOidcClientInAra": "الرجاء إدخال اسم عميل OIDC بالعربية",
+        "enterNameForOidcClientInHin": "कृपया OIDC क्लाइंट का नाम हिंदी में दर्ज करें",
+        "enterNameForOidcClientInFra": "Veuillez entrer le nom du client OIDC en français",
+        "enterNameForOidcClientInEng": "Please enter the OIDC client name in English",
+        "enterNameForOidcClientInTam": "தயவுசெய்து OIDC கிளையண்ட் பெயரை தமிழில் உள்ளிடவும்",
+        "enterNameForOidcClientInKan": "ದಯವಿಟ್ಟು OIDC ಕ್ಲೈಂಟ್ ಹೆಸರನ್ನು ಕನ್ನಡದಲ್ಲಿ ನಮೂದಿಸಿ",
+        "enterPurposeTitleInAra": "أدخل عنوان الغرض باللغة العربية",
+        "enterPurposeTitleInHin": "कृपया हिंदी में उद्देश्य शीर्षक दर्ज करें",
+        "enterPurposeTitleInFra": "Saisissez le titre de l'objet en français",
+        "enterPurposeTitleInEng": "Enter the Purpose Title in English",
+        "enterPurposeTitleInTam": "தயவுசெய்து தமிழில் நோக்கத்தின் தலைப்பை உள்ளிடவும்",
+        "enterPurposeTitleInKan": "ದಯವಿಟ್ಟು ಕನ್ನಡದಲ್ಲಿ ಉದ್ದೇಶ ಶೀರ್ಷಿಕೆಯನ್ನು ನಮೂದಿಸಿ",
+        "enterPurposeSubtitleInAra": "أدخل العنوان الفرعي للغرض باللغة العربية",
+        "enterPurposeSubtitleInHin": "कृपया हिंदी में उद्देश्य उपशीर्षक दर्ज करें",
+        "enterPurposeSubtitleInFra": "Saisissez le sous-titre de l'objectif en français",
+        "enterPurposeSubtitleInEng": "Enter the Purpose Subtitle in English",
+        "enterPurposeSubtitleInTam": "தயவுசெய்து தமிழில் நோக்கத்தின் உபதலைப்பை உள்ளிடவும்",
+        "enterPurposeSubtitleInKan": "ದಯವಿಟ್ಟು ಕನ್ನಡದಲ್ಲಿ ಉದ್ದೇಶ ಉಪಶೀರ್ಷಿಕೆಯನ್ನು ನಮೂದಿಸಿ",
         "addLanguage": "Add Language",
         "selectLanguage": "Select Language",
         "default": "Default",
@@ -510,7 +528,13 @@
         "clientNameMultilanguage": "OIDC Client Name (Multilingual Support)",
         "clientNameMultilanguageTooltip": "Enter the client name in multiple languages. This is optional and will be sent as an empty object if no entries are added.",
         "addClientNameLangMap": "Add Client Name Language",
-        "addClientNameLangMapHelperText": "Click on add client name language to add multi language client name"
+        "addClientNameLangMapHelperText": "Click on add client name language to add multi language client name",
+        "deleteInAra": "حذف",
+        "deleteInHin": "हटाएं",
+        "deleteInFra": "Supprimer",
+        "deleteInEng": "Delete",
+        "deleteInTam": "நீக்கு",
+        "deleteInKan": "ಅಳಿಸಿ"
     },
     "oidcClientsList": {
         "partnerId": "Partner ID",
@@ -563,7 +587,9 @@
         "adminName": "Admin Name",
         "commentsOfAdmin": "Comments of Admin",
         "partnersComment": "Partner's Comment",
-        "back": "Back"
+        "back": "Back",
+        "errorWhileGettingOidcClientDetails": "While fetching OIDC Client details, we have encountered with an error.",
+        "language": "Language"
     },
     "viewApiKeyDetails": {
         "viewApiKeyDetails": "View API Key Details",
@@ -1165,7 +1191,7 @@
     },
     "viewAdminOidcClientDetails": {
         "organisation": "Organisation",
-        "errorWhileGettingOidcClientDetails": "While fetching Policy Group details, we have encountered with an error.",
+        "errorWhileGettingOidcClientDetails": "While fetching OIDC Client details, we have encountered with an error.",
         "errorWhileGettingGroupDetails": "While fetching Policy Group details, we have encountered with an error."
     },
     "deactivateOidc": {
