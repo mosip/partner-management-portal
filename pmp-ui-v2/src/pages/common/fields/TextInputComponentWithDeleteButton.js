@@ -15,10 +15,27 @@ function TextInputComponentWithDeleteButton({
   errorMessage,
   className = "",
   containerClassName = "",
-  isRTL = null
+  isRTL = null,
+  languageCode = null
 }) {
   const { t } = useTranslation();
   const isLoginLanguageRTL = isRTL !== null ? isRTL : isLangRTL(getUserProfile().locale);
+  
+  // Get delete label in the target language
+  const getDeleteLabel = () => {
+    if (!languageCode || languageCode === 'default') {
+      return t('createOidcClient.delete');
+    }
+    
+    const langCode = languageCode.toLowerCase();
+    const deleteKey = `createOidcClient.deleteIn${langCode.charAt(0).toUpperCase() + langCode.slice(1)}`;
+    
+    // Use the respective translation file for the language code
+    const deleteLabel = t(deleteKey, { lng: langCode });
+    
+    // Fallback to default if translation not found
+    return deleteLabel === deleteKey ? t('createOidcClient.delete') : deleteLabel;
+  };
 
   const handleDelete = () => {
     if (onDelete) {
@@ -34,6 +51,7 @@ function TextInputComponentWithDeleteButton({
           onChange={onChange}
           maxLength={maxLength}
           placeholder={placeholder}
+          dir={isLoginLanguageRTL ? 'rtl' : 'ltr'}
           className={`h-10 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline w-full ${showDelete ? (isLoginLanguageRTL ? 'pl-28' : 'pr-28') : ''} ${className}`}
           id={id}
         />
@@ -48,7 +66,7 @@ function TextInputComponentWithDeleteButton({
           >
             <img src={deleteIconBlue} alt="Delete" className="w-[18px] h-5 mx-1 cursor-pointer" />
             <p className="text-sm font-normal text-[#1447b2] cursor-pointer">
-              {t('createOidcClient.delete')}
+              {getDeleteLabel()}
             </p>
           </div>
         )}
@@ -73,7 +91,8 @@ TextInputComponentWithDeleteButton.propTypes = {
   errorMessage: PropTypes.string,
   className: PropTypes.string,
   containerClassName: PropTypes.string,
-  isRTL: PropTypes.bool
+  isRTL: PropTypes.bool,
+  languageCode: PropTypes.string
 };
 
 export default TextInputComponentWithDeleteButton;

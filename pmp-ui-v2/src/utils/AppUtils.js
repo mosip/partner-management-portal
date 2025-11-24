@@ -110,6 +110,25 @@ export const getLanguageLabel = (languageCode, t) => {
     return languageCode; // fallback to code if no translation found
 }
 
+export const getLanguageNativeName = (languageCode) => {
+    const nativeNameMap = {
+        "eng": "English",
+        "hin": "हिन्दी",
+        "ara": "العربية",
+        "fra": "Français",
+        "tam": "தமிழ்",
+        "kan": "ಕನ್ನಡ"
+    };
+
+    if (languageCode) {
+        const nativeName = nativeNameMap[languageCode.toLowerCase()];
+        if (nativeName) {
+            return nativeName;
+        }
+    }
+    return languageCode; // fallback to code if no native name found
+}
+
 export const getStatusCode = (status, t) => {
     if (status) {
         status = status.toLowerCase();

@@ -164,7 +164,7 @@ function OidcClientsList() {
                             clientName: selectedClientdata.clientNameEng,
                             clientAuthMethods: clientData.clientAuthMethods,
                             clientNameLangMap: getClientNameLangMap(selectedClientdata.clientNameEng, selectedClientdata.clientNameJson)
-                        });
+                        }, "mosip.pms.deactivate.oidc.client.patch", true);
                         setDeactivateRequest(request);
                         setViewClientId(-1);
                         setSelectedOidcClient(selectedClientdata);

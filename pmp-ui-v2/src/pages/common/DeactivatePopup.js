@@ -59,7 +59,7 @@ function DeactivatePopup({ onClickConfirm, closePopUp, popupData, request, heade
                     }
                 });
             } else if (popupData.clientName) {
-                response = await HttpService.put(getPartnerManagerUrl(`/oidc-clients/${popupData.clientId}`, process.env.NODE_ENV), request, {
+                response = await HttpService.patch(getPartnerManagerUrl(`/oidc-clients/${popupData.clientId}`, process.env.NODE_ENV), request, {
                     headers: {
                         'Content-Type': 'application/json'
                     }
