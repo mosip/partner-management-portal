@@ -110,7 +110,11 @@ export const getLanguageLabel = (languageCode, t) => {
     return languageCode; // fallback to code if no translation found
 }
 
-export const getLanguageDisplayName = (languageCode) => {
+export const getLanguageDisplayName = (languageCode, t) => {
+    if (languageCode === '@none' || languageCode === 'default') {
+        return t('createOidcClient.default');
+    }
+
     const displayNameMap = {
         "eng": "English",
         "hin": "हिन्दी",

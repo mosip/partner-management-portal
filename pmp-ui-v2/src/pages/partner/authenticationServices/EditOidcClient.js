@@ -196,7 +196,7 @@ function EditOidcClient() {
 
                 const languageData = languageCodes.map(langCode => ({
                     languageCode: langCode,
-                    name: getLanguageDisplayName(langCode)
+                    name: getLanguageDisplayName(langCode, t)
                 }));
 
                 const defaultOption = { languageCode: 'default', name: t('createOidcClient.default') };
