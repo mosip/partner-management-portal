@@ -719,16 +719,13 @@ export const handleFileChange = (event, setErrorCode, setErrorMsg, setSuccessMsg
     event.target.value = '';
 };
 
-export const getClientNameEng = (clientName) => {
+export const getClientNameDefault = (clientName) => {
     try {
         const jsonObj = JSON.parse(clientName);
-        if (jsonObj['eng']) {
-            return jsonObj['eng'];
-        }
         if (jsonObj['@none']) {
             return jsonObj['@none'];
         }
-        // If neither "eng" nor "@none" is present, return the original string
+        // If "@none" is not present, return the original string
         return clientName;
     } catch {
         // If the string is not a valid JSON, return as it is
@@ -742,7 +739,7 @@ export const populateClientNames = (data) => {
         return {
             ...item,
             clientNameJson: item.clientName,
-            clientNameEng: getClientNameEng(item.clientName)
+            clientNameEng: getClientNameDefault(item.clientName)
         };
     });
     return extractedList;

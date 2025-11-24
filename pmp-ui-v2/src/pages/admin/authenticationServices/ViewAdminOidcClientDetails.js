@@ -21,7 +21,6 @@ function ViewAdminOidcClientDetails() {
     const [dataLoaded, setDataLoaded] = useState(false);
     const [unexpectedError, setUnexpectedError] = useState(false);
     const [copied, setCopied] = useState(false);
-    const [selectedClientData, setSelectedClientData] = useState({});
     const [oidcClientDetails, setOidcClientDetails] = useState({
         redirectUris: [],
         grantTypes: [],
@@ -45,7 +44,6 @@ function ViewAdminOidcClientDetails() {
             return;
         }
         const clientData = JSON.parse(data);
-        setSelectedClientData(clientData);
 
         const fetchData = async () => {
             try {
@@ -170,7 +168,7 @@ function ViewAdminOidcClientDetails() {
                                                 <div className="mt-4 border-b border-gray-200 pb-3">
                                                     <div className="flex justify-between items-start max-[450px]:flex-col">
                                                         <div className="flex-col flex-1">
-                                                            <p id='view_admin_oidc_clients_sub_title_id' className="text-lg text-dark-blue mb-2">{oidcClientDetails.name || selectedClientData.clientNameEng}</p>
+                                                            <p id='view_admin_oidc_clients_sub_title_id' className="text-lg text-dark-blue mb-2">{oidcClientDetails.name}</p>
                                                             <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
                                                                 <div id='view_admin_oidc_clients_status' className={`${bgOfStatus(oidcClientDetails.status)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
                                                                     {getStatusCode(oidcClientDetails.status, t)}
@@ -187,11 +185,11 @@ function ViewAdminOidcClientDetails() {
                                                         </div>
 
                                                         <button id="oidc_client_details_copy_id" className={`${oidcClientDetails.status === "ACTIVE" ? 'bg-[#F0F5FF] border-[#BED3FF] cursor-pointer hover:shadow-md' : 'bg-gray-200 border-gray-400 cursor-default'} border h-[55px] w-[157px] max-[450px]:w-[40%] max-[800px]:w-[25%] px-3 py-2 rounded-md relative flex flex-col justify-center`}
-                                                            onClick={() => copyClientId({...selectedClientData, status: oidcClientDetails.status}, selectedClientData.clientId, setCopied)} tabIndex={oidcClientDetails.status === "ACTIVE" ? "0" : "-1"}>
+                                                            onClick={() => copyClientId({ ...oidcClientDetails }, oidcClientDetails.id, setCopied)} tabIndex={oidcClientDetails.status === "ACTIVE" ? "0" : "-1"}>
                                                             <p id='view_admin_oidc_client_id_label' className={`text-sm font-semibold text-[#333333] mb-1 ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>{t('viewOidcClientDetails.oidcClientId')}</p>
                                                             <div className={`flex space-x-1 items-center ${isLoginLanguageRTL ? "justify-start flex-row-reverse" : "justify-end"}`}>
                                                                 <p id='view_admin_oidc_client_id' className={`text-base font-bold ${oidcClientDetails.status === "ACTIVE" ? 'text-[#1447B2]' : 'text-gray-400'} truncate`}>
-                                                                    {selectedClientData.clientId?.length > 10 ? selectedClientData.clientId.substring(0, 10) + '…' : selectedClientData.clientId}
+                                                                    {oidcClientDetails.id?.length > 10 ? oidcClientDetails.id.substring(0, 10) + '…' : oidcClientDetails.id}
                                                                 </p>
                                                                 {oidcClientDetails.status === "ACTIVE" ? (
                                                                     <img id="oidc_client_details_copy_id_icon" src={content_copy_icon} alt="" className="w-4 h-4 flex-shrink-0" />
@@ -217,7 +215,7 @@ function ViewAdminOidcClientDetails() {
                                                 {t("viewOidcClientDetails.partnerId")}
                                             </p>
                                             <p id='oidc_client_details_partner_id_context' className="font-[600] text-vulcan text-base">
-                                                {oidcClientDetails.relyingPartyId || selectedClientData.partnerId}
+                                                {oidcClientDetails.relyingPartyId}
                                             </p>
                                         </div>
                                         <div className="mb-3 max-[600px]:w-[100%] w-[49%]">
@@ -233,7 +231,7 @@ function ViewAdminOidcClientDetails() {
                                                 {t("viewAdminOidcClientDetails.organisation")}
                                             </p>
                                             <p id='oidc_client_details_org_name_context' className="font-[600] text-vulcan text-base">
-                                                {selectedClientData.orgName}
+                                                {oidcClientDetails.orgName}
                                             </p>
                                         </div>
                                     </div>
@@ -246,7 +244,7 @@ function ViewAdminOidcClientDetails() {
                                                     {t("viewOidcClientDetails.policyGroup")}
                                                 </p>
                                                 <p id='oidc_client_details_policy_group_name_context' className="font-[600] text-vulcan text-base">
-                                                    {oidcClientDetails.policyGroupName || selectedClientData.policyGroupName || ' - '}
+                                                    {oidcClientDetails.policyGroupName || ' - '}
                                                 </p>
                                             </div>
                                             <div>
@@ -254,7 +252,7 @@ function ViewAdminOidcClientDetails() {
                                                     {t("viewOidcClientDetails.policyGroupDescription")}
                                                 </p>
                                                 <p id='oidc_client_details_policy_group_description_context' className="font-[600] text-vulcan text-base">
-                                                    {oidcClientDetails.policyGroupDescription || selectedClientData.policyGroupDescription || ' - '}
+                                                    {oidcClientDetails.policyGroupDescription || ' - '}
                                                 </p>
                                             </div>
                                         </div>
@@ -265,7 +263,7 @@ function ViewAdminOidcClientDetails() {
                                                     {t("viewOidcClientDetails.policyName")}
                                                 </p>
                                                 <p id='oidc_client_details_policy_name_context' className="font-[600] text-vulcan text-base">
-                                                    {oidcClientDetails.policyName || selectedClientData.policyName || ' - '}
+                                                    {oidcClientDetails.policyName || ' - '}
                                                 </p>
                                             </div>
                                             <div>
@@ -273,7 +271,7 @@ function ViewAdminOidcClientDetails() {
                                                     {t("viewOidcClientDetails.policyNameDescription")}
                                                 </p>
                                                 <p id='oidc_client_details_policy_description_context' className="font-[600] text-vulcan text-base">
-                                                    {oidcClientDetails.policyDescription || selectedClientData.policyDescription || ' - '}
+                                                    {oidcClientDetails.policyDescription || ' - '}
                                                 </p>
                                             </div>
                                         </div>
