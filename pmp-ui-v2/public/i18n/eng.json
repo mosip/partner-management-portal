@@ -1191,7 +1191,7 @@
     },
     "viewAdminOidcClientDetails": {
         "organisation": "Organisation",
-        "errorWhileGettingOidcClientDetails": "While fetching Policy Group details, we have encountered with an error.",
+        "errorWhileGettingOidcClientDetails": "While fetching OIDC Client details, we have encountered with an error.",
         "errorWhileGettingGroupDetails": "While fetching Policy Group details, we have encountered with an error."
     },
     "deactivateOidc": {
