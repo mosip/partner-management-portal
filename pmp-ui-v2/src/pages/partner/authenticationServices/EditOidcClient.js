@@ -9,7 +9,7 @@ import {
     getErrorMessage,
     formatPublicKey,
     validateInputRegex,
-    getLanguageNativeName,
+    getLanguageDisplayName,
     createDropdownData,
     createRequest
 } from "../../../utils/AppUtils";
@@ -196,7 +196,7 @@ function EditOidcClient() {
 
                 const languageData = languageCodes.map(langCode => ({
                     languageCode: langCode,
-                    name: getLanguageNativeName(langCode)
+                    name: getLanguageDisplayName(langCode)
                 }));
 
                 const defaultOption = { languageCode: 'default', name: t('createOidcClient.default') };

@@ -110,8 +110,8 @@ export const getLanguageLabel = (languageCode, t) => {
     return languageCode; // fallback to code if no translation found
 }
 
-export const getLanguageNativeName = (languageCode) => {
-    const nativeNameMap = {
+export const getLanguageDisplayName = (languageCode) => {
+    const displayNameMap = {
         "eng": "English",
         "hin": "हिन्दी",
         "ara": "العربية",
@@ -121,12 +121,12 @@ export const getLanguageNativeName = (languageCode) => {
     };
 
     if (languageCode) {
-        const nativeName = nativeNameMap[languageCode.toLowerCase()];
-        if (nativeName) {
-            return nativeName;
+        const displayName = displayNameMap[languageCode.toLowerCase()];
+        if (displayName) {
+            return displayName;
         }
     }
-    return languageCode; // fallback to code if no native name found
+    return languageCode; // fallback to code if no display name found
 }
 
 export const getStatusCode = (status, t) => {

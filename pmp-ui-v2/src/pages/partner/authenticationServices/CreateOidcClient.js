@@ -8,7 +8,7 @@ import {
   moveToOidcClientsList, getGrantTypes, getApprovedAuthPartners,
   isLangRTL, createDropdownData, validateUrl, getPartnerPolicyRequests,
   onPressEnterKey, trimAndReplace, validateInputRegex,
-  getLanguageNativeName, createRequest
+  getLanguageDisplayName, createRequest
 } from '../../../utils/AppUtils';
 import { HttpService } from '../../../services/HttpService';
 import DropdownWithSearchComponent from "../../common/fields/DropdownWithSearchComponent";
@@ -231,7 +231,7 @@ function CreateOidcClient() {
 
         const languageData = languageCodes.map(langCode => ({
           languageCode: langCode,
-          name: getLanguageNativeName(langCode)
+          name: getLanguageDisplayName(langCode)
         }));
 
         // Add "Default" option at the beginning
