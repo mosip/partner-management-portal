@@ -159,7 +159,7 @@ function ViewAdminOidcClientDetails() {
                                             tabIndex="0"
                                             onKeyDown={(e) => onPressEnterKey(e, () => setIsPrimaryInfoExpanded(!isPrimaryInfoExpanded))}
                                         >
-                                            <h3 className={`text-lg font-semibold ${isPrimaryInfoExpanded ? 'text-[#1447B2]' : 'text-dark-blue'}`}>{t('createOidcClient.primaryInformation')}</h3>
+                                            <h3 className="text-lg font-semibold text-dark-blue">{t('createOidcClient.primaryInformation')}</h3>
                                             <img src={expandToggleIcon} alt="Toggle" className={`w-7 h-7 transform transition-transform ${isPrimaryInfoExpanded ? 'rotate-180' : ''}`} />
                                         </div>
 
@@ -168,7 +168,7 @@ function ViewAdminOidcClientDetails() {
                                                 <div className="mt-4 border-b border-gray-200 pb-3">
                                                     <div className="flex justify-between items-start max-[450px]:flex-col">
                                                         <div className="flex-col flex-1">
-                                                            <p id='view_admin_oidc_clients_sub_title_id' className="text-lg text-dark-blue mb-2">{oidcClientDetails.name}</p>
+                                                            <p id='view_admin_oidc_clients_sub_title_id' className="text-lg text-dark-blue mb-2">{t('authenticationServices.oidcClientName')}: {oidcClientDetails.name}</p>
                                                             <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
                                                                 <div id='view_admin_oidc_clients_status' className={`${bgOfStatus(oidcClientDetails.status)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
                                                                     {getStatusCode(oidcClientDetails.status, t)}
@@ -198,7 +198,7 @@ function ViewAdminOidcClientDetails() {
                                                                 )}
                                                                 {copied &&
                                                                     (
-                                                                        <div ref={copyToolTipRef} className={`z-20 px-4 py-1 mt-[3.5rem] max-h-[32%] font-semibold overflow-y-auto absolute ${isLoginLanguageRTL ? "left-10" : "right-10"} shadow-lg bg-white border border-gray-300 rounded-md`}>
+                                                                        <div ref={copyToolTipRef} className={`z-20 px-4 py-1 mt-10 min-h-8 font-semibold absolute ${isLoginLanguageRTL ? "left-8" : "right-8"} shadow-lg bg-white border border-gray-300 rounded-md`}>
                                                                             <p id='view_admin_oidc_client_id_copied' className="text-[#36393E] text-base font-inter">{t('viewOidcClientDetails.copied!')}</p>
                                                                         </div>
                                                                     )
@@ -399,7 +399,7 @@ function ViewAdminOidcClientDetails() {
                                                 tabIndex="0"
                                                 onKeyDown={(e) => onPressEnterKey(e, () => setIsAdditionalInfoExpanded(!isAdditionalInfoExpanded))}
                                             >
-                                                <h3 className={`text-lg font-semibold ${isAdditionalInfoExpanded ? 'text-[#1447B2]' : 'text-dark-blue'}`}>{t('createOidcClient.additionalInformation')}</h3>
+                                                <h3 className="text-lg font-semibold text-dark-blue">{t('createOidcClient.additionalInformation')}</h3>
                                                 <img src={expandToggleIcon} alt="Toggle" className={`w-7 h-7 transform transition-transform ${isAdditionalInfoExpanded ? 'rotate-180' : ''}`} />
                                             </div>
 
