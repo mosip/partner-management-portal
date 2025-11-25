@@ -280,11 +280,11 @@ function ViewOidcClientDetails() {
                                                     </div>
                                                     <hr className="h-px w-full bg-gray-200 border-0" />
                                                     {/* Client Name Multilanguage - Table Format */}
-                                                    {clientNameLangMap && Object.keys(clientNameLangMap).length > 0 && (
-                                                        <div className="my-3 space-y-1">
-                                                            <p id='oidc_client_details_client_name_multilang_label' className="font-[600] text-suva-gray text-sm mb-2">
-                                                                {t("createOidcClient.clientNameMultilanguage")}
-                                                            </p>
+                                                    <div className="my-3 space-y-1">
+                                                        <p id='oidc_client_details_client_name_multilang_label' className="font-[600] text-suva-gray text-sm mb-2">
+                                                            {t("createOidcClient.clientNameMultilanguage")}
+                                                        </p>
+                                                        {clientNameLangMap && Object.keys(clientNameLangMap).length > 0 ? (
                                                             <div id='oidc_client_client_name_multilang' className="bg-white border border-[#0000001A] rounded-[20px] overflow-hidden w-[60%]">
                                                                 <table className="w-full">
                                                                     <thead>
@@ -311,8 +311,10 @@ function ViewOidcClientDetails() {
                                                                     </tbody>
                                                                 </table>
                                                             </div>
-                                                        </div>
-                                                    )}
+                                                        ) : (
+                                                            <p className="font-[600] text-vulcan text-base">-</p>
+                                                        )}
+                                                    </div>
                                                     <div className="space-y-6">
                                                         <div className="my-3 space-y-2">
                                                             <p id='oidc_client_details_public_key_label' className="font-[600] text-suva-gray text-sm">
@@ -391,7 +393,7 @@ function ViewOidcClientDetails() {
                                 </div>
 
                                 {/* Additional Information Section */}
-                                {additionalConfig && Object.keys(additionalConfig).length > 0 && (
+                                {(
                                     <div className="bg-snow-white h-fit mt-4 rounded-xl shadow-lg font-inter mb-4">
                                         <div className="px-7 py-4">
                                             <div
@@ -409,77 +411,69 @@ function ViewOidcClientDetails() {
                                                 <div className={`pt-3 mb-2`}>
                                                     {/* Toggles */}
                                                     <div className="flex flex-wrap max-[600px]:flex-col gap-4 mb-4">
-                                                        {additionalConfig.forgot_pwd_link_required !== undefined && (
-                                                            <div className={`flex items-center gap-2 ${isLoginLanguageRTL ? "flex-row-reverse" : ""}`}>
-                                                                <div className={`relative inline-flex items-center flex-shrink-0`}>
-                                                                    <div className={`relative w-9 h-5 rounded-full transition-colors duration-200 ease-in-out ${additionalConfig.forgot_pwd_link_required ? 'bg-[#1447B2]' : 'bg-neutral-100'}`}>
-                                                                        <div className={`absolute top-0.5 left-0.5 w-4 h-4 bg-white rounded-full shadow-sm transform transition-transform duration-200 ease-in-out ${additionalConfig.forgot_pwd_link_required ? 'translate-x-4' : ''}`}></div>
-                                                                    </div>
+                                                        <div className={`flex items-center gap-2 ${isLoginLanguageRTL ? "flex-row-reverse" : ""}`}>
+                                                            <div className={`relative inline-flex items-center flex-shrink-0`}>
+                                                                <div className={`relative w-9 h-5 rounded-full transition-colors duration-200 ease-in-out ${additionalConfig.forgot_pwd_link_required ? 'bg-[#1447B2]' : 'bg-neutral-100'}`}>
+                                                                    <div className={`absolute top-0.5 left-0.5 w-4 h-4 bg-white rounded-full shadow-sm transform transition-transform duration-200 ease-in-out ${additionalConfig.forgot_pwd_link_required ? 'translate-x-4' : ''}`}></div>
                                                                 </div>
-                                                                <p className="font-[600] text-vulcan text-sm">
-                                                                    {t('createOidcClient.forgotPasswordBanner')}
-                                                                </p>
                                                             </div>
-                                                        )}
-                                                        {additionalConfig.signup_banner_required !== undefined && (
-                                                            <div className={`flex items-center gap-2 ${isLoginLanguageRTL ? "flex-row-reverse" : ""}`}>
-                                                                <div className={`relative inline-flex items-center flex-shrink-0`}>
-                                                                    <div className={`relative w-9 h-5 rounded-full transition-colors duration-200 ease-in-out ${additionalConfig.signup_banner_required ? 'bg-[#1447B2]' : 'bg-neutral-100'}`}>
-                                                                        <div className={`absolute top-0.5 left-0.5 w-4 h-4 bg-white rounded-full shadow-sm transform transition-transform duration-200 ease-in-out ${additionalConfig.signup_banner_required ? 'translate-x-4' : ''}`}></div>
-                                                                    </div>
+                                                            <p className="font-[600] text-vulcan text-sm">
+                                                                {t('createOidcClient.forgotPasswordBanner')}
+                                                            </p>
+                                                        </div>
+                                                        <div className={`flex items-center gap-2 ${isLoginLanguageRTL ? "flex-row-reverse" : ""}`}>
+                                                            <div className={`relative inline-flex items-center flex-shrink-0`}>
+                                                                <div className={`relative w-9 h-5 rounded-full transition-colors duration-200 ease-in-out ${additionalConfig.signup_banner_required ? 'bg-[#1447B2]' : 'bg-neutral-100'}`}>
+                                                                    <div className={`absolute top-0.5 left-0.5 w-4 h-4 bg-white rounded-full shadow-sm transform transition-transform duration-200 ease-in-out ${additionalConfig.signup_banner_required ? 'translate-x-4' : ''}`}></div>
                                                                 </div>
-                                                                <p className="font-[600] text-vulcan text-sm">
-                                                                    {t('createOidcClient.signUpBanner')}
-                                                                </p>
                                                             </div>
-                                                        )}
+                                                            <p className="font-[600] text-vulcan text-sm">
+                                                                {t('createOidcClient.signUpBanner')}
+                                                            </p>
+                                                        </div>
                                                     </div>
 
                                                     {/* Consent Expiry and User Info Response Type */}
                                                     <div className="flex flex-wrap max-[600px]:flex-col pt-3">
-                                                        {additionalConfig.consent_expire_in_mins !== undefined && (
-                                                            <div className={`w-[49%] max-[600px]:w-[100%] mb-3 ${isLoginLanguageRTL ? "ml-[1%]" : "mr-[1%]"}`}>
-                                                                <p className="font-[600] text-suva-gray text-sm">
-                                                                    {t('createOidcClient.consentExpiryDuration')}
-                                                                </p>
-                                                                <p className="font-[600] text-vulcan text-base">
-                                                                    {additionalConfig.consent_expire_in_mins} {t('createOidcClient.mins')}
-                                                                </p>
-                                                            </div>
-                                                        )}
-                                                        {additionalConfig.userinfo_response_type && (
-                                                            <div className="w-[50%] max-[600px]:w-[100%] mb-3">
-                                                                <p className="font-[600] text-suva-gray text-sm">
-                                                                    {t('createOidcClient.userInfoResponseType')}
-                                                                </p>
-                                                                <p className="font-[600] text-vulcan text-base">
-                                                                    {additionalConfig.userinfo_response_type === 'JWS' ? t('createOidcClient.jws') : t('createOidcClient.jwe')}
-                                                                </p>
-                                                            </div>
-                                                        )}
+                                                        <div className={`w-[49%] max-[600px]:w-[100%] mb-3 ${isLoginLanguageRTL ? "ml-[1%]" : "mr-[1%]"}`}>
+                                                            <p className="font-[600] text-suva-gray text-sm">
+                                                                {t('createOidcClient.consentExpiryDuration')}
+                                                            </p>
+                                                            <p className="font-[600] text-vulcan text-base">
+                                                                {additionalConfig.consent_expire_in_mins !== undefined ? `${additionalConfig.consent_expire_in_mins} ${t('createOidcClient.mins')}` : '-'}
+                                                            </p>
+                                                        </div>
+                                                        <div className="w-[50%] max-[600px]:w-[100%] mb-3">
+                                                            <p className="font-[600] text-suva-gray text-sm">
+                                                                {t('createOidcClient.userInfoResponseType')}
+                                                            </p>
+                                                            <p className="font-[600] text-vulcan text-base">
+                                                                {additionalConfig.userinfo_response_type ? (additionalConfig.userinfo_response_type === 'JWS' ? t('createOidcClient.jws') : t('createOidcClient.jwe')) : '-'}
+                                                            </p>
+                                                        </div>
                                                     </div>
 
                                                     {/* Purpose Type */}
-                                                    {additionalConfig.purpose && additionalConfig.purpose.type && (
-                                                        <div className="mb-3 pt-3">
-                                                            <p className="font-[600] text-suva-gray text-sm">
-                                                                {t('createOidcClient.purposeType')}
-                                                            </p>
-                                                            <p className="font-[600] text-vulcan text-base">
-                                                                {additionalConfig.purpose.type === 'login' ? t('createOidcClient.login') :
+                                                    <div className="mb-3 pt-3">
+                                                        <p className="font-[600] text-suva-gray text-sm">
+                                                            {t('createOidcClient.purposeType')}
+                                                        </p>
+                                                        <p className="font-[600] text-vulcan text-base">
+                                                            {additionalConfig.purpose && additionalConfig.purpose.type ? (
+                                                                additionalConfig.purpose.type === 'login' ? t('createOidcClient.login') :
                                                                     additionalConfig.purpose.type === 'link' ? t('createOidcClient.link') :
                                                                         additionalConfig.purpose.type === 'verify' ? t('createOidcClient.verify') :
-                                                                            additionalConfig.purpose.type}
-                                                            </p>
-                                                        </div>
-                                                    )}
+                                                                            additionalConfig.purpose.type
+                                                            ) : '-'}
+                                                        </p>
+                                                    </div>
 
                                                     {/* Purpose Title - Table Format */}
-                                                    {additionalConfig.purpose && additionalConfig.purpose.title && Object.keys(additionalConfig.purpose.title).length > 0 && (
-                                                        <div className="my-3 space-y-1">
-                                                            <p className="font-[600] text-suva-gray text-sm mb-2">
-                                                                {t('createOidcClient.purposeTitle')}
-                                                            </p>
+                                                    <div className="my-3 space-y-1">
+                                                        <p className="font-[600] text-suva-gray text-sm mb-2">
+                                                            {t('createOidcClient.purposeTitle')}
+                                                        </p>
+                                                        {additionalConfig.purpose && additionalConfig.purpose.title && Object.keys(additionalConfig.purpose.title).length > 0 ? (
                                                             <div className="bg-white border border-[#0000001A] rounded-[20px] overflow-hidden w-[60%]">
                                                                 <table className="w-full">
                                                                     <thead>
@@ -506,15 +500,17 @@ function ViewOidcClientDetails() {
                                                                     </tbody>
                                                                 </table>
                                                             </div>
-                                                        </div>
-                                                    )}
+                                                        ) : (
+                                                            <p className="font-[600] text-vulcan text-base">-</p>
+                                                        )}
+                                                    </div>
 
                                                     {/* Purpose Subtitle - Table Format */}
-                                                    {additionalConfig.purpose && additionalConfig.purpose.subTitle && Object.keys(additionalConfig.purpose.subTitle).length > 0 && (
-                                                        <div className="my-3 space-y-1">
-                                                            <p className="font-[600] text-suva-gray text-sm mb-2">
-                                                                {t('createOidcClient.purposeSubtitle')}
-                                                            </p>
+                                                    <div className="my-3 space-y-1">
+                                                        <p className="font-[600] text-suva-gray text-sm mb-2">
+                                                            {t('createOidcClient.purposeSubtitle')}
+                                                        </p>
+                                                        {additionalConfig.purpose && additionalConfig.purpose.subTitle && Object.keys(additionalConfig.purpose.subTitle).length > 0 ? (
                                                             <div className="bg-white border border-[#0000001A] rounded-[20px] overflow-hidden w-[60%]">
                                                                 <table className="w-full">
                                                                     <thead>
@@ -541,8 +537,10 @@ function ViewOidcClientDetails() {
                                                                     </tbody>
                                                                 </table>
                                                             </div>
-                                                        </div>
-                                                    )}
+                                                        ) : (
+                                                            <p className="font-[600] text-vulcan text-base">-</p>
+                                                        )}
+                                                    </div>
                                                 </div>
                                             )}
                                         </div>
