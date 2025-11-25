@@ -234,7 +234,7 @@ function ViewAdminOidcClientDetails() {
                                                                 {t("viewAdminOidcClientDetails.organisation")}
                                                             </p>
                                                             <p id='oidc_client_details_org_name_context' className="font-[600] text-vulcan text-base">
-                                                                {oidcClientDetails.orgName}
+                                                                {oidcClientDetails.orgName || '-'}
                                                             </p>
                                                         </div>
                                                     </div>
