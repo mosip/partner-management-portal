@@ -556,6 +556,9 @@ export const getPartnerDomainType = (partnerType) => {
         else if (partnerType === "MISP_Partner".toUpperCase()) {
             return 'MISP';
         }
+        else if (partnerType === "ABIS_Partner".toUpperCase()) {
+            return 'ABIS';
+        }
         else {
             return 'AUTH';
         }
