@@ -4,7 +4,7 @@ modules:
     image:
       registry: docker.io
       repository: mosipid/uitest-pmp
-      tag: v1.2.2.0
+      tag: v1.2.2.3
 
   - name: admin-ui
     enabled: false
