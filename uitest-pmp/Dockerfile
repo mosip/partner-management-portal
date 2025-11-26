@@ -1,5 +1,5 @@
 # Start with a base image that includes Java 21
-FROM openjdk:21-slim
+FROM eclipse-temurin:21-jre-alpine
 
 # Install additional dependencies, such as Selenium, Chrome, and kubectl
 USER root
