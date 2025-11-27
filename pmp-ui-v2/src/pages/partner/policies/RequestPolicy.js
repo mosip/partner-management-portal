@@ -85,7 +85,6 @@ function RequestPolicy() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                setDataLoaded(false);
                 const isAdmin = location.pathname.includes('admin');
 
                 // Initialize partner type dropdown data with MISP Partner and ABIS Partner
@@ -102,22 +101,9 @@ function RequestPolicy() {
                     ];
                     setPartnerTypeDropdownData(createDropdownData('partnerType', 'description', false, partnerTypeData, t));
                 } else {
-                    let apiUrl = '/partners/v3?status=approved&policyGroupAvailable=true';
-                    const response = await HttpService.get(getPartnerManagerUrl(apiUrl, process.env.NODE_ENV));
-                    if (response) {
-                        const responseData = response.data;
-                        if (responseData && responseData.response) {
-                            const resData = responseData.response;
-                            setPartnerData(resData);
-                            setPartnerIdDropdownData(createDropdownData('partnerId', '', false, resData, t));
-                        } else {
-                            handleServiceErrors(responseData, setErrorCode, setErrorMsg);
-                        }
-                    } else {
-                        setErrorMsg(t('commons.errorInResponse'));
-                    }
+                    const apiUrl = '/partners/v3?status=approved&policyGroupAvailable=true';
+                    await fetchPartnerList(apiUrl);
                 }
-                setDataLoaded(true);
             } catch (err) {
                 console.error('Error fetching data:', err);
                 if (err.response?.status && err.response.status !== 401) {
@@ -134,14 +120,13 @@ function RequestPolicy() {
         setPolicyName("");
         setPolicyGroupName("");
         setPoliciesDropdownData([]);
-        await getListOfPartners(selectedValue);
-        
+        const apiUrl = `/partners/v3?status=approved&partnerType=${selectedValue}`;
+        await fetchPartnerList(apiUrl);
     }
 
-    const getListOfPartners = async (partnerType) => {
+    const fetchPartnerList = async (apiUrl) => {
         try {
             setDataLoaded(false);
-            let apiUrl = `/partners/v3?status=approved&partnerType=${partnerType}`;
             const response = await HttpService.get(getPartnerManagerUrl(apiUrl, process.env.NODE_ENV));
             if (response) {
                 const responseData = response.data;
@@ -162,7 +147,8 @@ function RequestPolicy() {
                 setErrorMsg(err.toString());
             }
         }
-    }
+    };
+
 
     const onChangePartnerId = async (fieldName, selectedValue) => {
         setPartnerId(selectedValue);
