@@ -1526,7 +1526,7 @@
         "PMS_POLICY_ERROR_009": "The given partner ID does not belong to the user.So unable to create OIDC client",
         "PMS_POLICY_ERROR_010": "The given partner ID does not belong to the user.So unable to update OIDC client details",
         "PMS_POLICY_ERROR_011": "The given partner ID does not belong to the user.So unable to get OIDC client details",
-        "PMS_POLICY_ERROR_012": "Unable to fetch MISP partners list. Only Partner Admin can get the MISP partners list.",
+        "PMS_POLICY_ERROR_012": "Unable to fetch partners list. Only Partner Admin can get the partners list for provided partner type.",
         "PMS_POLICY_ERROR_013": "Error while creating OIDC client.",
         "PMS_POLICY_ERROR_014": "Invalid userinfo response type. Allowed values are JWS and JWE.",
         "PMS_POLICY_ERROR_015": "Invalid consent expire time. It should be more than or equal to 10 minutes.",

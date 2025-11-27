@@ -39,6 +39,7 @@ function RequestPolicy() {
     const [showApprovePopup, setShowApprovePopup] = useState(false);
     const [approveRequest, setApproveRequest] = useState({});
     const [popupData, setPopupData] = useState({});
+    const [partnerTypeDropdownData, setPartnerTypeDropdownData] = useState([]);
 
     const cancelErrorMsg = () => {
         setErrorMsg("");
@@ -52,8 +53,8 @@ function RequestPolicy() {
             }
 
             return (
-                (partnerId !== "" || policyName !== "" ||
-                    partnerComment !== "") &&
+                (partnerId !== "" || partnerType !== "" ||
+                    policyName !== "" || partnerComment !== "") &&
                 currentLocation.pathname !== nextLocation.pathname
             );
         }
@@ -62,6 +63,7 @@ function RequestPolicy() {
     useEffect(() => {
         const shouldWarnBeforeUnload = () => {
             return partnerId !== "" ||
+                partnerType !== "" ||
                 partnerComment !== "" ||
                 policyName !== "";
         };
@@ -78,30 +80,42 @@ function RequestPolicy() {
         return () => {
             window.removeEventListener('beforeunload', handleBeforeUnload);
         };
-    }, [partnerId, partnerComment, policyName, isSubmitClicked]);
+    }, [partnerId, partnerType, partnerComment, policyName, isSubmitClicked]);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 setDataLoaded(false);
-                // Check if URL contains 'admin'
                 const isAdmin = location.pathname.includes('admin');
-                let apiUrl = '/partners/v3?status=approved&policyGroupAvailable=true';
+
+                // Initialize partner type dropdown data with MISP Partner and ABIS Partner
                 if (isAdmin) {
-                    apiUrl = '/partners/v3?status=approved&partnerType=MISP_Partner';
-                }
-                const response = await HttpService.get(getPartnerManagerUrl(apiUrl, process.env.NODE_ENV));
-                if (response) {
-                    const responseData = response.data;
-                    if (responseData && responseData.response) {
-                        const resData = responseData.response;
-                        setPartnerData(resData);
-                        setPartnerIdDropdownData(createDropdownData('partnerId', '', false, resData, t));
-                    } else {
-                        handleServiceErrors(responseData, setErrorCode, setErrorMsg);
-                    }
+                    const partnerTypeData = [
+                        {
+                            partnerType: "MISP_Partner",
+                            description: getPartnerTypeDescription("MISP_Partner", t)
+                        },
+                        {
+                            partnerType: "ABIS_Partner",
+                            description: getPartnerTypeDescription("ABIS_Partner", t)
+                        }
+                    ];
+                    setPartnerTypeDropdownData(createDropdownData('partnerType', 'description', false, partnerTypeData, t));
                 } else {
-                    setErrorMsg(t('commons.errorInResponse'));
+                    let apiUrl = '/partners/v3?status=approved&policyGroupAvailable=true';
+                    const response = await HttpService.get(getPartnerManagerUrl(apiUrl, process.env.NODE_ENV));
+                    if (response) {
+                        const responseData = response.data;
+                        if (responseData && responseData.response) {
+                            const resData = responseData.response;
+                            setPartnerData(resData);
+                            setPartnerIdDropdownData(createDropdownData('partnerId', '', false, resData, t));
+                        } else {
+                            handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+                        }
+                    } else {
+                        setErrorMsg(t('commons.errorInResponse'));
+                    }
                 }
                 setDataLoaded(true);
             } catch (err) {
@@ -114,6 +128,42 @@ function RequestPolicy() {
         fetchData();
     }, [t]);
 
+    const onChangePartnerType = async (fieldName, selectedValue) => {
+        setPartnerType(selectedValue);
+        setPartnerId("");
+        setPolicyName("");
+        setPolicyGroupName("");
+        setPoliciesDropdownData([]);
+        await getListOfPartners(selectedValue);
+        
+    }
+
+    const getListOfPartners = async (partnerType) => {
+        try {
+            setDataLoaded(false);
+            let apiUrl = `/partners/v3?status=approved&partnerType=${partnerType}`;
+            const response = await HttpService.get(getPartnerManagerUrl(apiUrl, process.env.NODE_ENV));
+            if (response) {
+                const responseData = response.data;
+                if (responseData && responseData.response) {
+                    const resData = responseData.response;
+                    setPartnerData(resData);
+                    setPartnerIdDropdownData(createDropdownData('partnerId', '', false, resData, t));
+                } else {
+                    handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+                }
+            } else {
+                setErrorMsg(t('commons.errorInResponse'));
+            }
+            setDataLoaded(true);
+        } catch (err) {
+            console.error('Error fetching data:', err);
+            if (err.response?.status && err.response.status !== 401) {
+                setErrorMsg(err.toString());
+            }
+        }
+    }
+
     const onChangePartnerId = async (fieldName, selectedValue) => {
         setPartnerId(selectedValue);
         setPolicyName("");
@@ -121,7 +171,9 @@ function RequestPolicy() {
         const selectedPartner = partnerData.find(item => item.partnerId === selectedValue);
         console.log("Selected Partner Data: ", selectedPartner);
         if (selectedPartner) {
-            setPartnerType(getPartnerTypeDescription(selectedPartner.partnerType, t));
+            if (!isAdminPath) {
+                setPartnerType(getPartnerTypeDescription(selectedPartner.partnerType, t));
+            }
             if (selectedPartner.partnerType === 'MISP_Partner' && isAdminPath) {
                 setPolicyGroupName(selectedPartner.policyGroupName || t('requestPolicy.policyGroupNotAvailable'));
             } else {
@@ -234,7 +286,7 @@ function RequestPolicy() {
     }
 
     const isFormValid = () => {
-        return partnerId && policyName && partnerComment.trim() && !inputError;
+        return partnerId && partnerType && policyName && partnerComment.trim() && !inputError;
     };
 
     const handleCommentChange = (e) => {
@@ -318,7 +370,20 @@ function RequestPolicy() {
                                             <div className="flex flex-row justify-between space-x-4 my-[1%] max-[450px]:flex-col">
                                                 {isAdminPath ?
                                                     <>
-                                                        <PartnerTypeLabel isAdmin={true} />
+                                                        <div className="flex flex-col w-[48%] max-[450px]:w-full">
+                                                            <DropdownComponent
+                                                                fieldName='partnerType'
+                                                                dropdownDataList={partnerTypeDropdownData}
+                                                                onDropDownChangeEvent={onChangePartnerType}
+                                                                fieldNameKey='requestPolicy.partnerType*'
+                                                                placeHolderKey='policies.selectPartnerType'
+                                                                selectedDropdownValue={partnerType}
+                                                                styleSet={styles}
+                                                                addInfoIcon
+                                                                infoKey='requestPolicy.info'
+                                                                id='request_policy_partner_type'>
+                                                            </DropdownComponent>
+                                                        </div>
                                                         <div className="flex flex-col w-[48%] max-[450px]:w-full">
                                                             <DropdownWithSearchComponent
                                                                 fieldName='partnerId'
@@ -330,6 +395,7 @@ function RequestPolicy() {
                                                                 searchKey='commons.search'
                                                                 styleSet={styleForSearch}
                                                                 addInfoIcon
+                                                                disabled={!partnerType}
                                                                 infoKey='requestPolicy.info'
                                                                 id='request_policy_partner_id'>
                                                             </DropdownWithSearchComponent>

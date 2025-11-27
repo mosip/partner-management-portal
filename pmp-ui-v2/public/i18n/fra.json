@@ -1531,7 +1531,7 @@
         "PMS_POLICY_ERROR_009": "L'ID de partenaire donné n'appartient pas à l'utilisateur. Impossible donc de créer un client OIDC",
         "PMS_POLICY_ERROR_010": "L'ID de partenaire donné n'appartient pas à l'utilisateur. Impossible donc de mettre à jour les détails du client OIDC",
         "PMS_POLICY_ERROR_011": "L'ID de partenaire donné n'appartient pas à l'utilisateur. Impossible donc d'obtenir les détails du client OIDC",
-        "PMS_POLICY_ERROR_012": "Impossible de récupérer la liste des partenaires MISP. Seul l'administrateur partenaire peut y accéder.",
+        "PMS_POLICY_ERROR_012": "Impossible de récupérer la liste des partenaires. Seul l'administrateur des partenaires peut obtenir la liste des partenaires pour le type de partenaire indiqué.",
         "PMS_POLICY_ERROR_013": "Erreur lors de la création du client OIDC.",
         "PMS_POLICY_ERROR_014": "Type de réponse userinfo invalide. Les valeurs autorisées sont JWS et JWE.",
         "PMS_POLICY_ERROR_015": "Le délai d'expiration du consentement est invalide. Il doit être supérieur ou égal à 10 minutes.",
