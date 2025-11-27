@@ -120,6 +120,7 @@ function RequestPolicy() {
         setPolicyName("");
         setPolicyGroupName("");
         setPoliciesDropdownData([]);
+        setPartnerComment("");
         const apiUrl = `/partners/v3?status=approved&partnerType=${selectedValue}`;
         await fetchPartnerList(apiUrl);
     }
@@ -146,6 +147,7 @@ function RequestPolicy() {
             if (err.response?.status && err.response.status !== 401) {
                 setErrorMsg(err.toString());
             }
+            setDataLoaded(true);
         }
     };
 
