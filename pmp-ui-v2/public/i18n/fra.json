@@ -402,7 +402,8 @@
         "usernameMustStartWithLetter": "Le nom d'utilisateur doit commencer par une lettre",
         "errorInCreatingPartner": "Une erreur est survenue lors de la création du partenaire",
         "mispPartnerSuccessHeader": "Partenaire créé avec succès !",
-        "uploadMispPartnerCertificate": "Télécharger le certificat partenaire MISP"
+        "uploadMispPartnerCertificate": "Télécharger le certificat partenaire MISP",
+        "uploadAbisPartnerCertificate": "Télécharger le certificat partenaire ABIS"
     },
     "languages": {
         "english": "Anglais",

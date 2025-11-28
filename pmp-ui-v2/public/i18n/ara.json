@@ -402,7 +402,8 @@
         "usernameMustStartWithLetter": "يجب أن يبدأ اسم المستخدم بحرف",
         "errorInCreatingPartner": "حدث خطأ أثناء إنشاء الشريك",
         "mispPartnerSuccessHeader": "تم إنشاء الشريك بنجاح!",
-        "uploadMispPartnerCertificate": "تحميل شهادة شريك MISP"
+        "uploadMispPartnerCertificate": "تحميل شهادة شريك MISP",
+        "uploadAbisPartnerCertificate": "تحميل شهادة شريك ABIS"
     },
     "languages": {
         "english": "الإنجليزية",

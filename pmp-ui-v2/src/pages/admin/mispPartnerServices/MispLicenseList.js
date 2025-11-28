@@ -178,6 +178,7 @@ function MispLicenseList() {
     };
 
     const viewMispLicenseDetails = (license) => {
+        setActionId(-1);
         sessionStorage.setItem('selectedMispLicenseKey', JSON.stringify(license));
         navigate('/partnermanagement/admin/misp-partner-services/view-misp-license-key');
     };
@@ -193,6 +194,7 @@ function MispLicenseList() {
                 licenseKeyName: license.mispLicenseKeyName,
                 status: "De-Activate"
             }, "mosip.pms.deactivate.misp.license.patch", true);
+            setActionId(-1);
             setSelectedLicenseKey(license);
             setDeactivateLicenseRequest(request);
             setShowActiveIndexDeactivatePopup(index);
@@ -220,6 +222,7 @@ function MispLicenseList() {
 
     const renewMispLicenseKey = (license, index) => {
         if (license.status === "activated") {
+            setActionId(-1);
             sessionStorage.setItem('selectedMispLicenseKey', JSON.stringify(license));
             navigate('/partnermanagement/admin/misp-partner-services/regenerate-misp-license-key');
         }
