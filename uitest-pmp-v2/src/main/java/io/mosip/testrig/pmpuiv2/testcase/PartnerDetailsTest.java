@@ -102,10 +102,12 @@ public class PartnerDetailsTest extends BaseClass {
 		assertTrue(partnerAdmin.isViewPartnersDetailsPageDisplayed(),
 				GlobalConstants.isViewPartnersDetailsPageDisplayed);
 		partnerAdmin.clickOnlistOfPartners();
+
 		assertTrue(partnerAdmin.isSubTitleListDisplayed(), GlobalConstants.isSubTitleListDisplayed);
 		partnerAdmin.clickOnActionsButton();
 		assertTrue(partnerAdmin.isViewButtonsDisplayed(), GlobalConstants.isViewButtonsDisplayed);
 		assertTrue(partnerAdmin.isDeactivateButtonsDisplayed(), GlobalConstants.isDeactivateButtonsDisplayed);
+		assertTrue(partnerAdmin.isViewButtonsDisplayed(), GlobalConstants.isViewButtonsDisplayed);
 
 		assertTrue(partnerAdmin.isPartnersIdDescIconDisplayed(), GlobalConstants.isPartnersIdDescIconDisplayed);
 		assertTrue(partnerAdmin.isPartnersIdAscIconDisplayed(), GlobalConstants.isPartnersIdAscIconDisplayed);
@@ -126,7 +128,6 @@ public class PartnerDetailsTest extends BaseClass {
 		partnerAdmin.clickOnApplyFiltersBtn();
 		assertTrue(partnerAdmin.isDeactivatedPartnerRowDisplayed(), GlobalConstants.isDeactivatedPartnerRowDisplayed);
 		partnerAdmin.clickOnActionsButton();
-		assertTrue(partnerAdmin.isViewButtonsDisplayed(), GlobalConstants.isViewButtonsDisplayed);
 
 		partnerAdmin.clickOnFilterResetButton();
 		partnerAdmin.clickOnFilterButton();
@@ -148,6 +149,108 @@ public class PartnerDetailsTest extends BaseClass {
 		assertTrue(partnerAdmin.isPrefixOfPagesDisplayed(), GlobalConstants.isPrefixOfPagesDisplayed);
 		partnerAdmin.clickOnBreadcrumb();
 		assertTrue(partnerAdmin.isPartnersButtonDisplayed(), GlobalConstants.isPartnersButtonDisplayed);
+
+	}
+
+	@Test(priority = 2, description = "view individual partner details in tabular form")
+	public void partnerIndividualDetailsVerification() {
+		dashboardPage = new DashboardPage(driver);
+		basePage = new BasePage(driver);
+		loginPage = new LoginPage(driver);
+		partnerAdmin = new partnersAdmin(driver);
+
+		assertTrue(partnerAdmin.isPartnersButtonDisplayed(), GlobalConstants.isPartnersButtonDisplayed);
+		partnerAdmin.clickOnPartnersTab();
+		assertTrue(partnerAdmin.isSubTitleOfTabularViewsDisplayed(), GlobalConstants.isSubTitleOfTabularViewsDisplayed);
+		assertTrue(partnerAdmin.isBreadcrumbsDisplayed(), GlobalConstants.isBreadcrumbsDisplayed);
+		assertTrue(partnerAdmin.isTitlePartnerDisplayed(), GlobalConstants.isTitlePartnerDisplayed);
+		assertTrue(partnerAdmin.isOrganisationNameHeaderTagDisplayed(),
+				GlobalConstants.isOrganisationNameHeaderTagDisplayed);
+		assertTrue(partnerAdmin.isPolicyGroupHeaderTagDisplayed(), GlobalConstants.isPolicyGroupHeaderTagDisplayed);
+		assertTrue(partnerAdmin.isEmailAddressHeaderTagDisplayed(), GlobalConstants.isEmailAddressHeaderTagDisplayed);
+		assertTrue(partnerAdmin.isBackButtonAccessible(), GlobalConstants.isBackButtonAccessible);
+		assertTrue(partnerAdmin.isMosipIconsDisplayed(), GlobalConstants.isMosipIconsDisplayed);
+		assertTrue(partnerAdmin.isHamburgersIconDisplayed(), GlobalConstants.isHamburgersIconDisplayed);
+		assertTrue(partnerAdmin.isFooterMosipTextsDisplayed(), GlobalConstants.isFooterMosipTextsDisplayed);
+		assertTrue(partnerAdmin.isFooterDocumentationsDisplayed(), GlobalConstants.isFooterDocumentationsDisplayed);
+		assertTrue(partnerAdmin.isFootersContactUsDisplayed(), GlobalConstants.isFootersContactUsDisplayed);
+		partnerAdmin.clickOnActionsButton();
+		assertTrue(partnerAdmin.isViewButtonsDisplayed(), GlobalConstants.isViewButtonsDisplayed);
+		partnerAdmin.clickOnViewPartnerDetailsScreen();
+		assertTrue(partnerAdmin.isViewPartnersDetailsPageDisplayed(),
+				GlobalConstants.isViewPartnersDetailsPageDisplayed);
+		assertTrue(partnerAdmin.isBreadcrumbsDisplayed(), GlobalConstants.isBreadcrumbsDisplayed);
+		assertTrue(partnerAdmin.isPartnerIdDisplayed(), GlobalConstants.isPartnerIdDisplayed);
+		assertTrue(partnerAdmin.isPartnerStatusInViewPartnerPageDisplayed(),
+				GlobalConstants.isPartnerStatusInViewPartnerPageDisplayed);
+		assertTrue(partnerAdmin.isPartnerCreatedDateInViewPartnerPageDisplayed(),
+				GlobalConstants.isPartnerCreatedDateInViewPartnerPageDisplayed);
+		assertTrue(partnerAdmin.isPartnerCertificateDisplayed(), GlobalConstants.isPartnerCertificateDisplayed);
+		assertTrue(partnerAdmin.isPartnerTypeInViewPartnerPageDisplayed(),
+				GlobalConstants.isPartnerTypeInViewPartnerPageDisplayed);
+		assertTrue(partnerAdmin.isDeviceProviderInViewPartnerPageDisplayed(),
+				GlobalConstants.isDeviceProviderInViewPartnerPageDisplayed);
+		assertTrue(partnerAdmin.isExpiryDateTimeDisplayed(), GlobalConstants.isExpiryDateTimeDisplayed);
+		assertTrue(partnerAdmin.isTimeOfUploadDisplayed(), GlobalConstants.isTimeOfUploadDisplayed);
+		assertTrue(partnerAdmin.isDownloadCertificateButtonDisplayed(),
+				GlobalConstants.isDownloadCertificateButtonDisplayed);
+		partnerAdmin.clickOnDownloadCertificateButtonInViewPartnerPage();
+		assertTrue(partnerAdmin.isGobackButtonInViewPatnerPageDisplayed(),
+				GlobalConstants.isGobackButtonInViewPatnerPageDisplayed);
+		partnerAdmin.clickOngobackButtonInPartnerDetailsPage();
+		assertTrue(partnerAdmin.isSubTitleListDisplayed(), GlobalConstants.isSubTitleListDisplayed);
+		partnerAdmin.clickOnActionsButton();
+		partnerAdmin.clickOnDeactivateButton();
+
+	}
+
+	@Test(priority = 3, description = "partners details on deactivate partner")
+	public void deactivatePartnerDetails() {
+		dashboardPage = new DashboardPage(driver);
+		basePage = new BasePage(driver);
+		loginPage = new LoginPage(driver);
+		partnerAdmin = new partnersAdmin(driver);
+
+		assertTrue(partnerAdmin.isPartnersButtonDisplayed(), GlobalConstants.isPartnersButtonDisplayed);
+		partnerAdmin.clickOnPartnersTab();
+		assertTrue(partnerAdmin.isSubTitleOfTabularViewsDisplayed(), GlobalConstants.isSubTitleOfTabularViewsDisplayed);
+		partnerAdmin.clickOnFilterButton();
+		partnerAdmin.enterPartnerIdsFilter(GlobalConstants.AUTH_PARTNER_ID);
+		partnerAdmin.clickOnApplyFiltersBtn();
+
+		partnerAdmin.clickOnActionsButtonInActivatedPartner();
+		assertTrue(partnerAdmin.isDeactivateButtonsDisplayed(), GlobalConstants.isDeactivateButtonsDisplayed);
+		partnerAdmin.clickOnDeactivateButton();
+		assertTrue(partnerAdmin.isDeactivatePartnerHeaderDisplayed(),
+				GlobalConstants.isDeactivatePartnerHeaderDisplayed);
+		assertTrue(partnerAdmin.isDeactivatePartnerDescriptionDisplayed(),
+				GlobalConstants.isDeactivatePartnerDescriptionDisplayed);
+		assertTrue(partnerAdmin.isDeactivateConfirmButtonDisplayed(),
+				GlobalConstants.isDeactivateConfirmButtonDisplayed);
+		assertTrue(partnerAdmin.isDeactivateCancelButtonDisplayed(), GlobalConstants.isDeactivateCancelButtonDisplayed);
+		partnerAdmin.clickOnCancelButton();
+		partnerAdmin.clickOnActionsButtonInActivatedPartner();
+		partnerAdmin.clickOnDeactivateButton();
+		partnerAdmin.clickOnConfirmButton();
+		assertTrue(partnerAdmin.isSubTitleOfTabularViewsDisplayed(), GlobalConstants.isSubTitleOfTabularViewsDisplayed);
+		assertTrue(partnerAdmin.isDisabledDeactivateButtonDisplayed(),
+				GlobalConstants.isDisabledDeactivateButtonDisplayed);
+		partnerAdmin.clickOnDeactivateDisabledButton();
+		partnerAdmin.clickOnActionsButton();
+
+		partnerAdmin.clickOnViewButtonInListOfPartnerDetailsScreen();
+
+		assertTrue(partnerAdmin.isPartnerIdDisplayed(), GlobalConstants.isPartnerIdDisplayed);
+		assertTrue(partnerAdmin.isOrganisationNameInViewPartnerPageDisplayed(),
+				GlobalConstants.isOrganisationNameInViewPartnerPageDisplayed);
+
+		assertTrue(partnerAdmin.isDisabledPartnercertificateInViewDetailsDisplayed(),
+				GlobalConstants.isDisabledPartnercertificateInViewDetailsDisplayed);
+		assertTrue(partnerAdmin.isDisabledDownloadCertificateButtonDisplayed(),
+				GlobalConstants.isDisabledDownloadCertificateButtonDisplayed);
+
+		partnerAdmin.clickOngobackButtonInPartnerDetailsPage();
+		assertTrue(partnerAdmin.isSubTitleOfTabularViewsDisplayed(), GlobalConstants.isSubTitleOfTabularViewsDisplayed);
 
 	}
 

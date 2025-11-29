@@ -263,12 +263,231 @@ public class PoliciesPage extends BasePage {
 	@FindBy(id = "block_messsage_proceed")
 	private WebElement dataLostProcceedButton;
 
+	@FindBy(id = "dashboard_policies_card_header")
+	private WebElement polices;
+
+	@FindBy(id = "request_policy_partner_id_dropdown_btn")
+	private WebElement partnerIdDropdownInRequestPolicyPage;
+
+	@FindBy(id = "request_policy_partner_id_no_data_available")
+	private WebElement noDataAvailabel;
+
+	@FindBy(id = "request_policies_form_cancel_btn")
+	private WebElement cancelButtonInRequestPolicyScreen;
+
+	@FindBy(id = "request_policies_form_submit_btn")
+	private WebElement submitButtonInRequestPolicyScreen;
+
+	@FindBy(id = "page_title")
+	private WebElement titlepartnerInRequestPolicy;
+
+	@FindBy(id = "sub_title_btn")
+	private WebElement policesButtonInRequestPolicy;
+
+	@FindBy(id = "list_of_policies_title")
+	private WebElement listOfPolicyRequestTitle;
+
+	@FindBy(id = "filter_btn")
+	private WebElement filterButtonInListOfPolicyRequestScreen;
+
+	@FindBy(id = "policies.partnerId_header")
+	private WebElement partnerIdInListOfPolicyRequestScreen;
+
+	@FindBy(id = "policies.policyName_header")
+	private WebElement policyNameInListOfPolicyRequestScreen;
+
+	@FindBy(id = "policies.status_header")
+	private WebElement statusInListOfPolicyRequestScreen;
+
+	@FindBy(id = "partnerId_asc_icon")
+	private WebElement ascendingPartnerId;
+
+	@FindBy(id = "partnerId_desc_icon")
+	private WebElement descendingPartnerIdIcon;
+
+	@FindBy(id = "policy_list_view1")
+	private WebElement actionFieldInRequestPolicyPage;
+
+	@FindBy(id = "policy_list_view_card")
+	private WebElement viewButtonInActionField;
+
+	@FindBy(id = "items_per_page")
+	private WebElement rowItemsPerPageInRequestPolicyScreen;
+
+	@FindBy(id = "pagination_card")
+	private WebElement pagesInRequestPolicySccreen;
+
+	@FindBy(id = "selected_records_count")
+	private WebElement scrollBarInRequestPolicySccreen;
+
+	@FindBy(id = "page_title")
+	private WebElement navigateToViewPolicyDetails;
+
+	@FindBy(id = "view_policy_back_btn")
+	private WebElement backButtonInViewPolicyDetails;
+
+	@FindBy(id = "blocker_prompt_description")
+	private WebElement popupDescriptionInRequestPolicy;
+
+	@FindBy(id = "block_messsage_proceed")
+	private WebElement proceedButtonInRequestPolicy;
+
+	@FindBy(id = "show_request_policy")
+	private WebElement requestPolicyBtn;
+
+	@FindBy(id = "request_policies_policy_name_dropdown_btn")
+	private WebElement testPolicyInRequestPolicyScreen;
+
+	@FindBy(id = "request_policy_comment_box")
+	private WebElement commentBoxInRequestPolicy;
+
+	@FindBy(id = "view_expiry_date_label")
+	private WebElement expiryDateTimeInViewPartnerPage;
+
+	@FindBy(id = "policies.partnerType_header")
+	private WebElement partnerTypeInListOfPolicyRequestScreen;
+
 	public PoliciesPage(WebDriver driver) {
 		super(driver);
 	}
 
 	public boolean isPoliciesPageDisplayed() {
 		return isElementDisplayed(policiesTitle);
+	}
+
+	public boolean isPartnerIdDropdownInRequestPolicyPageDisplayed() {
+		return isElementDisplayed(partnerIdDropdownInRequestPolicyPage);
+	}
+
+	public boolean isDescendingPartnerIdDisplayed() {
+		return isElementDisplayed(descendingPartnerIdIcon);
+	}
+
+	public boolean isPopupDescriptionDisplayed() {
+		return isElementDisplayed(popupDescriptionInRequestPolicy);
+	}
+
+	public boolean isPagesInRequestPolicyScreenDisplayed() {
+		return isElementDisplayed(pagesInRequestPolicySccreen);
+	}
+
+	public void clickOnPolicesButtonInRequestPolicy() {
+		clickOnElement(policesButtonInRequestPolicy);
+	}
+
+	public boolean isViewButtonInActionFieldDisplayed() {
+		return isElementDisplayed(viewButtonInActionField);
+	}
+
+	public boolean isBackButtonInViewPolicyDetailsDisplayed() {
+		return isElementDisplayed(backButtonInViewPolicyDetails);
+	}
+
+	public boolean isListOfPolicyRequestTiteDisplayed() {
+		return isElementDisplayed(listOfPolicyRequestTitle);
+	}
+
+	public boolean isScrollBarInRequestPolicySccreenDisplayed() {
+		return isElementDisplayed(scrollBarInRequestPolicySccreen);
+	}
+
+	public boolean isrequestPolicyBtnDisplayed() {
+		return isElementDisplayed(requestPolicyBtn);
+	}
+
+	public void clickOnRequestPolicyBtn() {
+		clickOnElement(requestPolicyBtn);
+	}
+
+	public void clickOnPartnerIdDropdownInRequestPolicyPage() {
+		clickOnElement(partnerIdDropdownInRequestPolicyPage);
+	}
+
+	public boolean isPartnerTypeInListOfPartnerScreenDisplayed() {
+		return isElementDisplayed(partnerTypeInListOfPolicyRequestScreen);
+	}
+
+	public void enterCommentBoxInRequestPolicy(String invalidId) {
+		enter(commentBoxInRequestPolicy, invalidId);
+	}
+
+	public void enterPolicyIdInRequestPolicy(String invalidId) {
+		enter(partnerIdDropdownInRequestPolicyPage, invalidId);
+	}
+
+	public void enterTestPolicyInRequestPolicyScreen(String invalidId) {
+		enter(testPolicyInRequestPolicyScreen, invalidId);
+	}
+
+	public boolean isSubmitButtonoInRequestPolicyScreenDisplayed() {
+		return isElementDisplayed(submitButtonInRequestPolicyScreen);
+	}
+
+	public boolean isExpiryDateTimeDisplayed() {
+		return isElementDisplayed(expiryDateTimeInViewPartnerPage);
+	}
+
+	public boolean isROwItemsPerPageDisplayed() {
+		return isElementDisplayed(rowItemsPerPageInRequestPolicyScreen);
+	}
+
+	public boolean isNavigateToViewPolicyDetailsDisplayed() {
+		return isElementDisplayed(navigateToViewPolicyDetails);
+
+	}
+
+	public boolean isPartnerIdInRequestPartnerScreenDisplayed() {
+		return isElementDisplayed(partnerIdInListOfPolicyRequestScreen);
+	}
+
+	public boolean isStatusInListOfPartnerScreenDisplayed() {
+		return isElementDisplayed(statusInListOfPolicyRequestScreen);
+	}
+
+	public boolean isActionFieldInRequestPolicyScreenDisplayed() {
+		return isElementDisplayed(actionFieldInRequestPolicyPage);
+	}
+
+	public void clickOnActionButtonInRequestPolicyScreen() {
+		clickOnElement(actionFieldInRequestPolicyPage);
+
+	}
+
+	public boolean isPolicyNameInListOfPolicyScrreenDisplayed() {
+		return isElementDisplayed(policyNameInListOfPolicyRequestScreen);
+	}
+
+	public boolean isPartnerIdAscendingIconDisplayed() {
+		return isElementDisplayed(ascendingPartnerId);
+	}
+
+	public boolean isPolicyButtonInRequestPolicyScreenDisplayed() {
+		return isElementDisplayed(policesButtonInRequestPolicy);
+	}
+
+	public boolean isNoDataAvailabelsDisplayed() {
+		return isElementDisplayed(noDataAvailabel);
+	}
+
+	public boolean isTitlepartnerInRequestPolicyDisplayed() {
+		return isElementDisplayed(titlepartnerInRequestPolicy);
+	}
+
+	public boolean isFilterButtonInListOfPolicyRequestScreenDisplayed() {
+		return isElementDisplayed(filterButtonInListOfPolicyRequestScreen);
+	}
+
+	public void clickOnFilterButtonInListOfPolicyRequestScreen() {
+		clickOnElement(filterButtonInListOfPolicyRequestScreen);
+
+	}
+
+	public boolean isCancelButtonInRequestPolicyScreenDisplayed() {
+		return isElementDisplayed(cancelButtonInRequestPolicyScreen);
+	}
+
+	public boolean isPolicyButtonsDisplayed() {
+		return isElementDisplayed(polices);
 	}
 
 	public void clickOnRequestPolicyButton() {
@@ -587,6 +806,10 @@ public class PoliciesPage extends BasePage {
 
 	public void clickOnDeactivateConfirmButton() {
 		clickOnElement(deactivateConfirmButton);
+	}
+
+	public void clickOnPolicyButton() {
+		clickOnElement(polices);
 	}
 
 	public boolean isNoDataAvailableDisplayed() {

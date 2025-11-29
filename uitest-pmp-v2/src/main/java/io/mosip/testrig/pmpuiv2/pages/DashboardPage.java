@@ -149,6 +149,9 @@ public class DashboardPage extends BasePage {
 	@FindBy(id = "footer_documentation_link")
 	private WebElement footerDocumentationLink;
 
+	@FindBy(id = "dashboard_policies_card_header")
+	private WebElement policiesButtonInAdmin;
+
 	public DashboardPage(WebDriver driver) {
 		super(driver);
 	}
@@ -166,6 +169,10 @@ public class DashboardPage extends BasePage {
 		return isElementDisplayed(logoutButton);
 	}
 
+	public boolean isPoliciesButtonDisplayed() {
+		return isElementDisplayed(policiesButtonInAdmin);
+	}
+
 	public boolean isSelectPolicyGroupPopUpDisplayed() {
 		return isElementDisplayed(selectPolicyGroupPopUp);
 	}
@@ -175,12 +182,11 @@ public class DashboardPage extends BasePage {
 	}
 
 	public void selectPolicyGroupDropdown(String policyGroupValue) {
-	    clickOnElement(selectPolicyGroupDropdown);
-	    enter(SearchBox, policyGroupValue);
-	    WebElement policyGroupOption = driver.findElement(
-	        By.xpath("//span[@id='policy_group_selector_option_name_1' and text()='" + policyGroupValue + "']")
-	    );
-	    clickOnElement(policyGroupOption);
+		clickOnElement(selectPolicyGroupDropdown);
+		enter(SearchBox, policyGroupValue);
+		WebElement policyGroupOption = driver.findElement(
+				By.xpath("//span[@id='policy_group_selector_option_name_1' and text()='" + policyGroupValue + "']"));
+		clickOnElement(policyGroupOption);
 	}
 
 	public void closePolicyGroupDropdown() {
@@ -217,6 +223,10 @@ public class DashboardPage extends BasePage {
 
 	public boolean isPoliciesTitleDisplayed() {
 		return isElementDisplayed(policiesTitle);
+	}
+
+	public void clickOnPoliciesButton() {
+		clickOnElement(policiesButtonInAdmin);
 	}
 
 	public boolean isAuthenticationServicesTitleDisplayed() {

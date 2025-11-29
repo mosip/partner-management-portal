@@ -221,6 +221,7 @@ public class GlobalConstants {
 	public static final String DEVICE_PARTNER_ID = "pmpui-device";
 	public static final String DEFAULT_POLICYGROUP = "automationui policy group";
 	public static final String DEFAULT_POLICYGROUP_DESC = "desc automationui policy group";
+
 	public static final String ORGANISATION_NAME = "AABBCC";
 	public static final String PARTNER_ADMIN = "pmpui-v2";
 	public static final String PARTNER_PASSWORD = "mosip123";
@@ -241,7 +242,7 @@ public class GlobalConstants {
 	public static final String DEVICE_DETAIL_PAGE_BREADCUMB = "Home/ List of SBI/ List of Devices";
 	public static final String LIST_OF_SBI_PAGE_BREADCUMB2 = "Home/ List of SBI";
 	public static final String LIST_OF_SBI_PAGE_BREADCUMB = "Home/ List of SBIs";
-	public static final String DEVICE_DETAIL_PAGE_BREADCUMB2 = "Home/ List of Devices";	
+	public static final String DEVICE_DETAIL_PAGE_BREADCUMB2 = "Home/ List of Devices";
 	public static final String INITIAL_DEVICE_TYPE = "Select Device Type";
 	public static final String INITIAL_DEVICE_SUB_TYPE = "Select Device Sub Type";
 	public static final String LIST_OF_DEVICES_TITLE_COUNT_1 = "List of Devices (1)";
@@ -258,7 +259,7 @@ public class GlobalConstants {
 	public static final String LIST_OF_LINKED_DEVICES_COUNT_31 = "List of Linked Devices (4)";
 	public static final String BREADCUMB_TEXT_OF_CREATE_PARTNER = "Home/ List of Partners";
 	public static final String LIST_OF_SBIS_TITLE_COUNT_29 = "List of SBIs (29)";
-	
+
 	public static final String isApiKeyListPageGenerateApiKeyBtnDisplayed = "Verify if api key list page generate api key button displayed";
 	public static final String isPartnerIdHelpTextDisplayed = "Verify if partner ID help text displayed";
 	public static final String isPolicyNameHelpTextDisplayed = "Verify if policy name help text displayed";
@@ -1021,7 +1022,7 @@ public class GlobalConstants {
 	public static final String isPartnerCreatedDateInViewPartnerPageDisplayed = "Verify if ceated date in view partner details page displayed";
 	public static final String isDeactivatePartnerHeaderDisplayed = "Verify if deactivated header displayed";
 	public static final String isDeactivatePartnerDescriptionDisplayed = "Verify deactivate description displayed";
-	public static final String isDeactivateConfirmButtonDisplayed = "Verify if confirm button displayed";
+	public static final String isDeactivateConfirmButtonDisplayed = "Verify if confirm button is displayed";
 	public static final String isDeactivateColorCodeButtonDisplayed = "Verify if deactivate status displayed";
 	public static final String isPartnerCertificateInViewPartnerDetailsPageDisplayed = "Verify if partner certificate in view partnerdetails displayed";
 	public static final String isPartnerCertificateDisplayed = "Verify if partner certificate is displayed";
@@ -1045,6 +1046,73 @@ public class GlobalConstants {
 	public static final String isOrganisationNameInViewPartnerPageDisplayed = "Verify if organisation name in view partner  isdisplayed";
 	public static final String isListOfPartnerRowGreyedOutDisplayed = "Verify if list of partner row grey out row  isdisplayed";
 	public static final String isDisabledDeactivateButtonInListOfPartnerDisplayed = "Verify if deactivated button list  isdisplayed";
+	public static final String isCertificateSectionInViewDetailsGrayMarkedDisplayed = "Verify if certificate section  isdisplayed";
+	public static final String isDeactivateButtonInViewDetailsDisplayed = "Verify if deactivate button in viewdetails page  isdisplayed";
+	public static final String isStausAscendingIconDisplayed = "Verify if status ascending icon  isdisplayed";
+	public static final String isDisabledPartnercertificateInViewDetailsDisplayed = "Verify if disabled partner certificate  isdisplayed";
+	public static final String isDisabledPolicyGroupInViewDetailsDisplayed = "Verify if disabled policy goup in view details page  isdisplayed";
+	public static final String isListOfSbiDisplayed = "Verify if list of sbi in sbi page isdisplayed";
+	public static final String isFtmTitleDisplayed = "Verify if ftm list title isdisplayed";
+	public static final String isDisabledButtonDisplayed = "Verify if disabled button isdisplayed";
+	public static final String isDisabledDeactivateButtonDisplayed = "Verify if disabled deactivate button isdisplayed";
+	public static final String isViewButtonInPartnerDetailsScreenDisplayed = "Verify if enabled view button isdisplayed";
+	public static final String isPolicyButtonsDisplayed = "Verify if policy button isdisplayed";
+	public static final String isrequestPolicyBtnDisplayed = "Verify if request policy isdisplayed";
+	public static final String isPartnerIdDropdownInRequestPolicyPageDisplayed = "Verify if partner id dropdown isdisplayed";
+	public static final String isNoDataAvailabeslDisplayed = "Verify if no data availaibles  isdisplayed";
+	public static final String isCancelButtonInRequestPolicyScreenDisplayed = "Verify if cancel button isdisplayed";
+	public static final String isSubmitButtonoInRequestPolicyScreenDisplayed = "Verify if submit button isdisplayed";
+	public static final String isTtlepartnerInRequestPolicyDisplayed = "Verify if title partner isdisplayed";
+	public static final String isPolicyButtonInRequestPolicyScreenDisplayed = "Verify if policy button in request policy screen isdisplayed";
+	public static final String isListOfPolicyRequestTiteDisplayed = "Verify if list of policy request title isdisplayed";
+	public static final String isFilterButtonInListOfPolicyRequestScreenDisplayed = "Verify if filter isdisplayed";
+	public static final String isPartnerIdInRequestPartnerScreenDisplayed = "Verify if partner id header isdisplayed";
+	public static final String isPartnerTypeInListOfPartnerScreenDisplayed = "Verify if partner type isdisplayed";
+	public static final String isPolicyNameInListOfPolicyScrreenDisplayed = "Verify if policy name in list of parrtner isdisplayed";
+	public static final String isStatusInListOfPartnerScreenDisplayed = "Verify if status screen isdisplayed";
+	public static final String isPartnerIdAscendingIconDisplayed = "Verify if partner ascending icon isdisplayed";
+	public static final String isDescendingPartnerIdDisplayed = "Verify if descending icon isdisplayed";
+	public static final String isActionFieldInRequestPolicyScreenDisplayed = "Verify if action field isdisplayed";
+	public static final String isViewButtonInActionFieldDisplayed = "Verify if view button isdisplayed";
+	public static final String isPagesInRequestPolicyScreenDisplayed = "Verify if pages isdisplayed";
+	public static final String isScrollBarInRequestPolicySccreenDisplayed = "Verify if scroll bar isdisplayed";
+	public static final String isNavigateToViewPolicyDetailsDisplayed = "Verify if navigated to policy button isdisplayed";
+	public static final String isBackButtonInViewPolicyDetailsDisplayed = "Verify if back button isdisplayed";
+	public static final String isROwItemsPerPageDisplayed = "Verify if row iteam isdisplayed";
+	public static final String isTitelpartnerInRequestPolicyDisplayed = "Verify if title partner isdisplayed";
+	public static final String isSubTitleHomeButtonDisplayed = "Verify if subtitle home button isdisplayed";
+	public static final String isPoliciesButtonDisplayed = "Verify if policy button isdisplayed";
+	public static final String isListOfPolicyGroupsTitleDisplayed = "Verify if list of policy group title isdisplayed";
+	public static final String isPolicyOverlayMenuDisplayed = "Verify if list of policy overlay menu isdisplayed";
+	public static final String isHomeButtonInCreatePolicyGroupDisplayed = "Verify if home button isdisplayed";
+	public static final String isPolicyGroupsTabInCreatePolicyGroupDisplayed = "Verify if policy group in create policy isdisplayed";
+	public static final String isMispPolicyabInCreatePolicyGroupDisplayed = "Verify if misp button isdisplayed";
+	public static final String isCreatePolicyGroupBtnDisplayed = "Verify if create policy btn isdisplayed";
+	public static final String isItemsPerPagesDisplayed = "Verify if items per page isdisplayed";
+	public static final String isFilterButtonInCreatePolicyGroupDisplayed = "Verify if filter btn isdisplayed";
+	public static final String isCreatePrtnerPageTitleDisplayed = "Verify if create partner page title isdisplayed";
+	public static final String isTitleBackArrowDisplayed = "Verify if title back arrow isdisplayed";
+	public static final String isListOfPoliyGroupTitleDisplayed = "Verify if list of policy group title isdisplayed";
+	public static final String isMandatoryMessagesDisplayed = "Verify if mandatory message isdisplayed";
+	public static final String isPolicyGroupNameInputFieldDisplayed = "Verify if policy group name field isdisplayed";
+	public static final String isPolicyGroupDescriptionInputFieldDisplayed = "Verify if policy group description field isdisplayed";
+	public static final String isCreateMispPolicyHeaderDisplayed = "Verify if create policy header in data share policy title isdisplayed";
+	public static final String isListOfPoliciesTitleInMispPolicyDisplayed = "Verify if list of policy title in data share policy title isdisplayed";
+	public static final String isPolicyNameInMispPolicyDisplayed = "Verify if  policy name in misp policy isdisplayed";
+	public static final String isPolicyDescriptionInMispPolicyDisplayed = "Verify if  policy description in misp policy isdisplayed";
+	public static final String isSubmitBtnInMispPoliciesDisabledDisplayed = "Verify if  submit btn in misp policy disabled isdisplayed";
+	public static final String isUploadBtnInMispPolicyDisplayed = "Verify if upload btn in misp policy isdisplayed";
+	public static final String isClearBtnInMispPartnerDisplayed = "Verify if clear btn in misp policy isdisplayed";
+	public static final String isSuccessMessageInMispPolicyDisplayed = "Verify if success massage in misp policy isdisplayed";
+	public static final String isViewButtonInMispPolicyDisplayed = "Verify if view button in misp policy isdisplayed";
+	public static final String isViewMispPolicyDisplayed = "Verify if view misp policy isdisplayed";
+	public static final String isDeactivatePopUpDisplayed = "Verify if deactivate popup isdisplayed";
+	public static final String isEditBtnInActionTabDisplayed = "Verify if edit button isdisplayed";
+	public static final String isDraftBtnInEditPageDisplayed = "Verify if draft button isdisplayed";
+	public static final String isPublishBtnInActionTabDisplayed = "Verify if publish button isdisplayed";
+	public static final String isPopUpInPublishBtnDisplayed = "Verify if popup publish button isdisplayed";
+	public static final String isPublishBtnDisplayed = "Verify if publish btn isdisplayed";
+	public static final String isCancelBtnInPublishTabDisplayed = "Verify if cancel btn isdisplayed";
 
 	public static final String APPID = "appId";
 	public static final String PASSWORD = "password";
@@ -1107,9 +1175,9 @@ public class GlobalConstants {
 	public static final String YYYY_MM_DD_FORMATTER = "2020/11/23";
 	public static final String YYYY_MMM_DD_FORMATTER = "2020-Aug-23";
 	public static final String YYYY_MM_DD_FORMATTER2 = "2020.08.23";
-	
 
 	public static final String PARTNER_ID = "Partner ID";
+	public static final String COMMENTS = "policy group";
 	public static final String PARTNER_TYPE = "Partner Type";
 	public static final String DEVICE_ID = "Device ID";
 	public static final String DEVICE_TYPE = "Device Type";
@@ -1127,6 +1195,7 @@ public class GlobalConstants {
 
 //  Policy Group
 	public static final String POLICYGROUP01 = "policygroup01";
+	public static final String POLICYGROUPNAME = "policygroup";
 	public static final String POLICYGROUP01_DESCRIPTION = "policygroup 01";
 	public static final String POLICYGROUP02 = "policygroup02";
 	public static final String POLICYGROUP02_DESCRIPTION = "policygroup 02";
@@ -1207,13 +1276,15 @@ public class GlobalConstants {
 	public static final String DEACTIVATE_APIKEY = "deactivateapikey";
 	public static final String ACTIVATE_ADMINAPIKEY = "activateadminapikey";
 	public static final String VIEW_DEVICE_TITLE = "View Device Details";
-	
+
 	// MISP Partner
 	public static final String MISP_NOTIFICATION_LANGUAGE = "English";
 	public static final String MISP_ADDRESS = "mispaddress";
 	public static final String MISP_CONTACT_NUMBER = "9898767676";
 	public static final String MISP_EMAIL_ID = "misppmpui@gmail.com";
 	public static final String INVALID_EMAIL_ID = "mi12#sp.34@gmail@com";
-	
+	public static final String MISP_POLICY_TITLE = "mosip policy group MISP";
+	public static final String POLICY_NAME = "authentication policy";
+	public static final String POLICY_DESCRIPTION = "policy data";
 
 }
