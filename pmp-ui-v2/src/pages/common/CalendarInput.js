@@ -31,19 +31,18 @@ function CalendarInput({ isUsedAsFilter, showCalendar, addInfoIcon, infoKey, inf
         "rounded-sm"
       );
 
-      clearBtn.addEventListener("keydown", function (e) {
+      const handleKeydown = (e) => {
         if (e.key === "Enter") {
           // Trigger the same effect as clicking clear
           clearBtn.click();
         }
-      });
-    }
+      };
+      clearBtn.addEventListener("keydown", handleKeydown);
 
-    return () => {
-      if (clearBtn) {
-        clearBtn.removeEventListener("keydown", () => {});
-      }
-    };
+      return () => {
+        clearBtn.removeEventListener("keydown", handleKeydown);
+      };
+    }
   }, [selectedDateStr]);
 
 
