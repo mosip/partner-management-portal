@@ -17,6 +17,36 @@ function CalendarInput({ isUsedAsFilter, showCalendar, addInfoIcon, infoKey, inf
       setShowCalender(false))
   }, [calendarRef]);
 
+  useEffect(() => {
+    const clearBtn = document.querySelector('.react-datepicker__close-icon');
+    
+    if (clearBtn) {
+      clearBtn.setAttribute("tabIndex", "0");
+
+      // Add Tailwind classes for focus styling
+      clearBtn.classList.add(
+        "focus-visible:outline-none",
+        "focus-visible:ring-2",
+        "focus-visible:ring-black",
+        "rounded-sm"
+      );
+
+      clearBtn.addEventListener("keydown", function (e) {
+        if (e.key === "Enter") {
+          // Trigger the same effect as clicking clear
+          clearBtn.click();
+        }
+      });
+    }
+
+    return () => {
+      if (clearBtn) {
+        clearBtn.removeEventListener("keydown", () => {});
+      }
+    };
+  }, [selectedDateStr]);
+
+
   const onDateChange = (newDate) => {
     let formattedDate = "";
   
