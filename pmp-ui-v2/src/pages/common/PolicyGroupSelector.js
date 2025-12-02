@@ -148,7 +148,7 @@ function PolicyGroupSelector({ onPolicyGroupSelect, selectedPolicyGroup, contain
 
     return (
         <div id="policy_group_selector_container" className="w-full mx-auto">
-            <label id="policy_group_selector_label" className="flex items-center text-dark-blue text-sm mb-2 ml-1">
+            <label id="policy_group_selector_label" className="flex items-center text-dark-blue text-sm mb-1 ml-1">
                 <p id="policy_group_selector_label_text" className="font-semibold">
                     {t('selectPolicyPopup.policyGroup')}
                     {containsAsterisk && <span id="policy_group_selector_asterisk" className="text-crimson-red mx-1">*</span>}

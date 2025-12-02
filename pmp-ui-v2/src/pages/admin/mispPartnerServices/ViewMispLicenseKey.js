@@ -24,7 +24,7 @@ function ViewMispLicenseKey() {
     };
 
     useEffect(() => {
-        const data = localStorage.getItem('selectedMispLicenseKey');
+        const data = sessionStorage.getItem('selectedMispLicenseKey');
         if(!data){
             setUnexpectedError(true);
             return ;

@@ -30,7 +30,7 @@ function ViewAdminFtmChipDetails() {
     const [showApproveRejectPopup, setShowApproveRejectPopup] = useState(false);
 
     useEffect(() => {
-        const selectedFtmData = localStorage.getItem('selectedFtmAttributes');
+        const selectedFtmData = sessionStorage.getItem('selectedFtmAttributes');
         if (!selectedFtmData) {
             setUnexpectedError(true);
             return;
@@ -122,7 +122,7 @@ function ViewAdminFtmChipDetails() {
             setShowApproveRejectPopup(false);
             const updatedFtmDetails = {...ftmDetails, status: getApproveRejectStatus(status), isActive: updateActiveState(status)};
             setFtmDetails(updatedFtmDetails);
-            localStorage.setItem('selectedFtmAttributes', JSON.stringify(updatedFtmDetails));
+            sessionStorage.setItem('selectedFtmAttributes', JSON.stringify(updatedFtmDetails));
         }
     };
 

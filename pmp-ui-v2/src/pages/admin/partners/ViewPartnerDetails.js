@@ -37,7 +37,7 @@ function ViewPartnerDetails() {
     }, [dropdownRef]);
 
     useEffect(() => {
-        const selectedPartnerId = localStorage.getItem('selectedPartnerId');
+        const selectedPartnerId = sessionStorage.getItem('selectedPartnerId');
         if (!selectedPartnerId) {
             setUnexpectedError(true);
             return;

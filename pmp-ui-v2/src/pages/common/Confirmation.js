@@ -51,7 +51,7 @@ function Confirmation({ id, confirmationData, onClickCustomBtn1, onClickCustomBt
                             </div>
                             {confirmationData.customBtnName2 && (
                                 <div className="flex justify-start">
-                                    <button id="confirmation_custom_btn_2" onClick={onClickCustomBtn2} type="button" className={`text-[#1447b2] mx-2 mt-1 font-semibold bg-white border border-[#1447b2] rounded-md text-sm px-12 py-4`}>
+                                    <button id={confirmationData.customBtn2Id} onClick={onClickCustomBtn2} type="button" className={`text-[#1447b2] mx-2 mt-1 font-semibold bg-white border border-[#1447b2] rounded-md text-sm px-12 py-4`}>
                                         {t(confirmationData.customBtnName2)}
                                     </button>
                                 </div>

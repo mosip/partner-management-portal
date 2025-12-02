@@ -7,7 +7,6 @@ import {
     handleMouseClickForDropdown, toggleSortDescOrder, toggleSortAscOrder, createRequest, bgOfStatus,
     onPressEnterKey,
     populateClientNames,
-    getClientNameLangMap,
     setSubmenuRef,
     isOidcClientAvailable
 } from '../../../utils/AppUtils';
@@ -41,7 +40,7 @@ function OidcClientsList() {
     const [dataLoaded, setDataLoaded] = useState(false);
     const [tableDataLoaded, setTableDataLoaded] = useState(true);
     const [filter, setFilter] = useState(false);
-    const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
+    const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(sessionStorage.getItem('itemsPerPage') ? Number(sessionStorage.getItem('itemsPerPage')) : 8);
     const [order, setOrder] = useState("DESC");
     const [activeSortAsc, setActiveSortAsc] = useState("");
     const [activeSortDesc, setActiveSortDesc] = useState("createdDateTime");
@@ -72,7 +71,7 @@ function OidcClientsList() {
         const fetchData = async () => {
             try {
                 setDataLoaded(false);
-                const response = await HttpService.get(getPartnerManagerUrl('/oauth/client', process.env.NODE_ENV));
+                const response = await HttpService.get(getPartnerManagerUrl('/oidc-clients', process.env.NODE_ENV));
                 if (response) {
                     const responseData = response.data;
                     if (responseData && responseData.response) {
@@ -130,58 +129,32 @@ function OidcClientsList() {
 
     const showViewOidcClientDetails = (selectedClientdata) => {
         if (selectedClientdata.status === "ACTIVE") {
-            localStorage.setItem('selectedClientData', JSON.stringify(selectedClientdata));
+            sessionStorage.setItem('selectedClientData', JSON.stringify(selectedClientdata));
             navigate('/partnermanagement/authentication-services/view-oidc-client-details')
         }
     };
 
     const onClickView = (selectedClientdata) => {
-        localStorage.setItem('selectedClientData', JSON.stringify(selectedClientdata));
+        sessionStorage.setItem('selectedClientData', JSON.stringify(selectedClientdata));
         navigate('/partnermanagement/authentication-services/view-oidc-client-details')
     };
 
     const showEditOidcClient = (selectedClientdata) => {
         if (selectedClientdata.status === "ACTIVE") {
-            localStorage.setItem('selectedClientData', JSON.stringify(selectedClientdata));
+            sessionStorage.setItem('selectedClientData', JSON.stringify(selectedClientdata));
             navigate('/partnermanagement/authentication-services/edit-oidc-client')
         }
     };
 
     const showDeactivateOidcClient = async (selectedClientdata, index) => {
         if (selectedClientdata.status === "ACTIVE") {
-            setTableDataLoaded(false);
-            try {
-                const response = await HttpService.get(getPartnerManagerUrl(`/oauth/client/${selectedClientdata.clientId}`, process.env.NODE_ENV));
-                if (response) {
-                    const responseData = response.data;
-                    if (responseData && responseData.response) {
-                        const clientData = responseData.response;
-                        const request = createRequest({
-                            logoUri: clientData.logoUri,
-                            redirectUris: clientData.redirectUris,
-                            status: "INACTIVE",
-                            grantTypes: clientData.grantTypes,
-                            clientName: selectedClientdata.clientNameEng,
-                            clientAuthMethods: clientData.clientAuthMethods,
-                            clientNameLangMap: getClientNameLangMap(selectedClientdata.clientNameEng, selectedClientdata.clientNameJson)
-                        });
-                        setDeactivateRequest(request);
-                        setViewClientId(-1);
-                        setSelectedOidcClient(selectedClientdata);
-                        setShowActiveIndexDeactivatePopup(index);
-                    } else {
-                        handleServiceErrors(responseData, setErrorCode, setErrorMsg);
-                    }
-                } else {
-                    setErrorMsg(t('oidcClientsList.errorInOidcClientsList'))
-                }
-            } catch (err) {
-                console.error('Error fetching data:', err);
-                if (err.response?.status && err.response.status !== 401) {
-                    setErrorMsg(err.toString());
-                }
-            }
-            setTableDataLoaded(true);
+            const request = createRequest({
+                status: "INACTIVE"
+            }, "mosip.pms.deactivate.oidc.client.patch", true);
+            setDeactivateRequest(request);
+            setViewClientId(-1);
+            setSelectedOidcClient(selectedClientdata);
+            setShowActiveIndexDeactivatePopup(index);
         }
     };
 

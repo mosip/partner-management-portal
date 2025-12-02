@@ -22,7 +22,7 @@ function Pagination({ dataListLength, selectedRecordsPerPage, setSelectedRecords
         if (isViewNotificationPage) {
             setItemsPerPageOptions([4, 8, 12, 16]);
         } else {
-            let itemsPerPage = localStorage.getItem('itemsPerPage');
+            let itemsPerPage = sessionStorage.getItem('itemsPerPage');
             if (itemsPerPage) {
                 itemsPerPage = Number(itemsPerPage);
                 setItemsPerPageOptions([itemsPerPage, itemsPerPage * 2, itemsPerPage * 3, itemsPerPage * 4]);
