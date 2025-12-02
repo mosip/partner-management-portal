@@ -15,12 +15,12 @@ function MispPoliciesList() {
             subTitle: 'viewMispPoliciesList.listOfMispPolicies',
             backLink: '/partnermanagement/policy-manager/misp-policies-list'
         }
-        localStorage.setItem('selectedPolicyAttributes', JSON.stringify(requiredData));
+        sessionStorage.setItem('selectedPolicyAttributes', JSON.stringify(requiredData));
         navigate('/partnermanagement/policy-manager/view-misp-policy');
     };
 
     const editMispPolicy = (selectedPolicy) => {
-        localStorage.setItem('policyId', selectedPolicy.policyId);
+        sessionStorage.setItem('policyId', selectedPolicy.policyId);
         navigate('/partnermanagement/policy-manager/edit-misp-policy');
     };
 

@@ -5,10 +5,8 @@ import { getUserProfile } from '../../../services/UserProfileService';
 import {
     isLangRTL, handleMouseClickForDropdown, resetPageNumber, onClickApplyFilter, setPageNumberAndPageSize,
     getPartnerManagerUrl, handleServiceErrors, onResetFilter, formatDate, bgOfStatus, getStatusCode, onPressEnterKey,
-    getOidcClientDetails,
     createRequest,
     populateClientNames,
-    getClientNameLangMap,
     setSubmenuRef,
     isOidcClientAvailable
 } from '../../../utils/AppUtils';
@@ -43,11 +41,11 @@ function AdminOidcClientsList() {
     const [activeAscIcon, setActiveAscIcon] = useState("");
     const [activeDescIcon, setActiveDescIcon] = useState("createdDateTime");
     const [actionId, setActionId] = useState(-1);
-    const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
+    const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(sessionStorage.getItem('itemsPerPage') ? Number(sessionStorage.getItem('itemsPerPage')) : 8);
     const [sortFieldName, setSortFieldName] = useState("createdDateTime");
     const [sortType, setSortType] = useState("desc");
     const [pageNo, setPageNo] = useState(0);
-    const [pageSize, setPageSize] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
+    const [pageSize, setPageSize] = useState(sessionStorage.getItem('itemsPerPage') ? Number(sessionStorage.getItem('itemsPerPage')) : 8);
     const [fetchData, setFetchData] = useState(false);
     const [tableDataLoaded, setTableDataLoaded] = useState(true);
     const [totalRecords, setTotalRecords] = useState(0);
@@ -104,7 +102,7 @@ function AdminOidcClientsList() {
         if (filterAttributes.clientNameEng) queryParams.append('clientName', filterAttributes.clientNameEng);
         if (filterAttributes.status) queryParams.append('status', filterAttributes.status);
 
-        const url = `${getPartnerManagerUrl('/oauth/client', process.env.NODE_ENV)}?${queryParams.toString()}`;
+        const url = `${getPartnerManagerUrl('/oidc-clients', process.env.NODE_ENV)}?${queryParams.toString()}`;
         try {
             fetchData ? setTableDataLoaded(false) : setDataLoaded(false);
             const response = await HttpService.get(url);
@@ -192,30 +190,19 @@ function AdminOidcClientsList() {
     };
 
     const viewOidcClientDetails = (selectedClient) => {
-        localStorage.setItem('selectedOidcClientAttributes', JSON.stringify(selectedClient));
+        sessionStorage.setItem('selectedOidcClientAttributes', JSON.stringify(selectedClient));
         navigate('/partnermanagement/admin/authentication-services/view-oidc-client-details');
     };
 
     const deactivateOidcClient = async (client, index) => {
         if (client.status === "ACTIVE") {
-            const oidcClientDetails = await getOidcClientDetails(HttpService, client.clientId, setErrorCode, setErrorMsg);
-            if (oidcClientDetails !== null) {
-                const request = createRequest({
-                    logoUri: oidcClientDetails.logoUri,
-                    redirectUris: oidcClientDetails.redirectUris,
-                    status: "INACTIVE",
-                    grantTypes: oidcClientDetails.grantTypes,
-                    clientName: client.clientNameEng,
-                    clientAuthMethods: oidcClientDetails.clientAuthMethods,
-                    clientNameLangMap: getClientNameLangMap(client.clientNameEng, client.clientNameJson)
-                });
-                setActionId(-1);
-                setSelectedOidcClient(client);
-                setDeactivateRequest(request);
-                setShowActiveIndexDeactivatePopup(index);
-            } else {
-                setErrorMsg(t('deactivateOidc.errorInOidcDetails'));
-            }
+            const request = createRequest({
+                status: "INACTIVE"
+            }, "mosip.pms.deactivate.oidc.client.patch", true);
+            setActionId(-1);
+            setSelectedOidcClient(client);
+            setDeactivateRequest(request);
+            setShowActiveIndexDeactivatePopup(index);
         }
     };
 

@@ -33,7 +33,7 @@ function PoliciesList() {
   const [activeSortAsc, setActiveSortAsc] = useState("");
   const [activeSortDesc, setActiveSortDesc] = useState("createdDateTime");
   const [firstIndex, setFirstIndex] = useState(0);
-  const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
+  const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(sessionStorage.getItem('itemsPerPage') ? Number(sessionStorage.getItem('itemsPerPage')) : 8);
   const [isDescending, setIsDescending] = useState(false);
   const [viewPolicyId, setViewPolicyId] = useState(-1);
   const defaultFilterQuery = {
@@ -86,7 +86,7 @@ function PoliciesList() {
   }
 
   const showViewPolicyDetails = (selectedPolicyData) => {
-    localStorage.setItem('selectedPolicyAttributes', JSON.stringify(selectedPolicyData));
+    sessionStorage.setItem('selectedPolicyAttributes', JSON.stringify(selectedPolicyData));
     navigate('/partnermanagement/policies/view-policy-details')
   };
 

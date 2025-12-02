@@ -48,11 +48,11 @@ function PartnersList() {
   const [activeSortAsc, setActiveSortAsc] = useState("");
   const [activeSortDesc, setActiveSortDesc] = useState("");
   const [viewPartnerId, setViewPartnersId] = useState(-1);
-  const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
+  const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(sessionStorage.getItem('itemsPerPage') ? Number(sessionStorage.getItem('itemsPerPage')) : 8);
   const [sortFieldName, setSortFieldName] = useState("createdDateTime");
   const [sortType, setSortType] = useState("desc");
   const [pageNo, setPageNo] = useState(0);
-  const [pageSize, setPageSize] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
+  const [pageSize, setPageSize] = useState(sessionStorage.getItem('itemsPerPage') ? Number(sessionStorage.getItem('itemsPerPage')) : 8);
   const [triggerServerMethod, setTriggerServerMethod] = useState(false);
   const [totalRecords, setTotalRecords] = useState(0);
   const [tableDataLoaded, setTableDataLoaded] = useState(true);
@@ -115,9 +115,11 @@ function PartnersList() {
 
     // Check filters.status
     if (filters.status !== null) {
-      if (filters.status === 'active') queryParams.append('isActive', true);
-      else if (filters.status === 'deactivated') queryParams.append('isActive', false);
+      if (filters.status === 'active') queryParams.append('status', 'active');
+      else if (filters.status === 'deactivated') queryParams.append('status', 'deactivated');
+      else if (filters.status === 'partner_inactive') queryParams.append('status', 'inactive');
     }
+
 
     const url = `${getPartnerManagerUrl('/admin-partners', process.env.NODE_ENV)}?${queryParams.toString()}`;
     try {
@@ -171,7 +173,7 @@ function PartnersList() {
 
   const viewPartnerDetails = (selectedPartnerData) => {
     setSuccessMsg("");
-    localStorage.setItem('selectedPartnerId', selectedPartnerData.partnerId);
+    sessionStorage.setItem('selectedPartnerId', selectedPartnerData.partnerId);
     navigate('/partnermanagement/admin/partners/view-partner-details')
   };
 
@@ -188,7 +190,7 @@ function PartnersList() {
     if (order !== 'ASC' || activeSortAsc !== header) {
       setSuccessMsg("");
       setTriggerServerMethod(true);
-      setSortFieldName((header === 'status') ? 'isActive' : header);
+      setSortFieldName(header);
       setSortType("asc");
       setOrder("ASC");
       setActiveSortDesc("");
@@ -200,7 +202,7 @@ function PartnersList() {
     if (order !== 'DESC' || activeSortDesc !== header) {
       setSuccessMsg("");
       setTriggerServerMethod(true);
-      setSortFieldName((header === 'status') ? 'isActive' : header);
+      setSortFieldName(header);
       setSortType("desc");
       setOrder("DESC");
       setActiveSortDesc(header);
@@ -214,7 +216,7 @@ function PartnersList() {
 
   const showDeactivatePartner = (selectedPartnerdata, index) => {
     // Deactivate is only enabled for Active partners
-    if (selectedPartnerdata.isActive === true) {
+    if (selectedPartnerdata.status === 'active') {
       setSuccessMsg("");
       const request = createRequest({
         status: "De-Active"
@@ -227,47 +229,42 @@ function PartnersList() {
   };
 
   const isDeactivateEnabled = (partner) => {
-    return partner.isActive === true;
+    return partner.status === 'active';
   };
 
   const isUploadCertificateEnabled = (partner) => {
     // Upload certificate is enabled for MISP_Partner when active and inactive state
     // Disabled for deactivated state:
     return partner.partnerType === "MISP_Partner" && 
-           !(partner.isActive === false && partner.status === "approved");
+           !(partner.status === 'deactivated');
   };
 
   const isSelectPolicyGroupEnabled = (partner) => {
     // Select policy group is enabled for MISP_Partner when:
-    // 1. Active (isActive: true) + No Policy Group
-    // 2. Inactive (isActive: false, status: InProgress) + No Policy Group
     // Disabled for Deactivated partners or when policy group is already selected
     return partner.partnerType === "MISP_Partner" && 
            partner.policyGroupId === null && 
-           !(partner.isActive === false && partner.status === "approved");
+           !(partner.status === 'deactivated');
   };
 
   const getPartnerStatusBgColor = (partner) => {
-    if (partner.isActive === false && partner.status === "InProgress") {
+    if (partner.status === "inactive") {
       return 'bg-[#DFE9FF] text-[#384B75]';
     } 
-    else if (partner.isActive === true) {
-      return 'bg-[#D1FADF] text-[#155E3E]';
-    } 
-    else if (partner.isActive === false && partner.status === "approved") {
+    else if (partner.status === 'deactivated') {
       return 'bg-[#EAECF0] text-[#525252]';
+    } else {
+      return 'bg-[#D1FADF] text-[#155E3E]';
     }
   };
 
   const getPartnerStatusText = (partner, t) => {
-    if (partner.isActive === false && partner.status === "InProgress") {
+    if (partner.status === "inactive") {
       return t('statusCodes.inactive');
-    } 
-    else if (partner.isActive === true) {
-      return t('statusCodes.active');
-    } 
-    else if (partner.isActive === false && partner.status === "approved") {
+    } else if (partner.status === 'deactivated') {
       return t('statusCodes.deactivated');
+    } else {
+      return t('statusCodes.active');
     }
   };
 
@@ -283,7 +280,7 @@ function PartnersList() {
       // Update the specific row in the state with the new status
       setPartnersData((prevList) =>
         prevList.map(partner =>
-          partner.partnerId === selectedPartnerData.partnerId ? { ...partner, isActive: false } : partner
+          partner.partnerId === selectedPartnerData.partnerId ? { ...partner, status: 'deactivated' } : partner
         )
       );
     }
@@ -365,8 +362,7 @@ function PartnersList() {
             index === showActiveindexUploadCertificatePopup ? { 
               ...partner, 
               certificateUploadStatus: 'uploaded',
-              status: 'approved',
-              isActive: true 
+              status: 'active'
             } : partner
           )
         );
@@ -519,23 +515,23 @@ function PartnersList() {
                                       {partnersData.map((partner, index) => {
                                         return (
                                           <tr id={"partner_list_item" + (index + 1)} key={index}
-                                            className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${partner.isActive === false ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
-                                            <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className={`px-2`}>{partner.partnerId}</td>
-                                            <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className={`px-2`}>{getPartnerTypeDescription(partner.partnerType, t)}</td>
-                                            <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className={`px-2`}>{partner.orgName}</td>
-                                            <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className={`px-2`}>{partner.policyGroupName ? partner.policyGroupName : "-"}</td>
-                                            <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className={`px-2`}>{partner.emailAddress}</td>
-                                            <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className={`px-3 whitespace-nowrap ${partner.certificateUploadStatus === 'not_uploaded' && "text-[#BE1818]"}`}>
+                                            className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${partner.status === 'deactivated' ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
+                                            <td onClick={() => partner.status !== 'deactivated' && viewPartnerDetails(partner)} className={`px-2`}>{partner.partnerId}</td>
+                                            <td onClick={() => partner.status !== 'deactivated' && viewPartnerDetails(partner)} className={`px-2`}>{getPartnerTypeDescription(partner.partnerType, t)}</td>
+                                            <td onClick={() => partner.status !== 'deactivated' && viewPartnerDetails(partner)} className={`px-2`}>{partner.orgName}</td>
+                                            <td onClick={() => partner.status !== 'deactivated' && viewPartnerDetails(partner)} className={`px-2`}>{partner.policyGroupName ? partner.policyGroupName : "-"}</td>
+                                            <td onClick={() => partner.status !== 'deactivated' && viewPartnerDetails(partner)} className={`px-2`}>{partner.emailAddress}</td>
+                                            <td onClick={() => partner.status !== 'deactivated' && viewPartnerDetails(partner)} className={`px-3 whitespace-nowrap ${partner.certificateUploadStatus === 'not_uploaded' && "text-[#BE1818]"}`}>
                                               {getStatusCode(partner.certificateUploadStatus, t)}
                                             </td>
-                                            <td onClick={() => partner.isActive && viewPartnerDetails(partner)}>
+                                            <td onClick={() => partner.status !== 'deactivated' && viewPartnerDetails(partner)}>
                                               <div className={`${getPartnerStatusBgColor(partner)} flex w-fit py-1.5 px-2 mx-2 my-3 text-xs font-semibold rounded-md`}>
                                                 {getPartnerStatusText(partner, t)}
                                               </div>
                                             </td>
-                                            <td className="flex justify-center items-center cursor-default my-3">
+                                            <td className="text-center cursor-default my-3">
                                               <div ref={setSubmenuRef(submenuRef, index)}>
-                                                <button id={"partner_list_view" + (index + 1)} onClick={() => setViewPartnersId(index === viewPartnerId ? null : index)} className={`font-semibold mb-0.5 cursor-pointer text-center text-[#191919]`}>
+                                                <button id={"partner_list_view" + (index + 1)} onClick={() => setViewPartnersId(index === viewPartnerId ? null : index)} className={`font-semibold mb-0.5 text-[#191919] cursor-pointer text-center`}>
                                                   ...
                                                 </button>
                                                 {viewPartnerId === index && (

@@ -110,6 +110,29 @@ export const getLanguageLabel = (languageCode, t) => {
     return languageCode; // fallback to code if no translation found
 }
 
+export const getLanguageDisplayName = (languageCode, t) => {
+    if (languageCode === '@none' || languageCode === 'default') {
+        return t('createOidcClient.default');
+    }
+
+    const displayNameMap = {
+        "eng": "English",
+        "hin": "हिन्दी",
+        "ara": "العربية",
+        "fra": "Français",
+        "tam": "தமிழ்",
+        "kan": "ಕನ್ನಡ"
+    };
+
+    if (languageCode) {
+        const displayName = displayNameMap[languageCode.toLowerCase()];
+        if (displayName) {
+            return displayName;
+        }
+    }
+    return languageCode; // fallback to code if no display name found
+}
+
 export const getStatusCode = (status, t) => {
     if (status) {
         status = status.toLowerCase();
@@ -137,7 +160,10 @@ export const getStatusCode = (status, t) => {
             return t('statusCodes.valid');
         } else if (status === "not_available") {
             return t('statusCodes.notAvailable');
-        } else if (status === "-") {
+        } else if (status === "partner_inactive") {
+            return t('statusCodes.inactive');
+        }
+        else if (status === "-") {
             return "-"
         }
     }
@@ -251,7 +277,6 @@ export const moveToMispPartnerServices = (navigate) => {
 };
 
 export const logout = async () => {
-    localStorage.clear();
     sessionStorage.clear();
     let redirectUrl = process.env.NODE_ENV !== 'production' ? '' : window._env_.REACT_APP_PARTNER_MANAGER_API_BASE_URL;
 
@@ -531,6 +556,9 @@ export const getPartnerDomainType = (partnerType) => {
         else if (partnerType === "MISP_Partner".toUpperCase()) {
             return 'MISP';
         }
+        else if (partnerType === "ABIS_Partner".toUpperCase()) {
+            return 'AUTH';
+        }
         else {
             return 'AUTH';
         }
@@ -698,16 +726,13 @@ export const handleFileChange = (event, setErrorCode, setErrorMsg, setSuccessMsg
     event.target.value = '';
 };
 
-export const getClientNameEng = (clientName) => {
+export const getClientNameDefault = (clientName) => {
     try {
         const jsonObj = JSON.parse(clientName);
-        if (jsonObj['eng']) {
-            return jsonObj['eng'];
-        }
         if (jsonObj['@none']) {
             return jsonObj['@none'];
         }
-        // If neither "eng" nor "@none" is present, return the original string
+        // If "@none" is not present, return the original string
         return clientName;
     } catch {
         // If the string is not a valid JSON, return as it is
@@ -721,7 +746,7 @@ export const populateClientNames = (data) => {
         return {
             ...item,
             clientNameJson: item.clientName,
-            clientNameEng: getClientNameEng(item.clientName)
+            clientNameEng: getClientNameDefault(item.clientName)
         };
     });
     return extractedList;
@@ -747,7 +772,7 @@ export const getClientNameLangMap = (clientNameEng, clientNameJson) => {
 
 export const getOidcClientDetails = async (HttpService, clientId, setErrorCode, setErrorMsg) => {
     try {
-        const response = await HttpService.get(getPartnerManagerUrl(`/oauth/client/${clientId}`, process.env.NODE_ENV));
+        const response = await HttpService.get(getPartnerManagerUrl(`/oidc-clients/${clientId}`, process.env.NODE_ENV));
         if (response) {
             const responseData = response.data;
             if (responseData && responseData.response) {
@@ -1094,6 +1119,18 @@ export const getNotificationDescription = (notification, isLoginLanguageRTL, t) 
         );
     } else if (notification.notificationType === 'WEEKLY_SUMMARY') {
         return getWeeklySummaryDescription(notification, isLoginLanguageRTL, t);
+    } else if (notification.notificationType === 'MISP_LICENSE_KEY_EXPIRY') {
+        return (
+            <Trans 
+                i18nKey="viewAllNotifications.mispLicenseKeyExpiryDescription"
+                values={{
+                    mispLicenseKeyName: notification.notificationDetails.mispLicenseKeyDetails[0].mispLicenseKeyName ? notification.notificationDetails.mispLicenseKeyDetails[0].mispLicenseKeyName : '-',
+                    mispPartnerId: notification.notificationDetails.mispLicenseKeyDetails[0].mispPartnerId,
+                    expiryDateTime: formatDate(notification.notificationDetails.mispLicenseKeyDetails[0].expiryDateTime, 'dateInWords')
+                }}
+                components={{ span: <span className={`font-semibold ${isLoginLanguageRTL && 'whitespace-nowrap'}`} /> }}
+            />
+        );  
     }
 };
 
@@ -1168,6 +1205,18 @@ export const getNotificationPanelDescription = (notification, isLoginLanguageRTL
         );
     } else if (notification.notificationType === 'WEEKLY_SUMMARY') {
         return getWeeklySummaryDescription (notification, isLoginLanguageRTL, t);
+    } else if (notification.notificationType === 'MISP_LICENSE_KEY_EXPIRY') {
+        return (
+            <Trans 
+                i18nKey="notificationPopup.mispLicenseKeyExpiryDescription"
+                values={{
+                    mispLicenseKeyName: notification.notificationDetails.mispLicenseKeyDetails[0].mispLicenseKeyName ? notification.notificationDetails.mispLicenseKeyDetails[0].mispLicenseKeyName : '-',
+                    mispPartnerId: notification.notificationDetails.mispLicenseKeyDetails[0].mispPartnerId,
+                    expiryDateTime: formatDate(notification.notificationDetails.mispLicenseKeyDetails[0].expiryDateTime, 'dateInWords')
+                }}
+                components={{ span: <span className={`font-semibold ${isLoginLanguageRTL && 'whitespace-nowrap'}`} /> }}
+            />
+        );  
     }
 };
 
@@ -1186,6 +1235,8 @@ export const getNotificationTitle = (notification, t) => {
         return t('notificationPopup.sbiExpiry');
     } else if (notification.notificationType === 'WEEKLY_SUMMARY') {
         return t('notificationPopup.expiringItems') + " (" + formatDate(notification.createdDateTime, 'dateInWords') + t('notificationPopup.to') + formatDate(getWeeklySummaryDate(notification.createdDateTime), 'dateInWords') + ")";
+    } else if (notification.notificationType === 'MISP_LICENSE_KEY_EXPIRY') {
+        return t('notificationPopup.mispLicenseKeyExpiry');
     }
 };
 

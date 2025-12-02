@@ -15,12 +15,12 @@ function AuthPoliciesList() {
             subTitle: 'viewAuthPoliciesList.listOfAuthenticationPolicies',
             backLink: '/partnermanagement/policy-manager/auth-policies-list'
         }
-        localStorage.setItem('selectedPolicyAttributes', JSON.stringify(requiredData));
+        sessionStorage.setItem('selectedPolicyAttributes', JSON.stringify(requiredData));
         navigate('/partnermanagement/policy-manager/view-auth-policy');
     };
 
     const editAuthPolicy = (selectedPolicy) => {
-        localStorage.setItem('policyId', selectedPolicy.policyId);
+        sessionStorage.setItem('policyId', selectedPolicy.policyId);
         navigate('/partnermanagement/policy-manager/edit-auth-policy');
     };
 

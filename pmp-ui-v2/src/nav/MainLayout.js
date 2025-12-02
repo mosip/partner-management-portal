@@ -63,7 +63,7 @@ function MainLayout({ children }) {
         try {
             const configData = await getAppConfig();
             const itemsPerPage = Number(configData['itemsPerPage']);
-            localStorage.setItem('itemsPerPage', itemsPerPage);
+            sessionStorage.setItem('itemsPerPage', itemsPerPage);
         } catch (error) {
             console.error("Error fetching item per page value:", error);
         }

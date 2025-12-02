@@ -13,7 +13,7 @@ function ViewApiKeyDetails() {
     const [apiKeyDetails, setApiKeyDetails] = useState({});
 
     useEffect(() => {
-        const apiKeyData = localStorage.getItem('selectedApiKeyData');
+        const apiKeyData = sessionStorage.getItem('selectedApiKeyData');
         if (apiKeyData) {
             try {
                 const selectedApiKeyData = JSON.parse(apiKeyData);

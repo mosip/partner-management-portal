@@ -18,7 +18,7 @@ function ViewAdminDeviceDetails() {
     const [showRejectPopup, setShowRejectPopup] = useState(false);
 
     useEffect(() => {
-        const selectedDeviceAttributes = localStorage.getItem('selectedDeviceAttributes');
+        const selectedDeviceAttributes = sessionStorage.getItem('selectedDeviceAttributes');
         if(!selectedDeviceAttributes) {
             setUnexpectedError(true);
             return;
@@ -52,7 +52,7 @@ function ViewAdminDeviceDetails() {
             setShowApproveRejectPopup(false);
             const updatedDeviceDetails = {...deviceDetails, status: getApproveRejectStatus(status), isActive: updateActiveState(status)};
             setDeviceDetails(updatedDeviceDetails);
-            localStorage.setItem('selectedDeviceAttributes', JSON.stringify(updatedDeviceDetails));
+            sessionStorage.setItem('selectedDeviceAttributes', JSON.stringify(updatedDeviceDetails));
         }
     };
 
@@ -61,7 +61,7 @@ function ViewAdminDeviceDetails() {
             setShowRejectPopup(false);
             const updatedDeviceDetails = {...deviceDetails, status: 'rejected', isActive: false};
             setDeviceDetails(updatedDeviceDetails);
-            localStorage.setItem('selectedDeviceAttributes', JSON.stringify(updatedDeviceDetails));
+            sessionStorage.setItem('selectedDeviceAttributes', JSON.stringify(updatedDeviceDetails));
         }
     };
 
