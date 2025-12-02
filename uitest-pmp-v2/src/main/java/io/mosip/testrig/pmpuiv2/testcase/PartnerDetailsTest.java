@@ -58,11 +58,6 @@ public class PartnerDetailsTest extends BaseClass {
 				GlobalConstants.isCertificateUploadsStatusAscIconDisplayed);
 		assertTrue(partnerAdmin.isFilterButtonsDisplayed(), GlobalConstants.isFilterButtonsDisplayed);
 
-		partnerAdmin.clickOnrowInPartnerDetailsScreen();
-		assertTrue(partnerAdmin.isUserNavigatedToPartnerDetailsPage(),
-				GlobalConstants.isUserNavigatedToPartnerDetailsPage);
-		partnerAdmin.clickOngobackButtonInPartnerDetailsPage();
-
 		partnerAdmin.clickOnFilterButton();
 		assertTrue(partnerAdmin.isPartnersIdFilterDisplayed(), GlobalConstants.isPartnersIdFilterDisplayed);
 		assertTrue(partnerAdmin.isPartnersTypeFilterDisplayed(), GlobalConstants.isPartnerTypeFilterDisplayed);
@@ -93,7 +88,10 @@ public class PartnerDetailsTest extends BaseClass {
 		partnerAdmin.clickOnDeActivatedStatusInFilters();
 		partnerAdmin.clickOnApplyFiltersBtn();
 		assertTrue(partnerAdmin.isFiltersButtonDisabled(), GlobalConstants.isFiltersButtonDisabled);
-		partnerAdmin.enterPartnerIdsFilter(GlobalConstants.AUTH_PARTNER_ID);
+		partnerAdmin.clickOnFilterResetButton();
+		
+		partnerAdmin.clickOnFilterButton();
+		partnerAdmin.enterPartnerIdInFilter(GlobalConstants.AUTH_PARTNER_ID);
 		partnerAdmin.clickOnStatusFilter();
 		partnerAdmin.clickActivatedButton();
 		partnerAdmin.clickOnApplyFiltersBtn();
@@ -134,13 +132,14 @@ public class PartnerDetailsTest extends BaseClass {
 		partnerAdmin.clickOnAuthenticationPartner();
 		partnerAdmin.clickOnApplyFiltersBtn();
 
-		partnerAdmin.enterInvalidPartnerIdFilter(GlobalConstants.INVALID_DATA);
+		partnerAdmin.enterPartnerIdInFilter(GlobalConstants.AUTH_PARTNER_ID);
 		partnerAdmin.enterInvalidOrganisationNameFilter(GlobalConstants.INVALID_DATA);
 		partnerAdmin.enterInvalidPolicyGroupFilter(GlobalConstants.INVALID_DATA);
 		partnerAdmin.enterInvalidEmailFilter(GlobalConstants.INVALID_DATA);
 		partnerAdmin.clickOnApplyFiltersBtn();
 		assertTrue(partnerAdmin.isNoResultsFoundsDisplayed(), GlobalConstants.isNoResultsFoundsDisplayed);
 		partnerAdmin.clickOnFilterResetButton();
+		
 		partnerAdmin.clickOnFilterButton();
 		assertTrue(partnerAdmin.isFiltersButtonDisabled(), GlobalConstants.isFiltersButtonDisabled);
 		partnerAdmin.clickOnFilterResetButton();

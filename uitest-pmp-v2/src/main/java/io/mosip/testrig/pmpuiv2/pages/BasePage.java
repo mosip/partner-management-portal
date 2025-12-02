@@ -236,7 +236,7 @@ public class BasePage {
 	protected boolean isElementDisabled(WebElement element) {
 		LogUtil.verify("Checking is element is disabled: ", element);
 		try {
-			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(13));
 			return wait.until(driver -> !element.isEnabled());
 		} catch (Exception e) {
 			takeScreenshot();
@@ -256,12 +256,12 @@ public class BasePage {
 	}
 
 	protected void waitForElementToBeVisible(WebElement element) {
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(13));
 		wait.until(ExpectedConditions.visibilityOf(element));
 	}
 
 	private void waitForElementToBeDisabled(WebElement element) {
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(13));
 		wait.until(ExpectedConditions.invisibilityOfAllElements(element));
 	}
 

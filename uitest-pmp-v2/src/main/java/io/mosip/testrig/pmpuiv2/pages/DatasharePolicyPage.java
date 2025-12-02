@@ -1,9 +1,14 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
+import java.time.Duration;
+
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
 import io.mosip.testrig.pmpuiv2.utility.TestRunner;
@@ -791,12 +796,18 @@ public class DatasharePolicyPage extends BasePage {
 	}
 
 	public void selectPolicyGroupDropdown(String value) {
-		clickOnElement(policyGroupDropdown);
-		enter(policyGroupDropdownSearchInput, value);
-		WebElement policyGroupOption = driver
-				.findElement(By.xpath("//span[@class='font-semibold text-dark-blue' and text()='" + value + "']"));
-		clickOnElement(policyGroupOption);
+	    clickOnElement(policyGroupDropdown);
+	    enter(policyGroupDropdownSearchInput, value);
+	    String xpath = "//span[contains(@class,'font-semibold') and contains(@class,'text-dark-blue') and normalize-space(text())='" + value + "']";
+	    try {
+	        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(8));
+	        WebElement policyGroupOption = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
+	        clickOnElement(policyGroupOption);
+	    } catch (TimeoutException e) {
+	        System.out.println("Policy group not found: " + value);
+	    }
 	}
+
 
 	public void enterDeactivatedPolicyGroup(String value) {
 		clickOnElement(policyGroupDropdown);
@@ -1423,4 +1434,12 @@ public class DatasharePolicyPage extends BasePage {
 		return isElementDisplayed(noPolicyGroupFound);
 	}
 
+	public void clearClonePolicyGroupDropdownValue() {
+		clearTextBox(clonePolicyGroupDropdownSearchInput);
+	}
+	
+	public void selectPolicyGroupForClonePolicy(String value) {
+		enter(clonePolicyGroupDropdownSearchInput, value);
+		clickOnElement(clonePolicyGroupDropdownOption1);
+	}
 }

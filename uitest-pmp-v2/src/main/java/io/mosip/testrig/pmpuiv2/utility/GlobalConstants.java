@@ -1045,6 +1045,8 @@ public class GlobalConstants {
 	public static final String isOrganisationNameInViewPartnerPageDisplayed = "Verify if organisation name in view partner  isdisplayed";
 	public static final String isListOfPartnerRowGreyedOutDisplayed = "Verify if list of partner row grey out row  isdisplayed";
 	public static final String isDisabledDeactivateButtonInListOfPartnerDisplayed = "Verify if deactivated button list  isdisplayed";
+	public static final String isSbiVersionAscIconDisplayed = "Verify if sbi version asc icon Displayed";
+	public static final String isSbiVersionDescIconDisplayed = "Verify if sbi version desc icon Displayed";
 
 	public static final String APPID = "appId";
 	public static final String PASSWORD = "password";

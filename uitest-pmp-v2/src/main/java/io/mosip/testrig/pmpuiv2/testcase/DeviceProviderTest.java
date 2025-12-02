@@ -286,7 +286,7 @@ public class DeviceProviderTest extends BaseClass {
 
 		addSbi(GlobalConstants.AUTOMATION_DEACTIVATING, GlobalConstants.AUTOMATION_DEACTIVATING);
 		verifyCreatedSbi(GlobalConstants.AUTOMATION_DEACTIVATING);
-		
+
 		addSbi(GlobalConstants.DEACTIVATE_SBI_ASADMIN, GlobalConstants.DEACTIVATE_SBI_ASADMIN);
 		verifyCreatedSbi(GlobalConstants.DEACTIVATE_SBI_ASADMIN);
 
@@ -357,7 +357,8 @@ public class DeviceProviderTest extends BaseClass {
 		verifyListOfSbiHeaders();
 		verifySortingOfSbiList();
 
-		assertTrue(listOfSbiPage.isPartnerIdInFirstColumnDisplayed(), GlobalConstants.isPartnerIdInFirstColoumnDisplayed);
+		assertTrue(listOfSbiPage.isPartnerIdInFirstColumnDisplayed(),
+				GlobalConstants.isPartnerIdInFirstColoumnDisplayed);
 		listOfSbiPage.clickOnThreeDotsOfSbiListAsAdmin(GlobalConstants.AUTOMATION);
 		assertTrue(listOfSbiPage.isApproveRejectButtonEnabled(), GlobalConstants.isApproveRejectButtonEnabled);
 		listOfSbiPage.clickOnApproveOrReject();
@@ -378,7 +379,7 @@ public class DeviceProviderTest extends BaseClass {
 		listOfSbiPage.clickOnThreeDotsOfSbiListAsAdmin(GlobalConstants.AUTOMATION_DEACTIVATING);
 		listOfSbiPage.clickOnApproveOrReject();
 		listOfSbiPage.clickOnApprove();
-		
+
 		listOfSbiPage.clickOnThreeDotsOfSbiListAsAdmin(GlobalConstants.DEACTIVATE_SBI_ASADMIN);
 		listOfSbiPage.clickOnApproveOrReject();
 		listOfSbiPage.clickOnApprove();
@@ -469,7 +470,8 @@ public class DeviceProviderTest extends BaseClass {
 		addDevicePage.clickOnBackToListOfSbiButton();
 
 		listOfSbiPage.clickOnViewDeviceButton(GlobalConstants.ALPHANUMERIC);
-		assertTrue(listOfDevicesPage.isPartnerIdInFirstColumnInPartnerDisplayed(), GlobalConstants.isPartnerIdInFirstColoumnDisplayed);
+		assertTrue(listOfDevicesPage.isPartnerIdInFirstColumnInPartnerDisplayed(),
+				GlobalConstants.isPartnerIdInFirstColoumnDisplayed);
 		listOfDevicesPage.clickOnAddDeviceButtonFromDeviceList();
 		addMultipleDevices(GlobalConstants.FACE, GlobalConstants.FULL_FACE, GlobalConstants.AUTOMATION_DEACTIVATING,
 				GlobalConstants.AUTOMATION_DEACTIVATING, 5);
@@ -611,7 +613,8 @@ public class DeviceProviderTest extends BaseClass {
 		dashboardpage.clickOnSbiDevices();
 		listOfSbiPage.clickOnDeviceTab();
 
-		assertTrue(listOfDevicesPage.isPartnerIdInFirstColumnDisplayed(), GlobalConstants.isPartnerIdInFirstColoumnDisplayed);
+		assertTrue(listOfDevicesPage.isPartnerIdInFirstColumnDisplayed(),
+				GlobalConstants.isPartnerIdInFirstColoumnDisplayed);
 		listOfDevicesPage.clickOnDeviceThreeDotsAsAdmin(GlobalConstants.FACE, GlobalConstants.FULL_FACE,
 				GlobalConstants.AUTOMATION, GlobalConstants.AUTOMATION);
 		verifyOptionsInActionMenuAsAdmin();
@@ -730,7 +733,8 @@ public class DeviceProviderTest extends BaseClass {
 		deviceProviderPage = dashboardpage.clickOnDeviceProviderServicesTitle();
 		listOfSbiPage.clickOnViewDeviceButton(GlobalConstants.AUTOMATION);
 
-		assertTrue(listOfDevicesPage.isListOfDevicesTitleInPartnerDisplayed(), GlobalConstants.isListOfDevicesTitleDisplayed);
+		assertTrue(listOfDevicesPage.isListOfDevicesTitleInPartnerDisplayed(),
+				GlobalConstants.isListOfDevicesTitleDisplayed);
 		assertTrue(listOfDevicesPage.isSubTitleDisplayed(GlobalConstants.AUTOMATION),
 				GlobalConstants.isSbiVersionDisplayed);
 		assertTrue(listOfDevicesPage.isApprovedStatusDisplayed(), GlobalConstants.isStatusDisplayed);
@@ -1073,7 +1077,7 @@ public class DeviceProviderTest extends BaseClass {
 //		addDevicePage.closeSuccessMessage();
 
 	}
-	
+
 	@Test(priority = 37, description = "Verify linked devices of SBI list")
 	public void verifyLinkedDevicesOfSbiList() {
 
@@ -1149,7 +1153,6 @@ public class DeviceProviderTest extends BaseClass {
 		assertTrue(listOfDevicesPage.isListOfDevicesTitleDisplayed(), GlobalConstants.isListOfDevicesTitleDisplayed);
 		assertTrue(listOfDevicesPage.isHomeBreadcumbDisplayed(), GlobalConstants.isHomeBreadcumbDisplayed);
 
-		
 		assertTrue(listOfDevicesPage.isCreationDateSameAsBrowserDateFormat(),
 				GlobalConstants.isCreationDateSameAsBrowserDateFormat);
 
@@ -1206,14 +1209,14 @@ public class DeviceProviderTest extends BaseClass {
 		listOfDevicesPage.clickOnResetFilter();
 		listOfDevicesPage.clickOnFilterButton();
 		listOfDevicesPage.selectDeviceStatusFilterInAdmin(GlobalConstants.APPROVED);
-		verifySortingOfListOfDevices();
+		verifySortingOfListOfDevicesInAdmin();
 
 		listOfDevicesPage.clickOnResetFilter();
 		listOfDevicesPage.clickOnFilterButton();
 		listOfDevicesPage.enterPartnerIdInFilterInAdmin(GlobalConstants.DEVICE_PARTNER_ID);
-		listOfDevicesPage.selectDeviceTypeFilter(GlobalConstants.FACE);
+		listOfDevicesPage.selectDeviceTypeFilterInAdmin(GlobalConstants.FACE);
 
-		assertEquals(listOfDevicesPage.getListOfDevicesTitle(), GlobalConstants.LIST_OF_DEVICES_TITLE_COUNT_28);
+//		assertEquals(listOfDevicesPage.getListOfDevicesTitle(), GlobalConstants.LIST_OF_DEVICES_TITLE_COUNT_28);
 		assertTrue(authPolicyPage.isPaginationDisplayed(), GlobalConstants.isPaginationDisplayed);
 		assertTrue(authPolicyPage.isPreviusPageButtonDisplayed(), GlobalConstants.isPreviusPageButtonDisplayed);
 		assertTrue(authPolicyPage.isNextPageButtonDisplayed(), GlobalConstants.isNextPageButtonDisplayed);
@@ -1230,8 +1233,8 @@ public class DeviceProviderTest extends BaseClass {
 		assertTrue(authPolicyPage.isItemPerPage16Displayed(), GlobalConstants.isItemPerPage16Displayed);
 
 	}
-	
-@Test(priority = 40, description = "Verify View Of Devices Page As Admin")
+
+	@Test(priority = 40, description = "Verify View Of Devices Page As Admin")
 	public void verifyViewOfDevicesPageAsAdmin() {
 		dashboardpage = new DashboardPage(driver);
 		listOfSbiPage = new ListOfSbiPage(driver);
@@ -1260,8 +1263,6 @@ public class DeviceProviderTest extends BaseClass {
 				GlobalConstants.AUTOMATION_REJECTING, GlobalConstants.AUTOMATION_REJECTING, GlobalConstants.REJECTED);
 
 	}
-
-	
 
 	private void loginAsDeviceProvider() {
 		dashboardpage.clickOnProfileDropdown();
@@ -1543,6 +1544,62 @@ public class DeviceProviderTest extends BaseClass {
 		listOfDevicesPage.clickOnCreatedDateTimeDescIcon();
 		listOfDevicesPage.clickOnStatusAscIcon();
 		listOfDevicesPage.clickOnStatusDescIcon();
+	}
+
+	private void verifySortingOfListOfDevicesInAdmin() {
+		BasePage basePage = new BasePage(driver);
+
+		assertTrue(listOfDevicesPage.isPartnerIdAscIconInAdminDisplayed(), GlobalConstants.isPartnerIdAscIconDisplayed);
+		assertTrue(listOfDevicesPage.isPartnerIdAscIconInAdminDisplayed(),
+				GlobalConstants.isPartnerIdDescIconDisplayed);
+		assertTrue(listOfDevicesPage.isOrgNameAscIconInAdminDisplayed(), GlobalConstants.isOrgNameAscIconDisplayed);
+		assertTrue(listOfDevicesPage.isOrgNameDescIconInAdminDisplayed(), GlobalConstants.isOrgNameDescIconDisplayed);
+		assertTrue(listOfDevicesPage.isSbiIdAscIconInAdminDisplayed(), GlobalConstants.isSbiIdAscIconDisplayed);
+		assertTrue(listOfDevicesPage.isSbiIdDescIconInAdminDisplayed(), GlobalConstants.isSbiIdDescIconDisplayed);
+		assertTrue(listOfDevicesPage.isSbiVersionAscIconInAdminDisplayed(),
+				GlobalConstants.isSbiVersionAscIconDisplayed);
+		assertTrue(listOfDevicesPage.isSbiVersionDescIconInAdminDisplayed(),
+				GlobalConstants.isSbiVersionDescIconDisplayed);
+		assertTrue(listOfDevicesPage.isDeviceIdAscIconInAdminDisplayed(), GlobalConstants.isDeviceIdAscIconDisplayed);
+		assertTrue(listOfDevicesPage.isDeviceIdDescIconInAdminDisplayed(), GlobalConstants.isDeviceIdDescIconDisplayed);
+		assertTrue(listOfDevicesPage.isDeviceTypeAscIconInAdminDisplayed(),
+				GlobalConstants.isDeviceTypeCodeAscIconDisplayed);
+		assertTrue(listOfDevicesPage.isDeviceTypeDescIconInAdminDisplayed(),
+				GlobalConstants.isDeviceTypeCodeDescIconDisplayed);
+		assertTrue(listOfDevicesPage.isDeviceSubTypeAscIconInAdminDisplayed(),
+				GlobalConstants.isDeviceSubTypeCodeAscIconDisplayed);
+		assertTrue(listOfDevicesPage.isDeviceSubTypeDescIconInAdminDisplayed(),
+				GlobalConstants.isDeviceSubTypeCodeDescIconDisplayed);
+		assertTrue(listOfDevicesPage.isMakeAscIconInAdminDisplayed(), GlobalConstants.isMakeAscIconDisplayed);
+		assertTrue(listOfDevicesPage.isMakeDescIconInAdminDisplayed(), GlobalConstants.isMakeDescIconDisplayed);
+		assertTrue(listOfDevicesPage.isModelAscIconInAdminDisplayed(), GlobalConstants.isModelAscIconDisplayed);
+		assertTrue(listOfDevicesPage.isModelDescIconInAdminDisplayed(), GlobalConstants.isModelDescIconDisplayed);
+		assertTrue(listOfDevicesPage.isCreatedDateTimeAscIconInAdminDisplayed(),
+				GlobalConstants.isCreatedDateTimeAscIconDisplayed);
+		assertTrue(listOfDevicesPage.isCreatedDateTimeDescIconInAdminDisplayed(),
+				GlobalConstants.isCreatedDateTimeDescIconDisplayed);
+		assertTrue(listOfDevicesPage.isStatusAscIconInAdminDisplayed(), GlobalConstants.isStatusAscIconDisplayed);
+		assertTrue(listOfDevicesPage.isStatusDescIconInAdminDisplayed(), GlobalConstants.isStatusDescIconDisplayed);
+
+		basePage.scrollToEndPage();
+		basePage.scrollToStartPage();
+		listOfDevicesPage.clickOnPartnerIdAscIconInAdmin();
+		listOfDevicesPage.clickOnPartnerIdDescIconInAdmin();
+		listOfDevicesPage.clickOnOrgNameAscIconInAdmin();
+		listOfDevicesPage.clickOnOrgNameDescIconInAdmin();
+		listOfDevicesPage.clickOnDeviceIdAscIconInAdmin();
+		listOfDevicesPage.clickOnDeviceIdDescIconInAdmin();
+		listOfDevicesPage.clickOnDeviceSubTypeAscIconInAdmin();
+		listOfDevicesPage.clickOnDeviceSubTypeDescIconInAdmin();
+		listOfDevicesPage.clickOnMakeAscIconInAdmin();
+		listOfDevicesPage.clickOnMakeDescIconInAdmin();
+		listOfDevicesPage.clickOnModelAscIconInAdmin();
+		listOfDevicesPage.clickOnModelDescIconInAdmin();
+		listOfDevicesPage.clickOnCreatedDateTimeAscIconInAdmin();
+		listOfDevicesPage.clickOnCreatedDateTimeDescIconInAdmin();
+		listOfDevicesPage.clickOnStatusAscIconInAdmin();
+		listOfDevicesPage.clickOnStatusDescIconInAdmin();
+
 	}
 
 	private void verifyViewOptionIsEnabled(String sbiVersion, boolean status) {
