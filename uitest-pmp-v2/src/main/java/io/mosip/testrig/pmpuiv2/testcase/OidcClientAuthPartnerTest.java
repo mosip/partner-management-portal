@@ -24,7 +24,7 @@ public class OidcClientAuthPartnerTest extends BaseClass {
 	private OidcClientPage oidcClientPage;
 
 	@Test(priority = 1, description = "Creation OIDC client")
-	public void createOidecClient() {
+	public void createOidcClient() {
 		dashboardPage = new DashboardPage(driver);
 		basePage = new BasePage(driver);
 		oidcClientPage = new OidcClientPage(driver);
