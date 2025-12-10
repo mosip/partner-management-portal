@@ -73,7 +73,7 @@ public class FtmDeviceTest extends BaseClass {
 		assertTrue(ftmPage.isFtmChipDetailsLabelModelDisplayed(), GlobalConstants.isFtmModelLabelDisplayed);
 		assertTrue(ftmPage.isFtmChipdetailsContextModelDisplayed(), GlobalConstants.isFtmModelValueDisplayed);
 		assertTrue(ftmPage.isFtmChipDetailsCertificatelabelDisplayed(),
-				GlobalConstants.isFtmModelCertifiateLableDisplayed);
+				GlobalConstants.isFtmChipDetailsCertificatelabelDisplayed);
 		assertTrue(ftmPage.isFtmChipDetailsPartnerTypeLabelDisplayed(), GlobalConstants.isPartnerTypeLabelDisplayed);
 		assertTrue(ftmPage.isFtmChipDetailsPartnerTypeContextDisplayed(), GlobalConstants.isPartnerTypeValueDisplayed);
 		assertTrue(ftmPage.isFtmChipDetailsLabelUploadDateTimeDisplayed(),
@@ -111,7 +111,7 @@ public class FtmDeviceTest extends BaseClass {
 		assertTrue(ftmPage.isModelFilterDisplayed(), GlobalConstants.isModelTextBoxDisplayed);
 		assertTrue(ftmPage.isStatusFilterDisplayed(), GlobalConstants.isStatusDisplayed);
 
-		assertTrue(ftmPage.isFilterResetButtonDisplayed(), GlobalConstants.isResetFiletrButtonDisplayed);
+		assertTrue(ftmPage.isFilterResetButtonDisplayed(), GlobalConstants.isResetFilterButtonDisplayed);
 		ftmPage.enterPartnerIdFilterBox(GlobalConstants.FTM_PARTNER_ID);
 		ftmPage.SelectValueFromStatusFilter();
 
@@ -134,7 +134,7 @@ public class FtmDeviceTest extends BaseClass {
 //		assertTrue(ftmPage.isFtmChipDetailsLabelModelDisplayed(), GlobalConstants.isFtmModelLableDisplayed);
 //		assertTrue(ftmPage.isFtmChipdetailsContextModelDisplayed(), GlobalConstants.isFtmModelValueDisplayed);
 		assertTrue(ftmPage.isFtmChipDetailsCertificatelabelDisplayed(),
-				GlobalConstants.isFtmModelCertifiateLableDisplayed);
+				GlobalConstants.isFtmModelCertifiateLabelDisplayed);
 		assertTrue(ftmPage.isFtmChipDetailsPartnerTypeLabelDisplayed(), GlobalConstants.isPartnerTypeLabelDisplayed);
 		assertTrue(ftmPage.isFtmChipDetailsPartnerTypeContextDisplayed(), GlobalConstants.isPartnerTypeValueDisplayed);
 		assertTrue(ftmPage.isFtmChipDetailsLabelUploadDateTimeDisplayed(),
@@ -230,7 +230,7 @@ public class FtmDeviceTest extends BaseClass {
 
 		dashboardpage.clickOnFTMChipTab();
 		ftmPage.clickOnFilterButton();
-		assertTrue(ftmPage.isFilterResetButtonDisplayed(), GlobalConstants.isResetFiletrButtonDisplayed);
+		assertTrue(ftmPage.isFilterResetButtonDisplayed(), GlobalConstants.isResetFilterButtonDisplayed);
 		assertTrue(ftmPage.isListOfFtmChipDisplayed(), GlobalConstants.isListOfFtmChipTextDisplayed);
 
 		assertTrue(ftmPage.isTitleBackIconDisplayed(), GlobalConstants.isBackArrow);
@@ -241,7 +241,7 @@ public class FtmDeviceTest extends BaseClass {
 		assertTrue(ftmPage.isPendingForApprovalTextDisplayed(), GlobalConstants.isPendingForApprovalTextDisplayed);
 		ftmPage.ClickOnFilterResetButton();
 		ftmPage.clickOnFilterButton();
-		assertTrue(ftmPage.isFilterResetButtonDisplayed(), GlobalConstants.isResetFiletrButtonDisplayed);
+		assertTrue(ftmPage.isFilterResetButtonDisplayed(), GlobalConstants.isResetFilterButtonDisplayed);
 		ftmPage.enterMakeFilterBox(data + "reject");
 		ftmPage.clickOnApplyFilterButton();
 		assertTrue(ftmPage.isPendingForApprovalTextDisplayed(), GlobalConstants.isPendingForApprovalTextDisplayed);
@@ -250,7 +250,7 @@ public class FtmDeviceTest extends BaseClass {
 //		assertTrue(ftmPage.isFilterResetButtonDisplayed(), GlobalConstants.isResetFiletrButtonDisplayed);
 
 		ftmPage.clickOnFilterButton();
-		assertTrue(ftmPage.isFilterResetButtonDisplayed(), GlobalConstants.isResetFiletrButtonDisplayed);
+		assertTrue(ftmPage.isFilterResetButtonDisplayed(), GlobalConstants.isResetFilterButtonDisplayed);
 		ftmPage.enterModelFilterBox(data + "reject");
 
 		ftmPage.clickOnFtmListActionMenuEllipsisButton();
@@ -325,7 +325,7 @@ public class FtmDeviceTest extends BaseClass {
 
 		dashboardpage.clickOnFTMChipTab();
 		ftmPage.clickOnFilterButton();
-		assertTrue(ftmPage.isFilterResetButtonDisplayed(), GlobalConstants.isResetFiletrButtonDisplayed);
+		assertTrue(ftmPage.isFilterResetButtonDisplayed(), GlobalConstants.isResetFilterButtonDisplayed);
 		ftmPage.enterPartnerIdFilterBox(GlobalConstants.FTM_PARTNER_ID);
 
 		ftmPage.clickOnApplyFilterButton();
@@ -402,9 +402,9 @@ public class FtmDeviceTest extends BaseClass {
 //		assertTrue(ftmPage.isDownloadButtonViewPageDisabled(), GlobalConstants.isElementIsDisabled);
 
 		assertTrue(ftmPage.isFtmChipDetailsCertificatelabelDisplayed(),
-				GlobalConstants.isFtmModelCertifiateLableDisplayed);
+				GlobalConstants.isFtmChipDetailsCertificatelabelDisplayed);
 		assertTrue(ftmPage.isFtmChipDetailsCertificateContextDisplayed(),
-				GlobalConstants.isFtmModelCertifiateLableDisplayed);
+				GlobalConstants.isFtmChipDetailsCertificateContextDisplayed);
 		assertTrue(ftmPage.isManageFtmChipCertTextDisplayed(), GlobalConstants.isManageFtmChipCertDisplaed);
 
 		assertTrue(ftmPage.isFtmChipDetailsPartnerTypeContextDisplayed(), GlobalConstants.isPartnerTypeValueDisplayed);
