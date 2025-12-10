@@ -267,10 +267,10 @@ public class OidcClientAuthPartnerTest extends BaseClass {
 		oidcClientPage.clickOidcDetailsElipsisButton();
 		oidcClientPage.clickOnOidcEditButton();
 		oidcClientPage.clickOnoidcEditAddNewRedirectUrl();
-		oidcClientPage.EnterPublickeySecondTextBox(ConfigManager.getRedirectUri() + "c");
+		oidcClientPage.enterSecondRedirectUriTextBox(ConfigManager.getRedirectUri() + "c");
 		oidcClientPage.clickOnOidcEditSubmitButton();
 		assertTrue(oidcClientPage.isModifiedSuccessfullTextMessageDisplayed(),
-				GlobalConstants.isAutherisationCodeTextDisplayed);
+				GlobalConstants.isOidcModifiedSuccessfullyDisplayed);
 		oidcClientPage.clickConfirmationGoBackButton();
 		assertTrue(oidcClientPage.isPartnerIdDescIconDisplayed(), GlobalConstants.isPartnerIdDescAscIcon);
 		assertTrue(oidcClientPage.isPartnerIdAscIconDisplayed(), GlobalConstants.isPartnerIdDescAscIcon);

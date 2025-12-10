@@ -593,7 +593,7 @@ public class OidcClientPage extends BasePage {
 		enter(EnterPublickeyTextBox, value);
 	}
 
-	public void EnterPublickeySecondTextBox(String value) {
+	public void enterSecondRedirectUriTextBox(String value) {
 		enter(EnterPublickeyTextBoxSecond, value);
 	}
 
