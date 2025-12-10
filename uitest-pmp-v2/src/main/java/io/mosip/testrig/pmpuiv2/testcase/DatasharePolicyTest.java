@@ -570,12 +570,13 @@ public class DatasharePolicyTest extends BaseClass {
 		datasharePolicyPage.clickOnEditPolicyFormSubmitButton();
 		basePage.scrollToStartPage();
 		assertTrue(datasharePolicyPage.isInvalidInfoInPoliyDataMessageDisplayed(),
-				GlobalConstants.isPolicyDataExceedChractersMessageDisplayed);
+				GlobalConstants.isInvalidInfoInPolicyDataErrorDisplayed);
 		datasharePolicyPage.clickOnErrorCloseButton();
 		datasharePolicyPage.uploadPolicyData();
 		datasharePolicyPage.clearTextBoxPolicyData();
 		basePage.scrollToEndPage();
-		assertTrue(datasharePolicyPage.isEditPolicySubmitButtonEnabled(), GlobalConstants.isSaveAsDraftButtonEnabled);
+		assertTrue(datasharePolicyPage.isEditPolicySubmitButtonEnabled(),
+				GlobalConstants.isEditPolicySubmitButtonDisplayed);
 		datasharePolicyPage.clickOnEditPolicyFormSubmitButton();
 		datasharePolicyPage.clickOnGoBackButton();
 

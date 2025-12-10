@@ -170,7 +170,7 @@ public class GlobalConstants {
 	public static final String isFtmChipMakeValueDisplayed = "Verify if ftm chipe make value displayed";
 	public static final String isPartnerTypeLableDisplayed = "Verify if ftm chipe partner type lable displayed";
 	public static final String isPartnerTypeValueDisplayed = "Verify if ftm chipe partner type value displayed";
-
+	public static final String isOidcDetailsElipsisButtonDisplayed = "Verify if oidc details elipsis button displayed";
 	public static final String isFtmModelLableDisplayed = "Verify if ftm chipe model lable displayed";
 	public static final String isFtmModelValueDisplayed = "Verify if ftm chipe model value displayed";
 	public static final String isFtmModelCertifiateLableDisplayed = "Verify if ftm chipe certificate lable displayed";

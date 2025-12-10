@@ -83,7 +83,7 @@ public class OidcClientAuthPartnerTest extends BaseClass {
 		assertTrue(oidcClientPage.isHomeButtonDisplayed(), GlobalConstants.isHomeButtonInAuthenticationDisplayed);
 
 		assertTrue(oidcClientPage.isOidcDetailsElipsisButtonDisplayed(),
-				GlobalConstants.isAutherisationCodeTextDisplayed);
+				GlobalConstants.isOidcDetailsElipsisButtonDisplayed);
 		oidcClientPage.clickOidcDetailsElipsisButton();
 		assertTrue(oidcClientPage.isOidcDetailsViewButtonDisplayed(), GlobalConstants.isOidcDetailsViewButtonDisplayed);
 		assertTrue(oidcClientPage.isOidcEditButtonDisplayed(), GlobalConstants.isOidcEditButtonDisplayed);
