@@ -190,7 +190,7 @@ public class OidcClientAuthPartnerTest extends BaseClass {
 
 	}
 
-	@Test(priority = 2, description = "Deleting second redirct uri")
+	@Test(priority = 2, description = "Deleting second redirect uri")
 	public void deletingSecondRedirectUri() {
 		dashboardPage = new DashboardPage(driver);
 		basePage = new BasePage(driver);
@@ -496,8 +496,8 @@ public class OidcClientAuthPartnerTest extends BaseClass {
 		oidcClientPage.clickOnStatusFilter();
 		assertTrue(oidcClientPage.isActivatedStatusInFilterDisplayed(),
 				GlobalConstants.isActivatedStatusInFilterDisplayed);
-		assertTrue(oidcClientPage.isActivatedStatusInFilterDisplayed(),
-				GlobalConstants.isActivatedStatusInFilterDisplayed);
+		assertTrue(oidcClientPage.isDeactivatedStatusInFilterDisplayed(),
+				GlobalConstants.isDeactivatedStatusInFilterDisplayed);
 		oidcClientPage.clickOnStatusFilter();
 		oidcClientPage.clickOnFilterResetButton();
 		assertFalse(oidcClientPage.isfilterResetButtonEnabled(), GlobalConstants.isfilterResetButtonEnabled);

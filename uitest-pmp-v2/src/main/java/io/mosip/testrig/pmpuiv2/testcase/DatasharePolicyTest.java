@@ -390,7 +390,7 @@ public class DatasharePolicyTest extends BaseClass {
 		assertTrue(datasharePolicyPage.isSubTitleDisplayed(), GlobalConstants.isSubtitleButtonDisplayed);
 		assertTrue(datasharePolicyPage.isHomeButtonDisplayed(), GlobalConstants.isHomeButtonDisplayed);
 		assertTrue(datasharePolicyPage.isPolicyIdLabelDisplayed(), GlobalConstants.isPolicyIdLabelDisplayed);
-//		assertTrue(datasharepolicypage.isPolicyIdContextDisplayed(), GlobalConstants.isPolicyIdContextDisplayed);
+		assertTrue(datasharePolicyPage.isPolicyIdContextDisplayed(), GlobalConstants.isPolicyIdContextDisplayed);
 		assertTrue(datasharePolicyPage.isPolicyNameLabelDisplayed(), GlobalConstants.isPolicyNameLabelDisplayed);
 		assertTrue(datasharePolicyPage.isPolicyNameContextDisplayed(), GlobalConstants.isPolicyNameContextDisplayed);
 		assertTrue(datasharePolicyPage.isPolicyGroupLabelDisplayed(), GlobalConstants.isPolicyGroupLabelDisplayed);

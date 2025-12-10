@@ -44,7 +44,6 @@ public class ApiKeyAuthPartnerTest extends BaseClass {
 		apiKeyPage.enterNameOfApiKeyTextBox("0" + GlobalConstants.DEFAULT_POLICY);
 
 		apiKeyPage.clickOnSubmitButton();
-//		assertTrue(oidcClientPage.isAuthorizationCodeTextDisplayed(), GlobalConstants.isAutherisationCodeTextDisplayed);
 
 		apiKeyPage.clickOnCopyIdButton();
 		apiKeyPage.clickOnCopyIdCloseButton();
@@ -307,7 +306,7 @@ public class ApiKeyAuthPartnerTest extends BaseClass {
 		assertTrue(apiKeyPage.isPartnerIdDescIconDisplayed(), GlobalConstants.isPartnerIdDescIconDisplayed);
 		assertTrue(apiKeyPage.isPartnerIdAscIconDisplayed(), GlobalConstants.isPartnerIdAscIconDisplayed);
 		assertTrue(apiKeyPage.isApiKeyNameDescIconDisplayed(), GlobalConstants.isApiKeyNameDescIconDisplayed);
-		assertTrue(apiKeyPage.isApiKeyNameAscIconDisplayed(), GlobalConstants.isActionHeaderDisplayed);
+		assertTrue(apiKeyPage.isApiKeyNameAscIconDisplayed(), GlobalConstants.isApiKeyNameAscIconDisplayed);
 		assertTrue(apiKeyPage.isPolicyGroupNameDescIconDisplayed(), GlobalConstants.isPolicyGroupNameDescIconDisplayed);
 		assertTrue(apiKeyPage.isPolicyGroupNameAscIconDisplayed(), GlobalConstants.isPolicyGroupNameAscIconDisplayed);
 		assertTrue(apiKeyPage.isPolicyNameDescIconDisplayed(), GlobalConstants.isPolicyNameDescIconDisplayed);
@@ -379,7 +378,7 @@ public class ApiKeyAuthPartnerTest extends BaseClass {
 		assertTrue(apiKeyPage.isApiKeyCreationDateSameAsBrowserDateFormat(),
 				GlobalConstants.isCreationDateSameAsBrowserDateFormat);
 		apiKeyPage.clickOnActivatedAdminApiKey();
-		assertTrue(apiKeyPage.isApiKeyDetailsPageDisplayed(), GlobalConstants.isOidcClientDetailsPageDisplayed);
+		assertTrue(apiKeyPage.isApiKeyDetailsPageDisplayed(), GlobalConstants.isApiKeyDetailsPageDisplayed);
 		apiKeyPage.clickOnViewApiKeyBackButton();
 
 		apiKeyPage.clickOnFilterButton();

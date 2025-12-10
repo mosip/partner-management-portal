@@ -323,7 +323,7 @@ public class DatasharePolicyPage extends BasePage {
 	@FindBy(xpath = "//p[text()='Policy ID']")
 	private WebElement policyIdLabel;
 
-	@FindBy(xpath = "//span[text()='ab11CD22ef']")
+	@FindBy(id = "view_policy_sub_title_id")
 	private WebElement policyIdContext;
 
 	@FindBy(xpath = "//p[text()='Policy Name']")

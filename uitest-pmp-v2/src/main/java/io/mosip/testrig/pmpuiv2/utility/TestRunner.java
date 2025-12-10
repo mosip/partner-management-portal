@@ -163,23 +163,23 @@ public class TestRunner {
 
 		} else {
 			List<String> suitefiles = new ArrayList<>();
-			String os = System.getProperty("os.name");
-			if (checkRunType().contains("IDE") || os.toLowerCase().contains("windows")) {
-				homeDir = new File(getResourcePath() + "/testngFile");
-			} else {
-				homeDir = new File(getResourcePath() + "/testngFile");
-			}
+			homeDir = new File(getResourcePath() + "/testngFile");
 
-			for (File file : homeDir.listFiles()) {
-				if (file.getName().toLowerCase() != null) {
-					suitefiles.add(file.getAbsolutePath());
+			File[] files = homeDir.listFiles();
+			if (files != null) {
+				for (File file : files) {
+					if (file.getName() != null) {
+						suitefiles.add(file.getAbsolutePath());
+					}
 				}
+			} else {
+				logger.warn("No test suite files found in: " + homeDir.getAbsolutePath());
 			}
 
 			runner.setTestSuites(suitefiles);
 		}
 
-		System.getProperties().setProperty("testng.outpur.dir", "testng-report");
+		System.getProperties().setProperty("testng.output.dir", "testng-report");
 		runner.setOutputDirectory("testng-report");
 		System.getProperties().setProperty("emailable.report2.name",
 				"PMPUI-" + BaseTestCaseFunc.environment + "-run-" + BaseClass.Date() + "-report.html");

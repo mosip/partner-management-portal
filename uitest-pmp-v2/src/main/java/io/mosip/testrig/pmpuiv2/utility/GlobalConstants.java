@@ -623,6 +623,7 @@ public class GlobalConstants {
 	public static final String isPolicyGroupFilterHeaderDisplayed = "Verify if policy group filter header displayed";
 	public static final String isPolicyNameFilterHeaderDisplayed = "Verify if policy name filter header displayed";
 	public static final String isOidcClientNameFilterHeaderDisplayed = "Verify if oidc client name filter header displayed";
+	public static final String isApiKeyNameFilterHeaderDisplayed = "Verify if api key name filter header displayed";
 	public static final String isStatusFilterHeaderDisplayed = "Verify if status filter header displayed";
 	public static final String isPartnerIdPlaceHolderDisplayed = "Verify if partner id placeholder displayed";
 	public static final String isOrganisationPlaceHolderDisplayed = "Verify if organisation placeholder displayed";
@@ -652,6 +653,7 @@ public class GlobalConstants {
 	public static final String isCopiedTextDisplayed = "Verify if copied text displayed";
 	public static final String isApiKeyNameHeaderDisplayed = "Verify if apikey name header displayed";
 	public static final String isApiKeyNameDescIconDisplayed = "Verify if apikey name desc icon displayed";
+	public static final String isApiKeyNameAscIconDisplayed = "Verify if apikey name Asc icon displayed";
 	public static final String isDeactivatedStatusInFilterDisplayed = "Verify if deactivate status in filter displayed";
 	public static final String isApiKeyDetailsPageDisplayed = "Verify if apikey details page displayed";
 	public static final String isApiKeyDeactivatePopupDisplayed = "Verify if apikey deactivate popup displayed";
