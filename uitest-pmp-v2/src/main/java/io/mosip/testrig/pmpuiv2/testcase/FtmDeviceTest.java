@@ -346,7 +346,7 @@ public class FtmDeviceTest extends BaseClass {
 		assertTrue(ftmPage.isDeactivatedTextDisplayed(), GlobalConstants.isDeactivatedTextDisplayed);
 
 		basePage.navigateBack();
-		basePage.navigateForword();
+		basePage.navigateForward();
 		assertTrue(ftmPage.isDeactivatedTextDisplayed(), GlobalConstants.isDeactivatedTextDisplayed);
 
 		loginAsFtmPartner();

@@ -54,7 +54,8 @@ public class PolicyAdminAndPartnerCreation extends BaseClass {
 
 		dashboardPage = new DashboardPage(driver);
 		partnerCertificatePage = new PartnerCertificatePage(driver);
-
+		loginPage = new LoginPage(driver);
+		
 		loginAsPartnerAdmin();
 		dashboardPage.clickOnCertificateTrustStore();
 		assertTrue(partnerCertificatePage.isUploadTrustCertificateButtonDisplayed(),
@@ -114,7 +115,6 @@ public class PolicyAdminAndPartnerCreation extends BaseClass {
 		logoutFromPartner();
 
 		registerPage = loginPage.clickRegisterButton();
-		loginPage.clickRegisterButton();
 
 		registerPage.enterFirstName(GlobalConstants.POLICIES_USER_ID);
 		registerPage.enterLastName(GlobalConstants.POLICIES_USER_ID);

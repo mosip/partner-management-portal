@@ -318,7 +318,7 @@ public class BasePage {
 		driver.navigate().back();
 	}
 
-	public void navigateForword() {
+	public void navigateForward() {
 		LogUtil.action("Navigating to the forward page");
 		driver.navigate().forward();
 	}

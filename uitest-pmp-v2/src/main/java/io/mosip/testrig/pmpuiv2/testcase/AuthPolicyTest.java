@@ -357,7 +357,7 @@ public class AuthPolicyTest extends BaseClass {
 		assertTrue(authPolicyPage.isSubTitleDisplayed(), GlobalConstants.isSubTitleDisplayed);
 		assertTrue(authPolicyPage.isHomeButtonDisplayed(), GlobalConstants.isHomeButtonDisplayed);
 		assertTrue(authPolicyPage.isPolicyIdLabelDisplayed(), GlobalConstants.isPolicyIdLabelDisplayed);
-//		assertTrue(authpolicypage.isPolicyIdContextDisplayed(), GlobalConstants.isPolicyIdContextDisplayed);
+		assertTrue(authPolicyPage.isPolicyIdContextDisplayed(), GlobalConstants.isPolicyIdContextDisplayed);
 		assertTrue(authPolicyPage.isPolicyStatusActivatedDisplayed(), GlobalConstants.isPolicyStatusActivatedDisplayed);
 		assertTrue(authPolicyPage.isPolicyNameLabelDisplayed(), GlobalConstants.isPolicyNameLabelDisplayed);
 		assertTrue(authPolicyPage.isPolicyNameContextDisplayed(), GlobalConstants.isPolicyNameContextDisplayed);
@@ -474,7 +474,6 @@ public class AuthPolicyTest extends BaseClass {
 		authPolicyPage.clickOnEditPolicyFormSubmitButton();
 		authPolicyPage.clickOnGoBackButton();
 
-//		authPolicyPage.clickOnFilterResetButton();
 		authPolicyPage.clickOnFilterButton();
 		authPolicyPage.enterPolicyGroupInFilterBox(GlobalConstants.DEFAULT_POLICYGROUP);
 		authPolicyPage.enterPolicyNameInFilter(GlobalConstants.AUTOMATION);
@@ -900,7 +899,7 @@ public class AuthPolicyTest extends BaseClass {
 		authPolicyPage.clickOnDeactivateButton();
 		authPolicyPage.clickOnDeactivateConfirmButton();
 		basePage.navigateBack();
-		basePage.navigateForword();
+		basePage.navigateForward();
 
 		authPolicyPage.clickOnFilterButton();
 		partnerPolicyMappingPage.enterpolicyGroupFilter(GlobalConstants.DEFAULT_POLICYGROUP);

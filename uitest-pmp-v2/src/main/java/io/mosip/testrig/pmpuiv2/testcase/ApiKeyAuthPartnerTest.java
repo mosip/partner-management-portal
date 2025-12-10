@@ -261,7 +261,7 @@ public class ApiKeyAuthPartnerTest extends BaseClass {
 		apiKeyPage.clickOnDeactivateSubmitButton();
 
 		basePage.navigateBack();
-		basePage.navigateForword();
+		basePage.navigateForward();
 
 		loginAsAuthPartner();
 

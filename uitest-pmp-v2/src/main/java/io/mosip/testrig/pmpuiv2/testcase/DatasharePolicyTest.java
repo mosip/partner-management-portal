@@ -963,7 +963,7 @@ public class DatasharePolicyTest extends BaseClass {
 		datasharePolicyPage.clickOnDeactivateButton();
 		datasharePolicyPage.clickOnDeactivateConfirmButton();
 		basePage.navigateBack();
-		basePage.navigateForword();
+		basePage.navigateForward();
 
 		datasharePolicyPage.clickOnFilterButton();
 		datasharePolicyPage.clickOnPolicyGroupFilter(GlobalConstants.DEFAULT_POLICYGROUP);

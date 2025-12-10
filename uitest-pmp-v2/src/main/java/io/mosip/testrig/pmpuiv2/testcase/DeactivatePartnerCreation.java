@@ -47,7 +47,6 @@ public class DeactivatePartnerCreation extends BaseClass {
 		logoutFromPartner();
 
 		registerPage = loginPage.clickRegisterButton();
-		loginPage.clickRegisterButton();
 
 		registerPage.enterFirstName("pmpui-deactivate");
 		registerPage.enterLastName("pmpui-deactivate");

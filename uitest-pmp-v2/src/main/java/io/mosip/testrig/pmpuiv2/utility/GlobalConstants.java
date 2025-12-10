@@ -242,7 +242,7 @@ public class GlobalConstants {
 	public static final String DEVICE_DETAIL_PAGE_BREADCUMB = "Home/ List of SBI/ List of Devices";
 	public static final String LIST_OF_SBI_PAGE_BREADCUMB2 = "Home/ List of SBI";
 	public static final String LIST_OF_SBI_PAGE_BREADCUMB = "Home/ List of SBIs";
-	public static final String DEVICE_DETAIL_PAGE_BREADCUMB2 = "Home/ List of Devices";	
+	public static final String DEVICE_DETAIL_PAGE_BREADCUMB2 = "Home/ List of Devices";
 	public static final String INITIAL_DEVICE_TYPE = "Select Device Type";
 	public static final String INITIAL_DEVICE_SUB_TYPE = "Select Device Sub Type";
 	public static final String LIST_OF_DEVICES_TITLE_COUNT_1 = "List of Devices (1)";
@@ -261,7 +261,7 @@ public class GlobalConstants {
 	public static final String LIST_OF_SBIS_TITLE_COUNT_29 = "List of SBIs (29)";
 	public static final String POLICIES_ADMIN = "pmpui-policyadmin";
 	public static final String POLICIES_USER_ID = "pmpui-policies";
-	
+
 	public static final String isApiKeyListPageGenerateApiKeyBtnDisplayed = "Verify if api key list page generate api key button displayed";
 	public static final String isPartnerIdHelpTextDisplayed = "Verify if partner ID help text displayed";
 	public static final String isPolicyNameHelpTextDisplayed = "Verify if policy name help text displayed";
@@ -698,7 +698,8 @@ public class GlobalConstants {
 	public static final String isFiltersButtonDisabled = "Verify if filter button disabled";
 	public static final String isActivatedPartnersDisplayed = "Verify if activated partner displayed";
 	public static final String isViewPartnersDetailsPageDisplayed = "Verify if view partner displayed";
-
+	public static final String isOidcClientNameDescIconDisplayed = "Verify if Oidc client name desc icon displayed";
+	public static final String isOidcClientNameAscIconDisplayed = "Verify if Oidc client name asc icon displayed";
 	public static final String isPolicyIdFilterDisplayed = "Verify if policy id filter displayed";
 	public static final String isPolicyNameFilterDisplayed = "Verify if policy name filter displayed";
 	public static final String isPolicyGroupFilterDisplayed = "Verify if policy group filter displayed";
@@ -1051,7 +1052,7 @@ public class GlobalConstants {
 	public static final String isSbiVersionAscIconDisplayed = "Verify if sbi version asc icon Displayed";
 	public static final String isSbiVersionDescIconDisplayed = "Verify if sbi version desc icon Displayed";
 	public static final String isSuccessPublishButtonAvailable = "Verify if success publish button available";
-	
+
 	public static final String APPID = "appId";
 	public static final String PASSWORD = "password";
 	public static final String USER_NAME = "userName";
@@ -1113,7 +1114,6 @@ public class GlobalConstants {
 	public static final String YYYY_MM_DD_FORMATTER = "2020/11/23";
 	public static final String YYYY_MMM_DD_FORMATTER = "2020-Aug-23";
 	public static final String YYYY_MM_DD_FORMATTER2 = "2020.08.23";
-	
 
 	public static final String PARTNER_ID = "Partner ID";
 	public static final String PARTNER_TYPE = "Partner Type";
@@ -1214,13 +1214,12 @@ public class GlobalConstants {
 	public static final String DEACTIVATE_APIKEY = "deactivateapikey";
 	public static final String ACTIVATE_ADMINAPIKEY = "activateadminapikey";
 	public static final String VIEW_DEVICE_TITLE = "View Device Details";
-	
+
 	// MISP Partner
 	public static final String MISP_NOTIFICATION_LANGUAGE = "English";
 	public static final String MISP_ADDRESS = "mispaddress";
 	public static final String MISP_CONTACT_NUMBER = "9898767676";
 	public static final String MISP_EMAIL_ID = "misppmpui@gmail.com";
 	public static final String INVALID_EMAIL_ID = "mi12#sp.34@gmail@com";
-	
 
 }

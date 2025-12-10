@@ -429,8 +429,8 @@ public class OidcClientAuthPartnerTest extends BaseClass {
 
 		assertTrue(oidcClientPage.isPartnerIdDescIconDisplayed(), GlobalConstants.isPartnerIdDescIconDisplayed);
 		assertTrue(oidcClientPage.isPartnerIdAscIconDisplayed(), GlobalConstants.isPartnerIdAscIconDisplayed);
-//		assertTrue(oidcClientPage.isOidcClientNameDescIconDisplayed(), GlobalConstants.isOidcClientNameDescIconDisplayed);
-//		assertTrue(oidcClientPage.isOidcClientNameAscIconDisplayed(), GlobalConstants.isActionHeaderDisplayed);
+		assertTrue(oidcClientPage.isOidcClientNameDescIconDisplayed(), GlobalConstants.isOidcClientNameDescIconDisplayed);
+		assertTrue(oidcClientPage.isOidcClientNameAscIconDisplayed(), GlobalConstants.isOidcClientNameAscIconDisplayed);
 		assertTrue(oidcClientPage.isPolicyGroupNameDescIconDisplayed(),
 				GlobalConstants.isPolicyGroupNameDescIconDisplayed);
 		assertTrue(oidcClientPage.isPolicyGroupNameAscIconDisplayed(),

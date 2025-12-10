@@ -128,7 +128,7 @@ public class AdminTestUtil extends BaseTestCaseFunc {
 					TestRunner.getResourcePath() + "/" + "config/partnerUiv2DataDeleteQueriesForKeyMgr.txt");
 
 			DBManager.executeDBQueries(ConfigManager.getIdaDbUrl(), ConfigManager.getMasterDbUser(),
-					ConfigManager.getPMSDbPass(), ConfigManager.getIDADBSchema(),
+					ConfigManager.getMasterDbPass(), ConfigManager.getIDADBSchema(),
 					TestRunner.getResourcePath() + "/" + "config/partnerUiv2DataDeleteQueriesForIDA.txt");
 			KeycloakUserManager.removeUser();
 //  	    KeycloakUserManager.createUsers();

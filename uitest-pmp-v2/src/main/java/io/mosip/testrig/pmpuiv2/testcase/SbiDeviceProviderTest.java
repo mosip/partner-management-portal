@@ -191,7 +191,7 @@ public class SbiDeviceProviderTest extends BaseClass {
 		assertEquals(listOfSbiPage.getListOfSbiMessage(), GlobalConstants.LIST_OF_SBI_PAGE_MESSAGE);
 		assertTrue(listOfDevicesPage.isAddDeviceButtonDisabled(), GlobalConstants.isAddDeviceButtonDisabled);
 
-		// Adding same rejected device again
+		// Adding same rejected device again, these code required
 //		listOfDevicesPage.clickOnListOfSbiButton();
 //		listOfSbiPage.clickOnViewDeviceButton(GlobalConstants.AUTOMATION);
 //		listOfDevicesPage.clickOnAddDeviceButtonFromDeviceList();
@@ -318,9 +318,7 @@ public class SbiDeviceProviderTest extends BaseClass {
 		listOfDevicesPage.clickOnDevice(GlobalConstants.IRIS, GlobalConstants.SINGLE,
 				GlobalConstants.AUTOMATION_LOWERCASE, GlobalConstants.AUTOMATION_LOWERCASE,
 				GlobalConstants.DEACTIVATED);
-//		assertFalse(viewDeviceDetailsPage.isDeviceDetailsPageTitleDisplayed(),
-//				GlobalConstants.isDeviceDetailsTitleDisplayed);
-
+		
 		listOfDevicesPage.clickOnFilterButton();
 		assertTrue(listOfDevicesPage.isFilterButtonDisabled(), GlobalConstants.isFilterButtonDisabled);
 		assertTrue(listOfDevicesPage.isResetFilterDisplayed(), GlobalConstants.isResetFilterDisplayed);
@@ -403,7 +401,7 @@ public class SbiDeviceProviderTest extends BaseClass {
 		deviceProviderPage.clickOnPartnerOption();
 		assertEquals(deviceProviderPage.getPartnerType(), GlobalConstants.DEVICE_PROVIDER);
 		deviceProviderPage.enterSbiVersion(sbiVersion);
-		deviceProviderPage.enterSbiBinaryHash(sbiVersion);
+		deviceProviderPage.enterSbiBinaryHash(sbiBinaryHash);
 		assertTrue(deviceProviderPage.isSubmitButtonEnabled(), GlobalConstants.isSubmitButtonEnabled);
 	}
 
@@ -417,7 +415,7 @@ public class SbiDeviceProviderTest extends BaseClass {
 		assertTrue(listOfSbiPage.isSbiCreationDateTextDisplayed(), GlobalConstants.isSbiDetailsAreDisplayed);
 		assertTrue(listOfSbiPage.isSbiExpirationDateTextDisplayed(), GlobalConstants.isSbiDetailsAreDisplayed);
 		assertTrue(listOfSbiPage.isSubmittedOnDateDisplayed(), GlobalConstants.isSbiDetailsAreDisplayed);
-		if (sbiVersion == GlobalConstants.ALPHANUMERIC) {
+		if (GlobalConstants.ALPHANUMERIC.equals(sbiVersion))  {
 			assertTrue(listOfSbiPage.isPreviousMonthSbiCreationDateDisplayed(),
 					GlobalConstants.isSbiDetailsAreDisplayed);
 		} else {

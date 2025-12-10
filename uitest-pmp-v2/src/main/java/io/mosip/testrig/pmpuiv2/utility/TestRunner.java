@@ -196,7 +196,7 @@ public class TestRunner {
 				TestRunner.getResourcePath() + "/" + "config/partnerUiv2DataDeleteQueriesForKeyMgr.txt");
 
 		DBManager.executeDBQueries(ConfigManager.getIdaDbUrl(), ConfigManager.getMasterDbUser(),
-				ConfigManager.getPMSDbPass(), ConfigManager.getIDADBSchema(),
+				ConfigManager.getMasterDbPass(), ConfigManager.getIDADBSchema(),
 				TestRunner.getResourcePath() + "/" + "config/partnerUiv2DataDeleteQueriesForIDA.txt");
 
 		System.exit(0);
