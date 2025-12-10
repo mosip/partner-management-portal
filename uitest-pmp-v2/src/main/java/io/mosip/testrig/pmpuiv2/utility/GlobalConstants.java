@@ -228,6 +228,7 @@ public class GlobalConstants {
 	public static final String FTM_PARTNER_ID = "pmpui-ftm";
 	public static final String MISP_PARTNER = "MISP Partner";
 	public static final String MISP_PARTNER_USER = "pmpui-misp";
+	public static final String DEACTIVATE_PARTNER_ID = "pmpui-deactivate";
 	public static final String DEVICE_PROVIDER_TITLE = "Device Provider Services";
 	public static final String RELOAD_MESSAGE = "Changes you made may not be saved.";
 	public static final String INITIAL_SBI_VERSION = "Enter version of SBI";
@@ -258,6 +259,8 @@ public class GlobalConstants {
 	public static final String LIST_OF_LINKED_DEVICES_COUNT_31 = "List of Linked Devices (4)";
 	public static final String BREADCUMB_TEXT_OF_CREATE_PARTNER = "Home/ List of Partners";
 	public static final String LIST_OF_SBIS_TITLE_COUNT_29 = "List of SBIs (29)";
+	public static final String POLICIES_ADMIN = "pmpui-policyadmin";
+	public static final String POLICIES_USER_ID = "pmpui-policies";
 	
 	public static final String isApiKeyListPageGenerateApiKeyBtnDisplayed = "Verify if api key list page generate api key button displayed";
 	public static final String isPartnerIdHelpTextDisplayed = "Verify if partner ID help text displayed";
@@ -1047,7 +1050,8 @@ public class GlobalConstants {
 	public static final String isDisabledDeactivateButtonInListOfPartnerDisplayed = "Verify if deactivated button list  isdisplayed";
 	public static final String isSbiVersionAscIconDisplayed = "Verify if sbi version asc icon Displayed";
 	public static final String isSbiVersionDescIconDisplayed = "Verify if sbi version desc icon Displayed";
-
+	public static final String isSuccessPublishButtonAvailable = "Verify if success publish button available";
+	
 	public static final String APPID = "appId";
 	public static final String PASSWORD = "password";
 	public static final String USER_NAME = "userName";
@@ -1143,6 +1147,7 @@ public class GlobalConstants {
 	public static final String POLICYGROUP07 = "policygroup07";
 	public static final String POLICYGROUP07_DESCRIPTION = "policygroup 07";
 	// AuthPartner
+	public static final String DEFAULT_POLICY = "defaultauthpolicy";
 	public static final String AUTHPOLICY01 = "authpolicy01";
 	public static final String AUTHPOLICY01_DESCRIPTION = "authpolicy 01";
 	public static final String AUTHPOLICY02 = "authpolicy02";

@@ -1,12 +1,10 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
-import io.mosip.testrig.pmpuiv2.utility.TestRunner;
 
 public class FtmPage extends BasePage {
 
@@ -577,7 +575,6 @@ public class FtmPage extends BasePage {
 
 	public boolean isAddFtmSubmitButtonDisabled() {
 		refreshThePage();
-		WebElement submitButton = driver.findElement(By.id("add_ftm_submit_btn"));
 		return isElementEnabled(addFtmSubmitButton);
 	}
 

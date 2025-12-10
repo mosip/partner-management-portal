@@ -9,188 +9,18 @@ import io.mosip.testrig.pmpuiv2.pages.DashboardPage;
 import io.mosip.testrig.pmpuiv2.pages.FtmPage;
 import io.mosip.testrig.pmpuiv2.pages.LoginPage;
 import io.mosip.testrig.pmpuiv2.pages.PartnerCertificatePage;
-import io.mosip.testrig.pmpuiv2.pages.RegisterPage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
-public class FTMDeviceTest extends BaseClass {
+public class FtmDeviceTest extends BaseClass {
 
 	private BasePage basePage;
 	private DashboardPage dashboardpage;
 	private PartnerCertificatePage partnerCertificatePage;
-	private RegisterPage registerPage;
 	private FtmPage ftmPage;
 	private LoginPage loginpage;
 
-	@Test(priority = 19)
-	public void registerNewUserForFtmNoCert() throws InterruptedException {
-		dashboardpage = new DashboardPage(driver);
-		basePage = new BasePage(driver);
-		partnerCertificatePage = new PartnerCertificatePage(driver);
-		registerPage = new RegisterPage(driver);
-		ftmPage = new FtmPage(driver);
-
-		dashboardpage.clickOnProfileDropdown();
-		loginpage = dashboardpage.clickOnLogoutButton();
-		loginpage.clickRegisterButton();
-		registerPage.enterFirstName("pmpui-ftmnocert");
-		registerPage.enterLastName("pmpui-ftmnocert");
-		registerPage.enterOrganizationName("AABBCC");
-		registerPage.selectPartnerTypeDropdown(1);
-		registerPage.enterAddress("0" + data);
-		registerPage.enterEmail("0" + data + "ftmnocert" + "@gmail.com");
-		registerPage.enterPhone("9876544211");
-		registerPage.selectNotificationLanguageDropdown();
-		registerPage.enterUsername("pmpui-ftmnocert");
-		registerPage.enterPassword("mosip123");
-		registerPage.enterPasswordConfirm("mosip123");
-		dashboardpage = registerPage.clickSubmitButton();
-
-		dashboardpage.clickOnCheckbox();
-		dashboardpage.clickOnProceedButton();
-
-		assertTrue(partnerCertificatePage.isDashboardFtmChipProviderCardDisplayed(),
-				GlobalConstants.isProceedButtonDisplayed);
-
-		partnerCertificatePage.clickOnFtmChipProviderCard();
-		ftmPage.clickOnAddFtmButtonWioutRecord();
-
-		ftmPage.clickOnAddFtmPartnerIdForNoCert();
-		assertTrue(ftmPage.isNoDataAvailableMessageDisplayed(), GlobalConstants.isNoDataTextDisplaed);
-
-		ftmPage.EnterInAddFtmMakeBox(data);
-		assertTrue(ftmPage.isAutoPopulatedMessageDisplayed(), GlobalConstants.isAutoPopulatedTextDisplaed);
-
-		ftmPage.EnterInAddFtmModelBox(data);
-		ftmPage.clickOnAddFtmSubmitButton();
-
-		ftmPage.clickOnAddFtmPartnerIdInfo();
-		assertTrue(ftmPage.isInfoMessageDisplayed(), GlobalConstants.isInfoMessageDisplayed);
-
-		ftmPage.EnterInAddFtmMakeBox(" ");
-		ftmPage.EnterInAddFtmModelBox(" ");
-		ftmPage.clickOnAddFtmSubmitButton();
-		assertTrue(ftmPage.isInfoMessageDisplayed(), GlobalConstants.isInfoMessageDisplayed);
-
-		ftmPage.EnterInAddFtmMakeBox(data);
-		ftmPage.EnterInAddFtmModelBox(data);
-		basePage.navigateBack();
-
-		ftmPage.clickOnBlockMesssageProceed();
-		assertTrue(partnerCertificatePage.isPartnerCertificatePageDisplayed(),
-				GlobalConstants.isPartnerCertificatePageDisplayed);
-
-		ftmPage.clickOnAddFtmButtonWioutRecord();
-		ftmPage.EnterInAddFtmMakeBox(data);
-		ftmPage.EnterInAddFtmModelBox(data);
-
-		ftmPage.clickOnSideNavHomeIcon();
-		ftmPage.clickOnBlockMesssageProceed();
-
-		assertTrue(partnerCertificatePage.isDashboardFtmChipProviderCardDisplayed(),
-				GlobalConstants.isProceedButtonDisplayed);
-	}
-
-	@Test(priority = 20)
-	public void registerNewUserForFtm() throws InterruptedException {
-		dashboardpage = new DashboardPage(driver);
-		partnerCertificatePage = new PartnerCertificatePage(driver);
-		registerPage = new RegisterPage(driver);
-
-//		assertTrue(dashboardpage.isTermsAndConditionsPopUppDisplayed(), GlobalConstants.isTermsAndConditionsPopUppDisplayed);
-//		dashboardpage.clickOnCheckbox();
-//
-//		assertTrue(dashboardpage.isProceedButtonDisplayed(), GlobalConstants.isProceedButtonDisplayed);
-//		dashboardpage.clickOnProceedButton();
-
-		dashboardpage.clickOnRootOFTrustCertText();
-		partnerCertificatePage.clickOnRootUploadTrustCertificateButtonInAdmin();
-		partnerCertificatePage.clickOnpartnerDomainSelectorDropdown();
-		partnerCertificatePage.clickOnPartnerDomainSelectorDropdownOptionFtm();
-		partnerCertificatePage.uploadCertificateRootCa();
-		partnerCertificatePage.clickonSubmitButtonForAdmin();
-		partnerCertificatePage.clickOnGoBackButton();
-
-		partnerCertificatePage.clickOnIntermediateCACertTab();
-		partnerCertificatePage.clickOnIntermediateUploadTrustCertificateButtonInAdmin();
-		partnerCertificatePage.clickOnpartnerDomainSelectorDropdown();
-		partnerCertificatePage.clickOnPartnerDomainSelectorDropdownOptionFtm();
-		partnerCertificatePage.uploadCertificateSubCa();
-		partnerCertificatePage.clickonSubmitButtonForAdmin();
-		partnerCertificatePage.clickOnGoBackButton();
-
-		dashboardpage.clickOnProfileDropdown();
-		loginpage = dashboardpage.clickOnLogoutButton();
-		loginpage.clickRegisterButton();
-		registerPage.enterFirstName(GlobalConstants.FTM_PARTNER_ID);
-		registerPage.enterLastName(GlobalConstants.FTM_PARTNER_ID);
-		registerPage.enterOrganizationName(GlobalConstants.ORGANISATION_NAME);
-		registerPage.selectPartnerTypeDropdown(1);
-		registerPage.enterAddress("0" + data);
-		registerPage.enterEmail("0" + data + "ftm" + "@gmail.com");
-		registerPage.enterPhone("9876544210");
-		registerPage.selectNotificationLanguageDropdown();
-		registerPage.enterUsername(GlobalConstants.FTM_PARTNER_ID);
-		registerPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
-		registerPage.enterPasswordConfirm(GlobalConstants.PARTNER_PASSWORD);
-		dashboardpage = registerPage.clickSubmitButton();
-
-		assertTrue(dashboardpage.isTermsAndConditionsPopupDisplayed(),
-				GlobalConstants.isTermsAndConditionsPopUppDisplayed);
-		dashboardpage.clickOnCheckbox();
-		dashboardpage.clickOnProceedButton();
-
-		dashboardpage.clickOnDashboardPartnerCertificateListHeader();
-
-		assertTrue(partnerCertificatePage.isPartnerCertificatePageDisplayed(),
-				GlobalConstants.isPartnerCertificatePageDisplayed);
-		partnerCertificatePage.clickOnUploadButton();
-
-		assertTrue(partnerCertificatePage.isUploadPartnerCertificatePopUpDisplayed(),
-				GlobalConstants.isUploadPartnerCertificatePopUpDisplayed);
-		partnerCertificatePage.uploadCertificate();
-		partnerCertificatePage.clickOnSubmitButton();
-
-		assertTrue(partnerCertificatePage.isSuccessMessageForFtmCertDisplayed(),
-				GlobalConstants.isSuccessMessageDisplayed);
-		partnerCertificatePage.clickOnSuccessMsgCloseButton();
-		partnerCertificatePage.certifiCateUploadCancelButton();
-		dashboardpage = partnerCertificatePage.clickOnHomeButton();
-
-		dashboardpage.clickOnPartnerCertificateTitle();
-		partnerCertificatePage.clickOnPartnerCertificateReuploadButton();
-
-		assertTrue(partnerCertificatePage.isReUploadPartnerCertificateTextDisplayed(),
-				GlobalConstants.iReUploadPartnerCertificateTextDisplayed);
-//		assertTrue(partnerCertificatePage.isReUploadPartnerCertificateSubTextDisplayed(), GlobalConstants.isReUploadPartnerCertificateSubTextDisplayed);
-
-		assertTrue(partnerCertificatePage.isPleaseTabToSelectTextDisplayed(), GlobalConstants.isPleaseTabTextDisplayed);
-		assertTrue(partnerCertificatePage.isCertFormatesTextDisplayed(), GlobalConstants.isCertFormateDisplayed);
-		assertTrue(partnerCertificatePage.isLastUploadTimeAndDateTextDisplayed(),
-				GlobalConstants.isLastUploadTimeAndDateDisplayed);
-
-		assertTrue(partnerCertificatePage.isPartnerDomainTypeLabelDisplayed(),
-				GlobalConstants.iReUploadPartnerCertificateTextDisplayed);
-		assertTrue(partnerCertificatePage.isPartnerCertOvelayDisplayed(),
-				GlobalConstants.iReUploadPartnerCertificateTextDisplayed);
-
-		partnerCertificatePage.uploadCertificate();
-		partnerCertificatePage.clickOnRemoveCertificateButton();
-
-		partnerCertificatePage.uploadCertificateInvalidCert();
-		assertTrue(partnerCertificatePage.isInvalidFormatErrorPopupDisplayed(),
-				GlobalConstants.isInvalidCertFormatePopupDisplayed);
-
-		partnerCertificatePage.clickOnCertificateUploadCancelButton();
-
-		partnerCertificatePage.clickOnPartnerCertificateReuploadButton();
-		partnerCertificatePage.uploadCertificate();
-		partnerCertificatePage.clickOnSubmitButton();
-		assertTrue(partnerCertificatePage.isSuccessMessageForFtmCertDisplayed(),
-				GlobalConstants.isSuccessMessageDisplayed);
-	}
-
-	@Test(priority = 21)
+	@Test(priority = 1,description = "Add ftm chip with valid details")
 	public void AddFtm() throws InterruptedException {
 		dashboardpage = new DashboardPage(driver);
 		partnerCertificatePage = new PartnerCertificatePage(driver);
@@ -358,7 +188,7 @@ public class FTMDeviceTest extends BaseClass {
 
 	}
 
-	@Test(priority = 22)
+	@Test(priority = 2,description = "Try to reject added ftm chip")
 	public void AddFtmAndreject() throws InterruptedException {
 		dashboardpage = new DashboardPage(driver);
 		partnerCertificatePage = new PartnerCertificatePage(driver);
@@ -452,7 +282,7 @@ public class FTMDeviceTest extends BaseClass {
 				GlobalConstants.isSuccessMessageDisplayed);
 	}
 
-	@Test(priority = 23)
+	@Test(priority = 3,description = "Try to deactivate added ftm chip")
 	public void AddFtmAndDeactive() throws InterruptedException {
 		dashboardpage = new DashboardPage(driver);
 		basePage = new BasePage(driver);
@@ -546,7 +376,7 @@ public class FTMDeviceTest extends BaseClass {
 		assertTrue(ftmPage.isDeactivatedTextDisplayed(), GlobalConstants.isDeactivatedTextDisplayed);
 	}
 
-	@Test(priority = 24)
+	@Test(priority = 4,description = "Without ftm chip certificate try to add ftm chip")
 	public void addFtmWithoutUploadingFtmChipCert() throws InterruptedException {
 		dashboardpage = new DashboardPage(driver);
 		partnerCertificatePage = new PartnerCertificatePage(driver);

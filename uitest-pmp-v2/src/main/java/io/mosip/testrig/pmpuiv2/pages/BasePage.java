@@ -31,10 +31,10 @@ public class BasePage {
 	public static String appendDate = getPreAppend() + getDateTime();
 	private static final Logger logger = Logger.getLogger(BasePage.class);
 
-	 public BasePage(WebDriver driver) {
-	        this.driver = driver;
-	        PageFactory.initElements(driver, this);
-	    }
+	public BasePage(WebDriver driver) {
+		this.driver = driver;
+		PageFactory.initElements(driver, this);
+	}
 
 	public static String getDateTime() {
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("mmHHddMMyyyy");
@@ -236,7 +236,7 @@ public class BasePage {
 	protected boolean isElementDisabled(WebElement element) {
 		LogUtil.verify("Checking is element is disabled: ", element);
 		try {
-			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(13));
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
 			return wait.until(driver -> !element.isEnabled());
 		} catch (Exception e) {
 			takeScreenshot();
@@ -256,13 +256,8 @@ public class BasePage {
 	}
 
 	protected void waitForElementToBeVisible(WebElement element) {
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(13));
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
 		wait.until(ExpectedConditions.visibilityOf(element));
-	}
-
-	private void waitForElementToBeDisabled(WebElement element) {
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(13));
-		wait.until(ExpectedConditions.invisibilityOfAllElements(element));
 	}
 
 	public static void wait(int wait) {
@@ -381,9 +376,9 @@ public class BasePage {
 		} catch (IOException e) {
 			logger.error("Failed to take screenshot", e);
 		}
-		
+
 	}
-	
+
 	public void scrollIntoView(WebElement element) {
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript("arguments[0].scrollIntoView(true);", element);

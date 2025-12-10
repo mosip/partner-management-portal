@@ -1,13 +1,17 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
 import java.io.IOException;
+import java.time.Duration;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import io.mosip.testrig.pmpuiv2.driver.DriverManager;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
 public class AddDevicePage extends BasePage {
@@ -71,7 +75,7 @@ public class AddDevicePage extends BasePage {
 	@FindBy(id = "add_device_back_sbi_list_btn")
 	private WebElement addDeviceBackToSbiList;
 
-	@FindBy(xpath = "//*[text()='Add Devices']")
+	@FindBy(id = "page_title")
 	private WebElement addDevicesTitle;
 
 	@FindBy(xpath = "//span[text()='*']/../..//p[text()='Device Type']")
@@ -127,6 +131,8 @@ public class AddDevicePage extends BasePage {
 	}
 
 	public boolean isHomeButtonDisplayed() {
+		WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(10));
+		wait.until(ExpectedConditions.visibilityOf(homeButton));
 		return isElementDisplayed(homeButton);
 	}
 
@@ -143,6 +149,8 @@ public class AddDevicePage extends BasePage {
 	}
 
 	public boolean isAddDeviceTitleDisplayed() {
+		WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(10));
+		wait.until(ExpectedConditions.visibilityOf(addDevicesTitle));
 		return isElementDisplayed(addDevicesTitle);
 	}
 

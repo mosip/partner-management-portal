@@ -11,7 +11,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
-import io.mosip.testrig.pmpuiv2.utility.TestRunner;
 
 public class DatasharePolicyPage extends BasePage {
 
@@ -95,6 +94,9 @@ public class DatasharePolicyPage extends BasePage {
 
 	@FindBy(id = "confirmation_home_btn")
 	private WebElement successHomeButton;
+
+	@FindBy(id = "confirmation_custom_btn")
+	private WebElement successPublishButton;
 
 	@FindBy(xpath = "//p[text()='Policy data should not exceed more than 5120 characters.']")
 	private WebElement policyDataExceedChractersMessage;
@@ -500,7 +502,7 @@ public class DatasharePolicyPage extends BasePage {
 
 	@FindBy(xpath = "//span[text()='Re-Upload']")
 	private WebElement reUploadButton;
-	
+
 	@FindBy(xpath = "//li[text()='No policy groups found']")
 	private WebElement noPolicyGroupFound;
 
@@ -654,6 +656,10 @@ public class DatasharePolicyPage extends BasePage {
 		return isElementDisplayed(successHomeButton);
 	}
 
+	public boolean isSuccessPublishButtonAvailable() {
+		return isElementDisplayed(successPublishButton);
+	}
+
 	public void clickOnSuccessHomeButton() {
 		clickOnElement(successHomeButton);
 	}
@@ -796,18 +802,18 @@ public class DatasharePolicyPage extends BasePage {
 	}
 
 	public void selectPolicyGroupDropdown(String value) {
-	    clickOnElement(policyGroupDropdown);
-	    enter(policyGroupDropdownSearchInput, value);
-	    String xpath = "//span[contains(@class,'font-semibold') and contains(@class,'text-dark-blue') and normalize-space(text())='" + value + "']";
-	    try {
-	        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(8));
-	        WebElement policyGroupOption = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
-	        clickOnElement(policyGroupOption);
-	    } catch (TimeoutException e) {
-	        System.out.println("Policy group not found: " + value);
-	    }
+		clickOnElement(policyGroupDropdown);
+		enter(policyGroupDropdownSearchInput, value);
+		String xpath = "//span[contains(@class,'font-semibold') and contains(@class,'text-dark-blue') and normalize-space(text())='"
+				+ value + "']";
+		try {
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(8));
+			WebElement policyGroupOption = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
+			clickOnElement(policyGroupOption);
+		} catch (TimeoutException e) {
+			System.out.println("Policy group not found: " + value);
+		}
 	}
-
 
 	public void enterDeactivatedPolicyGroup(String value) {
 		clickOnElement(policyGroupDropdown);
@@ -1218,15 +1224,14 @@ public class DatasharePolicyPage extends BasePage {
 		enter(clonePolicyGroupDropdownSearchInput, value);
 		clickOnElement(clonePolicyGroupDropdownOption1);
 	}
-	
+
 	public void selectValidPolicyGroupForClone(String value) {
-	    clickOnElement(clonePolicyGroupDropdown);
-	    clickOnElement(clonePolicyGroupDropdownSearchInput);
-	    enter(clonePolicyGroupDropdownSearchInput, value);	    
-	    WebElement policyGroupOption = driver.findElement(
-	        By.xpath("//span[@id='policy_group_selector_option_name_1' and normalize-space(text())='" + value + "']")
-	    );    
-	    clickOnElement(policyGroupOption);
+		clickOnElement(clonePolicyGroupDropdown);
+		clickOnElement(clonePolicyGroupDropdownSearchInput);
+		enter(clonePolicyGroupDropdownSearchInput, value);
+		WebElement policyGroupOption = driver.findElement(By.xpath(
+				"//span[@id='policy_group_selector_option_name_1' and normalize-space(text())='" + value + "']"));
+		clickOnElement(policyGroupOption);
 	}
 
 	public boolean isClonePolicyButtonAvailable() {
@@ -1429,7 +1434,7 @@ public class DatasharePolicyPage extends BasePage {
 	public void clickOnEditPolicyFormSubmitButton() {
 		clickOnElement(editPolicyFormSubmitButton);
 	}
-	
+
 	public boolean isNoPolicyGroupFoundDisplayed() {
 		return isElementDisplayed(noPolicyGroupFound);
 	}
@@ -1437,7 +1442,7 @@ public class DatasharePolicyPage extends BasePage {
 	public void clearClonePolicyGroupDropdownValue() {
 		clearTextBox(clonePolicyGroupDropdownSearchInput);
 	}
-	
+
 	public void selectPolicyGroupForClonePolicy(String value) {
 		enter(clonePolicyGroupDropdownSearchInput, value);
 		clickOnElement(clonePolicyGroupDropdownOption1);

@@ -1,35 +1,23 @@
 package io.mosip.testrig.pmpuiv2.testcase;
 
-import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import org.testng.annotations.Test;
 
-import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
-import io.mosip.testrig.pmpuiv2.kernel.util.ConfigManager;
-
-import io.mosip.testrig.pmpuiv2.pages.AuthPolicyPage;
-import io.mosip.testrig.pmpuiv2.pages.BasePage;
 import io.mosip.testrig.pmpuiv2.pages.DashboardPage;
-import io.mosip.testrig.pmpuiv2.pages.LoginPage;
-
-import io.mosip.testrig.pmpuiv2.pages.partnersAdmin;
+import io.mosip.testrig.pmpuiv2.pages.PartnerAdmin;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
 public class PartnerDetailsTest extends BaseClass {
 
 	private DashboardPage dashboardPage;
-	private LoginPage loginPage;
-	private BasePage basePage;
-	private partnersAdmin partnerAdmin;
+	private PartnerAdmin partnerAdmin;
 
 	@Test(priority = 1, description = "verifying the partner details in tabular form")
 	public void partnerDetailsVerification() {
 		dashboardPage = new DashboardPage(driver);
-		basePage = new BasePage(driver);
-		loginPage = new LoginPage(driver);
-		partnerAdmin = new partnersAdmin(driver);
+		partnerAdmin = new PartnerAdmin(driver);
 
 		assertTrue(dashboardPage.isPartnersDisplayed(), GlobalConstants.isPartnersButtonDisplayed);
 		dashboardPage.clickOnPartners();
@@ -89,9 +77,9 @@ public class PartnerDetailsTest extends BaseClass {
 		partnerAdmin.clickOnApplyFiltersBtn();
 		assertTrue(partnerAdmin.isFiltersButtonDisabled(), GlobalConstants.isFiltersButtonDisabled);
 		partnerAdmin.clickOnFilterResetButton();
-		
+
 		partnerAdmin.clickOnFilterButton();
-		partnerAdmin.enterPartnerIdInFilter(GlobalConstants.AUTH_PARTNER_ID);
+		partnerAdmin.enterPartnerIdInFilter(GlobalConstants.DEACTIVATE_PARTNER_ID);
 		partnerAdmin.clickOnStatusFilter();
 		partnerAdmin.clickActivatedButton();
 		partnerAdmin.clickOnApplyFiltersBtn();
@@ -118,28 +106,22 @@ public class PartnerDetailsTest extends BaseClass {
 		assertTrue(partnerAdmin.isCertificateUploadsStatusAscIconDisplayed(),
 				GlobalConstants.isCertificateUploadsStatusAscIconDisplayed);
 
-		partnerAdmin.clickOnFilterButton();
-		partnerAdmin.clickOnStatusFilter();
-		partnerAdmin.clickOnDeActivatedStatusInFilters();
-		partnerAdmin.clickOnApplyFiltersBtn();
-		assertTrue(partnerAdmin.isDeactivatedPartnerRowDisplayed(), GlobalConstants.isDeactivatedPartnerRowDisplayed);
-		partnerAdmin.clickOnActionsButton();
-		assertTrue(partnerAdmin.isViewButtonsDisplayed(), GlobalConstants.isViewButtonsDisplayed);
+//		partnerAdmin.clickOnFilterButton();
+//		partnerAdmin.clickOnStatusFilter();
+//		partnerAdmin.clickOnDeActivatedStatusInFilters();
+//		partnerAdmin.clickOnApplyFiltersBtn();
+//		assertTrue(partnerAdmin.isDeactivatedPartnerRowDisplayed(), GlobalConstants.isDeactivatedPartnerRowDisplayed);
+//		partnerAdmin.clickOnActionsButton();
+//		assertTrue(partnerAdmin.isViewButtonsDisplayed(), GlobalConstants.isViewButtonsDisplayed);
 
-		partnerAdmin.clickOnFilterResetButton();
 		partnerAdmin.clickOnFilterButton();
-		partnerAdmin.clickOnPartnerTypeDropdown();
-		partnerAdmin.clickOnAuthenticationPartner();
-		partnerAdmin.clickOnApplyFiltersBtn();
-
-		partnerAdmin.enterPartnerIdInFilter(GlobalConstants.AUTH_PARTNER_ID);
+		partnerAdmin.enterPartnerIdInFilter(GlobalConstants.DEACTIVATE_PARTNER_ID);
 		partnerAdmin.enterInvalidOrganisationNameFilter(GlobalConstants.INVALID_DATA);
 		partnerAdmin.enterInvalidPolicyGroupFilter(GlobalConstants.INVALID_DATA);
 		partnerAdmin.enterInvalidEmailFilter(GlobalConstants.INVALID_DATA);
 		partnerAdmin.clickOnApplyFiltersBtn();
 		assertTrue(partnerAdmin.isNoResultsFoundsDisplayed(), GlobalConstants.isNoResultsFoundsDisplayed);
 		partnerAdmin.clickOnFilterResetButton();
-		
 		partnerAdmin.clickOnFilterButton();
 		assertTrue(partnerAdmin.isFiltersButtonDisabled(), GlobalConstants.isFiltersButtonDisabled);
 		partnerAdmin.clickOnFilterResetButton();

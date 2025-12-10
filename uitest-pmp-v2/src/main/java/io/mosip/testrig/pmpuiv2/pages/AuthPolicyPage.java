@@ -10,7 +10,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
-import io.mosip.testrig.pmpuiv2.utility.TestRunner;
 
 public class AuthPolicyPage extends BasePage {
 
@@ -487,10 +486,10 @@ public class AuthPolicyPage extends BasePage {
 
 	@FindBy(xpath = "//p[text()='Invalid input parameter - info in policy data']")
 	private WebElement invalidInfoInPolicyData;
-	
+
 	@FindBy(id = "create_policy_error_msg")
 	private WebElement policyGroupNotActiveMessage;
-	
+
 	@FindBy(xpath = "//li[text()='No policy groups found']")
 	private WebElement noPolicyGroupFound;
 
@@ -503,16 +502,15 @@ public class AuthPolicyPage extends BasePage {
 	}
 
 	public void selectPolicyGroupDropdown(String policyGroupValue) {
-	    clickOnElement(policyGroupDropdown);
-	    enter(policyGroupDropdownSearchInput, policyGroupValue);
-	    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-	    By optionLocator = By.xpath("//span[@class='font-semibold text-dark-blue' and normalize-space(text())='" 
-	                                 + policyGroupValue + "']");
-	    WebElement policyGroupOption = wait.until(ExpectedConditions.elementToBeClickable(optionLocator));
-	    clickOnElement(policyGroupOption);
+		clickOnElement(policyGroupDropdown);
+		enter(policyGroupDropdownSearchInput, policyGroupValue);
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		By optionLocator = By.xpath(
+				"//span[@class='font-semibold text-dark-blue' and normalize-space(text())='" + policyGroupValue + "']");
+		WebElement policyGroupOption = wait.until(ExpectedConditions.elementToBeClickable(optionLocator));
+		clickOnElement(policyGroupOption);
 	}
 
-	
 	public void selectDeactivatePolicyGroupInDropdown(String policyGroupValue) {
 		clickOnElement(policyGroupDropdown);
 		enter(policyGroupDropdownSearchInput, policyGroupValue);
@@ -1132,20 +1130,19 @@ public class AuthPolicyPage extends BasePage {
 		enter(clonePolicyGroupDropdownSearchInput, value);
 		clickOnElement(clonePolicyGroupDropdownOption1);
 	}
-	
+
 	public void selectPolicyGroupForClonePolicy(String value) {
 		enter(clonePolicyGroupDropdownSearchInput, value);
 		clickOnElement(clonePolicyGroupDropdownOption1);
 	}
-	
+
 	public void selectValidPolicyGroupForClone(String value) {
-	    clickOnElement(clonePolicyGroupDropdown);
-	    clickOnElement(clonePolicyGroupDropdownSearchInput);
-	    enter(clonePolicyGroupDropdownSearchInput, value);	    
-	    WebElement policyGroupOption = driver.findElement(
-	        By.xpath("//span[@id='policy_group_selector_option_name_1' and normalize-space(text())='" + value + "']")
-	    );    
-	    clickOnElement(policyGroupOption);
+		clickOnElement(clonePolicyGroupDropdown);
+		clickOnElement(clonePolicyGroupDropdownSearchInput);
+		enter(clonePolicyGroupDropdownSearchInput, value);
+		WebElement policyGroupOption = driver.findElement(By.xpath(
+				"//span[@id='policy_group_selector_option_name_1' and normalize-space(text())='" + value + "']"));
+		clickOnElement(policyGroupOption);
 	}
 
 	public boolean isClonePolicyButtonAvailable() {
@@ -1351,18 +1348,22 @@ public class AuthPolicyPage extends BasePage {
 	public boolean isInvalidInfoInPolicyDataErrorDisplayed() {
 		return isElementDisplayed(invalidInfoInPolicyData);
 	}
-	
+
 	public boolean isPolicyGroupNotActiveErrorDisplayed() {
 		return isElementDisplayed(policyGroupNotActiveMessage);
 	}
-	
+
 	public boolean isNoPolicyGroupFoundDisplayed() {
 		return isElementDisplayed(noPolicyGroupFound);
 	}
-	
+
 	public void clearClonePolicyGroupDropdownValue() {
 		clearTextBox(clonePolicyGroupDropdownSearchInput);
 	}
-	
+
+	public void selectDeactivatedPolicyGroupInDropdown(String policyGroupValue) {
+		clickOnElement(policyGroupDropdown);
+		enter(policyGroupDropdownSearchInput, policyGroupValue);
+	}
 
 }

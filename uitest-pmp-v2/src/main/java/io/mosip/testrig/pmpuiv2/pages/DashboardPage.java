@@ -9,6 +9,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import io.mosip.testrig.pmpuiv2.driver.DriverManager;
+
 public class DashboardPage extends BasePage {
 
 	@FindBy(id = "header_user_profile_title")
@@ -175,12 +177,11 @@ public class DashboardPage extends BasePage {
 	}
 
 	public void selectPolicyGroupDropdown(String policyGroupValue) {
-	    clickOnElement(selectPolicyGroupDropdown);
-	    enter(SearchBox, policyGroupValue);
-	    WebElement policyGroupOption = driver.findElement(
-	        By.xpath("//span[@id='policy_group_selector_option_name_1' and text()='" + policyGroupValue + "']")
-	    );
-	    clickOnElement(policyGroupOption);
+		clickOnElement(selectPolicyGroupDropdown);
+		enter(SearchBox, policyGroupValue);
+		WebElement policyGroupOption = driver.findElement(
+				By.xpath("//span[@id='policy_group_selector_option_name_1' and text()='" + policyGroupValue + "']"));
+		clickOnElement(policyGroupOption);
 	}
 
 	public void closePolicyGroupDropdown() {
@@ -212,6 +213,8 @@ public class DashboardPage extends BasePage {
 	}
 
 	public boolean isPartnerCertificateTitleDisplayed() {
+		WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(10));
+		wait.until(ExpectedConditions.visibilityOf(partnerCertificateTitle));
 		return isElementDisplayed(partnerCertificateTitle);
 	}
 
