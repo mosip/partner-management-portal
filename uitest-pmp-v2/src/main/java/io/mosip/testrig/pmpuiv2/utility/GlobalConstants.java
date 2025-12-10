@@ -166,20 +166,19 @@ public class GlobalConstants {
 	public static final String isSubmitButtonDisabled = "Verify if submit button is disabled";
 	public static final String isDeviceListAddDeviceButtonDisabled = "Verify if device list add device is disabled";
 	public static final String isPolicyCommentBoxTextDisplayed = "Mention the purpose of requesting the policy";
-	public static final String isFtmChipMakeLableDisplayed = "Verify if ftm chip make label displayed";
+	public static final String isFtmChipMakeLabelDisplayed = "Verify if ftm chip make label displayed";
 	public static final String isFtmChipMakeValueDisplayed = "Verify if ftm chip make value displayed";
-	public static final String isPartnerTypeLableDisplayed = "Verify if ftm chip partner type label displayed";
+	public static final String isPartnerTypeLabelDisplayed = "Verify if ftm chip partner type label displayed";
 	public static final String isPartnerTypeValueDisplayed = "Verify if ftm chip partner type value displayed";
 	public static final String isOidcDetailsElipsisButtonDisplayed = "Verify if oidc details elipsis button displayed";
-	public static final String isFtmModelLableDisplayed = "Verify if ftm chip model label displayed";
+	public static final String isFtmModelLabelDisplayed = "Verify if ftm chip model label displayed";
 	public static final String isFtmModelValueDisplayed = "Verify if ftm chip model value displayed";
 	public static final String isFtmModelCertifiateLableDisplayed = "Verify if ftm chip certificate label displayed";
-	public static final String isTimeOfUploadLableDisplayed = "Verify if ftm chip certificate time of upload label displayed";
+	public static final String isTimeOfUploadLabelDisplayed = "Verify if ftm chip certificate time of upload label displayed";
 	public static final String isOidcModifiedSuccessfullyDisplayed = "Verify if oidc modified successfully displayed";
 	public static final String isTimeOfUploadValueDisplayed = "Verify if ftm chip certificate time of upload value displayed";
-	public static final String isExpiryDateLableDisplayed = "Verify if ftm chip certificate time of upload value displayed";
-	public static final String isExpiryDateValueDisplayed = "Verify if ftm chip certificate time of upload value displayed";
-	public static final String isDownlaodButtonDisplayed = "Verify if ftm chip certificate download buttton displayed";
+	public static final String isExpiryDateLabelDisplayed = "Verify if ftm chip certificate expiry date label displayed";
+	public static final String isExpiryDateValueDisplayed = "Verify if ftm chip certificate expiry date value displayed";public static final String isDownlaodButtonDisplayed = "Verify if ftm chip certificate download buttton displayed";
 	public static final String isBackButton = "Verify if back button displayed";
 	public static final String isPendingForApprovalTextDisplayed = "Verify if pending for approval text displayed";
 
@@ -388,7 +387,6 @@ public class GlobalConstants {
 	public static final String isOrganisationNameContextDisplayed = "Verify if organisation name context displayed";
 	public static final String isAddressLabelDisplayed = "Verify if address label displayed";
 	public static final String isAddressContextDisplayed = "Verify if address context displayed";
-	public static final String isPartnerTypeLabelDisplayed = "Verify if partner type label displayed";
 	public static final String isPartnerTypeContextDisplayed = "Verify if partner type context displayed";
 	public static final String isPhoneNumberLabelDisplayed = "Verify if phone number label displayed";
 	public static final String isPhoneNumberContextDisplayed = "Verify if phone number context displayed";

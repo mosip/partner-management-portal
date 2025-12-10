@@ -65,22 +65,22 @@ public class FtmDeviceTest extends BaseClass {
 		assertTrue(ftmPage.isSubTitleFtmButtonDisplayed(), GlobalConstants.isSubTitleDisplayed);
 		assertTrue(ftmPage.isFtmChipDetailsLabelPartnerIdDisplayed(), GlobalConstants.isPartnerIdLableDisplayed);
 		assertTrue(ftmPage.isFtmChipDetailsContextPartnerIdDisplayed(), GlobalConstants.isPartnerIdDropdownDisplayed);
-		assertTrue(ftmPage.isFtmChipDetailsLabelMakeDisplayed(), GlobalConstants.isFtmChipMakeLableDisplayed);
+		assertTrue(ftmPage.isFtmChipDetailsLabelMakeDisplayed(), GlobalConstants.isFtmChipMakeLabelDisplayed);
 		assertTrue(ftmPage.isFtmChipDetailsContextMakeDisplayed(), GlobalConstants.isFtmChipMakeValueDisplayed);
-		assertTrue(ftmPage.isFtmChipDetailsLabelPartnerTypeDisplayed(), GlobalConstants.isPartnerTypeLableDisplayed);
+		assertTrue(ftmPage.isFtmChipDetailsLabelPartnerTypeDisplayed(), GlobalConstants.isPartnerTypeLabelDisplayed);
 		assertTrue(ftmPage.isFtmChipDetailsContextFtmChipProviderDisplayed(),
 				GlobalConstants.isPartnerTypeValueDisplayed);
-		assertTrue(ftmPage.isFtmChipDetailsLabelModelDisplayed(), GlobalConstants.isFtmModelLableDisplayed);
+		assertTrue(ftmPage.isFtmChipDetailsLabelModelDisplayed(), GlobalConstants.isFtmModelLabelDisplayed);
 		assertTrue(ftmPage.isFtmChipdetailsContextModelDisplayed(), GlobalConstants.isFtmModelValueDisplayed);
 		assertTrue(ftmPage.isFtmChipDetailsCertificatelabelDisplayed(),
 				GlobalConstants.isFtmModelCertifiateLableDisplayed);
-		assertTrue(ftmPage.isFtmChipDetailsPartnerTypeLabelDisplayed(), GlobalConstants.isPartnerTypeLableDisplayed);
+		assertTrue(ftmPage.isFtmChipDetailsPartnerTypeLabelDisplayed(), GlobalConstants.isPartnerTypeLabelDisplayed);
 		assertTrue(ftmPage.isFtmChipDetailsPartnerTypeContextDisplayed(), GlobalConstants.isPartnerTypeValueDisplayed);
 		assertTrue(ftmPage.isFtmChipDetailsLabelUploadDateTimeDisplayed(),
-				GlobalConstants.isTimeOfUploadLableDisplayed);
+				GlobalConstants.isTimeOfUploadLabelDisplayed);
 		assertTrue(ftmPage.isFtmChipDetailsContextUploadDateTimeDisplayed(),
 				GlobalConstants.isTimeOfUploadValueDisplayed);
-		assertTrue(ftmPage.isFtmChipDetailsLabelExpiryDateTimeDisplayed(), GlobalConstants.isExpiryDateLableDisplayed);
+		assertTrue(ftmPage.isFtmChipDetailsLabelExpiryDateTimeDisplayed(), GlobalConstants.isExpiryDateLabelDisplayed);
 		assertTrue(ftmPage.isFtmChipDetailsContextExpiryDateTimeDisplayed(),
 				GlobalConstants.isExpiryDateValueDisplayed);
 		assertTrue(ftmPage.isDownloadButtonViewPageDisplayed(), GlobalConstants.isDownlaodButtonDisplayed);
@@ -127,21 +127,21 @@ public class FtmDeviceTest extends BaseClass {
 		assertTrue(ftmPage.isSubTitleFtmButtonDisplayed(), GlobalConstants.isSubTitleDisplayed);
 //		assertTrue(ftmPage.isFtmChipDetailsLabelPartnerIdDisplayed(), GlobalConstants.isPartnerIdLableDisplayed);
 		assertTrue(ftmPage.isFtmChipDetailsContextPartnerIdDisplayed(), GlobalConstants.isPartnerIdDropdownDisplayed);
-		assertTrue(ftmPage.isFtmChipDetailsLabelMakeDisplayed(), GlobalConstants.isFtmChipMakeLableDisplayed);
+		assertTrue(ftmPage.isFtmChipDetailsLabelMakeDisplayed(), GlobalConstants.isFtmChipMakeLabelDisplayed);
 		assertTrue(ftmPage.isFtmChipDetailsContextMakeDisplayed(), GlobalConstants.isFtmChipMakeValueDisplayed);
-		assertTrue(ftmPage.isFtmChipDetailsLabelPartnerTypeDisplayed(), GlobalConstants.isPartnerTypeLableDisplayed);
+		assertTrue(ftmPage.isFtmChipDetailsLabelPartnerTypeDisplayed(), GlobalConstants.isPartnerTypeLabelDisplayed);
 		assertTrue(ftmPage.isFtmChipDetailsContextPartnerTypeDisplayed(), GlobalConstants.isPartnerTypeValueDisplayed);
 //		assertTrue(ftmPage.isFtmChipDetailsLabelModelDisplayed(), GlobalConstants.isFtmModelLableDisplayed);
 //		assertTrue(ftmPage.isFtmChipdetailsContextModelDisplayed(), GlobalConstants.isFtmModelValueDisplayed);
 		assertTrue(ftmPage.isFtmChipDetailsCertificatelabelDisplayed(),
 				GlobalConstants.isFtmModelCertifiateLableDisplayed);
-		assertTrue(ftmPage.isFtmChipDetailsPartnerTypeLabelDisplayed(), GlobalConstants.isPartnerTypeLableDisplayed);
+		assertTrue(ftmPage.isFtmChipDetailsPartnerTypeLabelDisplayed(), GlobalConstants.isPartnerTypeLabelDisplayed);
 		assertTrue(ftmPage.isFtmChipDetailsPartnerTypeContextDisplayed(), GlobalConstants.isPartnerTypeValueDisplayed);
 		assertTrue(ftmPage.isFtmChipDetailsLabelUploadDateTimeDisplayed(),
-				GlobalConstants.isTimeOfUploadLableDisplayed);
+				GlobalConstants.isTimeOfUploadLabelDisplayed);
 		assertTrue(ftmPage.isFtmChipDetailsContextUploadDateTimeDisplayed(),
 				GlobalConstants.isTimeOfUploadValueDisplayed);
-		assertTrue(ftmPage.isFtmChipDetailsLabelExpiryDateTimeDisplayed(), GlobalConstants.isExpiryDateLableDisplayed);
+		assertTrue(ftmPage.isFtmChipDetailsLabelExpiryDateTimeDisplayed(), GlobalConstants.isExpiryDateLabelDisplayed);
 		assertTrue(ftmPage.isFtmChipDetailsContextExpiryDateTimeDisplayed(),
 				GlobalConstants.isExpiryDateValueDisplayed);
 		assertTrue(ftmPage.isDownloadButtonViewPageDisplayed(), GlobalConstants.isDownlaodButtonDisplayed);
@@ -409,10 +409,10 @@ public class FtmDeviceTest extends BaseClass {
 
 		assertTrue(ftmPage.isFtmChipDetailsPartnerTypeContextDisplayed(), GlobalConstants.isPartnerTypeValueDisplayed);
 		assertTrue(ftmPage.isFtmChipDetailsLabelUploadDateTimeDisplayed(),
-				GlobalConstants.isTimeOfUploadLableDisplayed);
+				GlobalConstants.isTimeOfUploadLabelDisplayed);
 		assertTrue(ftmPage.isFtmChipDetailsContextUploadDateTimeDisplayed(),
 				GlobalConstants.isTimeOfUploadValueDisplayed);
-		assertTrue(ftmPage.isFtmChipDetailsLabelExpiryDateTimeDisplayed(), GlobalConstants.isExpiryDateLableDisplayed);
+		assertTrue(ftmPage.isFtmChipDetailsLabelExpiryDateTimeDisplayed(), GlobalConstants.isExpiryDateLabelDisplayed);
 		assertTrue(ftmPage.isFtmChipDetailsContextExpiryDateTimeDisplayed(),
 				GlobalConstants.isExpiryDateValueDisplayed);
 
