@@ -1128,7 +1128,7 @@ export const getNotificationDescription = (notification, isLoginLanguageRTL, t) 
                     mispPartnerId: notification.notificationDetails.mispLicenseKeyDetails[0].mispPartnerId,
                     expiryDateTime: formatDate(notification.notificationDetails.mispLicenseKeyDetails[0].expiryDateTime, 'dateInWords')
                 }}
-                components={{ span: <span className={`font-semibold ${isLoginLanguageRTL && 'whitespace-nowrap'}`} /> }}
+                components={{ span: <span className={`font-semibold md:whitespace-nowrap md:break-words break-all`} /> }}
             />
         );  
     }
