@@ -30,6 +30,10 @@ function TextInputComponent({ fieldName, fieldNameKey, placeHolderKey, textBoxVa
     const containsAsterisk = fieldNameKey.includes('*');
     fieldNameKey = containsAsterisk ? fieldNameKey.replace('*', '') : fieldNameKey;
 
+    // Handle empty placeholder key to avoid translation errors
+    const placeholderText = placeHolderKey && placeHolderKey.trim() ? t(placeHolderKey) : '';
+    const placeholderSize = placeholderText.length;
+
     return (
         <div className={`mb-2 min-w-fit ${styleSet?.outerDiv || ''}`}>
             <label id={id + '_label'} className={`flex items-center text-dark-blue text-sm mb-1 ${styleSet?.inputLabel || ''}`}>
@@ -45,8 +49,8 @@ function TextInputComponent({ fieldName, fieldNameKey, placeHolderKey, textBoxVa
                     value={inputValue}
                     onChange={handleInputChange}
                     onBlur={onBlur}
-                    placeholder={t(placeHolderKey)}
-                    size={t(placeHolderKey).length}
+                    placeholder={placeholderText}
+                    size={placeholderSize}
                     {...(maxLength && { maxLength })}
                     readOnly={disableField}
                     className={`${disableField ? 'bg-platinum-gray': 'bg-white'} ${isLoginLanguageRTL ? 'pl-7': 'pr-7'} w-full rounded-[4px] h-9 p-2 focus:outline-none items-center ${styleSet?.inputField || ''}`}

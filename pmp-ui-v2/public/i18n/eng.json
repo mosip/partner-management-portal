@@ -210,6 +210,28 @@
         "viewMore": "View More",
         "logoutMsg": "Do not want to select policy group and proceed further? "
     },
+    "partnerAdminBasicInfoForm": {
+        "title": "Partner Admin Details",
+        "description": "Provide your basic information to complete your profile and continue to the PMS dashboard.",
+        "mandatoryFieldsNote": "All fields marked with {asterisk} are mandatory.",
+        "logoutMessage": "Details not ready to be provided?",
+        "submissionSuccess": "Your basic details have been submitted successfully.",
+        "successDescription": "Your basic details have been submitted successfully. Click Continue to proceed to the PMS Dashboard.",
+        "continue": "Continue",
+        "email": "Email",
+        "phone": "Phone",
+        "organizationName": "Organization Name",
+        "address": "Address",
+        "partnerType": "Partner Type",
+        "notificationLanguage": "Notification Language",
+        "enterEmail": "Enter Email",
+        "enterPhone": "Enter Phone",
+        "enterOrganizationName": "Enter Organization Name",
+        "enterAddress": "Enter Address",
+        "selectLanguage": "Select Language",
+        "organizationNameRequired": "Organization Name is required",
+        "addressRequired": "Address is required"
+    },
     "loading": "Loading",
     "partnerCertificatesList": {
         "partnerCertificate": "Partner Certificate",
@@ -376,8 +398,8 @@
         "address": "Address",
         "organizationName": "Organization Name",
         "organizationNameInfo": "Enter the organization name as mentioned in the ORGANIZATION attribute of CERTIFICATE subject in the CA Signed Certificate.",
-        "contactNumber": "Phone Number",
-        "emailId": "Email Address",
+        "contactNumber": "Phone",
+        "emailId": "Email",
         "username": "Username",
         "notificationLanguage": "Notification Language",
         "selectPolicyGroup": "Select Policy Group",
@@ -408,11 +430,11 @@
     },
     "languages": {
         "english": "English",
-        "hindi": "Hindi",
-        "arabic": "Arabic",
-        "french": "French",
-        "tamil": "Tamil",
-        "kannada": "Kannada"
+        "hindi": "हिंदी",
+        "arabic": "العربية",
+        "french": "Français",
+        "tamil": "தமிழ்",
+        "kannada": "ಕನ್ನಡ"
     },
     "createOidcClient": {
         "createOidcClient": "Create OIDC Client",

@@ -208,6 +208,28 @@
         "viewMore": "Voir plus",
         "logoutMsg": "Vous ne souhaitez pas sélectionner un groupe de stratégies et continuer ? "
     },
+    "partnerAdminBasicInfoForm": {
+        "title": "Détails de l'administrateur partenaire",
+        "description": "Fournissez vos informations de base pour compléter votre profil et continuer vers le tableau de bord PMS.",
+        "mandatoryFieldsNote": "Tous les champs marqués d'un {asterisk} sont obligatoires.",
+        "logoutMessage": "Les détails ne sont pas prêts à être fournis ?",
+        "submissionSuccess": "Vos informations de base ont été soumises avec succès.",
+        "successDescription": "Vos informations de base ont été soumises avec succès. Cliquez sur Continuer pour accéder au tableau de bord PMS.",
+        "continue": "Continuer",
+        "email": "E-mail",
+        "phone": "Téléphone",
+        "organizationName": "Nom de l'organisation",
+        "address": "Adresse",
+        "partnerType": "Type de partenaire",
+        "notificationLanguage": "Langue de notification",
+        "enterEmail": "Entrez l'e-mail",
+        "enterPhone": "Entrez le numéro de téléphone",
+        "enterOrganizationName": "Entrez le nom de l'organisation",
+        "enterAddress": "Entrez l'adresse",
+        "selectLanguage": "Sélectionnez la langue",
+        "organizationNameRequired": "Le nom de l'organisation est requis",
+        "addressRequired": "L'adresse est requise"
+    },
     "loading": "chargement",
     "partnerCertificatesList": {
         "partnerCertificate": "Certificat de partenaire",
@@ -406,12 +428,12 @@
         "uploadAbisPartnerCertificate": "Télécharger le certificat partenaire ABIS"
     },
     "languages": {
-        "english": "Anglais",
-        "hindi": "Hindi",
-        "arabic": "Arabe",
+        "english": "English",
+        "hindi": "हिंदी",
+        "arabic": "العربية",
         "french": "Français",
-        "tamil": "Tamoul",
-        "kannada": "Kannada"
+        "tamil": "தமிழ்",
+        "kannada": "ಕನ್ನಡ"
     },
     "createOidcClient": {
         "createOidcClient": "Créer un client OIDC",

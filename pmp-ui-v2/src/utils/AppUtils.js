@@ -61,12 +61,7 @@ export const getPartnerTypeDescription = (partnerType, t) => {
 }
 
 export const getPartnerType = (userProfile) => {
-    // Return partnerType if already present
-    if (userProfile.partnerType) {
-      return userProfile.partnerType;
-    }
   
-    // if partnertype is not present in userProfile then extract it from roles
     // allowed partner types (same as roles)
     const validPartnerTypes = new Set([
       'AUTH_PARTNER',
@@ -80,6 +75,7 @@ export const getPartnerType = (userProfile) => {
       'PRINT_PARTNER',
       'INTERNAL_PARTNER',
       'MANUAL_ADJUDICATION',
+      'PARTNER_ADMIN',
     ]);
 
     const userRoles = (userProfile.roles ?? '')

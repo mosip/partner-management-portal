@@ -22,6 +22,7 @@ import adminMispPartnerServicesIcon from '../../svg/admin_misp_partner_services_
 import ConsentPopup from './ConsentPopup.js';
 import { getAppConfig } from '../../services/ConfigService.js';
 import OnboardingPartnerAlertPopup from './OnboardingPartnerAlertPopup.js';
+import PartnerAdminBasicInfoForm from './PartnerAdminBasicInfoForm.js';
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -52,6 +53,9 @@ function Dashboard() {
   const [onboardingPartnerAlertType, setOnboardingPartnerAlertType] = useState(null);
   const [isEmailVerified, setIsEmailVerified] = useState(false);
   const [configData, setConfigData] = useState(null);
+  const [showPartnerAdminBasicInfoForm, setShowPartnerAdminBasicInfoForm] = useState(false);
+  const [partnerAdminMissingAttributes, setPartnerAdminMissingAttributes] = useState([]);
+  const [partnerAdminFormSubmitted, setPartnerAdminFormSubmitted] = useState(false);
   let isSelectPolicyPopupVisible = false;
   let isUserConsentGiven = false;
 
@@ -109,6 +113,10 @@ function Dashboard() {
         // Extract partnerType from roles if not present in userProfile
         const partnerType = getPartnerType(userProfile);
 
+        // Use sessionStorage values set in HttpService.js instead of recalculating
+        const isUserPartnerAdmin = sessionStorage.getItem("isAdmin") === "true";
+        const isUserPolicyManager = sessionStorage.getItem("isPolicyManager") === "true";
+
         // Check if no valid partner type is found
         if (!partnerType) {
           setOnboardingPartnerAlertType('invalidPartnerTypeError');
@@ -137,7 +145,49 @@ function Dashboard() {
               return;
           }
           setIsEmailVerified(resData.partnerExists);
-          if (!resData.partnerExists) {
+          
+          // Special handling for new user registration for Partner Admin
+          // Note: Only PARTNER_ADMIN users will use PartnerAdminBasicInfoForm
+          if (isUserPartnerAdmin && !resData.partnerExists) {
+            console.log('Partner Admin email does not exist in PMS');
+            // Check for missing required attributes for Partner Admin
+            // Required fields: userName, orgName, address, phoneNumber, langCode, partnerType
+            // Note: email is always present and doesn't need to be checked
+            // Missing attributes will be collected via PartnerAdminBasicInfoForm for new user registration for Partner Admin
+            const missingAttrs = [];
+            
+            // Check each required field
+            if (!userProfile.userName || (typeof userProfile.userName === 'string' && userProfile.userName.trim() === '')) {
+              missingAttrs.push('userName');
+            }
+            if (!userProfile.orgName || (typeof userProfile.orgName === 'string' && userProfile.orgName.trim() === '')) {
+              missingAttrs.push('orgName');
+            }
+            if (!userProfile.address || (typeof userProfile.address === 'string' && userProfile.address.trim() === '')) {
+              missingAttrs.push('address');
+            }
+            if (!userProfile.phoneNumber || (typeof userProfile.phoneNumber === 'string' && userProfile.phoneNumber.trim() === '')) {
+              missingAttrs.push('phoneNumber');
+            }
+            if (!userProfile.langCode || (typeof userProfile.langCode === 'string' && userProfile.langCode.trim() === '')) {
+              missingAttrs.push('langCode');
+            }
+            if (!userProfile.partnerType || (typeof userProfile.partnerType === 'string' && userProfile.partnerType.trim() === '')) {
+              missingAttrs.push('partnerType');
+            }
+            
+            // Only show the form if attributes are missing
+            if (missingAttrs.length > 0) {
+              setPartnerAdminMissingAttributes(missingAttrs);
+              setShowPartnerAdminBasicInfoForm(true);
+              setDataLoaded(true);
+              return;
+            }
+          
+          }
+          
+          // Only check for non-admin users (PARTNER_ADMIN is handled above, POLICYMANAGER is excluded)
+          if (!resData.partnerExists && !isUserPartnerAdmin && !isUserPolicyManager) {
             console.log('user email does not exist in PMS');
             // 2. If email does not exist, check if any required attributes are missing
             const requiredFields = ['userName', 'orgName', 'address', 'phoneNumber', 'email', 'partnerType'];
@@ -158,7 +208,7 @@ function Dashboard() {
 
             //3. if email does not exist then check if Policy Group selection is required for this Partner Type or not
             if (
-              (userRoles.some(role => resData.policyRequiredPartnerTypes.includes(role))) && !roles.includes('PARTNER_ADMIN') && !roles.includes('POLICYMANAGER')) {
+              (userRoles.some(role => resData.policyRequiredPartnerTypes.includes(role)))) {
               console.log(`show policy group selection popup`);
               setShowPolicies(true);
               //4. show policy group selection popup
@@ -225,6 +275,16 @@ function Dashboard() {
       }
     }
   }
+
+  const handlePartnerAdminSubmit = () => {
+    setIsEmailVerified(true);
+  };
+
+  const handlePartnerAdminSuccessContinue = () => {
+    setShowPartnerAdminBasicInfoForm(false);
+    setPartnerAdminFormSubmitted(true);
+    callUserConsentPopup();
+  };
 
   useEffect(() => {
     const fetchTrustCertExpiryCount = async (certType) => {
@@ -523,7 +583,7 @@ function Dashboard() {
         fetchPartnerCertExpiryCount();
       }
 
-      if (!isPartnerAdmin && isEmailVerified && showFtmServices && configData.isCaSignedPartnerCertificateAvailable === 'true') {
+      if (!isPartnerAdmin && isEmailVerified && showFtmServices && configData && configData.isCaSignedPartnerCertificateAvailable === 'true') {
         fetchFtmCertificateExpiryCount();
       }
 
@@ -536,7 +596,7 @@ function Dashboard() {
       }
 
       if (isPartnerAdmin && isEmailVerified) {
-        if (configData.isRootIntermediateCertAvailable === 'true') {
+        if (configData && configData.isRootIntermediateCertAvailable === 'true') {
           fetchTrustCertExpiryCount('ROOT');
           fetchTrustCertExpiryCount('INTERMEDIATE');
         }
@@ -552,7 +612,7 @@ function Dashboard() {
     }
 
     init();
-  }, [isPartnerAdmin, isEmailVerified]);
+  }, [isPartnerAdmin, isEmailVerified, configData, showFtmServices, showAuthenticationServices, showDeviceProviderServices]);
 
   const partnerCertificatesList = () => {
     navigate('/partnermanagement/certificates/partner-certificate')
@@ -660,9 +720,9 @@ function Dashboard() {
       {dataLoaded && (
         <>
           {errorMsg && (
-            <ErrorMessage id='dashboard_error_msg' errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
-          )}
-          <div id='welcome_msg' className="flex mb-6 mt-5 ml-[2%] text-lg font-semibold tracking-tight text-gray-700 justify-between flex-wrap">
+                <ErrorMessage id='dashboard_error_msg' errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
+              )}
+              <div id='welcome_msg' className="flex mb-6 mt-5 ml-[2%] text-lg font-semibold tracking-tight text-gray-700 justify-between flex-wrap">
             <p>
               {t('dashboard.welcomeMsg', { firstName: getUserProfile().firstName, lastName: getUserProfile().lastName })}!
             </p>
@@ -765,7 +825,7 @@ function Dashboard() {
                     {t('dashboard.ftmChipProviderServicesDesc')}
                   </p>
                 </div>
-                {configData.isCaSignedPartnerCertificateAvailable && expiringFtmCertificateCount > 0 && (
+                {configData && configData.isCaSignedPartnerCertificateAvailable && expiringFtmCertificateCount > 0 && (
                   <CountWithHover
                     countLabel={expiringFtmCertificateCount}
                     descriptionKey={expiringFtmCertificateCount > 1 ? "dashboard.ftmChipCertExpiryCountDesc1" : "dashboard.ftmChipCertExpiryCountDesc2"}
@@ -789,7 +849,7 @@ function Dashboard() {
                       {t('dashboard.certificateTrustStoreDesc')}
                     </p>
                   </div>
-                  {configData.isRootIntermediateCertAvailable === 'true' && (rootCertExpiryCount > 0 || intermediateCertExpiryCount > 0) && (
+                  {configData && configData.isRootIntermediateCertAvailable === 'true' && (rootCertExpiryCount > 0 || intermediateCertExpiryCount > 0) && (
                     <CountWithHover
                       countLabel={
                         rootCertExpiryCount > 0 && intermediateCertExpiryCount > 0
@@ -957,13 +1017,20 @@ function Dashboard() {
             <ConsentPopup />
           )}
           {showOnboardingPartnerAlertPopup && (
-            <OnboardingPartnerAlertPopup 
+            <OnboardingPartnerAlertPopup
               errorType={onboardingPartnerAlertType}
             />
           )}
-        </>)
-      }
-    </div >
+          {showPartnerAdminBasicInfoForm && !partnerAdminFormSubmitted && (
+            <PartnerAdminBasicInfoForm
+              missingAttributes={partnerAdminMissingAttributes}
+              onSubmit={handlePartnerAdminSubmit}
+              onSuccessContinue={handlePartnerAdminSuccessContinue}
+            />
+          )}
+        </>
+      )}
+        </div>
   )
 }
 
