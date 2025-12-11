@@ -215,7 +215,8 @@ public class PartnerPolicyMappingTest extends BaseClass {
 		partnerPolicyMappingPage.clickOnFilterResetButton();
 
 		partnerPolicyMappingPage.clickOnFilterButton();
-		assertTrue(partnerPolicyMappingPage.isPartnerIdDescIconDisplayed(), GlobalConstants.isPartnerIdDescIconDisplayed);
+		assertTrue(partnerPolicyMappingPage.isPartnerIdDescIconDisplayed(),
+				GlobalConstants.isPartnerIdDescIconDisplayed);
 		assertTrue(partnerPolicyMappingPage.isPartnerIdAscIconDisplayed(), GlobalConstants.isPartnerIdAscIconDisplayed);
 		assertTrue(partnerPolicyMappingPage.isPartnerTypeDescIconDisplayed(),
 				GlobalConstants.isPartnerTypeDescIconDisplayed);
@@ -225,8 +226,10 @@ public class PartnerPolicyMappingTest extends BaseClass {
 				GlobalConstants.isPolicyGroupNameDescIconDisplayed);
 		assertTrue(partnerPolicyMappingPage.isPolicyGroupNameAscIconDisplayed(),
 				GlobalConstants.isPolicyGroupNameAscIconDisplayed);
-		assertTrue(partnerPolicyMappingPage.isPolicyNameDescIconDisplayed(), GlobalConstants.isPolicyNameDescIconDisplayed);
-		assertTrue(partnerPolicyMappingPage.isPolicyNameAscIconDisplayed(), GlobalConstants.isPolicyNameAscIconDisplayed);
+		assertTrue(partnerPolicyMappingPage.isPolicyNameDescIconDisplayed(),
+				GlobalConstants.isPolicyNameDescIconDisplayed);
+		assertTrue(partnerPolicyMappingPage.isPolicyNameAscIconDisplayed(),
+				GlobalConstants.isPolicyNameAscIconDisplayed);
 		assertTrue(partnerPolicyMappingPage.isCreatedDateTimeDescIconDisplayed(),
 				GlobalConstants.isCreatedDateTimeDescIconDisplayed);
 		assertTrue(partnerPolicyMappingPage.isCreatedDateTimeAscIconDisplayed(),
@@ -381,8 +384,8 @@ public class PartnerPolicyMappingTest extends BaseClass {
 
 	}
 
-	@Test(priority = 5, description = "View Requested Policie Details")
-	public void viewRequestedPolicieDetails() {
+	@Test(priority = 5, description = "View Requested Policy Details")
+	public void viewRequestedPolicyDetails() {
 
 		dashboardPage = new DashboardPage(driver);
 		partnerPolicyMappingPage = new PartnerPolicyMappingPage(driver);

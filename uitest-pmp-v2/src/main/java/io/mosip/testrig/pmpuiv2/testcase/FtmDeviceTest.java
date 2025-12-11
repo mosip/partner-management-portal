@@ -134,7 +134,7 @@ public class FtmDeviceTest extends BaseClass {
 //		assertTrue(ftmPage.isFtmChipDetailsLabelModelDisplayed(), GlobalConstants.isFtmModelLableDisplayed);
 //		assertTrue(ftmPage.isFtmChipdetailsContextModelDisplayed(), GlobalConstants.isFtmModelValueDisplayed);
 		assertTrue(ftmPage.isFtmChipDetailsCertificatelabelDisplayed(),
-				GlobalConstants.isFtmModelCertifiateLabelDisplayed);
+				GlobalConstants.isFtmChipDetailsCertificatelabelDisplayed);
 		assertTrue(ftmPage.isFtmChipDetailsPartnerTypeLabelDisplayed(), GlobalConstants.isPartnerTypeLabelDisplayed);
 		assertTrue(ftmPage.isFtmChipDetailsPartnerTypeContextDisplayed(), GlobalConstants.isPartnerTypeValueDisplayed);
 		assertTrue(ftmPage.isFtmChipDetailsLabelUploadDateTimeDisplayed(),

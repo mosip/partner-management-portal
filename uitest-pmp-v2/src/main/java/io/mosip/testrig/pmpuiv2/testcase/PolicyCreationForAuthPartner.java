@@ -173,7 +173,7 @@ public class PolicyCreationForAuthPartner extends BaseClass {
 
 	}
 
-	@Test(priority = 2, description = "Partner-Policy maaping")
+	@Test(priority = 2, description = "Partner-Policy mapping")
 	public void partnerPolicyMapping() {
 
 		dashboardPage = new DashboardPage(driver);

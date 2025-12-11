@@ -50,7 +50,7 @@ public class FtmPartnerCreation extends BaseClass {
 		dashboardpage.clickOnProceedButton();
 
 		assertTrue(partnerCertificatePage.isDashboardFtmChipProviderCardDisplayed(),
-				GlobalConstants.isProceedButtonDisplayed);
+				GlobalConstants.isDashboardFtmChipProviderCardDisplayed);
 
 		partnerCertificatePage.clickOnFtmChipProviderCard();
 		ftmPage.clickOnAddFtmButtonWioutRecord();
@@ -88,7 +88,7 @@ public class FtmPartnerCreation extends BaseClass {
 		ftmPage.clickOnBlockMesssageProceed();
 
 		assertTrue(partnerCertificatePage.isDashboardFtmChipProviderCardDisplayed(),
-				GlobalConstants.isProceedButtonDisplayed);
+				GlobalConstants.isDashboardFtmChipProviderCardDisplayed);
 	}
 
 	@Test(priority = 2, description = "Register ftm partner with valid certificate")
@@ -172,7 +172,7 @@ public class FtmPartnerCreation extends BaseClass {
 		assertTrue(partnerCertificatePage.isPartnerDomainTypeLabelDisplayed(),
 				GlobalConstants.isPartnerDomainTypeLabelDisplayed);
 		assertTrue(partnerCertificatePage.isPartnerCertOverlayDisplayed(),
-				GlobalConstants.isPartnerDomainTypeLabelDisplayed);
+				GlobalConstants.isPartnerCertOverlayDisplayed);
 
 		partnerCertificatePage.uploadCertificate();
 		partnerCertificatePage.clickOnRemoveCertificateButton();

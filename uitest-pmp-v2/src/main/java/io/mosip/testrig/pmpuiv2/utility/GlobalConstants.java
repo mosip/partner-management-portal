@@ -1207,11 +1207,11 @@ public class GlobalConstants {
 	public static final String isSbiVersionDescIconDisplayed = "Verify if sbi version desc icon Displayed";
 	public static final String isSuccessPublishButtonAvailable = "Verify if success publish button available";
 	public static final String isFtmChipDetailsCertificatelabelDisplayed = "Verify if ftm chip details certificate label is displayed";
-	public static final String isFtmModelCertifiateLabelDisplayed = "Verify if ftm chip certificate label is displayed";
 	public static final String isFtmChipDetailsCertificateContextDisplayed = "Verify if ftm chip certificate context is displayed";
 	public static final String isIntCAIssuedByContextDisplayed = "Verify if ftm chip certificate context is displayed";
 	public static final String isPartnerDomainTypeLabelDisplayed = "Verify if partner domain type label is displayed";
 	public static final String isPartnerCertOverlayDisplayed = "Verify if partner certificate overlay is displayed";
+	public static final String isSuccessMessageForFtmCertDisplayed = "Verify if success message for ftm certificate is displayed";
 
 	
 
