@@ -59,11 +59,19 @@ function DeactivatePopup({ onClickConfirm, closePopUp, popupData, request, heade
                     }
                 });
             } else if (popupData.clientName) {
-                response = await HttpService.patch(getPartnerManagerUrl(`/oidc-clients/${popupData.clientId}`, process.env.NODE_ENV), request, {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                });
+                if (popupData.additionalConfigRequired) {
+                    response = await HttpService.patch(getPartnerManagerUrl(`/oidc-clients/${popupData.clientId}`, process.env.NODE_ENV), request, {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                } else {
+                    response = await HttpService.put(getPartnerManagerUrl(`/oauth/client/${popupData.clientId}`, process.env.NODE_ENV), request, {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                }
             } else if (popupData.isDeactivateDevice) {
                 response = await HttpService.patch(getPartnerManagerUrl(`/devicedetail/${popupData.deviceId}`, process.env.NODE_ENV), request, {
                     headers: {

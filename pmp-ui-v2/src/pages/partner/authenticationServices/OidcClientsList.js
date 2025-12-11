@@ -8,7 +8,9 @@ import {
     onPressEnterKey,
     populateClientNames,
     setSubmenuRef,
-    isOidcClientAvailable
+    isOidcClientAvailable,
+    isOidcClientAdditionalInfoRequired,
+    createDeactivateRequest
 } from '../../../utils/AppUtils';
 import { HttpService } from '../../../services/HttpService';
 import ErrorMessage from '../../common/ErrorMessage';
@@ -62,10 +64,21 @@ function OidcClientsList() {
     const submenuRef = useRef([]);
     const [showCompatibilityMsg, setShowCompatibilityMsg] = useState(false);
     const [disableCreateOidcBtn, setDisableCreateOidcBtn] = useState(false);
+    const [additionalConfigRequired, setAdditionalConfigRequired] = useState(false);
 
     useEffect(() => {
         handleMouseClickForDropdown(submenuRef, () => setViewClientId(-1));
     }, [submenuRef]);
+
+    useEffect(() => {
+        const checkAdditionalConfigSupport = async () => {
+          const isRequired = await isOidcClientAdditionalInfoRequired();
+          if (isRequired) {
+            setAdditionalConfigRequired(isRequired);
+          }
+        };
+        checkAdditionalConfigSupport();
+    }, []);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -148,12 +161,17 @@ function OidcClientsList() {
 
     const showDeactivateOidcClient = async (selectedClientdata, index) => {
         if (selectedClientdata.status === "ACTIVE") {
-            const request = createRequest({
-                status: "INACTIVE"
-            }, "mosip.pms.deactivate.oidc.client.patch", true);
-            setDeactivateRequest(request);
+            if (additionalConfigRequired) {
+                const request = createRequest({
+                    status: "INACTIVE"
+                }, "mosip.pms.deactivate.oidc.client.patch", true);
+                setDeactivateRequest(request);
+                setSelectedOidcClient(selectedClientdata);
+            } else {
+                await createDeactivateRequest(selectedClientdata, setTableDataLoaded, setDeactivateRequest, setErrorCode, setErrorMsg, t);
+                setSelectedOidcClient({...selectedClientdata, additionalConfigRequired: false});
+            }
             setViewClientId(-1);
-            setSelectedOidcClient(selectedClientdata);
             setShowActiveIndexDeactivatePopup(index);
         }
     };

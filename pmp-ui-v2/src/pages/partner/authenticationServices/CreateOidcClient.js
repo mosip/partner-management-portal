@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { useNavigate, useBlocker } from "react-router-dom";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import DropdownComponent from '../../common/fields/DropdownComponent';
 import { getUserProfile } from '../../../services/UserProfileService';
 import {
@@ -8,7 +8,9 @@ import {
   moveToOidcClientsList, getGrantTypes, getApprovedAuthPartners,
   isLangRTL, createDropdownData, validateUrl, getPartnerPolicyRequests,
   onPressEnterKey, trimAndReplace, validateInputRegex,
-  getLanguageDisplayName, createRequest
+  getLanguageDisplayName, createRequest,
+  isOidcClientAdditionalInfoRequired,
+  buildClientNameLangMap
 } from '../../../utils/AppUtils';
 import { HttpService } from '../../../services/HttpService';
 import DropdownWithSearchComponent from "../../common/fields/DropdownWithSearchComponent";
@@ -89,6 +91,8 @@ function CreateOidcClient() {
   const [purposeSubtitleErrors, setPurposeSubtitleErrors] = useState({});
   const [purposeTitleDefaultError, setPurposeTitleDefaultError] = useState("");
   const [purposeSubtitleDefaultError, setPurposeSubtitleDefaultError] = useState("");
+  const [additionalConfigRequired, setAdditionalConfigRequired] = useState(false);
+  const [showCompatibilityMsg, setShowCompatibilityMsg] = useState(false);
 
   const blocker = useBlocker(
     ({ currentLocation, nextLocation }) => {
@@ -164,6 +168,21 @@ function CreateOidcClient() {
     })
     setGrantTypesList(list);
   }, [grantTypes]);
+
+  useEffect(() => {
+    const checkAdditionalConfigSupport = async () => {
+      const isRequired = await isOidcClientAdditionalInfoRequired();
+      if (isRequired) {
+        setAdditionalConfigRequired(isRequired);
+      } else {
+        setShowCompatibilityMsg(true);
+        setForgotPasswordBanner(false);
+        setSignUpBanner(false);
+        setConsentExpiry("");
+      }
+    };
+    checkAdditionalConfigSupport();
+  }, []);
 
   useEffect(() => {
     const config = sessionStorage.getItem('appConfig');
@@ -450,17 +469,6 @@ function CreateOidcClient() {
     return placeholder;
   };
 
-  // Build client name lang map - returns empty object {} if no entries
-  const buildClientNameLangMap = (entries) => {
-    const langMap = {};
-    entries.forEach(entry => {
-      if (entry.language && entry.text && entry.text.trim() !== '') {
-        langMap[entry.language] = trimAndReplace(entry.text);
-      }
-    });
-    return langMap;
-  };
-
   const handleGrantTypesChange = (fieldName, selectedValue) => {
     setGrantTypes(selectedValue);
     const grantTypeValue = [''];
@@ -716,7 +724,7 @@ function CreateOidcClient() {
       additionalConfig.consent_expire_in_mins = parseInt(consentExpiry);
     }
 
-    const clientNameLangMap = buildClientNameLangMap(clientNameLangMapEntries);
+    const clientNameLangMap = buildClientNameLangMap(clientNameLangMapEntries, additionalConfigRequired, clientName);
 
     const requestData = {
       name: trimAndReplace(clientName),
@@ -731,13 +739,13 @@ function CreateOidcClient() {
     };
 
     // Add additionalConfig only if it has any properties
-    if (Object.keys(additionalConfig).length > 0) {
+    if (Object.keys(additionalConfig).length > 0 && additionalConfigRequired) {
       requestData.additionalConfig = additionalConfig;
     }
-
-    const request = createRequest(requestData, "mosip.pms.create.oidc.client.post", true);
+    const request = additionalConfigRequired ? createRequest(requestData, "mosip.pms.create.oidc.client.post", true) : createRequest(requestData);
+    const apiUrl = additionalConfigRequired ? `/oidc-clients` : `/oauth/client`;
     try {
-      const response = await HttpService.post(getPartnerManagerUrl(`/oidc-clients`, process.env.NODE_ENV), request, {
+      const response = await HttpService.post(getPartnerManagerUrl(apiUrl, process.env.NODE_ENV), request, {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -792,9 +800,9 @@ function CreateOidcClient() {
     // Reset section expanded states
     setIsMandatoryInfoExpanded(true);
     setIsAdditionalInfoExpanded(false);
-    setForgotPasswordBanner(true);
-    setSignUpBanner(true);
-    setConsentExpiry("10");
+    setForgotPasswordBanner(additionalConfigRequired);
+    setSignUpBanner(additionalConfigRequired);
+    setConsentExpiry(additionalConfigRequired ? "10" : "");
     setConsentExpiryError("");
     setUserInfoResponseType("");
     setPurposeType("");
@@ -833,9 +841,7 @@ function CreateOidcClient() {
     const purposeSubtitleEntriesValid = !purposeType || purposeSubtitleEntries.length === 0 || 
       purposeSubtitleEntries.every(entry => entry.text && entry.text.trim() !== '');
     
-    const hasConsentExpiry = consentExpiry && consentExpiry.trim() !== '';
-    
-    return partnerId && policyName && hasClientName && publicKey.trim() && logoUrl && redirectUrlsNotEmpty() && grantTypes && hasConsentExpiry
+    return partnerId && policyName && hasClientName && publicKey.trim() && logoUrl && redirectUrlsNotEmpty() && grantTypes
       && !jsonError && !invalidLogoUrl && !invalidRedirectUrl && !consentExpiryError && !clientNameError && !hasClientNameLangMapErrors && !hasPurposeErrors && !hasPurposeDefaultErrors
       && clientNameLangMapEntriesValid && purposeTitleEntriesValid && purposeSubtitleEntriesValid;
   };
@@ -861,6 +867,17 @@ function CreateOidcClient() {
             <div className="flex justify-between">
               <Title title='createOidcClient.createOidcClient' subTitle='authenticationServices.authenticationServices' backLink='/partnermanagement/authentication-services/oidc-clients-list' />
             </div>
+            {showCompatibilityMsg && (
+              <div className="bg-[#FCFCFC] w-full my-3 rounded-lg shadow-lg items-center">
+                <div className="flex items-center justify-center p-2">
+                    <div className="p-2 bg-[#FFF7E5] border-2 border-[#EDDCAF] rounded-md w-full">
+                      <p id='oidc_client_list_compatibility_msg' className="text-sm font-medium text-[#8B6105]">
+                        <Trans i18nKey="createOidcClient.compatibilityMsg" components={{ italic: <i /> }} />
+                      </p>
+                    </div>
+                </div>
+              </div>
+            )}
             {!createOidcClientSuccess ?
               <div className="w-full">
                 <div className="">
@@ -1138,7 +1155,7 @@ function CreateOidcClient() {
                                   <input
                                     type="checkbox"
                                     checked={forgotPasswordBanner}
-                                    onChange={(e) => setForgotPasswordBanner(e.target.checked)}
+                                    onChange={(e) => additionalConfigRequired && setForgotPasswordBanner(e.target.checked)}
                                     className="sr-only peer focus:outline-none"
                                     id="forgot_password_banner_toggle"
                                   />
@@ -1162,7 +1179,7 @@ function CreateOidcClient() {
                                   <input
                                     type="checkbox"
                                     checked={signUpBanner}
-                                    onChange={(e) => setSignUpBanner(e.target.checked)}
+                                    onChange={(e) => additionalConfigRequired && setSignUpBanner(e.target.checked)}
                                     className="sr-only peer focus:outline-none"
                                     id="signup_banner_toggle"
                                   />
@@ -1186,8 +1203,9 @@ function CreateOidcClient() {
                                 id="consent_expiry_input"
                                 value={consentExpiry}
                                 onChange={(e) => handleConsentExpiryChange(e.target.value)}
-                                className="h-10 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline w-full"
-                                placeholder={t('createOidcClient.consentExpiryPlaceholder')}
+                                className={`h-10 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue ${additionalConfigRequired ? "bg-white" : "bg-platinum-gray"}  leading-tight focus:outline-none focus:shadow-outline w-full`}
+                                placeholder={additionalConfigRequired && t('createOidcClient.consentExpiryPlaceholder')}
+                                readOnly={!additionalConfigRequired}
                               />
                               {consentExpiryError && <span id="consent_expiry_error" className="text-sm text-crimson-red font-semibold mt-1">{consentExpiryError}</span>}
                             </div>
@@ -1205,7 +1223,8 @@ function CreateOidcClient() {
                                 addInfoIcon={true}
                                 infoKey={t('createOidcClient.userInfoResponseTypeTooltip')}
                                 isPlaceHolderPresent={true}
-                                id='user_info_response_type' />
+                                id='user_info_response_type'
+                                disabled={!additionalConfigRequired} />
                             </div>
                           </div>
 
@@ -1222,7 +1241,8 @@ function CreateOidcClient() {
                               addInfoIcon={true}
                               infoKey={t('createOidcClient.purposeTypeTooltip')}
                               isPlaceHolderPresent={true}
-                              id='purpose_type' />
+                              id='purpose_type'
+                              disabled={!additionalConfigRequired} />
                           </div>
 
                           {/* Purpose Title - shown only when Purpose Type is selected */}
