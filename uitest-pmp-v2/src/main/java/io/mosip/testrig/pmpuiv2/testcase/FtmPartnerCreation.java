@@ -136,7 +136,7 @@ public class FtmPartnerCreation extends BaseClass {
 		dashboardpage = registerPage.clickSubmitButton();
 
 		assertTrue(dashboardpage.isTermsAndConditionsPopupDisplayed(),
-				GlobalConstants.isTermsAndConditionsPopUppDisplayed);
+				GlobalConstants.isTermsAndConditionsPopUpDisplayed);
 		dashboardpage.clickOnCheckbox();
 		dashboardpage.clickOnProceedButton();
 

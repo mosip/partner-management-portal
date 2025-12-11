@@ -145,7 +145,7 @@ public class OidcClientAuthPartnerTest extends BaseClass {
 		oidcClientPage.clickOnOidcSelectClientNameFilter();
 		oidcClientPage.selectActivatedStatusInFilter();
 
-		assertTrue(oidcClientPage.isfilterResetButtonDisplayed(), GlobalConstants.isfilterResetButtonDisplayed);
+		assertTrue(oidcClientPage.isfilterResetButtonDisplayed(), GlobalConstants.isFilterResetButtonDisplayed);
 		oidcClientPage.clickOnFilterResetButton();
 		assertTrue(oidcClientPage.isFilterButtonEnabled(), GlobalConstants.isFilterButtonEnabled);
 
@@ -297,7 +297,7 @@ public class OidcClientAuthPartnerTest extends BaseClass {
 		oidcClientPage = dashboardPage.clickOnAuthenticationServicesTitle();
 		oidcClientPage.clickOidcDetailsElipsisButton();
 		oidcClientPage.clickOnOidcDeactivateButton();
-		assertTrue(oidcClientPage.isdeactivateOidcPopupDisplayed(), GlobalConstants.isdeactivateOidcPopupDisplayed);
+		assertTrue(oidcClientPage.isdeactivateOidcPopupDisplayed(), GlobalConstants.isDeactivateOidcPopupDisplayed);
 		assertTrue(oidcClientPage.isDeactivateOidcInfoMessageDisplayed(),
 				GlobalConstants.isDeactivateOidcInfoMessageDisplayed);
 		assertTrue(oidcClientPage.isDeactivateCancelButtonAvailable(),
@@ -488,7 +488,7 @@ public class OidcClientAuthPartnerTest extends BaseClass {
 		assertTrue(oidcClientPage.isStatusPlaceHolderDisplayed(), GlobalConstants.isStatusPlaceHolderDisplayed);
 
 		assertFalse(oidcClientPage.isApplyFilterButtonEnabled(), GlobalConstants.isApplyFilterButtonEnabled);
-		oidcClientPage.enterInvalidOidcClientNameInFilter(GlobalConstants.Random_DATA);
+		oidcClientPage.enterInvalidOidcClientNameInFilter(GlobalConstants.RANDOM_DATA);
 		assertTrue(oidcClientPage.isApplyFilterButtonEnabled(), GlobalConstants.isApplyFilterButtonEnabled);
 		oidcClientPage.clickOnApplyFilterButton();
 		assertTrue(oidcClientPage.isNoResultFoundDisplayed(), GlobalConstants.isNoResultFoundDisplayed);

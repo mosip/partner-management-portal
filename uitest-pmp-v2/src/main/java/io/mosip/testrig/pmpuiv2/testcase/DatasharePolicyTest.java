@@ -288,8 +288,8 @@ public class DatasharePolicyTest extends BaseClass {
 
 		datasharePolicyPage.clickOnFilterButton();
 		assertTrue(datasharePolicyPage.isFilterResetButtonEnabled(), GlobalConstants.isFilterResetButtonEnabled);
-		assertFalse(datasharePolicyPage.isFiletrButtonDisplayedOrEnabled(),
-				GlobalConstants.isFiletrButtonDisplayedOrEnabled);
+		assertFalse(datasharePolicyPage.isFilterButtonDisplayedOrEnabled(),
+				GlobalConstants.isFilterButtonDisplayedOrEnabled);
 		datasharePolicyPage.clickOnPolicyGroupFilter(GlobalConstants.DEFAULT_POLICYGROUP);
 		datasharePolicyPage.enterPolicyNameInFilter(GlobalConstants.ALPHANUMERIC);
 		datasharePolicyPage.clickOnApplyFilterButton();
@@ -527,8 +527,8 @@ public class DatasharePolicyTest extends BaseClass {
 		datasharePolicyPage.enterPolicyName(GlobalConstants.SPACE);
 		assertFalse(datasharePolicyPage.isSaveAsDraftButtonEnabled(), GlobalConstants.isSaveAsDraftButtonEnabled);
 
-		datasharePolicyPage.enterPolicyName(GlobalConstants.Single_CHARACTERS);
-		datasharePolicyPage.enterpolicyDescription(GlobalConstants.Single_CHARACTERS);
+		datasharePolicyPage.enterPolicyName(GlobalConstants.SINGLE_CHARACTERS);
+		datasharePolicyPage.enterpolicyDescription(GlobalConstants.SINGLE_CHARACTERS);
 		datasharePolicyPage.clickOnEditPolicyFormSubmitButton();
 		assertTrue(datasharePolicyPage.isEditPolicySuccessTitleDisplayed(),
 				GlobalConstants.isEditPolicySuccessTitleDisplayed);
@@ -541,7 +541,7 @@ public class DatasharePolicyTest extends BaseClass {
 		datasharePolicyPage.clickOnGoBackButton();
 
 		datasharePolicyPage.clickOnFilterButton();
-		datasharePolicyPage.enterPolicyNameInFilter(GlobalConstants.Single_CHARACTERS);
+		datasharePolicyPage.enterPolicyNameInFilter(GlobalConstants.SINGLE_CHARACTERS);
 		datasharePolicyPage.clickOnApplyFilterButton();
 		datasharePolicyPage.clickOnActionButton();
 		datasharePolicyPage.clickOnEditButton();

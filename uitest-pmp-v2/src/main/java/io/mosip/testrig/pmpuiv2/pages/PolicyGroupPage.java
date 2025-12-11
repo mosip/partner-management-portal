@@ -399,7 +399,7 @@ public class PolicyGroupPage extends BasePage {
 		return isElementDisplayed(actionHeader);
 	}
 
-	public boolean isFiletrButtonDisplayedOrEnabled() {
+	public boolean isFilterButtonDisplayedOrEnabled() {
 		return isElementDisplayed(filterButton);
 	}
 

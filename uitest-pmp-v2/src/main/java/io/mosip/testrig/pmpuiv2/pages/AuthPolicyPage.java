@@ -560,7 +560,7 @@ public class AuthPolicyPage extends BasePage {
 		clickOnElement(filterButton);
 	}
 
-	public boolean isFiletrButtonDisplayedOrEnabled() {
+	public boolean isFilterButtonDisplayedOrEnabled() {
 		return isElementEnabled(filterButton);
 	}
 

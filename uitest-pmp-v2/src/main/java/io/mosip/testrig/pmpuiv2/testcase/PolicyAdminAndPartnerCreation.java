@@ -42,7 +42,7 @@ public class PolicyAdminAndPartnerCreation extends BaseClass {
 		KeycloakUserManager.assignRole(GlobalConstants.POLICIES_ADMIN, "PARTNER_ADMIN");
 
 		assertTrue(dashboardPage.isTermsAndConditionsPopupDisplayed(),
-				GlobalConstants.isTermsAndConditionsPopUppDisplayed);
+				GlobalConstants.isTermsAndConditionsPopUpDisplayed);
 		dashboardPage.clickOnCheckbox();
 		assertTrue(dashboardPage.isProceedButtonDisplayed(), GlobalConstants.isProceedButtonDisplayed);
 		dashboardPage.clickOnProceedButton();
@@ -133,7 +133,7 @@ public class PolicyAdminAndPartnerCreation extends BaseClass {
 		dashboardPage.clickOnSubmitButton();
 
 		assertTrue(dashboardPage.isTermsAndConditionsPopupDisplayed(),
-				GlobalConstants.isTermsAndConditionsPopUppDisplayed);
+				GlobalConstants.isTermsAndConditionsPopUpDisplayed);
 		dashboardPage.clickOnCheckbox();
 		dashboardPage.clickOnProceedButton();
 

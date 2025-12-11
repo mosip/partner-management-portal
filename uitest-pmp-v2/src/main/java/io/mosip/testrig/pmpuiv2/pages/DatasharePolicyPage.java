@@ -936,7 +936,7 @@ public class DatasharePolicyPage extends BasePage {
 		return isElementDisplayed(pagination);
 	}
 
-	public boolean isFiletrButtonDisplayedOrEnabled() {
+	public boolean isFilterButtonDisplayedOrEnabled() {
 		return isElementEnabled(filterButton);
 	}
 

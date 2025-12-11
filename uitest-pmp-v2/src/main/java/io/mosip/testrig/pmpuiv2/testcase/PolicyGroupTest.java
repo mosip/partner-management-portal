@@ -147,8 +147,8 @@ public class PolicyGroupTest extends BaseClass {
 		assertTrue(policygroupPage.isStatusDescISconDisplayed(), GlobalConstants.isStatusDescISconDisplayed);
 		assertTrue(policygroupPage.isStatusAscIconDisplayed(), GlobalConstants.isStatusAscIconDisplayed);
 
-		assertTrue(policygroupPage.isFiletrButtonDisplayedOrEnabled(),
-				GlobalConstants.isFiletrButtonDisplayedOrEnabled);
+		assertTrue(policygroupPage.isFilterButtonDisplayedOrEnabled(),
+				GlobalConstants.isFilterButtonDisplayedOrEnabled);
 		assertTrue(policygroupPage.isPaginationDisplayed(), GlobalConstants.isPaginationDisplayed);
 
 		policygroupPage.clickOnPolicyGroupList1();

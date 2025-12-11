@@ -92,7 +92,7 @@ public class ApiKeyAuthPartnerTest extends BaseClass {
 		apiKeyPage.clickOnApiKeyListPageGenerateApiKeyBtn();
 		apiKeyPage.selectPartnerIdDropdown();
 		apiKeyPage.enterPendingPolicyNameDropdown(GlobalConstants.PENDING_POLICY);
-		assertTrue(apiKeyPage.isNoDataAvailableTextDisplayed(), GlobalConstants.isnoDataAvailableTextDisplayed);
+		assertTrue(apiKeyPage.isNoDataAvailableTextDisplayed(), GlobalConstants.isNoDataAvailableTextDisplayed);
 		apiKeyPage.clickOnClearButton();
 		apiKeyPage.selectPartnerIdDropdown();
 		apiKeyPage.selectPolicyNameDropdown(GlobalConstants.DEFAULT_POLICY);
@@ -353,7 +353,7 @@ public class ApiKeyAuthPartnerTest extends BaseClass {
 		assertTrue(apiKeyPage.isStatusPlaceHolderDisplayed(), GlobalConstants.isStatusPlaceHolderDisplayed);
 
 		assertFalse(apiKeyPage.isApplyFilterButtonEnabled(), GlobalConstants.isApplyFilterButtonEnabled);
-		apiKeyPage.enterInvalidDataInAdminApiKeyNameFilter(GlobalConstants.Random_DATA);
+		apiKeyPage.enterInvalidDataInAdminApiKeyNameFilter(GlobalConstants.RANDOM_DATA);
 		assertTrue(apiKeyPage.isApplyFilterButtonEnabled(), GlobalConstants.isApplyFilterButtonEnabled);
 		apiKeyPage.clickOnApplyFilterButton();
 		assertTrue(apiKeyPage.isNoResultFoundDisplayed(), GlobalConstants.isNoResultFoundDisplayed);

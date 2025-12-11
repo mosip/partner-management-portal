@@ -243,7 +243,7 @@ public class FtmPage extends BasePage {
 	private WebElement statusDescIcon;
 
 	@FindBy(xpath = "//*[contains(text(), 'FTM Chip details already exists')]")
-	private WebElement dublicateFtmChipErrorMessage;
+	private WebElement duplicateFtmChipErrorMessage;
 
 	@FindBy(id = "add_ftm_clear_form")
 	private WebElement addFtmClearForm;
@@ -565,8 +565,8 @@ public class FtmPage extends BasePage {
 		clickOnElement(statusDescIcon);
 	}
 
-	public boolean isDublicateFtmChipErrorMessageDisplayed() {
-		return isElementDisplayed(dublicateFtmChipErrorMessage);
+	public boolean isDuplicateFtmChipErrorMessageDisplayed() {
+		return isElementDisplayed(duplicateFtmChipErrorMessage);
 	}
 
 	public void clickOnAddFtmClearForm() {

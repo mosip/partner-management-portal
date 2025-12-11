@@ -65,7 +65,7 @@ public class AuthPartnerWithoutCertificateTest extends BaseClass {
 		dashboardPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULT_POLICYGROUP);
 		dashboardPage.clickOnSubmitButton();
 		assertTrue(dashboardPage.isTermsAndConditionsPopupDisplayed(),
-				GlobalConstants.isTermsAndConditionsPopUppDisplayed);
+				GlobalConstants.isTermsAndConditionsPopUpDisplayed);
 		dashboardPage.clickOnCheckbox();
 		dashboardPage.clickOnProceedButton();
 

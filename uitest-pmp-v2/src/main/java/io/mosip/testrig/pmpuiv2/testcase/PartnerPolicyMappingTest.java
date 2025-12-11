@@ -204,7 +204,7 @@ public class PartnerPolicyMappingTest extends BaseClass {
 		assertTrue(partnerPolicyMappingPage.isRejectedStatusDisplayed(), GlobalConstants.isRejectedStatusDisplayed);
 
 		partnerPolicyMappingPage.enterpolicyGroupFilter(GlobalConstants.DEFAULT_POLICYGROUP);
-		partnerPolicyMappingPage.enterPendingPolicyNameInFilter(GlobalConstants.Random_DATA);
+		partnerPolicyMappingPage.enterPendingPolicyNameInFilter(GlobalConstants.RANDOM_DATA);
 		partnerPolicyMappingPage.clickOnApplyFilterButton();
 		assertTrue(partnerPolicyMappingPage.isNoResultsFoundMessageDisplayed(),
 				GlobalConstants.isNoResultsFoundMessageDisplayed);
@@ -458,7 +458,7 @@ public class PartnerPolicyMappingTest extends BaseClass {
 		policiesPage.clickOnRequestPoliciesFormClearButton();
 
 		assertEquals(policiesPage.getThePolicyCommentBoxText(), GlobalConstants.isPolicyCommentBoxTextDisplayed);
-		assertEquals(policiesPage.getThepolicyNameDropdownBoxText(), GlobalConstants.isPolicyNameBoxTextDisplayed);
+		assertEquals(policiesPage.getThepolicyNameDropdownBoxText(), GlobalConstants.isPolicyNameTextboxDisplayed);
 
 		policiesPage.clickOnRequestPoliciesFormCancelButton();
 		assertTrue(policiesPage.isListOfPolicyRequestedDisplayed(),

@@ -141,7 +141,7 @@ public class AuthPolicyTest extends BaseClass {
 				GlobalConstants.isPolicyDataUploadedSuccessMessageDisplayed);
 		assertTrue(authPolicyPage.isPolicyDataBoxEnabled(), GlobalConstants.isPolicyDataBoxEnabled);
 		assertTrue(authPolicyPage.isPolicyDataContentDisplayed(), GlobalConstants.isPolicyDataContentDisplayed);
-		authPolicyPage.editPolicyData(GlobalConstants.Random_DATA);
+		authPolicyPage.editPolicyData(GlobalConstants.RANDOM_DATA);
 		assertTrue(authPolicyPage.isPolicyDataEdited(), GlobalConstants.isPolicyDataEdited);
 		authPolicyPage.uploadPolicyData();
 		basePage.scrollToEndPage();
@@ -257,8 +257,8 @@ public class AuthPolicyTest extends BaseClass {
 		assertFalse(authPolicyPage.isFilterResetButtonAvailableOrEnabled(),
 				GlobalConstants.isFilterResetButtonAvailableOrEnabled);
 		authPolicyPage.clickOnFilterButton();
-		assertFalse(authPolicyPage.isFiletrButtonDisplayedOrEnabled(),
-				GlobalConstants.isFiletrButtonDisplayedOrEnabled);
+		assertFalse(authPolicyPage.isFilterButtonDisplayedOrEnabled(),
+				GlobalConstants.isFilterButtonDisplayedOrEnabled);
 		assertTrue(authPolicyPage.isPolicyIdFilterLabelDisplayed(), GlobalConstants.isPolicyIdFilterLabelDisplayed);
 		assertTrue(authPolicyPage.isPolicyNameFilterLabelDisplayed(), GlobalConstants.isPolicyNameFilterLabelDisplayed);
 		assertTrue(authPolicyPage.isPolicyDescriptionFilterLabelDisplayed(),
@@ -450,8 +450,8 @@ public class AuthPolicyTest extends BaseClass {
 		authPolicyPage.enterPolicyName(GlobalConstants.SPACE);
 		assertFalse(authPolicyPage.isSaveAsDraftButtonEnabled(), GlobalConstants.isSaveAsDraftButtonEnabled);
 
-		authPolicyPage.enterPolicyName(GlobalConstants.Single_CHARACTERS);
-		authPolicyPage.enterpolicyDescription(GlobalConstants.Single_CHARACTERS);
+		authPolicyPage.enterPolicyName(GlobalConstants.SINGLE_CHARACTERS);
+		authPolicyPage.enterpolicyDescription(GlobalConstants.SINGLE_CHARACTERS);
 		basePage.scrollToEndPage();
 		authPolicyPage.clickOnEditPolicyFormSubmitButton();
 		assertTrue(authPolicyPage.isEditPolicySuccessTitleDisplayed(),
@@ -464,7 +464,7 @@ public class AuthPolicyTest extends BaseClass {
 
 		authPolicyPage.clickOnFilterButton();
 		authPolicyPage.enterPolicyGroupInFilterBox(GlobalConstants.DEFAULT_POLICYGROUP);
-		authPolicyPage.enterPolicyNameInFilter(GlobalConstants.Single_CHARACTERS);
+		authPolicyPage.enterPolicyNameInFilter(GlobalConstants.SINGLE_CHARACTERS);
 		authPolicyPage.clickOnApplyFilterButton();
 		authPolicyPage.clickOnActionButton();
 		authPolicyPage.clickOnEditButton();

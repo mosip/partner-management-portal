@@ -48,7 +48,7 @@ public class DevicePartnerCreation extends BaseClass {
 		dashboardpage = registerPage.clickSubmitButton();
 
 		assertTrue(dashboardpage.isTermsAndConditionsPopupDisplayed(),
-				GlobalConstants.isTermsAndConditionsPopUppDisplayed);
+				GlobalConstants.isTermsAndConditionsPopUpDisplayed);
 		dashboardpage.clickOnCheckbox();
 
 		assertTrue(dashboardpage.isProceedButtonDisplayed(), GlobalConstants.isProceedButtonDisplayed);

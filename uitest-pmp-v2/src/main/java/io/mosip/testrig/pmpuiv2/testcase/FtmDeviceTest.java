@@ -102,7 +102,7 @@ public class FtmDeviceTest extends BaseClass {
 
 		assertTrue(ftmPage.isTitleBackIconDisplayed(), GlobalConstants.isBackArrow);
 		assertTrue(ftmPage.isListofFtmChipDetailsDisplayed(), GlobalConstants.isSubTitleHomeDisplayed);
-		assertTrue(ftmPage.isFilterButtonDisplayed(), GlobalConstants.isFiletrButtonDisplayedOrEnabled);
+		assertTrue(ftmPage.isFilterButtonDisplayed(), GlobalConstants.isFilterButtonDisplayedOrEnabled);
 
 		assertTrue(ftmPage.isPartneridFilterDisplayed(), GlobalConstants.isPartnerIdDropdownDisplayed);
 		assertTrue(ftmPage.isOrgNameFilterDisplayed(), GlobalConstants.isOrganizationNameDisplayed);
@@ -179,8 +179,8 @@ public class FtmDeviceTest extends BaseClass {
 		ftmPage.EnterInAddFtmMakeBox(data + "1");
 		ftmPage.EnterInAddFtmModelBox(data + "1");
 		ftmPage.clickOnAddFtmSubmitButton();
-		assertTrue(ftmPage.isDublicateFtmChipErrorMessageDisplayed(),
-				GlobalConstants.isDublicateFTMErrorMessageDisplayed);
+		assertTrue(ftmPage.isDuplicateFtmChipErrorMessageDisplayed(),
+				GlobalConstants.isDuplicateFtmErrorMessageDisplayed);
 
 		assertTrue(ftmPage.isErrorCloseButtonDisplayed(), GlobalConstants.isErrorCrossButtonDisplayed);
 
@@ -235,7 +235,7 @@ public class FtmDeviceTest extends BaseClass {
 
 		assertTrue(ftmPage.isTitleBackIconDisplayed(), GlobalConstants.isBackArrow);
 		assertTrue(ftmPage.isListofFtmChipDetailsDisplayed(), GlobalConstants.isSubTitleHomeDisplayed);
-		assertTrue(ftmPage.isFilterButtonDisplayed(), GlobalConstants.isFiletrButtonDisplayedOrEnabled);
+		assertTrue(ftmPage.isFilterButtonDisplayed(), GlobalConstants.isFilterButtonDisplayedOrEnabled);
 		ftmPage.enterOrgNameFilterBox("AABBCC");
 		ftmPage.clickOnApplyFilterButton();
 		assertTrue(ftmPage.isPendingForApprovalTextDisplayed(), GlobalConstants.isPendingForApprovalTextDisplayed);

@@ -65,7 +65,7 @@ public class DeactivatePartnerCreation extends BaseClass {
 		dashboardPage.clickOnSubmitButton();
 
 		assertTrue(dashboardPage.isTermsAndConditionsPopupDisplayed(),
-				GlobalConstants.isTermsAndConditionsPopUppDisplayed);
+				GlobalConstants.isTermsAndConditionsPopUpDisplayed);
 		dashboardPage.clickOnCheckbox();
 		dashboardPage.clickOnProceedButton();
 
