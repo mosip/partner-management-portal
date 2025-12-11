@@ -752,19 +752,12 @@ export const populateClientNames = (data) => {
     return extractedList;
 };
 
-export const getClientNameLangMap = (clientNameEng, clientNameJson) => {
-    try {
-        const jsonObject = JSON.parse(clientNameJson);
-        const newJsonObject = {};
-        Object.keys(jsonObject).forEach(key => {
-            if (key !== '@none') {
-                newJsonObject[key] = clientNameEng;
-            }
-        });
-        return newJsonObject;
-    } catch {
+export const getClientNameLangMap = (clientName, clientNameLangMap) => {
+    if (clientNameLangMap && typeof clientNameLangMap === 'object' && Object.keys(clientNameLangMap).length > 0) {
+        return clientNameLangMap;
+    } else {
         const newJsonObject = {
-            eng: clientNameEng
+            eng: clientName
         }
         return newJsonObject;
     }
@@ -987,6 +980,78 @@ export const isOidcClientAvailable = async () => {
         console.error("Error fetching or parsing app config: ", error);
         return false;
     }
+};
+
+export const isOidcClientAdditionalInfoRequired = async () => {
+    try {
+        const configData = await getAppConfig();
+        const isRequired = configData.isOidcClientAdditionalInfoRequired === "true" ? true : false;
+        return isRequired;
+    } catch (error) {
+        console.error("Error fetching or parsing app config: ", error);
+        return false;
+    }
+};
+
+export const createDeactivateRequest = async (selectedClientdata, setTableDataLoaded, setDeactivateRequest, setErrorCode, setErrorMsg, t) => {
+    setTableDataLoaded(false);
+    try {
+        const response = await HttpService.get(getPartnerManagerUrl(`/oidc-clients/${selectedClientdata.clientId}`, process.env.NODE_ENV));
+        if (response) {
+            const responseData = response.data;
+            if (responseData && responseData.response) {
+                const clientData = responseData.response;
+                const request = createRequest({
+                    logoUri: clientData.logoUri,
+                    redirectUris: clientData.redirectUris,
+                    status: "INACTIVE",
+                    grantTypes: clientData.grantTypes,
+                    clientName: clientData.name,
+                    clientAuthMethods: clientData.clientAuthMethods,
+                    clientNameLangMap: getClientNameLangMap(clientData.name, clientData.clientNameLangMap)
+                });
+                setDeactivateRequest(request);
+            } else {
+                handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+            }
+        } else {
+            setErrorMsg(t('oidcClientsList.errorInOidcClientsList'))
+        }
+    } catch (err) {
+        console.error('Error fetching data:', err);
+        if (err.response?.status && err.response.status !== 401) {
+            setErrorMsg(err.toString());
+        }
+    }
+    setTableDataLoaded(true);
+};
+
+export const buildClientNameLangMap = (entries, additionalConfigRequired, clientName) => {
+    const langMap = {};
+
+    const applyEntries = () => {
+      entries?.forEach(entry => {
+        if (entry.language && entry.text && entry.text.trim() !== '') {
+          langMap[entry.language] = trimAndReplace(entry.text);
+        }
+      });
+    };
+
+    if (additionalConfigRequired) {
+      // Case 1: Use entries ONLY
+      applyEntries();
+      return langMap;
+    }
+
+    // Case 2: additionalConfigRequired === false
+    applyEntries();
+
+    // If no valid entries found - fallback to English clientName
+    if (Object.keys(langMap).length === 0) {
+      langMap["eng"] = trimAndReplace(clientName);
+    }
+
+    return langMap;
 };
 
 export const isRootIntermediateCertAvailable = async () => {

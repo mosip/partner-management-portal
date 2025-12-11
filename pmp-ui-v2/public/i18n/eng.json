@@ -535,7 +535,8 @@
         "deleteInFra": "Supprimer",
         "deleteInEng": "Delete",
         "deleteInTam": "நீக்கு",
-        "deleteInKan": "ಅಳಿಸಿ"
+        "deleteInKan": "ಅಳಿಸಿ",
+        "compatibilityMsg": "Note: Additional Information related fields are disabled because the version of Esignet currently deployed in the MOSIP Platform does not support them."
     },
     "oidcClientsList": {
         "partnerId": "Partner ID",

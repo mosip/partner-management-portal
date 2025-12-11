@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect, useCallback } from "react";
 import { useNavigate, useBlocker } from "react-router-dom";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import { getUserProfile } from "../../../services/UserProfileService";
 import { HttpService } from "../../../services/HttpService";
 import {
@@ -11,7 +11,9 @@ import {
     validateInputRegex,
     getLanguageDisplayName,
     createDropdownData,
-    createRequest
+    createRequest,
+    isOidcClientAdditionalInfoRequired,
+    buildClientNameLangMap
 } from "../../../utils/AppUtils";
 import LoadingIcon from "../../common/LoadingIcon";
 import ErrorMessage from "../../common/ErrorMessage";
@@ -89,6 +91,8 @@ function EditOidcClient() {
     const [purposeSubtitleErrors, setPurposeSubtitleErrors] = useState({});
     const [purposeTitleDefaultError, setPurposeTitleDefaultError] = useState("");
     const [purposeSubtitleDefaultError, setPurposeSubtitleDefaultError] = useState("");
+    const [additionalConfigRequired, setAdditionalConfigRequired] = useState(false);
+    const [showCompatibilityMsg, setShowCompatibilityMsg] = useState(false);
 
     const blocker = useBlocker(
         ({ currentLocation, nextLocation }) => {
@@ -149,6 +153,21 @@ function EditOidcClient() {
         console.log(dataArr);
         return dataArr;
     }, [t]);
+
+    useEffect(() => {
+        const checkAdditionalConfigSupport = async () => {
+          const isRequired = await isOidcClientAdditionalInfoRequired();
+          if (isRequired) {
+            setAdditionalConfigRequired(isRequired);
+          } else {
+            setShowCompatibilityMsg(true);
+            setForgotPasswordBanner(false);
+            setSignUpBanner(false);
+            setConsentExpiry("");
+          }
+        };
+        checkAdditionalConfigSupport();
+    }, []);
 
     // Initialize User Info Response Type dropdown
     useEffect(() => {
@@ -451,17 +470,6 @@ function EditOidcClient() {
         return placeholder;
     };
 
-    // Build client name lang map - returns empty object {} if no entries
-    const buildClientNameLangMap = (entries) => {
-        const langMap = {};
-        entries.forEach(entry => {
-            if (entry.language && entry.text && entry.text.trim() !== '') {
-                langMap[entry.language] = trimAndReplace(entry.text);
-            }
-        });
-        return langMap;
-    };
-
     const handleLogoUrlChange = (value) => {
         setInvalidLogoUrl(validateUrl(null, value, 2048, [], t));
         setOidcClientDetails(prevDetails => ({
@@ -674,7 +682,7 @@ function EditOidcClient() {
     }
 
     const checkIfClientNameLangMapIsUpdated = () => {
-        const currentLangMap = buildClientNameLangMap(clientNameLangMapEntries);
+        const currentLangMap = buildClientNameLangMap(clientNameLangMapEntries, additionalConfigRequired, clientName);
         const selectedLangMap = selectedClientDetails.clientNameLangMap || {};
         
         const currentKeys = Object.keys(currentLangMap).sort();
@@ -693,60 +701,62 @@ function EditOidcClient() {
     }
 
     const checkIfAdditionalConfigIsUpdated = () => {
-        const selectedAdditionalConfig = selectedClientDetails.additionalConfig || {};
-        
-        // Check consent expiry
-        const currentConsentExpiry = consentExpiry ? parseInt(consentExpiry) : undefined;
-        const selectedConsentExpiry = selectedAdditionalConfig.consent_expire_in_mins;
-        if (currentConsentExpiry !== selectedConsentExpiry) {
-            return true;
-        }
-        
-        // Check user info response type
-        if (userInfoResponseType !== (selectedAdditionalConfig.userinfo_response_type || '')) {
-            return true;
-        }
-        
-        // Check toggles
-        if (forgotPasswordBanner !== (selectedAdditionalConfig.forgot_pwd_link_required !== undefined ? selectedAdditionalConfig.forgot_pwd_link_required : true)) {
-            return true;
-        }
-        if (signUpBanner !== (selectedAdditionalConfig.signup_banner_required !== undefined ? selectedAdditionalConfig.signup_banner_required : true)) {
-            return true;
-        }
-        
-        // Check purpose type
-        const selectedPurposeType = selectedAdditionalConfig.purpose?.type || '';
-        if (purposeType !== selectedPurposeType) {
-            return true;
-        }
-        
-        // Check purpose title
-        if (purposeType) {
-            const currentTitleMap = buildPurposeLangMap(purposeTitleEntries);
-            const selectedTitleMap = selectedAdditionalConfig.purpose?.title || {};
-            const currentTitleKeys = currentTitleMap ? Object.keys(currentTitleMap).sort() : [];
-            const selectedTitleKeys = Object.keys(selectedTitleMap).sort();
-            if (currentTitleKeys.length !== selectedTitleKeys.length) {
+        if(additionalConfigRequired) {
+            const selectedAdditionalConfig = selectedClientDetails.additionalConfig || {};
+            
+            // Check consent expiry
+            const currentConsentExpiry = consentExpiry ? parseInt(consentExpiry) : undefined;
+            const selectedConsentExpiry = selectedAdditionalConfig.consent_expire_in_mins;
+            if (currentConsentExpiry !== selectedConsentExpiry) {
                 return true;
-            }
-            for (let key of currentTitleKeys) {
-                if (currentTitleMap[key] !== selectedTitleMap[key]) {
-                    return true;
-                }
             }
             
-            // Check purpose subtitle
-            const currentSubtitleMap = buildPurposeLangMap(purposeSubtitleEntries);
-            const selectedSubtitleMap = selectedAdditionalConfig.purpose?.subTitle || {};
-            const currentSubtitleKeys = currentSubtitleMap ? Object.keys(currentSubtitleMap).sort() : [];
-            const selectedSubtitleKeys = Object.keys(selectedSubtitleMap).sort();
-            if (currentSubtitleKeys.length !== selectedSubtitleKeys.length) {
+            // Check user info response type
+            if (userInfoResponseType !== (selectedAdditionalConfig.userinfo_response_type || '')) {
                 return true;
             }
-            for (let key of currentSubtitleKeys) {
-                if (currentSubtitleMap[key] !== selectedSubtitleMap[key]) {
+            
+            // Check toggles
+            if (forgotPasswordBanner !== (selectedAdditionalConfig.forgot_pwd_link_required !== undefined ? selectedAdditionalConfig.forgot_pwd_link_required : true)) {
+                return true;
+            }
+            if (signUpBanner !== (selectedAdditionalConfig.signup_banner_required !== undefined ? selectedAdditionalConfig.signup_banner_required : true)) {
+                return true;
+            }
+            
+            // Check purpose type
+            const selectedPurposeType = selectedAdditionalConfig.purpose?.type || '';
+            if (purposeType !== selectedPurposeType) {
+                return true;
+            }
+            
+            // Check purpose title
+            if (purposeType) {
+                const currentTitleMap = buildPurposeLangMap(purposeTitleEntries);
+                const selectedTitleMap = selectedAdditionalConfig.purpose?.title || {};
+                const currentTitleKeys = currentTitleMap ? Object.keys(currentTitleMap).sort() : [];
+                const selectedTitleKeys = Object.keys(selectedTitleMap).sort();
+                if (currentTitleKeys.length !== selectedTitleKeys.length) {
                     return true;
+                }
+                for (let key of currentTitleKeys) {
+                    if (currentTitleMap[key] !== selectedTitleMap[key]) {
+                        return true;
+                    }
+                }
+                
+                // Check purpose subtitle
+                const currentSubtitleMap = buildPurposeLangMap(purposeSubtitleEntries);
+                const selectedSubtitleMap = selectedAdditionalConfig.purpose?.subTitle || {};
+                const currentSubtitleKeys = currentSubtitleMap ? Object.keys(currentSubtitleMap).sort() : [];
+                const selectedSubtitleKeys = Object.keys(selectedSubtitleMap).sort();
+                if (currentSubtitleKeys.length !== selectedSubtitleKeys.length) {
+                    return true;
+                }
+                for (let key of currentSubtitleKeys) {
+                    if (currentSubtitleMap[key] !== selectedSubtitleMap[key]) {
+                        return true;
+                    }
                 }
             }
         }
@@ -776,8 +786,6 @@ function EditOidcClient() {
         const purposeSubtitleEntriesValid = !purposeType || purposeSubtitleEntries.length === 0 || 
             purposeSubtitleEntries.every(entry => entry.text && entry.text.trim() !== '');
         
-        const hasConsentExpiry = consentExpiry && consentExpiry.trim() !== '';
-        
         const hasChanges = checkIfRedirectUrisIsUpdated() ||
             (oidcClientDetails.grantTypes[0] !== selectedClientDetails.grantTypes[0]) ||
             (oidcClientDetails.logoUri !== selectedClientDetails.logoUri) ||
@@ -785,7 +793,7 @@ function EditOidcClient() {
             checkIfClientNameLangMapIsUpdated() ||
             checkIfAdditionalConfigIsUpdated();
         
-        return hasChanges && hasClientName && oidcClientDetails.logoUri !== "" && isRedirectUriNotEmpty() && hasConsentExpiry
+        return hasChanges && hasClientName && oidcClientDetails.logoUri !== "" && isRedirectUriNotEmpty()
             && !invalidLogoUrl && !invalidRedirectUrl && !clientNameError && !hasClientNameLangMapErrors && !hasPurposeErrors && !hasPurposeDefaultErrors
             && !consentExpiryError && clientNameLangMapEntriesValid && purposeTitleEntriesValid && purposeSubtitleEntriesValid;
     }
@@ -803,11 +811,11 @@ function EditOidcClient() {
         
         // Reset additional config fields
         const selectedAdditionalConfig = selectedClientDetails.additionalConfig || {};
-        setConsentExpiry(selectedAdditionalConfig.consent_expire_in_mins ? String(selectedAdditionalConfig.consent_expire_in_mins) : "10");
+        setConsentExpiry(selectedAdditionalConfig.consent_expire_in_mins ? String(selectedAdditionalConfig.consent_expire_in_mins) : additionalConfigRequired ? "10" : "");
         setConsentExpiryError("");
         setUserInfoResponseType(selectedAdditionalConfig.userinfo_response_type || "");
-        setForgotPasswordBanner(selectedAdditionalConfig.forgot_pwd_link_required !== undefined ? selectedAdditionalConfig.forgot_pwd_link_required : true);
-        setSignUpBanner(selectedAdditionalConfig.signup_banner_required !== undefined ? selectedAdditionalConfig.signup_banner_required : true);
+        setForgotPasswordBanner(selectedAdditionalConfig.forgot_pwd_link_required !== undefined ? selectedAdditionalConfig.forgot_pwd_link_required : additionalConfigRequired);
+        setSignUpBanner(selectedAdditionalConfig.signup_banner_required !== undefined ? selectedAdditionalConfig.signup_banner_required : additionalConfigRequired);
         setPurposeType(selectedAdditionalConfig.purpose?.type || "");
         
         // Reset purpose entries
@@ -892,7 +900,7 @@ function EditOidcClient() {
             additionalConfig.consent_expire_in_mins = parseInt(consentExpiry);
         }
         
-        const clientNameLangMap = buildClientNameLangMap(clientNameLangMapEntries);
+        const clientNameLangMap = buildClientNameLangMap(clientNameLangMapEntries, additionalConfigRequired, clientName);
         
         const requestData = {
             logoUri: oidcClientDetails.logoUri,
@@ -905,14 +913,14 @@ function EditOidcClient() {
         };
         
         // Add additionalConfig only if it has any properties
-        if (Object.keys(additionalConfig).length > 0) {
+        if (Object.keys(additionalConfig).length > 0 && additionalConfigRequired) {
             requestData.additionalConfig = additionalConfig;
         }
         
-        const request = createRequest(requestData, "mosip.pms.update.oidc.client.put", true);
-        
+        const request = additionalConfigRequired ? createRequest(requestData, "mosip.pms.update.oidc.client.put", true) : createRequest(requestData);
+        const apiUrl = additionalConfigRequired ? `/oidc-clients/${oidcClientDetails.id}` : `/oauth/client/${oidcClientDetails.id}`;
         try {
-            const response = await HttpService.put(getPartnerManagerUrl(`/oidc-clients/${oidcClientDetails.id}`, process.env.NODE_ENV), request, {
+            const response = await HttpService.put(getPartnerManagerUrl(apiUrl, process.env.NODE_ENV), request, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -968,6 +976,17 @@ function EditOidcClient() {
                         <div className="flex justify-between">
                             <Title title='editOidcClient.editOidcClient' subTitle='authenticationServices.authenticationServices' backLink='/partnermanagement/authentication-services/oidc-clients-list' />
                         </div>
+                        {showCompatibilityMsg && (
+                            <div className="bg-[#FCFCFC] w-full my-3 rounded-lg shadow-lg items-center">
+                                <div className="flex items-center justify-center p-2">
+                                    <div className="p-2 bg-[#FFF7E5] border-2 border-[#EDDCAF] rounded-md w-full">
+                                        <p id='oidc_client_list_compatibility_msg' className="text-sm font-medium text-[#8B6105]">
+                                            <Trans i18nKey="createOidcClient.compatibilityMsg" components={{ italic: <i /> }} />
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
                         {unexpectedError && (
                             <div className={`bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center`}>
                                 <div className="flex items-center justify-center p-24">
@@ -1254,7 +1273,7 @@ function EditOidcClient() {
                                                                             <input
                                                                                 type="checkbox"
                                                                                 checked={forgotPasswordBanner}
-                                                                                onChange={(e) => setForgotPasswordBanner(e.target.checked)}
+                                                                                onChange={(e) => additionalConfigRequired && setForgotPasswordBanner(e.target.checked)}
                                                                                 className="sr-only peer focus:outline-none"
                                                                                 id="forgot_password_banner_toggle"
                                                                             />
@@ -1278,7 +1297,7 @@ function EditOidcClient() {
                                                                             <input
                                                                                 type="checkbox"
                                                                                 checked={signUpBanner}
-                                                                                onChange={(e) => setSignUpBanner(e.target.checked)}
+                                                                                onChange={(e) => additionalConfigRequired && setSignUpBanner(e.target.checked)}
                                                                                 className="sr-only peer focus:outline-none"
                                                                                 id="signup_banner_toggle"
                                                                             />
@@ -1302,8 +1321,9 @@ function EditOidcClient() {
                                                                         id="consent_expiry_input"
                                                                         value={consentExpiry}
                                                                         onChange={(e) => handleConsentExpiryChange(e.target.value)}
-                                                                        className="h-10 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline w-full"
-                                                                        placeholder={t('createOidcClient.consentExpiryPlaceholder')}
+                                                                        className={`h-10 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue ${additionalConfigRequired ? "bg-white" : "bg-platinum-gray"} leading-tight focus:outline-none focus:shadow-outline w-full`}
+                                                                        placeholder={additionalConfigRequired && t('createOidcClient.consentExpiryPlaceholder')}
+                                                                        readOnly={!additionalConfigRequired}
                                                                     />
                                                                     {consentExpiryError && <span id="consent_expiry_error" className="text-sm text-crimson-red font-semibold mt-1">{consentExpiryError}</span>}
                                                                 </div>
@@ -1321,7 +1341,8 @@ function EditOidcClient() {
                                                                         addInfoIcon={true}
                                                                         infoKey={t('createOidcClient.userInfoResponseTypeTooltip')}
                                                                         isPlaceHolderPresent={true}
-                                                                        id='user_info_response_type' />
+                                                                        id='user_info_response_type'
+                                                                        disabled={!additionalConfigRequired} />
                                                                 </div>
                                                             </div>
 
@@ -1338,7 +1359,8 @@ function EditOidcClient() {
                                                                     addInfoIcon={true}
                                                                     infoKey={t('createOidcClient.purposeTypeTooltip')}
                                                                     isPlaceHolderPresent={true}
-                                                                    id='purpose_type' />
+                                                                    id='purpose_type'
+                                                                    disabled={!additionalConfigRequired} />
                                                             </div>
 
                                                             {/* Purpose Title - shown only when Purpose Type is selected */}
