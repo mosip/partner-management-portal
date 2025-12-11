@@ -166,7 +166,7 @@ function OidcClientsList() {
                     status: "INACTIVE"
                 }, "mosip.pms.deactivate.oidc.client.patch", true);
                 setDeactivateRequest(request);
-                setSelectedOidcClient(selectedClientdata);
+                setSelectedOidcClient({...selectedClientdata, additionalConfigRequired: true});
             } else {
                 await createDeactivateRequest(selectedClientdata, setTableDataLoaded, setDeactivateRequest, setErrorCode, setErrorMsg, t);
                 setSelectedOidcClient({...selectedClientdata, additionalConfigRequired: false});
