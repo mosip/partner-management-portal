@@ -144,7 +144,7 @@ public class PolicyCreationForAuthPartner extends BaseClass {
 		policiesPage.clickOnPolicyNameDescendingBtn();
 		policiesPage.clickOnPolicyNameAscendingBtn();
 		policiesPage.clickOnFilterResetButton();
-		policiesPage.isFilterButtonButtonEnabled();
+		assertTrue(policiesPage.isFilterButtonButtonEnabled(), "Filter button should be enabled after reset");
 
 		policiesPage.clickOnPolicyListItem1();
 		assertTrue(policiesPage.isSubTitleHomeButtonDisplayed(), GlobalConstants.isSubTitleHomeDisplayed);
@@ -259,7 +259,6 @@ public class PolicyCreationForAuthPartner extends BaseClass {
 	}
 
 	private void loginAsAuthPartner() {
-		DashboardPage dashboardPage = new DashboardPage(driver);
 		dashboardPage.clickOnProfileDropdown();
 		loginPage = dashboardPage.clickOnLogoutButton();
 		loginPage.enterUserName(GlobalConstants.AUTH_PARTNER_ID);
