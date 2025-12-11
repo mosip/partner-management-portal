@@ -86,8 +86,8 @@ public class PolicyCreationForAuthPartner extends BaseClass {
 		policiesPage.enterComments(GlobalConstants.DEFAULT_POLICY);
 		assertTrue(policiesPage.isSubmitButtonDisplayed(), GlobalConstants.isSubmitButtonDisplayed);
 		policiesPage.clickSubmitButton();
-		assertTrue(policiesPage.isPolicySubmittedSuccessfullyDisplayed(), GlobalConstants.isSubmitButtonDisplayed);
-
+		assertTrue(policiesPage.isPolicySubmittedSuccessfullyDisplayed(), GlobalConstants.isPolicySubmittedSuccessfullyDisplayed);
+		
 		policiesPage.clickOnHomeButton();
 		dashboardPage.clickOnPoliciesTitle();
 		assertTrue(policiesPage.isListOfPolicyRequestedDisplayed(),
