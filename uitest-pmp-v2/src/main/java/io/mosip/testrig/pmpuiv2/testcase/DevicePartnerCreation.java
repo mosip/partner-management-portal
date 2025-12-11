@@ -34,17 +34,17 @@ public class DevicePartnerCreation extends BaseClass {
 		dashboardpage.clickOnProfileDropdown();
 		loginpage = dashboardpage.clickOnLogoutButton();
 		loginpage.clickRegisterButton();
-		registerPage.enterFirstName("pmpui-device");
-		registerPage.enterLastName("pmpui-device");
-		registerPage.enterOrganizationName("AABBCC");
+		registerPage.enterFirstName(GlobalConstants.DEVICE_PARTNER_ID);
+		registerPage.enterLastName(GlobalConstants.DEVICE_PARTNER_ID);
+		registerPage.enterOrganizationName(GlobalConstants.ORGANISATION_NAME);
 		registerPage.selectDeviceProviderInPartnerTypeDropdown();
 		registerPage.enterAddress("0" + data + "device");
 		registerPage.enterEmail("0" + data + "device" + "@gmail.com");
 		registerPage.enterPhone("9876543010");
 		registerPage.selectNotificationLanguageDropdown();
-		registerPage.enterUsername("pmpui-device");
-		registerPage.enterPassword("mosip123");
-		registerPage.enterPasswordConfirm("mosip123");
+		registerPage.enterUsername(GlobalConstants.DEVICE_PARTNER_ID);
+		registerPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
+		registerPage.enterPasswordConfirm(GlobalConstants.PARTNER_PASSWORD);
 		dashboardpage = registerPage.clickSubmitButton();
 
 		assertTrue(dashboardpage.isTermsAndConditionsPopupDisplayed(),
@@ -54,7 +54,6 @@ public class DevicePartnerCreation extends BaseClass {
 		assertTrue(dashboardpage.isProceedButtonDisplayed(), GlobalConstants.isProceedButtonDisplayed);
 		dashboardpage.clickOnProceedButton();
 
-		Thread.sleep(3000);
 		assertTrue(dashboardpage.isPartnerCertificateTitleDisplayed(),
 				GlobalConstants.isPartnerCertificateTitleDisplayed);
 
@@ -82,9 +81,9 @@ public class DevicePartnerCreation extends BaseClass {
 //		assertTrue(partnerCertificatePage.isReUploadPartnerCertificateSubTextDisplayed(), GlobalConstants.isReUploadPartnerCertificateSubTextDisplayed);
 
 		assertTrue(partnerCertificatePage.isPartnerDomainTypeLabelDisplayed(),
-				GlobalConstants.iReUploadPartnerCertificateTextDisplayed);
-		assertTrue(partnerCertificatePage.isPartnerCertOvelayDisplayed(),
-				GlobalConstants.iReUploadPartnerCertificateTextDisplayed);
+				GlobalConstants.isPartnerDomainTypeLabelDisplayed);
+		assertTrue(partnerCertificatePage.isPartnerCertOverlayDisplayed(),
+				GlobalConstants.isPartnerCertOverlayDisplayed);
 
 		partnerCertificatePage.uploadCertificate();
 		partnerCertificatePage.clickOnRemoveCertificateButton();

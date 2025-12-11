@@ -48,19 +48,18 @@ public class AuthPartnerCreation extends BaseClass {
 		logoutFromPartner();
 
 		registerPage = loginPage.clickRegisterButton();
-		loginPage.clickRegisterButton();
-
-		registerPage.enterFirstName("pmpui-auth");
-		registerPage.enterLastName("pmpui-auth");
-		registerPage.enterOrganizationName("AABBCC");
+	
+		registerPage.enterFirstName(GlobalConstants.AUTH_PARTNER_ID);
+		registerPage.enterLastName(GlobalConstants.AUTH_PARTNER_ID);
+		registerPage.enterOrganizationName(GlobalConstants.ORGANISATION_NAME);
 		registerPage.selectPartnerTypeDropdown(2);
 		registerPage.enterAddress("0" + data);
 		registerPage.enterEmail("0" + data + "@gmail.com");
 		registerPage.enterPhone("9876543210");
 		registerPage.selectNotificationLanguageDropdown();
-		registerPage.enterUsername("pmpui-auth");
-		registerPage.enterPassword("mosip123");
-		registerPage.enterPasswordConfirm("mosip123");
+		registerPage.enterUsername(GlobalConstants.AUTH_PARTNER_ID);
+		registerPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
+		registerPage.enterPasswordConfirm(GlobalConstants.PARTNER_PASSWORD);
 		dashboardPage = registerPage.clickSubmitButton();
 
 		dashboardPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULT_POLICYGROUP);
@@ -150,7 +149,7 @@ public class AuthPartnerCreation extends BaseClass {
 
 	private void logoutFromPartner() {
 		dashboardPage.clickOnProfileDropdown();
-		dashboardPage.clickOnLogoutButton();
+		loginPage = dashboardPage.clickOnLogoutButton();
 	}
 
 }

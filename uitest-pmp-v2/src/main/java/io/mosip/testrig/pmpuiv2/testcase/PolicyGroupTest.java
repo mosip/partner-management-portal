@@ -136,14 +136,14 @@ public class PolicyGroupTest extends BaseClass {
 		assertTrue(policygroupPage.isPolicyGroupIdDescIconDisplayed(),
 				GlobalConstants.isPolicyGroupIdDescIconDisplayed);
 		assertTrue(policygroupPage.isPolicyGroupIdAscIconDisplayed(), GlobalConstants.isPolicyGroupIdAscIconDisplayed);
-		assertTrue(policygroupPage.isPolicyGroupNameDescIconDisplayed(), GlobalConstants.isPolicyGroupNameDescAscIcon);
-		assertTrue(policygroupPage.isPolicyGroupNameAscIconDisplayed(), GlobalConstants.isPolicyGroupNameDescAscIcon);
+		assertTrue(policygroupPage.isPolicyGroupNameDescIconDisplayed(), GlobalConstants.isPolicyGroupNameDescIconDisplayed);
+		assertTrue(policygroupPage.isPolicyGroupNameAscIconDisplayed(), GlobalConstants.isPolicyGroupNameAscIconDisplayed);
 		assertTrue(policygroupPage.isPolicyGroupDescriptionDescIconDisplayed(),
 				GlobalConstants.isPolicyGroupDescriptionDescIconDisplayed);
 		assertTrue(policygroupPage.isPolicyGroupDescriptionAscIconDisplayed(),
 				GlobalConstants.isPolicyGroupDescriptionAscIconDisplayed);
-		assertTrue(policygroupPage.isCreatedDateTimeDescISconDisplayed(), GlobalConstants.isCreatedDateTimeDescAscIcon);
-		assertTrue(policygroupPage.isCreatedDateTimeAscIconDisplayed(), GlobalConstants.isCreatedDateTimeDescAscIcon);
+		assertTrue(policygroupPage.isCreatedDateTimeDescIconDisplayed(), GlobalConstants.isCreatedDateTimeDescIconDisplayed);
+		assertTrue(policygroupPage.isCreatedDateTimeAscIconDisplayed(), GlobalConstants.isCreatedDateTimeAscIconDisplayed);
 		assertTrue(policygroupPage.isStatusDescISconDisplayed(), GlobalConstants.isStatusDescISconDisplayed);
 		assertTrue(policygroupPage.isStatusAscIconDisplayed(), GlobalConstants.isStatusAscIconDisplayed);
 

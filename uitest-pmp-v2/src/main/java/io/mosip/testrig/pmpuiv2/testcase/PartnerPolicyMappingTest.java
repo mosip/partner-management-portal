@@ -28,7 +28,7 @@ public class PartnerPolicyMappingTest extends BaseClass {
 	private DatasharePolicyPage datasharePolicyPage;
 
 	@Test(priority = 1, description = "Create Auth DataShare Policy")
-	public void creatAuthPolicyDataSharePolicy() {
+	public void createAuthPolicyDataSharePolicy() {
 
 		dashboardPage = new DashboardPage(driver);
 		basePage = new BasePage(driver);
@@ -215,22 +215,22 @@ public class PartnerPolicyMappingTest extends BaseClass {
 		partnerPolicyMappingPage.clickOnFilterResetButton();
 
 		partnerPolicyMappingPage.clickOnFilterButton();
-		assertTrue(partnerPolicyMappingPage.isPartnerIdDescIconDisplayed(), GlobalConstants.isPartnerIdDescAscIcon);
-		assertTrue(partnerPolicyMappingPage.isPartnerIdAscIconDisplayed(), GlobalConstants.isPartnerIdDescAscIcon);
+		assertTrue(partnerPolicyMappingPage.isPartnerIdDescIconDisplayed(), GlobalConstants.isPartnerIdDescIconDisplayed);
+		assertTrue(partnerPolicyMappingPage.isPartnerIdAscIconDisplayed(), GlobalConstants.isPartnerIdAscIconDisplayed);
 		assertTrue(partnerPolicyMappingPage.isPartnerTypeDescIconDisplayed(),
 				GlobalConstants.isPartnerTypeDescIconDisplayed);
 		assertTrue(partnerPolicyMappingPage.isPartnerTypeAscIconDisplayed(),
 				GlobalConstants.isPartnerTypeAscIconDisplayed);
 		assertTrue(partnerPolicyMappingPage.isPolicyGroupNameDescIconDisplayed(),
-				GlobalConstants.isPolicyGroupNameDescAscIcon);
+				GlobalConstants.isPolicyGroupNameDescIconDisplayed);
 		assertTrue(partnerPolicyMappingPage.isPolicyGroupNameAscIconDisplayed(),
-				GlobalConstants.isPolicyGroupNameDescAscIcon);
-		assertTrue(partnerPolicyMappingPage.isPolicyNameDescIconDisplayed(), GlobalConstants.isPolicyNameDescAscIcon);
-		assertTrue(partnerPolicyMappingPage.isPolicyNameAscIconDisplayed(), GlobalConstants.isPolicyNameDescAscIcon);
-		assertTrue(partnerPolicyMappingPage.isCreatedDateTimeDescISconDisplayed(),
-				GlobalConstants.isCreatedDateTimeDescAscIcon);
+				GlobalConstants.isPolicyGroupNameAscIconDisplayed);
+		assertTrue(partnerPolicyMappingPage.isPolicyNameDescIconDisplayed(), GlobalConstants.isPolicyNameDescIconDisplayed);
+		assertTrue(partnerPolicyMappingPage.isPolicyNameAscIconDisplayed(), GlobalConstants.isPolicyNameAscIconDisplayed);
+		assertTrue(partnerPolicyMappingPage.isCreatedDateTimeDescIconDisplayed(),
+				GlobalConstants.isCreatedDateTimeDescIconDisplayed);
 		assertTrue(partnerPolicyMappingPage.isCreatedDateTimeAscIconDisplayed(),
-				GlobalConstants.isCreatedDateTimeDescAscIcon);
+				GlobalConstants.isCreatedDateTimeAscIconDisplayed);
 
 		partnerPolicyMappingPage.clickOnPartnerIdDescIcon();
 		partnerPolicyMappingPage.clickOnPartnerIdAscIcon();
@@ -454,7 +454,7 @@ public class PartnerPolicyMappingTest extends BaseClass {
 		policiesPage.selectInvalidPolicyNameDropdown(GlobalConstants.DEFAULT_POLICY + "123");
 		policiesPage.searchInPolicyName(GlobalConstants.DEFAULT_POLICY + "123");
 
-		assertTrue(policiesPage.isNoDataAvailableTextDisplayed(), GlobalConstants.isPolicyNameDropdownDisplayed);
+		assertTrue(policiesPage.isNoDataAvailableTextDisplayed(), GlobalConstants.isNoDataAvailableTextDisplayed);
 		policiesPage.clickOnRequestPoliciesFormClearButton();
 
 		assertEquals(policiesPage.getThePolicyCommentBoxText(), GlobalConstants.isPolicyCommentBoxTextDisplayed);

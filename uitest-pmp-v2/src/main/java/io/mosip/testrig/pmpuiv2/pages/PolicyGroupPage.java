@@ -524,7 +524,7 @@ public class PolicyGroupPage extends BasePage {
 		return isElementDisplayed(policyGroupDescriptionAscIcon);
 	}
 
-	public boolean isCreatedDateTimeDescISconDisplayed() {
+	public boolean isCreatedDateTimeDescIconDisplayed() {
 		return isElementDisplayed(creationDateDescIcon);
 	}
 

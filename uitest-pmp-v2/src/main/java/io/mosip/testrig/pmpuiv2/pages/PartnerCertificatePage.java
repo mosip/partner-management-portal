@@ -70,7 +70,7 @@ public class PartnerCertificatePage extends BasePage {
 	private WebElement partnerDomainType;
 
 	@FindBy(id = "upload_file_FILL0_wght200_GRAD0_opsz24")
-	private WebElement partnerCertOvelay;
+	private WebElement partnerCertOverlay;
 
 	@FindBy(xpath = "//p[contains(text(), \"The certificate uploaded is not in the correct format.\")]")
 	private WebElement InvalidFormatErrorPopup;
@@ -538,8 +538,8 @@ public class PartnerCertificatePage extends BasePage {
 		return isElementDisplayed(partnerDomainType);
 	}
 
-	public boolean isPartnerCertOvelayDisplayed() {
-		return isElementDisplayed(partnerCertOvelay);
+	public boolean isPartnerCertOverlayDisplayed() {
+		return isElementDisplayed(partnerCertOverlay);
 	}
 
 	public boolean isInvalidFormatErrorPopupDisplayed() {

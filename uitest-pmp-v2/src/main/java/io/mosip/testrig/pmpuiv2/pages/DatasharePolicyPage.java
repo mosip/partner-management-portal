@@ -904,7 +904,7 @@ public class DatasharePolicyPage extends BasePage {
 		return isElementDisplayed(policyGroupNameDescIcon);
 	}
 
-	public boolean isCreatedDateTimeDescISconDisplayed() {
+	public boolean isCreatedDateTimeDescIconDisplayed() {
 		return isElementDisplayed(creationDateDescIcon);
 	}
 

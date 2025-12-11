@@ -279,10 +279,10 @@ public class DatasharePolicyTest extends BaseClass {
 				GlobalConstants.isPolicyGroupDescIconDisplayed);
 		assertTrue(datasharePolicyPage.isPolicyDescriptionDescIconDisplayed(),
 				GlobalConstants.isPolicyDescriptionDescIconDisplayed);
-		assertTrue(datasharePolicyPage.isCreatedDateTimeDescISconDisplayed(),
-				GlobalConstants.isCreatedDateTimeDescAscIcon);
+		assertTrue(datasharePolicyPage.isCreatedDateTimeDescIconDisplayed(),
+				GlobalConstants.isCreatedDateTimeDescIconDisplayed);
 		assertTrue(datasharePolicyPage.isCreatedDateTimeAscIconDisplayed(),
-				GlobalConstants.isCreatedDateTimeDescAscIcon);
+				GlobalConstants.isCreatedDateTimeAscIconDisplayed);
 		assertTrue(datasharePolicyPage.isStatusDescIconDisplayed(), GlobalConstants.isStatusDescISconDisplayed);
 		assertTrue(datasharePolicyPage.isStatusAscIconDisplayed(), GlobalConstants.isStatusAscIconDisplayed);
 

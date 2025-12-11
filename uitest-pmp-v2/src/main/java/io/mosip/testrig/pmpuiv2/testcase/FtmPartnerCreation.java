@@ -33,17 +33,17 @@ public class FtmPartnerCreation extends BaseClass {
 		dashboardpage.clickOnProfileDropdown();
 		loginpage = dashboardpage.clickOnLogoutButton();
 		loginpage.clickRegisterButton();
-		registerPage.enterFirstName("pmpui-ftmnocert");
-		registerPage.enterLastName("pmpui-ftmnocert");
-		registerPage.enterOrganizationName("AABBCC");
+		registerPage.enterFirstName(GlobalConstants.FTM_NOCERT_USER);
+		registerPage.enterLastName(GlobalConstants.FTM_NOCERT_USER);
+		registerPage.enterOrganizationName(GlobalConstants.ORGANISATION_NAME);
 		registerPage.selectPartnerTypeDropdown(1);
 		registerPage.enterAddress("0" + data);
 		registerPage.enterEmail("0" + data + "ftmnocert" + "@gmail.com");
 		registerPage.enterPhone("9876544211");
 		registerPage.selectNotificationLanguageDropdown();
-		registerPage.enterUsername("pmpui-ftmnocert");
-		registerPage.enterPassword("mosip123");
-		registerPage.enterPasswordConfirm("mosip123");
+		registerPage.enterUsername(GlobalConstants.FTM_NOCERT_USER);
+		registerPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
+		registerPage.enterPasswordConfirm(GlobalConstants.PARTNER_PASSWORD);
 		dashboardpage = registerPage.clickSubmitButton();
 
 		dashboardpage.clickOnCheckbox();
@@ -170,9 +170,9 @@ public class FtmPartnerCreation extends BaseClass {
 				GlobalConstants.isLastUploadTimeAndDateDisplayed);
 
 		assertTrue(partnerCertificatePage.isPartnerDomainTypeLabelDisplayed(),
-				GlobalConstants.iReUploadPartnerCertificateTextDisplayed);
-		assertTrue(partnerCertificatePage.isPartnerCertOvelayDisplayed(),
-				GlobalConstants.iReUploadPartnerCertificateTextDisplayed);
+				GlobalConstants.isPartnerDomainTypeLabelDisplayed);
+		assertTrue(partnerCertificatePage.isPartnerCertOverlayDisplayed(),
+				GlobalConstants.isPartnerDomainTypeLabelDisplayed);
 
 		partnerCertificatePage.uploadCertificate();
 		partnerCertificatePage.clickOnRemoveCertificateButton();

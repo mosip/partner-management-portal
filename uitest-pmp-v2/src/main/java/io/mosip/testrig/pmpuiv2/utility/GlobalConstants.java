@@ -91,6 +91,7 @@ public class GlobalConstants {
 	public static final String AUTOMATION_DEACTIVATING_4 = "AutomationDeactivating4";
 	public static final String AUTOMATION_DEACTIVATING_5 = "AutomationDeactivating5";
 	public static final String DEACTIVATE_SBI_ASADMIN = "Deactivatesbiinadmin";
+	public static final String FTM_NOCERT_USER = "pmpui-ftmnocert";
 
 	public static final String ALPHANUMERIC_AND_SYMBOLS = "Automation@123#";
 	public static final String SPECIAL_CHARACTERS = "!@#$%^&";
@@ -323,11 +324,6 @@ public class GlobalConstants {
 	public static final String isPreviousPageDisplayed = "Verify if Previous page for policy requested  displayed";
 	public static final String isPendingForApprovalDisplayed = "Verify if pending for approval text displayed";
 	public static final String isPartnerIdTextDisplayed = "Verify if partner id text displayed";
-	public static final String isPartnerIdDescAscIcon = "Verify if partner Asending decending icon displayed";
-	public static final String isPartnerTypeDescAscIcon = "Verify if partner type Asending decending icon displayed";
-	public static final String isPolicyGroupNameDescAscIcon = "Verify if policy group name type Asending decending icon displayed";
-	public static final String isPolicyNameDescAscIcon = "Verify if policy name Asending decending icon displayed";
-	public static final String isCreatedDateTimeDescAscIcon = "Verify if created date time Asending decending icon displayed";
 	public static final String isSubTitleHomeDisplayed = "Verify if subtitle home displayed";
 	public static final String isSubTitleDisplayed = "Verify if subtitle displayed";
 	public static final String isBackArrow = "Verify if back arrow icon displayed";
@@ -769,7 +765,6 @@ public class GlobalConstants {
 	public static final String isPartnerIdAscIconDisplayed = "Verify if partner id asc icon displayed";
 	public static final String isPolicyGroupNameDescIconDisplayed = "Verify if policy group name desc icon displayed";
 	public static final String isPolicyGroupNameAscIconDisplayed = "Verify if policy group name asc icon displayed";
-	public static final String isCreatedDateTimeDescISconDisplayed = "Verify if created date time desc icon displayed";
 	public static final String isCreatedDateTimeAscIconDisplayed = "Verify if created date time asc icon displayed";
 	public static final String isStatusDescIconDisplayed = "Verify if status desc icon displayed";
 	public static final String isOrgNameDescIconDisplayed = "Verify if organisation name desc icon displayed";
@@ -808,6 +803,7 @@ public class GlobalConstants {
 	public static final String isCreatedOnLabelDisplayed = "Verify if created on label displayed";
 	public static final String isCreatedDateDisplayed = "Verify if created date displayed";
 	public static final String isCopiedTextDisplayed = "Verify if copied text displayed";
+	public static final String isCopiedTextNotDisplayed = "Verify if copied text not displayed";
 	public static final String isApiKeyNameHeaderDisplayed = "Verify if apikey name header displayed";
 	public static final String isApiKeyNameDescIconDisplayed = "Verify if apikey name desc icon displayed";
 	public static final String isApiKeyNameAscIconDisplayed = "Verify if apikey name Asc icon displayed";
@@ -1214,6 +1210,8 @@ public class GlobalConstants {
 	public static final String isFtmModelCertifiateLabelDisplayed = "Verify if ftm chip certificate label is displayed";
 	public static final String isFtmChipDetailsCertificateContextDisplayed = "Verify if ftm chip certificate context is displayed";
 	public static final String isIntCAIssuedByContextDisplayed = "Verify if ftm chip certificate context is displayed";
+	public static final String isPartnerDomainTypeLabelDisplayed = "Verify if partner domain type label is displayed";
+	public static final String isPartnerCertOverlayDisplayed = "Verify if partner certificate overlay is displayed";
 
 	
 
