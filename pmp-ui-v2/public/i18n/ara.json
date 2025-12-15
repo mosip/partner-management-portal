@@ -535,7 +535,8 @@
         "deleteInFra": "Supprimer",
         "deleteInEng": "Delete",
         "deleteInTam": "நீக்கு",
-        "deleteInKan": "ಅಳಿಸಿ"
+        "deleteInKan": "ಅಳಿಸಿ",
+        "compatibilityMsg": "ملاحظة: تم تعطيل حقول المعلومات الإضافية ذات الصلة لأن إصدار Esignet المستخدم حاليًا في منصة MOSIP لا يدعمها."
     },
     "oidcClientsList": {
         "partnerId": "معرف الشريك",

@@ -535,7 +535,8 @@
         "deleteInFra": "Supprimer",
         "deleteInEng": "Delete",
         "deleteInTam": "நீக்கு",
-        "deleteInKan": "ಅಳಿಸಿ"
+        "deleteInKan": "ಅಳಿಸಿ",
+        "compatibilityMsg": "Remarque : Les champs relatifs aux informations supplémentaires sont désactivés car la version d'Esignet actuellement déployée sur la plateforme MOSIP ne les prend pas en charge."
     },
     "oidcClientsList": {
         "partnerId": "ID partenaire",
