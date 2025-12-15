@@ -8,6 +8,7 @@ import org.testng.annotations.Test;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
+@Test(dependsOnGroups = { "DeactivatePartnerCreation" }, groups = { "PolicyGroupTest" })
 public class PolicyGroupTest extends BaseClass {
 	private BasePage basePage;
 	private DashboardPage dashboardPage;
@@ -106,7 +107,7 @@ public class PolicyGroupTest extends BaseClass {
 		policygroupPage.clickOnBrowserBackProceedButton();
 	}
 
-	@Test(priority = 2, description = "Policygroup Tabular View")
+	@Test(priority = 2, description = "Policygroup Tabular View", dependsOnMethods = "createPolicyGroup")
 	public void policyGroupTabularView() {
 
 		dashboardPage = new DashboardPage(driver);
@@ -136,14 +137,18 @@ public class PolicyGroupTest extends BaseClass {
 		assertTrue(policygroupPage.isPolicyGroupIdDescIconDisplayed(),
 				GlobalConstants.isPolicyGroupIdDescIconDisplayed);
 		assertTrue(policygroupPage.isPolicyGroupIdAscIconDisplayed(), GlobalConstants.isPolicyGroupIdAscIconDisplayed);
-		assertTrue(policygroupPage.isPolicyGroupNameDescIconDisplayed(), GlobalConstants.isPolicyGroupNameDescIconDisplayed);
-		assertTrue(policygroupPage.isPolicyGroupNameAscIconDisplayed(), GlobalConstants.isPolicyGroupNameAscIconDisplayed);
+		assertTrue(policygroupPage.isPolicyGroupNameDescIconDisplayed(),
+				GlobalConstants.isPolicyGroupNameDescIconDisplayed);
+		assertTrue(policygroupPage.isPolicyGroupNameAscIconDisplayed(),
+				GlobalConstants.isPolicyGroupNameAscIconDisplayed);
 		assertTrue(policygroupPage.isPolicyGroupDescriptionDescIconDisplayed(),
 				GlobalConstants.isPolicyGroupDescriptionDescIconDisplayed);
 		assertTrue(policygroupPage.isPolicyGroupDescriptionAscIconDisplayed(),
 				GlobalConstants.isPolicyGroupDescriptionAscIconDisplayed);
-		assertTrue(policygroupPage.isCreatedDateTimeDescIconDisplayed(), GlobalConstants.isCreatedDateTimeDescIconDisplayed);
-		assertTrue(policygroupPage.isCreatedDateTimeAscIconDisplayed(), GlobalConstants.isCreatedDateTimeAscIconDisplayed);
+		assertTrue(policygroupPage.isCreatedDateTimeDescIconDisplayed(),
+				GlobalConstants.isCreatedDateTimeDescIconDisplayed);
+		assertTrue(policygroupPage.isCreatedDateTimeAscIconDisplayed(),
+				GlobalConstants.isCreatedDateTimeAscIconDisplayed);
 		assertTrue(policygroupPage.isStatusDescISconDisplayed(), GlobalConstants.isStatusDescISconDisplayed);
 		assertTrue(policygroupPage.isStatusAscIconDisplayed(), GlobalConstants.isStatusAscIconDisplayed);
 
@@ -183,7 +188,7 @@ public class PolicyGroupTest extends BaseClass {
 
 	}
 
-	@Test(priority = 3, description = "Policygroup Details View")
+	@Test(priority = 3, description = "Policygroup Details View", dependsOnMethods = "policyGroupTabularView")
 	public void policyGroupDetailsView() {
 
 		dashboardPage = new DashboardPage(driver);

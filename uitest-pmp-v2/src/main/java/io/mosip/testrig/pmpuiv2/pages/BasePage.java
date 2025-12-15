@@ -29,7 +29,7 @@ public class BasePage {
 
 	protected WebDriver driver;
 	public static String appendDate = getPreAppend() + getDateTime();
-	private static final Logger logger = Logger.getLogger(BasePage.class);
+	protected static final Logger logger = Logger.getLogger(BasePage.class);
 
 	public BasePage(WebDriver driver) {
 		this.driver = driver;

@@ -260,6 +260,12 @@ public class PoliciesPage extends BasePage {
 
 	@FindBy(id = "block_messsage_proceed")
 	private WebElement dataLostProcceedButton;
+	
+	@FindBy(xpath = "//span[text()='Select policy name']")
+	private WebElement policyNamePlaceholder;
+	
+	@FindBy(xpath = "//textarea[@placeholder='Mention the purpose of requesting the policy']")
+	private WebElement policyCommentBoxPlaceholder;
 
 	public PoliciesPage(WebDriver driver) {
 		super(driver);
@@ -273,7 +279,6 @@ public class PoliciesPage extends BasePage {
 		try {
 			Thread.sleep(3000);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		clickOnElement(requestPolicyButton);
@@ -539,12 +544,12 @@ public class PoliciesPage extends BasePage {
 		clickOnElement(requestPoliciesFormClearButton);
 	}
 
-	public String getThePolicyCommentBoxText() {
-		return getTextFromAttribute(commentsTextBox, "placeholder");
+	public boolean isPolicyNamePlaceHolderDisplayed() {
+		return isElementDisplayed(policyNamePlaceholder);
 	}
-
-	public String getThepolicyNameDropdownBoxText() {
-		return getTextFromLocator(policyNameDropdown);
+	
+	public boolean isPolicyCommentBoxPlaceholderDisplayed() {
+		return isElementDisplayed(policyCommentBoxPlaceholder);
 	}
 
 	public void clickOnRequestPoliciesFormCancelButton() {

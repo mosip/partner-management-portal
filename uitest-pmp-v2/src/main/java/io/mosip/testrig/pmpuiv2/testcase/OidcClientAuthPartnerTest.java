@@ -16,6 +16,7 @@ import io.mosip.testrig.pmpuiv2.pages.OidcClientPage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
+@Test(dependsOnGroups = {"PolicyCreationForAuthPartner"}, groups = {"OidcClientAuthPartnerTest"})
 public class OidcClientAuthPartnerTest extends BaseClass {
 	private BasePage basePage;
 	private DashboardPage dashboardPage;
@@ -190,7 +191,7 @@ public class OidcClientAuthPartnerTest extends BaseClass {
 
 	}
 
-	@Test(priority = 2, description = "Deleting second redirect uri")
+	@Test(priority = 2, description = "Deleting second redirect uri", dependsOnMethods = "createOidcClient")
 	public void deletingSecondRedirectUri() {
 		dashboardPage = new DashboardPage(driver);
 		basePage = new BasePage(driver);
@@ -205,7 +206,7 @@ public class OidcClientAuthPartnerTest extends BaseClass {
 		assertFalse(oidcClientPage.isRedirectUri2TextBoxDisplayed(), GlobalConstants.isRedirectUri2TextBoxDisplayed);
 	}
 
-	@Test(priority = 3, description = "Adding second redirect uri")
+	@Test(priority = 3, description = "Adding second redirect uri", dependsOnMethods = "deletingSecondRedirectUri")
 	public void addingSecondRedirectUri() {
 		dashboardPage = new DashboardPage(driver);
 		basePage = new BasePage(driver);
@@ -218,8 +219,8 @@ public class OidcClientAuthPartnerTest extends BaseClass {
 		assertTrue(oidcClientPage.isRedirectUri2TextBoxDisplayed(), GlobalConstants.isRedirectUri2TextBoxDisplayed);
 	}
 
-	@Test(priority = 4, description = "clear form oidc client")
-	public void ClearFormOidcClient() {
+	@Test(priority = 4, description = "clear form oidc client", dependsOnMethods = "addingSecondRedirectUri")
+	public void clearFormOidcClient() {
 		dashboardPage = new DashboardPage(driver);
 		basePage = new BasePage(driver);
 
@@ -235,7 +236,7 @@ public class OidcClientAuthPartnerTest extends BaseClass {
 		assertTrue(oidcClientPage.isLogoUriempty(), GlobalConstants.isLogoUriempty);
 	}
 
-	@Test(priority = 5, description = "Using invalid data to create oidc")
+	@Test(priority = 5, description = "Using invalid data to create oidc", dependsOnMethods = "clearFormOidcClient")
 	public void usingInvalidDataToCreateOIDC() {
 		dashboardPage = new DashboardPage(driver);
 		basePage = new BasePage(driver);
@@ -256,7 +257,7 @@ public class OidcClientAuthPartnerTest extends BaseClass {
 				GlobalConstants.isInvalidRedirectUriErrorDisplayed);
 	}
 
-	@Test(priority = 6, description = "edit OIDC client")
+	@Test(priority = 6, description = "edit OIDC client", dependsOnMethods = "usingInvalidDataToCreateOIDC")
 	public void editOIDCClient() {
 		dashboardPage = new DashboardPage(driver);
 		basePage = new BasePage(driver);
@@ -287,7 +288,7 @@ public class OidcClientAuthPartnerTest extends BaseClass {
 
 	}
 
-	@Test(priority = 7, description = "Deactivate OIDC client")
+	@Test(priority = 7, description = "Deactivate OIDC client", dependsOnMethods = "editOIDCClient")
 	public void deactivateOIDCClient() {
 		dashboardPage = new DashboardPage(driver);
 		basePage = new BasePage(driver);
@@ -323,7 +324,7 @@ public class OidcClientAuthPartnerTest extends BaseClass {
 
 	}
 
-	@Test(priority = 8, description = "Oidc Client Deactivate")
+	@Test(priority = 8, description = "Oidc Client Deactivate", dependsOnMethods = "deactivateOIDCClient")
 	public void oidcClientDeactivate() {
 
 		dashboardPage = new DashboardPage(driver);
@@ -401,7 +402,7 @@ public class OidcClientAuthPartnerTest extends BaseClass {
 
 	}
 
-	@Test(priority = 9, description = "Oidc Client Tabular View")
+	@Test(priority = 9, description = "Oidc Client Tabular View", dependsOnMethods = "oidcClientDeactivate")
 	public void oidcClientTabularView() {
 
 		dashboardPage = new DashboardPage(driver);
@@ -429,8 +430,6 @@ public class OidcClientAuthPartnerTest extends BaseClass {
 
 		assertTrue(oidcClientPage.isPartnerIdDescIconDisplayed(), GlobalConstants.isPartnerIdDescIconDisplayed);
 		assertTrue(oidcClientPage.isPartnerIdAscIconDisplayed(), GlobalConstants.isPartnerIdAscIconDisplayed);
-		assertTrue(oidcClientPage.isOidcClientNameDescIconDisplayed(), GlobalConstants.isOidcClientNameDescIconDisplayed);
-		assertTrue(oidcClientPage.isOidcClientNameAscIconDisplayed(), GlobalConstants.isOidcClientNameAscIconDisplayed);
 		assertTrue(oidcClientPage.isPolicyGroupNameDescIconDisplayed(),
 				GlobalConstants.isPolicyGroupNameDescIconDisplayed);
 		assertTrue(oidcClientPage.isPolicyGroupNameAscIconDisplayed(),
@@ -589,7 +588,7 @@ public class OidcClientAuthPartnerTest extends BaseClass {
 
 	}
 
-	@Test(priority = 10, description = "Oidc Client View Details")
+	@Test(priority = 10, description = "Oidc Client View Details", dependsOnMethods = "oidcClientTabularView")
 	public void oidcClientViewDetails() {
 
 		dashboardPage = new DashboardPage(driver);

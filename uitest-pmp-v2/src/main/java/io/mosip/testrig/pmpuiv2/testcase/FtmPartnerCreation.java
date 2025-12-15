@@ -13,6 +13,7 @@ import io.mosip.testrig.pmpuiv2.pages.RegisterPage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
+@Test(dependsOnGroups = {"PartnerAdminCreation"}, groups = {"FtmPartnerCreation"})
 public class FtmPartnerCreation extends BaseClass {
 
 	private BasePage basePage;
@@ -48,6 +49,8 @@ public class FtmPartnerCreation extends BaseClass {
 
 		dashboardpage.clickOnCheckbox();
 		dashboardpage.clickOnProceedButton();
+
+		dashboardpage.waitForDashboardReady();
 
 		assertTrue(partnerCertificatePage.isDashboardFtmChipProviderCardDisplayed(),
 				GlobalConstants.isDashboardFtmChipProviderCardDisplayed);
@@ -91,7 +94,7 @@ public class FtmPartnerCreation extends BaseClass {
 				GlobalConstants.isDashboardFtmChipProviderCardDisplayed);
 	}
 
-	@Test(priority = 2, description = "Register ftm partner with valid certificate")
+	@Test(priority = 2, description = "Register ftm partner with valid certificate", dependsOnMethods = "registerNewUserForFtmNoCert")
 	public void registerNewUserForFtm() throws InterruptedException {
 		dashboardpage = new DashboardPage(driver);
 		partnerCertificatePage = new PartnerCertificatePage(driver);
@@ -187,7 +190,7 @@ public class FtmPartnerCreation extends BaseClass {
 		partnerCertificatePage.uploadCertificate();
 		partnerCertificatePage.clickOnSubmitButton();
 		assertTrue(partnerCertificatePage.isSuccessMessageForFtmCertDisplayed(),
-				GlobalConstants.isSuccessMessageDisplayed);
+				GlobalConstants.isSuccessMessageForFtmCertDisplayed);
 	}
 
 }

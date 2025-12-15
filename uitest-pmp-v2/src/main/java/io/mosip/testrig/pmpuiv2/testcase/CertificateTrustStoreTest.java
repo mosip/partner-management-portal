@@ -10,6 +10,7 @@ import io.mosip.testrig.pmpuiv2.pages.PartnerCertificatePage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
+@Test(dependsOnGroups = { "PartnerDetailsTest" }, groups = { "CertificateTrustStoreTest" })
 public class CertificateTrustStoreTest extends BaseClass {
 
 	private DashboardPage dashboardPage;
@@ -103,7 +104,7 @@ public class CertificateTrustStoreTest extends BaseClass {
 
 	}
 
-	@Test(priority = 2, description = "Tabular View Of Uploaded Root CA Certificates")
+	@Test(priority = 2, description = "Tabular View Of Uploaded Root CA Certificates", dependsOnMethods = "uploadInvlidCertificates")
 	public void tabularViewOfUploadedRootCACertificates() {
 
 		dashboardPage = new DashboardPage(driver);
@@ -202,7 +203,7 @@ public class CertificateTrustStoreTest extends BaseClass {
 
 	}
 
-	@Test(priority = 3, description = "Download Uploaded Root CA Certificates")
+	@Test(priority = 3, description = "Download Uploaded Root CA Certificates", dependsOnMethods = "tabularViewOfUploadedRootCACertificates")
 	public void downloadUploadedRootCACertificates() {
 
 		dashboardPage = new DashboardPage(driver);
@@ -233,7 +234,7 @@ public class CertificateTrustStoreTest extends BaseClass {
 
 	}
 
-	@Test(priority = 4, description = "View Root CA Certificate Details")
+	@Test(priority = 4, description = "View Root CA Certificate Details", dependsOnMethods = "downloadUploadedRootCACertificates")
 	public void viewRootCACertificateDetails() {
 
 		dashboardPage = new DashboardPage(driver);
@@ -295,7 +296,7 @@ public class CertificateTrustStoreTest extends BaseClass {
 
 	}
 
-	@Test(priority = 5, description = "Tabular View Of Uploaded Intermediate CA Certificates")
+	@Test(priority = 5, description = "Tabular View Of Uploaded Intermediate CA Certificates", dependsOnMethods = "viewRootCACertificateDetails")
 	public void tabularViewOfUploadedIntermediateCACertificates() {
 
 		dashboardPage = new DashboardPage(driver);
@@ -401,7 +402,7 @@ public class CertificateTrustStoreTest extends BaseClass {
 		partnerCertificatePage.clickOnTitleBackButton();
 	}
 
-	@Test(priority = 6, description = "Download Uploaded Int CA Certificates")
+	@Test(priority = 6, description = "Download Uploaded Int CA Certificates", dependsOnMethods = "tabularViewOfUploadedIntermediateCACertificates")
 	public void downloadUploadedIntCACertificates() {
 
 		dashboardPage = new DashboardPage(driver);
@@ -435,7 +436,7 @@ public class CertificateTrustStoreTest extends BaseClass {
 
 	}
 
-	@Test(priority = 7, description = "View Intermediate CA Certificate Details")
+	@Test(priority = 7, description = "View Intermediate CA Certificate Details", dependsOnMethods = "downloadUploadedIntCACertificates")
 	public void viewIntCACertificateDetails() {
 
 		dashboardPage = new DashboardPage(driver);

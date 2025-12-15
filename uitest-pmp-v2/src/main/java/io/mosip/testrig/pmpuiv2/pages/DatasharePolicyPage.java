@@ -593,7 +593,7 @@ public class DatasharePolicyPage extends BasePage {
 	}
 
 	public void enterPolicyName(String val) {
-		enter(policyNameBox, val);
+	    enter(policyNameBox, val);
 	}
 
 	public void enterpolicyDescription(String val) {
@@ -811,7 +811,7 @@ public class DatasharePolicyPage extends BasePage {
 			WebElement policyGroupOption = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
 			clickOnElement(policyGroupOption);
 		} catch (TimeoutException e) {
-			System.out.println("Policy group not found: " + value);
+			logger.warn("Policy group not found: " + value);
 		}
 	}
 

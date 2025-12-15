@@ -370,7 +370,6 @@ public class GlobalConstants {
 	public static final String isSubmitButtonEnabled = "Verify if submit button is enabled";
 	public static final String isSubmitButtonDisabled = "Verify if submit button is disabled";
 	public static final String isDeviceListAddDeviceButtonDisabled = "Verify if device list add device is disabled";
-	public static final String isPolicyCommentBoxTextDisplayed = "Mention the purpose of requesting the policy";
 	public static final String isFtmChipMakeLabelDisplayed = "Verify if ftm chip make label displayed";
 	public static final String isFtmChipMakeValueDisplayed = "Verify if ftm chip make value displayed";
 	public static final String isPartnerTypeLabelDisplayed = "Verify if ftm chip partner type label displayed";
@@ -602,15 +601,16 @@ public class GlobalConstants {
 	public static final String isCreateDatashareTitleDisplayed = "Verify if create data share title displayed";
 	public static final String isDatashareFormSubTitleDisplayed = "Verify if data share form title displayed";
 	public static final String isPolicyGroupDropdownSearchInputDisplayed = "Verify if policy group dropdown search input displayed";
-	public static final String isPolicyGroupPlaceHolderDisplayed = "Verify if policy group place holder displayed";
+	public static final String isPolicyGroupPlaceHolderDisplayed = "Verify if policy group placeholder displayed";
 	public static final String isPolicyGroupNameDisplayed = "Verify if policy group name displayed";
 	public static final String isPolicyGroupDescriptionDisplayed = "Verify if policy group description displayed";
-	public static final String isFileUploadPlaceHolderDisplayed = "Verify if file upload place holder displayed";
+	public static final String isFileUploadPlaceHolderDisplayed = "Verify if file upload placeholder displayed";
 	public static final String isUploadPolicyDataHelpTextDisplayed = "Verify if upload policy data help text displayed";
 	public static final String isUploadPolicyDataLabelDisplayed = "Verify if upload policy data label displayed";
-	public static final String isPolicyDescriptionPlaceHolderDisplayed = "Verify if policy description place holder displayed";
+	public static final String isPolicyDescriptionPlaceHolderDisplayed = "Verify if policy description placeholder displayed";
 	public static final String isPolicyDescriptionTextLabelDisplayed = "Verify if policy description text label displayed";
-	public static final String isPolicyNamePlaceHolderDisplayed = "Verify if policy name place holder displayed";
+	public static final String isPolicyNamePlaceHolderDisplayed = "Verify if policy name placeholder displayed";
+	public static final String isPolicyCommentBoxPlaceholderDisplayed = "Verify if policy comment box placeholder displayed";
 	public static final String isPolicyNameTextLabelDisplayed = "Verify if policy name text label displayed";
 	public static final String isSubTitleOfSuccessMessageDisplayed = "Verify if subtitle of success message displayed";
 	public static final String isSaveAsDraftButtonEnabled = "Verify if save as draft enabled";
@@ -666,7 +666,7 @@ public class GlobalConstants {
 	public static final String isPolicyDataContentDisplayed = "Verify if policy data content displayed";
 	public static final String isPolicyFormSubTitleDisplayed = "Verify if auth policy form subtitle displayed";
 	public static final String isPolicyGroupDropdownDisplayed = "Verify if policy group dropdown displayed";
-	public static final String isAuthPolicyPlaceHolderDisplayed = "Verify if auth policy place holder displayed";
+	public static final String isAuthPolicyPlaceHolderDisplayed = "Verify if auth policy placeholder displayed";
 	public static final String isPolicyDataEdited = "Verify if policy data edited";
 	public static final String isFilterResetButtonAvailableOrEnabled = "Verify if filter reset button available or enabled";
 	public static final String isPolicyIdFilterLabelDisplayed = "Verify if policy Id filter label displayed";

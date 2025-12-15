@@ -1,6 +1,8 @@
 package io.mosip.testrig.pmpuiv2.utility;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +19,7 @@ import io.mosip.testrig.pmpuiv2.kernel.util.ConfigManager;
 
 public class TestRunner {
 	static TestListenerAdapter tla = new TestListenerAdapter();
+	public static List<String> knownIssues = new ArrayList<>();
 	public static String jarUrl = TestRunner.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 	public static String uin = "";
 	public static String perpetualVid = "";
@@ -28,6 +31,17 @@ public class TestRunner {
 
 	public static void main(String[] args) throws Exception {
 		AdminTestUtil.initialize();
+		try (BufferedReader br = new BufferedReader(new FileReader(getResourcePath() + "/config/knownIssues.txt"))) {
+			String line;
+			while ((line = br.readLine()) != null) {
+				if (!line.trim().isEmpty()) {
+					knownIssues.add(line.trim());
+				}
+			}
+			logger.info("Known Issues Loaded: " + knownIssues);
+		} catch (Exception e) {
+			logger.warn("knownIssues.txt not found or unreadable: " + e.getMessage());
+		}
 		startTestRunner();
 
 	}
@@ -51,7 +65,7 @@ public class TestRunner {
 			XmlClass deactivatePartnerCreation = new XmlClass(
 					"io.mosip.testrig.pmpuiv2.testcase.DeactivatePartnerCreation");
 			XmlClass ftmDeviceTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.FtmDeviceTest");
-			XmlClass deviceProviderTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.DeviceProviderTest");
+			XmlClass sbiCreationTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.SbiCreationTest");
 			XmlClass policyCreationForAuthPartner = new XmlClass(
 					"io.mosip.testrig.pmpuiv2.testcase.PolicyCreationForAuthPartner");
 			XmlClass oidcClientAuthPartnerTest = new XmlClass(
@@ -100,8 +114,8 @@ public class TestRunner {
 				case "FTMDeviceTest":
 					classes.add(ftmDeviceTest);
 					break;
-				case "DeviceProviderTest":
-					classes.add(deviceProviderTest);
+				case "SbiCreationTest":
+					classes.add(sbiCreationTest);
 					break;
 				case "PolicyCreationForAuthPartner":
 					classes.add(policyCreationForAuthPartner);

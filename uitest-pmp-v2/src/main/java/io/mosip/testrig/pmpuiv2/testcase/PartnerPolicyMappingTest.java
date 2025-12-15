@@ -17,6 +17,7 @@ import io.mosip.testrig.pmpuiv2.pages.PolicyGroupPage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
+@Test(dependsOnGroups = { "CertificateTrustStoreTest" }, groups = { "PartnerPolicyMappingTest" })
 public class PartnerPolicyMappingTest extends BaseClass {
 	private BasePage basePage;
 	private DashboardPage dashboardPage;
@@ -102,7 +103,7 @@ public class PartnerPolicyMappingTest extends BaseClass {
 		datasharePolicyPage.clickOnPublishPolicyCloseButton();
 	}
 
-	@Test(priority = 2, description = "Request Auth DataShare Policy")
+	@Test(priority = 2, description = "Request Auth DataShare Policy", dependsOnMethods = "createAuthPolicyDataSharePolicy")
 	public void requestAuthDataSharePolicy() {
 
 		dashboardPage = new DashboardPage(driver);
@@ -121,7 +122,7 @@ public class PartnerPolicyMappingTest extends BaseClass {
 
 	}
 
-	@Test(priority = 3, description = "Tabular View Of Partner Policy")
+	@Test(priority = 3, description = "Tabular View Of Partner Policy", dependsOnMethods = "requestAuthDataSharePolicy")
 	public void tabularViewOfPartnerPolicy() {
 
 		dashboardPage = new DashboardPage(driver);
@@ -317,7 +318,7 @@ public class PartnerPolicyMappingTest extends BaseClass {
 
 	}
 
-	@Test(priority = 4, description = "Approve Reject Requested Policies")
+	@Test(priority = 4, description = "Approve Reject Requested Policies", dependsOnMethods = "tabularViewOfPartnerPolicy")
 	public void approveRejectRequestedPolicies() {
 
 		dashboardPage = new DashboardPage(driver);
@@ -384,7 +385,7 @@ public class PartnerPolicyMappingTest extends BaseClass {
 
 	}
 
-	@Test(priority = 5, description = "View Requested Policy Details")
+	@Test(priority = 5, description = "View Requested Policy Details", dependsOnMethods = "approveRejectRequestedPolicies")
 	public void viewRequestedPolicyDetails() {
 
 		dashboardPage = new DashboardPage(driver);
@@ -440,7 +441,7 @@ public class PartnerPolicyMappingTest extends BaseClass {
 
 	}
 
-	@Test(priority = 6, description = "Search with invalid policy name")
+	@Test(priority = 6, description = "Search with invalid policy name", dependsOnMethods = "viewRequestedPolicyDetails")
 	public void searchWithInvalidPolicyName() {
 		dashboardPage = new DashboardPage(driver);
 		basePage = new BasePage(driver);
@@ -460,15 +461,16 @@ public class PartnerPolicyMappingTest extends BaseClass {
 		assertTrue(policiesPage.isNoDataAvailableTextDisplayed(), GlobalConstants.isNoDataAvailableTextDisplayed);
 		policiesPage.clickOnRequestPoliciesFormClearButton();
 
-		assertEquals(policiesPage.getThePolicyCommentBoxText(), GlobalConstants.isPolicyCommentBoxTextDisplayed);
-		assertEquals(policiesPage.getThepolicyNameDropdownBoxText(), GlobalConstants.isPolicyNameTextboxDisplayed);
+		assertTrue(policiesPage.isPolicyNamePlaceHolderDisplayed(), GlobalConstants.isPolicyNamePlaceHolderDisplayed);
+		assertTrue(policiesPage.isPolicyCommentBoxPlaceholderDisplayed(),
+				GlobalConstants.isPolicyCommentBoxPlaceholderDisplayed);
 
 		policiesPage.clickOnRequestPoliciesFormCancelButton();
 		assertTrue(policiesPage.isListOfPolicyRequestedDisplayed(),
 				GlobalConstants.isListOfPolicyRequestedTextDisplayed);
 	}
 
-	@Test(priority = 7, description = "Resubmit already submitted request policy")
+	@Test(priority = 7, description = "Resubmit already submitted request policy", dependsOnMethods = "searchWithInvalidPolicyName")
 	public void reSubmitAlreadySubmittedRequestPolicy() {
 		dashboardPage = new DashboardPage(driver);
 		basePage = new BasePage(driver);

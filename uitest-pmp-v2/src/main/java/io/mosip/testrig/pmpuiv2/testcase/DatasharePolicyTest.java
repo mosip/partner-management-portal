@@ -17,6 +17,7 @@ import io.mosip.testrig.pmpuiv2.pages.PolicyGroupPage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
+@Test(dependsOnGroups = { "PolicyGroupTest" }, groups = { "DatasharePolicyTest" })
 public class DatasharePolicyTest extends BaseClass {
 
 	private BasePage basePage;
@@ -102,7 +103,7 @@ public class DatasharePolicyTest extends BaseClass {
 
 	}
 
-	@Test(priority = 2, description = "Create Multiple Datashare Policy")
+	@Test(priority = 2, description = "Create Multiple Datashare Policy", dependsOnMethods = "createDatasharePolicy")
 	public void createMultipleDatasharePolicy() {
 
 		dashboardPage = new DashboardPage(driver);
@@ -161,7 +162,7 @@ public class DatasharePolicyTest extends BaseClass {
 
 	}
 
-	@Test(priority = 3, description = "Create Duplicate Datashare Policy")
+	@Test(priority = 3, description = "Create Duplicate Datashare Policy", dependsOnMethods = "createMultipleDatasharePolicy")
 	public void createDuplicateDatasharePolicy() {
 
 		dashboardPage = new DashboardPage(driver);
@@ -212,7 +213,7 @@ public class DatasharePolicyTest extends BaseClass {
 
 	}
 
-	@Test(priority = 4, description = "Upload Invalid Policy Data")
+	@Test(priority = 4, description = "Upload Invalid Policy Data", dependsOnMethods = "createDuplicateDatasharePolicy")
 	public void uploadInvalidPolicyData() {
 
 		dashboardPage = new DashboardPage(driver);
@@ -243,7 +244,7 @@ public class DatasharePolicyTest extends BaseClass {
 
 	}
 
-	@Test(priority = 5, description = "Datashare Policy Tabular View")
+	@Test(priority = 5, description = "Datashare Policy Tabular View", dependsOnMethods = "uploadInvalidPolicyData")
 	public void datasharePolicyTabularView() {
 
 		dashboardPage = new DashboardPage(driver);
@@ -361,7 +362,7 @@ public class DatasharePolicyTest extends BaseClass {
 
 	}
 
-	@Test(priority = 6, description = "View Datashare Policy Details")
+	@Test(priority = 6, description = "View Datashare Policy Details", dependsOnMethods = "datasharePolicyTabularView")
 	public void viewDatasharePolicyDetails() {
 
 		dashboardPage = new DashboardPage(driver);
@@ -417,7 +418,7 @@ public class DatasharePolicyTest extends BaseClass {
 
 	}
 
-	@Test(priority = 7, description = "Publish Datashare Policy")
+	@Test(priority = 7, description = "Publish Datashare Policy", dependsOnMethods = "viewDatasharePolicyDetails")
 	public void publishDatasharePolicy() {
 
 		dashboardPage = new DashboardPage(driver);
@@ -469,7 +470,7 @@ public class DatasharePolicyTest extends BaseClass {
 
 	}
 
-	@Test(priority = 8, description = "Edit Datashare Policy")
+	@Test(priority = 8, description = "Edit Datashare Policy", dependsOnMethods = "publishDatasharePolicy")
 	public void editDatasharePolicy() {
 
 		dashboardPage = new DashboardPage(driver);
@@ -617,7 +618,7 @@ public class DatasharePolicyTest extends BaseClass {
 
 	}
 
-	@Test(priority = 9, description = "Clone Datashare Policy")
+	@Test(priority = 9, description = "Clone Datashare Policy", dependsOnMethods = "editDatasharePolicy")
 	public void cloneDatasharePolicy() {
 
 		dashboardPage = new DashboardPage(driver);
@@ -778,7 +779,7 @@ public class DatasharePolicyTest extends BaseClass {
 
 	}
 
-	@Test(priority = 10, description = "Deactivate Datashare Policy")
+	@Test(priority = 10, description = "Deactivate Datashare Policy", dependsOnMethods = "cloneDatasharePolicy")
 	public void deactivateDatasharePolicy() {
 
 		dashboardPage = new DashboardPage(driver);
@@ -878,7 +879,7 @@ public class DatasharePolicyTest extends BaseClass {
 		policiesPage.clickOnHomeButton();
 
 		dashboardPage.clickOnPoliciesTitle();
-		policiesPage.clickOnRequestPolicyButton();
+		policiesPage.clickOnRequestPolicyButtonOfTabularPage();
 		policiesPage.selectPartnerIdDropdown();
 		policiesPage.selectInvalidPolicyNameDropdown(GlobalConstants.DEACTIVATE_DATA2);
 		assertTrue(policiesPage.isNoDataAvailableTextDisplayed(), GlobalConstants.isNoDataAvailableTextDisplayed);

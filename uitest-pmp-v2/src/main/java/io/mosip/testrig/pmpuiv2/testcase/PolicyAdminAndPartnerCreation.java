@@ -12,6 +12,7 @@ import io.mosip.testrig.pmpuiv2.pages.RegisterPage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
+@Test(dependsOnGroups = {"PartnerAdminCreation"}, groups = {"PolicyAdminAndPartnerCreation"})
 public class PolicyAdminAndPartnerCreation extends BaseClass {
 	private DashboardPage dashboardPage;
 	private LoginPage loginPage;
@@ -49,7 +50,7 @@ public class PolicyAdminAndPartnerCreation extends BaseClass {
 
 	}
 
-	@Test(priority = 2, description = "Uploading Trust Certificate")
+	@Test(priority = 2, description = "Uploading Trust Certificate", dependsOnMethods = "policiesAdminCreation")
 	public void uploadTrustCertificate() {
 
 		dashboardPage = new DashboardPage(driver);
@@ -85,7 +86,7 @@ public class PolicyAdminAndPartnerCreation extends BaseClass {
 		dashboardPage.clickOnLogoutButton();
 	}
 
-	@Test(priority = 3, description = "This is a test case register new user")
+	@Test(priority = 3, description = "This is a test case register new user", dependsOnMethods = "uploadTrustCertificate")
 	public void registerNewUser() {
 		dashboardPage = new DashboardPage(driver);
 		partnerCertificatePage = new PartnerCertificatePage(driver);

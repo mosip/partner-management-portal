@@ -13,6 +13,7 @@ import io.mosip.testrig.pmpuiv2.pages.PoliciesPage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
+@Test(dependsOnGroups = {"AuthPartnerCreation"}, groups = {"PolicyCreationForAuthPartner"})
 public class PolicyCreationForAuthPartner extends BaseClass {
 	private BasePage basePage;
 	private DashboardPage dashboardPage;
@@ -173,7 +174,7 @@ public class PolicyCreationForAuthPartner extends BaseClass {
 
 	}
 
-	@Test(priority = 2, description = "Partner-Policy mapping")
+	@Test(priority = 2, description = "Partner-Policy mapping", dependsOnMethods = "verifyingPolicyCreationAndFilter")
 	public void partnerPolicyMapping() {
 
 		dashboardPage = new DashboardPage(driver);

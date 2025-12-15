@@ -3,6 +3,7 @@ package io.mosip.testrig.pmpuiv2.testcase;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import io.mosip.testrig.pmpuiv2.pages.AddDevicePage;
@@ -18,6 +19,7 @@ import io.mosip.testrig.pmpuiv2.pages.ViewDeviceDetailsPage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
+@Test(dependsOnGroups = { "SbiCreationTest" }, groups = { "DeviceCreationTest" })
 public class DeviceCreationTest extends BaseClass {
 	private DeviceProviderPage deviceProviderPage;
 	private DashboardPage dashboardpage;
@@ -29,7 +31,7 @@ public class DeviceCreationTest extends BaseClass {
 	private AuthPolicyPage authPolicyPage;
 
 	@Test(priority = 1, description = "Add and verify device for SBI's")
-	public void AddAndVerifyDeviceInSbi() {
+	public void addAndVerifyDeviceInSbi() {
 		dashboardpage = new DashboardPage(driver);
 		listOfSbiPage = new ListOfSbiPage(driver);
 		listOfDevicesPage = new ListOfDevicesPage(driver);
@@ -41,12 +43,12 @@ public class DeviceCreationTest extends BaseClass {
 		deviceProviderPage = dashboardpage.clickOnDeviceProviderServicesTitle();
 
 		listOfSbiPage.clickOnAddDeviceButton(GlobalConstants.ALPHANUMERIC);
-		basePage.scrollToStartPage();
-		assertTrue(addDevicePage.isAddDeviceTitleDisplayed(), GlobalConstants.isAddDeviceTitleDisplayed);
+
+		Assert.assertTrue(addDevicePage.isAddDeviceTitleDisplayed(),
+		        "Add Device page did not load");
 		assertTrue(addDevicePage.isHomeButtonDisplayed(), GlobalConstants.isHomeButtonDisplayed);
 		assertEquals(addDevicePage.getSubTitle(), GlobalConstants.LIST_OF_SBI);
-		// todo make and mode name should be changed to GlobalConstants.AUTOMATION_2
-		// once same device is allowed for multiple devices
+		
 		fillDeviceDetails(GlobalConstants.FACE, GlobalConstants.FULL_FACE, GlobalConstants.AUTOMATION_TEMP,
 				GlobalConstants.AUTOMATION_TEMP);
 		addDevicePage.clickOnSubmit();
@@ -190,7 +192,7 @@ public class DeviceCreationTest extends BaseClass {
 
 	}
 
-	@Test(priority = 2, description = "Approve and reject the devices as admin")
+	@Test(priority = 2, description = "Approve and reject the devices as admin", dependsOnMethods = "addAndVerifyDeviceInSbi")
 	public void approveAndRejectDevices() {
 		dashboardpage = new DashboardPage(driver);
 		listOfSbiPage = new ListOfSbiPage(driver);
@@ -272,7 +274,7 @@ public class DeviceCreationTest extends BaseClass {
 		listOfDevicesPage.isApproceRejectDeviceDisabled();
 	}
 
-	@Test(priority = 3, description = "Verify and Deactivate the Device from List Of Devices Page")
+	@Test(priority = 3, description = "Verify and Deactivate the Device from List Of Devices Page", dependsOnMethods = "approveAndRejectDevices")
 	public void verifyAndDeactivateDeviceFromListOfDevicesPage() {
 
 		dashboardpage = new DashboardPage(driver);
@@ -304,7 +306,7 @@ public class DeviceCreationTest extends BaseClass {
 
 	}
 
-	@Test(priority = 4, description = "Verify List Of Devices and View Device Details Page")
+	@Test(priority = 4, description = "Verify List Of Devices and View Device Details Page", dependsOnMethods = "verifyAndDeactivateDeviceFromListOfDevicesPage")
 	public void verifyListOfDevicesPage() {
 
 		dashboardpage = new DashboardPage(driver);
@@ -435,7 +437,7 @@ public class DeviceCreationTest extends BaseClass {
 
 	}
 
-	@Test(priority = 5, description = "Verify Device filtering in list of devices page")
+	@Test(priority = 5, description = "Verify Device filtering in list of devices page", dependsOnMethods = "verifyListOfDevicesPage")
 	public void verifyDeviceFilteringInListOfDevicesPage() {
 		dashboardpage = new DashboardPage(driver);
 		listOfSbiPage = new ListOfSbiPage(driver);

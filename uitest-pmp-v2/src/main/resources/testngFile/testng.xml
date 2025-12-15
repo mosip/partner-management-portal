@@ -5,7 +5,7 @@
 <suite name="PMP uiv2 UI TestRig" preserve-order="true" parallel="false">
 
     <!-- STEP 1: must run alone (serial) -->
-    <test name="1-PartnerCreation" preserve-order="true" parallel="classes" thread-count="1">
+    <test name="PartnerManagementService" preserve-order="false" parallel="classes" thread-count="4">
         <classes>
             <class name="io.mosip.testrig.pmpuiv2.testcase.PartnerAdminCreation"/>
             <class name="io.mosip.testrig.pmpuiv2.testcase.AuthPartnerCreation"/>
@@ -13,51 +13,26 @@
             <class name="io.mosip.testrig.pmpuiv2.testcase.FtmPartnerCreation"/>
             <class name="io.mosip.testrig.pmpuiv2.testcase.PolicyAdminAndPartnerCreation"/>
             <class name="io.mosip.testrig.pmpuiv2.testcase.DeactivatePartnerCreation"/>
-        </classes>
-    </test>
-
-    <!-- STEP 2: Certificate upload tests (class-level parallelism) -->
-    <!-- Conservative thread-count to avoid resource starvation -->
-    <test name="2-Sbi-Ftm-Policy-Creation" preserve-order="true" parallel="classes" thread-count="3">
-        <classes>
             <class name="io.mosip.testrig.pmpuiv2.testcase.FtmDeviceTest"/>
-            <class name="io.mosip.testrig.pmpuiv2.testcase.DeviceProviderTest"/>
+            <class name="io.mosip.testrig.pmpuiv2.testcase.SbiCreationTest"/>
             <class name="io.mosip.testrig.pmpuiv2.testcase.PolicyCreationForAuthPartner"/>
-        </classes>
-    </test>
-
-    <!-- STEP 3: More certificate / policy setup (parallel classes) -->
-    <test name="3-Device-PolicGroup-Ftm-Oidc-Creation" preserve-order="true" parallel="classes" thread-count="3">
-        <classes>
             <class name="io.mosip.testrig.pmpuiv2.testcase.OidcClientAuthPartnerTest"/>
             <class name="io.mosip.testrig.pmpuiv2.testcase.DeviceCreationTest"/>  
             <class name="io.mosip.testrig.pmpuiv2.testcase.PolicyGroupTest"/>
-        </classes>
-    </test>
-
-    <!-- STEP 4: Policy creation tests (parallel classes) -->
-    <test name="4-Device-Datashare-Apikey-Creation" preserve-order="true" parallel="classes" thread-count="4">
-        <classes>
             <class name="io.mosip.testrig.pmpuiv2.testcase.CertificateTrustStoreTest"/>
             <class name="io.mosip.testrig.pmpuiv2.testcase.ApiKeyAuthPartnerTest"/>
             <class name="io.mosip.testrig.pmpuiv2.testcase.DatasharePolicyTest"/>
             <class name="io.mosip.testrig.pmpuiv2.testcase.SbiDeviceProviderTest"/>
-        </classes>
-    </test>
-
-    <!-- STEP 5: Policy/Partner tests (parallel classes) -->
-    <test name="5-Auth-PartnerPolicy" preserve-order="true" parallel="classes" thread-count="4">
-        <classes>
             <class name="io.mosip.testrig.pmpuiv2.testcase.AuthPartnerWithoutCertificateTest"/>
             <class name="io.mosip.testrig.pmpuiv2.testcase.PartnerDetailsTest"/>
             <class name="io.mosip.testrig.pmpuiv2.testcase.AuthPolicyTest"/>
             <class name="io.mosip.testrig.pmpuiv2.testcase.PartnerPolicyMappingTest"/>
-            
         </classes>
     </test>
 
     <listeners>
         <listener class-name="io.mosip.testrig.pmpuiv2.utility.EmailableReport"/>
+        <listener class-name="io.mosip.testrig.pmpuiv2.utility.KnownIssues"/>
     </listeners>
 
 </suite>

@@ -17,6 +17,7 @@ import io.mosip.testrig.pmpuiv2.pages.PolicyGroupPage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
+@Test(dependsOnGroups = { "PolicyGroupTest" }, groups = { "AuthPolicyTest" })
 public class AuthPolicyTest extends BaseClass {
 
 	private BasePage basePage;
@@ -172,7 +173,7 @@ public class AuthPolicyTest extends BaseClass {
 		authPolicyPage.clickOnGoBackButton();
 	}
 
-	@Test(priority = 2, description = "Upload Invalid auth Policy Data")
+	@Test(priority = 2, description = "Upload Invalid auth Policy Data", dependsOnMethods = "createAuthPolicy")
 	public void uploadInvalidAuthPolicyData() {
 
 		dashboardPage = new DashboardPage(driver);
@@ -234,7 +235,7 @@ public class AuthPolicyTest extends BaseClass {
 		authPolicyPage.clickOnHomeButton();
 	}
 
-	@Test(priority = 3, description = "Auth Policy Tabular View")
+	@Test(priority = 3, description = "Auth Policy Tabular View", dependsOnMethods = "uploadInvalidAuthPolicyData")
 	public void authPolicyTabularView() {
 
 		dashboardPage = new DashboardPage(driver);
@@ -336,7 +337,7 @@ public class AuthPolicyTest extends BaseClass {
 		assertTrue(authPolicyPage.isItemPerPage16Displayed(), GlobalConstants.isItemPerPage16Displayed);
 	}
 
-	@Test(priority = 4, description = "Auth Policy Details View")
+	@Test(priority = 4, description = "Auth Policy Details View", dependsOnMethods = "authPolicyTabularView")
 	public void authPolicyDetailsView() {
 
 		dashboardPage = new DashboardPage(driver);
@@ -396,7 +397,7 @@ public class AuthPolicyTest extends BaseClass {
 		authPolicyPage.clickOnHomeButton();
 	}
 
-	@Test(priority = 5, description = "Edit Auth Policy")
+	@Test(priority = 5, description = "Edit Auth Policy", dependsOnMethods = "authPolicyDetailsView")
 	public void editAuthPolicy() {
 
 		dashboardPage = new DashboardPage(driver);
@@ -544,7 +545,7 @@ public class AuthPolicyTest extends BaseClass {
 
 	}
 
-	@Test(priority = 6, description = "Publish Auth Policy")
+	@Test(priority = 6, description = "Publish Auth Policy", dependsOnMethods = "editAuthPolicy")
 	public void publishAuthPolicy() {
 
 		dashboardPage = new DashboardPage(driver);
@@ -611,7 +612,7 @@ public class AuthPolicyTest extends BaseClass {
 
 	}
 
-	@Test(priority = 7, description = "Clone Auth Policy")
+	@Test(priority = 7, description = "Clone Auth Policy", dependsOnMethods = "publishAuthPolicy")
 	public void cloneAuthPolicy() {
 
 		dashboardPage = new DashboardPage(driver);
@@ -752,7 +753,7 @@ public class AuthPolicyTest extends BaseClass {
 
 	}
 
-	@Test(priority = 8, description = "Deactivate Auth Policy")
+	@Test(priority = 8, description = "Deactivate Auth Policy", dependsOnMethods = "cloneAuthPolicy")
 	public void deactivateAuthPolicy() {
 
 		dashboardPage = new DashboardPage(driver);
@@ -821,7 +822,7 @@ public class AuthPolicyTest extends BaseClass {
 		policiesPage.clickOnDataLostProcceedButton();
 
 		dashboardPage.clickOnPoliciesTitle();
-		policiesPage.clickOnRequestPolicyButtonOfTabularPage();
+		policiesPage.clickOnRequestPolicyButton();
 		policiesPage.selectPartnerIdDropdown();
 		policiesPage.selectInvalidPolicyNameDropdown(GlobalConstants.DEACTIVATE_AUTH2);
 		assertTrue(policiesPage.isNoDataAvailableTextDisplayed(), GlobalConstants.isNoDataAvailableTextDisplayed);
@@ -919,7 +920,7 @@ public class AuthPolicyTest extends BaseClass {
 				GlobalConstants.isPolicyNameExistErrorMessageDisplayed);
 	}
 
-	@Test(priority = 9, description = "Deactivate Policy Group")
+	@Test(priority = 9, description = "Deactivate Policy Group", dependsOnMethods = "deactivateAuthPolicy")
 	public void deactivatePolicyGroup() {
 		dashboardPage = new DashboardPage(driver);
 		policiesPage = new PoliciesPage(driver);

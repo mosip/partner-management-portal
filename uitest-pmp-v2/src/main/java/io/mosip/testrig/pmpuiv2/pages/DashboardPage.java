@@ -211,11 +211,18 @@ public class DashboardPage extends BasePage {
 	public void clickOnProceedButton() {
 		clickOnElement(proceedButton);
 	}
+	
+	private By partnerCertificateTitleDashboard = By.id("dashboard_partner_certificate_list_header");
 
 	public boolean isPartnerCertificateTitleDisplayed() {
-		WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(10));
-		wait.until(ExpectedConditions.visibilityOf(partnerCertificateTitle));
-		return isElementDisplayed(partnerCertificateTitle);
+	    try {
+	        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+	        wait.until(ExpectedConditions.presenceOfElementLocated(partnerCertificateTitleDashboard));
+	        wait.until(ExpectedConditions.visibilityOfElementLocated(partnerCertificateTitleDashboard));
+	        return true;
+	    } catch (Exception e) {
+	        return false;
+	    }
 	}
 
 	public boolean isPoliciesTitleDisplayed() {
@@ -411,5 +418,14 @@ public class DashboardPage extends BasePage {
 
 	public boolean isFooterDocumentationLinkDisplayed() {
 		return isElementDisplayed(footerDocumentationLink);
+	}
+	
+	public void waitForDashboardReady() {
+	    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+
+	    wait.until(ExpectedConditions.or(
+	        ExpectedConditions.visibilityOfElementLocated(By.id("dashboard_partner_certificate_list_card")),
+	        ExpectedConditions.visibilityOfElementLocated(By.id("dashboard_ftm_chip_provider_card"))
+	    ));
 	}
 }

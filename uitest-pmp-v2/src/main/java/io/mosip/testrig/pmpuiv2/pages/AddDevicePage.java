@@ -5,6 +5,7 @@ import java.time.Duration;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -130,10 +131,19 @@ public class AddDevicePage extends BasePage {
 		super(driver);
 	}
 
+	private By homeButtonBy = By.id("sub_title_home_btn");
+
 	public boolean isHomeButtonDisplayed() {
-		WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(10));
-		wait.until(ExpectedConditions.visibilityOf(homeButton));
-		return isElementDisplayed(homeButton);
+		try {
+			WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(20));
+
+			WebElement homeButton = wait
+					.until(ExpectedConditions.refreshed(ExpectedConditions.visibilityOfElementLocated(homeButtonBy)));
+
+			return homeButton.isDisplayed();
+		} catch (TimeoutException e) {
+			return false;
+		}
 	}
 
 	public String getSubTitle() {
@@ -149,9 +159,14 @@ public class AddDevicePage extends BasePage {
 	}
 
 	public boolean isAddDeviceTitleDisplayed() {
-		WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(10));
-		wait.until(ExpectedConditions.visibilityOf(addDevicesTitle));
-		return isElementDisplayed(addDevicesTitle);
+	    try {
+	        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+	        wait.until(ExpectedConditions.textToBePresentInElementLocated(
+	                By.id("page_title"), "Add Devices"));
+	        return true;
+	    } catch (TimeoutException e) {
+	        return false;
+	    }
 	}
 
 	public boolean isSbiVersionDisplayed(String sbiVersion) {

@@ -19,6 +19,7 @@ import io.mosip.testrig.pmpuiv2.pages.ViewSbiDetailsPage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
+@Test(dependsOnGroups = { "DeviceCreationTest" }, groups = { "SbiDeviceProviderTest" })
 public class SbiDeviceProviderTest extends BaseClass {
 	private DeviceProviderPage deviceProviderPage;
 	private DashboardPage dashboardpage;
@@ -105,7 +106,7 @@ public class SbiDeviceProviderTest extends BaseClass {
 
 	}
 
-	@Test(priority = 2, description = "Verify SBI Devices with Pending for approval status")
+	@Test(priority = 2, description = "Verify SBI Devices with Pending for approval status", dependsOnMethods = "verifySbiPage")
 	public void verifySbiWithPendingForApprovalStatus() {
 		dashboardpage = new DashboardPage(driver);
 		listOfSbiPage = new ListOfSbiPage(driver);
@@ -131,7 +132,7 @@ public class SbiDeviceProviderTest extends BaseClass {
 
 	}
 
-	@Test(priority = 3, description = "Creating SBI Devices which are already exists")
+	@Test(priority = 3, description = "Creating SBI Devices which are already exists", dependsOnMethods = "verifySbiWithPendingForApprovalStatus")
 	public void createSbiDeviceWhichExist() {
 
 		dashboardpage = new DashboardPage(driver);
@@ -151,7 +152,7 @@ public class SbiDeviceProviderTest extends BaseClass {
 				GlobalConstants.isSbiExistsErrorMessageDisplayed);
 	}
 
-	@Test(priority = 4, description = "Verifying the SBI and Devices after deactivating")
+	@Test(priority = 4, description = "Verifying the SBI and Devices after deactivating", dependsOnMethods = "createSbiDeviceWhichExist")
 	public void verifySbiAndDeviceAfterDeactivate() {
 
 		dashboardpage = new DashboardPage(driver);
@@ -203,7 +204,7 @@ public class SbiDeviceProviderTest extends BaseClass {
 
 	}
 
-	@Test(priority = 5, description = "Verify linked devices of SBI list")
+	@Test(priority = 5, description = "Verify linked devices of SBI list", dependsOnMethods = "verifySbiAndDeviceAfterDeactivate")
 	public void verifyLinkedDevicesOfSbiList() {
 
 		dashboardpage = new DashboardPage(driver);
@@ -234,7 +235,7 @@ public class SbiDeviceProviderTest extends BaseClass {
 
 	}
 
-	@Test(priority = 6, description = "Verify SBI details page as admin")
+	@Test(priority = 6, description = "Verify SBI details page as admin", dependsOnMethods = "verifyLinkedDevicesOfSbiList")
 	public void verifySbiDetailsPageAsAdmin() {
 		dashboardpage = new DashboardPage(driver);
 		listOfSbiPage = new ListOfSbiPage(driver);
@@ -262,7 +263,7 @@ public class SbiDeviceProviderTest extends BaseClass {
 
 	}
 
-	@Test(priority = 7, description = "Verify Tabular View Of Devices page as admin")
+	@Test(priority = 7, description = "Verify Tabular View Of Devices page as admin", dependsOnMethods = "verifySbiDetailsPageAsAdmin")
 	public void verifyTabularViewOfDevicesPageAsAdmin() {
 		dashboardpage = new DashboardPage(driver);
 		listOfSbiPage = new ListOfSbiPage(driver);
@@ -318,7 +319,7 @@ public class SbiDeviceProviderTest extends BaseClass {
 		listOfDevicesPage.clickOnDevice(GlobalConstants.IRIS, GlobalConstants.SINGLE,
 				GlobalConstants.AUTOMATION_LOWERCASE, GlobalConstants.AUTOMATION_LOWERCASE,
 				GlobalConstants.DEACTIVATED);
-		
+
 		listOfDevicesPage.clickOnFilterButton();
 		assertTrue(listOfDevicesPage.isFilterButtonDisabled(), GlobalConstants.isFilterButtonDisabled);
 		assertTrue(listOfDevicesPage.isResetFilterDisplayed(), GlobalConstants.isResetFilterDisplayed);
@@ -357,7 +358,7 @@ public class SbiDeviceProviderTest extends BaseClass {
 
 	}
 
-	@Test(priority = 8, description = "Verify View Of Devices Page As Admin")
+	@Test(priority = 8, description = "Verify View Of Devices Page As Admin", dependsOnMethods = "verifyTabularViewOfDevicesPageAsAdmin")
 	public void verifyViewOfDevicesPageAsAdmin() {
 		dashboardpage = new DashboardPage(driver);
 		listOfSbiPage = new ListOfSbiPage(driver);
@@ -415,7 +416,7 @@ public class SbiDeviceProviderTest extends BaseClass {
 		assertTrue(listOfSbiPage.isSbiCreationDateTextDisplayed(), GlobalConstants.isSbiDetailsAreDisplayed);
 		assertTrue(listOfSbiPage.isSbiExpirationDateTextDisplayed(), GlobalConstants.isSbiDetailsAreDisplayed);
 		assertTrue(listOfSbiPage.isSubmittedOnDateDisplayed(), GlobalConstants.isSbiDetailsAreDisplayed);
-		if (GlobalConstants.ALPHANUMERIC.equals(sbiVersion))  {
+		if (GlobalConstants.ALPHANUMERIC.equals(sbiVersion)) {
 			assertTrue(listOfSbiPage.isPreviousMonthSbiCreationDateDisplayed(),
 					GlobalConstants.isSbiDetailsAreDisplayed);
 		} else {

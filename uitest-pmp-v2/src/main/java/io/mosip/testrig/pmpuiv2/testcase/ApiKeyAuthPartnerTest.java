@@ -14,6 +14,7 @@ import io.mosip.testrig.pmpuiv2.pages.OidcClientPage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
+@Test(dependsOnGroups = {"PolicyCreationForAuthPartner"}, groups = {"ApiKeyAuthPartnerTest"})
 public class ApiKeyAuthPartnerTest extends BaseClass {
 	private BasePage basePage;
 	private DashboardPage dashboardPage;
@@ -213,7 +214,7 @@ public class ApiKeyAuthPartnerTest extends BaseClass {
 		apiKeyPage.clickOnBreadcomb();
 	}
 
-	@Test(priority = 2, description = "ApiKey Deactivate")
+	@Test(priority = 2, description = "ApiKey Deactivate", dependsOnMethods = "createApiKey")
 	public void apiKeyDeactivate() {
 
 		dashboardPage = new DashboardPage(driver);
@@ -277,7 +278,7 @@ public class ApiKeyAuthPartnerTest extends BaseClass {
 
 	}
 
-	@Test(priority = 3, description = "API Key Tabular View")
+	@Test(priority = 3, description = "API Key Tabular View", dependsOnMethods = "apiKeyDeactivate")
 	public void apiKeyTabularView() {
 		dashboardPage = new DashboardPage(driver);
 		authPolicyPage = new AuthPolicyPage(driver);
@@ -428,7 +429,7 @@ public class ApiKeyAuthPartnerTest extends BaseClass {
 
 	}
 
-	@Test(priority = 4, description = "Api Key View Details")
+	@Test(priority = 4, description = "Api Key View Details", dependsOnMethods = "apiKeyTabularView")
 	public void apiKeyViewDetails() {
 
 		dashboardPage = new DashboardPage(driver);

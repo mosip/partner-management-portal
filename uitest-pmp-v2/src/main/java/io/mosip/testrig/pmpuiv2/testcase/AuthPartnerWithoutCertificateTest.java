@@ -18,6 +18,7 @@ import io.mosip.testrig.pmpuiv2.pages.RegisterPage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
+@Test(dependsOnGroups = {"CertificateTrustStoreTest"}, groups = {"AuthPartnerWithoutCertificateTest"})
 public class AuthPartnerWithoutCertificateTest extends BaseClass {
 
 	private DashboardPage dashboardPage;
@@ -78,7 +79,7 @@ public class AuthPartnerWithoutCertificateTest extends BaseClass {
 
 	}
 
-	@Test(priority = 2, description = "Create oidc client with out uploading certficates")
+	@Test(priority = 2, description = "Create oidc client with out uploading certficates", dependsOnMethods = "requestNewPolicyWithoutUploadingCertificates")
 	public void createOidcClientWithoutUploadingCertificates() {
 
 		dashboardPage = new DashboardPage(driver);
@@ -127,7 +128,7 @@ public class AuthPartnerWithoutCertificateTest extends BaseClass {
 
 	}
 
-	@Test(priority = 3, description = " Create apikey without uploading certificates")
+	@Test(priority = 3, description = " Create apikey without uploading certificates", dependsOnMethods = "createOidcClientWithoutUploadingCertificates")
 	public void createApiKeyWithoutUploadingCertificates() {
 		dashboardPage = new DashboardPage(driver);
 		apiKeyPage = new ApiKeyPage(driver);

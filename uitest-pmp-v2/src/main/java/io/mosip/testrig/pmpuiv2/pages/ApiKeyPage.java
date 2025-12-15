@@ -1,13 +1,18 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
 
 public class ApiKeyPage extends BasePage {
@@ -445,7 +450,14 @@ public class ApiKeyPage extends BasePage {
 	public void selectPolicyNameDropdown(String value) {
 		clickOnElement(policyNameDropdown);
 		enter(generatePolicyNameSearchInputBox, value);
-		clickOnElement(generatePolicyNameOption1);
+		String xpath = "//button[.//span[normalize-space(text())='" + value + "']]";
+		try {
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(8));
+			WebElement policyNameOption = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
+			clickOnElement(policyNameOption);
+		} catch (TimeoutException e) {
+			logger.warn("Policy name not found: " + value);
+		}
 	}
 
 	public void enterDeactivePolicyNameInDropdown(String value) {

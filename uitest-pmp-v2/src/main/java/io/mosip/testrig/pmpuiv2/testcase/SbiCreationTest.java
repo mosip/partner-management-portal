@@ -14,7 +14,8 @@ import io.mosip.testrig.pmpuiv2.pages.LoginPage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
-public class DeviceProviderTest extends BaseClass {
+@Test(dependsOnGroups = { "DeactivatePartnerCreation" }, groups = { "SbiCreationTest" })
+public class SbiCreationTest extends BaseClass {
 
 	private DeviceProviderPage deviceProviderPage;
 	private DashboardPage dashboardpage;
@@ -228,7 +229,7 @@ public class DeviceProviderTest extends BaseClass {
 
 	}
 
-	@Test(priority = 2, description = "Approving and Rejecting the SBI's")
+	@Test(priority = 2, description = "Approving and Rejecting the SBI's", dependsOnMethods = "createSbiDevice")
 	public void ApproveAndRejectSbi() {
 
 		dashboardpage = new DashboardPage(driver);
