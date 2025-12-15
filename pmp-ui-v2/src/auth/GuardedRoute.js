@@ -42,7 +42,9 @@ const GuardedRoute = ({ children }) => {
           //in the Axios Http Interceptor
           const userProfile = getUserProfile();
           const isDashboard = initialPathnameRef.current.split('/').includes('dashboard') ? true : false;
-          if (userProfile && !isDashboard) {
+          const isAdmin = userProfile?.roles?.includes("PARTNER_ADMIN") || false;
+          const isPolicyManager = userProfile?.roles?.includes("POLICYMANAGER") || false;
+          if (userProfile && !isDashboard && !isAdmin && !isPolicyManager) {
             const verifyEmailRequest = createRequest({
               "emailId": userProfile.email
             });
