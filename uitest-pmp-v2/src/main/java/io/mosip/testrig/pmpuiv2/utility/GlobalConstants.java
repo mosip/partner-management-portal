@@ -27,7 +27,7 @@ public class GlobalConstants {
 	public static final String FTM_PARTNER_ID = "pmpui-ftm";
 	public static final String MISP_PARTNER = "MISP Partner";
 	public static final String MISP_PARTNER_USER = "pmpui-misp";
-	public static final String DEACTIVATE_PARTNER_ID = "pmpui-deactivate";
+	public static final String PARTNERDETAILS_USER_ID = "pmpui-deactivate";
 	public static final String DEVICE_PROVIDER_TITLE = "Device Provider Services";
 	public static final String RELOAD_MESSAGE = "Changes you made may not be saved.";
 	public static final String INITIAL_SBI_VERSION = "Enter version of SBI";
@@ -463,8 +463,6 @@ public class GlobalConstants {
 	public static final String isOidcClientNameAscIcon = "Verify if oidc client name asc icon displayed";
 	public static final String isApiKeyDeactivationInfoTextDisplayed = "Verify if api key deactivate info text displayed";
 	public static final String isApiKeyDeactivateConfirmationTextDisplayed = "Verify if api key deactivate confirmation text displayed";
-	public static final String isApiKeyNameDescIcon = "Verify if api key name decending icon displayed";
-	public static final String isApiKeyNameAscIcon = "Verify if api key name Ascending icon displayed";
 	public static final String isDeactivatedApiKeyGreyColored = "Verify if deactivated api key grey colored";
 	public static final String isDeactivatedApiKeyDisabled = "Verify if deactivated api key is disabled";
 	public static final String isApiKeyStatusDeactivated = "Verify if api key status deactivated displayed";

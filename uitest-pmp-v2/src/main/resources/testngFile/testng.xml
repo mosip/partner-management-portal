@@ -4,7 +4,7 @@
 <!-- Suite: preserve order; tests decide their own parallelism -->
 <suite name="PMP uiv2 UI TestRig" preserve-order="true" parallel="false">
 
-    <!-- STEP 1: must run alone (serial) -->
+    <!-- STEP 1: runs test classes in parallel with 4 threads -->
     <test name="PartnerManagementService" preserve-order="false" parallel="classes" thread-count="4">
         <classes>
             <class name="io.mosip.testrig.pmpuiv2.testcase.PartnerAdminCreation"/>

@@ -80,7 +80,7 @@ public class PartnerDetailsTest extends BaseClass {
 		partnerAdmin.clickOnFilterResetButton();
 
 		partnerAdmin.clickOnFilterButton();
-		partnerAdmin.enterPartnerIdInFilter(GlobalConstants.DEACTIVATE_PARTNER_ID);
+		partnerAdmin.enterPartnerIdInFilter(GlobalConstants.PARTNERDETAILS_USER_ID);
 		partnerAdmin.clickOnStatusFilter();
 		partnerAdmin.clickActivatedButton();
 		partnerAdmin.clickOnApplyFiltersBtn();
@@ -107,6 +107,7 @@ public class PartnerDetailsTest extends BaseClass {
 		assertTrue(partnerAdmin.isCertificateUploadsStatusAscIconDisplayed(),
 				GlobalConstants.isCertificateUploadsStatusAscIconDisplayed);
 
+		//Re-enable deactivated partner verification once stability issues are resolved
 //		partnerAdmin.clickOnFilterButton();
 //		partnerAdmin.clickOnStatusFilter();
 //		partnerAdmin.clickOnDeActivatedStatusInFilters();
@@ -116,7 +117,7 @@ public class PartnerDetailsTest extends BaseClass {
 //		assertTrue(partnerAdmin.isViewButtonsDisplayed(), GlobalConstants.isViewButtonsDisplayed);
 
 		partnerAdmin.clickOnFilterButton();
-		partnerAdmin.enterPartnerIdInFilter(GlobalConstants.DEACTIVATE_PARTNER_ID);
+		partnerAdmin.enterPartnerIdInFilter(GlobalConstants.PARTNERDETAILS_USER_ID);
 		partnerAdmin.enterInvalidOrganisationNameFilter(GlobalConstants.INVALID_DATA);
 		partnerAdmin.enterInvalidPolicyGroupFilter(GlobalConstants.INVALID_DATA);
 		partnerAdmin.enterInvalidEmailFilter(GlobalConstants.INVALID_DATA);

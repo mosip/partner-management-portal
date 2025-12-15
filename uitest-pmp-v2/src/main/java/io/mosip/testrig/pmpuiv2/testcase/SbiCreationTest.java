@@ -344,7 +344,7 @@ public class SbiCreationTest extends BaseClass {
 		deviceProviderPage.clickOnPartnerOption();
 		assertEquals(deviceProviderPage.getPartnerType(), GlobalConstants.DEVICE_PROVIDER);
 		deviceProviderPage.enterSbiVersion(sbiVersion);
-		deviceProviderPage.enterSbiBinaryHash(sbiVersion);
+		deviceProviderPage.enterSbiBinaryHash(sbiBinaryHash);
 		assertTrue(deviceProviderPage.isSubmitButtonEnabled(), GlobalConstants.isSubmitButtonEnabled);
 	}
 
@@ -352,7 +352,7 @@ public class SbiCreationTest extends BaseClass {
 		deviceProviderPage.clickOnAddSbiPartnerIdBox();
 		deviceProviderPage.clickOnPartnerOption();
 		deviceProviderPage.enterSbiVersion(sbiVersion);
-		deviceProviderPage.enterSbiBinaryHash(sbiVersion);
+		deviceProviderPage.enterSbiBinaryHash(sbiBinaryHash);
 	}
 
 	private void fillSbiDetailsDateManually(String sbiVersion, String sbiBinaryHash) {
@@ -360,7 +360,7 @@ public class SbiCreationTest extends BaseClass {
 		deviceProviderPage.clickOnAddSbiPartnerIdBox();
 		deviceProviderPage.clickOnPartnerOption();
 		deviceProviderPage.enterSbiVersion(sbiVersion);
-		deviceProviderPage.enterSbiBinaryHash(sbiVersion);
+		deviceProviderPage.enterSbiBinaryHash(sbiBinaryHash);
 	}
 
 	private void verifyCreatedSbi(String sbiVersion) {
