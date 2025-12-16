@@ -1,6 +1,6 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
-import java.util.NoSuchElementException;
+import org.openqa.selenium.NoSuchElementException;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
