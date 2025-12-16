@@ -1,7 +1,9 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
 import java.time.Duration;
+import java.util.NoSuchElementException;
 
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -510,6 +512,8 @@ public class DatasharePolicyPage extends BasePage {
 		super(driver);
 	}
 
+	private static final Logger logger = Logger.getLogger(DatasharePolicyPage.class);
+
 	public boolean isDataSharePolicyCreateButtonAvailable() {
 		return isElementEnabled(createDatasharePolicyButton);
 	}
@@ -593,7 +597,7 @@ public class DatasharePolicyPage extends BasePage {
 	}
 
 	public void enterPolicyName(String val) {
-	    enter(policyNameBox, val);
+		enter(policyNameBox, val);
 	}
 
 	public void enterpolicyDescription(String val) {
@@ -804,13 +808,12 @@ public class DatasharePolicyPage extends BasePage {
 	public void selectPolicyGroupDropdown(String value) {
 		clickOnElement(policyGroupDropdown);
 		enter(policyGroupDropdownSearchInput, value);
-		String xpath = "//span[contains(@class,'font-semibold') and contains(@class,'text-dark-blue') and normalize-space(text())='"
-				+ value + "']";
+
 		try {
-			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(8));
-			WebElement policyGroupOption = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
-			clickOnElement(policyGroupOption);
-		} catch (TimeoutException e) {
+			WebElement policyGroupValue = driver.findElement(By.xpath("//span[contains(@class,'font-semibold') "
+					+ "and contains(@class,'text-dark-blue') " + "and normalize-space(text())='" + value + "']"));
+			clickOnElement(policyGroupValue);
+		} catch (NoSuchElementException e) {
 			logger.warn("Policy group not found: " + value);
 		}
 	}

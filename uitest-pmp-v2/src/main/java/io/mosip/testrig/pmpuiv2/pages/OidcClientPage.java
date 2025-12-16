@@ -1,7 +1,9 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
 import java.time.Duration;
+import java.util.NoSuchElementException;
 
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -558,6 +560,8 @@ public class OidcClientPage extends BasePage {
 		super(driver);
 	}
 
+	private static final Logger logger = Logger.getLogger(OidcClientPage.class);
+
 	public boolean isCreateOidcClientDisplayed() {
 		return isElementDisplayed(createOidcClient);
 	}
@@ -578,21 +582,19 @@ public class OidcClientPage extends BasePage {
 	public boolean isPolicyNameDropdownDisplayed() {
 		return isElementDisplayed(selectPolicyNameForOidc);
 	}
-	
-	public void selectPolicyNameDropdown(String value) {
-	    clickOnElement(selectPolicyNameForOidc);
-	    enter(createOidcPolicyNameSearchInput, value);
-	    String xpath = "//button[starts-with(@id,'create_oidc_policy_name_option') and .//span[normalize-space(text())='" + value + "']]";
-	    try {
-	        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(8));
-	        WebElement policyNameOption =
-	                wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
-	        clickOnElement(policyNameOption);
-	    } catch (TimeoutException e) {
-	        logger.warn("Policy name not found: " + value);
-	    }
-	}
 
+	public void selectPolicyNameDropdown(String value) {
+		clickOnElement(selectPolicyNameForOidc);
+		enter(createOidcPolicyNameSearchInput, value);
+		try {
+			WebElement policyNameOption = driver
+					.findElement(By.xpath("//button[starts-with(@id,'create_oidc_policy_name_option') "
+							+ "and .//span[normalize-space(text())='" + value + "']]"));
+			clickOnElement(policyNameOption);
+		} catch (NoSuchElementException e) {
+			logger.warn("Policy name not found: " + value);
+		}
+	}
 
 	public void enterDeactivePolicyNameInDropdown(String policyNameValue) {
 		clickOnElement(selectPolicyNameForOidc);

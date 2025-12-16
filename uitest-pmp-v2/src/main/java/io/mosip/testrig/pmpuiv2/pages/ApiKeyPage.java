@@ -4,14 +4,13 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.NoSuchElementException;
 
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
 
@@ -425,6 +424,7 @@ public class ApiKeyPage extends BasePage {
 	public ApiKeyPage(WebDriver driver) {
 		super(driver);
 	}
+	private static final Logger logger = Logger.getLogger(ApiKeyPage.class);
 
 	public void enterNameOfApiKeyTextBox(String apiKeyTextBoxValue) {
 		enter(enterNameOfApiKeyTextBox, apiKeyTextBoxValue);
@@ -450,12 +450,11 @@ public class ApiKeyPage extends BasePage {
 	public void selectPolicyNameDropdown(String value) {
 		clickOnElement(policyNameDropdown);
 		enter(generatePolicyNameSearchInputBox, value);
-		String xpath = "//button[.//span[normalize-space(text())='" + value + "']]";
 		try {
-			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(8));
-			WebElement policyNameOption = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
+			WebElement policyNameOption = driver
+					.findElement(By.xpath("//button[.//span[normalize-space(text())='" + value + "']]"));
 			clickOnElement(policyNameOption);
-		} catch (TimeoutException e) {
+		} catch (NoSuchElementException e) {
 			logger.warn("Policy name not found: " + value);
 		}
 	}

@@ -134,16 +134,7 @@ public class AddDevicePage extends BasePage {
 	private By homeButtonBy = By.id("sub_title_home_btn");
 
 	public boolean isHomeButtonDisplayed() {
-		try {
-			WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(20));
-
-			WebElement homeButton = wait
-					.until(ExpectedConditions.refreshed(ExpectedConditions.visibilityOfElementLocated(homeButtonBy)));
-
-			return homeButton.isDisplayed();
-		} catch (TimeoutException e) {
-			return false;
-		}
+		return isDisplayed(homeButtonBy);
 	}
 
 	public String getSubTitle() {
@@ -158,15 +149,10 @@ public class AddDevicePage extends BasePage {
 		clickOnElement(addDeviceBackToSbiList);
 	}
 
+	private By pageTitle = By.id("page_title");
+
 	public boolean isAddDeviceTitleDisplayed() {
-	    try {
-	        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-	        wait.until(ExpectedConditions.textToBePresentInElementLocated(
-	                By.id("page_title"), "Add Devices"));
-	        return true;
-	    } catch (TimeoutException e) {
-	        return false;
-	    }
+		return isTextPresent(pageTitle, "Add Devices");
 	}
 
 	public boolean isSbiVersionDisplayed(String sbiVersion) {

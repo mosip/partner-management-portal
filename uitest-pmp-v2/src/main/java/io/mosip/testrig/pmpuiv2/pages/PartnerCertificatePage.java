@@ -585,14 +585,7 @@ public class PartnerCertificatePage extends BasePage {
 	private By dashboardFtmChipProviderCardDashboard = By.id("dashboard_ftm_chip_provider_card");
 
 	public boolean isDashboardFtmChipProviderCardDisplayed() {
-		try {
-			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-			WebElement el = wait
-					.until(ExpectedConditions.visibilityOfElementLocated(dashboardFtmChipProviderCardDashboard));
-			return el.isDisplayed();
-		} catch (TimeoutException e) {
-			return false;
-		}
+		return isDisplayed(dashboardFtmChipProviderCardDashboard);
 	}
 
 	public boolean isSuccessMessageForFtmCertDisplayed() {

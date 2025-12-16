@@ -211,18 +211,11 @@ public class DashboardPage extends BasePage {
 	public void clickOnProceedButton() {
 		clickOnElement(proceedButton);
 	}
-	
+
 	private By partnerCertificateTitleDashboard = By.id("dashboard_partner_certificate_list_header");
 
 	public boolean isPartnerCertificateTitleDisplayed() {
-	    try {
-	        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-	        wait.until(ExpectedConditions.presenceOfElementLocated(partnerCertificateTitleDashboard));
-	        wait.until(ExpectedConditions.visibilityOfElementLocated(partnerCertificateTitleDashboard));
-	        return true;
-	    } catch (Exception e) {
-	        return false;
-	    }
+		return isDisplayed(partnerCertificateTitleDashboard);
 	}
 
 	public boolean isPoliciesTitleDisplayed() {
@@ -420,12 +413,14 @@ public class DashboardPage extends BasePage {
 		return isElementDisplayed(footerDocumentationLink);
 	}
 	
-	public void waitForDashboardReady() {
-	    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+	private By partnerCertificateCard =
+	        By.id("dashboard_partner_certificate_list_card");
 
-	    wait.until(ExpectedConditions.or(
-	        ExpectedConditions.visibilityOfElementLocated(By.id("dashboard_partner_certificate_list_card")),
-	        ExpectedConditions.visibilityOfElementLocated(By.id("dashboard_ftm_chip_provider_card"))
-	    ));
+	private By ftmChipProviderCard =
+	        By.id("dashboard_ftm_chip_provider_card");
+
+	public void waitForDashboardReady() {
+	    waitUntilAnyElementVisible(partnerCertificateCard, ftmChipProviderCard);
 	}
+
 }

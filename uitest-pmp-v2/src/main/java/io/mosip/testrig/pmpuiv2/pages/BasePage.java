@@ -10,6 +10,7 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotInteractableException;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
@@ -19,6 +20,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Reporter;
 import org.apache.log4j.Logger;
 
+import io.mosip.testrig.pmpuiv2.driver.DriverManager;
 import io.mosip.testrig.pmpuiv2.kernel.util.ConfigManager;
 import io.mosip.testrig.pmpuiv2.utility.JsonUtil;
 import io.mosip.testrig.pmpuiv2.utility.LogUtil;
@@ -29,7 +31,7 @@ public class BasePage {
 
 	protected WebDriver driver;
 	public static String appendDate = getPreAppend() + getDateTime();
-	protected static final Logger logger = Logger.getLogger(BasePage.class);
+	private static final Logger logger = Logger.getLogger(BasePage.class);
 
 	public BasePage(WebDriver driver) {
 		this.driver = driver;
@@ -383,5 +385,53 @@ public class BasePage {
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript("arguments[0].scrollIntoView(true);", element);
 	}
+	
+	public boolean isDisplayed(By locator) {
+	    try {
+	        WebDriverWait wait = new WebDriverWait(
+	                DriverManager.getDriver(), Duration.ofSeconds(20));
+
+	        WebElement element = wait.until(
+	                ExpectedConditions.refreshed(
+	                        ExpectedConditions.visibilityOfElementLocated(locator)
+	                )
+	        );
+	        return element.isDisplayed();
+	    } catch (TimeoutException e) {
+	        return false;
+	    }
+	}
+	
+	public boolean isTextPresent(By locator, String expectedText) {
+	    try {
+	        WebDriverWait wait = new WebDriverWait(
+	                DriverManager.getDriver(), Duration.ofSeconds(20));
+	        return wait.until(
+	                ExpectedConditions.textToBePresentInElementLocated(locator, expectedText)
+	        );
+	    } catch (TimeoutException e) {
+	        return false;
+	    }
+	}
+	protected static final long DEFAULT_TIMEOUT_MS = 30_000;
+
+	protected void waitUntilAnyElementVisible(By first, By second) {
+	    long endTime = System.currentTimeMillis() + DEFAULT_TIMEOUT_MS;
+
+	    while (System.currentTimeMillis() < endTime) {
+	        if (isDisplayed(first) || isDisplayed(second)) {
+	            return;
+	        }
+	        try {
+	            Thread.sleep(300);
+	        } catch (InterruptedException e) {
+	            Thread.currentThread().interrupt();
+	            throw new RuntimeException("Thread interrupted while waiting for dashboard", e);
+	        }
+	    }
+	    throw new RuntimeException("Dashboard not ready");
+	}
+
+
 
 }
