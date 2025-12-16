@@ -93,7 +93,7 @@ public class SbiCreationTest extends BaseClass {
 		deviceProviderPage.enterPastDateOnExpiryDate();
 		deviceProviderPage.clickOnSubmit();
 		assertTrue(deviceProviderPage.isSameDateErrorMessageDisplayed(),
-				GlobalConstants.isPastDateErrorMessageDisplayed);
+				GlobalConstants.isSameDateErrorMessageDisplayed);
 		deviceProviderPage.clickOnClearForm();
 
 		fillSbiDetailsOnly(GlobalConstants.AUTOMATION, GlobalConstants.AUTOMATION);
