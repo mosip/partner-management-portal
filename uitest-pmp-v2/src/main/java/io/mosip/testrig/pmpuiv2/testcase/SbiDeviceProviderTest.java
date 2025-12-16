@@ -450,10 +450,10 @@ public class SbiDeviceProviderTest extends BaseClass {
 	}
 
 	private void verifySortingOfListOfDevicesInAdmin() {
-		BasePage basePage = new BasePage(driver);
+		basePage = new BasePage(driver);
 
 		assertTrue(listOfDevicesPage.isPartnerIdAscIconInAdminDisplayed(), GlobalConstants.isPartnerIdAscIconDisplayed);
-		assertTrue(listOfDevicesPage.isPartnerIdAscIconInAdminDisplayed(),
+		assertTrue(listOfDevicesPage.isPartnerIdDescIconInAdminDisplayed(),
 				GlobalConstants.isPartnerIdDescIconDisplayed);
 		assertTrue(listOfDevicesPage.isOrgNameAscIconInAdminDisplayed(), GlobalConstants.isOrgNameAscIconDisplayed);
 		assertTrue(listOfDevicesPage.isOrgNameDescIconInAdminDisplayed(), GlobalConstants.isOrgNameDescIconDisplayed);

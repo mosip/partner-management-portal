@@ -141,8 +141,6 @@ public class SbiCreationTest extends BaseClass {
 				GlobalConstants.isSbiExistsErrorMessageDisplayed);
 
 		deviceProviderPage.reload();
-//		assertEquals(deviceProviderPage.getAlertText(), GlobalConstants.RELOAD_MESSAGE);
-//		addDevicePage.cancelAlert();
 
 		deviceProviderPage.enterSbiVersion(GlobalConstants.SPECIAL_CHARACTERS);
 		assertTrue(deviceProviderPage.isSpecialCharacterErrorMessageDisplayed(),
