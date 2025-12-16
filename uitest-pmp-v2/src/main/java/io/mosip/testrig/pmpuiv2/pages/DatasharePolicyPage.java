@@ -1,16 +1,13 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
-import java.time.Duration;
 import java.util.NoSuchElementException;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+
 
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
 
@@ -815,6 +812,7 @@ public class DatasharePolicyPage extends BasePage {
 			clickOnElement(policyGroupValue);
 		} catch (NoSuchElementException e) {
 			logger.warn("Policy group not found: " + value);
+			throw new NoSuchElementException("Failed to select policy group: " + value + ". Element not found.", e);
 		}
 	}
 

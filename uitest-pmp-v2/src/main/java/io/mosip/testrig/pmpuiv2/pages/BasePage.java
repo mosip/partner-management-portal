@@ -385,53 +385,56 @@ public class BasePage {
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript("arguments[0].scrollIntoView(true);", element);
 	}
-	
-	public boolean isDisplayed(By locator) {
-	    try {
-	        WebDriverWait wait = new WebDriverWait(
-	                DriverManager.getDriver(), Duration.ofSeconds(20));
 
-	        WebElement element = wait.until(
-	                ExpectedConditions.refreshed(
-	                        ExpectedConditions.visibilityOfElementLocated(locator)
-	                )
-	        );
-	        return element.isDisplayed();
-	    } catch (TimeoutException e) {
-	        return false;
-	    }
+	public boolean isDisplayed(By locator) {
+		try {
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+
+			WebElement element = wait
+					.until(ExpectedConditions.refreshed(ExpectedConditions.visibilityOfElementLocated(locator)));
+			return element.isDisplayed();
+		} catch (TimeoutException e) {
+			return false;
+		}
 	}
-	
+
 	public boolean isTextPresent(By locator, String expectedText) {
-	    try {
-	        WebDriverWait wait = new WebDriverWait(
-	                DriverManager.getDriver(), Duration.ofSeconds(20));
-	        return wait.until(
-	                ExpectedConditions.textToBePresentInElementLocated(locator, expectedText)
-	        );
-	    } catch (TimeoutException e) {
-	        return false;
-	    }
+		try {
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+			return wait.until(ExpectedConditions.textToBePresentInElementLocated(locator, expectedText));
+		} catch (TimeoutException e) {
+			return false;
+		}
 	}
+
 	protected static final long DEFAULT_TIMEOUT_MS = 30_000;
+	protected static final long POLL_INTERVAL_MS = 300;
+	protected static final Duration QUICK_CHECK_TIMEOUT = Duration.ofMillis(500);
 
 	protected void waitUntilAnyElementVisible(By first, By second) {
-	    long endTime = System.currentTimeMillis() + DEFAULT_TIMEOUT_MS;
+		long endTime = System.currentTimeMillis() + DEFAULT_TIMEOUT_MS;
 
-	    while (System.currentTimeMillis() < endTime) {
-	        if (isDisplayed(first) || isDisplayed(second)) {
-	            return;
-	        }
-	        try {
-	            Thread.sleep(300);
-	        } catch (InterruptedException e) {
-	            Thread.currentThread().interrupt();
-	            throw new RuntimeException("Thread interrupted while waiting for dashboard", e);
-	        }
-	    }
-	    throw new RuntimeException("Dashboard not ready");
+		while (System.currentTimeMillis() < endTime) {
+			if (isDisplayedQuick(first) || isDisplayedQuick(second)) {
+				return;
+			}
+			try {
+				Thread.sleep(POLL_INTERVAL_MS);
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+				throw new RuntimeException("Thread interrupted while waiting for dashboard", e);
+			}
+		}
+		throw new RuntimeException("Dashboard not ready");
 	}
 
-
+	private boolean isDisplayedQuick(By locator) {
+		try {
+			WebDriverWait wait = new WebDriverWait(driver, QUICK_CHECK_TIMEOUT);
+			return wait.until(ExpectedConditions.visibilityOfElementLocated(locator)).isDisplayed();
+		} catch (TimeoutException e) {
+			return false;
+		}
+	}
 
 }

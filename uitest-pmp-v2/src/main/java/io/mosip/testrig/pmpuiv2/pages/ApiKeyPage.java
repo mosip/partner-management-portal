@@ -1,10 +1,9 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.NoSuchElementException;
+import org.openqa.selenium.NoSuchElementException;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
@@ -447,15 +446,17 @@ public class ApiKeyPage extends BasePage {
 		return isElementDisplayed(policyNameDropdown);
 	}
 
-	public void selectPolicyNameDropdown(String value) {
+	public boolean selectPolicyNameDropdown(String value) {
 		clickOnElement(policyNameDropdown);
 		enter(generatePolicyNameSearchInputBox, value);
 		try {
 			WebElement policyNameOption = driver
 					.findElement(By.xpath("//button[.//span[normalize-space(text())='" + value + "']]"));
 			clickOnElement(policyNameOption);
+			 return true;
 		} catch (NoSuchElementException e) {
 			logger.warn("Policy name not found: " + value);
+			 return false;
 		}
 	}
 

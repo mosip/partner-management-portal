@@ -1,16 +1,12 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
-import java.time.Duration;
-import java.util.NoSuchElementException;
+import org.openqa.selenium.NoSuchElementException;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
 
@@ -583,7 +579,7 @@ public class OidcClientPage extends BasePage {
 		return isElementDisplayed(selectPolicyNameForOidc);
 	}
 
-	public void selectPolicyNameDropdown(String value) {
+	public boolean selectPolicyNameDropdown(String value) {
 		clickOnElement(selectPolicyNameForOidc);
 		enter(createOidcPolicyNameSearchInput, value);
 		try {
@@ -591,8 +587,10 @@ public class OidcClientPage extends BasePage {
 					.findElement(By.xpath("//button[starts-with(@id,'create_oidc_policy_name_option') "
 							+ "and .//span[normalize-space(text())='" + value + "']]"));
 			clickOnElement(policyNameOption);
+			return true;
 		} catch (NoSuchElementException e) {
 			logger.warn("Policy name not found: " + value);
+			return false;
 		}
 	}
 
