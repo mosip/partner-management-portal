@@ -294,7 +294,7 @@ function MispLicenseList() {
                                                                 <tr>
                                                                     {tableHeaders.map((header, index) => {
                                                                         return (
-                                                                            <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[13%]">
+                                                                            <th key={index} className={`py-4 text-sm font-semibold text-[#6F6E6E] ${header.id === "status" ? 'w-[13%] min-w-28' : 'w-[13%]'}`}>
                                                                                 <div id={`${header.headerNameKey}_header`} className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
                                                                                     {t(header.headerNameKey)}
                                                                                     {(header.id !== "action") && (header.id !== "mispLicenseKey") && (
@@ -332,7 +332,7 @@ function MispLicenseList() {
                                                                                 </div>
                                                                             </td>
                                                                             <td className="px-2 cursor-default">
-                                                                                <div className="flex">
+                                                                                <div className="flex justify-center">
                                                                                     {license.status === "activated" ? 
                                                                                         <button className='cursor-pointer bg-transparent border-none p-0' id={'misp_license_show_copy_popup_btn' + (index + 1)} onClick={() => openLicenseKeyPopUp(license, index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => openLicenseKeyPopUp(license, index))}>
                                                                                             <img src={eyeIcon} alt="" />

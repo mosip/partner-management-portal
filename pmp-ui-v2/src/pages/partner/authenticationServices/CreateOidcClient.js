@@ -1151,7 +1151,16 @@ function CreateOidcClient() {
                                   </label>
                                   <Information infoKey={t('createOidcClient.forgotPasswordBannerTooltip')} id='forgot_password_banner_info' />
                                 </div>
-                                <label className={`relative inline-flex items-center cursor-pointer flex-shrink-0 ${isLoginLanguageRTL ? "" : "ml-7"}`}>
+                                <label 
+                                  className={`relative inline-flex items-center cursor-pointer flex-shrink-0 ${isLoginLanguageRTL ? "" : "ml-7"} focus-within:outline focus-within:outline-2 focus-within:outline-[#1447B2] focus-within:outline-offset-2 rounded`}
+                                  tabIndex="0"
+                                  onKeyDown={(e) => {
+                                    if ((e.key === 'Enter' || e.key === ' ') && additionalConfigRequired) {
+                                      e.preventDefault();
+                                      setForgotPasswordBanner(!forgotPasswordBanner);
+                                    }
+                                  }}
+                                >
                                   <input
                                     type="checkbox"
                                     checked={forgotPasswordBanner}
@@ -1175,7 +1184,16 @@ function CreateOidcClient() {
                                   </label>
                                   <Information infoKey={t('createOidcClient.signUpBannerTooltip')} id='signup_banner_info' />
                                 </div>
-                                <label className={`relative inline-flex items-center cursor-pointer flex-shrink-0 ${isLoginLanguageRTL ? "" : "ml-7"}`}>
+                                <label 
+                                  className={`relative inline-flex items-center cursor-pointer flex-shrink-0 ${isLoginLanguageRTL ? "" : "ml-7"} focus-within:outline focus-within:outline-2 focus-within:outline-[#1447B2] focus-within:outline-offset-2 rounded`}
+                                  tabIndex="0"
+                                  onKeyDown={(e) => {
+                                    if ((e.key === 'Enter' || e.key === ' ') && additionalConfigRequired) {
+                                      e.preventDefault();
+                                      setSignUpBanner(!signUpBanner);
+                                    }
+                                  }}
+                                >
                                   <input
                                     type="checkbox"
                                     checked={signUpBanner}

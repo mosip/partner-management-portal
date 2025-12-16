@@ -1269,7 +1269,16 @@ function EditOidcClient() {
                                                                             </label>
                                                                             <Information infoKey={t('createOidcClient.forgotPasswordBannerTooltip')} id='forgot_password_banner_info' />
                                                                         </div>
-                                                                        <label className="relative inline-flex items-center cursor-pointer flex-shrink-0">
+                                                                        <label 
+                                                                            className="relative inline-flex items-center cursor-pointer flex-shrink-0 focus-within:outline focus-within:outline-2 focus-within:outline-[#1447B2] focus-within:outline-offset-2 rounded"
+                                                                            tabIndex="0"
+                                                                            onKeyDown={(e) => {
+                                                                                if ((e.key === 'Enter' || e.key === ' ') && additionalConfigRequired) {
+                                                                                    e.preventDefault();
+                                                                                    setForgotPasswordBanner(!forgotPasswordBanner);
+                                                                                }
+                                                                            }}
+                                                                        >
                                                                             <input
                                                                                 type="checkbox"
                                                                                 checked={forgotPasswordBanner}
@@ -1293,7 +1302,16 @@ function EditOidcClient() {
                                                                             </label>
                                                                             <Information infoKey={t('createOidcClient.signUpBannerTooltip')} id='signup_banner_info' />
                                                                         </div>
-                                                                        <label className="relative inline-flex items-center cursor-pointer flex-shrink-0">
+                                                                        <label 
+                                                                            className="relative inline-flex items-center cursor-pointer flex-shrink-0 focus-within:outline focus-within:outline-2 focus-within:outline-[#1447B2] focus-within:outline-offset-2 rounded"
+                                                                            tabIndex="0"
+                                                                            onKeyDown={(e) => {
+                                                                                if ((e.key === 'Enter' || e.key === ' ') && additionalConfigRequired) {
+                                                                                    e.preventDefault();
+                                                                                    setSignUpBanner(!signUpBanner);
+                                                                                }
+                                                                            }}
+                                                                        >
                                                                             <input
                                                                                 type="checkbox"
                                                                                 checked={signUpBanner}
@@ -1524,7 +1542,7 @@ function EditOidcClient() {
                                         <div className="pb-3 pt-6 px-4 bg-snow-white mt-[1.5%] rounded-lg shadow-md">
                                             <div className="border bg-medium-gray" />
                                             <div className="flex flex-row px-[3%] py-6 justify-between">
-                                                <button id="oidc_edit_undo_changes_btn" onClick={() => undoChanges()} className="mr-2 w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold">{t('commons.undoChanges')}</button>
+                                                <button id="oidc_edit_undo_changes_btn" onClick={() => undoChanges()} className="mr-2 w-40 min-w-fit px-3 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold">{t('commons.undoChanges')}</button>
                                                 <div className="flex flex-row space-x-3 w-full md:w-auto justify-end">
                                                     <button id="oidc_edit_cancel_btn" onClick={() => clickOnCancel()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.cancel')}</button>
                                                     <button id="oidc_edit_submit_btn" disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>{t('requestPolicy.submit')}</button>

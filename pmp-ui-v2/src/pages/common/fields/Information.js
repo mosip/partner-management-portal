@@ -31,7 +31,7 @@ function Information({ infoKey, infoKey1, id }) {
                 {showTooltip && (
                     <div
                         className={`
-                        absolute z-20 p-4 
+                        absolute z-20 p-4 font-normal
                         w-[20vw] max-w-[300px] max-h-[20vh] overflow-y-auto
                         shadow-lg bg-white border border-gray-300 rounded
                         ${isLoginLanguageRTL ? 'right-6 max-800:-right-[800%]' : 'max-800:left-1/2  left-6'} mt-2
