@@ -106,8 +106,16 @@ function Dashboard() {
           setIsPolicyManager(true);
         }
 
+        // Don't do self registration if partner role is partner admin or policy manager
+        if (roles.includes('PARTNER_ADMIN') || roles.includes('POLICYMANAGER')) {
+          // Partner admins and policy managers are treated as verified
+          setIsEmailVerified(true);
+          setDataLoaded(true);
+          return;
+        }
+
         // Extract partnerType from roles if not present in userProfile
-        const partnerType = getPartnerType(userProfile);
+        const partnerType = await getPartnerType(userProfile);
 
         // Check if no valid partner type is found
         if (!partnerType) {
@@ -519,11 +527,11 @@ function Dashboard() {
     };
 
     async function init() {
-      if (!isPartnerAdmin && isEmailVerified) {
+      if (!isPartnerAdmin && !isPolicyManager && isEmailVerified) {
         fetchPartnerCertExpiryCount();
       }
 
-      if (!isPartnerAdmin && isEmailVerified && showFtmServices && configData.isCaSignedPartnerCertificateAvailable === 'true') {
+      if (!isPartnerAdmin && isEmailVerified && showFtmServices && configData && configData.isCaSignedPartnerCertificateAvailable === 'true') {
         fetchFtmCertificateExpiryCount();
       }
 
@@ -536,7 +544,7 @@ function Dashboard() {
       }
 
       if (isPartnerAdmin && isEmailVerified) {
-        if (configData.isRootIntermediateCertAvailable === 'true') {
+        if (configData && configData.isRootIntermediateCertAvailable === 'true') {
           fetchTrustCertExpiryCount('ROOT');
           fetchTrustCertExpiryCount('INTERMEDIATE');
         }
@@ -551,8 +559,10 @@ function Dashboard() {
       }
     }
 
-    init();
-  }, [isPartnerAdmin, isEmailVerified]);
+    if (configData !== null) {
+      init();
+    }
+  }, [isPartnerAdmin, isEmailVerified, configData]);
 
   const partnerCertificatesList = () => {
     navigate('/partnermanagement/certificates/partner-certificate')
@@ -765,7 +775,7 @@ function Dashboard() {
                     {t('dashboard.ftmChipProviderServicesDesc')}
                   </p>
                 </div>
-                {configData.isCaSignedPartnerCertificateAvailable && expiringFtmCertificateCount > 0 && (
+                {configData && configData.isCaSignedPartnerCertificateAvailable && expiringFtmCertificateCount > 0 && (
                   <CountWithHover
                     countLabel={expiringFtmCertificateCount}
                     descriptionKey={expiringFtmCertificateCount > 1 ? "dashboard.ftmChipCertExpiryCountDesc1" : "dashboard.ftmChipCertExpiryCountDesc2"}
@@ -789,7 +799,7 @@ function Dashboard() {
                       {t('dashboard.certificateTrustStoreDesc')}
                     </p>
                   </div>
-                  {configData.isRootIntermediateCertAvailable === 'true' && (rootCertExpiryCount > 0 || intermediateCertExpiryCount > 0) && (
+                  {configData && configData.isRootIntermediateCertAvailable === 'true' && (rootCertExpiryCount > 0 || intermediateCertExpiryCount > 0) && (
                     <CountWithHover
                       countLabel={
                         rootCertExpiryCount > 0 && intermediateCertExpiryCount > 0
