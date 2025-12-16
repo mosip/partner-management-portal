@@ -93,12 +93,12 @@ export const getPartnerType = (userProfile) => {
 
 export const getLanguageLabel = (languageCode, t) => {
     const languageMap = {
-        "eng": 'languages.english',
-        "hin": 'languages.hindi',
-        "ara": 'languages.arabic',
-        "fra": 'languages.french',
-        "tam": 'languages.tamil',
-        "kan": 'languages.kannada'
+        "eng": "English",
+        "hin": "हिन्दी",
+        "ara": "العربية",
+        "fra": "Français",
+        "tam": "தமிழ்",
+        "kan": "ಕನ್ನಡ"
     };
 
     if (languageCode) {
