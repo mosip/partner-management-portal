@@ -126,10 +126,14 @@ function ViewAdminFtmChipDetails() {
         }
     };
 
+    const styles = {
+        loadingDiv: "!py-[40%]"
+    }
+
     return (
         <div className={`w-full p-4 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm mb-[2%] ${isLoginLanguageRTL ? "mr-24 ml-1" : "ml-24 mr-1"} overflow-x-scroll`}>
             {!dataLoaded && (
-                <LoadingIcon />
+                <LoadingIcon styleSet={styles}/>
             )}
             {dataLoaded && (
                 <>

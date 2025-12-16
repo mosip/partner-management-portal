@@ -321,7 +321,7 @@ function OidcClientsList() {
                                                     <tr>
                                                         {tableHeaders.map((header, index) => {
                                                             return (
-                                                                <th key={index} className={`py-4 font-semibold text-sm whitespace-nowrap text-[#6F6E6E] w-[15%] ${header.id === "status" && 'w-[12%]'} ${(header.id === 'policyName' || header.id === 'policyGroupName') ? (isLoginLanguageRTL ? 'pr-0.5' : 'pl-0.5') : 'px-1.5'}`}>
+                                                                <th key={index} className={`py-4 px-2 font-semibold text-sm whitespace-nowrap text-[#6F6E6E] ${header.id === "status" ? 'w-[7%]' : 'w-[15%]'}`}>
                                                                     <div id={`${header.headerNameKey}_header`} className={`flex items-center gap-x-1 font-semibold  ${header.id === "oidcClientId" && 'justify-center'} ${header.id === "action" && 'justify-center'}`}>
                                                                         {t(header.headerNameKey)}
                                                                         {(header.id !== "action") && (header.id !== "oidcClientId") && (
@@ -347,8 +347,8 @@ function OidcClientsList() {
                                                             return (
                                                                 <tr id={'oidc_client_list_item' + (index + 1)} key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${client.status.toLowerCase() === "inactive" ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
                                                                     <td onClick={() => showViewOidcClientDetails(client)} className="px-2 mx-2">{client.partnerId}</td>
-                                                                    <td onClick={() => showViewOidcClientDetails(client)}>{client.policyGroupName}</td>
-                                                                    <td onClick={() => showViewOidcClientDetails(client)} className={`${isLoginLanguageRTL ? 'pr-1' : 'pl-1'}`}>{client.policyName}</td>
+                                                                    <td onClick={() => showViewOidcClientDetails(client)} className="px-2 mx-2">{client.policyGroupName}</td>
+                                                                    <td onClick={() => showViewOidcClientDetails(client)} className={`px-2 mx-2`}>{client.policyName}</td>
                                                                     <td onClick={() => showViewOidcClientDetails(client)} className="px-2 mx-2">{client.clientNameEng}</td>
                                                                     <td onClick={() => showViewOidcClientDetails(client)} className="px-2 mx-2">{formatDate(client.createdDateTime, 'date')}</td>
                                                                     <td onClick={() => showViewOidcClientDetails(client)} className="px-2 mx-2">

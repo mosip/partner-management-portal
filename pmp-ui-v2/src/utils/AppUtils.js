@@ -60,45 +60,67 @@ export const getPartnerTypeDescription = (partnerType, t) => {
     }
 }
 
-export const getPartnerType = (userProfile) => {
-    // Return partnerType if already present
-    if (userProfile.partnerType) {
-      return userProfile.partnerType;
+/**
+ * Fetches partner types from the backend
+ */
+export const fetchPartnerTypes = async () => {
+  try {
+    const request = createRequest({
+      "filters": [],
+      "pagination": { "pageFetch": 100, "pageStart": 0 },
+      "sort": []
+    });
+
+    const response = await HttpService.post(
+      getPartnerManagerUrl(`/partners/partnertype/search`, process.env.NODE_ENV),
+      request
+    );
+
+    if (response && response.data) {
+      const responseData = response.data;
+      if (responseData.response && responseData.response.data) {
+        const partnerTypeCodes = responseData.response.data
+          .map(item => item.code)
+          .filter(Boolean)
+          .map(code => code.toLowerCase());
+        return new Set(partnerTypeCodes);
+      }
     }
+    
+    console.error('Failed to fetch partner types from backend');
+    return null;
+  } catch (err) {
+    console.error('Error fetching partner types from backend:', err);
+    return null;
+  }
+};
+
+export const getPartnerType = async (userProfile) => {
   
-    // if partnertype is not present in userProfile then extract it from roles
-    // allowed partner types (same as roles)
-    const validPartnerTypes = new Set([
-      'AUTH_PARTNER',
-      'DEVICE_PROVIDER',
-      'FTM_PROVIDER',
-      'CREDENTIAL_PARTNER',
-      'ONLINE_VERIFICATION_PARTNER',
-      'ABIS_PARTNER',
-      'MISP_PARTNER',
-      'SDK_PARTNER',
-      'PRINT_PARTNER',
-      'INTERNAL_PARTNER',
-      'MANUAL_ADJUDICATION',
-    ]);
+    // Fetch partner types from backend
+    const validPartnerTypes = await fetchPartnerTypes();
+    
+    if (!validPartnerTypes) {
+      return null;
+    }
 
     const userRoles = (userProfile.roles ?? '')
         .split(',')                // turn "A,B,C" into ["A", "B", "C"]
         .map(role => role.trim())  // remove extra spaces from each role
         .filter(role => role);     // drop empty entries
 
-    // Return first role that is a valid partner type
-    return userRoles.find(role => validPartnerTypes.has(role)) ?? null;
+    // Return first role that is a valid partner type (case-insensitive)
+    return userRoles.find(role => validPartnerTypes.has(role.toLowerCase())) ?? null;
   }; 
 
 export const getLanguageLabel = (languageCode, t) => {
     const languageMap = {
-        "eng": 'languages.english',
-        "hin": 'languages.hindi',
-        "ara": 'languages.arabic',
-        "fra": 'languages.french',
-        "tam": 'languages.tamil',
-        "kan": 'languages.kannada'
+        "eng": "English",
+        "hin": "हिन्दी",
+        "ara": "العربية",
+        "fra": "Français",
+        "tam": "தமிழ்",
+        "kan": "ಕನ್ನಡ"
     };
 
     if (languageCode) {
