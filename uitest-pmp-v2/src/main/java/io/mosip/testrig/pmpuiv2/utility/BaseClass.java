@@ -21,7 +21,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
+import io.mosip.testrig.pmpuiv2.driver.DriverManager;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.mosip.testrig.pmpuiv2.kernel.util.ConfigManager;
 import io.mosip.testrig.pmpuiv2.pages.BasePage;
@@ -64,9 +64,9 @@ public class BaseClass {
 
 		WebDriver createdDriver = new ChromeDriver(options);
 
-		io.mosip.testrig.pmpuiv2.driver.DriverManager.setDriver(createdDriver);
+		DriverManager.setDriver(createdDriver);
 
-		this.driver = io.mosip.testrig.pmpuiv2.driver.DriverManager.getDriver();
+		this.driver = DriverManager.getDriver();
 
 		js = (JavascriptExecutor) this.driver;
 		vars = new HashMap<String, Object>();
@@ -81,8 +81,8 @@ public class BaseClass {
 		String description = method.getAnnotation(Test.class) != null ? method.getAnnotation(Test.class).description()
 				: "";
 		LogUtil.step("--------------------------------------------------");
-		LogUtil.step("🔹 Starting Test: " + testName);
-		LogUtil.step("📝 Description: " + description);
+		LogUtil.step("Starting Test: " + testName);
+		LogUtil.step("Description: " + description);
 		LogUtil.step("--------------------------------------------------");
 
 		BasePage basePage = new BasePage(this.driver);
@@ -94,7 +94,7 @@ public class BaseClass {
 	@AfterMethod
 	public void tearDown(ITestResult result) {
 		try {
-			io.mosip.testrig.pmpuiv2.driver.DriverManager.quitDriver();
+			DriverManager.quitDriver();
 		} catch (Exception ignored) {
 		}
 		this.driver = null;

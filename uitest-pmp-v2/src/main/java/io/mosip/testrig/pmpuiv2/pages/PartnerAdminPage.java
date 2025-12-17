@@ -4,7 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class partnersAdmin extends BasePage {
+public class PartnerAdminPage extends BasePage {
 
 	@FindBy(id = "undefined_title")
 	private WebElement subTitleList;
@@ -267,7 +267,7 @@ public class partnersAdmin extends BasePage {
 	@FindBy(id = "partnerList.certUploadStatus_header")
 	private WebElement certUploadStatusHeader;
 
-	public partnersAdmin(WebDriver driver) {
+	public PartnerAdminPage(WebDriver driver) {
 		super(driver);
 	}
 

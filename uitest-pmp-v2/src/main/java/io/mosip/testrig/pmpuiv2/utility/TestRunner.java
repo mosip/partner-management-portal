@@ -201,18 +201,7 @@ public class TestRunner {
 		runner.run();
 
 		// DB cleanup
-		DBManager.executeDBQueries(ConfigManager.getPMSDbUrl(), ConfigManager.getPMSDbUser(),
-				ConfigManager.getPMSDbPass(), ConfigManager.getPMSDbSchema(),
-				TestRunner.getResourcePath() + "/" + "config/partnerUiv2DataDeleteQueries.txt");
-
-		DBManager.executeDBQueries(ConfigManager.getKMDbUrl(), ConfigManager.getMasterDbUser(),
-				ConfigManager.getMasterDbPass(), ConfigManager.getMasterDbSchema(),
-				TestRunner.getResourcePath() + "/" + "config/partnerUiv2DataDeleteQueriesForKeyMgr.txt");
-
-		DBManager.executeDBQueries(ConfigManager.getIdaDbUrl(), ConfigManager.getMasterDbUser(),
-				ConfigManager.getMasterDbPass(), ConfigManager.getIDADBSchema(),
-				TestRunner.getResourcePath() + "/" + "config/partnerUiv2DataDeleteQueriesForIDA.txt");
-
+		DBManager.cleanUpPartnerUiV2Data();
 		System.exit(0);
 	}
 

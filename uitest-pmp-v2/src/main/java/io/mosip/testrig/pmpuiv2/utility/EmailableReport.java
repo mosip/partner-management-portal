@@ -37,6 +37,9 @@ import io.mosip.testrig.pmpuiv2.fw.util.AdminTestUtil;
 import io.mosip.testrig.pmpuiv2.kernel.util.ConfigManager;
 import io.mosip.testrig.pmpuiv2.kernel.util.S3Adapter;
 
+/**
+ * Reporter that generates a single-page HTML report of the test results.
+ */
 public class EmailableReport implements IReporter {
 	private static final Logger LOG = Logger.getLogger(EmailableReport.class);
 
@@ -496,6 +499,9 @@ public class EmailableReport implements IReporter {
 		return false; // If none of the strings are found, return false
 	}
 
+	/**
+	 * Writes a summary of all the test scenarios.
+	 */
 	public static boolean isKnownIssue(ITestResult result) {
 
 		String methodName = result.getMethod().getMethodName();
@@ -603,6 +609,10 @@ public class EmailableReport implements IReporter {
 //		return "";
 //	}
 
+	/**
+	 * Writes the scenario summary for the results of a given state for a single
+	 * test.
+	 */
 	private int writeScenarioSummary(String description, List<ClassResult> classResults, String cssClassPrefix,
 			int startingScenarioIndex) {
 		int scenarioCount = 0;
@@ -674,6 +684,9 @@ public class EmailableReport implements IReporter {
 		return scenarioCount;
 	}
 
+	/**
+	 * Writes the details for all test scenarios.
+	 */
 	protected void writeScenarioDetails() {
 		int scenarioIndex = 0;
 		for (SuiteResult suiteResult : suiteResults) {
@@ -698,6 +711,10 @@ public class EmailableReport implements IReporter {
 		}
 	}
 
+	/**
+	 * Writes the scenario details for the results of a given state for a single
+	 * test.
+	 */
 	private int writeScenarioDetails(List<ClassResult> classResults, int startingScenarioIndex) {
 		int scenarioIndex = startingScenarioIndex;
 		String label = "";
@@ -720,6 +737,9 @@ public class EmailableReport implements IReporter {
 		return scenarioIndex - startingScenarioIndex;
 	}
 
+	/**
+	 * Writes the details for an individual test scenario.
+	 */
 	private void writeScenario(int scenarioIndex, String label, ITestResult result) {
 		writer.print("<h3 id=\"m");
 		writer.print(scenarioIndex);
@@ -824,18 +844,46 @@ public class EmailableReport implements IReporter {
 		writer.print("</div>");
 	}
 
+	/**
+	 * Writes a TH element with the specified contents and CSS class names.
+	 * 
+	 * @param html       the HTML contents
+	 * @param cssClasses the space-delimited CSS classes or null if there are no
+	 *                   classes to apply
+	 */
 	protected void writeTableHeader(String html, String cssClasses) {
 		writeTag("th", html, cssClasses);
 	}
 
+	/**
+	 * Writes a TD element with the specified contents.
+	 * 
+	 * @param html the HTML contents
+	 */
 	protected void writeTableData(String html) {
 		writeTableData(html, null);
 	}
 
+	/**
+	 * Writes a TD element with the specified contents and CSS class names.
+	 * 
+	 * @param html       the HTML contents
+	 * @param cssClasses the space-delimited CSS classes or null if there are no
+	 *                   classes to apply
+	 */
 	protected void writeTableData(String html, String cssClasses) {
 		writeTag("td", html, cssClasses);
 	}
 
+	/**
+	 * Writes an arbitrary HTML element with the specified contents and CSS class
+	 * names.
+	 * 
+	 * @param tag        the tag name
+	 * @param html       the HTML contents
+	 * @param cssClasses the space-delimited CSS classes or null if there are no
+	 *                   classes to apply
+	 */
 	protected void writeTag(String tag, String html, String cssClasses) {
 		writer.print("<");
 		writer.print(tag);
@@ -851,6 +899,9 @@ public class EmailableReport implements IReporter {
 		writer.print(">");
 	}
 
+	/**
+	 * Groups {@link TestResult}s by suite.
+	 */
 	protected static class SuiteResult {
 		private final String suiteName;
 		private final List<TestResult> testResults = Lists.newArrayList();
@@ -866,13 +917,23 @@ public class EmailableReport implements IReporter {
 			return suiteName;
 		}
 
+		/**
+		 * @return the test results (possibly empty)
+		 */
 		public List<TestResult> getTestResults() {
 			return testResults;
 		}
 	}
 
+	/**
+	 * Groups {@link ClassResult}s by test, type (configuration or test), and
+	 * status.
+	 */
 	protected static class TestResult {
-
+		/**
+		 * Orders test results by class name and then by method name (in lexicographic
+		 * order).
+		 */
 		protected static final Comparator<ITestResult> RESULT_COMPARATOR = new Comparator<ITestResult>() {
 			@Override
 			public int compare(ITestResult o1, ITestResult o2) {
@@ -942,6 +1003,9 @@ public class EmailableReport implements IReporter {
 			excludedGroups = formatGroups(context.getExcludedGroups());
 		}
 
+		/**
+		 * Groups test results by method and then by class.
+		 */
 		protected List<ClassResult> groupResults(Set<ITestResult> results) {
 			List<ClassResult> classResults = Lists.newArrayList();
 			if (!results.isEmpty()) {
@@ -997,10 +1061,16 @@ public class EmailableReport implements IReporter {
 			return testName;
 		}
 
+		/**
+		 * @return the results for failed configurations (possibly empty)
+		 */
 		public List<ClassResult> getFailedConfigurationResults() {
 			return failedConfigurationResults;
 		}
 
+		/**
+		 * @return the results for failed tests (possibly empty)
+		 */
 		public List<ClassResult> getFailedTestResults() {
 			return failedTestResults;
 		}
@@ -1013,14 +1083,23 @@ public class EmailableReport implements IReporter {
 			return knownIssueTestResults;
 		}
 
+		/**
+		 * @return the results for skipped configurations (possibly empty)
+		 */
 		public List<ClassResult> getSkippedConfigurationResults() {
 			return skippedConfigurationResults;
 		}
 
+		/**
+		 * @return the results for skipped tests (possibly empty)
+		 */
 		public List<ClassResult> getSkippedTestResults() {
 			return skippedTestResults;
 		}
 
+		/**
+		 * @return the results for passed tests (possibly empty)
+		 */
 		public List<ClassResult> getPassedTestResults() {
 			return passedTestResults;
 		}
@@ -1057,6 +1136,9 @@ public class EmailableReport implements IReporter {
 			return excludedGroups;
 		}
 
+		/**
+		 * Formats an array of groups for display.
+		 */
 		protected String formatGroups(String[] groups) {
 			if (groups.length == 0) {
 				return "";
@@ -1071,10 +1153,17 @@ public class EmailableReport implements IReporter {
 		}
 	}
 
+	/**
+	 * Groups {@link MethodResult}s by class.
+	 */
 	protected static class ClassResult {
 		private final String className;
 		private final List<MethodResult> methodResults;
 
+		/**
+		 * @param className     the class name
+		 * @param methodResults the non-null, non-empty {@link MethodResult} list
+		 */
 		public ClassResult(String className, List<MethodResult> methodResults) {
 			this.className = className;
 			this.methodResults = methodResults;
@@ -1084,18 +1173,30 @@ public class EmailableReport implements IReporter {
 			return className;
 		}
 
+		/**
+		 * @return the non-null, non-empty {@link MethodResult} list
+		 */
 		public List<MethodResult> getMethodResults() {
 			return methodResults;
 		}
 	}
 
+	/**
+	 * Groups test results by method.
+	 */
 	protected static class MethodResult {
 		private final List<ITestResult> results;
 
+		/**
+		 * @param results the non-null, non-empty result list
+		 */
 		public MethodResult(List<ITestResult> results) {
 			this.results = results;
 		}
 
+		/**
+		 * @return the non-null, non-empty result list
+		 */
 		public List<ITestResult> getResults() {
 			return results;
 		}
