@@ -344,6 +344,8 @@ public class ConfigManager {
 
 		testcases = System.getenv(Testcases) == null ? propsKernel.getProperty(Testcases) : System.getenv(Testcases);
 		propsKernel.setProperty(Testcases, testcases);
+		
+		 
 
 	}
 
@@ -654,14 +656,14 @@ public class ConfigManager {
 		}
 		return prop;
 	}
-	
+
 	public static int getTimeout() {
-        try {
-            return Integer.parseInt(propsKernel.getProperty("explicitWaitTimeout", "10"));
-        } catch (NumberFormatException e) {
-        	logger.error("Invalid explicitWaitTimeout value in config.properties. Using default 10 seconds.");
-            return 10;
-        }
-    }
+		try {
+			return Integer.parseInt(propsKernel.getProperty("explicitWaitTimeout", "10"));
+		} catch (NumberFormatException e) {
+			logger.error("Invalid explicitWaitTimeout value in config.properties. Using default 10 seconds.");
+			return 10;
+		}
+	}
 
 }

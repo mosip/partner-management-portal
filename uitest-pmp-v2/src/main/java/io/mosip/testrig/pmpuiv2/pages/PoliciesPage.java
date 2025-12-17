@@ -4,8 +4,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-import io.mosip.testrig.pmpuiv2.utility.TestRunner;
-
 public class PoliciesPage extends BasePage {
 
 	@FindBy(id = "title_back_icon")
@@ -45,25 +43,25 @@ public class PoliciesPage extends BasePage {
 	private WebElement requestPolicyNameOption;
 
 	@FindBy(id = "sub_title_home_btn")
-	private WebElement HomeButton;
+	private WebElement homeButton;
 
 	@FindBy(id = "sub_title_btn")
-	private WebElement PolicyButton;
+	private WebElement policyButton;
 
 	@FindBy(id = "list_of_policies")
-	private WebElement ListOfPolicyRequested;
+	private WebElement listOfPolicyRequested;
 
 	@FindBy(xpath = "//div[text()='Pending For Approval']")
-	private WebElement PendingForApproval;
+	private WebElement pendingForApproval;
 
 	@FindBy(id = "policy_list_view1")
-	private WebElement ElipcisButton;
+	private WebElement elipcisButton;
 
 	@FindBy(id = "policy_list_view_card")
-	private WebElement CardViewButton;
+	private WebElement cardViewButton;
 
 	@FindBy(id = "view_policy_back_btn")
-	private WebElement BackButton;
+	private WebElement backButton;
 
 	@FindBy(id = "policy_partner_id_filter_dropdown_btn")
 	private WebElement policyPartnerIdFilter;
@@ -99,7 +97,7 @@ public class PoliciesPage extends BasePage {
 	private WebElement previousPage;
 
 	@FindBy(xpath = "//div[text()='Partner ID']")
-	private WebElement PartnerIdText;
+	private WebElement partnerIdText;
 
 	@FindBy(id = "policy_list_item1")
 	private WebElement policyListItem1;
@@ -114,7 +112,7 @@ public class PoliciesPage extends BasePage {
 	private WebElement titleBackIcon;
 
 	@FindBy(xpath = "//h1[text()='View Policy Details']")
-	private WebElement ViewPolicyDetailsText;
+	private WebElement viewPolicyDetailsText;
 
 	@FindBy(id = "partnerId_desc_icon")
 	private WebElement partnerId_desc_icon;
@@ -262,6 +260,12 @@ public class PoliciesPage extends BasePage {
 
 	@FindBy(id = "block_messsage_proceed")
 	private WebElement dataLostProcceedButton;
+	
+	@FindBy(xpath = "//span[text()='Select policy name']")
+	private WebElement policyNamePlaceholder;
+	
+	@FindBy(xpath = "//textarea[@placeholder='Mention the purpose of requesting the policy']")
+	private WebElement policyCommentBoxPlaceholder;
 
 	public PoliciesPage(WebDriver driver) {
 		super(driver);
@@ -275,7 +279,6 @@ public class PoliciesPage extends BasePage {
 		try {
 			Thread.sleep(3000);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		clickOnElement(requestPolicyButton);
@@ -342,7 +345,7 @@ public class PoliciesPage extends BasePage {
 	}
 
 	public void clickOnHomeButton() {
-		clickOnElement(HomeButton);
+		clickOnElement(homeButton);
 	}
 
 	public void clickOnPartnerIdDropdown() {
@@ -350,27 +353,27 @@ public class PoliciesPage extends BasePage {
 	}
 
 	public boolean isListOfPolicyRequestedDisplayed() {
-		return isElementDisplayed(ListOfPolicyRequested);
+		return isElementDisplayed(listOfPolicyRequested);
 	}
 
 	public boolean isPendingForApprovalTextDisplayed() {
-		return isElementDisplayed(PendingForApproval);
+		return isElementDisplayed(pendingForApproval);
 	}
 
 	public void clickOnElipcisButton() {
-		clickOnElement(ElipcisButton);
+		clickOnElement(elipcisButton);
 	}
 
 	public boolean isCardViewButtonDisplayed() {
-		return isElementDisplayed(CardViewButton);
+		return isElementDisplayed(cardViewButton);
 	}
 
 	public void clickOnCardViewButton() {
-		clickOnElement(CardViewButton);
+		clickOnElement(cardViewButton);
 	}
 
 	public void clickOnBackButton() {
-		clickOnElement(BackButton);
+		clickOnElement(backButton);
 	}
 
 	public void clickOnPolicyPartnerIdFilter() {
@@ -406,7 +409,7 @@ public class PoliciesPage extends BasePage {
 	}
 
 	public boolean isPartnerIdTextDisplayed() {
-		return isElementDisplayed(PartnerIdText);
+		return isElementDisplayed(partnerIdText);
 	}
 
 	public boolean isPartnerIdDescIconDisplayed() {
@@ -441,7 +444,7 @@ public class PoliciesPage extends BasePage {
 		return isElementDisplayed(policyName_asc_icon);
 	}
 
-	public boolean isCreatedDateTimeDescISconDisplayed() {
+	public boolean isCreatedDateTimeDescIconDisplayed() {
 		return isElementDisplayed(createdDateTime_desc_icon);
 	}
 
@@ -470,7 +473,7 @@ public class PoliciesPage extends BasePage {
 	}
 
 	public boolean isViewPolicyDetailsTextDisplayed() {
-		return isElementDisplayed(ViewPolicyDetailsText);
+		return isElementDisplayed(viewPolicyDetailsText);
 	}
 
 	public void clickOnPolicyListItem1() {
@@ -541,12 +544,12 @@ public class PoliciesPage extends BasePage {
 		clickOnElement(requestPoliciesFormClearButton);
 	}
 
-	public String getThePolicyCommentBoxText() {
-		return getTextFromAttribute(commentsTextBox, "placeholder");
+	public boolean isPolicyNamePlaceHolderDisplayed() {
+		return isElementDisplayed(policyNamePlaceholder);
 	}
-
-	public String getThepolicyNameDropdownBoxText() {
-		return getTextFromLocator(policyNameDropdown);
+	
+	public boolean isPolicyCommentBoxPlaceholderDisplayed() {
+		return isElementDisplayed(policyCommentBoxPlaceholder);
 	}
 
 	public void clickOnRequestPoliciesFormCancelButton() {
@@ -594,7 +597,7 @@ public class PoliciesPage extends BasePage {
 	}
 
 	public boolean isPolicyViewPageBackButtonEnabled() {
-		return isElementDisplayed(BackButton);
+		return isElementDisplayed(backButton);
 	}
 
 	public boolean isRequestPolicyButtonDisplayed() {
@@ -691,5 +694,9 @@ public class PoliciesPage extends BasePage {
 
 	public void clickOnPolicyNameDropdown() {
 		clickOnElement(policyNameDropdown);
+	}
+
+	public void clickOnPolicyButton() {
+		clickOnElement(policyButton);
 	}
 }

@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -73,7 +74,7 @@ public class PartnerCertificatePage extends BasePage {
 	private WebElement partnerDomainType;
 
 	@FindBy(id = "upload_file_FILL0_wght200_GRAD0_opsz24")
-	private WebElement partnerCertOvelay;
+	private WebElement partnerCertOverlay;
 
 	@FindBy(xpath = "//p[contains(text(), \"The certificate uploaded is not in the correct format.\")]")
 	private WebElement InvalidFormatErrorPopup;
@@ -425,10 +426,10 @@ public class PartnerCertificatePage extends BasePage {
 
 	@FindBy(id = "upload_trust_certificate_confirmation_header")
 	private WebElement uploadedSuccessfullyMessage;
-	
+
 	@FindBy(id = "partnerDomain_selector_dropdown_option4")
 	private WebElement partnerDomainSelectorDropdownOptionMisp;
-	
+
 	@FindBy(id = "upload_certificate_popup_title")
 	private WebElement mispPartnerCertificatePopup;
 
@@ -541,8 +542,8 @@ public class PartnerCertificatePage extends BasePage {
 		return isElementDisplayed(partnerDomainType);
 	}
 
-	public boolean isPartnerCertOvelayDisplayed() {
-		return isElementDisplayed(partnerCertOvelay);
+	public boolean isPartnerCertOverlayDisplayed() {
+		return isElementDisplayed(partnerCertOverlay);
 	}
 
 	public boolean isInvalidFormatErrorPopupDisplayed() {
@@ -581,8 +582,10 @@ public class PartnerCertificatePage extends BasePage {
 		clickOnElement(partnerDomainSelectorDropdownOptionFtm);
 	}
 
+	private By dashboardFtmChipProviderCardDashboard = By.id("dashboard_ftm_chip_provider_card");
+
 	public boolean isDashboardFtmChipProviderCardDisplayed() {
-		return isElementDisplayed(dashboardFtmChipProviderCard);
+		return isDisplayed(dashboardFtmChipProviderCardDashboard);
 	}
 
 	public boolean isSuccessMessageForFtmCertDisplayed() {
@@ -1219,17 +1222,48 @@ public class PartnerCertificatePage extends BasePage {
 		clickOnElement(rootUploadTrustCertificateButtonInAdmin);
 	}
 
-
 	public void clickOnIntermediateUploadTrustCertificateButtonInAdmin() {
 		clickOnElement(intermediateUploadTrustCertificateButtonInAdmin);
 	}
-	
+
 	public void clickOnPartnerDomainSelectorDropdownOptionMisp() {
 		clickOnElement(partnerDomainSelectorDropdownOptionMisp);
 	}
 
 	public boolean isMispPartnerCertificatePopupDisplayed() {
 		return isElementDisplayed(mispPartnerCertificatePopup);
+	}
+
+	public void uploadDeactivateUserRootCaCert() {
+		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "deactivateca.cer"));
+	}
+
+	public void uploadDeactivateUserIntermediateCaCert() {
+		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "deactivatesubca.cer"));
+	}
+
+	public void uploadDeactivateUserClientCertificate() {
+		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "deactivatesubca.cer"));
+	}
+
+	public void uploadPolicyAdminUserRootCaCert() {
+		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "policyadminca.cer"));
+	}
+
+	public void uploadPolicyAdminUserRootSubCaCert() {
+		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "policyadminsubca.cer"));
+	}
+
+	public void uploadPolicyUserRootCaCert() {
+		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "policyUserCACert.cer"));
+	}
+
+	public void uploadPolicyUserIntermediateCaCert() {
+		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "policyUserInterCACert.cer"));
+	}
+
+	public void uploadPolicyUserClientCertificate() {
+		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "policiesintermidiate.cer"));
 	}
 
 }

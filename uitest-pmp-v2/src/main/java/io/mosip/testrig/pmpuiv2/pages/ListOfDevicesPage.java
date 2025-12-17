@@ -158,16 +158,16 @@ public class ListOfDevicesPage extends BasePage {
 	@FindBy(id = "deviceId_desc_icon")
 	private WebElement deviceIdDescIcon;
 
-	@FindBy(id = "deviceType_asc_icon")
+	@FindBy(id = "deviceTypeCode_asc_icon")
 	private WebElement deviceTypeCodeAscIcon;
 
-	@FindBy(id = "deviceType_desc_icon")
+	@FindBy(id = "deviceTypeCode_desc_icon")
 	private WebElement deviceTypeCodeDescIcon;
 
-	@FindBy(id = "deviceSubType_asc_icon")
+	@FindBy(id = "deviceSubTypeCode_asc_icon")
 	private WebElement deviceSubTypeCodeAscIcon;
 
-	@FindBy(id = "deviceSubType_desc_icon")
+	@FindBy(id = "deviceSubTypeCode_desc_icon")
 	private WebElement deviceSubTypeCodeDescIcon;
 
 	@FindBy(id = "make_asc_icon")
@@ -319,6 +319,75 @@ public class ListOfDevicesPage extends BasePage {
 
 	@FindBy(xpath = "//tr[@id='device_list_device_item1']/td[1]")
 	private WebElement partnerIdInFirstColumnInPartner;
+
+	@FindBy(id = "device_type_filter_dropdown_btn")
+	private WebElement deviceTypeFilterInAdmin;
+
+	@FindBy(id = "partnerId_asc_icon")
+	private WebElement partnerIdAscIconInAdmin;
+
+	@FindBy(id = "partnerId_desc_icon")
+	private WebElement partnerIdDescIconInAdmin;
+
+	@FindBy(id = "orgName_asc_icon")
+	private WebElement orgNameAscIconInAdmin;
+
+	@FindBy(id = "orgName_desc_icon")
+	private WebElement orgNameDescIconInAdmin;
+
+	@FindBy(id = "sbiId_asc_icon")
+	private WebElement sbiIdAscIconInAdmin;
+
+	@FindBy(id = "sbiId_desc_icon")
+	private WebElement sbiIdDescIconInAdmin;
+
+	@FindBy(id = "sbiVersion_asc_icon")
+	private WebElement sbiVersionAscIconInAdmin;
+
+	@FindBy(id = "sbiVersion_desc_icon")
+	private WebElement sbiVersionDescIconInAdmin;
+
+	@FindBy(id = "deviceId_asc_icon")
+	private WebElement deviceIdAscIconInAdmin;
+
+	@FindBy(id = "deviceId_desc_icon")
+	private WebElement deviceIdDescIconInAdmin;
+
+	@FindBy(id = "deviceType_asc_icon")
+	private WebElement deviceTypeAscIconInAdmin;
+
+	@FindBy(id = "deviceType_desc_icon")
+	private WebElement deviceTypeDescIconInAdmin;
+
+	@FindBy(id = "deviceSubType_asc_icon")
+	private WebElement deviceSubTypeAscIconInAdmin;
+
+	@FindBy(id = "deviceSubType_desc_icon")
+	private WebElement deviceSubTypeDescIconInAdmin;
+
+	@FindBy(id = "make_asc_icon")
+	private WebElement makeAscIconInAdmin;
+
+	@FindBy(id = "make_desc_icon")
+	private WebElement makeDescIconInAdmin;
+
+	@FindBy(id = "model_asc_icon")
+	private WebElement modelAscIconInAdmin;
+
+	@FindBy(id = "model_desc_icon")
+	private WebElement modelDescIconInAdmin;
+
+	@FindBy(id = "createdDateTime_asc_icon")
+	private WebElement createdDateTimeAscIconInAdmin;
+
+	@FindBy(id = "createdDateTime_desc_icon")
+	private WebElement createdDateTimeDescIconInAdmin;
+
+	@FindBy(id = "status_asc_icon")
+	private WebElement statusAscIconInAdmin;
+
+	@FindBy(id = "status_desc_icon")
+	private WebElement statusDescIconInAdmin;
 
 	public ListOfDevicesPage(WebDriver driver) {
 		super(driver);
@@ -534,6 +603,14 @@ public class ListOfDevicesPage extends BasePage {
 	public void selectDeviceTypeFilter(String deviceType) {
 		try {
 			dropdown(deviceTypeFilter, deviceType);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void selectDeviceTypeFilterInAdmin(String deviceType) {
+		try {
+			dropdown(deviceTypeFilterInAdmin, deviceType);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -1004,6 +1081,174 @@ public class ListOfDevicesPage extends BasePage {
 
 	public boolean isPartnerIdInFirstColumnInPartnerDisplayed() {
 		return isElementDisplayed(partnerIdInFirstColumnInPartner);
+	}
+
+	public boolean isPartnerIdAscIconInAdminDisplayed() {
+		return isElementDisplayed(partnerIdAscIconInAdmin);
+	}
+
+	public boolean isPartnerIdDescIconInAdminDisplayed() {
+		return isElementDisplayed(partnerIdDescIconInAdmin);
+	}
+
+	public boolean isOrgNameAscIconInAdminDisplayed() {
+		return isElementDisplayed(orgNameAscIconInAdmin);
+	}
+
+	public boolean isOrgNameDescIconInAdminDisplayed() {
+		return isElementDisplayed(orgNameDescIconInAdmin);
+	}
+
+	public boolean isSbiIdAscIconInAdminDisplayed() {
+		return isElementDisplayed(sbiIdAscIconInAdmin);
+	}
+
+	public boolean isSbiIdDescIconInAdminDisplayed() {
+		return isElementDisplayed(sbiIdDescIconInAdmin);
+	}
+
+	public boolean isSbiVersionAscIconInAdminDisplayed() {
+		return isElementDisplayed(sbiVersionAscIconInAdmin);
+	}
+
+	public boolean isSbiVersionDescIconInAdminDisplayed() {
+		return isElementDisplayed(sbiVersionDescIconInAdmin);
+	}
+
+	public boolean isDeviceIdAscIconInAdminDisplayed() {
+		return isElementDisplayed(deviceIdAscIconInAdmin);
+	}
+
+	public boolean isDeviceIdDescIconInAdminDisplayed() {
+		return isElementDisplayed(deviceIdDescIconInAdmin);
+	}
+
+	public boolean isDeviceTypeAscIconInAdminDisplayed() {
+		return isElementDisplayed(deviceTypeAscIconInAdmin);
+	}
+
+	public boolean isDeviceTypeDescIconInAdminDisplayed() {
+		return isElementDisplayed(deviceTypeDescIconInAdmin);
+	}
+
+	public boolean isDeviceSubTypeAscIconInAdminDisplayed() {
+		return isElementDisplayed(deviceSubTypeAscIconInAdmin);
+	}
+
+	public boolean isDeviceSubTypeDescIconInAdminDisplayed() {
+		return isElementDisplayed(deviceSubTypeDescIconInAdmin);
+	}
+
+	public boolean isMakeAscIconInAdminDisplayed() {
+		return isElementDisplayed(makeAscIconInAdmin);
+	}
+
+	public boolean isMakeDescIconInAdminDisplayed() {
+		return isElementDisplayed(makeDescIconInAdmin);
+	}
+
+	public boolean isModelAscIconInAdminDisplayed() {
+		return isElementDisplayed(modelAscIconInAdmin);
+	}
+
+	public boolean isModelDescIconInAdminDisplayed() {
+		return isElementDisplayed(modelDescIconInAdmin);
+	}
+
+	public boolean isCreatedDateTimeAscIconInAdminDisplayed() {
+		return isElementDisplayed(createdDateTimeAscIconInAdmin);
+	}
+
+	public boolean isCreatedDateTimeDescIconInAdminDisplayed() {
+		return isElementDisplayed(createdDateTimeDescIconInAdmin);
+	}
+
+	public boolean isStatusAscIconInAdminDisplayed() {
+		return isElementDisplayed(statusAscIconInAdmin);
+	}
+
+	public boolean isStatusDescIconInAdminDisplayed() {
+		return isElementDisplayed(statusDescIconInAdmin);
+	}
+
+	public void clickOnPartnerIdAscIconInAdmin() {
+		clickOnElement(partnerIdAscIconInAdmin);
+	}
+
+	public void clickOnPartnerIdDescIconInAdmin() {
+		clickOnElement(partnerIdDescIconInAdmin);
+	}
+
+	public void clickOnOrgNameAscIconInAdmin() {
+		clickOnElement(orgNameAscIconInAdmin);
+	}
+
+	public void clickOnOrgNameDescIconInAdmin() {
+		clickOnElement(orgNameDescIconInAdmin);
+	}
+
+	public void clickOnSbiIdAscIconInAdmin() {
+		clickOnElement(sbiIdAscIconInAdmin);
+	}
+
+	public void clickOnSbiIdDescIconInAdmin() {
+		clickOnElement(sbiIdDescIconInAdmin);
+	}
+
+	public void clickOnSbiVersionAscIconInAdmin() {
+		clickOnElement(sbiVersionAscIconInAdmin);
+	}
+
+	public void clickOnSbiVersionDescIconInAdmin() {
+		clickOnElement(sbiVersionDescIconInAdmin);
+	}
+
+	public void clickOnDeviceIdAscIconInAdmin() {
+		clickOnElement(deviceIdAscIconInAdmin);
+	}
+
+	public void clickOnDeviceIdDescIconInAdmin() {
+		clickOnElement(deviceIdDescIconInAdmin);
+	}
+
+	public void clickOnDeviceSubTypeAscIconInAdmin() {
+		clickOnElement(deviceSubTypeAscIconInAdmin);
+	}
+
+	public void clickOnDeviceSubTypeDescIconInAdmin() {
+		clickOnElement(deviceSubTypeDescIconInAdmin);
+	}
+
+	public void clickOnMakeAscIconInAdmin() {
+		clickOnElement(makeAscIconInAdmin);
+	}
+
+	public void clickOnMakeDescIconInAdmin() {
+		clickOnElement(makeDescIconInAdmin);
+	}
+
+	public void clickOnModelAscIconInAdmin() {
+		clickOnElement(modelAscIconInAdmin);
+	}
+
+	public void clickOnModelDescIconInAdmin() {
+		clickOnElement(modelDescIconInAdmin);
+	}
+
+	public void clickOnCreatedDateTimeAscIconInAdmin() {
+		clickOnElement(createdDateTimeAscIconInAdmin);
+	}
+
+	public void clickOnCreatedDateTimeDescIconInAdmin() {
+		clickOnElement(createdDateTimeDescIconInAdmin);
+	}
+
+	public void clickOnStatusAscIconInAdmin() {
+		clickOnElement(statusAscIconInAdmin);
+	}
+
+	public void clickOnStatusDescIconInAdmin() {
+		clickOnElement(statusDescIconInAdmin);
 	}
 
 }

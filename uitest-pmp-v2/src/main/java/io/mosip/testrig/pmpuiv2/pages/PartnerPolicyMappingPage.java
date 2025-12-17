@@ -272,7 +272,7 @@ public class PartnerPolicyMappingPage extends BasePage {
 
 	@FindBy(id = "partner_policy_request_partner_comment")
 	private WebElement partnerCommentsContext;
-	
+
 	@FindBy(id = "view_partner_policy_request_status")
 	private WebElement partnerPolicyRequestStatus;
 
@@ -592,7 +592,7 @@ public class PartnerPolicyMappingPage extends BasePage {
 		return isElementDisplayed(policyName_asc_icon);
 	}
 
-	public boolean isCreatedDateTimeDescISconDisplayed() {
+	public boolean isCreatedDateTimeDescIconDisplayed() {
 		return isElementDisplayed(createdDateTime_desc_icon);
 	}
 

@@ -1,5 +1,6 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -8,6 +9,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
@@ -265,10 +268,10 @@ public class ListOfSbiPage extends BasePage {
 
 	@FindBy(id = "deactivate_popup_description_for_sbi")
 	private WebElement deactivatePopupSbiConfInAdmin;
-	
+
 	@FindBy(id = "undefined_title")
 	private WebElement listOfSbiText;
-	
+
 	@FindBy(xpath = "//tr[@id='sbi_list_item1']/td[1]")
 	private WebElement partnerIdInFirstColumn;
 
@@ -319,8 +322,10 @@ public class ListOfSbiPage extends BasePage {
 	}
 
 	public void clickOnThreeDotsOfSbiListAsAdmin(String sbiVersion) {
-		WebElement threeDotSbiOptionsButton = driver
-				.findElement(By.xpath("//*[text()='" + sbiVersion + "']/..//button[contains(@id, 'sbi_list_action')]"));
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		By threeDots = By
+				.xpath("//tr[.//td[normalize-space()='" + sbiVersion + "']]//button[contains(@id,'sbi_list_action')]");
+		WebElement threeDotSbiOptionsButton = wait.until(ExpectedConditions.elementToBeClickable(threeDots));
 		clickOnElement(threeDotSbiOptionsButton);
 	}
 
@@ -849,7 +854,7 @@ public class ListOfSbiPage extends BasePage {
 				.findElement(By.xpath("//td[text()='" + sbiVersion + "']/..//div[text()='Deactivated']"));
 		return isElementDisplayed(status);
 	}
-	
+
 	public boolean isPartnerIdInFirstColumnDisplayed() {
 		return isElementDisplayed(partnerIdInFirstColumn);
 	}
