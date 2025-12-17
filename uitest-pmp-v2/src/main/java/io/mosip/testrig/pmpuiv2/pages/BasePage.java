@@ -10,6 +10,7 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotInteractableException;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -387,15 +388,13 @@ public class BasePage {
 	}
 
 	public boolean isDisplayed(By locator) {
-		try {
-			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-
-			WebElement element = wait
-					.until(ExpectedConditions.refreshed(ExpectedConditions.visibilityOfElementLocated(locator)));
-			return element.isDisplayed();
-		} catch (TimeoutException e) {
-			return false;
-		}
+	    try {
+	        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+	        wait.ignoring(StaleElementReferenceException.class);
+	        return wait.until(d -> d.findElement(locator).isDisplayed());
+	    } catch (Exception e) {
+	        return false;
+	    }
 	}
 
 	public boolean isTextPresent(By locator, String expectedText) {
