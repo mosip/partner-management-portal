@@ -1392,6 +1392,38 @@ export const fetchNotificationsList = async (dispatch) => {
     }
 };
 
+export const fetchUserConsent = async () => {
+    // Return immediately if consent was already confirmed in this session
+    const userConsent = sessionStorage.getItem('userConsentGiven');
+    if (userConsent === 'true') {
+        return true;
+    }
+
+    // Consent not confirmed yet in this session, so verify from backend
+    try {
+        const response = await HttpService.get(
+            getPartnerManagerUrl('/users/user-consent', process.env.NODE_ENV)
+        );
+
+        if (response?.data?.response) {
+            const consentGiven = response.data.response.consentGiven;
+
+            // Persist only a positive consent decision for the current session
+            if (consentGiven) {
+                sessionStorage.setItem('userConsentGiven', 'true');
+            }
+
+            return consentGiven;
+        }
+
+        return false;
+    } catch (err) {
+        console.error('Error fetching user consent:', err);
+        return false;
+    }
+};
+
+
 export const getOuterDivWidth = (text) => {
     if (text.length > 30) {
         return 'min-w-[21rem]';

@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { getUserProfile } from '../../services/UserProfileService.js';
 import { useTranslation } from "react-i18next";
-import { isLangRTL, onPressEnterKey, getPartnerManagerUrl, createRequest, handleServiceErrors, moveToOidcClientsList, moveToMispPartnerServices, getPartnerType } from '../../utils/AppUtils.js';
+import { isLangRTL, onPressEnterKey, getPartnerManagerUrl, createRequest, handleServiceErrors, moveToOidcClientsList, moveToMispPartnerServices, getPartnerType, fetchUserConsent } from '../../utils/AppUtils.js';
 import { HttpService } from '../../services/HttpService.js';
 import ErrorMessage from '../common/ErrorMessage.js';
 import LoadingIcon from "../common/LoadingIcon.js";
@@ -57,30 +57,20 @@ function Dashboard() {
 
   const [showPopup, setShowPopup] = useState(false);
 
-  const fetchUserConsent = async () => {
+  const fetchUserConsentData = async () => {
     setDataLoaded(false);
     setErrorCode("");
     setErrorMsg("");
     try {
-      const response = await HttpService.get(getPartnerManagerUrl(`/users/user-consent`, process.env.NODE_ENV));
-      if (response) {
-        const responseData = response.data;
-        if (responseData && responseData.response) {
-          const resData = responseData.response;
-          let consentGiven = resData.consentGiven;
-          isUserConsentGiven = consentGiven;
-        } else {
-          handleServiceErrors(responseData, setErrorCode, setErrorMsg);
-        }
-      } else {
-        setErrorMsg(t('consentPopup.consentFetchError'));
-      }
+      const consentGiven = await fetchUserConsent();
+      isUserConsentGiven = consentGiven;
       setDataLoaded(true);
     } catch (err) {
       if (err.response?.status && err.response.status !== 401) {
         setErrorMsg(err.toString());
       }
       console.log("Error: ", err);
+      setDataLoaded(true);
     }
   }
 
@@ -110,6 +100,8 @@ function Dashboard() {
         if (roles.includes('PARTNER_ADMIN') || roles.includes('POLICYMANAGER')) {
           // Partner admins and policy managers are treated as verified
           setIsEmailVerified(true);
+          // Show consent popup for both PARTNER_ADMIN and POLICYMANAGER
+          await callUserConsentPopup();
           setDataLoaded(true);
           return;
         }
@@ -227,7 +219,7 @@ function Dashboard() {
 
   const callUserConsentPopup = async () => {
     if (!isSelectPolicyPopupVisible) {
-      await fetchUserConsent();
+      await fetchUserConsentData();
       if (!isUserConsentGiven) {
         setShowConsentPopup(true);
       }

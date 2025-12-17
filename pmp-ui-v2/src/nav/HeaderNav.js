@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../services/UserProfileService.js';
-import { isLangRTL, onPressEnterKey, handleMouseClickForDropdown, logout, getPartnerManagerUrl, fetchNotificationsList, createRequest } from '../utils/AppUtils.js';
+import { isLangRTL, onPressEnterKey, handleMouseClickForDropdown, logout, getPartnerManagerUrl, fetchNotificationsList, createRequest, fetchUserConsent } from '../utils/AppUtils.js';
 import profileIcon from '../profile_icon.png';
 import hamburgerIcon from '../svg/hamburger_icon.svg';
 import orgIcon from '../svg/org_icon.svg';
@@ -78,6 +78,15 @@ function HeaderNav({ open, setOpen }) {
 
     useEffect(() => {
         async function fetchNotificationsData() {
+            // Check if user consent is given before calling notifications-seen-timestamp
+            const consentGiven = await fetchUserConsent();
+            
+            // Only proceed if consent is given
+            if (!consentGiven) {
+                setShowLatestNotificationIcon(false);
+                return;
+            }
+
             const notificationsSeenTimestamp = await fetchNotificationsSeenTimestamp();
             const notifications = await fetchNotificationsList(dispatch);
             console.log("last seen time : ", notificationsSeenTimestamp);
