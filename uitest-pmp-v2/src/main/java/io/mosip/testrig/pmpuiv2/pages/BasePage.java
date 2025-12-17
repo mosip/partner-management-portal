@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Random;
 
 import org.openqa.selenium.Alert;
@@ -388,13 +389,13 @@ public class BasePage {
 	}
 
 	public boolean isDisplayed(By locator) {
-	    try {
-	        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-	        wait.ignoring(StaleElementReferenceException.class);
-	        return wait.until(d -> d.findElement(locator).isDisplayed());
-	    } catch (Exception e) {
-	        return false;
-	    }
+		try {
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+			wait.ignoring(StaleElementReferenceException.class);
+			return wait.until(d -> d.findElement(locator).isDisplayed());
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
 	public boolean isTextPresent(By locator, String expectedText) {
@@ -427,10 +428,15 @@ public class BasePage {
 		throw new RuntimeException("Dashboard not ready");
 	}
 
-	private boolean isDisplayedQuick(By locator) {
+	protected boolean isDisplayedQuick(By locator) {
 		try {
-			WebDriverWait wait = new WebDriverWait(driver, QUICK_CHECK_TIMEOUT);
-			return wait.until(ExpectedConditions.visibilityOfElementLocated(locator)).isDisplayed();
+			WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), QUICK_CHECK_TIMEOUT);
+
+			return wait.until(driver -> {
+				List<WebElement> elements = driver.findElements(locator);
+				return !elements.isEmpty() && elements.get(0).isDisplayed();
+			});
+
 		} catch (TimeoutException e) {
 			return false;
 		}
