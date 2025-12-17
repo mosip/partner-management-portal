@@ -504,10 +504,20 @@ public class EmailableReport implements IReporter {
 	 */
 	public static boolean isKnownIssue(ITestResult result) {
 
-		String methodName = result.getMethod().getMethodName();
-		String className = result.getTestClass().getRealClass().getSimpleName();
+		if (result == null || result.getMethod() == null || result.getTestClass() == null) {
+			return false;
+		}
 
-		for (String knownIssue : AdminTestUtil.getKnownIssues()) {
+		String methodName = result.getMethod().getMethodName();
+		Class<?> realClass = result.getTestClass().getRealClass();
+		String className = realClass != null ? realClass.getSimpleName() : "";
+
+		List<String> issues = AdminTestUtil.getKnownIssues();
+		if (issues == null || methodName == null) {
+			return false;
+		}
+
+		for (String knownIssue : issues) {
 
 			// Method-level known issue
 			if (knownIssue.equalsIgnoreCase(methodName)) {

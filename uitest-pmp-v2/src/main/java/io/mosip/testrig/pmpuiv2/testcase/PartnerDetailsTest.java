@@ -108,13 +108,13 @@ public class PartnerDetailsTest extends BaseClass {
 				GlobalConstants.isCertificateUploadsStatusAscIconDisplayed);
 
 		//Re-enable deactivated partner verification once stability issues are resolved
-//		partnerAdmin.clickOnFilterButton();
-//		partnerAdmin.clickOnStatusFilter();
-//		partnerAdmin.clickOnDeActivatedStatusInFilters();
-//		partnerAdmin.clickOnApplyFiltersBtn();
-//		assertTrue(partnerAdmin.isDeactivatedPartnerRowDisplayed(), GlobalConstants.isDeactivatedPartnerRowDisplayed);
-//		partnerAdmin.clickOnActionsButton();
-//		assertTrue(partnerAdmin.isViewButtonsDisplayed(), GlobalConstants.isViewButtonsDisplayed);
+//		partnerAdminPage.clickOnFilterButton();
+//		partnerAdminPage.clickOnStatusFilter();
+//		partnerAdminPage.clickOnDeActivatedStatusInFilters();
+//		partnerAdminPage.clickOnApplyFiltersBtn();
+//		assertTrue(partnerAdminPage.isDeactivatedPartnerRowDisplayed(), GlobalConstants.isDeactivatedPartnerRowDisplayed);
+//		partnerAdminPage.clickOnActionsButton();
+//		assertTrue(partnerAdminPage.isViewButtonsDisplayed(), GlobalConstants.isViewButtonsDisplayed);
 
 		partnerAdminPage.clickOnFilterButton();
 		partnerAdminPage.enterPartnerIdInFilter(GlobalConstants.PARTNERDETAILS_USER_ID);

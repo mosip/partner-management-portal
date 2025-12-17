@@ -87,7 +87,7 @@ public class BaseClass {
 
 		BasePage basePage = new BasePage(this.driver);
 		basePage.enter(this.driver.findElement(By.id("username")), userid);
-		basePage.enter(this.driver.findElement(By.id("password")), "mosip123");
+		basePage.enter(this.driver.findElement(By.id("password")), password);
 		this.driver.findElement(By.xpath("//input[@name='login']")).click();
 	}
 
