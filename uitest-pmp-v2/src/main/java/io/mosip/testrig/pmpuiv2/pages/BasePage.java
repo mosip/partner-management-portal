@@ -10,6 +10,7 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotInteractableException;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
@@ -19,6 +20,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Reporter;
 import org.apache.log4j.Logger;
 
+import io.mosip.testrig.pmpuiv2.driver.DriverManager;
 import io.mosip.testrig.pmpuiv2.kernel.util.ConfigManager;
 import io.mosip.testrig.pmpuiv2.utility.JsonUtil;
 import io.mosip.testrig.pmpuiv2.utility.LogUtil;
@@ -236,7 +238,7 @@ public class BasePage {
 	protected boolean isElementDisabled(WebElement element) {
 		LogUtil.verify("Checking is element is disabled: ", element);
 		try {
-			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(13));
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
 			return wait.until(driver -> !element.isEnabled());
 		} catch (Exception e) {
 			takeScreenshot();
@@ -256,13 +258,8 @@ public class BasePage {
 	}
 
 	protected void waitForElementToBeVisible(WebElement element) {
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(13));
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
 		wait.until(ExpectedConditions.visibilityOf(element));
-	}
-
-	private void waitForElementToBeDisabled(WebElement element) {
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(13));
-		wait.until(ExpectedConditions.invisibilityOfAllElements(element));
 	}
 
 	public static void wait(int wait) {
@@ -323,7 +320,7 @@ public class BasePage {
 		driver.navigate().back();
 	}
 
-	public void navigateForword() {
+	public void navigateForward() {
 		LogUtil.action("Navigating to the forward page");
 		driver.navigate().forward();
 	}
@@ -387,6 +384,57 @@ public class BasePage {
 	public void scrollIntoView(WebElement element) {
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript("arguments[0].scrollIntoView(true);", element);
+	}
+
+	public boolean isDisplayed(By locator) {
+		try {
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+
+			WebElement element = wait
+					.until(ExpectedConditions.refreshed(ExpectedConditions.visibilityOfElementLocated(locator)));
+			return element.isDisplayed();
+		} catch (TimeoutException e) {
+			return false;
+		}
+	}
+
+	public boolean isTextPresent(By locator, String expectedText) {
+		try {
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+			return wait.until(ExpectedConditions.textToBePresentInElementLocated(locator, expectedText));
+		} catch (TimeoutException e) {
+			return false;
+		}
+	}
+
+	protected static final long DEFAULT_TIMEOUT_MS = 30_000;
+	protected static final long POLL_INTERVAL_MS = 300;
+	protected static final Duration QUICK_CHECK_TIMEOUT = Duration.ofMillis(500);
+
+	protected void waitUntilAnyElementVisible(By first, By second) {
+		long endTime = System.currentTimeMillis() + DEFAULT_TIMEOUT_MS;
+
+		while (System.currentTimeMillis() < endTime) {
+			if (isDisplayedQuick(first) || isDisplayedQuick(second)) {
+				return;
+			}
+			try {
+				Thread.sleep(POLL_INTERVAL_MS);
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+				throw new RuntimeException("Thread interrupted while waiting for dashboard", e);
+			}
+		}
+		throw new RuntimeException("Dashboard not ready");
+	}
+
+	private boolean isDisplayedQuick(By locator) {
+		try {
+			WebDriverWait wait = new WebDriverWait(driver, QUICK_CHECK_TIMEOUT);
+			return wait.until(ExpectedConditions.visibilityOfElementLocated(locator)).isDisplayed();
+		} catch (TimeoutException e) {
+			return false;
+		}
 	}
 
 }

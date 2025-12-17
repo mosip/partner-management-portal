@@ -10,7 +10,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
-import io.mosip.testrig.pmpuiv2.utility.TestRunner;
 
 public class AuthPolicyPage extends BasePage {
 
@@ -275,7 +274,7 @@ public class AuthPolicyPage extends BasePage {
 	@FindBy(xpath = "//p[text()='Policy ID']")
 	private WebElement policyId;
 
-	@FindBy(xpath = "//span[text()='ab11CD22ef']")
+	@FindBy(id = "view_policy_sub_title_id")
 	private WebElement policyIdContext;
 
 	@FindBy(xpath = "//p[text()='Policy Name']")
@@ -561,7 +560,7 @@ public class AuthPolicyPage extends BasePage {
 		clickOnElement(filterButton);
 	}
 
-	public boolean isFiletrButtonDisplayedOrEnabled() {
+	public boolean isFilterButtonDisplayedOrEnabled() {
 		return isElementEnabled(filterButton);
 	}
 
@@ -1360,6 +1359,11 @@ public class AuthPolicyPage extends BasePage {
 
 	public void clearClonePolicyGroupDropdownValue() {
 		clearTextBox(clonePolicyGroupDropdownSearchInput);
+	}
+
+	public void selectDeactivatedPolicyGroupInDropdown(String policyGroupValue) {
+		clickOnElement(policyGroupDropdown);
+		enter(policyGroupDropdownSearchInput, policyGroupValue);
 	}
 
 }

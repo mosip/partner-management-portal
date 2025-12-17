@@ -1,17 +1,10 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
-
-public class PartnerAdmin extends BasePage {
+public class PartnerAdminPage extends BasePage {
 
 	@FindBy(id = "undefined_title")
 	private WebElement subTitleList;
@@ -274,7 +267,7 @@ public class PartnerAdmin extends BasePage {
 	@FindBy(id = "partnerList.certUploadStatus_header")
 	private WebElement certUploadStatusHeader;
 
-	public PartnerAdmin(WebDriver driver) {
+	public PartnerAdminPage(WebDriver driver) {
 		super(driver);
 	}
 
