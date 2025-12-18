@@ -264,7 +264,7 @@ function EditOidcClient() {
                         // Initialize client name lang map
                         if (resData.clientNameLangMap && typeof resData.clientNameLangMap === 'object') {
                             const langMapEntries = Object.entries(resData.clientNameLangMap).map(([language, text]) => ({
-                                id: `oidc_name_${Date.now()}_${Math.random().toString(36).slice(2, 11)}`,
+                                id: `oidc_name_${crypto.randomUUID()}`,
                                 language: language,
                                 text: text || ''
                             }));
@@ -295,24 +295,24 @@ function EditOidcClient() {
                                  setPurposeType(additionalConfig.purpose.type || '');
                                  
                                  // Initialize purpose title entries
-                                 if (additionalConfig.purpose.title && typeof additionalConfig.purpose.title === 'object') {
-                                     const titleEntries = Object.entries(additionalConfig.purpose.title).map(([langKey, text]) => ({
-                                         id: `purpose_title_${Date.now()}_${Math.random().toString(36).slice(2, 11)}`,
-                                         language: langKey === '@none' ? 'default' : langKey,
-                                         text: text || ''
-                                     }));
-                                     setPurposeTitleEntries(titleEntries);
-                                 }
+                                if (additionalConfig.purpose.title && typeof additionalConfig.purpose.title === 'object') {
+                                    const titleEntries = Object.entries(additionalConfig.purpose.title).map(([langKey, text]) => ({
+                                        id: `purpose_title_${crypto.randomUUID()}`,
+                                        language: langKey === '@none' ? 'default' : langKey,
+                                        text: text || ''
+                                    }));
+                                    setPurposeTitleEntries(titleEntries);
+                                }
                                  
                                  // Initialize purpose subtitle entries
-                                 if (additionalConfig.purpose.subTitle && typeof additionalConfig.purpose.subTitle === 'object') {
-                                     const subtitleEntries = Object.entries(additionalConfig.purpose.subTitle).map(([langKey, text]) => ({
-                                         id: `purpose_subtitle_${Date.now()}_${Math.random().toString(36).slice(2, 11)}`,
-                                         language: langKey === '@none' ? 'default' : langKey,
-                                         text: text || ''
-                                     }));
-                                     setPurposeSubtitleEntries(subtitleEntries);
-                                 }
+                                if (additionalConfig.purpose.subTitle && typeof additionalConfig.purpose.subTitle === 'object') {
+                                    const subtitleEntries = Object.entries(additionalConfig.purpose.subTitle).map(([langKey, text]) => ({
+                                        id: `purpose_subtitle_${crypto.randomUUID()}`,
+                                        language: langKey === '@none' ? 'default' : langKey,
+                                        text: text || ''
+                                    }));
+                                    setPurposeSubtitleEntries(subtitleEntries);
+                                }
                              }
                          }
                      } else {
@@ -530,7 +530,7 @@ function EditOidcClient() {
 
     // Additional Information
     const handleConsentExpiryChange = (value) => {
-        const numValue = value.replace(/[^0-9]/g, '');
+        const numValue = value.replaceAll(/[^0-9]/g, '');
         setConsentExpiry(numValue);
         if (!numValue || numValue.trim() === '') {
             setConsentExpiryError(t('createOidcClient.consentExpiryRequired'));
@@ -821,7 +821,7 @@ function EditOidcClient() {
         // Reset purpose entries
         if (selectedAdditionalConfig.purpose?.title) {
             const titleEntries = Object.entries(selectedAdditionalConfig.purpose.title).map(([langKey, text]) => ({
-                id: `purpose_title_${Date.now()}_${Math.random().toString(36).slice(2, 11)}`,
+                id: `purpose_title_${crypto.randomUUID()}`,
                 language: langKey === '@none' ? 'default' : langKey,
                 text: text || ''
             }));
@@ -832,7 +832,7 @@ function EditOidcClient() {
         
         if (selectedAdditionalConfig.purpose?.subTitle) {
             const subtitleEntries = Object.entries(selectedAdditionalConfig.purpose.subTitle).map(([langKey, text]) => ({
-                id: `purpose_subtitle_${Date.now()}_${Math.random().toString(36).slice(2, 11)}`,
+                id: `purpose_subtitle_${crypto.randomUUID()}`,
                 language: langKey === '@none' ? 'default' : langKey,
                 text: text || ''
             }));
@@ -849,7 +849,7 @@ function EditOidcClient() {
         // Reset client name lang map
         if (selectedClientDetails.clientNameLangMap && typeof selectedClientDetails.clientNameLangMap === 'object') {
             const langMapEntries = Object.entries(selectedClientDetails.clientNameLangMap).map(([language, text]) => ({
-                id: `oidc_name_${Date.now()}_${Math.random().toString(36).slice(2, 11)}`,
+                id: `oidc_name_${crypto.randomUUID()}`,
                 language: language,
                 text: text || ''
             }));

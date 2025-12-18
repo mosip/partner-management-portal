@@ -545,7 +545,7 @@ function CreateOidcClient() {
 
   // Additional Information handlers
   const handleConsentExpiryChange = (value) => {
-    const numValue = value.replace(/[^0-9]/g, '');
+    const numValue = value.replaceAll(/[^0-9]/g, '');
     setConsentExpiry(numValue);
     if (!numValue || numValue.trim() === '') {
       setConsentExpiryError(t('createOidcClient.consentExpiryRequired'));
