@@ -341,22 +341,22 @@ function EditOidcClient() {
 
     // Helper function to create a new entry
     const createNewEntry = (language, type) => {
+        const baseId = crypto.randomUUID();
+
         let uniqueId;
-        // Generate truly unique ID using timestamp and random number to avoid duplicates
-        const id = `${Date.now()}_${Math.random().toString(36).slice(2, 11)}`;
         
         switch (type) {
             case 'clientName':
-                uniqueId = `oidc_name_${id}`;
+                uniqueId = `oidc_name_${baseId}`;
                 break;
             case 'purposeTitle':
-                uniqueId = `purpose_title_${id}`;
+                uniqueId = `purpose_title_${baseId}`;
                 break;
             case 'purposeSubtitle':
-                uniqueId = `purpose_subtitle_${id}`;
+                uniqueId = `purpose_subtitle_${baseId}`;
                 break;
             default:
-                uniqueId = `entry_${type}_${id}`;
+                uniqueId = `entry_${type}_${baseId}`;
         }
         
         return {
@@ -534,7 +534,7 @@ function EditOidcClient() {
         setConsentExpiry(numValue);
         if (!numValue || numValue.trim() === '') {
             setConsentExpiryError(t('createOidcClient.consentExpiryRequired'));
-        } else if (isNaN(numValue) || parseInt(numValue) < 10) {
+        } else if (Number.isNaN(Number.parseInt(numValue, 10)) || Number.parseInt(numValue, 10) < 10) {
             setConsentExpiryError(t('createOidcClient.consentExpiryValidation'));
         } else {
             setConsentExpiryError("");
@@ -685,8 +685,8 @@ function EditOidcClient() {
         const currentLangMap = buildClientNameLangMap(clientNameLangMapEntries, additionalConfigRequired, clientName);
         const selectedLangMap = selectedClientDetails.clientNameLangMap || {};
         
-        const currentKeys = Object.keys(currentLangMap).sort();
-        const selectedKeys = Object.keys(selectedLangMap).sort();
+        const currentKeys = Object.keys(currentLangMap).sort((a, b) => a.localeCompare(b));
+        const selectedKeys = Object.keys(selectedLangMap).sort((a, b) => a.localeCompare(b));
         
         if (currentKeys.length !== selectedKeys.length) {
             return true;
@@ -705,7 +705,7 @@ function EditOidcClient() {
             const selectedAdditionalConfig = selectedClientDetails.additionalConfig || {};
             
             // Check consent expiry
-            const currentConsentExpiry = consentExpiry ? parseInt(consentExpiry) : undefined;
+            const currentConsentExpiry = consentExpiry ? Number.parseInt(consentExpiry, 10) : undefined;
             const selectedConsentExpiry = selectedAdditionalConfig.consent_expire_in_mins;
             if (currentConsentExpiry !== selectedConsentExpiry) {
                 return true;
@@ -734,8 +734,8 @@ function EditOidcClient() {
             if (purposeType) {
                 const currentTitleMap = buildPurposeLangMap(purposeTitleEntries);
                 const selectedTitleMap = selectedAdditionalConfig.purpose?.title || {};
-                const currentTitleKeys = currentTitleMap ? Object.keys(currentTitleMap).sort() : [];
-                const selectedTitleKeys = Object.keys(selectedTitleMap).sort();
+                const currentTitleKeys = currentTitleMap ? Object.keys(currentTitleMap).sort((a, b) => a.localeCompare(b)) : [];
+                const selectedTitleKeys = Object.keys(selectedTitleMap).sort((a, b) => a.localeCompare(b));
                 if (currentTitleKeys.length !== selectedTitleKeys.length) {
                     return true;
                 }
@@ -748,8 +748,8 @@ function EditOidcClient() {
                 // Check purpose subtitle
                 const currentSubtitleMap = buildPurposeLangMap(purposeSubtitleEntries);
                 const selectedSubtitleMap = selectedAdditionalConfig.purpose?.subTitle || {};
-                const currentSubtitleKeys = currentSubtitleMap ? Object.keys(currentSubtitleMap).sort() : [];
-                const selectedSubtitleKeys = Object.keys(selectedSubtitleMap).sort();
+                const currentSubtitleKeys = currentSubtitleMap ? Object.keys(currentSubtitleMap).sort((a, b) => a.localeCompare(b)) : [];
+                const selectedSubtitleKeys = Object.keys(selectedSubtitleMap).sort((a, b) => a.localeCompare(b));
                 if (currentSubtitleKeys.length !== selectedSubtitleKeys.length) {
                     return true;
                 }
@@ -897,7 +897,7 @@ function EditOidcClient() {
         additionalConfig.forgot_pwd_link_required = forgotPasswordBanner;
         
         if (consentExpiry && consentExpiry.trim() !== '') {
-            additionalConfig.consent_expire_in_mins = parseInt(consentExpiry);
+            additionalConfig.consent_expire_in_mins = Number.parseInt(consentExpiry, 10);
         }
         
         const clientNameLangMap = buildClientNameLangMap(clientNameLangMapEntries, additionalConfigRequired, clientName);
@@ -1264,20 +1264,19 @@ function EditOidcClient() {
                                                                 <div className="flex flex-col w-[48%]">
                                                                     <div className={`flex items-center ${isLoginLanguageRTL ? 'flex-row-reverse justify-end' : 'justify-start'} gap-3`}>
                                                                         <div className="flex items-center">
-                                                                            <label className={`text-dark-blue text-sm font-semibold ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+                                                                            <label htmlFor="forgot_password_banner_toggle" className={`text-dark-blue text-sm font-semibold ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                                                                                 {t('createOidcClient.forgotPasswordBanner')}
                                                                             </label>
                                                                             <Information infoKey={t('createOidcClient.forgotPasswordBannerTooltip')} id='forgot_password_banner_info' />
                                                                         </div>
-                                                                        <label 
-                                                                            className="relative inline-flex items-center cursor-pointer flex-shrink-0 focus-within:outline focus-within:outline-2 focus-within:outline-[#1447B2] focus-within:outline-offset-2 rounded"
-                                                                            tabIndex="0"
-                                                                            onKeyDown={(e) => {
-                                                                                if ((e.key === 'Enter' || e.key === ' ') && additionalConfigRequired) {
-                                                                                    e.preventDefault();
-                                                                                    setForgotPasswordBanner(!forgotPasswordBanner);
-                                                                                }
-                                                                            }}
+                                                                        <button
+                                                                            type="button"
+                                                                            role="switch"
+                                                                            aria-checked={forgotPasswordBanner}
+                                                                            aria-label={t('createOidcClient.forgotPasswordBanner')}
+                                                                            className="relative inline-flex items-center cursor-pointer flex-shrink-0 focus:outline focus:outline-2 focus:outline-[#1447B2] focus:outline-offset-2 rounded"
+                                                                            onClick={() => additionalConfigRequired && setForgotPasswordBanner(!forgotPasswordBanner)}
+                                                                            disabled={!additionalConfigRequired}
                                                                         >
                                                                             <input
                                                                                 type="checkbox"
@@ -1285,11 +1284,12 @@ function EditOidcClient() {
                                                                                 onChange={(e) => additionalConfigRequired && setForgotPasswordBanner(e.target.checked)}
                                                                                 className="sr-only peer focus:outline-none"
                                                                                 id="forgot_password_banner_toggle"
+                                                                                tabIndex={-1}
                                                                             />
                                                                             <div className={`relative w-9 h-5 rounded-full transition-colors duration-200 ease-in-out ${forgotPasswordBanner ? 'bg-[#1447B2]' : 'bg-neutral-100'}`}>
                                                                                 <div className={`absolute top-0.5 left-0.5 w-4 h-4 bg-white rounded-full shadow-sm transform transition-transform duration-200 ease-in-out ${forgotPasswordBanner ? 'translate-x-4' : ''}`}></div>
                                                                             </div>
-                                                                        </label>
+                                                                        </button>
                                                                     </div>
                                                                 </div>
 
@@ -1297,20 +1297,19 @@ function EditOidcClient() {
                                                                 <div className="flex flex-col w-[48%]">
                                                                     <div className={`flex items-center ${isLoginLanguageRTL ? 'flex-row-reverse justify-end' : 'justify-start'} gap-3`}>
                                                                         <div className="flex items-center">
-                                                                            <label className={`text-dark-blue text-sm font-semibold ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+                                                                            <label htmlFor="signup_banner_toggle" className={`text-dark-blue text-sm font-semibold ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                                                                                 {t('createOidcClient.signUpBanner')}
                                                                             </label>
                                                                             <Information infoKey={t('createOidcClient.signUpBannerTooltip')} id='signup_banner_info' />
                                                                         </div>
-                                                                        <label 
-                                                                            className="relative inline-flex items-center cursor-pointer flex-shrink-0 focus-within:outline focus-within:outline-2 focus-within:outline-[#1447B2] focus-within:outline-offset-2 rounded"
-                                                                            tabIndex="0"
-                                                                            onKeyDown={(e) => {
-                                                                                if ((e.key === 'Enter' || e.key === ' ') && additionalConfigRequired) {
-                                                                                    e.preventDefault();
-                                                                                    setSignUpBanner(!signUpBanner);
-                                                                                }
-                                                                            }}
+                                                                        <button
+                                                                            type="button"
+                                                                            role="switch"
+                                                                            aria-checked={signUpBanner}
+                                                                            aria-label={t('createOidcClient.signUpBanner')}
+                                                                            className="relative inline-flex items-center cursor-pointer flex-shrink-0 focus:outline focus:outline-2 focus:outline-[#1447B2] focus:outline-offset-2 rounded"
+                                                                            onClick={() => additionalConfigRequired && setSignUpBanner(!signUpBanner)}
+                                                                            disabled={!additionalConfigRequired}
                                                                         >
                                                                             <input
                                                                                 type="checkbox"
@@ -1318,11 +1317,12 @@ function EditOidcClient() {
                                                                                 onChange={(e) => additionalConfigRequired && setSignUpBanner(e.target.checked)}
                                                                                 className="sr-only peer focus:outline-none"
                                                                                 id="signup_banner_toggle"
+                                                                                tabIndex={-1}
                                                                             />
                                                                             <div className={`relative w-9 h-5 rounded-full transition-colors duration-200 ease-in-out ${signUpBanner ? 'bg-[#1447B2]' : 'bg-neutral-100'}`}>
                                                                                 <div className={`absolute top-0.5 left-0.5 w-4 h-4 bg-white rounded-full shadow-sm transform transition-transform duration-200 ease-in-out ${signUpBanner ? 'translate-x-4' : ''}`}></div>
                                                                             </div>
-                                                                        </label>
+                                                                        </button>
                                                                     </div>
                                                                 </div>
                                                             </div>
