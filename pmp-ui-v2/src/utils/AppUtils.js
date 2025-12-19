@@ -126,7 +126,7 @@ export const getLanguageLabel = (languageCode, t) => {
     if (languageCode) {
         const languageLabel = languageMap[languageCode.toLowerCase()];
         if (languageLabel) {
-            return t(languageLabel);
+            return languageLabel;
         }
     }
     return languageCode; // fallback to code if no translation found
