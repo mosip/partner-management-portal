@@ -235,8 +235,7 @@ function PartnersList() {
   const isUploadCertificateEnabled = (partner) => {
     // Upload certificate is enabled for MISP_Partner and ABIS_Partner when active and inactive state
     // Disabled for deactivated state:
-    const partnerTypeUpper = partner.partnerType?.toUpperCase();
-    return (partnerTypeUpper === "MISP_PARTNER" || partnerTypeUpper === "ABIS_PARTNER") && 
+    return (partner.partnerType === "MISP_Partner" || partner.partnerType === "ABIS_Partner") && 
            !(partner.status === 'deactivated');
   };
 
@@ -330,7 +329,7 @@ function PartnersList() {
       reUploadHeader: "uploadCertificate.reUploadPartnerCertificate",
       isCertificateAvailable: isUploaded,
       certificateUploadDateTime: certificateUploadDateTime,
-      isMispOrAbisPartnerCertificate: partner.partnerType?.toUpperCase() === "MISP_PARTNER" || partner.partnerType?.toUpperCase() === "ABIS_PARTNER"
+      isMispOrAbisPartnerCertificate: partner.partnerType === "MISP_Partner" || partner.partnerType === "ABIS_Partner"
     };
 
     // Update UI state
