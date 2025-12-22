@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import PropTypes from "prop-types";
 import { onPressEnterKey, isLangRTL, getOidcPlaceholderForLanguage, getAvailableOidcLanguages } from "../../utils/AppUtils";
 import DropdownComponent from "./fields/DropdownComponent";
 import Information from "./fields/Information";
@@ -338,6 +339,72 @@ function OidcClientAdditionalInfoSection({
     </div>
   );
 }
+
+OidcClientAdditionalInfoSection.propTypes = {
+  isAdditionalInfoExpanded: PropTypes.bool.isRequired,
+  setIsAdditionalInfoExpanded: PropTypes.func.isRequired,
+  isLoginLanguageRTL: PropTypes.bool.isRequired,
+  additionalConfigRequired: PropTypes.bool.isRequired,
+  forgotPasswordBanner: PropTypes.bool.isRequired,
+  setForgotPasswordBanner: PropTypes.func.isRequired,
+  signUpBanner: PropTypes.bool.isRequired,
+  setSignUpBanner: PropTypes.func.isRequired,
+  consentExpiry: PropTypes.string.isRequired,
+  handleConsentExpiryChange: PropTypes.func.isRequired,
+  consentExpiryError: PropTypes.string.isRequired,
+  userInfoResponseType: PropTypes.string.isRequired,
+  handleUserInfoResponseTypeChange: PropTypes.func.isRequired,
+  userInfoResponseTypeDropdownData: PropTypes.arrayOf(
+    PropTypes.shape({
+      fieldCode: PropTypes.string,
+      fieldValue: PropTypes.string
+    })
+  ).isRequired,
+  purposeType: PropTypes.string.isRequired,
+  handlePurposeTypeChange: PropTypes.func.isRequired,
+  purposeTypeDropdownData: PropTypes.arrayOf(
+    PropTypes.shape({
+      fieldCode: PropTypes.string,
+      fieldValue: PropTypes.string
+    })
+  ).isRequired,
+  purposeTitleEntries: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      language: PropTypes.string.isRequired,
+      text: PropTypes.string.isRequired
+    })
+  ).isRequired,
+  addPurposeTitleEntry: PropTypes.func.isRequired,
+  updatePurposeTitleEntry: PropTypes.func.isRequired,
+  deletePurposeTitleEntry: PropTypes.func.isRequired,
+  purposeTitleErrors: PropTypes.object.isRequired,
+  purposeTitleDefaultError: PropTypes.string.isRequired,
+  purposeSubtitleEntries: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      language: PropTypes.string.isRequired,
+      text: PropTypes.string.isRequired
+    })
+  ).isRequired,
+  addPurposeSubtitleEntry: PropTypes.func.isRequired,
+  updatePurposeSubtitleEntry: PropTypes.func.isRequired,
+  deletePurposeSubtitleEntry: PropTypes.func.isRequired,
+  purposeSubtitleErrors: PropTypes.object.isRequired,
+  purposeSubtitleDefaultError: PropTypes.string.isRequired,
+  languageDropdownData: PropTypes.arrayOf(
+    PropTypes.shape({
+      fieldCode: PropTypes.string,
+      fieldValue: PropTypes.string
+    })
+  ).isRequired,
+  styles: PropTypes.shape({
+    outerDiv: PropTypes.string,
+    dropdownLabel: PropTypes.string,
+    dropdownButton: PropTypes.string,
+    selectionBox: PropTypes.string
+  }).isRequired
+};
 
 export default OidcClientAdditionalInfoSection;
 
