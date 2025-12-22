@@ -1543,3 +1543,138 @@ export const fetchPartnerDetails = async (HttpService, partnerId, setErrorCode, 
         return null;
     }
 };
+
+// ============================================================================
+// OIDC Client Helper Functions
+// ============================================================================
+
+/**
+ * Creates a new entry object for language-based fields (client name, purpose title/subtitle)
+ * @param {string} language - The language code
+ * @param {string} type - The type of entry ('clientName', 'purposeTitle', 'purposeSubtitle')
+ * @returns {Object} Entry object with id, language, and text
+ */
+export const createOidcClientEntry = (language, type) => {
+    const baseId = crypto.randomUUID();
+    let uniqueId;
+    
+    switch (type) {
+        case 'clientName':
+            uniqueId = `oidc_name_${baseId}`;
+            break;
+        case 'purposeTitle':
+            uniqueId = `purpose_title_${baseId}`;
+            break;
+        case 'purposeSubtitle':
+            uniqueId = `purpose_subtitle_${baseId}`;
+            break;
+        default:
+            uniqueId = `entry_${type}_${baseId}`;
+    }
+    
+    return {
+        id: uniqueId,
+        language: language,
+        text: ''
+    };
+};
+
+/**
+ * Finds an available language from the dropdown data that hasn't been used
+ * @param {Array} usedLanguages - Array of language codes already in use
+ * @param {Array} languageDropdownData - Available language options
+ * @returns {Object|undefined} First available language object or undefined
+ */
+export const findAvailableOidcLanguage = (usedLanguages, languageDropdownData) => {
+    return languageDropdownData.find(lang => !usedLanguages.includes(lang.fieldValue));
+};
+
+/**
+ * Validates entry text for language-based fields
+ * @param {string} value - The text value to validate
+ * @param {Object} entry - The entry object being validated
+ * @param {string} requiredErrorKey - Translation key for required error
+ * @param {Object} errors - Current errors object
+ * @param {Function} setErrors - Function to update errors
+ * @param {Function} t - Translation function
+ */
+export const validateOidcEntryText = (value, entry, requiredErrorKey, errors, setErrors, t) => {
+    const newErrors = { ...errors };
+    let inputError = "";
+
+    validateInputRegex(value, (error) => {
+        inputError = error;
+    }, t);
+
+    // Determine which error to show (priority: required > regex)
+    if (entry.text.trim() === '' && entry.text !== '') {
+        newErrors[entry.id] = t(requiredErrorKey);
+    } else if (inputError) {
+        newErrors[entry.id] = inputError;
+    } else {
+        delete newErrors[entry.id];
+    }
+    setErrors(newErrors);
+};
+
+/**
+ * Gets placeholder text based on language code and field type
+ * @param {string} languageCode - The language code
+ * @param {string} fieldType - The field type (e.g., 'NameForOidcClient', 'PurposeTitle', 'PurposeSubtitle')
+ * @param {Function} t - Translation function
+ * @returns {string} Placeholder text
+ */
+export const getOidcPlaceholderForLanguage = (languageCode, fieldType, t) => {
+    if (!languageCode || languageCode === 'default') {
+        const fallbackKey = `createOidcClient.enter${fieldType}Default`;
+        return t(fallbackKey);
+    }
+    
+    const langCode = languageCode.toLowerCase();
+    
+    // Use the new translation keys that have text in the target language
+    const placeholderKey = `createOidcClient.enter${fieldType}In${langCode.charAt(0).toUpperCase() + langCode.slice(1)}`;
+    const fallbackKey = `createOidcClient.enter${fieldType}Default`;
+    
+    // Get translation (all translation files have the same keys with target language text)
+    let placeholder = t(placeholderKey);
+    if (placeholder === placeholderKey) {
+        placeholder = t(fallbackKey);
+    }
+    
+    return placeholder;
+};
+
+/**
+ * Gets available languages for a specific entry, excluding already used languages
+ * @param {string} currentEntryId - ID of the current entry
+ * @param {Array} entries - Array of all entries
+ * @param {Array} languageDropdownData - Available language options
+ * @param {boolean} excludeDefault - Whether to exclude 'default' from available languages
+ * @returns {Array} Filtered array of available languages
+ */
+export const getAvailableOidcLanguages = (currentEntryId, entries, languageDropdownData, excludeDefault = false) => {
+    const currentEntry = entries.find(e => e.id === currentEntryId);
+    const currentLanguage = currentEntry ? currentEntry.language : '';
+    const usedLanguages = entries
+        .filter(e => e.id !== currentEntryId && e.language)
+        .map(e => e.language);
+    
+    return languageDropdownData.filter(lang => {
+        if (excludeDefault && lang.fieldValue === 'default') {
+            return false;
+        }
+        return !usedLanguages.includes(lang.fieldValue) || lang.fieldValue === currentLanguage;
+    });
+};
+
+/**
+ * Gets available languages specifically for client name lang map (excludes 'default')
+ * @param {string} currentEntryId - ID of the current entry
+ * @param {Array} clientNameLangMapEntries - Array of client name lang map entries
+ * @param {Array} languageDropdownData - Available language options
+ * @returns {Array} Filtered array of available languages
+ */
+export const getAvailableLanguagesForClientNameLangMap = (currentEntryId, clientNameLangMapEntries, languageDropdownData) => {
+    return getAvailableOidcLanguages(currentEntryId, clientNameLangMapEntries, languageDropdownData, true);
+};
