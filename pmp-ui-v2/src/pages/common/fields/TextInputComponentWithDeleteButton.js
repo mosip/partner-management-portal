@@ -16,7 +16,8 @@ function TextInputComponentWithDeleteButton({
   className = "",
   containerClassName = "",
   isRTL = null,
-  languageCode = null
+  languageCode = null,
+  disabled = false
 }) {
   const { t } = useTranslation();
   const isLoginLanguageRTL = isRTL !== null ? isRTL : isLangRTL(getUserProfile().locale);
@@ -52,7 +53,8 @@ function TextInputComponentWithDeleteButton({
           maxLength={maxLength}
           placeholder={placeholder}
           dir={isLoginLanguageRTL ? 'rtl' : 'ltr'}
-          className={`h-10 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline w-full ${showDelete ? (isLoginLanguageRTL ? 'pl-28' : 'pr-28') : ''} ${className}`}
+          disabled={disabled}
+          className={`h-10 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue ${disabled ? 'bg-platinum-gray' : 'bg-white'} leading-tight focus:outline-none focus:shadow-outline w-full ${showDelete ? (isLoginLanguageRTL ? 'pl-28' : 'pr-28') : ''} ${className}`}
           id={id}
         />
         {showDelete && (
@@ -60,12 +62,13 @@ function TextInputComponentWithDeleteButton({
             role='button'
             id={`${id}_delete`}
             className={`absolute ${isLoginLanguageRTL ? 'left-2' : 'right-2'} top-1/2 -translate-y-1/2 flex flex-row items-center`}
-            onClick={handleDelete}
-            tabIndex="0"
-            onKeyDown={(e) => onPressEnterKey(e, handleDelete)}
+            onClick={disabled ? undefined : handleDelete}
+            tabIndex={disabled ? -1 : 0}
+            onKeyDown={disabled ? undefined : (e) => onPressEnterKey(e, handleDelete)}
+            style={{ pointerEvents: disabled ? 'none' : 'auto' }}
           >
-            <img src={deleteIconBlue} alt="Delete" className="w-[18px] h-5 mx-1 cursor-pointer" />
-            <p className="text-sm font-normal text-[#1447b2] cursor-pointer">
+            <img src={deleteIconBlue} alt="Delete" className={`w-[18px] h-5 mx-1 ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`} />
+            <p className={`text-sm font-normal ${disabled ? 'text-gray-400 cursor-not-allowed' : 'text-[#1447b2] cursor-pointer'}`}>
               {getDeleteLabel()}
             </p>
           </div>
@@ -92,7 +95,8 @@ TextInputComponentWithDeleteButton.propTypes = {
   className: PropTypes.string,
   containerClassName: PropTypes.string,
   isRTL: PropTypes.bool,
-  languageCode: PropTypes.string
+  languageCode: PropTypes.string,
+  disabled: PropTypes.bool
 };
 
 export default TextInputComponentWithDeleteButton;

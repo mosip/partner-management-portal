@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -656,6 +657,10 @@ function OidcClientDetailsPage({ variant }) {
         </div>
     );
 }
+
+OidcClientDetailsPage.propTypes = {
+    variant: PropTypes.oneOf(['admin', 'partner']).isRequired,
+};
 
 export default OidcClientDetailsPage;
 

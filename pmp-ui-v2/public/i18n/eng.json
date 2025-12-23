@@ -518,7 +518,7 @@
         "duplicateLanguage": "Each language can only be used once",
         "clientNameTooltip": "Enter the client name in multiple languages. The default language will be used as fallback.",
         "clientNameRequired": "Client name cannot be empty",
-        "consentExpiryPlaceholder": "10 mins",
+        "consentExpiryPlaceholder": "Enter duration in minutes",
         "purposeTypeTooltip": "Select the purpose type for the OIDC client",
         "addTitle": "Add Title",
         "addSubtitle": "Add Subtitle",
