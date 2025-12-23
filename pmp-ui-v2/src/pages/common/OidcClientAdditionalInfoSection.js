@@ -140,7 +140,7 @@ function OidcClientAdditionalInfoSection({
                 value={consentExpiry}
                 onChange={(e) => handleConsentExpiryChange(e.target.value)}
                 className={`h-10 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue ${additionalConfigRequired ? "bg-white" : "bg-platinum-gray"}  leading-tight focus:outline-none focus:shadow-outline w-full`}
-                placeholder={additionalConfigRequired && t('createOidcClient.consentExpiryPlaceholder')}
+                placeholder={t('createOidcClient.consentExpiryPlaceholder')}
                 readOnly={!additionalConfigRequired}
               />
               {consentExpiryError && <span id="consent_expiry_error" className="text-sm text-crimson-red font-semibold mt-1">{consentExpiryError}</span>}
@@ -193,10 +193,11 @@ function OidcClientAdditionalInfoSection({
                   <button
                     type="button"
                     id="add_purpose_title_language"
-                    className="bg-[#1447b2] text-white font-semibold text-sm px-6 py-2 rounded-md cursor-pointer hover:bg-[#0f3a8a] transition-colors"
-                    tabIndex="0"
-                    onKeyDown={(e) => onPressEnterKey(e, addPurposeTitleEntry)}
-                    onClick={addPurposeTitleEntry}
+                    className={`${additionalConfigRequired ? 'bg-[#1447b2] text-white hover:bg-[#0f3a8a] cursor-pointer' : 'bg-[#A5A5A5] text-white'} font-semibold text-sm px-6 py-2 rounded-md transition-colors`}
+                    tabIndex={additionalConfigRequired ? 0 : -1}
+                    onKeyDown={additionalConfigRequired ? (e) => onPressEnterKey(e, addPurposeTitleEntry) : undefined}
+                    onClick={additionalConfigRequired ? addPurposeTitleEntry : undefined}
+                    disabled={!additionalConfigRequired}
                   >
                     {t('createOidcClient.addTitle')}
                   </button>
@@ -219,7 +220,8 @@ function OidcClientAdditionalInfoSection({
                             placeHolderKey="createOidcClient.selectLanguage"
                             selectedDropdownValue={entry.language}
                             styleSet={styles}
-                            id={`purpose_title_lang_${index + 1}`} />
+                            id={`purpose_title_lang_${index + 1}`}
+                            disabled={!additionalConfigRequired} />
                         </div>
                         <div className={`w-full mt-1 ${isLoginLanguageRTL ? 'mr-5' : 'ml-5'}`}>
                           <TextInputComponentWithDeleteButton
@@ -232,6 +234,7 @@ function OidcClientAdditionalInfoSection({
                             errorMessage={purposeTitleErrors[entry.id]}
                             isRTL={isLangRTL(entry.language)}
                             languageCode={entry.language}
+                            disabled={!additionalConfigRequired}
                           />
                         </div>
                       </div>
@@ -241,10 +244,10 @@ function OidcClientAdditionalInfoSection({
                     <div
                       role="button"
                       id="add_purpose_title_language"
-                      className="text-[#1447b2] font-bold text-xs w-fit cursor-pointer"
-                      tabIndex="0"
-                      onKeyDown={(e) => onPressEnterKey(e, addPurposeTitleEntry)}
-                      onClick={addPurposeTitleEntry}
+                      className={`font-bold text-xs w-fit ${additionalConfigRequired ? 'text-[#1447b2] cursor-pointer' : 'text-gray-400'}`}
+                      tabIndex={additionalConfigRequired ? 0 : -1}
+                      onKeyDown={additionalConfigRequired ? (e) => onPressEnterKey(e, addPurposeTitleEntry) : undefined}
+                      onClick={additionalConfigRequired ? addPurposeTitleEntry : undefined}
                     >
                       <span className="text-lg text-center">+</span>
                       <span>{t('createOidcClient.addNew')}</span>
@@ -270,10 +273,11 @@ function OidcClientAdditionalInfoSection({
                   <button
                     type="button"
                     id="add_purpose_subtitle_language"
-                    className="bg-[#1447b2] text-white font-semibold text-sm px-6 py-2 rounded-md cursor-pointer hover:bg-[#0f3a8a] transition-colors"
-                    tabIndex="0"
-                    onKeyDown={(e) => onPressEnterKey(e, addPurposeSubtitleEntry)}
-                    onClick={addPurposeSubtitleEntry}
+                    className={`${additionalConfigRequired ? 'bg-[#1447b2] text-white hover:bg-[#0f3a8a] cursor-pointer' : 'bg-[#A5A5A5] text-white'} font-semibold text-sm px-6 py-2 rounded-md transition-colors`}
+                    tabIndex={additionalConfigRequired ? 0 : -1}
+                    onKeyDown={additionalConfigRequired ? (e) => onPressEnterKey(e, addPurposeSubtitleEntry) : undefined}
+                    onClick={additionalConfigRequired ? addPurposeSubtitleEntry : undefined}
+                    disabled={!additionalConfigRequired}
                   >
                     {t('createOidcClient.addSubtitle')}
                   </button>
@@ -296,7 +300,8 @@ function OidcClientAdditionalInfoSection({
                             placeHolderKey="createOidcClient.selectLanguage"
                             selectedDropdownValue={entry.language}
                             styleSet={styles}
-                            id={`purpose_subtitle_lang_${index + 1}`} />
+                            id={`purpose_subtitle_lang_${index + 1}`}
+                            disabled={!additionalConfigRequired} />
                         </div>
                         <div className={`w-full mt-1 ${isLoginLanguageRTL ? 'mr-5' : 'ml-5'}`}>
                           <TextInputComponentWithDeleteButton
@@ -309,6 +314,7 @@ function OidcClientAdditionalInfoSection({
                             errorMessage={purposeSubtitleErrors[entry.id]}
                             isRTL={isLangRTL(entry.language)}
                             languageCode={entry.language}
+                            disabled={!additionalConfigRequired}
                           />
                         </div>
                       </div>
@@ -318,10 +324,10 @@ function OidcClientAdditionalInfoSection({
                     <div
                       role="button"
                       id="add_purpose_subtitle_language"
-                      className="text-[#1447b2] font-bold text-xs w-fit cursor-pointer"
-                      tabIndex="0"
-                      onKeyDown={(e) => onPressEnterKey(e, addPurposeSubtitleEntry)}
-                      onClick={addPurposeSubtitleEntry}
+                      className={`font-bold text-xs w-fit ${additionalConfigRequired ? 'text-[#1447b2] cursor-pointer' : 'text-gray-400'}`}
+                      tabIndex={additionalConfigRequired ? 0 : -1}
+                      onKeyDown={additionalConfigRequired ? (e) => onPressEnterKey(e, addPurposeSubtitleEntry) : undefined}
+                      onClick={additionalConfigRequired ? addPurposeSubtitleEntry : undefined}
                     >
                       <span className="text-lg text-center">+</span>
                       <span>{t('createOidcClient.addNew')}</span>

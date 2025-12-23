@@ -12,7 +12,7 @@ import {
   isOidcClientAdditionalInfoRequired,
   buildClientNameLangMap,
   createOidcClientEntry, findAvailableOidcLanguage, validateOidcEntryText,
-  getOidcPlaceholderForLanguage, getAvailableOidcLanguages, getAvailableLanguagesForClientNameLangMap
+  getOidcPlaceholderForLanguage, getAvailableOidcLanguages
 } from '../../../utils/AppUtils';
 import { HttpService } from '../../../services/HttpService';
 import DropdownWithSearchComponent from "../../common/fields/DropdownWithSearchComponent";
@@ -902,7 +902,7 @@ function CreateOidcClient() {
                               ) : (
                                 <div className="bg-white border border-neutral-300 shadow-sm rounded-md p-4">
                                   {clientNameLangMapEntries.map((entry, index) => {
-                                    const availableLangs = getAvailableLanguagesForClientNameLangMap(entry.id, clientNameLangMapEntries, languageDropdownData);
+                                    const availableLangs = getAvailableOidcLanguages(entry.id, clientNameLangMapEntries, languageDropdownData, true);
                                     return (
                                       <div key={index} className="flex mb-2">
                                         <div className="w-1/3">
@@ -1072,7 +1072,7 @@ function CreateOidcClient() {
                     <button id="create_oidc_clear_form" onClick={() => clearForm()} className="mr-2 w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold">{t('requestPolicy.clearForm')}</button>
                     <div className="flex flex-row space-x-3 w-full md:w-auto justify-end">
                       <button id="create_oidc_cancel_btn" onClick={() => clickOnCancel()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.cancel')}</button>
-                      <button id="create_oidc_submit_btn" disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>{t('requestPolicy.submit')}</button>
+                      <button id="create_oidc_submit_btn" disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white'}`}>{t('requestPolicy.submit')}</button>
                     </div>
                   </div>
                 </div>

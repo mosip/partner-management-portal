@@ -15,7 +15,7 @@ import {
     isOidcClientAdditionalInfoRequired,
     buildClientNameLangMap,
     createOidcClientEntry, findAvailableOidcLanguage, validateOidcEntryText,
-    getOidcPlaceholderForLanguage, getAvailableOidcLanguages, getAvailableLanguagesForClientNameLangMap
+    getOidcPlaceholderForLanguage, getAvailableOidcLanguages
 } from "../../../utils/AppUtils";
 import LoadingIcon from "../../common/LoadingIcon";
 import ErrorMessage from "../../common/ErrorMessage";
@@ -234,6 +234,43 @@ function EditOidcClient() {
         };
         fetchLanguages();
     }, [t]);
+
+    // Helper function to add missing languages to dropdown data
+    const addMissingLanguagesToDropdown = useCallback((entries, currentDropdownData) => {
+        if (!entries || entries.length === 0) {
+            return currentDropdownData;
+        }
+
+        const existingLanguageCodes = new Set(
+            currentDropdownData.map(item => item.fieldValue).filter(code => code)
+        );
+
+        const missingLanguages = [];
+        entries.forEach(entry => {
+            if (entry.language && 
+                entry.language !== 'default' && 
+                !existingLanguageCodes.has(entry.language)) {
+                missingLanguages.push(entry.language);
+                existingLanguageCodes.add(entry.language);
+            }
+        });
+
+        if (missingLanguages.length === 0) {
+            return currentDropdownData;
+        }
+
+        const newLanguageEntries = missingLanguages.map(langCode => ({
+            languageCode: langCode,
+            name: getLanguageDisplayName(langCode, t)
+        }));
+
+        const newDropdownItems = newLanguageEntries.map(lang => ({
+            fieldCode: lang.name,
+            fieldValue: lang.languageCode
+        }));
+
+        return [...currentDropdownData, ...newDropdownItems];
+    }, [t]);
     
   useEffect(() => {
          const clientData = sessionStorage.getItem('selectedClientData');
@@ -265,8 +302,9 @@ function EditOidcClient() {
                         setClientName(resData.name || '');
                         
                         // Initialize client name lang map
+                        let langMapEntries = [];
                         if (resData.clientNameLangMap && typeof resData.clientNameLangMap === 'object') {
-                            const langMapEntries = Object.entries(resData.clientNameLangMap).map(([language, text]) => ({
+                            langMapEntries = Object.entries(resData.clientNameLangMap).map(([language, text]) => ({
                                 id: `oidc_name_${crypto.randomUUID()}`,
                                 language: language,
                                 text: text || ''
@@ -275,6 +313,8 @@ function EditOidcClient() {
                         }
                         
                         // Initialize additionalConfig fields
+                        let titleEntries = [];
+                        let subtitleEntries = [];
                         if (resData.additionalConfig) {
                             const additionalConfig = resData.additionalConfig;
                              
@@ -299,7 +339,7 @@ function EditOidcClient() {
                                  
                                  // Initialize purpose title entries
                                 if (additionalConfig.purpose.title && typeof additionalConfig.purpose.title === 'object') {
-                                    const titleEntries = Object.entries(additionalConfig.purpose.title).map(([langKey, text]) => ({
+                                    titleEntries = Object.entries(additionalConfig.purpose.title).map(([langKey, text]) => ({
                                         id: `purpose_title_${crypto.randomUUID()}`,
                                         language: langKey === '@none' ? 'default' : langKey,
                                         text: text || ''
@@ -309,7 +349,7 @@ function EditOidcClient() {
                                  
                                  // Initialize purpose subtitle entries
                                 if (additionalConfig.purpose.subTitle && typeof additionalConfig.purpose.subTitle === 'object') {
-                                    const subtitleEntries = Object.entries(additionalConfig.purpose.subTitle).map(([langKey, text]) => ({
+                                    subtitleEntries = Object.entries(additionalConfig.purpose.subTitle).map(([langKey, text]) => ({
                                         id: `purpose_subtitle_${crypto.randomUUID()}`,
                                         language: langKey === '@none' ? 'default' : langKey,
                                         text: text || ''
@@ -318,6 +358,14 @@ function EditOidcClient() {
                                 }
                              }
                          }
+                         
+                         // Add missing languages from API response to dropdown data
+                         setLanguageDropdownData(prevDropdownData => {
+                             let updatedData = addMissingLanguagesToDropdown(langMapEntries, prevDropdownData);
+                             updatedData = addMissingLanguagesToDropdown(titleEntries, updatedData);
+                             updatedData = addMissingLanguagesToDropdown(subtitleEntries, updatedData);
+                             return updatedData;
+                         });
                      } else {
                          setUnexpectedError(true);
                          handleServiceErrors(responseData, setErrorCode, setErrorMsg);
@@ -336,7 +384,7 @@ function EditOidcClient() {
              }
          };
          fetchData();
-     }, [createGrantTypesDropdownData, t]);
+     }, [createGrantTypesDropdownData, t, addMissingLanguagesToDropdown]);
 
     const cancelErrorMsg = () => {
         setErrorMsg("");
@@ -1027,7 +1075,7 @@ function EditOidcClient() {
                                                                     ) : (
                                                                         <div className="bg-white border border-neutral-300 shadow-sm rounded-md p-4">
                                                                             {clientNameLangMapEntries.map((entry, index) => {
-                                                                                const availableLangs = getAvailableLanguagesForClientNameLangMap(entry.id, clientNameLangMapEntries, languageDropdownData);
+                                                                                const availableLangs = getAvailableOidcLanguages(entry.id, clientNameLangMapEntries, languageDropdownData, true);
                                                                                 return (
                                                                                     <div key={index} className="flex mb-2">
                                                                                         <div className="w-1/3">
@@ -1194,7 +1242,7 @@ function EditOidcClient() {
                                                 <button id="oidc_edit_undo_changes_btn" onClick={() => undoChanges()} className="mr-2 w-40 min-w-fit px-3 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold">{t('commons.undoChanges')}</button>
                                                 <div className="flex flex-row space-x-3 w-full md:w-auto justify-end">
                                                     <button id="oidc_edit_cancel_btn" onClick={() => clickOnCancel()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.cancel')}</button>
-                                                    <button id="oidc_edit_submit_btn" disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>{t('requestPolicy.submit')}</button>
+                                                    <button id="oidc_edit_submit_btn" disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white'}`}>{t('requestPolicy.submit')}</button>
                                                 </div>
                                             </div>
                                         </div>
