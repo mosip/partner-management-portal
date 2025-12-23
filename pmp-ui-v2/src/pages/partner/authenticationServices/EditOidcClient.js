@@ -15,7 +15,8 @@ import {
     isOidcClientAdditionalInfoRequired,
     buildClientNameLangMap,
     createOidcClientEntry, findAvailableOidcLanguage, validateOidcEntryText,
-    getOidcPlaceholderForLanguage, getAvailableOidcLanguages
+    getOidcPlaceholderForLanguage, getAvailableOidcLanguages,
+    initializeUserInfoResponseTypeDropdown, initializePurposeTypeDropdown, initializeLanguageDropdown
 } from "../../../utils/AppUtils";
 import LoadingIcon from "../../common/LoadingIcon";
 import ErrorMessage from "../../common/ErrorMessage";
@@ -27,7 +28,6 @@ import BlockerPrompt from "../../common/BlockerPrompt";
 import somethingWentWrongIcon from '../../../svg/something_went_wrong_icon.svg';
 import expandToggleIcon from '../../../svg/expand_toggle_icon.svg';
 import TextInputComponentWithDeleteButton from '../../common/fields/TextInputComponentWithDeleteButton';
-import { getAppConfig } from '../../../services/ConfigService';
 import OidcClientAdditionalInfoSection from '../../common/OidcClientAdditionalInfoSection';
 
 function EditOidcClient() {
@@ -157,6 +157,25 @@ function EditOidcClient() {
         return dataArr;
     }, [t]);
 
+    // Initialize User Info Response Type dropdown
+    useEffect(() => {
+        setUserInfoResponseTypeDropdownData(initializeUserInfoResponseTypeDropdown(t));
+    }, [t]);
+
+    // Initialize Purpose Type dropdown
+    useEffect(() => {
+        setPurposeTypeDropdownData(initializePurposeTypeDropdown(t));
+    }, [t]);
+
+    // Initialize Language dropdown
+    useEffect(() => {
+        const fetchLanguages = async () => {
+            const data = await initializeLanguageDropdown(t);
+            setLanguageDropdownData(data);
+        };
+        fetchLanguages();
+    }, [t]);
+
     useEffect(() => {
         const checkAdditionalConfigSupport = async () => {
           const isRequired = await isOidcClientAdditionalInfoRequired();
@@ -171,69 +190,6 @@ function EditOidcClient() {
         };
         checkAdditionalConfigSupport();
     }, []);
-
-    // Initialize User Info Response Type dropdown
-    useEffect(() => {
-        const userInfoResponseTypeData = [
-            { fieldCode: t('createOidcClient.jws'), fieldValue: 'JWS' },
-            { fieldCode: t('createOidcClient.jwe'), fieldValue: 'JWE' }
-        ];
-        const dropdownData = createDropdownData("fieldValue", "", true, userInfoResponseTypeData, t, t("createOidcClient.selectUserInfoResponseType"));
-        const finalData = dropdownData.map(item => {
-            if (item.fieldValue === '') return item;
-            const originalItem = userInfoResponseTypeData.find(d => d.fieldValue === item.fieldValue);
-            return originalItem ? { ...item, fieldCode: originalItem.fieldCode } : item;
-        });
-        setUserInfoResponseTypeDropdownData(finalData);
-    }, [t]);
-
-    // Initialize Purpose Type dropdown
-    useEffect(() => {
-        const purposeTypeData = [
-            { fieldCode: t('createOidcClient.login'), fieldValue: 'login' },
-            { fieldCode: t('createOidcClient.link'), fieldValue: 'link' },
-            { fieldCode: t('createOidcClient.verify'), fieldValue: 'verify' }
-        ];
-        const dropdownData = createDropdownData("fieldValue", "", true, purposeTypeData, t, t("createOidcClient.selectPurposeType"));
-        const finalData = dropdownData.map(item => {
-            if (item.fieldValue === '') return item;
-            const originalItem = purposeTypeData.find(d => d.fieldValue === item.fieldValue);
-            return originalItem ? { ...item, fieldCode: originalItem.fieldCode } : item;
-        });
-        setPurposeTypeDropdownData(finalData);
-    }, [t]);
-
-    // Initialize Language dropdown
-    useEffect(() => {
-        const fetchLanguages = async () => {
-            try {
-                const appConfig = await getAppConfig();
-                const supportedLanguages = appConfig && appConfig.supportedOidcLanguages;
-                let languageCodes = [];
-                if (Array.isArray(supportedLanguages)) {
-                    languageCodes = supportedLanguages;
-                } else if (typeof supportedLanguages === 'string') {
-                    languageCodes = supportedLanguages.split(',').map(code => code.trim()).filter(code => code);
-                }
-
-                const languageData = languageCodes.map(langCode => ({
-                    languageCode: langCode,
-                    name: getLanguageDisplayName(langCode, t)
-                }));
-
-                const defaultOption = { languageCode: 'default', name: t('createOidcClient.default') };
-                const allLanguages = [defaultOption, ...languageData.map(lang => ({
-                    languageCode: lang.languageCode,
-                    name: lang.name
-                }))];
-
-                setLanguageDropdownData(createDropdownData('languageCode', 'name', false, allLanguages, t));
-            } catch (err) {
-                console.error('Error fetching languages:', err);
-            }
-        };
-        fetchLanguages();
-    }, [t]);
 
     // Helper function to add missing languages to dropdown data
     const addMissingLanguagesToDropdown = useCallback((entries, currentDropdownData) => {

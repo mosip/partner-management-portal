@@ -1643,3 +1643,74 @@ export const getAvailableOidcLanguages = (currentEntryId, entries, languageDropd
         return !usedLanguages.includes(lang.fieldValue) || lang.fieldValue === currentLanguage;
     });
 };
+
+/**
+ * Initializes User Info Response Type dropdown data
+ */
+export const initializeUserInfoResponseTypeDropdown = (t) => {
+    const userInfoResponseTypeData = [
+        { fieldCode: t('createOidcClient.jws'), fieldValue: 'JWS' },
+        { fieldCode: t('createOidcClient.jwe'), fieldValue: 'JWE' }
+    ];
+    // Add blank entry
+    const dropdownData = createDropdownData("fieldValue", "", true, userInfoResponseTypeData, t, t("createOidcClient.selectUserInfoResponseType"));
+    
+    const finalData = dropdownData.map(item => {
+        if (item.fieldValue === '') return item; // Keep blank entry as is
+        const originalItem = userInfoResponseTypeData.find(d => d.fieldValue === item.fieldValue);
+        return originalItem ? { ...item, fieldCode: originalItem.fieldCode } : item;
+    });
+    return finalData;
+};
+
+/**
+ * Initializes Purpose Type dropdown data
+ */
+export const initializePurposeTypeDropdown = (t) => {
+    const purposeTypeData = [
+        { fieldCode: t('createOidcClient.login'), fieldValue: 'login' },
+        { fieldCode: t('createOidcClient.link'), fieldValue: 'link' },
+        { fieldCode: t('createOidcClient.verify'), fieldValue: 'verify' }
+    ];
+    // Add blank entry
+    const dropdownData = createDropdownData("fieldValue", "", true, purposeTypeData, t, t("createOidcClient.selectPurposeType"));
+    const finalData = dropdownData.map(item => {
+        if (item.fieldValue === '') return item; // Keep blank entry as is
+        const originalItem = purposeTypeData.find(d => d.fieldValue === item.fieldValue);
+        return originalItem ? { ...item, fieldCode: originalItem.fieldCode } : item;
+    });
+    return finalData;
+};
+
+/**
+ * Initializes Language dropdown data
+ */
+export const initializeLanguageDropdown = async (t) => {
+    try {
+        const appConfig = await getAppConfig();
+        const supportedLanguages = appConfig && appConfig.supportedOidcLanguages;
+        let languageCodes = [];
+        if (Array.isArray(supportedLanguages)) {
+            languageCodes = supportedLanguages;
+        } else if (typeof supportedLanguages === 'string') {
+            languageCodes = supportedLanguages.split(',').map(code => code.trim()).filter(code => code);
+        }
+
+        const languageData = languageCodes.map(langCode => ({
+            languageCode: langCode,
+            name: getLanguageDisplayName(langCode, t)
+        }));
+
+        // Add "Default" option at the beginning
+        const defaultOption = { languageCode: 'default', name: t('createOidcClient.default') };
+        const allLanguages = [defaultOption, ...languageData.map(lang => ({
+            languageCode: lang.languageCode,
+            name: lang.name
+        }))];
+
+        return createDropdownData('languageCode', 'name', false, allLanguages, t);
+    } catch (err) {
+        console.error('Error fetching languages:', err);
+        return [];
+    }
+};
