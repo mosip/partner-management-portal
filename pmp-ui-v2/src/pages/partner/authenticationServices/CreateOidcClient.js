@@ -8,11 +8,12 @@ import {
   moveToOidcClientsList, getGrantTypes, getApprovedAuthPartners,
   isLangRTL, createDropdownData, validateUrl, getPartnerPolicyRequests,
   onPressEnterKey, trimAndReplace, validateInputRegex,
-  getLanguageDisplayName, createRequest,
+  createRequest,
   isOidcClientAdditionalInfoRequired,
   buildClientNameLangMap,
   createOidcClientEntry, findAvailableOidcLanguage, validateOidcEntryText,
-  getOidcPlaceholderForLanguage, getAvailableOidcLanguages
+  getOidcPlaceholderForLanguage, getAvailableOidcLanguages,
+  initializeUserInfoResponseTypeDropdown, initializePurposeTypeDropdown, initializeLanguageDropdown
 } from '../../../utils/AppUtils';
 import { HttpService } from '../../../services/HttpService';
 import DropdownWithSearchComponent from "../../common/fields/DropdownWithSearchComponent";
@@ -23,7 +24,6 @@ import Information from "../../common/fields/Information";
 import Title from "../../common/Title";
 import Confirmation from "../../common/Confirmation";
 import JSON5 from 'json5';
-import { getAppConfig } from '../../../services/ConfigService';
 import expandToggleIcon from '../../../svg/expand_toggle_icon.svg';
 import TextInputComponentWithDeleteButton from '../../common/fields/TextInputComponentWithDeleteButton';
 import OidcClientAdditionalInfoSection from '../../common/OidcClientAdditionalInfoSection';
@@ -187,6 +187,25 @@ function CreateOidcClient() {
     checkAdditionalConfigSupport();
   }, []);
 
+  // Initialize User Info Response Type dropdown
+  useEffect(() => {
+    setUserInfoResponseTypeDropdownData(initializeUserInfoResponseTypeDropdown(t));
+  }, [t]);
+
+  // Initialize Purpose Type dropdown
+  useEffect(() => {
+    setPurposeTypeDropdownData(initializePurposeTypeDropdown(t));
+  }, [t]);
+
+  // Initialize Language dropdown
+  useEffect(() => {
+    const fetchLanguages = async () => {
+      const data = await initializeLanguageDropdown(t);
+      setLanguageDropdownData(data);
+    };
+    fetchLanguages();
+  }, [t]);
+
   useEffect(() => {
     const config = sessionStorage.getItem('appConfig');
     if (config) {
@@ -202,75 +221,6 @@ function CreateOidcClient() {
       }
     }
   }, [createGrantTypesDropdownData, defaultGrantTypesList])
-
-  // Initialize User Info Response Type dropdown
-  useEffect(() => {
-    const userInfoResponseTypeData = [
-      { fieldCode: t('createOidcClient.jws'), fieldValue: 'JWS' },
-      { fieldCode: t('createOidcClient.jwe'), fieldValue: 'JWE' }
-    ];
-    // Add blank entry at the beginning using createDropdownData pattern
-    const dropdownData = createDropdownData("fieldValue", "", true, userInfoResponseTypeData, t, t("createOidcClient.selectUserInfoResponseType"));
-    // Restore translated fieldCode values (createDropdownData overwrites them)
-    const finalData = dropdownData.map(item => {
-      if (item.fieldValue === '') return item; // Keep blank entry as is
-      const originalItem = userInfoResponseTypeData.find(d => d.fieldValue === item.fieldValue);
-      return originalItem ? { ...item, fieldCode: originalItem.fieldCode } : item;
-    });
-    setUserInfoResponseTypeDropdownData(finalData);
-  }, [t]);
-
-  // Initialize Purpose Type dropdown
-  useEffect(() => {
-    const purposeTypeData = [
-      { fieldCode: t('createOidcClient.login'), fieldValue: 'login' },
-      { fieldCode: t('createOidcClient.link'), fieldValue: 'link' },
-      { fieldCode: t('createOidcClient.verify'), fieldValue: 'verify' }
-    ];
-    // Add blank entry at the beginning using createDropdownData pattern
-    const dropdownData = createDropdownData("fieldValue", "", true, purposeTypeData, t, t("createOidcClient.selectPurposeType"));
-    // Restore translated fieldCode values (createDropdownData overwrites them)
-    const finalData = dropdownData.map(item => {
-      if (item.fieldValue === '') return item; // Keep blank entry as is
-      const originalItem = purposeTypeData.find(d => d.fieldValue === item.fieldValue);
-      return originalItem ? { ...item, fieldCode: originalItem.fieldCode } : item;
-    });
-    setPurposeTypeDropdownData(finalData);
-  }, [t]);
-
-  // Initialize Language dropdown
-  useEffect(() => {
-    const fetchLanguages = async () => {
-      try {
-        const appConfig = await getAppConfig();
-        const supportedLanguages = appConfig && appConfig.supportedOidcLanguages;
-        let languageCodes = [];
-        if (Array.isArray(supportedLanguages)) {
-          languageCodes = supportedLanguages;
-        } else if (typeof supportedLanguages === 'string') {
-          languageCodes = supportedLanguages.split(',').map(code => code.trim()).filter(code => code);
-        }
-
-        const languageData = languageCodes.map(langCode => ({
-          languageCode: langCode,
-          name: getLanguageDisplayName(langCode, t)
-        }));
-
-        // Add "Default" option at the beginning
-        const defaultOption = { languageCode: 'default', name: t('createOidcClient.default') };
-        const allLanguages = [defaultOption, ...languageData.map(lang => ({
-          languageCode: lang.languageCode,
-          name: lang.name
-        }))];
-
-        setLanguageDropdownData(createDropdownData('languageCode', 'name', false, allLanguages, t));
-      } catch (err) {
-        console.error('Error fetching languages:', err);
-      }
-    };
-    fetchLanguages();
-  }, [t]);
-
 
   useEffect(() => {
     const fetchData = async () => {
