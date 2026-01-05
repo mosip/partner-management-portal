@@ -146,12 +146,11 @@ function EditAdminApiKey() {
 
         try {
             const request = createRequest({
-                apiKeyName: apiKeyDetails.apiKeyLabel,
-                apiKeyExpiryDateTime: selectedDateStr
-            }, "mosip.pms.update.api.key.expiry.patch", true);
+                expiryDateTime: selectedDateStr
+            }, "mosip.pms.update.api.key.patch", true);
 
             const response = await HttpService.patch(
-                getPartnerManagerUrl(`/partners/${apiKeyDetails.partnerId}/policy/${apiKeyDetails.policyId}/apiKey/expiry-date`, process.env.NODE_ENV),
+                getPartnerManagerUrl(`/partners/${apiKeyDetails.partnerId}/policies/${apiKeyDetails.policyId}/api-keys/${apiKeyDetails.apiKeyLabel}`, process.env.NODE_ENV),
                 request,
                 {
                     headers: {
