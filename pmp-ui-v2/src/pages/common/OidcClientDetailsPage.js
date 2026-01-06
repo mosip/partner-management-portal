@@ -384,10 +384,10 @@ function OidcClientDetailsPage({ variant }) {
                                                                 <table className="w-full">
                                                                     <thead>
                                                                         <tr className="bg-[#F8F8F8] border-b border-[#0000001A]">
-                                                                            <th className="py-3 px-4 text-left text-sm font-normal text-black">
+                                                                            <th className={`py-3 px-4 text-sm font-normal text-black ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
                                                                                 {t("viewOidcClientDetails.language")}
                                                                             </th>
-                                                                            <th className="py-3 px-4 text-left text-sm font-normal text-[#36393e]">
+                                                                            <th className={`py-3 px-4 text-sm font-normal text-[#36393e] ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
                                                                                 {t("authenticationServices.oidcClientName")}
                                                                             </th>
                                                                         </tr>
@@ -572,10 +572,10 @@ function OidcClientDetailsPage({ variant }) {
                                                             <table className="w-full">
                                                                 <thead>
                                                                     <tr className="bg-[#F8F8F8] border-b border-[#0000001A]">
-                                                                        <th className="py-3 px-4 text-left text-sm font-normal text-black">
+                                                                        <th className={`py-3 px-4 text-sm font-normal text-black ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
                                                                             {t("viewOidcClientDetails.language")}
                                                                         </th>
-                                                                        <th className="py-3 px-4 text-left text-sm font-normal text-[#031640]">
+                                                                        <th className={`py-3 px-4 text-sm font-normal text-[#031640] ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
                                                                             {t('createOidcClient.purposeTitle')}
                                                                         </th>
                                                                     </tr>
@@ -609,10 +609,10 @@ function OidcClientDetailsPage({ variant }) {
                                                             <table className="w-full">
                                                                 <thead>
                                                                     <tr className="bg-[#F8F8F8] border-b border-[#0000001A]">
-                                                                        <th className="py-3 px-4 text-left text-sm font-normal text-black">
+                                                                        <th className={`py-3 px-4 text-sm font-normal text-black ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
                                                                             {t("viewOidcClientDetails.language")}
                                                                         </th>
-                                                                        <th className="py-3 px-4 text-left text-sm font-normal text-[#031640]">
+                                                                        <th className={`py-3 px-4 text-sm font-normal text-[#031640] ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
                                                                             {t('createOidcClient.purposeSubtitle')}
                                                                         </th>
                                                                     </tr>
