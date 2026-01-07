@@ -17,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import io.mosip.testrig.pmpuiv2.kernel.util.ConfigManager;
+import io.mosip.testrig.pmpuiv2.utility.TestRunner;
 
 public class DBManager {
 
@@ -25,7 +26,8 @@ public class DBManager {
 	/**
 	 * Execute SQL queries from a given file on the specified DB
 	 */
-	public static void executeDBQueries(String dbUrl, String dbUser, String dbPass, String dbSchema, String queryFilePath) {
+	public static void executeDBQueries(String dbUrl, String dbUser, String dbPass, String dbSchema,
+			String queryFilePath) {
 		SessionFactory sessionFactory = null;
 		Session session = null;
 
@@ -95,13 +97,36 @@ public class DBManager {
 
 			LOGGER.info("DB queries executed successfully.");
 			for (int count : rowCounts) {
-				LOGGER.info("➡️ Rows affected: {}", count);
+				LOGGER.info("Rows affected: {}", count);
 			}
 		} catch (Exception e) {
 			LOGGER.error("Error:: While executing DB Queries. {}", e.getMessage(), e);
 		} finally {
-			if (session != null) session.close();
-			if (sessionFactory != null) sessionFactory.close();
+			if (session != null)
+				session.close();
+			if (sessionFactory != null)
+				sessionFactory.close();
 		}
+
+	}
+
+	// DB cleanup
+	public static void cleanUpPartnerUiV2Data() {
+
+		LOGGER.info("===== Starting Partner UI V2 DB Cleanup =====");
+
+		executeDBQueries(ConfigManager.getPMSDbUrl(), ConfigManager.getPMSDbUser(), ConfigManager.getPMSDbPass(),
+				ConfigManager.getPMSDbSchema(),
+				TestRunner.getResourcePath() + "/config/partnerUiv2DataDeleteQueries.txt");
+
+		executeDBQueries(ConfigManager.getKMDbUrl(), ConfigManager.getMasterDbUser(), ConfigManager.getMasterDbPass(),
+				ConfigManager.getMasterDbSchema(),
+				TestRunner.getResourcePath() + "/config/partnerUiv2DataDeleteQueriesForKeyMgr.txt");
+
+		executeDBQueries(ConfigManager.getIdaDbUrl(), ConfigManager.getMasterDbUser(), ConfigManager.getMasterDbPass(),
+				ConfigManager.getIDADBSchema(),
+				TestRunner.getResourcePath() + "/config/partnerUiv2DataDeleteQueriesForIDA.txt");
+
+		LOGGER.info("===== Partner UI V2 DB Cleanup Completed =====");
 	}
 }

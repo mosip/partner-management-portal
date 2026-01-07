@@ -399,7 +399,7 @@ public class PolicyGroupPage extends BasePage {
 		return isElementDisplayed(actionHeader);
 	}
 
-	public boolean isFiletrButtonDisplayedOrEnabled() {
+	public boolean isFilterButtonDisplayedOrEnabled() {
 		return isElementDisplayed(filterButton);
 	}
 
@@ -524,7 +524,7 @@ public class PolicyGroupPage extends BasePage {
 		return isElementDisplayed(policyGroupDescriptionAscIcon);
 	}
 
-	public boolean isCreatedDateTimeDescISconDisplayed() {
+	public boolean isCreatedDateTimeDescIconDisplayed() {
 		return isElementDisplayed(creationDateDescIcon);
 	}
 

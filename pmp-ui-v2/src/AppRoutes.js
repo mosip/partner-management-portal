@@ -40,6 +40,7 @@ import AdminOidcClientsList from './pages/admin/authenticationServices/AdminOidc
 import AdminApiKeysList from './pages/admin/authenticationServices/AdminApiKeysList.js';
 import ViewAdminOidcClientDetails from './pages/admin/authenticationServices/ViewAdminOidcClientDetails.js';
 import ViewAdminApiKeyDetails from './pages/admin/authenticationServices/ViewAdminApiKeyDetails.js';
+import EditAdminApiKey from './pages/admin/authenticationServices/EditAdminApiKey.js';
 import AdminFtmList from './pages/admin/ftmProviderServices/AdminFtmList.js';
 import ViewAdminFtmChipDetails from './pages/admin/ftmProviderServices/ViewAdminFtmChipDetails.js';
 import AdminSbiList from './pages/admin/deviceProviderServices/AdminSbiList.js';
@@ -63,6 +64,7 @@ import MispLicenseList from './pages/admin/mispPartnerServices/MispLicenseList.j
 import GenerateMispLicenseKey from './pages/admin/mispPartnerServices/GenerateMispLicenseKey.js';
 import ViewMispLicenseKey from './pages/admin/mispPartnerServices/ViewMispLicenseKey.js';
 import RegenerateMispLicenseKey from './pages/admin/mispPartnerServices/RegenerateMispLicenseKey.js';
+import ViewMispLicenseKeyNotifications from './pages/admin/notifications/ViewMispLicenseKeyNotifications.js';
 
 function AppRoutes() {
 
@@ -280,6 +282,10 @@ function AppRoutes() {
           element: <GuardedRoute><MainLayout><ViewAdminApiKeyDetails /></MainLayout></GuardedRoute>
         },
         {
+          path: 'admin/authentication-services/edit-api-key',
+          element: <GuardedRoute><MainLayout><EditAdminApiKey /></MainLayout></GuardedRoute>
+        },
+        {
           path: 'admin/ftm-chip-provider-services/ftm-list',
           element: <GuardedRoute><MainLayout><AdminFtmList /></MainLayout></GuardedRoute>
         },
@@ -334,6 +340,10 @@ function AppRoutes() {
         {
           path: 'admin/notifications/view-intermediate-certificate-expiry',
           element: <GuardedRoute><MainLayout><ViewIntermediateTrustNotifications /></MainLayout></GuardedRoute>,
+        },
+        {
+          path: 'admin/notifications/view-misp-license-key-expiry',
+          element: <GuardedRoute><MainLayout><ViewMispLicenseKeyNotifications /></MainLayout></GuardedRoute>,
         },
         {
           path: 'admin/notifications/view-partner-created-items-expiry',

@@ -30,7 +30,7 @@ function ViewAdminFtmChipDetails() {
     const [showApproveRejectPopup, setShowApproveRejectPopup] = useState(false);
 
     useEffect(() => {
-        const selectedFtmData = localStorage.getItem('selectedFtmAttributes');
+        const selectedFtmData = sessionStorage.getItem('selectedFtmAttributes');
         if (!selectedFtmData) {
             setUnexpectedError(true);
             return;
@@ -122,14 +122,18 @@ function ViewAdminFtmChipDetails() {
             setShowApproveRejectPopup(false);
             const updatedFtmDetails = {...ftmDetails, status: getApproveRejectStatus(status), isActive: updateActiveState(status)};
             setFtmDetails(updatedFtmDetails);
-            localStorage.setItem('selectedFtmAttributes', JSON.stringify(updatedFtmDetails));
+            sessionStorage.setItem('selectedFtmAttributes', JSON.stringify(updatedFtmDetails));
         }
     };
+
+    const styles = {
+        loadingDiv: "!py-[40%]"
+    }
 
     return (
         <div className={`w-full p-4 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm mb-[2%] ${isLoginLanguageRTL ? "mr-24 ml-1" : "ml-24 mr-1"} overflow-x-scroll`}>
             {!dataLoaded && (
-                <LoadingIcon />
+                <LoadingIcon styleSet={styles}/>
             )}
             {dataLoaded && (
                 <>

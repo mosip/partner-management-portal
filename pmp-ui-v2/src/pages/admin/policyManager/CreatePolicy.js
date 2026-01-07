@@ -14,6 +14,7 @@ import Confirmation from "../../common/Confirmation";
 import TextInputComponent from "../../common/fields/TextInputComponent";
 import uploadPolicyDataFileIcon from '../../../svg/upload_policy_data.svg';
 import SuccessMessage from "../../common/SuccessMessage";
+import PublishPolicyPopup from "./PublishPolicyPopup";
 
 function CreatePolicy() {
     const navigate = useNavigate();
@@ -41,6 +42,8 @@ function CreatePolicy() {
     const [confirmationMessage, setConfirmationMessage] = useState("");
     const [invalidPolicyNameError, setInvalidPolicyNameError] = useState("");
     const [invalidPolicyDescError, setInvalidPolicyDescError] = useState("");
+    const [showPublishPopup, setShowPublishPopup] = useState(false);
+    const [policyDetails, setPolicyDetails] = useState(null);
 
     const policyDescriptionRef = useRef(null);
     const policyDataRef = useRef(null);
@@ -105,7 +108,7 @@ function CreatePolicy() {
         const fetchData = async () => {
             setDataLoaded(false);
             try {
-                const storedPolicyType = localStorage.getItem('activeTab');
+                const storedPolicyType = sessionStorage.getItem('activeTab');
                 if (!storedPolicyType) {
                     console.err('policy Type not found');
                     navigate('/partnermanagement/policy-manager/policy-group-list')
@@ -190,10 +193,15 @@ function CreatePolicy() {
             if (response) {
                 const responseData = response.data;
                 if (responseData && responseData.response) {
+                    const createdPolicyDetails = responseData.response;
+                    setPolicyDetails({ policyId: createdPolicyDetails.id, policyName: createdPolicyDetails.name, policyGroupId: selectedPolicyGroup?.id });
                     const requiredData = {
                         backUrl: backLink,
                         header: confirmationHeader,
                         description: confirmationMessage,
+                        customBtnName1: "policiesList.publish",
+                        customBtnName2: "commons.goBack",
+                        customBtn2Id: "confirmation_go_back_btn"
                     }
                     setConfirmationData(requiredData);
                     setCreatePolicySuccess(true);
@@ -266,6 +274,10 @@ function CreatePolicy() {
 
     const onFileChangeEvent = (event) => {
         handleFileChange(event, setErrorCode, setErrorMsg, setSuccessMsg, setPolicyData, t);
+    }
+
+    const backToPoliciesList = () => {
+        navigate(backLink);
     }
 
     return (
@@ -392,7 +404,17 @@ function CreatePolicy() {
                                     </div>
                                 </div>
                             </div>
-                            : <Confirmation id='create_policy_confirmation' confirmationData={confirmationData} />
+                            : 
+                            <>
+                                <Confirmation id='create_policy_confirmation' confirmationData={confirmationData} onClickCustomBtn1={() => setShowPublishPopup(true)} onClickCustomBtn2={backToPoliciesList} />
+                                {showPublishPopup &&
+                                    <PublishPolicyPopup
+                                        policyDetails={policyDetails}
+                                        closePopUp={() => setShowPublishPopup(false)}
+                                        onClickPublish={() => backToPoliciesList()}
+                                    />
+                                }
+                            </>
                         }
                     </div>
                 </>

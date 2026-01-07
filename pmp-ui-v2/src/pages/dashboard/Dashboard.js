@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { getUserProfile } from '../../services/UserProfileService.js';
 import { useTranslation } from "react-i18next";
-import { isLangRTL, onPressEnterKey, getPartnerManagerUrl, createRequest, handleServiceErrors, moveToOidcClientsList, moveToMispPartnerServices, getPartnerType } from '../../utils/AppUtils.js';
+import { isLangRTL, onPressEnterKey, getPartnerManagerUrl, createRequest, handleServiceErrors, moveToOidcClientsList, moveToMispPartnerServices, getPartnerType, fetchUserConsent } from '../../utils/AppUtils.js';
 import { HttpService } from '../../services/HttpService.js';
 import ErrorMessage from '../common/ErrorMessage.js';
 import LoadingIcon from "../common/LoadingIcon.js";
@@ -47,6 +47,7 @@ function Dashboard() {
   const [partnerCertExpiryCount, setPartnerCertExpiryCount] = useState();
   const [expiringApiKeyCount, setExpiringApiKeyCount] = useState();
   const [expiringSbiCount, setExpiringSbiCount] = useState();
+  const [expiringMispLicenseKeyCount, setExpiringMispLicenseKeyCount] = useState();
   const [showOnboardingPartnerAlertPopup, setShowOnboardingPartnerAlertPopup] = useState(false);
   const [onboardingPartnerAlertType, setOnboardingPartnerAlertType] = useState(null);
   const [isEmailVerified, setIsEmailVerified] = useState(false);
@@ -56,30 +57,20 @@ function Dashboard() {
 
   const [showPopup, setShowPopup] = useState(false);
 
-  const fetchUserConsent = async () => {
+  const fetchUserConsentData = async () => {
     setDataLoaded(false);
     setErrorCode("");
     setErrorMsg("");
     try {
-      const response = await HttpService.get(getPartnerManagerUrl(`/users/user-consent`, process.env.NODE_ENV));
-      if (response) {
-        const responseData = response.data;
-        if (responseData && responseData.response) {
-          const resData = responseData.response;
-          let consentGiven = resData.consentGiven;
-          isUserConsentGiven = consentGiven;
-        } else {
-          handleServiceErrors(responseData, setErrorCode, setErrorMsg);
-        }
-      } else {
-        setErrorMsg(t('consentPopup.consentFetchError'));
-      }
+      const consentGiven = await fetchUserConsent();
+      isUserConsentGiven = consentGiven;
       setDataLoaded(true);
     } catch (err) {
       if (err.response?.status && err.response.status !== 401) {
         setErrorMsg(err.toString());
       }
       console.log("Error: ", err);
+      setDataLoaded(true);
     }
   }
 
@@ -105,8 +96,18 @@ function Dashboard() {
           setIsPolicyManager(true);
         }
 
+        // Don't do self registration if partner role is partner admin or policy manager
+        if (roles.includes('PARTNER_ADMIN') || roles.includes('POLICYMANAGER')) {
+          // Partner admins and policy managers are treated as verified
+          setIsEmailVerified(true);
+          // Show consent popup for both PARTNER_ADMIN and POLICYMANAGER
+          await callUserConsentPopup();
+          setDataLoaded(true);
+          return;
+        }
+
         // Extract partnerType from roles if not present in userProfile
-        const partnerType = getPartnerType(userProfile);
+        const partnerType = await getPartnerType(userProfile);
 
         // Check if no valid partner type is found
         if (!partnerType) {
@@ -218,7 +219,7 @@ function Dashboard() {
 
   const callUserConsentPopup = async () => {
     if (!isSelectPolicyPopupVisible) {
-      await fetchUserConsent();
+      await fetchUserConsentData();
       if (!isUserConsentGiven) {
         setShowConsentPopup(true);
       }
@@ -489,12 +490,40 @@ function Dashboard() {
       }
     };
 
+    const fetchExpiringMispLicenseKeyCount = async () => {
+      const queryParams = new URLSearchParams();
+      queryParams.append('expiryPeriod', 30)
+      queryParams.append('status', 'activated');
+      queryParams.append('pageSize', '1');
+      queryParams.append('pageNo', '0');
+
+      const url = `${getPartnerManagerUrl('/misp-licenses', process.env.NODE_ENV)}?${queryParams.toString()}`;
+      try {
+        const response = await HttpService.get(url);
+        if (response) {
+          const responseData = response.data;
+          if (responseData && responseData.response) {
+            setExpiringMispLicenseKeyCount(responseData.response.totalResults);
+          } else {
+            handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+          }
+        } else {
+          setErrorMsg(t('dashboard.requestCountFetchError'));
+        }
+      } catch (err) {
+        if (err.response?.status && err.response.status !== 401) {
+          setErrorMsg(t('dashboard.requestCountFetchError'));
+        }
+        console.error("Error fetching data:", err);
+      }
+    };
+
     async function init() {
-      if (!isPartnerAdmin && isEmailVerified) {
+      if (!isPartnerAdmin && !isPolicyManager && isEmailVerified) {
         fetchPartnerCertExpiryCount();
       }
 
-      if (!isPartnerAdmin && isEmailVerified && showFtmServices && configData.isCaSignedPartnerCertificateAvailable === 'true') {
+      if (!isPartnerAdmin && isEmailVerified && showFtmServices && configData && configData.isCaSignedPartnerCertificateAvailable === 'true') {
         fetchFtmCertificateExpiryCount();
       }
 
@@ -507,10 +536,11 @@ function Dashboard() {
       }
 
       if (isPartnerAdmin && isEmailVerified) {
-        if (configData.isRootIntermediateCertAvailable === 'true') {
+        if (configData && configData.isRootIntermediateCertAvailable === 'true') {
           fetchTrustCertExpiryCount('ROOT');
           fetchTrustCertExpiryCount('INTERMEDIATE');
         }
+        fetchExpiringMispLicenseKeyCount();
 
         setTimeout(() => {
           fetchPartnerPolicyMappingRequestCount();
@@ -521,8 +551,10 @@ function Dashboard() {
       }
     }
 
-    init();
-  }, [isPartnerAdmin, isEmailVerified]);
+    if (configData !== null) {
+      init();
+    }
+  }, [isPartnerAdmin, isEmailVerified, configData]);
 
   const partnerCertificatesList = () => {
     navigate('/partnermanagement/certificates/partner-certificate')
@@ -637,9 +669,9 @@ function Dashboard() {
               {t('dashboard.welcomeMsg', { firstName: getUserProfile().firstName, lastName: getUserProfile().lastName })}!
             </p>
           </div>
-          <div className="flex mt-2 ml-[1.8rem] flex-wrap break-words">
+          <div className="grid grid-cols-[repeat(auto-fill,minmax(256px,1fr))] gap-4 mt-2 ml-[1.8rem] mr-[1.8rem] break-words">
             {!isPartnerAdmin && !isPolicyManager &&
-              <div role='button' id='dashboard_partner_certificate_list_card' onClick={() => partnerCertificatesList()} className="relative w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => partnerCertificatesList())}>
+              <div role='button' id='dashboard_partner_certificate_list_card' onClick={() => partnerCertificatesList()} className="relative min-h-[50%] p-6 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => partnerCertificatesList())}>
                 <div className="flex justify-center mb-5">
                   <img id='dashboard_partner_certificated_list_icon' src={partnerCertificateIcon} alt="" className="w-8 h-8" />
                 </div>
@@ -662,7 +694,7 @@ function Dashboard() {
               </div>
             }
             {!isPartnerAdmin && !isPolicyManager && showPolicies && (
-              <div role='button' id='dashboard_policies_card' onClick={() => policies()} className="w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => policies())}>
+              <div role='button' id='dashboard_policies_card' onClick={() => policies()} className="min-h-[50%] p-6 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => policies())}>
                 <div className="flex justify-center mb-5">
                   <img id='dashboard_policies_card_icon' src={policiesIcon} alt="" className="w-8 h-8" />
                 </div>
@@ -677,7 +709,7 @@ function Dashboard() {
               </div>
             )}
             {!isPartnerAdmin && !isPolicyManager && showAuthenticationServices && (
-              <div role='button' id='dashboard_authentication_clients_list_card' onClick={() => moveToOidcClientsList(navigate)} className="w-[23.5%] relative min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => moveToOidcClientsList(navigate))}>
+              <div role='button' id='dashboard_authentication_clients_list_card' onClick={() => moveToOidcClientsList(navigate)} className="relative min-h-[50%] p-6 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => moveToOidcClientsList(navigate))}>
                 <div className="flex justify-center mb-5">
                   <img id='dashboard_authentication_clients_list_icon' src={authServiceIcon} alt="" className="w-8 h-8" />
                 </div>
@@ -700,7 +732,7 @@ function Dashboard() {
               </div>
             )}
             {!isPartnerAdmin && !isPolicyManager && showDeviceProviderServices && (
-              <div role='button' id='dashboard_device_provider_service_card' onClick={deviceProviderServices} className="w-[23.5%] relative min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, deviceProviderServices)}>
+              <div role='button' id='dashboard_device_provider_service_card' onClick={deviceProviderServices} className="relative min-h-[50%] p-6 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, deviceProviderServices)}>
                 <div className="flex justify-center mb-5">
                   <img id='dashboard_device_provider_service_icon' src={deviceProviderServicesIcon} alt="" className="w-8 h-8" />
                 </div>
@@ -723,7 +755,7 @@ function Dashboard() {
               </div>
             )}
             {!isPartnerAdmin && !isPolicyManager && showFtmServices && (
-              <div role='button' id='dashboard_ftm_chip_provider_card' onClick={ftmChipProviderServices} className="relative w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, ftmChipProviderServices)}>
+              <div role='button' id='dashboard_ftm_chip_provider_card' onClick={ftmChipProviderServices} className="relative min-h-[50%] p-6 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, ftmChipProviderServices)}>
                 <div className="flex justify-center mb-5">
                   <img id='dashboard_ftm_chip_provider_icon' src={ftmServicesIcon} alt="" className="w-8 h-8" />
                 </div>
@@ -735,7 +767,7 @@ function Dashboard() {
                     {t('dashboard.ftmChipProviderServicesDesc')}
                   </p>
                 </div>
-                {configData.isCaSignedPartnerCertificateAvailable && expiringFtmCertificateCount > 0 && (
+                {configData && configData.isCaSignedPartnerCertificateAvailable && expiringFtmCertificateCount > 0 && (
                   <CountWithHover
                     countLabel={expiringFtmCertificateCount}
                     descriptionKey={expiringFtmCertificateCount > 1 ? "dashboard.ftmChipCertExpiryCountDesc1" : "dashboard.ftmChipCertExpiryCountDesc2"}
@@ -747,7 +779,7 @@ function Dashboard() {
             )}
              {isPartnerAdmin && (
               <>
-                <div role='button' id='dashboard_certificate_trust_store_card' onClick={rootTrustCertificateList} className="relative w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, rootTrustCertificateList)}>
+                <div role='button' id='dashboard_certificate_trust_store_card' onClick={rootTrustCertificateList} className="relative min-h-[50%] p-6 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, rootTrustCertificateList)}>
                   <div className="flex justify-center mb-5">
                     <img id='admin_partner_certificate_list_icon' src={partnerCertificateIcon} alt="" className="w-8 h-8" />
                   </div>
@@ -759,7 +791,7 @@ function Dashboard() {
                       {t('dashboard.certificateTrustStoreDesc')}
                     </p>
                   </div>
-                  {configData.isRootIntermediateCertAvailable === 'true' && (rootCertExpiryCount > 0 || intermediateCertExpiryCount > 0) && (
+                  {configData && configData.isRootIntermediateCertAvailable === 'true' && (rootCertExpiryCount > 0 || intermediateCertExpiryCount > 0) && (
                     <CountWithHover
                       countLabel={
                         rootCertExpiryCount > 0 && intermediateCertExpiryCount > 0
@@ -783,7 +815,7 @@ function Dashboard() {
                     />
                   )}
                 </div>
-                <div role='button' id='dashboard_partner_card' onClick={partnersList} className="w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, partnersList)}>
+                <div role='button' id='dashboard_partner_card' onClick={partnersList} className="min-h-[50%] p-6 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, partnersList)}>
                   <div className="flex justify-center mb-5">
                     <img id='partner_admin_icon' src={partner_admin_icon} alt="" className="w-8 h-8" />
                   </div>
@@ -799,7 +831,7 @@ function Dashboard() {
                 </>
               )}
               {(isPolicyManager || isPartnerAdmin) && (
-                <div role='button' id='dashboard_policies_card' onClick={policiesInAdmin} className="w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, policiesInAdmin)}>
+                <div role='button' id='dashboard_policies_card' onClick={policiesInAdmin} className="min-h-[50%] p-6 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, policiesInAdmin)}>
                   <div className="flex justify-center mb-5">
                     <img id='admin_policies_icon' src={admin_policies_icon} alt="" className="w-8 h-8" />
                   </div>
@@ -815,7 +847,7 @@ function Dashboard() {
               )}
               {isPartnerAdmin && (
                 <>
-                  <div role='button' id='dashboard_partner_policy_linking_card' onClick={partnerPolicyMappingRequestList} className="relative w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, partnerPolicyMappingRequestList)}>
+                  <div role='button' id='dashboard_partner_policy_linking_card' onClick={partnerPolicyMappingRequestList} className="relative min-h-[50%] p-6 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, partnerPolicyMappingRequestList)}>
                     <div className="flex justify-center mb-5">
                       <img id='partner_policy_mapping_icon' src={partner_policy_mapping_icon} alt="" className="w-8 h-8" />
                     </div>
@@ -834,7 +866,7 @@ function Dashboard() {
                     />
                   </div>
 
-                  <div role='button' id='dashboard_sbi_device_card' onClick={adminDeviceProviderServices} className="relative w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, adminDeviceProviderServices)}>
+                  <div role='button' id='dashboard_sbi_device_card' onClick={adminDeviceProviderServices} className="relative min-h-[50%] p-6 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, adminDeviceProviderServices)}>
                     <div className="flex justify-center mb-5">
                       <img id='deviceProviderServicesIcon' src={deviceProviderServicesIcon} alt="" className="w-8 h-8" />
                     </div>
@@ -863,7 +895,7 @@ function Dashboard() {
                     />
                   </div>
 
-                  <div role='button' id='dashboard_ftm_chip_card' onClick={adminftmChipProviderServices} className="relative w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, adminftmChipProviderServices)}>
+                  <div role='button' id='dashboard_ftm_chip_card' onClick={adminftmChipProviderServices} className="relative min-h-[50%] p-6 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, adminftmChipProviderServices)}>
                     <div className="flex justify-center mb-5">
                       <img id='ftmServicesIcon' src={ftmServicesIcon} alt="" className="w-8 h-8" />
                     </div>
@@ -882,7 +914,7 @@ function Dashboard() {
                     />
                   </div>
 
-                  <div role='button' id='dashboard_admin_authentication_services_card' onClick={adminAuthenticationServices} className="w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, adminAuthenticationServices)}>
+                  <div role='button' id='dashboard_admin_authentication_services_card' onClick={adminAuthenticationServices} className="min-h-[50%] p-6 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, adminAuthenticationServices)}>
                     <div className="flex justify-center mb-5">
                       <img id='admin_auth_service_icon' src={authServiceIcon} alt="" className="w-8 h-8" />
                     </div>
@@ -896,36 +928,26 @@ function Dashboard() {
                   </div>
                 </div>
 
-                <div
-                  role='button'
-                  id='misp_partner_services_card'
-                  onClick={() => moveToMispPartnerServices(navigate)}
-                  className="w-[23.5%] min-h-[50%] p-6 mr-4 mb-4 pt-16 bg-white border border-gray-200 shadow cursor-pointer text-center rounded-xl"
-                  tabIndex="0"
-                  onKeyDown={(e) => onPressEnterKey(e, () => moveToMispPartnerServices(navigate))}
-                >
+                <div role='button' id='misp_partner_services_card' onClick={() => moveToMispPartnerServices(navigate)} className="relative min-h-[50%] p-6 pt-16 bg-white border border-gray-200 shadow cursor-pointer text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => moveToMispPartnerServices(navigate))}>
                   <div className="flex justify-center mb-5">
-                    <img
-                      id='admin_misp_partner_services_icon'
-                      src={adminMispPartnerServicesIcon}
-                      alt="Admin MISP Partner Services Icon"
-                      className="w-8 h-8"
-                    />
+                    <img id='admin_misp_partner_services_icon' src={adminMispPartnerServicesIcon} alt="Admin MISP Partner Services Icon" className="w-8 h-8" />
                   </div>
                   <div>
-                    <h5
-                      id='admin_misp_partner_services_card_header'
-                      className="mb-2 text-sm font-semibold tracking-tight text-gray-600"
-                    >
+                    <h5 id='admin_misp_partner_services_card_header' className="mb-2 text-sm font-semibold tracking-tight text-gray-600" >
                       {t('dashboard.mispPartnerServices')}
                     </h5>
-                    <p
-                      id='admin_misp_partner_services_card_description'
-                      className="mb-3 text-xs font-normal text-gray-400"
-                    >
+                    <p id='admin_misp_partner_services_card_description' className="mb-3 text-xs font-normal text-gray-400" >
                       {t('dashboard.mispPartnerServicesDesc')}
                     </p>
                   </div>
+                  {expiringMispLicenseKeyCount > 0 && (
+                    <CountWithHover
+                      countLabel={expiringMispLicenseKeyCount}
+                      descriptionKey={expiringMispLicenseKeyCount > 1 ? "dashboard.mispLicenseKeyExpiryCountDesc1" : "dashboard.mispLicenseKeyExpiryCountDesc2"}
+                      descriptionParams={{ expiringMispLicenseKeyCount }}
+                      isExpiryHover={true}
+                    />
+                  )}
                 </div>
               </>
             )}

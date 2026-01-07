@@ -607,7 +607,7 @@ public class ListOfDevicesPage extends BasePage {
 			e.printStackTrace();
 		}
 	}
-
+	
 	public void selectDeviceTypeFilterInAdmin(String deviceType) {
 		try {
 			dropdown(deviceTypeFilterInAdmin, deviceType);

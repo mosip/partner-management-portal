@@ -34,11 +34,11 @@ function PolicyGroupList() {
     const [activeAscIcon, setActiveAscIcon] = useState("");
     const [activeDescIcon, setActiveDescIcon] = useState("crDtimes");
     const [actionId, setActionId] = useState(-1);
-    const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
+    const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(sessionStorage.getItem('itemsPerPage') ? Number(sessionStorage.getItem('itemsPerPage')) : 8);
     const [sortFieldName, setSortFieldName] = useState("crDtimes");
     const [sortType, setSortType] = useState("desc");
     const [pageNo, setPageNo] = useState(0);
-    const [pageSize, setPageSize] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
+    const [pageSize, setPageSize] = useState(sessionStorage.getItem('itemsPerPage') ? Number(sessionStorage.getItem('itemsPerPage')) : 8);
     const [selectedPolicyGroup, setSelectedPolicyGroup] = useState({});
     const [fetchData, setFetchData] = useState(false);
     const [tableDataLoaded, setTableDataLoaded] = useState(true);
@@ -119,7 +119,7 @@ function PolicyGroupList() {
     }
 
     useEffect(() => {
-        localStorage.setItem('activeTab', 'policyGroup');
+        sessionStorage.setItem('activeTab', 'policyGroup');
         fetchPolicyGroupListData();
     }, [sortFieldName, sortType, pageNo, pageSize]);
 
@@ -194,7 +194,7 @@ function PolicyGroupList() {
     };
 
     const viewPolicyGroupDetails = (selectedPolicyGroup) => {
-        localStorage.setItem('selectedPolicyGroupAttributes', JSON.stringify(selectedPolicyGroup));
+        sessionStorage.setItem('selectedPolicyGroupAttributes', JSON.stringify(selectedPolicyGroup));
         navigate('/partnermanagement/policy-manager/view-policy-group-details');
     };
 

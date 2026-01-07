@@ -60,7 +60,7 @@ function CopyIdPopUp({ closePopUp, title, subtitle, id, header, alertMsg, styleS
                                 <p id='copy_id_popup_alert_msg' className="test-[13px] font-medium text-[#8B6105]">{t(alertMsg)}</p>
                             </div>
                         )}
-                        <h1 id='copy_id_popup_header' className={`text-[#6A6A6A] text-sm opacity-8 mb-[0.5%]`}>{t(header)}</h1>
+                        <h1 id='copy_id_popup_header' className={`text-[#6A6A6A] font-bold text-sm opacity-8 mb-[0.5%]`}>{t(header)}</h1>
                         <p id='copy_id_popup_id' className={`font-bold text-sm text-black break-words px-6`}>{id}</p>
                         {!removeCopyBtn &&
                             <button id='copy_id_btn' type="button" onClick={() => copyId()} className={`flex items-center justify-center gap-x-2 my-[4%] border-2 py-[3%] w-[40%] rounded-2xl ${copied ? "text-[#FFFFFF] bg-[#1447B2] border-0" : "text-[#1447B2] border-[#1447B2]"} ${isLoginLanguageRTL ? "mr-[31%]" : "ml-[31%]"} cursor-pointer`}>

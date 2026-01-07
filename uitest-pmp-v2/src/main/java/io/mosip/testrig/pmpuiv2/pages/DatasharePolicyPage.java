@@ -1,17 +1,15 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
-import java.time.Duration;
+import org.openqa.selenium.NoSuchElementException;
 
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+
 
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
-import io.mosip.testrig.pmpuiv2.utility.TestRunner;
 
 public class DatasharePolicyPage extends BasePage {
 
@@ -95,6 +93,9 @@ public class DatasharePolicyPage extends BasePage {
 
 	@FindBy(id = "confirmation_home_btn")
 	private WebElement successHomeButton;
+
+	@FindBy(id = "confirmation_custom_btn")
+	private WebElement successPublishButton;
 
 	@FindBy(xpath = "//p[text()='Policy data should not exceed more than 5120 characters.']")
 	private WebElement policyDataExceedChractersMessage;
@@ -321,7 +322,7 @@ public class DatasharePolicyPage extends BasePage {
 	@FindBy(xpath = "//p[text()='Policy ID']")
 	private WebElement policyIdLabel;
 
-	@FindBy(xpath = "//span[text()='ab11CD22ef']")
+	@FindBy(id = "view_policy_sub_title_id")
 	private WebElement policyIdContext;
 
 	@FindBy(xpath = "//p[text()='Policy Name']")
@@ -508,6 +509,8 @@ public class DatasharePolicyPage extends BasePage {
 		super(driver);
 	}
 
+	private static final Logger logger = Logger.getLogger(DatasharePolicyPage.class);
+
 	public boolean isDataSharePolicyCreateButtonAvailable() {
 		return isElementEnabled(createDatasharePolicyButton);
 	}
@@ -654,6 +657,10 @@ public class DatasharePolicyPage extends BasePage {
 		return isElementDisplayed(successHomeButton);
 	}
 
+	public boolean isSuccessPublishButtonAvailable() {
+		return isElementDisplayed(successPublishButton);
+	}
+
 	public void clickOnSuccessHomeButton() {
 		clickOnElement(successHomeButton);
 	}
@@ -798,13 +805,14 @@ public class DatasharePolicyPage extends BasePage {
 	public void selectPolicyGroupDropdown(String value) {
 		clickOnElement(policyGroupDropdown);
 		enter(policyGroupDropdownSearchInput, value);
-		String xpath = "//span[contains(@class,'font-semibold') and contains(@class,'text-dark-blue') and normalize-space(text())='"
-				+ value + "']";
+
 		try {
-			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(8));
-			WebElement policyGroupOption = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
-			clickOnElement(policyGroupOption);
-		} catch (TimeoutException e) {
+			WebElement policyGroupValue = driver.findElement(By.xpath("//span[contains(@class,'font-semibold') "
+					+ "and contains(@class,'text-dark-blue') " + "and normalize-space(text())='" + value + "']"));
+			clickOnElement(policyGroupValue);
+		} catch (NoSuchElementException e) {
+			logger.warn("Policy group not found: " + value);
+			throw new NoSuchElementException("Failed to select policy group: " + value + ". Element not found.", e);
 		}
 	}
 
@@ -897,7 +905,7 @@ public class DatasharePolicyPage extends BasePage {
 		return isElementDisplayed(policyGroupNameDescIcon);
 	}
 
-	public boolean isCreatedDateTimeDescISconDisplayed() {
+	public boolean isCreatedDateTimeDescIconDisplayed() {
 		return isElementDisplayed(creationDateDescIcon);
 	}
 
@@ -929,7 +937,7 @@ public class DatasharePolicyPage extends BasePage {
 		return isElementDisplayed(pagination);
 	}
 
-	public boolean isFiletrButtonDisplayedOrEnabled() {
+	public boolean isFilterButtonDisplayedOrEnabled() {
 		return isElementEnabled(filterButton);
 	}
 

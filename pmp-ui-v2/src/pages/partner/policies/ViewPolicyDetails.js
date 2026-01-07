@@ -15,7 +15,7 @@ function ViewPolicyDetails() {
     const [policyDetails, setPolicyDetails] = useState([]);
 
     useEffect(() => {
-        const partnerData = localStorage.getItem('selectedPolicyAttributes');
+        const partnerData = sessionStorage.getItem('selectedPolicyAttributes');
         if (partnerData) {
             try {
                 const selectedPartner = JSON.parse(partnerData);

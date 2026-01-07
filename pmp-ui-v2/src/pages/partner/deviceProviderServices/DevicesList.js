@@ -33,7 +33,7 @@ function DevicesList() {
     const [unexpectedError, setUnexpectedError] = useState(false);
     const [dataLoaded, setDataLoaded] = useState(false);
     const [filter, setFilter] = useState(false);
-    const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
+    const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(sessionStorage.getItem('itemsPerPage') ? Number(sessionStorage.getItem('itemsPerPage')) : 8);
     const [order, setOrder] = useState("DESC");
     const [activeSortAsc, setActiveSortAsc] = useState("");
     const [activeSortDesc, setActiveSortDesc] = useState("createdDateTime");
@@ -60,7 +60,7 @@ function DevicesList() {
     }, [submenuRef]);
 
     useEffect(() => {
-        const selectedSbi = localStorage.getItem('selectedSbiData');
+        const selectedSbi = sessionStorage.getItem('selectedSbiData');
         if (!selectedSbi) {
             setDataLoaded(true);
             setUnexpectedError(true);
@@ -128,7 +128,7 @@ function DevicesList() {
             path: '/partnermanagement/device-provider-services/devices-list',
             backToSbiList: false
         };
-        localStorage.setItem('previousPath', JSON.stringify(previousPath));
+        sessionStorage.setItem('previousPath', JSON.stringify(previousPath));
         navigate('/partnermanagement/device-provider-services/add-devices');
     }
 
@@ -167,13 +167,13 @@ function DevicesList() {
 
     const showDeviceDetails = (selectedDeviceData) => {
         if (selectedDeviceData.status !== "deactivated") {
-            localStorage.setItem('selectedDeviceData', JSON.stringify(selectedDeviceData));
+            sessionStorage.setItem('selectedDeviceData', JSON.stringify(selectedDeviceData));
             navigate('/partnermanagement/device-provider-services/view-device-details')
         }
     }
 
     const viewDeviceDetails = (selectedDeviceData) => {
-        localStorage.setItem('selectedDeviceData', JSON.stringify(selectedDeviceData));
+        sessionStorage.setItem('selectedDeviceData', JSON.stringify(selectedDeviceData));
         navigate('/partnermanagement/device-provider-services/view-device-details')
     }
 

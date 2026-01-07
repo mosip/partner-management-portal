@@ -63,7 +63,7 @@ function MainLayout({ children }) {
         try {
             const configData = await getAppConfig();
             const itemsPerPage = Number(configData['itemsPerPage']);
-            localStorage.setItem('itemsPerPage', itemsPerPage);
+            sessionStorage.setItem('itemsPerPage', itemsPerPage);
         } catch (error) {
             console.error("Error fetching item per page value:", error);
         }
@@ -116,6 +116,15 @@ function MainLayout({ children }) {
         async function fetchData() {
             try {
                 const userProfile = getUserProfile();
+                const roles = userProfile.roles ?? '';
+                const isPartnerAdmin = roles.includes('PARTNER_ADMIN');
+                const isPolicyManager = roles.includes('POLICYMANAGER');
+
+                // Don't call verify endpoint if user is partner admin or policy manager
+                if (isPartnerAdmin || isPolicyManager) {
+                    return;
+                }
+
                 const verifyEmailRequest = createRequest({
                     "emailId": userProfile.email
                 });

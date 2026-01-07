@@ -40,11 +40,11 @@ function MispLicenseList() {
     const [activeAscIcon, setActiveAscIcon] = useState("");
     const [activeDescIcon, setActiveDescIcon] = useState("createdDateTime");
     const [actionId, setActionId] = useState(-1);
-    const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
+    const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(sessionStorage.getItem('itemsPerPage') ? Number(sessionStorage.getItem('itemsPerPage')) : 8);
     const [sortFieldName, setSortFieldName] = useState("createdDateTime");
     const [sortType, setSortType] = useState("desc");
     const [pageNo, setPageNo] = useState(0);
-    const [pageSize, setPageSize] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
+    const [pageSize, setPageSize] = useState(sessionStorage.getItem('itemsPerPage') ? Number(sessionStorage.getItem('itemsPerPage')) : 8);
     const [fetchData, setFetchData] = useState(false);
     const [tableDataLoaded, setTableDataLoaded] = useState(true);
     const [totalRecords, setTotalRecords] = useState(0);
@@ -178,7 +178,8 @@ function MispLicenseList() {
     };
 
     const viewMispLicenseDetails = (license) => {
-        localStorage.setItem('selectedMispLicenseKey', JSON.stringify(license));
+        setActionId(-1);
+        sessionStorage.setItem('selectedMispLicenseKey', JSON.stringify(license));
         navigate('/partnermanagement/admin/misp-partner-services/view-misp-license-key');
     };
 
@@ -193,6 +194,7 @@ function MispLicenseList() {
                 licenseKeyName: license.mispLicenseKeyName,
                 status: "De-Activate"
             }, "mosip.pms.deactivate.misp.license.patch", true);
+            setActionId(-1);
             setSelectedLicenseKey(license);
             setDeactivateLicenseRequest(request);
             setShowActiveIndexDeactivatePopup(index);
@@ -220,7 +222,8 @@ function MispLicenseList() {
 
     const renewMispLicenseKey = (license, index) => {
         if (license.status === "activated") {
-            localStorage.setItem('selectedMispLicenseKey', JSON.stringify(license));
+            setActionId(-1);
+            sessionStorage.setItem('selectedMispLicenseKey', JSON.stringify(license));
             navigate('/partnermanagement/admin/misp-partner-services/regenerate-misp-license-key');
         }
     };
@@ -291,7 +294,7 @@ function MispLicenseList() {
                                                                 <tr>
                                                                     {tableHeaders.map((header, index) => {
                                                                         return (
-                                                                            <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[13%]">
+                                                                            <th key={index} className={`py-4 text-sm font-semibold text-[#6F6E6E] ${header.id === "status" ? 'w-[13%] min-w-28' : 'w-[13%]'}`}>
                                                                                 <div id={`${header.headerNameKey}_header`} className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
                                                                                     {t(header.headerNameKey)}
                                                                                     {(header.id !== "action") && (header.id !== "mispLicenseKey") && (
@@ -329,7 +332,7 @@ function MispLicenseList() {
                                                                                 </div>
                                                                             </td>
                                                                             <td className="px-2 cursor-default">
-                                                                                <div className="flex">
+                                                                                <div className="flex justify-center">
                                                                                     {license.status === "activated" ? 
                                                                                         <button className='cursor-pointer bg-transparent border-none p-0' id={'misp_license_show_copy_popup_btn' + (index + 1)} onClick={() => openLicenseKeyPopUp(license, index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => openLicenseKeyPopUp(license, index))}>
                                                                                             <img src={eyeIcon} alt="" />

@@ -22,7 +22,7 @@ function Pagination({ dataListLength, selectedRecordsPerPage, setSelectedRecords
         if (isViewNotificationPage) {
             setItemsPerPageOptions([4, 8, 12, 16]);
         } else {
-            let itemsPerPage = localStorage.getItem('itemsPerPage');
+            let itemsPerPage = sessionStorage.getItem('itemsPerPage');
             if (itemsPerPage) {
                 itemsPerPage = Number(itemsPerPage);
                 setItemsPerPageOptions([itemsPerPage, itemsPerPage * 2, itemsPerPage * 3, itemsPerPage * 4]);
@@ -77,7 +77,7 @@ function Pagination({ dataListLength, selectedRecordsPerPage, setSelectedRecords
                     pageRangeDisplayed={3}
                     marginPagesDisplayed={1}
                     breakLabel="..."
-                    containerClassName={`flex items-center justify-center space-x-1 sm:space-x-2 md:space-x-3 min-w-fit ${isLoginLanguageRTL && 'space-x-reverse'}`}
+                    containerClassName={`flex items-center justify-center gap-1 sm:gap-2 md:gap-3 min-w-fit`}
                     pageClassName="px-2 sm:px-3 py-1.5 text-[#1447B2] text-xs sm:text-sm"
                     activeClassName="bg-[#1447B2] text-white text-xs sm:text-sm p-1 sm:p-1.5 rounded-md"
                     previousClassName={`border rounded-md ${isFirstPage ? greyBtn : blueBtn}`}
@@ -99,7 +99,7 @@ function Pagination({ dataListLength, selectedRecordsPerPage, setSelectedRecords
                         <div className={`absolute bg-white text-xs text-tory-blue font-semibold rounded-lg border-[2px] bottom-6 duration-700 z-10`}>
                             {itemsPerPageOptions.map((num, i) => {
                                 return (
-                                    <button id={'pagination_each_num_option' + (i + 1)} key={i} onClick={() => changeItemsPerPage(num)}
+                                    <button id={'pagination_each_num_option' + (i + 1)} key={i} onClick={() => changeItemsPerPage(num)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => changeItemsPerPage(num))}
                                         className={`px-3 py-2 w-full cursor-pointer text-center ${selectedRecordsPerPage === num ? 'bg-[#F2F5FC]' : 'hover:bg-[#F2F5FC]'}`}>
                                         {num}
                                     </button>

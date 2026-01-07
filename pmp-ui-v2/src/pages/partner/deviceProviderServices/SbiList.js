@@ -45,7 +45,7 @@ function SbiList() {
     };
 
     useEffect(() => {
-        // localStorage.removeItem('selectedSbiData');
+        // sessionStorage.removeItem('selectedSbiData');
         const fetchData = async () => {
             try {
                 setDataLoaded(false);
@@ -86,7 +86,7 @@ function SbiList() {
             path: '/partnermanagement/device-provider-services/sbi-list',
             backToSbiList: true
         };
-        localStorage.setItem('previousPath', JSON.stringify(previousPath));
+        sessionStorage.setItem('previousPath', JSON.stringify(previousPath));
         navigate('/partnermanagement/device-provider-services/add-devices');
     };
 
@@ -104,7 +104,7 @@ function SbiList() {
             partnerId: sbi.partnerId
         };
 
-        localStorage.setItem('selectedSbiData', JSON.stringify(sbiData));
+        sessionStorage.setItem('selectedSbiData', JSON.stringify(sbiData));
     };
 
     const canAddDevices = (sbi) => {
