@@ -167,7 +167,7 @@ function AdminApiKeysList() {
     const deactivateApiKey = (selectedApiKeyData, index) => {
         if (selectedApiKeyData.status === "activated") {
             const request = createRequest({
-                status: "INACTIVE"
+                status: "De-active"
             }, "mosip.pms.update.api.key.patch", true);
             setActionId(-1);
             setSelectedApiKey(selectedApiKeyData);
