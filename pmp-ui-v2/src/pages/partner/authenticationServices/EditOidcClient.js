@@ -13,7 +13,10 @@ import {
     createDropdownData,
     createRequest,
     isOidcClientAdditionalInfoRequired,
-    buildClientNameLangMap
+    buildClientNameLangMap,
+    createOidcClientEntry, findAvailableOidcLanguage, validateOidcEntryText,
+    getOidcPlaceholderForLanguage, getAvailableOidcLanguages,
+    initializeUserInfoResponseTypeDropdown, initializePurposeTypeDropdown, initializeLanguageDropdown
 } from "../../../utils/AppUtils";
 import LoadingIcon from "../../common/LoadingIcon";
 import ErrorMessage from "../../common/ErrorMessage";
@@ -25,7 +28,7 @@ import BlockerPrompt from "../../common/BlockerPrompt";
 import somethingWentWrongIcon from '../../../svg/something_went_wrong_icon.svg';
 import expandToggleIcon from '../../../svg/expand_toggle_icon.svg';
 import TextInputComponentWithDeleteButton from '../../common/fields/TextInputComponentWithDeleteButton';
-import { getAppConfig } from '../../../services/ConfigService';
+import OidcClientAdditionalInfoSection from '../../common/OidcClientAdditionalInfoSection';
 
 function EditOidcClient() {
     const { t } = useTranslation();
@@ -154,6 +157,25 @@ function EditOidcClient() {
         return dataArr;
     }, [t]);
 
+    // Initialize User Info Response Type dropdown
+    useEffect(() => {
+        setUserInfoResponseTypeDropdownData(initializeUserInfoResponseTypeDropdown(t));
+    }, [t]);
+
+    // Initialize Purpose Type dropdown
+    useEffect(() => {
+        setPurposeTypeDropdownData(initializePurposeTypeDropdown(t));
+    }, [t]);
+
+    // Initialize Language dropdown
+    useEffect(() => {
+        const fetchLanguages = async () => {
+            const data = await initializeLanguageDropdown(t);
+            setLanguageDropdownData(data);
+        };
+        fetchLanguages();
+    }, [t]);
+
     useEffect(() => {
         const checkAdditionalConfigSupport = async () => {
           const isRequired = await isOidcClientAdditionalInfoRequired();
@@ -169,67 +191,41 @@ function EditOidcClient() {
         checkAdditionalConfigSupport();
     }, []);
 
-    // Initialize User Info Response Type dropdown
-    useEffect(() => {
-        const userInfoResponseTypeData = [
-            { fieldCode: t('createOidcClient.jws'), fieldValue: 'JWS' },
-            { fieldCode: t('createOidcClient.jwe'), fieldValue: 'JWE' }
-        ];
-        const dropdownData = createDropdownData("fieldValue", "", true, userInfoResponseTypeData, t, t("createOidcClient.selectUserInfoResponseType"));
-        const finalData = dropdownData.map(item => {
-            if (item.fieldValue === '') return item;
-            const originalItem = userInfoResponseTypeData.find(d => d.fieldValue === item.fieldValue);
-            return originalItem ? { ...item, fieldCode: originalItem.fieldCode } : item;
-        });
-        setUserInfoResponseTypeDropdownData(finalData);
-    }, [t]);
+    // Helper function to add missing languages to dropdown data
+    const addMissingLanguagesToDropdown = useCallback((entries, currentDropdownData) => {
+        if (!entries || entries.length === 0) {
+            return currentDropdownData;
+        }
 
-    // Initialize Purpose Type dropdown
-    useEffect(() => {
-        const purposeTypeData = [
-            { fieldCode: t('createOidcClient.login'), fieldValue: 'login' },
-            { fieldCode: t('createOidcClient.link'), fieldValue: 'link' },
-            { fieldCode: t('createOidcClient.verify'), fieldValue: 'verify' }
-        ];
-        const dropdownData = createDropdownData("fieldValue", "", true, purposeTypeData, t, t("createOidcClient.selectPurposeType"));
-        const finalData = dropdownData.map(item => {
-            if (item.fieldValue === '') return item;
-            const originalItem = purposeTypeData.find(d => d.fieldValue === item.fieldValue);
-            return originalItem ? { ...item, fieldCode: originalItem.fieldCode } : item;
-        });
-        setPurposeTypeDropdownData(finalData);
-    }, [t]);
+        const existingLanguageCodes = new Set(
+            currentDropdownData.map(item => item.fieldValue).filter(code => code)
+        );
 
-    // Initialize Language dropdown
-    useEffect(() => {
-        const fetchLanguages = async () => {
-            try {
-                const appConfig = await getAppConfig();
-                const supportedLanguages = appConfig && appConfig.supportedOidcLanguages;
-                let languageCodes = [];
-                if (Array.isArray(supportedLanguages)) {
-                    languageCodes = supportedLanguages;
-                } else if (typeof supportedLanguages === 'string') {
-                    languageCodes = supportedLanguages.split(',').map(code => code.trim()).filter(code => code);
-                }
-
-                const languageData = languageCodes.map(langCode => ({
-                    languageCode: langCode,
-                    name: getLanguageDisplayName(langCode, t)
-                }));
-
-                const defaultOption = { languageCode: 'default', name: t('createOidcClient.default') };
-                const allLanguages = [defaultOption, ...languageData.map(lang => ({
-                    languageCode: lang.languageCode,
-                    name: lang.name
-                }))];
-
-                setLanguageDropdownData(createDropdownData('languageCode', 'name', false, allLanguages, t));
-            } catch (err) {
-                console.error('Error fetching languages:', err);
+        const missingLanguages = [];
+        entries.forEach(entry => {
+            if (entry.language && 
+                entry.language !== 'default' && 
+                !existingLanguageCodes.has(entry.language)) {
+                missingLanguages.push(entry.language);
+                existingLanguageCodes.add(entry.language);
             }
-        };
-        fetchLanguages();
+        });
+
+        if (missingLanguages.length === 0) {
+            return currentDropdownData;
+        }
+
+        const newLanguageEntries = missingLanguages.map(langCode => ({
+            languageCode: langCode,
+            name: getLanguageDisplayName(langCode, t)
+        }));
+
+        const newDropdownItems = newLanguageEntries.map(lang => ({
+            fieldCode: lang.name,
+            fieldValue: lang.languageCode
+        }));
+
+        return [...currentDropdownData, ...newDropdownItems];
     }, [t]);
     
   useEffect(() => {
@@ -262,9 +258,10 @@ function EditOidcClient() {
                         setClientName(resData.name || '');
                         
                         // Initialize client name lang map
+                        let langMapEntries = [];
                         if (resData.clientNameLangMap && typeof resData.clientNameLangMap === 'object') {
-                            const langMapEntries = Object.entries(resData.clientNameLangMap).map(([language, text]) => ({
-                                id: `oidc_name_${Date.now()}_${Math.random().toString(36).slice(2, 11)}`,
+                            langMapEntries = Object.entries(resData.clientNameLangMap).map(([language, text]) => ({
+                                id: `oidc_name_${crypto.randomUUID()}`,
                                 language: language,
                                 text: text || ''
                             }));
@@ -272,6 +269,8 @@ function EditOidcClient() {
                         }
                         
                         // Initialize additionalConfig fields
+                        let titleEntries = [];
+                        let subtitleEntries = [];
                         if (resData.additionalConfig) {
                             const additionalConfig = resData.additionalConfig;
                              
@@ -295,26 +294,34 @@ function EditOidcClient() {
                                  setPurposeType(additionalConfig.purpose.type || '');
                                  
                                  // Initialize purpose title entries
-                                 if (additionalConfig.purpose.title && typeof additionalConfig.purpose.title === 'object') {
-                                     const titleEntries = Object.entries(additionalConfig.purpose.title).map(([langKey, text]) => ({
-                                         id: `purpose_title_${Date.now()}_${Math.random().toString(36).slice(2, 11)}`,
-                                         language: langKey === '@none' ? 'default' : langKey,
-                                         text: text || ''
-                                     }));
-                                     setPurposeTitleEntries(titleEntries);
-                                 }
+                                if (additionalConfig.purpose.title && typeof additionalConfig.purpose.title === 'object') {
+                                    titleEntries = Object.entries(additionalConfig.purpose.title).map(([langKey, text]) => ({
+                                        id: `purpose_title_${crypto.randomUUID()}`,
+                                        language: langKey === '@none' ? 'default' : langKey,
+                                        text: text || ''
+                                    }));
+                                    setPurposeTitleEntries(titleEntries);
+                                }
                                  
                                  // Initialize purpose subtitle entries
-                                 if (additionalConfig.purpose.subTitle && typeof additionalConfig.purpose.subTitle === 'object') {
-                                     const subtitleEntries = Object.entries(additionalConfig.purpose.subTitle).map(([langKey, text]) => ({
-                                         id: `purpose_subtitle_${Date.now()}_${Math.random().toString(36).slice(2, 11)}`,
-                                         language: langKey === '@none' ? 'default' : langKey,
-                                         text: text || ''
-                                     }));
-                                     setPurposeSubtitleEntries(subtitleEntries);
-                                 }
+                                if (additionalConfig.purpose.subTitle && typeof additionalConfig.purpose.subTitle === 'object') {
+                                    subtitleEntries = Object.entries(additionalConfig.purpose.subTitle).map(([langKey, text]) => ({
+                                        id: `purpose_subtitle_${crypto.randomUUID()}`,
+                                        language: langKey === '@none' ? 'default' : langKey,
+                                        text: text || ''
+                                    }));
+                                    setPurposeSubtitleEntries(subtitleEntries);
+                                }
                              }
                          }
+                         
+                         // Add missing languages from API response to dropdown data
+                         setLanguageDropdownData(prevDropdownData => {
+                             let updatedData = addMissingLanguagesToDropdown(langMapEntries, prevDropdownData);
+                             updatedData = addMissingLanguagesToDropdown(titleEntries, updatedData);
+                             updatedData = addMissingLanguagesToDropdown(subtitleEntries, updatedData);
+                             return updatedData;
+                         });
                      } else {
                          setUnexpectedError(true);
                          handleServiceErrors(responseData, setErrorCode, setErrorMsg);
@@ -333,43 +340,12 @@ function EditOidcClient() {
              }
          };
          fetchData();
-     }, [createGrantTypesDropdownData, t]);
+     }, [createGrantTypesDropdownData, t, addMissingLanguagesToDropdown]);
 
     const cancelErrorMsg = () => {
         setErrorMsg("");
     };
 
-    // Helper function to create a new entry
-    const createNewEntry = (language, type) => {
-        let uniqueId;
-        // Generate truly unique ID using timestamp and random number to avoid duplicates
-        const id = `${Date.now()}_${Math.random().toString(36).slice(2, 11)}`;
-        
-        switch (type) {
-            case 'clientName':
-                uniqueId = `oidc_name_${id}`;
-                break;
-            case 'purposeTitle':
-                uniqueId = `purpose_title_${id}`;
-                break;
-            case 'purposeSubtitle':
-                uniqueId = `purpose_subtitle_${id}`;
-                break;
-            default:
-                uniqueId = `entry_${type}_${id}`;
-        }
-        
-        return {
-            id: uniqueId,
-            language: language,
-            text: ''
-        };
-    };
-
-    // Helper function to find available language
-    const findAvailableLanguage = (usedLanguages) => {
-        return languageDropdownData.find(lang => !usedLanguages.includes(lang.fieldValue));
-    };
 
     // Client name handler
     const handleClientNameChange = (value) => {
@@ -395,27 +371,10 @@ function EditOidcClient() {
             lang.fieldValue !== 'default' && !usedLanguages.includes(lang.fieldValue)
         );
         const availableLang = availableLangs[0];
-        const newEntry = createNewEntry(availableLang?.fieldValue, 'clientName');
+        const newEntry = createOidcClientEntry(availableLang?.fieldValue, 'clientName');
         setClientNameLangMapEntries([...clientNameLangMapEntries, newEntry]);
     };
 
-    const validateEntryText = (value, entry, requiredErrorKey, errors, setErrors) => {
-        const newErrors = { ...errors };
-        let inputError = "";
-
-        validateInputRegex(value, (error) => {
-            inputError = error;
-        }, t);
-
-        if (entry.text.trim() === '' && entry.text !== '') {
-            newErrors[entry.id] = t(requiredErrorKey);
-        } else if (inputError) {
-            newErrors[entry.id] = inputError;
-        } else {
-            delete newErrors[entry.id];
-        }
-        setErrors(newErrors);
-    };
 
     const updateClientNameLangMapEntry = (id, field, value) => {
         const updated = clientNameLangMapEntries.map(entry =>
@@ -425,7 +384,7 @@ function EditOidcClient() {
 
         if (field === 'text') {
             const entry = updated.find(e => e.id === id);
-            validateEntryText(value, entry, 'createOidcClient.clientNameRequired', clientNameLangMapErrors, setClientNameLangMapErrors);
+            validateOidcEntryText(value, entry, 'createOidcClient.clientNameRequired', clientNameLangMapErrors, setClientNameLangMapErrors, t);
         }
     };
 
@@ -437,38 +396,6 @@ function EditOidcClient() {
         setClientNameLangMapErrors(errors);
     };
 
-    const getAvailableLanguagesForClientNameLangMap = (currentEntryId) => {
-        const currentEntry = clientNameLangMapEntries.find(e => e.id === currentEntryId);
-        const currentLanguage = currentEntry ? currentEntry.language : '';
-        const usedLanguages = clientNameLangMapEntries
-            .filter(e => e.id !== currentEntryId && e.language)
-            .map(e => e.language);
-        return languageDropdownData.filter(lang =>
-            lang.fieldValue !== 'default' && (!usedLanguages.includes(lang.fieldValue) || lang.fieldValue === currentLanguage)
-        );
-    };
-
-    // Get placeholder based on language code and field type
-    const getPlaceholderForLanguage = (languageCode, fieldType) => {
-        if (!languageCode || languageCode === 'default') {
-            const fallbackKey = `createOidcClient.enter${fieldType}Default`;
-            return t(fallbackKey);
-        }
-        
-        const langCode = languageCode.toLowerCase();
-        
-        // Use the new translation keys that have text in the target language
-        const placeholderKey = `createOidcClient.enter${fieldType}In${langCode.charAt(0).toUpperCase() + langCode.slice(1)}`;
-        const fallbackKey = `createOidcClient.enter${fieldType}Default`;
-        
-        // Get translation (all translation files have the same keys with target language text)
-        let placeholder = t(placeholderKey);
-        if (placeholder === placeholderKey) {
-            placeholder = t(fallbackKey);
-        }
-        
-        return placeholder;
-    };
 
     const handleLogoUrlChange = (value) => {
         setInvalidLogoUrl(validateUrl(null, value, 2048, [], t));
@@ -530,11 +457,11 @@ function EditOidcClient() {
 
     // Additional Information
     const handleConsentExpiryChange = (value) => {
-        const numValue = value.replace(/[^0-9]/g, '');
+        const numValue = value.replaceAll(/[^0-9]/g, '');
         setConsentExpiry(numValue);
         if (!numValue || numValue.trim() === '') {
             setConsentExpiryError(t('createOidcClient.consentExpiryRequired'));
-        } else if (isNaN(numValue) || parseInt(numValue) < 10) {
+        } else if (Number.isNaN(Number.parseInt(numValue, 10)) || Number.parseInt(numValue, 10) < 10) {
             setConsentExpiryError(t('createOidcClient.consentExpiryValidation'));
         } else {
             setConsentExpiryError("");
@@ -569,8 +496,8 @@ function EditOidcClient() {
         const usedLanguages = purposeTitleEntries.map(e => e.language).filter(lang => lang);
         const availableLang = purposeTitleEntries.length === 0
             ? languageDropdownData.find(lang => lang.fieldValue === 'default')
-            : findAvailableLanguage(usedLanguages);
-        const newEntry = createNewEntry(availableLang?.fieldValue, 'purposeTitle');
+            : findAvailableOidcLanguage(usedLanguages, languageDropdownData);
+        const newEntry = createOidcClientEntry(availableLang?.fieldValue, 'purposeTitle');
         const updated = [...purposeTitleEntries, newEntry];
         setPurposeTitleEntries(updated);
         validatePurposeDefaultRequirement(updated, 'title');
@@ -580,8 +507,8 @@ function EditOidcClient() {
         const usedLanguages = purposeSubtitleEntries.map(e => e.language).filter(lang => lang);
         const availableLang = purposeSubtitleEntries.length === 0
             ? languageDropdownData.find(lang => lang.fieldValue === 'default')
-            : findAvailableLanguage(usedLanguages);
-        const newEntry = createNewEntry(availableLang?.fieldValue, 'purposeSubtitle');
+            : findAvailableOidcLanguage(usedLanguages, languageDropdownData);
+        const newEntry = createOidcClientEntry(availableLang?.fieldValue, 'purposeSubtitle');
         const updated = [...purposeSubtitleEntries, newEntry];
         setPurposeSubtitleEntries(updated);
         validatePurposeDefaultRequirement(updated, 'subtitle');
@@ -595,7 +522,7 @@ function EditOidcClient() {
 
         if (field === 'text') {
             const entry = updated.find(e => e.id === id);
-            validateEntryText(value, entry, 'createOidcClient.purposeTitleRequired', purposeTitleErrors, setPurposeTitleErrors);
+            validateOidcEntryText(value, entry, 'createOidcClient.purposeTitleRequired', purposeTitleErrors, setPurposeTitleErrors, t);
         }
         validatePurposeDefaultRequirement(updated, 'title');
     };
@@ -608,7 +535,7 @@ function EditOidcClient() {
 
         if (field === 'text') {
             const entry = updated.find(e => e.id === id);
-            validateEntryText(value, entry, 'createOidcClient.purposeSubtitleRequired', purposeSubtitleErrors, setPurposeSubtitleErrors);
+            validateOidcEntryText(value, entry, 'createOidcClient.purposeSubtitleRequired', purposeSubtitleErrors, setPurposeSubtitleErrors, t);
         }
         validatePurposeDefaultRequirement(updated, 'subtitle');
     };
@@ -643,18 +570,6 @@ function EditOidcClient() {
         validatePurposeDefaultRequirement(updated, 'subtitle');
     };
 
-    const getAvailableLanguages = (currentEntryId, type) => {
-        const entries = type === 'title' ? purposeTitleEntries : purposeSubtitleEntries;
-        const currentEntry = entries.find(e => e.id === currentEntryId);
-        const currentLanguage = currentEntry ? currentEntry.language : '';
-        const usedLanguages = entries
-            .filter(e => e.id !== currentEntryId && e.language)
-            .map(e => e.language);
-        return languageDropdownData.filter(lang =>
-            !usedLanguages.includes(lang.fieldValue) || lang.fieldValue === currentLanguage
-        );
-    };
-
     // Build purpose title/subtitle lang map with @none mapping
     const buildPurposeLangMap = (entries) => {
         const langMap = {};
@@ -685,8 +600,8 @@ function EditOidcClient() {
         const currentLangMap = buildClientNameLangMap(clientNameLangMapEntries, additionalConfigRequired, clientName);
         const selectedLangMap = selectedClientDetails.clientNameLangMap || {};
         
-        const currentKeys = Object.keys(currentLangMap).sort();
-        const selectedKeys = Object.keys(selectedLangMap).sort();
+        const currentKeys = Object.keys(currentLangMap).sort((a, b) => a.localeCompare(b));
+        const selectedKeys = Object.keys(selectedLangMap).sort((a, b) => a.localeCompare(b));
         
         if (currentKeys.length !== selectedKeys.length) {
             return true;
@@ -705,7 +620,7 @@ function EditOidcClient() {
             const selectedAdditionalConfig = selectedClientDetails.additionalConfig || {};
             
             // Check consent expiry
-            const currentConsentExpiry = consentExpiry ? parseInt(consentExpiry) : undefined;
+            const currentConsentExpiry = consentExpiry ? Number.parseInt(consentExpiry, 10) : undefined;
             const selectedConsentExpiry = selectedAdditionalConfig.consent_expire_in_mins;
             if (currentConsentExpiry !== selectedConsentExpiry) {
                 return true;
@@ -734,8 +649,8 @@ function EditOidcClient() {
             if (purposeType) {
                 const currentTitleMap = buildPurposeLangMap(purposeTitleEntries);
                 const selectedTitleMap = selectedAdditionalConfig.purpose?.title || {};
-                const currentTitleKeys = currentTitleMap ? Object.keys(currentTitleMap).sort() : [];
-                const selectedTitleKeys = Object.keys(selectedTitleMap).sort();
+                const currentTitleKeys = currentTitleMap ? Object.keys(currentTitleMap).sort((a, b) => a.localeCompare(b)) : [];
+                const selectedTitleKeys = Object.keys(selectedTitleMap).sort((a, b) => a.localeCompare(b));
                 if (currentTitleKeys.length !== selectedTitleKeys.length) {
                     return true;
                 }
@@ -748,8 +663,8 @@ function EditOidcClient() {
                 // Check purpose subtitle
                 const currentSubtitleMap = buildPurposeLangMap(purposeSubtitleEntries);
                 const selectedSubtitleMap = selectedAdditionalConfig.purpose?.subTitle || {};
-                const currentSubtitleKeys = currentSubtitleMap ? Object.keys(currentSubtitleMap).sort() : [];
-                const selectedSubtitleKeys = Object.keys(selectedSubtitleMap).sort();
+                const currentSubtitleKeys = currentSubtitleMap ? Object.keys(currentSubtitleMap).sort((a, b) => a.localeCompare(b)) : [];
+                const selectedSubtitleKeys = Object.keys(selectedSubtitleMap).sort((a, b) => a.localeCompare(b));
                 if (currentSubtitleKeys.length !== selectedSubtitleKeys.length) {
                     return true;
                 }
@@ -821,7 +736,7 @@ function EditOidcClient() {
         // Reset purpose entries
         if (selectedAdditionalConfig.purpose?.title) {
             const titleEntries = Object.entries(selectedAdditionalConfig.purpose.title).map(([langKey, text]) => ({
-                id: `purpose_title_${Date.now()}_${Math.random().toString(36).slice(2, 11)}`,
+                id: `purpose_title_${crypto.randomUUID()}`,
                 language: langKey === '@none' ? 'default' : langKey,
                 text: text || ''
             }));
@@ -832,7 +747,7 @@ function EditOidcClient() {
         
         if (selectedAdditionalConfig.purpose?.subTitle) {
             const subtitleEntries = Object.entries(selectedAdditionalConfig.purpose.subTitle).map(([langKey, text]) => ({
-                id: `purpose_subtitle_${Date.now()}_${Math.random().toString(36).slice(2, 11)}`,
+                id: `purpose_subtitle_${crypto.randomUUID()}`,
                 language: langKey === '@none' ? 'default' : langKey,
                 text: text || ''
             }));
@@ -849,7 +764,7 @@ function EditOidcClient() {
         // Reset client name lang map
         if (selectedClientDetails.clientNameLangMap && typeof selectedClientDetails.clientNameLangMap === 'object') {
             const langMapEntries = Object.entries(selectedClientDetails.clientNameLangMap).map(([language, text]) => ({
-                id: `oidc_name_${Date.now()}_${Math.random().toString(36).slice(2, 11)}`,
+                id: `oidc_name_${crypto.randomUUID()}`,
                 language: language,
                 text: text || ''
             }));
@@ -897,7 +812,7 @@ function EditOidcClient() {
         additionalConfig.forgot_pwd_link_required = forgotPasswordBanner;
         
         if (consentExpiry && consentExpiry.trim() !== '') {
-            additionalConfig.consent_expire_in_mins = parseInt(consentExpiry);
+            additionalConfig.consent_expire_in_mins = Number.parseInt(consentExpiry, 10);
         }
         
         const clientNameLangMap = buildClientNameLangMap(clientNameLangMapEntries, additionalConfigRequired, clientName);
@@ -1116,7 +1031,7 @@ function EditOidcClient() {
                                                                     ) : (
                                                                         <div className="bg-white border border-neutral-300 shadow-sm rounded-md p-4">
                                                                             {clientNameLangMapEntries.map((entry, index) => {
-                                                                                const availableLangs = getAvailableLanguagesForClientNameLangMap(entry.id);
+                                                                                const availableLangs = getAvailableOidcLanguages(entry.id, clientNameLangMapEntries, languageDropdownData, true);
                                                                                 return (
                                                                                     <div key={index} className="flex mb-2">
                                                                                         <div className="w-1/3">
@@ -1135,7 +1050,7 @@ function EditOidcClient() {
                                                                                                 value={entry.text}
                                                                                                 onChange={(e) => updateClientNameLangMapEntry(entry.id, 'text', e.target.value)}
                                                                                                 onDelete={() => deleteClientNameLangMapEntry(entry.id)}
-                                                                                                placeholder={getPlaceholderForLanguage(entry.language, 'NameForOidcClient')}
+                                                                                                placeholder={getOidcPlaceholderForLanguage(entry.language, 'NameForOidcClient', t)}
                                                                                                 id={`client_name_lang_map_text_${index + 1}`}
                                                                                                 maxLength={256}
                                                                                                 showDelete={clientNameLangMapEntries.length > 0}
@@ -1242,301 +1157,39 @@ function EditOidcClient() {
                                                 </div>
 
                                                 {/* Additional Information Section */}
-                                                <div className="bg-snow-white px-7 py-4 mt-[1.5%] mb-4 rounded-lg shadow-md">
-                                                    <div
-                                                        className="flex items-center justify-between cursor-pointer"
-                                                        onClick={() => setIsAdditionalInfoExpanded(!isAdditionalInfoExpanded)}
-                                                        role="button"
-                                                        tabIndex="0"
-                                                        onKeyDown={(e) => onPressEnterKey(e, () => setIsAdditionalInfoExpanded(!isAdditionalInfoExpanded))}
-                                                    >
-                                                        <h3 className="text-lg font-semibold text-dark-blue">{t('createOidcClient.additionalInformation')}</h3>
-                                                        <img src={expandToggleIcon} alt="Toggle" className={`w-7 h-7 transform transition-transform ${isAdditionalInfoExpanded ? 'rotate-180' : ''}`} />
-                                                    </div>
-
-                                                    {isAdditionalInfoExpanded && (
-                                                        <div className="flex flex-col space-y-4 mt-3">
-                                                            <div className="border-b border-gray-200 mb-3"></div>
-                                                            
-                                                            {/* Toggles - Side by Side */}
-                                                            <div className="flex justify-between space-x-4">
-                                                                {/* Forgot Password Banner Toggle */}
-                                                                <div className="flex flex-col w-[48%]">
-                                                                    <div className={`flex items-center ${isLoginLanguageRTL ? 'flex-row-reverse justify-end' : 'justify-start'} gap-3`}>
-                                                                        <div className="flex items-center">
-                                                                            <label className={`text-dark-blue text-sm font-semibold ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
-                                                                                {t('createOidcClient.forgotPasswordBanner')}
-                                                                            </label>
-                                                                            <Information infoKey={t('createOidcClient.forgotPasswordBannerTooltip')} id='forgot_password_banner_info' />
-                                                                        </div>
-                                                                        <label 
-                                                                            className="relative inline-flex items-center cursor-pointer flex-shrink-0 focus-within:outline focus-within:outline-2 focus-within:outline-[#1447B2] focus-within:outline-offset-2 rounded"
-                                                                            tabIndex="0"
-                                                                            onKeyDown={(e) => {
-                                                                                if ((e.key === 'Enter' || e.key === ' ') && additionalConfigRequired) {
-                                                                                    e.preventDefault();
-                                                                                    setForgotPasswordBanner(!forgotPasswordBanner);
-                                                                                }
-                                                                            }}
-                                                                        >
-                                                                            <input
-                                                                                type="checkbox"
-                                                                                checked={forgotPasswordBanner}
-                                                                                onChange={(e) => additionalConfigRequired && setForgotPasswordBanner(e.target.checked)}
-                                                                                className="sr-only peer focus:outline-none"
-                                                                                id="forgot_password_banner_toggle"
-                                                                            />
-                                                                            <div className={`relative w-9 h-5 rounded-full transition-colors duration-200 ease-in-out ${forgotPasswordBanner ? 'bg-[#1447B2]' : 'bg-neutral-100'}`}>
-                                                                                <div className={`absolute top-0.5 left-0.5 w-4 h-4 bg-white rounded-full shadow-sm transform transition-transform duration-200 ease-in-out ${forgotPasswordBanner ? 'translate-x-4' : ''}`}></div>
-                                                                            </div>
-                                                                        </label>
-                                                                    </div>
-                                                                </div>
-
-                                                                {/* SignUp Banner Toggle */}
-                                                                <div className="flex flex-col w-[48%]">
-                                                                    <div className={`flex items-center ${isLoginLanguageRTL ? 'flex-row-reverse justify-end' : 'justify-start'} gap-3`}>
-                                                                        <div className="flex items-center">
-                                                                            <label className={`text-dark-blue text-sm font-semibold ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
-                                                                                {t('createOidcClient.signUpBanner')}
-                                                                            </label>
-                                                                            <Information infoKey={t('createOidcClient.signUpBannerTooltip')} id='signup_banner_info' />
-                                                                        </div>
-                                                                        <label 
-                                                                            className="relative inline-flex items-center cursor-pointer flex-shrink-0 focus-within:outline focus-within:outline-2 focus-within:outline-[#1447B2] focus-within:outline-offset-2 rounded"
-                                                                            tabIndex="0"
-                                                                            onKeyDown={(e) => {
-                                                                                if ((e.key === 'Enter' || e.key === ' ') && additionalConfigRequired) {
-                                                                                    e.preventDefault();
-                                                                                    setSignUpBanner(!signUpBanner);
-                                                                                }
-                                                                            }}
-                                                                        >
-                                                                            <input
-                                                                                type="checkbox"
-                                                                                checked={signUpBanner}
-                                                                                onChange={(e) => additionalConfigRequired && setSignUpBanner(e.target.checked)}
-                                                                                className="sr-only peer focus:outline-none"
-                                                                                id="signup_banner_toggle"
-                                                                            />
-                                                                            <div className={`relative w-9 h-5 rounded-full transition-colors duration-200 ease-in-out ${signUpBanner ? 'bg-[#1447B2]' : 'bg-neutral-100'}`}>
-                                                                                <div className={`absolute top-0.5 left-0.5 w-4 h-4 bg-white rounded-full shadow-sm transform transition-transform duration-200 ease-in-out ${signUpBanner ? 'translate-x-4' : ''}`}></div>
-                                                                            </div>
-                                                                        </label>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            {/* Consent Expiry Duration and User Info Response Type - Side by Side */}
-                                                            <div className="flex flex-row justify-between space-x-4">
-                                                                {/* Consent Expiry Duration */}
-                                                                <div className="flex flex-col w-[48%]">
-                                                                    <label id="consent_expiry_label" className={`flex items-center text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
-                                                                        {t('createOidcClient.consentExpiryDuration')}<span className="text-crimson-red mx-1">*</span>
-                                                                        <Information infoKey={t('createOidcClient.consentExpiryDurationTooltip')} id='consent_expiry_info' />
-                                                                    </label>
-                                                                    <input
-                                                                        id="consent_expiry_input"
-                                                                        value={consentExpiry}
-                                                                        onChange={(e) => handleConsentExpiryChange(e.target.value)}
-                                                                        className={`h-10 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue ${additionalConfigRequired ? "bg-white" : "bg-platinum-gray"} leading-tight focus:outline-none focus:shadow-outline w-full`}
-                                                                        placeholder={additionalConfigRequired && t('createOidcClient.consentExpiryPlaceholder')}
-                                                                        readOnly={!additionalConfigRequired}
-                                                                    />
-                                                                    {consentExpiryError && <span id="consent_expiry_error" className="text-sm text-crimson-red font-semibold mt-1">{consentExpiryError}</span>}
-                                                                </div>
-
-                                                                {/* User Info Response Type */}
-                                                                <div className="flex flex-col w-[48%]">
-                                                                    <DropdownComponent
-                                                                        fieldName='userInfoResponseType'
-                                                                        dropdownDataList={userInfoResponseTypeDropdownData}
-                                                                        onDropDownChangeEvent={handleUserInfoResponseTypeChange}
-                                                                        fieldNameKey='createOidcClient.userInfoResponseType'
-                                                                        placeHolderKey='createOidcClient.selectUserInfoResponseType'
-                                                                        selectedDropdownValue={userInfoResponseType}
-                                                                        styleSet={styles}
-                                                                        addInfoIcon={true}
-                                                                        infoKey={t('createOidcClient.userInfoResponseTypeTooltip')}
-                                                                        isPlaceHolderPresent={true}
-                                                                        id='user_info_response_type'
-                                                                        disabled={!additionalConfigRequired} />
-                                                                </div>
-                                                            </div>
-
-                                                            {/* Purpose Type - Full Width */}
-                                                            <div className="flex flex-col w-[48%] mb-2">
-                                                                <DropdownComponent
-                                                                    fieldName='purposeType'
-                                                                    dropdownDataList={purposeTypeDropdownData}
-                                                                    onDropDownChangeEvent={handlePurposeTypeChange}
-                                                                    fieldNameKey='createOidcClient.purposeType'
-                                                                    placeHolderKey='createOidcClient.selectPurposeType'
-                                                                    selectedDropdownValue={purposeType}
-                                                                    styleSet={styles}
-                                                                    addInfoIcon={true}
-                                                                    infoKey={t('createOidcClient.purposeTypeTooltip')}
-                                                                    isPlaceHolderPresent={true}
-                                                                    id='purpose_type'
-                                                                    disabled={!additionalConfigRequired} />
-                                                            </div>
-
-                                                            {/* Purpose Title - shown only when Purpose Type is selected */}
-                                                            {purposeType && (
-                                                                <div className="flex flex-col">
-                                                                    <label id="purpose_title_label" className={`flex items-center text-dark-blue text-sm font-semibold mb-2 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
-                                                                        {t('createOidcClient.purposeTitle')}
-                                                                        <Information infoKey={t('createOidcClient.purposeTitleTooltip')} id='purpose_title_info' />
-                                                                    </label>
-                                                                    {purposeTitleEntries.length === 0 ? (
-                                                                        <div className="bg-white border border-neutral-200 rounded-md p-8 flex flex-col items-center justify-center min-h-[120px]">
-                                                                            <button
-                                                                                type="button"
-                                                                                id="add_purpose_title_language"
-                                                                                className="bg-[#1447b2] text-white font-semibold text-sm px-6 py-2 rounded-md cursor-pointer hover:bg-[#0f3a8a] transition-colors"
-                                                                                tabIndex="0"
-                                                                                onKeyDown={(e) => onPressEnterKey(e, addPurposeTitleEntry)}
-                                                                                onClick={addPurposeTitleEntry}
-                                                                            >
-                                                                                {t('createOidcClient.addTitle')}
-                                                                            </button>
-                                                                            <p className="text-gray-400 text-sm mt-2 text-center">
-                                                                                {t('createOidcClient.addTitleHelperText')}
-                                                                            </p>
-                                                                        </div>
-                                                                    ) : (
-                                                                        <div className="bg-white border border-neutral-300 shadow-sm rounded-md p-4">
-                                                                            {purposeTitleEntries.map((entry, index) => {
-                                                                                const availableLangs = getAvailableLanguages(entry.id, 'title');
-                                                                                return (
-                                                                                    <div key={index} className="flex mb-2">
-                                                                                        <div className="w-1/3">
-                                                                                            <DropdownComponent
-                                                                                                fieldName={`purposeTitleLang_${index + 1}`}
-                                                                                                dropdownDataList={availableLangs}
-                                                                                                onDropDownChangeEvent={(field, value) => updatePurposeTitleEntry(entry.id, 'language', value)}
-                                                                                                fieldNameKey=""
-                                                                                                placeHolderKey="createOidcClient.selectLanguage"
-                                                                                                selectedDropdownValue={entry.language}
-                                                                                                styleSet={styles}
-                                                                                                id={`purpose_title_lang_${index + 1}`} />
-                                                                                        </div>
-                                                                                        <div className={`w-full mt-1 ${isLoginLanguageRTL ? 'mr-5' : 'ml-5'}`}>
-                                                                                            <TextInputComponentWithDeleteButton
-                                                                                                value={entry.text}
-                                                                                                onChange={(e) => updatePurposeTitleEntry(entry.id, 'text', e.target.value)}
-                                                                                                onDelete={() => deletePurposeTitleEntry(entry.id)}
-                                                                                                placeholder={getPlaceholderForLanguage(entry.language, 'PurposeTitle')}
-                                                                                                id={`purpose_title_text_${index + 1}`}
-                                                                                                showDelete={purposeTitleEntries.length > 0}
-                                                                                                errorMessage={purposeTitleErrors[entry.id]}
-                                                                                                isRTL={isLangRTL(entry.language)}
-                                                                                                languageCode={entry.language}
-                                                                                            />
-                                                                                        </div>
-                                                                                    </div>
-                                                                                );
-                                                                            })}
-                                                                            {purposeTitleEntries.length < languageDropdownData.length && (
-                                                                                <div
-                                                                                    role="button"
-                                                                                    id="add_purpose_title_language"
-                                                                                    className="text-[#1447b2] font-bold text-xs w-fit cursor-pointer"
-                                                                                    tabIndex="0"
-                                                                                    onKeyDown={(e) => onPressEnterKey(e, addPurposeTitleEntry)}
-                                                                                    onClick={addPurposeTitleEntry}
-                                                                                >
-                                                                                    <span className="text-lg text-center">+</span>
-                                                                                    <span>{t('createOidcClient.addNew')}</span>
-                                                                                </div>
-                                                                            )}
-                                                                        </div>
-                                                                    )}
-                                                                    {purposeTitleDefaultError && (
-                                                                        <span className="text-sm text-crimson-red font-semibold mt-2">{purposeTitleDefaultError}</span>
-                                                                    )}
-                                                                </div>
-                                                            )}
-
-                                                            {/* Purpose Subtitle - shown only when Purpose Type is selected */}
-                                                            {purposeType && (
-                                                                <div className="flex flex-col">
-                                                                    <label id="purpose_subtitle_label" className={`flex items-center text-dark-blue text-sm font-semibold mb-2 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
-                                                                        {t('createOidcClient.purposeSubtitle')}
-                                                                        <Information infoKey={t('createOidcClient.purposeSubtitleTooltip')} id='purpose_subtitle_info' />
-                                                                    </label>
-                                                                    {purposeSubtitleEntries.length === 0 ? (
-                                                                        <div className="bg-white border border-neutral-200 rounded-md p-8 flex flex-col items-center justify-center min-h-[120px]">
-                                                                            <button
-                                                                                type="button"
-                                                                                id="add_purpose_subtitle_language"
-                                                                                className="bg-[#1447b2] text-white font-semibold text-sm px-6 py-2 rounded-md cursor-pointer hover:bg-[#0f3a8a] transition-colors"
-                                                                                tabIndex="0"
-                                                                                onKeyDown={(e) => onPressEnterKey(e, addPurposeSubtitleEntry)}
-                                                                                onClick={addPurposeSubtitleEntry}
-                                                                            >
-                                                                                {t('createOidcClient.addSubtitle')}
-                                                                            </button>
-                                                                            <p className="text-gray-400 text-sm mt-2 text-center">
-                                                                                {t('createOidcClient.addSubtitleHelperText')}
-                                                                            </p>
-                                                                        </div>
-                                                                    ) : (
-                                                                        <div className="bg-white border border-neutral-300 shadow-sm rounded-md p-4">
-                                                                            {purposeSubtitleEntries.map((entry, index) => {
-                                                                                const availableLangs = getAvailableLanguages(entry.id, 'subtitle');
-                                                                                return (
-                                                                                    <div key={index} className="flex mb-2">
-                                                                                        <div className="w-1/3">
-                                                                                            <DropdownComponent
-                                                                                                fieldName={`purposeSubtitleLang_${index + 1}`}
-                                                                                                dropdownDataList={availableLangs}
-                                                                                                onDropDownChangeEvent={(field, value) => updatePurposeSubtitleEntry(entry.id, 'language', value)}
-                                                                                                fieldNameKey=""
-                                                                                                placeHolderKey="createOidcClient.selectLanguage"
-                                                                                                selectedDropdownValue={entry.language}
-                                                                                                styleSet={styles}
-                                                                                                id={`purpose_subtitle_lang_${index + 1}`} />
-                                                                                        </div>
-                                                                                        <div className={`w-full mt-1 ${isLoginLanguageRTL ? 'mr-5' : 'ml-5'}`}>
-                                                                                            <TextInputComponentWithDeleteButton
-                                                                                                value={entry.text}
-                                                                                                onChange={(e) => updatePurposeSubtitleEntry(entry.id, 'text', e.target.value)}
-                                                                                                onDelete={() => deletePurposeSubtitleEntry(entry.id)}
-                                                                                                placeholder={getPlaceholderForLanguage(entry.language, 'PurposeSubtitle')}
-                                                                                                id={`purpose_subtitle_text_${index + 1}`}
-                                                                                                showDelete={purposeSubtitleEntries.length > 0}
-                                                                                                errorMessage={purposeSubtitleErrors[entry.id]}
-                                                                                                isRTL={isLangRTL(entry.language)}
-                                                                                                languageCode={entry.language}
-                                                                                            />
-                                                                                        </div>
-                                                                                    </div>
-                                                                                );
-                                                                            })}
-                                                                            {purposeSubtitleEntries.length < languageDropdownData.length && (
-                                                                                <div
-                                                                                    role="button"
-                                                                                    id="add_purpose_subtitle_language"
-                                                                                    className="text-[#1447b2] font-bold text-xs w-fit cursor-pointer"
-                                                                                    tabIndex="0"
-                                                                                    onKeyDown={(e) => onPressEnterKey(e, addPurposeSubtitleEntry)}
-                                                                                    onClick={addPurposeSubtitleEntry}
-                                                                                >
-                                                                                    <span className="text-lg text-center">+</span>
-                                                                                    <span>{t('createOidcClient.addNew')}</span>
-                                                                                </div>
-                                                                            )}
-                                                                        </div>
-                                                                    )}
-                                                                    {purposeSubtitleDefaultError && (
-                                                                        <span className="text-sm text-crimson-red font-semibold mt-2">{purposeSubtitleDefaultError}</span>
-                                                                    )}
-                                                                </div>
-                                                            )}
-                                                        </div>
-                                                    )}
-                                                </div>
+                                                <OidcClientAdditionalInfoSection
+                                                  isAdditionalInfoExpanded={isAdditionalInfoExpanded}
+                                                  setIsAdditionalInfoExpanded={setIsAdditionalInfoExpanded}
+                                                  isLoginLanguageRTL={isLoginLanguageRTL}
+                                                  additionalConfigRequired={additionalConfigRequired}
+                                                  forgotPasswordBanner={forgotPasswordBanner}
+                                                  setForgotPasswordBanner={setForgotPasswordBanner}
+                                                  signUpBanner={signUpBanner}
+                                                  setSignUpBanner={setSignUpBanner}
+                                                  consentExpiry={consentExpiry}
+                                                  handleConsentExpiryChange={handleConsentExpiryChange}
+                                                  consentExpiryError={consentExpiryError}
+                                                  userInfoResponseType={userInfoResponseType}
+                                                  handleUserInfoResponseTypeChange={handleUserInfoResponseTypeChange}
+                                                  userInfoResponseTypeDropdownData={userInfoResponseTypeDropdownData}
+                                                  purposeType={purposeType}
+                                                  handlePurposeTypeChange={handlePurposeTypeChange}
+                                                  purposeTypeDropdownData={purposeTypeDropdownData}
+                                                  purposeTitleEntries={purposeTitleEntries}
+                                                  addPurposeTitleEntry={addPurposeTitleEntry}
+                                                  updatePurposeTitleEntry={updatePurposeTitleEntry}
+                                                  deletePurposeTitleEntry={deletePurposeTitleEntry}
+                                                  purposeTitleErrors={purposeTitleErrors}
+                                                  purposeTitleDefaultError={purposeTitleDefaultError}
+                                                  purposeSubtitleEntries={purposeSubtitleEntries}
+                                                  addPurposeSubtitleEntry={addPurposeSubtitleEntry}
+                                                  updatePurposeSubtitleEntry={updatePurposeSubtitleEntry}
+                                                  deletePurposeSubtitleEntry={deletePurposeSubtitleEntry}
+                                                  purposeSubtitleErrors={purposeSubtitleErrors}
+                                                  purposeSubtitleDefaultError={purposeSubtitleDefaultError}
+                                                  languageDropdownData={languageDropdownData}
+                                                  styles={styles}
+                                                />
                                             </form>
                                         </div>
                                         <div className="pb-3 pt-6 px-4 bg-snow-white mt-[1.5%] rounded-lg shadow-md">
@@ -1545,7 +1198,7 @@ function EditOidcClient() {
                                                 <button id="oidc_edit_undo_changes_btn" onClick={() => undoChanges()} className="mr-2 w-40 min-w-fit px-3 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold">{t('commons.undoChanges')}</button>
                                                 <div className="flex flex-row space-x-3 w-full md:w-auto justify-end">
                                                     <button id="oidc_edit_cancel_btn" onClick={() => clickOnCancel()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.cancel')}</button>
-                                                    <button id="oidc_edit_submit_btn" disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>{t('requestPolicy.submit')}</button>
+                                                    <button id="oidc_edit_submit_btn" disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white'}`}>{t('requestPolicy.submit')}</button>
                                                 </div>
                                             </div>
                                         </div>

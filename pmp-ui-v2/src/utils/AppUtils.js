@@ -126,7 +126,7 @@ export const getLanguageLabel = (languageCode, t) => {
     if (languageCode) {
         const languageLabel = languageMap[languageCode.toLowerCase()];
         if (languageLabel) {
-            return t(languageLabel);
+            return languageLabel;
         }
     }
     return languageCode; // fallback to code if no translation found
@@ -1392,6 +1392,38 @@ export const fetchNotificationsList = async (dispatch) => {
     }
 };
 
+export const fetchUserConsent = async () => {
+    // Return immediately if consent was already confirmed in this session
+    const userConsent = sessionStorage.getItem('userConsentGiven');
+    if (userConsent === 'true') {
+        return true;
+    }
+
+    // Consent not confirmed yet in this session, so verify from backend
+    try {
+        const response = await HttpService.get(
+            getPartnerManagerUrl('/users/user-consent', process.env.NODE_ENV)
+        );
+
+        if (response?.data?.response) {
+            const consentGiven = response.data.response.consentGiven;
+
+            // Persist only a positive consent decision for the current session
+            if (consentGiven) {
+                sessionStorage.setItem('userConsentGiven', 'true');
+            }
+
+            return consentGiven;
+        }
+
+        return false;
+    } catch (err) {
+        console.error('Error fetching user consent:', err);
+        return false;
+    }
+};
+
+
 export const getOuterDivWidth = (text) => {
     if (text.length > 30) {
         return 'min-w-[21rem]';
@@ -1509,5 +1541,176 @@ export const fetchPartnerDetails = async (HttpService, partnerId, setErrorCode, 
             setErrorMsg(err.toString());
         }
         return null;
+    }
+};
+
+// OIDC Client Helper Functions
+/**
+ * Creates a new entry object for language-based fields (client name, purpose title/subtitle)
+ */
+export const createOidcClientEntry = (language, type) => {
+    const baseId = crypto.randomUUID();
+    let uniqueId;
+    
+    switch (type) {
+        case 'clientName':
+            uniqueId = `oidc_name_${baseId}`;
+            break;
+        case 'purposeTitle':
+            uniqueId = `purpose_title_${baseId}`;
+            break;
+        case 'purposeSubtitle':
+            uniqueId = `purpose_subtitle_${baseId}`;
+            break;
+        default:
+            uniqueId = `entry_${type}_${baseId}`;
+    }
+    
+    return {
+        id: uniqueId,
+        language: language,
+        text: ''
+    };
+};
+
+/**
+ * Finds an available language from the dropdown data that hasn't been used
+ */
+export const findAvailableOidcLanguage = (usedLanguages, languageDropdownData) => {
+    return languageDropdownData.find(lang => !usedLanguages.includes(lang.fieldValue));
+};
+
+/**
+ * Validates entry text for language-based fields
+ */
+export const validateOidcEntryText = (value, entry, requiredErrorKey, errors, setErrors, t) => {
+    const newErrors = { ...errors };
+    let inputError = "";
+
+    validateInputRegex(value, (error) => {
+        inputError = error;
+    }, t);
+
+    // Determine which error to show (priority: required > regex)
+    if (entry.text.trim() === '' && entry.text !== '') {
+        newErrors[entry.id] = t(requiredErrorKey);
+    } else if (inputError) {
+        newErrors[entry.id] = inputError;
+    } else {
+        delete newErrors[entry.id];
+    }
+    setErrors(newErrors);
+};
+
+/**
+ * Gets placeholder text based on language code and field type
+ */
+export const getOidcPlaceholderForLanguage = (languageCode, fieldType, t) => {
+    if (!languageCode || languageCode === 'default') {
+        const fallbackKey = `createOidcClient.enter${fieldType}Default`;
+        return t(fallbackKey);
+    }
+    
+    const langCode = languageCode.toLowerCase();
+    
+    // Use the new translation keys that have text in the target language
+    const placeholderKey = `createOidcClient.enter${fieldType}In${langCode.charAt(0).toUpperCase() + langCode.slice(1)}`;
+    const fallbackKey = `createOidcClient.enter${fieldType}Default`;
+    
+    // Get translation (all translation files have the same keys with target language text)
+    let placeholder = t(placeholderKey);
+    if (placeholder === placeholderKey) {
+        placeholder = t(fallbackKey);
+    }
+    
+    return placeholder;
+};
+
+/**
+ * Gets available languages for a specific entry, excluding already used languages
+ */
+export const getAvailableOidcLanguages = (currentEntryId, entries, languageDropdownData, excludeDefault = false) => {
+    const currentEntry = entries.find(e => e.id === currentEntryId);
+    const currentLanguage = currentEntry ? currentEntry.language : '';
+    const usedLanguages = entries
+        .filter(e => e.id !== currentEntryId && e.language)
+        .map(e => e.language);
+    
+    return languageDropdownData.filter(lang => {
+        if (excludeDefault && lang.fieldValue === 'default') {
+            return false;
+        }
+        return !usedLanguages.includes(lang.fieldValue) || lang.fieldValue === currentLanguage;
+    });
+};
+
+/**
+ * Initializes User Info Response Type dropdown data
+ */
+export const initializeUserInfoResponseTypeDropdown = (t) => {
+    const userInfoResponseTypeData = [
+        { fieldCode: t('createOidcClient.jws'), fieldValue: 'JWS' },
+        { fieldCode: t('createOidcClient.jwe'), fieldValue: 'JWE' }
+    ];
+    // Add blank entry
+    const dropdownData = createDropdownData("fieldValue", "", true, userInfoResponseTypeData, t, t("createOidcClient.selectUserInfoResponseType"));
+    
+    const finalData = dropdownData.map(item => {
+        if (item.fieldValue === '') return item; // Keep blank entry as is
+        const originalItem = userInfoResponseTypeData.find(d => d.fieldValue === item.fieldValue);
+        return originalItem ? { ...item, fieldCode: originalItem.fieldCode } : item;
+    });
+    return finalData;
+};
+
+/**
+ * Initializes Purpose Type dropdown data
+ */
+export const initializePurposeTypeDropdown = (t) => {
+    const purposeTypeData = [
+        { fieldCode: t('createOidcClient.login'), fieldValue: 'login' },
+        { fieldCode: t('createOidcClient.link'), fieldValue: 'link' },
+        { fieldCode: t('createOidcClient.verify'), fieldValue: 'verify' }
+    ];
+    // Add blank entry
+    const dropdownData = createDropdownData("fieldValue", "", true, purposeTypeData, t, t("createOidcClient.selectPurposeType"));
+    const finalData = dropdownData.map(item => {
+        if (item.fieldValue === '') return item; // Keep blank entry as is
+        const originalItem = purposeTypeData.find(d => d.fieldValue === item.fieldValue);
+        return originalItem ? { ...item, fieldCode: originalItem.fieldCode } : item;
+    });
+    return finalData;
+};
+
+/**
+ * Initializes Language dropdown data
+ */
+export const initializeLanguageDropdown = async (t) => {
+    try {
+        const appConfig = await getAppConfig();
+        const supportedLanguages = appConfig && appConfig.supportedOidcLanguages;
+        let languageCodes = [];
+        if (Array.isArray(supportedLanguages)) {
+            languageCodes = supportedLanguages;
+        } else if (typeof supportedLanguages === 'string') {
+            languageCodes = supportedLanguages.split(',').map(code => code.trim()).filter(code => code);
+        }
+
+        const languageData = languageCodes.map(langCode => ({
+            languageCode: langCode,
+            name: getLanguageDisplayName(langCode, t)
+        }));
+
+        // Add "Default" option at the beginning
+        const defaultOption = { languageCode: 'default', name: t('createOidcClient.default') };
+        const allLanguages = [defaultOption, ...languageData.map(lang => ({
+            languageCode: lang.languageCode,
+            name: lang.name
+        }))];
+
+        return createDropdownData('languageCode', 'name', false, allLanguages, t);
+    } catch (err) {
+        console.error('Error fetching languages:', err);
+        return [];
     }
 };

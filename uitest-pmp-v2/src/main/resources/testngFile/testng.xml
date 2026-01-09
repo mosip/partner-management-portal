@@ -3,7 +3,9 @@
 
 <suite name="PMP uiv2 UI TestRig" preserve-order="true" parallel="false">
 
+    <!-- ========================= -->
     <!-- STEP 1: Partner Creation (SEQUENTIAL) -->
+    <!-- ========================= -->
     <test name="PartnerCreationSequence" preserve-order="true" parallel="false">
         <classes>
             <class name="io.mosip.testrig.pmpuiv2.testcase.PartnerAdminCreation"/>
@@ -14,8 +16,11 @@
             <class name="io.mosip.testrig.pmpuiv2.testcase.DeactivatePartnerCreation"/>
         </classes>
     </test>
+
+    <!-- ========================= -->
     <!-- STEP 2: Remaining Tests (PARALLEL) -->
-    <test name="ClassTestsParallel" parallel="classes" thread-count="4">
+    <!-- ========================= -->
+    <test name="RemainingTestsParallel" parallel="classes" thread-count="4">
         <classes>
             <class name="io.mosip.testrig.pmpuiv2.testcase.FtmDeviceTest"/>
             <class name="io.mosip.testrig.pmpuiv2.testcase.SbiCreationTest"/>

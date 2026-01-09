@@ -518,7 +518,7 @@
         "duplicateLanguage": "يمكن استخدام كل لغة مرة واحدة فقط",
         "clientNameTooltip": "أدخل اسم العميل بلغات متعددة. سيتم استخدام اللغة الافتراضية كبديل.",
         "clientNameRequired": "اسم العميل لا يمكن أن يكون فارغًا",
-        "consentExpiryPlaceholder": "10 دقائق",
+        "consentExpiryPlaceholder": "أدخل المدة بالدقائق",
         "purposeTypeTooltip": "حدد نوع الغرض لعميل OIDC",
         "addTitle": "إضافة عنوان",
         "addSubtitle": "إضافة عنوان فرعي",

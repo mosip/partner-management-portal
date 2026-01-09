@@ -233,9 +233,9 @@ function PartnersList() {
   };
 
   const isUploadCertificateEnabled = (partner) => {
-    // Upload certificate is enabled for MISP_Partner when active and inactive state
+    // Upload certificate is enabled for MISP_Partner and ABIS_Partner when active and inactive state
     // Disabled for deactivated state:
-    return partner.partnerType === "MISP_Partner" && 
+    return (partner.partnerType === "MISP_Partner" || partner.partnerType === "ABIS_Partner") && 
            !(partner.status === 'deactivated');
   };
 
@@ -318,18 +318,18 @@ function PartnersList() {
     // Prepare request payload
     const request = {
       partnerId: partner.partnerId,
-      partnerDomain: getPartnerDomainType("MISP_Partner"),
+      partnerDomain: getPartnerDomainType(partner.partnerType),
     };
 
     // Prepare certificate popup data
     const certificateData = {
-      partnerType: "MISP_Partner",
+      partnerType: partner.partnerType,
       uploadHeader: "uploadCertificate.uploadPartnerCertificate",
       isUploadPartnerCertificate: true,
       reUploadHeader: "uploadCertificate.reUploadPartnerCertificate",
       isCertificateAvailable: isUploaded,
       certificateUploadDateTime: certificateUploadDateTime,
-      isMispPartnerCertificate: true
+      isMispOrAbisPartnerCertificate: partner.partnerType === "MISP_Partner" || partner.partnerType === "ABIS_Partner"
     };
 
     // Update UI state
