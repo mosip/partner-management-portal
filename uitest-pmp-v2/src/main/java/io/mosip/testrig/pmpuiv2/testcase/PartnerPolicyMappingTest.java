@@ -523,8 +523,11 @@ public class PartnerPolicyMappingTest extends BaseClass {
 
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
 		boolean policyFound = false;
-		By policyRow = By.xpath("//tr[contains(@class,'policy-row')]");
-		By noDataLabel = By.xpath("//p[contains(normalize-space(), 'No Data Available')]");
+
+		By policyRowByName = By
+				.xpath("//tr[contains(@class,'policy-row')]" + "[.//td[normalize-space()='" + authPolicyName + "']]");
+
+		By noDataLabel = By.xpath("//p[contains(normalize-space(),'No Data Available')]");
 
 		for (int attempt = 1; attempt <= 3; attempt++) {
 			try {
@@ -532,24 +535,27 @@ public class PartnerPolicyMappingTest extends BaseClass {
 				policiesPage.selectPartnerIdDropdown();
 				policiesPage.enterAuthPolicyNameDropdown(authPolicyName);
 
-				wait.until(ExpectedConditions.or(ExpectedConditions.visibilityOfElementLocated(policyRow),
+				// Wait until either the exact policy row OR no-data message appears
+				wait.until(ExpectedConditions.or(ExpectedConditions.visibilityOfElementLocated(policyRowByName),
 						ExpectedConditions.visibilityOfElementLocated(noDataLabel)));
 
-				if (driver.findElements(policyRow).size() > 0) {
+				if (!driver.findElements(policyRowByName).isEmpty()) {
 					policyFound = true;
 					break;
 				}
 
 				driver.navigate().refresh();
+				policiesPage.waitUntilPageReady();
 
-			} catch (TimeoutException te) {
+			} catch (TimeoutException e) {
 				driver.navigate().refresh();
+				policiesPage.waitUntilPageReady();
 			}
 		}
 
 		if (!policyFound) {
 			throw new RuntimeException("Policy not available for request after retries: " + authPolicyName);
 		}
-
 	}
+
 }

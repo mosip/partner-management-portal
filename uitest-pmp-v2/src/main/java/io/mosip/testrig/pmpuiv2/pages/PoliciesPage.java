@@ -725,4 +725,10 @@ public class PoliciesPage extends BasePage {
 	public void clickOnPolicyButton() {
 		clickOnElement(policyButton);
 	}
+	
+	public void waitUntilPageReady() {
+	    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+	    waitForPageToBeReady(wait);
+	}
+
 }

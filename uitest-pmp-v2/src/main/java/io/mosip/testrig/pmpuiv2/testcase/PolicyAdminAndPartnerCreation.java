@@ -87,7 +87,7 @@ public class PolicyAdminAndPartnerCreation extends BaseClass {
 	}
 
 	@Test(priority = 3, description = "This is a test case register new user", dependsOnMethods = "uploadTrustCertificate")
-	public void registerNewUser() throws TimeoutException {
+	public void registerNewUser(){
 		dashboardPage = new DashboardPage(driver);
 		partnerCertificatePage = new PartnerCertificatePage(driver);
 		loginPage = new LoginPage(driver);

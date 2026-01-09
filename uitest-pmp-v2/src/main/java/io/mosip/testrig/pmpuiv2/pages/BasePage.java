@@ -475,5 +475,13 @@ public class BasePage {
 			return false;
 		}
 	}
+	
+	protected void waitForPageToBeReady(WebDriverWait wait) {
+	    waitForLoaderToDisappear();
+	    wait.until(
+	        ExpectedConditions.visibilityOfElementLocated(By.id("partnerId"))
+	    );
+	}
+
 
 }
