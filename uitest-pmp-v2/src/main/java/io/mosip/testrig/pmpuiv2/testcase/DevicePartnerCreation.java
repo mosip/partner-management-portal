@@ -28,6 +28,7 @@ public class DevicePartnerCreation extends BaseClass {
 		dashboardPage = new DashboardPage(driver);
 		partnerCertificatePage = new PartnerCertificatePage(driver);
 		registerPage = new RegisterPage(driver);
+		basePage = new BasePage(driver);
 
 		handleTermsAndCondition();
 

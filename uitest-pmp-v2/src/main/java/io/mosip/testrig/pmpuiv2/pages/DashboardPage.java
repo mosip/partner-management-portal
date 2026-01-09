@@ -180,21 +180,11 @@ public class DashboardPage extends BasePage {
 	public void selectPolicyGroupDropdown(String policyGroupValue) {
 
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-
-		// 1️⃣ Open dropdown
 		clickOnElement(selectPolicyGroupDropdown);
-
-		// 2️⃣ Type search text
 		enter(SearchBox, policyGroupValue);
-
-		// 3️⃣ Wait for matching option (NO hardcoded id)
 		By optionLocator = By.xpath("//button[.//span[contains(normalize-space(text()),'" + policyGroupValue + "')]]");
-
 		WebElement option = wait.until(ExpectedConditions.visibilityOfElementLocated(optionLocator));
-
-		// 4️⃣ Scroll + click (SPA-safe)
 		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block:'center'});", option);
-
 		try {
 			option.click();
 		} catch (Exception e) {
@@ -261,11 +251,7 @@ public class DashboardPage extends BasePage {
 	public PoliciesPage clickOnPoliciesTitle() {
 
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
-
-		// Wait for loader to disappear (dashboard stabilization)
 		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//*[contains(text(),'Loading')]")));
-
-		// Re-find element every time (NO caching)
 		wait.until((WebDriver d) -> {
 			try {
 				d.findElement(policiesTitle).click();

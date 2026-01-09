@@ -153,7 +153,7 @@ public class SbiDeviceProviderTest extends BaseClass {
 	}
 
 	@Test(priority = 4, description = "Verifying the SBI and Devices after deactivating", dependsOnMethods = "createSbiDeviceWhichExist")
-	public void verifySbiAndDeviceAfterDeactivate() throws InterruptedException {
+	public void verifySbiAndDeviceAfterDeactivate(){
 
 		dashboardpage = new DashboardPage(driver);
 		listOfSbiPage = new ListOfSbiPage(driver);

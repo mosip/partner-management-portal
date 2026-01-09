@@ -818,19 +818,14 @@ public class DatasharePolicyPage extends BasePage {
 
 		clickOnElement(policyGroupDropdown);
 		enter(policyGroupDropdownSearchInput, value);
-
 		By optionButton = By.xpath(
 				"//button[.//span[contains(@class,'font-semibold') " + "and normalize-space(text())='" + value + "']]");
-
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-
 		try {
 			WebElement button = wait.until(ExpectedConditions.presenceOfElementLocated(optionButton));
-
 			try {
 				button.click();
 			} catch (StaleElementReferenceException e) {
-				// one retry with fresh lookup
 				wait.until(ExpectedConditions.presenceOfElementLocated(optionButton)).click();
 			}
 

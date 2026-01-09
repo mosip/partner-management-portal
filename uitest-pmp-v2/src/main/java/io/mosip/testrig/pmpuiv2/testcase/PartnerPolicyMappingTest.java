@@ -6,6 +6,9 @@ import static org.testng.Assert.assertTrue;
 
 import java.time.Duration;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
 
@@ -518,37 +521,35 @@ public class PartnerPolicyMappingTest extends BaseClass {
 
 	private void requestPolicy(String authPolicyName) {
 
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
 		boolean policyFound = false;
+		By policyRow = By.xpath("//tr[contains(@class,'policy-row')]");
+		By noDataLabel = By.xpath("//*[text()='No Data Available']");
 
 		for (int attempt = 1; attempt <= 3; attempt++) {
 			try {
 				policiesPage.clickOnRequestPolicyButton();
 				policiesPage.selectPartnerIdDropdown();
-
-				// Try typing policy name
 				policiesPage.enterAuthPolicyNameDropdown(authPolicyName);
 
-				// ✅ Validate policy is visible (NO "No Data Available")
-				wait.until(d -> !driver.getPageSource().contains("No Data Available"));
+				wait.until(ExpectedConditions.or(ExpectedConditions.visibilityOfElementLocated(policyRow),
+						ExpectedConditions.visibilityOfElementLocated(noDataLabel)));
 
-				policyFound = true;
-				break; // ✅ exit retry loop
+				if (driver.findElements(policyRow).size() > 0) {
+					policyFound = true;
+					break;
+				}
 
-			} catch (Exception e) {
-				// 🔁 Backend not ready yet → refresh & retry
+				driver.navigate().refresh();
+
+			} catch (TimeoutException te) {
 				driver.navigate().refresh();
 			}
 		}
 
 		if (!policyFound) {
-			throw new RuntimeException("Policy not available for request even after retries: " + authPolicyName);
+			throw new RuntimeException("Policy not available for request after retries: " + authPolicyName);
 		}
 
-		// Continue only after policy is confirmed visible
-		policiesPage.enterComments(GlobalConstants.DEFAULT_POLICY);
-		policiesPage.clickSubmitButton();
-		policiesPage.clickOnGoBackButton();
 	}
-
 }

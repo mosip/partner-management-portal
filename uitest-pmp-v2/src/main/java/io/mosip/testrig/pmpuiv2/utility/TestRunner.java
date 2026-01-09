@@ -240,14 +240,14 @@ public class TestRunner {
 
 	public static String GetKernalFilename() {
 		String path = System.getProperty("env.user");
-		String kernalpath = null;
+		String kernelpath = null;
 		if (System.getProperty("env.user") == null || System.getProperty("env.user").equals("")) {
-			kernalpath = "kernal.properties";
+			kernelpath = "kernel.properties";
 
 		} else {
-			kernalpath = "kernal_" + path + ".properties";
+			kernelpath = "kernel_" + path + ".properties";
 		}
-		return kernalpath;
+		return kernelpath;
 	}
 
 }

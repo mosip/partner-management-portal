@@ -2,23 +2,15 @@ package io.mosip.testrig.pmpuiv2.pages;
 
 import java.io.IOException;
 import java.time.Duration;
-import java.util.List;
-import java.util.NoSuchElementException;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.StaleElementReferenceException;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
-import io.mosip.testrig.pmpuiv2.driver.DriverManager;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
 public class AddDevicePage extends BasePage {
@@ -218,33 +210,32 @@ public class AddDevicePage extends BasePage {
 		return isElementDisplayed(headerUserProfile);
 	}
 
-	public void selectAddDeviceType(String value) {
+	public void selectAddDeviceType(String value) throws Exception {
 		try {
 			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
 
-			// 🔑 re-locate element fresh every time
 			WebElement deviceTypeDropdown = wait
-					.until(ExpectedConditions.elementToBeClickable(By.id("add_device_device_type_dropdown_btn")));
+					.until(ExpectedConditions.elementToBeClickable(By.id("add_device_device_type_dropdown")));
 
 			dropdown(deviceTypeDropdown, value);
 
 		} catch (Exception e) {
-			logger.info(e.getMessage());
+			logger.error("Failed to select device type: " + value, e);
+			throw e;
 		}
 	}
 
-	public void selectDeviceSubType(String value) {
+	public void selectDeviceSubType(String value) throws Exception {
 		try {
 			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-
-			// 🔑 re-locate Sub Type dropdown fresh
 			WebElement subTypeDropdown = wait
 					.until(ExpectedConditions.elementToBeClickable(By.id("add_device_device_sub_type_dropdown_btn")));
 
 			dropdown(subTypeDropdown, value);
 
 		} catch (Exception e) {
-			logger.info(e.getMessage());
+			logger.error("Failed to select device sub type: " + value, e);
+			throw e;
 		}
 	}
 

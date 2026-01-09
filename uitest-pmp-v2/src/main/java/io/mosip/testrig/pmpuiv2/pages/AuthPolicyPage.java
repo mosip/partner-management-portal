@@ -1,7 +1,7 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
 import java.time.Duration;
-import java.util.NoSuchElementException;
+import org.openqa.selenium.NoSuchElementException;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -524,7 +524,7 @@ public class AuthPolicyPage extends BasePage {
 		});
 	}
 
-	public boolean selectPolicyGroupDropdownIfPresent(String policyGroupValue) {
+	public boolean selectPolicyGroupDropdownIfPresent(String policyGroupValue) throws NoSuchElementException {
 
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
 		clickOnElement(policyGroupDropdown);
@@ -537,7 +537,7 @@ public class AuthPolicyPage extends BasePage {
 				try {
 					d.findElement(optionLocator).click();
 					return true;
-				} catch (NoSuchElementException | WebDriverException e) {
+				} catch (WebDriverException e) {
 					return false;
 				}
 			});

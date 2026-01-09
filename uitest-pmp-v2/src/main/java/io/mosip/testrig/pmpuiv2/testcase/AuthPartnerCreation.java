@@ -31,6 +31,7 @@ public class AuthPartnerCreation extends BaseClass {
 		dashboardPage = new DashboardPage(driver);
 		partnerCertificatePage = new PartnerCertificatePage(driver);
 		loginPage = new LoginPage(driver);
+		basePage = new BasePage(driver);
 
 		dashboardPage.clickOnCertificateTrustStore();
 		assertTrue(partnerCertificatePage.isUploadTrustCertificateButtonDisplayed(),
@@ -159,6 +160,7 @@ public class AuthPartnerCreation extends BaseClass {
 		policiesPage = new PoliciesPage(driver);
 		registerPage = new RegisterPage(driver);
 		loginPage = new LoginPage(driver);
+		basePage = new BasePage(driver);
 
 		logoutFromPartner();
 

@@ -27,6 +27,7 @@ public class PolicyAdminAndPartnerCreation extends BaseClass {
 	public void policiesAdminCreation() {
 		dashboardPage = new DashboardPage(driver);
 		loginPage = new LoginPage(driver);
+		basePage = new BasePage(driver);
 
 		logoutFromPartner();
 		registerPage = loginPage.clickRegisterButton();
@@ -90,6 +91,7 @@ public class PolicyAdminAndPartnerCreation extends BaseClass {
 		dashboardPage = new DashboardPage(driver);
 		partnerCertificatePage = new PartnerCertificatePage(driver);
 		loginPage = new LoginPage(driver);
+		basePage = new BasePage(driver);
 
 		loginAsPartnerAdmin();
 		dashboardPage.clickOnCertificateTrustStore();

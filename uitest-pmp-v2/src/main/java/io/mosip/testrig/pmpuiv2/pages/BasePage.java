@@ -179,7 +179,7 @@ public class BasePage {
 		try {
 			waitForElementVisible(element);
 			clickOnElement(element);
-			WebElement dropdown=driver.findElement(By.xpath("(//*[text()='" + value + "'])[" + position + "]"));
+			WebElement dropdown = driver.findElement(By.xpath("(//*[text()='" + value + "'])[" + position + "]"));
 			waitForElementVisible(dropdown);
 			clickOnElement(dropdown);
 		} catch (Exception e) {
@@ -219,7 +219,6 @@ public class BasePage {
 		String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 		Random random = new Random();
 		StringBuilder stringBuilder = new StringBuilder(15);
-
 		for (int i = 0; i < 15; i++) {
 			int index = random.nextInt(alphabet.length());
 			stringBuilder.append(alphabet.charAt(index));
@@ -277,9 +276,7 @@ public class BasePage {
 	public static String getPreAppend() {
 		String preappend = null;
 		try {
-
 			preappend = ConfigManager.getpreappend();
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -289,9 +286,7 @@ public class BasePage {
 	public static int getSplitdigit() {
 		String splitdigit = null;
 		try {
-
 			splitdigit = ConfigManager.getsplitdigit();
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -364,7 +359,6 @@ public class BasePage {
 	public void scrollToEndPage() {
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
-
 	}
 
 	public void scrollToStartPage() {
@@ -442,7 +436,7 @@ public class BasePage {
 					}
 					return elements.get(0).isDisplayed();
 				} catch (StaleElementReferenceException e) {
-					return false; // retry on next poll
+					return false;
 				}
 			});
 
@@ -461,17 +455,25 @@ public class BasePage {
 		}
 	}
 
-	public void clickOnElement(By locator) {
+	protected void clickOnElement(By locator) {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
 		WebElement element = wait.until(ExpectedConditions.elementToBeClickable(locator));
 		element.click();
 	}
 
-	public void enter(By locator, String value) {
+	protected void enter(By locator, String value) {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
 		WebElement el = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
 		el.clear();
 		el.sendKeys(value);
+	}
+
+	protected boolean isClickable(By locator) {
+		try {
+			return driver.findElement(locator).isDisplayed() && driver.findElement(locator).isEnabled();
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
 }

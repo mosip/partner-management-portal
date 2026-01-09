@@ -343,11 +343,13 @@ public class SbiLinkedDevicePage extends BasePage {
 
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
 
-		WebElement addedDeviceThreeDots = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//td[text()='"
-				+ deviceType + "']/.." + "//td[text()='" + deviceSubType + "']/.." + "//td[text()='" + make + "']/.."
-				+ "//td[text()='" + model + "']/.." + "//button[contains(@id, 'device_list_action_menu1')]")));
+		String xpath = "//tr[" + "td[normalize-space()='" + deviceType + "'] and " + "td[normalize-space()='"
+				+ deviceSubType + "'] and " + "td[normalize-space()='" + make + "'] and " + "td[normalize-space()='"
+				+ model + "']" + "]//button[contains(@id,'device_list_action_menu')]";
 
-		clickOnElement(addedDeviceThreeDots);
+		WebElement threeDots = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
+
+		threeDots.click();
 	}
 
 //	public boolean isApproveRejectOptionDisplayed() {
@@ -390,11 +392,14 @@ public class SbiLinkedDevicePage extends BasePage {
 
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
 
-		WebElement addedDevice = wait.until(ExpectedConditions
-				.elementToBeClickable(By.xpath("//td[text()='" + deviceType + "']/.." + "//td[text()='" + deviceSubType
-						+ "']/.." + "//td[text()='" + make + "']/.." + "//td[text()='" + model + "']")));
+		String xpath = "//tr[" + "td[normalize-space()='" + deviceType + "'] and " + "td[normalize-space()='"
+				+ deviceSubType + "'] and " + "td[normalize-space()='" + make + "'] and " + "td[normalize-space()='"
+				+ model + "'] and " + "td[normalize-space()='" + status + "']"
+				+ "]//button[contains(@id,'device_list_action_menu')]";
 
-		clickOnElement(addedDevice);
+		WebElement deviceAction = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
+
+		deviceAction.click();
 	}
 
 	public boolean isFilterResetButtonDisplayed() {

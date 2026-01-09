@@ -31,7 +31,7 @@ public class DeviceCreationTest extends BaseClass {
 	private AuthPolicyPage authPolicyPage;
 
 	@Test(priority = 1, description = "Add and verify device for SBI's")
-	public void addAndVerifyDeviceInSbi() throws InterruptedException {
+	public void addAndVerifyDeviceInSbi() throws Exception {
 		dashboardpage = new DashboardPage(driver);
 		listOfSbiPage = new ListOfSbiPage(driver);
 		listOfDevicesPage = new ListOfDevicesPage(driver);
@@ -518,7 +518,7 @@ public class DeviceCreationTest extends BaseClass {
 		assertTrue(addDevicePage.isHeaderUserProfileDisplayed(), GlobalConstants.isUserProfileIconDisplayed);
 	}
 
-	private void fillDeviceDetails(String deviceType, String deviceSubType, String make, String model) {
+	private void fillDeviceDetails(String deviceType, String deviceSubType, String make, String model) throws Exception {
 		addDevicePage.selectAddDeviceType(deviceType);
 		addDevicePage.selectDeviceSubType(deviceSubType);
 		addDevicePage.enterMakeName(make);
@@ -526,7 +526,7 @@ public class DeviceCreationTest extends BaseClass {
 		assertTrue(addDevicePage.isSubmitEnabled(), GlobalConstants.isSubmitButtonEnabled);
 	}
 
-	private void addDevices(String deviceType, String deviceSubType, String make, String model) {
+	private void addDevices(String deviceType, String deviceSubType, String make, String model) throws Exception {
 		fillDeviceDetails(deviceType, deviceSubType, make, model);
 		addDevicePage.clickOnSubmit();
 		assertTrue(addDevicePage.isSuccessMessageDisplayed(), GlobalConstants.isSuccessMessageDisplayed);
