@@ -458,7 +458,7 @@ public class DeviceProviderPage extends BasePage {
 	public boolean isExpireDateChangedToDateYearFormat() {
 		String dateFromTextbox = driver.findElement(By.id("sbi_expiry_date_calender")).getAttribute("value");
 
-		DateTimeFormatter dateFormatter = PmpTestUtil.nonZeroPadderDateFormatter;
+		DateTimeFormatter dateFormatter = PmpTestUtil.dateFormatter;
 		try {
 			LocalDate parsedDate = LocalDate.parse(dateFromTextbox, dateFormatter);
 			return true;

@@ -592,7 +592,7 @@ public class PartnerPolicyMappingPage extends BasePage {
 		return isElementDisplayed(policyName_asc_icon);
 	}
 
-	public boolean isCreatedDateTimeDescIconDisplayed() {
+	public boolean isCreatedDateTimeDescISconDisplayed() {
 		return isElementDisplayed(createdDateTime_desc_icon);
 	}
 

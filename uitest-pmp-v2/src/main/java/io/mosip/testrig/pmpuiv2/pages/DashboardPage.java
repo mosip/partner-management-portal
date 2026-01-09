@@ -9,8 +9,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import io.mosip.testrig.pmpuiv2.driver.DriverManager;
-
 public class DashboardPage extends BasePage {
 
 	@FindBy(id = "header_user_profile_title")
@@ -40,10 +38,7 @@ public class DashboardPage extends BasePage {
 	@FindBy(id = "select_policy_group_submit_btn")
 	private WebElement submitButton;
 
-	@FindBy(xpath = "//*[@class='min-h-2']")
-	private WebElement value;
-
-	@FindBy(xpath = "//*[text()='Terms and Conditions']")
+	@FindBy(id = "consent_popup_title")
 	private WebElement termsAndConditionsPopup;
 
 	@FindBy(id = "default-checkbox")
@@ -212,10 +207,8 @@ public class DashboardPage extends BasePage {
 		clickOnElement(proceedButton);
 	}
 
-	private By partnerCertificateTitleDashboard = By.id("dashboard_partner_certificate_list_header");
-
 	public boolean isPartnerCertificateTitleDisplayed() {
-		return isDisplayed(partnerCertificateTitleDashboard);
+		return isElementDisplayed(partnerCertificateTitle);
 	}
 
 	public boolean isPoliciesTitleDisplayed() {
@@ -412,15 +405,4 @@ public class DashboardPage extends BasePage {
 	public boolean isFooterDocumentationLinkDisplayed() {
 		return isElementDisplayed(footerDocumentationLink);
 	}
-	
-	private By partnerCertificateCard =
-	        By.id("dashboard_partner_certificate_list_card");
-
-	private By ftmChipProviderCard =
-	        By.id("dashboard_ftm_chip_provider_card");
-
-	public void waitForDashboardReady() {
-	    waitUntilAnyElementVisible(partnerCertificateCard, ftmChipProviderCard);
-	}
-
 }

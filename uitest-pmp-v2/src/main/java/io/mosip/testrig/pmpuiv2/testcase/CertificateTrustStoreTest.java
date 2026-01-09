@@ -10,17 +10,13 @@ import io.mosip.testrig.pmpuiv2.pages.PartnerCertificatePage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
-@Test(dependsOnGroups = { "PartnerDetailsTest" }, groups = { "CertificateTrustStoreTest" })
 public class CertificateTrustStoreTest extends BaseClass {
 
-	private DashboardPage dashboardPage;
-	private PartnerCertificatePage partnerCertificatePage;
-
-	@Test(priority = 1, description = "Upload Invalid Certificates")
+	@Test(priority = 01, description = "Upload Invalid Certificates")
 	public void uploadInvlidCertificates() {
 
-		dashboardPage = new DashboardPage(driver);
-		partnerCertificatePage = new PartnerCertificatePage(driver);
+		DashboardPage dashboardPage = new DashboardPage(driver);
+		PartnerCertificatePage partnerCertificatePage = new PartnerCertificatePage(driver);
 
 		assertTrue(dashboardPage.isCertificateTrustStoreDisplayed(), GlobalConstants.isCertificateTrustStoreDisplayed);
 		dashboardPage.clickOnCertificateTrustStore();
@@ -104,11 +100,11 @@ public class CertificateTrustStoreTest extends BaseClass {
 
 	}
 
-	@Test(priority = 2, description = "Tabular View Of Uploaded Root CA Certificates", dependsOnMethods = "uploadInvlidCertificates")
+	@Test(priority = 02, description = "Tabular View Of Uploaded Root CA Certificates")
 	public void tabularViewOfUploadedRootCACertificates() {
 
-		dashboardPage = new DashboardPage(driver);
-		partnerCertificatePage = new PartnerCertificatePage(driver);
+		DashboardPage dashboardPage = new DashboardPage(driver);
+		PartnerCertificatePage partnerCertificatePage = new PartnerCertificatePage(driver);
 
 		dashboardPage.clickOnCertificateTrustStore();
 		assertTrue(partnerCertificatePage.isCertificateTrustStoreTitleDisplayed(),
@@ -203,11 +199,11 @@ public class CertificateTrustStoreTest extends BaseClass {
 
 	}
 
-	@Test(priority = 3, description = "Download Uploaded Root CA Certificates", dependsOnMethods = "tabularViewOfUploadedRootCACertificates")
+	@Test(priority = 03, description = "Download Uploaded Root CA Certificates")
 	public void downloadUploadedRootCACertificates() {
 
-		dashboardPage = new DashboardPage(driver);
-		partnerCertificatePage = new PartnerCertificatePage(driver);
+		DashboardPage dashboardPage = new DashboardPage(driver);
+		PartnerCertificatePage partnerCertificatePage = new PartnerCertificatePage(driver);
 
 		dashboardPage.clickOnCertificateTrustStore();
 		partnerCertificatePage.clickOnFilterButton();
@@ -234,11 +230,11 @@ public class CertificateTrustStoreTest extends BaseClass {
 
 	}
 
-	@Test(priority = 4, description = "View Root CA Certificate Details", dependsOnMethods = "downloadUploadedRootCACertificates")
+	@Test(priority = 04, description = "View Root CA Certificate Details")
 	public void viewRootCACertificateDetails() {
 
-		dashboardPage = new DashboardPage(driver);
-		partnerCertificatePage = new PartnerCertificatePage(driver);
+		DashboardPage dashboardPage = new DashboardPage(driver);
+		PartnerCertificatePage partnerCertificatePage = new PartnerCertificatePage(driver);
 
 		dashboardPage.clickOnCertificateTrustStore();
 		partnerCertificatePage.clickOnFilterButton();
@@ -277,14 +273,14 @@ public class CertificateTrustStoreTest extends BaseClass {
 				GlobalConstants.isTrustCertificateLabelUploadDateTimeDisplayed);
 		assertTrue(partnerCertificatePage.isTrustCertificateContextUploadDateTimeDisplayed(),
 				GlobalConstants.isTrustCertificateContextUploadDateTimeDisplayed);
-//		assertTrue(partnerCertificatePage.isValidFromDateTimeFormatValid(),
-//				GlobalConstants.isValidFromDateTimeFormatValid);
+		assertTrue(partnerCertificatePage.isValidFromDateTimeFormatValid(),
+				GlobalConstants.isValidFromDateTimeFormatValid);
 
 		assertTrue(partnerCertificatePage.isTrustCertificateLabelExpiryDateTimeDisplayed(),
 				GlobalConstants.isTrustCertificateLabelExpiryDateTimeDisplayed);
 		assertTrue(partnerCertificatePage.isTrustCertificateContextExpiryDateTimeDisplayed(),
 				GlobalConstants.isTrustCertificateContextExpiryDateTimeDisplayed);
-//		assertTrue(partnerCertificatePage.isValidToDateTimeFormatValid(), GlobalConstants.isValidToDateTimeFormatValid);
+		assertTrue(partnerCertificatePage.isValidToDateTimeFormatValid(), GlobalConstants.isValidToDateTimeFormatValid);
 
 		assertTrue(partnerCertificatePage.isCertificateDownloadButtonDisplayed(),
 				GlobalConstants.isCertificateDownloadButtonDisplayed);
@@ -296,11 +292,11 @@ public class CertificateTrustStoreTest extends BaseClass {
 
 	}
 
-	@Test(priority = 5, description = "Tabular View Of Uploaded Intermediate CA Certificates", dependsOnMethods = "viewRootCACertificateDetails")
+	@Test(priority = 05, description = "Tabular View Of Uploaded Intermediate CA Certificates")
 	public void tabularViewOfUploadedIntermediateCACertificates() {
 
-		dashboardPage = new DashboardPage(driver);
-		partnerCertificatePage = new PartnerCertificatePage(driver);
+		DashboardPage dashboardPage = new DashboardPage(driver);
+		PartnerCertificatePage partnerCertificatePage = new PartnerCertificatePage(driver);
 
 		dashboardPage.clickOnCertificateTrustStore();
 		assertTrue(partnerCertificatePage.isCertificateTrustStoreTitleDisplayed(),
@@ -402,11 +398,11 @@ public class CertificateTrustStoreTest extends BaseClass {
 		partnerCertificatePage.clickOnTitleBackButton();
 	}
 
-	@Test(priority = 6, description = "Download Uploaded Int CA Certificates", dependsOnMethods = "tabularViewOfUploadedIntermediateCACertificates")
+	@Test(priority = 06, description = "Download Uploaded Int CA Certificates")
 	public void downloadUploadedIntCACertificates() {
 
-		dashboardPage = new DashboardPage(driver);
-		partnerCertificatePage = new PartnerCertificatePage(driver);
+		DashboardPage dashboardPage = new DashboardPage(driver);
+		PartnerCertificatePage partnerCertificatePage = new PartnerCertificatePage(driver);
 
 		dashboardPage.clickOnCertificateTrustStore();
 		partnerCertificatePage.clickOnIntermediateCACertTab();
@@ -436,11 +432,11 @@ public class CertificateTrustStoreTest extends BaseClass {
 
 	}
 
-	@Test(priority = 7, description = "View Intermediate CA Certificate Details", dependsOnMethods = "downloadUploadedIntCACertificates")
+	@Test(priority = 07, description = "View Intermediate CA Certificate Details")
 	public void viewIntCACertificateDetails() {
 
-		dashboardPage = new DashboardPage(driver);
-		partnerCertificatePage = new PartnerCertificatePage(driver);
+		DashboardPage dashboardPage = new DashboardPage(driver);
+		PartnerCertificatePage partnerCertificatePage = new PartnerCertificatePage(driver);
 
 		dashboardPage.clickOnCertificateTrustStore();
 		partnerCertificatePage.clickOnIntermediateCACertTab();

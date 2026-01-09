@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import org.openqa.selenium.By;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -74,7 +73,7 @@ public class PartnerCertificatePage extends BasePage {
 	private WebElement partnerDomainType;
 
 	@FindBy(id = "upload_file_FILL0_wght200_GRAD0_opsz24")
-	private WebElement partnerCertOverlay;
+	private WebElement partnerCertOvelay;
 
 	@FindBy(xpath = "//p[contains(text(), \"The certificate uploaded is not in the correct format.\")]")
 	private WebElement InvalidFormatErrorPopup;
@@ -542,8 +541,8 @@ public class PartnerCertificatePage extends BasePage {
 		return isElementDisplayed(partnerDomainType);
 	}
 
-	public boolean isPartnerCertOverlayDisplayed() {
-		return isElementDisplayed(partnerCertOverlay);
+	public boolean isPartnerCertOvelayDisplayed() {
+		return isElementDisplayed(partnerCertOvelay);
 	}
 
 	public boolean isInvalidFormatErrorPopupDisplayed() {
@@ -582,10 +581,8 @@ public class PartnerCertificatePage extends BasePage {
 		clickOnElement(partnerDomainSelectorDropdownOptionFtm);
 	}
 
-	private By dashboardFtmChipProviderCardDashboard = By.id("dashboard_ftm_chip_provider_card");
-
 	public boolean isDashboardFtmChipProviderCardDisplayed() {
-		return isDisplayed(dashboardFtmChipProviderCardDashboard);
+		return isElementDisplayed(dashboardFtmChipProviderCard);
 	}
 
 	public boolean isSuccessMessageForFtmCertDisplayed() {
@@ -1232,38 +1229,6 @@ public class PartnerCertificatePage extends BasePage {
 
 	public boolean isMispPartnerCertificatePopupDisplayed() {
 		return isElementDisplayed(mispPartnerCertificatePopup);
-	}
-
-	public void uploadDeactivateUserRootCaCert() {
-		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "deactivateca.cer"));
-	}
-
-	public void uploadDeactivateUserIntermediateCaCert() {
-		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "deactivatesubca.cer"));
-	}
-
-	public void uploadDeactivateUserClientCertificate() {
-		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "deactivatesubca.cer"));
-	}
-
-	public void uploadPolicyAdminUserRootCaCert() {
-		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "policyadminca.cer"));
-	}
-
-	public void uploadPolicyAdminUserRootSubCaCert() {
-		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "policyadminsubca.cer"));
-	}
-
-	public void uploadPolicyUserRootCaCert() {
-		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "policyUserCACert.cer"));
-	}
-
-	public void uploadPolicyUserIntermediateCaCert() {
-		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "policyUserInterCACert.cer"));
-	}
-
-	public void uploadPolicyUserClientCertificate() {
-		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "policiesintermidiate.cer"));
 	}
 
 }

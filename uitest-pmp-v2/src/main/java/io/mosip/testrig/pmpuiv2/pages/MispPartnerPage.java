@@ -140,7 +140,7 @@ public class MispPartnerPage extends BasePage {
 	public void selectPolicyGroup(String defaultPolicyGroup) {
 		clickOnElement(policyGroupDropdown);
 		WebElement policyGroup = driver.findElement(By.xpath(
-				"//button[@id='policy_group_selector_dropdown_button']//span[text()='" + defaultPolicyGroup + "']"));
+				"//button[@id='policy_group_selector_search_input']//span[text()='" + defaultPolicyGroup + "']"));
 		clickOnElement(policyGroup);
 	}
 

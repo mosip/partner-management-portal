@@ -1,14 +1,14 @@
 #####  DB queries to be executed to tear down the data used and generated during the test rig run for partner uiv2 APIs
 
-#These are delete queries for AUTH PARTNER - pmpui-v2 , pmpui-policyadmin
-delete from pms.partner_policy where cr_by in ('pmpui-auth', 'pmpui-policies', 'pmpui-v2', 'pmpui-policyadmin');
-delete from pms.partner_policy_request where cr_by in ('pmpui-v2', 'pmpui-policyadmin');
-delete from pms.auth_policy where cr_by in ('pmpui-v2', 'pmpui-policyadmin');
-delete from pms.policy_group where cr_by in ('pmpui-v2', 'pmpui-policyadmin');
-delete from pms.oidc_client where cr_by in ('pmpui-v2', 'pmpui-policyadmin');
-delete from pms.partner_h where cr_by in ('pmpui-v2', 'pmpui-policyadmin');
-delete from pms.partner where cr_by in ('pmpui-v2', 'pmpui-policyadmin');
-delete from pms.user_details where cr_by in ('pmpui-v2', 'pmpui-policyadmin');
+#These are delete queries for AUTH PARTNER - pmpui-v2
+delete from pms.partner_policy where cr_by in ('pmpui-v2', 'pmpui-auth');
+delete from pms.oidc_client where cr_by='pmpui-v2';
+delete from pms.partner_policy_request where cr_by='pmpui-v2';
+delete from pms.auth_policy where cr_by='pmpui-v2';
+delete from pms.policy_group where cr_by='pmpui-v2';
+delete from pms.partner_h where cr_by='pmpui-v2';
+delete from pms.partner where cr_by='pmpui-v2';
+delete FROM pms.user_details where user_id='pmpui-v2';
 
 #These are delete queries for AUTH PARTNER - pmpui-auth
 delete from pms.partner_policy where cr_by='pmpui-auth';
@@ -20,23 +20,8 @@ delete from pms.partner_h where cr_by='pmpui-auth';
 delete from pms.partner where cr_by='pmpui-auth';
 delete FROM pms.user_details where user_id='pmpui-auth';
 
-#These are delete queries for AUTH PARTNER - pmpui-policies
-delete from pms.partner_policy where cr_by='pmpui-policies';
-delete from pms.oidc_client where cr_by='pmpui-policies';
-delete from pms.partner_policy_request where cr_by='pmpui-policies';
-delete from pms.auth_policy where cr_by='pmpui-policies';
-delete from pms.policy_group where cr_by='pmpui-policies';
-delete from pms.partner_h where cr_by='pmpui-policies';
-delete from pms.partner where cr_by='pmpui-policies';
-delete FROM pms.user_details where user_id='pmpui-policies';
-
-#These are delete queries for AUTH PARTNER - pmpui-deactivate
-delete from pms.partner_h where cr_by='pmpui-deactivate';
-delete from pms.partner where cr_by='pmpui-deactivate';
-delete FROM pms.user_details where user_id='pmpui-deactivate';
-
 #These are delete queries for PARTNER ADMIN- pmpui-v2 [which are not deleted due to AUTH partner dependent]
-delete from pms.auth_policy where cr_by in ('pmpui-v2', 'pmpui-policyadmin');
+delete from pms.auth_policy where cr_by='pmpui-v2';
 
 #These are delete queries for pmpui-nocert
 delete from pms.partner where user_id='pmpui-nocert';
@@ -57,7 +42,3 @@ delete FROM pms.user_details where user_id='pmpui-ftmnocert';
 delete from pms.ftp_chip_detail where foundational_trust_provider_id='pmpui-ftm';
 delete from pms.partner where cr_by='pmpui-ftm';
 delete FROM pms.user_details where user_id='pmpui-ftm';
-
-#These are delete queries for pmpui-devicenocert
-delete from pms.partner where user_id='pmpui-devicenocert';
-delete FROM pms.user_details where user_id='pmpui-devicenocert';

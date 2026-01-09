@@ -14,22 +14,18 @@ import io.mosip.testrig.pmpuiv2.pages.RegisterPage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
-@Test(groups = "PartnerAdminCreation")
 public class PartnerAdminCreation extends BaseClass {
 
 	private DashboardPage dashboardPage;
 	private LoginPage loginPage;
 	private PartnerCertificatePage partnerCertificatePage;
-	private PolicyGroupPage policygroupPage;
-	private RegisterPage registerPage;
-	private PoliciesPage policiesPage;
 
 	@Test(priority = 1, description = "Creating Partner Admin")
 	public void partnerAdminCreation() {
 		dashboardPage = new DashboardPage(driver);
 		loginPage = new LoginPage(driver);
 
-		registerPage = loginPage.clickRegisterButton();
+		RegisterPage registerPage = loginPage.clickRegisterButton();
 		assertTrue(loginPage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
 		loginPage.clickRegisterButton();
 
@@ -71,14 +67,14 @@ public class PartnerAdminCreation extends BaseClass {
 		KeycloakUserManager.assignRole("pmpui-v2", "PARTNER_ADMIN");
 
 		assertTrue(dashboardPage.isTermsAndConditionsPopupDisplayed(),
-				GlobalConstants.isTermsAndConditionsPopUpDisplayed);
+				GlobalConstants.isTermsAndConditionsPopUppDisplayed);
 		dashboardPage.clickOnCheckbox();
 		assertTrue(dashboardPage.isProceedButtonDisplayed(), GlobalConstants.isProceedButtonDisplayed);
 		dashboardPage.clickOnProceedButton();
 
 	}
 
-	@Test(priority = 2, description = "Uploading Trust Certificate", dependsOnMethods = "partnerAdminCreation")
+	@Test(priority = 2, description = "Uploading Trust Certificate")
 	public void uploadTrustCertificate() {
 
 		dashboardPage = new DashboardPage(driver);
@@ -112,12 +108,12 @@ public class PartnerAdminCreation extends BaseClass {
 		dashboardPage.clickOnLogoutButton();
 	}
 
-	@Test(priority = 3, description = "Create Default Policy Group", dependsOnMethods = "uploadTrustCertificate")
+	@Test(priority = 3, description = "Create Default Policy Group")
 	public void createDefaultPolicyGroup() {
 
-		dashboardPage = new DashboardPage(driver);
-		policiesPage = new PoliciesPage(driver);
-		policygroupPage = new PolicyGroupPage(driver);
+		DashboardPage dashboardPage = new DashboardPage(driver);
+		PoliciesPage policiesPage = new PoliciesPage(driver);
+		PolicyGroupPage policygroupPage = new PolicyGroupPage(driver);
 
 		dashboardPage.clickOnPolicyButton();
 		assertTrue(policiesPage.isPoliciesPolicyGroupTabDisplayed(), GlobalConstants.isPoliciesPolicyGroupTabDisplayed);

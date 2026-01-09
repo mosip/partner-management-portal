@@ -87,13 +87,10 @@ public class KeycloakUserManager extends BaseTestCaseFunc {
 				moduleSpecificUser = needsToBeCreatedUser;
 			}else if (needsToBeCreatedUser.equals("device")) {
 				moduleSpecificUser = needsToBeCreatedUser;
-			}else if (needsToBeCreatedUser.equals("ftm")) {
+			}
+			else if (needsToBeCreatedUser.equals("ftm")) {
 				moduleSpecificUser = needsToBeCreatedUser;
 			}else if (needsToBeCreatedUser.equals("ftmnocert")) {
-				moduleSpecificUser = needsToBeCreatedUser;
-			}else if (needsToBeCreatedUser.equals("policyadmin")) {
-				moduleSpecificUser = needsToBeCreatedUser;
-			}else if (needsToBeCreatedUser.equals("policies")) {
 				moduleSpecificUser = needsToBeCreatedUser;
 			}
 			

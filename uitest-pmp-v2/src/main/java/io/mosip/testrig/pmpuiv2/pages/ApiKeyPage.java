@@ -3,14 +3,11 @@ package io.mosip.testrig.pmpuiv2.pages;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import org.openqa.selenium.NoSuchElementException;
 
-import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
 
 public class ApiKeyPage extends BasePage {
@@ -423,7 +420,6 @@ public class ApiKeyPage extends BasePage {
 	public ApiKeyPage(WebDriver driver) {
 		super(driver);
 	}
-	private static final Logger logger = Logger.getLogger(ApiKeyPage.class);
 
 	public void enterNameOfApiKeyTextBox(String apiKeyTextBoxValue) {
 		enter(enterNameOfApiKeyTextBox, apiKeyTextBoxValue);
@@ -446,18 +442,10 @@ public class ApiKeyPage extends BasePage {
 		return isElementDisplayed(policyNameDropdown);
 	}
 
-	public boolean selectPolicyNameDropdown(String value) {
+	public void selectPolicyNameDropdown(String value) {
 		clickOnElement(policyNameDropdown);
 		enter(generatePolicyNameSearchInputBox, value);
-		try {
-			WebElement policyNameOption = driver
-					.findElement(By.xpath("//button[.//span[normalize-space(text())='" + value + "']]"));
-			clickOnElement(policyNameOption);
-			 return true;
-		} catch (NoSuchElementException e) {
-			logger.warn("Policy name not found: " + value);
-			 return false;
-		}
+		clickOnElement(generatePolicyNameOption1);
 	}
 
 	public void enterDeactivePolicyNameInDropdown(String value) {
@@ -565,7 +553,7 @@ public class ApiKeyPage extends BasePage {
 		return isElementDisplayed(policyName_asc_icon);
 	}
 
-	public boolean isCreatedDateTimeDescIconDisplayed() {
+	public boolean isCreatedDateTimeDescISconDisplayed() {
 		return isElementDisplayed(createdDateTime_desc_icon);
 	}
 

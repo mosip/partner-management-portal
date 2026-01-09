@@ -16,7 +16,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
@@ -130,15 +129,19 @@ public class EmailableReport implements IReporter {
 		String newString = oldString.replace("-report", temp);
 
 		File orignialReportFile = new File(
-				outputDirectory + "/" + System.getProperty(GlobalConstants.EMAILABLEREPORT2NAME));
-		LOG.info("reportFile is::" + System.getProperty("user.dir") + "/" + System.getProperty("testng.output.dir")
+				System.getProperty("user.dir") + "/" + System.getProperty("testng.outpur.dir") + "/"
+						+ System.getProperty(GlobalConstants.EMAILABLEREPORT2NAME));
+		LOG.info("reportFile is::" + System.getProperty("user.dir") + "/" + System.getProperty("testng.outpur.dir")
 				+ "/" + System.getProperty(GlobalConstants.EMAILABLEREPORT2NAME));
 
-		File newReportFile = new File(outputDirectory + "/" + newString);
+		File newReportFile = new File(
+				System.getProperty("user.dir") + "/" + System.getProperty("testng.outpur.dir") + "/" + newString);
+		LOG.info("New reportFile is::" + System.getProperty("user.dir") + "/" + System.getProperty("testng.outpur.dir")
+				+ "/" + newString);
 
 		if (orignialReportFile.exists()) {
-			try {
-				Files.move(orignialReportFile.toPath(), newReportFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+			if (orignialReportFile.renameTo(newReportFile)) {
+				orignialReportFile.delete();
 				LOG.info("Report File re-named successfully!");
 				if (ConfigManager.getPushReportsToS3().equalsIgnoreCase("yes")) {
 					S3Adapter s3Adapter = new S3Adapter();
@@ -159,7 +162,7 @@ public class EmailableReport implements IReporter {
 				} else {
 					try {
 						Path mountFilePath = Path.of(
-								System.getProperty("user.dir") + "/" + System.getProperty("testng.output.dir") + "/",
+								System.getProperty("user.dir") + "/" + System.getProperty("testng.outpur.dir") + "/",
 								newString);
 						Files.copy(newReportFile.toPath(), mountFilePath, StandardCopyOption.REPLACE_EXISTING);
 						LOG.info("Successfully copied report file to mount path: " + mountFilePath.toString());
@@ -167,8 +170,8 @@ public class EmailableReport implements IReporter {
 						LOG.error("Error occurred while copying file to mount path: " + e.getLocalizedMessage());
 					}
 				}
-			} catch (Exception e) {
-				LOG.error("Failed to rename report file", e);
+			} else {
+				LOG.error("Renamed report file doesn't exist");
 			}
 		} else {
 			LOG.error("Original report File does not exist!");
@@ -277,6 +280,7 @@ public class EmailableReport implements IReporter {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
 			branch = reader.readLine();
 		} catch (Exception e) {
+			// TODO: handle exception
 		}
 
 		totalPassedTests = 0;
@@ -467,8 +471,11 @@ public class EmailableReport implements IReporter {
 							// Skip the test result
 						}
 					} else if (subSetString.contains(GlobalConstants.KNOWN_ISSUES_STRING)) {
-						if (isKnownIssue(result)) {
+						if (containsAny(throwable.getMessage(), subSetString)) {
+							// Add only results which are skipped due to feature not supported
 							testResultsSubList.add(result);
+						} else {
+							// Skip the test result
 						}
 					} else { // Service not deployed. Hence skipping the testcase // skipped
 						if (!throwable.getMessage().contains(GlobalConstants.FEATURE_NOT_SUPPORTED)
@@ -502,36 +509,6 @@ public class EmailableReport implements IReporter {
 	/**
 	 * Writes a summary of all the test scenarios.
 	 */
-	public static boolean isKnownIssue(ITestResult result) {
-
-		if (result == null || result.getMethod() == null || result.getTestClass() == null) {
-			return false;
-		}
-
-		String methodName = result.getMethod().getMethodName();
-		Class<?> realClass = result.getTestClass().getRealClass();
-		String className = realClass != null ? realClass.getSimpleName() : "";
-
-		List<String> issues = AdminTestUtil.getKnownIssues();
-		if (issues == null || methodName == null) {
-			return false;
-		}
-
-		for (String knownIssue : issues) {
-
-			// Method-level known issue
-			if (knownIssue.equalsIgnoreCase(methodName)) {
-				return true;
-			}
-
-			// Class-level known issue
-			if (knownIssue.equalsIgnoreCase(className)) {
-				return true;
-			}
-		}
-		return false;
-	}
-
 	protected void writeScenarioSummary() {
 		writer.print("<table id='summary'>");
 		writer.print("<thead>");
@@ -979,18 +956,12 @@ public class EmailableReport implements IReporter {
 			Set<ITestResult> failedTests = context.getFailedTests().getAllResults();
 			Set<ITestResult> skippedConfigurations = context.getSkippedConfigurations().getAllResults();
 //			Set<ITestResult> skippedTests = context.getSkippedTests().getAllResults();
-			Set<ITestResult> skippedTests = new HashSet<>(
-					getResultsSubSet(context.getSkippedTests().getAllResults(), GlobalConstants.SKIPPED));
+			Set<ITestResult> skippedTests = getResultsSubSet(context.getSkippedTests().getAllResults(),
+					GlobalConstants.SKIPPED);
 			Set<ITestResult> ignoredTests = getResultsSubSet(context.getSkippedTests().getAllResults(),
 					GlobalConstants.IGNORED_SUBSET_STRING);
-			Set<ITestResult> knownIssueTests = new HashSet<>();
-			knownIssueTests.addAll(getResultsSubSet(context.getSkippedTests().getAllResults(),
-					GlobalConstants.KNOWN_ISSUE_SUBSET_STRING));
-			knownIssueTests.addAll(getResultsSubSet(context.getFailedTests().getAllResults(),
-					GlobalConstants.KNOWN_ISSUE_SUBSET_STRING));
-
-			skippedTests.removeAll(knownIssueTests);
-
+			Set<ITestResult> knownIssueTests = getResultsSubSet(context.getSkippedTests().getAllResults(),
+					GlobalConstants.KNOWN_ISSUE_SUBSET_STRING);
 			Set<ITestResult> passedTests = context.getPassedTests().getAllResults();
 
 			failedConfigurationResults = groupResults(failedConfigurations);
