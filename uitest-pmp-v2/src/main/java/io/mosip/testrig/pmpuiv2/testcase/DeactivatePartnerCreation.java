@@ -73,6 +73,7 @@ public class DeactivatePartnerCreation extends BaseClass {
 		handleTermsAndCondition();
 
 		basePage.refreshThePage();
+		// TODO:Re-enable after fixing certificate title timing issue
 //		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
 //				GlobalConstants.isPartnerCertificateTitleDisplayed);
 		dashboardPage.clickOnPartnerCertificateTitle();

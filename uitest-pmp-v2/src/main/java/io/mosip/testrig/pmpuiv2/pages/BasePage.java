@@ -469,19 +469,21 @@ public class BasePage {
 	}
 
 	protected boolean isClickable(By locator) {
-		try {
-			return driver.findElement(locator).isDisplayed() && driver.findElement(locator).isEnabled();
-		} catch (Exception e) {
-			return false;
-		}
+	    try {
+	        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+	        wait.until(ExpectedConditions.elementToBeClickable(locator));
+	        return true;
+	    } catch (TimeoutException e) {
+	        return false;
+	    }
 	}
 	
-	protected void waitForPageToBeReady(WebDriverWait wait) {
+	protected void waitForPageToBeReady(By readyIndicator, int timeoutSeconds) {
+	    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds));
 	    waitForLoaderToDisappear();
-	    wait.until(
-	        ExpectedConditions.visibilityOfElementLocated(By.id("partnerId"))
-	    );
+	    wait.until(ExpectedConditions.visibilityOfElementLocated(readyIndicator));
 	}
+
 
 
 }

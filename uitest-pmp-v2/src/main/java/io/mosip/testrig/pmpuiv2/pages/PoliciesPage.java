@@ -727,8 +727,8 @@ public class PoliciesPage extends BasePage {
 	}
 	
 	public void waitUntilPageReady() {
-	    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-	    waitForPageToBeReady(wait);
+	    waitForPageToBeReady(By.id("show_request_policy"), 20);
 	}
+
 
 }
