@@ -96,14 +96,14 @@ function EditAdminApiKey() {
         setSelectedDateStr(dateStr);
         setDateError("");
         
-        // Validate that the date is not in the past
+        // Validate that the date is in the future (not today or past)
         if (dateStr) {
             const today = new Date();
             today.setHours(0, 0, 0, 0);
             const selectedDate = new Date(dateStr);
             selectedDate.setHours(0, 0, 0, 0);
             
-            if (selectedDate < today) {
+            if (selectedDate <= today) {
                 setDateError(t('apiKeysList.expiryDateMustBeFuture'));
             } else {
                 setDateError("");
@@ -127,13 +127,13 @@ function EditAdminApiKey() {
             return;
         }
 
-        // Validate that the date is not in the past
+        // Validate that the date is in the future (not today or past)
         const today = new Date();
         today.setHours(0, 0, 0, 0);
         const selectedDate = new Date(selectedDateStr);
         selectedDate.setHours(0, 0, 0, 0);
         
-        if (selectedDate < today) {
+        if (selectedDate <= today) {
             setDateError(t('apiKeysList.expiryDateMustBeFuture'));
             setIsSubmitClicked(false);
             return;
@@ -207,6 +207,12 @@ function EditAdminApiKey() {
         datePicker: dateError ? "!border-red-500" : "",
         outerDiv: "w-full"
     };
+
+    // Set minimum date to tomorrow to prevent selecting today or past dates
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    tomorrow.setHours(0, 0, 0, 0);
+    const minSelectableDate = tomorrow;
 
     const styles = {
         loadingDiv: "!py-[20%]",
@@ -354,6 +360,7 @@ function EditAdminApiKey() {
                                                 isUsedAsFilter={false}
                                                 placeholderText={t('apiKeysList.selectExpiryDatePlaceholder')}
                                                 disabled={false}
+                                                minDate={minSelectableDate}
                                             />
                                             {dateError && (
                                                 <p id='edit_admin_api_key_date_error' className="text-red-500 text-xs mt-1 ml-1">{dateError}</p>
