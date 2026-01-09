@@ -53,7 +53,7 @@ function DeactivatePopup({ onClickConfirm, closePopUp, popupData, request, heade
         try {
             let response;
             if (popupData.apiKeyLabel) {
-                response = await HttpService.patch(getPartnerManagerUrl(`/partners/${popupData.partnerId}/policy/${popupData.policyId}/apiKey/status`, process.env.NODE_ENV), request, {
+                response = await HttpService.patch(getPartnerManagerUrl(`/partners/${popupData.partnerId}/policies/${popupData.policyId}/api-keys/${popupData.apiKeyLabel}`, process.env.NODE_ENV), request, {
                     headers: {
                         'Content-Type': 'application/json'
                     }
