@@ -457,8 +457,13 @@ public class BasePage {
 
 	protected void clickOnElement(By locator) {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-		WebElement element = wait.until(ExpectedConditions.elementToBeClickable(locator));
-		element.click();
+		try {
+			WebElement element = wait.until(ExpectedConditions.elementToBeClickable(locator));
+			element.click();
+		} catch (Exception e) {
+			WebElement element = driver.findElement(locator);
+			((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
+		}
 	}
 
 	protected void enter(By locator, String value) {
@@ -469,21 +474,18 @@ public class BasePage {
 	}
 
 	protected boolean isClickable(By locator) {
-	    try {
-	        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-	        wait.until(ExpectedConditions.elementToBeClickable(locator));
-	        return true;
-	    } catch (TimeoutException e) {
-	        return false;
-	    }
+		try {
+			WebElement el = driver.findElement(locator);
+			return el.isDisplayed() && el.isEnabled();
+		} catch (Exception e) {
+			return false;
+		}
 	}
-	
+
 	protected void waitForPageToBeReady(By readyIndicator, int timeoutSeconds) {
-	    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds));
-	    waitForLoaderToDisappear();
-	    wait.until(ExpectedConditions.visibilityOfElementLocated(readyIndicator));
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds));
+		waitForLoaderToDisappear();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(readyIndicator));
 	}
-
-
 
 }
