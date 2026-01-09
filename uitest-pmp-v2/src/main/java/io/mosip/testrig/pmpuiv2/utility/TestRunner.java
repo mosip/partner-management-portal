@@ -111,7 +111,7 @@ public class TestRunner {
 					break;
 
 				// STEP 2
-				case "FTMDeviceTest":
+				case "FtmDeviceTest":
 					classes.add(ftmDeviceTest);
 					break;
 				case "SbiCreationTest":
@@ -242,10 +242,10 @@ public class TestRunner {
 		String path = System.getProperty("env.user");
 		String kernalpath = null;
 		if (System.getProperty("env.user") == null || System.getProperty("env.user").equals("")) {
-			kernalpath = "Kernel.properties";
+			kernalpath = "kernal.properties";
 
 		} else {
-			kernalpath = "Kernel_" + path + ".properties";
+			kernalpath = "kernal_" + path + ".properties";
 		}
 		return kernalpath;
 	}

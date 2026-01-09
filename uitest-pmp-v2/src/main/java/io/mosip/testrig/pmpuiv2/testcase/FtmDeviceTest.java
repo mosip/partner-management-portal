@@ -12,7 +12,7 @@ import io.mosip.testrig.pmpuiv2.pages.PartnerCertificatePage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
-@Test(dependsOnGroups = {"FtmPartnerCreation"}, groups = {"FtmDeviceTest"})
+@Test(groups = { "FtmDeviceTest" })
 public class FtmDeviceTest extends BaseClass {
 
 	private BasePage basePage;
@@ -21,7 +21,7 @@ public class FtmDeviceTest extends BaseClass {
 	private FtmPage ftmPage;
 	private LoginPage loginpage;
 
-	@Test(priority = 1,description = "Add ftm chip with valid details")
+	@Test(priority = 1, description = "Add ftm chip with valid details")
 	public void addFtm() throws InterruptedException {
 		dashboardpage = new DashboardPage(driver);
 		partnerCertificatePage = new PartnerCertificatePage(driver);
@@ -189,7 +189,7 @@ public class FtmDeviceTest extends BaseClass {
 
 	}
 
-	@Test(priority = 2,description = "Try to reject added ftm chip", dependsOnMethods = "addFtm")
+	@Test(priority = 2, description = "Try to reject added ftm chip", dependsOnMethods = "addFtm")
 	public void addFtmAndreject() throws InterruptedException {
 		dashboardpage = new DashboardPage(driver);
 		partnerCertificatePage = new PartnerCertificatePage(driver);
@@ -283,7 +283,7 @@ public class FtmDeviceTest extends BaseClass {
 				GlobalConstants.isSuccessMessageDisplayed);
 	}
 
-	@Test(priority = 3,description = "Try to deactivate added ftm chip", dependsOnMethods = "addFtmAndreject")
+	@Test(priority = 3, description = "Try to deactivate added ftm chip", dependsOnMethods = "addFtmAndreject")
 	public void addFtmAndDeactive() throws InterruptedException {
 		dashboardpage = new DashboardPage(driver);
 		basePage = new BasePage(driver);
@@ -377,7 +377,7 @@ public class FtmDeviceTest extends BaseClass {
 		assertTrue(ftmPage.isDeactivatedTextDisplayed(), GlobalConstants.isDeactivatedTextDisplayed);
 	}
 
-	@Test(priority = 4,description = "Without ftm chip certificate try to add ftm chip", dependsOnMethods = "addFtmAndDeactive")
+	@Test(priority = 4, description = "Without ftm chip certificate try to add ftm chip", dependsOnMethods = "addFtmAndDeactive")
 	public void addFtmWithoutUploadingFtmChipCert() throws InterruptedException {
 		dashboardpage = new DashboardPage(driver);
 		partnerCertificatePage = new PartnerCertificatePage(driver);

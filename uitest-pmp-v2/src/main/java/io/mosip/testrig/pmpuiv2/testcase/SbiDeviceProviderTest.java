@@ -153,7 +153,7 @@ public class SbiDeviceProviderTest extends BaseClass {
 	}
 
 	@Test(priority = 4, description = "Verifying the SBI and Devices after deactivating", dependsOnMethods = "createSbiDeviceWhichExist")
-	public void verifySbiAndDeviceAfterDeactivate() {
+	public void verifySbiAndDeviceAfterDeactivate() throws InterruptedException {
 
 		dashboardpage = new DashboardPage(driver);
 		listOfSbiPage = new ListOfSbiPage(driver);
@@ -164,13 +164,13 @@ public class SbiDeviceProviderTest extends BaseClass {
 
 		listOfSbiPage.clickOnViewDeviceButton(GlobalConstants.ALPHANUMERIC);
 
-		listOfDevicesPage.isDeviceStatusDisplayed(GlobalConstants.FACE, GlobalConstants.FULL_FACE,
+		listOfDevicesPage.isDeviceStatusRejectedDisplayed(GlobalConstants.FACE, GlobalConstants.FULL_FACE,
 				GlobalConstants.AUTOMATION_DEACTIVATING_5, GlobalConstants.AUTOMATION_DEACTIVATING_5,
 				GlobalConstants.REJECTED);
-		listOfDevicesPage.isDeviceStatusDisplayed(GlobalConstants.FACE, GlobalConstants.FULL_FACE,
+		listOfDevicesPage.isDeviceStatusDeactivatedDisplayed(GlobalConstants.FACE, GlobalConstants.FULL_FACE,
 				GlobalConstants.AUTOMATION_DEACTIVATING_4, GlobalConstants.AUTOMATION_DEACTIVATING_4,
 				GlobalConstants.DEACTIVATED);
-		listOfDevicesPage.isDeviceStatusDisplayed(GlobalConstants.FACE, GlobalConstants.FULL_FACE,
+		listOfDevicesPage.isDeviceStatusRejectedDisplayed(GlobalConstants.FACE, GlobalConstants.FULL_FACE,
 				GlobalConstants.AUTOMATION_DEACTIVATING_3, GlobalConstants.AUTOMATION_DEACTIVATING_3,
 				GlobalConstants.REJECTED);
 		listOfDevicesPage.clickOnDeviceThreeDots(GlobalConstants.FACE, GlobalConstants.FULL_FACE,
@@ -264,7 +264,7 @@ public class SbiDeviceProviderTest extends BaseClass {
 	}
 
 	@Test(priority = 7, description = "Verify Tabular View Of Devices page as admin", dependsOnMethods = "verifySbiDetailsPageAsAdmin")
-	public void verifyTabularViewOfDevicesPageAsAdmin() {
+	public void verifyTabularViewOfDevicesPageAsAdmin() throws InterruptedException {
 		dashboardpage = new DashboardPage(driver);
 		listOfSbiPage = new ListOfSbiPage(driver);
 		listOfDevicesPage = new ListOfDevicesPage(driver);
@@ -340,7 +340,7 @@ public class SbiDeviceProviderTest extends BaseClass {
 		listOfDevicesPage.enterPartnerIdInFilterInAdmin(GlobalConstants.DEVICE_PARTNER_ID);
 		listOfDevicesPage.selectDeviceTypeFilterInAdmin(GlobalConstants.FACE);
 
-		//required for later
+		// required for later
 //		assertEquals(listOfDevicesPage.getListOfDevicesTitle(), GlobalConstants.LIST_OF_DEVICES_TITLE_COUNT_28);
 		assertTrue(authPolicyPage.isPaginationDisplayed(), GlobalConstants.isPaginationDisplayed);
 		assertTrue(authPolicyPage.isPreviusPageButtonDisplayed(), GlobalConstants.isPreviusPageButtonDisplayed);
@@ -360,7 +360,7 @@ public class SbiDeviceProviderTest extends BaseClass {
 	}
 
 	@Test(priority = 8, description = "Verify View Of Devices Page As Admin", dependsOnMethods = "verifyTabularViewOfDevicesPageAsAdmin")
-	public void verifyViewOfDevicesPageAsAdmin() {
+	public void verifyViewOfDevicesPageAsAdmin() throws InterruptedException {
 		dashboardpage = new DashboardPage(driver);
 		listOfSbiPage = new ListOfSbiPage(driver);
 		listOfDevicesPage = new ListOfDevicesPage(driver);
@@ -631,7 +631,7 @@ public class SbiDeviceProviderTest extends BaseClass {
 	}
 
 	private void verifyActionMenuOfDevicesInAdmin(String deviceType, String deviceSubType, String make, String model,
-			String status, boolean status1, boolean status2, boolean status3) {
+			String status, boolean status1, boolean status2, boolean status3) throws InterruptedException {
 		listOfDevicesPage.clickOnDeviceThreeDots(deviceType, deviceSubType, make, model);
 		assertEquals(listOfDevicesPage.isViewOptionDisplayed(), status1);
 		assertEquals(listOfDevicesPage.isDeactivateDeviceEnabledInAdmin(), status2);

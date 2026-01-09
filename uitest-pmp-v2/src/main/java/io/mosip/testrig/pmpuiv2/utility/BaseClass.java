@@ -13,9 +13,14 @@ import java.util.Properties;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.PageLoadStrategy;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -45,50 +50,60 @@ public class BaseClass {
 	@BeforeMethod
 	public void setUp(Method method) throws Exception {
 		logger.info("Start set up");
-		if (System.getProperty("os.name").equalsIgnoreCase("Linux") && ConfigManager.getdocker().equals("yes")) {
-			logger.info("Docker start");
-			String configFilePath = "/usr/bin/chromedriver";
-			System.setProperty("webdriver.chrome.driver", configFilePath);
+
+		if (System.getProperty("os.name").equalsIgnoreCase("Linux")
+				&& ConfigManager.getdocker().equalsIgnoreCase("yes")) {
+			System.setProperty("webdriver.chrome.driver", "/usr/bin/chromedriver");
+			logger.info("Docker chrome driver start");
 		} else {
 			WebDriverManager.chromedriver().setup();
-			logger.info("window chrome driver start");
+			logger.info("Windows chrome driver start");
 		}
 
 		ChromeOptions options = new ChromeOptions();
-		String headless = ConfigManager.getheadless();
-		if (headless.equalsIgnoreCase("yes")) {
-			logger.info("Running is headless mode");
-			options.addArguments("--headless", "--disable-gpu", "--no-sandbox", "--window-size=1920x1080",
-					"--disable-dev-shm-usage");
+
+		// 🔥 MOST IMPORTANT FIX
+		options.setPageLoadStrategy(PageLoadStrategy.EAGER);
+
+		options.addArguments("--no-sandbox", "--disable-dev-shm-usage", "--disable-gpu", "--disable-extensions",
+				"--disable-notifications", "--disable-renderer-backgrounding", "--disable-background-timer-throttling",
+				"--disable-backgrounding-occluded-windows");
+
+		if ("yes".equalsIgnoreCase(ConfigManager.getheadless())) {
+			logger.info("Running in headless mode");
+			options.addArguments("--headless=new", "--window-size=1920,1080");
 		}
 
 		WebDriver createdDriver = new ChromeDriver(options);
-
 		DriverManager.setDriver(createdDriver);
-
 		this.driver = DriverManager.getDriver();
 
-		js = (JavascriptExecutor) this.driver;
-		vars = new HashMap<String, Object>();
+		this.driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(60));
+		this.driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(0)); // ❗ important
 
-		this.driver.get(envPathPmpUiv2);
-		logger.info("launch url --" + envPathPmpUiv2);
+		loadUrlWithRetry(envPathPmpUiv2);
+
 		this.driver.manage().window().maximize();
-		this.driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10)); // Configurable if needed
-		this.driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
+
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("username")));
 
 		String testName = method.getName();
 		String description = method.getAnnotation(Test.class) != null ? method.getAnnotation(Test.class).description()
 				: "";
+
 		LogUtil.step("--------------------------------------------------");
 		LogUtil.step("Starting Test: " + testName);
 		LogUtil.step("Description: " + description);
 		LogUtil.step("--------------------------------------------------");
 
 		BasePage basePage = new BasePage(this.driver);
-		basePage.enter(this.driver.findElement(By.id("username")), userid);
-		basePage.enter(this.driver.findElement(By.id("password")), password);
-		this.driver.findElement(By.xpath("//input[@name='login']")).click();
+		basePage.enter(driver.findElement(By.id("username")), userid);
+		basePage.enter(driver.findElement(By.id("password")), password);
+
+		WebElement loginButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("kc-login")));
+
+		((JavascriptExecutor) driver).executeScript("arguments[0].click();", loginButton);
 	}
 
 	@AfterMethod
@@ -169,4 +184,19 @@ public class BaseClass {
 		System.out.println(formattedDate);
 		return formattedDate;
 	}
+
+	private void loadUrlWithRetry(String url) {
+		int attempts = 0;
+		while (attempts < 3) {
+			try {
+				driver.get(url);
+				return;
+			} catch (TimeoutException e) {
+				attempts++;
+				if (attempts == 3)
+					throw e;
+			}
+		}
+	}
+
 }

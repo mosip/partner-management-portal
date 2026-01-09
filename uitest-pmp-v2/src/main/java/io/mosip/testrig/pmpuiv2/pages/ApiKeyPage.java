@@ -1,5 +1,6 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -10,6 +11,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
 
@@ -34,7 +37,7 @@ public class ApiKeyPage extends BasePage {
 	private WebElement generatePolicyNameOption1;
 
 	@FindBy(id = "generate_api_key")
-	private WebElement generateAPIKey;
+	private WebElement generateApiKey;
 
 	@FindBy(xpath = "(//*[@id='columnheaderName'])[1]")
 	private WebElement partnerIDHeaderText;
@@ -75,8 +78,7 @@ public class ApiKeyPage extends BasePage {
 	@FindBy(id = "api_list_action1")
 	private WebElement apiListAction;
 
-	@FindBy(id = "api_key_view")
-	private WebElement apiKeyView;
+	private By apiKeyView = By.id("api_key_view");
 
 	@FindBy(id = "partnerId_desc_icon")
 	private WebElement partnerId_desc_icon;
@@ -423,6 +425,7 @@ public class ApiKeyPage extends BasePage {
 	public ApiKeyPage(WebDriver driver) {
 		super(driver);
 	}
+
 	private static final Logger logger = Logger.getLogger(ApiKeyPage.class);
 
 	public void enterNameOfApiKeyTextBox(String apiKeyTextBoxValue) {
@@ -453,10 +456,10 @@ public class ApiKeyPage extends BasePage {
 			WebElement policyNameOption = driver
 					.findElement(By.xpath("//button[.//span[normalize-space(text())='" + value + "']]"));
 			clickOnElement(policyNameOption);
-			 return true;
+			return true;
 		} catch (NoSuchElementException e) {
 			logger.warn("Policy name not found: " + value);
-			 return false;
+			return false;
 		}
 	}
 
@@ -465,12 +468,18 @@ public class ApiKeyPage extends BasePage {
 		enter(generatePolicyNameSearchInputBox, value);
 	}
 
-	public boolean isGenerateAPIKeyDisplayed() {
-		return isElementDisplayed(generateAPIKey);
+	public boolean isGenerateApiKeyDisplayed() {
+		return isElementDisplayed(generateApiKey);
 	}
 
-	public void clickOnAPIKeyDisplayed() {
-		clickOnElement(generateAPIKey);
+	public void clickOnCreateApiKey() {
+		if (isElementDisplayed(generateApiKey)) {
+			clickOnElement(generateApiKey);
+		} else if (isElementDisplayed(apiKeyListPageGenerateApiKeyBtn)) {
+			clickOnElement(apiKeyListPageGenerateApiKeyBtn);
+		} else {
+			throw new RuntimeException("Create API Key button is not visible on the page");
+		}
 	}
 
 	public void clickOnSubmitButton() {
@@ -530,6 +539,8 @@ public class ApiKeyPage extends BasePage {
 	}
 
 	public void clickOnApiKeyViewButton() {
+		waitForLoaderToDisappear();
+		isDisplayed(apiKeyView);
 		clickOnElement(apiKeyView);
 	}
 
@@ -696,10 +707,6 @@ public class ApiKeyPage extends BasePage {
 
 	public boolean isApiKeyListPageGenerateApiKeyBtnDisplayed() {
 		return isElementDisplayed(apiKeyListPageGenerateApiKeyBtn);
-	}
-
-	public void clickOnApiKeyListPageGenerateApiKeyBtn() {
-		clickOnElement(apiKeyListPageGenerateApiKeyBtn);
 	}
 
 	public boolean isPartnerIdHelpTextDisplayed() {
@@ -1158,9 +1165,11 @@ public class ApiKeyPage extends BasePage {
 
 	public boolean isApiKeyCreationDateSameAsBrowserDateFormat() {
 
-		WebElement dateCell = driver.findElement(By.xpath("//tr[@id='api_key_list_item1']/td[6]"));
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+		By firstRowLocator = By.xpath("//tbody//tr[starts-with(@id,'api_key_list_item')]");
+		WebElement firstRow = wait.until(ExpectedConditions.visibilityOfElementLocated(firstRowLocator));
+		WebElement dateCell = firstRow.findElement(By.xpath("./td[6]"));
 		String browserTime = dateCell.getText().trim();
-
 		DateTimeFormatter dateFormatter = PmpTestUtil.nonZeroPadderDateFormatter;
 		try {
 			LocalDate.parse(browserTime, dateFormatter);
@@ -1168,6 +1177,6 @@ public class ApiKeyPage extends BasePage {
 		} catch (DateTimeParseException e) {
 			return false;
 		}
-
 	}
+
 }

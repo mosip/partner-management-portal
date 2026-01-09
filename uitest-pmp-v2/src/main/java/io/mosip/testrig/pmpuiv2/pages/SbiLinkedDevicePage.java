@@ -1,5 +1,6 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -8,6 +9,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
 
@@ -337,9 +340,13 @@ public class SbiLinkedDevicePage extends BasePage {
 	}
 
 	public void clickOnDeviceThreeDots(String deviceType, String deviceSubType, String make, String model) {
-		WebElement addedDeviceThreeDots = driver.findElement(By
-				.xpath("//td[text()='" + deviceType + "']/..//td[text()='" + deviceSubType + "']/..//td[text()='" + make
-						+ "']/..//td[text()='" + model + "']/..//button[contains(@id, 'device_list_action_menu1')]"));
+
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+
+		WebElement addedDeviceThreeDots = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//td[text()='"
+				+ deviceType + "']/.." + "//td[text()='" + deviceSubType + "']/.." + "//td[text()='" + make + "']/.."
+				+ "//td[text()='" + model + "']/.." + "//button[contains(@id, 'device_list_action_menu1')]")));
+
 		clickOnElement(addedDeviceThreeDots);
 	}
 
@@ -380,8 +387,13 @@ public class SbiLinkedDevicePage extends BasePage {
 	}
 
 	public void clickOnLinkedDevice(String deviceType, String deviceSubType, String make, String model, String status) {
-		WebElement addedDevice = driver.findElement(By.xpath("//td[text()='" + deviceType + "']/..//td[text()='"
-				+ deviceSubType + "']/..//td[text()='" + make + "']/..//td[text()='" + model + "']"));
+
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+
+		WebElement addedDevice = wait.until(ExpectedConditions
+				.elementToBeClickable(By.xpath("//td[text()='" + deviceType + "']/.." + "//td[text()='" + deviceSubType
+						+ "']/.." + "//td[text()='" + make + "']/.." + "//td[text()='" + model + "']")));
+
 		clickOnElement(addedDevice);
 	}
 
@@ -436,9 +448,10 @@ public class SbiLinkedDevicePage extends BasePage {
 
 	public boolean isLinkedDeviceCreationDateSameAsBrowserDateFormat() {
 
-		WebElement dateCell = driver.findElement(By.xpath("//tr[@id='device_list_item1']/td[8]"));
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+		WebElement dateCell = wait
+				.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//tr[@id='device_list_item1']/td[8]")));
 		String browserTime = dateCell.getText().trim();
-
 		DateTimeFormatter dateFormatter = PmpTestUtil.nonZeroPadderDateFormatter;
 		try {
 			LocalDate.parse(browserTime, dateFormatter);
@@ -446,6 +459,6 @@ public class SbiLinkedDevicePage extends BasePage {
 		} catch (DateTimeParseException e) {
 			return false;
 		}
-
 	}
+
 }

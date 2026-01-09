@@ -10,7 +10,7 @@ import io.mosip.testrig.pmpuiv2.pages.PartnerCertificatePage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
-@Test(dependsOnGroups = { "PartnerDetailsTest" }, groups = { "CertificateTrustStoreTest" })
+@Test(groups = { "CertificateTrustStoreTest" })
 public class CertificateTrustStoreTest extends BaseClass {
 
 	private DashboardPage dashboardPage;
@@ -490,7 +490,7 @@ public class CertificateTrustStoreTest extends BaseClass {
 				GlobalConstants.isTrustCertificateLabelExpiryDateTimeDisplayed);
 		assertTrue(partnerCertificatePage.isTrustCertificateContextExpiryDateTimeDisplayed(),
 				GlobalConstants.isTrustCertificateContextExpiryDateTimeDisplayed);
-//		assertTrue(partnerCertificatePage.isToDateTimeFormatValid(), GlobalConstants.isValidToDateTimeFormatValid);
+		assertTrue(partnerCertificatePage.isValidToDateTimeFormatValid(), GlobalConstants.isValidToDateTimeFormatValid);
 
 		assertTrue(partnerCertificatePage.isCertificateDownloadButtonDisplayed(),
 				GlobalConstants.isCertificateDownloadButtonDisplayed);

@@ -1,11 +1,15 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
 
@@ -265,10 +269,17 @@ public class ViewDeviceDetailsPage extends BasePage {
 	}
 
 	public boolean isCreationDateInAdminSameAsBrowserDateFormat() {
-		WebElement dateCell = driver.findElement(By.xpath("//div[@id='view_admin_device_details_created_on']"));
+
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+
+		WebElement dateCell = wait
+				.until(ExpectedConditions.visibilityOfElementLocated(By.id("view_admin_device_details_created_on")));
+
 		String browserTime = dateCell.getText().trim();
-		String dateText = browserTime.replace("Created On ", "").trim();
-		java.time.format.DateTimeFormatter dateFormatter = PmpTestUtil.nonZeroPadderDateFormatter;
+		String dateText = browserTime.replace("Created On", "").trim();
+
+		DateTimeFormatter dateFormatter = PmpTestUtil.nonZeroPadderDateFormatter;
+
 		try {
 			LocalDate.parse(dateText, dateFormatter);
 			return true;

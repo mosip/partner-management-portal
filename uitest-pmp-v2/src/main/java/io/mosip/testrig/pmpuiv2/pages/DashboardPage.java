@@ -1,9 +1,14 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
 import java.time.Duration;
+import java.util.NoSuchElementException;
+import java.util.concurrent.TimeoutException;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -43,8 +48,7 @@ public class DashboardPage extends BasePage {
 	@FindBy(xpath = "//*[@class='min-h-2']")
 	private WebElement value;
 
-	@FindBy(xpath = "//*[text()='Terms and Conditions']")
-	private WebElement termsAndConditionsPopup;
+	private By termsAndConditionsPopup = By.xpath("//*[text()='Terms and Conditions']");
 
 	@FindBy(id = "default-checkbox")
 	private WebElement checkbox;
@@ -52,11 +56,9 @@ public class DashboardPage extends BasePage {
 	@FindBy(id = "consent_proceed_btn")
 	private WebElement proceedButton;
 
-	@FindBy(id = "dashboard_partner_certificate_list_header")
-	private WebElement partnerCertificateTitle;
+	private By partnerCertificateTitle = By.id("dashboard_partner_certificate_list_header");
 
-	@FindBy(id = "dashboard_policies_card")
-	private WebElement policiesTitle;
+	private By policiesTitle = By.id("dashboard_policies_card");
 
 	@FindBy(id = "dashboard_authentication_clients_list_card")
 	private WebElement AuthenticationServices;
@@ -100,8 +102,7 @@ public class DashboardPage extends BasePage {
 	@FindBy(xpath = "//h5[text()='SBI - Device']")
 	private WebElement sbiDeviceHeader;
 
-	@FindBy(id = "dashboard_partner_certificate_list_header")
-	private WebElement dashboardPartnerCertificateListHeader;
+	private By dashboardPartnerCertificateListHeader = By.id("dashboard_partner_certificate_list_header");
 
 	@FindBy(xpath = "//h5[text()='FTM Chip']")
 	private WebElement FTMChipTab;
@@ -177,11 +178,28 @@ public class DashboardPage extends BasePage {
 	}
 
 	public void selectPolicyGroupDropdown(String policyGroupValue) {
+
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+
+		// 1️⃣ Open dropdown
 		clickOnElement(selectPolicyGroupDropdown);
+
+		// 2️⃣ Type search text
 		enter(SearchBox, policyGroupValue);
-		WebElement policyGroupOption = driver.findElement(
-				By.xpath("//span[@id='policy_group_selector_option_name_1' and text()='" + policyGroupValue + "']"));
-		clickOnElement(policyGroupOption);
+
+		// 3️⃣ Wait for matching option (NO hardcoded id)
+		By optionLocator = By.xpath("//button[.//span[contains(normalize-space(text()),'" + policyGroupValue + "')]]");
+
+		WebElement option = wait.until(ExpectedConditions.visibilityOfElementLocated(optionLocator));
+
+		// 4️⃣ Scroll + click (SPA-safe)
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block:'center'});", option);
+
+		try {
+			option.click();
+		} catch (Exception e) {
+			((JavascriptExecutor) driver).executeScript("arguments[0].click();", option);
+		}
 	}
 
 	public void closePolicyGroupDropdown() {
@@ -197,7 +215,7 @@ public class DashboardPage extends BasePage {
 	}
 
 	public boolean isTermsAndConditionsPopupDisplayed() {
-		return isElementDisplayed(termsAndConditionsPopup);
+		return isDisplayed(termsAndConditionsPopup);
 	}
 
 	public void clickOnCheckbox() {
@@ -212,14 +230,20 @@ public class DashboardPage extends BasePage {
 		clickOnElement(proceedButton);
 	}
 
-	private By partnerCertificateTitleDashboard = By.id("dashboard_partner_certificate_list_header");
-
 	public boolean isPartnerCertificateTitleDisplayed() {
-		return isDisplayed(partnerCertificateTitleDashboard);
+
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(40));
+		By card = By.id("dashboard_partner_certificate_list_card");
+
+		try {
+			return wait.until(ExpectedConditions.visibilityOfElementLocated(card)).isDisplayed();
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
 	public boolean isPoliciesTitleDisplayed() {
-		return isElementDisplayed(policiesTitle);
+		return isDisplayed(policiesTitle);
 	}
 
 	public boolean isAuthenticationServicesTitleDisplayed() {
@@ -235,12 +259,39 @@ public class DashboardPage extends BasePage {
 	}
 
 	public PoliciesPage clickOnPoliciesTitle() {
-		clickOnElement(policiesTitle);
+
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+
+		// Wait for loader to disappear (dashboard stabilization)
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//*[contains(text(),'Loading')]")));
+
+		// Re-find element every time (NO caching)
+		wait.until((WebDriver d) -> {
+			try {
+				d.findElement(policiesTitle).click();
+				return true;
+			} catch (StaleElementReferenceException | NoSuchElementException e) {
+				return false;
+			}
+		});
+
 		return new PoliciesPage(driver);
 	}
 
 	public PartnerCertificatePage clickOnPartnerCertificateTitle() {
-		clickOnElement(partnerCertificateTitle);
+
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+		waitForDashboardLoaderToDisappear();
+		wait.until((WebDriver d) -> {
+			try {
+				WebElement el = d.findElement(partnerCertificateTitle);
+				el.click();
+				return true;
+			} catch (StaleElementReferenceException | NoSuchElementException e) {
+				return false;
+			}
+		});
+
 		return new PartnerCertificatePage(driver);
 	}
 
@@ -291,7 +342,17 @@ public class DashboardPage extends BasePage {
 	}
 
 	public void clickOnDashboardPartnerCertificateListHeader() {
-		clickOnElement(dashboardPartnerCertificateListHeader);
+
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//*[contains(text(),'Loading')]")));
+		wait.until((WebDriver d) -> {
+			try {
+				d.findElement(dashboardPartnerCertificateListHeader).click();
+				return true;
+			} catch (NoSuchElementException | WebDriverException e) {
+				return false;
+			}
+		});
 	}
 
 	public void clickOnFTMChipTab() {
@@ -412,15 +473,18 @@ public class DashboardPage extends BasePage {
 	public boolean isFooterDocumentationLinkDisplayed() {
 		return isElementDisplayed(footerDocumentationLink);
 	}
-	
-	private By partnerCertificateCard =
-	        By.id("dashboard_partner_certificate_list_card");
 
-	private By ftmChipProviderCard =
-	        By.id("dashboard_ftm_chip_provider_card");
+	private By partnerCertificateCard = By.id("dashboard_partner_certificate_list_card");
+
+	private By ftmChipProviderCard = By.id("dashboard_ftm_chip_provider_card");
 
 	public void waitForDashboardReady() {
-	    waitUntilAnyElementVisible(partnerCertificateCard, ftmChipProviderCard);
+		waitUntilAnyElementVisible(partnerCertificateCard, ftmChipProviderCard);
+	}
+
+	public void waitForDashboardLoaderToDisappear() {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//*[contains(text(),'Loading')]")));
 	}
 
 }

@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
-@Test(dependsOnGroups = { "DeactivatePartnerCreation" }, groups = { "PolicyGroupTest" })
+@Test(groups = { "PolicyGroupTest" })
 public class PolicyGroupTest extends BaseClass {
 	private BasePage basePage;
 	private DashboardPage dashboardPage;

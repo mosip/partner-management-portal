@@ -1,7 +1,7 @@
 package io.mosip.testrig.pmpuiv2.utility;
 
 public class GlobalConstants {
-	
+
 	public static final String TABLE = "</table>";
 	public static final String TR = "</tr>";
 	public static final String IGNORED_SUBSET_STRING = "feature not supported;Service not deployed";
@@ -225,7 +225,7 @@ public class GlobalConstants {
 	public static final String MISP_CONTACT_NUMBER = "9898767676";
 	public static final String MISP_EMAIL_ID = "misppmpui@gmail.com";
 	public static final String INVALID_EMAIL_ID = "mi12#sp.34@gmail@com";
-	
+
 	public static final String isLogoutButtonDisplayed = "Verify if logout button is display on dashboard screen.";
 	public static final String isElementDisplayed = "Verify if Partners option shown in dashboard screen.";
 	public static final String isLoginPageDisplayed = "Verify if login page is displayed after clicking on logout button in dashboard page.";
@@ -1210,7 +1210,6 @@ public class GlobalConstants {
 	public static final String isPartnerDomainTypeLabelDisplayed = "Verify if partner domain type label is displayed";
 	public static final String isPartnerCertOverlayDisplayed = "Verify if partner certificate overlay is displayed";
 	public static final String isSuccessMessageForFtmCertDisplayed = "Verify if success message for ftm certificate is displayed";
-
-	
+	public static final String isClonePolicyPopupTitleNotDisplayed = "Verify if clone policy popup title not displayed";
 
 }

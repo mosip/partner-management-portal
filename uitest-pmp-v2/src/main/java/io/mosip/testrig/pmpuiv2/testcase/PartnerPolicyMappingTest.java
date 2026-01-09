@@ -4,6 +4,9 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
+import java.time.Duration;
+
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
 
 import io.mosip.testrig.pmpuiv2.pages.AuthPolicyPage;
@@ -450,7 +453,7 @@ public class PartnerPolicyMappingTest extends BaseClass {
 
 		PoliciesPage policiesPage = dashboardPage.clickOnPoliciesTitle();
 
-		policiesPage.clickOnRequestPolicyButtonOfTabularPage();
+		policiesPage.clickOnRequestPolicyButton();
 
 		policiesPage.selectPartnerIdDropdown();
 
@@ -479,7 +482,7 @@ public class PartnerPolicyMappingTest extends BaseClass {
 
 		policiesPage = dashboardPage.clickOnPoliciesTitle();
 
-		policiesPage.clickOnRequestPolicyButtonOfTabularPage();
+		policiesPage.clickOnRequestPolicyButton();
 
 		assertTrue(policiesPage.isPartnerIdDropdownDisplayed(), GlobalConstants.isPartnerIdDropdownDisplayed);
 		policiesPage.selectPartnerIdDropdown();
@@ -514,13 +517,38 @@ public class PartnerPolicyMappingTest extends BaseClass {
 	}
 
 	private void requestPolicy(String authPolicyName) {
-		policiesPage.clickOnRequestPolicyButtonOfTabularPage();
-		policiesPage.selectPartnerIdDropdown();
-		policiesPage.enterAuthPolicyNameDropdown(authPolicyName);
+
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+		boolean policyFound = false;
+
+		for (int attempt = 1; attempt <= 3; attempt++) {
+			try {
+				policiesPage.clickOnRequestPolicyButton();
+				policiesPage.selectPartnerIdDropdown();
+
+				// Try typing policy name
+				policiesPage.enterAuthPolicyNameDropdown(authPolicyName);
+
+				// ✅ Validate policy is visible (NO "No Data Available")
+				wait.until(d -> !driver.getPageSource().contains("No Data Available"));
+
+				policyFound = true;
+				break; // ✅ exit retry loop
+
+			} catch (Exception e) {
+				// 🔁 Backend not ready yet → refresh & retry
+				driver.navigate().refresh();
+			}
+		}
+
+		if (!policyFound) {
+			throw new RuntimeException("Policy not available for request even after retries: " + authPolicyName);
+		}
+
+		// Continue only after policy is confirmed visible
 		policiesPage.enterComments(GlobalConstants.DEFAULT_POLICY);
 		policiesPage.clickSubmitButton();
 		policiesPage.clickOnGoBackButton();
-
 	}
 
 }

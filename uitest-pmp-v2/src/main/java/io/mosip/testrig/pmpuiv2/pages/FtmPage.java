@@ -1,8 +1,13 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
+import java.time.Duration;
+
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
 
@@ -522,7 +527,15 @@ public class FtmPage extends BasePage {
 	}
 
 	public boolean isPendingForApprovalTextDisplayed() {
-		return isElementDisplayed(pendingForApproval);
+
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+
+		try {
+			wait.until(ExpectedConditions.visibilityOf(pendingForApproval));
+			return true;
+		} catch (TimeoutException e) {
+			return false;
+		}
 	}
 
 	public boolean isFilterResetButtonDisplayed() {

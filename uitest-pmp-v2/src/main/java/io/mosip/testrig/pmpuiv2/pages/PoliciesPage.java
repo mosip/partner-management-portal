@@ -260,10 +260,10 @@ public class PoliciesPage extends BasePage {
 
 	@FindBy(id = "block_messsage_proceed")
 	private WebElement dataLostProcceedButton;
-	
+
 	@FindBy(xpath = "//span[text()='Select policy name']")
 	private WebElement policyNamePlaceholder;
-	
+
 	@FindBy(xpath = "//textarea[@placeholder='Mention the purpose of requesting the policy']")
 	private WebElement policyCommentBoxPlaceholder;
 
@@ -276,16 +276,11 @@ public class PoliciesPage extends BasePage {
 	}
 
 	public void clickOnRequestPolicyButton() {
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+		if (isElementDisplayed(requestPolicyButton)) {
+			clickOnElement(requestPolicyButton);
+		} else if (isElementDisplayed(policies_request_btn)) {
+			clickOnElement(policies_request_btn);
 		}
-		clickOnElement(requestPolicyButton);
-	}
-
-	public void clickOnRequestPolicyButtonOfTabularPage() {
-		clickOnElement(policies_request_btn);
 	}
 
 	public void selectPartnerIdDropdown() {
@@ -547,7 +542,7 @@ public class PoliciesPage extends BasePage {
 	public boolean isPolicyNamePlaceHolderDisplayed() {
 		return isElementDisplayed(policyNamePlaceholder);
 	}
-	
+
 	public boolean isPolicyCommentBoxPlaceholderDisplayed() {
 		return isElementDisplayed(policyCommentBoxPlaceholder);
 	}

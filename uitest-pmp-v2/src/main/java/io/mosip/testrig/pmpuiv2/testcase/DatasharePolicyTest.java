@@ -546,6 +546,9 @@ public class DatasharePolicyTest extends BaseClass {
 		datasharePolicyPage.clickOnApplyFilterButton();
 		datasharePolicyPage.clickOnActionButton();
 		datasharePolicyPage.clickOnEditButton();
+		basePage.refreshThePage();
+		assertTrue(datasharePolicyPage.isEditPolicyPageTitleDisplayed(),
+				GlobalConstants.isEditPolicyPageTitleDisplayed);
 		datasharePolicyPage.enterPolicyName(GlobalConstants.AUTOMATION);
 		datasharePolicyPage.enterpolicyDescription(GlobalConstants.AUTOMATION);
 		datasharePolicyPage.clickOnEditPolicyFormSubmitButton();
@@ -685,8 +688,9 @@ public class DatasharePolicyTest extends BaseClass {
 
 		datasharePolicyPage.searchPolicyGroupForClone(GlobalConstants.DEACTIVATE_DATA1);
 		assertTrue(datasharePolicyPage.isNoPolicyGroupFoundDisplayed(), GlobalConstants.isNoDataAvailableDisplayed);
-		datasharePolicyPage.clickOnClonePolicyGroupDropdown();
-		datasharePolicyPage.selectPolicyGroupForClone(GlobalConstants.CHARACTERS_1);
+		datasharePolicyPage.clearClonePolicyGroupDropdownValue();
+
+		datasharePolicyPage.selectPolicyGroupForClonePolicy(GlobalConstants.CHARACTERS_1);
 		assertTrue(datasharePolicyPage.isClonePolicyButtonEnabled(), GlobalConstants.isClonePolicyButtonEnabled);
 		datasharePolicyPage.clickOnClonePolicyButton();
 		assertTrue(datasharePolicyPage.isClonedSuccessMessageDisplayed(),
@@ -871,7 +875,7 @@ public class DatasharePolicyTest extends BaseClass {
 
 		dashboardPage.clickOnAuthenticationServicesTitle();
 		oidcClientPage.clickOnApiKeyTab();
-		apiKeyPage.clickOnAPIKeyDisplayed();
+		apiKeyPage.clickOnCreateApiKey();
 		apiKeyPage.selectPartnerIdDropdown();
 		apiKeyPage.enterDeactivePolicyNameInDropdown(GlobalConstants.DEACTIVATE_DATA2);
 		assertTrue(apiKeyPage.isNoDataAvailableTextDisplayed(), GlobalConstants.isNoDataAvailableTextDisplayed);
@@ -879,7 +883,7 @@ public class DatasharePolicyTest extends BaseClass {
 		policiesPage.clickOnHomeButton();
 
 		dashboardPage.clickOnPoliciesTitle();
-		policiesPage.clickOnRequestPolicyButtonOfTabularPage();
+		policiesPage.clickOnRequestPolicyButton();
 		policiesPage.selectPartnerIdDropdown();
 		policiesPage.selectInvalidPolicyNameDropdown(GlobalConstants.DEACTIVATE_DATA2);
 		assertTrue(policiesPage.isNoDataAvailableTextDisplayed(), GlobalConstants.isNoDataAvailableTextDisplayed);
@@ -890,21 +894,21 @@ public class DatasharePolicyTest extends BaseClass {
 		policiesPage.clickSubmitButton();
 		policiesPage.clickOnGoBackButton();
 
-		policiesPage.clickOnRequestPolicyButtonOfTabularPage();
+		policiesPage.clickOnRequestPolicyButton();
 		policiesPage.selectPartnerIdDropdown();
 		policiesPage.selectPolicyNameDropdown(GlobalConstants.EDITDATAPOLICY1);
 		policiesPage.enterComments(GlobalConstants.EDITDATAPOLICY1);
 		policiesPage.clickSubmitButton();
 		policiesPage.clickOnGoBackButton();
 
-		policiesPage.clickOnRequestPolicyButtonOfTabularPage();
+		policiesPage.clickOnRequestPolicyButton();
 		policiesPage.selectPartnerIdDropdown();
 		policiesPage.selectPolicyNameDropdown(GlobalConstants.ALPHANUMERIC);
 		policiesPage.enterComments(GlobalConstants.ALPHANUMERIC);
 		policiesPage.clickSubmitButton();
 		policiesPage.clickOnGoBackButton();
 
-		policiesPage.clickOnRequestPolicyButtonOfTabularPage();
+		policiesPage.clickOnRequestPolicyButton();
 		policiesPage.selectPartnerIdDropdown();
 		policiesPage.selectPolicyNameDropdown(GlobalConstants.DATAPOLICY01);
 		policiesPage.enterComments(GlobalConstants.DATAPOLICY01);

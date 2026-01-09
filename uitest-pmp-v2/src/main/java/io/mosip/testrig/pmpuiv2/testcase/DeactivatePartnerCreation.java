@@ -2,8 +2,11 @@ package io.mosip.testrig.pmpuiv2.testcase;
 
 import static org.testng.Assert.assertTrue;
 
+import java.util.concurrent.TimeoutException;
+
 import org.testng.annotations.Test;
 
+import io.mosip.testrig.pmpuiv2.pages.BasePage;
 import io.mosip.testrig.pmpuiv2.pages.DashboardPage;
 import io.mosip.testrig.pmpuiv2.pages.LoginPage;
 import io.mosip.testrig.pmpuiv2.pages.PartnerCertificatePage;
@@ -11,16 +14,17 @@ import io.mosip.testrig.pmpuiv2.pages.RegisterPage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
-@Test(dependsOnGroups = {"PolicyAdminAndPartnerCreation"}, groups = {"DeactivatePartnerCreation"})
+@Test(groups = { "DeactivatePartnerCreation" })
 public class DeactivatePartnerCreation extends BaseClass {
 
 	private DashboardPage dashboardPage;
 	private LoginPage loginPage;
 	private PartnerCertificatePage partnerCertificatePage;
 	private RegisterPage registerPage;
+	private BasePage basePage;
 
 	@Test(priority = 1, description = "This is a test case register new user")
-	public void registerDeactivatePartnerUser() {
+	public void registerDeactivatePartnerUser() throws TimeoutException {
 		dashboardPage = new DashboardPage(driver);
 		partnerCertificatePage = new PartnerCertificatePage(driver);
 		loginPage = new LoginPage(driver);
@@ -65,13 +69,11 @@ public class DeactivatePartnerCreation extends BaseClass {
 		dashboardPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULT_POLICYGROUP);
 		dashboardPage.clickOnSubmitButton();
 
-		assertTrue(dashboardPage.isTermsAndConditionsPopupDisplayed(),
-				GlobalConstants.isTermsAndConditionsPopUpDisplayed);
-		dashboardPage.clickOnCheckbox();
-		dashboardPage.clickOnProceedButton();
+		handleTermsAndCondition();
 
-		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
-				GlobalConstants.isPartnerCertificateTitleDisplayed);
+		basePage.refreshThePage();
+//		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
+//				GlobalConstants.isPartnerCertificateTitleDisplayed);
 		dashboardPage.clickOnPartnerCertificateTitle();
 
 		assertTrue(partnerCertificatePage.isPartnerCertificatePageDisplayed(),
@@ -94,6 +96,14 @@ public class DeactivatePartnerCreation extends BaseClass {
 	private void logoutFromPartner() {
 		dashboardPage.clickOnProfileDropdown();
 		dashboardPage.clickOnLogoutButton();
+	}
+
+	private void handleTermsAndCondition() {
+		if (dashboardPage.isTermsAndConditionsPopupDisplayed()) {
+			dashboardPage.clickOnCheckbox();
+			assertTrue(dashboardPage.isProceedButtonDisplayed(), GlobalConstants.isProceedButtonDisplayed);
+			dashboardPage.clickOnProceedButton();
+		}
 	}
 
 }

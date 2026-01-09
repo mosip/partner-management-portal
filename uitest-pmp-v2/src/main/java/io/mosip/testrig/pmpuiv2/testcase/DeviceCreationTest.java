@@ -31,7 +31,7 @@ public class DeviceCreationTest extends BaseClass {
 	private AuthPolicyPage authPolicyPage;
 
 	@Test(priority = 1, description = "Add and verify device for SBI's")
-	public void addAndVerifyDeviceInSbi() {
+	public void addAndVerifyDeviceInSbi() throws InterruptedException {
 		dashboardpage = new DashboardPage(driver);
 		listOfSbiPage = new ListOfSbiPage(driver);
 		listOfDevicesPage = new ListOfDevicesPage(driver);
@@ -42,13 +42,12 @@ public class DeviceCreationTest extends BaseClass {
 
 		deviceProviderPage = dashboardpage.clickOnDeviceProviderServicesTitle();
 
-		listOfSbiPage.clickOnAddDeviceButton(GlobalConstants.ALPHANUMERIC);
+		listOfSbiPage.clickOnAddDeviceButtonForSbi(GlobalConstants.ALPHANUMERIC);
 
-		Assert.assertTrue(addDevicePage.isAddDeviceTitleDisplayed(),
-		        "Add Device page did not load");
+		Assert.assertTrue(addDevicePage.isAddDeviceTitleDisplayed(), "Add Device page did not load");
 		assertTrue(addDevicePage.isHomeButtonDisplayed(), GlobalConstants.isHomeButtonDisplayed);
 		assertEquals(addDevicePage.getSubTitle(), GlobalConstants.LIST_OF_SBI);
-		
+
 		fillDeviceDetails(GlobalConstants.FACE, GlobalConstants.FULL_FACE, GlobalConstants.AUTOMATION_TEMP,
 				GlobalConstants.AUTOMATION_TEMP);
 		addDevicePage.clickOnSubmit();
@@ -193,7 +192,7 @@ public class DeviceCreationTest extends BaseClass {
 	}
 
 	@Test(priority = 2, description = "Approve and reject the devices as admin", dependsOnMethods = "addAndVerifyDeviceInSbi")
-	public void approveAndRejectDevices() {
+	public void approveAndRejectDevices() throws InterruptedException {
 		dashboardpage = new DashboardPage(driver);
 		listOfSbiPage = new ListOfSbiPage(driver);
 		listOfDevicesPage = new ListOfDevicesPage(driver);
@@ -227,7 +226,7 @@ public class DeviceCreationTest extends BaseClass {
 		listOfDevicesPage.clickOnFilterButton();
 		listOfDevicesPage.applyMakeFilter(GlobalConstants.AUTOMATION_DEACTIVATING);
 
-		listOfDevicesPage.clickOnDeviceThreeDotsAsAdmin(GlobalConstants.FACE, GlobalConstants.FULL_FACE,
+		listOfDevicesPage.clickOnFilteredDeviceEllipsisButtonAsAdmin(GlobalConstants.FACE, GlobalConstants.FULL_FACE,
 				GlobalConstants.AUTOMATION_DEACTIVATING_1, GlobalConstants.AUTOMATION_DEACTIVATING_1);
 		listOfDevicesPage.clickOnApproveOrReject();
 		listOfDevicesPage.isApproceRejectpopupDisplayed();
@@ -237,45 +236,45 @@ public class DeviceCreationTest extends BaseClass {
 		listOfDevicesPage.isApprovePopupCloseIconDisplayed();
 		listOfDevicesPage.clickOnApprovePopupCloseIcon();
 
-		listOfDevicesPage.clickOnDeviceThreeDotsAsAdmin(GlobalConstants.FACE, GlobalConstants.FULL_FACE,
+		listOfDevicesPage.clickOnFilteredDeviceEllipsisButtonAsAdmin(GlobalConstants.FACE, GlobalConstants.FULL_FACE,
 				GlobalConstants.AUTOMATION_DEACTIVATING_1, GlobalConstants.AUTOMATION_DEACTIVATING_1);
 		listOfDevicesPage.clickOnApproveOrReject();
 		listOfDevicesPage.clickOnApprove();
-		assertTrue(listOfDevicesPage.isDeviceStatusDisplayed(GlobalConstants.FACE, GlobalConstants.FULL_FACE,
+		assertTrue(listOfDevicesPage.isDeviceStatusApprovedDisplayed(GlobalConstants.FACE, GlobalConstants.FULL_FACE,
 				GlobalConstants.AUTOMATION_DEACTIVATING_1, GlobalConstants.AUTOMATION_DEACTIVATING_1,
 				GlobalConstants.APPROVED), GlobalConstants.isStatusDisplayed);
 
-		listOfDevicesPage.clickOnDeviceThreeDotsAsAdmin(GlobalConstants.FACE, GlobalConstants.FULL_FACE,
+		listOfDevicesPage.clickOnFilteredDeviceEllipsisButtonAsAdmin(GlobalConstants.FACE, GlobalConstants.FULL_FACE,
 				GlobalConstants.AUTOMATION_DEACTIVATING_2, GlobalConstants.AUTOMATION_DEACTIVATING_2);
 		listOfDevicesPage.clickOnApproveOrReject();
 		listOfDevicesPage.clickOnApprove();
 
-		listOfDevicesPage.clickOnDeviceThreeDotsAsAdmin(GlobalConstants.FACE, GlobalConstants.FULL_FACE,
+		listOfDevicesPage.clickOnFilteredDeviceEllipsisButtonAsAdmin(GlobalConstants.FACE, GlobalConstants.FULL_FACE,
 				GlobalConstants.AUTOMATION_DEACTIVATING_3, GlobalConstants.AUTOMATION_DEACTIVATING_3);
 		listOfDevicesPage.clickOnApproveOrReject();
 		listOfDevicesPage.clickOnReject();
 
-		assertTrue(listOfDevicesPage.isDeviceStatusDisplayed(GlobalConstants.FACE, GlobalConstants.FULL_FACE,
+		assertTrue(listOfDevicesPage.isDeviceStatusRejectedDisplayed(GlobalConstants.FACE, GlobalConstants.FULL_FACE,
 				GlobalConstants.AUTOMATION_DEACTIVATING_3, GlobalConstants.AUTOMATION_DEACTIVATING_3,
 				GlobalConstants.REJECTED), GlobalConstants.isStatusDisplayed);
 
-		listOfDevicesPage.clickOnDeviceThreeDotsAsAdmin(GlobalConstants.FACE, GlobalConstants.FULL_FACE,
+		listOfDevicesPage.clickOnFilteredDeviceEllipsisButtonAsAdmin(GlobalConstants.FACE, GlobalConstants.FULL_FACE,
 				GlobalConstants.AUTOMATION_DEACTIVATING_4, GlobalConstants.AUTOMATION_DEACTIVATING_4);
 		listOfDevicesPage.clickOnApproveOrReject();
 		listOfDevicesPage.clickOnApprove();
 
-		listOfDevicesPage.clickOnDeviceThreeDotsAsAdmin(GlobalConstants.FACE, GlobalConstants.FULL_FACE,
+		listOfDevicesPage.clickOnFilteredDeviceEllipsisButtonAsAdmin(GlobalConstants.FACE, GlobalConstants.FULL_FACE,
 				GlobalConstants.AUTOMATION_DEACTIVATING_4, GlobalConstants.AUTOMATION_DEACTIVATING_4);
 		listOfDevicesPage.clickOnDeactivateButton();
 		listOfDevicesPage.clickOnDeactivateSubmit();
 
-		listOfDevicesPage.clickOnDeviceThreeDotsAsAdmin(GlobalConstants.FACE, GlobalConstants.FULL_FACE,
+		listOfDevicesPage.clickOnFilteredDeviceEllipsisButtonAsAdmin(GlobalConstants.FACE, GlobalConstants.FULL_FACE,
 				GlobalConstants.AUTOMATION_DEACTIVATING_4, GlobalConstants.AUTOMATION_DEACTIVATING_4);
 		listOfDevicesPage.isApproceRejectDeviceDisabled();
 	}
 
 	@Test(priority = 3, description = "Verify and Deactivate the Device from List Of Devices Page", dependsOnMethods = "approveAndRejectDevices")
-	public void verifyAndDeactivateDeviceFromListOfDevicesPage() {
+	public void verifyAndDeactivateDeviceFromListOfDevicesPage() throws InterruptedException {
 
 		dashboardpage = new DashboardPage(driver);
 		listOfSbiPage = new ListOfSbiPage(driver);
@@ -295,7 +294,7 @@ public class DeviceCreationTest extends BaseClass {
 				GlobalConstants.AUTOMATION_LOWERCASE, GlobalConstants.AUTOMATION_LOWERCASE);
 		listOfDevicesPage.clickOnDeactivateDevice();
 		listOfDevicesPage.clickOnDeactivateSubmit();
-		assertTrue(listOfDevicesPage.isDeviceStatusDisplayed(GlobalConstants.IRIS, GlobalConstants.SINGLE,
+		assertTrue(listOfDevicesPage.isDeviceStatusDeactivatedDisplayed(GlobalConstants.IRIS, GlobalConstants.SINGLE,
 				GlobalConstants.AUTOMATION_LOWERCASE, GlobalConstants.AUTOMATION_LOWERCASE,
 				GlobalConstants.DEACTIVATED), GlobalConstants.isDeviceStatusDisplayed);
 
@@ -307,7 +306,7 @@ public class DeviceCreationTest extends BaseClass {
 	}
 
 	@Test(priority = 4, description = "Verify List Of Devices and View Device Details Page", dependsOnMethods = "verifyAndDeactivateDeviceFromListOfDevicesPage")
-	public void verifyListOfDevicesPage() {
+	public void verifyListOfDevicesPage() throws InterruptedException {
 
 		dashboardpage = new DashboardPage(driver);
 		listOfSbiPage = new ListOfSbiPage(driver);
@@ -537,7 +536,7 @@ public class DeviceCreationTest extends BaseClass {
 	}
 
 	private void fillDeviceDetailsWithPosition(String deviceType, String deviceSubType, String make, String model,
-			int position) {
+			int position) throws InterruptedException {
 		addDevicePage.selectAddDeviceTypeWithPosition(deviceType, position);
 		addDevicePage.selectDeviceSubTypeWithPosition(deviceSubType, position);
 		addDevicePage.enterMakeNameWithPosition(make, position);
@@ -545,8 +544,8 @@ public class DeviceCreationTest extends BaseClass {
 		assertTrue(addDevicePage.isSubmitEnabled(), GlobalConstants.isSubmitButtonEnabled);
 	}
 
-	private void addMultipleDevices(String deviceType, String deviceSubType, String make, String model,
-			int deviceCount) {
+	private void addMultipleDevices(String deviceType, String deviceSubType, String make, String model, int deviceCount)
+			throws InterruptedException {
 		for (int position = 1; position <= deviceCount; position++) {
 			fillDeviceDetailsWithPosition(deviceType, deviceSubType, make + position, model + position, position);
 			addDevicePage.clickOnSubmit();
@@ -623,7 +622,7 @@ public class DeviceCreationTest extends BaseClass {
 	}
 
 	private void verifyDeviceDetailsWithViewDeviceFromMenuDots(String deviceType, String deviceSubType, String make,
-			String model, String status) {
+			String model, String status) throws InterruptedException {
 		listOfDevicesPage.clickOnDeviceThreeDots(deviceType, deviceSubType, make, model);
 		listOfDevicesPage.clickOnViewDevice();
 
@@ -727,7 +726,7 @@ public class DeviceCreationTest extends BaseClass {
 	}
 
 	private void verifyActionMenuOfDevices(String deviceType, String deviceSubType, String make, String model,
-			String status, boolean status1, boolean status2) {
+			String status, boolean status1, boolean status2) throws InterruptedException {
 		listOfDevicesPage.clickOnDeviceThreeDots(deviceType, deviceSubType, make, model);
 		assertEquals(listOfDevicesPage.isViewDeviceEnabled(), status1);
 		assertEquals(listOfDevicesPage.isDeactivateDeviceEnabled(), status2);

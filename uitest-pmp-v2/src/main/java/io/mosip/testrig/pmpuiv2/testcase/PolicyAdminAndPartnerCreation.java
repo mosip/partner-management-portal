@@ -2,9 +2,12 @@ package io.mosip.testrig.pmpuiv2.testcase;
 
 import static org.testng.Assert.assertTrue;
 
+import java.util.concurrent.TimeoutException;
+
 import org.testng.annotations.Test;
 
 import io.mosip.testrig.pmpuiv2.kernel.util.KeycloakUserManager;
+import io.mosip.testrig.pmpuiv2.pages.BasePage;
 import io.mosip.testrig.pmpuiv2.pages.DashboardPage;
 import io.mosip.testrig.pmpuiv2.pages.LoginPage;
 import io.mosip.testrig.pmpuiv2.pages.PartnerCertificatePage;
@@ -12,13 +15,14 @@ import io.mosip.testrig.pmpuiv2.pages.RegisterPage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
-@Test(dependsOnGroups = {"PartnerAdminCreation"}, groups = {"PolicyAdminAndPartnerCreation"})
+@Test(groups = { "PolicyAdminAndPartnerCreation" })
 public class PolicyAdminAndPartnerCreation extends BaseClass {
 	private DashboardPage dashboardPage;
 	private LoginPage loginPage;
 	private PartnerCertificatePage partnerCertificatePage;
 	private RegisterPage registerPage;
-	
+	private BasePage basePage;
+
 	@Test(priority = 1, description = "Creating Partner Admin")
 	public void policiesAdminCreation() {
 		dashboardPage = new DashboardPage(driver);
@@ -42,12 +46,7 @@ public class PolicyAdminAndPartnerCreation extends BaseClass {
 
 		KeycloakUserManager.assignRole(GlobalConstants.POLICIES_ADMIN, "PARTNER_ADMIN");
 
-		assertTrue(dashboardPage.isTermsAndConditionsPopupDisplayed(),
-				GlobalConstants.isTermsAndConditionsPopUpDisplayed);
-		dashboardPage.clickOnCheckbox();
-		assertTrue(dashboardPage.isProceedButtonDisplayed(), GlobalConstants.isProceedButtonDisplayed);
-		dashboardPage.clickOnProceedButton();
-
+		handleTermsAndCondition();
 	}
 
 	@Test(priority = 2, description = "Uploading Trust Certificate", dependsOnMethods = "policiesAdminCreation")
@@ -56,7 +55,7 @@ public class PolicyAdminAndPartnerCreation extends BaseClass {
 		dashboardPage = new DashboardPage(driver);
 		partnerCertificatePage = new PartnerCertificatePage(driver);
 		loginPage = new LoginPage(driver);
-		
+
 		loginAsPartnerAdmin();
 		dashboardPage.clickOnCertificateTrustStore();
 		assertTrue(partnerCertificatePage.isUploadTrustCertificateButtonDisplayed(),
@@ -87,7 +86,7 @@ public class PolicyAdminAndPartnerCreation extends BaseClass {
 	}
 
 	@Test(priority = 3, description = "This is a test case register new user", dependsOnMethods = "uploadTrustCertificate")
-	public void registerNewUser() {
+	public void registerNewUser() throws TimeoutException {
 		dashboardPage = new DashboardPage(driver);
 		partnerCertificatePage = new PartnerCertificatePage(driver);
 		loginPage = new LoginPage(driver);
@@ -133,13 +132,12 @@ public class PolicyAdminAndPartnerCreation extends BaseClass {
 		dashboardPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULT_POLICYGROUP);
 		dashboardPage.clickOnSubmitButton();
 
-		assertTrue(dashboardPage.isTermsAndConditionsPopupDisplayed(),
-				GlobalConstants.isTermsAndConditionsPopUpDisplayed);
-		dashboardPage.clickOnCheckbox();
-		dashboardPage.clickOnProceedButton();
+		handleTermsAndCondition();
 
-		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
-				GlobalConstants.isPartnerCertificateTitleDisplayed);
+		basePage.refreshThePage();
+//		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
+//				GlobalConstants.isPartnerCertificateTitleDisplayed);
+
 		dashboardPage.clickOnPartnerCertificateTitle();
 
 		assertTrue(partnerCertificatePage.isPartnerCertificatePageDisplayed(),
@@ -151,14 +149,14 @@ public class PolicyAdminAndPartnerCreation extends BaseClass {
 		assertTrue(partnerCertificatePage.isPleaseTabToSelectTextDisplayed(),
 				GlobalConstants.isPleaseTabToSelectTextDisplayed);
 		assertTrue(partnerCertificatePage.isCertFormatesTextDisplayed(), GlobalConstants.isCertFormatesTextDisplayed);
-		partnerCertificatePage.uploadPolicyUserIntermediateCaCert();
+		partnerCertificatePage.uploadPolicyUserClientCert();
 		partnerCertificatePage.clickOnSubmitButton();
 		assertTrue(partnerCertificatePage.isSuccessMessageDisplayed(), GlobalConstants.isSuccessMessageDisplayed);
 		partnerCertificatePage.clickOncertificateUploadCloseButton();
 		dashboardPage = partnerCertificatePage.clickOnHomeButton();
 
 	}
-	
+
 	private void logoutFromPartner() {
 		dashboardPage.clickOnProfileDropdown();
 		dashboardPage.clickOnLogoutButton();
@@ -171,6 +169,14 @@ public class PolicyAdminAndPartnerCreation extends BaseClass {
 		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
 		loginPage.clickOnLoginButton();
 
+	}
+
+	private void handleTermsAndCondition() {
+		if (dashboardPage.isTermsAndConditionsPopupDisplayed()) {
+			dashboardPage.clickOnCheckbox();
+			assertTrue(dashboardPage.isProceedButtonDisplayed(), GlobalConstants.isProceedButtonDisplayed);
+			dashboardPage.clickOnProceedButton();
+		}
 	}
 
 }

@@ -2,12 +2,18 @@ package io.mosip.testrig.pmpuiv2.pages;
 
 import java.io.IOException;
 import java.time.Duration;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -214,16 +220,30 @@ public class AddDevicePage extends BasePage {
 
 	public void selectAddDeviceType(String value) {
 		try {
-			dropdown(addDeviceTypeSelectDropdown, value);
-		} catch (IOException e) {
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+
+			// 🔑 re-locate element fresh every time
+			WebElement deviceTypeDropdown = wait
+					.until(ExpectedConditions.elementToBeClickable(By.id("add_device_device_type_dropdown_btn")));
+
+			dropdown(deviceTypeDropdown, value);
+
+		} catch (Exception e) {
 			logger.info(e.getMessage());
 		}
 	}
 
 	public void selectDeviceSubType(String value) {
 		try {
-			dropdown(addDeviceSubTypeSelectDropdown, value);
-		} catch (IOException e) {
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+
+			// 🔑 re-locate Sub Type dropdown fresh
+			WebElement subTypeDropdown = wait
+					.until(ExpectedConditions.elementToBeClickable(By.id("add_device_device_sub_type_dropdown_btn")));
+
+			dropdown(subTypeDropdown, value);
+
+		} catch (Exception e) {
 			logger.info(e.getMessage());
 		}
 	}
@@ -236,11 +256,13 @@ public class AddDevicePage extends BasePage {
 		enter(addDeviceModelTextbox, modelName);
 	}
 
-	public void selectAddDeviceTypeWithPosition(String value, int position) {
+	public void selectAddDeviceTypeWithPosition(String value, int position) throws InterruptedException {
+		position = position - 1;
+		Thread.sleep(1000);
 		WebElement addDeviceTypeSelectDropdown = driver
-				.findElement(By.xpath("(//button[@id='add_device_device_type_dropdown_btn'])[" + position + "]"));
+				.findElements(By.xpath("//button[@id='add_device_device_type_dropdown_btn']")).get(position);
 		try {
-			dropdownWithPosition(addDeviceTypeSelectDropdown, value, position);
+			dropdownWithPosition(addDeviceTypeSelectDropdown, value, position + 1);
 		} catch (IOException e) {
 			logger.info(e.getMessage());
 		}
@@ -257,15 +279,19 @@ public class AddDevicePage extends BasePage {
 	}
 
 	public void enterMakeNameWithPosition(String makeName, int position) {
-		WebElement addDeviceMakeTextbox = driver
-				.findElement(By.xpath("(//input[@id='add_device_make_input'])[" + position + "]"));
-		enter(addDeviceMakeTextbox, makeName);
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+		By makeInputLocator = By.xpath("(//form)[" + position + "]//input[@placeholder='Enter Make']");
+		WebElement makeInput = wait.until(ExpectedConditions.visibilityOfElementLocated(makeInputLocator));
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block:'center'});", makeInput);
+		enter(makeInput, makeName);
 	}
 
 	public void enterModelNameWithPosition(String modelName, int position) {
-		WebElement addDeviceModelTextbox = driver
-				.findElement(By.xpath("(//input[@id='add_device_model_input'])[" + position + "]"));
-		enter(addDeviceModelTextbox, modelName);
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+		By modelInputLocator = By.xpath("(//form)[" + position + "]//input[@placeholder='Enter Model']");
+		WebElement modelInput = wait.until(ExpectedConditions.visibilityOfElementLocated(modelInputLocator));
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block:'center'});", modelInput);
+		enter(modelInput, modelName);
 	}
 
 	public boolean isSubmitEnabled() {
@@ -397,4 +423,5 @@ public class AddDevicePage extends BasePage {
 		clickOnElement(addDeviceTypeSelectDropdown);
 		clickOnElement(addDeviceTypeOption);
 	}
+
 }

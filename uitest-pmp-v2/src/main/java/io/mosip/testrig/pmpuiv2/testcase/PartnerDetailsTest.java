@@ -9,7 +9,7 @@ import io.mosip.testrig.pmpuiv2.pages.PartnerAdminPage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
-@Test(dependsOnGroups = {"DeactivatePartnerCreation"}, groups = {"PartnerDetailsTest"})
+@Test(groups = { "PartnerDetailsTest" })
 public class PartnerDetailsTest extends BaseClass {
 
 	private DashboardPage dashboardPage;
@@ -30,7 +30,8 @@ public class PartnerDetailsTest extends BaseClass {
 		assertTrue(partnerAdminPage.isOrganisationNameHeaderTagDisplayed(),
 				GlobalConstants.isOrganisationNameHeaderTagDisplayed);
 		assertTrue(partnerAdminPage.isPolicyGroupHeaderTagDisplayed(), GlobalConstants.isPolicyGroupHeaderTagDisplayed);
-		assertTrue(partnerAdminPage.isEmailAddressHeaderTagDisplayed(), GlobalConstants.isEmailAddressHeaderTagDisplayed);
+		assertTrue(partnerAdminPage.isEmailAddressHeaderTagDisplayed(),
+				GlobalConstants.isEmailAddressHeaderTagDisplayed);
 		assertTrue(partnerAdminPage.isStatusHeaderTagDisplayed(), GlobalConstants.isStatusHeaderTagDisplayed);
 		assertTrue(partnerAdminPage.isActionHeaderTagDisplayed(), GlobalConstants.isActionHeaderTagDisplayed);
 		assertTrue(partnerAdminPage.isPartnersIdDescIconDisplayed(), GlobalConstants.isPartnersIdDescIconDisplayed);
@@ -66,9 +67,11 @@ public class PartnerDetailsTest extends BaseClass {
 		assertTrue(partnerAdminPage.isAuthenticationPartnerCellDisplayed(),
 				GlobalConstants.isauthenticationPartnerCellDisplayed);
 		assertTrue(partnerAdminPage.isPartnerIdSearchBarDisplayed(), GlobalConstants.isPartnerIdSearchBarDisplayed);
-		assertTrue(partnerAdminPage.isOrganisationSearchBarDisplayed(), GlobalConstants.isOrganisationSearchBarDisplayed);
+		assertTrue(partnerAdminPage.isOrganisationSearchBarDisplayed(),
+				GlobalConstants.isOrganisationSearchBarDisplayed);
 		assertTrue(partnerAdminPage.isPolicyGroupSearchBarDisplayed(), GlobalConstants.isPolicyGroupSearchBarDisplayed);
-		assertTrue(partnerAdminPage.isEmailAddressSearchBarDisplayed(), GlobalConstants.isEmailAddressSearchBarDisplayed);
+		assertTrue(partnerAdminPage.isEmailAddressSearchBarDisplayed(),
+				GlobalConstants.isEmailAddressSearchBarDisplayed);
 		partnerAdminPage.clickOnFilterResetButton();
 
 		partnerAdminPage.clickOnFilterButton();
@@ -107,7 +110,7 @@ public class PartnerDetailsTest extends BaseClass {
 		assertTrue(partnerAdminPage.isCertificateUploadsStatusAscIconDisplayed(),
 				GlobalConstants.isCertificateUploadsStatusAscIconDisplayed);
 
-		//Re-enable deactivated partner verification once stability issues are resolved
+		// Re-enable deactivated partner verification once stability issues are resolved
 //		partnerAdminPage.clickOnFilterButton();
 //		partnerAdminPage.clickOnStatusFilter();
 //		partnerAdminPage.clickOnDeActivatedStatusInFilters();
@@ -127,7 +130,8 @@ public class PartnerDetailsTest extends BaseClass {
 		partnerAdminPage.clickOnFilterButton();
 		assertTrue(partnerAdminPage.isFiltersButtonDisabled(), GlobalConstants.isFiltersButtonDisabled);
 		partnerAdminPage.clickOnFilterResetButton();
-		assertTrue(partnerAdminPage.isSubTitleOfTabularViewsDisplayed(), GlobalConstants.isSubTitleOfTabularViewsDisplayed);
+		assertTrue(partnerAdminPage.isSubTitleOfTabularViewsDisplayed(),
+				GlobalConstants.isSubTitleOfTabularViewsDisplayed);
 		assertTrue(partnerAdminPage.isPrefixOfPagesDisplayed(), GlobalConstants.isPrefixOfPagesDisplayed);
 		partnerAdminPage.clickOnBreadcrumb();
 		assertTrue(partnerAdminPage.isPartnersButtonDisplayed(), GlobalConstants.isPartnersButtonDisplayed);

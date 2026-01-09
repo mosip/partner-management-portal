@@ -1,13 +1,17 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
 
@@ -104,21 +108,30 @@ public class ViewSbiDetailsPage extends BasePage {
 
 	public boolean isSbiCreationDateSameAsBrowserDateFormat() {
 
-		WebElement createdDateCell = driver.findElement(By.id("view_admin_sbi_created_date_context"));
-		String browserTime = createdDateCell.getText().trim();
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
 
-		DateTimeFormatter dateFormatter = PmpTestUtil.nonZeroPadderDateFormatter;
 		try {
+			WebElement createdDateCell = wait
+					.until(ExpectedConditions.visibilityOfElementLocated(By.id("view_admin_sbi_created_date_context")));
+
+			String browserTime = createdDateCell.getText().trim();
+
+			DateTimeFormatter dateFormatter = PmpTestUtil.nonZeroPadderDateFormatter;
 			LocalDate.parse(browserTime, dateFormatter);
+
 			return true;
-		} catch (DateTimeParseException e) {
+		} catch (TimeoutException | DateTimeParseException e) {
 			return false;
 		}
 	}
 
 	public boolean isSbiExpirationDateSameAsBrowserDateFormat() {
 
-		WebElement expiryDateCell = driver.findElement(By.id("view_admin_sbi_expiry_date_context"));
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+
+		WebElement expiryDateCell = wait
+				.until(ExpectedConditions.visibilityOfElementLocated(By.id("view_admin_sbi_expiry_date_context")));
+
 		String browserTime = expiryDateCell.getText().trim();
 
 		DateTimeFormatter dateFormatter = PmpTestUtil.nonZeroPadderDateFormatter;
@@ -128,7 +141,6 @@ public class ViewSbiDetailsPage extends BasePage {
 		} catch (DateTimeParseException e) {
 			return false;
 		}
-
 	}
 
 	public void clickOnSbiDetailsBackButton() {

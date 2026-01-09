@@ -4,12 +4,14 @@ import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Random;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotInteractableException;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -177,7 +179,9 @@ public class BasePage {
 		try {
 			waitForElementVisible(element);
 			clickOnElement(element);
-			click(By.xpath("(//*[contains(text(),'" + value + "')])[" + position + "]"));
+			WebElement dropdown=driver.findElement(By.xpath("(//*[text()='" + value + "'])[" + position + "]"));
+			waitForElementVisible(dropdown);
+			clickOnElement(dropdown);
 		} catch (Exception e) {
 			LogUtil.step("Dropdown position select failed, trying JS click: " + element.toString());
 			try {
@@ -389,11 +393,9 @@ public class BasePage {
 	public boolean isDisplayed(By locator) {
 		try {
 			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-
-			WebElement element = wait
-					.until(ExpectedConditions.refreshed(ExpectedConditions.visibilityOfElementLocated(locator)));
-			return element.isDisplayed();
-		} catch (TimeoutException e) {
+			wait.ignoring(StaleElementReferenceException.class);
+			return wait.until(d -> d.findElement(locator).isDisplayed());
+		} catch (Exception e) {
 			return false;
 		}
 	}
@@ -428,13 +430,48 @@ public class BasePage {
 		throw new RuntimeException("Dashboard not ready");
 	}
 
-	private boolean isDisplayedQuick(By locator) {
+	protected boolean isDisplayedQuick(By locator) {
 		try {
-			WebDriverWait wait = new WebDriverWait(driver, QUICK_CHECK_TIMEOUT);
-			return wait.until(ExpectedConditions.visibilityOfElementLocated(locator)).isDisplayed();
+			WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), QUICK_CHECK_TIMEOUT);
+
+			return wait.until(driver -> {
+				try {
+					List<WebElement> elements = driver.findElements(locator);
+					if (elements.isEmpty()) {
+						return false;
+					}
+					return elements.get(0).isDisplayed();
+				} catch (StaleElementReferenceException e) {
+					return false; // retry on next poll
+				}
+			});
+
 		} catch (TimeoutException e) {
 			return false;
 		}
+	}
+
+	private By loadingOverlay = By.xpath("//*[contains(text(),'Loading')]");
+
+	protected void waitForLoaderToDisappear() {
+		try {
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+			wait.until(ExpectedConditions.invisibilityOfElementLocated(loadingOverlay));
+		} catch (TimeoutException e) {
+		}
+	}
+
+	public void clickOnElement(By locator) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+		WebElement element = wait.until(ExpectedConditions.elementToBeClickable(locator));
+		element.click();
+	}
+
+	public void enter(By locator, String value) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+		WebElement el = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+		el.clear();
+		el.sendKeys(value);
 	}
 
 }

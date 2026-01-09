@@ -16,7 +16,7 @@ import io.mosip.testrig.pmpuiv2.pages.OidcClientPage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
-@Test(dependsOnGroups = {"PolicyCreationForAuthPartner"}, groups = {"OidcClientAuthPartnerTest"})
+@Test(dependsOnGroups = { "PolicyCreationForAuthPartner" }, groups = { "OidcClientAuthPartnerTest" })
 public class OidcClientAuthPartnerTest extends BaseClass {
 	private BasePage basePage;
 	private DashboardPage dashboardPage;
@@ -74,12 +74,16 @@ public class OidcClientAuthPartnerTest extends BaseClass {
 		assertTrue(oidcClientPage.isPartnerIdAscIconDisplayed(), GlobalConstants.isPartnerIdAscIconDisplayed);
 		assertTrue(oidcClientPage.isOidcClientNameDescIconDisplayed(), GlobalConstants.isOidcClientNameDescIcon);
 		assertTrue(oidcClientPage.isOidcClientNameAscIconDisplayed(), GlobalConstants.isOidcClientNameAscIcon);
-		assertTrue(oidcClientPage.isPolicyGroupNameDescIconDisplayed(), GlobalConstants.isPolicyGroupNameDescIconDisplayed);
-		assertTrue(oidcClientPage.isPolicyGroupNameAscIconDisplayed(), GlobalConstants.isPolicyGroupNameAscIconDisplayed);
+		assertTrue(oidcClientPage.isPolicyGroupNameDescIconDisplayed(),
+				GlobalConstants.isPolicyGroupNameDescIconDisplayed);
+		assertTrue(oidcClientPage.isPolicyGroupNameAscIconDisplayed(),
+				GlobalConstants.isPolicyGroupNameAscIconDisplayed);
 		assertTrue(oidcClientPage.isPolicyNameDescIconDisplayed(), GlobalConstants.isPolicyNameDescIconDisplayed);
 		assertTrue(oidcClientPage.isPolicyNameAscIconDisplayed(), GlobalConstants.isPolicyNameAscIconDisplayed);
-		assertTrue(oidcClientPage.isCreatedDateTimeDescIconDisplayed(), GlobalConstants.isCreatedDateTimeDescIconDisplayed);
-		assertTrue(oidcClientPage.isCreatedDateTimeAscIconDisplayed(), GlobalConstants.isCreatedDateTimeAscIconDisplayed);
+		assertTrue(oidcClientPage.isCreatedDateTimeDescIconDisplayed(),
+				GlobalConstants.isCreatedDateTimeDescIconDisplayed);
+		assertTrue(oidcClientPage.isCreatedDateTimeAscIconDisplayed(),
+				GlobalConstants.isCreatedDateTimeAscIconDisplayed);
 		assertTrue(oidcClientPage.isFilterButtonEnabled(), GlobalConstants.isFilterButtonEnabled);
 		assertTrue(oidcClientPage.isHomeButtonDisplayed(), GlobalConstants.isHomeButtonInAuthenticationDisplayed);
 
@@ -160,7 +164,7 @@ public class OidcClientAuthPartnerTest extends BaseClass {
 
 		createOidcClient(GlobalConstants.AUTOMATION_LOWERCASE);
 
-		oidcClientPage.clickOnListCreateOidcClientButton();
+		oidcClientPage.clickOnCreateOidcClientButton();
 		oidcClientPage.selectPartnerIdDropdown();
 		oidcClientPage.selectPolicyNameDropdown(GlobalConstants.DEFAULT_POLICY);
 		oidcClientPage.enterNameOidcTextBox(GlobalConstants.SPACE);
@@ -199,7 +203,7 @@ public class OidcClientAuthPartnerTest extends BaseClass {
 		loginAsAuthPartner();
 
 		oidcClientPage = dashboardPage.clickOnAuthenticationServicesTitle();
-		oidcClientPage.clickOnListCreateOidcClientButton();
+		oidcClientPage.clickOnCreateOidcClientButton();
 		oidcClientPage.clickOnRedirectUriAddNew();
 		assertTrue(oidcClientPage.isRedirectUri2TextBoxDisplayed(), GlobalConstants.isRedirectUri2TextBoxDisplayed);
 		oidcClientPage.clickOnRedirectUri2Delete();
@@ -214,7 +218,7 @@ public class OidcClientAuthPartnerTest extends BaseClass {
 		loginAsAuthPartner();
 
 		oidcClientPage = dashboardPage.clickOnAuthenticationServicesTitle();
-		oidcClientPage.clickOnListCreateOidcClientButton();
+		oidcClientPage.clickOnCreateOidcClientButton();
 		oidcClientPage.clickOnRedirectUriAddNew();
 		assertTrue(oidcClientPage.isRedirectUri2TextBoxDisplayed(), GlobalConstants.isRedirectUri2TextBoxDisplayed);
 	}
@@ -227,7 +231,7 @@ public class OidcClientAuthPartnerTest extends BaseClass {
 		loginAsAuthPartner();
 
 		oidcClientPage = dashboardPage.clickOnAuthenticationServicesTitle();
-		oidcClientPage.clickOnListCreateOidcClientButton();
+		oidcClientPage.clickOnCreateOidcClientButton();
 		oidcClientPage.enterNameOidcTextBox(GlobalConstants.DEFAULT_POLICY);
 		oidcClientPage.enterPublicKeyTextBox(KeycloakUserManager.publicKeytemp);
 		oidcClientPage.enterLogoUrTextBox(ConfigManager.getLogouri());
@@ -244,7 +248,7 @@ public class OidcClientAuthPartnerTest extends BaseClass {
 		loginAsAuthPartner();
 
 		oidcClientPage = dashboardPage.clickOnAuthenticationServicesTitle();
-		oidcClientPage.clickOnListCreateOidcClientButton();
+		oidcClientPage.clickOnCreateOidcClientButton();
 		oidcClientPage.selectPartnerIdDropdown();
 		oidcClientPage.selectPolicyNameDropdown(GlobalConstants.DEFAULT_POLICY);
 		oidcClientPage.enterNameOidcTextBox(GlobalConstants.AUTOMATION_LOWERCASE);
@@ -277,12 +281,16 @@ public class OidcClientAuthPartnerTest extends BaseClass {
 		assertTrue(oidcClientPage.isPartnerIdAscIconDisplayed(), GlobalConstants.isPartnerIdAscIconDisplayed);
 		assertTrue(oidcClientPage.isOidcClientNameDescIconDisplayed(), GlobalConstants.isOidcClientNameDescIcon);
 		assertTrue(oidcClientPage.isOidcClientNameAscIconDisplayed(), GlobalConstants.isOidcClientNameAscIcon);
-		assertTrue(oidcClientPage.isPolicyGroupNameDescIconDisplayed(), GlobalConstants.isPolicyGroupNameDescIconDisplayed);
-		assertTrue(oidcClientPage.isPolicyGroupNameAscIconDisplayed(), GlobalConstants.isPolicyGroupNameAscIconDisplayed);
+		assertTrue(oidcClientPage.isPolicyGroupNameDescIconDisplayed(),
+				GlobalConstants.isPolicyGroupNameDescIconDisplayed);
+		assertTrue(oidcClientPage.isPolicyGroupNameAscIconDisplayed(),
+				GlobalConstants.isPolicyGroupNameAscIconDisplayed);
 		assertTrue(oidcClientPage.isPolicyNameDescIconDisplayed(), GlobalConstants.isPolicyNameDescIconDisplayed);
 		assertTrue(oidcClientPage.isPolicyNameAscIconDisplayed(), GlobalConstants.isPolicyNameAscIconDisplayed);
-		assertTrue(oidcClientPage.isCreatedDateTimeDescIconDisplayed(), GlobalConstants.isCreatedDateTimeDescIconDisplayed);
-		assertTrue(oidcClientPage.isCreatedDateTimeAscIconDisplayed(), GlobalConstants.isCreatedDateTimeAscIconDisplayed);
+		assertTrue(oidcClientPage.isCreatedDateTimeDescIconDisplayed(),
+				GlobalConstants.isCreatedDateTimeDescIconDisplayed);
+		assertTrue(oidcClientPage.isCreatedDateTimeAscIconDisplayed(),
+				GlobalConstants.isCreatedDateTimeAscIconDisplayed);
 		assertTrue(oidcClientPage.isFilterButtonEnabled(), GlobalConstants.isFilterButtonEnabled);
 		assertTrue(oidcClientPage.isHomeButtonDisplayed(), GlobalConstants.isHomeButtonDisplayed);
 
@@ -387,7 +395,7 @@ public class OidcClientAuthPartnerTest extends BaseClass {
 		loginAsAuthPartner();
 
 		dashboardPage.clickOnAuthenticationServicesTitle();
-		oidcClientPage.clickOnListCreateOidcClientButton();
+		oidcClientPage.clickOnCreateOidcClientButton();
 		oidcClientPage.selectPartnerIdDropdown();
 		oidcClientPage.selectPolicyNameDropdown(GlobalConstants.DEFAULT_POLICY);
 		oidcClientPage.enterNameOidcTextBox(GlobalConstants.AUTOMATION_LOWERCASE);
@@ -710,7 +718,7 @@ public class OidcClientAuthPartnerTest extends BaseClass {
 	private void createOidcClient(String oidcTextBoxValue) {
 
 		oidcClientPage = new OidcClientPage(driver);
-		oidcClientPage.clickOnListCreateOidcClientButton();
+		oidcClientPage.clickOnCreateOidcClientButton();
 		oidcClientPage.selectPartnerIdDropdown();
 		oidcClientPage.selectPolicyNameDropdown(GlobalConstants.DEFAULT_POLICY);
 		oidcClientPage.enterNameOidcTextBox(oidcTextBoxValue);

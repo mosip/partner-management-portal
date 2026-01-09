@@ -185,7 +185,8 @@ public class AuthPolicyTest extends BaseClass {
 		dashboardPage.clickOnPolicyButton();
 		policiesPage.clickOnAuthPolicyTab();
 		authPolicyPage.clickOnCreateAuthPolicyButton();
-		authPolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULT_POLICYGROUP);
+		assertTrue(authPolicyPage.selectPolicyGroupDropdownIfPresent("automationui policy group"),
+				"Policy group should be selectable");
 		authPolicyPage.enterPolicyName(GlobalConstants.DEACTIVATE_AUTH2);
 		authPolicyPage.enterpolicyDescription(GlobalConstants.DEACTIVATE_AUTH2_DESCRIPTION);
 		authPolicyPage.uploadBlankData();
@@ -632,7 +633,7 @@ public class AuthPolicyTest extends BaseClass {
 		authPolicyPage.clickOnGoBackButton();
 		authPolicyPage.clickOnActionButton();
 		authPolicyPage.clickOnCloneButton();
-		assertFalse(authPolicyPage.isClonePolicyPopupTitleDisplayed(),
+		assertTrue(authPolicyPage.isClonePolicyPopupTitleNotDisplayed(),
 				GlobalConstants.isClonePolicyPopupTitleDisplayed);
 
 		authPolicyPage.clickOnFilterButton();
@@ -814,7 +815,7 @@ public class AuthPolicyTest extends BaseClass {
 
 		dashboardPage.clickOnAuthenticationServicesTitle();
 		oidcClientPage.clickOnApiKeyTab();
-		apiKeyPage.clickOnAPIKeyDisplayed();
+		apiKeyPage.clickOnCreateApiKey();
 		apiKeyPage.selectPartnerIdDropdown();
 		apiKeyPage.enterDeactivePolicyNameInDropdown(GlobalConstants.DEACTIVATE_AUTH2);
 		assertTrue(apiKeyPage.isNoDataAvailableTextDisplayed(), GlobalConstants.isNoDataAvailableTextDisplayed);
@@ -832,14 +833,14 @@ public class AuthPolicyTest extends BaseClass {
 		policiesPage.clickSubmitButton();
 		policiesPage.clickOnGoBackButton();
 
-		policiesPage.clickOnRequestPolicyButtonOfTabularPage();
+		policiesPage.clickOnRequestPolicyButton();
 		policiesPage.selectPartnerIdDropdown();
 		policiesPage.selectPolicyNameDropdown(GlobalConstants.AUTHPOLICY09);
 		policiesPage.enterComments(GlobalConstants.AUTHPOLICY09);
 		policiesPage.clickSubmitButton();
 		policiesPage.clickOnGoBackButton();
 
-		policiesPage.clickOnRequestPolicyButtonOfTabularPage();
+		policiesPage.clickOnRequestPolicyButton();
 		policiesPage.selectPartnerIdDropdown();
 		policiesPage.selectPolicyNameDropdown(GlobalConstants.AUTHPOLICY06);
 		policiesPage.enterComments(GlobalConstants.AUTHPOLICY06);

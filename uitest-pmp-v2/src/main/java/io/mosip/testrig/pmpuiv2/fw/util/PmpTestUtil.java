@@ -46,7 +46,7 @@ public class PmpTestUtil extends BaseTestCaseFunc {
 	public static DateTimeFormatter monthYearFormatter = DateTimeFormatter.ofPattern("MMMM yyyy");
 	public static DateTimeFormatter yyyyMmDdFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 	public static DateTimeFormatter yyyyMmmDdFormatter = DateTimeFormatter.ofPattern("yyyy-MMM-dd");
-	public static DateTimeFormatter yyyyMmDdFormatter2 = DateTimeFormatter.ofPattern("yyyy.MM.dd");	
+	public static DateTimeFormatter yyyyMmDdFormatter2 = DateTimeFormatter.ofPattern("yyyy.MM.dd");
 	public static String todayDate = LocalDate.now().format(dateFormatter);
 	public static String todayDateWithoutZeroPadder = LocalDate.now().format(nonZeroPadderDateFormatter);
 	public static String expiryDate = LocalDate.now().plusWeeks(2).format(dateFormatter);
@@ -57,6 +57,7 @@ public class PmpTestUtil extends BaseTestCaseFunc {
 	public static String previousMonth4thDateWithoutZeroPadder = LocalDate.now().minusMonths(1).withDayOfMonth(4)
 			.format(nonZeroPadderDateFormatter);
 	public static String currentMonthAndYear = LocalDate.now().format(monthYearFormatter);
+	public static DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("M/d/yyyy, h:mm:ss a");
 
 	public static String getServerComponentsDetails() {
 		if (serverComponentsCommitDetails != null && !serverComponentsCommitDetails.isEmpty())
@@ -167,7 +168,7 @@ public class PmpTestUtil extends BaseTestCaseFunc {
 			return null;
 		}
 	}
-	
+
 	public static String getResourceFilePath(String folderName, String fileName) {
 		return Paths.get(TestRunner.getResourcePath(), folderName, fileName).toString();
 	}

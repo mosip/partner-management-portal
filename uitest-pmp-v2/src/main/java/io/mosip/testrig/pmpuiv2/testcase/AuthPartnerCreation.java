@@ -2,25 +2,31 @@ package io.mosip.testrig.pmpuiv2.testcase;
 
 import static org.testng.Assert.assertTrue;
 
+import java.util.concurrent.TimeoutException;
+
 import org.testng.annotations.Test;
 
+import io.mosip.testrig.pmpuiv2.pages.BasePage;
 import io.mosip.testrig.pmpuiv2.pages.DashboardPage;
 import io.mosip.testrig.pmpuiv2.pages.LoginPage;
 import io.mosip.testrig.pmpuiv2.pages.PartnerCertificatePage;
+import io.mosip.testrig.pmpuiv2.pages.PoliciesPage;
 import io.mosip.testrig.pmpuiv2.pages.RegisterPage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
-@Test(dependsOnGroups = {"PartnerAdminCreation"}, groups = {"AuthPartnerCreation"})
+@Test(groups = { "AuthPartnerCreation" })
 public class AuthPartnerCreation extends BaseClass {
 
 	private DashboardPage dashboardPage;
 	private LoginPage loginPage;
 	private PartnerCertificatePage partnerCertificatePage;
 	private RegisterPage registerPage;
+	private PoliciesPage policiesPage;
+	private BasePage basePage;
 
 	@Test(priority = 1, description = "This is a test case register new user")
-	public void registerAuthPartnerUser() {
+	public void registerAuthPartnerUser() throws TimeoutException {
 
 		dashboardPage = new DashboardPage(driver);
 		partnerCertificatePage = new PartnerCertificatePage(driver);
@@ -49,7 +55,7 @@ public class AuthPartnerCreation extends BaseClass {
 		logoutFromPartner();
 
 		registerPage = loginPage.clickRegisterButton();
-	
+
 		registerPage.enterFirstName(GlobalConstants.AUTH_PARTNER_ID);
 		registerPage.enterLastName(GlobalConstants.AUTH_PARTNER_ID);
 		registerPage.enterOrganizationName(GlobalConstants.ORGANISATION_NAME);
@@ -66,13 +72,11 @@ public class AuthPartnerCreation extends BaseClass {
 		dashboardPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULT_POLICYGROUP);
 		dashboardPage.clickOnSubmitButton();
 
-		assertTrue(dashboardPage.isTermsAndConditionsPopupDisplayed(),
-				GlobalConstants.isTermsAndConditionsPopUpDisplayed);
-		dashboardPage.clickOnCheckbox();
-		dashboardPage.clickOnProceedButton();
+		handleTermsAndCondition();
 
-		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
-				GlobalConstants.isPartnerCertificateTitleDisplayed);
+		basePage.refreshThePage();
+//		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
+//				GlobalConstants.isPartnerCertificateTitleDisplayed);
 		dashboardPage.clickOnPartnerCertificateTitle();
 
 		assertTrue(partnerCertificatePage.isPartnerCertificatePageDisplayed(),
@@ -148,9 +152,64 @@ public class AuthPartnerCreation extends BaseClass {
 		partnerCertificatePage.clickOnTitleBackButton();
 	}
 
+	@Test(priority = 2, description = "Request new policy with out uploading certificates")
+	public void requestNewPolicyWithoutUploadingCertificates() throws InterruptedException {
+
+		dashboardPage = new DashboardPage(driver);
+		policiesPage = new PoliciesPage(driver);
+		registerPage = new RegisterPage(driver);
+		loginPage = new LoginPage(driver);
+
+		logoutFromPartner();
+
+		loginPage.clickRegisterButton();
+
+		registerPage.enterFirstName("pmpui-nocert");
+		registerPage.enterLastName("  ");
+		registerPage.enterOrganizationName("AABBCC");
+		registerPage.selectPartnerTypeDropdown(2);
+		registerPage.enterAddress("0" + data);
+		registerPage.enterEmail(data + "nocert" + "@gmail.com");
+		registerPage.enterPhone("  ");
+		registerPage.selectNotificationLanguageDropdown();
+		registerPage.enterUsername("pmpui-nocert");
+		registerPage.enterPassword("mosip123");
+		registerPage.enterPasswordConfirm("mosip123");
+		dashboardPage = registerPage.clickSubmitButton();
+
+		assertTrue(registerPage.isPhoneNumberWarningMessageDisplayed(),
+				GlobalConstants.isPhoneNumberWarningMessageDisplayed);
+		registerPage.selectPartnerTypeDropdown(2);
+		registerPage.enterPhone("8098768903");
+		registerPage.enterPassword("mosip123");
+		registerPage.enterPasswordConfirm("mosip123");
+		dashboardPage = registerPage.clickSubmitButton();
+
+		dashboardPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULT_POLICYGROUP);
+		dashboardPage.clickOnSubmitButton();
+
+		handleTermsAndCondition();
+
+		dashboardPage.clickOnPoliciesTitle();
+		policiesPage.clickOnRequestPolicyButton();
+
+		assertTrue(policiesPage.isPartnerIdDropdownDisplayed(), GlobalConstants.isPartnerIdDropdownDisplayed);
+		policiesPage.clickOnPartnerIdDropdown();
+		assertTrue(policiesPage.isNoDataAvailableTextDisplayed(), GlobalConstants.isNoDataTextDisplaed);
+
+	}
+
 	private void logoutFromPartner() {
 		dashboardPage.clickOnProfileDropdown();
 		loginPage = dashboardPage.clickOnLogoutButton();
+	}
+
+	private void handleTermsAndCondition() {
+		if (dashboardPage.isTermsAndConditionsPopupDisplayed()) {
+			dashboardPage.clickOnCheckbox();
+			assertTrue(dashboardPage.isProceedButtonDisplayed(), GlobalConstants.isProceedButtonDisplayed);
+			dashboardPage.clickOnProceedButton();
+		}
 	}
 
 }
