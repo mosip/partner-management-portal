@@ -524,7 +524,7 @@ public class PartnerPolicyMappingTest extends BaseClass {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
 		boolean policyFound = false;
 		By policyRow = By.xpath("//tr[contains(@class,'policy-row')]");
-		By noDataLabel = By.xpath("//*[text()='No Data Available']");
+		By noDataLabel = By.xpath("//p[contains(normalize-space(), 'No Data Available')]");
 
 		for (int attempt = 1; attempt <= 3; attempt++) {
 			try {

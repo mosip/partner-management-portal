@@ -284,24 +284,33 @@ public class PoliciesPage extends BasePage {
 
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
 
+		By showRequestPolicyBtn = By.id("show_request_policy");
 		By requestPolicyBtn = By.id("request_policy_btn");
 		By policiesRequestBtn = By.id("policies_request_btn");
 
 		try {
 			WebElement button = wait.until(driver -> {
+
+				if (isClickable(showRequestPolicyBtn)) {
+					return driver.findElement(showRequestPolicyBtn);
+				}
+
 				if (isClickable(requestPolicyBtn)) {
 					return driver.findElement(requestPolicyBtn);
 				}
+
 				if (isClickable(policiesRequestBtn)) {
 					return driver.findElement(policiesRequestBtn);
 				}
+
 				return null;
 			});
 
 			button.click();
 
 		} catch (TimeoutException e) {
-			throw new RuntimeException("Request Policy button not clickable using any known locator", e);
+			throw new RuntimeException("Request Policy button not clickable using any known locator: "
+					+ "[show_request_policy, request_policy_btn, policies_request_btn]", e);
 		}
 	}
 

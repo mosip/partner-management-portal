@@ -426,15 +426,12 @@ public class BasePage {
 
 	protected boolean isDisplayedQuick(By locator) {
 		try {
-			WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), QUICK_CHECK_TIMEOUT);
+			WebDriverWait wait = new WebDriverWait(this.driver, QUICK_CHECK_TIMEOUT);
 
-			return wait.until(driver -> {
+			return wait.until(d -> {
 				try {
-					List<WebElement> elements = driver.findElements(locator);
-					if (elements.isEmpty()) {
-						return false;
-					}
-					return elements.get(0).isDisplayed();
+					List<WebElement> elements = d.findElements(locator);
+					return !elements.isEmpty() && elements.get(0).isDisplayed();
 				} catch (StaleElementReferenceException e) {
 					return false;
 				}
@@ -449,9 +446,12 @@ public class BasePage {
 
 	protected void waitForLoaderToDisappear() {
 		try {
-			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+			WebDriverWait wait = new WebDriverWait(this.driver, Duration.ofSeconds(30));
+
 			wait.until(ExpectedConditions.invisibilityOfElementLocated(loadingOverlay));
+
 		} catch (TimeoutException e) {
+			logger.warn("Loading overlay did not disappear within timeout. Locator: " + loadingOverlay);
 		}
 	}
 

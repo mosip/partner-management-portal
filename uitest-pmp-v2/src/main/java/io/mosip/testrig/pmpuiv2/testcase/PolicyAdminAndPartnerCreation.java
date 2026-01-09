@@ -2,7 +2,7 @@ package io.mosip.testrig.pmpuiv2.testcase;
 
 import static org.testng.Assert.assertTrue;
 
-import java.util.concurrent.TimeoutException;
+import org.openqa.selenium.TimeoutException;
 
 import org.testng.annotations.Test;
 

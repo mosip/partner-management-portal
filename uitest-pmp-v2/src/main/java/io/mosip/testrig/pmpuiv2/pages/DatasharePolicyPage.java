@@ -595,19 +595,16 @@ public class DatasharePolicyPage extends BasePage {
 
 	public void enterPolicyName(String val) {
 
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(40));
+	    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(40));
 
-		WebElement policyNameBox = wait.until(ExpectedConditions.elementToBeClickable(By.id("policy_name_box")));
+	    WebElement policyNameBox = wait.until(
+	        ExpectedConditions.elementToBeClickable(By.id("policy_name_box"))
+	    );
 
-		// ✅ wait until React finishes binding value
-		wait.until(d -> policyNameBox.getAttribute("value") != null);
-
-		// React-safe clear + type
-		policyNameBox.sendKeys(Keys.chord(Keys.CONTROL, "a"));
-		policyNameBox.sendKeys(Keys.DELETE);
-		policyNameBox.sendKeys(val);
-
+	    policyNameBox.clear();
+	    policyNameBox.sendKeys(val);
 	}
+
 
 	public void enterpolicyDescription(String val) {
 		enter(policyDescriptionBox, val);

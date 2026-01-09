@@ -2,8 +2,6 @@ package io.mosip.testrig.pmpuiv2.testcase;
 
 import static org.testng.Assert.assertTrue;
 
-import java.util.concurrent.TimeoutException;
-
 import org.testng.annotations.Test;
 
 import io.mosip.testrig.pmpuiv2.pages.BasePage;
@@ -24,7 +22,7 @@ public class DevicePartnerCreation extends BaseClass {
 	private BasePage basePage;
 
 	@Test(priority = 1, description = "This is a test case register new device user")
-	public void registerDevicePartnerUser() throws InterruptedException, TimeoutException {
+	public void registerDevicePartnerUser(){
 		dashboardPage = new DashboardPage(driver);
 		partnerCertificatePage = new PartnerCertificatePage(driver);
 		registerPage = new RegisterPage(driver);
