@@ -125,11 +125,13 @@ public class AddDevicePage extends BasePage {
 	@FindBy(xpath = "//p[contains(text(), 'Device Details already exists')]")
 	private WebElement duplicateDeviceErrorMessage;
 
+	private By deviceTypeDropdown = By.id("add_device_device_type_dropdown");
+
+	private By homeButtonBy = By.id("sub_title_home_btn");
+
 	public AddDevicePage(WebDriver driver) {
 		super(driver);
 	}
-
-	private By homeButtonBy = By.id("sub_title_home_btn");
 
 	public boolean isHomeButtonDisplayed() {
 		return isDisplayed(homeButtonBy);
@@ -212,15 +214,15 @@ public class AddDevicePage extends BasePage {
 
 	public void selectAddDeviceType(String value) throws Exception {
 		try {
-			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+			By addDeviceTypeDropdown = By.xpath("//button[@id='add_device_device_type_dropdown_btn']");
 
-			WebElement deviceTypeDropdown = wait
-					.until(ExpectedConditions.elementToBeClickable(By.id("add_device_device_type_dropdown")));
+			WebElement addDeviceTypeSelectDropdown = new WebDriverWait(driver, Duration.ofSeconds(20))
+					.until(ExpectedConditions.visibilityOfElementLocated(addDeviceTypeDropdown));
 
-			dropdown(deviceTypeDropdown, value);
+			dropdown(addDeviceTypeSelectDropdown, value);
 
 		} catch (Exception e) {
-			logger.error("Failed to select device type: " + value, e);
+			logger.error("Failed to select Add Device Type: " + value, e);
 			throw e;
 		}
 	}
@@ -413,6 +415,25 @@ public class AddDevicePage extends BasePage {
 	public void selectAddDeviceTypeForReject() {
 		clickOnElement(addDeviceTypeSelectDropdown);
 		clickOnElement(addDeviceTypeOption);
+	}
+
+	private void selectFromCustomDropdown(String value) {
+		By option = By.xpath("//li[normalize-space()='" + value + "']");
+		new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.visibilityOfElementLocated(option))
+				.click();
+	}
+
+	private WebElement waitForDeviceTypeDropdown() {
+
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+
+		wait.until(ExpectedConditions.presenceOfElementLocated(deviceTypeDropdown));
+
+		WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(deviceTypeDropdown));
+
+		wait.until(d -> element.isEnabled());
+
+		return element;
 	}
 
 }

@@ -36,13 +36,22 @@ public class AuthPartnerWithoutCertificateTest extends BaseClass {
 
 		dashboardPage = new DashboardPage(driver);
 		loginPage = new LoginPage(driver);
+		policiesPage = new PoliciesPage(driver);
 
 		logoutFromPartner();
 
 		loginPage.enterUserName("pmpui-nocert");
 		loginPage.enterPassword(password);
 		loginPage.clickOnLoginButton();
+		
+		dashboardPage.clickOnPoliciesTitle();
+		policiesPage.clickOnRequestPolicyButton();
 
+		assertTrue(policiesPage.isPartnerIdDropdownDisplayed(), GlobalConstants.isPartnerIdDropdownDisplayed);
+		policiesPage.clickOnPartnerIdDropdown();
+		assertTrue(policiesPage.isNoDataAvailableTextDisplayed(), GlobalConstants.isNoDataTextDisplaed);
+		policiesPage.clickOnHomeButton();
+		
 		oidcClientPage = dashboardPage.clickOnAuthenticationServicesTitle();
 
 		assertTrue(oidcClientPage.isCreateOidcClientDisplayed(), GlobalConstants.isCreateOIDCClientDisplayed);

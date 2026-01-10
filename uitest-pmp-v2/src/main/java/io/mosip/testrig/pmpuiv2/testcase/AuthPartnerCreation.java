@@ -76,8 +76,8 @@ public class AuthPartnerCreation extends BaseClass {
 		handleTermsAndCondition();
 
 		basePage.refreshThePage();
-//		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
-//				GlobalConstants.isPartnerCertificateTitleDisplayed);
+		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
+				GlobalConstants.isPartnerCertificateTitleDisplayed);
 		dashboardPage.clickOnPartnerCertificateTitle();
 
 		assertTrue(partnerCertificatePage.isPartnerCertificatePageDisplayed(),
@@ -153,8 +153,8 @@ public class AuthPartnerCreation extends BaseClass {
 		partnerCertificatePage.clickOnTitleBackButton();
 	}
 
-	@Test(priority = 2, description = "Request new policy with out uploading certificates")
-	public void requestNewPolicyWithoutUploadingCertificates() throws InterruptedException {
+	@Test(priority = 2, description = "Register auth user with out uploading certificates")
+	public void registerAuthUserWithoutUploadingCertificates() throws InterruptedException {
 
 		dashboardPage = new DashboardPage(driver);
 		policiesPage = new PoliciesPage(driver);
@@ -191,14 +191,7 @@ public class AuthPartnerCreation extends BaseClass {
 		dashboardPage.clickOnSubmitButton();
 
 		handleTermsAndCondition();
-
-		dashboardPage.clickOnPoliciesTitle();
-		policiesPage.clickOnRequestPolicyButton();
-
-		assertTrue(policiesPage.isPartnerIdDropdownDisplayed(), GlobalConstants.isPartnerIdDropdownDisplayed);
-		policiesPage.clickOnPartnerIdDropdown();
-		assertTrue(policiesPage.isNoDataAvailableTextDisplayed(), GlobalConstants.isNoDataTextDisplaed);
-
+		
 	}
 
 	private void logoutFromPartner() {

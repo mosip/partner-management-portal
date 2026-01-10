@@ -155,7 +155,7 @@ public class PolicyCreationForAuthPartner extends BaseClass {
 		assertTrue(policiesPage.isTitleBackIconDisplayed(), GlobalConstants.isBackArrow);
 		policiesPage.clickOnTitleBackIcon();
 		assertTrue(policiesPage.isTitleOfPolicyPageDisplayed(), GlobalConstants.isTitleOfPolicyPageDisplayed);
-		assertTrue(policiesPage.isRequestPolicyButtonDisplayed(), GlobalConstants.isRequestPolicyButtonDisplayed);
+		assertTrue(policiesPage.isTabularRequestPolicyButtonDisplayed(), GlobalConstants.isRequestPolicyButtonDisplayed);
 
 		requestPolicy(GlobalConstants.PENDING_POLICY);
 

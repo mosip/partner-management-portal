@@ -138,8 +138,8 @@ public class PolicyAdminAndPartnerCreation extends BaseClass {
 
 		basePage.refreshThePage();
 		// TODO:Re-enable after fixing certificate title timing issue
-//		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
-//				GlobalConstants.isPartnerCertificateTitleDisplayed);
+		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
+				GlobalConstants.isPartnerCertificateTitleDisplayed);
 
 		dashboardPage.clickOnPartnerCertificateTitle();
 

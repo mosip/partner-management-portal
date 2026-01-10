@@ -17,11 +17,8 @@ public class PoliciesPage extends BasePage {
 	@FindBy(xpath = "//div[@class='flex flex-col items-center']")
 	private WebElement policiesEmptyTable;
 
-	@FindBy(id = "show_request_policy")
-	private WebElement requestPolicyButton;
-
-	@FindBy(id = "policies_request_btn")
-	private WebElement policies_request_btn;
+	private By middleRequestPolicyButton = By.id("show_request_policy");
+	private By tabularPoliciesRequestButton = By.id("policies_request_btn");
 
 	@FindBy(id = "request_policy_partner_id_dropdown_btn")
 	private WebElement partnerIdDropdown;
@@ -281,25 +278,17 @@ public class PoliciesPage extends BasePage {
 	}
 
 	public void clickOnRequestPolicyButton() {
-	    By[] locators = {
-	            By.id("show_request_policy"),
-	            By.id("request_policy_btn"),
-	            By.id("policies_request_btn")
-	    };
 
-	    for (By locator : locators) {
-	        if (driver.findElements(locator).size() > 0) {
-	            clickOnElement(locator);
-	            return;
-	        }
-	    }
+		if (isMiddleRequestPolicyButtonDisplayed()) {
+			clickOnElement(middleRequestPolicyButton);
 
-	    throw new RuntimeException(
-	            "Request Policy button not clickable using any known locator: "
-	                    + "[show_request_policy, request_policy_btn, policies_request_btn]"
-	    );
+		} else if (isTabularRequestPolicyButtonDisplayed()) {
+			clickOnElement(tabularPoliciesRequestButton);
+
+		} else {
+			throw new RuntimeException("Request Policy button not found in middle or tabular view");
+		}
 	}
-
 
 	public void selectPartnerIdDropdown() {
 		clickOnElement(partnerIdDropdown);
@@ -354,7 +343,7 @@ public class PoliciesPage extends BasePage {
 	}
 
 	public boolean isPoliciesEmptyTableEnabled() {
-		return isElementEnabled(requestPolicyButton);
+		return isElementEnabled(middleRequestPolicyButton);
 	}
 
 	public void clickOnHomeButton() {
@@ -613,8 +602,12 @@ public class PoliciesPage extends BasePage {
 		return isElementDisplayed(backButton);
 	}
 
-	public boolean isRequestPolicyButtonDisplayed() {
-		return isElementDisplayed(policies_request_btn);
+	public boolean isMiddleRequestPolicyButtonDisplayed() {
+		return isDisplayed(middleRequestPolicyButton);
+	}
+
+	public boolean isTabularRequestPolicyButtonDisplayed() {
+		return isDisplayed(tabularPoliciesRequestButton);
 	}
 
 	public boolean isTitleOfPolicyPageDisplayed() {
@@ -712,10 +705,9 @@ public class PoliciesPage extends BasePage {
 	public void clickOnPolicyButton() {
 		clickOnElement(policyButton);
 	}
-	
-	public void waitUntilPageReady() {
-	    waitForPageToBeReady(By.id("show_request_policy"), 20);
-	}
 
+	public void waitUntilPageReady() {
+		waitForPageToBeReady(By.id("show_request_policy"), 20);
+	}
 
 }

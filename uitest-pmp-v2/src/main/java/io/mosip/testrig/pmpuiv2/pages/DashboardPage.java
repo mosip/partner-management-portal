@@ -251,15 +251,14 @@ public class DashboardPage extends BasePage {
 	public PoliciesPage clickOnPoliciesTitle() {
 
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
-		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//*[contains(text(),'Loading')]")));
-		wait.until((WebDriver d) -> {
-			try {
-				d.findElement(policiesTitle).click();
-				return true;
-			} catch (StaleElementReferenceException | NoSuchElementException e) {
-				return false;
-			}
-		});
+
+		By blockingOverlay = By.cssSelector("div.fixed.inset-0.z-50");
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(blockingOverlay));
+
+		wait.until(ExpectedConditions.presenceOfElementLocated(policiesTitle));
+
+		WebElement policiesCard = driver.findElement(policiesTitle);
+		((JavascriptExecutor) driver).executeScript("arguments[0].click();", policiesCard);
 
 		return new PoliciesPage(driver);
 	}

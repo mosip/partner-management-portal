@@ -76,8 +76,7 @@ public class DatasharePolicyPage extends BasePage {
 	@FindBy(xpath = "//textarea[@placeholder='Upload the json file successfully to display its content here']")
 	private WebElement fileUploadPlaceHolder;
 
-	@FindBy(id = "confirmation_go_back_btn")
-	private WebElement goBackButton;
+	private By goBackButton = By.id("confirmation_go_back_btn");
 
 	@FindBy(xpath = "//span[text()='desc automationui policy group']")
 	private WebElement policyGroupDescription;
@@ -659,7 +658,7 @@ public class DatasharePolicyPage extends BasePage {
 	}
 
 	public boolean isSuccessGoBackButtonAvailable() {
-		return isElementDisplayed(goBackButton);
+		return isDisplayed(goBackButton);
 	}
 
 	public boolean isSuccessHomeButtonAvailable() {

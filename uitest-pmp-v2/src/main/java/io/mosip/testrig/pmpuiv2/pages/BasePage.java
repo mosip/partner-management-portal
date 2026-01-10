@@ -11,13 +11,17 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotInteractableException;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.NoSuchSessionException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Reporter;
 import org.apache.log4j.Logger;
@@ -260,6 +264,24 @@ public class BasePage {
 		}
 	}
 
+	protected boolean isElementEnabled(By locator) {
+		LogUtil.verify("Checking if element is enabled: ", locator);
+
+		try {
+			WebElement element = waitForElementClickable(locator);
+			return element.isEnabled();
+
+		} catch (Exception e) {
+			takeScreenshot();
+			return false;
+		}
+	}
+
+	protected WebElement waitForElementClickable(By locator) {
+		return new WebDriverWait(driver, Duration.ofSeconds(10))
+				.until(ExpectedConditions.elementToBeClickable(locator));
+	}
+
 	protected void waitForElementToBeVisible(WebElement element) {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
 		wait.until(ExpectedConditions.visibilityOf(element));
@@ -310,8 +332,10 @@ public class BasePage {
 	}
 
 	public void refreshThePage() {
-		LogUtil.action("Refreshing the page");
-		driver.navigate().refresh();
+		WebDriver current = DriverManager.getDriver();
+		if (current != null) {
+			current.navigate().refresh();
+		}
 	}
 
 	public void navigateBack() {
@@ -384,10 +408,12 @@ public class BasePage {
 		js.executeScript("arguments[0].scrollIntoView(true);", element);
 	}
 
-	public boolean isDisplayed(By locator) {
+	protected boolean isDisplayed(By locator) {
 		try {
-			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-			wait.ignoring(StaleElementReferenceException.class);
+			Wait<WebDriver> wait = new FluentWait<>(driver).withTimeout(Duration.ofSeconds(20))
+					.pollingEvery(Duration.ofMillis(500)).ignoring(StaleElementReferenceException.class)
+					.ignoring(NoSuchElementException.class);
+
 			return wait.until(d -> d.findElement(locator).isDisplayed());
 		} catch (Exception e) {
 			return false;
@@ -442,14 +468,12 @@ public class BasePage {
 		}
 	}
 
-	private By loadingOverlay = By.xpath("//*[contains(text(),'Loading')]");
+	private By loadingOverlay = By.id("loading_text");
 
 	protected void waitForLoaderToDisappear() {
 		try {
 			WebDriverWait wait = new WebDriverWait(this.driver, Duration.ofSeconds(30));
-
 			wait.until(ExpectedConditions.invisibilityOfElementLocated(loadingOverlay));
-
 		} catch (TimeoutException e) {
 			logger.warn("Loading overlay did not disappear within timeout. Locator: " + loadingOverlay);
 		}

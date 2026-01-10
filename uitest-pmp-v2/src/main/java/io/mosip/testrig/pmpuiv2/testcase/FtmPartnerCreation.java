@@ -53,8 +53,8 @@ public class FtmPartnerCreation extends BaseClass {
 
 		basePage.refreshThePage();
 		// TODO:Re-enable after fixing certificate title timing issue
-//		assertTrue(partnerCertificatePage.isDashboardFtmChipProviderCardDisplayed(),
-//				GlobalConstants.isDashboardFtmChipProviderCardDisplayed);
+		assertTrue(partnerCertificatePage.isDashboardFtmChipProviderCardDisplayed(),
+				GlobalConstants.isDashboardFtmChipProviderCardDisplayed);
 
 		partnerCertificatePage.clickOnFtmChipProviderCard();
 		ftmPage.clickOnAddFtmButtonWioutRecord();
@@ -137,10 +137,11 @@ public class FtmPartnerCreation extends BaseClass {
 
 		handleTermsAndCondition();
 
+		basePage.refreshThePage();
 		dashboardPage.clickOnDashboardPartnerCertificateListHeader();
 		// TODO:Re-enable after fixing certificate title timing issue
-//		assertTrue(partnerCertificatePage.isPartnerCertificatePageDisplayed(),
-//				GlobalConstants.isPartnerCertificatePageDisplayed);
+		assertTrue(partnerCertificatePage.isPartnerCertificatePageDisplayed(),
+				GlobalConstants.isPartnerCertificatePageDisplayed);
 		partnerCertificatePage.clickOnUploadButton();
 
 		assertTrue(partnerCertificatePage.isUploadPartnerCertificatePopUpDisplayed(),
