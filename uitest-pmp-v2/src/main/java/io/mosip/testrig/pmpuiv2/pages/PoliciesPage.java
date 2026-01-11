@@ -339,7 +339,16 @@ public class PoliciesPage extends BasePage {
 	}
 
 	public boolean isPoliciesEmptyTableEnabled() {
-		return isElementEnabled(middleRequestPolicyButton);
+
+		if (isMiddleRequestPolicyButtonDisplayed()) {
+			return isElementEnabled(middleRequestPolicyButton);
+
+		} else if (isTabularRequestPolicyButtonDisplayed()) {
+			return isElementEnabled(tabularPoliciesRequestButton);
+
+		} else {
+			return false;
+		}
 	}
 
 	public void clickOnHomeButton() {

@@ -1,11 +1,16 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
+import java.time.Duration;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
 
 public class AuthPolicyPage extends BasePage {
@@ -311,8 +316,7 @@ public class AuthPolicyPage extends BasePage {
 	@FindBy(xpath = "//p[text()='X']")
 	private WebElement previewCloseButton;
 
-	@FindBy(xpath = "//div[text()='Deactivated']")
-	private WebElement deactivateStatus;
+	private By deactivateStatus = By.xpath("//div[text()='Deactivated']");
 
 	@FindBy(id = "view_policy_status")
 	private WebElement activateStatus;
@@ -497,11 +501,16 @@ public class AuthPolicyPage extends BasePage {
 	}
 
 	public void selectPolicyGroupDropdown(String policyGroupValue) {
+
 		clickOnElement(policyGroupDropdown);
 		enter(policyGroupDropdownSearchInput, policyGroupValue);
+
+		String escapedValue = escapeXPathText(policyGroupValue);
+
 		By optionLocator = By.xpath("//button[contains(@id,'policy_group_selector_option_button')"
-				+ " and .//span[contains(@id,'policy_group_selector_option_name')"
-				+ " and contains(normalize-space(.),'" + policyGroupValue + "')]]");
+				+ " and .//span[contains(@id,'policy_group_selector_option_name')" + " and contains(normalize-space(.),"
+				+ escapedValue + ")]]");
+
 		WebElement option = waitForElementToBeVisible(optionLocator);
 		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block:'center'});", option);
 		clickOnElement(option);
@@ -1021,8 +1030,7 @@ public class AuthPolicyPage extends BasePage {
 	}
 
 	public boolean isPolicyStatusDeactivatedDisplayed() {
-		By deactivatedStatus = By.xpath("//div[normalize-space()='Deactivated']");
-		return isElementDisplayed(deactivatedStatus);
+		return isElementDisplayed(deactivateStatus);
 	}
 
 	public void clickOnSubTitleButton() {
@@ -1109,8 +1117,14 @@ public class AuthPolicyPage extends BasePage {
 	}
 
 	public boolean isClonePolicyPopupTitleNotDisplayed() {
-		By clonePolicyTitleLocator = By.xpath("//div[normalize-space()='Clone Policy']");
-		return !isElementDisplayed(clonePolicyTitleLocator);
+		By clonePolicyPopupTitle = By.id("clone_policy_popup_title");
+
+		try {
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+			return wait.until(ExpectedConditions.invisibilityOfElementLocated(clonePolicyPopupTitle));
+		} catch (TimeoutException e) {
+			return false;
+		}
 	}
 
 	public boolean isClonePolicyInfoMessageDisplayed() {

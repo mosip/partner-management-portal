@@ -542,20 +542,42 @@ public class BasePage {
 
 	protected void waitForUiToBeUnblocked() {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-		By blockingOverlay = By.cssSelector("div.fixed.inset-0.z-50, " + "div[role='dialog'], "
-				+ "div[class*='loading'], " + "div[class*='spinner'], " + "div[class*='overlay']");
+		By blockingOverlay = By
+				.cssSelector("div.fixed.inset-0.z-50.bg-opacity-35, " + "div.fixed.inset-0.z-50.bg-black");
+
 		try {
 			wait.until(ExpectedConditions.invisibilityOfElementLocated(blockingOverlay));
 		} catch (TimeoutException e) {
 			LogUtil.step("UI overlay still present after wait, proceeding cautiously");
 		}
 	}
-	
+
 	protected void selectFromCustomDropdown(String value) {
-	    By option = By.xpath("//li[normalize-space()='" + value + "']");
-	    waitForElementToBeVisible(option);
-	    clickOnElement(option);
+		By option = By.xpath("//button[starts-with(@id,'add_device_device_type_option') " + "and normalize-space(.)="
+				+ escapeXPathText(value) + "]");
+
+		waitForElementToBeVisible(option);
+		clickOnElement(option);
 	}
 
+	protected String escapeXPathText(String text) {
+		if (!text.contains("'")) {
+			return "'" + text + "'";
+		}
+		if (!text.contains("\"")) {
+			return "\"" + text + "\"";
+		}
+
+		String[] parts = text.split("'");
+		StringBuilder xpath = new StringBuilder("concat(");
+		for (int i = 0; i < parts.length; i++) {
+			xpath.append("'").append(parts[i]).append("'");
+			if (i < parts.length - 1) {
+				xpath.append(", \"'\", ");
+			}
+		}
+		xpath.append(")");
+		return xpath.toString();
+	}
 
 }

@@ -536,7 +536,6 @@ public class ApiKeyPage extends BasePage {
 
 	public void clickOnApiKeyViewButton() {
 		waitForLoaderToDisappear();
-		isDisplayed(apiKeyView);
 		clickOnElement(apiKeyView);
 	}
 

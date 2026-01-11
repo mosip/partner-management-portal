@@ -1,10 +1,12 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -232,11 +234,21 @@ public class AddDevicePage extends BasePage {
 	}
 
 	public void selectAddDeviceTypeWithPosition(String value, int position) throws InterruptedException {
+
 		position = position - 1;
+
 		By addDeviceTypeDropdown = By.id("add_device_device_type_dropdown_btn");
 		waitForElementToBeVisible(addDeviceTypeDropdown);
-		WebElement addDeviceTypeSelectDropdown = driver
-				.findElements(By.xpath("//button[@id='add_device_device_type_dropdown_btn']")).get(position);
+
+		List<WebElement> dropdowns = driver
+				.findElements(By.xpath("//button[@id='add_device_device_type_dropdown_btn']"));
+
+		if (dropdowns.size() <= position) {
+			throw new NoSuchElementException("Add Device Type dropdown not found at position: " + (position + 1));
+		}
+
+		WebElement addDeviceTypeSelectDropdown = dropdowns.get(position);
+
 		try {
 			dropdownWithPosition(addDeviceTypeSelectDropdown, value, position + 1);
 		} catch (IOException e) {

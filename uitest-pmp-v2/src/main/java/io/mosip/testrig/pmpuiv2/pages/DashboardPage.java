@@ -3,8 +3,10 @@ package io.mosip.testrig.pmpuiv2.pages;
 import java.time.Duration;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -174,14 +176,16 @@ public class DashboardPage extends BasePage {
 	public void selectPolicyGroupDropdown(String policyGroupValue) {
 		clickOnElement(selectPolicyGroupDropdown);
 		enter(SearchBox, policyGroupValue);
-		By optionLocator = By.xpath("//button[.//span[contains(normalize-space(text()),'" + policyGroupValue + "')]]");
+		By optionLocator = By.xpath("//button[contains(@id,'policy_group_selector_option_button')"
+				+ " and .//span[contains(normalize-space(.), " + escapeXPathText(policyGroupValue) + ")]]");
 		WebElement option = waitForElementToBeVisible(optionLocator);
 		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block:'center'});", option);
 		try {
 			option.click();
-		} catch (Exception e) {
+		} catch (WebDriverException e) {
 			((JavascriptExecutor) driver).executeScript("arguments[0].click();", option);
 		}
+
 	}
 
 	public void closePolicyGroupDropdown() {

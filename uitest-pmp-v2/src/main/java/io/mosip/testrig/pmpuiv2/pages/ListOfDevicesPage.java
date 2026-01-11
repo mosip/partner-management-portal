@@ -1003,12 +1003,12 @@ public class ListOfDevicesPage extends BasePage {
 	public void clickOnDeviceThreeDotsInAdmin(String deviceType, String deviceSubType, String make, String model) {
 
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-
-		WebElement addedDeviceThreeDots = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//td[text()='"
-				+ deviceType + "']/.." + "//td[text()='" + deviceSubType + "']/.." + "//td[text()='" + make + "']/.."
-				+ "//td[text()='" + model + "']/.." + "//button[contains(@id, 'device_list_action_menu')]")));
-
-		clickOnElement(addedDeviceThreeDots);
+		By threeDotsLocator = By.xpath("//tr[" + "td[normalize-space()=" + escapeXPathText(deviceType) + "] and "
+				+ "td[normalize-space()=" + escapeXPathText(deviceSubType) + "] and " + "td[normalize-space()="
+				+ escapeXPathText(make) + "] and " + "td[normalize-space()=" + escapeXPathText(model) + "]"
+				+ "]//button[contains(@id,'device_list_action_menu')]");
+		WebElement threeDots = wait.until(ExpectedConditions.elementToBeClickable(threeDotsLocator));
+		clickOnElement(threeDots);
 	}
 
 	public void clickOnViewDeviceOfTabularInAdmin() {
