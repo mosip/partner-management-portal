@@ -371,15 +371,52 @@ public class BasePage {
 	}
 
 	public void refreshThePage() {
-		WebDriver current = DriverManager.getDriver();
-		if (current != null) {
-			current.navigate().refresh();
+		try {
+			if (driver == null) {
+				throw new IllegalStateException("Driver is null");
+			}
+			driver.getTitle();
+
+			waitForUiToBeUnblocked();
+
+			driver.navigate().refresh();
+
+			waitForUiToBeUnblocked();
+
+		} catch (org.openqa.selenium.NoSuchSessionException e) {
+			throw new RuntimeException("WebDriver session is already closed", e);
+
+		} catch (org.openqa.selenium.TimeoutException e) {
+			throw new RuntimeException("Page refresh timed out – page may be navigating", e);
+
+		} catch (org.openqa.selenium.WebDriverException e) {
+			throw new RuntimeException("Failed to refresh page safely", e);
 		}
 	}
 
-	public void navigateBack() {
-		LogUtil.action("Navigating to the back page");
-		driver.navigate().back();
+	public void navigateBackDefaultButton() {
+		try {
+			if (driver == null) {
+				throw new IllegalStateException("Driver is null");
+			}
+
+			driver.getTitle();
+
+			waitForUiToBeUnblocked();
+
+			driver.navigate().back();
+
+			waitForUiToBeUnblocked();
+
+		} catch (org.openqa.selenium.NoSuchSessionException e) {
+			throw new RuntimeException("WebDriver session already closed", e);
+
+		} catch (org.openqa.selenium.TimeoutException e) {
+			throw new RuntimeException("Navigation back timed out – page was still navigating", e);
+
+		} catch (org.openqa.selenium.WebDriverException e) {
+			throw new RuntimeException("Failed to navigate back safely", e);
+		}
 	}
 
 	public void navigateForward() {
@@ -392,7 +429,7 @@ public class BasePage {
 		driver.navigate().refresh();
 	}
 
-	public void back() {
+	public void navigateBack() {
 		LogUtil.action("Navigating to the back page");
 		driver.navigate().back();
 	}

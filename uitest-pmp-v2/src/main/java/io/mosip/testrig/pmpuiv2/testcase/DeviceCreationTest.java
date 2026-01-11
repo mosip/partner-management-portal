@@ -405,7 +405,7 @@ public class DeviceCreationTest extends BaseClass {
 				GlobalConstants.AUTOMATION_REJECTING, GlobalConstants.AUTOMATION_REJECTING, GlobalConstants.REJECTED);
 		assertTrue(viewDeviceDetailsPage.isDeviceDetailsPageTitleDisplayed(),
 				GlobalConstants.isDeviceDetailsTitleDisplayed);
-		basePage.back();
+		basePage.navigateBack();
 		assertTrue(listOfDevicesPage.isListOfDevicesHeadingDisplayed(),
 				GlobalConstants.isListOfDevicesHeadingDisplayed);
 

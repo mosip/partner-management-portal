@@ -517,11 +517,14 @@ public class AuthPolicyPage extends BasePage {
 	}
 
 	public boolean selectPolicyGroupDropdownIfPresent(String policyGroupValue) {
+
 		clickOnElement(policyGroupDropdown);
 		enter(policyGroupDropdownSearchInput, policyGroupValue);
+
 		By optionLocator = By.xpath("//button[contains(@id,'policy_group_selector_option_button')"
-				+ " and .//span[contains(@id,'policy_group_selector_option_name')"
-				+ " and contains(normalize-space(.),'" + policyGroupValue + "')]]");
+				+ " and .//span[contains(@id,'policy_group_selector_option_name')" + " and contains(normalize-space(.),"
+				+ escapeXPathText(policyGroupValue) + ")]]");
+
 		try {
 			WebElement option = waitForElementToBeVisible(optionLocator);
 			clickOnElement(option);

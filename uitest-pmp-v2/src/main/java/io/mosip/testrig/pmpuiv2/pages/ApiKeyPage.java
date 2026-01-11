@@ -448,7 +448,9 @@ public class ApiKeyPage extends BasePage {
 	public boolean selectPolicyNameDropdown(String value) {
 		clickOnElement(policyNameDropdown);
 		enter(generatePolicyNameSearchInputBox, value);
-		By policyNameOption = By.xpath("//button[.//span[normalize-space()='" + value + "']]");
+
+		By policyNameOption = By.xpath("//button[.//span[normalize-space()=" + escapeXPathText(value) + "]]");
+
 		try {
 			WebElement option = waitForElementToBeVisible(policyNameOption);
 			clickOnElement(option);

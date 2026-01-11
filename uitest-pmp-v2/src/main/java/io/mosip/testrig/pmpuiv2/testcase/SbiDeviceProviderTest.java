@@ -314,7 +314,7 @@ public class SbiDeviceProviderTest extends BaseClass {
 		assertTrue(viewDeviceDetailsPage.isDeviceDetailsPageTitleDisplayed(),
 				GlobalConstants.isDeviceDetailsTitleDisplayed);
 
-		basePage.back();
+		basePage.navigateBack();
 		assertTrue(listOfDevicesPage.isListOfDeviceInAdminDisplayed(), GlobalConstants.isListOfDevicesHeadingDisplayed);
 		listOfDevicesPage.clickOnDevice(GlobalConstants.IRIS, GlobalConstants.SINGLE,
 				GlobalConstants.AUTOMATION_LOWERCASE, GlobalConstants.AUTOMATION_LOWERCASE,

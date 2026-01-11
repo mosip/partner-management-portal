@@ -7,6 +7,7 @@ import static org.testng.Assert.assertTrue;
 import org.testng.annotations.Test;
 
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
+import io.mosip.testrig.pmpuiv2.pages.BasePage;
 import io.mosip.testrig.pmpuiv2.pages.DashboardPage;
 import io.mosip.testrig.pmpuiv2.pages.DeviceProviderPage;
 import io.mosip.testrig.pmpuiv2.pages.ListOfSbiPage;
@@ -20,12 +21,14 @@ public class SbiCreationTest extends BaseClass {
 	private DeviceProviderPage deviceProviderPage;
 	private DashboardPage dashboardpage;
 	private ListOfSbiPage listOfSbiPage;
+	private BasePage basePage;
 
 	@Test(priority = 1, description = "Creating SBI Device")
 	public void createSbiDevice() {
 
 		dashboardpage = new DashboardPage(driver);
 		listOfSbiPage = new ListOfSbiPage(driver);
+		basePage = new BasePage(driver);
 
 		loginAsDeviceProvider();
 
@@ -149,12 +152,12 @@ public class SbiCreationTest extends BaseClass {
 		deviceProviderPage.enterSbiBinaryHash(GlobalConstants.SPECIAL_CHARACTERS);
 		assertTrue(deviceProviderPage.isSpecialCharacterErrorMessageDisplayed(),
 				GlobalConstants.isSpecialCharacterErrorMessageDisplayed);
-		deviceProviderPage.back();
+		basePage.navigateBack();
 		assertTrue(deviceProviderPage.isNavigationAlertMessageDisplayed(),
 				GlobalConstants.isNavigationAlertMessageDisplayed);
 		deviceProviderPage.clickOnNavigationAlertCancel();
 		deviceProviderPage.clickOnClearForm();
-		deviceProviderPage.back();
+		basePage.navigateBack();
 
 		fillSbiDetails(GlobalConstants.ALPHANUMERIC, GlobalConstants.ALPHANUMERIC);
 		deviceProviderPage.enterPastDateOnCreatedDate();

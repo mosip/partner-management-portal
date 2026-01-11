@@ -542,7 +542,7 @@ public class AuthPolicyTest extends BaseClass {
 		authPolicyPage.uploadPolicyData();
 		authPolicyPage.clickOnEditPolicyFormSubmitButton();
 		authPolicyPage.clickOnGoBackButton();
-		basePage.navigateBack();
+		basePage.navigateBackDefaultButton();
 
 	}
 
@@ -553,6 +553,7 @@ public class AuthPolicyTest extends BaseClass {
 		policiesPage = new PoliciesPage(driver);
 		authPolicyPage = new AuthPolicyPage(driver);
 		policygroupPage = new PolicyGroupPage(driver);
+		basePage = new BasePage(driver);
 
 		loginAsPartnerAdmin();
 		dashboardPage.clickOnPolicyButton();
@@ -609,7 +610,7 @@ public class AuthPolicyTest extends BaseClass {
 		authPolicyPage.selectPolicyGroupDropdownForClone(GlobalConstants.NUMERIC);
 		authPolicyPage.clickOnClonePolicyButton();
 		authPolicyPage.clickOnClonePolicyCloseButton();
-		policygroupPage.navigateBackDefaultButton();
+		basePage.navigateBackDefaultButton();
 
 	}
 

@@ -431,8 +431,11 @@ public class DashboardPage extends BasePage {
 	}
 
 	public void waitForDashboardLoaderToDisappear() {
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
-		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//*[contains(text(),'Loading')]")));
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+		By dashboardLoader = By
+				.cssSelector("div.fixed.inset-0.z-50, " + "div[class*='loading'], " + "div[class*='spinner']");
+
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(dashboardLoader));
 	}
 
 }

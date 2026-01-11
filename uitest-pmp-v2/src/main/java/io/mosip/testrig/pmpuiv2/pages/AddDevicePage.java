@@ -209,20 +209,36 @@ public class AddDevicePage extends BasePage {
 		return isElementDisplayed(headerUserProfile);
 	}
 
-	public void selectAddDeviceType(String value) {
-		By addDeviceTypeDropdown = By.id("add_device_device_type_dropdown_btn");
-		waitForUiToBeUnblocked();
-		waitForElementToBeVisible(addDeviceTypeDropdown);
-		clickOnElement(addDeviceTypeDropdown);
-		selectFromCustomDropdown(value);
+	public void selectAddDeviceType(String value) throws Exception {
+		try {
+			waitForUiToBeUnblocked();
+
+			By addDeviceTypeDropdown = By.id("add_device_device_type_dropdown_btn");
+
+			WebElement deviceTypeDropdown = waitForElementClickable(addDeviceTypeDropdown);
+
+			dropdown(deviceTypeDropdown, value);
+
+		} catch (Exception e) {
+			logger.error("Failed to select Add Device Type: " + value, e);
+			throw e;
+		}
 	}
 
-	public void selectDeviceSubType(String value) {
-		By subTypeDropdown = By.id("add_device_device_sub_type_dropdown_btn");
-		waitForUiToBeUnblocked();
-		waitForElementToBeVisible(subTypeDropdown);
-		clickOnElement(subTypeDropdown);
-		selectFromCustomDropdown(value);
+	public void selectDeviceSubType(String value) throws Exception {
+		try {
+			waitForUiToBeUnblocked();
+
+			By deviceSubTypeDropdown = By.id("add_device_device_sub_type_dropdown_btn");
+
+			WebElement subTypeDropdown = waitForElementClickable(deviceSubTypeDropdown);
+
+			dropdown(subTypeDropdown, value);
+
+		} catch (Exception e) {
+			logger.error("Failed to select Device Sub Type: " + value, e);
+			throw e;
+		}
 	}
 
 	public void enterMakeName(String makeName) {
@@ -233,22 +249,17 @@ public class AddDevicePage extends BasePage {
 		enter(addDeviceModelTextbox, modelName);
 	}
 
-	public void selectAddDeviceTypeWithPosition(String value, int position) throws InterruptedException {
-
+	public void selectAddDeviceTypeWithPosition(String value, int position) {
 		position = position - 1;
-
 		By addDeviceTypeDropdown = By.id("add_device_device_type_dropdown_btn");
 		waitForElementToBeVisible(addDeviceTypeDropdown);
 
 		List<WebElement> dropdowns = driver
 				.findElements(By.xpath("//button[@id='add_device_device_type_dropdown_btn']"));
-
 		if (dropdowns.size() <= position) {
 			throw new NoSuchElementException("Add Device Type dropdown not found at position: " + (position + 1));
 		}
-
 		WebElement addDeviceTypeSelectDropdown = dropdowns.get(position);
-
 		try {
 			dropdownWithPosition(addDeviceTypeSelectDropdown, value, position + 1);
 		} catch (IOException e) {
