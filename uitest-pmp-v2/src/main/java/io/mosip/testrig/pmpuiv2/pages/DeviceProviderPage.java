@@ -396,11 +396,12 @@ public class DeviceProviderPage extends BasePage {
 	}
 
 	public boolean isEnteredDateInYearDateWithSlashDisplayed() {
-		String dateFromTextbox = driver.findElement(By.id("sbi_created_date_calender")).getAttribute("value");
-
+		By dateInputLocator = By.id("sbi_created_date_calender");
+		WebElement dateInput = waitForElementToBeVisible(dateInputLocator);
+		String dateFromTextbox = dateInput.getAttribute("value");
 		DateTimeFormatter yearMonthDateFormatter = PmpTestUtil.yyyyMmDdFormatter;
 		try {
-			LocalDate parsedDate = LocalDate.parse(dateFromTextbox, yearMonthDateFormatter);
+			LocalDate.parse(dateFromTextbox, yearMonthDateFormatter);
 			return true;
 		} catch (DateTimeParseException e) {
 			return false;
@@ -408,11 +409,12 @@ public class DeviceProviderPage extends BasePage {
 	}
 
 	public boolean isEnteredDateChangedToDateYearFormat() {
-		String dateFromTextbox = driver.findElement(By.id("sbi_created_date_calender")).getAttribute("value");
-
+		By dateInputLocator = By.id("sbi_created_date_calender");
+		WebElement dateInput = waitForElementToBeVisible(dateInputLocator);
+		String dateFromTextbox = dateInput.getAttribute("value");
 		DateTimeFormatter dateFormatter = PmpTestUtil.dateFormatter;
 		try {
-			LocalDate parsedDate = LocalDate.parse(dateFromTextbox, dateFormatter);
+			LocalDate.parse(dateFromTextbox, dateFormatter);
 			return true;
 		} catch (DateTimeParseException e) {
 			return false;
@@ -420,11 +422,14 @@ public class DeviceProviderPage extends BasePage {
 	}
 
 	public boolean isEnteredDateInYearDateWithHyphenDisplayed() {
-		String dateFromTextbox = driver.findElement(By.id("sbi_created_date_calender")).getAttribute("value");
+		By dateInputLocator = By.id("sbi_created_date_calender");
+		WebElement dateInput = waitForElementToBeVisible(dateInputLocator);
+		String dateFromTextbox = dateInput.getAttribute("value");
 
 		DateTimeFormatter yearMonthDateFormatter = PmpTestUtil.yyyyMmmDdFormatter;
+
 		try {
-			LocalDate parsedDate = LocalDate.parse(dateFromTextbox, yearMonthDateFormatter);
+			LocalDate.parse(dateFromTextbox, yearMonthDateFormatter);
 			return true;
 		} catch (DateTimeParseException e) {
 			return false;
@@ -432,11 +437,15 @@ public class DeviceProviderPage extends BasePage {
 	}
 
 	public boolean isEnteredDateInYearDateWithDotDisplayed() {
-		String dateFromTextbox = driver.findElement(By.id("sbi_created_date_calender")).getAttribute("value");
+
+		By dateInputLocator = By.id("sbi_created_date_calender");
+		WebElement dateInput = waitForElementToBeVisible(dateInputLocator);
+		String dateFromTextbox = dateInput.getAttribute("value");
 
 		DateTimeFormatter yearMonthDateFormatter = PmpTestUtil.yyyyMmDdFormatter2;
+
 		try {
-			LocalDate parsedDate = LocalDate.parse(dateFromTextbox, yearMonthDateFormatter);
+			LocalDate.parse(dateFromTextbox, yearMonthDateFormatter);
 			return true;
 		} catch (DateTimeParseException e) {
 			return false;
@@ -444,11 +453,15 @@ public class DeviceProviderPage extends BasePage {
 	}
 
 	public boolean isExpireDateInYearDateWithSlashDisplayed() {
-		String dateFromTextbox = driver.findElement(By.id("sbi_expiry_date_calender")).getAttribute("value");
+
+		By expiryDateInputLocator = By.id("sbi_expiry_date_calender");
+		WebElement dateInput = waitForElementToBeVisible(expiryDateInputLocator);
+		String dateFromTextbox = dateInput.getAttribute("value");
 
 		DateTimeFormatter yearMonthDateFormatter = PmpTestUtil.yyyyMmDdFormatter;
+
 		try {
-			LocalDate parsedDate = LocalDate.parse(dateFromTextbox, yearMonthDateFormatter);
+			LocalDate.parse(dateFromTextbox, yearMonthDateFormatter);
 			return true;
 		} catch (DateTimeParseException e) {
 			return false;
@@ -456,11 +469,16 @@ public class DeviceProviderPage extends BasePage {
 	}
 
 	public boolean isExpireDateChangedToDateYearFormat() {
-		String dateFromTextbox = driver.findElement(By.id("sbi_expiry_date_calender")).getAttribute("value");
+
+		By expiryDateInputLocator = By.id("sbi_expiry_date_calender");
+
+		WebElement dateInput = waitForElementToBeVisible(expiryDateInputLocator);
+		String dateFromTextbox = dateInput.getAttribute("value");
 
 		DateTimeFormatter dateFormatter = PmpTestUtil.nonZeroPadderDateFormatter;
+
 		try {
-			LocalDate parsedDate = LocalDate.parse(dateFromTextbox, dateFormatter);
+			LocalDate.parse(dateFromTextbox, dateFormatter);
 			return true;
 		} catch (DateTimeParseException e) {
 			return false;
@@ -468,11 +486,16 @@ public class DeviceProviderPage extends BasePage {
 	}
 
 	public boolean isExpireDateInYearDateWithHyphenDisplayed() {
-		String dateFromTextbox = driver.findElement(By.id("sbi_expiry_date_calender")).getAttribute("value");
+
+		By expiryDateInputLocator = By.id("sbi_expiry_date_calender");
+
+		WebElement dateInput = waitForElementToBeVisible(expiryDateInputLocator);
+		String dateFromTextbox = dateInput.getAttribute("value");
 
 		DateTimeFormatter yearMonthDateFormatter = PmpTestUtil.yyyyMmmDdFormatter;
+
 		try {
-			LocalDate parsedDate = LocalDate.parse(dateFromTextbox, yearMonthDateFormatter);
+			LocalDate.parse(dateFromTextbox, yearMonthDateFormatter);
 			return true;
 		} catch (DateTimeParseException e) {
 			return false;
@@ -480,11 +503,16 @@ public class DeviceProviderPage extends BasePage {
 	}
 
 	public boolean isExpireDateInYearDateWithDotDisplayed() {
-		String dateFromTextbox = driver.findElement(By.id("sbi_expiry_date_calender")).getAttribute("value");
+
+		By expiryDateInputLocator = By.id("sbi_expiry_date_calender");
+
+		WebElement dateInput = waitForElementToBeVisible(expiryDateInputLocator);
+		String dateFromTextbox = dateInput.getAttribute("value");
 
 		DateTimeFormatter yearMonthDateFormatter = PmpTestUtil.yyyyMmDdFormatter2;
+
 		try {
-			LocalDate parsedDate = LocalDate.parse(dateFromTextbox, yearMonthDateFormatter);
+			LocalDate.parse(dateFromTextbox, yearMonthDateFormatter);
 			return true;
 		} catch (DateTimeParseException e) {
 			return false;

@@ -269,15 +269,10 @@ public class ViewDeviceDetailsPage extends BasePage {
 	}
 
 	public boolean isCreationDateInAdminSameAsBrowserDateFormat() {
-
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-
-		WebElement dateCell = wait
-				.until(ExpectedConditions.visibilityOfElementLocated(By.id("view_admin_device_details_created_on")));
-
+		By createdOnLocator = By.id("view_admin_device_details_created_on");
+		WebElement dateCell = waitForElementToBeVisible(createdOnLocator);
 		String browserTime = dateCell.getText().trim();
 		String dateText = browserTime.replace("Created On", "").trim();
-
 		DateTimeFormatter dateFormatter = PmpTestUtil.nonZeroPadderDateFormatter;
 
 		try {

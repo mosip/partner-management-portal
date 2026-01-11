@@ -1,18 +1,14 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import org.openqa.selenium.NoSuchElementException;
-
+import org.openqa.selenium.TimeoutException;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
 
@@ -452,12 +448,12 @@ public class ApiKeyPage extends BasePage {
 	public boolean selectPolicyNameDropdown(String value) {
 		clickOnElement(policyNameDropdown);
 		enter(generatePolicyNameSearchInputBox, value);
+		By policyNameOption = By.xpath("//button[.//span[normalize-space()='" + value + "']]");
 		try {
-			WebElement policyNameOption = driver
-					.findElement(By.xpath("//button[.//span[normalize-space(text())='" + value + "']]"));
-			clickOnElement(policyNameOption);
+			WebElement option = waitForElementToBeVisible(policyNameOption);
+			clickOnElement(option);
 			return true;
-		} catch (NoSuchElementException e) {
+		} catch (TimeoutException e) {
 			logger.warn("Policy name not found: " + value);
 			return false;
 		}
@@ -1164,10 +1160,8 @@ public class ApiKeyPage extends BasePage {
 	}
 
 	public boolean isApiKeyCreationDateSameAsBrowserDateFormat() {
-
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
 		By firstRowLocator = By.xpath("//tbody//tr[starts-with(@id,'api_key_list_item')]");
-		WebElement firstRow = wait.until(ExpectedConditions.visibilityOfElementLocated(firstRowLocator));
+		WebElement firstRow = waitForElementToBeVisible(firstRowLocator);
 		WebElement dateCell = firstRow.findElement(By.xpath("./td[6]"));
 		String browserTime = dateCell.getText().trim();
 		DateTimeFormatter dateFormatter = PmpTestUtil.nonZeroPadderDateFormatter;

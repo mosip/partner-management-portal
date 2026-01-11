@@ -6,10 +6,6 @@ import org.apache.log4j.Logger;
 import org.openqa.selenium.support.FindBy;
 
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.time.Duration;
 
 public class DatasharePolicyPage extends BasePage {
 
@@ -593,17 +589,11 @@ public class DatasharePolicyPage extends BasePage {
 	}
 
 	public void enterPolicyName(String val) {
-
-	    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(40));
-
-	    WebElement policyNameBox = wait.until(
-	        ExpectedConditions.elementToBeClickable(By.id("policy_name_box"))
-	    );
-
-	    policyNameBox.clear();
-	    policyNameBox.sendKeys(val);
+		By policyNameBoxLocator = By.id("policy_name_box");
+		WebElement policyNameBox = waitForElementToBeVisible(policyNameBoxLocator);
+		policyNameBox.clear();
+		policyNameBox.sendKeys(val);
 	}
-
 
 	public void enterpolicyDescription(String val) {
 		enter(policyDescriptionBox, val);
@@ -811,20 +801,17 @@ public class DatasharePolicyPage extends BasePage {
 	}
 
 	public void selectPolicyGroupDropdown(String value) {
-
 		clickOnElement(policyGroupDropdown);
 		enter(policyGroupDropdownSearchInput, value);
 		By optionButton = By.xpath(
 				"//button[.//span[contains(@class,'font-semibold') " + "and normalize-space(text())='" + value + "']]");
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
 		try {
-			WebElement button = wait.until(ExpectedConditions.presenceOfElementLocated(optionButton));
+			WebElement button = waitForElementToBeVisible(optionButton);
 			try {
 				button.click();
 			} catch (StaleElementReferenceException e) {
-				wait.until(ExpectedConditions.presenceOfElementLocated(optionButton)).click();
+				waitForElementToBeVisible(optionButton).click();
 			}
-
 		} catch (TimeoutException e) {
 			logger.warn("Policy group not found: " + value);
 			throw new NoSuchElementException("Failed to select policy group: " + value, e);
@@ -1242,12 +1229,11 @@ public class DatasharePolicyPage extends BasePage {
 	}
 
 	public void selectValidPolicyGroupForClone(String value) {
-
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
 		clickOnElement(clonePolicyGroupDropdown);
 		enter(clonePolicyGroupDropdownSearchInput, value);
 		By optionLocator = By.xpath("//button[.//span[contains(normalize-space(.),'" + value + "')]]");
-		WebElement option = wait.until(ExpectedConditions.visibilityOfElementLocated(optionLocator));
+		WebElement option = waitForElementToBeVisible(optionLocator);
+
 		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block:'center'});", option);
 		try {
 			option.click();
@@ -1349,13 +1335,8 @@ public class DatasharePolicyPage extends BasePage {
 	}
 
 	public boolean isEditPolicyPageTitleDisplayed() {
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-		try {
-			wait.until(ExpectedConditions.visibilityOf(editPolicyPageTitle));
-			return editPolicyPageTitle.isDisplayed();
-		} catch (TimeoutException e) {
-			return false;
-		}
+		By editPolicyPageTitleLocator = By.id("page_title");
+		return isElementDisplayed(editPolicyPageTitleLocator);
 	}
 
 	public boolean isPolicyFormSubTitleDisplayed() {

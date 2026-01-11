@@ -1,18 +1,12 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
-import java.time.Duration;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
 
@@ -601,17 +595,19 @@ public class PartnerCertificatePage extends BasePage {
 
 	public void clickOnFtmChipProviderCard() {
 
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(40));
 		By card = By.id("dashboard_ftm_chip_provider_card");
+
+		waitForUiToBeUnblocked();
 
 		for (int i = 0; i < 2; i++) {
 			try {
-				wait.until(ExpectedConditions.elementToBeClickable(card)).click();
+				WebElement cardElement = waitForElementToBeVisible(card);
+				clickOnElement(cardElement);
 				return;
 			} catch (StaleElementReferenceException e) {
-				// retry once
 			}
 		}
+
 		throw new RuntimeException("FTM Chip Provider card not clickable");
 	}
 

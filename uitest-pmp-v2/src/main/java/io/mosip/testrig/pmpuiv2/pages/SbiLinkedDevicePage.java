@@ -341,20 +341,14 @@ public class SbiLinkedDevicePage extends BasePage {
 
 	public void clickOnDeviceThreeDots(String deviceType, String deviceSubType, String make, String model) {
 
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-
 		String xpath = "//tr[" + "td[normalize-space()='" + deviceType + "'] and " + "td[normalize-space()='"
 				+ deviceSubType + "'] and " + "td[normalize-space()='" + make + "'] and " + "td[normalize-space()='"
 				+ model + "']" + "]//button[contains(@id,'device_list_action_menu')]";
 
-		WebElement threeDots = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
-
+		By threeDotsLocator = By.xpath(xpath);
+		WebElement threeDots = waitForElementToBeVisible(threeDotsLocator);
 		threeDots.click();
 	}
-
-//	public boolean isApproveRejectOptionDisplayed() {
-//		return isElementDisplayed(approveRejectButton);
-//	}
 
 	public boolean isViewOptionDisplayed() {
 		return isElementDisplayed(deviceListViewOption);
@@ -389,16 +383,13 @@ public class SbiLinkedDevicePage extends BasePage {
 	}
 
 	public void clickOnLinkedDevice(String deviceType, String deviceSubType, String make, String model, String status) {
-
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-
 		String xpath = "//tr[" + "td[normalize-space()='" + deviceType + "'] and " + "td[normalize-space()='"
 				+ deviceSubType + "'] and " + "td[normalize-space()='" + make + "'] and " + "td[normalize-space()='"
 				+ model + "'] and " + "td[normalize-space()='" + status + "']"
 				+ "]//button[contains(@id,'device_list_action_menu')]";
 
-		WebElement deviceAction = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
-
+		By deviceActionLocator = By.xpath(xpath);
+		WebElement deviceAction = waitForElementToBeVisible(deviceActionLocator);
 		deviceAction.click();
 	}
 
@@ -452,10 +443,8 @@ public class SbiLinkedDevicePage extends BasePage {
 	}
 
 	public boolean isLinkedDeviceCreationDateSameAsBrowserDateFormat() {
-
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-		WebElement dateCell = wait
-				.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//tr[@id='device_list_item1']/td[8]")));
+		By dateCellLocator = By.xpath("//tr[@id='device_list_item1']/td[8]");
+		WebElement dateCell = waitForElementToBeVisible(dateCellLocator);
 		String browserTime = dateCell.getText().trim();
 		DateTimeFormatter dateFormatter = PmpTestUtil.nonZeroPadderDateFormatter;
 		try {

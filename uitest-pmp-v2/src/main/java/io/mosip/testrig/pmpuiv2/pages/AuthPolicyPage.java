@@ -1,19 +1,11 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
-import java.time.Duration;
-import org.openqa.selenium.NoSuchElementException;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
 
 public class AuthPolicyPage extends BasePage {
@@ -505,42 +497,25 @@ public class AuthPolicyPage extends BasePage {
 	}
 
 	public void selectPolicyGroupDropdown(String policyGroupValue) {
-
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
 		clickOnElement(policyGroupDropdown);
 		enter(policyGroupDropdownSearchInput, policyGroupValue);
 		By optionLocator = By.xpath("//button[contains(@id,'policy_group_selector_option_button')"
 				+ " and .//span[contains(@id,'policy_group_selector_option_name')"
 				+ " and contains(normalize-space(.),'" + policyGroupValue + "')]]");
-		wait.until((WebDriver d) -> {
-			try {
-				WebElement option = d.findElement(optionLocator);
-				((JavascriptExecutor) d).executeScript("arguments[0].scrollIntoView({block:'center'});", option);
-				option.click();
-				return true;
-			} catch (StaleElementReferenceException | NoSuchElementException e) {
-				return false;
-			}
-		});
+		WebElement option = waitForElementToBeVisible(optionLocator);
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block:'center'});", option);
+		clickOnElement(option);
 	}
 
-	public boolean selectPolicyGroupDropdownIfPresent(String policyGroupValue) throws NoSuchElementException {
-
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+	public boolean selectPolicyGroupDropdownIfPresent(String policyGroupValue) {
 		clickOnElement(policyGroupDropdown);
 		enter(policyGroupDropdownSearchInput, policyGroupValue);
 		By optionLocator = By.xpath("//button[contains(@id,'policy_group_selector_option_button')"
 				+ " and .//span[contains(@id,'policy_group_selector_option_name')"
 				+ " and contains(normalize-space(.),'" + policyGroupValue + "')]]");
 		try {
-			wait.until(d -> {
-				try {
-					d.findElement(optionLocator).click();
-					return true;
-				} catch (WebDriverException e) {
-					return false;
-				}
-			});
+			WebElement option = waitForElementToBeVisible(optionLocator);
+			clickOnElement(option);
 			return true;
 		} catch (TimeoutException e) {
 			return false;
@@ -1046,14 +1021,8 @@ public class AuthPolicyPage extends BasePage {
 	}
 
 	public boolean isPolicyStatusDeactivatedDisplayed() {
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-		try {
-			WebElement status = wait.until(
-					ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[normalize-space()='Deactivated']")));
-			return status.isDisplayed();
-		} catch (TimeoutException e) {
-			return false;
-		}
+		By deactivatedStatus = By.xpath("//div[normalize-space()='Deactivated']");
+		return isElementDisplayed(deactivatedStatus);
 	}
 
 	public void clickOnSubTitleButton() {
@@ -1140,12 +1109,8 @@ public class AuthPolicyPage extends BasePage {
 	}
 
 	public boolean isClonePolicyPopupTitleNotDisplayed() {
-		try {
-			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-			return wait.until(ExpectedConditions.invisibilityOf(clonePolicyTitle));
-		} catch (Exception e) {
-			return false;
-		}
+		By clonePolicyTitleLocator = By.xpath("//div[normalize-space()='Clone Policy']");
+		return !isElementDisplayed(clonePolicyTitleLocator);
 	}
 
 	public boolean isClonePolicyInfoMessageDisplayed() {
@@ -1189,22 +1154,13 @@ public class AuthPolicyPage extends BasePage {
 	}
 
 	public void selectValidPolicyGroupForClone(String value) {
-
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
 		clickOnElement(clonePolicyGroupDropdown);
 		enter(clonePolicyGroupDropdownSearchInput, value);
 		By optionLocator = By.xpath("//button[contains(@id,'policy_group_selector_option_button')"
 				+ " and .//span[contains(@id,'policy_group_selector_option_name')"
 				+ " and contains(normalize-space(.),'" + value + "')]]");
-		wait.until((WebDriver d) -> {
-			try {
-				WebElement option = d.findElement(optionLocator);
-				option.click();
-				return true;
-			} catch (StaleElementReferenceException | NoSuchElementException e) {
-				return false;
-			}
-		});
+		WebElement option = waitForElementToBeVisible(optionLocator);
+		clickOnElement(option);
 	}
 
 	public boolean isClonePolicyButtonAvailable() {

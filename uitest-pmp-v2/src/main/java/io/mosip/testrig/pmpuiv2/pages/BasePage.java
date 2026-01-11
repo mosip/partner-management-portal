@@ -12,7 +12,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotInteractableException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.NoSuchSessionException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -70,6 +69,31 @@ public class BasePage {
 				executor.executeScript("arguments[0].click();", element);
 			} catch (Exception jsEx) {
 				LogUtil.error("JS click failed on element: " + element.toString());
+				LogUtil.error("Exception: " + jsEx.getMessage());
+				takeScreenshot();
+				throw jsEx;
+			}
+		}
+	}
+
+	protected void clickOnElement(By locator) {
+		LogUtil.action("Clicking on element: ", locator);
+
+		try {
+
+			WebElement element = waitForElementClickable(locator);
+			element.click();
+
+		} catch (Exception e) {
+			LogUtil.step("Standard click failed, trying JS click: " + locator);
+
+			try {
+				WebElement element = driver.findElement(locator);
+				JavascriptExecutor executor = (JavascriptExecutor) driver;
+				executor.executeScript("arguments[0].click();", element);
+
+			} catch (Exception jsEx) {
+				LogUtil.error("JS click failed on element: " + locator);
 				LogUtil.error("Exception: " + jsEx.getMessage());
 				takeScreenshot();
 				throw jsEx;
@@ -242,6 +266,17 @@ public class BasePage {
 		}
 	}
 
+	protected boolean isElementDisplayed(By locator) {
+		LogUtil.verify("Checking is element is displayed: ", locator);
+		try {
+			waitForElementToBeVisible(locator);
+			return true;
+		} catch (Exception e) {
+			takeScreenshot();
+			return false;
+		}
+	}
+
 	protected boolean isElementDisabled(WebElement element) {
 		LogUtil.verify("Checking is element is disabled: ", element);
 		try {
@@ -266,11 +301,9 @@ public class BasePage {
 
 	protected boolean isElementEnabled(By locator) {
 		LogUtil.verify("Checking if element is enabled: ", locator);
-
 		try {
 			WebElement element = waitForElementClickable(locator);
 			return element.isEnabled();
-
 		} catch (Exception e) {
 			takeScreenshot();
 			return false;
@@ -278,13 +311,19 @@ public class BasePage {
 	}
 
 	protected WebElement waitForElementClickable(By locator) {
-		return new WebDriverWait(driver, Duration.ofSeconds(10))
-				.until(ExpectedConditions.elementToBeClickable(locator));
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+		wait.ignoring(StaleElementReferenceException.class);
+		return wait.until(ExpectedConditions.elementToBeClickable(locator));
 	}
 
 	protected void waitForElementToBeVisible(WebElement element) {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
 		wait.until(ExpectedConditions.visibilityOf(element));
+	}
+
+	protected WebElement waitForElementToBeVisible(By locator) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+		return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
 	}
 
 	public static void wait(int wait) {
@@ -479,17 +518,6 @@ public class BasePage {
 		}
 	}
 
-	protected void clickOnElement(By locator) {
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-		try {
-			WebElement element = wait.until(ExpectedConditions.elementToBeClickable(locator));
-			element.click();
-		} catch (Exception e) {
-			WebElement element = driver.findElement(locator);
-			((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
-		}
-	}
-
 	protected void enter(By locator, String value) {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
 		WebElement el = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
@@ -511,5 +539,23 @@ public class BasePage {
 		waitForLoaderToDisappear();
 		wait.until(ExpectedConditions.visibilityOfElementLocated(readyIndicator));
 	}
+
+	protected void waitForUiToBeUnblocked() {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+		By blockingOverlay = By.cssSelector("div.fixed.inset-0.z-50, " + "div[role='dialog'], "
+				+ "div[class*='loading'], " + "div[class*='spinner'], " + "div[class*='overlay']");
+		try {
+			wait.until(ExpectedConditions.invisibilityOfElementLocated(blockingOverlay));
+		} catch (TimeoutException e) {
+			LogUtil.step("UI overlay still present after wait, proceeding cautiously");
+		}
+	}
+	
+	protected void selectFromCustomDropdown(String value) {
+	    By option = By.xpath("//li[normalize-space()='" + value + "']");
+	    waitForElementToBeVisible(option);
+	    clickOnElement(option);
+	}
+
 
 }

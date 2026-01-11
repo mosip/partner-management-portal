@@ -68,7 +68,6 @@ public class ViewSbiDetailsPage extends BasePage {
 
 	public boolean isViewSbiDetailsTitleDisplayed() {
 		return isElementDisplayed(viewSbiDetailsTitle);
-
 	}
 
 	public String getBreadcrumbText() {
@@ -77,7 +76,6 @@ public class ViewSbiDetailsPage extends BasePage {
 
 	public boolean isViewSbiDetailsSubTitleDisplayed() {
 		return isElementDisplayed(sbiIdWithValue);
-
 	}
 
 	public boolean isCreatedDateDisplayed() {
@@ -107,33 +105,22 @@ public class ViewSbiDetailsPage extends BasePage {
 	}
 
 	public boolean isSbiCreationDateSameAsBrowserDateFormat() {
-
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-
+		By createdDateLocator = By.id("view_admin_sbi_created_date_context");
+		WebElement createdDateCell = waitForElementToBeVisible(createdDateLocator);
+		String browserTime = createdDateCell.getText().trim();
+		DateTimeFormatter dateFormatter = PmpTestUtil.nonZeroPadderDateFormatter;
 		try {
-			WebElement createdDateCell = wait
-					.until(ExpectedConditions.visibilityOfElementLocated(By.id("view_admin_sbi_created_date_context")));
-
-			String browserTime = createdDateCell.getText().trim();
-
-			DateTimeFormatter dateFormatter = PmpTestUtil.nonZeroPadderDateFormatter;
 			LocalDate.parse(browserTime, dateFormatter);
-
 			return true;
-		} catch (TimeoutException | DateTimeParseException e) {
+		} catch (DateTimeParseException e) {
 			return false;
 		}
 	}
 
 	public boolean isSbiExpirationDateSameAsBrowserDateFormat() {
-
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-
-		WebElement expiryDateCell = wait
-				.until(ExpectedConditions.visibilityOfElementLocated(By.id("view_admin_sbi_expiry_date_context")));
-
+		By expiryDateLocator = By.id("view_admin_sbi_expiry_date_context");
+		WebElement expiryDateCell = waitForElementToBeVisible(expiryDateLocator);
 		String browserTime = expiryDateCell.getText().trim();
-
 		DateTimeFormatter dateFormatter = PmpTestUtil.nonZeroPadderDateFormatter;
 		try {
 			LocalDate.parse(browserTime, dateFormatter);

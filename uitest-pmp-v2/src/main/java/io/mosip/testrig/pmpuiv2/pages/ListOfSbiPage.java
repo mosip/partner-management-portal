@@ -7,7 +7,6 @@ import java.time.format.DateTimeParseException;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -18,6 +17,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
+import io.mosip.testrig.pmpuiv2.utility.LogUtil;
 
 public class ListOfSbiPage extends BasePage {
 
@@ -295,100 +295,61 @@ public class ListOfSbiPage extends BasePage {
 	}
 
 	public boolean isAddDeviceButtonEnabled(String sbiVersion) {
-
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-
-		try {
-			WebElement addDeviceButton = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(
-					"//p[text()='" + sbiVersion + "']/../../..//button[contains(@id, 'sbi_list_add_Devices')]")));
-			return isElementEnabled(addDeviceButton);
-		} catch (TimeoutException e) {
-			return false;
-		}
+		By addDeviceButton = By.xpath("//p[normalize-space()='" + sbiVersion + "']"
+				+ "/ancestor::div[contains(@class,'p-4')]" + "//button[contains(@id,'sbi_list_add_Devices')]");
+		return isElementEnabled(addDeviceButton);
 	}
 
 	public boolean isRejectedStatusDisplayed(String sbiVersion) {
-
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-
-		try {
-			WebElement rejected = wait
-					.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//p[text()='" + sbiVersion
-							+ "']/..//div[contains(@class, 'bg-[#FAD6D1] text-[#5E1515]') and text()='Rejected']")));
-			return isElementDisplayed(rejected);
-		} catch (TimeoutException e) {
-			return false;
-		}
+		By rejectedStatusLocator = By
+				.xpath("//p[normalize-space()='" + sbiVersion + "']" + "/..//div[normalize-space()='Rejected' "
+						+ "and contains(@class,'bg-[#FAD6D1]') " + "and contains(@class,'text-[#5E1515]')]");
+		return isElementDisplayed(rejectedStatusLocator);
 	}
 
 	public boolean getDeviceDetails(String sbiVersion) {
-
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-
-		try {
-			WebElement deviceDetails = wait.until(ExpectedConditions.visibilityOfElementLocated(
-					By.xpath("//p[text()='" + sbiVersion + "']/..//div[@class='flex items-center w-fit px-2 mx-1']")));
-			return isElementDisplayed(deviceDetails);
-		} catch (TimeoutException e) {
-			return false;
-		}
+		By deviceDetailsLocator = By.xpath("//p[normalize-space()='" + sbiVersion + "']"
+				+ "/..//div[contains(@class,'flex') and contains(@class,'items-center')]");
+		return isElementDisplayed(deviceDetailsLocator);
 	}
 
 	public boolean isViewDeviceButtonEnabled(String sbiVersion) {
-
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-
-		try {
-			WebElement viewDeviceButton = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(
-					"//p[text()='" + sbiVersion + "']/../../..//button[contains(@id, 'sbi_list_view_Devices')]")));
-			return isElementEnabled(viewDeviceButton);
-		} catch (TimeoutException e) {
-			return false;
-		}
+		By viewDeviceButton = By.xpath("//p[normalize-space()='" + sbiVersion + "']"
+				+ "/ancestor::div[contains(@class,'p-4')]" + "//button[contains(@id,'sbi_list_view_Devices')]");
+		return isElementEnabled(viewDeviceButton);
 	}
 
 	public void clickOnViewDeviceButton(String sbiVersion) {
-
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
-
-		By viewDeviceButton = By.xpath("//p[normalize-space(text())='" + sbiVersion + "']"
+		By viewDeviceButton = By.xpath("//p[normalize-space()='" + sbiVersion + "']"
 				+ "/ancestor::div[contains(@class,'p-4')]" + "//button[starts-with(@id,'sbi_list_view_Devices')]");
-
-		wait.until(d -> {
-			try {
-				WebElement btn = d.findElement(viewDeviceButton);
-				btn.click();
-				return true;
-			} catch (NoSuchElementException | StaleElementReferenceException e) {
-				return false;
-			}
-		});
+		waitForUiToBeUnblocked();
+		waitForElementToBeVisible(viewDeviceButton);
+		clickOnElement(viewDeviceButton);
 	}
 
 	public void clickOnThreeDotsOfSbiListAsAdmin(String sbiVersion) {
+		By threeDots = By.xpath(
+				"//tr[.//td[normalize-space()='" + sbiVersion + "']]" + "//button[contains(@id,'sbi_list_action')]");
+		waitForUiToBeUnblocked();
+		for (int attempt = 1; attempt <= 3; attempt++) {
+			try {
+				waitForElementToBeVisible(threeDots);
+				clickOnElement(threeDots);
+				return;
 
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-
-		By threeDots = By
-				.xpath("//tr[.//td[normalize-space()='" + sbiVersion + "']]//button[contains(@id,'sbi_list_action')]");
-
-		WebElement button = wait.until(ExpectedConditions.presenceOfElementLocated(threeDots));
-
-		try {
-			button.click();
-		} catch (Exception e) {
-			((JavascriptExecutor) driver).executeScript("arguments[0].click();", button);
+			} catch (StaleElementReferenceException e) {
+				LogUtil.step("Retrying click on SBI three-dots due to stale DOM (attempt " + attempt + ")");
+			}
 		}
+		throw new RuntimeException("Unable to click SBI three-dots menu due to repeated DOM refresh: " + sbiVersion);
 	}
 
 	public void clickOnThreeDotsOfSbiList(String sbiVersion) {
-
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-
-		WebElement threeDotSbiOptionsButton = wait.until(ExpectedConditions.elementToBeClickable(
-				By.xpath("//p[text()='" + sbiVersion + "']/../../..//button[contains(@id, 'sbi_list_hamburger')]")));
-
-		clickOnElement(threeDotSbiOptionsButton);
+		By threeDotsButton = By.xpath("//p[normalize-space()='" + sbiVersion + "']"
+				+ "/ancestor::tr//button[contains(@id,'sbi_list_hamburger')]");
+		waitForUiToBeUnblocked();
+		waitForElementToBeVisible(threeDotsButton);
+		clickOnElement(threeDotsButton);
 	}
 
 	public void clickOnApproveOrReject() {
@@ -404,20 +365,11 @@ public class ListOfSbiPage extends BasePage {
 	}
 
 	public void clickOnAddDeviceButtonForSbi(String sbiVersion) {
-
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
-		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//*[contains(text(),'Loading')]")));
-		By addDeviceBtn = By.xpath("//p[normalize-space(text())='" + sbiVersion + "']"
+		By addDeviceBtn = By.xpath("//p[normalize-space()='" + sbiVersion + "']"
 				+ "/ancestor::div[contains(@class,'p-4')]" + "//button[starts-with(@id,'sbi_list_add_Devices')]");
-		wait.until(d -> {
-			try {
-				WebElement btn = d.findElement(addDeviceBtn);
-				btn.click();
-				return true;
-			} catch (NoSuchElementException | StaleElementReferenceException e) {
-				return false;
-			}
-		});
+		waitForUiToBeUnblocked();
+		waitForElementToBeVisible(addDeviceBtn);
+		clickOnElement(addDeviceBtn);
 	}
 
 	public boolean isDeactivateOptionEnabled() {
@@ -448,16 +400,9 @@ public class ListOfSbiPage extends BasePage {
 	}
 
 	public boolean isDeactivatedStatusDisplayed(String sbiVersion) {
-
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-
-		try {
-			WebElement status = wait.until(ExpectedConditions.visibilityOfElementLocated(
-					By.xpath("//p[text()='" + sbiVersion + "']/..//div[text()='Deactivated']")));
-			return isElementDisplayed(status);
-		} catch (TimeoutException e) {
-			return false;
-		}
+		By deactivatedStatusLocator = By
+				.xpath("//p[normalize-space()='" + sbiVersion + "']/..//div[normalize-space()='Deactivated']");
+		return isElementDisplayed(deactivatedStatusLocator);
 	}
 
 	public boolean isCreatedSbiDisplayed(String sbiVersion) {
@@ -472,28 +417,15 @@ public class ListOfSbiPage extends BasePage {
 	}
 
 	public boolean isPendingForApprovalDisplayedInAdminPage(String sbiVersion) {
-
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-		By rowLocator = By.xpath("//tr[.//td[contains(normalize-space(.),'" + sbiVersion + "')]]");
-
-		WebElement row = wait.until(ExpectedConditions.visibilityOfElementLocated(rowLocator));
-		By statusLocator = By
-				.xpath(".//*[contains(normalize-space(.),'Pending') and contains(normalize-space(.),'Approval')]");
-
-		WebElement status = row.findElement(statusLocator);
-
-		return status.isDisplayed();
+		By pendingApprovalStatusLocator = By.xpath("//tr[.//td[contains(normalize-space(.),'" + sbiVersion + "')]]"
+				+ "//*[contains(normalize-space(.),'Pending') and contains(normalize-space(.),'Approval')]");
+		return isElementDisplayed(pendingApprovalStatusLocator);
 	}
 
 	public boolean isRejectedStatusDisplayedInAdminPage(String sbiVersion) {
-
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-		By rowLocator = By.xpath("//tr[.//td[contains(normalize-space(.),'" + sbiVersion + "')]]");
-
-		WebElement row = wait.until(ExpectedConditions.visibilityOfElementLocated(rowLocator));
-		By statusLocator = By.xpath(".//*[contains(normalize-space(.),'Reject')]");
-		WebElement status = row.findElement(statusLocator);
-		return status.isDisplayed();
+		By rejectedStatusLocator = By.xpath("//tr[.//td[contains(normalize-space(.),'" + sbiVersion + "')]]"
+				+ "//*[contains(normalize-space(.),'Reject')]");
+		return isElementDisplayed(rejectedStatusLocator);
 	}
 
 	public String getSbiListArrowDirection() {
@@ -725,18 +657,11 @@ public class ListOfSbiPage extends BasePage {
 	}
 
 	public boolean isSbiCreationDateSameAsBrowserDateFormat() {
-
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-
+		By creationDateCell = By.xpath("//tr[@id='sbi_list_item1']/td[5]");
 		try {
-			WebElement dateCell = wait
-					.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//tr[@id='sbi_list_item1']/td[5]")));
-
-			String browserTime = dateCell.getText().trim();
-
-			DateTimeFormatter dateFormatter = PmpTestUtil.nonZeroPadderDateFormatter;
-			LocalDate.parse(browserTime, dateFormatter);
-
+			String browserDateText = waitForElementToBeVisible(creationDateCell).getText().trim();
+			DateTimeFormatter formatter = PmpTestUtil.nonZeroPadderDateFormatter;
+			LocalDate.parse(browserDateText, formatter);
 			return true;
 		} catch (TimeoutException | DateTimeParseException e) {
 			return false;
@@ -744,17 +669,11 @@ public class ListOfSbiPage extends BasePage {
 	}
 
 	public boolean isSbiExpirationDateSameAsBrowserDateFormat() {
-
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+		By expiryDateCell = By.xpath("//tr[@id='sbi_list_item1']/td[6]");
 		try {
-			WebElement expiryDateCell = wait
-					.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//tr[@id='sbi_list_item1']/td[6]")));
-
-			String browserTime = expiryDateCell.getText().trim();
-
-			DateTimeFormatter dateFormatter = PmpTestUtil.nonZeroPadderDateFormatter;
-			LocalDate.parse(browserTime, dateFormatter);
-
+			String browserDateText = waitForElementToBeVisible(expiryDateCell).getText().trim();
+			DateTimeFormatter formatter = PmpTestUtil.nonZeroPadderDateFormatter;
+			LocalDate.parse(browserDateText, formatter);
 			return true;
 		} catch (TimeoutException | DateTimeParseException e) {
 			return false;
@@ -774,19 +693,11 @@ public class ListOfSbiPage extends BasePage {
 	}
 
 	public void clickOnRejectedSbiItem() {
-
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-		wait.until((WebDriver d) -> {
-			try {
-				WebElement row = d.findElement(By.xpath("//tr[.//td[normalize-space()='Rejected']]"));
-				((JavascriptExecutor) d).executeScript("arguments[0].scrollIntoView({block:'center'});", row);
-				row.findElement(By.xpath(".//td[1]")).click();
-
-				return true;
-			} catch (StaleElementReferenceException | NoSuchElementException e) {
-				return false;
-			}
-		});
+		By rejectedRow = By.xpath("//tr[.//td[normalize-space()='Rejected']]");
+		By firstCellInRow = By.xpath("//tr[.//td[normalize-space()='Rejected']]//td[1]");
+		WebElement row = waitForElementToBeVisible(rejectedRow);
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block:'center'});", row);
+		clickOnElement(firstCellInRow);
 	}
 
 	public void clickOnDeactivatedSbiItem() {
@@ -889,15 +800,8 @@ public class ListOfSbiPage extends BasePage {
 	}
 
 	public boolean isPendingForApprovalDisplayed() {
-
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-		try {
-			WebElement statusElement = wait.until(
-					ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[text()='Pending For Approval']")));
-			return isElementDisplayed(statusElement);
-		} catch (TimeoutException e) {
-			return false;
-		}
+		By pendingForApprovalStatus = By.xpath("//div[normalize-space()='Pending For Approval']");
+		return isElementDisplayed(pendingForApprovalStatus);
 	}
 
 	public boolean isLinkedDevicesListDisplayed() {
@@ -909,26 +813,16 @@ public class ListOfSbiPage extends BasePage {
 	}
 
 	public boolean isLinkedDevicePresentForStatus(String statusText, String count) {
-
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-
-		try {
-			WebElement linkedDeviceElement = wait.until(ExpectedConditions.visibilityOfElementLocated(
-					By.xpath("//tr[.//div[text()='" + statusText + "']]" + "//button//p[text()='" + count + "']")));
-			return isElementDisplayed(linkedDeviceElement);
-		} catch (TimeoutException e) {
-			return false;
-		}
+		By linkedDevices = By.xpath(
+				"//tr[.//div[normalize-space()='" + statusText + "']]//button//p[normalize-space()='" + count + "']");
+		return isElementDisplayed(linkedDevices);
 	}
 
 	public void clickOnLinkedDevicesInSbiList(String statusText, String count) {
-
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-
-		WebElement linkedDeviceElement = wait.until(ExpectedConditions.elementToBeClickable(
-				By.xpath("//tr[.//div[text()='" + statusText + "']]" + "//button//p[text()='" + count + "']")));
-
-		clickOnElement(linkedDeviceElement);
+		By linkedDevices = By.xpath(
+				"//tr[.//div[normalize-space()='" + statusText + "']]//button//p[normalize-space()='" + count + "']");
+		waitForElementToBeVisible(linkedDevices);
+		clickOnElement(linkedDevices);
 	}
 
 	public void clickOnDeactivateSbiButtonAsAdmin() {
@@ -978,16 +872,9 @@ public class ListOfSbiPage extends BasePage {
 	}
 
 	public boolean isDeactivatedStatusDisplayedInAdminPage(String sbiVersion) {
-
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-
-		try {
-			WebElement status = wait.until(ExpectedConditions.visibilityOfElementLocated(
-					By.xpath("//td[text()='" + sbiVersion + "']/..//div[text()='Deactivated']")));
-			return isElementDisplayed(status);
-		} catch (TimeoutException e) {
-			return false;
-		}
+		By deactivatedStatus = By
+				.xpath("//td[normalize-space()='" + sbiVersion + "']/..//div[normalize-space()='Deactivated']");
+		return isElementDisplayed(deactivatedStatus);
 	}
 
 	public boolean isPartnerIdInFirstColumnDisplayed() {

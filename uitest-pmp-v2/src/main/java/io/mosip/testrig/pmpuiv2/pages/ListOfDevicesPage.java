@@ -7,7 +7,6 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -429,40 +428,29 @@ public class ListOfDevicesPage extends BasePage {
 	}
 
 	public boolean isDeviceDisplayed(String deviceType, String deviceSubType, String make, String model) {
-		try {
-			By rowLocator = By.xpath("//tr[td[normalize-space(text())='" + deviceType + "']"
-					+ " and td[normalize-space(text())='" + deviceSubType + "']" + " and td[normalize-space(text())='"
-					+ make + "']" + " and td[normalize-space(text())='" + model + "']]");
-
-			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-
-			WebElement row = wait.until(ExpectedConditions.visibilityOfElementLocated(rowLocator));
-
-			return row.isDisplayed();
-		} catch (TimeoutException e) {
-			return false;
-		}
+		By rowLocator = By.xpath("//tr[" + "td[normalize-space()='" + deviceType + "'] and " + "td[normalize-space()='"
+				+ deviceSubType + "'] and " + "td[normalize-space()='" + make + "'] and " + "td[normalize-space()='"
+				+ model + "']" + "]");
+		return isElementDisplayed(rowLocator);
 	}
 
 	public void clickOnDeviceThreeDots(String deviceType, String deviceSubType, String make, String model) {
 
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-
-		WebElement addedDeviceThreeDots = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//td[text()='"
-				+ deviceType + "']/.." + "//td[text()='" + deviceSubType + "']/.." + "//td[text()='" + make + "']/.."
-				+ "//td[text()='" + model + "']/.." + "//button[contains(@id, 'device_list_action')]")));
-
+		By deviceThreeDotsLocator = By.xpath("//tr[" + "td[normalize-space()='" + deviceType + "'] and "
+				+ "td[normalize-space()='" + deviceSubType + "'] and " + "td[normalize-space()='" + make + "'] and "
+				+ "td[normalize-space()='" + model + "']" + "]//button[contains(@id,'device_list_action')]");
+		WebElement addedDeviceThreeDots = waitForElementToBeVisible(deviceThreeDotsLocator);
 		clickOnElement(addedDeviceThreeDots);
 	}
 
 	public void clickOnDevice(String deviceType, String deviceSubType, String make, String model, String status) {
 
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+		By deviceLocator = By.xpath("//tr[" + "td[normalize-space()='" + deviceType + "'] and "
+				+ "td[normalize-space()='" + deviceSubType + "'] and " + "td[normalize-space()='" + make + "'] and "
+				+ "td[normalize-space()='" + model + "']" + "]");
 
-		By deviceLocator = By.xpath("//td[text()='" + deviceType + "']/.." + "//td[text()='" + deviceSubType + "']/.."
-				+ "//td[text()='" + make + "']/.." + "//td[text()='" + model + "']");
-
-		WebElement addedDevice = wait.until(ExpectedConditions.visibilityOfElementLocated(deviceLocator));
+// replace local WebDriverWait with existing helper
+		WebElement addedDevice = waitForElementToBeVisible(deviceLocator);
 
 		clickOnElement(addedDevice);
 	}
@@ -470,58 +458,42 @@ public class ListOfDevicesPage extends BasePage {
 	public boolean isDeviceStatusApprovedDisplayed(String deviceType, String deviceSubType, String make, String model,
 			String status) {
 
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+		By deviceStatusLocator = By.xpath("//tr[" + "td[normalize-space()='" + deviceType + "'] and "
+				+ "td[normalize-space()='" + deviceSubType + "'] and " + "td[normalize-space()='" + make + "'] and "
+				+ "td[normalize-space()='" + model + "']" + "]//div[normalize-space()='" + status + "']");
 
-		try {
-			WebElement deviceStatus = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(
-					"//td[text()='" + deviceType + "']/.." + "//td[text()='" + deviceSubType + "']/.." + "//td[text()='"
-							+ make + "']/.." + "//td[text()='" + model + "']/.." + "//div[text()='" + status + "']")));
-			return isElementDisplayed(deviceStatus);
-		} catch (TimeoutException e) {
-			return false;
-		}
+		return isElementDisplayed(deviceStatusLocator);
 	}
 
 	public boolean isDeviceStatusRejectedDisplayed(String deviceType, String deviceSubType, String make, String model,
 			String status) {
 
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+		By deviceStatusLocator = By.xpath("//tr[" + "td[normalize-space()='" + deviceType + "'] and "
+				+ "td[normalize-space()='" + deviceSubType + "'] and " + "td[normalize-space()='" + make + "'] and "
+				+ "td[normalize-space()='" + model + "']" + "]//div[normalize-space()='" + status + "']");
 
-		try {
-			WebElement deviceStatus = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(
-					"//td[text()='" + deviceType + "']/.." + "//td[text()='" + deviceSubType + "']/.." + "//td[text()='"
-							+ make + "']/.." + "//td[text()='" + model + "']/.." + "//div[text()='" + status + "']")));
-			return isElementDisplayed(deviceStatus);
-		} catch (TimeoutException e) {
-			return false;
-		}
+		return isElementDisplayed(deviceStatusLocator);
 	}
 
 	public boolean isDeviceStatusDeactivatedDisplayed(String deviceType, String deviceSubType, String make,
 			String model, String status) {
 
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+		By deviceStatusLocator = By.xpath("//tr[" + "td[normalize-space()='" + deviceType + "'] and "
+				+ "td[normalize-space()='" + deviceSubType + "'] and " + "td[normalize-space()='" + make + "'] and "
+				+ "td[normalize-space()='" + model + "']" + "]//div[normalize-space()='" + status + "']");
 
-		try {
-			WebElement deviceStatus = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(
-					"//td[text()='" + deviceType + "']/.." + "//td[text()='" + deviceSubType + "']/.." + "//td[text()='"
-							+ make + "']/.." + "//td[text()='" + model + "']/.." + "//div[text()='" + status + "']")));
-			return isElementDisplayed(deviceStatus);
-		} catch (TimeoutException e) {
-			return false;
-		}
+		return isElementDisplayed(deviceStatusLocator);
 	}
 
 	public String getDeviceStatusClassValue(String deviceType, String deviceSubType, String make, String model,
 			String status) {
-
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-
+		By deviceStatusLocator = By.xpath("//tr[" + "td[normalize-space()='" + deviceType + "'] and "
+				+ "td[normalize-space()='" + deviceSubType + "'] and " + "td[normalize-space()='" + make + "'] and "
+				+ "td[normalize-space()='" + model + "']" + "]//div[normalize-space()='" + status + "']");
 		try {
-			WebElement deviceStatus = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(
-					"//td[text()='" + deviceType + "']/.." + "//td[text()='" + deviceSubType + "']/.." + "//td[text()='"
-							+ make + "']/.." + "//td[text()='" + model + "']/.." + "//div[text()='" + status + "']")));
+			WebElement deviceStatus = waitForElementToBeVisible(deviceStatusLocator);
 			return getTextFromAttribute(deviceStatus, GlobalConstants.CLASS);
+
 		} catch (TimeoutException e) {
 			return null;
 		}
@@ -532,23 +504,23 @@ public class ListOfDevicesPage extends BasePage {
 	}
 
 	public void clickOnDeviceThreeDotsAsAdmin(String deviceType, String deviceSubType, String make, String model) {
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
 
-		WebElement addedDeviceThreeDots = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//td[text()='"
-				+ deviceType + "']/.." + "//td[text()='" + deviceSubType + "']/.." + "//td[text()='" + make + "']/.."
-				+ "//td[text()='" + model + "']/.." + "//button[contains(@id, 'device_list_action')]")));
-
+		By deviceThreeDotsLocator = By.xpath("//tr[" + "td[normalize-space()='" + deviceType + "'] and "
+				+ "td[normalize-space()='" + deviceSubType + "'] and " + "td[normalize-space()='" + make + "'] and "
+				+ "td[normalize-space()='" + model + "']" + "]//button[contains(@id,'device_list_action')]");
+		WebElement addedDeviceThreeDots = waitForElementToBeVisible(deviceThreeDotsLocator);
 		clickOnElement(addedDeviceThreeDots);
 	}
 
 	public void clickOnFilteredDeviceEllipsisButtonAsAdmin(String deviceType, String deviceSubType, String make,
 			String model) {
 
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+		By deviceEllipsisLocator = By.xpath("//tr[" + "td[normalize-space()='" + deviceType + "'] and "
+				+ "td[normalize-space()='" + deviceSubType + "'] and " + "td[normalize-space()='" + make + "'] and "
+				+ "td[normalize-space()='" + model + "']" + "]//button[contains(@id,'device_list_action')]");
 
-		WebElement addedDeviceThreeDots = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//td[text()='"
-				+ deviceType + "']/.." + "//td[text()='" + deviceSubType + "']/.." + "//td[text()='" + make + "']/.."
-				+ "//td[text()='" + model + "']/.." + "//button[contains(@id, 'device_list_action')]")));
+// replace local WebDriverWait with existing helper
+		WebElement addedDeviceThreeDots = waitForElementToBeVisible(deviceEllipsisLocator);
 
 		clickOnElement(addedDeviceThreeDots);
 	}

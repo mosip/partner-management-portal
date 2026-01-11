@@ -1,20 +1,14 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
 import java.time.Duration;
-import java.util.NoSuchElementException;
-import java.util.concurrent.TimeoutException;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
-import io.mosip.testrig.pmpuiv2.driver.DriverManager;
 
 public class DashboardPage extends BasePage {
 
@@ -178,12 +172,10 @@ public class DashboardPage extends BasePage {
 	}
 
 	public void selectPolicyGroupDropdown(String policyGroupValue) {
-
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
 		clickOnElement(selectPolicyGroupDropdown);
 		enter(SearchBox, policyGroupValue);
 		By optionLocator = By.xpath("//button[.//span[contains(normalize-space(text()),'" + policyGroupValue + "')]]");
-		WebElement option = wait.until(ExpectedConditions.visibilityOfElementLocated(optionLocator));
+		WebElement option = waitForElementToBeVisible(optionLocator);
 		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block:'center'});", option);
 		try {
 			option.click();
@@ -221,15 +213,8 @@ public class DashboardPage extends BasePage {
 	}
 
 	public boolean isPartnerCertificateTitleDisplayed() {
-
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(40));
 		By card = By.id("dashboard_partner_certificate_list_card");
-
-		try {
-			return wait.until(ExpectedConditions.visibilityOfElementLocated(card)).isDisplayed();
-		} catch (Exception e) {
-			return false;
-		}
+		return isElementDisplayed(card);
 	}
 
 	public boolean isPoliciesTitleDisplayed() {
@@ -249,34 +234,16 @@ public class DashboardPage extends BasePage {
 	}
 
 	public PoliciesPage clickOnPoliciesTitle() {
-
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
-
-		By blockingOverlay = By.cssSelector("div.fixed.inset-0.z-50");
-		wait.until(ExpectedConditions.invisibilityOfElementLocated(blockingOverlay));
-
-		wait.until(ExpectedConditions.presenceOfElementLocated(policiesTitle));
-
-		WebElement policiesCard = driver.findElement(policiesTitle);
+		waitForUiToBeUnblocked();
+		WebElement policiesCard = waitForElementToBeVisible(policiesTitle);
 		((JavascriptExecutor) driver).executeScript("arguments[0].click();", policiesCard);
-
 		return new PoliciesPage(driver);
 	}
 
 	public PartnerCertificatePage clickOnPartnerCertificateTitle() {
-
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
 		waitForDashboardLoaderToDisappear();
-		wait.until((WebDriver d) -> {
-			try {
-				WebElement el = d.findElement(partnerCertificateTitle);
-				el.click();
-				return true;
-			} catch (StaleElementReferenceException | NoSuchElementException e) {
-				return false;
-			}
-		});
-
+		WebElement title = waitForElementToBeVisible(partnerCertificateTitle);
+		clickOnElement(title);
 		return new PartnerCertificatePage(driver);
 	}
 
@@ -327,17 +294,9 @@ public class DashboardPage extends BasePage {
 	}
 
 	public void clickOnDashboardPartnerCertificateListHeader() {
-
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
-		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//*[contains(text(),'Loading')]")));
-		wait.until((WebDriver d) -> {
-			try {
-				d.findElement(dashboardPartnerCertificateListHeader).click();
-				return true;
-			} catch (NoSuchElementException | WebDriverException e) {
-				return false;
-			}
-		});
+		waitForUiToBeUnblocked();
+		WebElement header = waitForElementToBeVisible(dashboardPartnerCertificateListHeader);
+		clickOnElement(header);
 	}
 
 	public void clickOnFTMChipTab() {

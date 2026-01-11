@@ -1,7 +1,6 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
 import java.io.IOException;
-import java.time.Duration;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
@@ -9,8 +8,6 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
 public class AddDevicePage extends BasePage {
@@ -125,8 +122,6 @@ public class AddDevicePage extends BasePage {
 	@FindBy(xpath = "//p[contains(text(), 'Device Details already exists')]")
 	private WebElement duplicateDeviceErrorMessage;
 
-	private By deviceTypeDropdown = By.id("add_device_device_type_dropdown");
-
 	private By homeButtonBy = By.id("sub_title_home_btn");
 
 	public AddDevicePage(WebDriver driver) {
@@ -212,33 +207,20 @@ public class AddDevicePage extends BasePage {
 		return isElementDisplayed(headerUserProfile);
 	}
 
-	public void selectAddDeviceType(String value) throws Exception {
-		try {
-			By addDeviceTypeDropdown = By.xpath("//button[@id='add_device_device_type_dropdown_btn']");
-
-			WebElement addDeviceTypeSelectDropdown = new WebDriverWait(driver, Duration.ofSeconds(20))
-					.until(ExpectedConditions.visibilityOfElementLocated(addDeviceTypeDropdown));
-
-			dropdown(addDeviceTypeSelectDropdown, value);
-
-		} catch (Exception e) {
-			logger.error("Failed to select Add Device Type: " + value, e);
-			throw e;
-		}
+	public void selectAddDeviceType(String value) {
+		By addDeviceTypeDropdown = By.id("add_device_device_type_dropdown_btn");
+		waitForUiToBeUnblocked();
+		waitForElementToBeVisible(addDeviceTypeDropdown);
+		clickOnElement(addDeviceTypeDropdown);
+		selectFromCustomDropdown(value);
 	}
 
-	public void selectDeviceSubType(String value) throws Exception {
-		try {
-			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-			WebElement subTypeDropdown = wait
-					.until(ExpectedConditions.elementToBeClickable(By.id("add_device_device_sub_type_dropdown_btn")));
-
-			dropdown(subTypeDropdown, value);
-
-		} catch (Exception e) {
-			logger.error("Failed to select device sub type: " + value, e);
-			throw e;
-		}
+	public void selectDeviceSubType(String value) {
+		By subTypeDropdown = By.id("add_device_device_sub_type_dropdown_btn");
+		waitForUiToBeUnblocked();
+		waitForElementToBeVisible(subTypeDropdown);
+		clickOnElement(subTypeDropdown);
+		selectFromCustomDropdown(value);
 	}
 
 	public void enterMakeName(String makeName) {
@@ -251,7 +233,8 @@ public class AddDevicePage extends BasePage {
 
 	public void selectAddDeviceTypeWithPosition(String value, int position) throws InterruptedException {
 		position = position - 1;
-		Thread.sleep(1000);
+		By addDeviceTypeDropdown = By.id("add_device_device_type_dropdown_btn");
+		waitForElementToBeVisible(addDeviceTypeDropdown);
 		WebElement addDeviceTypeSelectDropdown = driver
 				.findElements(By.xpath("//button[@id='add_device_device_type_dropdown_btn']")).get(position);
 		try {
@@ -262,8 +245,8 @@ public class AddDevicePage extends BasePage {
 	}
 
 	public void selectDeviceSubTypeWithPosition(String value, int position) {
-		WebElement addDeviceSubTypeSelectDropdown = driver
-				.findElement(By.xpath("(//button[@id='add_device_device_sub_type_dropdown_btn'])[" + position + "]"));
+		By subTypeDropdown = By.xpath("(//button[@id='add_device_device_sub_type_dropdown_btn'])[" + position + "]");
+		WebElement addDeviceSubTypeSelectDropdown = waitForElementToBeVisible(subTypeDropdown);
 		try {
 			dropdownWithPosition(addDeviceSubTypeSelectDropdown, value, position);
 		} catch (IOException e) {
@@ -272,17 +255,15 @@ public class AddDevicePage extends BasePage {
 	}
 
 	public void enterMakeNameWithPosition(String makeName, int position) {
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
 		By makeInputLocator = By.xpath("(//form)[" + position + "]//input[@placeholder='Enter Make']");
-		WebElement makeInput = wait.until(ExpectedConditions.visibilityOfElementLocated(makeInputLocator));
+		WebElement makeInput = waitForElementToBeVisible(makeInputLocator);
 		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block:'center'});", makeInput);
 		enter(makeInput, makeName);
 	}
 
 	public void enterModelNameWithPosition(String modelName, int position) {
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
 		By modelInputLocator = By.xpath("(//form)[" + position + "]//input[@placeholder='Enter Model']");
-		WebElement modelInput = wait.until(ExpectedConditions.visibilityOfElementLocated(modelInputLocator));
+		WebElement modelInput = waitForElementToBeVisible(modelInputLocator);
 		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block:'center'});", modelInput);
 		enter(modelInput, modelName);
 	}
@@ -415,25 +396,6 @@ public class AddDevicePage extends BasePage {
 	public void selectAddDeviceTypeForReject() {
 		clickOnElement(addDeviceTypeSelectDropdown);
 		clickOnElement(addDeviceTypeOption);
-	}
-
-	private void selectFromCustomDropdown(String value) {
-		By option = By.xpath("//li[normalize-space()='" + value + "']");
-		new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.visibilityOfElementLocated(option))
-				.click();
-	}
-
-	private WebElement waitForDeviceTypeDropdown() {
-
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-
-		wait.until(ExpectedConditions.presenceOfElementLocated(deviceTypeDropdown));
-
-		WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(deviceTypeDropdown));
-
-		wait.until(d -> element.isEnabled());
-
-		return element;
 	}
 
 }

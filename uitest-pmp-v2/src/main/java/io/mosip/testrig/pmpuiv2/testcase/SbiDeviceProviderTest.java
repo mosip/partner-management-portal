@@ -153,11 +153,12 @@ public class SbiDeviceProviderTest extends BaseClass {
 	}
 
 	@Test(priority = 4, description = "Verifying the SBI and Devices after deactivating", dependsOnMethods = "createSbiDeviceWhichExist")
-	public void verifySbiAndDeviceAfterDeactivate(){
+	public void verifySbiAndDeviceAfterDeactivate() throws Exception {
 
 		dashboardpage = new DashboardPage(driver);
 		listOfSbiPage = new ListOfSbiPage(driver);
 		listOfDevicesPage = new ListOfDevicesPage(driver);
+		addDevicePage = new AddDevicePage(driver);
 		loginAsDeviceProvider();
 
 		deviceProviderPage = dashboardpage.clickOnDeviceProviderServicesTitle();
@@ -196,9 +197,8 @@ public class SbiDeviceProviderTest extends BaseClass {
 //		listOfDevicesPage.clickOnListOfSbiButton();
 //		listOfSbiPage.clickOnViewDeviceButton(GlobalConstants.AUTOMATION);
 //		listOfDevicesPage.clickOnAddDeviceButtonFromDeviceList();
-//		fillDeviceDetailsForRejectVerification(GlobalConstants.FACE, GlobalConstants.FULL_FACE, GlobalConstants.AUTOMATION_DEACTIVATING_3,
-//				GlobalConstants.AUTOMATION_DEACTIVATING_3);
-//		addDevicePage.clickOnSubmit();
+//		fillDeviceDetailsForRejectVerification(GlobalConstants.FACE, GlobalConstants.FULL_FACE,
+//				GlobalConstants.AUTOMATION_DEACTIVATING_3, GlobalConstants.AUTOMATION_DEACTIVATING_3);
 //		assertTrue(addDevicePage.isSuccessMessageDisplayed(), GlobalConstants.isSuccessMessageDisplayed);
 //		addDevicePage.closeSuccessMessage();
 
@@ -687,6 +687,15 @@ public class SbiDeviceProviderTest extends BaseClass {
 		listOfDevicesPage.enterInvalidValueInDeviceModelFilterInAdmin(GlobalConstants.INVALID_DATA);
 		listOfDevicesPage.clickOnApplyFilterButton();
 		assertTrue(listOfDevicesPage.isNoResultsFoundInAdminDisplayed(), GlobalConstants.isNoResultsFoundDisplayed);
+	}
+
+	private void fillDeviceDetailsForRejectVerification(String deviceType, String deviceSubType, String make,
+			String model) throws Exception {
+		addDevicePage.selectAddDeviceType(deviceType);
+		addDevicePage.selectDeviceSubType(deviceSubType);
+		addDevicePage.enterMakeName(make);
+		addDevicePage.enterModelName(model);
+		addDevicePage.clickOnSubmit();
 	}
 
 }

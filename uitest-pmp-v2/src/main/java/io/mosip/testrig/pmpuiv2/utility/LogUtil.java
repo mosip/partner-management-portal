@@ -44,6 +44,13 @@ public class LogUtil {
 		logger.info(fullMessage);
 		Reporter.log("<br><span style='color:blue;'>" + fullMessage + "</span>", false);
 	}
+	
+	public static void action(String message, By locator) {
+	    String fullMessage = "🔸 ACTION: " + message + ": " + describeLocator(locator);
+	    logger.info(fullMessage);
+	    Reporter.log("<br><span style='color:blue;'>" + fullMessage + "</span>", false);
+	}
+
 
 	public static void action(String message) {
 		String formatted = "🔸 ACTION: " + message;
