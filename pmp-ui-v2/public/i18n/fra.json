@@ -1364,6 +1364,7 @@
         "PMS_PRT_006": "Aucune clé API requise n'existe",
         "PMS_PRT_105": "La clé API du partenaire n'est pas créée",
         "PMS_PRT_011": "L’adresse e-mail fournie est déjà enregistrée. Veuillez fournir une autre adresse e-mail.",
+        "PMS_PRT_014": "Le nom d'utilisateur et l'adresse e-mail indiqués existent déjà. Veuillez réessayer avec une autre adresse e-mail et un autre nom d'utilisateur.",
         "PMS_PRT_012": "Saisissez une adresse e-mail valide et réessayez",
         "PMS_PRT_013": "Numéro de mobile non valide. La longueur doit être inférieure à .",
         "PMS_ATH_401": "Authentification échouée",
