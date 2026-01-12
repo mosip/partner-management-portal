@@ -135,9 +135,9 @@ public class FtmPartnerCreation extends BaseClass {
 
 		handleTermsAndCondition();
 
-		basePage.refreshThePage();
+		dashboardPage.waitForDashboardReady();
+		
 		dashboardPage.clickOnDashboardPartnerCertificateListHeader();
-		// TODO:Re-enable after fixing certificate title timing issue
 		assertTrue(partnerCertificatePage.isPartnerCertificatePageDisplayed(),
 				GlobalConstants.isPartnerCertificatePageDisplayed);
 		partnerCertificatePage.clickOnUploadButton();

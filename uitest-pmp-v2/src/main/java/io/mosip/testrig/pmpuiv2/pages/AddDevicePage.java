@@ -356,7 +356,8 @@ public class AddDevicePage extends BasePage {
 	}
 
 	public String getDeviceTypeValue() {
-		return getTextFromLocator(addDeviceTypeSelectDropdown);
+		By selectedValue = By.xpath(".//span[normalize-space()]");
+		return addDeviceTypeSelectDropdown.findElement(selectedValue).getText().trim();
 	}
 
 	public boolean isDeviceTypeDisabled() {

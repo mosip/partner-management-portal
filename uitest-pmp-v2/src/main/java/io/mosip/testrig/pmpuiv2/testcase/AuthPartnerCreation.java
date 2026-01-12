@@ -22,8 +22,6 @@ public class AuthPartnerCreation extends BaseClass {
 	private LoginPage loginPage;
 	private PartnerCertificatePage partnerCertificatePage;
 	private RegisterPage registerPage;
-	private PoliciesPage policiesPage;
-	private BasePage basePage;
 
 	@Test(priority = 1, description = "This is a test case register new user")
 	public void registerAuthPartnerUser() throws TimeoutException {
@@ -31,7 +29,6 @@ public class AuthPartnerCreation extends BaseClass {
 		dashboardPage = new DashboardPage(driver);
 		partnerCertificatePage = new PartnerCertificatePage(driver);
 		loginPage = new LoginPage(driver);
-		basePage = new BasePage(driver);
 
 		dashboardPage.clickOnCertificateTrustStore();
 		assertTrue(partnerCertificatePage.isUploadTrustCertificateButtonDisplayed(),
@@ -156,10 +153,8 @@ public class AuthPartnerCreation extends BaseClass {
 	public void registerAuthUserWithoutUploadingCertificates() throws InterruptedException {
 
 		dashboardPage = new DashboardPage(driver);
-		policiesPage = new PoliciesPage(driver);
 		registerPage = new RegisterPage(driver);
 		loginPage = new LoginPage(driver);
-		basePage = new BasePage(driver);
 
 		logoutFromPartner();
 

@@ -355,13 +355,17 @@ public class BasePage {
 	}
 
 	protected String getTextFromLocator(WebElement element) {
-		try {
-			if (element.isDisplayed()) {
-				return element.getText();
-			}
-		} catch (NoSuchElementException | TimeoutException ignored) {
-		}
-		return "";
+	    try {
+	        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+	        wait.until(ExpectedConditions.visibilityOf(element));
+	        return element.getText().trim();
+	    } catch (TimeoutException e) {
+	        LogUtil.warn("Element not visible to get text: " + element);
+	        return "";
+	    } catch (StaleElementReferenceException e) {
+	        LogUtil.warn("Stale element while getting text: " + element);
+	        return "";
+	    }
 	}
 
 	protected String getTextFromAttribute(WebElement element, String atrr) {
@@ -602,14 +606,17 @@ public class BasePage {
 	}
 
 	protected String escapeXPathText(String text) {
+
 		if (!text.contains("'")) {
 			return "'" + text + "'";
 		}
+
 		if (!text.contains("\"")) {
 			return "\"" + text + "\"";
 		}
 
-		String[] parts = text.split("'");
+		String[] parts = text.split("'", -1);
+
 		StringBuilder xpath = new StringBuilder("concat(");
 		for (int i = 0; i < parts.length; i++) {
 			xpath.append("'").append(parts[i]).append("'");
@@ -618,6 +625,7 @@ public class BasePage {
 			}
 		}
 		xpath.append(")");
+
 		return xpath.toString();
 	}
 
