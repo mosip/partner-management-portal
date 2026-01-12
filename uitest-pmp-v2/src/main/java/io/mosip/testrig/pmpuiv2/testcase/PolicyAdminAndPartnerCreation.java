@@ -21,13 +21,11 @@ public class PolicyAdminAndPartnerCreation extends BaseClass {
 	private LoginPage loginPage;
 	private PartnerCertificatePage partnerCertificatePage;
 	private RegisterPage registerPage;
-	private BasePage basePage;
 
 	@Test(priority = 1, description = "Creating Partner Admin")
 	public void policiesAdminCreation() {
 		dashboardPage = new DashboardPage(driver);
 		loginPage = new LoginPage(driver);
-		basePage = new BasePage(driver);
 
 		logoutFromPartner();
 		registerPage = loginPage.clickRegisterButton();
@@ -91,7 +89,6 @@ public class PolicyAdminAndPartnerCreation extends BaseClass {
 		dashboardPage = new DashboardPage(driver);
 		partnerCertificatePage = new PartnerCertificatePage(driver);
 		loginPage = new LoginPage(driver);
-		basePage = new BasePage(driver);
 
 		loginAsPartnerAdmin();
 		dashboardPage.clickOnCertificateTrustStore();
@@ -136,8 +133,6 @@ public class PolicyAdminAndPartnerCreation extends BaseClass {
 
 		handleTermsAndCondition();
 
-		basePage.refreshThePage();
-		// TODO:Re-enable after fixing certificate title timing issue
 		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
 				GlobalConstants.isPartnerCertificateTitleDisplayed);
 

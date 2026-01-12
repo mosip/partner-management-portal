@@ -51,8 +51,6 @@ public class FtmPartnerCreation extends BaseClass {
 
 		dashboardPage.waitForDashboardReady();
 
-		basePage.refreshThePage();
-		// TODO:Re-enable after fixing certificate title timing issue
 		assertTrue(partnerCertificatePage.isDashboardFtmChipProviderCardDisplayed(),
 				GlobalConstants.isDashboardFtmChipProviderCardDisplayed);
 

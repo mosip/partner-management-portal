@@ -635,7 +635,7 @@ public class AuthPolicyTest extends BaseClass {
 		authPolicyPage.clickOnActionButton();
 		authPolicyPage.clickOnCloneButton();
 		assertTrue(authPolicyPage.isClonePolicyPopupTitleNotDisplayed(),
-				GlobalConstants.isClonePolicyPopupTitleDisplayed);
+				GlobalConstants.isClonePolicyPopupTitleNotDisplayed);
 
 		authPolicyPage.clickOnFilterButton();
 		authPolicyPage.enterPolicyGroupInFilterBox(GlobalConstants.DEFAULT_POLICYGROUP);

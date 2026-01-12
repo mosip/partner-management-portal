@@ -355,9 +355,13 @@ public class BasePage {
 	}
 
 	protected String getTextFromLocator(WebElement element) {
-		LogUtil.action("Getting text from element: ", element);
-		waitForElementVisible(element);
-		return element.getText();
+		try {
+			if (element.isDisplayed()) {
+				return element.getText();
+			}
+		} catch (NoSuchElementException | TimeoutException ignored) {
+		}
+		return "";
 	}
 
 	protected String getTextFromAttribute(WebElement element, String atrr) {

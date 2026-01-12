@@ -3,6 +3,7 @@ package io.mosip.testrig.pmpuiv2.pages;
 import java.time.Duration;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -1171,13 +1172,26 @@ public class AuthPolicyPage extends BasePage {
 	}
 
 	public void selectValidPolicyGroupForClone(String value) {
+
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+
 		clickOnElement(clonePolicyGroupDropdown);
 		enter(clonePolicyGroupDropdownSearchInput, value);
+
+		String safeValue = escapeXPathText(value);
+
 		By optionLocator = By.xpath("//button[contains(@id,'policy_group_selector_option_button')"
-				+ " and .//span[contains(@id,'policy_group_selector_option_name')"
-				+ " and contains(normalize-space(.),'" + value + "')]]");
-		WebElement option = waitForElementToBeVisible(optionLocator);
-		clickOnElement(option);
+				+ " and .//span[contains(normalize-space(.), " + safeValue + ")]]");
+
+		WebElement option = wait.until(ExpectedConditions.visibilityOfElementLocated(optionLocator));
+
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block:'center'});", option);
+
+		try {
+			option.click();
+		} catch (ElementClickInterceptedException e) {
+			((JavascriptExecutor) driver).executeScript("arguments[0].click();", option);
+		}
 	}
 
 	public boolean isClonePolicyButtonAvailable() {

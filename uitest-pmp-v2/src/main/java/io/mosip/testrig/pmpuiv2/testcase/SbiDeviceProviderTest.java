@@ -165,15 +165,15 @@ public class SbiDeviceProviderTest extends BaseClass {
 
 		listOfSbiPage.clickOnViewDeviceButton(GlobalConstants.ALPHANUMERIC);
 
-		listOfDevicesPage.isDeviceStatusRejectedDisplayed(GlobalConstants.FACE, GlobalConstants.FULL_FACE,
+		assertTrue(listOfDevicesPage.isDeviceStatusRejectedDisplayed(GlobalConstants.FACE, GlobalConstants.FULL_FACE,
 				GlobalConstants.AUTOMATION_DEACTIVATING_5, GlobalConstants.AUTOMATION_DEACTIVATING_5,
-				GlobalConstants.REJECTED);
-		listOfDevicesPage.isDeviceStatusDeactivatedDisplayed(GlobalConstants.FACE, GlobalConstants.FULL_FACE,
+				GlobalConstants.REJECTED));
+		assertTrue(listOfDevicesPage.isDeviceStatusDeactivatedDisplayed(GlobalConstants.FACE, GlobalConstants.FULL_FACE,
 				GlobalConstants.AUTOMATION_DEACTIVATING_4, GlobalConstants.AUTOMATION_DEACTIVATING_4,
-				GlobalConstants.DEACTIVATED);
-		listOfDevicesPage.isDeviceStatusRejectedDisplayed(GlobalConstants.FACE, GlobalConstants.FULL_FACE,
+				GlobalConstants.DEACTIVATED));
+		assertTrue(listOfDevicesPage.isDeviceStatusRejectedDisplayed(GlobalConstants.FACE, GlobalConstants.FULL_FACE,
 				GlobalConstants.AUTOMATION_DEACTIVATING_3, GlobalConstants.AUTOMATION_DEACTIVATING_3,
-				GlobalConstants.REJECTED);
+				GlobalConstants.REJECTED));
 		listOfDevicesPage.clickOnDeviceThreeDots(GlobalConstants.FACE, GlobalConstants.FULL_FACE,
 				GlobalConstants.AUTOMATION_DEACTIVATING_3, GlobalConstants.AUTOMATION_DEACTIVATING_3);
 		assertTrue(listOfDevicesPage.isDeactivateDeviceDisabled(), GlobalConstants.isDeactivateDeviceDisabled);

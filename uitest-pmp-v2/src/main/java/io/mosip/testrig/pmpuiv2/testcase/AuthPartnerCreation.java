@@ -75,7 +75,6 @@ public class AuthPartnerCreation extends BaseClass {
 
 		handleTermsAndCondition();
 
-		basePage.refreshThePage();
 		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
 				GlobalConstants.isPartnerCertificateTitleDisplayed);
 		dashboardPage.clickOnPartnerCertificateTitle();
