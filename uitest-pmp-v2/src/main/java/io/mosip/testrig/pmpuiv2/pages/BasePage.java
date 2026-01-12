@@ -355,17 +355,16 @@ public class BasePage {
 	}
 
 	protected String getTextFromLocator(WebElement element) {
-	    try {
-	        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-	        wait.until(ExpectedConditions.visibilityOf(element));
-	        return element.getText().trim();
-	    } catch (TimeoutException e) {
-	        LogUtil.warn("Element not visible to get text: " + element);
-	        return "";
-	    } catch (StaleElementReferenceException e) {
-	        LogUtil.warn("Stale element while getting text: " + element);
-	        return "";
-	    }
+		for (int i = 0; i < 2; i++) {
+			try {
+				WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+				wait.until(ExpectedConditions.visibilityOf(element));
+				return element.getText().trim();
+			} catch (StaleElementReferenceException e) {
+				LogUtil.warn("Retrying due to stale element: " + element);
+			}
+		}
+		throw new TimeoutException("Element not stable to get text: " + element);
 	}
 
 	protected String getTextFromAttribute(WebElement element, String atrr) {

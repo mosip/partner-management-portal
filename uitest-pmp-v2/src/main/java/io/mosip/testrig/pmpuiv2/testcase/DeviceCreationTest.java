@@ -339,7 +339,7 @@ public class DeviceCreationTest extends BaseClass {
 				GlobalConstants.AUTOMATION, GlobalConstants.APPROVED);
 		assertTrue(viewDeviceDetailsPage.isDeviceDetailsPageTitleDisplayed(),
 				GlobalConstants.isDeviceDetailsTitleDisplayed);
-		assertEquals(viewDeviceDetailsPage.getBreadcrumbText(), GlobalConstants.DEVICE_DETAIL_PAGE_BREADCUMB);
+		assertEquals(viewDeviceDetailsPage.getBreadcrumbTextOfViewDetails(), GlobalConstants.DEVICE_DETAIL_PAGE_BREADCUMB);
 		assertTrue(viewDeviceDetailsPage.isApprovedStatusDisplayed(), GlobalConstants.isStatusDisplayed);
 		verifyDeviceDetails(GlobalConstants.FACE, GlobalConstants.FULL_FACE, GlobalConstants.AUTOMATION,
 				GlobalConstants.AUTOMATION);

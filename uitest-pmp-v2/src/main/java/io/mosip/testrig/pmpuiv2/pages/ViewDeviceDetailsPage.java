@@ -125,9 +125,13 @@ public class ViewDeviceDetailsPage extends BasePage {
 		return isElementDisplayed(viewDeviceDetailsTitle);
 	}
 
-	public String getBreadcrumbText() {
-		return getTextFromLocator(homeButton) + getTextFromLocator(listOfSbiButton)
-				+ getTextFromLocator(listOfDevicesButton);
+	public String getBreadcrumbTextOfViewDetails() {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+		wait.until(ExpectedConditions.and(ExpectedConditions.visibilityOf(homeButton),
+				ExpectedConditions.visibilityOf(listOfSbiButton),
+				ExpectedConditions.visibilityOf(listOfDevicesButton)));
+
+		return homeButton.getText().trim() + listOfSbiButton.getText().trim() + listOfDevicesButton.getText().trim();
 	}
 
 	public boolean isPendingForApprovalStatusDisplayed() {

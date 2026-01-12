@@ -360,13 +360,12 @@ public class AddDevicePage extends BasePage {
 	public String getDeviceTypeValue() {
 		By deviceTypeDropdown = By.id("add_device_device_type_dropdown_btn");
 		By selectedValue = By.xpath("//button[@id='add_device_device_type_dropdown_btn']//span[normalize-space()]");
-
 		try {
 			waitForElementToBeVisible(deviceTypeDropdown);
 			return driver.findElement(selectedValue).getText().trim();
-		} catch (NoSuchElementException | TimeoutException e) {
-			LogUtil.info("Device Type dropdown not present when reading value");
-			return "";
+		} catch (TimeoutException | NoSuchElementException e) {
+			throw new AssertionError("Device Type dropdown not present when reading value. Page state is incorrect.",
+					e);
 		}
 	}
 

@@ -182,7 +182,10 @@ public class AuthPartnerCreation extends BaseClass {
 		dashboardPage.clickOnSubmitButton();
 
 		handleTermsAndCondition();
-		
+
+		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
+				GlobalConstants.isPartnerCertificateTitleDisplayed);
+
 	}
 
 	private void logoutFromPartner() {

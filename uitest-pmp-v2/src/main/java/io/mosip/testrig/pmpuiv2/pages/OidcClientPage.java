@@ -1,14 +1,20 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.TimeoutException;
+
+import java.time.Duration;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
+import io.mosip.testrig.pmpuiv2.utility.LogUtil;
 
 public class OidcClientPage extends BasePage {
 
@@ -1454,7 +1460,15 @@ public class OidcClientPage extends BasePage {
 	}
 
 	public boolean isCopiedTextDisplayed() {
-		return isElementDisplayed(copied);
+		By copiedToast = By.xpath("//p[contains(text(),'Copied!')]");
+		try {
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+			wait.until(ExpectedConditions.visibilityOfElementLocated(copiedToast));
+			return true;
+		} catch (TimeoutException e) {
+			LogUtil.warn("Copied toast not visible");
+			return false;
+		}
 	}
 
 	public void selectDeactivateStatusInFilter() {
