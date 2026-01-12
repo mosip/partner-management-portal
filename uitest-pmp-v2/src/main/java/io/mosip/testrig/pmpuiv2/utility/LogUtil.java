@@ -99,4 +99,8 @@ public class LogUtil {
 		System.out.println("WARN: " + message);
 	}
 
+	public static void info(String message) {
+		System.out.println("INFO: " + message);
+	}
+
 }

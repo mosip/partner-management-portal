@@ -7,10 +7,12 @@ import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
+import io.mosip.testrig.pmpuiv2.utility.LogUtil;
 
 public class AddDevicePage extends BasePage {
 
@@ -356,8 +358,16 @@ public class AddDevicePage extends BasePage {
 	}
 
 	public String getDeviceTypeValue() {
-		By selectedValue = By.xpath(".//span[normalize-space()]");
-		return addDeviceTypeSelectDropdown.findElement(selectedValue).getText().trim();
+		By deviceTypeDropdown = By.id("add_device_device_type_dropdown_btn");
+		By selectedValue = By.xpath("//button[@id='add_device_device_type_dropdown_btn']//span[normalize-space()]");
+
+		try {
+			waitForElementToBeVisible(deviceTypeDropdown);
+			return driver.findElement(selectedValue).getText().trim();
+		} catch (NoSuchElementException | TimeoutException e) {
+			LogUtil.info("Device Type dropdown not present when reading value");
+			return "";
+		}
 	}
 
 	public boolean isDeviceTypeDisabled() {

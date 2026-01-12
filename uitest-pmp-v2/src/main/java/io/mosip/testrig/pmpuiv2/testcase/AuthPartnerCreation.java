@@ -2,15 +2,12 @@ package io.mosip.testrig.pmpuiv2.testcase;
 
 import static org.testng.Assert.assertTrue;
 
-import java.util.concurrent.TimeoutException;
-
+import org.openqa.selenium.TimeoutException;
 import org.testng.annotations.Test;
 
-import io.mosip.testrig.pmpuiv2.pages.BasePage;
 import io.mosip.testrig.pmpuiv2.pages.DashboardPage;
 import io.mosip.testrig.pmpuiv2.pages.LoginPage;
 import io.mosip.testrig.pmpuiv2.pages.PartnerCertificatePage;
-import io.mosip.testrig.pmpuiv2.pages.PoliciesPage;
 import io.mosip.testrig.pmpuiv2.pages.RegisterPage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
