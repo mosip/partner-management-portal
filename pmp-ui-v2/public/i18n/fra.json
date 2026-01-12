@@ -536,7 +536,7 @@
         "deleteInEng": "Delete",
         "deleteInTam": "நீக்கு",
         "deleteInKan": "ಅಳಿಸಿ",
-        "compatibilityMsg": "Remarque : Les champs relatifs aux informations supplémentaires sont désactivés car la version d'Esignet actuellement déployée sur la plateforme MOSIP ne les prend pas en charge."
+        "compatibilityMsg": "Remarque : La section ci-dessous est désactivée et non modifiable car PMS est intégré à une version d’eSignet qui ne prend pas en charge ces champs d’information supplémentaires."
     },
     "oidcClientsList": {
         "partnerId": "ID partenaire",

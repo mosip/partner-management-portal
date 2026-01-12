@@ -339,11 +339,14 @@ function RequestPolicy() {
 
     return (
         <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll relative font-inter`}>
-            {!dataLoaded && (
-                <LoadingIcon></LoadingIcon>
-            )}
-            {dataLoaded && (
-                <>
+            <div className="relative">
+                {!dataLoaded && (
+                    <div className="absolute inset-0 z-50 flex items-center justify-center bg-white/50 min-h-[200px]">
+                        <LoadingIcon inline={true} />
+                    </div>
+                )}
+                
+                <div className={!dataLoaded ? 'opacity-50 pointer-events-none transition-opacity duration-200' : ''}>
                     {errorMsg && (
                         <ErrorMessage id='request_policy_error_msg' errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
@@ -466,8 +469,8 @@ function RequestPolicy() {
                             </>
                         }
                     </div>
-                </>
-            )}
+                </div>
+            </div>
             <BlockerPrompt blocker={blocker} />
         </div>
 
