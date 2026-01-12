@@ -2,8 +2,12 @@ package io.mosip.testrig.pmpuiv2.pages;
 
 import org.openqa.selenium.*;
 
+import java.time.Duration;
+
 import org.apache.log4j.Logger;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
 
@@ -590,7 +594,11 @@ public class DatasharePolicyPage extends BasePage {
 
 	public void enterPolicyName(String val) {
 		By policyNameBoxLocator = By.id("policy_name_box");
-		WebElement policyNameBox = waitForElementToBeVisible(policyNameBoxLocator);
+
+		WebElement policyNameBox = new WebDriverWait(driver, Duration.ofSeconds(30))
+				.until(ExpectedConditions.elementToBeClickable(policyNameBoxLocator));
+
+		policyNameBox.click();
 		policyNameBox.clear();
 		policyNameBox.sendKeys(val);
 	}
@@ -1287,7 +1295,9 @@ public class DatasharePolicyPage extends BasePage {
 	}
 
 	public boolean isAlreadyExistErrorMessageDisplayed() {
-		return isElementDisplayed(alreadyExistErrorMessage);
+		By errorMsg = By.xpath(
+				"//p[contains(normalize-space(.),'This policy already exists within the selected policy group')]");
+		return isElementDisplayed(errorMsg);
 	}
 
 	public void clickOnCloseIcon() {

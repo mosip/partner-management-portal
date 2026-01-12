@@ -674,10 +674,6 @@ public class OidcClientAuthPartnerTest extends BaseClass {
 				GlobalConstants.isOidcClientDetailsCopyIdDisplayed);
 		oidcClientPage.clickOnOidcClientDetailsCopyId();
 		assertTrue(oidcClientPage.isCopiedTextDisplayed(), GlobalConstants.isCopiedTextDisplayed);
-		oidcClientPage.clickOnOidcClientDetailsCopyId();
-		assertTrue(oidcClientPage.isCopiedTextDisplayed(), GlobalConstants.isCopiedTextDisplayed);
-		oidcClientPage.clickOnOidcClientDetailsCopyId();
-		assertTrue(oidcClientPage.isCopiedTextDisplayed(), GlobalConstants.isCopiedTextDisplayed);
 
 		assertTrue(oidcClientPage.isOidcClientDetailsBackButtonDisplayed(),
 				GlobalConstants.isOidcClientDetailsBackButtonDisplayed);

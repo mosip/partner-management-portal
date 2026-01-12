@@ -345,11 +345,15 @@ public class ListOfSbiPage extends BasePage {
 	}
 
 	public void clickOnThreeDotsOfSbiList(String sbiVersion) {
+
 		By threeDotsButton = By.xpath("//p[normalize-space()='" + sbiVersion + "']"
-				+ "/ancestor::tr//button[contains(@id,'sbi_list_hamburger')]");
+				+ "/ancestor::div[.//button[contains(@id,'sbi_list_hamburger')]][1]"
+				+ "//button[contains(@id,'sbi_list_hamburger')]");
+
 		waitForUiToBeUnblocked();
-		waitForElementToBeVisible(threeDotsButton);
-		clickOnElement(threeDotsButton);
+
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+		wait.until(ExpectedConditions.elementToBeClickable(threeDotsButton)).click();
 	}
 
 	public void clickOnApproveOrReject() {

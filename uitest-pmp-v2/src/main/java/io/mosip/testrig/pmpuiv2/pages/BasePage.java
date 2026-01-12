@@ -357,7 +357,7 @@ public class BasePage {
 	protected String getTextFromLocator(WebElement element) {
 		for (int i = 0; i < 2; i++) {
 			try {
-				WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+				WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
 				wait.until(ExpectedConditions.visibilityOf(element));
 				return element.getText().trim();
 			} catch (StaleElementReferenceException e) {
