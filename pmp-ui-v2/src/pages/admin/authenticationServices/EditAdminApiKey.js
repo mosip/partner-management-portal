@@ -40,7 +40,6 @@ function EditAdminApiKey() {
     const blocker = useBlocker(
         ({ currentLocation, nextLocation }) => {
             if (isSubmitClicked || editExpirySuccess) {
-                setIsSubmitClicked(false);
                 return false;
             }
             return (
@@ -82,6 +81,12 @@ function EditAdminApiKey() {
             return;
         }
     }, []);
+
+    useEffect(() => {
+        if (editExpirySuccess) {
+            setIsSubmitClicked(false);
+        }
+    }, [editExpirySuccess]);
 
     useEffect(() => {
         const shouldWarnBeforeUnload = () => selectedDateStr !== originalExpiryDate && !editExpirySuccess;
