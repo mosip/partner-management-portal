@@ -34,6 +34,7 @@
         "undoChanges": "Annuler les modifications",
         "clear": "Effacer",
         "inputError": "Caractère non valide. Les caractères spéciaux autorisés sont : @ # & ( ) \\ - ' ? ! \" : ; = _",
+        "usernameError": "Le nom d'utilisateur doit commencer par une lettre et ne peut contenir que des lettres, des chiffres, . _ -.",
         "networkError": "Erreur réseau",
         "networkErrorDesc": "Veuillez vérifier votre connexion Internet et réessayer.",
         "retry": "Réessayer",

@@ -34,6 +34,7 @@
         "undoChanges": "Undo Changes",
         "clear": "Clear",
         "inputError": "Invalid character. Allowed special characters are: @ # & ( ) \\ - ' ? ! \" : ; = _",
+        "usernameError": "Username must start with a letter and can include only letters, numbers, . _ -.",
         "networkError": "Network Error",
         "networkErrorDesc": "Please check your internet connection and try again.",
         "retry": "Retry",
