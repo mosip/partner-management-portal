@@ -153,7 +153,6 @@ function EditOidcClient() {
                 });
             }
         });
-        console.log(dataArr);
         return dataArr;
     }, [t]);
 
@@ -243,7 +242,16 @@ function EditOidcClient() {
          const fetchData = async () => {
              try {
                  setDataLoaded(false);
-                const selectedOidcClientData = JSON.parse(clientData);
+                let selectedOidcClientData;
+                try {
+                    selectedOidcClientData = JSON.parse(clientData);
+                } catch (parseErr) {
+                    console.error('Error parsing selectedClientData from sessionStorage:', parseErr);
+                    sessionStorage.removeItem('selectedClientData');
+                    setUnexpectedError(true);
+                    setDataLoaded(true);
+                    return;
+                }
                 // Use clientId from sessionStorage for the GET request
                 const clientId = selectedOidcClientData.clientId;
                  const response = await HttpService.get(getPartnerManagerUrl(`/oidc-clients/${clientId}`, process.env.NODE_ENV));
