@@ -145,7 +145,7 @@ function ClonePolicyPopup ({policyDetails, closePopUp}) {
                                 <SuccessMessage id='clone_policy_popup_success_msg' successMsg={successMsg} clickOnCancel={cancelSuccessMsg} customStyle={customStyle}/>
                             )}
                             <div className="py-2 px-6">
-                                <p id='clone_policy_popup_description' className={`text-sm ${isLoginLanguageRTL ? 'text-right' : 'text-left'} font-normal text-[#414141] break-words}`}>{t('clonePolicyPopup.description1')} 
+                                <p id='clone_policy_popup_description' className={`text-sm ${isLoginLanguageRTL ? 'text-right' : 'text-left'} font-normal text-[#414141] break-words`}>{t('clonePolicyPopup.description1')} 
                                     <span className="font-bold"> {policyDetails.policyName}</span> {t('clonePolicyPopup.description2')}
                                 </p>
                             </div>

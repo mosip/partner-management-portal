@@ -3,6 +3,7 @@ import { Trans } from "react-i18next";
 import { HttpService } from "../services/HttpService";
 import { getLoginRedirectUrl } from "../services/LoginRedirectService";
 import { updateHeaderNotifications } from "../notificationsSlice";
+import { v4 as uuidv4 } from 'uuid';
 
 export const formatDate = (dateString, format) => {
     if (!dateString) return '-';
@@ -1551,7 +1552,7 @@ export const fetchPartnerDetails = async (HttpService, partnerId, setErrorCode, 
  * Creates a new entry object for language-based fields (client name, purpose title/subtitle)
  */
 export const createOidcClientEntry = (language, type) => {
-    const baseId = crypto.randomUUID();
+    const baseId = uuidv4();
     let uniqueId;
     
     switch (type) {
@@ -1594,7 +1595,7 @@ export const validateOidcEntryText = (value, entry, requiredErrorKey, errors, se
     }, t);
 
     // Determine which error to show (priority: required > regex)
-    if (entry.text.trim() === '' && entry.text !== '') {
+    if (value.trim() === '') {
         newErrors[entry.id] = t(requiredErrorKey);
     } else if (inputError) {
         newErrors[entry.id] = inputError;
