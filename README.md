@@ -22,4 +22,3 @@
     $ cd deploy/pmp-ui-v2
     $ ./restart.sh
    ```
-

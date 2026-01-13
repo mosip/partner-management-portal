@@ -37,7 +37,7 @@ function ViewPartnerDetails() {
     }, [dropdownRef]);
 
     useEffect(() => {
-        const selectedPartnerId = localStorage.getItem('selectedPartnerId');
+        const selectedPartnerId = sessionStorage.getItem('selectedPartnerId');
         if (!selectedPartnerId) {
             setUnexpectedError(true);
             return;
@@ -264,7 +264,7 @@ function ViewPartnerDetails() {
                                             <p id='view_partner_details_email_label' className="font-[600] text-suva-gray text-sm">
                                                 {t("userProfile.emailAddress")}
                                             </p>
-                                            <p id='view_partner_details_email_context' className="font-[600] text-vulcan text-base">
+                                            <p id='view_partner_details_email_context' className="font-[600] text-vulcan text-base break-all">
                                                 {partnerDetails.emailId}
                                             </p>
                                         </div>

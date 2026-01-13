@@ -161,9 +161,11 @@ function CreatePartner() {
     };
 
     const clickOnUpload = () => {
+        // Use the selected partner type to determine domain
+        const partnerTypeForDomain = getPartnerTypeForDomain(partnerTypeValue);
         const request = {
             partnerId: username.trim(),
-            partnerDomain: getPartnerDomainType("MISP_Partner"),
+            partnerDomain: getPartnerDomainType(partnerTypeForDomain),
         };
         setUploadCertificateRequest(request);
         setShowPopup(true);
@@ -185,15 +187,37 @@ function CreatePartner() {
         navigate('/partnermanagement/admin/partners/partners-list');
     };
 
+    const getPartnerTypeForDomain = (partnerType) => {
+        if (partnerType === "MISP_PARTNER") {
+            return "MISP_Partner";
+        } else if (partnerType === "ABIS_PARTNER") {
+            return "ABIS_Partner";
+        }
+    };
+
+    const getUploadCertificateButtonName = (partnerType) => {
+        if (partnerType === "MISP_PARTNER") {
+            return "createPartner.uploadMispPartnerCertificate";
+        } else if (partnerType === "ABIS_PARTNER") {
+            return "createPartner.uploadAbisPartnerCertificate";
+        }
+    };
+
     useEffect(() => {
         const fetchData = async () => {
             setDataLoaded(false);
             try {
-                // Initialize partner type dropdown data with only MISP Partner
-                const partnerTypeData = [{
-                    partnerType: "MISP_PARTNER",
-                    description: getPartnerTypeDescription("MISP_PARTNER", t)
-                }];
+                // Initialize partner type dropdown data with MISP Partner and ABIS Partner
+                const partnerTypeData = [
+                    {
+                        partnerType: "MISP_PARTNER",
+                        description: getPartnerTypeDescription("MISP_PARTNER", t)
+                    },
+                    {
+                        partnerType: "ABIS_PARTNER",
+                        description: getPartnerTypeDescription("ABIS_PARTNER", t)
+                    }
+                ];
                 setPartnerTypeDropdownData(createDropdownData('partnerType', 'description', false, partnerTypeData, t));
 
                 // Fetch supported languages from app config
@@ -256,22 +280,29 @@ function CreatePartner() {
                 const responseData = response.data;
                 if (responseData && responseData.response) {
                     const resData = responseData.response;
+                    // Determine button text and certificate data based on partner type
+                    const isMispPartner = partnerTypeValue === "MISP_PARTNER";
+                    const isAbisPartner = partnerTypeValue === "ABIS_PARTNER";
+                    
                     const requiredData = {
                         title: "createPartner.createPartner",
                         backUrl: "/partnermanagement/admin/partners/partners-list",
                         header: "createPartner.mispPartnerSuccessHeader",
                         subNavigation: "createPartner.listOfPartners",
-                        customBtnName1: "createPartner.uploadMispPartnerCertificate",
+                        customBtnName1: getUploadCertificateButtonName(partnerTypeValue),
                         customBtnName2: "commons.home",
+                        customBtn2Id: "confirmation_home_btn"
                     };
                     setConfirmationData(requiredData);
                     
-                    // Set upload certificate data
+                    // Set upload certificate data based on partner type
+                    const partnerTypeForDomain = getPartnerTypeForDomain(partnerTypeValue);
                     const requiredDataForCertUpload = {
-                        partnerType: "MISP_Partner",
+                        partnerType: partnerTypeForDomain,
                         uploadHeader: 'uploadCertificate.uploadPartnerCertificate',
                         isUploadPartnerCertificate: true,
-                        isMispPartnerCertificate: true,
+                        isMispPartnerCertificate: isMispPartner,
+                        isAbisPartnerCertificate: isAbisPartner,
                     }
                     setUploadCertificateData(requiredDataForCertUpload);
                     
@@ -294,8 +325,12 @@ function CreatePartner() {
     };
 
     const isFormValid = () => {
+        const isPolicyGroupRequired = partnerTypeValue === "ABIS_PARTNER";
+        const isPolicyGroupValid = !isPolicyGroupRequired || selectedPolicyGroup !== null;
+        
         return address.trim() && organizationName.trim() && phoneNumber.trim() && 
                email.trim() && username.trim() && notificationLanguage && 
+               isPolicyGroupValid &&
                !invalidAddressError && !invalidOrganizationNameError && 
                !invalidPhoneNumberError && !invalidEmailError && !invalidUsernameError;
     };
@@ -353,6 +388,7 @@ function CreatePartner() {
                                                         selectedPolicyGroup={selectedPolicyGroup}
                                                         placeholderKey='createPartner.selectPolicyGroup'
                                                         isPlaceHolderPresent={true}
+                                                        containsAsterisk={partnerTypeValue === "ABIS_PARTNER"}
                                                     />
                                                 </div>
                                             </div>

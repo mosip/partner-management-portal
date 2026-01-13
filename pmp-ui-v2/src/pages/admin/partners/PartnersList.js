@@ -48,11 +48,11 @@ function PartnersList() {
   const [activeSortAsc, setActiveSortAsc] = useState("");
   const [activeSortDesc, setActiveSortDesc] = useState("");
   const [viewPartnerId, setViewPartnersId] = useState(-1);
-  const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
+  const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(sessionStorage.getItem('itemsPerPage') ? Number(sessionStorage.getItem('itemsPerPage')) : 8);
   const [sortFieldName, setSortFieldName] = useState("createdDateTime");
   const [sortType, setSortType] = useState("desc");
   const [pageNo, setPageNo] = useState(0);
-  const [pageSize, setPageSize] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
+  const [pageSize, setPageSize] = useState(sessionStorage.getItem('itemsPerPage') ? Number(sessionStorage.getItem('itemsPerPage')) : 8);
   const [triggerServerMethod, setTriggerServerMethod] = useState(false);
   const [totalRecords, setTotalRecords] = useState(0);
   const [tableDataLoaded, setTableDataLoaded] = useState(true);
@@ -173,7 +173,7 @@ function PartnersList() {
 
   const viewPartnerDetails = (selectedPartnerData) => {
     setSuccessMsg("");
-    localStorage.setItem('selectedPartnerId', selectedPartnerData.partnerId);
+    sessionStorage.setItem('selectedPartnerId', selectedPartnerData.partnerId);
     navigate('/partnermanagement/admin/partners/view-partner-details')
   };
 
@@ -233,9 +233,9 @@ function PartnersList() {
   };
 
   const isUploadCertificateEnabled = (partner) => {
-    // Upload certificate is enabled for MISP_Partner when active and inactive state
+    // Upload certificate is enabled for MISP_Partner and ABIS_Partner when active and inactive state
     // Disabled for deactivated state:
-    return partner.partnerType === "MISP_Partner" && 
+    return (partner.partnerType === "MISP_Partner" || partner.partnerType === "ABIS_Partner") && 
            !(partner.status === 'deactivated');
   };
 
@@ -318,18 +318,18 @@ function PartnersList() {
     // Prepare request payload
     const request = {
       partnerId: partner.partnerId,
-      partnerDomain: getPartnerDomainType("MISP_Partner"),
+      partnerDomain: getPartnerDomainType(partner.partnerType),
     };
 
     // Prepare certificate popup data
     const certificateData = {
-      partnerType: "MISP_Partner",
+      partnerType: partner.partnerType,
       uploadHeader: "uploadCertificate.uploadPartnerCertificate",
       isUploadPartnerCertificate: true,
       reUploadHeader: "uploadCertificate.reUploadPartnerCertificate",
       isCertificateAvailable: isUploaded,
       certificateUploadDateTime: certificateUploadDateTime,
-      isMispPartnerCertificate: true
+      isMispOrAbisPartnerCertificate: partner.partnerType === "MISP_Partner" || partner.partnerType === "ABIS_Partner"
     };
 
     // Update UI state
@@ -529,9 +529,9 @@ function PartnersList() {
                                                 {getPartnerStatusText(partner, t)}
                                               </div>
                                             </td>
-                                            <td className="flex justify-center items-center cursor-default my-3">
+                                            <td className="text-center cursor-default my-3">
                                               <div ref={setSubmenuRef(submenuRef, index)}>
-                                                <button id={"partner_list_view" + (index + 1)} onClick={() => setViewPartnersId(index === viewPartnerId ? null : index)} className={`font-semibold mb-0.5 cursor-pointer text-center text-[#191919]`}>
+                                                <button id={"partner_list_view" + (index + 1)} onClick={() => setViewPartnersId(index === viewPartnerId ? null : index)} className={`font-semibold mb-0.5 text-[#191919] cursor-pointer text-center`}>
                                                   ...
                                                 </button>
                                                 {viewPartnerId === index && (

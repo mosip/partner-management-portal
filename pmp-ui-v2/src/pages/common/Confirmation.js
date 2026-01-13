@@ -43,15 +43,15 @@ function Confirmation({ id, confirmationData, onClickCustomBtn1, onClickCustomBt
                         </div>
                     )}
                     {confirmationData.customBtnName1 &&
-                        <div className={confirmationData.customBtnName2 ? `grid grid-cols-2 justify-center p-2 max-450:flex max-450:flex-col max-450:items-center` : ''}>
+                        <div className={confirmationData.customBtnName2 ? `flex justify-center items-center p-2 max-640:flex max-640:flex-col max-640:items-center max-640:gap-y-2` : ''}>
                             <div className={confirmationData.customBtnName2 ? `flex justify-end` : 'flex justify-center'}>
-                                <button id='confirmation_custom_btn' onClick={onClickCustomBtn1} type="button" className={`text-white font-semibold bg-tory-blue rounded-md mt-1 text-sm ${confirmationData.customBtnName2 ? 'px-12' : 'px-3'} py-4`}>
+                                <button id='confirmation_custom_btn' onClick={onClickCustomBtn1} type="button" className={`text-white font-semibold bg-tory-blue rounded-md mt-1 text-sm ${confirmationData.customBtnName2 ? 'px-12' : 'px-3'} py-4 mx-2`}>
                                     {t(confirmationData.customBtnName1)}
                                 </button>
                             </div>
                             {confirmationData.customBtnName2 && (
                                 <div className="flex justify-start">
-                                    <button id="confirmation_custom_btn_2" onClick={onClickCustomBtn2} type="button" className={`text-[#1447b2] mx-4 mt-1 font-semibold bg-white border border-[#1447b2] rounded-md text-sm px-12 py-4`}>
+                                    <button id={confirmationData.customBtn2Id} onClick={onClickCustomBtn2} type="button" className={`text-[#1447b2] mx-2 mt-1 font-semibold bg-white border border-[#1447b2] rounded-md text-sm px-12 py-4`}>
                                         {t(confirmationData.customBtnName2)}
                                     </button>
                                 </div>

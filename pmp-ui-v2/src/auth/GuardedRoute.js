@@ -17,13 +17,13 @@ const GuardedRoute = ({ children }) => {
     //if user is accessing partneradmin path
     const isPartnerAdminPath = location.pathname.includes('admin');
     // If user is on a partnerAdmin path, ensure they have admin privileges
-    if (isPartnerAdminPath && localStorage.getItem("isAdmin") === 'false') {
+    if (isPartnerAdminPath && sessionStorage.getItem("isAdmin") === 'false') {
       navigate('/partnermanagement/runtimeError', { state: { messageType: 'noAccess', errorCode: '', errorText: '' } });
     };
 
     const isPolicyManagerPath = location.pathname.includes('policy-manager');
     // If user is on a policy-manager path, ensure they have admin or policy-manager privileges
-    if (isPolicyManagerPath && localStorage.getItem("isPolicyManager") === 'false' && localStorage.getItem("isAdmin") === 'false') {
+    if (isPolicyManagerPath && sessionStorage.getItem("isPolicyManager") === 'false' && sessionStorage.getItem("isAdmin") === 'false') {
       navigate('/partnermanagement/runtimeError', { state: { messageType: 'noAccess', errorCode: '', errorText: '' } });
     };
 
@@ -42,7 +42,9 @@ const GuardedRoute = ({ children }) => {
           //in the Axios Http Interceptor
           const userProfile = getUserProfile();
           const isDashboard = initialPathnameRef.current.split('/').includes('dashboard') ? true : false;
-          if (userProfile && !isDashboard) {
+          const isAdmin = userProfile?.roles?.includes("PARTNER_ADMIN") || false;
+          const isPolicyManager = userProfile?.roles?.includes("POLICYMANAGER") || false;
+          if (userProfile && !isDashboard && !isAdmin && !isPolicyManager) {
             const verifyEmailRequest = createRequest({
               "emailId": userProfile.email
             });

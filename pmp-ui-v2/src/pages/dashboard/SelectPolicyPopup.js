@@ -10,6 +10,7 @@ import ErrorMessage from "../common/ErrorMessage.js";
 import LoadingIcon from '../common/LoadingIcon.js';
 import SuccessMessage from '../common/SuccessMessage.js';
 import PolicyGroupSelector from '../common/PolicyGroupSelector.js';
+import TextInputComponent from '../common/fields/TextInputComponent.js';
 import FocusTrap from 'focus-trap-react';
 import PropTypes from 'prop-types';
 
@@ -212,7 +213,7 @@ function SelectPolicyPopup({
                             )}
                             <div className="border-gray-200 border-opacity-75 border-t"></div>
                             <div className="py-3 px-4 text-sm text-[#414141]">
-                                <p id='select_policy_group_popup_description'>
+                                <p id='select_policy_group_popup_description' className={isLoginLanguageRTL ? "text-right" : "text-left"}>
                                     {displayText}
                                 </p>
                                 {descriptionText.split(' ').length > maxWords && (
@@ -223,12 +224,16 @@ function SelectPolicyPopup({
                                 <form>
                                     <div className="pt-2 w-full mb-1 flex flex-col">
                                         <div className="flex flex-col mb-3">
-                                            <label id="select_policy_group_partner_type_label" className="block text-dark-blue text-sm font-semibold mb-2">
-                                                {t('selectPolicyPopup.partnerTypeLabel')}<span className="text-red-500 pl-1">*</span>
-                                            </label>
-                                            <button id='select_policyPopup_partner_type' disabled className="flex items-center justify-between w-full h-10 px-2 py-2 border border-gray-300 rounded-md text-sm text-dark-blue bg-gray-200 leading-tight focus:outline-none focus:shadow-outline" type="button">
-                                                <span>{getPartnerTypeDescription(isLinkPolicyGroupPopup ? partnerType : userprofile.partnerType, t)}</span>
-                                            </button>
+                                            <TextInputComponent
+                                                fieldName="partnerType"
+                                                fieldNameKey="selectPolicyPopup.partnerTypeLabel*"
+                                                placeHolderKey="selectPolicyPopup.partnerTypeLabel"
+                                                textBoxValue={getPartnerTypeDescription(isLinkPolicyGroupPopup ? partnerType : userprofile.partnerType, t)}
+                                                onTextChange={() => {}}
+                                                styleSet={{ outerDiv: "mb-0" }}
+                                                id="select_policyPopup_partner_type"
+                                                disableField={true}
+                                            />
                                         </div>
                                         <div className="flex flex-col">
                                             <PolicyGroupSelector

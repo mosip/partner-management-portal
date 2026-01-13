@@ -29,7 +29,7 @@ function ViewFtmChipDetails() {
     const [downloadCertApiNotExist, setDownloadCertApiNotExist] = useState(false);
 
     useEffect(() => {
-        const selectedFtm = localStorage.getItem('selectedFtmData');
+        const selectedFtm = sessionStorage.getItem('selectedFtmData');
         if (!selectedFtm) {
             setUnexpectedError(true);
             return;

@@ -17,7 +17,7 @@ function ViewPolicyRequestDetails() {
     const [showApproveRejectPopup, setShowApproveRejectPopup] = useState(false);
 
     useEffect(() => {
-        const policyRequestData = localStorage.getItem('selectedPartnerPolicyRequest');
+        const policyRequestData = sessionStorage.getItem('selectedPartnerPolicyRequest');
         if (policyRequestData) {
             try {
                 const selectedPolicyRequestData = JSON.parse(policyRequestData);
@@ -40,7 +40,7 @@ function ViewPolicyRequestDetails() {
             setShowApproveRejectPopup(false);
             const updatedPolicyRequestDetails = {...policyRequestDetails, status: getApproveRejectStatus(status)};
             setPolicyRequestDetails(updatedPolicyRequestDetails);
-            localStorage.setItem('selectedPartnerPolicyRequest', JSON.stringify(updatedPolicyRequestDetails));
+            sessionStorage.setItem('selectedPartnerPolicyRequest', JSON.stringify(updatedPolicyRequestDetails));
         }
     }
 

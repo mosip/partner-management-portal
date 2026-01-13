@@ -63,7 +63,7 @@ function MainLayout({ children }) {
         try {
             const configData = await getAppConfig();
             const itemsPerPage = Number(configData['itemsPerPage']);
-            localStorage.setItem('itemsPerPage', itemsPerPage);
+            sessionStorage.setItem('itemsPerPage', itemsPerPage);
         } catch (error) {
             console.error("Error fetching item per page value:", error);
         }
@@ -116,6 +116,20 @@ function MainLayout({ children }) {
         async function fetchData() {
             try {
                 const userProfile = getUserProfile();
+                const rolesString = userProfile.roles ?? '';
+                // Split roles string into array, trim whitespace, and filter empty entries
+                const rolesArray = rolesString.split(',')
+                    .map(role => role.trim())
+                    .filter(role => role.length > 0);
+                // Perform exact membership checks
+                const isPartnerAdmin = rolesArray.includes('PARTNER_ADMIN');
+                const isPolicyManager = rolesArray.includes('POLICYMANAGER');
+
+                // Don't call verify endpoint if user is partner admin or policy manager
+                if (isPartnerAdmin || isPolicyManager) {
+                    return;
+                }
+
                 const verifyEmailRequest = createRequest({
                     "emailId": userProfile.email
                 });

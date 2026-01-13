@@ -7,9 +7,10 @@ import {
     handleMouseClickForDropdown, toggleSortDescOrder, toggleSortAscOrder, createRequest, bgOfStatus,
     onPressEnterKey,
     populateClientNames,
-    getClientNameLangMap,
     setSubmenuRef,
-    isOidcClientAvailable
+    isOidcClientAvailable,
+    isOidcClientAdditionalInfoRequired,
+    createDeactivateRequest
 } from '../../../utils/AppUtils';
 import { HttpService } from '../../../services/HttpService';
 import ErrorMessage from '../../common/ErrorMessage';
@@ -41,7 +42,7 @@ function OidcClientsList() {
     const [dataLoaded, setDataLoaded] = useState(false);
     const [tableDataLoaded, setTableDataLoaded] = useState(true);
     const [filter, setFilter] = useState(false);
-    const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
+    const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(sessionStorage.getItem('itemsPerPage') ? Number(sessionStorage.getItem('itemsPerPage')) : 8);
     const [order, setOrder] = useState("DESC");
     const [activeSortAsc, setActiveSortAsc] = useState("");
     const [activeSortDesc, setActiveSortDesc] = useState("createdDateTime");
@@ -63,16 +64,27 @@ function OidcClientsList() {
     const submenuRef = useRef([]);
     const [showCompatibilityMsg, setShowCompatibilityMsg] = useState(false);
     const [disableCreateOidcBtn, setDisableCreateOidcBtn] = useState(false);
+    const [additionalConfigRequired, setAdditionalConfigRequired] = useState(false);
 
     useEffect(() => {
         handleMouseClickForDropdown(submenuRef, () => setViewClientId(-1));
     }, [submenuRef]);
 
     useEffect(() => {
+        const checkAdditionalConfigSupport = async () => {
+          const isRequired = await isOidcClientAdditionalInfoRequired();
+          if (isRequired) {
+            setAdditionalConfigRequired(isRequired);
+          }
+        };
+        checkAdditionalConfigSupport();
+    }, []);
+
+    useEffect(() => {
         const fetchData = async () => {
             try {
                 setDataLoaded(false);
-                const response = await HttpService.get(getPartnerManagerUrl('/oauth/client', process.env.NODE_ENV));
+                const response = await HttpService.get(getPartnerManagerUrl('/oidc-clients', process.env.NODE_ENV));
                 if (response) {
                     const responseData = response.data;
                     if (responseData && responseData.response) {
@@ -130,58 +142,37 @@ function OidcClientsList() {
 
     const showViewOidcClientDetails = (selectedClientdata) => {
         if (selectedClientdata.status === "ACTIVE") {
-            localStorage.setItem('selectedClientData', JSON.stringify(selectedClientdata));
+            sessionStorage.setItem('selectedClientData', JSON.stringify(selectedClientdata));
             navigate('/partnermanagement/authentication-services/view-oidc-client-details')
         }
     };
 
     const onClickView = (selectedClientdata) => {
-        localStorage.setItem('selectedClientData', JSON.stringify(selectedClientdata));
+        sessionStorage.setItem('selectedClientData', JSON.stringify(selectedClientdata));
         navigate('/partnermanagement/authentication-services/view-oidc-client-details')
     };
 
     const showEditOidcClient = (selectedClientdata) => {
         if (selectedClientdata.status === "ACTIVE") {
-            localStorage.setItem('selectedClientData', JSON.stringify(selectedClientdata));
+            sessionStorage.setItem('selectedClientData', JSON.stringify(selectedClientdata));
             navigate('/partnermanagement/authentication-services/edit-oidc-client')
         }
     };
 
     const showDeactivateOidcClient = async (selectedClientdata, index) => {
         if (selectedClientdata.status === "ACTIVE") {
-            setTableDataLoaded(false);
-            try {
-                const response = await HttpService.get(getPartnerManagerUrl(`/oauth/client/${selectedClientdata.clientId}`, process.env.NODE_ENV));
-                if (response) {
-                    const responseData = response.data;
-                    if (responseData && responseData.response) {
-                        const clientData = responseData.response;
-                        const request = createRequest({
-                            logoUri: clientData.logoUri,
-                            redirectUris: clientData.redirectUris,
-                            status: "INACTIVE",
-                            grantTypes: clientData.grantTypes,
-                            clientName: selectedClientdata.clientNameEng,
-                            clientAuthMethods: clientData.clientAuthMethods,
-                            clientNameLangMap: getClientNameLangMap(selectedClientdata.clientNameEng, selectedClientdata.clientNameJson)
-                        });
-                        setDeactivateRequest(request);
-                        setViewClientId(-1);
-                        setSelectedOidcClient(selectedClientdata);
-                        setShowActiveIndexDeactivatePopup(index);
-                    } else {
-                        handleServiceErrors(responseData, setErrorCode, setErrorMsg);
-                    }
-                } else {
-                    setErrorMsg(t('oidcClientsList.errorInOidcClientsList'))
-                }
-            } catch (err) {
-                console.error('Error fetching data:', err);
-                if (err.response?.status && err.response.status !== 401) {
-                    setErrorMsg(err.toString());
-                }
+            if (additionalConfigRequired) {
+                const request = createRequest({
+                    status: "INACTIVE"
+                }, "mosip.pms.deactivate.oidc.client.patch", true);
+                setDeactivateRequest(request);
+                setSelectedOidcClient({...selectedClientdata, additionalConfigRequired: true});
+            } else {
+                await createDeactivateRequest(selectedClientdata, setTableDataLoaded, setDeactivateRequest, setErrorCode, setErrorMsg, t);
+                setSelectedOidcClient({...selectedClientdata, additionalConfigRequired: false});
             }
-            setTableDataLoaded(true);
+            setViewClientId(-1);
+            setShowActiveIndexDeactivatePopup(index);
         }
     };
 
@@ -330,7 +321,7 @@ function OidcClientsList() {
                                                     <tr>
                                                         {tableHeaders.map((header, index) => {
                                                             return (
-                                                                <th key={index} className={`py-4 font-semibold text-sm whitespace-nowrap text-[#6F6E6E] w-[15%] ${header.id === "status" && 'w-[12%]'} ${(header.id === 'policyName' || header.id === 'policyGroupName') ? (isLoginLanguageRTL ? 'pr-0.5' : 'pl-0.5') : 'px-1.5'}`}>
+                                                                <th key={index} className={`py-4 px-2 font-semibold text-sm whitespace-nowrap text-[#6F6E6E] ${header.id === "status" ? 'w-[7%]' : 'w-[15%]'}`}>
                                                                     <div id={`${header.headerNameKey}_header`} className={`flex items-center gap-x-1 font-semibold  ${header.id === "oidcClientId" && 'justify-center'} ${header.id === "action" && 'justify-center'}`}>
                                                                         {t(header.headerNameKey)}
                                                                         {(header.id !== "action") && (header.id !== "oidcClientId") && (
@@ -356,8 +347,8 @@ function OidcClientsList() {
                                                             return (
                                                                 <tr id={'oidc_client_list_item' + (index + 1)} key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${client.status.toLowerCase() === "inactive" ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
                                                                     <td onClick={() => showViewOidcClientDetails(client)} className="px-2 mx-2">{client.partnerId}</td>
-                                                                    <td onClick={() => showViewOidcClientDetails(client)}>{client.policyGroupName}</td>
-                                                                    <td onClick={() => showViewOidcClientDetails(client)} className={`${isLoginLanguageRTL ? 'pr-1' : 'pl-1'}`}>{client.policyName}</td>
+                                                                    <td onClick={() => showViewOidcClientDetails(client)} className="px-2 mx-2">{client.policyGroupName}</td>
+                                                                    <td onClick={() => showViewOidcClientDetails(client)} className={`px-2 mx-2`}>{client.policyName}</td>
                                                                     <td onClick={() => showViewOidcClientDetails(client)} className="px-2 mx-2">{client.clientNameEng}</td>
                                                                     <td onClick={() => showViewOidcClientDetails(client)} className="px-2 mx-2">{formatDate(client.createdDateTime, 'date')}</td>
                                                                     <td onClick={() => showViewOidcClientDetails(client)} className="px-2 mx-2">
