@@ -1269,7 +1269,7 @@
         "filterNoNotificationTitle": "No Notifications Found",
         "errorInNotifcations": "Error while fetching notifications",
         "errorWhileUpdatingNotificationSeenTime": "Error while updating notifications seen date and time.",
-        "errorInDismiss": "Error while dismissing notifcation",
+        "errorInDismiss": "Error while dismissing notification",
         "mispLicenseKeyExpiry": "MISP License Key Expiration",
         "mispLicenseKeyExpiryDescription": "MISP License Key with name: <span>{{mispLicenseKeyName}}</span> for partner <span>{{mispPartnerId}}</span> is set to expire on <span>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions."
     },

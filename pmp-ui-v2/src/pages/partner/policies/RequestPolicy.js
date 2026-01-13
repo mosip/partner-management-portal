@@ -41,6 +41,9 @@ function RequestPolicy() {
     const [popupData, setPopupData] = useState({});
     const [partnerTypeDropdownData, setPartnerTypeDropdownData] = useState([]);
 
+    // Determine admin path at the top of component to avoid temporal dead zone
+    const isAdminPath = location.pathname.includes('admin');
+
     const cancelErrorMsg = () => {
         setErrorMsg("");
     };
@@ -222,7 +225,6 @@ function RequestPolicy() {
     };
 
     // Determine backUrl and cancelUrl based on admin path
-    const isAdminPath = location.pathname.includes('admin');
     const backUrl = isAdminPath ? '/partnermanagement/admin/policy-requests-list' : '/partnermanagement/policies/policies-list';
     const cancelUrl = backUrl;
 

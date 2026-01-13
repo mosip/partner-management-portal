@@ -34,7 +34,7 @@ function Information({ infoKey, infoKey1, id }) {
                         absolute z-20 p-4 font-normal
                         w-[20vw] max-w-[300px] max-h-[20vh] overflow-y-auto
                         shadow-lg bg-white border border-gray-300 rounded
-                        ${isLoginLanguageRTL ? 'right-6 max-800:-right-[800%]' : 'max-800:left-1/2  left-6'} mt-2
+                        ${isLoginLanguageRTL ? 'right-6 max-800:-right-[50%]' : 'max-800:left-1/2  left-6'} mt-2
                         max-800:-translate-x-1/2 max-800:top-full max-800:mt-3
                         `}
                     >

@@ -57,22 +57,29 @@ function EditAdminApiKey() {
             setDataLoaded(true);
             return;
         }
-        const apiKeyData = JSON.parse(data);
-        setApiKeyDetails(apiKeyData);
-        
-        // Initialize expiry date
-        if (apiKeyData?.apiKeyExpiryDateTime) {
-            setSelectedDateStr(apiKeyData.apiKeyExpiryDateTime);
-            setOriginalExpiryDate(apiKeyData.apiKeyExpiryDateTime);
-        } else {
-            // Initialize with today's date as default
-            const today = new Date();
-            today.setHours(23, 59, 59, 999);
-            const todayISO = today.toISOString();
-            setSelectedDateStr(todayISO);
-            setOriginalExpiryDate(todayISO);
+        try {
+            const apiKeyData = JSON.parse(data);
+            setApiKeyDetails(apiKeyData);
+            
+            // Initialize expiry date
+            if (apiKeyData?.apiKeyExpiryDateTime) {
+                setSelectedDateStr(apiKeyData.apiKeyExpiryDateTime);
+                setOriginalExpiryDate(apiKeyData.apiKeyExpiryDateTime);
+            } else {
+                // Initialize with today's date as default
+                const today = new Date();
+                today.setHours(23, 59, 59, 999);
+                const todayISO = today.toISOString();
+                setSelectedDateStr(todayISO);
+                setOriginalExpiryDate(todayISO);
+            }
+            setDataLoaded(true);
+        } catch (error) {
+            console.error('Error parsing selectedApiKeyAttributes from sessionStorage:', error);
+            setUnexpectedError(true);
+            setDataLoaded(true);
+            return;
         }
-        setDataLoaded(true);
     }, []);
 
     useEffect(() => {

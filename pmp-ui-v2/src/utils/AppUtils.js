@@ -1207,13 +1207,14 @@ export const getNotificationDescription = (notification, isLoginLanguageRTL, t) 
     } else if (notification.notificationType === 'WEEKLY_SUMMARY') {
         return getWeeklySummaryDescription(notification, isLoginLanguageRTL, t);
     } else if (notification.notificationType === 'MISP_LICENSE_KEY_EXPIRY') {
+        const mispLicenseKeyDetail = notification.notificationDetails?.mispLicenseKeyDetails?.[0] || null;
         return (
             <Trans 
                 i18nKey="viewAllNotifications.mispLicenseKeyExpiryDescription"
                 values={{
-                    mispLicenseKeyName: notification.notificationDetails.mispLicenseKeyDetails[0].mispLicenseKeyName ? notification.notificationDetails.mispLicenseKeyDetails[0].mispLicenseKeyName : '-',
-                    mispPartnerId: notification.notificationDetails.mispLicenseKeyDetails[0].mispPartnerId,
-                    expiryDateTime: formatDate(notification.notificationDetails.mispLicenseKeyDetails[0].expiryDateTime, 'dateInWords')
+                    mispLicenseKeyName: mispLicenseKeyDetail?.mispLicenseKeyName || '-',
+                    mispPartnerId: mispLicenseKeyDetail?.mispPartnerId || '-',
+                    expiryDateTime: formatDate(mispLicenseKeyDetail?.expiryDateTime, 'dateInWords')
                 }}
                 components={{ span: <span className={`font-semibold md:whitespace-nowrap md:break-words break-all`} /> }}
             />
@@ -1293,13 +1294,14 @@ export const getNotificationPanelDescription = (notification, isLoginLanguageRTL
     } else if (notification.notificationType === 'WEEKLY_SUMMARY') {
         return getWeeklySummaryDescription (notification, isLoginLanguageRTL, t);
     } else if (notification.notificationType === 'MISP_LICENSE_KEY_EXPIRY') {
+        const mispLicenseKeyDetail = notification.notificationDetails?.mispLicenseKeyDetails?.[0] || null;
         return (
             <Trans 
                 i18nKey="notificationPopup.mispLicenseKeyExpiryDescription"
                 values={{
-                    mispLicenseKeyName: notification.notificationDetails.mispLicenseKeyDetails[0].mispLicenseKeyName ? notification.notificationDetails.mispLicenseKeyDetails[0].mispLicenseKeyName : '-',
-                    mispPartnerId: notification.notificationDetails.mispLicenseKeyDetails[0].mispPartnerId,
-                    expiryDateTime: formatDate(notification.notificationDetails.mispLicenseKeyDetails[0].expiryDateTime, 'dateInWords')
+                    mispLicenseKeyName: mispLicenseKeyDetail?.mispLicenseKeyName || '-',
+                    mispPartnerId: mispLicenseKeyDetail?.mispPartnerId || '-',
+                    expiryDateTime: formatDate(mispLicenseKeyDetail?.expiryDateTime, 'dateInWords')
                 }}
                 components={{ span: <span className={`font-semibold ${isLoginLanguageRTL && 'whitespace-nowrap'}`} /> }}
             />

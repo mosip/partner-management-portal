@@ -131,7 +131,7 @@ function OidcClientAdditionalInfoSection({
           <div className="flex flex-row justify-between space-x-4">
             {/* Consent Expiry Duration */}
             <div className="flex flex-col w-[48%]">
-              <label id="consent_expiry_label" className={`flex items-center text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+              <label id="consent_expiry_label" htmlFor="consent_expiry_input" className={`flex items-center text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                 {t('createOidcClient.consentExpiryDuration')}
                 <Information infoKey={t('createOidcClient.consentExpiryDurationTooltip')} id='consent_expiry_info' />
               </label>
@@ -192,7 +192,7 @@ function OidcClientAdditionalInfoSection({
                 <div className="bg-white border border-neutral-200 rounded-md p-8 flex flex-col items-center justify-center min-h-[120px]">
                   <button
                     type="button"
-                    id="add_purpose_title_language"
+                    id="add_purpose_title_language_btn"
                     className={`${additionalConfigRequired ? 'bg-[#1447b2] text-white hover:bg-[#0f3a8a] cursor-pointer' : 'bg-[#A5A5A5] text-white'} font-semibold text-sm px-6 py-2 rounded-md transition-colors`}
                     tabIndex={additionalConfigRequired ? 0 : -1}
                     onKeyDown={additionalConfigRequired ? (e) => onPressEnterKey(e, addPurposeTitleEntry) : undefined}
@@ -210,17 +210,17 @@ function OidcClientAdditionalInfoSection({
                   {purposeTitleEntries.map((entry, index) => {
                     const availableLangs = getAvailableOidcLanguages(entry.id, purposeTitleEntries, languageDropdownData);
                     return (
-                      <div key={index} className="flex mb-2">
+                      <div key={entry.id} className="flex mb-2">
                         <div className="w-1/3">
                           <DropdownComponent
-                            fieldName={`purposeTitleLang_${index + 1}`}
+                            fieldName={`purposeTitleLang_${entry.id}`}
                             dropdownDataList={availableLangs}
                             onDropDownChangeEvent={(field, value) => updatePurposeTitleEntry(entry.id, 'language', value)}
                             fieldNameKey=""
                             placeHolderKey="createOidcClient.selectLanguage"
                             selectedDropdownValue={entry.language}
                             styleSet={styles}
-                            id={`purpose_title_lang_${index + 1}`}
+                            id={`purpose_title_lang_${entry.id}`}
                             disabled={!additionalConfigRequired} />
                         </div>
                         <div className={`w-full mt-1 ${isLoginLanguageRTL ? 'mr-5' : 'ml-5'}`}>
@@ -229,7 +229,7 @@ function OidcClientAdditionalInfoSection({
                             onChange={(e) => updatePurposeTitleEntry(entry.id, 'text', e.target.value)}
                             onDelete={() => deletePurposeTitleEntry(entry.id)}
                             placeholder={getOidcPlaceholderForLanguage(entry.language, 'PurposeTitle', t)}
-                            id={`purpose_title_text_${index + 1}`}
+                            id={`purpose_title_text_${entry.id}`}
                             showDelete={purposeTitleEntries.length > 0}
                             errorMessage={purposeTitleErrors[entry.id]}
                             isRTL={isLangRTL(entry.language)}
@@ -243,7 +243,7 @@ function OidcClientAdditionalInfoSection({
                   {purposeTitleEntries.length < languageDropdownData.length && (
                     <div
                       role="button"
-                      id="add_purpose_title_language"
+                      id="add_purpose_title_language_link"
                       className={`font-bold text-xs w-fit ${additionalConfigRequired ? 'text-[#1447b2] cursor-pointer' : 'text-gray-400'}`}
                       tabIndex={additionalConfigRequired ? 0 : -1}
                       onKeyDown={additionalConfigRequired ? (e) => onPressEnterKey(e, addPurposeTitleEntry) : undefined}
@@ -272,7 +272,7 @@ function OidcClientAdditionalInfoSection({
                 <div className="bg-white border border-neutral-200 rounded-md p-8 flex flex-col items-center justify-center min-h-[120px]">
                   <button
                     type="button"
-                    id="add_purpose_subtitle_language"
+                    id="add_purpose_subtitle_language_btn"
                     className={`${additionalConfigRequired ? 'bg-[#1447b2] text-white hover:bg-[#0f3a8a] cursor-pointer' : 'bg-[#A5A5A5] text-white'} font-semibold text-sm px-6 py-2 rounded-md transition-colors`}
                     tabIndex={additionalConfigRequired ? 0 : -1}
                     onKeyDown={additionalConfigRequired ? (e) => onPressEnterKey(e, addPurposeSubtitleEntry) : undefined}
@@ -290,17 +290,17 @@ function OidcClientAdditionalInfoSection({
                   {purposeSubtitleEntries.map((entry, index) => {
                     const availableLangs = getAvailableOidcLanguages(entry.id, purposeSubtitleEntries, languageDropdownData);
                     return (
-                      <div key={index} className="flex mb-2">
+                      <div key={entry.id} className="flex mb-2">
                         <div className="w-1/3">
                           <DropdownComponent
-                            fieldName={`purposeSubtitleLang_${index + 1}`}
+                            fieldName={`purposeSubtitleLang_${entry.id}`}
                             dropdownDataList={availableLangs}
                             onDropDownChangeEvent={(field, value) => updatePurposeSubtitleEntry(entry.id, 'language', value)}
                             fieldNameKey=""
                             placeHolderKey="createOidcClient.selectLanguage"
                             selectedDropdownValue={entry.language}
                             styleSet={styles}
-                            id={`purpose_subtitle_lang_${index + 1}`}
+                            id={`purpose_subtitle_lang_${entry.id}`}
                             disabled={!additionalConfigRequired} />
                         </div>
                         <div className={`w-full mt-1 ${isLoginLanguageRTL ? 'mr-5' : 'ml-5'}`}>
@@ -309,7 +309,7 @@ function OidcClientAdditionalInfoSection({
                             onChange={(e) => updatePurposeSubtitleEntry(entry.id, 'text', e.target.value)}
                             onDelete={() => deletePurposeSubtitleEntry(entry.id)}
                             placeholder={getOidcPlaceholderForLanguage(entry.language, 'PurposeSubtitle', t)}
-                            id={`purpose_subtitle_text_${index + 1}`}
+                            id={`purpose_subtitle_text_${entry.id}`}
                             showDelete={purposeSubtitleEntries.length > 0}
                             errorMessage={purposeSubtitleErrors[entry.id]}
                             isRTL={isLangRTL(entry.language)}
@@ -323,7 +323,7 @@ function OidcClientAdditionalInfoSection({
                   {purposeSubtitleEntries.length < languageDropdownData.length && (
                     <div
                       role="button"
-                      id="add_purpose_subtitle_language"
+                      id="add_purpose_subtitle_language_link"
                       className={`font-bold text-xs w-fit ${additionalConfigRequired ? 'text-[#1447b2] cursor-pointer' : 'text-gray-400'}`}
                       tabIndex={additionalConfigRequired ? 0 : -1}
                       onKeyDown={additionalConfigRequired ? (e) => onPressEnterKey(e, addPurposeSubtitleEntry) : undefined}
