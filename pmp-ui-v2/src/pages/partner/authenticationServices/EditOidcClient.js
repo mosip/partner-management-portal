@@ -598,7 +598,15 @@ function EditOidcClient() {
 
     const checkIfClientNameLangMapIsUpdated = () => {
         const currentLangMap = buildClientNameLangMap(clientNameLangMapEntries, additionalConfigRequired, clientName);
-        const selectedLangMap = selectedClientDetails.clientNameLangMap || {};
+        
+        // Normalize selected map the same way as current map to ensure consistent comparison
+        const selectedClientNameLangMapEntries = selectedClientDetails.clientNameLangMap && typeof selectedClientDetails.clientNameLangMap === 'object'
+            ? Object.entries(selectedClientDetails.clientNameLangMap).map(([language, text]) => ({
+                language: language,
+                text: text || ''
+            }))
+            : [];
+        const selectedLangMap = buildClientNameLangMap(selectedClientNameLangMapEntries, additionalConfigRequired, selectedClientDetails.name || clientName);
         
         const currentKeys = Object.keys(currentLangMap).sort((a, b) => a.localeCompare(b));
         const selectedKeys = Object.keys(selectedLangMap).sort((a, b) => a.localeCompare(b));
