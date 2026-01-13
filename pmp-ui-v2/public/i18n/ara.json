@@ -536,7 +536,7 @@
         "deleteInEng": "Delete",
         "deleteInTam": "நீக்கு",
         "deleteInKan": "ಅಳಿಸಿ",
-        "compatibilityMsg": "ملاحظة: تم تعطيل حقول المعلومات الإضافية ذات الصلة لأن إصدار Esignet المستخدم حاليًا في منصة MOSIP لا يدعمها."
+        "compatibilityMsg": "ملاحظة: القسم أدناه معطّل وغير قابل للتحرير، لأن نظام PMS مدمج مع إصدار من eSignet لا يدعم حقول المعلومات الإضافية هذه."
     },
     "oidcClientsList": {
         "partnerId": "معرف الشريك",
