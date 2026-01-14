@@ -34,6 +34,7 @@
         "undoChanges": "Undo Changes",
         "clear": "Clear",
         "inputError": "Invalid character. Allowed special characters are: @ # & ( ) \\ - ' ? ! \" : ; = _",
+        "usernameError": "Username must start with a letter and can include only letters, numbers, . _ -.",
         "networkError": "Network Error",
         "networkErrorDesc": "Please check your internet connection and try again.",
         "retry": "Retry",
@@ -536,7 +537,7 @@
         "deleteInEng": "Delete",
         "deleteInTam": "நீக்கு",
         "deleteInKan": "ಅಳಿಸಿ",
-        "compatibilityMsg": "Note: Additional Information related fields are disabled because the version of Esignet currently deployed in the MOSIP Platform does not support them."
+        "compatibilityMsg": "Note: The section below is disabled and non-editable as PMS is integrated with an eSignet version that does not support these additional information fields."
     },
     "oidcClientsList": {
         "partnerId": "Partner ID",
