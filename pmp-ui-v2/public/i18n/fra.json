@@ -34,6 +34,7 @@
         "undoChanges": "Annuler les modifications",
         "clear": "Effacer",
         "inputError": "Caractère non valide. Les caractères spéciaux autorisés sont : @ # & ( ) \\ - ' ? ! \" : ; = _",
+        "usernameError": "Le nom d'utilisateur doit commencer par une lettre et ne peut contenir que des lettres, des chiffres, . _ -.",
         "networkError": "Erreur réseau",
         "networkErrorDesc": "Veuillez vérifier votre connexion Internet et réessayer.",
         "retry": "Réessayer",
@@ -536,7 +537,7 @@
         "deleteInEng": "Delete",
         "deleteInTam": "நீக்கு",
         "deleteInKan": "ಅಳಿಸಿ",
-        "compatibilityMsg": "Remarque : Les champs relatifs aux informations supplémentaires sont désactivés car la version d'Esignet actuellement déployée sur la plateforme MOSIP ne les prend pas en charge."
+        "compatibilityMsg": "Remarque : la section ci-dessous est désactivée et non modifiable, car PMS est intégré à une version de eSignet qui ne prend pas en charge ces champs d’informations supplémentaires."
     },
     "oidcClientsList": {
         "partnerId": "ID partenaire",

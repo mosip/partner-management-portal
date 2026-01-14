@@ -1470,7 +1470,7 @@ export const validateUsernameRegex = (input, setInputError, t) => {
     if (validPattern.test(input)) {
         setInputError("");
     } else {
-        setInputError(t('commons.inputError'));
+        setInputError(t('commons.usernameError'));
     }
 }
 
