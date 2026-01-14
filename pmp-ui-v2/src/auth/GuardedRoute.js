@@ -42,8 +42,14 @@ const GuardedRoute = ({ children }) => {
           //in the Axios Http Interceptor
           const userProfile = getUserProfile();
           const isDashboard = initialPathnameRef.current.split('/').includes('dashboard') ? true : false;
-          const isAdmin = userProfile?.roles?.includes("PARTNER_ADMIN") || false;
-          const isPolicyManager = userProfile?.roles?.includes("POLICYMANAGER") || false;
+          const rolesString = userProfile?.roles ?? '';
+          // Split roles string into array, trim whitespace, and filter empty entries
+          const rolesArray = rolesString.split(',')
+              .map(role => role.trim())
+              .filter(role => role.length > 0);
+          // Perform exact membership checks
+          const isAdmin = rolesArray.includes("PARTNER_ADMIN");
+          const isPolicyManager = rolesArray.includes("POLICYMANAGER");
           if (userProfile && !isDashboard && !isAdmin && !isPolicyManager) {
             const verifyEmailRequest = createRequest({
               "emailId": userProfile.email
