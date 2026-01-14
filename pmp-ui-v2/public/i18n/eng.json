@@ -34,7 +34,6 @@
         "undoChanges": "Undo Changes",
         "clear": "Clear",
         "inputError": "Invalid character. Allowed special characters are: @ # & ( ) \\ - ' ? ! \" : ; = _",
-        "usernameError": "Username must start with a letter and can include only letters, numbers, . _ -.",
         "networkError": "Network Error",
         "networkErrorDesc": "Please check your internet connection and try again.",
         "retry": "Retry",
@@ -537,7 +536,7 @@
         "deleteInEng": "Delete",
         "deleteInTam": "நீக்கு",
         "deleteInKan": "ಅಳಿಸಿ",
-        "compatibilityMsg": "Note: The section below is disabled and non-editable as PMS is integrated with an eSignet version that does not support these additional information fields."
+        "compatibilityMsg": "Note: Additional Information related fields are disabled because the version of Esignet currently deployed in the MOSIP Platform does not support them."
     },
     "oidcClientsList": {
         "partnerId": "Partner ID",
@@ -1270,7 +1269,7 @@
         "filterNoNotificationTitle": "No Notifications Found",
         "errorInNotifcations": "Error while fetching notifications",
         "errorWhileUpdatingNotificationSeenTime": "Error while updating notifications seen date and time.",
-        "errorInDismiss": "Error while dismissing notifcation",
+        "errorInDismiss": "Error while dismissing notification",
         "mispLicenseKeyExpiry": "MISP License Key Expiration",
         "mispLicenseKeyExpiryDescription": "MISP License Key with name: <span>{{mispLicenseKeyName}}</span> for partner <span>{{mispPartnerId}}</span> is set to expire on <span>{{expiryDateTime}}</span>. Renew it now to avoid any disruptions."
     },

@@ -229,7 +229,7 @@ function PartnerCertificatesList() {
                                                         {t('partnerCertificatesList.upload')}
                                                     </button>}
                                                 {showActiveIndexUploadCertifcatePopup === index && (
-                                                    <UploadCertificate closePopup={closePopup} popupData={{ ...selectedPartnerData, isUploadPartnerCertificate: true, uploadHeader: 'uploadCertificate.uploadPartnerCertificate', reUploadHeader: 'uploadCertificate.reUploadPartnerCertificate' }} request={uploadCertificateRequest} />
+                                                    <UploadCertificate closePopup={closePopup} popupData={{ ...selectedPartnerData, isUploadPartnerCertificate: true, uploadHeader: 'uploadCertificate.uploadPartnerCertificate', reUploadHeader: 'uploadCertificate.reUploadPartnerCertificate', isMispOrAbisPartnerCertificate: selectedPartnerData?.partnerType === "MISP_Partner" || selectedPartnerData?.partnerType === "ABIS_Partner" }} request={uploadCertificateRequest} />
                                                 )}
                                             </div>
                                             <hr className="border bg-medium-gray" />

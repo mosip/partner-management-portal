@@ -31,8 +31,8 @@ function TextInputComponentWithDeleteButton({
     const langCode = languageCode.toLowerCase();
     const deleteKey = `createOidcClient.deleteIn${langCode.charAt(0).toUpperCase() + langCode.slice(1)}`;
     
-    // Use the respective translation file for the language code
-    const deleteLabel = t(deleteKey, { lng: langCode });
+    // Use the currently loaded resource bundle
+    const deleteLabel = t(deleteKey);
     
     // Fallback to default if translation not found
     return deleteLabel === deleteKey ? t('createOidcClient.delete') : deleteLabel;

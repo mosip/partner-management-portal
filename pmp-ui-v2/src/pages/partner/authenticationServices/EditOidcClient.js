@@ -153,7 +153,6 @@ function EditOidcClient() {
                 });
             }
         });
-        console.log(dataArr);
         return dataArr;
     }, [t]);
 
@@ -243,7 +242,16 @@ function EditOidcClient() {
          const fetchData = async () => {
              try {
                  setDataLoaded(false);
-                const selectedOidcClientData = JSON.parse(clientData);
+                let selectedOidcClientData;
+                try {
+                    selectedOidcClientData = JSON.parse(clientData);
+                } catch (parseErr) {
+                    console.error('Error parsing selectedClientData from sessionStorage:', parseErr);
+                    sessionStorage.removeItem('selectedClientData');
+                    setUnexpectedError(true);
+                    setDataLoaded(true);
+                    return;
+                }
                 // Use clientId from sessionStorage for the GET request
                 const clientId = selectedOidcClientData.clientId;
                  const response = await HttpService.get(getPartnerManagerUrl(`/oidc-clients/${clientId}`, process.env.NODE_ENV));
@@ -355,7 +363,7 @@ function EditOidcClient() {
             inputError = error;
         }, t);
         
-        if (value.trim() === '' && value !== '') {
+        if (value.trim() === '') {
             setClientNameError(t('createOidcClient.clientNameRequired'));
         } else if (inputError) {
             setClientNameError(inputError);
@@ -598,7 +606,15 @@ function EditOidcClient() {
 
     const checkIfClientNameLangMapIsUpdated = () => {
         const currentLangMap = buildClientNameLangMap(clientNameLangMapEntries, additionalConfigRequired, clientName);
-        const selectedLangMap = selectedClientDetails.clientNameLangMap || {};
+        
+        // Normalize selected map the same way as current map to ensure consistent comparison
+        const selectedClientNameLangMapEntries = selectedClientDetails.clientNameLangMap && typeof selectedClientDetails.clientNameLangMap === 'object'
+            ? Object.entries(selectedClientDetails.clientNameLangMap).map(([language, text]) => ({
+                language: language,
+                text: text || ''
+            }))
+            : [];
+        const selectedLangMap = buildClientNameLangMap(selectedClientNameLangMapEntries, additionalConfigRequired, selectedClientDetails.name || clientName);
         
         const currentKeys = Object.keys(currentLangMap).sort((a, b) => a.localeCompare(b));
         const selectedKeys = Object.keys(selectedLangMap).sort((a, b) => a.localeCompare(b));
@@ -1016,7 +1032,7 @@ function EditOidcClient() {
                                                                         <div className="bg-white border border-neutral-200 rounded-md p-8 flex flex-col items-center justify-center min-h-[120px]">
                                                                             <button
                                                                                 type="button"
-                                                                                id="add_client_name_lang_map_entry"
+                                                                                id="add_client_name_lang_map_entry_top"
                                                                                 className="bg-[#1447b2] text-white font-semibold text-sm px-6 py-2 rounded-md cursor-pointer hover:bg-[#0f3a8a] transition-colors"
                                                                                 tabIndex="0"
                                                                                 onKeyDown={(e) => onPressEnterKey(e, addClientNameLangMapEntry)}
@@ -1033,7 +1049,7 @@ function EditOidcClient() {
                                                                             {clientNameLangMapEntries.map((entry, index) => {
                                                                                 const availableLangs = getAvailableOidcLanguages(entry.id, clientNameLangMapEntries, languageDropdownData, true);
                                                                                 return (
-                                                                                    <div key={index} className="flex mb-2">
+                                                                                    <div key={entry.id} className="flex mb-2">
                                                                                         <div className="w-1/3">
                                                                                             <DropdownComponent
                                                                                                 fieldName={`clientNameLangMapLang_${index + 1}`}
@@ -1065,7 +1081,7 @@ function EditOidcClient() {
                                                                             {clientNameLangMapEntries.length < languageDropdownData.filter(lang => lang.fieldValue !== 'default').length && (
                                                                                 <div
                                                                                     role="button"
-                                                                                    id="add_client_name_lang_map_entry"
+                                                                                    id="add_client_name_lang_map_entry_inline"
                                                                                     className="text-[#1447b2] font-bold text-xs w-fit cursor-pointer"
                                                                                     tabIndex="0"
                                                                                     onKeyDown={(e) => onPressEnterKey(e, addClientNameLangMapEntry)}
