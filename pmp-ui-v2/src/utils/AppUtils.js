@@ -3,6 +3,7 @@ import { Trans } from "react-i18next";
 import { HttpService } from "../services/HttpService";
 import { getLoginRedirectUrl } from "../services/LoginRedirectService";
 import { updateHeaderNotifications } from "../notificationsSlice";
+import { v4 as uuidv4 } from 'uuid';
 
 export const formatDate = (dateString, format) => {
     if (!dateString) return '-';
@@ -1207,13 +1208,14 @@ export const getNotificationDescription = (notification, isLoginLanguageRTL, t) 
     } else if (notification.notificationType === 'WEEKLY_SUMMARY') {
         return getWeeklySummaryDescription(notification, isLoginLanguageRTL, t);
     } else if (notification.notificationType === 'MISP_LICENSE_KEY_EXPIRY') {
+        const mispLicenseKeyDetail = notification.notificationDetails?.mispLicenseKeyDetails?.[0] || null;
         return (
             <Trans 
                 i18nKey="viewAllNotifications.mispLicenseKeyExpiryDescription"
                 values={{
-                    mispLicenseKeyName: notification.notificationDetails.mispLicenseKeyDetails[0].mispLicenseKeyName ? notification.notificationDetails.mispLicenseKeyDetails[0].mispLicenseKeyName : '-',
-                    mispPartnerId: notification.notificationDetails.mispLicenseKeyDetails[0].mispPartnerId,
-                    expiryDateTime: formatDate(notification.notificationDetails.mispLicenseKeyDetails[0].expiryDateTime, 'dateInWords')
+                    mispLicenseKeyName: mispLicenseKeyDetail?.mispLicenseKeyName || '-',
+                    mispPartnerId: mispLicenseKeyDetail?.mispPartnerId || '-',
+                    expiryDateTime: formatDate(mispLicenseKeyDetail?.expiryDateTime, 'dateInWords')
                 }}
                 components={{ span: <span className={`font-semibold md:whitespace-nowrap md:break-words break-all`} /> }}
             />
@@ -1293,13 +1295,14 @@ export const getNotificationPanelDescription = (notification, isLoginLanguageRTL
     } else if (notification.notificationType === 'WEEKLY_SUMMARY') {
         return getWeeklySummaryDescription (notification, isLoginLanguageRTL, t);
     } else if (notification.notificationType === 'MISP_LICENSE_KEY_EXPIRY') {
+        const mispLicenseKeyDetail = notification.notificationDetails?.mispLicenseKeyDetails?.[0] || null;
         return (
             <Trans 
                 i18nKey="notificationPopup.mispLicenseKeyExpiryDescription"
                 values={{
-                    mispLicenseKeyName: notification.notificationDetails.mispLicenseKeyDetails[0].mispLicenseKeyName ? notification.notificationDetails.mispLicenseKeyDetails[0].mispLicenseKeyName : '-',
-                    mispPartnerId: notification.notificationDetails.mispLicenseKeyDetails[0].mispPartnerId,
-                    expiryDateTime: formatDate(notification.notificationDetails.mispLicenseKeyDetails[0].expiryDateTime, 'dateInWords')
+                    mispLicenseKeyName: mispLicenseKeyDetail?.mispLicenseKeyName || '-',
+                    mispPartnerId: mispLicenseKeyDetail?.mispPartnerId || '-',
+                    expiryDateTime: formatDate(mispLicenseKeyDetail?.expiryDateTime, 'dateInWords')
                 }}
                 components={{ span: <span className={`font-semibold ${isLoginLanguageRTL && 'whitespace-nowrap'}`} /> }}
             />
@@ -1467,7 +1470,7 @@ export const validateUsernameRegex = (input, setInputError, t) => {
     if (validPattern.test(input)) {
         setInputError("");
     } else {
-        setInputError(t('commons.usernameError'));
+        setInputError(t('commons.inputError'));
     }
 }
 
@@ -1549,7 +1552,7 @@ export const fetchPartnerDetails = async (HttpService, partnerId, setErrorCode, 
  * Creates a new entry object for language-based fields (client name, purpose title/subtitle)
  */
 export const createOidcClientEntry = (language, type) => {
-    const baseId = crypto.randomUUID();
+    const baseId = uuidv4();
     let uniqueId;
     
     switch (type) {
@@ -1592,7 +1595,7 @@ export const validateOidcEntryText = (value, entry, requiredErrorKey, errors, se
     }, t);
 
     // Determine which error to show (priority: required > regex)
-    if (entry.text.trim() === '' && entry.text !== '') {
+    if (value.trim() === '') {
         newErrors[entry.id] = t(requiredErrorKey);
     } else if (inputError) {
         newErrors[entry.id] = inputError;

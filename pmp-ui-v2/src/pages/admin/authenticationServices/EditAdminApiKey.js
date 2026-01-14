@@ -40,7 +40,6 @@ function EditAdminApiKey() {
     const blocker = useBlocker(
         ({ currentLocation, nextLocation }) => {
             if (isSubmitClicked || editExpirySuccess) {
-                setIsSubmitClicked(false);
                 return false;
             }
             return (
@@ -57,23 +56,37 @@ function EditAdminApiKey() {
             setDataLoaded(true);
             return;
         }
-        const apiKeyData = JSON.parse(data);
-        setApiKeyDetails(apiKeyData);
-        
-        // Initialize expiry date
-        if (apiKeyData?.apiKeyExpiryDateTime) {
-            setSelectedDateStr(apiKeyData.apiKeyExpiryDateTime);
-            setOriginalExpiryDate(apiKeyData.apiKeyExpiryDateTime);
-        } else {
-            // Initialize with today's date as default
-            const today = new Date();
-            today.setHours(23, 59, 59, 999);
-            const todayISO = today.toISOString();
-            setSelectedDateStr(todayISO);
-            setOriginalExpiryDate(todayISO);
+        try {
+            const apiKeyData = JSON.parse(data);
+            setApiKeyDetails(apiKeyData);
+            
+            // Initialize expiry date
+            if (apiKeyData?.apiKeyExpiryDateTime) {
+                setSelectedDateStr(apiKeyData.apiKeyExpiryDateTime);
+                setOriginalExpiryDate(apiKeyData.apiKeyExpiryDateTime);
+            } else {
+                // Initialize with tomorrow's start-of-day as default to satisfy "must be future" rule
+                const tomorrow = new Date();
+                tomorrow.setDate(tomorrow.getDate() + 1);
+                tomorrow.setHours(0, 0, 0, 0);
+                const tomorrowISO = tomorrow.toISOString();
+                setSelectedDateStr(tomorrowISO);
+                setOriginalExpiryDate(tomorrowISO);
+            }
+            setDataLoaded(true);
+        } catch (error) {
+            console.error('Error parsing selectedApiKeyAttributes from sessionStorage:', error);
+            setUnexpectedError(true);
+            setDataLoaded(true);
+            return;
         }
-        setDataLoaded(true);
     }, []);
+
+    useEffect(() => {
+        if (editExpirySuccess) {
+            setIsSubmitClicked(false);
+        }
+    }, [editExpirySuccess]);
 
     useEffect(() => {
         const shouldWarnBeforeUnload = () => selectedDateStr !== originalExpiryDate && !editExpirySuccess;

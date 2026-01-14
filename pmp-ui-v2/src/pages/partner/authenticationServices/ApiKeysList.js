@@ -166,7 +166,7 @@ function ApiKeysList() {
     }
 
     const onClickConfirmDeactivate = (deactivationResponse, selectedApiKey) => {
-        if (deactivationResponse !== "") {
+        if (deactivationResponse && deactivationResponse.status === "De-active") {
             setShowActiveIndexDeactivatePopup(null);
             setSelectedApiKey({});
             // Update the specific row in the state with the new status

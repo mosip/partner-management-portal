@@ -116,9 +116,14 @@ function MainLayout({ children }) {
         async function fetchData() {
             try {
                 const userProfile = getUserProfile();
-                const roles = userProfile.roles ?? '';
-                const isPartnerAdmin = roles.includes('PARTNER_ADMIN');
-                const isPolicyManager = roles.includes('POLICYMANAGER');
+                const rolesString = userProfile.roles ?? '';
+                // Split roles string into array, trim whitespace, and filter empty entries
+                const rolesArray = rolesString.split(',')
+                    .map(role => role.trim())
+                    .filter(role => role.length > 0);
+                // Perform exact membership checks
+                const isPartnerAdmin = rolesArray.includes('PARTNER_ADMIN');
+                const isPolicyManager = rolesArray.includes('POLICYMANAGER');
 
                 // Don't call verify endpoint if user is partner admin or policy manager
                 if (isPartnerAdmin || isPolicyManager) {
