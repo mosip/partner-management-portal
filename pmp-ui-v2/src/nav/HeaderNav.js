@@ -31,9 +31,14 @@ function HeaderNav({ open, setOpen }) {
     
     // Check if user has POLICYMANAGER or PARTNER_ADMIN role
     const userProfile = getUserProfile();
-    const roles = userProfile.roles ?? '';
-    const isPolicyManager = roles.includes('POLICYMANAGER');
-    const isPartnerAdmin = roles.includes('PARTNER_ADMIN');
+    const rolesString = userProfile.roles ?? '';
+    // Split roles string into array, trim whitespace, and filter empty entries
+    const rolesArray = rolesString.split(',')
+        .map(role => role.trim())
+        .filter(role => role.length > 0);
+    // Perform exact membership checks
+    const isPolicyManager = rolesArray.includes('POLICYMANAGER');
+    const isPartnerAdmin = rolesArray.includes('PARTNER_ADMIN');
 
     useEffect(() => {
         const verifyUserEmail = async () => {

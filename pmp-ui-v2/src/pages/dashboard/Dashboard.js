@@ -78,26 +78,30 @@ function Dashboard() {
     const fetchData = async () => {
       try {
         const userProfile = getUserProfile();
-        const roles = userProfile.roles ?? '';
-        const userRoles = roles.split(',');
-        if (roles.includes("AUTH_PARTNER")) {
+        const rolesString = userProfile.roles ?? '';
+        // Split roles string into array, trim whitespace, and filter empty entries
+        const rolesArray = rolesString.split(',')
+          .map(role => role.trim())
+          .filter(role => role.length > 0);
+        const userRoles = rolesArray;
+        if (rolesArray.includes("AUTH_PARTNER")) {
           setShowAuthenticationServices(true);
         }
-        if (roles.includes("DEVICE_PROVIDER")) {
+        if (rolesArray.includes("DEVICE_PROVIDER")) {
           setShowDeviceProviderServices(true);
         }
-        if (roles.includes("FTM_PROVIDER")) {
+        if (rolesArray.includes("FTM_PROVIDER")) {
           setShowFtmServices(true);
         }
-        if (roles.includes('PARTNER_ADMIN')) {
+        if (rolesArray.includes('PARTNER_ADMIN')) {
           setIsPartnerAdmin(true);
         }
-        if (roles.includes('POLICYMANAGER')) {
+        if (rolesArray.includes('POLICYMANAGER')) {
           setIsPolicyManager(true);
         }
 
         // Don't do self registration if partner role is partner admin or policy manager
-        if (roles.includes('PARTNER_ADMIN') || roles.includes('POLICYMANAGER')) {
+        if (rolesArray.includes('PARTNER_ADMIN') || rolesArray.includes('POLICYMANAGER')) {
           // Partner admins and policy managers are treated as verified
           setIsEmailVerified(true);
           // Show consent popup for both PARTNER_ADMIN and POLICYMANAGER
@@ -158,7 +162,7 @@ function Dashboard() {
 
             //3. if email does not exist then check if Policy Group selection is required for this Partner Type or not
             if (
-              (userRoles.some(role => resData.policyRequiredPartnerTypes.includes(role))) && !roles.includes('PARTNER_ADMIN') && !roles.includes('POLICYMANAGER')) {
+              (userRoles.some(role => resData.policyRequiredPartnerTypes.includes(role))) && !rolesArray.includes('PARTNER_ADMIN') && !rolesArray.includes('POLICYMANAGER')) {
               console.log(`show policy group selection popup`);
               setShowPolicies(true);
               //4. show policy group selection popup
