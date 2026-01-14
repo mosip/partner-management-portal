@@ -55,24 +55,28 @@ function SideNav({ open, policyRequiredPartnerTypes }) {
 
     useEffect(() => {
         const userProfile = getUserProfile();
-        const roles = userProfile.roles ?? '';
-        const userRoles = roles.split(',');
+        const rolesString = userProfile.roles ?? '';
+        // Split roles string into array, trim whitespace, and filter empty entries
+        const rolesArray = rolesString.split(',')
+            .map(role => role.trim())
+            .filter(role => role.length > 0);
+        const userRoles = rolesArray;
         if (userRoles.some(role => policyRequiredPartnerTypes.includes(role))) {
             setEnablePoliciesMenu(true);
         }
-        if (roles.includes("AUTH_PARTNER")) {
+        if (rolesArray.includes("AUTH_PARTNER")) {
             setEnableAuthenticationServicesMenu(true);
         }
-        if (roles.includes("DEVICE_PROVIDER")) {
+        if (rolesArray.includes("DEVICE_PROVIDER")) {
             setEnableDeviceProviderServicesMenu(true);
         }
-        if (roles.includes("FTM_PROVIDER")) {
+        if (rolesArray.includes("FTM_PROVIDER")) {
             setEnableFtmServicesMenu(true);
         }
-        if (roles.includes('PARTNER_ADMIN')) {
+        if (rolesArray.includes('PARTNER_ADMIN')) {
             setEnablePartnerAdminMenu(true);
         }
-        if (roles.includes('POLICYMANAGER')) {
+        if (rolesArray.includes('POLICYMANAGER')) {
             setEnablePolicyManagerMenu(true);
         }
     }, [policyRequiredPartnerTypes]);
