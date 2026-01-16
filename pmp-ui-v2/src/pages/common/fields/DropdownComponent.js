@@ -46,8 +46,8 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
 
     return (
         <div key={fieldName} className={`mb-2 ${(styleSet && styleSet.outerDiv) ? styleSet.outerDiv : ''}`}>
-            <label className={`flex items-center text-dark-blue text-sm font-semibold mb-1 ${(styleSet && styleSet.dropdownLabel) ? styleSet.dropdownLabel : ''} ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
-                {t(fieldNameKey)}{containsAsterisk && <span className={`text-crimson-red mx-1`}>*</span>}
+            <label className={`flex items-center text-dark-blue text-sm mb-1 ${(styleSet && styleSet.dropdownLabel) ? styleSet.dropdownLabel : ''} ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+                <p id={id + '_label'} className={`font-semibold`}>{t(fieldNameKey)}{containsAsterisk && <span className={`text-crimson-red mx-1`}>*</span>}</p>
                 {addInfoIcon && (
                     <Information infoKey={infoKey} id={id + '_info'}/>
                 )}
@@ -79,7 +79,7 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
                                     return (
                                         <div key={index} className="min-h-3">
                                             <button id={isPlaceHolderPresent ? (index > 0 ? id + '_option' + (index) : undefined) : id + '_option' + (index + 1)}
-                                                className={`block w-full h-auto px-4 py-1 text-sm text-dark-blue overflow-x-auto whitespace-normal no-scrollbar break-words
+                                                className={`block w-full h-auto px-4 py-1 text-sm text-dark-blue whitespace-normal no-scrollbar break-words
                                                     ${isPlaceHolderPresent && index === 0 ? 'text-gray-500' : 'text-dark-blue'}
                                                     ${selectedDropdownEntry === dropdownItem.fieldValue ? 'bg-gray-100' : 'hover:bg-gray-100'} ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}
                                                 onClick={() => changeDropdownSelection(dropdownItem.fieldValue)}>

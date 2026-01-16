@@ -219,7 +219,7 @@ function PolicyGroupSelector({ onPolicyGroupSelect, selectedPolicyGroup, contain
                                             <button
                                                 id={`policy_group_selector_option_button_${index + 1}`}
                                                 type="button"
-                                                className={`block w-full ${policyGroup.desc ? 'min-h-16' : 'min-h-8'} px-4 py-2 text-sm text-dark-blue ${isLoginLanguageRTL ? 'text-right' : 'text-left'} ${isSelected ? 'bg-gray-100' : 'bg-white hover:bg-gray-50'}`}
+                                                className={`block w-full ${policyGroup.desc ? 'min-h-16' : 'min-h-8'} px-4 py-2 text-sm text-dark-blue ${isLoginLanguageRTL ? 'text-right' : 'text-left'} ${isSelected ? 'bg-gray-100' : 'bg-white hover:bg-gray-50'} whitespace-normal break-words`}
                                                 onClick={() => handlePolicyGroupSelect(isPlaceholder ? null : policyGroup)}
                                             >
                                                 <span id={`policy_group_selector_option_name_${index + 1}`} className={`${policyGroup.desc ? 'font-semibold' : 'font-normal'} ${isPlaceholder ? 'text-gray-500' : 'text-dark-blue'}`}>
