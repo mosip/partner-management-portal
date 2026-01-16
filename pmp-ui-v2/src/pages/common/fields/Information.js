@@ -16,12 +16,12 @@ function Information({ infoKey, infoKey1, id }) {
         handleMouseClickForDropdown(tooltipRef, () => setShowTooltip(false));
     }, [tooltipRef])
     return (
-        <div>
-            <div ref={tooltipRef} className="absolute mx-2 flex items-center">
+        <div className="relative inline-flex items-center">
+            <div ref={tooltipRef} className="flex items-center">
                 <div
                     id={id}
                     onClick={() => setShowTooltip(!showTooltip)}
-                    className="cursor-pointer h-[13px] w-[13px] ml-1 -mt-1.5"
+                    className="cursor-pointer h-[13px] w-[13px] ml-1 flex-shrink-0"
                     role="button"
                     tabIndex="0"
                     onKeyDown={(e) => e.key === 'Enter' && setShowTooltip(!showTooltip)}

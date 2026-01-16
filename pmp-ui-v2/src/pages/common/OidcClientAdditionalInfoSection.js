@@ -63,7 +63,7 @@ function OidcClientAdditionalInfoSection({
             {/* Forgot Password Banner Toggle */}
             <div className="flex flex-col w-[48%]">
               <div className={`flex items-center ${isLoginLanguageRTL ? 'flex-row-reverse justify-end' : 'justify-start'} gap-3`}>
-                <div className="flex items-center">
+                <div className="flex items-center gap-1">
                   <label htmlFor="forgot_password_banner_toggle" className={`text-dark-blue text-sm font-semibold ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                     {t('createOidcClient.forgotPasswordBanner')}
                   </label>
@@ -96,7 +96,7 @@ function OidcClientAdditionalInfoSection({
             {/* SignUp Banner Toggle */}
             <div className="flex flex-col w-[48%]">
               <div className={`flex items-center ${isLoginLanguageRTL ? 'flex-row-reverse justify-end' : 'justify-start'} gap-3`}>
-                <div className="flex items-center">
+                <div className="flex items-center gap-1">
                   <label htmlFor="signup_banner_toggle" className={`text-dark-blue text-sm font-semibold ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                     {t('createOidcClient.signUpBanner')}
                   </label>
@@ -131,7 +131,7 @@ function OidcClientAdditionalInfoSection({
           <div className="flex flex-row justify-between space-x-4">
             {/* Consent Expiry Duration */}
             <div className="flex flex-col w-[48%]">
-              <label id="consent_expiry_label" htmlFor="consent_expiry_input" className={`flex items-center text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+              <label id="consent_expiry_label" htmlFor="consent_expiry_input" className={`flex items-center gap-1 text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                 {t('createOidcClient.consentExpiryDuration')}
                 <Information infoKey={t('createOidcClient.consentExpiryDurationTooltip')} id='consent_expiry_info' />
               </label>
