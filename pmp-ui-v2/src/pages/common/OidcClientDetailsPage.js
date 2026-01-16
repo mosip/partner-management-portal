@@ -423,9 +423,9 @@ function OidcClientDetailsPage({ variant }) {
                                                             <p id='oidc_client_details_logo_uri_label' className="font-[600] text-suva-gray text-sm">
                                                                 {t("viewOidcClientDetails.logoUri")}
                                                             </p>
-                                                            <p id='oidc_client_details_logo_uri_context' className="font-[600] text-vulcan text-base">
+                                                            <div id='oidc_client_details_logo_uri_context' className="font-[600] text-vulcan text-base whitespace-nowrap overflow-x-auto">
                                                                 {oidcClientDetails.logoUri}
-                                                            </p>
+                                                            </div>
                                                         </div>
                                                         <div className="flex flex-wrap my-3 max-[800px]:flex-col max-[1020px]:flex-col">
                                                             <div className={`flex-col space-y-1 w-[50%] ${isLoginLanguageRTL ? "pl-[1%]" : "pr-[1%]"}`}>
@@ -437,9 +437,9 @@ function OidcClientDetailsPage({ variant }) {
                                                                         {oidcClientDetails.redirectUris && oidcClientDetails.redirectUris.length > 0 ? (
                                                                             oidcClientDetails.redirectUris.map((uri, index) => (
                                                                                 <li key={index + uri} className={`space-y-3 mt-2 ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
-                                                                                    <p className="text-base  font-[600] text-[#36393E] py-1">
+                                                                                    <div className="text-base font-[600] text-[#36393E] py-1 whitespace-nowrap overflow-x-auto">
                                                                                         {uri}
-                                                                                    </p>
+                                                                                    </div>
                                                                                     {oidcClientDetails.redirectUris.length > 1 && (
                                                                                         <hr className="h-px w-[72%] max-[800px]:w-[140%] border-[1px] bg-[#707070]" />
                                                                                     )}
