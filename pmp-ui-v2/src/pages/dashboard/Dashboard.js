@@ -527,15 +527,15 @@ function Dashboard() {
         fetchPartnerCertExpiryCount();
       }
 
-      if (!isPartnerAdmin && isEmailVerified && showFtmServices && configData && configData.isCaSignedPartnerCertificateAvailable === 'true') {
+      if (!isPartnerAdmin && !isPolicyManager && isEmailVerified && showFtmServices && configData && configData.isCaSignedPartnerCertificateAvailable === 'true') {
         fetchFtmCertificateExpiryCount();
       }
 
-      if (!isPartnerAdmin && isEmailVerified && showAuthenticationServices) {
+      if (!isPartnerAdmin && !isPolicyManager && isEmailVerified && showAuthenticationServices) {
         fetchExpiringApiKeyCount();
       }
 
-      if (!isPartnerAdmin && isEmailVerified && showDeviceProviderServices) {
+      if (!isPartnerAdmin && !isPolicyManager && isEmailVerified && showDeviceProviderServices) {
         fetchExpiringSbiCount();
       }
 

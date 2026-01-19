@@ -39,6 +39,8 @@ function HeaderNav({ open, setOpen }) {
     // Perform exact membership checks
     const isPolicyManager = rolesArray.includes('POLICYMANAGER');
     const isPartnerAdmin = rolesArray.includes('PARTNER_ADMIN');
+    // Show bell icon if user is partner admin or not a policy manager
+    const shouldShowBellIcon = isPartnerAdmin || !isPolicyManager;
 
     useEffect(() => {
         const verifyUserEmail = async () => {
@@ -133,14 +135,14 @@ function HeaderNav({ open, setOpen }) {
             console.error("Error fetching refresh notification time:", error);
         }
     
-        // Only call fetchNotificationsData if user is not a policy manager and either
-        if (!isPolicyManager && isEmailVerified) {
+        // Only call fetchNotificationsData if user is partner admin or not a policy manager
+        if (shouldShowBellIcon && isEmailVerified) {
             fetchNotificationsData();
         }
     
         // Set up an interval to call the function every 5 minutes
         const intervalId = setInterval(() => {
-            if (!isPolicyManager && isEmailVerified) {
+            if (shouldShowBellIcon && isEmailVerified) {
                 fetchNotificationsData();
             }
         }, 1000 * refreshTime);
@@ -148,7 +150,7 @@ function HeaderNav({ open, setOpen }) {
         // Cleanup function to clear the interval when component unmounts
         return () => clearInterval(intervalId);
     
-    }, [isEmailVerified]);
+    }, [isEmailVerified, shouldShowBellIcon, dispatch]);
     
 
     const fetchNotificationsSeenTimestamp = async () => {
@@ -237,7 +239,7 @@ function HeaderNav({ open, setOpen }) {
                 </div>
             </div>
             <div className={`flex items-center relative justify-between gap-x-4 ${isLoginLanguageRTL ? "left-3" : "right-3"}`}>
-                {!isPolicyManager && (
+                {shouldShowBellIcon && (
                     <div className="flex items-center relative" ref={notificationRef}>
                         {!showLatestNotificationIcon ? (
                             <button className='p-1.5 bg-blue-50 cursor-pointer' onClick={openNotificationPopup}>
