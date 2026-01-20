@@ -73,7 +73,7 @@ function CalendarInput({ isUsedAsFilter, showCalendar, addInfoIcon, infoKey, inf
       <div id="datePicker" className="w-full">
         <DatePicker
           id={id}
-          selected={selectedDateStr === "" ? null : new Date(selectedDateStr)}
+          selected={selectedDateStr === "" ? (isUsedAsFilter ? null : new Date()) : new Date(selectedDateStr)}
           onChange={(date) => onDateChange(date)}
           placeholderText={placeholderText}
           dateFormat="MM/dd/yyyy"
