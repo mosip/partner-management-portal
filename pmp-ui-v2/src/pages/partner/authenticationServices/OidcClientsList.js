@@ -316,7 +316,7 @@ function OidcClientsList() {
                                     {!tableDataLoaded && <LoadingIcon styleSet={LoadingIconStyle}></LoadingIcon>}
                                     {tableDataLoaded &&
                                         <div className="mx-[1.5rem] overflow-x-scroll">
-                                            <table className="table-fixed">
+                                            <table className="table-fixed w-full">
                                                 <thead>
                                                     <tr>
                                                         {tableHeaders.map((header, index) => {
