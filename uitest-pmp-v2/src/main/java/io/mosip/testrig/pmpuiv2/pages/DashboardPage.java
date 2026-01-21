@@ -1,15 +1,8 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
-import java.time.Duration;
-
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import io.mosip.testrig.pmpuiv2.driver.DriverManager;
 
 public class DashboardPage extends BasePage {
 
@@ -51,9 +44,6 @@ public class DashboardPage extends BasePage {
 
 	@FindBy(id = "consent_proceed_btn")
 	private WebElement proceedButton;
-
-	@FindBy(id = "dashboard_partner_certificate_list_header")
-	private WebElement partnerCertificateTitle;
 
 	@FindBy(id = "dashboard_policies_card")
 	private WebElement policiesTitle;
@@ -150,7 +140,10 @@ public class DashboardPage extends BasePage {
 
 	@FindBy(id = "footer_documentation_link")
 	private WebElement footerDocumentationLink;
-
+	
+	@FindBy(id = "policy_group_selector_option_button_1")
+	private WebElement policyGroupOption;
+	
 	public DashboardPage(WebDriver driver) {
 		super(driver);
 	}
@@ -179,8 +172,6 @@ public class DashboardPage extends BasePage {
 	public void selectPolicyGroupDropdown(String policyGroupValue) {
 		clickOnElement(selectPolicyGroupDropdown);
 		enter(SearchBox, policyGroupValue);
-		WebElement policyGroupOption = driver.findElement(
-				By.xpath("//span[@id='policy_group_selector_option_name_1' and text()='" + policyGroupValue + "']"));
 		clickOnElement(policyGroupOption);
 	}
 
@@ -212,10 +203,8 @@ public class DashboardPage extends BasePage {
 		clickOnElement(proceedButton);
 	}
 
-	private By partnerCertificateTitleDashboard = By.id("dashboard_partner_certificate_list_header");
-
 	public boolean isPartnerCertificateTitleDisplayed() {
-		return isDisplayed(partnerCertificateTitleDashboard);
+		return isElementDisplayed(dashboardPartnerCertificateListHeader);
 	}
 
 	public boolean isPoliciesTitleDisplayed() {
@@ -240,7 +229,7 @@ public class DashboardPage extends BasePage {
 	}
 
 	public PartnerCertificatePage clickOnPartnerCertificateTitle() {
-		clickOnElement(partnerCertificateTitle);
+		clickOnElement(dashboardPartnerCertificateListHeader);
 		return new PartnerCertificatePage(driver);
 	}
 
@@ -411,16 +400,6 @@ public class DashboardPage extends BasePage {
 
 	public boolean isFooterDocumentationLinkDisplayed() {
 		return isElementDisplayed(footerDocumentationLink);
-	}
-	
-	private By partnerCertificateCard =
-	        By.id("dashboard_partner_certificate_list_card");
-
-	private By ftmChipProviderCard =
-	        By.id("dashboard_ftm_chip_provider_card");
-
-	public void waitForDashboardReady() {
-	    waitUntilAnyElementVisible(partnerCertificateCard, ftmChipProviderCard);
 	}
 
 }

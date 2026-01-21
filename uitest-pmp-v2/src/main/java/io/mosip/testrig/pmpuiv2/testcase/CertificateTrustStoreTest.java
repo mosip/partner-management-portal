@@ -10,7 +10,7 @@ import io.mosip.testrig.pmpuiv2.pages.PartnerCertificatePage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
-@Test(dependsOnGroups = { "PartnerDetailsTest" }, groups = { "CertificateTrustStoreTest" })
+@Test(dependsOnGroups = {"PartnerAdminCreation"}, groups = { "CertificateTrustStoreTest" })
 public class CertificateTrustStoreTest extends BaseClass {
 
 	private DashboardPage dashboardPage;
@@ -81,9 +81,8 @@ public class CertificateTrustStoreTest extends BaseClass {
 		assertTrue(partnerCertificatePage.isUploadCertInstructionTextDisplayed(),
 				GlobalConstants.isUploadCertInstructionTextDisplayed);
 		assertTrue(partnerCertificatePage.isCertFormatesTextDisplayed(), GlobalConstants.isCertFormatesTextDisplayed);
-		partnerCertificatePage.clickonSubmitButtonForAdmin();
-		assertFalse(partnerCertificatePage.isUploadedSuccessfullyMessageDisplayed(),
-				GlobalConstants.isUploadedSuccessfullyMessageDisplayed);
+		assertTrue(partnerCertificatePage.isSubmitButtonForAdminEnabled(), GlobalConstants.isSubmitButtonForAdminEnabled);
+		
 
 		partnerCertificatePage.uploadExpiredCertificateForRootCa();
 		assertTrue(partnerCertificatePage.isUploadedRootCACertificateNameDisplayed(),
@@ -490,7 +489,7 @@ public class CertificateTrustStoreTest extends BaseClass {
 				GlobalConstants.isTrustCertificateLabelExpiryDateTimeDisplayed);
 		assertTrue(partnerCertificatePage.isTrustCertificateContextExpiryDateTimeDisplayed(),
 				GlobalConstants.isTrustCertificateContextExpiryDateTimeDisplayed);
-//		assertTrue(partnerCertificatePage.isToDateTimeFormatValid(), GlobalConstants.isValidToDateTimeFormatValid);
+		assertTrue(partnerCertificatePage.isValidToDateTimeFormatValid(), GlobalConstants.isValidToDateTimeFormatValid);
 
 		assertTrue(partnerCertificatePage.isCertificateDownloadButtonDisplayed(),
 				GlobalConstants.isCertificateDownloadButtonDisplayed);

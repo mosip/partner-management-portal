@@ -573,8 +573,7 @@ public class FtmPage extends BasePage {
 		clickOnElement(addFtmClearForm);
 	}
 
-	public boolean isAddFtmSubmitButtonDisabled() {
-		refreshThePage();
+	public boolean isAddFtmSubmitButtonEnabled() {
 		return isElementEnabled(addFtmSubmitButton);
 	}
 

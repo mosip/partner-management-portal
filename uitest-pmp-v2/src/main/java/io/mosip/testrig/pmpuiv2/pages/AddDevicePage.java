@@ -1,18 +1,12 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
 import java.io.IOException;
-import java.time.Duration;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import io.mosip.testrig.pmpuiv2.driver.DriverManager;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
 public class AddDevicePage extends BasePage {
@@ -131,10 +125,8 @@ public class AddDevicePage extends BasePage {
 		super(driver);
 	}
 
-	private By homeButtonBy = By.id("sub_title_home_btn");
-
 	public boolean isHomeButtonDisplayed() {
-		return isDisplayed(homeButtonBy);
+		return isElementDisplayed(homeButton);
 	}
 
 	public String getSubTitle() {
@@ -237,13 +229,10 @@ public class AddDevicePage extends BasePage {
 	}
 
 	public void selectAddDeviceTypeWithPosition(String value, int position) {
-		WebElement addDeviceTypeSelectDropdown = driver
-				.findElement(By.xpath("(//button[@id='add_device_device_type_dropdown_btn'])[" + position + "]"));
-		try {
-			dropdownWithPosition(addDeviceTypeSelectDropdown, value, position);
-		} catch (IOException e) {
-			logger.info(e.getMessage());
-		}
+
+		By dropdownLocator = By.xpath("(//button[@id='add_device_device_type_dropdown_btn'])[" + position + "]");
+
+		dropdownWithPosition(dropdownLocator, value, position);
 	}
 
 	public void selectDeviceSubTypeWithPosition(String value, int position) {

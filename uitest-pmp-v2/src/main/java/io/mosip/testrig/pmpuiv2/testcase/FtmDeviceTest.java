@@ -12,7 +12,7 @@ import io.mosip.testrig.pmpuiv2.pages.PartnerCertificatePage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
-@Test(dependsOnGroups = {"FtmPartnerCreation"}, groups = {"FtmDeviceTest"})
+@Test(dependsOnGroups = { "FtmPartnerCreation" }, groups = {"FtmDeviceTest"})
 public class FtmDeviceTest extends BaseClass {
 
 	private BasePage basePage;
@@ -155,8 +155,8 @@ public class FtmDeviceTest extends BaseClass {
 		ftmPage.clickOnAddFtmChipButton();
 
 		ftmPage.clickOnAddFtmPartnerId();
-		ftmPage.EnterInAddFtmMakeBox(data + "1");
-		ftmPage.EnterInAddFtmModelBox(data + "1");
+		ftmPage.EnterInAddFtmMakeBox(GlobalConstants.FTMMAKE1);
+		ftmPage.EnterInAddFtmModelBox(GlobalConstants.FTMMODEL1);
 		ftmPage.clickOnAddFtmSubmitButton();
 		ftmPage.clickOnConfirmationCustomButton();
 		ftmPage.uploadCertificateConfrmationForFtm();
@@ -177,8 +177,8 @@ public class FtmDeviceTest extends BaseClass {
 
 		ftmPage.clickOnAddFtmChipButton();
 		ftmPage.clickOnAddFtmPartnerId();
-		ftmPage.EnterInAddFtmMakeBox(data + "1");
-		ftmPage.EnterInAddFtmModelBox(data + "1");
+		ftmPage.EnterInAddFtmMakeBox(GlobalConstants.FTMMAKE1);
+		ftmPage.EnterInAddFtmModelBox(GlobalConstants.FTMMODEL1);
 		ftmPage.clickOnAddFtmSubmitButton();
 		assertTrue(ftmPage.isDuplicateFtmChipErrorMessageDisplayed(),
 				GlobalConstants.isDuplicateFtmErrorMessageDisplayed);

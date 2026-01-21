@@ -18,7 +18,7 @@ public class LoginPage extends BasePage {
 	@FindBy(id = "password")
 	private WebElement passwordTextBox;
 
-	@FindBy(xpath = "//input[@name=\'login\']")
+	@FindBy(xpath = "//input[@name='login']")
 	private WebElement LoginButton;
 
 	public LoginPage(WebDriver driver) {
@@ -45,5 +45,11 @@ public class LoginPage extends BasePage {
 	public void clickOnLoginButton() {
 		clickOnElement(LoginButton);
 	}
+	
+	public void login(String userName, String password) {
+		enterUserName(userName);
+		enterPassword(password);
+		clickOnLoginButton();
+    }
 
 }

@@ -44,11 +44,10 @@ public class DeviceCreationTest extends BaseClass {
 
 		listOfSbiPage.clickOnAddDeviceButton(GlobalConstants.ALPHANUMERIC);
 
-		Assert.assertTrue(addDevicePage.isAddDeviceTitleDisplayed(),
-		        "Add Device page did not load");
+		Assert.assertTrue(addDevicePage.isAddDeviceTitleDisplayed(), "Add Device page did not load");
 		assertTrue(addDevicePage.isHomeButtonDisplayed(), GlobalConstants.isHomeButtonDisplayed);
 		assertEquals(addDevicePage.getSubTitle(), GlobalConstants.LIST_OF_SBI);
-		
+
 		fillDeviceDetails(GlobalConstants.FACE, GlobalConstants.FULL_FACE, GlobalConstants.AUTOMATION_TEMP,
 				GlobalConstants.AUTOMATION_TEMP);
 		addDevicePage.clickOnSubmit();
@@ -87,6 +86,7 @@ public class DeviceCreationTest extends BaseClass {
 		addDevicePage.selectAddDeviceType(GlobalConstants.FACE);
 		assertEquals(addDevicePage.getDeviceTypeValue(), GlobalConstants.FACE);
 		assertTrue(addDevicePage.isDeviceSubTypeEnabled(), GlobalConstants.isDeviceSubTypeEnabled);
+
 		addDevicePage.clickOnDeviceSubType();
 		assertTrue(addDevicePage.isDeviceSubTypeOptionDisplayed(), GlobalConstants.isDeviceSubTypeOptionsDisplayed);
 		addDevicePage.clickOnDeviceSubType();
@@ -173,7 +173,7 @@ public class DeviceCreationTest extends BaseClass {
 				GlobalConstants.CHARACTER_WITH_SPACE);
 		addDevicePage.clickOnSubmit();
 		assertEquals(addDevicePage.getDuplicateDeviceErrorMessage(), GlobalConstants.DUPLICATE_DEVICE_ERROR_MESSAGE);
-		addDevicePage.clickOnDeleteButton();
+		addDevicePage.clickOnClear();
 		fillDeviceDetails(GlobalConstants.FACE, GlobalConstants.FULL_FACE, GlobalConstants.AUTOMATION,
 				GlobalConstants.AUTOMATION);
 		addDevicePage.clickOnSubmit();

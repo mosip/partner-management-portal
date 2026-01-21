@@ -14,72 +14,21 @@ import io.mosip.testrig.pmpuiv2.pages.OidcClientPage;
 import io.mosip.testrig.pmpuiv2.pages.PartnerCertificatePage;
 import io.mosip.testrig.pmpuiv2.pages.PoliciesPage;
 import io.mosip.testrig.pmpuiv2.pages.ProfilePage;
-import io.mosip.testrig.pmpuiv2.pages.RegisterPage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
-@Test(dependsOnGroups = {"CertificateTrustStoreTest"}, groups = {"AuthPartnerWithoutCertificateTest"})
+@Test(dependsOnGroups = { "AuthPartnerCreation" }, groups = {"AuthPartnerWithoutCertificateTest"})
 public class AuthPartnerWithoutCertificateTest extends BaseClass {
 
 	private DashboardPage dashboardPage;
 	private LoginPage loginPage;
 	private ApiKeyPage apiKeyPage;
 	private PartnerCertificatePage partnerCertificatePage;
-	private RegisterPage registerPage;
 	private PoliciesPage policiesPage;
 	private OidcClientPage oidcClientPage;
 	private ProfilePage profilePage;
 
-	@Test(priority = 1, description = "Request new policy with out uploading certificates")
-	public void requestNewPolicyWithoutUploadingCertificates() throws InterruptedException {
-
-		dashboardPage = new DashboardPage(driver);
-		policiesPage = new PoliciesPage(driver);
-		registerPage = new RegisterPage(driver);
-		loginPage = new LoginPage(driver);
-
-		logoutFromPartner();
-
-		loginPage.clickRegisterButton();
-
-		registerPage.enterFirstName("pmpui-nocert");
-		registerPage.enterLastName("  ");
-		registerPage.enterOrganizationName("AABBCC");
-		registerPage.selectPartnerTypeDropdown(2);
-		registerPage.enterAddress("0" + data);
-		registerPage.enterEmail(data + "nocert" + "@gmail.com");
-		registerPage.enterPhone("  ");
-		registerPage.selectNotificationLanguageDropdown();
-		registerPage.enterUsername("pmpui-nocert");
-		registerPage.enterPassword("mosip123");
-		registerPage.enterPasswordConfirm("mosip123");
-		dashboardPage = registerPage.clickSubmitButton();
-
-		assertTrue(registerPage.isPhoneNumberWarningMessageDisplayed(),
-				GlobalConstants.isPhoneNumberWarningMessageDisplayed);
-		registerPage.selectPartnerTypeDropdown(2);
-		registerPage.enterPhone("8098768903");
-		registerPage.enterPassword("mosip123");
-		registerPage.enterPasswordConfirm("mosip123");
-		dashboardPage = registerPage.clickSubmitButton();
-
-		dashboardPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULT_POLICYGROUP);
-		dashboardPage.clickOnSubmitButton();
-		assertTrue(dashboardPage.isTermsAndConditionsPopupDisplayed(),
-				GlobalConstants.isTermsAndConditionsPopUpDisplayed);
-		dashboardPage.clickOnCheckbox();
-		dashboardPage.clickOnProceedButton();
-
-		dashboardPage.clickOnPoliciesTitle();
-		policiesPage.clickOnRequestPolicyButton();
-
-		assertTrue(policiesPage.isPartnerIdDropdownDisplayed(), GlobalConstants.isPartnerIdDropdownDisplayed);
-		policiesPage.clickOnPartnerIdDropdown();
-		assertTrue(policiesPage.isNoDataAvailableTextDisplayed(), GlobalConstants.isNoDataTextDisplaed);
-
-	}
-
-	@Test(priority = 2, description = "Create oidc client with out uploading certficates", dependsOnMethods = "requestNewPolicyWithoutUploadingCertificates")
+	@Test(priority = 1, description = "Create OIDC client without uploading certificates")
 	public void createOidcClientWithoutUploadingCertificates() {
 
 		dashboardPage = new DashboardPage(driver);
@@ -128,7 +77,7 @@ public class AuthPartnerWithoutCertificateTest extends BaseClass {
 
 	}
 
-	@Test(priority = 3, description = " Create apikey without uploading certificates", dependsOnMethods = "createOidcClientWithoutUploadingCertificates")
+	@Test(priority = 2, description = " Create apikey without uploading certificates", dependsOnMethods = "createOidcClientWithoutUploadingCertificates")
 	public void createApiKeyWithoutUploadingCertificates() {
 		dashboardPage = new DashboardPage(driver);
 		apiKeyPage = new ApiKeyPage(driver);
@@ -144,15 +93,15 @@ public class AuthPartnerWithoutCertificateTest extends BaseClass {
 
 		oidcClientPage.clickOnApiKeyTab();
 
-		assertTrue(apiKeyPage.isGenerateAPIKeyDisplayed(), GlobalConstants.isGenerateAPIKeyDisplayed);
-		apiKeyPage.clickOnAPIKeyDisplayed();
+		assertTrue(apiKeyPage.isGenerateApiKeyDisplayed(), GlobalConstants.isGenerateAPIKeyDisplayed);
+		apiKeyPage.clickOnCreateApiKey();
 		assertTrue(apiKeyPage.isPartnerIdDropdownDisplayed(), GlobalConstants.isPartnerIdDropdownDisplayed);
 		apiKeyPage.ClickOnPartnerIdDropdown();
 		assertTrue(apiKeyPage.isNoDataAvailableTextDisplayed(), GlobalConstants.isNoDataTextDisplaed);
 
 	}
 
-	@Test(priority = 4, description = "User Profile")
+	@Test(priority = 3, description = "User Profile")
 	public void userProfile() {
 		dashboardPage = new DashboardPage(driver);
 		profilePage = new ProfilePage(driver);
@@ -189,7 +138,7 @@ public class AuthPartnerWithoutCertificateTest extends BaseClass {
 
 	}
 
-	@Test(priority = 5, description = "User dashboard of authentication partner")
+	@Test(priority = 4, description = "User dashboard of authentication partner")
 	public void userDashboardOfAuthenticationPartner() {
 
 		dashboardPage = new DashboardPage(driver);
