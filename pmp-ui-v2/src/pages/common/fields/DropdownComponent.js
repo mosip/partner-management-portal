@@ -45,8 +45,8 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
     };
 
     return (
-        <div key={fieldName} className={`mb-2 ${(styleSet && styleSet.outerDiv) ? styleSet.outerDiv : ''}`}>
-            <label className={`flex items-center gap-1 text-dark-blue text-sm mb-1 ${(styleSet && styleSet.dropdownLabel) ? styleSet.dropdownLabel : ''} ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+        <div key={fieldName} className={`ml-4 mb-2 ${(styleSet && styleSet.outerDiv) ? styleSet.outerDiv : ''}`}>
+            <label className={`flex items-center gap-1 text-dark-blue text-sm mb-2 ${(styleSet && styleSet.dropdownLabel) ? styleSet.dropdownLabel : ''} ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                 <p id={id + '_label'} className={`font-semibold`}>{t(fieldNameKey)}{containsAsterisk && <span className={`text-crimson-red mx-1`}>*</span>}</p>
                 {addInfoIcon && (
                     <Information infoKey={infoKey} id={id + '_info'}/>
