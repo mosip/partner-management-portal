@@ -154,7 +154,7 @@ public class AuthPartnerCreation extends BaseClass {
 
 		logoutFromPartner();
 
-		loginPage.clickRegisterButton();
+		registerPage = loginPage.clickRegisterButton();
 
 		registerPage.enterFirstName(GlobalConstants.AUTHNOCERT);
 		registerPage.enterLastName("  ");

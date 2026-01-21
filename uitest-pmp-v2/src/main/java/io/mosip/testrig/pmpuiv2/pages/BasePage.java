@@ -371,7 +371,7 @@ public class BasePage {
 
 		try {
 			WebElement element = new WebDriverWait(driver, Duration.ofSeconds(ConfigManager.getTimeout()))
-					.until(ExpectedConditions.presenceOfElementLocated(locator));
+					.until(ExpectedConditions.visibilityOfElementLocated(locator));
 
 			return element.isEnabled();
 
