@@ -743,8 +743,8 @@ public class PartnerCertificatePage extends BasePage {
 		return isElementDisplayed(SubmitButtonForAdmin);
 	}
 	
-	public boolean isSubmitButtonForAdminEnabled() {
-		return isElementEnabled(SubmitButtonForAdmin);
+	public boolean isSubmitButtonForAdminDisabled() {
+		return isElementDisabled(SubmitButtonForAdmin);
 	}
 
 	public void clickOnTitleBackButton() {

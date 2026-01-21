@@ -1214,7 +1214,7 @@ public class GlobalConstants {
 	public static final String isPartnerCertOverlayDisplayed = "Verify if partner certificate overlay is displayed";
 	public static final String isSuccessMessageForFtmCertDisplayed = "Verify if success message for ftm certificate is displayed";
 	public static final String isSaveAsDraftButtonDisabled = "Verify if save as draft button disabled";
-	public static final String isSubmitButtonForAdminEnabled = "Verify if submit button for admin enabled";
+	public static final String isSubmitButtonForAdminDisabled = "Verify if submit button for admin disabled";
 
 	
 
