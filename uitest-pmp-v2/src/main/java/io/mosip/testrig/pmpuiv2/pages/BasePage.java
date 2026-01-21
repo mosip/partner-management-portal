@@ -108,6 +108,10 @@ public class BasePage {
 				attempts++;
 				LogUtil.step("Stale element. Retrying " + attempts + "/" + STALE_RETRY);
 
+			} catch (ElementClickInterceptedException intercepted) {
+				LogUtil.step("Click intercepted. Falling back to JS click.");
+				jsClick(locator);
+				return;
 			} catch (ElementNotInteractableException e) {
 				LogUtil.step("Click intercepted. Falling back to JS click.");
 				jsClick(locator);

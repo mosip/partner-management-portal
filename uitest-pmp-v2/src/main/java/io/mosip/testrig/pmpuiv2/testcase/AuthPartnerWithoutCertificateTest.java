@@ -28,7 +28,7 @@ public class AuthPartnerWithoutCertificateTest extends BaseClass {
 	private OidcClientPage oidcClientPage;
 	private ProfilePage profilePage;
 
-	@Test(priority = 1, description = "Create oidc client with out uploading certficates")
+	@Test(priority = 1, description = "Create oidc client with out uploading certificates")
 	public void createOidcClientWithoutUploadingCertificates() {
 
 		dashboardPage = new DashboardPage(driver);

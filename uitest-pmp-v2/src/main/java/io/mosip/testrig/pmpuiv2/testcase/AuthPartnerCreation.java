@@ -156,25 +156,25 @@ public class AuthPartnerCreation extends BaseClass {
 
 		loginPage.clickRegisterButton();
 
-		registerPage.enterFirstName("pmpui-nocert");
+		registerPage.enterFirstName(GlobalConstants.AUTHNOCERT);
 		registerPage.enterLastName("  ");
-		registerPage.enterOrganizationName("AABBCC");
+		registerPage.enterOrganizationName(GlobalConstants.ORGANISATION_NAME);
 		registerPage.selectPartnerTypeDropdown(2);
 		registerPage.enterAddress("0" + data);
 		registerPage.enterEmail(data + "nocert" + "@gmail.com");
 		registerPage.enterPhone("  ");
 		registerPage.selectNotificationLanguageDropdown();
-		registerPage.enterUsername("pmpui-nocert");
-		registerPage.enterPassword("mosip123");
-		registerPage.enterPasswordConfirm("mosip123");
+		registerPage.enterUsername(GlobalConstants.AUTHNOCERT);
+		registerPage.enterPassword(GlobalConstants.PASSWORD);
+		registerPage.enterPasswordConfirm(GlobalConstants.PASSWORD);
 		dashboardPage = registerPage.clickSubmitButton();
 
 		assertTrue(registerPage.isPhoneNumberWarningMessageDisplayed(),
 				GlobalConstants.isPhoneNumberWarningMessageDisplayed);
 		registerPage.selectPartnerTypeDropdown(2);
 		registerPage.enterPhone("8098768903");
-		registerPage.enterPassword("mosip123");
-		registerPage.enterPasswordConfirm("mosip123");
+		registerPage.enterPassword(GlobalConstants.PASSWORD);
+		registerPage.enterPasswordConfirm(GlobalConstants.PASSWORD);
 		dashboardPage = registerPage.clickSubmitButton();
 
 		dashboardPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULT_POLICYGROUP);
