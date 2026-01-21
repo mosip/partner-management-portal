@@ -165,16 +165,16 @@ public class AuthPartnerCreation extends BaseClass {
 		registerPage.enterPhone("  ");
 		registerPage.selectNotificationLanguageDropdown();
 		registerPage.enterUsername(GlobalConstants.AUTHNOCERT);
-		registerPage.enterPassword(GlobalConstants.PASSWORD);
-		registerPage.enterPasswordConfirm(GlobalConstants.PASSWORD);
+		registerPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
+		registerPage.enterPasswordConfirm(GlobalConstants.PARTNER_PASSWORD);
 		dashboardPage = registerPage.clickSubmitButton();
 
 		assertTrue(registerPage.isPhoneNumberWarningMessageDisplayed(),
 				GlobalConstants.isPhoneNumberWarningMessageDisplayed);
 		registerPage.selectPartnerTypeDropdown(2);
 		registerPage.enterPhone("8098768903");
-		registerPage.enterPassword(GlobalConstants.PASSWORD);
-		registerPage.enterPasswordConfirm(GlobalConstants.PASSWORD);
+		registerPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
+		registerPage.enterPasswordConfirm(GlobalConstants.PARTNER_PASSWORD);
 		dashboardPage = registerPage.clickSubmitButton();
 
 		dashboardPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULT_POLICYGROUP);

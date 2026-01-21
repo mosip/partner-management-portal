@@ -36,8 +36,8 @@ public class AuthPartnerWithoutCertificateTest extends BaseClass {
 
 		logoutFromPartner();
 
-		loginPage.enterUserName("pmpui-nocert");
-		loginPage.enterPassword(password);
+		loginPage.enterUserName(GlobalConstants.AUTHNOCERT);
+		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
 		loginPage.clickOnLoginButton();
 
 		oidcClientPage = dashboardPage.clickOnAuthenticationServicesTitle();
@@ -85,8 +85,8 @@ public class AuthPartnerWithoutCertificateTest extends BaseClass {
 
 		logoutFromPartner();
 
-		loginPage.enterUserName("pmpui-nocert");
-		loginPage.enterPassword(password);
+		loginPage.enterUserName(GlobalConstants.AUTHNOCERT);
+		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
 		loginPage.clickOnLoginButton();
 
 		OidcClientPage oidcClientPage = dashboardPage.clickOnAuthenticationServicesTitle();
@@ -109,8 +109,8 @@ public class AuthPartnerWithoutCertificateTest extends BaseClass {
 
 		logoutFromPartner();
 
-		loginPage.enterUserName("pmpui-nocert");
-		loginPage.enterPassword(password);
+		loginPage.enterUserName(GlobalConstants.AUTHNOCERT);
+		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
 		loginPage.clickOnLoginButton();
 
 		dashboardPage.clickOnProfileDropdown();
