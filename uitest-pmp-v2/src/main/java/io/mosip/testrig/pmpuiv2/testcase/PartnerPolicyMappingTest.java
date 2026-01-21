@@ -155,7 +155,7 @@ public class PartnerPolicyMappingTest extends BaseClass {
 		assertTrue(partnerPolicyMappingPage.isFilterButtonDisabled(), GlobalConstants.isFilterButtonDisabled);
 		assertTrue(partnerPolicyMappingPage.isFilterResetButtonEnabled(), GlobalConstants.isFilterResetButtonEnabled);
 		assertTrue(partnerPolicyMappingPage.isApplyFilterButtonDisabled(), GlobalConstants.isApplyFilterButtonDisabled);
-		
+
 		partnerPolicyMappingPage.clickOnFilterResetButton();
 		partnerPolicyMappingPage.clickOnFilterButton();
 		assertFalse(partnerPolicyMappingPage.isFilterButtonEnabled(), GlobalConstants.isFilterButtonEnabled);
@@ -214,7 +214,7 @@ public class PartnerPolicyMappingTest extends BaseClass {
 				GlobalConstants.isCancelButtonOfTextBoxDisplayed);
 		partnerPolicyMappingPage.clickOnCancelButtonOfTextBox();
 		partnerPolicyMappingPage.enterPendingPolicyNameInFilter("authPollink");
-		
+
 		partnerPolicyMappingPage.clickOnFilterResetButton();
 		partnerPolicyMappingPage.clickOnFilterButton();
 		assertTrue(partnerPolicyMappingPage.isPartnerIdDescIconDisplayed(),

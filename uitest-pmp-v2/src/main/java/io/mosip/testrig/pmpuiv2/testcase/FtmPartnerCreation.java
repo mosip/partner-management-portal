@@ -14,7 +14,7 @@ import io.mosip.testrig.pmpuiv2.pages.RegisterPage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
-@Test(dependsOnGroups = { "PartnerAdminCreation" }, groups = {"FtmPartnerCreation"})
+@Test(dependsOnGroups = { "PartnerAdminCreation" }, groups = { "FtmPartnerCreation" })
 public class FtmPartnerCreation extends BaseClass {
 
 	private BasePage basePage;
@@ -59,10 +59,10 @@ public class FtmPartnerCreation extends BaseClass {
 		ftmPage.clickOnAddFtmPartnerIdForNoCert();
 		assertTrue(ftmPage.isNoDataAvailableMessageDisplayed(), GlobalConstants.isNoDataTextDisplaed);
 
-		ftmPage.EnterInAddFtmMakeBox(data);
+		ftmPage.EnterInAddFtmMakeBox(GlobalConstants.AUTOFTMMAKE);
 		assertTrue(ftmPage.isAutoPopulatedMessageDisplayed(), GlobalConstants.isAutoPopulatedTextDisplaed);
 
-		ftmPage.EnterInAddFtmModelBox(data);
+		ftmPage.EnterInAddFtmModelBox(GlobalConstants.AUTOFTMMODEL);
 		assertEquals(ftmPage.isAddFtmSubmitButtonEnabled(), false);
 
 		ftmPage.clickOnAddFtmPartnerIdInfo();
@@ -72,8 +72,8 @@ public class FtmPartnerCreation extends BaseClass {
 		ftmPage.EnterInAddFtmModelBox(" ");
 		assertTrue(ftmPage.isInfoMessageDisplayed(), GlobalConstants.isInfoMessageDisplayed);
 
-		ftmPage.EnterInAddFtmMakeBox(data);
-		ftmPage.EnterInAddFtmModelBox(data);
+		ftmPage.EnterInAddFtmMakeBox(GlobalConstants.AUTOFTMMAKE);
+		ftmPage.EnterInAddFtmModelBox(GlobalConstants.AUTOFTMMODEL);
 		basePage.navigateBack();
 
 		ftmPage.clickOnBlockMesssageProceed();
@@ -81,8 +81,8 @@ public class FtmPartnerCreation extends BaseClass {
 				GlobalConstants.isPartnerCertificatePageDisplayed);
 
 		ftmPage.clickOnAddFtmButtonWioutRecord();
-		ftmPage.EnterInAddFtmMakeBox(data);
-		ftmPage.EnterInAddFtmModelBox(data);
+		ftmPage.EnterInAddFtmMakeBox(GlobalConstants.AUTOFTMMAKE);
+		ftmPage.EnterInAddFtmModelBox(GlobalConstants.AUTOFTMMODEL);
 
 		ftmPage.clickOnSideNavHomeIcon();
 		ftmPage.clickOnBlockMesssageProceed();
@@ -183,7 +183,7 @@ public class FtmPartnerCreation extends BaseClass {
 		assertTrue(partnerCertificatePage.isSuccessMessageForFtmCertDisplayed(),
 				GlobalConstants.isSuccessMessageForFtmCertDisplayed);
 	}
-	
+
 	private void handleTermsAndCondition() {
 		if (dashboardPage.isTermsAndConditionsPopupDisplayed()) {
 			dashboardPage.clickOnCheckbox();

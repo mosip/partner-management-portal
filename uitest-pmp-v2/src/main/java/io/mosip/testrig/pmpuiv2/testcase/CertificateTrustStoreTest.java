@@ -10,7 +10,7 @@ import io.mosip.testrig.pmpuiv2.pages.PartnerCertificatePage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
-@Test(dependsOnGroups = {"PartnerAdminCreation"}, groups = { "CertificateTrustStoreTest" })
+@Test(dependsOnGroups = { "PartnerAdminCreation" }, groups = { "CertificateTrustStoreTest" })
 public class CertificateTrustStoreTest extends BaseClass {
 
 	private DashboardPage dashboardPage;
@@ -81,9 +81,8 @@ public class CertificateTrustStoreTest extends BaseClass {
 		assertTrue(partnerCertificatePage.isUploadCertInstructionTextDisplayed(),
 				GlobalConstants.isUploadCertInstructionTextDisplayed);
 		assertTrue(partnerCertificatePage.isCertFormatesTextDisplayed(), GlobalConstants.isCertFormatesTextDisplayed);
-		assertTrue(partnerCertificatePage.isSubmitButtonForAdminDisabled(), GlobalConstants.isSubmitButtonForAdminDisabled);
-
-		
+		assertTrue(partnerCertificatePage.isSubmitButtonForAdminDisabled(),
+				GlobalConstants.isSubmitButtonForAdminDisabled);
 
 		partnerCertificatePage.uploadExpiredCertificateForRootCa();
 		assertTrue(partnerCertificatePage.isUploadedRootCACertificateNameDisplayed(),

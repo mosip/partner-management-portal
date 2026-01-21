@@ -11,7 +11,7 @@ import io.mosip.testrig.pmpuiv2.pages.RegisterPage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
-@Test(dependsOnGroups = { "PartnerAdminCreation" }, groups = {"AuthPartnerCreation"})
+@Test(dependsOnGroups = { "PartnerAdminCreation" }, groups = { "AuthPartnerCreation" })
 public class AuthPartnerCreation extends BaseClass {
 
 	private DashboardPage dashboardPage;
@@ -49,7 +49,7 @@ public class AuthPartnerCreation extends BaseClass {
 		logoutFromPartner();
 
 		registerPage = loginPage.clickRegisterButton();
-	
+
 		registerPage.enterFirstName(GlobalConstants.AUTH_PARTNER_ID);
 		registerPage.enterLastName(GlobalConstants.AUTH_PARTNER_ID);
 		registerPage.enterOrganizationName(GlobalConstants.ORGANISATION_NAME);
@@ -144,7 +144,7 @@ public class AuthPartnerCreation extends BaseClass {
 		partnerCertificatePage.clickOnSuccessMsgCloseButton();
 		partnerCertificatePage.clickOnTitleBackButton();
 	}
-	
+
 	@Test(priority = 2, description = "Register auth user with out uploading certificates")
 	public void registerAuthUserWithoutUploadingCertificates() throws InterruptedException {
 
@@ -191,7 +191,7 @@ public class AuthPartnerCreation extends BaseClass {
 		dashboardPage.clickOnProfileDropdown();
 		loginPage = dashboardPage.clickOnLogoutButton();
 	}
-	
+
 	private void handleTermsAndCondition() {
 		if (dashboardPage.isTermsAndConditionsPopupDisplayed()) {
 			dashboardPage.clickOnCheckbox();

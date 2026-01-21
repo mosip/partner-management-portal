@@ -92,9 +92,14 @@ public class GlobalConstants {
 	public static final String AUTOMATION_DEACTIVATING_5 = "AutomationDeactivating5";
 	public static final String DEACTIVATE_SBI_ASADMIN = "Deactivatesbiinadmin";
 	public static final String FTM_NOCERT_USER = "pmpui-ftmnocert";
+	public static final String AUTOFTMMAKE = "autoftmmake";
+	public static final String AUTOFTMMODEL = "autoftmmodel";
 	public static final String FTMMAKE1 = "ftmmake1";
 	public static final String FTMMODEL1 = "ftmmodel1";
 	public static final String AUTHNOCERT = "pmpui-nocert";
+	public static final String AUTOFTMREJECT = "autoftmreject";
+	public static final String AUTOFTMDEACTIVATE = "autoftmdeactivate";
+	public static final String AUTOFTMWITHOUTCERT = "autoftmwithoutcert";
 
 	public static final String ALPHANUMERIC_AND_SYMBOLS = "Automation@123#";
 	public static final String SPECIAL_CHARACTERS = "!@#$%^&";

@@ -131,7 +131,7 @@ public class PartnerAdminCreation extends BaseClass {
 		policygroupPage.clickOnSuccessHomeButton();
 
 	}
-	
+
 	private void handleTermsAndCondition() {
 		if (dashboardPage.isTermsAndConditionsPopupDisplayed()) {
 			dashboardPage.clickOnCheckbox();

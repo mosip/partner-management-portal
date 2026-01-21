@@ -17,7 +17,7 @@ import io.mosip.testrig.pmpuiv2.pages.ProfilePage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
-@Test(dependsOnGroups = { "AuthPartnerCreation" }, groups = {"AuthPartnerWithoutCertificateTest"})
+@Test(dependsOnGroups = { "AuthPartnerCreation" }, groups = { "AuthPartnerWithoutCertificateTest" })
 public class AuthPartnerWithoutCertificateTest extends BaseClass {
 
 	private DashboardPage dashboardPage;

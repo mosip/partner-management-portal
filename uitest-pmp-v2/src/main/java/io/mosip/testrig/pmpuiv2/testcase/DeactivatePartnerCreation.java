@@ -11,7 +11,7 @@ import io.mosip.testrig.pmpuiv2.pages.RegisterPage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
-@Test(dependsOnGroups = { "PartnerAdminCreation" }, groups = {"DeactivatePartnerCreation"})
+@Test(dependsOnGroups = { "PartnerAdminCreation" }, groups = { "DeactivatePartnerCreation" })
 public class DeactivatePartnerCreation extends BaseClass {
 
 	private DashboardPage dashboardPage;
@@ -92,7 +92,7 @@ public class DeactivatePartnerCreation extends BaseClass {
 		dashboardPage.clickOnProfileDropdown();
 		dashboardPage.clickOnLogoutButton();
 	}
-	
+
 	private void handleTermsAndCondition() {
 		if (dashboardPage.isTermsAndConditionsPopupDisplayed()) {
 			dashboardPage.clickOnCheckbox();
