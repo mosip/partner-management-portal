@@ -12,7 +12,7 @@ import io.mosip.testrig.pmpuiv2.pages.RegisterPage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
-@Test(dependsOnGroups = {"PartnerAdminCreation"}, groups = {"PolicyAdminAndPartnerCreation"})
+@Test(dependsOnGroups = { "PartnerAdminCreation" }, groups = {"PolicyAdminAndPartnerCreation"})
 public class PolicyAdminAndPartnerCreation extends BaseClass {
 	private DashboardPage dashboardPage;
 	private LoginPage loginPage;
@@ -42,11 +42,7 @@ public class PolicyAdminAndPartnerCreation extends BaseClass {
 
 		KeycloakUserManager.assignRole(GlobalConstants.POLICIES_ADMIN, "PARTNER_ADMIN");
 
-		assertTrue(dashboardPage.isTermsAndConditionsPopupDisplayed(),
-				GlobalConstants.isTermsAndConditionsPopUpDisplayed);
-		dashboardPage.clickOnCheckbox();
-		assertTrue(dashboardPage.isProceedButtonDisplayed(), GlobalConstants.isProceedButtonDisplayed);
-		dashboardPage.clickOnProceedButton();
+		handleTermsAndCondition();
 
 	}
 
@@ -133,10 +129,7 @@ public class PolicyAdminAndPartnerCreation extends BaseClass {
 		dashboardPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULT_POLICYGROUP);
 		dashboardPage.clickOnSubmitButton();
 
-		assertTrue(dashboardPage.isTermsAndConditionsPopupDisplayed(),
-				GlobalConstants.isTermsAndConditionsPopUpDisplayed);
-		dashboardPage.clickOnCheckbox();
-		dashboardPage.clickOnProceedButton();
+		handleTermsAndCondition();
 
 		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
 				GlobalConstants.isPartnerCertificateTitleDisplayed);
@@ -151,7 +144,7 @@ public class PolicyAdminAndPartnerCreation extends BaseClass {
 		assertTrue(partnerCertificatePage.isPleaseTabToSelectTextDisplayed(),
 				GlobalConstants.isPleaseTabToSelectTextDisplayed);
 		assertTrue(partnerCertificatePage.isCertFormatesTextDisplayed(), GlobalConstants.isCertFormatesTextDisplayed);
-		partnerCertificatePage.uploadPolicyUserIntermediateCaCert();
+		partnerCertificatePage.uploadPolicyUserClientCertificate();
 		partnerCertificatePage.clickOnSubmitButton();
 		assertTrue(partnerCertificatePage.isSuccessMessageDisplayed(), GlobalConstants.isSuccessMessageDisplayed);
 		partnerCertificatePage.clickOncertificateUploadCloseButton();
@@ -171,6 +164,14 @@ public class PolicyAdminAndPartnerCreation extends BaseClass {
 		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
 		loginPage.clickOnLoginButton();
 
+	}
+	
+	private void handleTermsAndCondition() {
+		if (dashboardPage.isTermsAndConditionsPopupDisplayed()) {
+			dashboardPage.clickOnCheckbox();
+			assertTrue(dashboardPage.isProceedButtonDisplayed(), GlobalConstants.isProceedButtonDisplayed);
+			dashboardPage.clickOnProceedButton();
+		}
 	}
 
 }

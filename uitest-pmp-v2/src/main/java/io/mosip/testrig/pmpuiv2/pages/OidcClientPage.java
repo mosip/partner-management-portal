@@ -563,7 +563,13 @@ public class OidcClientPage extends BasePage {
 	}
 
 	public void clickOnCreateOidcClientButton() {
-		clickOnElement(createOidcClient);
+		if (isElementDisplayed(createOidcClient)) {
+			clickOnElement(createOidcClient);
+		} else if (isElementDisplayed(createOidcClientButton)) {
+			clickOnElement(createOidcClientButton);
+		} else {
+			throw new RuntimeException("Create OIDC Client button not visible");
+		}
 	}
 
 	public void selectPartnerIdDropdown() {
@@ -878,10 +884,6 @@ public class OidcClientPage extends BasePage {
 
 	public boolean isHomeButtonDisplayed() {
 		return isElementDisplayed(homeButton);
-	}
-
-	public void clickOnListCreateOidcClientButton() {
-		clickOnElement(createOidcClientButton);
 	}
 
 	public void navigateBackDefaultButton() {

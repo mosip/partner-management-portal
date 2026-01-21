@@ -1,5 +1,6 @@
 package io.mosip.testrig.pmpuiv2.testcase;
 
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
@@ -197,6 +198,7 @@ public class AuthPolicyTest extends BaseClass {
 				GlobalConstants.isProvideValidJsonDataErrorMessageDisplayed);
 		authPolicyPage.clickOnErrorCloseButton();
 		authPolicyPage.uploadExceedData();
+		assertEquals(authPolicyPage.isPolicyDataBoxEnabled(), true);
 		basePage.scrollToEndPage();
 		authPolicyPage.clickOnSaveAsDraftButton();
 		basePage.scrollToStartPage();
@@ -206,7 +208,7 @@ public class AuthPolicyTest extends BaseClass {
 		authPolicyPage.uploadPolicyData();
 		authPolicyPage.clearTextBoxPolicyData();
 		basePage.scrollToEndPage();
-		assertTrue(authPolicyPage.isSaveAsDraftButtonEnabled(), GlobalConstants.isSaveAsDraftButtonEnabled);
+		assertTrue(authPolicyPage.isSaveAsDraftButtonDisabled(), GlobalConstants.isSaveAsDraftButtonDisabled);
 		authPolicyPage.uploadPolicyData();
 		authPolicyPage.clickOnSaveAsDraftButton();
 		assertTrue(authPolicyPage.isPolicyNameExistErrorMessageDisplayed(),
@@ -499,7 +501,6 @@ public class AuthPolicyTest extends BaseClass {
 				GlobalConstants.isInvalidInfoInPolicyDataErrorDisplayed);
 		authPolicyPage.clickOnErrorCloseButton();
 		authPolicyPage.uploadPolicyData();
-		authPolicyPage.clearTextBoxPolicyData();
 		basePage.scrollToEndPage();
 		assertTrue(authPolicyPage.isEditPolicySubmitButtonEnabled(), GlobalConstants.isSaveAsDraftButtonEnabled);
 		authPolicyPage.clickOnEditPolicyFormSubmitButton();
@@ -599,6 +600,7 @@ public class AuthPolicyTest extends BaseClass {
 		authPolicyPage.clickOnPublishPolicyCloseButton();
 		assertTrue(authPolicyPage.isListOfPoliciesPageDisplayed(), GlobalConstants.isListOfPoliciesPageDisplayed);
 
+		authPolicyPage.clickOnFilterResetButton();
 		authPolicyPage.clickOnFilterButton();
 		authPolicyPage.enterPolicyGroupInFilterBox(GlobalConstants.DEFAULT_POLICYGROUP);
 		authPolicyPage.enterPolicyNameInFilter(GlobalConstants.AUTHPOLICY08);
@@ -814,7 +816,7 @@ public class AuthPolicyTest extends BaseClass {
 
 		dashboardPage.clickOnAuthenticationServicesTitle();
 		oidcClientPage.clickOnApiKeyTab();
-		apiKeyPage.clickOnAPIKeyDisplayed();
+		apiKeyPage.clickOnCreateApiKey();
 		apiKeyPage.selectPartnerIdDropdown();
 		apiKeyPage.enterDeactivePolicyNameInDropdown(GlobalConstants.DEACTIVATE_AUTH2);
 		assertTrue(apiKeyPage.isNoDataAvailableTextDisplayed(), GlobalConstants.isNoDataAvailableTextDisplayed);
@@ -950,6 +952,7 @@ public class AuthPolicyTest extends BaseClass {
 		policygroupPage.clickOnDeactivateCancelBtn();
 		assertTrue(policiesPage.isPoliciesPolicyGroupTabDisplayed(), GlobalConstants.isPoliciesPolicyGroupTabDisplayed);
 
+		policygroupPage.clickOnFilterResetButton();
 		policygroupPage.clickOnFilterButton();
 		policygroupPage.clickOnPolicyGroupNameFilter(GlobalConstants.DEACTIVATE_POLICYGROUP);
 		policygroupPage.clickOnApplyFilterButton();

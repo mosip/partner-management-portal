@@ -230,6 +230,9 @@ public class PolicyGroupPage extends BasePage {
 
 	@FindBy(xpath = "//span[contains(text(), 'Invalid character. Allowed special characters')]")
 	private WebElement specialCharactersAreNotAllowedErrorMessage;
+	
+	@FindBy(id = "filter_reset_btn")
+	private WebElement filterResetButton;
 
 	public PolicyGroupPage(WebDriver driver) {
 		super(driver);
@@ -409,6 +412,10 @@ public class PolicyGroupPage extends BasePage {
 
 	public void clickOnFilterButton() {
 		clickOnElement(filterButton);
+	}
+	
+	public void clickOnFilterResetButton() {
+		clickOnElement(filterResetButton);
 	}
 
 	public void clickOnPolicyGroupIdFilter(String value) {

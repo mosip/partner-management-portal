@@ -14,7 +14,7 @@ import io.mosip.testrig.pmpuiv2.pages.LoginPage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
-@Test(dependsOnGroups = { "DeactivatePartnerCreation" }, groups = { "SbiCreationTest" })
+@Test(dependsOnGroups = { "DevicePartnerCreation" }, groups = { "SbiCreationTest" })
 public class SbiCreationTest extends BaseClass {
 
 	private DeviceProviderPage deviceProviderPage;

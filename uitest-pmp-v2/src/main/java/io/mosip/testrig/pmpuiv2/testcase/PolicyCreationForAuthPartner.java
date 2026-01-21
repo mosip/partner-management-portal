@@ -13,7 +13,7 @@ import io.mosip.testrig.pmpuiv2.pages.PoliciesPage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
-@Test(dependsOnGroups = {"AuthPartnerCreation"}, groups = {"PolicyCreationForAuthPartner"})
+@Test(dependsOnGroups = { "AuthPartnerCreation" }, groups = {"PolicyCreationForAuthPartner"})
 public class PolicyCreationForAuthPartner extends BaseClass {
 	private BasePage basePage;
 	private DashboardPage dashboardPage;
@@ -152,13 +152,13 @@ public class PolicyCreationForAuthPartner extends BaseClass {
 		assertTrue(policiesPage.isTitleBackIconDisplayed(), GlobalConstants.isBackArrow);
 		policiesPage.clickOnTitleBackIcon();
 		assertTrue(policiesPage.isTitleOfPolicyPageDisplayed(), GlobalConstants.isTitleOfPolicyPageDisplayed);
-		assertTrue(policiesPage.isRequestPolicyButtonDisplayed(), GlobalConstants.isRequestPolicyButtonDisplayed);
+		assertTrue(policiesPage.isTabularRequestPolicyButtonDisplayed(), GlobalConstants.isRequestPolicyButtonDisplayed);
 
 		requestPolicy(GlobalConstants.PENDING_POLICY);
 
 		requestPolicy(GlobalConstants.AUTHPOLICY02);
 
-		policiesPage.clickOnRequestPolicyButtonOfTabularPage();
+		policiesPage.clickOnRequestPolicyButton();
 		policiesPage.selectPartnerIdDropdown();
 		policiesPage.enterInvalidPolicyNameDropdown(GlobalConstants.DEACTIVATE_AUTHPOLICY);
 		assertTrue(policiesPage.isNoDataAvailableDisplayed(), GlobalConstants.isNoDataAvailableDisplayed);
@@ -235,6 +235,7 @@ public class PolicyCreationForAuthPartner extends BaseClass {
 	}
 
 	private void filterAndDeactivateAuthPolicy(String policyNameFilterValue) {
+		authPolicyPage.clickOnFilterResetButton();
 		authPolicyPage.clickOnFilterButton();
 		authPolicyPage.enterPolicyNameInFilter(policyNameFilterValue);
 		authPolicyPage.clickOnApplyFilterButton();
@@ -250,7 +251,7 @@ public class PolicyCreationForAuthPartner extends BaseClass {
 	}
 
 	private void requestPolicy(String authPolicyName) {
-		policiesPage.clickOnRequestPolicyButtonOfTabularPage();
+		policiesPage.clickOnRequestPolicyButton();
 		policiesPage.selectPartnerIdDropdown();
 		policiesPage.enterAuthPolicyNameDropdown(authPolicyName);
 		policiesPage.enterComments(GlobalConstants.DEFAULT_POLICY);

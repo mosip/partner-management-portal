@@ -1,5 +1,6 @@
 package io.mosip.testrig.pmpuiv2.utility;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -25,5 +26,14 @@ public class WaitUtil {
 	public static boolean waitForInvisibility(WebDriver driver, WebElement element) {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(TIMEOUT));
 		return wait.until(ExpectedConditions.invisibilityOf(element));
+	}
+	
+	public static WebElement waitForClickable(WebDriver driver, By locator) {
+	    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(TIMEOUT));
+	    return wait.until(
+	        ExpectedConditions.refreshed(
+	            ExpectedConditions.elementToBeClickable(locator)
+	        )
+	    );
 	}
 }

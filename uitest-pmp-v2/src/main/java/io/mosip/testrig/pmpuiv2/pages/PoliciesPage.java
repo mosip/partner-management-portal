@@ -266,6 +266,12 @@ public class PoliciesPage extends BasePage {
 	
 	@FindBy(xpath = "//textarea[@placeholder='Mention the purpose of requesting the policy']")
 	private WebElement policyCommentBoxPlaceholder;
+	
+	@FindBy(id = "show_request_policy")
+	private WebElement middleRequestPolicyButton;
+	
+	@FindBy(id = "policies_request_btn")
+	private WebElement tabularPoliciesRequestButton;
 
 	public PoliciesPage(WebDriver driver) {
 		super(driver);
@@ -276,12 +282,15 @@ public class PoliciesPage extends BasePage {
 	}
 
 	public void clickOnRequestPolicyButton() {
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+		if (isTabularRequestPolicyButtonDisplayed()) {
+			clickOnElement(tabularPoliciesRequestButton);
+
+		} else if (isMiddleRequestPolicyButtonDisplayed()) {
+			clickOnElement(middleRequestPolicyButton);
+
+		} else {
+			throw new RuntimeException("Request Policy button not found in middle or tabular view");
 		}
-		clickOnElement(requestPolicyButton);
 	}
 
 	public void clickOnRequestPolicyButtonOfTabularPage() {
@@ -341,7 +350,15 @@ public class PoliciesPage extends BasePage {
 	}
 
 	public boolean isPoliciesEmptyTableEnabled() {
-		return isElementEnabled(requestPolicyButton);
+		if (isMiddleRequestPolicyButtonDisplayed()) {
+			return isElementEnabled(middleRequestPolicyButton);
+
+		} else if (isTabularRequestPolicyButtonDisplayed()) {
+			return isElementEnabled(tabularPoliciesRequestButton);
+
+		} else {
+			return false;
+		}
 	}
 
 	public void clickOnHomeButton() {
@@ -600,8 +617,12 @@ public class PoliciesPage extends BasePage {
 		return isElementDisplayed(backButton);
 	}
 
-	public boolean isRequestPolicyButtonDisplayed() {
-		return isElementDisplayed(policies_request_btn);
+	public boolean isMiddleRequestPolicyButtonDisplayed() {
+		return isElementDisplayed(middleRequestPolicyButton);
+	}
+
+	public boolean isTabularRequestPolicyButtonDisplayed() {
+		return isElementDisplayed(tabularPoliciesRequestButton);
 	}
 
 	public boolean isTitleOfPolicyPageDisplayed() {

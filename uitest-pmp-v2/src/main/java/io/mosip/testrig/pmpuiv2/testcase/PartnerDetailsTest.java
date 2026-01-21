@@ -9,7 +9,7 @@ import io.mosip.testrig.pmpuiv2.pages.PartnerAdminPage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
-@Test(dependsOnGroups = {"DeactivatePartnerCreation"}, groups = {"PartnerDetailsTest"})
+@Test(dependsOnGroups = { "DeactivatePartnerCreation" }, groups = {"PartnerDetailsTest"})
 public class PartnerDetailsTest extends BaseClass {
 
 	private DashboardPage dashboardPage;
