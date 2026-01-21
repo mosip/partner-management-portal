@@ -82,6 +82,7 @@ public class CertificateTrustStoreTest extends BaseClass {
 				GlobalConstants.isUploadCertInstructionTextDisplayed);
 		assertTrue(partnerCertificatePage.isCertFormatesTextDisplayed(), GlobalConstants.isCertFormatesTextDisplayed);
 		assertTrue(partnerCertificatePage.isSubmitButtonForAdminDisabled(), GlobalConstants.isSubmitButtonForAdminDisabled);
+
 		
 
 		partnerCertificatePage.uploadExpiredCertificateForRootCa();
