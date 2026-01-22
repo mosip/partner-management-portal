@@ -1,12 +1,10 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
-import io.mosip.testrig.pmpuiv2.utility.TestRunner;
 
 public class FtmPage extends BasePage {
 
@@ -245,7 +243,7 @@ public class FtmPage extends BasePage {
 	private WebElement statusDescIcon;
 
 	@FindBy(xpath = "//*[contains(text(), 'FTM Chip details already exists')]")
-	private WebElement dublicateFtmChipErrorMessage;
+	private WebElement duplicateFtmChipErrorMessage;
 
 	@FindBy(id = "add_ftm_clear_form")
 	private WebElement addFtmClearForm;
@@ -567,17 +565,15 @@ public class FtmPage extends BasePage {
 		clickOnElement(statusDescIcon);
 	}
 
-	public boolean isDublicateFtmChipErrorMessageDisplayed() {
-		return isElementDisplayed(dublicateFtmChipErrorMessage);
+	public boolean isDuplicateFtmChipErrorMessageDisplayed() {
+		return isElementDisplayed(duplicateFtmChipErrorMessage);
 	}
 
 	public void clickOnAddFtmClearForm() {
 		clickOnElement(addFtmClearForm);
 	}
 
-	public boolean isAddFtmSubmitButtonDisabled() {
-		refreshThePage();
-		WebElement submitButton = driver.findElement(By.id("add_ftm_submit_btn"));
+	public boolean isAddFtmSubmitButtonEnabled() {
 		return isElementEnabled(addFtmSubmitButton);
 	}
 

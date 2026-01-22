@@ -1,5 +1,6 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -8,8 +9,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
+import io.mosip.testrig.pmpuiv2.kernel.util.ConfigManager;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
 public class ListOfSbiPage extends BasePage {
@@ -248,6 +252,30 @@ public class ListOfSbiPage extends BasePage {
 	@FindBy(id = "subtitle_back_icon")
 	private WebElement backIconOfLinkedDevices;
 
+	@FindBy(id = "sbi_list_deactivate_btn")
+	private WebElement deactivateSbiButtonInAdmin;
+
+	@FindBy(xpath = "//p[@id='sbi_list_deactivate_btn' and contains(@class, 'text-[#A5A5A5]')]")
+	private WebElement deactivateSbiButtonWithGreyedOutInAdmin;
+
+	@FindBy(id = "deactivate_popup_header")
+	private WebElement deactivatePopupInAdmin;
+
+	@FindBy(xpath = "//p[@id='deactivate_popup_header' and contains(text(), 'Do you want to deactivate SBI Version')]")
+	private WebElement deactivateSbiPopupTitleInAdmin;
+
+	@FindBy(xpath = "//p[@id='deactivate_popup_description' and contains(text(), 'On clicking Confirm')]")
+	private WebElement deactivatePopupDescriptionInAdmin;
+
+	@FindBy(id = "deactivate_popup_description_for_sbi")
+	private WebElement deactivatePopupSbiConfInAdmin;
+
+	@FindBy(id = "undefined_title")
+	private WebElement listOfSbiText;
+
+	@FindBy(xpath = "//tr[@id='sbi_list_item1']/td[1]")
+	private WebElement partnerIdInFirstColumn;
+
 	public ListOfSbiPage(WebDriver driver) {
 		super(driver);
 	}
@@ -265,45 +293,46 @@ public class ListOfSbiPage extends BasePage {
 	}
 
 	public boolean isAddDeviceButtonEnabled(String sbiVersion) {
-		WebElement addDeviceButton = driver.findElement(
-				By.xpath("//p[text()='" + sbiVersion + "']/../../..//button[contains(@id, 'sbi_list_add_Devices')]"));
+		By addDeviceButton = By
+				.xpath("//p[text()='" + sbiVersion + "']/../../..//button[contains(@id, 'sbi_list_add_Devices')]");
 		return isElementEnabled(addDeviceButton);
 	}
 
 	public boolean isRejectedStatusDisplayed(String sbiVersion) {
-		WebElement rejected = driver.findElement(By.xpath("//p[text()='" + sbiVersion
-				+ "']/..//div[contains(@class, 'bg-[#FAD6D1] text-[#5E1515]') and text()='Rejected']"));
-		return isElementDisplayed(rejected);
+		By rejected = By.xpath("//p[text()='" + sbiVersion
+				+ "']/..//div[contains(@class, 'bg-[#FAD6D1] text-[#5E1515]') and text()='Rejected']");
+		return isDisplayed(rejected);
 	}
 
 	public boolean getDeviceDetails(String sbiVersion) {
-		WebElement deviceDetails = driver.findElement(
-				By.xpath("//p[text()='" + sbiVersion + "']/..//div[@class='flex items-center w-fit px-2 mx-1']"));
-		return isElementDisplayed(deviceDetails);
+		By deviceDetails = By
+				.xpath("//p[text()='" + sbiVersion + "']/..//div[@class='flex items-center w-fit px-2 mx-1']");
+		return isDisplayed(deviceDetails);
 	}
 
 	public boolean isViewDeviceButtonEnabled(String sbiVersion) {
-		WebElement addDeviceButton = driver.findElement(
-				By.xpath("//p[text()='" + sbiVersion + "']/../../..//button[contains(@id, 'sbi_list_view_Devices')]"));
+		By addDeviceButton = By
+				.xpath("//p[text()='" + sbiVersion + "']/../../..//button[contains(@id, 'sbi_list_view_Devices')]");
 		return isElementEnabled(addDeviceButton);
 	}
 
 	public void clickOnViewDeviceButton(String sbiVersion) {
-		WebElement addDeviceButton = driver.findElement(
-				By.xpath("//p[text()='" + sbiVersion + "']/../../..//button[contains(@id, 'sbi_list_view_Devices')]"));
-		clickOnElement(addDeviceButton);
+		By addDeviceButton = By
+				.xpath("//p[text()='" + sbiVersion + "']/../../..//button[contains(@id, 'sbi_list_view_Devices')]");
+		click(addDeviceButton);
 	}
 
 	public void clickOnThreeDotsOfSbiListAsAdmin(String sbiVersion) {
-		WebElement threeDotSbiOptionsButton = driver
-				.findElement(By.xpath("//*[text()='" + sbiVersion + "']/..//button[contains(@id, 'sbi_list_action')]"));
-		clickOnElement(threeDotSbiOptionsButton);
+
+		By threeDotSbiOptionsButton = By.xpath("//td[text()='" + sbiVersion + "']/..//button[text()='...']");
+
+		click(threeDotSbiOptionsButton);
 	}
 
 	public void clickOnThreeDotsOfSbiList(String sbiVersion) {
-		WebElement threeDotSbiOptionsButton = driver.findElement(
-				By.xpath("//p[text()='" + sbiVersion + "']/../../..//button[contains(@id, 'sbi_list_hamburger')]"));
-		clickOnElement(threeDotSbiOptionsButton);
+		By threeDotSbiOptionsButton = By
+				.xpath("//p[text()='" + sbiVersion + "']/../../..//button[contains(@id, 'sbi_list_hamburger')]");
+		click(threeDotSbiOptionsButton);
 	}
 
 	public void clickOnApproveOrReject() {
@@ -319,9 +348,9 @@ public class ListOfSbiPage extends BasePage {
 	}
 
 	public void clickOnAddDeviceButton(String sbiVersion) {
-		WebElement addDeviceButton = driver.findElement(
-				By.xpath("//p[text()='" + sbiVersion + "']/../../..//button[contains(@id, 'sbi_list_add_Devices')]"));
-		clickOnElement(addDeviceButton);
+		By addDeviceButton = By
+				.xpath("//p[text()='" + sbiVersion + "']/../../..//button[contains(@id, 'sbi_list_add_Devices')]");
+		click(addDeviceButton);
 	}
 
 	public boolean isDeactivateOptionEnabled() {
@@ -352,32 +381,29 @@ public class ListOfSbiPage extends BasePage {
 	}
 
 	public boolean isDeactivatedStatusDisplayed(String sbiVersion) {
-		WebElement status = driver
-				.findElement(By.xpath("//p[text()='" + sbiVersion + "']/..//div[text()='Deactivated']"));
-		return isElementDisplayed(status);
+		By status = By.xpath("//p[text()='" + sbiVersion + "']/..//div[text()='Deactivated']");
+		return isDisplayed(status);
 	}
 
 	public boolean isCreatedSbiDisplayed(String sbiVersion) {
-		WebElement createdSbi = driver.findElement(By.xpath("//*[text()='" + sbiVersion + "']"));
-		return isElementDisplayed(createdSbi);
+		By createdSbi = By.xpath("//*[text()='" + sbiVersion + "']");
+		return isDisplayed(createdSbi);
 	}
 
 	public boolean isPendingForApprovalDisplayed(String sbiVersion) {
-		WebElement status = driver
-				.findElement(By.xpath("//p[text()='" + sbiVersion + "']/..//div[text()='Pending For Approval']"));
-		return isElementDisplayed(status);
+		By status = By.xpath("//p[text()='" + sbiVersion + "']/..//div[text()='Pending For Approval']");
+		return isDisplayed(status);
 	}
 
 	public boolean isPendingForApprovalDisplayedInAdminPage(String sbiVersion) {
-		WebElement status = driver
-				.findElement(By.xpath("//td[text()='" + sbiVersion + "']/..//div[text()='Pending For Approval']"));
-		return isElementDisplayed(status);
+		By status = By.xpath(
+				"//tr[td[normalize-space()='" + sbiVersion + "']]//div[normalize-space()='Pending For Approval']");
+		return isDisplayed(status);
 	}
 
 	public boolean isRejectedStatusDisplayedInAdminPage(String sbiVersion) {
-		WebElement status = driver
-				.findElement(By.xpath("//td[text()='" + sbiVersion + "']/..//div[text()='Rejected']"));
-		return isElementDisplayed(status);
+		By status = By.xpath("//tr[td[normalize-space()='" + sbiVersion + "']]//div[normalize-space()='Rejected']");
+		return isDisplayed(status);
 	}
 
 	public String getSbiListArrowDirection() {
@@ -385,9 +411,9 @@ public class ListOfSbiPage extends BasePage {
 	}
 
 	public void clickOnSbiListArrow(String sbiVersion) {
-		WebElement sbiArrowButton = driver.findElement(
-				By.xpath("//p[text()='" + sbiVersion + "']/../../..//button[contains(@id, 'sbi_list_arrow')]"));
-		clickOnElement(sbiArrowButton);
+		By sbiArrowButton = By
+				.xpath("//p[text()='" + sbiVersion + "']/../../..//button[contains(@id, 'sbi_list_arrow')]");
+		click(sbiArrowButton);
 	}
 
 	public boolean isPartnerIdTextDisplayed() {
@@ -419,27 +445,26 @@ public class ListOfSbiPage extends BasePage {
 	}
 
 	public boolean isSubmittedOnDateDisplayed() {
-		WebElement status = driver.findElement(
-				By.xpath(generateXpathWithDateAndTitle("Submitted On", PmpTestUtil.todayDateWithoutZeroPadder)));
-		return isElementDisplayed(status);
+		By status = By.xpath(generateXpathWithDateAndTitle("Submitted On", PmpTestUtil.todayDateWithoutZeroPadder));
+		return isDisplayed(status);
 	}
 
 	public boolean isSbiCreationDateDisplayed() {
-		WebElement status = driver.findElement(
-				By.xpath(generateXpathWithDateAndTitle("SBI Creation Date", PmpTestUtil.todayDateWithoutZeroPadder)));
-		return isElementDisplayed(status);
+		By status = By
+				.xpath(generateXpathWithDateAndTitle("SBI Creation Date", PmpTestUtil.todayDateWithoutZeroPadder));
+		return isDisplayed(status);
 	}
 
 	public boolean isPreviousMonthSbiCreationDateDisplayed() {
-		WebElement status = driver.findElement(By.xpath(
-				generateXpathWithDateAndTitle("SBI Creation Date", PmpTestUtil.previousMonth4thDateWithoutZeroPadder)));
-		return isElementDisplayed(status);
+		By status = By.xpath(
+				generateXpathWithDateAndTitle("SBI Creation Date", PmpTestUtil.previousMonth4thDateWithoutZeroPadder));
+		return isDisplayed(status);
 	}
 
 	public boolean isSbiExpirationDateDisplayed() {
-		WebElement status = driver.findElement(By.xpath(
-				generateXpathWithDateAndTitle("SBI Expiration Date", PmpTestUtil.nextMonth24thDateWithoutZeroPadder)));
-		return isElementDisplayed(status);
+		By status = By.xpath(
+				generateXpathWithDateAndTitle("SBI Expiration Date", PmpTestUtil.nextMonth24thDateWithoutZeroPadder));
+		return isDisplayed(status);
 	}
 
 	private String generateXpathWithDateAndTitle(String title, String date) {
@@ -606,32 +631,46 @@ public class ListOfSbiPage extends BasePage {
 
 	public boolean isSbiCreationDateSameAsBrowserDateFormat() {
 
-		WebElement dateCell = driver.findElement(By.xpath("//tr[@id='sbi_list_item1']/td[5]"));
-		String browserTime = dateCell.getText().trim();
+		By dateCellLocator = By.xpath("//tr[@id='sbi_list_item1']/td[5]");
 
-		DateTimeFormatter dateFormatter = PmpTestUtil.nonZeroPadderDateFormatter;
 		try {
+			WebElement dateCell = new WebDriverWait(driver, Duration.ofSeconds(ConfigManager.getTimeout()))
+					.until(ExpectedConditions.visibilityOfElementLocated(dateCellLocator));
+
+			String browserTime = dateCell.getText().trim();
+
+			DateTimeFormatter dateFormatter = PmpTestUtil.nonZeroPadderDateFormatter;
+
 			LocalDate.parse(browserTime, dateFormatter);
 			return true;
-		} catch (DateTimeParseException e) {
-			return false;
-		}
 
+		} catch (Exception e) {
+
+			return false;
+
+		}
 	}
 
 	public boolean isSbiExpirationDateSameAsBrowserDateFormat() {
 
-		WebElement expiryDateCell = driver.findElement(By.xpath("//tr[@id='sbi_list_item1']/td[6]"));
-		String browserTime = expiryDateCell.getText().trim();
+		By expiryDateCell = By.xpath("//tr[@id='sbi_list_item1']/td[6]");
 
-		DateTimeFormatter dateFormatter = PmpTestUtil.nonZeroPadderDateFormatter;
 		try {
+			WebElement dateCell = new WebDriverWait(driver, Duration.ofSeconds(ConfigManager.getTimeout()))
+					.until(ExpectedConditions.visibilityOfElementLocated(expiryDateCell));
+
+			String browserTime = dateCell.getText().trim();
+
+			DateTimeFormatter dateFormatter = PmpTestUtil.nonZeroPadderDateFormatter;
+
 			LocalDate.parse(browserTime, dateFormatter);
 			return true;
-		} catch (DateTimeParseException e) {
-			return false;
-		}
 
+		} catch (Exception e) {
+
+			return false;
+
+		}
 	}
 
 	public void clickOnPendingForApprovalSbiItem() {
@@ -750,8 +789,8 @@ public class ListOfSbiPage extends BasePage {
 	}
 
 	public boolean isPendingForApprovalDisplayed() {
-		WebElement statusElement = driver.findElement(By.xpath("//div[text()='Pending For Approval']"));
-		return isElementDisplayed(statusElement);
+		By statusElement = By.xpath("//div[text()='Pending For Approval']");
+		return isDisplayed(statusElement);
 	}
 
 	public boolean isLinkedDevicesListDisplayed() {
@@ -763,15 +802,69 @@ public class ListOfSbiPage extends BasePage {
 	}
 
 	public boolean isLinkedDevicePresentForStatus(String statusText, String count) {
-		WebElement linkedDeviceElement = driver
-				.findElement(By.xpath("//tr[.//div[text()='" + statusText + "']]//button//p[text()='" + count + "']"));
-		return isElementDisplayed(linkedDeviceElement);
+		By linkedDeviceElement = By
+				.xpath("//tr[.//div[text()='" + statusText + "']]//button//p[text()='" + count + "']");
+		return isDisplayed(linkedDeviceElement);
 	}
 
 	public void clickOnLinkedDevicesInSbiList(String statusText, String count) {
-		WebElement linkedDeviceElement = driver
-				.findElement(By.xpath("//tr[.//div[text()='" + statusText + "']]//button//p[text()='" + count + "']"));
-		clickOnElement(linkedDeviceElement);
+		By linkedDeviceElement = By
+				.xpath("//tr[.//div[text()='" + statusText + "']]//button//p[text()='" + count + "']");
+		click(linkedDeviceElement);
+	}
+
+	public void clickOnDeactivateSbiButtonAsAdmin() {
+		clickOnElement(deactivateSbiButtonInAdmin);
+	}
+
+	public boolean isDeactivateOptionEnabledInAdmin() {
+		if (isElementDisplayed(deactivateSbiButtonWithGreyedOutInAdmin)) {
+			return false;
+		}
+		return isElementDisplayed(deactivateSbiButtonInAdmin);
+	}
+
+	public boolean isDeactivatePopupInAdminDisplayed() {
+		return isElementDisplayed(deactivatePopupInAdmin);
+	}
+
+	public boolean isDeactivateSbiPopupTitleInAdminDisplayed() {
+		return isElementDisplayed(deactivateSbiPopupTitleInAdmin);
+	}
+
+	public boolean isDeactivatePopupDescriptionInAdminDisplayed() {
+		return isElementDisplayed(deactivatePopupDescriptionInAdmin);
+	}
+
+	public boolean isDeactivatePopupSbiConfMsgInAdminDisplayed() {
+		return isElementDisplayed(deactivatePopupSbiConfInAdmin);
+	}
+
+	public boolean isDeactivateCancelDisplayed() {
+		return isElementDisplayed(deactivateCancel);
+	}
+
+	public boolean isDeactivateSubmitButtonDisplayed() {
+		return isElementDisplayed(deactivateSubmitButton);
+	}
+
+	public void selectSbiStatusFilterInAdmin(String status) {
+		clickOnElement(statusFilter);
+		By statusOption = By.xpath("//button[contains(@id, 'status_filter_option') and text()='" + status + "']");
+		click(statusOption);
+	}
+
+	public String getListOfSbisTitle() {
+		return getTextFromLocator(listOfSbiText);
+	}
+
+	public boolean isDeactivatedStatusDisplayedInAdminPage(String sbiVersion) {
+		By status = By.xpath("//td[text()='" + sbiVersion + "']/..//div[text()='Deactivated']");
+		return isDisplayed(status);
+	}
+
+	public boolean isPartnerIdInFirstColumnDisplayed() {
+		return isElementDisplayed(partnerIdInFirstColumn);
 	}
 
 }

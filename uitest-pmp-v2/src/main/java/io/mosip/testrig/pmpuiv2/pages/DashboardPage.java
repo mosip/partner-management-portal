@@ -1,13 +1,9 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
-import java.time.Duration;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class DashboardPage extends BasePage {
 
@@ -26,16 +22,16 @@ public class DashboardPage extends BasePage {
 	@FindBy(xpath = "//span[text()='Select Policy Group']")
 	private WebElement selectPolicyGroupDropdownForInvalid;
 
-	@FindBy(id = "select_policy_group_dropdown_dropdown_btn")
+	@FindBy(id = "policy_group_selector_dropdown_button")
 	private WebElement selectPolicyGroupDropdown;
 
 	@FindBy(id = "select_policy_group_dropdown_no_data_available")
 	private WebElement noDataAvailableText;
 
-	@FindBy(id = "select_policy_group_dropdown_search_input")
+	@FindBy(id = "policy_group_selector_search_input")
 	private WebElement SearchBox;
 
-	@FindBy(id = "select_policy_group_submit")
+	@FindBy(id = "select_policy_group_submit_btn")
 	private WebElement submitButton;
 
 	@FindBy(xpath = "//*[@class='min-h-2']")
@@ -49,9 +45,6 @@ public class DashboardPage extends BasePage {
 
 	@FindBy(id = "consent_proceed_btn")
 	private WebElement proceedButton;
-
-	@FindBy(id = "dashboard_partner_certificate_list_header")
-	private WebElement partnerCertificateTitle;
 
 	@FindBy(id = "dashboard_policies_card")
 	private WebElement policiesTitle;
@@ -83,7 +76,7 @@ public class DashboardPage extends BasePage {
 	@FindBy(id = "select_policy_group_submit")
 	private WebElement selectPolicyGroupSubmit;
 
-	@FindBy(id = "select_policy_group_dropdown_option1")
+	@FindBy(id = "policy_group_selector_option_1")
 	private WebElement selectPolicyGrouDropdownOption1;
 
 	@FindBy(xpath = "//h5[text()='Certificate Trust Store']")
@@ -149,6 +142,9 @@ public class DashboardPage extends BasePage {
 	@FindBy(id = "footer_documentation_link")
 	private WebElement footerDocumentationLink;
 
+	@FindBy(id = "policy_group_selector_option_button_1")
+	private WebElement policyGroupOption;
+
 	public DashboardPage(WebDriver driver) {
 		super(driver);
 	}
@@ -177,7 +173,8 @@ public class DashboardPage extends BasePage {
 	public void selectPolicyGroupDropdown(String policyGroupValue) {
 		clickOnElement(selectPolicyGroupDropdown);
 		enter(SearchBox, policyGroupValue);
-		clickOnElement(selectPolicyGrouDropdownOption1);
+		By policyGroupOption = By.xpath("//span[normalize-space()='" + policyGroupValue + "']");
+		click(policyGroupOption);
 	}
 
 	public void closePolicyGroupDropdown() {
@@ -209,7 +206,7 @@ public class DashboardPage extends BasePage {
 	}
 
 	public boolean isPartnerCertificateTitleDisplayed() {
-		return isElementDisplayed(partnerCertificateTitle);
+		return isElementDisplayed(dashboardPartnerCertificateListHeader);
 	}
 
 	public boolean isPoliciesTitleDisplayed() {
@@ -234,7 +231,8 @@ public class DashboardPage extends BasePage {
 	}
 
 	public PartnerCertificatePage clickOnPartnerCertificateTitle() {
-		clickOnElement(partnerCertificateTitle);
+		By dashboardPartnerCertificateListTitel = By.id("dashboard_partner_certificate_list_header");
+		click(dashboardPartnerCertificateListTitel);
 		return new PartnerCertificatePage(driver);
 	}
 
@@ -318,7 +316,7 @@ public class DashboardPage extends BasePage {
 	}
 
 	public void clickOnCertificateTrustStore() {
-		clickOnElement(certificateTrustStore);		
+		clickOnElement(certificateTrustStore);
 	}
 
 	public boolean isAuthenticationServiceInfoTextDisplayed() {
@@ -406,4 +404,5 @@ public class DashboardPage extends BasePage {
 	public boolean isFooterDocumentationLinkDisplayed() {
 		return isElementDisplayed(footerDocumentationLink);
 	}
+
 }

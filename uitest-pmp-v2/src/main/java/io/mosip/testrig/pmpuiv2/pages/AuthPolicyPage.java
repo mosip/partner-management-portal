@@ -1,24 +1,25 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
-import io.mosip.testrig.pmpuiv2.utility.TestRunner;
 
 public class AuthPolicyPage extends BasePage {
 
 	@FindBy(id = "create_auth_policy_btn")
 	private WebElement createAuthPolicyButton;
 
-	@FindBy(id = "policy_group_dropdown_dropdown_btn")
+	@FindBy(id = "policy_group_selector_dropdown_button")
 	private WebElement policyGroupDropdown;
 
-	@FindBy(id = "policy_group_dropdown_search_input")
+	@FindBy(id = "policy_group_selector_search_input")
 	private WebElement policyGroupDropdownSearchInput;
 
-	@FindBy(id = "policy_group_dropdown_option1")
+	@FindBy(id = "policy_group_selector_option_1")
 	private WebElement policyGroupDropdownOption1;
 
 	@FindBy(id = "policy_name_box")
@@ -81,13 +82,13 @@ public class AuthPolicyPage extends BasePage {
 	@FindBy(xpath = "//p[contains(text(), 'All fields marked with')]")
 	private WebElement policyFormSubTitle;
 
-	@FindBy(xpath = "//span[text()='Select policy group']")
+	@FindBy(xpath = "//span[text()='Select Policy Group']")
 	private WebElement policyGroupPlaceholder;
 
 	@FindBy(xpath = "//span[text()='automationui policy group']")
 	private WebElement policyGroupName;
 
-	@FindBy(xpath = "//p[text()='desc automationui policy group']")
+	@FindBy(xpath = "//span[text()='desc automationui policy group']")
 	private WebElement policyGroupDescription;
 
 	@FindBy(xpath = "//p[text()='No Data Available.']")
@@ -195,7 +196,7 @@ public class AuthPolicyPage extends BasePage {
 	@FindBy(id = "status_filter_option3")
 	private WebElement draftStatus;
 
-	@FindBy(xpath = "(//div[contains(text(), 'Activated')])[1]")
+	@FindBy(xpath = "(//div[contains(text(), 'Active')])[1]")
 	private WebElement statusActivated;
 
 	@FindBy(xpath = "(//div[contains(text(), 'Deactivated')])[2]")
@@ -270,7 +271,7 @@ public class AuthPolicyPage extends BasePage {
 	@FindBy(xpath = "//p[text()='Policy ID']")
 	private WebElement policyId;
 
-	@FindBy(xpath = "//span[text()='ab11CD22ef']")
+	@FindBy(id = "view_policy_sub_title_id")
 	private WebElement policyIdContext;
 
 	@FindBy(xpath = "//p[text()='Policy Name']")
@@ -291,7 +292,7 @@ public class AuthPolicyPage extends BasePage {
 	@FindBy(xpath = "//p[text()='authpolicy 03']")
 	private WebElement policyDescriptionContext;
 
-	@FindBy(xpath = "//p[text()='Policy Group Description']")
+	@FindBy(id = "view_policy_group_description_label")
 	private WebElement policyGroupDescriptionLabel;
 
 	@FindBy(xpath = "//p[text()='desc automationui policy group']")
@@ -315,7 +316,7 @@ public class AuthPolicyPage extends BasePage {
 	@FindBy(xpath = "//div[text()='Deactivated']")
 	private WebElement deactivateStatus;
 
-	@FindBy(xpath = "//div[text()='Activated']")
+	@FindBy(id = "view_policy_status")
 	private WebElement activateStatus;
 
 	@FindBy(xpath = "//button[text()='Select Status']")
@@ -333,7 +334,7 @@ public class AuthPolicyPage extends BasePage {
 	@FindBy(xpath = "//p[contains(text(), 'List of Authentication Policies')]")
 	private WebElement listOfPolicies;
 
-	@FindBy(id = "clone_policy_group_dropdown_search_input")
+	@FindBy(id = "policy_group_selector_search_input")
 	private WebElement clonePolicyGroupsearchInput;
 
 	@FindBy(xpath = "//h1[text()='Policy saved as Draft']")
@@ -357,19 +358,19 @@ public class AuthPolicyPage extends BasePage {
 	@FindBy(xpath = "//p[contains(text(), 'Select the policy group to nest the cloned policy')]")
 	private WebElement clonePolicyInfoMessage;
 
-	@FindBy(id = "clone_policy_group_dropdown_dropdown_btn")
+	@FindBy(id = "policy_group_selector_dropdown_button")
 	private WebElement clonePolicyGroupDropdown;
 
-	@FindBy(id = "clone_policy_group_dropdown_search_input")
+	@FindBy(id = "policy_group_selector_search_input")
 	private WebElement clonePolicyGroupDropdownSearchInput;
 
 	@FindBy(xpath = "//span[text()='@#A#@']")
 	private WebElement clonePolicyGroupName;
 
-	@FindBy(xpath = "//p[text()='@#A#@']")
+	@FindBy(id = "policy_group_selector_option_desc_1")
 	private WebElement clonePolicyGroupDescription;
 
-	@FindBy(id = "clone_policy_group_dropdown_option1")
+	@FindBy(id = "policy_group_selector_option_button_1")
 	private WebElement clonePolicyGroupDropdownOption1;
 
 	@FindBy(id = "clone_policy_cancel")
@@ -483,6 +484,15 @@ public class AuthPolicyPage extends BasePage {
 	@FindBy(xpath = "//p[text()='Invalid input parameter - info in policy data']")
 	private WebElement invalidInfoInPolicyData;
 
+	@FindBy(id = "create_policy_error_msg")
+	private WebElement policyGroupNotActiveMessage;
+
+	@FindBy(xpath = "//li[text()='No policy groups found']")
+	private WebElement noPolicyGroupFound;
+
+	@FindBy(id = "policy_group_selector_option_button_1")
+	private WebElement clonePolicyGroupOption;
+
 	public AuthPolicyPage(WebDriver driver) {
 		super(driver);
 	}
@@ -493,8 +503,22 @@ public class AuthPolicyPage extends BasePage {
 
 	public void selectPolicyGroupDropdown(String policyGroupValue) {
 		clickOnElement(policyGroupDropdown);
+		clearTextBox(policyGroupDropdownSearchInput);
 		enter(policyGroupDropdownSearchInput, policyGroupValue);
-		clickOnElement(policyGroupDropdownOption1);
+
+		try {
+			By policyGroupOption = By.xpath("//span[normalize-space()='" + policyGroupValue + "']");
+			click(policyGroupOption);
+		} catch (NoSuchElementException e) {
+			logger.warn("Policy group not found: " + policyGroupValue);
+			throw new NoSuchElementException(
+					"Failed to select policy group: " + policyGroupValue + ". Element not found.", e);
+		}
+	}
+
+	public void selectDeactivatePolicyGroupInDropdown(String policyGroupValue) {
+		clickOnElement(policyGroupDropdown);
+		enter(policyGroupDropdownSearchInput, policyGroupValue);
 	}
 
 	public void enterPolicyName(String policyNameValue) {
@@ -541,7 +565,7 @@ public class AuthPolicyPage extends BasePage {
 		clickOnElement(filterButton);
 	}
 
-	public boolean isFiletrButtonDisplayedOrEnabled() {
+	public boolean isFilterButtonDisplayedOrEnabled() {
 		return isElementEnabled(filterButton);
 	}
 
@@ -943,7 +967,7 @@ public class AuthPolicyPage extends BasePage {
 	}
 
 	public boolean isPolicyGroupDescriptionLabelDisplayed() {
-		return isElementDisplayed(policyGroupDescription);
+		return isElementDisplayed(policyGroupDescriptionLabel);
 	}
 
 	public boolean isPolicyGroupDescriptionContextDisplayed() {
@@ -1046,7 +1070,8 @@ public class AuthPolicyPage extends BasePage {
 	public void selectPolicyGroupDropdownForClone(String value) {
 		clickOnElement(clonePolicyGroupDropdown);
 		enter(clonePolicyGroupsearchInput, value);
-		clickOnElement(clonePolicyGroupDropdownOption1);
+		By policyGroupOption = By.xpath("//span[normalize-space()='" + value + "']");
+		click(policyGroupOption);
 	}
 
 	public boolean isPolicySavedAsDraftMessageDisplayed() {
@@ -1055,6 +1080,10 @@ public class AuthPolicyPage extends BasePage {
 
 	public boolean isSaveAsDraftButtonEnabled() {
 		return isElementEnabled(saveAsDraftButton);
+	}
+
+	public boolean isSaveAsDraftButtonDisabled() {
+		return isElementDisabled(saveAsDraftButton);
 	}
 
 	public void clickOnPolicyCancelButton() {
@@ -1109,7 +1138,22 @@ public class AuthPolicyPage extends BasePage {
 		clickOnElement(clonePolicyGroupDropdown);
 		clickOnElement(clonePolicyGroupDropdownSearchInput);
 		enter(clonePolicyGroupDropdownSearchInput, value);
-		clickOnElement(clonePolicyGroupDropdownOption1);
+		By policyGroupOption = By.xpath("//span[normalize-space()='" + value + "']");
+		click(policyGroupOption);
+	}
+
+	public void selectPolicyGroupForClonePolicy(String value) {
+		enter(clonePolicyGroupDropdownSearchInput, value);
+		By policyGroupOption = By.xpath("//span[normalize-space()='" + value + "']");
+		click(policyGroupOption);
+	}
+
+	public void selectValidPolicyGroupForClone(String value) {
+		clickOnElement(clonePolicyGroupDropdown);
+		clickOnElement(clonePolicyGroupDropdownSearchInput);
+		enter(clonePolicyGroupDropdownSearchInput, value);
+		By policyGroupOption = By.xpath("//span[normalize-space()='" + value + "']");
+		click(policyGroupOption);
 	}
 
 	public boolean isClonePolicyButtonAvailable() {
@@ -1314,6 +1358,23 @@ public class AuthPolicyPage extends BasePage {
 
 	public boolean isInvalidInfoInPolicyDataErrorDisplayed() {
 		return isElementDisplayed(invalidInfoInPolicyData);
+	}
+
+	public boolean isPolicyGroupNotActiveErrorDisplayed() {
+		return isElementDisplayed(policyGroupNotActiveMessage);
+	}
+
+	public boolean isNoPolicyGroupFoundDisplayed() {
+		return isElementDisplayed(noPolicyGroupFound);
+	}
+
+	public void clearClonePolicyGroupDropdownValue() {
+		clearTextBox(clonePolicyGroupDropdownSearchInput);
+	}
+
+	public void selectDeactivatedPolicyGroupInDropdown(String policyGroupValue) {
+		clickOnElement(policyGroupDropdown);
+		enter(policyGroupDropdownSearchInput, policyGroupValue);
 	}
 
 }

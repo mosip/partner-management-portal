@@ -1,10 +1,11 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
 import java.time.Duration;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
+
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -12,6 +13,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
+import io.mosip.testrig.pmpuiv2.utility.WaitUtil;
 
 public class PartnerCertificatePage extends BasePage {
 
@@ -73,7 +75,7 @@ public class PartnerCertificatePage extends BasePage {
 	private WebElement partnerDomainType;
 
 	@FindBy(id = "upload_file_FILL0_wght200_GRAD0_opsz24")
-	private WebElement partnerCertOvelay;
+	private WebElement partnerCertOverlay;
 
 	@FindBy(xpath = "//p[contains(text(), \"The certificate uploaded is not in the correct format.\")]")
 	private WebElement InvalidFormatErrorPopup;
@@ -426,6 +428,15 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(id = "upload_trust_certificate_confirmation_header")
 	private WebElement uploadedSuccessfullyMessage;
 
+	@FindBy(id = "partnerDomain_selector_dropdown_option4")
+	private WebElement partnerDomainSelectorDropdownOptionMisp;
+
+	@FindBy(id = "upload_certificate_popup_title")
+	private WebElement mispPartnerCertificatePopup;
+
+	@FindBy(id = "dashboard_ftm_chip_provider_card")
+	private WebElement dashboardFtmChipProviderCardDashboard;
+
 	public PartnerCertificatePage(WebDriver driver) {
 		super(driver);
 	}
@@ -535,8 +546,8 @@ public class PartnerCertificatePage extends BasePage {
 		return isElementDisplayed(partnerDomainType);
 	}
 
-	public boolean isPartnerCertOvelayDisplayed() {
-		return isElementDisplayed(partnerCertOvelay);
+	public boolean isPartnerCertOverlayDisplayed() {
+		return isElementDisplayed(partnerCertOverlay);
 	}
 
 	public boolean isInvalidFormatErrorPopupDisplayed() {
@@ -576,7 +587,7 @@ public class PartnerCertificatePage extends BasePage {
 	}
 
 	public boolean isDashboardFtmChipProviderCardDisplayed() {
-		return isElementDisplayed(dashboardFtmChipProviderCard);
+		return isElementDisplayed(dashboardFtmChipProviderCardDashboard);
 	}
 
 	public boolean isSuccessMessageForFtmCertDisplayed() {
@@ -730,6 +741,14 @@ public class PartnerCertificatePage extends BasePage {
 
 	public boolean isSubmitButtonForAdminDisplayed() {
 		return isElementDisplayed(SubmitButtonForAdmin);
+	}
+
+	public boolean isSubmitButtonForAdminDisabled() {
+		return isElementDisabled(SubmitButtonForAdmin);
+	}
+
+	public boolean isSubmitButtonForAdminEnabled() {
+		return isElementEnabled(SubmitButtonForAdmin);
 	}
 
 	public void clickOnTitleBackButton() {
@@ -1068,26 +1087,26 @@ public class PartnerCertificatePage extends BasePage {
 	}
 
 	public boolean isValidFromDateTimeFormatValid() {
-		String browserTime = trustCertificateContextUploadDateTime.getText();
-		String datePart = browserTime.split(",")[0].trim();
-		DateTimeFormatter dateFormatter = PmpTestUtil.dateFormatter;
+		String uiDateTime = trustCertificateContextUploadDateTime.getText().replaceAll("\\s+", " ").trim();
 
 		try {
-			LocalDate.parse(datePart, dateFormatter);
-			return true;
+			LocalDateTime parsed = LocalDateTime.parse(uiDateTime, PmpTestUtil.browserFormatter);
+			String reformatted = parsed.format(PmpTestUtil.browserFormatter);
+
+			return uiDateTime.equals(reformatted);
 		} catch (DateTimeParseException e) {
 			return false;
 		}
 	}
 
 	public boolean isValidToDateTimeFormatValid() {
-		String browserTime = trustCertificateContextExpiryDateTime.getText();
-		String datePart = browserTime.split(",")[0].trim();
-		DateTimeFormatter dateFormatter = PmpTestUtil.dateFormatter;
+		String uiDateTime = trustCertificateContextExpiryDateTime.getText().replaceAll("\\s+", " ").trim();
 
 		try {
-			LocalDate.parse(datePart, dateFormatter);
-			return true;
+			LocalDateTime parsed = LocalDateTime.parse(uiDateTime, PmpTestUtil.browserFormatter);
+			String reformatted = parsed.format(PmpTestUtil.browserFormatter);
+
+			return uiDateTime.equals(reformatted);
 		} catch (DateTimeParseException e) {
 			return false;
 		}
@@ -1213,10 +1232,48 @@ public class PartnerCertificatePage extends BasePage {
 		clickOnElement(rootUploadTrustCertificateButtonInAdmin);
 	}
 
-
 	public void clickOnIntermediateUploadTrustCertificateButtonInAdmin() {
 		clickOnElement(intermediateUploadTrustCertificateButtonInAdmin);
 	}
 
+	public void clickOnPartnerDomainSelectorDropdownOptionMisp() {
+		clickOnElement(partnerDomainSelectorDropdownOptionMisp);
+	}
+
+	public boolean isMispPartnerCertificatePopupDisplayed() {
+		return isElementDisplayed(mispPartnerCertificatePopup);
+	}
+
+	public void uploadDeactivateUserRootCaCert() {
+		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "deactivateUserRootCA.cer"));
+	}
+
+	public void uploadDeactivateUserIntermediateCaCert() {
+		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "deactivateUserIntermediateCA.cer"));
+	}
+
+	public void uploadDeactivateUserClientCertificate() {
+		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "deactivateUserClient.cer"));
+	}
+
+	public void uploadPolicyAdminUserRootCaCert() {
+		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "policyadminca.cer"));
+	}
+
+	public void uploadPolicyAdminUserRootSubCaCert() {
+		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "policyadminsubca.cer"));
+	}
+
+	public void uploadPolicyUserRootCaCert() {
+		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "policyUserRootCA.cer"));
+	}
+
+	public void uploadPolicyUserIntermediateCaCert() {
+		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "policyUserIntermediateCA.cer"));
+	}
+
+	public void uploadPolicyUserClientCertificate() {
+		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "policyUserClient.cer"));
+	}
 
 }

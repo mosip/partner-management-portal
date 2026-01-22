@@ -12,6 +12,7 @@ import java.util.Properties;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -21,15 +22,16 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
+import io.mosip.testrig.pmpuiv2.driver.DriverManager;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.mosip.testrig.pmpuiv2.kernel.util.ConfigManager;
 import io.mosip.testrig.pmpuiv2.pages.BasePage;
+import io.mosip.testrig.pmpuiv2.pages.LoginPage;
 
 public class BaseClass {
 	protected WebDriver driver;
 	protected Map<String, Object> vars;
-	protected static JavascriptExecutor js;
+	protected JavascriptExecutor js;
 	protected String langcode;
 	protected String envPath = ConfigManager.getiam_adminportal_path();
 	protected String envPathPmpUiv2 = ConfigManager.getiam_pmpuiv2_path();
@@ -40,70 +42,83 @@ public class BaseClass {
 	protected String[] allpassword = ConfigManager.getIAMUsersPassword().split(",");
 	protected String password = allpassword[0];
 	public static final Logger logger = Logger.getLogger(BaseClass.class);
-	public static String data = BasePage.appendDate.substring(0, BasePage.getSplitdigit());;
+	public static String data;
 
 	@BeforeMethod
 	public void setUp(Method method) throws Exception {
 		logger.info("Start set up");
 		if (System.getProperty("os.name").equalsIgnoreCase("Linux") && ConfigManager.getdocker().equals("yes")) {
-
 			logger.info("Docker start");
 			String configFilePath = "/usr/bin/chromedriver";
 			System.setProperty("webdriver.chrome.driver", configFilePath);
-
 		} else {
 			WebDriverManager.chromedriver().setup();
 			logger.info("window chrome driver start");
 		}
-		ChromeOptions options = new ChromeOptions();
-		String headless = ConfigManager.getheadless();
-		if (headless.equalsIgnoreCase("yes")) {
-			logger.info("Running is headless mode");
-			options.addArguments("--headless", "--disable-gpu", "--no-sandbox", "--window-size=1920x1080",
-					"--disable-dev-shm-usage");
 
-		}
-		driver = new ChromeDriver(options);
-		js = (JavascriptExecutor) driver;
-		vars = new HashMap<String, Object>();
-		driver.get(envPathPmpUiv2);
-		logger.info("launch url --" + envPathPmpUiv2);
-		driver.manage().window().maximize();
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10)); // Configurable if needed
-		driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
-		String language1 = null;
-//		try {
-//
-//			language1 = ConfigManager.getloginlang();
-//			String loginlang = null;
-//			System.out.println(language1);
-//			if(!language1.equals("sin")) {
-//				loginlang = JsonUtil.JsonObjArrayListParsing2(ConfigManager.getlangcode());
-//				driver.findElement(By.xpath("//*[@id='kc-locale-dropdown']")).click();
-//				String var = "//li/a[contains(text(),'" + loginlang + "')]";
-//				driver.findElement(By.xpath(var)).click();
-//			}
-//		} catch (Exception e) {
-//			e.getMessage();
-//		}
+		ChromeOptions options = new ChromeOptions();
+	    boolean isHeadless = ConfigManager.getheadless().equalsIgnoreCase("yes");
+
+	    if (isHeadless) {
+	        logger.info("Running in HEADLESS mode");
+
+	        options.addArguments(
+	            "--headless=new",
+	            "--disable-gpu",
+	            "--no-sandbox",
+	            "--disable-dev-shm-usage",
+	            "--window-size=1920,1080",
+	            "--force-device-scale-factor=1",
+	            "--high-dpi-support=1"
+	        );
+	    } else {
+	        logger.info("Running in HEADED mode");
+	    }
+
+	    WebDriver driver = new ChromeDriver(options);
+	    DriverManager.setDriver(driver);
+	    this.driver = driver;
+
+	    driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
+
+	    if (!isHeadless) {
+	        driver.manage().window().maximize();
+	    } else {
+	        driver.manage().window().setSize(new Dimension(1920, 1080));
+	    }
+
+	    driver.get(envPathPmpUiv2);
+	    logger.info("Launched URL: {"+envPathPmpUiv2+"}");
+
+	    if (isHeadless) {
+	        ((JavascriptExecutor) driver).executeScript(
+	            "window.resizeTo(1920,1080);"
+	        );
+	    }
 
 		String testName = method.getName();
-		String description = method.getAnnotation(Test.class).description();
+		String description = method.getAnnotation(Test.class) != null ? method.getAnnotation(Test.class).description()
+				: "";
 		LogUtil.step("--------------------------------------------------");
-		LogUtil.step("🔹 Starting Test: " + testName);
-		LogUtil.step("📝 Description: " + description);
+		LogUtil.step("Starting Test: " + testName);
+		LogUtil.step("Description: " + description);
 		LogUtil.step("--------------------------------------------------");
 
-		BasePage basePage = new BasePage(driver);
-		basePage.enter(driver.findElement(By.id("username")), userid);
-		basePage.enter(driver.findElement(By.id("password")), "mosip123");
-		driver.findElement(By.xpath("//input[@name=\'login\']")).click();
+		String rawData = BasePage.getPreAppend() + BasePage.getDateTime();
+		BaseClass.data = rawData.substring(0, BasePage.getSplitdigit());
+		logger.info("Test data suffix generated: " + BaseClass.data);
 
+		LoginPage loginPage = new LoginPage(driver);
+		loginPage.login(userid, password);
 	}
 
 	@AfterMethod
 	public void tearDown(ITestResult result) {
-		driver.quit();
+		try {
+			DriverManager.quitDriver();
+		} catch (Exception ignored) {
+		}
+		this.driver = null;
 	}
 
 	@DataProvider(name = "data-provider-ca")
@@ -138,18 +153,15 @@ public class BaseClass {
 		String contents[] = null;
 		File directoryPath = null;
 		try {
-
 			if (TestRunner.checkRunType().equalsIgnoreCase("JAR")) {
 				directoryPath = new File(TestRunner.getResourcePath() + "/" + str);
 			} else if (TestRunner.checkRunType().equalsIgnoreCase("IDE")) {
 				directoryPath = new File(
 						System.getProperty("user.dir") + System.getProperty("path.config") + "/" + str);
-
 			}
 
 			logger.info("file directory for " + directoryPath);
 			if (directoryPath.exists()) {
-
 				contents = directoryPath.list();
 				System.out.println("List of files and directories in the specified directory:");
 				for (int i = 0; i < contents.length; i++) {

@@ -153,7 +153,7 @@ public class PolicyGroupPage extends BasePage {
 	@FindBy(xpath = "//p[text()='Policy Group ID']")
 	private WebElement policyGroupIdLabel;
 
-	@FindBy(xpath = "//div[text()='Activated']")
+	@FindBy(xpath = "//div[text()='Active']")
 	private WebElement statusOfPolicyGroup;
 
 	@FindBy(xpath = "//p[text()='Policy Group Name']")
@@ -230,6 +230,9 @@ public class PolicyGroupPage extends BasePage {
 
 	@FindBy(xpath = "//span[contains(text(), 'Invalid character. Allowed special characters')]")
 	private WebElement specialCharactersAreNotAllowedErrorMessage;
+
+	@FindBy(id = "filter_reset_btn")
+	private WebElement filterResetButton;
 
 	public PolicyGroupPage(WebDriver driver) {
 		super(driver);
@@ -399,7 +402,7 @@ public class PolicyGroupPage extends BasePage {
 		return isElementDisplayed(actionHeader);
 	}
 
-	public boolean isFiletrButtonDisplayedOrEnabled() {
+	public boolean isFilterButtonDisplayedOrEnabled() {
 		return isElementDisplayed(filterButton);
 	}
 
@@ -409,6 +412,10 @@ public class PolicyGroupPage extends BasePage {
 
 	public void clickOnFilterButton() {
 		clickOnElement(filterButton);
+	}
+
+	public void clickOnFilterResetButton() {
+		clickOnElement(filterResetButton);
 	}
 
 	public void clickOnPolicyGroupIdFilter(String value) {
@@ -524,7 +531,7 @@ public class PolicyGroupPage extends BasePage {
 		return isElementDisplayed(policyGroupDescriptionAscIcon);
 	}
 
-	public boolean isCreatedDateTimeDescISconDisplayed() {
+	public boolean isCreatedDateTimeDescIconDisplayed() {
 		return isElementDisplayed(creationDateDescIcon);
 	}
 

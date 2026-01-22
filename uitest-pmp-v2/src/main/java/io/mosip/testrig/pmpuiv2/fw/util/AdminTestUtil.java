@@ -6,6 +6,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,6 +22,7 @@ import io.mosip.testrig.pmpuiv2.utility.BaseTestCaseFunc;
 import io.mosip.testrig.pmpuiv2.utility.TestRunner;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import org.apache.log4j.Logger;
 
 public class AdminTestUtil extends BaseTestCaseFunc {
 
@@ -128,7 +131,7 @@ public class AdminTestUtil extends BaseTestCaseFunc {
 					TestRunner.getResourcePath() + "/" + "config/partnerUiv2DataDeleteQueriesForKeyMgr.txt");
 
 			DBManager.executeDBQueries(ConfigManager.getIdaDbUrl(), ConfigManager.getMasterDbUser(),
-					ConfigManager.getPMSDbPass(), ConfigManager.getIDADBSchema(),
+					ConfigManager.getMasterDbPass(), ConfigManager.getIDADBSchema(),
 					TestRunner.getResourcePath() + "/" + "config/partnerUiv2DataDeleteQueriesForIDA.txt");
 			KeycloakUserManager.removeUser();
 //  	    KeycloakUserManager.createUsers();
@@ -144,6 +147,35 @@ public class AdminTestUtil extends BaseTestCaseFunc {
 //			BaseTestCaseFunc.mapZone(BaseTestCaseFunc.currentModule + "-" + propsKernel.getProperty("admin_userName"));
 			initialized = true;
 		}
+	}
+
+	private static final Logger LOG = Logger.getLogger(AdminTestUtil.class);
+	private static final List<String> knownIssues = new ArrayList<>();
+
+	static {
+		try (InputStream is = AdminTestUtil.class.getClassLoader().getResourceAsStream("config/knownIssues.txt")) {
+
+			if (is == null) {
+				LOG.warn("knownIssues.txt not found in classpath");
+			} else {
+				try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
+					String line;
+					while ((line = br.readLine()) != null) {
+						if (!line.trim().isEmpty()) {
+							knownIssues.add(line.trim());
+						}
+					}
+				}
+				LOG.info("Known Issues Loaded: " + knownIssues);
+			}
+
+		} catch (Exception e) {
+			LOG.warn("Error while loading knownIssues.txt", e);
+		}
+	}
+
+	public static List<String> getKnownIssues() {
+		return knownIssues;
 	}
 
 }

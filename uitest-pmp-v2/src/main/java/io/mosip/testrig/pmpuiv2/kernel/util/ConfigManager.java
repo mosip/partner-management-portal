@@ -172,7 +172,7 @@ public class ConfigManager {
 
 	public static void init() {
 
-		logger.info("file location for kernal" + TestRunner.getResourcePath() + "/config/"
+		logger.info("file location for kernel : " + TestRunner.getResourcePath() + "/config/"
 				+ TestRunner.GetKernalFilename());
 
 		propsKernel = getproperty(TestRunner.getResourcePath() + "/config/" + TestRunner.GetKernalFilename());
@@ -221,8 +221,7 @@ public class ConfigManager {
 		serviceNotDeployedList = System.getenv(SERVICES_NOT_DEPLOYED) == null
 				? propsKernel.getProperty(SERVICES_NOT_DEPLOYED)
 				: System.getenv(SERVICES_NOT_DEPLOYED);
-		propsKernel.setProperty(SERVICES_NOT_DEPLOYED, serviceNotDeployedList);
-
+		
 		iam_adminportal_path = System.getenv(IAM_ADMINPORTAL_PATH) == null
 				? propsKernel.getProperty(IAM_ADMINPORTAL_PATH)
 				: System.getenv(IAM_ADMINPORTAL_PATH);
@@ -264,86 +263,65 @@ public class ConfigManager {
 		admin_client_secret = System.getenv(MOSIP_ADMIN_CLIENT_SECRET) == null
 				? propsKernel.getProperty(MOSIP_ADMIN_CLIENT_SECRET)
 				: System.getenv(MOSIP_ADMIN_CLIENT_SECRET);
-		logger.info("admin_client_secret=" + admin_client_secret);
-		propsKernel.setProperty(MOSIP_ADMIN_CLIENT_SECRET, admin_client_secret);
+		
 
 		reportExpirationInDays = System.getenv(REPORT_EXPIRATION_IN_DAYS) == null
 				? propsKernel.getProperty(REPORT_EXPIRATION_IN_DAYS)
 				: System.getenv(REPORT_EXPIRATION_IN_DAYS);
-		propsKernel.setProperty(REPORT_EXPIRATION_IN_DAYS, reportExpirationInDays);
 		push_reports_to_s3 = System.getenv(PUSH_TO_S3) == null ? propsKernel.getProperty(PUSH_TO_S3)
 				: System.getenv(PUSH_TO_S3);
-		propsKernel.setProperty(PUSH_TO_S3, push_reports_to_s3);
 		holidayDateCenter = System.getenv(HolidayDateCenter) == null ? propsKernel.getProperty(HolidayDateCenter)
 				: System.getenv(HolidayDateCenter);
-		propsKernel.setProperty(HolidayDateCenter, holidayDateCenter);
 
 		holidayDate = System.getenv(HolidayDate) == null ? propsKernel.getProperty(HolidayDate)
 				: System.getenv(HolidayDate);
-		propsKernel.setProperty(HolidayDate, holidayDate);
 
 		preappend = System.getenv(Preappend) == null ? propsKernel.getProperty(Preappend) : System.getenv(Preappend);
-		propsKernel.setProperty(Preappend, preappend);
 
 		splitdigit = System.getenv(Splitdigit) == null ? propsKernel.getProperty(Splitdigit)
 				: System.getenv(Splitdigit);
-		propsKernel.setProperty(Splitdigit, splitdigit);
 
 		jsonObjName = System.getenv(JsonObjName) == null ? propsKernel.getProperty(JsonObjName)
 				: System.getenv(JsonObjName);
-		propsKernel.setProperty(JsonObjName, jsonObjName);
 
 		bulkwait = System.getenv(Bulkwait) == null ? propsKernel.getProperty(Bulkwait) : System.getenv(Bulkwait);
-		propsKernel.setProperty(Bulkwait, bulkwait);
 
 		sbivalidDate = System.getenv(SbivalidDate) == null ? propsKernel.getProperty(SbivalidDate)
 				: System.getenv(SbivalidDate);
-		propsKernel.setProperty(SbivalidDate, sbivalidDate);
 
 		sbiexpiryDate = System.getenv(SbiexpiryDate) == null ? propsKernel.getProperty(SbiexpiryDate)
 				: System.getenv(SbiexpiryDate);
-		propsKernel.setProperty(SbiexpiryDate, sbiexpiryDate);
 
 		publicKey = System.getenv(PublicKey) == null ? propsKernel.getProperty(PublicKey) : System.getenv(PublicKey);
-		propsKernel.setProperty(PublicKey, publicKey);
 
 		randomPublicKey = System.getenv(RandomPublicKey) == null ? propsKernel.getProperty(RandomPublicKey)
 				: System.getenv(RandomPublicKey);
-		propsKernel.setProperty(RandomPublicKey, randomPublicKey);
 
 		logouri = System.getenv(LogoUri) == null ? propsKernel.getProperty(LogoUri) : System.getenv(LogoUri);
-		propsKernel.setProperty(LogoUri, logouri);
-
+		
 		redirectUri = System.getenv(RedirectUri) == null ? propsKernel.getProperty(RedirectUri)
 				: System.getenv(RedirectUri);
-		propsKernel.setProperty(RedirectUri, redirectUri);
 
 		signPublicKey = System.getenv(SignPublicKey) == null ? propsKernel.getProperty(SignPublicKey)
 				: System.getenv(SignPublicKey);
-		propsKernel.setProperty(SignPublicKey, signPublicKey);
 
 		headless = System.getenv(Headless) == null ? propsKernel.getProperty(Headless) : System.getenv(Headless);
-		propsKernel.setProperty(Headless, headless);
 
 		docker = System.getenv(Docker) == null ? propsKernel.getProperty(Docker) : System.getenv(Docker);
-		propsKernel.setProperty(Docker, docker);
 
 		langcode = System.getenv(Langcode) == null ? propsKernel.getProperty(Langcode) : System.getenv(Langcode);
-		propsKernel.setProperty(Langcode, langcode);
 
 		loginlang = System.getenv(Loginlang) == null ? propsKernel.getProperty(Loginlang) : System.getenv(Loginlang);
-		propsKernel.setProperty(Loginlang, loginlang);
 
 		policyData = System.getenv(PolicyData) == null ? propsKernel.getProperty(PolicyData)
 				: System.getenv(PolicyData);
-		propsKernel.setProperty(PolicyData, policyData);
 
 		dataSharepolicyData = System.getenv(DataSharepolicyData) == null ? propsKernel.getProperty(DataSharepolicyData)
 				: System.getenv(DataSharepolicyData);
-		propsKernel.setProperty(DataSharepolicyData, dataSharepolicyData);
 
 		testcases = System.getenv(Testcases) == null ? propsKernel.getProperty(Testcases) : System.getenv(Testcases);
-		propsKernel.setProperty(Testcases, testcases);
+		
+		 
 
 	}
 
@@ -654,14 +632,14 @@ public class ConfigManager {
 		}
 		return prop;
 	}
-	
+
 	public static int getTimeout() {
-        try {
-            return Integer.parseInt(propsKernel.getProperty("explicitWaitTimeout", "10"));
-        } catch (NumberFormatException e) {
-        	logger.error("Invalid explicitWaitTimeout value in config.properties. Using default 10 seconds.");
-            return 10;
-        }
-    }
+		try {
+			return Integer.parseInt(propsKernel.getProperty("explicitWaitTimeout", "10"));
+		} catch (NumberFormatException e) {
+			logger.error("Invalid explicitWaitTimeout value in config.properties. Using default 10 seconds.");
+			return 10;
+		}
+	}
 
 }
