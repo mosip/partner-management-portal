@@ -3,10 +3,10 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { getUserProfile } from '../../../services/UserProfileService';
 import {
-    downloadFile, formatDate, getPartnerManagerUrl, getCertificate,
+    downloadFile, formatDate, getCertificate,
     handleMouseClickForDropdown, handleServiceErrors, isLangRTL, getErrorMessage, getPartnerTypeDescription,
     isCaSignedPartnerCertificateAvailable,
-    checkCertificateExpired
+    checkCertificateExpired, fetchPartnerDetails
 } from '../../../utils/AppUtils';
 import SuccessMessage from '../../common/SuccessMessage';
 import ErrorMessage from '../../common/ErrorMessage';
@@ -37,7 +37,7 @@ function ViewPartnerDetails() {
     }, [dropdownRef]);
 
     useEffect(() => {
-        const selectedPartnerId = localStorage.getItem('selectedPartnerId');
+        const selectedPartnerId = sessionStorage.getItem('selectedPartnerId');
         if (!selectedPartnerId) {
             setUnexpectedError(true);
             return;
@@ -46,18 +46,11 @@ function ViewPartnerDetails() {
         const fetchData = async () => {
             try {
                 setDataLoaded(false);
-                const response = await HttpService.get(getPartnerManagerUrl(`/admin-partners/${selectedPartnerId}`, process.env.NODE_ENV));
-                if (response) {
-                    const responseData = response.data;
-                    if (responseData && responseData.response) {
-                        const resData = responseData.response;
-                        setPartnerDetails(resData);
-                    } else {
-                        setUnexpectedError(true);
-                        handleServiceErrors(responseData, setErrorCode, setErrorMsg);
-                    }
+                const resData = await fetchPartnerDetails(HttpService, selectedPartnerId, setErrorCode, setErrorMsg, t);
+                if (resData) {
+                    setPartnerDetails(resData);
                 } else {
-                    setErrorMsg(t('viewPartnerDetails.errorInPartnerList'));
+                    setUnexpectedError(true);
                 }
                 setDataLoaded(true);
             } catch (err) {
@@ -65,13 +58,14 @@ function ViewPartnerDetails() {
                 if (err.response?.status && err.response.status !== 401) {
                     setErrorMsg(err.toString());
                 }
+                setDataLoaded(true);
             }
         };
         fetchData();
     }, [t]);
 
     const moveToPartnersList = () => {
-        navigate('/partnermanagement/admin/partners-list');
+        navigate('/partnermanagement/admin/partners/partners-list');
     };
 
     const getOriginalCertificate = async (partner) => {
@@ -144,12 +138,33 @@ function ViewPartnerDetails() {
         setSuccessMsg("");
     };
 
+    const getPartnerStatus = ({ approvalStatus, isActive }) => {
+        if (approvalStatus === 'InProgress' && !isActive) {
+            return 'inactive';
+        } else if (approvalStatus === 'approved' && !isActive) {
+            return 'deactivated';
+        } else {
+            return 'active';
+        }
+    };    
+    
+    const getPartnerStatusText = (partner, t) => t(`statusCodes.${getPartnerStatus(partner)}`);
+    
+    const statusColors = {
+        inactive: 'bg-[#DFE9FF] text-[#384B75]',
+        active: 'bg-[#D1FADF] text-[#155E3E]',
+        deactivated: 'bg-[#EAECF0] text-[#525252]',
+    };
+    
+    const getPartnerStatusBgColor = (partner) => statusColors[getPartnerStatus(partner)];
+    
+
     const dropdownStyle = {
         outerDiv: `w-[18%] min-w-fit absolute py-2 px-1  ${isLoginLanguageRTL ? "origin-bottom-right left-[6rem]" : "origin-bottom-left right-[6rem]"} rounded-md bg-white shadow-lg ring-gray-50 border duration-700`
     }
 
     return (
-        <div className={`w-full p-4 bg-anti-flash-white font-inter break-words max-[450px]:text-sm mb-[2%] ${isLoginLanguageRTL ? "mr-24 ml-1" : "ml-24 mr-1"} overflow-x-scroll`}>
+        <div className={`w-full p-4 bg-anti-flash-white font-inter break-words max-[450px]:text-sm mb-[2%] ${isLoginLanguageRTL ? "mr-24 ml-1" : "ml-24 mr-1"} `}>
             {!dataLoaded && (
                 <LoadingIcon/>
             )}
@@ -163,7 +178,7 @@ function ViewPartnerDetails() {
                     )}
                     <div className={`flex-col mt-5 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm mb-[2%]`}>
                         <div className="flex justify-between mb-3">
-                            <Title title={'viewPartnerDetails.viewPartnerDetails'} subTitle='viewPartnerDetails.listOfPartners' backLink='/partnermanagement/admin/partners-list' />
+                            <Title title={'viewPartnerDetails.viewPartnerDetails'} subTitle='viewPartnerDetails.listOfPartners' backLink='/partnermanagement/admin/partners/partners-list' />
                         </div>
 
                         {unexpectedError && (
@@ -189,8 +204,8 @@ function ViewPartnerDetails() {
                                             {t('partnerList.partnerId')}: <span className="font-semibold">{partnerDetails.partnerId}</span>
                                         </p>
                                         <div className="flex items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
-                                            <div id='view_partner_details_partner_status' className={`${partnerDetails.isActive ? 'bg-[#D1FADF] text-[#155E3E]' : 'bg-[#EAECF0] text-[#525252]'} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
-                                                {partnerDetails.isActive ? t('statusCodes.activated') : t('statusCodes.deactivated')}
+                                            <div id='view_partner_details_partner_status' className={`${getPartnerStatusBgColor(partnerDetails)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
+                                                {getPartnerStatusText(partnerDetails, t)}
                                             </div>
                                             <div id='view_partner_details_partner_created_on' className={`font-semibold ${isLoginLanguageRTL ? "mr-[1.4rem]" : "ml-[0.75rem]"} text-sm text-dark-blue`}>
                                                 {t("viewPartnerDetails.createdOn") + ' ' +
@@ -249,7 +264,7 @@ function ViewPartnerDetails() {
                                             <p id='view_partner_details_email_label' className="font-[600] text-suva-gray text-sm">
                                                 {t("userProfile.emailAddress")}
                                             </p>
-                                            <p id='view_partner_details_email_context' className="font-[600] text-vulcan text-base">
+                                            <p id='view_partner_details_email_context' className="font-[600] text-vulcan text-base break-all">
                                                 {partnerDetails.emailId}
                                             </p>
                                         </div>

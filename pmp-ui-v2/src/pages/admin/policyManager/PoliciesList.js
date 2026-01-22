@@ -43,11 +43,11 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
     const [activeAscIcon, setActiveAscIcon] = useState("");
     const [activeDescIcon, setActiveDescIcon] = useState("createdDateTime");
     const [actionId, setActionId] = useState(-1);
-    const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
+    const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(sessionStorage.getItem('itemsPerPage') ? Number(sessionStorage.getItem('itemsPerPage')) : 8);
     const [sortFieldName, setSortFieldName] = useState("createdDateTime");
     const [sortType, setSortType] = useState("desc");
     const [pageNo, setPageNo] = useState(0);
-    const [pageSize, setPageSize] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
+    const [pageSize, setPageSize] = useState(sessionStorage.getItem('itemsPerPage') ? Number(sessionStorage.getItem('itemsPerPage')) : 8);
     const [fetchData, setFetchData] = useState(false);
     const [tableDataLoaded, setTableDataLoaded] = useState(true);
     const [totalRecords, setTotalRecords] = useState(0);
@@ -141,7 +141,7 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
     }
 
     useEffect(() => {
-        localStorage.setItem('activeTab', policyType);
+        sessionStorage.setItem('activeTab', policyType);
         fetchPoliciesListData();
     }, [sortFieldName, sortType, pageNo, pageSize]);
 
@@ -184,7 +184,7 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
     };
 
     const onClickClone = (selectedPolicy, index) => {
-        if (selectedPolicy.status !== 'draft') {
+        if (selectedPolicy.status === 'activated') {
             setActiveIndexShowClonePopup(index);
             setActionId(-1);
             setSelectedPolicy(selectedPolicy);
@@ -332,7 +332,7 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
                                                                     <tr>
                                                                         {tableHeaders.map((header, index) => {
                                                                             return (
-                                                                                <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[20%]">
+                                                                                <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[17%]">
                                                                                     <div id={`${header.headerNameKey}_header`} className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
                                                                                         {t(header.headerNameKey)}
                                                                                         {header.id !== "action" && (
@@ -389,9 +389,9 @@ function PoliciesList({ policyType, createPolicyButtonName, createPolicy, subTit
                                                                                                     <img src={policy.status === 'draft' ? editPolicyIcon : disableEditPolicyIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                                 </div>
                                                                                                 <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                                <div role='button' className={`flex justify-between hover:bg-gray-100 ${policy.status !== 'draft' ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => onClickClone(policy, index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => onClickClone(policy, index))}>
-                                                                                                    <p id="policy_replicate_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${policy.status !== 'draft' ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("policiesList.clone")}</p>
-                                                                                                    <img src={policy.status !== 'draft' ? replicateIcon : disableReplicateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
+                                                                                                <div role='button' className={`flex justify-between hover:bg-gray-100 ${policy.status === 'activated' ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => onClickClone(policy, index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => onClickClone(policy, index))}>
+                                                                                                    <p id="policy_replicate_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${policy.status === 'activated' ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("policiesList.clone")}</p>
+                                                                                                    <img src={policy.status === 'activated' ? replicateIcon : disableReplicateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                                 </div>
                                                                                                 <hr className="h-px bg-gray-100 border-0 mx-1" />
                                                                                                 <div role='button' className={`flex justify-between hover:bg-gray-100 ${policy.status === 'activated' ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => showDeactivatePolicy(policy, index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => showDeactivatePolicy(policy, index))}>

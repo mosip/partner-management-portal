@@ -7,22 +7,27 @@ import { isLangRTL } from '../../../utils/AppUtils';
 function PoliciesTab() {
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
-    const activeTab = localStorage.getItem('activeTab') ? localStorage.getItem('activeTab') : 'policyGroup';
+    const activeTab = sessionStorage.getItem('activeTab') ? sessionStorage.getItem('activeTab') : 'policyGroup';
     const navigate = useNavigate();
 
     const changeToPolicyGroup = () => {
-        localStorage.setItem('activeTab', 'policyGroup');
+        sessionStorage.setItem('activeTab', 'policyGroup');
         navigate('/partnermanagement/policy-manager/policy-group-list')
     };
 
     const changeToAuthPolicy = () => {
-        localStorage.setItem('activeTab', 'Auth');
+        sessionStorage.setItem('activeTab', 'Auth');
         navigate('/partnermanagement/policy-manager/auth-policies-list')
     };
 
     const changeToDataSharePolicy = () => {
-        localStorage.setItem('activeTab', 'DataShare');
+        sessionStorage.setItem('activeTab', 'DataShare');
         navigate('/partnermanagement/policy-manager/data-share-policies-list')
+    };
+
+    const changeToMispPolicy = () => {
+        sessionStorage.setItem('activeTab', 'MISP');
+        navigate('/partnermanagement/policy-manager/misp-policies-list')
     };
 
     return (
@@ -47,6 +52,13 @@ function PoliciesTab() {
                 </button>
 
                 <div className={`h-1 w-full ${activeTab === "DataShare" ? "bg-tory-blue" : "bg-transparent"} rounded-t-md`}></div>
+            </div>
+            <div className={`flex-col justify-center`}>
+                <button id='policies_misp_policy_tab' onClick={changeToMispPolicy} className={`${activeTab === "MISP" ? "text-[#1447b2]" : "text-[#031640]"} mb-[12%] cursor-pointer text-sm`}>
+                    <h6> {t('policyGroupList.mispPolicy')}</h6>
+                </button>
+
+                <div className={`h-1 w-full ${activeTab === "MISP" ? "bg-tory-blue" : "bg-transparent"} rounded-t-md`}></div>
             </div>
         </div>
     )

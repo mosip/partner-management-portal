@@ -53,17 +53,25 @@ function DeactivatePopup({ onClickConfirm, closePopUp, popupData, request, heade
         try {
             let response;
             if (popupData.apiKeyLabel) {
-                response = await HttpService.patch(getPartnerManagerUrl(`/partners/${popupData.partnerId}/policy/${popupData.policyId}/apiKey/status`, process.env.NODE_ENV), request, {
+                response = await HttpService.patch(getPartnerManagerUrl(`/partners/${popupData.partnerId}/policies/${popupData.policyId}/api-keys/${popupData.apiKeyLabel}`, process.env.NODE_ENV), request, {
                     headers: {
                         'Content-Type': 'application/json'
                     }
                 });
             } else if (popupData.clientName) {
-                response = await HttpService.put(getPartnerManagerUrl(`/oauth/client/${popupData.clientId}`, process.env.NODE_ENV), request, {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                });
+                if (popupData.additionalConfigRequired) {
+                    response = await HttpService.patch(getPartnerManagerUrl(`/oidc-clients/${popupData.clientId}`, process.env.NODE_ENV), request, {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                } else {
+                    response = await HttpService.put(getPartnerManagerUrl(`/oauth/client/${popupData.clientId}`, process.env.NODE_ENV), request, {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                }
             } else if (popupData.isDeactivateDevice) {
                 response = await HttpService.patch(getPartnerManagerUrl(`/devicedetail/${popupData.deviceId}`, process.env.NODE_ENV), request, {
                     headers: {
@@ -84,6 +92,12 @@ function DeactivatePopup({ onClickConfirm, closePopUp, popupData, request, heade
                 });
             } else if (popupData.isDeactivatePartner) {
                 response = await HttpService.patch(getPartnerManagerUrl(`/partners/${popupData.partnerId}`, process.env.NODE_ENV), request, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+            } else if (popupData.isDeactivateMispLicense) {
+                response = await HttpService.patch(getPartnerManagerUrl(`/misp-licenses/${popupData.partnerId}`, process.env.NODE_ENV), request, {
                     headers: {
                         'Content-Type': 'application/json'
                     }

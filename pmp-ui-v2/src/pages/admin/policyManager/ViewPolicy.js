@@ -24,7 +24,7 @@ function ViewPolicy() {
     const [previewJsonPopup, setPreviewJsonPopup] = useState(false);
 
     useEffect(() => {
-        const data = localStorage.getItem('selectedPolicyAttributes');
+        const data = sessionStorage.getItem('selectedPolicyAttributes');
 
         if (!data) {
             setUnexpectedError(true);
@@ -127,7 +127,7 @@ function ViewPolicy() {
                                             <p id='view_policy_name_label' className="font-[600] text-suva-gray text-sm">
                                                 {t("policiesList.policyName")}
                                             </p>
-                                            <p id='view_policy_name_context' className="font-[600] text-vulcan text-base break-all">
+                                            <p id='view_policy_name_context' className="font-[600] text-vulcan text-base break-words">
                                                 {viewDetails.policyName}
                                             </p>
                                         </div>
@@ -135,7 +135,7 @@ function ViewPolicy() {
                                             <p id='view_policy_group_label' className="font-[600] text-suva-gray text-sm">
                                                 {t("viewAuthPoliciesList.policyGroup")}
                                             </p>
-                                            <p id='view_policy_group_context' className="font-[600] text-vulcan text-base break-all">
+                                            <p id='view_policy_group_context' className="font-[600] text-vulcan text-base break-words">
                                                 {viewDetails.policyGroupName}
                                             </p>
                                         </div>
@@ -145,7 +145,7 @@ function ViewPolicy() {
                                             <p id='view_policy_description_label' className="font-[600] text-suva-gray text-sm">
                                                 {t("viewAuthPoliciesList.policyDescription")}
                                             </p>
-                                            <p id='view_policy_description_context' className="font-[600] text-vulcan text-base break-all">
+                                            <p id='view_policy_description_context' className="font-[600] text-vulcan text-base break-words">
                                                 {viewDetails.policyDesc}
                                             </p>
                                         </div>
@@ -153,7 +153,7 @@ function ViewPolicy() {
                                             <p id='view_policy_group_description_label' className="font-[600] text-suva-gray text-sm">
                                                 {t("viewAuthPoliciesList.policyGroupDescription")}
                                             </p>
-                                            <p id='view_policy_group_description_context' className="font-[600] text-vulcan text-base break-all">
+                                            <p id='view_policy_group_description_context' className="font-[600] text-vulcan text-base break-words">
                                                 {viewDetails.policyGroupDesc}
                                             </p>
                                         </div>

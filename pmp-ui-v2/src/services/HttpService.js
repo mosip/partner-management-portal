@@ -31,8 +31,8 @@ export const setupResponseInterceptor = (navigate) => {
           "locale": userData.locale ? userData.locale : 'eng',
           "roles": resp.role
         };
-        localStorage.setItem("isAdmin", resp.role.includes("PARTNER_ADMIN"))
-        localStorage.setItem("isPolicyManager", resp.role.includes("POLICYMANAGER"))
+        sessionStorage.setItem("isAdmin", resp.role.includes("PARTNER_ADMIN"))
+        sessionStorage.setItem("isPolicyManager", resp.role.includes("POLICYMANAGER"))
         setUserProfile(profile);
         console.log(profile);
       }
@@ -71,7 +71,7 @@ export const setupResponseInterceptor = (navigate) => {
       } else {
         navigate('/partnermanagement/runtimeError');
       }
-      return Promise.reject(error);
+      return Promise.reject(error instanceof Error ? error : new Error(error?.message || 'Unknown error occurred'));
     });
 }
 

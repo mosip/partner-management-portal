@@ -2,22 +2,23 @@ import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import ErrorMessage from '../../common/ErrorMessage.js';
 import LoadingIcon from '../../common/LoadingIcon.js';
-import DropdownWithSearchComponent from '../../common/fields/DropdownWithSearchComponent.js';
+import PolicyGroupSelector from '../../common/PolicyGroupSelector.js';
 import FocusTrap from 'focus-trap-react';
 import { HttpService } from '../../../services/HttpService.js';
-import { getPolicyGroupList, getPolicyManagerUrl, createRequest, getPolicyDetails, handleEscapeKey } from '../../../utils/AppUtils.js';
+import { getPolicyManagerUrl, createRequest, getPolicyDetails, handleEscapeKey, isLangRTL } from '../../../utils/AppUtils.js';
 import SuccessMessage from '../../common/SuccessMessage.js';
+import { getUserProfile } from '../../../services/UserProfileService.js';
 import closeIcon from "../../../svg/close_icon.svg";
 import PropTypes from 'prop-types';
 
 function ClonePolicyPopup ({policyDetails, closePopUp}) {
-    const [selectedPolicyGroup, setSelectedPolicyGroup] = useState('');
-    const [policyGroupList, setPolicyGroupList] = useState([]);
+    const [selectedPolicyGroup, setSelectedPolicyGroup] = useState(null);
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [successMsg, setSuccessMsg] = useState("");
     const [cloneSuccess, setCloneSccesss] = useState(false);
     const [dataLoaded, setDataLoaded] = useState(true);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const { t } = useTranslation();
 
     useEffect(() => {
@@ -33,9 +34,6 @@ function ClonePolicyPopup ({policyDetails, closePopUp}) {
         return removeListener;
     }, [closePopUp]);
 
-    const changePolicyGroupSelection = (fieldName, selectedValue) => {
-        setSelectedPolicyGroup(selectedValue);
-    };
 
     const cancelErrorMsg = () => {
         setErrorMsg("");
@@ -45,14 +43,6 @@ function ClonePolicyPopup ({policyDetails, closePopUp}) {
         setSuccessMsg("");
     };
 
-    useEffect(() => {
-        const fetchData = async () => {
-            setDataLoaded(false);
-            await getPolicyGroupList(HttpService, setPolicyGroupList, setErrorCode, setErrorMsg, t);
-            setDataLoaded(true);
-        };
-        fetchData();
-    }, [t]);
 
     const cancelPopUp = () => {
         closePopUp();
@@ -72,7 +62,7 @@ function ClonePolicyPopup ({policyDetails, closePopUp}) {
         if (policyData !== null) {
             let request = createRequest({
                 name: policyData.policyName,
-                policyGroupName: selectedPolicyGroup,
+                policyGroupName: selectedPolicyGroup?.name,
                 policyType: policyData.policyType,
                 desc: policyData.policyDesc,
                 policies: policyData.policies,
@@ -89,7 +79,7 @@ function ClonePolicyPopup ({policyDetails, closePopUp}) {
                     const responseData = response.data;
                     if (responseData && responseData.response) {
                         setCloneSccesss(true);
-                        setSuccessMsg(t('clonePolicyPopup.successMsg', { policyName: policyData.policyName, policyGroupName: selectedPolicyGroup }));
+                        setSuccessMsg(t('clonePolicyPopup.successMsg', { policyName: policyData.policyName, policyGroupName: selectedPolicyGroup?.name }));
                     } else {
                         if (responseData && responseData.errors && responseData.errors.length > 0) {
                             const errorCode = responseData.errors[0].errorCode;
@@ -155,23 +145,17 @@ function ClonePolicyPopup ({policyDetails, closePopUp}) {
                                 <SuccessMessage id='clone_policy_popup_success_msg' successMsg={successMsg} clickOnCancel={cancelSuccessMsg} customStyle={customStyle}/>
                             )}
                             <div className="py-2 px-6">
-                                <p id='clone_policy_popup_description' className="text-sm font-normal text-[#414141] break-words">{t('clonePolicyPopup.description1')} 
+                                <p id='clone_policy_popup_description' className={`text-sm ${isLoginLanguageRTL ? 'text-right' : 'text-left'} font-normal text-[#414141] break-words`}>{t('clonePolicyPopup.description1')} 
                                     <span className="font-bold"> {policyDetails.policyName}</span> {t('clonePolicyPopup.description2')}
                                 </p>
                             </div>
                             <div className="w-full flex flex-col px-6 pb-6">
-                                <DropdownWithSearchComponent
-                                    fieldName='policyGroup'
-                                    dropdownDataList={policyGroupList}
-                                    onDropDownChangeEvent={changePolicyGroupSelection}
-                                    selectedDropdownValue={selectedPolicyGroup}
-                                    fieldNameKey='selectPolicyPopup.policyGroup*'
-                                    placeHolderKey='selectPolicyPopup.title'
-                                    searchKey='commons.search'
-                                    selectPolicyPopup
-                                    styleSet={styles}
-                                    id="clone_policy_group_dropdown">
-                                </DropdownWithSearchComponent>
+                                <PolicyGroupSelector
+                                    onPolicyGroupSelect={setSelectedPolicyGroup}
+                                    selectedPolicyGroup={selectedPolicyGroup}
+                                    containsAsterisk
+                                    style={{ listboxheight: 'max-h-36' }}
+                                />
                             </div>
                             <div className="border-[#E5EBFA] border-t mx-2"></div>
                             <div className="px-6 py-3 flex justify-between relative">
@@ -182,9 +166,9 @@ function ClonePolicyPopup ({policyDetails, closePopUp}) {
                                 </button>
                                 { !cloneSuccess ? 
                                     <button className={`w-36 h-10 m-1  border rounded-lg text-white text-sm font-semibold relative z-60 
-                                        ${selectedPolicyGroup ? 'bg-tory-blue border-[#1447B2] cursor-pointer' : 'border-[#A5A5A5] bg-[#A5A5A5] cursor-not-allowed'}`}
+                                        ${selectedPolicyGroup?.name ? 'bg-tory-blue border-[#1447B2] cursor-pointer' : 'border-[#A5A5A5] bg-[#A5A5A5] cursor-not-allowed'}`}
                                         onClick={clickOnClone}
-                                        disabled={!selectedPolicyGroup}
+                                        disabled={!selectedPolicyGroup?.name}
                                         id="clone_policy_button">
                                         {t('policiesList.clone')}
                                     </button> : 

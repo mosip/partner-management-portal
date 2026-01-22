@@ -33,11 +33,11 @@ function AdminFtmList() {
     const [activeAscIcon, setActiveAscIcon] = useState("");
     const [activeDescIcon, setActiveDescIcon] = useState("createdDateTime");
     const [actionId, setActionId] = useState(-1);
-    const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
+    const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(sessionStorage.getItem('itemsPerPage') ? Number(sessionStorage.getItem('itemsPerPage')) : 8);
     const [sortFieldName, setSortFieldName] = useState("createdDateTime");
     const [sortType, setSortType] = useState("desc");
     const [pageNo, setPageNo] = useState(0);
-    const [pageSize, setPageSize] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
+    const [pageSize, setPageSize] = useState(sessionStorage.getItem('itemsPerPage') ? Number(sessionStorage.getItem('itemsPerPage')) : 8);
     const [fetchData, setFetchData] = useState(false);
     const [tableDataLoaded, setTableDataLoaded] = useState(true);
     const [totalRecords, setTotalRecords] = useState(0);
@@ -144,7 +144,7 @@ function AdminFtmList() {
     };
 
     const viewFtmChipDetails = (ftm) => {
-        localStorage.setItem('selectedFtmAttributes', JSON.stringify(ftm));
+        sessionStorage.setItem('selectedFtmAttributes', JSON.stringify(ftm));
         navigate('/partnermanagement/admin/ftm-chip-provider-services/view-ftm-chip-details');
     };
 

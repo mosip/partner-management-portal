@@ -9,10 +9,13 @@ import {
   getStatusCode,
   handleMouseClickForDropdown,
   getPartnerTypeDescription,
-  resetPageNumber, onClickApplyFilter, setPageNumberAndPageSize, onResetFilter, setSubmenuRef
+  getPartnerDomainType,
+  resetPageNumber, onClickApplyFilter, setPageNumberAndPageSize, onResetFilter, setSubmenuRef,
+  fetchPartnerDetails
 } from "../../../utils/AppUtils";
 import LoadingIcon from "../../common/LoadingIcon";
 import ErrorMessage from "../../common/ErrorMessage";
+import SuccessMessage from "../../common/SuccessMessage";
 import Title from "../../common/Title";
 import FilterButtons from "../../common/FilterButtons";
 import PartnerListFilter from "./PartnersListFilter";
@@ -20,10 +23,16 @@ import SortingIcon from "../../common/SortingIcon";
 import Pagination from "../../common/Pagination";
 import { HttpService } from "../../../services/HttpService";
 import DeactivatePopup from "../../common/DeactivatePopup";
+import UploadCertificate from "../../partner/certificates/UploadCertificate";
+import SelectPolicyPopup from "../../dashboard/SelectPolicyPopup";
 import viewIcon from "../../../svg/view_icon.svg";
 import deactivateIcon from "../../../svg/deactivate_icon.svg";
 import disableDeactivateIcon from "../../../svg/disable_deactivate_icon.svg";
 import EmptyList from "../../common/EmptyList";
+import selectPolicyGroupIcon from "../../../svg/admin_select_policy_group_icon.svg";
+import uploadOrReuploadIcon from "../../../svg/admin_partner_certicate_upload_or_reupload_icon.svg";
+import disableUploadOrReuploadIcon from "../../../svg/admin_disabled_upload_or_reupload_icon.svg";
+import disableSelectPolicyGroupIcon from "../../../svg/admin_disabled_select_policy_group_icon.svg";
 
 function PartnersList() {
   const { t } = useTranslation();
@@ -32,17 +41,18 @@ function PartnersList() {
   const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
   const [errorCode, setErrorCode] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
   const [dataLoaded, setDataLoaded] = useState(false);
   const [partnersData, setPartnersData] = useState([]);
   const [order, setOrder] = useState("DESC");
   const [activeSortAsc, setActiveSortAsc] = useState("");
   const [activeSortDesc, setActiveSortDesc] = useState("");
   const [viewPartnerId, setViewPartnersId] = useState(-1);
-  const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
+  const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(sessionStorage.getItem('itemsPerPage') ? Number(sessionStorage.getItem('itemsPerPage')) : 8);
   const [sortFieldName, setSortFieldName] = useState("createdDateTime");
   const [sortType, setSortType] = useState("desc");
   const [pageNo, setPageNo] = useState(0);
-  const [pageSize, setPageSize] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
+  const [pageSize, setPageSize] = useState(sessionStorage.getItem('itemsPerPage') ? Number(sessionStorage.getItem('itemsPerPage')) : 8);
   const [triggerServerMethod, setTriggerServerMethod] = useState(false);
   const [totalRecords, setTotalRecords] = useState(0);
   const [tableDataLoaded, setTableDataLoaded] = useState(true);
@@ -62,6 +72,13 @@ function PartnersList() {
     policyGroupName: null,
   });
   const submenuRef = useRef([]);
+
+  const [uploadCertificateData, setUploadCertificateData] = useState({});
+  const [uploadCertificateRequest, setUploadCertificateRequest] = useState({});
+  const [showActiveindexUploadCertificatePopup, setShowActiveindexUploadCertificatePopup] = useState(null);
+  const [showActiveindexSelectPolicyGroupPopup, setShowActiveindexSelectPolicyGroupPopup] = useState(null);
+  const [fetchingPartnerDetails, setFetchingPartnerDetails] = useState(null);
+  const [selectedPartnerForPolicyGroup, setSelectedPartnerForPolicyGroup] = useState({});
 
   useEffect(() => {
     handleMouseClickForDropdown(submenuRef, () => setViewPartnersId(-1));
@@ -98,9 +115,11 @@ function PartnersList() {
 
     // Check filters.status
     if (filters.status !== null) {
-      if (filters.status === 'active') queryParams.append('isActive', true);
-      else if (filters.status === 'deactivated') queryParams.append('isActive', false);
+      if (filters.status === 'active') queryParams.append('status', 'active');
+      else if (filters.status === 'deactivated') queryParams.append('status', 'deactivated');
+      else if (filters.status === 'partner_inactive') queryParams.append('status', 'inactive');
     }
+
 
     const url = `${getPartnerManagerUrl('/admin-partners', process.env.NODE_ENV)}?${queryParams.toString()}`;
     try {
@@ -143,27 +162,35 @@ function PartnersList() {
   }, [isApplyFilterClicked]);
 
   const onApplyFilter = (filters) => {
+    setSuccessMsg("");
     onClickApplyFilter(filters, setIsFilterApplied, setResetPageNo, setTriggerServerMethod, setFilters, setIsApplyFilterClicked);
   };
 
   const getPaginationValues = (recordsPerPage, pageIndex) => {
+    setSuccessMsg("");
     setPageNumberAndPageSize(recordsPerPage, pageIndex, pageNo, setPageNo, pageSize, setPageSize, setTriggerServerMethod);
   }
 
   const viewPartnerDetails = (selectedPartnerData) => {
-    localStorage.setItem('selectedPartnerId', selectedPartnerData.partnerId);
-    navigate('/partnermanagement/admin/view-partner-details')
+    setSuccessMsg("");
+    sessionStorage.setItem('selectedPartnerId', selectedPartnerData.partnerId);
+    navigate('/partnermanagement/admin/partners/view-partner-details')
   };
 
   const cancelErrorMsg = () => {
     setErrorMsg("");
   };
 
+  const cancelSuccessMsg = () => {
+    setSuccessMsg("");
+  };
+
   //This part is related to Sorting
   const sortAscOrder = (header) => {
     if (order !== 'ASC' || activeSortAsc !== header) {
+      setSuccessMsg("");
       setTriggerServerMethod(true);
-      setSortFieldName((header === 'status') ? 'isActive' : header);
+      setSortFieldName(header);
       setSortType("asc");
       setOrder("ASC");
       setActiveSortDesc("");
@@ -173,8 +200,9 @@ function PartnersList() {
 
   const sortDescOrder = (header) => {
     if (order !== 'DESC' || activeSortDesc !== header) {
+      setSuccessMsg("");
       setTriggerServerMethod(true);
-      setSortFieldName((header === 'status') ? 'isActive' : header);
+      setSortFieldName(header);
       setSortType("desc");
       setOrder("DESC");
       setActiveSortDesc(header);
@@ -187,7 +215,9 @@ function PartnersList() {
   };
 
   const showDeactivatePartner = (selectedPartnerdata, index) => {
-    if (selectedPartnerdata.isActive === true) {
+    // Deactivate is only enabled for Active partners
+    if (selectedPartnerdata.status === 'active') {
+      setSuccessMsg("");
       const request = createRequest({
         status: "De-Active"
       });
@@ -195,6 +225,46 @@ function PartnersList() {
       setViewPartnersId(-1);
       setDeactivateRequest(request);
       setShowActiveIndexDeactivatePopup(index);
+    }
+  };
+
+  const isDeactivateEnabled = (partner) => {
+    return partner.status === 'active';
+  };
+
+  const isUploadCertificateEnabled = (partner) => {
+    // Upload certificate is enabled for MISP_Partner and ABIS_Partner when active and inactive state
+    // Disabled for deactivated state:
+    return (partner.partnerType === "MISP_Partner" || partner.partnerType === "ABIS_Partner") && 
+           !(partner.status === 'deactivated');
+  };
+
+  const isSelectPolicyGroupEnabled = (partner) => {
+    // Select policy group is enabled for MISP_Partner when:
+    // Disabled for Deactivated partners or when policy group is already selected
+    return partner.partnerType === "MISP_Partner" && 
+           partner.policyGroupId === null && 
+           !(partner.status === 'deactivated');
+  };
+
+  const getPartnerStatusBgColor = (partner) => {
+    if (partner.status === "inactive") {
+      return 'bg-[#DFE9FF] text-[#384B75]';
+    } 
+    else if (partner.status === 'deactivated') {
+      return 'bg-[#EAECF0] text-[#525252]';
+    } else {
+      return 'bg-[#D1FADF] text-[#155E3E]';
+    }
+  };
+
+  const getPartnerStatusText = (partner, t) => {
+    if (partner.status === "inactive") {
+      return t('statusCodes.inactive');
+    } else if (partner.status === 'deactivated') {
+      return t('statusCodes.deactivated');
+    } else {
+      return t('statusCodes.active');
     }
   };
 
@@ -210,7 +280,121 @@ function PartnersList() {
       // Update the specific row in the state with the new status
       setPartnersData((prevList) =>
         prevList.map(partner =>
-          partner.partnerId === selectedPartnerData.partnerId ? { ...partner, isActive: false } : partner
+          partner.partnerId === selectedPartnerData.partnerId ? { ...partner, status: 'deactivated' } : partner
+        )
+      );
+    }
+  };
+
+  const createPartner = () => {
+    setSuccessMsg("");
+    navigate('/partnermanagement/admin/partners/create-partner');
+  };
+
+  // Upload/Reupload Certificate
+  const handleUploadCertificate = async (partner, index) => {
+    if (!isUploadCertificateEnabled(partner)) return;
+
+    setSuccessMsg("");
+    const isUploaded = partner.certificateUploadStatus === "uploaded";
+
+    // Default to null; only fetch details if already uploaded
+    let certificateUploadDateTime = null;
+    if (isUploaded) {
+      // Set loading state for this specific partner
+      setFetchingPartnerDetails(index);
+
+      const partnerDetails = await fetchPartnerDetails(
+        HttpService,
+        partner.partnerId,
+        setErrorCode,
+        setErrorMsg,
+        t
+      );
+      certificateUploadDateTime = partnerDetails?.certificateUploadDateTime;
+      setFetchingPartnerDetails(null);
+    }
+
+    // Prepare request payload
+    const request = {
+      partnerId: partner.partnerId,
+      partnerDomain: getPartnerDomainType(partner.partnerType),
+    };
+
+    // Prepare certificate popup data
+    const certificateData = {
+      partnerType: partner.partnerType,
+      uploadHeader: "uploadCertificate.uploadPartnerCertificate",
+      isUploadPartnerCertificate: true,
+      reUploadHeader: "uploadCertificate.reUploadPartnerCertificate",
+      isCertificateAvailable: isUploaded,
+      certificateUploadDateTime: certificateUploadDateTime,
+      isMispOrAbisPartnerCertificate: partner.partnerType === "MISP_Partner" || partner.partnerType === "ABIS_Partner"
+    };
+
+    // Update UI state
+    setShowActiveindexUploadCertificatePopup(index);
+    setUploadCertificateRequest(request);
+    setUploadCertificateData(certificateData);
+    setViewPartnersId(-1);
+  };
+
+  // Select Policy Group
+  const handleSelectPolicyGroup = (partner, index) => {
+    if (isSelectPolicyGroupEnabled(partner)) {
+      setSuccessMsg("");
+      setSelectedPartnerForPolicyGroup(partner);
+      setShowActiveindexSelectPolicyGroupPopup(index);
+      setViewPartnersId(-1);
+    }
+  };
+
+  // Close Upload Certificate Popup
+  const closeUploadCertificatePopup = (state, btnName) => {
+    if (state && btnName === 'cancel') {
+      setShowActiveindexUploadCertificatePopup(null);
+    } else if (state && btnName === 'close') {
+      setShowActiveindexUploadCertificatePopup(null);
+      // Update the specific row in the state with the new certificate status
+      if (showActiveindexUploadCertificatePopup !== null) {
+        setPartnersData((prevList) =>
+          prevList.map((partner, index) =>
+            index === showActiveindexUploadCertificatePopup ? { 
+              ...partner, 
+              certificateUploadStatus: 'uploaded',
+              status: 'active'
+            } : partner
+          )
+        );
+      }
+    }
+  };
+
+  // Close Select Policy Group Popup
+  const closeSelectPolicyGroupPopup = () => {
+    setShowActiveindexSelectPolicyGroupPopup(null);
+    setSelectedPartnerForPolicyGroup({});
+  };
+
+  // Handle Select Policy Group Submit
+  const onClickConfirmSelectPolicyGroup = (policyGroupResponse, selectedPartnerData) => {
+    if (policyGroupResponse && policyGroupResponse.response) {
+      setShowActiveindexSelectPolicyGroupPopup(null);
+      setSelectedPartnerForPolicyGroup({});
+      
+      // Show success message with partner ID
+      setSuccessMsg(t('partnerList.policyGroupLinkedSuccessMsg', { partnerId: selectedPartnerData.partnerId }));
+      
+      // Update the specific row in the state with the new policy group name
+      setPartnersData((prevList) =>
+        prevList.map(partner =>
+          partner.partnerId === selectedPartnerData.partnerId 
+            ? { 
+                ...partner, 
+                policyGroupName: policyGroupResponse.response.policyGroupName,
+                policyGroupId: policyGroupResponse.response.policyGroupId
+              } 
+            : partner
         )
       );
     }
@@ -218,6 +402,12 @@ function PartnersList() {
 
   const styles = {
     loadingDiv: "!py-[20%]"
+  }
+
+  const successCustomStyle = {
+    outerDiv: `flex justify-end w-full max-w-md my-3 absolute ${isLoginLanguageRTL ? "left-4" : "right-4"}`,
+    innerDiv: "flex justify-between items-center rounded-xl w-full max-w-md min-h-14 min-w-72 p-4",
+    cancelIcon: "!mt-3 !top-1"
   }
 
   return (
@@ -228,9 +418,18 @@ function PartnersList() {
           {errorMsg && (
             <ErrorMessage id='partners_list_error_msg' errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
           )}
+          {successMsg && (
+            <SuccessMessage id='partners_list_success_msg' successMsg={successMsg} clickOnCancel={cancelSuccessMsg} customStyle={successCustomStyle} />
+          )}
           <div className="flex-col mt-5">
             <div className="flex justify-between mb-3">
               <Title title="partnerList.partnerTitle" backLink="/partnermanagement" styleSet={style} />
+              {partnersData.length > 0 || isFilterApplied ?
+                <button id='create_partner_btn' onClick={() => createPartner()} type="button" className={`h-10 text-sm font-semibold text-white px-7 rounded-md bg-tory-blue`}>
+                  {t('partnerList.createPartner')}
+                </button>
+                : null
+              }
             </div>
             <div className="flex-col justify-center ml-3 h-full">
               {!isFilterApplied && partnersData.length === 0 ? (
@@ -253,7 +452,13 @@ function PartnersList() {
                       </button>
                     </div>
                   </div>
-                  <EmptyList tableHeaders={tableHeaders} showCustomButton={false} />
+                  <EmptyList
+                    tableHeaders={tableHeaders}
+                    showCustomButton={true}
+                    customButtonName='partnerList.createMispPartner'
+                    buttonId='create_partner_empty_btn'
+                    onClickButton={createPartner}
+                    disableBtn={false} />
                 </div>
               ) : (
                 <>
@@ -310,23 +515,23 @@ function PartnersList() {
                                       {partnersData.map((partner, index) => {
                                         return (
                                           <tr id={"partner_list_item" + (index + 1)} key={index}
-                                            className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${partner.isActive === false ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
-                                            <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className={`px-2`}>{partner.partnerId}</td>
-                                            <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className={`px-2`}>{getPartnerTypeDescription(partner.partnerType, t)}</td>
-                                            <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className={`px-2`}>{partner.orgName}</td>
-                                            <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className={`px-2`}>{partner.policyGroupName ? partner.policyGroupName : "-"}</td>
-                                            <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className={`px-2`}>{partner.emailAddress}</td>
-                                            <td onClick={() => partner.isActive && viewPartnerDetails(partner)} className={`px-3 whitespace-nowrap ${partner.certificateUploadStatus === 'not_uploaded' && "text-[#BE1818]"}`}>
+                                            className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${partner.status === 'deactivated' ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
+                                            <td onClick={() => partner.status !== 'deactivated' && viewPartnerDetails(partner)} className={`px-2`}>{partner.partnerId}</td>
+                                            <td onClick={() => partner.status !== 'deactivated' && viewPartnerDetails(partner)} className={`px-2`}>{getPartnerTypeDescription(partner.partnerType, t)}</td>
+                                            <td onClick={() => partner.status !== 'deactivated' && viewPartnerDetails(partner)} className={`px-2`}>{partner.orgName}</td>
+                                            <td onClick={() => partner.status !== 'deactivated' && viewPartnerDetails(partner)} className={`px-2`}>{partner.policyGroupName ? partner.policyGroupName : "-"}</td>
+                                            <td onClick={() => partner.status !== 'deactivated' && viewPartnerDetails(partner)} className={`px-2`}>{partner.emailAddress}</td>
+                                            <td onClick={() => partner.status !== 'deactivated' && viewPartnerDetails(partner)} className={`px-3 whitespace-nowrap ${partner.certificateUploadStatus === 'not_uploaded' && "text-[#BE1818]"}`}>
                                               {getStatusCode(partner.certificateUploadStatus, t)}
                                             </td>
-                                            <td onClick={() => partner.isActive && viewPartnerDetails(partner)}>
-                                              <div className={`${partner.isActive ? 'bg-[#D1FADF] text-[#155E3E]' : 'bg-[#EAECF0] text-[#525252]'} flex w-fit py-1.5 px-2 mx-2 my-3 text-xs font-semibold rounded-md`}>
-                                                {partner.isActive ? t('statusCodes.activated') : t('statusCodes.deactivated')}
+                                            <td onClick={() => partner.status !== 'deactivated' && viewPartnerDetails(partner)}>
+                                              <div className={`${getPartnerStatusBgColor(partner)} flex w-fit py-1.5 px-2 mx-2 my-3 text-xs font-semibold rounded-md`}>
+                                                {getPartnerStatusText(partner, t)}
                                               </div>
                                             </td>
-                                            <td className="text-center cursor-default">
+                                            <td className="text-center cursor-default my-3">
                                               <div ref={setSubmenuRef(submenuRef, index)}>
-                                                <button id={"partner_list_view" + (index + 1)} onClick={() => setViewPartnersId(index === viewPartnerId ? null : index)} className={`font-semibold mb-0.5 cursor-pointer text-center text-[#191919]`}>
+                                                <button id={"partner_list_view" + (index + 1)} onClick={() => setViewPartnersId(index === viewPartnerId ? null : index)} className={`font-semibold mb-0.5 text-[#191919] cursor-pointer text-center`}>
                                                   ...
                                                 </button>
                                                 {viewPartnerId === index && (
@@ -336,9 +541,27 @@ function PartnersList() {
                                                       <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                     </div>
                                                     <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                    <div role='button' className={`flex justify-between hover:bg-gray-100 ${partner.isActive === true ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => showDeactivatePartner(partner, index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => showDeactivatePartner(partner, index))}>
-                                                      <p id="partner_deactive_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${partner.isActive === true ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("partnerList.deActivate")}</p>
-                                                      <img src={partner.isActive === true ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
+                                                    <div role='button' className={`flex justify-between hover:bg-gray-100 ${isUploadCertificateEnabled(partner) && fetchingPartnerDetails !== index ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => handleUploadCertificate(partner, index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => handleUploadCertificate(partner, index))}>
+                                                      <p id="partner_upload_certificate_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${isUploadCertificateEnabled(partner) && fetchingPartnerDetails !== index ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>
+                                                        {t("partnerList.uploadOrReuploadCertificate")}
+                                                      </p>
+                                                      {fetchingPartnerDetails === index ? (
+                                                        <LoadingIcon inline={true} styleSet={{ loadingDiv: `${isLoginLanguageRTL ? "pl-2" : "pr-2"}` }} />
+                                                      ) : (
+                                                        <img src={isUploadCertificateEnabled(partner) ? uploadOrReuploadIcon : disableUploadOrReuploadIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
+                                                      )}
+                                                    </div>
+                                                    <hr className="h-px bg-gray-100 border-0 mx-1" />
+                                                    <div role='button' className={`flex justify-between hover:bg-gray-100 ${isSelectPolicyGroupEnabled(partner) ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => handleSelectPolicyGroup(partner, index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => handleSelectPolicyGroup(partner, index))}>
+                                                      <p id="partner_select_policy_group_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${isSelectPolicyGroupEnabled(partner) ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>
+                                                        {t("partnerList.selectPolicyGroup")}
+                                                      </p>
+                                                      <img src={isSelectPolicyGroupEnabled(partner) ? selectPolicyGroupIcon : disableSelectPolicyGroupIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
+                                                    </div>
+                                                    <hr className="h-px bg-gray-100 border-0 mx-1" />
+                                                    <div role='button' className={`flex justify-between hover:bg-gray-100 ${isDeactivateEnabled(partner) ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => showDeactivatePartner(partner, index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => showDeactivatePartner(partner, index))}>
+                                                      <p id="partner_deactive_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${isDeactivateEnabled(partner) ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("partnerList.deActivate")}</p>
+                                                      <img src={isDeactivateEnabled(partner) ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                     </div>
                                                   </div>
                                                 )}
@@ -351,6 +574,22 @@ function PartnersList() {
                                                     headerMsg={t('deactivatePartner.headerMsg', { partnerId: selectedPartner.partnerId, organisationName: selectedPartner.orgName })}
                                                     descriptionMsg='deactivatePartner.description'
                                                     headerKeyName={selectedPartner.orgName}
+                                                  />
+                                                )}
+                                                {showActiveindexUploadCertificatePopup === index && (
+                                                  <UploadCertificate 
+                                                    closePopup={closeUploadCertificatePopup} 
+                                                    popupData={uploadCertificateData} 
+                                                    request={uploadCertificateRequest} 
+                                                  />
+                                                )}
+                                                {showActiveindexSelectPolicyGroupPopup === index && (
+                                                  <SelectPolicyPopup
+                                                    isLinkPolicyGroupPopup={true}
+                                                    partnerId={selectedPartnerForPolicyGroup.partnerId}
+                                                    partnerType={selectedPartnerForPolicyGroup.partnerType}
+                                                    onClose={closeSelectPolicyGroupPopup}
+                                                    onSubmit={(policyGroupResponse) => onClickConfirmSelectPolicyGroup(policyGroupResponse, selectedPartnerForPolicyGroup)}
                                                   />
                                                 )}
                                               </div>

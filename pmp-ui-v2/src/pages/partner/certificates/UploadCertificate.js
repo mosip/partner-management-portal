@@ -112,12 +112,12 @@ function UploadCertificate({ closePopup, popupData, request }) {
 
     const decodeCertificate = (certificateData) => {
         const certBase64 = certificateData
-            .replace("-----BEGIN CERTIFICATE-----", "")
-            .replace("-----END CERTIFICATE-----", "")
-            .replace(/\s+/g, "");
+            .replaceAll("-----BEGIN CERTIFICATE-----", "")
+            .replaceAll("-----END CERTIFICATE-----", "")
+            .replaceAll(/\s+/g, "");
 
         // Convert the base64 string to a Uint8Array
-        const certBinary = Uint8Array.from(atob(certBase64), (c) => c.charCodeAt(0));
+        const certBinary = Uint8Array.from(atob(certBase64), (c) => c.codePointAt(0));
 
         // Parse the certificate using asn1js and pkijs
         const asn1 = fromBER(certBinary.buffer);
@@ -221,9 +221,23 @@ function UploadCertificate({ closePopup, popupData, request }) {
                     )}
                     {dataLoaded && (
                         <>
-                            <div className="px-[3.5%] py-[2%]">
+                            <div className={`px-[3.5%] py-[2%] ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
                                 <h3 id='upload_certificate_popup_title' className="text-base font-bold text-[#333333]">{popupData.isCertificateAvailable ? t(popupData.reUploadHeader) : t(popupData.uploadHeader)}</h3>
-                                <p id='upload_certificate_popup_msg' className="text-sm text-[#717171]">{t('uploadCertificate.selectFieldsMsg')}</p>
+                                {popupData.isMispOrAbisPartnerCertificate ? (
+                                    <p
+                                        id='upload_certificate_popup_partner_id_field'
+                                        className={`text-xs font-bold text-[#717171]`}
+                                    >
+                                        # {request.partnerId}
+                                    </p>
+                                ) : (
+                                    <p
+                                        id='upload_certificate_popup_msg'
+                                        className="text-sm text-[#717171]"
+                                    >
+                                        {t('uploadCertificate.selectFieldsMsg')}
+                                    </p>
+                                )}
                             </div>
                             <div className="border-gray-200 border-opacity-75 border-t"></div>
                             <div className="relative">

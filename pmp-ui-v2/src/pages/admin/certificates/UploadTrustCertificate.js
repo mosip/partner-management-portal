@@ -31,7 +31,7 @@ function UploadTrustCertificate() {
     const [isSubmitClicked, setIsSubmitClicked] = useState(false);
 
     useEffect(() => {
-        const data = localStorage.getItem('uploadTrustAttributes');
+        const data = sessionStorage.getItem('uploadTrustAttributes');
         if (!data) {
             setUnexpectedError(true);
             return;
@@ -233,6 +233,7 @@ function UploadTrustCertificate() {
                                                                 { fieldValue: 'AUTH', fieldCode: 'AUTH' },
                                                                 { fieldValue: 'FTM', fieldCode: 'FTM' },
                                                                 { fieldValue: 'DEVICE', fieldCode: 'DEVICE' },
+                                                                { fieldValue: 'MISP', fieldCode: 'MISP' },
                                                             ]}
                                                             placeHolderKey={'uploadTrustCertificate.dropdownPlaceholder'}
                                                             selectedDropdownValue={selectedDomain}

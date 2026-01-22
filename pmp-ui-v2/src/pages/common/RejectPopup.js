@@ -94,7 +94,7 @@ function RejectPopup({ popupData, closePopUp, rejectResponse, title }) {
                                     </div>
                                     <div className="flex justify-end p-5">
                                         <button id='reject_popup_reject_btn' onClick={onClickReject} className="w-36 h-10 border-[#1447B2] border rounded-md bg-tory-blue text-white">
-                                            Reject
+                                            {t('approveRejectPopup.reject')}
                                         </button>
                                     </div>
                                 </>

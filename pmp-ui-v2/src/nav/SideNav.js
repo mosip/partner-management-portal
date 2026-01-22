@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { SideNavMenuItem } from './SideNavMenuItem';
 import { useTranslation } from 'react-i18next';
 import { getUserProfile } from '../services/UserProfileService';
-import { isLangRTL } from '../utils/AppUtils';
+import { isLangRTL, moveToMispPartnerServices } from '../utils/AppUtils';
 import PropTypes from 'prop-types';
 
 function SideNav({ open, policyRequiredPartnerTypes }) {
@@ -41,10 +41,12 @@ function SideNav({ open, policyRequiredPartnerTypes }) {
             setActiveIcon('ftmChipProviderServices');
         } else if (selectedPath.includes('admin/certificates')) {
             setActiveIcon("rootOfTrustCertificate");
-        } else if (selectedPath.includes('partners-list') || selectedPath.includes('view-partner-details')) {
+        } else if (selectedPath.includes('partners')) {
             setActiveIcon("partner");
         } else if (selectedPath.includes('policy-requests-list') || selectedPath.includes('view-policy-request')) {
             setActiveIcon("partnerPolicyMapping");
+        } else if (selectedPath.includes('misp-partner-services')) {
+            setActiveIcon("mispPartnerServices");
         }
         else {
             setActiveIcon("home");
@@ -53,24 +55,28 @@ function SideNav({ open, policyRequiredPartnerTypes }) {
 
     useEffect(() => {
         const userProfile = getUserProfile();
-        const roles = userProfile.roles ?? '';
-        const userRoles = roles.split(',');
+        const rolesString = userProfile.roles ?? '';
+        // Split roles string into array, trim whitespace, and filter empty entries
+        const rolesArray = rolesString.split(',')
+            .map(role => role.trim())
+            .filter(role => role.length > 0);
+        const userRoles = rolesArray;
         if (userRoles.some(role => policyRequiredPartnerTypes.includes(role))) {
             setEnablePoliciesMenu(true);
         }
-        if (roles.includes("AUTH_PARTNER")) {
+        if (rolesArray.includes("AUTH_PARTNER")) {
             setEnableAuthenticationServicesMenu(true);
         }
-        if (roles.includes("DEVICE_PROVIDER")) {
+        if (rolesArray.includes("DEVICE_PROVIDER")) {
             setEnableDeviceProviderServicesMenu(true);
         }
-        if (roles.includes("FTM_PROVIDER")) {
+        if (rolesArray.includes("FTM_PROVIDER")) {
             setEnableFtmServicesMenu(true);
         }
-        if (roles.includes('PARTNER_ADMIN')) {
+        if (rolesArray.includes('PARTNER_ADMIN')) {
             setEnablePartnerAdminMenu(true);
         }
-        if (roles.includes('POLICYMANAGER')) {
+        if (rolesArray.includes('POLICYMANAGER')) {
             setEnablePolicyManagerMenu(true);
         }
     }, [policyRequiredPartnerTypes]);
@@ -101,7 +107,7 @@ function SideNav({ open, policyRequiredPartnerTypes }) {
         navigate('/partnermanagement/admin/certificates/root-ca-certificate-list');
     };
     const showPartner = () => {
-        navigate('/partnermanagement/admin/partners-list');
+        navigate('/partnermanagement/admin/partners/partners-list');
     };
     const showAdminPolicies = () => {
         navigate('/partnermanagement/policy-manager/policy-group-list');
@@ -184,6 +190,10 @@ function SideNav({ open, policyRequiredPartnerTypes }) {
                             
                             <button id='side_nav_authenticationServices_icon' className="duration-700 cursor-pointer" onClick={() => showAdminAuthenticationServices()}>
                                 <SideNavMenuItem title={t('dashboard.authenticationServices')} id='authenticationServices' isExpanded={open} activeIcon={activeIcon} />
+                            </button>
+
+                            <button id='side_nav_mispServices_icon' className="duration-700 cursor-pointer" onClick={() => moveToMispPartnerServices(navigate)}>
+                                <SideNavMenuItem title={t('dashboard.mispPartnerServices')} id='mispPartnerServices' isExpanded={open} activeIcon={activeIcon} />
                             </button>
 
                         </>

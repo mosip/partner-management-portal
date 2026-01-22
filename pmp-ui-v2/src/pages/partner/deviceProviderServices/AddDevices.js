@@ -75,8 +75,8 @@ function AddDevices() {
     }, [deviceEntries, isConfirmClicked]);
 
     useEffect(() => {
-        const selectedSbi = localStorage.getItem('selectedSbiData');
-        const pathData = localStorage.getItem('previousPath');
+        const selectedSbi = sessionStorage.getItem('selectedSbiData');
+        const pathData = sessionStorage.getItem('previousPath');
         if (!selectedSbi) {
             setDataLoaded(true);
             setUnexpectedError(true);

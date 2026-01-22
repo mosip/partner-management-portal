@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../services/UserProfileService.js';
-import { isLangRTL, onPressEnterKey, handleMouseClickForDropdown, logout, getPartnerManagerUrl, fetchNotificationsList, createRequest } from '../utils/AppUtils.js';
+import { isLangRTL, onPressEnterKey, handleMouseClickForDropdown, logout, getPartnerManagerUrl, fetchNotificationsList, createRequest, fetchUserConsent } from '../utils/AppUtils.js';
 import profileIcon from '../profile_icon.png';
 import hamburgerIcon from '../svg/hamburger_icon.svg';
 import orgIcon from '../svg/org_icon.svg';
@@ -28,9 +28,28 @@ function HeaderNav({ open, setOpen }) {
     const dispatch = useDispatch();
     const store = useStore();
     const [dropdownWidth, setDropdownWidth] = useState(0);
+    
+    // Check if user has POLICYMANAGER or PARTNER_ADMIN role
+    const userProfile = getUserProfile();
+    const rolesString = userProfile.roles ?? '';
+    // Split roles string into array, trim whitespace, and filter empty entries
+    const rolesArray = rolesString.split(',')
+        .map(role => role.trim())
+        .filter(role => role.length > 0);
+    // Perform exact membership checks
+    const isPolicyManager = rolesArray.includes('POLICYMANAGER');
+    const isPartnerAdmin = rolesArray.includes('PARTNER_ADMIN');
+    // Show bell icon if user is partner admin or not a policy manager
+    const shouldShowBellIcon = isPartnerAdmin || !isPolicyManager;
 
     useEffect(() => {
         const verifyUserEmail = async () => {
+            // Don't call verify endpoint if user is partner admin or policy manager
+            if (isPartnerAdmin || isPolicyManager) {
+                setIsEmailVerified(true);
+                return;
+            }
+
             try {
                 const { email } = getUserProfile();
                 const request = createRequest({ emailId: email });
@@ -47,7 +66,7 @@ function HeaderNav({ open, setOpen }) {
         };
 
         verifyUserEmail();
-    }, []);
+    }, [isPartnerAdmin, isPolicyManager]);
       
     useEffect(() => {
         handleMouseClickForDropdown(dropdownRef, () => setIsDropdownOpen(false));
@@ -66,6 +85,15 @@ function HeaderNav({ open, setOpen }) {
 
     useEffect(() => {
         async function fetchNotificationsData() {
+            // Check if user consent is given before calling notifications-seen-timestamp
+            const consentGiven = await fetchUserConsent();
+            
+            // Only proceed if consent is given
+            if (!consentGiven) {
+                setShowLatestNotificationIcon(false);
+                return;
+            }
+
             const notificationsSeenTimestamp = await fetchNotificationsSeenTimestamp();
             const notifications = await fetchNotificationsList(dispatch);
             console.log("last seen time : ", notificationsSeenTimestamp);
@@ -92,9 +120,9 @@ function HeaderNav({ open, setOpen }) {
             }
         }
     
-        // Fetch refresh time from localStorage before setting interval
+        // Fetch refresh time from sessionStorage before setting interval
         let refreshTime = 300; // Default to 5 min(300seconds)
-        const config = localStorage.getItem("appConfig");
+        const config = sessionStorage.getItem("appConfig");
     
         try {
             if (config) {
@@ -107,14 +135,14 @@ function HeaderNav({ open, setOpen }) {
             console.error("Error fetching refresh notification time:", error);
         }
     
-        // Only call fetchNotificationsData if email is verified
-        if (isEmailVerified) {
+        // Only call fetchNotificationsData if user is partner admin or not a policy manager
+        if (shouldShowBellIcon && isEmailVerified) {
             fetchNotificationsData();
         }
     
         // Set up an interval to call the function every 5 minutes
         const intervalId = setInterval(() => {
-            if (isEmailVerified) {
+            if (shouldShowBellIcon && isEmailVerified) {
                 fetchNotificationsData();
             }
         }, 1000 * refreshTime);
@@ -122,7 +150,7 @@ function HeaderNav({ open, setOpen }) {
         // Cleanup function to clear the interval when component unmounts
         return () => clearInterval(intervalId);
     
-    }, [isEmailVerified]);
+    }, [isEmailVerified, shouldShowBellIcon, dispatch]);
     
 
     const fetchNotificationsSeenTimestamp = async () => {
@@ -211,33 +239,35 @@ function HeaderNav({ open, setOpen }) {
                 </div>
             </div>
             <div className={`flex items-center relative justify-between gap-x-4 ${isLoginLanguageRTL ? "left-3" : "right-3"}`}>
-                <div className="flex items-center relative" ref={notificationRef}>
-                    {!showLatestNotificationIcon ? (
-                        <button className='p-1.5 bg-blue-50 cursor-pointer' onClick={openNotificationPopup}>
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M4 19.85V17.75H6.1V10.4C6.1 8.9475 6.5375 7.65687 7.4125 6.52812C8.2875 5.39937 9.425 4.66 10.825 4.31V3.575C10.825 3.1375 10.9781 2.76562 11.2844 2.45937C11.5906 2.15312 11.9625 2 12.4 2C12.8375 2 13.2094 2.15312 13.5156 2.45937C13.8219 2.76562 13.975 3.1375 13.975 3.575V4.31C15.375 4.66 16.5125 5.39937 17.3875 6.52812C18.2625 7.65687 18.7 8.9475 18.7 10.4V17.75H20.8V19.85H4ZM12.4 23C11.8225 23 11.3281 22.7944 10.9169 22.3831C10.5056 21.9719 10.3 21.4775 10.3 20.9H14.5C14.5 21.4775 14.2944 21.9719 13.8831 22.3831C13.4719 22.7944 12.9775 23 12.4 23ZM8.2 17.75H16.6V10.4C16.6 9.245 16.1887 8.25625 15.3663 7.43375C14.5437 6.61125 13.555 6.2 12.4 6.2C11.245 6.2 10.2562 6.61125 9.43375 7.43375C8.61125 8.25625 8.2 9.245 8.2 10.4V17.75Z" fill="#1447B2"/>
-                            </svg>
-                        </button>
-                    ) : (
-                        <button className="relative p-1.5 bg-blue-50 cursor-pointer" onClick={openNotificationPopup}>
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M4 19.85V17.75H6.1V10.4C6.1 8.9475 6.5375 7.65687 7.4125 6.52812C8.2875 5.39937 9.425 4.66 10.825 4.31V3.575C10.825 3.1375 10.9781 2.76562 11.2844 2.45937C11.5906 2.15312 11.9625 2 12.4 2C12.8375 2 13.2094 2.15312 13.5156 2.45937C13.8219 2.76562 13.975 3.1375 13.975 3.575V4.31C15.375 4.66 16.5125 5.39937 17.3875 6.52812C18.2625 7.65687 18.7 8.9475 18.7 10.4V17.75H20.8V19.85H4ZM12.4 23C11.8225 23 11.3281 22.7944 10.9169 22.3831C10.5056 21.9719 10.3 21.4775 10.3 20.9H14.5C14.5 21.4775 14.2944 21.9719 13.8831 22.3831C13.4719 22.7944 12.9775 23 12.4 23ZM8.2 17.75H16.6V10.4C16.6 9.245 16.1887 8.25625 15.3663 7.43375C14.5437 6.61125 13.555 6.2 12.4 6.2C11.245 6.2 10.2562 6.61125 9.43375 7.43375C8.61125 8.25625 8.2 9.245 8.2 10.4V17.75Z" fill="#1447B2"/>
-                            </svg>
-                            <div className="absolute -top-1 -right-1">
-                                <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="5" cy="5" r="5" fill="#ED4537"/>
+                {shouldShowBellIcon && (
+                    <div className="flex items-center relative" ref={notificationRef}>
+                        {!showLatestNotificationIcon ? (
+                            <button className='p-1.5 bg-blue-50 cursor-pointer' onClick={openNotificationPopup}>
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M4 19.85V17.75H6.1V10.4C6.1 8.9475 6.5375 7.65687 7.4125 6.52812C8.2875 5.39937 9.425 4.66 10.825 4.31V3.575C10.825 3.1375 10.9781 2.76562 11.2844 2.45937C11.5906 2.15312 11.9625 2 12.4 2C12.8375 2 13.2094 2.15312 13.5156 2.45937C13.8219 2.76562 13.975 3.1375 13.975 3.575V4.31C15.375 4.66 16.5125 5.39937 17.3875 6.52812C18.2625 7.65687 18.7 8.9475 18.7 10.4V17.75H20.8V19.85H4ZM12.4 23C11.8225 23 11.3281 22.7944 10.9169 22.3831C10.5056 21.9719 10.3 21.4775 10.3 20.9H14.5C14.5 21.4775 14.2944 21.9719 13.8831 22.3831C13.4719 22.7944 12.9775 23 12.4 23ZM8.2 17.75H16.6V10.4C16.6 9.245 16.1887 8.25625 15.3663 7.43375C14.5437 6.61125 13.555 6.2 12.4 6.2C11.245 6.2 10.2562 6.61125 9.43375 7.43375C8.61125 8.25625 8.2 9.245 8.2 10.4V17.75Z" fill="#1447B2"/>
                                 </svg>
+                            </button>
+                        ) : (
+                            <button className="relative p-1.5 bg-blue-50 cursor-pointer" onClick={openNotificationPopup}>
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M4 19.85V17.75H6.1V10.4C6.1 8.9475 6.5375 7.65687 7.4125 6.52812C8.2875 5.39937 9.425 4.66 10.825 4.31V3.575C10.825 3.1375 10.9781 2.76562 11.2844 2.45937C11.5906 2.15312 11.9625 2 12.4 2C12.8375 2 13.2094 2.15312 13.5156 2.45937C13.8219 2.76562 13.975 3.1375 13.975 3.575V4.31C15.375 4.66 16.5125 5.39937 17.3875 6.52812C18.2625 7.65687 18.7 8.9475 18.7 10.4V17.75H20.8V19.85H4ZM12.4 23C11.8225 23 11.3281 22.7944 10.9169 22.3831C10.5056 21.9719 10.3 21.4775 10.3 20.9H14.5C14.5 21.4775 14.2944 21.9719 13.8831 22.3831C13.4719 22.7944 12.9775 23 12.4 23ZM8.2 17.75H16.6V10.4C16.6 9.245 16.1887 8.25625 15.3663 7.43375C14.5437 6.61125 13.555 6.2 12.4 6.2C11.245 6.2 10.2562 6.61125 9.43375 7.43375C8.61125 8.25625 8.2 9.245 8.2 10.4V17.75Z" fill="#1447B2"/>
+                                </svg>
+                                <div className="absolute -top-1 -right-1">
+                                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="5" cy="5" r="5" fill="#ED4537"/>
+                                    </svg>
+                                </div>
+                            </button>
+                        )}
+                        { openNotification && (
+                            <div className={`inset-0 bg-black bg-opacity-0 z-40 cursor-default`}>
+                                <NotificationPopup
+                                    closeNotification={closeNotificationPanel}
+                                />
                             </div>
-                        </button>
-                    )}
-                    { openNotification && (
-                        <div className={`inset-0 bg-black bg-opacity-0 z-40 cursor-default`}>
-                            <NotificationPopup
-                                closeNotification={closeNotificationPanel}
-                            />
-                        </div>
-                    )}
-                </div>
+                        )}
+                    </div>
+                )}
                 <div className="flex items-center">
                     <div className="p-2 m-1 bg-blue-50">
                         <img id='orgIcon' src={orgIcon} alt="" className="w-5 h-5" />

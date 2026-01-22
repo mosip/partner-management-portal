@@ -5,12 +5,12 @@ import { getUserProfile } from '../../../services/UserProfileService';
 import {
     isLangRTL, handleMouseClickForDropdown, resetPageNumber, onClickApplyFilter, setPageNumberAndPageSize,
     getPartnerManagerUrl, handleServiceErrors, onResetFilter, formatDate, bgOfStatus, getStatusCode, onPressEnterKey,
-    getOidcClientDetails,
     createRequest,
     populateClientNames,
-    getClientNameLangMap,
     setSubmenuRef,
-    isOidcClientAvailable
+    isOidcClientAvailable,
+    isOidcClientAdditionalInfoRequired,
+    createDeactivateRequest
 } from '../../../utils/AppUtils';
 import ErrorMessage from '../../common/ErrorMessage';
 import LoadingIcon from '../../common/LoadingIcon';
@@ -19,6 +19,8 @@ import Title from '../../common/Title.js';
 import AuthenticationServicesTab from '../../common/AuthenticationServicesTab.js';
 import AdminOidcClientsFilter from './AdminOidcClientsFilter.js';
 import viewIcon from "../../../svg/view_icon.svg";
+import eyeIcon from "../../../svg/eye_icon.svg";
+import disabledEyeIcon from "../../../svg/disable_eye_icon.svg";
 import deactivateIcon from "../../../svg/deactivate_icon.svg";
 import disableDeactivateIcon from "../../../svg/disable_deactivate_icon.svg";
 import FilterButtons from '../../common/FilterButtons.js';
@@ -41,11 +43,11 @@ function AdminOidcClientsList() {
     const [activeAscIcon, setActiveAscIcon] = useState("");
     const [activeDescIcon, setActiveDescIcon] = useState("createdDateTime");
     const [actionId, setActionId] = useState(-1);
-    const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
+    const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(sessionStorage.getItem('itemsPerPage') ? Number(sessionStorage.getItem('itemsPerPage')) : 8);
     const [sortFieldName, setSortFieldName] = useState("createdDateTime");
     const [sortType, setSortType] = useState("desc");
     const [pageNo, setPageNo] = useState(0);
-    const [pageSize, setPageSize] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
+    const [pageSize, setPageSize] = useState(sessionStorage.getItem('itemsPerPage') ? Number(sessionStorage.getItem('itemsPerPage')) : 8);
     const [fetchData, setFetchData] = useState(false);
     const [tableDataLoaded, setTableDataLoaded] = useState(true);
     const [totalRecords, setTotalRecords] = useState(0);
@@ -67,10 +69,21 @@ function AdminOidcClientsList() {
     });
     const submenuRef = useRef([]);
     const [showCompatibilityMsg, setShowCompatibilityMsg] = useState(false);
+    const [additionalConfigRequired, setAdditionalConfigRequired] = useState(false);
 
     useEffect(() => {
         handleMouseClickForDropdown(submenuRef, () => setActionId(-1));
     }, [submenuRef]);
+
+    useEffect(() => {
+        const checkAdditionalConfigSupport = async () => {
+            const isRequired = await isOidcClientAdditionalInfoRequired();
+            if (isRequired) {
+            setAdditionalConfigRequired(isRequired);
+            }
+        };
+        checkAdditionalConfigSupport();
+    }, []);
 
     const tableHeaders = [
         { id: "partnerId", headerNameKey: 'oidcClientsList.partnerId' },
@@ -102,7 +115,7 @@ function AdminOidcClientsList() {
         if (filterAttributes.clientNameEng) queryParams.append('clientName', filterAttributes.clientNameEng);
         if (filterAttributes.status) queryParams.append('status', filterAttributes.status);
 
-        const url = `${getPartnerManagerUrl('/oauth/client', process.env.NODE_ENV)}?${queryParams.toString()}`;
+        const url = `${getPartnerManagerUrl('/oidc-clients', process.env.NODE_ENV)}?${queryParams.toString()}`;
         try {
             fetchData ? setTableDataLoaded(false) : setDataLoaded(false);
             const response = await HttpService.get(url);
@@ -190,30 +203,24 @@ function AdminOidcClientsList() {
     };
 
     const viewOidcClientDetails = (selectedClient) => {
-        localStorage.setItem('selectedOidcClientAttributes', JSON.stringify(selectedClient));
+        sessionStorage.setItem('selectedOidcClientAttributes', JSON.stringify(selectedClient));
         navigate('/partnermanagement/admin/authentication-services/view-oidc-client-details');
     };
 
     const deactivateOidcClient = async (client, index) => {
         if (client.status === "ACTIVE") {
-            const oidcClientDetails = await getOidcClientDetails(HttpService, client.clientId, setErrorCode, setErrorMsg);
-            if (oidcClientDetails !== null) {
+            if (additionalConfigRequired) {
                 const request = createRequest({
-                    logoUri: oidcClientDetails.logoUri,
-                    redirectUris: oidcClientDetails.redirectUris,
-                    status: "INACTIVE",
-                    grantTypes: oidcClientDetails.grantTypes,
-                    clientName: client.clientNameEng,
-                    clientAuthMethods: oidcClientDetails.clientAuthMethods,
-                    clientNameLangMap: getClientNameLangMap(client.clientNameEng, client.clientNameJson)
-                });
-                setActionId(-1);
-                setSelectedOidcClient(client);
+                    status: "INACTIVE"
+                }, "mosip.pms.deactivate.oidc.client.patch", true);
                 setDeactivateRequest(request);
-                setShowActiveIndexDeactivatePopup(index);
+                setSelectedOidcClient({...client, additionalConfigRequired: true});
             } else {
-                setErrorMsg(t('deactivateOidc.errorInOidcDetails'));
+                await createDeactivateRequest(client, setTableDataLoaded, setDeactivateRequest, setErrorCode, setErrorMsg, t);
+                setSelectedOidcClient({...client, additionalConfigRequired: false});
             }
+            setActionId(-1);
+            setShowActiveIndexDeactivatePopup(index);
         }
     };
 
@@ -300,7 +307,7 @@ function AdminOidcClientsList() {
                                             : (
                                                 <>
                                                     <div className="mx-[1.5rem] overflow-x-scroll">
-                                                        <table className="table-fixed">
+                                                        <table className="table-fixed w-full">
                                                             <thead>
                                                                 <tr>
                                                                     {tableHeaders.map((header, index) => {
@@ -343,14 +350,15 @@ function AdminOidcClientsList() {
                                                                             </td>
                                                                             <td className="px-2 mx-2 cursor-default">
                                                                                 <div className="flex items-center justify-center">
-                                                                                    <svg className={`${client.status !== 'INACTIVE' ? 'cursor-pointer' : 'cursor-default'}`} id={'oidc_show_copy_popup_btn' + (index + 1)} onClick={() => openClientIdPopUp(client, index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => openClientIdPopUp(client, index))}
-                                                                                        xmlns="http://www.w3.org/2000/svg" width="22.634" height="15.433" viewBox="0 0 22.634 15.433">
-                                                                                        <path id="visibility_FILL0_wght400_GRAD0_opsz48"
-                                                                                            d="M51.32-787.911a4.21,4.21,0,0,0,3.1-1.276,4.225,4.225,0,0,0,1.273-3.1,4.21,4.21,0,0,0-1.276-3.1,4.225,4.225,0,0,0-3.1-1.273,4.21,4.21,0,0,0-3.1,1.276,4.225,4.225,0,0,0-1.273,3.1,4.21,4.21,0,0,0,1.276,3.1A4.225,4.225,0,0,0,51.32-787.911Zm-.009-1.492a2.764,2.764,0,0,1-2.039-.842,2.794,2.794,0,0,1-.836-2.045,2.764,2.764,0,0,1,.842-2.039,2.794,2.794,0,0,1,2.045-.836,2.764,2.764,0,0,1,2.039.842,2.794,2.794,0,0,1,.836,2.045,2.764,2.764,0,0,1-.842,2.039A2.794,2.794,0,0,1,51.311-789.4Zm.006,4.836a11.528,11.528,0,0,1-6.79-2.135A13,13,0,0,1,40-792.284a13.006,13.006,0,0,1,4.527-5.582A11.529,11.529,0,0,1,51.317-800a11.529,11.529,0,0,1,6.79,2.135,13.006,13.006,0,0,1,4.527,5.582,13,13,0,0,1-4.527,5.581A11.528,11.528,0,0,1,51.317-784.568ZM51.317-792.284Zm0,6.173A10.351,10.351,0,0,0,57.04-787.8a10.932,10.932,0,0,0,3.974-4.488,10.943,10.943,0,0,0-3.97-4.488,10.33,10.33,0,0,0-5.723-1.685,10.351,10.351,0,0,0-5.727,1.685,11.116,11.116,0,0,0-4,4.488,11.127,11.127,0,0,0,4,4.488A10.33,10.33,0,0,0,51.313-786.111Z"
-                                                                                            transform="translate(-40 800)" fill={`${client.status === 'ACTIVE' ? "#1447B2" : "#D1D1D1"}`} />
-                                                                                    </svg>
+                                                                                    {client.status === 'ACTIVE' ? 
+                                                                                        <button className='cursor-pointer bg-transparent border-none p-0' id={'oidc_show_copy_popup_btn' + (index + 1)} onClick={() => openClientIdPopUp(client, index)} onKeyDown={(e) => onPressEnterKey(e, () => openClientIdPopUp(client, index))}>
+                                                                                            <img src={eyeIcon} alt="View client ID" />
+                                                                                        </button>
+                                                                                        :
+                                                                                        <img src={disabledEyeIcon} alt="View client ID (disabled)" />
+                                                                                    }
                                                                                     {showActiveIndexClientIdPopup === index && (
-                                                                                        <CopyIdPopUp closePopUp={() => setShowActiveIndexClientIdPopup(null)} partnerId={currentClient.partnerId} policyName={currentClient.policyName} id={currentClient.clientId} header='oidcClientsList.oidcClientId' styleSet={styles} />
+                                                                                        <CopyIdPopUp closePopUp={() => setShowActiveIndexClientIdPopup(null)} subtitle={currentClient.partnerId} title={currentClient.policyName} id={currentClient.clientId} header='oidcClientsList.oidcClientId' styleSet={styles} />
                                                                                     )}
                                                                                 </div>
                                                                             </td>
