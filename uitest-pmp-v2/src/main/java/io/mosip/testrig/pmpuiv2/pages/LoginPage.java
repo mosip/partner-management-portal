@@ -45,11 +45,11 @@ public class LoginPage extends BasePage {
 	public void clickOnLoginButton() {
 		clickOnElement(LoginButton);
 	}
-	
+
 	public void login(String userName, String password) {
 		enterUserName(userName);
 		enterPassword(password);
 		clickOnLoginButton();
-    }
+	}
 
 }

@@ -11,7 +11,7 @@ import io.mosip.testrig.pmpuiv2.pages.RegisterPage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
-@Test(dependsOnGroups = { "PartnerAdminCreation" }, groups = {"AuthPartnerCreation"})
+@Test(dependsOnGroups = { "PartnerAdminCreation" }, groups = { "AuthPartnerCreation" })
 public class AuthPartnerCreation extends BaseClass {
 
 	private DashboardPage dashboardPage;
@@ -49,7 +49,7 @@ public class AuthPartnerCreation extends BaseClass {
 		logoutFromPartner();
 
 		registerPage = loginPage.clickRegisterButton();
-	
+
 		registerPage.enterFirstName(GlobalConstants.AUTH_PARTNER_ID);
 		registerPage.enterLastName(GlobalConstants.AUTH_PARTNER_ID);
 		registerPage.enterOrganizationName(GlobalConstants.ORGANISATION_NAME);
@@ -144,7 +144,7 @@ public class AuthPartnerCreation extends BaseClass {
 		partnerCertificatePage.clickOnSuccessMsgCloseButton();
 		partnerCertificatePage.clickOnTitleBackButton();
 	}
-	
+
 	@Test(priority = 2, description = "Register auth user with out uploading certificates")
 	public void registerAuthUserWithoutUploadingCertificates() throws InterruptedException {
 
@@ -165,16 +165,16 @@ public class AuthPartnerCreation extends BaseClass {
 		registerPage.enterPhone("  ");
 		registerPage.selectNotificationLanguageDropdown();
 		registerPage.enterUsername(GlobalConstants.AUTHNOCERT);
-		registerPage.enterPassword(GlobalConstants.PASSWORD);
-		registerPage.enterPasswordConfirm(GlobalConstants.PASSWORD);
+		registerPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
+		registerPage.enterPasswordConfirm(GlobalConstants.PARTNER_PASSWORD);
 		dashboardPage = registerPage.clickSubmitButton();
 
 		assertTrue(registerPage.isPhoneNumberWarningMessageDisplayed(),
 				GlobalConstants.isPhoneNumberWarningMessageDisplayed);
 		registerPage.selectPartnerTypeDropdown(2);
 		registerPage.enterPhone("8098768903");
-		registerPage.enterPassword(GlobalConstants.PASSWORD);
-		registerPage.enterPasswordConfirm(GlobalConstants.PASSWORD);
+		registerPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
+		registerPage.enterPasswordConfirm(GlobalConstants.PARTNER_PASSWORD);
 		dashboardPage = registerPage.clickSubmitButton();
 
 		dashboardPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULT_POLICYGROUP);
@@ -191,7 +191,7 @@ public class AuthPartnerCreation extends BaseClass {
 		dashboardPage.clickOnProfileDropdown();
 		loginPage = dashboardPage.clickOnLogoutButton();
 	}
-	
+
 	private void handleTermsAndCondition() {
 		if (dashboardPage.isTermsAndConditionsPopupDisplayed()) {
 			dashboardPage.clickOnCheckbox();

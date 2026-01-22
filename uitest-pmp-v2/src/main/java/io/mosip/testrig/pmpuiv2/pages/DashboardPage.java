@@ -1,5 +1,6 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -140,10 +141,10 @@ public class DashboardPage extends BasePage {
 
 	@FindBy(id = "footer_documentation_link")
 	private WebElement footerDocumentationLink;
-	
+
 	@FindBy(id = "policy_group_selector_option_button_1")
 	private WebElement policyGroupOption;
-	
+
 	public DashboardPage(WebDriver driver) {
 		super(driver);
 	}
@@ -172,7 +173,8 @@ public class DashboardPage extends BasePage {
 	public void selectPolicyGroupDropdown(String policyGroupValue) {
 		clickOnElement(selectPolicyGroupDropdown);
 		enter(SearchBox, policyGroupValue);
-		clickOnElement(policyGroupOption);
+		By policyGroupOption = By.xpath("//span[normalize-space()='" + policyGroupValue + "']");
+		click(policyGroupOption);
 	}
 
 	public void closePolicyGroupDropdown() {
@@ -229,7 +231,8 @@ public class DashboardPage extends BasePage {
 	}
 
 	public PartnerCertificatePage clickOnPartnerCertificateTitle() {
-		clickOnElement(dashboardPartnerCertificateListHeader);
+		By dashboardPartnerCertificateListTitel = By.id("dashboard_partner_certificate_list_header");
+		click(dashboardPartnerCertificateListTitel);
 		return new PartnerCertificatePage(driver);
 	}
 

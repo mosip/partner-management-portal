@@ -260,16 +260,16 @@ public class PoliciesPage extends BasePage {
 
 	@FindBy(id = "block_messsage_proceed")
 	private WebElement dataLostProcceedButton;
-	
+
 	@FindBy(xpath = "//span[text()='Select policy name']")
 	private WebElement policyNamePlaceholder;
-	
+
 	@FindBy(xpath = "//textarea[@placeholder='Mention the purpose of requesting the policy']")
 	private WebElement policyCommentBoxPlaceholder;
-	
+
 	@FindBy(id = "show_request_policy")
 	private WebElement middleRequestPolicyButton;
-	
+
 	@FindBy(id = "policies_request_btn")
 	private WebElement tabularPoliciesRequestButton;
 
@@ -564,7 +564,7 @@ public class PoliciesPage extends BasePage {
 	public boolean isPolicyNamePlaceHolderDisplayed() {
 		return isElementDisplayed(policyNamePlaceholder);
 	}
-	
+
 	public boolean isPolicyCommentBoxPlaceholderDisplayed() {
 		return isElementDisplayed(policyCommentBoxPlaceholder);
 	}

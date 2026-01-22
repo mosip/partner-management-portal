@@ -433,7 +433,7 @@ public class PartnerCertificatePage extends BasePage {
 
 	@FindBy(id = "upload_certificate_popup_title")
 	private WebElement mispPartnerCertificatePopup;
-	
+
 	@FindBy(id = "dashboard_ftm_chip_provider_card")
 	private WebElement dashboardFtmChipProviderCardDashboard;
 
@@ -742,7 +742,11 @@ public class PartnerCertificatePage extends BasePage {
 	public boolean isSubmitButtonForAdminDisplayed() {
 		return isElementDisplayed(SubmitButtonForAdmin);
 	}
-	
+
+	public boolean isSubmitButtonForAdminDisabled() {
+		return isElementDisabled(SubmitButtonForAdmin);
+	}
+
 	public boolean isSubmitButtonForAdminEnabled() {
 		return isElementEnabled(SubmitButtonForAdmin);
 	}
@@ -1084,28 +1088,28 @@ public class PartnerCertificatePage extends BasePage {
 
 	public boolean isValidFromDateTimeFormatValid() {
 		String uiDateTime = trustCertificateContextUploadDateTime.getText().replaceAll("\\s+", " ").trim();
-		
-		try {
-	        LocalDateTime parsed = LocalDateTime.parse(uiDateTime, PmpTestUtil.browserFormatter);
-	        String reformatted = parsed.format(PmpTestUtil.browserFormatter);
 
-	        return uiDateTime.equals(reformatted);
-	    } catch (DateTimeParseException e) {
-	        return false;
-	    }
+		try {
+			LocalDateTime parsed = LocalDateTime.parse(uiDateTime, PmpTestUtil.browserFormatter);
+			String reformatted = parsed.format(PmpTestUtil.browserFormatter);
+
+			return uiDateTime.equals(reformatted);
+		} catch (DateTimeParseException e) {
+			return false;
+		}
 	}
 
 	public boolean isValidToDateTimeFormatValid() {
 		String uiDateTime = trustCertificateContextExpiryDateTime.getText().replaceAll("\\s+", " ").trim();
 
 		try {
-	        LocalDateTime parsed = LocalDateTime.parse(uiDateTime, PmpTestUtil.browserFormatter);
-	        String reformatted = parsed.format(PmpTestUtil.browserFormatter);
+			LocalDateTime parsed = LocalDateTime.parse(uiDateTime, PmpTestUtil.browserFormatter);
+			String reformatted = parsed.format(PmpTestUtil.browserFormatter);
 
-	        return uiDateTime.equals(reformatted);
-	    } catch (DateTimeParseException e) {
-	        return false;
-	    }
+			return uiDateTime.equals(reformatted);
+		} catch (DateTimeParseException e) {
+			return false;
+		}
 	}
 
 	public void clickOnBreadcumbOfRootCA() {

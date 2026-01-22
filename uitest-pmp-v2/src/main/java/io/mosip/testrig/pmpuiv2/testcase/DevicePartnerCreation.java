@@ -109,7 +109,7 @@ public class DevicePartnerCreation extends BaseClass {
 //		assertTrue(partnerCertificatePage.isSucessMessageDisplayed(), GlobalConstants.isSucessMessageDisplayed);
 		partnerCertificatePage.clickOnSuccessMsgCloseButton();
 	}
-	
+
 	private void handleTermsAndCondition() {
 		if (dashboardPage.isTermsAndConditionsPopupDisplayed()) {
 			dashboardPage.clickOnCheckbox();

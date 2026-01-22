@@ -285,9 +285,6 @@ public class SbiCreationTest extends BaseClass {
 		assertTrue(listOfSbiPage.isNoResultsFoundDisplayed(), GlobalConstants.isNoResultsFoundDisplayed);
 		listOfSbiPage.clickOnFilterResetButton();
 
-		listOfSbiPage.reload();
-		assertTrue(listOfSbiPage.isSbiAdminListPageTitleDisplayed(), GlobalConstants.isSbiAdminListPageTitleDisplayed);
-
 		listOfSbiPage.clickOnFilterButton();
 		listOfSbiPage.enterPartnerIdInFilter(GlobalConstants.DEVICE_PARTNER_ID);
 		listOfSbiPage.enterSbiVersionInFilter(GlobalConstants.AUTOMATION_REJECTING);

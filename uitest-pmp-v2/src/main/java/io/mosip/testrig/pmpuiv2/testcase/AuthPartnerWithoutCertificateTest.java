@@ -17,7 +17,7 @@ import io.mosip.testrig.pmpuiv2.pages.ProfilePage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
-@Test(dependsOnGroups = { "AuthPartnerCreation" }, groups = {"AuthPartnerWithoutCertificateTest"})
+@Test(dependsOnGroups = { "AuthPartnerCreation" }, groups = { "AuthPartnerWithoutCertificateTest" })
 public class AuthPartnerWithoutCertificateTest extends BaseClass {
 
 	private DashboardPage dashboardPage;
@@ -36,8 +36,8 @@ public class AuthPartnerWithoutCertificateTest extends BaseClass {
 
 		logoutFromPartner();
 
-		loginPage.enterUserName("pmpui-nocert");
-		loginPage.enterPassword(password);
+		loginPage.enterUserName(GlobalConstants.AUTHNOCERT);
+		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
 		loginPage.clickOnLoginButton();
 
 		oidcClientPage = dashboardPage.clickOnAuthenticationServicesTitle();
@@ -85,8 +85,8 @@ public class AuthPartnerWithoutCertificateTest extends BaseClass {
 
 		logoutFromPartner();
 
-		loginPage.enterUserName("pmpui-nocert");
-		loginPage.enterPassword(password);
+		loginPage.enterUserName(GlobalConstants.AUTHNOCERT);
+		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
 		loginPage.clickOnLoginButton();
 
 		OidcClientPage oidcClientPage = dashboardPage.clickOnAuthenticationServicesTitle();
@@ -109,8 +109,8 @@ public class AuthPartnerWithoutCertificateTest extends BaseClass {
 
 		logoutFromPartner();
 
-		loginPage.enterUserName("pmpui-nocert");
-		loginPage.enterPassword(password);
+		loginPage.enterUserName(GlobalConstants.AUTHNOCERT);
+		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
 		loginPage.clickOnLoginButton();
 
 		dashboardPage.clickOnProfileDropdown();

@@ -16,7 +16,7 @@ import io.mosip.testrig.pmpuiv2.pages.OidcClientPage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
-@Test(dependsOnGroups = {"PolicyCreationForAuthPartner"}, groups = {"OidcClientAuthPartnerTest"})
+@Test(dependsOnGroups = { "PolicyCreationForAuthPartner" }, groups = { "OidcClientAuthPartnerTest" })
 public class OidcClientAuthPartnerTest extends BaseClass {
 	private BasePage basePage;
 	private DashboardPage dashboardPage;
@@ -74,12 +74,16 @@ public class OidcClientAuthPartnerTest extends BaseClass {
 		assertTrue(oidcClientPage.isPartnerIdAscIconDisplayed(), GlobalConstants.isPartnerIdAscIconDisplayed);
 		assertTrue(oidcClientPage.isOidcClientNameDescIconDisplayed(), GlobalConstants.isOidcClientNameDescIcon);
 		assertTrue(oidcClientPage.isOidcClientNameAscIconDisplayed(), GlobalConstants.isOidcClientNameAscIcon);
-		assertTrue(oidcClientPage.isPolicyGroupNameDescIconDisplayed(), GlobalConstants.isPolicyGroupNameDescIconDisplayed);
-		assertTrue(oidcClientPage.isPolicyGroupNameAscIconDisplayed(), GlobalConstants.isPolicyGroupNameAscIconDisplayed);
+		assertTrue(oidcClientPage.isPolicyGroupNameDescIconDisplayed(),
+				GlobalConstants.isPolicyGroupNameDescIconDisplayed);
+		assertTrue(oidcClientPage.isPolicyGroupNameAscIconDisplayed(),
+				GlobalConstants.isPolicyGroupNameAscIconDisplayed);
 		assertTrue(oidcClientPage.isPolicyNameDescIconDisplayed(), GlobalConstants.isPolicyNameDescIconDisplayed);
 		assertTrue(oidcClientPage.isPolicyNameAscIconDisplayed(), GlobalConstants.isPolicyNameAscIconDisplayed);
-		assertTrue(oidcClientPage.isCreatedDateTimeDescIconDisplayed(), GlobalConstants.isCreatedDateTimeDescIconDisplayed);
-		assertTrue(oidcClientPage.isCreatedDateTimeAscIconDisplayed(), GlobalConstants.isCreatedDateTimeAscIconDisplayed);
+		assertTrue(oidcClientPage.isCreatedDateTimeDescIconDisplayed(),
+				GlobalConstants.isCreatedDateTimeDescIconDisplayed);
+		assertTrue(oidcClientPage.isCreatedDateTimeAscIconDisplayed(),
+				GlobalConstants.isCreatedDateTimeAscIconDisplayed);
 		assertTrue(oidcClientPage.isFilterButtonEnabled(), GlobalConstants.isFilterButtonEnabled);
 		assertTrue(oidcClientPage.isHomeButtonDisplayed(), GlobalConstants.isHomeButtonInAuthenticationDisplayed);
 
@@ -277,12 +281,16 @@ public class OidcClientAuthPartnerTest extends BaseClass {
 		assertTrue(oidcClientPage.isPartnerIdAscIconDisplayed(), GlobalConstants.isPartnerIdAscIconDisplayed);
 		assertTrue(oidcClientPage.isOidcClientNameDescIconDisplayed(), GlobalConstants.isOidcClientNameDescIcon);
 		assertTrue(oidcClientPage.isOidcClientNameAscIconDisplayed(), GlobalConstants.isOidcClientNameAscIcon);
-		assertTrue(oidcClientPage.isPolicyGroupNameDescIconDisplayed(), GlobalConstants.isPolicyGroupNameDescIconDisplayed);
-		assertTrue(oidcClientPage.isPolicyGroupNameAscIconDisplayed(), GlobalConstants.isPolicyGroupNameAscIconDisplayed);
+		assertTrue(oidcClientPage.isPolicyGroupNameDescIconDisplayed(),
+				GlobalConstants.isPolicyGroupNameDescIconDisplayed);
+		assertTrue(oidcClientPage.isPolicyGroupNameAscIconDisplayed(),
+				GlobalConstants.isPolicyGroupNameAscIconDisplayed);
 		assertTrue(oidcClientPage.isPolicyNameDescIconDisplayed(), GlobalConstants.isPolicyNameDescIconDisplayed);
 		assertTrue(oidcClientPage.isPolicyNameAscIconDisplayed(), GlobalConstants.isPolicyNameAscIconDisplayed);
-		assertTrue(oidcClientPage.isCreatedDateTimeDescIconDisplayed(), GlobalConstants.isCreatedDateTimeDescIconDisplayed);
-		assertTrue(oidcClientPage.isCreatedDateTimeAscIconDisplayed(), GlobalConstants.isCreatedDateTimeAscIconDisplayed);
+		assertTrue(oidcClientPage.isCreatedDateTimeDescIconDisplayed(),
+				GlobalConstants.isCreatedDateTimeDescIconDisplayed);
+		assertTrue(oidcClientPage.isCreatedDateTimeAscIconDisplayed(),
+				GlobalConstants.isCreatedDateTimeAscIconDisplayed);
 		assertTrue(oidcClientPage.isFilterButtonEnabled(), GlobalConstants.isFilterButtonEnabled);
 		assertTrue(oidcClientPage.isHomeButtonDisplayed(), GlobalConstants.isHomeButtonDisplayed);
 

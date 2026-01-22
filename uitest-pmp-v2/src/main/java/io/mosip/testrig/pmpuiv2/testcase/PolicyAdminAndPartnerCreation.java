@@ -12,13 +12,13 @@ import io.mosip.testrig.pmpuiv2.pages.RegisterPage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
-@Test(dependsOnGroups = { "PartnerAdminCreation" }, groups = {"PolicyAdminAndPartnerCreation"})
+@Test(dependsOnGroups = { "PartnerAdminCreation" }, groups = { "PolicyAdminAndPartnerCreation" })
 public class PolicyAdminAndPartnerCreation extends BaseClass {
 	private DashboardPage dashboardPage;
 	private LoginPage loginPage;
 	private PartnerCertificatePage partnerCertificatePage;
 	private RegisterPage registerPage;
-	
+
 	@Test(priority = 1, description = "Creating Partner Admin")
 	public void policiesAdminCreation() {
 		dashboardPage = new DashboardPage(driver);
@@ -52,7 +52,7 @@ public class PolicyAdminAndPartnerCreation extends BaseClass {
 		dashboardPage = new DashboardPage(driver);
 		partnerCertificatePage = new PartnerCertificatePage(driver);
 		loginPage = new LoginPage(driver);
-		
+
 		loginAsPartnerAdmin();
 		dashboardPage.clickOnCertificateTrustStore();
 		assertTrue(partnerCertificatePage.isUploadTrustCertificateButtonDisplayed(),
@@ -151,7 +151,7 @@ public class PolicyAdminAndPartnerCreation extends BaseClass {
 		dashboardPage = partnerCertificatePage.clickOnHomeButton();
 
 	}
-	
+
 	private void logoutFromPartner() {
 		dashboardPage.clickOnProfileDropdown();
 		dashboardPage.clickOnLogoutButton();
@@ -165,7 +165,7 @@ public class PolicyAdminAndPartnerCreation extends BaseClass {
 		loginPage.clickOnLoginButton();
 
 	}
-	
+
 	private void handleTermsAndCondition() {
 		if (dashboardPage.isTermsAndConditionsPopupDisplayed()) {
 			dashboardPage.clickOnCheckbox();
