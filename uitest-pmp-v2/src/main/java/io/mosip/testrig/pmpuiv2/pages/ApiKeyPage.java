@@ -1,14 +1,22 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.TimeoutException;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
+import io.mosip.testrig.pmpuiv2.kernel.util.ConfigManager;
+import io.mosip.testrig.pmpuiv2.utility.LogUtil;
 
 public class ApiKeyPage extends BasePage {
 
@@ -31,7 +39,7 @@ public class ApiKeyPage extends BasePage {
 	private WebElement generatePolicyNameOption1;
 
 	@FindBy(id = "generate_api_key")
-	private WebElement generateAPIKey;
+	private WebElement generateApiKey;
 
 	@FindBy(xpath = "(//*[@id='columnheaderName'])[1]")
 	private WebElement partnerIDHeaderText;
@@ -421,6 +429,8 @@ public class ApiKeyPage extends BasePage {
 		super(driver);
 	}
 
+	private static final Logger logger = Logger.getLogger(ApiKeyPage.class);
+
 	public void enterNameOfApiKeyTextBox(String apiKeyTextBoxValue) {
 		enter(enterNameOfApiKeyTextBox, apiKeyTextBoxValue);
 	}
@@ -442,10 +452,18 @@ public class ApiKeyPage extends BasePage {
 		return isElementDisplayed(policyNameDropdown);
 	}
 
-	public void selectPolicyNameDropdown(String value) {
+	public boolean selectPolicyNameDropdown(String value) {
 		clickOnElement(policyNameDropdown);
 		enter(generatePolicyNameSearchInputBox, value);
-		clickOnElement(generatePolicyNameOption1);
+		try {
+			WebElement policyNameOption = driver
+					.findElement(By.xpath("//button[.//span[normalize-space(text())='" + value + "']]"));
+			clickOnElement(policyNameOption);
+			return true;
+		} catch (NoSuchElementException e) {
+			logger.warn("Policy name not found: " + value);
+			return false;
+		}
 	}
 
 	public void enterDeactivePolicyNameInDropdown(String value) {
@@ -453,12 +471,18 @@ public class ApiKeyPage extends BasePage {
 		enter(generatePolicyNameSearchInputBox, value);
 	}
 
-	public boolean isGenerateAPIKeyDisplayed() {
-		return isElementDisplayed(generateAPIKey);
+	public boolean isGenerateApiKeyDisplayed() {
+		return isElementDisplayed(generateApiKey);
 	}
 
-	public void clickOnAPIKeyDisplayed() {
-		clickOnElement(generateAPIKey);
+	public void clickOnCreateApiKey() {
+		if (isElementDisplayed(apiKeyListPageGenerateApiKeyBtn)) {
+			clickOnElement(apiKeyListPageGenerateApiKeyBtn);
+		} else if (isElementDisplayed(generateApiKey)) {
+			clickOnElement(generateApiKey);
+		} else {
+			throw new RuntimeException("Create API Key button is not visible on the page");
+		}
 	}
 
 	public void clickOnSubmitButton() {
@@ -553,7 +577,7 @@ public class ApiKeyPage extends BasePage {
 		return isElementDisplayed(policyName_asc_icon);
 	}
 
-	public boolean isCreatedDateTimeDescISconDisplayed() {
+	public boolean isCreatedDateTimeDescIconDisplayed() {
 		return isElementDisplayed(createdDateTime_desc_icon);
 	}
 
@@ -1146,16 +1170,32 @@ public class ApiKeyPage extends BasePage {
 
 	public boolean isApiKeyCreationDateSameAsBrowserDateFormat() {
 
-		WebElement dateCell = driver.findElement(By.xpath("//tr[@id='api_key_list_item1']/td[6]"));
-		String browserTime = dateCell.getText().trim();
+		By dateCellLocator = By.xpath("//tr[starts-with(@id,'api_key_list_item')][1]/td[6]");
 
-		DateTimeFormatter dateFormatter = PmpTestUtil.nonZeroPadderDateFormatter;
 		try {
-			LocalDate.parse(browserTime, dateFormatter);
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(ConfigManager.getTimeout()));
+
+			WebElement dateCell = wait.until(ExpectedConditions.visibilityOfElementLocated(dateCellLocator));
+
+			String browserTime = dateCell.getText().trim();
+
+			LogUtil.step("API key creation date from UI: " + browserTime);
+			LogUtil.step("Thread: " + Thread.currentThread().getName());
+
+			DateTimeFormatter formatter = PmpTestUtil.nonZeroPadderDateFormatter;
+
+			LocalDate.parse(browserTime, formatter);
 			return true;
+
+		} catch (TimeoutException e) {
+			LogUtil.error("API key table row not visible in time");
+			takeScreenshot();
+			return false;
+
 		} catch (DateTimeParseException e) {
+			LogUtil.error("Date format mismatch: " + e.getMessage());
+			takeScreenshot();
 			return false;
 		}
-
 	}
 }

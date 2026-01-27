@@ -14,9 +14,11 @@ import java.security.SecureRandom;
 import java.security.interfaces.RSAPublicKey;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import org.json.JSONObject;
 import com.nimbusds.jose.jwk.KeyUse;
@@ -57,6 +59,8 @@ public class PmpTestUtil extends BaseTestCaseFunc {
 	public static String previousMonth4thDateWithoutZeroPadder = LocalDate.now().minusMonths(1).withDayOfMonth(4)
 			.format(nonZeroPadderDateFormatter);
 	public static String currentMonthAndYear = LocalDate.now().format(monthYearFormatter);
+	public static DateTimeFormatter browserFormatter = new DateTimeFormatterBuilder().parseCaseInsensitive()
+			.appendPattern("M/d/yyyy, h:mm:ss a").toFormatter(Locale.ENGLISH);
 
 	public static String getServerComponentsDetails() {
 		if (serverComponentsCommitDetails != null && !serverComponentsCommitDetails.isEmpty())

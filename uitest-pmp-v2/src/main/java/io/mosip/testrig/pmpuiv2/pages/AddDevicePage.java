@@ -7,7 +7,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
 public class AddDevicePage extends BasePage {
@@ -71,7 +70,7 @@ public class AddDevicePage extends BasePage {
 	@FindBy(id = "add_device_back_sbi_list_btn")
 	private WebElement addDeviceBackToSbiList;
 
-	@FindBy(xpath = "//*[text()='Add Devices']")
+	@FindBy(id = "page_title")
 	private WebElement addDevicesTitle;
 
 	@FindBy(xpath = "//span[text()='*']/../..//p[text()='Device Type']")
@@ -142,8 +141,10 @@ public class AddDevicePage extends BasePage {
 		clickOnElement(addDeviceBackToSbiList);
 	}
 
+	private By pageTitle = By.id("page_title");
+
 	public boolean isAddDeviceTitleDisplayed() {
-		return isElementDisplayed(addDevicesTitle);
+		return isTextPresent(pageTitle, "Add Devices");
 	}
 
 	public boolean isSbiVersionDisplayed(String sbiVersion) {
@@ -228,13 +229,10 @@ public class AddDevicePage extends BasePage {
 	}
 
 	public void selectAddDeviceTypeWithPosition(String value, int position) {
-		WebElement addDeviceTypeSelectDropdown = driver
-				.findElement(By.xpath("(//button[@id='add_device_device_type_dropdown_btn'])[" + position + "]"));
-		try {
-			dropdownWithPosition(addDeviceTypeSelectDropdown, value, position);
-		} catch (IOException e) {
-			logger.info(e.getMessage());
-		}
+
+		By dropdownLocator = By.xpath("(//button[@id='add_device_device_type_dropdown_btn'])[" + position + "]");
+
+		dropdownWithPosition(dropdownLocator, value, position);
 	}
 
 	public void selectDeviceSubTypeWithPosition(String value, int position) {

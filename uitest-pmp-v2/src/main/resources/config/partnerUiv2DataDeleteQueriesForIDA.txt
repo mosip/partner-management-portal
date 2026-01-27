@@ -2,6 +2,4 @@
 
 delete from ida.ca_cert_store where cert_subject ='CN=AABBCC,OU=AABBCC,O=AABBCC,L=aa,ST=aa,C=aa';
 delete FROM ida.oidc_client_data where partner_id='pmpui-v2';
-
-
-
+delete FROM ida.oidc_client_data where partner_id='pmpui-policyadmin';

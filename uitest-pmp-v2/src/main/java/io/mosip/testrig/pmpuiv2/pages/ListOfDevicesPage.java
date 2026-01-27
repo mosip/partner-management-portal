@@ -427,33 +427,32 @@ public class ListOfDevicesPage extends BasePage {
 
 	public boolean isDeviceDisplayed(String deviceType, String deviceSubType, String make, String model) {
 		try {
-			WebElement addedDevice = driver.findElement(By.xpath("//td[text()='" + deviceType + "']/..//td[text()='"
-					+ deviceSubType + "']/..//td[text()='" + make + "']/..//td[text()='" + model + "']"));
-			return isElementDisplayed(addedDevice);
+			By addedDevice = By.xpath("//td[text()='" + deviceType + "']/..//td[text()='" + deviceSubType
+					+ "']/..//td[text()='" + make + "']/..//td[text()='" + model + "']");
+			return isDisplayed(addedDevice);
 		} catch (NoSuchElementException | TimeoutException e) {
 			return false;
 		}
 	}
 
 	public void clickOnDeviceThreeDots(String deviceType, String deviceSubType, String make, String model) {
-		WebElement addedDeviceThreeDots = driver.findElement(
-				By.xpath("//td[text()='" + deviceType + "']/..//td[text()='" + deviceSubType + "']/..//td[text()='"
-						+ make + "']/..//td[text()='" + model + "']/..//button[contains(@id, 'device_list_action')]"));
-		clickOnElement(addedDeviceThreeDots);
+		By addedDeviceThreeDots = By
+				.xpath("//td[text()='" + deviceType + "']/..//td[text()='" + deviceSubType + "']/..//td[text()='" + make
+						+ "']/..//td[text()='" + model + "']/..//button[contains(@id, 'device_list_action')]");
+		click(addedDeviceThreeDots);
 	}
 
 	public void clickOnDevice(String deviceType, String deviceSubType, String make, String model, String status) {
-		WebElement addedDevice = driver.findElement(By.xpath("//td[text()='" + deviceType + "']/..//td[text()='"
-				+ deviceSubType + "']/..//td[text()='" + make + "']/..//td[text()='" + model + "']"));
-		clickOnElement(addedDevice);
+		By addedDevice = By.xpath("//td[text()='" + deviceType + "']/..//td[text()='" + deviceSubType
+				+ "']/..//td[text()='" + make + "']/..//td[text()='" + model + "']");
+		click(addedDevice);
 	}
 
 	public boolean isDeviceStatusDisplayed(String deviceType, String deviceSubType, String make, String model,
 			String status) {
-		WebElement deviceStatus = driver.findElement(
-				By.xpath("//td[text()='" + deviceType + "']/..//td[text()='" + deviceSubType + "']/..//td[text()='"
-						+ make + "']/..//td[text()='" + model + "']/..//div[text()='" + status + "']"));
-		return isElementDisplayed(deviceStatus);
+		By deviceStatus = By.xpath("//td[text()='" + deviceType + "']/..//td[text()='" + deviceSubType
+				+ "']/..//td[text()='" + make + "']/..//td[text()='" + model + "']/..//div[text()='" + status + "']");
+		return isDisplayed(deviceStatus);
 	}
 
 	public String getDeviceStatusClassValue(String deviceType, String deviceSubType, String make, String model,
@@ -469,10 +468,10 @@ public class ListOfDevicesPage extends BasePage {
 	}
 
 	public void clickOnDeviceThreeDotsAsAdmin(String deviceType, String deviceSubType, String make, String model) {
-		WebElement addedDeviceThreeDots = driver.findElement(
-				By.xpath("//td[text()='" + deviceType + "']/..//td[text()='" + deviceSubType + "']/..//td[text()='"
-						+ make + "']/..//td[text()='" + model + "']/..//button[contains(@id, 'device_list_action')]"));
-		clickOnElement(addedDeviceThreeDots);
+		By addedDeviceThreeDots = By
+				.xpath("//td[text()='" + deviceType + "']/..//td[text()='" + deviceSubType + "']/..//td[text()='" + make
+						+ "']/..//td[text()='" + model + "']/..//button[contains(@id, 'device_list_action')]");
+		click(addedDeviceThreeDots);
 	}
 
 	public boolean isSubTitleDisplayed(String sbiVersion) {
@@ -951,10 +950,10 @@ public class ListOfDevicesPage extends BasePage {
 	}
 
 	public void clickOnDeviceThreeDotsInAdmin(String deviceType, String deviceSubType, String make, String model) {
-		WebElement addedDeviceThreeDots = driver.findElement(By
+		By addedDeviceThreeDots = By
 				.xpath("//td[text()='" + deviceType + "']/..//td[text()='" + deviceSubType + "']/..//td[text()='" + make
-						+ "']/..//td[text()='" + model + "']/..//button[contains(@id, 'device_list_action_menu')]"));
-		clickOnElement(addedDeviceThreeDots);
+						+ "']/..//td[text()='" + model + "']/..//button[contains(@id, 'device_list_action_menu')]");
+		click(addedDeviceThreeDots);
 	}
 
 	public void clickOnViewDeviceOfTabularInAdmin() {
@@ -966,9 +965,9 @@ public class ListOfDevicesPage extends BasePage {
 	}
 
 	public boolean isListOfDevicesTitleDisplayed(String count) {
-		WebElement deviceList = driver.findElement(
-				By.xpath("//p[@id='list_of_device_details_title' and text()='List of Devices (" + count + ")']"));
-		return isElementDisplayed(deviceList);
+		By deviceList = By
+				.xpath("//p[@id='list_of_device_details_title' and text()='List of Devices (" + count + ")']");
+		return isDisplayed(deviceList);
 	}
 
 	public boolean isDeactivateDevicePopupInAdminDisplayed() {
@@ -976,10 +975,10 @@ public class ListOfDevicesPage extends BasePage {
 	}
 
 	public boolean isDeactivateDevicePopupTitleInAdminDisplayed(String device) {
-		WebElement title = driver.findElement(By.xpath(
+		By title = By.xpath(
 				"//p[@id='deactivate_popup_header' and contains(normalize-space(text()), \"Do you want to deactivate Device  - '"
-						+ device + "'\")]"));
-		return isElementDisplayed(title);
+						+ device + "'\")]");
+		return isDisplayed(title);
 	}
 
 	public boolean isDeactivateDevicePopupDescInAdminDisplayed() {
@@ -1062,9 +1061,8 @@ public class ListOfDevicesPage extends BasePage {
 
 	public void selectDeviceStatusFilterInAdmin(String status) {
 		clickOnElement(deviceStatusFilterInAdmin);
-		WebElement statusOption = driver
-				.findElement(By.xpath("//button[contains(@id, 'status_filter_option') and text()='" + status + "']"));
-		clickOnElement(statusOption);
+		By statusOption = By.xpath("//button[contains(@id, 'status_filter_option') and text()='" + status + "']");
+		click(statusOption);
 	}
 
 	public boolean isHomeBreadcumbDisplayed() {

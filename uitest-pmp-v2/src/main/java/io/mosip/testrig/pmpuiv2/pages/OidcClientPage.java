@@ -1,12 +1,12 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
+import org.openqa.selenium.NoSuchElementException;
+
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import java.time.Duration;
 
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
 
@@ -556,12 +556,20 @@ public class OidcClientPage extends BasePage {
 		super(driver);
 	}
 
+	private static final Logger logger = Logger.getLogger(OidcClientPage.class);
+
 	public boolean isCreateOidcClientDisplayed() {
 		return isElementDisplayed(createOidcClient);
 	}
 
 	public void clickOnCreateOidcClientButton() {
-		clickOnElement(createOidcClient);
+		if (isElementDisplayed(createOidcClient)) {
+			clickOnElement(createOidcClient);
+		} else if (isElementDisplayed(createOidcClientButton)) {
+			clickOnElement(createOidcClientButton);
+		} else {
+			throw new RuntimeException("Create OIDC Client button not visible");
+		}
 	}
 
 	public void selectPartnerIdDropdown() {
@@ -577,10 +585,19 @@ public class OidcClientPage extends BasePage {
 		return isElementDisplayed(selectPolicyNameForOidc);
 	}
 
-	public void selectPolicyNameDropdown(String policyNameValue) {
+	public boolean selectPolicyNameDropdown(String value) {
 		clickOnElement(selectPolicyNameForOidc);
-		enter(createOidcPolicyNameSearchInput, policyNameValue);
-		clickOnElement(createOidcPolicyNameOption1);
+		enter(createOidcPolicyNameSearchInput, value);
+		try {
+			WebElement policyNameOption = driver
+					.findElement(By.xpath("//button[starts-with(@id,'create_oidc_policy_name_option') "
+							+ "and .//span[normalize-space(text())='" + value + "']]"));
+			clickOnElement(policyNameOption);
+			return true;
+		} catch (NoSuchElementException e) {
+			logger.warn("Policy name not found: " + value);
+			return false;
+		}
 	}
 
 	public void enterDeactivePolicyNameInDropdown(String policyNameValue) {
@@ -596,7 +613,7 @@ public class OidcClientPage extends BasePage {
 		enter(EnterPublickeyTextBox, value);
 	}
 
-	public void EnterPublickeySecondTextBox(String value) {
+	public void enterSecondRedirectUriTextBox(String value) {
 		enter(EnterPublickeyTextBoxSecond, value);
 	}
 
@@ -756,7 +773,7 @@ public class OidcClientPage extends BasePage {
 		return isElementDisplayed(policyName_asc_icon);
 	}
 
-	public boolean isCreatedDateTimeDescISconDisplayed() {
+	public boolean isCreatedDateTimeDescIconDisplayed() {
 		return isElementDisplayed(createdDateTime_desc_icon);
 	}
 
@@ -867,10 +884,6 @@ public class OidcClientPage extends BasePage {
 
 	public boolean isHomeButtonDisplayed() {
 		return isElementDisplayed(homeButton);
-	}
-
-	public void clickOnListCreateOidcClientButton() {
-		clickOnElement(createOidcClientButton);
 	}
 
 	public void navigateBackDefaultButton() {

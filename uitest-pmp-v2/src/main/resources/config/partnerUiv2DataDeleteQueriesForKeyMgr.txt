@@ -18,3 +18,7 @@ delete FROM keymgr.partner_cert_store where cert_subject ='CN=AABBCC,OU=AABBCC,O
 DELETE FROM keymgr.key_alias where app_id = 'PARTNER' AND ref_id = 'pmpui-v2';
 DELETE FROM keymgr.key_alias where app_id = 'PARTNER' AND ref_id = 'pmpui-auth';
 DELETE FROM keymgr.key_alias where app_id = 'PARTNER' AND ref_id = 'pmpui-ftm';
+DELETE FROM keymgr.key_alias where app_id = 'PARTNER' AND ref_id = 'pmpui-policies';
+DELETE FROM keymgr.key_alias where app_id = 'PARTNER' AND ref_id = 'pmpui-device';
+DELETE FROM keymgr.key_alias where app_id = 'PARTNER' AND ref_id = 'pmpui-policyadmin';
+DELETE FROM keymgr.key_alias where app_id = 'PARTNER' AND ref_id = 'pmpui-deactivate';
