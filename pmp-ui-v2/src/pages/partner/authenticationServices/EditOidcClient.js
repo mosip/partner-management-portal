@@ -345,6 +345,7 @@ function EditOidcClient() {
                     setUnexpectedError(true);
                     setErrorMsg(err.toString());
                 }
+                setDataLoaded(true);
             }
         };
         fetchData();
@@ -632,7 +633,7 @@ function EditOidcClient() {
     }
 
     const checkIfAdditionalConfigIsUpdated = () => {
-        if(additionalConfigRequired) {
+        if (additionalConfigRequired) {
             const selectedAdditionalConfig = selectedClientDetails.additionalConfig || {};
 
             // Check consent expiry
