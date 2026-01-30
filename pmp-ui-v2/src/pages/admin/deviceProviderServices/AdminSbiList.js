@@ -326,7 +326,7 @@ function AdminSbiList() {
                                                                             <td onClick={() => sbi.status !== 'deactivated' && viewSbiDetails(sbi)} className={`px-2 ${(sbi.status !== 'deactivated' && sbi.sbiExpiryStatus === 'expired') && 'text-crimson-red'}`}>{getStatusCode(sbi.sbiExpiryStatus, t)}</td>
                                                                             <td onClick={() => sbi.status !== 'deactivated' && viewSbiDetails(sbi)} className="px-2">{formatDate(sbi.createdDateTime, "date")}</td>
                                                                             <td onClick={() => sbi.status !== 'deactivated' && viewSbiDetails(sbi)}>
-                                                                                <div className={`${bgOfStatus(sbi.status)} flex min-w-fit w-14 justify-center py-1.5 px-2 mx-2 my-3 text-xs font-semibold rounded-md`}>
+                                                                                <div className={`${bgOfStatus(sbi.status)} flex min-w-fit justify-center py-1.5 px-2 mx-2 my-3 text-xs font-semibold rounded-md`}>
                                                                                     {getStatusCode(sbi.status, t)}
                                                                                 </div>
                                                                             </td>

@@ -77,6 +77,7 @@ function OidcClientAdditionalInfoSection({
                   className={`relative inline-flex items-center cursor-pointer flex-shrink-0 ${isLoginLanguageRTL ? "" : "ml-7"} focus:outline focus:outline-2 focus:outline-[#1447B2] focus:outline-offset-2 rounded`}
                   onClick={() => additionalConfigRequired && setForgotPasswordBanner(!forgotPasswordBanner)}
                   disabled={!additionalConfigRequired}
+                  tabIndex={additionalConfigRequired ? 0 : -1}
                 >
                   <input
                     type="checkbox"
@@ -110,6 +111,7 @@ function OidcClientAdditionalInfoSection({
                   className={`relative inline-flex items-center cursor-pointer flex-shrink-0 ${isLoginLanguageRTL ? "" : "ml-7"} focus:outline focus:outline-2 focus:outline-[#1447B2] focus:outline-offset-2 rounded`}
                   onClick={() => additionalConfigRequired && setSignUpBanner(!signUpBanner)}
                   disabled={!additionalConfigRequired}
+                  tabIndex={additionalConfigRequired ? 0 : -1}
                 >
                   <input
                     type="checkbox"
