@@ -127,7 +127,7 @@ function SideNav({ open, policyRequiredPartnerTypes }) {
 
     return (
         <div className="flex font-inter bg-white h-screen z-40">
-            <div className={`h-full ${open ? "absolute inset-y-14 min-w-[16rem]" : "absolute inset-y-14 w-[4.5rem]"} 
+            <div className={`h-full ${open ? "absolute inset-y-14 w-[16rem]" : "absolute inset-y-14 w-[4.5rem]"} 
             flex-col duration-500`}>
                 <div className={` flex flex-col pt-3 h-full space-y-[0.7rem] bg-[#FCFCFC] shadow-[rgba(0,0,0,0.13)_5px_2px_8px_-2px]`}>
                     <button id='side_nav_home_icon' className="duration-700 cursor-pointer" onClick={() => showHome()}>
@@ -187,7 +187,7 @@ function SideNav({ open, policyRequiredPartnerTypes }) {
                             <button id='side_nav_ftmDetails_icon' className="duration-700 cursor-pointer" onClick={() => showAdminFtmDetails()}>
                                 <SideNavMenuItem title={t('dashboard.ftmChip')} id='ftmChipProviderServices' isExpanded={open} activeIcon={activeIcon} />
                             </button>
-                            
+
                             <button id='side_nav_authenticationServices_icon' className="duration-700 cursor-pointer" onClick={() => showAdminAuthenticationServices()}>
                                 <SideNavMenuItem title={t('dashboard.authenticationServices')} id='authenticationServices' isExpanded={open} activeIcon={activeIcon} />
                             </button>
