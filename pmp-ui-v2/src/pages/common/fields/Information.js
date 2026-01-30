@@ -60,7 +60,7 @@ function Information({ infoKey, infoKey1, id }) {
                         className={`
                         absolute z-50 p-4 font-normal
                         w-[min(200px,calc(100vw-4rem))] max-h-[30vh] overflow-y-auto overflow-x-hidden
-                        shadow-lg bg-white border border-gray-400 rounded
+                        shadow-lg bg-white border border-gray-300 rounded
                         ${tooltipPosition === 'left' ? 'left-0' : tooltipPosition === 'right' ? 'right-0' : 'left-1/2 -translate-x-1/2'} top-full mt-2
                         break-words
                         ${isLoginLanguageRTL ? 'text-right' : 'text-left'}
