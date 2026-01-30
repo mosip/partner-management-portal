@@ -149,7 +149,7 @@ export const SideNavMenuItem = ({ title, id, isExpanded, activeIcon }) => {
                 }
             </div>
             {isExpanded &&
-                <p className={`duration-200 ${!isExpanded && 'scale-0'} text-nowrap font-semibold text-xs text-dark-blue`}>
+                <p className={`duration-200 ${!isExpanded && 'scale-0'} font-semibold text-xs text-dark-blue break-words text-left`}>
                     {title}
                 </p>}
         </div>
