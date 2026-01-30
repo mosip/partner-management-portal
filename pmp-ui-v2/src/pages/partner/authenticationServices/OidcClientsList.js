@@ -315,13 +315,13 @@ function OidcClientsList() {
                                     }
                                     {!tableDataLoaded && <LoadingIcon styleSet={LoadingIconStyle}></LoadingIcon>}
                                     {tableDataLoaded &&
-                                        <div className="mx-[1.5rem] overflow-x-scroll">
-                                            <table className="table-fixed w-full">
+                                        <div className="mx-[1.4rem] overflow-x-scroll">
+                                            <table className="table-fixed">
                                                 <thead>
                                                     <tr>
                                                         {tableHeaders.map((header, index) => {
                                                             return (
-                                                                <th key={index} className={`py-4 px-2 font-semibold text-sm whitespace-nowrap text-[#6F6E6E] ${header.id === "status" ? 'w-[7%]' : 'w-[15%]'}`}>
+                                                                <th key={index} className={`py-4 px-2 font-semibold text-sm whitespace-nowrap text-[#6F6E6E] ${header.id === "status" ? 'w-[7%]' : header.id === "oidcClientId" || header.id === "action" ? 'w-[7%]' : 'w-[15%]'}`}>
                                                                     <div id={`${header.headerNameKey}_header`} className={`flex items-center gap-x-1 font-semibold  ${header.id === "oidcClientId" && 'justify-center'} ${header.id === "action" && 'justify-center'}`}>
                                                                         {t(header.headerNameKey)}
                                                                         {(header.id !== "action") && (header.id !== "oidcClientId") && (

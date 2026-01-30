@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { isLangRTL, handleMouseClickForDropdown } from '../../../utils/AppUtils';
-import {  } from '../../../utils/AppUtils';
 import { getUserProfile } from '../../../services/UserProfileService';
 import Information from './Information';
 import PropTypes from 'prop-types';
@@ -44,6 +43,23 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
         }
     };
 
+    const handleKeyDown = (e) => {
+        if (!disabled && (e.key === 'Enter' || e.key === ' ')) {
+            e.preventDefault();
+            openDropdown();
+        }
+    };
+
+    const handleOptionKeyDown = (e, dropdownItemValue) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            changeDropdownSelection(dropdownItemValue);
+        } else if (e.key === 'Escape') {
+            e.preventDefault();
+            setIsDropdownOpen(false);
+        }
+    };
+
     return (
         <div key={fieldName} className={`ml-4 mb-2 ${(styleSet && styleSet.outerDiv) ? styleSet.outerDiv : ''}`}>
             <label className={`flex items-center gap-1 text-dark-blue text-sm mb-2 ${(styleSet && styleSet.dropdownLabel) ? styleSet.dropdownLabel : ''} ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
@@ -54,7 +70,7 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
             </label>
 
             <div className="relative w-full" ref={dropdownRef}>
-                <button id={id + '_dropdown_btn'} onClick={openDropdown} disabled={disabled} className={`flex items-center justify-between w-fit h-auto px-2 py-2 border border-[#707070] ${disabled ? 'bg-platinum-gray' : changeDropdownBackground ? 'bg-[#EBEBEB]' : 'bg-white'}
+                <button id={id + '_dropdown_btn'} onClick={openDropdown} onKeyDown={handleKeyDown} disabled={disabled} tabIndex={disabled ? -1 : 0} className={`flex items-center justify-between w-fit h-auto px-2 py-2 border border-[#707070] ${disabled ? 'bg-platinum-gray' : changeDropdownBackground ? 'bg-[#EBEBEB]' : 'bg-white'}
                  rounded-[4px] text-[15px] ${selectedDropdownEntry ? 'text-[#343434]' : 'text-grayish-blue'} leading-tight
                     focus:shadow-none overflow-x-auto whitespace-normal no-scrollbar ${(styleSet && styleSet.dropdownButton) ? styleSet.dropdownButton : ''}`} type="button">
                     <span className='w-full break-all text-wrap text-start'>{
@@ -82,7 +98,9 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
                                                 className={`block w-full h-auto px-4 py-1 text-sm text-dark-blue overflow-x-auto whitespace-normal no-scrollbar break-words
                                                     ${isPlaceHolderPresent && index === 0 ? 'text-gray-500' : 'text-dark-blue'}
                                                     ${selectedDropdownEntry === dropdownItem.fieldValue ? 'bg-gray-100' : 'hover:bg-gray-100'} ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}
-                                                onClick={() => changeDropdownSelection(dropdownItem.fieldValue)}>
+                                                onClick={() => changeDropdownSelection(dropdownItem.fieldValue)}
+                                                onKeyDown={(e) => handleOptionKeyDown(e, dropdownItem.fieldValue)}
+                                                tabIndex={0}>
                                                 {dropdownItem.fieldCode}
                                             </button>
                                             <div className="border-gray-200 border-t mx-2"></div>
