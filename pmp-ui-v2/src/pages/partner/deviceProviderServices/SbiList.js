@@ -205,8 +205,8 @@ function SbiList() {
                                 return (
                                     <div key={index} className={`bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center`}>
                                         <div className={`p-4 ${getbgOfStatus(sbi)}`}>
-                                            <div className="flex flex-row max-[720px]:flex-col justify-between items-center max-[720px]:items-start">
-                                                <div className="flex flex-row justify-between items-center max-[670px]:mb-2">
+                                            <div className="flex flex-row max-800:flex-col max-800:flex-wrap justify-between items-center max-800:items-start">
+                                                <div className="flex flex-row justify-between items-center max-[670px]:mb-2 max-800:mb-4">
                                                     <img src={getIcon(sbi)} alt="" className={`${isLoginLanguageRTL ? "ml-4" : "mr-4"}`} />
                                                     <div className="flex flex-col">
                                                         <p id={'sbi_list_sbi_version_' + (index+1)} className={`text-base break-all font-bold p-1 ${sbi.status === "deactivated" ? 'text-[#8E8E8E]' : 'text-dark-blue'}`}>{sbi.sbiVersion}</p>
@@ -230,7 +230,7 @@ function SbiList() {
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div ref={setSubmenuRef(submenuRef, index)} className="flex flex-row justify-between items-center relative space-x-3">
+                                                <div ref={setSubmenuRef(submenuRef, index)} className={`flex flex-row justify-between items-center relative space-x-3 max-800:space-x-2 max-800:justify-start ${isLoginLanguageRTL ? "max-800:pr-12" : "max-800:pl-12"} max-800:py-1 max-800:w-full`}>
                                                     <button id={'sbi_list_add_Devices' + (index + 1)} disabled={!canAddDevices(sbi)} onClick={() => addDevices(sbi)} className={`${sbi.status === "approved" && sbi.sbiExpiryStatus === 'valid' ? 'bg-tory-blue border-[#1447B2]' : 'border-[#A5A5A5] bg-[#A5A5A5] cursor-auto'} ${sbi.status !== "approved" && "disabled"} h-10 w-28 text-white text-xs font-semibold rounded-md ${isLoginLanguageRTL && "ml-3"}`}>{t('sbiList.addDevices')}</button>
                                                     <button id={'sbi_list_view_Devices' + (index + 1)} onClick={() => devicesList(sbi)} className="h-10 w-28 text-xs px-3 py-1 text-tory-blue bg-white border border-blue-800 font-semibold rounded-md text-center">{t('sbiList.viewDevices')}</button>
                                                     <button id={'sbi_list_hamburger' + (index + 1)} onClick={() => onClickAction(sbi, index)} className={`h-10 w-8 text-lg pb-3 text-tory-blue border-[#1447B2] bg-white  border font-bold rounded-md text-center`}>...</button>
