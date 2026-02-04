@@ -177,15 +177,15 @@ function EditOidcClient() {
 
     useEffect(() => {
         const checkAdditionalConfigSupport = async () => {
-          const isRequired = await isOidcClientAdditionalInfoRequired();
-          if (isRequired) {
-            setAdditionalConfigRequired(isRequired);
-          } else {
-            setShowCompatibilityMsg(true);
-            setForgotPasswordBanner(false);
-            setSignUpBanner(false);
-            setConsentExpiry("");
-          }
+            const isRequired = await isOidcClientAdditionalInfoRequired();
+            if (isRequired) {
+                setAdditionalConfigRequired(isRequired);
+            } else {
+                setShowCompatibilityMsg(true);
+                setForgotPasswordBanner(false);
+                setSignUpBanner(false);
+                setConsentExpiry("");
+            }
         };
         checkAdditionalConfigSupport();
     }, []);
@@ -202,8 +202,8 @@ function EditOidcClient() {
 
         const missingLanguages = [];
         entries.forEach(entry => {
-            if (entry.language && 
-                entry.language !== 'default' && 
+            if (entry.language &&
+                entry.language !== 'default' &&
                 !existingLanguageCodes.has(entry.language)) {
                 missingLanguages.push(entry.language);
                 existingLanguageCodes.add(entry.language);
@@ -226,22 +226,22 @@ function EditOidcClient() {
 
         return [...currentDropdownData, ...newDropdownItems];
     }, [t]);
-    
-  useEffect(() => {
-         const clientData = sessionStorage.getItem('selectedClientData');
-         if (!clientData) {
-             setUnexpectedError(true);
-             return;
-         }
+
+    useEffect(() => {
+        const clientData = sessionStorage.getItem('selectedClientData');
+        if (!clientData) {
+            setUnexpectedError(true);
+            return;
+        }
         const config = sessionStorage.getItem('appConfig');
         if (config) {
             const configData = JSON.parse(config);
             const configGrantTypes = configData.grantTypes.split(',').map(item => item.trim());
             setGrantTypesDropdownData(createGrantTypesDropdownData(configGrantTypes));
         }
-         const fetchData = async () => {
-             try {
-                 setDataLoaded(false);
+        const fetchData = async () => {
+            try {
+                setDataLoaded(false);
                 let selectedOidcClientData;
                 try {
                     selectedOidcClientData = JSON.parse(clientData);
@@ -254,17 +254,17 @@ function EditOidcClient() {
                 }
                 // Use clientId from sessionStorage for the GET request
                 const clientId = selectedOidcClientData.clientId;
-                 const response = await HttpService.get(getPartnerManagerUrl(`/oidc-clients/${clientId}`, process.env.NODE_ENV));
+                const response = await HttpService.get(getPartnerManagerUrl(`/oidc-clients/${clientId}`, process.env.NODE_ENV));
                 if (response) {
                     const responseData = response.data;
                     if (responseData && responseData.response) {
                         const resData = responseData.response;
                         setSelectedClientDetails(resData);
                         setOidcClientDetails(resData);
-                         
+
                         // Initialize client name
                         setClientName(resData.name || '');
-                        
+
                         // Initialize client name lang map
                         let langMapEntries = [];
                         if (resData.clientNameLangMap && typeof resData.clientNameLangMap === 'object') {
@@ -275,33 +275,33 @@ function EditOidcClient() {
                             }));
                             setClientNameLangMapEntries(langMapEntries);
                         }
-                        
+
                         // Initialize additionalConfig fields
                         let titleEntries = [];
                         let subtitleEntries = [];
                         if (resData.additionalConfig) {
                             const additionalConfig = resData.additionalConfig;
-                             
-                             if (additionalConfig.consent_expire_in_mins !== undefined) {
-                                 setConsentExpiry(String(additionalConfig.consent_expire_in_mins));
-                             }
-                             
-                             if (additionalConfig.userinfo_response_type) {
-                                 setUserInfoResponseType(additionalConfig.userinfo_response_type);
-                             }
-                             
-                             if (additionalConfig.forgot_pwd_link_required !== undefined) {
-                                 setForgotPasswordBanner(additionalConfig.forgot_pwd_link_required);
-                             }
-                             
-                             if (additionalConfig.signup_banner_required !== undefined) {
-                                 setSignUpBanner(additionalConfig.signup_banner_required);
-                             }
-                             
-                             if (additionalConfig.purpose) {
-                                 setPurposeType(additionalConfig.purpose.type || '');
-                                 
-                                 // Initialize purpose title entries
+
+                            if (additionalConfig.consent_expire_in_mins !== undefined) {
+                                setConsentExpiry(String(additionalConfig.consent_expire_in_mins));
+                            }
+
+                            if (additionalConfig.userinfo_response_type) {
+                                setUserInfoResponseType(additionalConfig.userinfo_response_type);
+                            }
+
+                            if (additionalConfig.forgot_pwd_link_required !== undefined) {
+                                setForgotPasswordBanner(additionalConfig.forgot_pwd_link_required);
+                            }
+
+                            if (additionalConfig.signup_banner_required !== undefined) {
+                                setSignUpBanner(additionalConfig.signup_banner_required);
+                            }
+
+                            if (additionalConfig.purpose) {
+                                setPurposeType(additionalConfig.purpose.type || '');
+
+                                // Initialize purpose title entries
                                 if (additionalConfig.purpose.title && typeof additionalConfig.purpose.title === 'object') {
                                     titleEntries = Object.entries(additionalConfig.purpose.title).map(([langKey, text]) => ({
                                         id: `purpose_title_${crypto.randomUUID()}`,
@@ -310,8 +310,8 @@ function EditOidcClient() {
                                     }));
                                     setPurposeTitleEntries(titleEntries);
                                 }
-                                 
-                                 // Initialize purpose subtitle entries
+
+                                // Initialize purpose subtitle entries
                                 if (additionalConfig.purpose.subTitle && typeof additionalConfig.purpose.subTitle === 'object') {
                                     subtitleEntries = Object.entries(additionalConfig.purpose.subTitle).map(([langKey, text]) => ({
                                         id: `purpose_subtitle_${crypto.randomUUID()}`,
@@ -320,35 +320,36 @@ function EditOidcClient() {
                                     }));
                                     setPurposeSubtitleEntries(subtitleEntries);
                                 }
-                             }
-                         }
-                         
-                         // Add missing languages from API response to dropdown data
-                         setLanguageDropdownData(prevDropdownData => {
-                             let updatedData = addMissingLanguagesToDropdown(langMapEntries, prevDropdownData);
-                             updatedData = addMissingLanguagesToDropdown(titleEntries, updatedData);
-                             updatedData = addMissingLanguagesToDropdown(subtitleEntries, updatedData);
-                             return updatedData;
-                         });
-                     } else {
-                         setUnexpectedError(true);
-                         handleServiceErrors(responseData, setErrorCode, setErrorMsg);
-                     }
-                 } else {
-                     setUnexpectedError(true);
-                     setErrorMsg(t('editOidcClient.errorWhileGettingOidcClientDetails'))
-                 }
-                 setDataLoaded(true);
-             } catch (err) {
+                            }
+                        }
+
+                        // Add missing languages from API response to dropdown data
+                        setLanguageDropdownData(prevDropdownData => {
+                            let updatedData = addMissingLanguagesToDropdown(langMapEntries, prevDropdownData);
+                            updatedData = addMissingLanguagesToDropdown(titleEntries, updatedData);
+                            updatedData = addMissingLanguagesToDropdown(subtitleEntries, updatedData);
+                            return updatedData;
+                        });
+                    } else {
+                        setUnexpectedError(true);
+                        handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+                    }
+                } else {
+                    setUnexpectedError(true);
+                    setErrorMsg(t('editOidcClient.errorWhileGettingOidcClientDetails'))
+                }
+                setDataLoaded(true);
+            } catch (err) {
                 console.error('Error fetching data:', err);
                 if (err.response?.status && err.response.status !== 401) {
                     setUnexpectedError(true);
                     setErrorMsg(err.toString());
                 }
-             }
-         };
-         fetchData();
-     }, [createGrantTypesDropdownData, t, addMissingLanguagesToDropdown]);
+                setDataLoaded(true);
+            }
+        };
+        fetchData();
+    }, [createGrantTypesDropdownData, t, addMissingLanguagesToDropdown]);
 
     const cancelErrorMsg = () => {
         setErrorMsg("");
@@ -362,7 +363,7 @@ function EditOidcClient() {
         validateInputRegex(value, (error) => {
             inputError = error;
         }, t);
-        
+
         if (value.trim() === '') {
             setClientNameError(t('createOidcClient.clientNameRequired'));
         } else if (inputError) {
@@ -375,7 +376,7 @@ function EditOidcClient() {
     // Multi-language client name lang map handlers
     const addClientNameLangMapEntry = () => {
         const usedLanguages = clientNameLangMapEntries.map(e => e.language).filter(lang => lang);
-        const availableLangs = languageDropdownData.filter(lang => 
+        const availableLangs = languageDropdownData.filter(lang =>
             lang.fieldValue !== 'default' && !usedLanguages.includes(lang.fieldValue)
         );
         const availableLang = availableLangs[0];
@@ -606,7 +607,7 @@ function EditOidcClient() {
 
     const checkIfClientNameLangMapIsUpdated = () => {
         const currentLangMap = buildClientNameLangMap(clientNameLangMapEntries, additionalConfigRequired, clientName);
-        
+
         // Normalize selected map the same way as current map to ensure consistent comparison
         const selectedClientNameLangMapEntries = selectedClientDetails.clientNameLangMap && typeof selectedClientDetails.clientNameLangMap === 'object'
             ? Object.entries(selectedClientDetails.clientNameLangMap).map(([language, text]) => ({
@@ -615,14 +616,14 @@ function EditOidcClient() {
             }))
             : [];
         const selectedLangMap = buildClientNameLangMap(selectedClientNameLangMapEntries, additionalConfigRequired, selectedClientDetails.name || clientName);
-        
+
         const currentKeys = Object.keys(currentLangMap).sort((a, b) => a.localeCompare(b));
         const selectedKeys = Object.keys(selectedLangMap).sort((a, b) => a.localeCompare(b));
-        
+
         if (currentKeys.length !== selectedKeys.length) {
             return true;
         }
-        
+
         for (let key of currentKeys) {
             if (currentLangMap[key] !== selectedLangMap[key]) {
                 return true;
@@ -632,21 +633,21 @@ function EditOidcClient() {
     }
 
     const checkIfAdditionalConfigIsUpdated = () => {
-        if(additionalConfigRequired) {
+        if (additionalConfigRequired) {
             const selectedAdditionalConfig = selectedClientDetails.additionalConfig || {};
-            
+
             // Check consent expiry
             const currentConsentExpiry = consentExpiry ? Number.parseInt(consentExpiry, 10) : undefined;
             const selectedConsentExpiry = selectedAdditionalConfig.consent_expire_in_mins;
             if (currentConsentExpiry !== selectedConsentExpiry) {
                 return true;
             }
-            
+
             // Check user info response type
             if (userInfoResponseType !== (selectedAdditionalConfig.userinfo_response_type || '')) {
                 return true;
             }
-            
+
             // Check toggles
             if (forgotPasswordBanner !== (selectedAdditionalConfig.forgot_pwd_link_required !== undefined ? selectedAdditionalConfig.forgot_pwd_link_required : true)) {
                 return true;
@@ -654,13 +655,13 @@ function EditOidcClient() {
             if (signUpBanner !== (selectedAdditionalConfig.signup_banner_required !== undefined ? selectedAdditionalConfig.signup_banner_required : true)) {
                 return true;
             }
-            
+
             // Check purpose type
             const selectedPurposeType = selectedAdditionalConfig.purpose?.type || '';
             if (purposeType !== selectedPurposeType) {
                 return true;
             }
-            
+
             // Check purpose title
             if (purposeType) {
                 const currentTitleMap = buildPurposeLangMap(purposeTitleEntries);
@@ -675,7 +676,7 @@ function EditOidcClient() {
                         return true;
                     }
                 }
-                
+
                 // Check purpose subtitle
                 const currentSubtitleMap = buildPurposeLangMap(purposeSubtitleEntries);
                 const selectedSubtitleMap = selectedAdditionalConfig.purpose?.subTitle || {};
@@ -691,7 +692,7 @@ function EditOidcClient() {
                 }
             }
         }
-        
+
         return false;
     }
     const isRedirectUriNotEmpty = () => {
@@ -707,23 +708,23 @@ function EditOidcClient() {
         const hasClientNameLangMapErrors = Object.keys(clientNameLangMapErrors).length > 0;
         const hasPurposeErrors = Object.keys(purposeTitleErrors).length > 0 || Object.keys(purposeSubtitleErrors).length > 0;
         const hasPurposeDefaultErrors = purposeTitleDefaultError !== "" || purposeSubtitleDefaultError !== "";
-        
-        const clientNameLangMapEntriesValid = clientNameLangMapEntries.length === 0 || 
+
+        const clientNameLangMapEntriesValid = clientNameLangMapEntries.length === 0 ||
             clientNameLangMapEntries.every(entry => entry.text && entry.text.trim() !== '');
-        
-        const purposeTitleEntriesValid = !purposeType || purposeTitleEntries.length === 0 || 
+
+        const purposeTitleEntriesValid = !purposeType || purposeTitleEntries.length === 0 ||
             purposeTitleEntries.every(entry => entry.text && entry.text.trim() !== '');
-        
-        const purposeSubtitleEntriesValid = !purposeType || purposeSubtitleEntries.length === 0 || 
+
+        const purposeSubtitleEntriesValid = !purposeType || purposeSubtitleEntries.length === 0 ||
             purposeSubtitleEntries.every(entry => entry.text && entry.text.trim() !== '');
-        
+
         const hasChanges = checkIfRedirectUrisIsUpdated() ||
             (oidcClientDetails.grantTypes[0] !== selectedClientDetails.grantTypes[0]) ||
             (oidcClientDetails.logoUri !== selectedClientDetails.logoUri) ||
             (trimAndReplace(clientName) !== selectedClientDetails.name) ||
             checkIfClientNameLangMapIsUpdated() ||
             checkIfAdditionalConfigIsUpdated();
-        
+
         return hasChanges && hasClientName && oidcClientDetails.logoUri !== "" && isRedirectUriNotEmpty()
             && !invalidLogoUrl && !invalidRedirectUrl && !clientNameError && !hasClientNameLangMapErrors && !hasPurposeErrors && !hasPurposeDefaultErrors
             && !consentExpiryError && clientNameLangMapEntriesValid && purposeTitleEntriesValid && purposeSubtitleEntriesValid;
@@ -739,7 +740,7 @@ function EditOidcClient() {
         setClientNameError("");
         setClientNameLangMapEntries([]);
         setClientNameLangMapErrors({});
-        
+
         // Reset additional config fields
         const selectedAdditionalConfig = selectedClientDetails.additionalConfig || {};
         setConsentExpiry(selectedAdditionalConfig.consent_expire_in_mins ? String(selectedAdditionalConfig.consent_expire_in_mins) : additionalConfigRequired ? "10" : "");
@@ -748,7 +749,7 @@ function EditOidcClient() {
         setForgotPasswordBanner(selectedAdditionalConfig.forgot_pwd_link_required !== undefined ? selectedAdditionalConfig.forgot_pwd_link_required : additionalConfigRequired);
         setSignUpBanner(selectedAdditionalConfig.signup_banner_required !== undefined ? selectedAdditionalConfig.signup_banner_required : additionalConfigRequired);
         setPurposeType(selectedAdditionalConfig.purpose?.type || "");
-        
+
         // Reset purpose entries
         if (selectedAdditionalConfig.purpose?.title) {
             const titleEntries = Object.entries(selectedAdditionalConfig.purpose.title).map(([langKey, text]) => ({
@@ -760,7 +761,7 @@ function EditOidcClient() {
         } else {
             setPurposeTitleEntries([]);
         }
-        
+
         if (selectedAdditionalConfig.purpose?.subTitle) {
             const subtitleEntries = Object.entries(selectedAdditionalConfig.purpose.subTitle).map(([langKey, text]) => ({
                 id: `purpose_subtitle_${crypto.randomUUID()}`,
@@ -771,12 +772,12 @@ function EditOidcClient() {
         } else {
             setPurposeSubtitleEntries([]);
         }
-        
+
         setPurposeTitleErrors({});
         setPurposeSubtitleErrors({});
         setPurposeTitleDefaultError("");
         setPurposeSubtitleDefaultError("");
-        
+
         // Reset client name lang map
         if (selectedClientDetails.clientNameLangMap && typeof selectedClientDetails.clientNameLangMap === 'object') {
             const langMapEntries = Object.entries(selectedClientDetails.clientNameLangMap).map(([language, text]) => ({
@@ -800,22 +801,22 @@ function EditOidcClient() {
         setErrorCode("");
         setErrorMsg("");
         setDataLoaded(false);
-        
+
         // Build additionalConfig
         const additionalConfig = {};
-        
+
         if (userInfoResponseType) {
             additionalConfig.userinfo_response_type = userInfoResponseType;
         }
-        
+
         if (purposeType) {
             additionalConfig.purpose = {
                 type: purposeType
             };
-            
+
             const purposeTitleMap = buildPurposeLangMap(purposeTitleEntries);
             const purposeSubtitleMap = buildPurposeLangMap(purposeSubtitleEntries);
-            
+
             if (purposeTitleMap) {
                 additionalConfig.purpose.title = purposeTitleMap;
             }
@@ -823,16 +824,16 @@ function EditOidcClient() {
                 additionalConfig.purpose.subTitle = purposeSubtitleMap;
             }
         }
-        
+
         additionalConfig.signup_banner_required = signUpBanner;
         additionalConfig.forgot_pwd_link_required = forgotPasswordBanner;
-        
+
         if (consentExpiry && consentExpiry.trim() !== '') {
             additionalConfig.consent_expire_in_mins = Number.parseInt(consentExpiry, 10);
         }
-        
+
         const clientNameLangMap = buildClientNameLangMap(clientNameLangMapEntries, additionalConfigRequired, clientName);
-        
+
         const requestData = {
             logoUri: oidcClientDetails.logoUri,
             redirectUris: getRedirectUris(),
@@ -842,12 +843,12 @@ function EditOidcClient() {
             clientAuthMethods: oidcClientDetails.clientAuthMethods,
             clientNameLangMap: clientNameLangMap
         };
-        
+
         // Add additionalConfig only if it has any properties
         if (Object.keys(additionalConfig).length > 0 && additionalConfigRequired) {
             requestData.additionalConfig = additionalConfig;
         }
-        
+
         const request = additionalConfigRequired ? createRequest(requestData, "mosip.pms.update.oidc.client.put", true) : createRequest(requestData);
         const apiUrl = additionalConfigRequired ? `/oidc-clients/${oidcClientDetails.id}` : `/oauth/client/${oidcClientDetails.id}`;
         try {
@@ -1174,47 +1175,47 @@ function EditOidcClient() {
 
                                                 {/* Additional Information Section */}
                                                 <OidcClientAdditionalInfoSection
-                                                  isAdditionalInfoExpanded={isAdditionalInfoExpanded}
-                                                  setIsAdditionalInfoExpanded={setIsAdditionalInfoExpanded}
-                                                  isLoginLanguageRTL={isLoginLanguageRTL}
-                                                  additionalConfigRequired={additionalConfigRequired}
-                                                  forgotPasswordBanner={forgotPasswordBanner}
-                                                  setForgotPasswordBanner={setForgotPasswordBanner}
-                                                  signUpBanner={signUpBanner}
-                                                  setSignUpBanner={setSignUpBanner}
-                                                  consentExpiry={consentExpiry}
-                                                  handleConsentExpiryChange={handleConsentExpiryChange}
-                                                  consentExpiryError={consentExpiryError}
-                                                  userInfoResponseType={userInfoResponseType}
-                                                  handleUserInfoResponseTypeChange={handleUserInfoResponseTypeChange}
-                                                  userInfoResponseTypeDropdownData={userInfoResponseTypeDropdownData}
-                                                  purposeType={purposeType}
-                                                  handlePurposeTypeChange={handlePurposeTypeChange}
-                                                  purposeTypeDropdownData={purposeTypeDropdownData}
-                                                  purposeTitleEntries={purposeTitleEntries}
-                                                  addPurposeTitleEntry={addPurposeTitleEntry}
-                                                  updatePurposeTitleEntry={updatePurposeTitleEntry}
-                                                  deletePurposeTitleEntry={deletePurposeTitleEntry}
-                                                  purposeTitleErrors={purposeTitleErrors}
-                                                  purposeTitleDefaultError={purposeTitleDefaultError}
-                                                  purposeSubtitleEntries={purposeSubtitleEntries}
-                                                  addPurposeSubtitleEntry={addPurposeSubtitleEntry}
-                                                  updatePurposeSubtitleEntry={updatePurposeSubtitleEntry}
-                                                  deletePurposeSubtitleEntry={deletePurposeSubtitleEntry}
-                                                  purposeSubtitleErrors={purposeSubtitleErrors}
-                                                  purposeSubtitleDefaultError={purposeSubtitleDefaultError}
-                                                  languageDropdownData={languageDropdownData}
-                                                  styles={styles}
+                                                    isAdditionalInfoExpanded={isAdditionalInfoExpanded}
+                                                    setIsAdditionalInfoExpanded={setIsAdditionalInfoExpanded}
+                                                    isLoginLanguageRTL={isLoginLanguageRTL}
+                                                    additionalConfigRequired={additionalConfigRequired}
+                                                    forgotPasswordBanner={forgotPasswordBanner}
+                                                    setForgotPasswordBanner={setForgotPasswordBanner}
+                                                    signUpBanner={signUpBanner}
+                                                    setSignUpBanner={setSignUpBanner}
+                                                    consentExpiry={consentExpiry}
+                                                    handleConsentExpiryChange={handleConsentExpiryChange}
+                                                    consentExpiryError={consentExpiryError}
+                                                    userInfoResponseType={userInfoResponseType}
+                                                    handleUserInfoResponseTypeChange={handleUserInfoResponseTypeChange}
+                                                    userInfoResponseTypeDropdownData={userInfoResponseTypeDropdownData}
+                                                    purposeType={purposeType}
+                                                    handlePurposeTypeChange={handlePurposeTypeChange}
+                                                    purposeTypeDropdownData={purposeTypeDropdownData}
+                                                    purposeTitleEntries={purposeTitleEntries}
+                                                    addPurposeTitleEntry={addPurposeTitleEntry}
+                                                    updatePurposeTitleEntry={updatePurposeTitleEntry}
+                                                    deletePurposeTitleEntry={deletePurposeTitleEntry}
+                                                    purposeTitleErrors={purposeTitleErrors}
+                                                    purposeTitleDefaultError={purposeTitleDefaultError}
+                                                    purposeSubtitleEntries={purposeSubtitleEntries}
+                                                    addPurposeSubtitleEntry={addPurposeSubtitleEntry}
+                                                    updatePurposeSubtitleEntry={updatePurposeSubtitleEntry}
+                                                    deletePurposeSubtitleEntry={deletePurposeSubtitleEntry}
+                                                    purposeSubtitleErrors={purposeSubtitleErrors}
+                                                    purposeSubtitleDefaultError={purposeSubtitleDefaultError}
+                                                    languageDropdownData={languageDropdownData}
+                                                    styles={styles}
                                                 />
                                             </form>
                                         </div>
                                         <div className="pb-3 pt-6 px-4 bg-snow-white mt-[1.5%] rounded-lg shadow-md">
                                             <div className="border bg-medium-gray" />
-                                            <div className="flex flex-row px-[3%] py-6 justify-between">
-                                                <button id="oidc_edit_undo_changes_btn" onClick={() => undoChanges()} className="mr-2 w-40 min-w-fit px-3 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold">{t('commons.undoChanges')}</button>
-                                                <div className="flex flex-row space-x-3 w-full md:w-auto justify-end">
-                                                    <button id="oidc_edit_cancel_btn" onClick={() => clickOnCancel()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.cancel')}</button>
-                                                    <button id="oidc_edit_submit_btn" disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white'}`}>{t('requestPolicy.submit')}</button>
+                                            <div className="flex flex-col md:flex-row px-[3%] py-6 justify-between gap-3">
+                                                <button id="oidc_edit_undo_changes_btn" onClick={() => undoChanges()} className="w-full md:w-40 min-w-fit px-3 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold">{t('commons.undoChanges')}</button>
+                                                <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto justify-end">
+                                                    <button id="oidc_edit_cancel_btn" onClick={() => clickOnCancel()} className="w-full sm:w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold">{t('requestPolicy.cancel')}</button>
+                                                    <button id="oidc_edit_submit_btn" disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`w-full sm:w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white'}`}>{t('requestPolicy.submit')}</button>
                                                 </div>
                                             </div>
                                         </div>
