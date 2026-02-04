@@ -64,6 +64,12 @@ export const setupResponseInterceptor = (navigate) => {
           console.log(redirectUrl);
           window.location.href = redirectUrl;
         } else if (error.response.status === 403) {
+          // Allow 403 errors from partner type endpoint to pass through for custom handling
+          const requestUrl = error.config?.url || '';
+          if (requestUrl.includes('partnertype/search')) {
+            // Let the error propagate to be handled in Dashboard component
+            return Promise.reject(error instanceof Error ? error : new Error(error?.message || 'Unknown error occurred'));
+          }
           navigate('/partnermanagement/runtimeError', { state: { messageType: 'noAccess', errorCode: error.response.status, errorText: error.response.statusText } });
         } else {
           navigate('/partnermanagement/runtimeError', { state: { messageType: 'somethingWentWrong', errorCode: error.response.status, errorText: error.response.statusText } });

@@ -30,9 +30,9 @@ function Title({ title, subTitle, subTitle2, backLink, backLink2, status, versio
 
             <div className={`flex-col w-full ${!isLoginLanguageRTL ? 'ml-7' : 'mr-7'}`}>
                 {(status && version) && (
-                    <div className="flex flex-wrap max-w-[63rem] mb-1">
-                        <h1 id='sub_title_version' className={`font-semibold text-lg text-[#707070] break-words max-w-[63rem]`}>{version + ' | '}</h1>
-                        <div id='sub_title_status' className={`${(status === 'deactivated') ? 'bg-[#A5A5A5] text-white' : bgOfStatus(status)} flex h-fit py-1.5 px-2 ${isLoginLanguageRTL ? "ml-1" : "mr-1 ml-2"} text-xs font-semibold rounded-md`}>
+                    <div className="flex flex-wrap items-center gap-2 mb-1 min-w-0">
+                        <h1 id='sub_title_version' className={`font-semibold text-lg text-[#707070] break-words min-w-0 flex-shrink`}>{version + ' | '}</h1>
+                        <div id='sub_title_status' className={`${(status === 'deactivated') ? 'bg-[#A5A5A5] text-white' : bgOfStatus(status)} flex h-fit py-1.5 px-2 text-xs font-semibold rounded-md flex-shrink-0`}>
                             {getStatusCode(status, t)}
                         </div>
                     </div>
