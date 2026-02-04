@@ -92,12 +92,16 @@ export const fetchPartnerTypes = async () => {
     return null;
   } catch (err) {
     console.error('Error fetching partner types from backend:', err);
+    // Re-throw 403 errors so they can be handled specifically
+    if (err.response?.status === 403) {
+      throw err;
+    }
     return null;
   }
 };
 
 export const getPartnerType = async (userProfile) => {
-  
+  try {
     // Fetch partner types from backend
     const validPartnerTypes = await fetchPartnerTypes();
     
@@ -112,7 +116,14 @@ export const getPartnerType = async (userProfile) => {
 
     // Return first role that is a valid partner type (case-insensitive)
     return userRoles.find(role => validPartnerTypes.has(role.toLowerCase())) ?? null;
-  }; 
+  } catch (err) {
+    // Re-throw 403 errors so they can be handled specifically
+    if (err.response?.status === 403) {
+      throw err;
+    }
+    return null;
+  }
+}; 
 
 export const getLanguageLabel = (languageCode, t) => {
     const languageMap = {
@@ -1233,7 +1244,7 @@ export const getNotificationPanelDescription = (notification, isLoginLanguageRTL
                     partnerDomain: notification.notificationDetails.certificateDetails[0].partnerDomain,
                     expiryDateTime: formatDate(notification.notificationDetails.certificateDetails[0].expiryDateTime, 'dateInWords')
                 }}
-                components={{ span: <span className={`font-semibold ${isLoginLanguageRTL && 'whitespace-nowrap'}`} /> }}
+                components={{ span: <span className="font-semibold break-words" /> }}
             />
         );
     } else if (notification.notificationType === 'INTERMEDIATE_CERT_EXPIRY') {
@@ -1245,7 +1256,7 @@ export const getNotificationPanelDescription = (notification, isLoginLanguageRTL
                     partnerDomain: notification.notificationDetails.certificateDetails[0].partnerDomain,
                     expiryDateTime: formatDate(notification.notificationDetails.certificateDetails[0].expiryDateTime, 'dateInWords')
                 }}
-                components={{ span: <span className={`font-semibold ${isLoginLanguageRTL && 'whitespace-nowrap'}`} /> }}
+                components={{ span: <span className="font-semibold break-words" /> }}
             />
         );
     } else if (notification.notificationType === 'PARTNER_CERT_EXPIRY') {
@@ -1256,7 +1267,7 @@ export const getNotificationPanelDescription = (notification, isLoginLanguageRTL
                     partnerDomain: notification.notificationDetails.certificateDetails[0].partnerDomain,
                     expiryDateTime: formatDate(notification.notificationDetails.certificateDetails[0].expiryDateTime, 'dateInWords')
                 }}
-                components={{ span: <span className={`font-semibold ${isLoginLanguageRTL && 'whitespace-nowrap'}`} /> }}
+                components={{ span: <span className="font-semibold break-words" /> }}
             />
         );
     } else if (notification.notificationType === 'FTM_CHIP_CERT_EXPIRY') {
@@ -1267,7 +1278,7 @@ export const getNotificationPanelDescription = (notification, isLoginLanguageRTL
                     ftmId: notification.notificationDetails.ftmDetails[0].ftmId,
                     expiryDateTime: formatDate(notification.notificationDetails.ftmDetails[0].expiryDateTime, 'dateInWords')
                 }}
-                components={{ span: <span className={`font-semibold ${isLoginLanguageRTL && 'whitespace-nowrap'}`} /> }}
+                components={{ span: <span className="font-semibold break-words" /> }}
             />
         );
     } else if (notification.notificationType === 'API_KEY_EXPIRY') {
@@ -1278,7 +1289,7 @@ export const getNotificationPanelDescription = (notification, isLoginLanguageRTL
                     apiKeyName: notification.notificationDetails.apiKeyDetails[0].apiKeyName,
                     expiryDateTime: formatDate(notification.notificationDetails.apiKeyDetails[0].expiryDateTime, 'dateInWords')
                 }}
-                components={{ span: <span className={`font-semibold ${isLoginLanguageRTL && 'whitespace-nowrap'}`} /> }}
+                components={{ span: <span className="font-semibold break-words" /> }}
             />
         );
     } else if (notification.notificationType === 'SBI_EXPIRY') {
@@ -1289,7 +1300,7 @@ export const getNotificationPanelDescription = (notification, isLoginLanguageRTL
                     sbiId: notification.notificationDetails.sbiDetails[0].sbiId,
                     expiryDateTime: formatDate(notification.notificationDetails.sbiDetails[0].expiryDateTime, 'dateInWords')
                 }}
-                components={{ span: <span className={`font-semibold ${isLoginLanguageRTL && 'whitespace-nowrap'}`} /> }}
+                components={{ span: <span className="font-semibold break-words" /> }}
             />
         );
     } else if (notification.notificationType === 'WEEKLY_SUMMARY') {
@@ -1304,7 +1315,7 @@ export const getNotificationPanelDescription = (notification, isLoginLanguageRTL
                     mispPartnerId: mispLicenseKeyDetail?.mispPartnerId || '-',
                     expiryDateTime: formatDate(mispLicenseKeyDetail?.expiryDateTime, 'dateInWords')
                 }}
-                components={{ span: <span className={`font-semibold ${isLoginLanguageRTL && 'whitespace-nowrap'}`} /> }}
+                components={{ span: <span className="font-semibold break-words" /> }}
             />
         );  
     }

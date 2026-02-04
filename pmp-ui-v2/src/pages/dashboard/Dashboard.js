@@ -111,7 +111,20 @@ function Dashboard() {
         }
 
         // Extract partnerType from roles if not present in userProfile
-        const partnerType = await getPartnerType(userProfile);
+        let partnerType;
+        try {
+          partnerType = await getPartnerType(userProfile);
+        } catch (err) {
+          // Handle 403 error when user doesn't have valid roles
+          if (err.response?.status === 403) {
+            setOnboardingPartnerAlertType('invalidPartnerTypeError');
+            setShowOnboardingPartnerAlertPopup(true);
+            setDataLoaded(true);
+            return;
+          }
+          // Re-throw other errors to be handled by outer catch block
+          throw err;
+        }
 
         // Check if no valid partner type is found
         if (!partnerType) {
