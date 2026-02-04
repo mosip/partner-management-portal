@@ -227,17 +227,19 @@ function DevicesList() {
                         <ErrorMessage id='devices_list_error_msg' errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
                     <div className="flex-col mt-7">
-                        <div className="flex justify-between mb-5">
-                            <Title
-                                title='devicesList.listOfDevices'
-                                subTitle='sbiList.listOfSbi'
-                                backLink='/partnermanagement/device-provider-services/sbi-list'
-                                status={!unexpectedError ? selectedSbidata.status : ''}
-                                version={!unexpectedError ? selectedSbidata.sbiVersion : ''}
-                            />
+                        <div className="flex justify-between items-start gap-4 mb-5">
+                            <div className="flex-1 min-w-0">
+                                <Title
+                                    title='devicesList.listOfDevices'
+                                    subTitle='sbiList.listOfSbi'
+                                    backLink='/partnermanagement/device-provider-services/sbi-list'
+                                    status={!unexpectedError ? selectedSbidata.status : ''}
+                                    version={!unexpectedError ? selectedSbidata.sbiVersion : ''}
+                                />
+                            </div>
                             {devicesList.length > 0 ?
                                 <button id='device_list_add_device_btn' onClick={() => addDevices()} type="button" disabled={!canAddDevices}
-                                    className={`h-10 text-sm font-semibold px-7  rounded-md ${canAddDevices ? "bg-tory-blue text-white" : "bg-gray-400 opacity-55"}`}>
+                                    className={`h-10 ${isLoginLanguageRTL ? "mr-4" : "ml-4"} text-sm font-semibold px-7 rounded-md flex-shrink-0 ${canAddDevices ? "bg-tory-blue text-white" : "bg-gray-400 opacity-55"}`}>
                                     {t('devicesList.addDevices')}
                                 </button>
                                 : null
