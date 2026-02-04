@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 import PropTypes from "prop-types";
-import { onPressEnterKey, isLangRTL, getOidcPlaceholderForLanguage, getAvailableOidcLanguages } from "../../utils/AppUtils";
+import { onPressEnterKey, isLangRTL, getOidcPlaceholderForLanguage,  getOidcPlaceholderKeyForLanguage, getAvailableOidcLanguages } from "../../utils/AppUtils";
 import DropdownComponent from "./fields/DropdownComponent";
 import Information from "./fields/Information";
 import TextInputComponentWithDeleteButton from "./fields/TextInputComponentWithDeleteButton";
@@ -143,6 +143,7 @@ function OidcClientAdditionalInfoSection({
                 onChange={(e) => handleConsentExpiryChange(e.target.value)}
                 className={`h-10 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue ${additionalConfigRequired ? "bg-white" : "bg-platinum-gray"}  leading-tight focus:outline-none focus:shadow-outline w-full`}
                 placeholder={t('createOidcClient.consentExpiryPlaceholder')}
+                data-placeholder-id="createOidcClient.consentExpiryPlaceholder"
                 readOnly={!additionalConfigRequired}
               />
               {consentExpiryError && <span id="consent_expiry_error" className="text-sm text-crimson-red font-semibold mt-1">{consentExpiryError}</span>}
@@ -231,6 +232,7 @@ function OidcClientAdditionalInfoSection({
                             onChange={(e) => updatePurposeTitleEntry(entry.id, 'text', e.target.value)}
                             onDelete={() => deletePurposeTitleEntry(entry.id)}
                             placeholder={getOidcPlaceholderForLanguage(entry.language, 'PurposeTitle', t)}
+                            placeholderId={getOidcPlaceholderKeyForLanguage(entry.language, 'PurposeTitle', t)}
                             id={`purpose_title_text_${entry.id}`}
                             showDelete={purposeTitleEntries.length > 0}
                             errorMessage={purposeTitleErrors[entry.id]}
@@ -311,6 +313,7 @@ function OidcClientAdditionalInfoSection({
                             onChange={(e) => updatePurposeSubtitleEntry(entry.id, 'text', e.target.value)}
                             onDelete={() => deletePurposeSubtitleEntry(entry.id)}
                             placeholder={getOidcPlaceholderForLanguage(entry.language, 'PurposeSubtitle', t)}
+                            placeholderId={getOidcPlaceholderKeyForLanguage(entry.language, 'PurposeSubtitle', t)}
                             id={`purpose_subtitle_text_${entry.id}`}
                             showDelete={purposeSubtitleEntries.length > 0}
                             errorMessage={purposeSubtitleErrors[entry.id]}

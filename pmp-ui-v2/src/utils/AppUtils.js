@@ -1608,25 +1608,23 @@ export const validateOidcEntryText = (value, entry, requiredErrorKey, errors, se
 /**
  * Gets placeholder text based on language code and field type
  */
-export const getOidcPlaceholderForLanguage = (languageCode, fieldType, t) => {
+export const getOidcPlaceholderKeyForLanguage = (languageCode, fieldType, t) => {
+    const fallbackKey = `createOidcClient.enter${fieldType}Default`;
+
     if (!languageCode || languageCode === 'default') {
-        const fallbackKey = `createOidcClient.enter${fieldType}Default`;
-        return t(fallbackKey);
+        return fallbackKey;
     }
     
     const langCode = languageCode.toLowerCase();
     
-    // Use the new translation keys that have text in the target language
     const placeholderKey = `createOidcClient.enter${fieldType}In${langCode.charAt(0).toUpperCase() + langCode.slice(1)}`;
-    const fallbackKey = `createOidcClient.enter${fieldType}Default`;
-    
-    // Get translation (all translation files have the same keys with target language text)
-    let placeholder = t(placeholderKey);
-    if (placeholder === placeholderKey) {
-        placeholder = t(fallbackKey);
-    }
-    
-    return placeholder;
+    const placeholder = t(placeholderKey);
+
+    return placeholder === placeholderKey ? fallbackKey : placeholderKey;
+};
+
+export const getOidcPlaceholderForLanguage = (languageCode, fieldType, t) => {
+    return t(getOidcPlaceholderKeyForLanguage(languageCode, fieldType, t));
 };
 
 /**

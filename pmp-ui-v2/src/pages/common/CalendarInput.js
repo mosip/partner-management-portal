@@ -7,7 +7,7 @@ import Information from './fields/Information';
 import { format } from 'date-fns';
 import PropTypes from 'prop-types';
 
-function CalendarInput({ isUsedAsFilter, showCalendar, addInfoIcon, infoKey, infoKey1, setShowCalender, placeholderText, label, onChange, styleSet, selectedDateStr, containsAsterisk, id, minDate, disabled}) {
+function CalendarInput({ isUsedAsFilter, showCalendar, addInfoIcon, infoKey, infoKey1, setShowCalender, placeholderText, placeholderId, label, onChange, styleSet, selectedDateStr, containsAsterisk, id, minDate, disabled}) {
   const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
 
   const calendarRef = useRef(null);
@@ -76,6 +76,7 @@ function CalendarInput({ isUsedAsFilter, showCalendar, addInfoIcon, infoKey, inf
           selected={selectedDateStr === "" ? (isUsedAsFilter ? null : new Date()) : new Date(selectedDateStr)}
           onChange={(date) => onDateChange(date)}
           placeholderText={placeholderText}
+          data-placeholder-id={placeholderId}
           dateFormat="MM/dd/yyyy"
           className={`${styleSet?.datePicker || ''} w-full px-2 py-3 border border-[#707070] rounded-[4px] text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar`}
           wrapperClassName="w-full"
@@ -96,6 +97,7 @@ CalendarInput.propTypes = {
   infoKey1: PropTypes.string,
   setShowCalender: PropTypes.func.isRequired,
   placeholderText: PropTypes.string,
+  placeholderId: PropTypes.string,
   label: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   styleSet: PropTypes.object.isRequired,

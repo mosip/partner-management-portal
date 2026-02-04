@@ -167,7 +167,9 @@ function CreatePolicyGroup() {
                                                         <label id='create_policy_group_name_label' className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('createPolicyGroup.policyGroupName')}<span className="text-crimson-red mx-1">*</span></label>
                                                         <input value={policyGroupName} onChange={(e) => onChangePolicyGroupName(e.target.value)} maxLength={128}
                                                             className="h-12 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
-                                                            placeholder={t('createPolicyGroup.enterNameforPolicyGroup')} id="policy_group_name"
+                                                            placeholder={t('createPolicyGroup.enterNameforPolicyGroup')}
+                                                            data-placeholder-id="createPolicyGroup.enterNameforPolicyGroup"
+                                                            id="policy_group_name"
                                                         />
                                                         {invalidPolicyGroupName && <span id='create_policy_group_invalid_name' className="text-sm text-crimson-red font-semibold">{invalidPolicyGroupName}</span>}
                                                     </div>
@@ -179,7 +181,9 @@ function CreatePolicyGroup() {
                                                         <label id='create_policy_group_description' className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('createPolicyGroup.policyGroupDescription')}<span className="text-crimson-red mx-1">*</span></label>
                                                         <textarea value={policyGroupDesc} onChange={(e) => onChangePolicyGroupDesc(e.target.value)} maxLength={256}
                                                             className="h-14 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
-                                                            placeholder={t('createPolicyGroup.enterPolicyGroupDescription')} id="policy_group_description"
+                                                             placeholder={t('createPolicyGroup.enterPolicyGroupDescription')}
+                                                            data-placeholder-id="createPolicyGroup.enterPolicyGroupDescription"
+                                                            id="policy_group_description"
                                                         />
                                                         {invalidPolicyGroupDesc && <span id='create_policy_group_invalid_description' className="text-sm text-crimson-red font-semibold">{invalidPolicyGroupDesc}</span>}
                                                     </div>

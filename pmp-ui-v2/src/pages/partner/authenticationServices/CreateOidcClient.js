@@ -12,7 +12,7 @@ import {
   isOidcClientAdditionalInfoRequired,
   buildClientNameLangMap,
   createOidcClientEntry, findAvailableOidcLanguage, validateOidcEntryText,
-  getOidcPlaceholderForLanguage, getAvailableOidcLanguages,
+  getOidcPlaceholderForLanguage,  getOidcPlaceholderKeyForLanguage, getAvailableOidcLanguages,
   initializeUserInfoResponseTypeDropdown, initializePurposeTypeDropdown, initializeLanguageDropdown
 } from '../../../utils/AppUtils';
 import { HttpService } from '../../../services/HttpService';
@@ -822,6 +822,7 @@ function CreateOidcClient() {
                                   onChange={(e) => handleClientNameChange(e.target.value)}
                                   className="h-10 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline w-full"
                                   placeholder={t('createOidcClient.clientNamePlaceholder')}
+                                  data-placeholder-id="createOidcClient.clientNamePlaceholder"
                                   maxLength={256}
                                 />
                                 {clientNameError && <span id="create_oidc_client_name_error" className="text-sm text-crimson-red font-semibold mt-1">{clientNameError}</span>}
@@ -872,6 +873,7 @@ function CreateOidcClient() {
                                             onChange={(e) => updateClientNameLangMapEntry(entry.id, 'text', e.target.value)}
                                             onDelete={() => deleteClientNameLangMapEntry(entry.id)}
                                             placeholder={getOidcPlaceholderForLanguage(entry.language, 'NameForOidcClient', t)}
+                                            placeholderId={getOidcPlaceholderKeyForLanguage(entry.language, 'NameForOidcClient', t)}
                                             id={`client_name_lang_map_text_${index + 1}`}
                                             maxLength={256}
                                             showDelete={clientNameLangMapEntries.length > 0}
@@ -907,7 +909,8 @@ function CreateOidcClient() {
                                 </label>
                                 <textarea id="create_oidc_public_key" value={publicKey} onChange={(e) => handlePublicKeyChange(e.target.value)}
                                   className="px-2 py-4 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
-                                  placeholder={t('createOidcClient.publicKeyPlaceHolder')}>
+                                  placeholder={t('createOidcClient.publicKeyPlaceHolder')}
+                                  data-placeholder-id="createOidcClient.publicKeyPlaceHolder">
                                 </textarea>
                                 {jsonError && <span id="create_oidc_invalid_public_key" className="text-sm text-crimson-red font-semibold">{jsonError}</span>}
                               </div>
@@ -917,7 +920,8 @@ function CreateOidcClient() {
                                 <label id="create_oidc_logo_url_label" className={`block text-dark-blue text-sm font-semibold mb-1  ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('createOidcClient.logoUrl')}<span className="text-crimson-red mx-1">*</span></label>
                                 <input id="create_oidc_logo_url" value={logoUrl} onChange={(e) => handleLogoUrlChange(e.target.value)}
                                   className="h-10 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
-                                  placeholder={t('createOidcClient.logoUrlPlaceHolder')} />
+                                  placeholder={t('createOidcClient.logoUrlPlaceHolder')}
+                                  data-placeholder-id="createOidcClient.logoUrlPlaceHolder" />
                                 {invalidLogoUrl && <span id="create_oidc_invalid_logo_url" className="text-sm text-crimson-red font-semibold">{invalidLogoUrl}</span>}
                               </div>
                             </div>
@@ -934,6 +938,7 @@ function CreateOidcClient() {
                                       onChange={(e) => onChangeRedirectUrl(index, e.target.value)}
                                       placeholder={t('createOidcClient.redirectUrlPlaceHolder')}
                                       className="w-[85%] focus:outline-none"
+                                      data-placeholder-id="createOidcClient.redirectUrlPlaceHolder"
                                       id={"create_oidc_redirect_url" + (index + 1)}
                                     />
                                     <div role='button' id={"delete_redirect_url" + (index + 1)} className="flex flex-row items-center" onClick={() => onDeleteRedirectUrl(index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => onDeleteRedirectUrl(index))}>

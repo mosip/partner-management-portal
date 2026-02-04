@@ -104,6 +104,7 @@ function ApiKeyNotificationFilter({ onApplyFilter, setErrorCode, setErrorMsg }) 
                     isUsedAsFilter={true}
                     styleSet={calenderStyleSet}
                     placeholderText={t('partnerCertificatesList.searchExpiryDate')}
+                    placeholderId="partnerCertificatesList.searchExpiryDate"
                     id='api_key_expiry_date_calender'
                 />
                 <div className={`mt-6 mr-6 ${isLoginLanguageRTL ? "mr-auto" : "ml-auto"}`}>

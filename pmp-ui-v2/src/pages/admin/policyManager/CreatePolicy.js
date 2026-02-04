@@ -338,6 +338,7 @@ function CreatePolicy() {
                                                         onChange={(e) => handlePolicyDescriptionChange(e)}
                                                         className="w-full min-h-11 h-11 p-3 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-pre-wrap no-scrollbar"
                                                         placeholder={t(policyDescriptionPlaceHolderKey)}
+                                                        data-placeholder-id={policyDescriptionPlaceHolderKey}
                                                         maxLength={256}
                                                     />
                                                     {invalidPolicyDescError && <span id='create_policy_invalid_policy_description' className="text-sm text-crimson-red font-semibold">{invalidPolicyDescError}</span>}
@@ -382,6 +383,7 @@ function CreatePolicy() {
                                                             onChange={(e) => handlePolicyDataChange(e)}
                                                             className={`w-full min-h-11 p-3 max-h-80 border border-[#707070] rounded-md text-base text-dark-blue ${!policyData ? 'bg-gray-100 resize-none' : 'bg-white resize'}  leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-pre-wrap`}
                                                             placeholder={t('createPolicy.policyDataDesc')}
+                                                            data-placeholder-id="createPolicy.policyDataDesc"
                                                             disabled={!policyData}
                                                         />
                                                     </div>
