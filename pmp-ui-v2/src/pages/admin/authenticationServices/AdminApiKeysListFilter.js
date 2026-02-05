@@ -48,7 +48,7 @@ function AdminApiKeysListFilter({ onApplyFilter }) {
 
     const areFiltersEmpty = () => {
         return Object.values(filters).every(value => value === "") || invalidPartnerId
-            || invalidOrgName || invalidPolicyGroupName || invalidPolicyName || invalidApiKeyLabel;
+        || invalidOrgName || invalidPolicyGroupName || invalidPolicyName || invalidApiKeyLabel;
     };
 
     return (
