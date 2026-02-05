@@ -33,7 +33,7 @@ function FtmChipCertNotificationFilter( { onApplyFilter }) {
     const handleExpiryDateChange = (newDateStr) => {
         onFilterChangeEvent("expiryDate", newDateStr);
     };
-        
+
     const areFiltersEmpty = () => {
         return Object.values(filters).every(value => value === "") || invalidFtmId || invalidMake || invalidModel;
     };
@@ -53,6 +53,7 @@ function FtmChipCertNotificationFilter( { onApplyFilter }) {
                     placeHolderKey='ftmList.searchFtmId'
                     styleSet={getFilterTextFieldStyle()}
                     id='ftm_chip_cert_expiry_ftm_id_filter'
+                    maxLength={64}
                     inputError={invalidFtmId}
                 />
                 <TextInputComponent
@@ -62,6 +63,7 @@ function FtmChipCertNotificationFilter( { onApplyFilter }) {
                     placeHolderKey='ftmList.searchMake'
                     styleSet={getFilterTextFieldStyle()}
                     id='ftm_chip_cert_expiry_make_filter'
+                    maxLength={36}
                     inputError={invalidMake}
                 />
                 <TextInputComponent
@@ -71,6 +73,7 @@ function FtmChipCertNotificationFilter( { onApplyFilter }) {
                     placeHolderKey='ftmList.searchModel'
                     styleSet={getFilterTextFieldStyle()}
                     id='ftm_chip_cert_expiry_model_filter'
+                    maxLength={36}
                     inputError={invalidModel}
                 />
                 <CalendarInput

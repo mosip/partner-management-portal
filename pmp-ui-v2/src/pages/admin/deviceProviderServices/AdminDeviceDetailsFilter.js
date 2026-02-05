@@ -57,7 +57,7 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg, re
         if (fieldName === 'deviceId') { validateInputRegex(selectedFilter, setInvalidDeviceId, t); }
         if (fieldName === 'make') { validateInputRegex(selectedFilter, setInvalidMake, t); }
         if (fieldName === 'model') { validateInputRegex(selectedFilter, setInvalidModel, t); }
-    
+
         // Check if fieldName is 'deviceType'
         if (fieldName === 'deviceType') {
             //clear deviceSubType dropdown data
@@ -78,7 +78,7 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg, re
             try {
                 // Fetch deviceSubType data 
                 const subtypeData = await fetchDeviceSubTypeDropdownData(selectedFilter, setErrorCode, setErrorMsg, t);
-    
+
                 setDeviceSubTypeDropdownData(
                     createDropdownData('fieldCode', "", true, subtypeData, t,  t('addDevices.selectDeviceSubType'))
                 );
@@ -87,7 +87,7 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg, re
             }
         }
     };
-    
+
     const areFiltersEmpty = () => {
         return Object.values(filters).every(value => value === "" || value === null || value === undefined)
             || invalidPartnerId || invalidOrgName || invalidSbiId || invalidSbiVersion || invalidDeviceId
@@ -103,6 +103,7 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg, re
                 placeHolderKey="partnerList.searchPartnerId"
                 styleSet={getFilterTextFieldStyle()}
                 id="partner_id_filter"
+                maxLength={36}
                 inputError={invalidPartnerId}
             />
             <TextInputComponent
@@ -112,6 +113,7 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg, re
                 placeHolderKey="partnerList.searchOrganisation"
                 styleSet={getFilterTextFieldStyle()}
                 id="org_name_filter"
+                maxLength={128}
                 inputError={invalidOrgName}
             />
             { !removeSbiFields && (
@@ -123,6 +125,7 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg, re
                         placeHolderKey="sbiList.searchSbiId"
                         styleSet={getFilterTextFieldStyle()}
                         id="sbi_id_filter"
+                        maxLength={64}
                         inputError={invalidSbiId}
                     />
                     <TextInputComponent
@@ -132,6 +135,7 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg, re
                         placeHolderKey="sbiList.searchVersion"
                         styleSet={getFilterTextFieldStyle()}
                         id="sbi_version_filter"
+                        maxLength={64}
                         inputError={invalidSbiVersion}
                     />
                 </>
@@ -143,6 +147,7 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg, re
                 placeHolderKey="devicesList.searchDeviceId"
                 styleSet={getFilterTextFieldStyle()}
                 id="device_id_filter"
+                maxLength={64}
                 inputError={invalidDeviceId}
             />
             <DropdownComponent
@@ -173,6 +178,7 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg, re
                 placeHolderKey="ftmList.searchMake"
                 styleSet={getFilterTextFieldStyle()}
                 id="make_filter"
+                maxLength={36}
                 inputError={invalidMake}
             />
             <TextInputComponent
@@ -182,6 +188,7 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg, re
                 placeHolderKey="ftmList.searchModel"
                 styleSet={getFilterTextFieldStyle()}
                 id="model_filter"
+                maxLength={36}
                 inputError={invalidModel}
             />
             <DropdownComponent

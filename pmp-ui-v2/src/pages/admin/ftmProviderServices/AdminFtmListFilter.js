@@ -36,8 +36,8 @@ function AdminFtmListFilter ({ onApplyFilter }) {
 
     const onFilterChangeEvent = (fieldName, selectedFilter) => {
         setFilters((prevFilters) => ({
-          ...prevFilters,
-          [fieldName]: selectedFilter
+            ...prevFilters,
+            [fieldName]: selectedFilter
         }));
         if (fieldName === 'partnerId') { validateInputRegex(selectedFilter, setInvalidPartnerId, t); }
         if (fieldName === 'orgName') { validateInputRegex(selectedFilter, setInvalidOrgName, t); }
@@ -47,8 +47,8 @@ function AdminFtmListFilter ({ onApplyFilter }) {
     };
 
     const areFiltersEmpty = () => {
-        return Object.values(filters).every(value => value === "") || invalidPartnerId 
-        || invalidOrgName || invalidFtmId || invalidMake || invalidModel;
+        return Object.values(filters).every(value => value === "") || invalidPartnerId
+            || invalidOrgName || invalidFtmId || invalidMake || invalidModel;
     };
 
     return (
@@ -60,6 +60,7 @@ function AdminFtmListFilter ({ onApplyFilter }) {
                 placeHolderKey="partnerList.searchPartnerId"
                 styleSet={getFilterTextFieldStyle()}
                 id="partner_id_filter"
+                maxLength={36}
                 inputError={invalidPartnerId}
             />
             <TextInputComponent
@@ -69,6 +70,7 @@ function AdminFtmListFilter ({ onApplyFilter }) {
                 placeHolderKey="partnerList.searchOrganisation"
                 styleSet={getFilterTextFieldStyle()}
                 id="org_name_filter"
+                maxLength={128}
                 inputError={invalidOrgName}
             />
             <TextInputComponent
@@ -78,6 +80,7 @@ function AdminFtmListFilter ({ onApplyFilter }) {
                 placeHolderKey="ftmList.searchFtmId"
                 styleSet={getFilterTextFieldStyle()}
                 id="ftm_id_filter"
+                maxLength={64}
                 inputError={invalidFtmId}
             />
             <TextInputComponent
@@ -87,6 +90,7 @@ function AdminFtmListFilter ({ onApplyFilter }) {
                 placeHolderKey="ftmList.searchMake"
                 styleSet={getFilterTextFieldStyle()}
                 id="make_filter"
+                maxLength={36}
                 inputError={invalidMake}
             />
             <TextInputComponent
@@ -96,6 +100,7 @@ function AdminFtmListFilter ({ onApplyFilter }) {
                 placeHolderKey="ftmList.searchModel"
                 styleSet={getFilterTextFieldStyle()}
                 id="model_filter"
+                maxLength={36}
                 inputError={invalidModel}
             />
             <DropdownComponent
@@ -110,14 +115,14 @@ function AdminFtmListFilter ({ onApplyFilter }) {
             />
             <div className={`mt-6 mr-6 ${isLoginLanguageRTL ? "mr-auto" : "ml-auto"}`}>
                 <button
-                id="apply_filter__btn"
-                onClick={() => onApplyFilter(filters)}
-                type="button"
-                disabled={areFiltersEmpty()}
-                className={`h-10 text-sm font-semibold px-7 text-white rounded-md ml-6 
+                    id="apply_filter__btn"
+                    onClick={() => onApplyFilter(filters)}
+                    type="button"
+                    disabled={areFiltersEmpty()}
+                    className={`h-10 text-sm font-semibold px-7 text-white rounded-md ml-6 
                 ${areFiltersEmpty() ? 'bg-[#A5A5A5] cursor-auto' : 'bg-tory-blue'}`}
                 >
-                {t("partnerList.applyFilter")}
+                    {t("partnerList.applyFilter")}
                 </button>
             </div>
         </div>

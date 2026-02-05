@@ -11,12 +11,12 @@ function AdminOidcClientsFilter ({ onApplyFilter }) {
     const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [status, setStatus] = useState([]);
     const [filters, setFilters] = useState({
-      partnerId: "",
-      orgName: "",
-      policyGroupName: "",
-      policyName: "",
-      clientNameEng: "",
-      status: "",
+        partnerId: "",
+        orgName: "",
+        policyGroupName: "",
+        policyName: "",
+        clientNameEng: "",
+        status: "",
     });
     const [invalidPartnerId, setInvalidPartnerId] = useState("");
     const [invalidOrgName, setInvalidOrgName] = useState("");
@@ -36,8 +36,8 @@ function AdminOidcClientsFilter ({ onApplyFilter }) {
 
     const onFilterChangeEvent = (fieldName, selectedFilter) => {
         setFilters((prevFilters) => ({
-          ...prevFilters,
-          [fieldName]: selectedFilter
+            ...prevFilters,
+            [fieldName]: selectedFilter
         }));
         if (fieldName === 'partnerId') { validateInputRegex(selectedFilter, setInvalidPartnerId, t); }
         if (fieldName === 'orgName') { validateInputRegex(selectedFilter, setInvalidOrgName, t); }
@@ -48,7 +48,7 @@ function AdminOidcClientsFilter ({ onApplyFilter }) {
 
     const areFiltersEmpty = () => {
         return Object.values(filters).every(value => value === "") || invalidPartnerId
-        || invalidOrgName || invalidPolicyGroupName || invalidPolicyName || invalidClientName;
+            || invalidOrgName || invalidPolicyGroupName || invalidPolicyName || invalidClientName;
     };
 
     return (
@@ -60,6 +60,7 @@ function AdminOidcClientsFilter ({ onApplyFilter }) {
                 placeHolderKey="partnerList.searchPartnerId"
                 styleSet={getFilterTextFieldStyle()}
                 id="partner_id_filter"
+                maxLength={36}
                 inputError={invalidPartnerId}
             />
             <TextInputComponent
@@ -69,6 +70,7 @@ function AdminOidcClientsFilter ({ onApplyFilter }) {
                 placeHolderKey="partnerList.searchOrganisation"
                 styleSet={getFilterTextFieldStyle()}
                 id="org_name_filter"
+                maxLength={128}
                 inputError={invalidOrgName}
             />
             <TextInputComponent
@@ -78,6 +80,7 @@ function AdminOidcClientsFilter ({ onApplyFilter }) {
                 placeHolderKey="policiesList.searchPolicyGroup"
                 styleSet={getFilterTextFieldStyle()}
                 id="policy_group_filter"
+                maxLength={128}
                 inputError={invalidPolicyGroupName}
             />
             <TextInputComponent
@@ -87,6 +90,7 @@ function AdminOidcClientsFilter ({ onApplyFilter }) {
                 placeHolderKey="policiesList.searchPolicyName"
                 styleSet={getFilterTextFieldStyle()}
                 id="policy_name_filter"
+                maxLength={128}
                 inputError={invalidPolicyName}
             />
             <TextInputComponent
@@ -96,6 +100,7 @@ function AdminOidcClientsFilter ({ onApplyFilter }) {
                 placeHolderKey="oidcClientsList.searchOidcClientName"
                 styleSet={getFilterTextFieldStyle()}
                 id="oidc_client_name_filter"
+                maxLength={128}
                 inputError={invalidClientName}
             />
             <DropdownComponent
@@ -110,14 +115,14 @@ function AdminOidcClientsFilter ({ onApplyFilter }) {
             />
             <div className={`mt-6 mr-6 ${isLoginLanguageRTL ? "mr-auto" : "ml-auto"}`}>
                 <button
-                id="apply_filter__btn"
-                onClick={() => onApplyFilter(filters)}
-                type="button"
-                disabled={areFiltersEmpty()}
-                className={`h-10 text-sm font-semibold px-7 text-white rounded-md ml-6 
+                    id="apply_filter__btn"
+                    onClick={() => onApplyFilter(filters)}
+                    type="button"
+                    disabled={areFiltersEmpty()}
+                    className={`h-10 text-sm font-semibold px-7 text-white rounded-md ml-6 
                 ${areFiltersEmpty() ? 'bg-[#A5A5A5] cursor-auto' : 'bg-tory-blue'}`}
                 >
-                {t("partnerList.applyFilter")}
+                    {t("partnerList.applyFilter")}
                 </button>
             </div>
         </div>

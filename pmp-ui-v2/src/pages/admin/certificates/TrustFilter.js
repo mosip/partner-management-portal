@@ -38,8 +38,8 @@ function TrustFilter({ onApplyFilter }) {
 
     const onFilterChangeEvent = (fieldName, selectedFilter) => {
         setFilters((prevFilters) => ({
-          ...prevFilters,
-          [fieldName]: selectedFilter
+            ...prevFilters,
+            [fieldName]: selectedFilter
         }));
         if (fieldName === 'certificateId') { validateInputRegex(selectedFilter, setInvalidCertId, t); }
         if (fieldName === 'issuedTo') { validateInputRegex(selectedFilter, setInvalidIssuedTo, t); }
@@ -60,6 +60,7 @@ function TrustFilter({ onApplyFilter }) {
                     placeHolderKey="trustList.searchCertificateId"
                     styleSet={getFilterTextFieldStyle()}
                     id="cert_id_filter"
+                    maxLength={128}
                     inputError={invalidCertId}
                 />
                 <DropdownComponent
@@ -79,6 +80,7 @@ function TrustFilter({ onApplyFilter }) {
                     placeHolderKey='trustList.searchIssuedTo'
                     styleSet={getFilterTextFieldStyle()}
                     id='cert_issued_to_filter'
+                    maxLength={128}
                     inputError={invalidIssuedTo}
                 />
                 <TextInputComponent
@@ -88,18 +90,19 @@ function TrustFilter({ onApplyFilter }) {
                     placeHolderKey='trustList.searchIssuedBy'
                     styleSet={getFilterTextFieldStyle()}
                     id='cert_issued_by_domain_filter'
+                    maxLength={128}
                     inputError={invalidIssuedBy}
                 />
                 <div className={`mt-6 mr-6 ${isLoginLanguageRTL ? "mr-auto" : "ml-auto"}`}>
                     <button
-                    id="apply_filter__btn"
-                    onClick={() => onApplyFilter(filters)}
-                    type="button"
-                    disabled={areFiltersEmpty()}
-                    className={`h-10 text-sm font-semibold px-7 text-white rounded-md ml-6 
+                        id="apply_filter__btn"
+                        onClick={() => onApplyFilter(filters)}
+                        type="button"
+                        disabled={areFiltersEmpty()}
+                        className={`h-10 text-sm font-semibold px-7 text-white rounded-md ml-6 
                     ${areFiltersEmpty() ? 'bg-[#A5A5A5] cursor-auto' : 'bg-tory-blue'}`}
                     >
-                    {t("partnerList.applyFilter")}
+                        {t("partnerList.applyFilter")}
                     </button>
                 </div>
             </div>

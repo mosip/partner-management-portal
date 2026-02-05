@@ -113,6 +113,7 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
         placeHolderKey="partnerList.searchPartnerId"
         styleSet={getFilterTextFieldStyle()}
         id="partner_id_filter"
+        maxLength={36}
         inputError={invalidPartnerId}
       />
       <DropdownComponent
@@ -133,6 +134,7 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
         placeHolderKey="partnerList.searchOrganisation"
         styleSet={getFilterTextFieldStyle()}
         id="partner_organisation_filter"
+        maxLength={128}
         inputError={invalidOrgName}
       />
       <TextInputComponent
@@ -143,6 +145,7 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
         placeHolderKey="partnerList.searchPolicyGroup"
         styleSet={getFilterTextFieldStyle()}
         id="policy_group_filter"
+        maxLength={128}
         inputError={invalidPolicyGroup}
       />
       <TextInputComponent
@@ -155,6 +158,7 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
         addInfoIcon={true}
         styleSet={getFilterTextFieldStyle()}
         id="email_address_filter"
+        maxLength={254}
         inputError={invalidEmail}
       />
       <DropdownComponent
@@ -194,9 +198,9 @@ function PartnerListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) {
 }
 
 PartnerListFilter.propTypes = {
-    onApplyFilter: PropTypes.func.isRequired,
-    setErrorCode: PropTypes.func.isRequired,
-    setErrorMsg: PropTypes.func.isRequired,
+  onApplyFilter: PropTypes.func.isRequired,
+  setErrorCode: PropTypes.func.isRequired,
+  setErrorMsg: PropTypes.func.isRequired,
 };
 
 export default PartnerListFilter;

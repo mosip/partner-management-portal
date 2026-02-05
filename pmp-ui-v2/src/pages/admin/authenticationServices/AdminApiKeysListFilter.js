@@ -48,7 +48,7 @@ function AdminApiKeysListFilter({ onApplyFilter }) {
 
     const areFiltersEmpty = () => {
         return Object.values(filters).every(value => value === "") || invalidPartnerId
-        || invalidOrgName || invalidPolicyGroupName || invalidPolicyName || invalidApiKeyLabel;
+            || invalidOrgName || invalidPolicyGroupName || invalidPolicyName || invalidApiKeyLabel;
     };
 
     return (
@@ -60,6 +60,7 @@ function AdminApiKeysListFilter({ onApplyFilter }) {
                 placeHolderKey="partnerList.searchPartnerId"
                 styleSet={getFilterTextFieldStyle()}
                 id="partner_id_filter"
+                maxLength={36}
                 inputError={invalidPartnerId}
             />
             <TextInputComponent
@@ -69,6 +70,7 @@ function AdminApiKeysListFilter({ onApplyFilter }) {
                 placeHolderKey="partnerList.searchOrganisation"
                 styleSet={getFilterTextFieldStyle()}
                 id="org_name_filter"
+                maxLength={128}
                 inputError={invalidOrgName}
             />
             <TextInputComponent
@@ -78,6 +80,7 @@ function AdminApiKeysListFilter({ onApplyFilter }) {
                 placeHolderKey="policiesList.searchPolicyGroup"
                 styleSet={getFilterTextFieldStyle()}
                 id="policy_group_filter"
+                maxLength={128}
                 inputError={invalidPolicyGroupName}
             />
             <TextInputComponent
@@ -87,6 +90,7 @@ function AdminApiKeysListFilter({ onApplyFilter }) {
                 placeHolderKey="policiesList.searchPolicyName"
                 styleSet={getFilterTextFieldStyle()}
                 id="policy_name_filter"
+                maxLength={128}
                 inputError={invalidPolicyName}
             />
             <TextInputComponent
@@ -96,6 +100,7 @@ function AdminApiKeysListFilter({ onApplyFilter }) {
                 placeHolderKey="apiKeysList.searchApiKeyName"
                 styleSet={getFilterTextFieldStyle()}
                 id="api_key_name_filter"
+                maxLength={36}
                 inputError={invalidApiKeyLabel}
             />
             <DropdownComponent

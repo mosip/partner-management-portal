@@ -51,7 +51,7 @@ function CertificateNotificationsFilter({ onApplyFilter }) {
     const handleExpiryDateChange = (newDateStr) => {
         onFilterChangeEvent("expiryDate", newDateStr);
     };
-      
+
     const areFiltersEmpty = () => {
         return Object.values(filters).every(value => value === "") || invalidCertificateId || invalidIssuedBy || invalidIssuedTo;
     };
@@ -71,6 +71,7 @@ function CertificateNotificationsFilter({ onApplyFilter }) {
                     placeHolderKey="viewAllNotifications.searchCertificateId"
                     styleSet={getFilterTextFieldStyle()}
                     id="cert_id_filter"
+                    maxLength={128}
                     inputError={invalidCertificateId}
                 />
                 <TextInputComponent
@@ -80,6 +81,7 @@ function CertificateNotificationsFilter({ onApplyFilter }) {
                     placeHolderKey='viewAllNotifications.searchIssuedBy'
                     styleSet={getFilterTextFieldStyle()}
                     id='cert_issued_by_domain_filter'
+                    maxLength={128}
                     inputError={invalidIssuedBy}
                 />
                 <TextInputComponent
@@ -89,6 +91,7 @@ function CertificateNotificationsFilter({ onApplyFilter }) {
                     placeHolderKey='viewAllNotifications.searchIssuedTo'
                     styleSet={getFilterTextFieldStyle()}
                     id='cert_issued_to_filter'
+                    maxLength={128}
                     inputError={invalidIssuedTo}
                 />
                 <DropdownComponent

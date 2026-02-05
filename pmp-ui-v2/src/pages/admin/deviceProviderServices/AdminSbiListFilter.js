@@ -12,12 +12,12 @@ function AdminSbiListFilter( {onApplyFilter} ) {
     const [status, setStatus] = useState([]);
     const [sbiExpiryStatus, setSbiExpiryStatus] = useState([]);
     const [filters, setFilters] = useState({
-      partnerId: "",
-      orgName: "",
-      sbiId: "",
-      sbiVersion: "",
-      status: "",
-      sbiExpiryStatus: "",
+        partnerId: "",
+        orgName: "",
+        sbiId: "",
+        sbiVersion: "",
+        status: "",
+        sbiExpiryStatus: "",
     });
     const [invalidPartnerId, setInvalidPartnerId] = useState("");
     const [invalidOrgName, setInvalidOrgName] = useState("");
@@ -28,7 +28,7 @@ function AdminSbiListFilter( {onApplyFilter} ) {
         const fetchData = async () => {
             const statusDropdownData = [{ status: 'approved' },{ status: 'rejected'},{ status: 'pending_approval'},{ status: 'deactivated'}];
             setStatus(createDropdownData("status", "", true, statusDropdownData, t, t("partnerList.selectStatus")));
-            
+
             const sbiExpiryStatusDropdownData = [{ sbiExpiryStatus: 'expired' },{ sbiExpiryStatus: 'valid'}];
             setSbiExpiryStatus(createDropdownData("sbiExpiryStatus", "", true, sbiExpiryStatusDropdownData, t, t("sbiList.selectSbiExpiryStatus")));
         };
@@ -37,8 +37,8 @@ function AdminSbiListFilter( {onApplyFilter} ) {
 
     const onFilterChangeEvent = (fieldName, selectedFilter) => {
         setFilters((prevFilters) => ({
-          ...prevFilters,
-          [fieldName]: selectedFilter
+            ...prevFilters,
+            [fieldName]: selectedFilter
         }));
         if (fieldName === 'partnerId') { validateInputRegex(selectedFilter, setInvalidPartnerId, t); }
         if (fieldName === 'orgName') { validateInputRegex(selectedFilter, setInvalidOrgName, t); }
@@ -60,6 +60,7 @@ function AdminSbiListFilter( {onApplyFilter} ) {
                 placeHolderKey="partnerList.searchPartnerId"
                 styleSet={getFilterTextFieldStyle()}
                 id="partner_id_filter"
+                maxLength={36}
                 inputError={invalidPartnerId}
             />
             <TextInputComponent
@@ -69,6 +70,7 @@ function AdminSbiListFilter( {onApplyFilter} ) {
                 placeHolderKey="partnerList.searchOrganisation"
                 styleSet={getFilterTextFieldStyle()}
                 id="org_name_filter"
+                maxLength={128}
                 inputError={invalidOrgName}
             />
             <TextInputComponent
@@ -78,6 +80,7 @@ function AdminSbiListFilter( {onApplyFilter} ) {
                 placeHolderKey="sbiList.searchSbiId"
                 styleSet={getFilterTextFieldStyle()}
                 id="sbi_id_filter"
+                maxLength={64}
                 inputError={invalidSbiId}
             />
             <TextInputComponent
@@ -87,6 +90,7 @@ function AdminSbiListFilter( {onApplyFilter} ) {
                 placeHolderKey="sbiList.searchVersion"
                 styleSet={getFilterTextFieldStyle()}
                 id="sbi_version_filter"
+                maxLength={64}
                 inputError={invalidSbiVersion}
             />
             <DropdownComponent
@@ -111,14 +115,14 @@ function AdminSbiListFilter( {onApplyFilter} ) {
             />
             <div className={`mt-6 mr-6 ${isLoginLanguageRTL ? "mr-auto" : "ml-auto"}`}>
                 <button
-                id="apply_filter__btn"
-                onClick={() => onApplyFilter(filters)}
-                type="button"
-                disabled={areFiltersEmpty()}
-                className={`h-10 text-sm font-semibold px-7 text-white rounded-md ml-6 
+                    id="apply_filter__btn"
+                    onClick={() => onApplyFilter(filters)}
+                    type="button"
+                    disabled={areFiltersEmpty()}
+                    className={`h-10 text-sm font-semibold px-7 text-white rounded-md ml-6 
                 ${areFiltersEmpty() ? 'bg-[#A5A5A5] cursor-auto' : 'bg-tory-blue'}`}
                 >
-                {t("partnerList.applyFilter")}
+                    {t("partnerList.applyFilter")}
                 </button>
             </div>
         </div>
