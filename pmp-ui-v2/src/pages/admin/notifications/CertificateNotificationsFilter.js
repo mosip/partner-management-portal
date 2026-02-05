@@ -111,7 +111,7 @@ function CertificateNotificationsFilter({ onApplyFilter }) {
                     isUsedAsFilter={true}
                     styleSet={calenderStyleSet}
                     placeholderText={t('viewAllNotifications.selectExpiryDate')}
-                    placeholderId="viewAllNotifications.selectExpiryDate"
+                    placeholderId="view_notifications_expiry_date_calender_placeholder"
                     id='view_notifications_expiry_date_calender'
                 />
                 <div className={`mt-6 mr-6 ${isLoginLanguageRTL ? "mr-auto" : "ml-auto"}`}>

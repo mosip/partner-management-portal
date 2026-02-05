@@ -185,7 +185,7 @@ function PolicyGroupSelector({ onPolicyGroupSelect, selectedPolicyGroup, contain
                                     id="policy_group_selector_search_input"
                                     type="text"
                                     placeholder={t('commons.search')}
-                                    data-placeholder-id="commons.search"
+                                    data-placeholder-id="policy_group_selector_search_input_placeholder"
                                     value={searchTerm}
                                     onChange={(e) => { setSearchTerm(e.target.value); }}
                                     className={`block w-full ${isLoginLanguageRTL ? 'pr-10 pl-3 text-right' : 'pl-10 pr-3'} py-2 border border-gray-400 rounded-md leading-5 bg-white placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:ring-0`}

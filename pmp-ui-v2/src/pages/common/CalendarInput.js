@@ -86,9 +86,7 @@ function CalendarInput({ isUsedAsFilter, showCalendar, addInfoIcon, infoKey, inf
           selected={selectedDateStr === "" ? (isUsedAsFilter ? null : new Date()) : new Date(selectedDateStr)}
           onChange={(date) => onDateChange(date)}
           placeholderText={placeholderText}
-          customInput={
-            <CustomDateInput data-placeholder-id={placeholderId} />
-          }
+          data-placeholder-id={placeholderId ?? `${id}_placeholder`}
           dateFormat="MM/dd/yyyy"
           className={`${styleSet?.datePicker || ''} w-full px-2 py-3 border border-[#707070] rounded-[4px] text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar`}
           wrapperClassName="w-full"

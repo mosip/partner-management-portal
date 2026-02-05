@@ -46,7 +46,7 @@ function TextInputComponent({ fieldName, fieldNameKey, placeHolderKey, textBoxVa
                     onChange={handleInputChange}
                     onBlur={onBlur}
                     placeholder={t(placeHolderKey)}
-                    data-placeholder-id={placeHolderKey}
+                    data-placeholder-id={`${id}_placeholder`}
                     size={t(placeHolderKey).length}
                     {...(maxLength && { maxLength })}
                     readOnly={disableField}

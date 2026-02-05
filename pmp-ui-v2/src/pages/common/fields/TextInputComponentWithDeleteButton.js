@@ -53,7 +53,7 @@ function TextInputComponentWithDeleteButton({
           onChange={onChange}
           maxLength={maxLength}
           placeholder={placeholder}
-          data-placeholder-id={placeholderId}
+          data-placeholder-id={placeholderId ?? `${id}_placeholder`}
           dir={isLoginLanguageRTL ? 'rtl' : 'ltr'}
           disabled={disabled}
           className={`h-10 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue ${disabled ? 'bg-platinum-gray' : 'bg-white'} leading-tight focus:outline-none focus:shadow-outline w-full ${showDelete ? (isLoginLanguageRTL ? 'pl-28' : 'pr-28') : ''} ${className}`}

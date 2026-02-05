@@ -442,7 +442,7 @@ function RequestPolicy() {
                                                         {t('requestPolicy.comments')}<span className="text-crimson-red mx-1">*</span>
                                                     </label>
                                                     <textarea id="request_policy_comment_box" maxLength={500} ref={textareaRef} value={partnerComment} onChange={(e) => handleCommentChange(e)} className="w-full px-2 py-2 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline
-                                                overflow-x-auto whitespace-pre-wrap no-scrollbar" placeholder={t('requestPolicy.commentBoxDesc')} data-placeholder-id="requestPolicy.commentBoxDesc">
+                                                overflow-x-auto whitespace-pre-wrap no-scrollbar" placeholder={t('requestPolicy.commentBoxDesc')} data-placeholder-id="request_policy_comment_box_placeholder">
                                                     </textarea>
                                                     {inputError && <span id='request_policy_invalid_comment' className="text-sm text-crimson-red font-semibold">{inputError}</span>}
                                                 </div>

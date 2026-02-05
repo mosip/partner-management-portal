@@ -392,7 +392,7 @@ function AddDevices() {
                                                 <input disabled={entry.isSubmitted} value={entry.make} onChange={(e) => handleInputChange(index, 'make', e.target.value)} maxLength={36}
                                                     className={`h-10 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue ${entry.isSubmitted ? 'bg-[#EBEBEB]' : 'bg-white'} leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar`}
                                                     placeholder={t('addDevices.enterMake')}
-                                                    data-placeholder-id="addDevices.enterMake"
+                                                    data-placeholder-id="add_device_make_input_placeholder"
                                                     id={'add_device_make_input_' + (index + 1)}/>
                                                 {entry.invalidMakeError && <span id='add_devices_invalid_make' className="text-sm text-crimson-red font-semibold">{entry.invalidMakeError}</span>}
                                             </div>
@@ -401,7 +401,7 @@ function AddDevices() {
                                                 <input disabled={entry.isSubmitted} value={entry.model} onChange={(e) => handleInputChange(index, 'model', e.target.value)} maxLength={36}
                                                     className={`h-10 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue ${entry.isSubmitted ? 'bg-[#EBEBEB]' : 'bg-white'} leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar`}
                                                     placeholder={t('addDevices.enterModel')}
-                                                    data-placeholder-id="addDevices.enterModel"
+                                                    data-placeholder-id="add_device_model_input_placeholder"
                                                     id={'add_device_model_input_' + (index + 1)}/>
                                                 {entry.invalidModelError && <span id='add_devices_invalid_model' className="text-sm text-crimson-red font-semibold">{entry.invalidModelError}</span>}
                                             </div>

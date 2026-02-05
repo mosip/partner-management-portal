@@ -276,7 +276,7 @@ function AddFtm() {
                           <input value={make} onChange={(e) => onChangeMake(e.target.value)} maxLength={36}
                             className="h-11 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                             placeholder={t('addFtm.enterMake')}
-                            data-placeholder-id="addFtm.enterMake"
+                            data-placeholder-id="add_ftm_make_placeholder"
                             id="add_ftm_make"/>
                           {invalidMakeError && <span id='add_ftm_invalid_make' className="text-sm text-crimson-red font-semibold">{invalidMakeError}</span>}
                         </div>
@@ -285,7 +285,7 @@ function AddFtm() {
                           <input value={model} onChange={(e) => onChangeModel(e.target.value)} maxLength={36}
                             className="h-11 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                             placeholder={t('addFtm.enterModel')}
-                            data-placeholder-id="addFtm.enterModel"
+                            data-placeholder-id="add_ftm_model_placeholder"
                             id="add_ftm_model"/>
                           {invalidModelError && <span id='add_ftm_invalid_model' className="text-sm text-crimson-red font-semibold">{invalidModelError}</span>}
                         </div>

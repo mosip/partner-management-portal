@@ -168,7 +168,7 @@ function CreatePolicyGroup() {
                                                         <input value={policyGroupName} onChange={(e) => onChangePolicyGroupName(e.target.value)} maxLength={128}
                                                             className="h-12 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                                                             placeholder={t('createPolicyGroup.enterNameforPolicyGroup')}
-                                                            data-placeholder-id="createPolicyGroup.enterNameforPolicyGroup"
+                                                            data-placeholder-id="policy_group_name_placeholder"
                                                             id="policy_group_name"
                                                         />
                                                         {invalidPolicyGroupName && <span id='create_policy_group_invalid_name' className="text-sm text-crimson-red font-semibold">{invalidPolicyGroupName}</span>}
@@ -182,7 +182,7 @@ function CreatePolicyGroup() {
                                                         <textarea value={policyGroupDesc} onChange={(e) => onChangePolicyGroupDesc(e.target.value)} maxLength={256}
                                                             className="h-14 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                                                              placeholder={t('createPolicyGroup.enterPolicyGroupDescription')}
-                                                            data-placeholder-id="createPolicyGroup.enterPolicyGroupDescription"
+                                                            data-placeholder-id="policy_group_description_placeholder"
                                                             id="policy_group_description"
                                                         />
                                                         {invalidPolicyGroupDesc && <span id='create_policy_group_invalid_description' className="text-sm text-crimson-red font-semibold">{invalidPolicyGroupDesc}</span>}

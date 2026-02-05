@@ -1616,11 +1616,21 @@ export const getOidcPlaceholderKeyForLanguage = (languageCode, fieldType, t) => 
     }
     
     const langCode = languageCode.toLowerCase();
-    
     const placeholderKey = `createOidcClient.enter${fieldType}In${langCode.charAt(0).toUpperCase() + langCode.slice(1)}`;
     const placeholder = t(placeholderKey);
-
     return placeholder === placeholderKey ? fallbackKey : placeholderKey;
+};
+
+export const getOidcPlaceholderIdForLanguage = (languageCode, fieldType) => {
+    const normalizedFieldType = fieldType
+        .replace(/([A-Z])/g, '_$1')
+        .replace(/^_/, '')
+        .toLowerCase();
+    const normalizedLanguage = !languageCode || languageCode === 'default' || languageCode === '@none'
+        ? 'default'
+        : languageCode.toLowerCase();
+
+    return `oidc_client_${normalizedFieldType}_${normalizedLanguage}_placeholder`;
 };
 
 export const getOidcPlaceholderForLanguage = (languageCode, fieldType, t) => {
