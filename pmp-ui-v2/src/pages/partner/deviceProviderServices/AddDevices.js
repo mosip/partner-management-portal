@@ -393,7 +393,7 @@ function AddDevices() {
                                                     className={`h-10 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue ${entry.isSubmitted ? 'bg-[#EBEBEB]' : 'bg-white'} leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar`}
                                                     placeholder={t('addDevices.enterMake')}
                                                     data-placeholder-id="addDevices.enterMake"
-                                                    id='add_device_make_input'/>
+                                                    id={'add_device_make_input_' + (index + 1)}/>
                                                 {entry.invalidMakeError && <span id='add_devices_invalid_make' className="text-sm text-crimson-red font-semibold">{entry.invalidMakeError}</span>}
                                             </div>
                                             <div className="flex flex-col w-[22.5%] max-[850px]:w-[47%] max-[585px]:w-full">
@@ -402,7 +402,7 @@ function AddDevices() {
                                                     className={`h-10 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue ${entry.isSubmitted ? 'bg-[#EBEBEB]' : 'bg-white'} leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar`}
                                                     placeholder={t('addDevices.enterModel')}
                                                     data-placeholder-id="addDevices.enterModel"
-                                                    id='add_device_model_input'/>
+                                                    id={'add_device_model_input_' + (index + 1)}/>
                                                 {entry.invalidModelError && <span id='add_devices_invalid_model' className="text-sm text-crimson-red font-semibold">{entry.invalidModelError}</span>}
                                             </div>
                                         </div>

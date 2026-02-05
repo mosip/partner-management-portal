@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import DatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css';
 import { isLangRTL, handleMouseClickForDropdown } from '../../utils/AppUtils';
@@ -6,6 +6,16 @@ import { getUserProfile } from '../../services/UserProfileService';
 import Information from './fields/Information';
 import { format } from 'date-fns';
 import PropTypes from 'prop-types';
+
+const CustomDateInput = React.forwardRef(
+  ({ 'data-placeholder-id': dataPlaceholderId, ...props }, ref) => (
+    <input
+      ref={ref}
+      data-placeholder-id={dataPlaceholderId}
+      {...props}
+    />
+  )
+);
 
 function CalendarInput({ isUsedAsFilter, showCalendar, addInfoIcon, infoKey, infoKey1, setShowCalender, placeholderText, placeholderId, label, onChange, styleSet, selectedDateStr, containsAsterisk, id, minDate, disabled}) {
   const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
@@ -76,11 +86,13 @@ function CalendarInput({ isUsedAsFilter, showCalendar, addInfoIcon, infoKey, inf
           selected={selectedDateStr === "" ? (isUsedAsFilter ? null : new Date()) : new Date(selectedDateStr)}
           onChange={(date) => onDateChange(date)}
           placeholderText={placeholderText}
-          data-placeholder-id={placeholderId}
+          customInput={
+            <CustomDateInput data-placeholder-id={placeholderId} />
+          }
           dateFormat="MM/dd/yyyy"
           className={`${styleSet?.datePicker || ''} w-full px-2 py-3 border border-[#707070] rounded-[4px] text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar`}
           wrapperClassName="w-full"
-          isClearable={isUsedAsFilter? true : false}
+          isClearable={isUsedAsFilter ? true : false}
           minDate={minDate}
           disabled={disabled}
         />

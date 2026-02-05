@@ -1110,7 +1110,7 @@ function EditOidcClient() {
                                                                 <div className="flex my-[1%]">
                                                                     <div className="flex flex-col w-full">
                                                                         <label id='edit_oidc_logo_url_label' className={`block text-dark-blue text-sm font-semibold mb-1  ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('createOidcClient.logoUrl')}<span className="text-crimson-red mx-1">*</span></label>
-                                                                        <input id="oidc_edit_enter_logo_url_input" value={oidcClientDetails.logoUri} onChange={(e) => handleLogoUrlChange(e.target.value)} placeholder={t('createOidcClient.logoUrlPlaceHolder')}data-placeholder-id="createOidcClient.logoUrlPlaceHolder"
+                                                                        <input id="oidc_edit_enter_logo_url_input" value={oidcClientDetails.logoUri} onChange={(e) => handleLogoUrlChange(e.target.value)} placeholder={t('createOidcClient.logoUrlPlaceHolder')} data-placeholder-id="createOidcClient.logoUrlPlaceHolder"
                                                                             className="h-10 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar" />
                                                                         {invalidLogoUrl && <span id='edit_oidc_invalid_logo_url' className="text-sm text-crimson-red font-semibold">{invalidLogoUrl}</span>}
                                                                     </div>
