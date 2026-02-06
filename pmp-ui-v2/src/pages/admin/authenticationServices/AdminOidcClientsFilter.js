@@ -100,7 +100,7 @@ function AdminOidcClientsFilter ({ onApplyFilter }) {
                 placeHolderKey="oidcClientsList.searchOidcClientName"
                 styleSet={getFilterTextFieldStyle()}
                 id="oidc_client_name_filter"
-                maxLength={128}
+                maxLength={256}
                 inputError={invalidClientName}
             />
             <DropdownComponent

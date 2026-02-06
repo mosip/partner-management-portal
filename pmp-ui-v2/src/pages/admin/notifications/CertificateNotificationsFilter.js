@@ -71,7 +71,7 @@ function CertificateNotificationsFilter({ onApplyFilter }) {
                     placeHolderKey="viewAllNotifications.searchCertificateId"
                     styleSet={getFilterTextFieldStyle()}
                     id="cert_id_filter"
-                    maxLength={128}
+                    maxLength={36}
                     inputError={invalidCertificateId}
                 />
                 <TextInputComponent

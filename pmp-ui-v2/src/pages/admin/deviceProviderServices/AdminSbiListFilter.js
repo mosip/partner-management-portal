@@ -80,7 +80,7 @@ function AdminSbiListFilter( {onApplyFilter} ) {
                 placeHolderKey="sbiList.searchSbiId"
                 styleSet={getFilterTextFieldStyle()}
                 id="sbi_id_filter"
-                maxLength={64}
+                maxLength={36}
                 inputError={invalidSbiId}
             />
             <TextInputComponent

@@ -125,7 +125,7 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg, re
                         placeHolderKey="sbiList.searchSbiId"
                         styleSet={getFilterTextFieldStyle()}
                         id="sbi_id_filter"
-                        maxLength={64}
+                        maxLength={36}
                         inputError={invalidSbiId}
                     />
                     <TextInputComponent
@@ -147,7 +147,7 @@ function AdminDeviceDetailsFilter({ onApplyFilter, setErrorCode, setErrorMsg, re
                 placeHolderKey="devicesList.searchDeviceId"
                 styleSet={getFilterTextFieldStyle()}
                 id="device_id_filter"
-                maxLength={64}
+                maxLength={36}
                 inputError={invalidDeviceId}
             />
             <DropdownComponent

@@ -53,7 +53,7 @@ function FtmChipCertNotificationFilter( { onApplyFilter }) {
                     placeHolderKey='ftmList.searchFtmId'
                     styleSet={getFilterTextFieldStyle()}
                     id='ftm_chip_cert_expiry_ftm_id_filter'
-                    maxLength={64}
+                    maxLength={36}
                     inputError={invalidFtmId}
                 />
                 <TextInputComponent
