@@ -46,7 +46,7 @@ function RequestPolicy() {
     const isAdminPath = location.pathname.includes('admin');
 
         const normalizePartnerType = (value) => (value || '').toString().toUpperCase();
-        const isManualAdjudicationPartner = (partner) => normalizePartnerType(partner?.partnerType).includes('MANUAL_ADJUDICATION');
+        const isManualAdjudicationPartner = (partner) => normalizePartnerType(partner?.partnerType) === 'MANUAL_ADJUDICATION';
         const isCertificateUploaded = (partner) => {
         if (typeof partner?.isCertificateAvailable === 'boolean') {
             return partner.isCertificateAvailable;
@@ -150,8 +150,6 @@ function RequestPolicy() {
                 const responseData = response.data;
                 if (responseData && responseData.response) {
                     const resData = responseData.response;
-                    setPartnerData(resData);
-                    setPartnerIdDropdownData(createDropdownData('partnerId', '', false, resData, t));
                     const filteredData = isAdminPath
                         ? resData
                         : resData.filter((partner) => isManualAdjudicationPartner(partner) && isCertificateUploaded(partner));
