@@ -40,9 +40,22 @@ function RequestPolicy() {
     const [approveRequest, setApproveRequest] = useState({});
     const [popupData, setPopupData] = useState({});
     const [partnerTypeDropdownData, setPartnerTypeDropdownData] = useState([]);
+    const manualAdjudicationPartnerType = 'MANUAL_ADJUDICATION';
 
     // Determine admin path at the top of component to avoid temporal dead zone
     const isAdminPath = location.pathname.includes('admin');
+
+        const normalizePartnerType = (value) => (value || '').toString().toUpperCase();
+        const isManualAdjudicationPartner = (partner) => normalizePartnerType(partner?.partnerType).includes('MANUAL_ADJUDICATION');
+        const isCertificateUploaded = (partner) => {
+        if (typeof partner?.isCertificateAvailable === 'boolean') {
+            return partner.isCertificateAvailable;
+        }
+        if (partner?.certificateUploadStatus) {
+            return partner.certificateUploadStatus.toLowerCase() === 'uploaded';
+        }
+        return Boolean(partner?.certificateUploadDateTime);
+    };
 
     const cancelErrorMsg = () => {
         setErrorMsg("");
@@ -104,6 +117,7 @@ function RequestPolicy() {
                     ];
                     setPartnerTypeDropdownData(createDropdownData('partnerType', 'description', false, partnerTypeData, t));
                 } else {
+                    setPartnerType(getPartnerTypeDescription(manualAdjudicationPartnerType, t));
                     const apiUrl = '/partners/v3?status=approved&policyGroupAvailable=true';
                     await fetchPartnerList(apiUrl);
                 }
@@ -138,6 +152,11 @@ function RequestPolicy() {
                     const resData = responseData.response;
                     setPartnerData(resData);
                     setPartnerIdDropdownData(createDropdownData('partnerId', '', false, resData, t));
+                    const filteredData = isAdminPath
+                        ? resData
+                        : resData.filter((partner) => isManualAdjudicationPartner(partner) && isCertificateUploaded(partner));
+                    setPartnerData(filteredData);
+                    setPartnerIdDropdownData(createDropdownData('partnerId', '', false, filteredData, t));
                 } else {
                     handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                 }
@@ -416,7 +435,9 @@ function RequestPolicy() {
                                                     </label>
                                                     <button id='request_policy_policy_group' disabled className="flex items-center justify-between w-full h-auto px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-dark-blue bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
                                                 overflow-x-auto whitespace-normal no-scrollbar" type="button">
-                                                        <span className={`w-full break-words ${partnerType ? 'text-dark-blue' : 'text-gray-400'} text-wrap text-start`}>{policyGroupName || t('commons.partnersHelpText')}</span>
+                                                         <span className={`w-full break-words ${partnerId ? 'text-dark-blue' : 'text-gray-400'} text-wrap text-start`}>
+                                                            {partnerId ? (policyGroupName || t('requestPolicy.policyGroupNotAvailable')) : t('commons.partnersHelpText')}
+                                                        </span>
                                                         <svg className={`w-3 h-2 ml-3 transform 'rotate-0' text-gray-500 text-base`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
                                                         </svg>
