@@ -52,6 +52,7 @@ function WeeklyNotificationsFilter({ onApplyFilter }) {
                         isUsedAsFilter={true}
                         styleSet={createdFromDateStyleSet}
                         placeholderText={t('viewAllNotifications.selectCreatedFromDate')}
+                        placeholderId="created_from_date_calender_placeholder"
                         id='created_from_date_calender'
                     />
                 </div>
@@ -66,6 +67,7 @@ function WeeklyNotificationsFilter({ onApplyFilter }) {
                         isUsedAsFilter={true}
                         styleSet={createdToDateStyleSet}
                         placeholderText={t('viewAllNotifications.selectCreatedToDate')}
+                        placeholderId="created_to_date_calender_placeholder"
                         id='created_to_date_calender'
                     />
                 </div>

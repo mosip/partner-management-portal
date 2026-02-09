@@ -73,6 +73,7 @@ function SbiNotificationFilter({ onApplyFilter }) {
                     isUsedAsFilter={true}
                     styleSet={calenderStyleSet}
                     placeholderText={t('partnerCertificatesList.searchExpiryDate')}
+                    placeholderId="sbi_expiry_date_calender_placeholder"
                     id='sbi_expiry_date_calender'
                 />
                 <div className={`mt-6 mr-6 ${isLoginLanguageRTL ? "mr-auto" : "ml-auto"}`}>
