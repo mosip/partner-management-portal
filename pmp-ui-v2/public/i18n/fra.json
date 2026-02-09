@@ -1082,7 +1082,7 @@
         "selectPolicyGroup": "Sélectionner un groupe de politique",
         "policyName": "Nom de la Politique",
         "policyDescription": "Description de la Politique",
-        "policyDataDesc": "Téléchargez le fichier JSON avec succès pour afficher son contenu ici",
+        "policyDataDesc": "Téléversez le fichier JSON avec succès pour afficher son contenu ici",
         "upload": "Téléverser",
         "uploadFileError": "Veuillez sélectionner un fichier JSON valide",
         "jsonParseError": "Veuillez fournir des données JSON valides",
