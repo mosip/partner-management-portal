@@ -30,7 +30,7 @@ function MispLicenseKeyNotificationFilter({ onApplyFilter }) {
     const handleExpiryDateChange = (newDateStr) => {
         onFilterChangeEvent("expiryDate", newDateStr);
     };
-        
+
     const areFiltersEmpty = () => {
         return Object.values(filters).every(value => value === "") || invalidMispLicenseKeyName || invalidMispPartnerId;
     };
@@ -50,6 +50,7 @@ function MispLicenseKeyNotificationFilter({ onApplyFilter }) {
                     placeHolderKey='mispLicenseList.searchMispLicenseKeyName'
                     styleSet={getFilterTextFieldStyle()}
                     id='misp_expiry_misp_license_key_name_filter'
+                    maxLength={128}
                     inputError={invalidMispLicenseKeyName}
                 />
                 <TextInputComponent
@@ -59,6 +60,7 @@ function MispLicenseKeyNotificationFilter({ onApplyFilter }) {
                     placeHolderKey='partnerList.searchPartnerId'
                     styleSet={getFilterTextFieldStyle()}
                     id='misp_expiry_partner_id_filter'
+                    maxLength={36}
                     inputError={invalidMispPartnerId}
                 />
                 <CalendarInput

@@ -63,7 +63,7 @@ function ApiKeyNotificationFilter({ onApplyFilter, setErrorCode, setErrorMsg }) 
     const handleExpiryDateChange = (newDateStr) => {
         onFilterChangeEvent("expiryDate", newDateStr);
     };
-        
+
     const areFiltersEmpty = () => {
         return Object.values(filters).every(value => value === "") || invalidApiKeyName;
     };
@@ -82,6 +82,7 @@ function ApiKeyNotificationFilter({ onApplyFilter, setErrorCode, setErrorMsg }) 
                     placeHolderKey='apiKeysList.searchApiKeyName'
                     styleSet={getFilterTextFieldStyle()}
                     id='api_key_expiry_api_key_name_filter'
+                    maxLength={36}
                     inputError={invalidApiKeyName}
                 />
                 <DropdownComponent
