@@ -93,7 +93,7 @@ function DropdownWithSearchComponent({ fieldName, dropdownDataList, onDropDownCh
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 18a8 8 0 100-16 8 8 0 000 16zM21 21l-5.2-5.2" />
                                         </svg>
                                     </span>
-                                    <input id={id + "_search_input"} type="text" placeholder={t(searchKey)} value={searchItem} onChange={(e) => setSearchItem(e.target.value)} onKeyDown={handleKeyDown}
+                                    <input id={id + "_search_input"} type="text" placeholder={t(searchKey)} data-placeholder-id={`${id}_search_placeholder`}  value={searchItem} onChange={(e) => setSearchItem(e.target.value)} onKeyDown={handleKeyDown}
                                         className="w-full h-8 pl-8 py-1 text-sm text-gray-300 border border-gray-400 rounded-md focus:outline-none focus:text focus:text-gray-800" />
                                 </div>
                                 {filteredPolicyGroupList.length === 0 && (
