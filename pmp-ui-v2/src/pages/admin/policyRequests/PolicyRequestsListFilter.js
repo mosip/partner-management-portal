@@ -109,6 +109,7 @@ function PolicyRequestsListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) 
         placeHolderKey="partnerPolicyMappingRequestList.searchPartnerId"
         styleSet={getFilterTextFieldStyle()}
         id="partner_id_filter"
+        maxLength={36}
         inputError={invalidPartnerId}
       />
       <DropdownComponent
@@ -129,6 +130,7 @@ function PolicyRequestsListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) 
         placeHolderKey="partnerPolicyMappingRequestList.searchOrganisation"
         styleSet={getFilterTextFieldStyle()}
         id="partner_organisation_filter"
+        maxLength={128}
         inputError={invalidOrgName}
       />
       <TextInputComponent
@@ -139,6 +141,7 @@ function PolicyRequestsListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) 
         placeHolderKey="partnerPolicyMappingRequestList.searchPolicyId"
         styleSet={getFilterTextFieldStyle()}
         id="policy_id_filter"
+        maxLength={128}
         inputError={invalidPolicyId}
       />
       <TextInputComponent
@@ -149,6 +152,7 @@ function PolicyRequestsListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) 
         placeHolderKey="partnerPolicyMappingRequestList.searchPolicyName"
         styleSet={getFilterTextFieldStyle()}
         id="policy_name_filter"
+        maxLength={128}
         inputError={invalidPolicyName}
       />
       <TextInputComponent
@@ -159,6 +163,7 @@ function PolicyRequestsListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) 
         placeHolderKey="partnerPolicyMappingRequestList.searchPolicyGroup"
         styleSet={getFilterTextFieldStyle()}
         id="policy_group_filter"
+        maxLength={128}
         inputError={invalidPolicyGroupName}
       />
       <DropdownComponent
@@ -188,9 +193,9 @@ function PolicyRequestsListFilter({ onApplyFilter, setErrorCode, setErrorMsg }) 
 }
 
 PolicyRequestsListFilter.propTypes = {
-    onApplyFilter: PropTypes.func.isRequired,
-    setErrorCode: PropTypes.func.isRequired,
-    setErrorMsg: PropTypes.func.isRequired,
+  onApplyFilter: PropTypes.func.isRequired,
+  setErrorCode: PropTypes.func.isRequired,
+  setErrorMsg: PropTypes.func.isRequired,
 };
 
 export default PolicyRequestsListFilter;
