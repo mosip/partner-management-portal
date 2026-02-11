@@ -64,7 +64,7 @@ function SideNav({ open, policyRequiredPartnerTypes }) {
         if (userRoles.some(role => policyRequiredPartnerTypes.includes(role))) {
             setEnablePoliciesMenu(true);
         }
-        if (rolesArray.includes("AUTH_PARTNER")) {
+        if (rolesArray.includes("AUTH_PARTNER") || rolesArray.includes("MANUAL_ADJUDICATION")) {
             setEnableAuthenticationServicesMenu(true);
         }
         if (rolesArray.includes("DEVICE_PROVIDER")) {

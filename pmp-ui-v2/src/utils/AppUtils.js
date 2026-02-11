@@ -566,6 +566,25 @@ export const getApprovedAuthPartners = async (HttpService, setErrorCode, setErro
         return null;
     }
 };
+export const getApprovedManualAdjudicationPartners = async (HttpService, setErrorCode, setErrorMsg, t) => {
+    try {
+        const response = await HttpService.get(getPartnerManagerUrl(`/partners/v3?status=approved&policyGroupAvailable=true&partnerType=Manual_Adjudication`, process.env.NODE_ENV));
+        if (response && response.data) {
+            const responseData = response.data;
+            if (responseData.response) {
+                const resData = responseData.response;
+                return resData;
+            } else {
+                handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+            }
+        } else {
+            return null;
+        }
+    } catch (error) {
+        console.error('Error in getApprovedManualAdjudicationPartners:', error);
+        return null;
+    }
+};
 
 export const populateDeactivatedStatus = (data, statusAttributeName, activeAttributeName) => {
     // Updating the status based on the condition

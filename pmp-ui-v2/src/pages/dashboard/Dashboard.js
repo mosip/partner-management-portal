@@ -84,7 +84,7 @@ function Dashboard() {
           .map(role => role.trim())
           .filter(role => role.length > 0);
         const userRoles = rolesArray;
-        if (rolesArray.includes("AUTH_PARTNER")) {
+        if (rolesArray.includes("AUTH_PARTNER") || rolesArray.includes("MANUAL_ADJUDICATION")) {
           setShowAuthenticationServices(true);
         }
         if (rolesArray.includes("DEVICE_PROVIDER")) {

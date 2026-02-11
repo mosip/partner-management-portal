@@ -8,7 +8,7 @@ import ErrorMessage from "../../common/ErrorMessage";
 import {
     getPartnerManagerUrl, handleServiceErrors, getPartnerTypeDescription, isLangRTL, moveToApiKeysList,
     createRequest, getPartnerPolicyRequests, createDropdownData, trimAndReplace, getApprovedAuthPartners,
-    validateInputRegex
+    getApprovedManualAdjudicationPartners, validateInputRegex
 } from "../../../utils/AppUtils";
 import { HttpService } from '../../../services/HttpService';
 import DropdownWithSearchComponent from "../../common/fields/DropdownWithSearchComponent";
@@ -41,6 +41,11 @@ function GenerateApiKey() {
     const [inputError, setInputError] = useState("");
 
     const navigate = useNavigate();
+        const rolesArray = (getUserProfile().roles ?? '')
+        .split(',')
+        .map(role => role.trim())
+        .filter(role => role.length > 0);
+    const isManualAdjudicationPartner = rolesArray.includes("MANUAL_ADJUDICATION");
 
     const blocker = useBlocker(
         ({ currentLocation, nextLocation }) => {
@@ -92,7 +97,8 @@ function GenerateApiKey() {
           const activePolicies = policyRequestsData.filter(
             item => item.partnerId === selectedValue && item.status === 'approved'
           );
-          setPartnerType(getPartnerTypeDescription("AUTH_PARTNER", t));
+          const partnerTypeCode = isManualAdjudicationPartner ? "MANUAL_ADJUDICATION" : "AUTH_PARTNER";
+          setPartnerType(getPartnerTypeDescription(partnerTypeCode, t));
           setPolicyGroupName(selectedPartner.policyGroupName);
           setPoliciesDropdownData(createDropdownData('policyName', 'policyDescription', false, activePolicies, t));
         }
@@ -111,7 +117,9 @@ function GenerateApiKey() {
         const fetchData = async () => {
             try {
                 setDataLoaded(false);
-                const resData = await getApprovedAuthPartners(HttpService, setErrorCode, setErrorMsg, t);
+                const resData = isManualAdjudicationPartner
+                    ? await getApprovedManualAdjudicationPartners(HttpService, setErrorCode, setErrorMsg, t)
+                    : await getApprovedAuthPartners(HttpService, setErrorCode, setErrorMsg, t);
                 if (resData) {
                     setPartnerData(resData);
                     setPartnerIdDropdownData(createDropdownData('partnerId', '', false, resData, t));
