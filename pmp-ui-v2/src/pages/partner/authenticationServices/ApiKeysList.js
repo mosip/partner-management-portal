@@ -48,6 +48,7 @@ function ApiKeysList() {
     };
     const [filterQuery, setFilterQuery] = useState({ ...defaultFilterQuery });
     const submenuRef = useRef([]);
+        const isApiKeyActivated = (status) => (status || '').toLowerCase() === 'activated' || (status || '').toLowerCase() === 'active';
 
     useEffect(() => {
         handleMouseClickForDropdown(submenuRef, () => setViewApiKeyId(-1));
@@ -102,7 +103,7 @@ function ApiKeysList() {
     };
 
     const showViewApiKeyDetails = (selectedApiKeyData) => {
-        if (selectedApiKeyData.status === "activated") {
+        if (isApiKeyActivated(selectedApiKeyData.status)) {
             // codeql[js/stored-xss]: Data stored in sessionStorage does not contain sensitive information
             sessionStorage.setItem('selectedApiKeyData', JSON.stringify(selectedApiKeyData));
             navigate('/partnermanagement/authentication-services/view-api-key-details')
@@ -116,7 +117,7 @@ function ApiKeysList() {
     };
 
     const onClickDeactivate = (selectedApiKeyData, index) => {
-        if (selectedApiKeyData.status === "activated") {
+        if (isApiKeyActivated(selectedApiKeyData.status)) {
             const request = createRequest({
                 status: "De-active"
             }, "mosip.pms.update.api.key.patch", true);
@@ -166,7 +167,7 @@ function ApiKeysList() {
     }
 
     const onClickConfirmDeactivate = (deactivationResponse, selectedApiKey) => {
-        if (deactivationResponse && deactivationResponse.status === "De-active") {
+        if (deactivationResponse && (deactivationResponse.status || '').toLowerCase() === "de-active") {
             setShowActiveIndexDeactivatePopup(null);
             setSelectedApiKey({});
             // Update the specific row in the state with the new status
@@ -268,7 +269,7 @@ function ApiKeysList() {
                                                 {
                                                     tableRows.map((apiKey, index, currentArray) => {
                                                         return (
-                                                            <tr id={'api_list_item' + (index + 1)} key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${apiKey.status === "deactivated" ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
+                                                            <tr id={'api_list_item' + (index + 1)} key={index} className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${(apiKey.status || '').toLowerCase() === "deactivated" ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
                                                                 <td onClick={() => showViewApiKeyDetails(apiKey)} className="px-2 mx-2">{apiKey.partnerId}</td>
                                                                 <td onClick={() => showViewApiKeyDetails(apiKey)} className="px-2 mx-2">{apiKey.policyGroupName}</td>
                                                                 <td onClick={() => showViewApiKeyDetails(apiKey)} className="px-2 mx-2">{apiKey.policyName}</td>
@@ -293,9 +294,9 @@ function ApiKeysList() {
                                                                                     <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                 </div>
                                                                                 <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                <div role='button' tabIndex="0" id='api_key_deactivate' onClick={() => onClickDeactivate(apiKey, index)} className={`flex justify-between py-2 w-full px-2 ${isLoginLanguageRTL ? "text-right" : "text-left"} ${apiKey.status === "activated" ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`} onKeyDown={(e) => onPressEnterKey(e, () => onClickDeactivate(apiKey, index))}>
+                                                                                <div role='button' tabIndex="0" id='api_key_deactivate' onClick={() => onClickDeactivate(apiKey, index)} className={`flex justify-between py-2 w-full px-2 ${isLoginLanguageRTL ? "text-right" : "text-left"} ${isApiKeyActivated(apiKey.status) ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-auto'} hover:bg-gray-100`} onKeyDown={(e) => onPressEnterKey(e, () => onClickDeactivate(apiKey, index))}>
                                                                                     <p> {t('oidcClientsList.deActivate')} </p>
-                                                                                    <img src={apiKey.status === "activated" ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
+                                                                                    <img src={isApiKeyActivated(apiKey.status) ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                 </div>
                                                                             </div>
                                                                         )}
