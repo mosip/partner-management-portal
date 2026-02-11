@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { getUserProfile } from '../../services/UserProfileService.js';
 import { useTranslation } from "react-i18next";
-import { isLangRTL, onPressEnterKey, getPartnerManagerUrl, createRequest, handleServiceErrors, moveToOidcClientsList, moveToMispPartnerServices, getPartnerType, fetchUserConsent } from '../../utils/AppUtils.js';
+import { isLangRTL, onPressEnterKey, getPartnerManagerUrl, createRequest, handleServiceErrors, moveToMispPartnerServices, getPartnerType, fetchUserConsent } from '../../utils/AppUtils.js';
 import { HttpService } from '../../services/HttpService.js';
 import ErrorMessage from '../common/ErrorMessage.js';
 import LoadingIcon from "../common/LoadingIcon.js";
@@ -84,7 +84,7 @@ function Dashboard() {
           .map(role => role.trim())
           .filter(role => role.length > 0);
         const userRoles = rolesArray;
-        if (rolesArray.includes("AUTH_PARTNER")) {
+        if (rolesArray.includes("AUTH_PARTNER") || rolesArray.includes("MANUAL_ADJUDICATION")) {
           setShowAuthenticationServices(true);
         }
         if (rolesArray.includes("DEVICE_PROVIDER")) {
@@ -589,6 +589,17 @@ function Dashboard() {
     navigate('/partnermanagement/ftm-chip-provider-services/ftm-list')
   };
 
+    const authenticationServices = () => {
+    const rolesArray = (getUserProfile().roles ?? '')
+      .split(',')
+      .map(role => role.trim())
+      .filter(role => role.length > 0);
+    const landingPath = rolesArray.includes('MANUAL_ADJUDICATION')
+      ? '/partnermanagement/authentication-services/api-keys-list'
+      : '/partnermanagement/authentication-services/oidc-clients-list';
+    navigate(landingPath);
+  };
+
   const rootTrustCertificateList = () => {
     navigate('/partnermanagement/admin/certificates/root-ca-certificate-list')
   }
@@ -726,7 +737,7 @@ function Dashboard() {
               </div>
             )}
             {!isPartnerAdmin && !isPolicyManager && showAuthenticationServices && (
-              <div role='button' id='dashboard_authentication_clients_list_card' onClick={() => moveToOidcClientsList(navigate)} className="relative min-h-[50%] p-6 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => moveToOidcClientsList(navigate))}>
+              <div role='button' id='dashboard_authentication_clients_list_card' onClick={authenticationServices} className="relative min-h-[50%] p-6 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, authenticationServices)}>
                 <div className="flex justify-center mb-5">
                   <img id='dashboard_authentication_clients_list_icon' src={authServiceIcon} alt="" className="w-8 h-8" />
                 </div>

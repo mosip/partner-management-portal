@@ -64,7 +64,7 @@ function SideNav({ open, policyRequiredPartnerTypes }) {
         if (userRoles.some(role => policyRequiredPartnerTypes.includes(role))) {
             setEnablePoliciesMenu(true);
         }
-        if (rolesArray.includes("AUTH_PARTNER")) {
+        if (rolesArray.includes("AUTH_PARTNER") || rolesArray.includes("MANUAL_ADJUDICATION")) {
             setEnableAuthenticationServicesMenu(true);
         }
         if (rolesArray.includes("DEVICE_PROVIDER")) {
@@ -94,7 +94,14 @@ function SideNav({ open, policyRequiredPartnerTypes }) {
         setActiveIcon("policies");
     };
     const showAuthenticationServices = () => {
-        navigate('/partnermanagement/authentication-services/oidc-clients-list');
+        const rolesArray = (getUserProfile().roles ?? '')
+            .split(',')
+            .map(role => role.trim())
+            .filter(role => role.length > 0);
+        const landingPath = rolesArray.includes('MANUAL_ADJUDICATION')
+            ? '/partnermanagement/authentication-services/api-keys-list'
+            : '/partnermanagement/authentication-services/oidc-clients-list';
+        navigate(landingPath);
         setActiveIcon("authenticationServices");
     };
     const showDeviceProviderServices = () => {
