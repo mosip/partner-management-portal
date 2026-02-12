@@ -233,24 +233,26 @@ function PartnersList() {
   };
 
   const isUploadCertificateEnabled = (partner) => {
-    // Upload certificate is enabled for MISP_Partner and ABIS_Partner when active and inactive state
+    // Upload certificate is enabled for MISP_Partner, ABIS_Partner and Manual_Adjudication
     // Disabled for deactivated state:
-    return (partner.partnerType === "MISP_Partner" || partner.partnerType === "ABIS_Partner") && 
-           !(partner.status === 'deactivated');
+    return (partner.partnerType === "MISP_Partner" ||
+      partner.partnerType === "ABIS_Partner" ||
+      partner.partnerType === "Manual_Adjudication") &&
+      !(partner.status === 'deactivated');
   };
 
   const isSelectPolicyGroupEnabled = (partner) => {
     // Select policy group is enabled for MISP_Partner when:
     // Disabled for Deactivated partners or when policy group is already selected
-    return partner.partnerType === "MISP_Partner" && 
-           partner.policyGroupId === null && 
-           !(partner.status === 'deactivated');
+    return partner.partnerType === "MISP_Partner" &&
+      partner.policyGroupId === null &&
+      !(partner.status === 'deactivated');
   };
 
   const getPartnerStatusBgColor = (partner) => {
     if (partner.status === "inactive") {
       return 'bg-[#DFE9FF] text-[#384B75]';
-    } 
+    }
     else if (partner.status === 'deactivated') {
       return 'bg-[#EAECF0] text-[#525252]';
     } else {
@@ -329,7 +331,8 @@ function PartnersList() {
       reUploadHeader: "uploadCertificate.reUploadPartnerCertificate",
       isCertificateAvailable: isUploaded,
       certificateUploadDateTime: certificateUploadDateTime,
-      isMispOrAbisPartnerCertificate: partner.partnerType === "MISP_Partner" || partner.partnerType === "ABIS_Partner"
+      isMispOrAbisPartnerCertificate: partner.partnerType === "MISP_Partner" || partner.partnerType === "ABIS_Partner",
+      isManualAdjudicationPartnerCertificate: partner.partnerType === "Manual_Adjudication"
     };
 
     // Update UI state
@@ -359,8 +362,8 @@ function PartnersList() {
       if (showActiveindexUploadCertificatePopup !== null) {
         setPartnersData((prevList) =>
           prevList.map((partner, index) =>
-            index === showActiveindexUploadCertificatePopup ? { 
-              ...partner, 
+            index === showActiveindexUploadCertificatePopup ? {
+              ...partner,
               certificateUploadStatus: 'uploaded',
               status: 'active'
             } : partner
@@ -381,19 +384,19 @@ function PartnersList() {
     if (policyGroupResponse && policyGroupResponse.response) {
       setShowActiveindexSelectPolicyGroupPopup(null);
       setSelectedPartnerForPolicyGroup({});
-      
+
       // Show success message with partner ID
       setSuccessMsg(t('partnerList.policyGroupLinkedSuccessMsg', { partnerId: selectedPartnerData.partnerId }));
-      
+
       // Update the specific row in the state with the new policy group name
       setPartnersData((prevList) =>
         prevList.map(partner =>
-          partner.partnerId === selectedPartnerData.partnerId 
-            ? { 
-                ...partner, 
-                policyGroupName: policyGroupResponse.response.policyGroupName,
-                policyGroupId: policyGroupResponse.response.policyGroupId
-              } 
+          partner.partnerId === selectedPartnerData.partnerId
+            ? {
+              ...partner,
+              policyGroupName: policyGroupResponse.response.policyGroupName,
+              policyGroupId: policyGroupResponse.response.policyGroupId
+            }
             : partner
         )
       );
@@ -464,157 +467,157 @@ function PartnersList() {
                 <>
                   <div className={`bg-[#FCFCFC] w-full mt-1 rounded-t-xl shadow-lg pt-3 ${!tableDataLoaded && "py-6"}`}>
                     <FilterButtons
-                        listTitle="partnerList.listOfPartnerTitle"
-                        dataListLength={totalRecords}
-                        filter={filter}
-                        onResetFilter={onResetFilter}
-                        setFilter={setFilter}
+                      listTitle="partnerList.listOfPartnerTitle"
+                      dataListLength={totalRecords}
+                      filter={filter}
+                      onResetFilter={onResetFilter}
+                      setFilter={setFilter}
+                    />
+                    <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
+                    {filter && (
+                      <PartnerListFilter
+                        onApplyFilter={onApplyFilter}
+                        setErrorCode={setErrorCode}
+                        setErrorMsg={setErrorMsg}
                       />
-                      <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
-                      {filter && (
-                        <PartnerListFilter
-                          onApplyFilter={onApplyFilter}
-                          setErrorCode={setErrorCode}
-                          setErrorMsg={setErrorMsg}
-                        />
-                      )}
-                      {!tableDataLoaded ? (
-                        <LoadingIcon styleSet={styles} />
-                      ) : (
-                        <>
-                          {isFilterApplied && partnersData.length === 0 ?
-                            <EmptyList tableHeaders={tableHeaders} showCustomButton={false} />
-                            : (
-                              <>
-                                <div className="mx-[1.4rem] overflow-x-scroll">
-                                  <table className="table-fixed">
-                                    <thead>
-                                      <tr>
-                                        {tableHeaders.map((header, index) => {
-                                          return (
-                                            <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[15%]">
-                                              <div id={`${header.headerNameKey}_header`} className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
-                                                {t(header.headerNameKey)}
-                                                {!["action", "emailAddress"].includes(header.id) && (
-                                                  <SortingIcon
-                                                    id={`${header.headerNameKey}_sorting_icon`}
-                                                    headerId={header.id}
-                                                    sortDescOrder={sortDescOrder}
-                                                    sortAscOrder={sortAscOrder}
-                                                    order={order}
-                                                    activeSortDesc={activeSortDesc}
-                                                    activeSortAsc={activeSortAsc}
-                                                  />
-                                                )}
-                                              </div>
-                                            </th>);
-                                        })}
-                                      </tr>
-                                    </thead>
-                                    <tbody>
-                                      {partnersData.map((partner, index) => {
+                    )}
+                    {!tableDataLoaded ? (
+                      <LoadingIcon styleSet={styles} />
+                    ) : (
+                      <>
+                        {isFilterApplied && partnersData.length === 0 ?
+                          <EmptyList tableHeaders={tableHeaders} showCustomButton={false} />
+                          : (
+                            <>
+                              <div className="mx-[1.4rem] overflow-x-scroll">
+                                <table className="table-fixed">
+                                  <thead>
+                                    <tr>
+                                      {tableHeaders.map((header, index) => {
                                         return (
-                                          <tr id={"partner_list_item" + (index + 1)} key={index}
-                                            className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${partner.status === 'deactivated' ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
-                                            <td onClick={() => partner.status !== 'deactivated' && viewPartnerDetails(partner)} className={`px-2`}>{partner.partnerId}</td>
-                                            <td onClick={() => partner.status !== 'deactivated' && viewPartnerDetails(partner)} className={`px-2`}>{getPartnerTypeDescription(partner.partnerType, t)}</td>
-                                            <td onClick={() => partner.status !== 'deactivated' && viewPartnerDetails(partner)} className={`px-2`}>{partner.orgName}</td>
-                                            <td onClick={() => partner.status !== 'deactivated' && viewPartnerDetails(partner)} className={`px-2`}>{partner.policyGroupName ? partner.policyGroupName : "-"}</td>
-                                            <td onClick={() => partner.status !== 'deactivated' && viewPartnerDetails(partner)} className={`px-2`}>{partner.emailAddress}</td>
-                                            <td onClick={() => partner.status !== 'deactivated' && viewPartnerDetails(partner)} className={`px-3 whitespace-nowrap ${partner.certificateUploadStatus === 'not_uploaded' && "text-[#BE1818]"}`}>
-                                              {getStatusCode(partner.certificateUploadStatus, t)}
-                                            </td>
-                                            <td onClick={() => partner.status !== 'deactivated' && viewPartnerDetails(partner)}>
-                                              <div className={`${getPartnerStatusBgColor(partner)} flex w-fit py-1.5 px-2 mx-2 my-3 text-xs font-semibold rounded-md`}>
-                                                {getPartnerStatusText(partner, t)}
-                                              </div>
-                                            </td>
-                                            <td className="text-center cursor-default my-3">
-                                              <div ref={setSubmenuRef(submenuRef, index)}>
-                                                <button id={"partner_list_view" + (index + 1)} onClick={() => setViewPartnersId(index === viewPartnerId ? null : index)} className={`font-semibold mb-0.5 text-[#191919] cursor-pointer text-center`}>
-                                                  ...
-                                                </button>
-                                                {viewPartnerId === index && (
-                                                  <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-9 text-right" : "right-9 text-left"}`}>
-                                                    <div role='button' className="flex justify-between hover:bg-gray-100" onClick={() => viewPartnerDetails(partner)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => viewPartnerDetails(partner))}>
-                                                      <p id="partner_details_view_btn" className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerList.view")}</p>
-                                                      <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
-                                                    </div>
-                                                    <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                    <div role='button' className={`flex justify-between hover:bg-gray-100 ${isUploadCertificateEnabled(partner) && fetchingPartnerDetails !== index ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => handleUploadCertificate(partner, index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => handleUploadCertificate(partner, index))}>
-                                                      <p id="partner_upload_certificate_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${isUploadCertificateEnabled(partner) && fetchingPartnerDetails !== index ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>
-                                                        {t("partnerList.uploadOrReuploadCertificate")}
-                                                      </p>
-                                                      {fetchingPartnerDetails === index ? (
-                                                        <LoadingIcon inline={true} styleSet={{ loadingDiv: `${isLoginLanguageRTL ? "pl-2" : "pr-2"}` }} />
-                                                      ) : (
-                                                        <img src={isUploadCertificateEnabled(partner) ? uploadOrReuploadIcon : disableUploadOrReuploadIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
-                                                      )}
-                                                    </div>
-                                                    <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                    <div role='button' className={`flex justify-between hover:bg-gray-100 ${isSelectPolicyGroupEnabled(partner) ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => handleSelectPolicyGroup(partner, index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => handleSelectPolicyGroup(partner, index))}>
-                                                      <p id="partner_select_policy_group_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${isSelectPolicyGroupEnabled(partner) ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>
-                                                        {t("partnerList.selectPolicyGroup")}
-                                                      </p>
-                                                      <img src={isSelectPolicyGroupEnabled(partner) ? selectPolicyGroupIcon : disableSelectPolicyGroupIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
-                                                    </div>
-                                                    <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                    <div role='button' className={`flex justify-between hover:bg-gray-100 ${isDeactivateEnabled(partner) ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => showDeactivatePartner(partner, index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => showDeactivatePartner(partner, index))}>
-                                                      <p id="partner_deactive_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${isDeactivateEnabled(partner) ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("partnerList.deActivate")}</p>
-                                                      <img src={isDeactivateEnabled(partner) ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
-                                                    </div>
-                                                  </div>
-                                                )}
-                                                {showActiveIndexDeactivatePopup === index && (
-                                                  <DeactivatePopup
-                                                    onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, selectedPartner)}
-                                                    closePopUp={closeDeactivatePopup}
-                                                    popupData={{ ...selectedPartner, isDeactivatePartner: true }}
-                                                    request={deactivateRequest}
-                                                    headerMsg={t('deactivatePartner.headerMsg', { partnerId: selectedPartner.partnerId, organisationName: selectedPartner.orgName })}
-                                                    descriptionMsg='deactivatePartner.description'
-                                                    headerKeyName={selectedPartner.orgName}
-                                                  />
-                                                )}
-                                                {showActiveindexUploadCertificatePopup === index && (
-                                                  <UploadCertificate 
-                                                    closePopup={closeUploadCertificatePopup} 
-                                                    popupData={uploadCertificateData} 
-                                                    request={uploadCertificateRequest} 
-                                                  />
-                                                )}
-                                                {showActiveindexSelectPolicyGroupPopup === index && (
-                                                  <SelectPolicyPopup
-                                                    isLinkPolicyGroupPopup={true}
-                                                    partnerId={selectedPartnerForPolicyGroup.partnerId}
-                                                    partnerType={selectedPartnerForPolicyGroup.partnerType}
-                                                    onClose={closeSelectPolicyGroupPopup}
-                                                    onSubmit={(policyGroupResponse) => onClickConfirmSelectPolicyGroup(policyGroupResponse, selectedPartnerForPolicyGroup)}
-                                                  />
-                                                )}
-                                              </div>
-                                            </td>
-                                          </tr>
-                                        );
+                                          <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[15%]">
+                                            <div id={`${header.headerNameKey}_header`} className={`mx-2 flex gap-x-0 items-center ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
+                                              {t(header.headerNameKey)}
+                                              {!["action", "emailAddress"].includes(header.id) && (
+                                                <SortingIcon
+                                                  id={`${header.headerNameKey}_sorting_icon`}
+                                                  headerId={header.id}
+                                                  sortDescOrder={sortDescOrder}
+                                                  sortAscOrder={sortAscOrder}
+                                                  order={order}
+                                                  activeSortDesc={activeSortDesc}
+                                                  activeSortAsc={activeSortAsc}
+                                                />
+                                              )}
+                                            </div>
+                                          </th>);
                                       })}
-                                    </tbody>
-                                  </table>
-                                </div>
-                              </>
-                            )}
-                        </>
-                      )}
-                      <Pagination
-                        dataListLength={totalRecords}
-                        selectedRecordsPerPage={selectedRecordsPerPage}
-                        setSelectedRecordsPerPage={setSelectedRecordsPerPage}
-                        isServerSideFilter={true}
-                        getPaginationValues={getPaginationValues}
-                        isApplyFilterClicked={isApplyFilterClicked}
-                        setIsApplyFilterClicked={setIsApplyFilterClicked}
-                      />
-                    </div>
-                  </>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    {partnersData.map((partner, index) => {
+                                      return (
+                                        <tr id={"partner_list_item" + (index + 1)} key={index}
+                                          className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words ${partner.status === 'deactivated' ? "text-[#969696]" : "text-[#191919] cursor-pointer"}`}>
+                                          <td onClick={() => partner.status !== 'deactivated' && viewPartnerDetails(partner)} className={`px-2`}>{partner.partnerId}</td>
+                                          <td onClick={() => partner.status !== 'deactivated' && viewPartnerDetails(partner)} className={`px-2`}>{getPartnerTypeDescription(partner.partnerType, t)}</td>
+                                          <td onClick={() => partner.status !== 'deactivated' && viewPartnerDetails(partner)} className={`px-2`}>{partner.orgName}</td>
+                                          <td onClick={() => partner.status !== 'deactivated' && viewPartnerDetails(partner)} className={`px-2`}>{partner.policyGroupName ? partner.policyGroupName : "-"}</td>
+                                          <td onClick={() => partner.status !== 'deactivated' && viewPartnerDetails(partner)} className={`px-2`}>{partner.emailAddress}</td>
+                                          <td onClick={() => partner.status !== 'deactivated' && viewPartnerDetails(partner)} className={`px-3 whitespace-nowrap ${partner.certificateUploadStatus === 'not_uploaded' && "text-[#BE1818]"}`}>
+                                            {getStatusCode(partner.certificateUploadStatus, t)}
+                                          </td>
+                                          <td onClick={() => partner.status !== 'deactivated' && viewPartnerDetails(partner)}>
+                                            <div className={`${getPartnerStatusBgColor(partner)} flex w-fit py-1.5 px-2 mx-2 my-3 text-xs font-semibold rounded-md`}>
+                                              {getPartnerStatusText(partner, t)}
+                                            </div>
+                                          </td>
+                                          <td className="text-center cursor-default my-3">
+                                            <div ref={setSubmenuRef(submenuRef, index)}>
+                                              <button id={"partner_list_view" + (index + 1)} onClick={() => setViewPartnersId(index === viewPartnerId ? null : index)} className={`font-semibold mb-0.5 text-[#191919] cursor-pointer text-center`}>
+                                                ...
+                                              </button>
+                                              {viewPartnerId === index && (
+                                                <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-9 text-right" : "right-9 text-left"}`}>
+                                                  <div role='button' className="flex justify-between hover:bg-gray-100" onClick={() => viewPartnerDetails(partner)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => viewPartnerDetails(partner))}>
+                                                    <p id="partner_details_view_btn" className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerList.view")}</p>
+                                                    <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
+                                                  </div>
+                                                  <hr className="h-px bg-gray-100 border-0 mx-1" />
+                                                  <div role='button' className={`flex justify-between hover:bg-gray-100 ${isUploadCertificateEnabled(partner) && fetchingPartnerDetails !== index ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => handleUploadCertificate(partner, index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => handleUploadCertificate(partner, index))}>
+                                                    <p id="partner_upload_certificate_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${isUploadCertificateEnabled(partner) && fetchingPartnerDetails !== index ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>
+                                                      {t("partnerList.uploadOrReuploadCertificate")}
+                                                    </p>
+                                                    {fetchingPartnerDetails === index ? (
+                                                      <LoadingIcon inline={true} styleSet={{ loadingDiv: `${isLoginLanguageRTL ? "pl-2" : "pr-2"}` }} />
+                                                    ) : (
+                                                      <img src={isUploadCertificateEnabled(partner) ? uploadOrReuploadIcon : disableUploadOrReuploadIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
+                                                    )}
+                                                  </div>
+                                                  <hr className="h-px bg-gray-100 border-0 mx-1" />
+                                                  <div role='button' className={`flex justify-between hover:bg-gray-100 ${isSelectPolicyGroupEnabled(partner) ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => handleSelectPolicyGroup(partner, index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => handleSelectPolicyGroup(partner, index))}>
+                                                    <p id="partner_select_policy_group_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${isSelectPolicyGroupEnabled(partner) ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>
+                                                      {t("partnerList.selectPolicyGroup")}
+                                                    </p>
+                                                    <img src={isSelectPolicyGroupEnabled(partner) ? selectPolicyGroupIcon : disableSelectPolicyGroupIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
+                                                  </div>
+                                                  <hr className="h-px bg-gray-100 border-0 mx-1" />
+                                                  <div role='button' className={`flex justify-between hover:bg-gray-100 ${isDeactivateEnabled(partner) ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => showDeactivatePartner(partner, index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => showDeactivatePartner(partner, index))}>
+                                                    <p id="partner_deactive_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${isDeactivateEnabled(partner) ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("partnerList.deActivate")}</p>
+                                                    <img src={isDeactivateEnabled(partner) ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
+                                                  </div>
+                                                </div>
+                                              )}
+                                              {showActiveIndexDeactivatePopup === index && (
+                                                <DeactivatePopup
+                                                  onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, selectedPartner)}
+                                                  closePopUp={closeDeactivatePopup}
+                                                  popupData={{ ...selectedPartner, isDeactivatePartner: true }}
+                                                  request={deactivateRequest}
+                                                  headerMsg={t('deactivatePartner.headerMsg', { partnerId: selectedPartner.partnerId, organisationName: selectedPartner.orgName })}
+                                                  descriptionMsg='deactivatePartner.description'
+                                                  headerKeyName={selectedPartner.orgName}
+                                                />
+                                              )}
+                                              {showActiveindexUploadCertificatePopup === index && (
+                                                <UploadCertificate
+                                                  closePopup={closeUploadCertificatePopup}
+                                                  popupData={uploadCertificateData}
+                                                  request={uploadCertificateRequest}
+                                                />
+                                              )}
+                                              {showActiveindexSelectPolicyGroupPopup === index && (
+                                                <SelectPolicyPopup
+                                                  isLinkPolicyGroupPopup={true}
+                                                  partnerId={selectedPartnerForPolicyGroup.partnerId}
+                                                  partnerType={selectedPartnerForPolicyGroup.partnerType}
+                                                  onClose={closeSelectPolicyGroupPopup}
+                                                  onSubmit={(policyGroupResponse) => onClickConfirmSelectPolicyGroup(policyGroupResponse, selectedPartnerForPolicyGroup)}
+                                                />
+                                              )}
+                                            </div>
+                                          </td>
+                                        </tr>
+                                      );
+                                    })}
+                                  </tbody>
+                                </table>
+                              </div>
+                            </>
+                          )}
+                      </>
+                    )}
+                    <Pagination
+                      dataListLength={totalRecords}
+                      selectedRecordsPerPage={selectedRecordsPerPage}
+                      setSelectedRecordsPerPage={setSelectedRecordsPerPage}
+                      isServerSideFilter={true}
+                      getPaginationValues={getPaginationValues}
+                      isApplyFilterClicked={isApplyFilterClicked}
+                      setIsApplyFilterClicked={setIsApplyFilterClicked}
+                    />
+                  </div>
+                </>
               )}
             </div>
           </div>
