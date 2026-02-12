@@ -261,7 +261,7 @@
         "sdkPartner": "شريك SDK",
         "printPartner": "شريك الطباعة",
         "internalPartner": "الشريك الداخلي",
-        "manualAdjudication": "التحكيم اليدوي",
+        "manualAdjudication": "شريك التحكيم اليدوي",
         "partnerAdmin": "مشرف الشريك"
     },
     "statusCodes": {
@@ -403,7 +403,9 @@
         "errorInCreatingPartner": "حدث خطأ أثناء إنشاء الشريك",
         "mispPartnerSuccessHeader": "تم إنشاء الشريك بنجاح!",
         "uploadMispPartnerCertificate": "تحميل شهادة شريك MISP",
-        "uploadAbisPartnerCertificate": "تحميل شهادة شريك ABIS"
+        "uploadAbisPartnerCertificate": "تحميل شهادة شريك ABIS",
+        "uploadManualAdjudicationPartnerCertificate": "تحميل شهادة شريك التحكيم اليدوي",
+        "manualAdjudicationPartnerSuccessHeader": "تم إنشاء شريك التحكيم اليدوي بنجاح!"
     },
     "languages": {
         "english": "الإنجليزية",

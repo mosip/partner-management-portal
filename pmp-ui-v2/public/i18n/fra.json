@@ -261,7 +261,7 @@
         "sdkPartner": "Partenaire SDK",
         "printPartner": "Partenaire d'impression",
         "internalPartner": "Partenaire interne",
-        "manualAdjudication": "Arbitrage manuelle",
+        "manualAdjudication": "Partenaire d'arbitrage manuel",
         "partnerAdmin": "Administrateur partenaire"
     },
     "statusCodes": {
@@ -403,7 +403,9 @@
         "errorInCreatingPartner": "Une erreur est survenue lors de la création du partenaire",
         "mispPartnerSuccessHeader": "Partenaire créé avec succès !",
         "uploadMispPartnerCertificate": "Télécharger le certificat partenaire MISP",
-        "uploadAbisPartnerCertificate": "Télécharger le certificat partenaire ABIS"
+        "uploadAbisPartnerCertificate": "Télécharger le certificat partenaire ABIS",
+        "uploadManualAdjudicationPartnerCertificate": "Télécharger le certificat de partenaire d'arbitrage manuel",
+        "manualAdjudicationPartnerSuccessHeader": "Partenaire d'arbitrage manuel créé avec succès !"
     },
     "languages": {
         "english": "Anglais",
@@ -881,7 +883,7 @@
         "description": "Veuillez sélectionner le domaine partenaire et télécharger le certificat CA racine / CA intermédiaire.",
         "uploadSectionDescription": "Veuillez appuyer pour sélectionner le certificat d'autorité de certification racine / intermédiaire",
         "uploadingCertMessage": "Nous téléchargeons votre certificat",
-        "partnerDomain": "Domaine partenaire", 
+        "partnerDomain": "Domaine partenaire",
         "dropdownPlaceholder": "Sélectionnez un domaine partenaire",
         "successMsg": "Le certificat de confiance pour {{partnerDomain}} a été téléchargé avec succès !",
         "downloadRootCertSuccessMsg": "Le certificat de l'autorité de certification racine a été téléchargé avec succès",
