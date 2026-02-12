@@ -196,7 +196,7 @@ function SideNav({ open, policyRequiredPartnerTypes }) {
                                 <SideNavMenuItem title={t('dashboard.mispPartnerServices')} id='mispPartnerServices' isExpanded={open} activeIcon={activeIcon} />
                             </button>
 
-                            <button id='side_nav_manualAdjudicationServices_icon' className="duration-700 cursor-pointer" onClick={() => navigate('/partnermanagement/manualadjudication-services')}>
+                            <button id='side_nav_manualAdjudicationServices_icon' className="duration-700 cursor-pointer" onClick={() => navigate('/partnermanagement/manual-adjudication-services')}>
                                 <SideNavMenuItem title={t('dashboard.manualAdjudication')} id='manualAdjudicationServices' isExpanded={open} activeIcon={activeIcon} />
                             </button>
 

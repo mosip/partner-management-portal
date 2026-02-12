@@ -1,34 +1,48 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import Title from '../../common/Title';
+import { useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../../../services/UserProfileService';
-import { isLangRTL } from '../../../utils/AppUtils';
+import { isLangRTL, onPressEnterKey } from '../../../utils/AppUtils';
+import Title from '../../common/Title.js';
+import EmptyList from '../../common/EmptyList.js';
 
-const ManualAdjudicationServices = () => {
+function ManualAdjudicationServices() {
+    const navigate = useNavigate('');
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
 
-    return (
-        <div className={`w-full p-4 bg-anti-flash-white h-full font-inter break-words max-450:text-sm mb-[2%] ${isLoginLanguageRTL ? "mr-24 ml-1" : "ml-24 mr-1"} overflow-x-scroll`}>
-            <div className={`flex-col mt-5 bg-anti-flash-white h-full font-inter break-words max-450:text-sm mb-[2%]`}>
-                <div className="flex justify-between mb-3">
-                    <Title title='dashboard.manualAdjudication' subTitle='' backLink={'/partnermanagement/dashboard'} />
-                </div>
-            </div>
+    const tableHeaders = [
+        { id: "partnerId", headerNameKey: 'oidcClientsList.partnerId' },
+        { id: "policyGroupName", headerNameKey: "oidcClientsList.policyGroup" },
+        { id: "policyName", headerNameKey: "oidcClientsList.policyName" },
+        { id: "apiKeyLabel", headerNameKey: "apiKeysList.apiKeyName" },
+        { id: "createdDateTime", headerNameKey: "oidcClientsList.creationDate" },
+        { id: "status", headerNameKey: "oidcClientsList.status" },
+        { id: "action", headerNameKey: 'oidcClientsList.action' }
+    ];
 
-            <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200 w-full flex flex-col items-center justify-center min-h-[400px]">
-                <h2 className="text-lg font-semibold mb-2">{t('dashboard.manualAdjudication')}</h2>
-                <p className="text-sm text-gray-600 mb-6 text-center">
-                    {t('dashboard.manualAdjudicationDesc')}
-                </p>
-                <button
-                    className='bg-tory-blue text-white px-6 py-2 rounded-md hover:bg-blue-800 transition-colors font-semibold'
-                >
-                    {t('authenticationServices.generateApiKeyBtn')}
-                </button>
+    const generateApiKey = () => {
+        // TODO: Navigate to generate API key page
+    };
+
+    return (
+        <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll font-inter`}>
+            <div className="flex-col mt-5">
+                <div className="flex justify-between mb-5">
+                    <Title title='dashboard.manualAdjudication' backLink='/partnermanagement' />
+                </div>
+                <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
+                    <EmptyList
+                        tableHeaders={tableHeaders}
+                        showCustomButton={true}
+                        customButtonName='apiKeysList.generateApiKey'
+                        buttonId='generate_api_key'
+                        onClickButton={generateApiKey}
+                    />
+                </div>
             </div>
         </div>
     );
-};
+}
 
 export default ManualAdjudicationServices;

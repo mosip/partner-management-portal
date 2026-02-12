@@ -371,7 +371,7 @@ function AppRoutes() {
           element: <RuntimeError />,
         },
         {
-          path: 'manualadjudication-services',
+          path: 'manual-adjudication-services',
           element: <GuardedRoute><MainLayout><ManualAdjudicationServices /></MainLayout></GuardedRoute>,
         },
       ],
