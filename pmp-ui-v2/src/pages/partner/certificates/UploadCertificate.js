@@ -223,7 +223,7 @@ function UploadCertificate({ closePopup, popupData, request }) {
                         <>
                             <div className={`px-[3.5%] py-[2%] ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
                                 <h3 id='upload_certificate_popup_title' className="text-base font-bold text-[#333333]">{popupData.isCertificateAvailable ? t(popupData.reUploadHeader) : t(popupData.uploadHeader)}</h3>
-                                {popupData.isMispOrAbisPartnerCertificate ? (
+                                {popupData.isMispOrAbisPartnerCertificate || popupData.isManualAdjudicationPartnerCertificate ? (
                                     <p
                                         id='upload_certificate_popup_partner_id_field'
                                         className={`text-xs font-bold text-[#717171]`}
@@ -306,10 +306,10 @@ function UploadCertificate({ closePopup, popupData, request }) {
                                         )}
                                     </div>
                                     {popupData.isCertificateAvailable && !removeLastUploadDate && (
-                                       <p id='last_certificate_upload_date'className="text-sm text-gray-800 text-center mt-1">
-                                       {t('uploadCertificate.lastcertificateUploadDate')}{' '}
-                                       <span className="whitespace-nowrap">{formattedDate}</span>
-                                     </p>
+                                        <p id='last_certificate_upload_date' className="text-sm text-gray-800 text-center mt-1">
+                                            {t('uploadCertificate.lastcertificateUploadDate')}{' '}
+                                            <span className="whitespace-nowrap">{formattedDate}</span>
+                                        </p>
                                     )}
                                 </div>
                                 <div className="border-gray-200 border-opacity-50 border-t"></div>
