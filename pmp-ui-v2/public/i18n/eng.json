@@ -98,7 +98,9 @@
         "mispPartnerServices": "MISP Services",
         "mispPartnerServicesDesc": "Generate, Regenerate, View or Deactivate MISP License Keys",
         "mispLicenseKeyExpiryCountDesc1": "{{expiringMispLicenseKeyCount}} MISP License Keys are expiring soon",
-        "mispLicenseKeyExpiryCountDesc2": "{{expiringMispLicenseKeyCount}} MISP License Key is expiring soon"
+        "mispLicenseKeyExpiryCountDesc2": "{{expiringMispLicenseKeyCount}} MISP License Key is expiring soon",
+        "manualAdjudication": "Manual Adjudication Services",
+        "manualAdjudicationDesc": "View, Generate API Keys"
     },
     "mispLicenseList": {
         "partnerId": "Partner ID",
