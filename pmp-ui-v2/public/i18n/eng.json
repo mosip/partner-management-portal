@@ -263,7 +263,7 @@
         "sdkPartner": "SDK Partner",
         "printPartner": "Print Partner",
         "internalPartner": "Internal Partner",
-        "manualAdjudication": "Manual Adjudication",
+        "manualAdjudication": "Manual Adjudication Partner",
         "partnerAdmin": "Partner Admin"
     },
     "statusCodes": {
@@ -404,7 +404,9 @@
         "errorInCreatingPartner": "Error occurred while creating partner",
         "mispPartnerSuccessHeader": "Partner Created Successfully!",
         "uploadMispPartnerCertificate": "Upload MISP Partner Certificate",
-        "uploadAbisPartnerCertificate": "Upload ABIS Partner Certificate"
+        "uploadAbisPartnerCertificate": "Upload ABIS Partner Certificate",
+        "uploadManualAdjudicationPartnerCertificate": "Upload Manual Adjudication Partner Certificate",
+        "manualAdjudicationPartnerSuccessHeader": "Partner Created Successfully!"
     },
     "languages": {
         "english": "English",
