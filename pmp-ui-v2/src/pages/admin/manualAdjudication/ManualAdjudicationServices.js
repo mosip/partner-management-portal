@@ -7,7 +7,7 @@ import Title from '../../common/Title.js';
 import EmptyList from '../../common/EmptyList.js';
 
 function ManualAdjudicationServices() {
-    const navigate = useNavigate('');
+    const navigate = useNavigate();
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
 
