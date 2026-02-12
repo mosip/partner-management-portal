@@ -49,6 +49,7 @@ export const getPartnerTypeDescription = (partnerType, t) => {
         "PRINT_PARTNER": 'partnerTypes.printPartner',
         "INTERNAL_PARTNER": 'partnerTypes.internalPartner',
         "MANUAL_ADJUDICATION": 'partnerTypes.manualAdjudication',
+        "MANUAL_ADJUDICATION_PARTNER": 'partnerTypes.manualAdjudication',
         "PARTNER_ADMIN": 'partnerTypes.partnerAdmin',
     };
 
@@ -65,65 +66,65 @@ export const getPartnerTypeDescription = (partnerType, t) => {
  * Fetches partner types from the backend
  */
 export const fetchPartnerTypes = async () => {
-  try {
-    const request = createRequest({
-      "filters": [],
-      "pagination": { "pageFetch": 100, "pageStart": 0 },
-      "sort": []
-    });
+    try {
+        const request = createRequest({
+            "filters": [],
+            "pagination": { "pageFetch": 100, "pageStart": 0 },
+            "sort": []
+        });
 
-    const response = await HttpService.post(
-      getPartnerManagerUrl(`/partners/partnertype/search`, process.env.NODE_ENV),
-      request
-    );
+        const response = await HttpService.post(
+            getPartnerManagerUrl(`/partners/partnertype/search`, process.env.NODE_ENV),
+            request
+        );
 
-    if (response && response.data) {
-      const responseData = response.data;
-      if (responseData.response && responseData.response.data) {
-        const partnerTypeCodes = responseData.response.data
-          .map(item => item.code)
-          .filter(Boolean)
-          .map(code => code.toLowerCase());
-        return new Set(partnerTypeCodes);
-      }
+        if (response && response.data) {
+            const responseData = response.data;
+            if (responseData.response && responseData.response.data) {
+                const partnerTypeCodes = responseData.response.data
+                    .map(item => item.code)
+                    .filter(Boolean)
+                    .map(code => code.toLowerCase());
+                return new Set(partnerTypeCodes);
+            }
+        }
+
+        console.error('Failed to fetch partner types from backend');
+        return null;
+    } catch (err) {
+        console.error('Error fetching partner types from backend:', err);
+        // Re-throw 403 errors so they can be handled specifically
+        if (err.response?.status === 403) {
+            throw err;
+        }
+        return null;
     }
-    
-    console.error('Failed to fetch partner types from backend');
-    return null;
-  } catch (err) {
-    console.error('Error fetching partner types from backend:', err);
-    // Re-throw 403 errors so they can be handled specifically
-    if (err.response?.status === 403) {
-      throw err;
-    }
-    return null;
-  }
 };
 
 export const getPartnerType = async (userProfile) => {
-  try {
-    // Fetch partner types from backend
-    const validPartnerTypes = await fetchPartnerTypes();
-    
-    if (!validPartnerTypes) {
-      return null;
-    }
+    try {
+        // Fetch partner types from backend
+        const validPartnerTypes = await fetchPartnerTypes();
 
-    const userRoles = (userProfile.roles ?? '')
-        .split(',')                // turn "A,B,C" into ["A", "B", "C"]
-        .map(role => role.trim())  // remove extra spaces from each role
-        .filter(role => role);     // drop empty entries
+        if (!validPartnerTypes) {
+            return null;
+        }
 
-    // Return first role that is a valid partner type (case-insensitive)
-    return userRoles.find(role => validPartnerTypes.has(role.toLowerCase())) ?? null;
-  } catch (err) {
-    // Re-throw 403 errors so they can be handled specifically
-    if (err.response?.status === 403) {
-      throw err;
+        const userRoles = (userProfile.roles ?? '')
+            .split(',')                // turn "A,B,C" into ["A", "B", "C"]
+            .map(role => role.trim())  // remove extra spaces from each role
+            .filter(role => role);     // drop empty entries
+
+        // Return first role that is a valid partner type (case-insensitive)
+        return userRoles.find(role => validPartnerTypes.has(role.toLowerCase())) ?? null;
+    } catch (err) {
+        // Re-throw 403 errors so they can be handled specifically
+        if (err.response?.status === 403) {
+            throw err;
+        }
+        return null;
     }
-    return null;
-  }
-}; 
+};
 
 export const getLanguageLabel = (languageCode, t) => {
     const languageMap = {
@@ -593,6 +594,9 @@ export const getPartnerDomainType = (partnerType) => {
         else if (partnerType === "ABIS_Partner".toUpperCase()) {
             return 'AUTH';
         }
+        else if (partnerType === "Manual_Adjudication".toUpperCase()) {
+            return 'AUTH';
+        }
         else {
             return 'AUTH';
         }
@@ -981,14 +985,14 @@ export const handleKeymanagerErrors = (responseData, setErrorCode, setErrorMsg, 
         const errorCode = responseData.errors[0].errorCode;
         const errorMessage = responseData.errors[0].message;
         if (errorCode === "PMS_KKS_001") {
-          setErrorMsg(t('trustList.errorWhileDownloadingCertificate'));
+            setErrorMsg(t('trustList.errorWhileDownloadingCertificate'));
         } else {
-          setErrorCode(errorCode);
-          setErrorMsg(errorMessage);
+            setErrorCode(errorCode);
+            setErrorMsg(errorMessage);
         }
         console.error('Error:', errorMessage);
     }
-  }
+}
 
 export const setSubmenuRef = (refArray, index) => (el) => {
     if (el) refArray.current[index] = el;
@@ -1064,17 +1068,17 @@ export const buildClientNameLangMap = (entries, additionalConfigRequired, client
     const langMap = {};
 
     const applyEntries = () => {
-      entries?.forEach(entry => {
-        if (entry.language && entry.text && entry.text.trim() !== '') {
-          langMap[entry.language] = trimAndReplace(entry.text);
-        }
-      });
+        entries?.forEach(entry => {
+            if (entry.language && entry.text && entry.text.trim() !== '') {
+                langMap[entry.language] = trimAndReplace(entry.text);
+            }
+        });
     };
 
     if (additionalConfigRequired) {
-      // Case 1: Use entries ONLY
-      applyEntries();
-      return langMap;
+        // Case 1: Use entries ONLY
+        applyEntries();
+        return langMap;
     }
 
     // Case 2: additionalConfigRequired === false
@@ -1082,7 +1086,7 @@ export const buildClientNameLangMap = (entries, additionalConfigRequired, client
 
     // If no valid entries found - fallback to English clientName
     if (Object.keys(langMap).length === 0) {
-      langMap["eng"] = trimAndReplace(clientName);
+        langMap["eng"] = trimAndReplace(clientName);
     }
 
     return langMap;
@@ -1099,7 +1103,7 @@ export const isRootIntermediateCertAvailable = async () => {
     }
 };
 
-export const checkCertificateExpired = (expiryDateTime) => { 
+export const checkCertificateExpired = (expiryDateTime) => {
     if (!expiryDateTime) return false; // treat as non expired if no date
 
     const currentUTC = new Date().toISOString(); // current UTC time
@@ -1140,7 +1144,7 @@ export const getWeeklySummaryDescription = (notification, isLoginLanguageRTL, t)
 export const getNotificationDescription = (notification, isLoginLanguageRTL, t) => {
     if (notification.notificationType === 'ROOT_CERT_EXPIRY') {
         return (
-            <Trans 
+            <Trans
                 i18nKey="notificationsTab.rootCertExpiryDescription"
                 values={{
                     certificateId: notification.notificationDetails.certificateDetails[0].certificateId,
@@ -1154,7 +1158,7 @@ export const getNotificationDescription = (notification, isLoginLanguageRTL, t) 
         );
     } else if (notification.notificationType === 'INTERMEDIATE_CERT_EXPIRY') {
         return (
-            <Trans 
+            <Trans
                 i18nKey="notificationsTab.intermediateCertExpiryDescription"
                 values={{
                     certificateId: notification.notificationDetails.certificateDetails[0].certificateId,
@@ -1168,7 +1172,7 @@ export const getNotificationDescription = (notification, isLoginLanguageRTL, t) 
         );
     } else if (notification.notificationType === 'PARTNER_CERT_EXPIRY') {
         return (
-            <Trans 
+            <Trans
                 i18nKey="partnerNotificationsTab.partnerCertExpiryDescription"
                 values={{
                     issuedTo: notification.notificationDetails.certificateDetails[0].issuedTo,
@@ -1181,7 +1185,7 @@ export const getNotificationDescription = (notification, isLoginLanguageRTL, t) 
         );
     } else if (notification.notificationType === 'FTM_CHIP_CERT_EXPIRY') {
         return (
-            <Trans 
+            <Trans
                 i18nKey="viewAllNotifications.ftmChipCertExpiryDescription"
                 values={{
                     make: notification.notificationDetails.ftmDetails[0].make,
@@ -1194,7 +1198,7 @@ export const getNotificationDescription = (notification, isLoginLanguageRTL, t) 
         );
     } else if (notification.notificationType === 'API_KEY_EXPIRY') {
         return (
-            <Trans 
+            <Trans
                 i18nKey="viewAllNotifications.apiKeyExpiryDescription"
                 values={{
                     apiKeyName: notification.notificationDetails.apiKeyDetails[0].apiKeyName,
@@ -1206,7 +1210,7 @@ export const getNotificationDescription = (notification, isLoginLanguageRTL, t) 
         );
     } else if (notification.notificationType === 'SBI_EXPIRY') {
         return (
-            <Trans 
+            <Trans
                 i18nKey="viewAllNotifications.sbiExpiryDescription"
                 values={{
                     sbiId: notification.notificationDetails.sbiDetails[0].sbiId,
@@ -1221,7 +1225,7 @@ export const getNotificationDescription = (notification, isLoginLanguageRTL, t) 
     } else if (notification.notificationType === 'MISP_LICENSE_KEY_EXPIRY') {
         const mispLicenseKeyDetail = notification.notificationDetails?.mispLicenseKeyDetails?.[0] || null;
         return (
-            <Trans 
+            <Trans
                 i18nKey="viewAllNotifications.mispLicenseKeyExpiryDescription"
                 values={{
                     mispLicenseKeyName: mispLicenseKeyDetail?.mispLicenseKeyName || '-',
@@ -1230,14 +1234,14 @@ export const getNotificationDescription = (notification, isLoginLanguageRTL, t) 
                 }}
                 components={{ span: <span className={`font-semibold md:whitespace-nowrap md:break-words break-all`} /> }}
             />
-        );  
+        );
     }
 };
 
 export const getNotificationPanelDescription = (notification, isLoginLanguageRTL, t) => {
     if (notification.notificationType === 'ROOT_CERT_EXPIRY') {
         return (
-            <Trans 
+            <Trans
                 i18nKey="notificationPopup.rootCertExpiryDescription"
                 values={{
                     certificateId: notification.notificationDetails.certificateDetails[0].certificateId,
@@ -1249,7 +1253,7 @@ export const getNotificationPanelDescription = (notification, isLoginLanguageRTL
         );
     } else if (notification.notificationType === 'INTERMEDIATE_CERT_EXPIRY') {
         return (
-            <Trans 
+            <Trans
                 i18nKey="notificationPopup.intermediateCertExpiryDescription"
                 values={{
                     certificateId: notification.notificationDetails.certificateDetails[0].certificateId,
@@ -1261,7 +1265,7 @@ export const getNotificationPanelDescription = (notification, isLoginLanguageRTL
         );
     } else if (notification.notificationType === 'PARTNER_CERT_EXPIRY') {
         return (
-            <Trans 
+            <Trans
                 i18nKey="notificationPopup.partnerCertExpiryDescription"
                 values={{
                     partnerDomain: notification.notificationDetails.certificateDetails[0].partnerDomain,
@@ -1272,7 +1276,7 @@ export const getNotificationPanelDescription = (notification, isLoginLanguageRTL
         );
     } else if (notification.notificationType === 'FTM_CHIP_CERT_EXPIRY') {
         return (
-            <Trans 
+            <Trans
                 i18nKey="notificationPopup.ftmChipCertExpiryDescription"
                 values={{
                     ftmId: notification.notificationDetails.ftmDetails[0].ftmId,
@@ -1283,7 +1287,7 @@ export const getNotificationPanelDescription = (notification, isLoginLanguageRTL
         );
     } else if (notification.notificationType === 'API_KEY_EXPIRY') {
         return (
-            <Trans 
+            <Trans
                 i18nKey="notificationPopup.apiKeyExpiryDescription"
                 values={{
                     apiKeyName: notification.notificationDetails.apiKeyDetails[0].apiKeyName,
@@ -1294,7 +1298,7 @@ export const getNotificationPanelDescription = (notification, isLoginLanguageRTL
         );
     } else if (notification.notificationType === 'SBI_EXPIRY') {
         return (
-            <Trans 
+            <Trans
                 i18nKey="notificationPopup.sbiExpiryDescription"
                 values={{
                     sbiId: notification.notificationDetails.sbiDetails[0].sbiId,
@@ -1304,11 +1308,11 @@ export const getNotificationPanelDescription = (notification, isLoginLanguageRTL
             />
         );
     } else if (notification.notificationType === 'WEEKLY_SUMMARY') {
-        return getWeeklySummaryDescription (notification, isLoginLanguageRTL, t);
+        return getWeeklySummaryDescription(notification, isLoginLanguageRTL, t);
     } else if (notification.notificationType === 'MISP_LICENSE_KEY_EXPIRY') {
         const mispLicenseKeyDetail = notification.notificationDetails?.mispLicenseKeyDetails?.[0] || null;
         return (
-            <Trans 
+            <Trans
                 i18nKey="notificationPopup.mispLicenseKeyExpiryDescription"
                 values={{
                     mispLicenseKeyName: mispLicenseKeyDetail?.mispLicenseKeyName || '-',
@@ -1317,7 +1321,7 @@ export const getNotificationPanelDescription = (notification, isLoginLanguageRTL
                 }}
                 components={{ span: <span className="font-semibold break-words" /> }}
             />
-        );  
+        );
     }
 };
 
@@ -1466,18 +1470,18 @@ export const validateUsernameRegex = (input, setInputError, t) => {
         setInputError("");
         return;
     }
-    
+
     // Check if username starts with a letter (any language)
     const startsWithLetter = /^[\p{L}]/u.test(input);
-    
+
     if (!startsWithLetter) {
         setInputError(t('createPartner.usernameMustStartWithLetter'));
         return;
     }
-    
+
     // Check if the rest of the username contains only valid characters
     const validPattern = /^[\p{L}][\p{L}\p{N}\p{M}._-]*$/u;
-    
+
     if (validPattern.test(input)) {
         setInputError("");
     } else {
@@ -1490,10 +1494,10 @@ export const validateEmailRegex = (email, setEmailError, t) => {
         setEmailError("");
         return;
     }
-    
+
     // Email validation: alphanumeric characters and symbols ( . _ - +) are allowed. @ is mandatory
     const emailPattern = /^[\w-+]+(\.[\w]+)*@[\w-]+(\.[\w]+)*(\.[a-z]{2,})$/;
-    
+
     if (emailPattern.test(email)) {
         setEmailError("");
     } else {
@@ -1506,10 +1510,10 @@ export const validateContactNumberRegex = (contactNumber, setContactNumberError,
         setContactNumberError("");
         return;
     }
-    
+
     // Contact number validation: only digits, spaces, hyphens, plus signs, and parentheses are allowed
     const contactNumberPattern = /^[0-9\s\-+()]+$/;
-    
+
     if (contactNumberPattern.test(contactNumber)) {
         setContactNumberError("");
     } else {
@@ -1565,7 +1569,7 @@ export const fetchPartnerDetails = async (HttpService, partnerId, setErrorCode, 
 export const createOidcClientEntry = (language, type) => {
     const baseId = uuidv4();
     let uniqueId;
-    
+
     switch (type) {
         case 'clientName':
             uniqueId = `oidc_name_${baseId}`;
@@ -1579,7 +1583,7 @@ export const createOidcClientEntry = (language, type) => {
         default:
             uniqueId = `entry_${type}_${baseId}`;
     }
-    
+
     return {
         id: uniqueId,
         language: language,
@@ -1625,7 +1629,7 @@ export const getOidcPlaceholderKeyForLanguage = (languageCode, fieldType, t) => 
     if (!languageCode || languageCode === 'default') {
         return fallbackKey;
     }
-    
+
     const langCode = languageCode.toLowerCase();
     const placeholderKey = `createOidcClient.enter${fieldType}In${langCode.charAt(0).toUpperCase() + langCode.slice(1)}`;
     const placeholder = t(placeholderKey);
@@ -1657,7 +1661,7 @@ export const getAvailableOidcLanguages = (currentEntryId, entries, languageDropd
     const usedLanguages = entries
         .filter(e => e.id !== currentEntryId && e.language)
         .map(e => e.language);
-    
+
     return languageDropdownData.filter(lang => {
         if (excludeDefault && lang.fieldValue === 'default') {
             return false;
@@ -1676,7 +1680,7 @@ export const initializeUserInfoResponseTypeDropdown = (t) => {
     ];
     // Add blank entry
     const dropdownData = createDropdownData("fieldValue", "", true, userInfoResponseTypeData, t, t("createOidcClient.selectUserInfoResponseType"));
-    
+
     const finalData = dropdownData.map(item => {
         if (item.fieldValue === '') return item; // Keep blank entry as is
         const originalItem = userInfoResponseTypeData.find(d => d.fieldValue === item.fieldValue);
