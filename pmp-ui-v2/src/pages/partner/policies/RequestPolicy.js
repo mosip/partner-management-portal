@@ -92,16 +92,20 @@ function RequestPolicy() {
 
                 // Initialize partner type dropdown data with MISP Partner and ABIS Partner
                 if (isAdmin) {
-                    const partnerTypeData = [
-                        {
-                            partnerType: "MISP_Partner",
-                            description: getPartnerTypeDescription("MISP_Partner", t)
-                        },
-                        {
-                            partnerType: "ABIS_Partner",
-                            description: getPartnerTypeDescription("ABIS_Partner", t)
-                        }
-                    ];
+                const partnerTypeData = [
+             {
+                partnerType: "MISP_Partner",
+                description: getPartnerTypeDescription("MISP_Partner", t)
+             },
+             {
+                 partnerType: "ABIS_Partner",
+                 description: getPartnerTypeDescription("ABIS_Partner", t)
+             },
+             {
+                partnerType: "Manual_Adjudication",
+                description: getPartnerTypeDescription("Manual_Adjudication", t)
+             }
+            ];
                     setPartnerTypeDropdownData(createDropdownData('partnerType', 'description', false, partnerTypeData, t));
                 } else {
                     const apiUrl = '/partners/v3?status=approved&policyGroupAvailable=true';
