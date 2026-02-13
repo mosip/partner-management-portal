@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../../../services/UserProfileService';
-import { isLangRTL, onPressEnterKey } from '../../../utils/AppUtils';
+import { isLangRTL} from '../../../utils/AppUtils';
 import Title from '../../common/Title.js';
 import EmptyList from '../../common/EmptyList.js';
 
