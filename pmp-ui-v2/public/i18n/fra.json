@@ -657,6 +657,20 @@
         "apiKeyName": "Voulez-vous désactiver la clé API",
         "description": "En cliquant sur Confirmer, vous ne pourrez plus utiliser la clé API pour l'authentification."
     },
+    "manualAdjudicationServices": {
+        "manualAdjudicationServices": "Services d'arbitrage manuel",
+        "partnerId": "ID partenaire",
+        "orgName": "Organisation",
+        "policyGroup": "Groupe de politiques",
+        "policyName": "Nom de la politique",
+        "apiKeyName": "Nom de la clé API",
+        "creationDate": "Date de création",
+        "status": "Statut",
+        "action": "Action",
+        "generateApiKey": "Générer une clé API",
+        "listOfManualAdjudicationApiKeys": "Liste des clés API d'arbitrage manuel",
+        "errorInManualAdjudicationList": "Lors de la récupération des détails de l'arbitrage manuel, nous avons rencontré une erreur."
+    },
     "deviceProviderServices": {
         "listOfSbisAndDevices": "Liste des SBI et des appareilsBI - Device",
         "addSbiDevices": "Ajouter SBI - Appareil",

@@ -657,6 +657,20 @@
         "apiKeyName": "هل تريد إلغاء تنشيط مفتاح API؟",
         "description": "عند النقر فوق تأكيد، لن تتمكن من استخدام مفتاح API للمصادقة بعد الآن."
     },
+    "manualAdjudicationServices": {
+        "manualAdjudicationServices": "خدمات التحكيم اليدوي",
+        "partnerId": "معرف الشريك",
+        "orgName": "منظمة",
+        "policyGroup": "مجموعة السياسات",
+        "policyName": "اسم السياسة",
+        "apiKeyName": "اسم مفتاح API",
+        "creationDate": "تاريخ الإنشاء",
+        "status": "حالة",
+        "action": "فعل",
+        "generateApiKey": "إنشاء مفتاح API",
+        "listOfManualAdjudicationApiKeys": "قائمة مفاتيح API للتحكيم اليدوي",
+        "errorInManualAdjudicationList": "أثناء جلب تفاصيل التحكيم اليدوي، واجهنا خطأ."
+    },
     "deviceProviderServices": {
         "listOfSbisAndDevices": "قائمة الهيئات الفرعية للتنفيذ والأجهزة",
         "addSbiDevices": "إضافة SBI - الجهاز",

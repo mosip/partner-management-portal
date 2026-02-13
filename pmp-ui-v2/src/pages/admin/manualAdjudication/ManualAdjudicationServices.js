@@ -12,13 +12,14 @@ function ManualAdjudicationServices() {
     const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
 
     const tableHeaders = [
-        { id: "partnerId", headerNameKey: 'oidcClientsList.partnerId' },
-        { id: "policyGroupName", headerNameKey: "oidcClientsList.policyGroup" },
-        { id: "policyName", headerNameKey: "oidcClientsList.policyName" },
-        { id: "apiKeyLabel", headerNameKey: "apiKeysList.apiKeyName" },
-        { id: "createdDateTime", headerNameKey: "oidcClientsList.creationDate" },
-        { id: "status", headerNameKey: "oidcClientsList.status" },
-        { id: "action", headerNameKey: 'oidcClientsList.action' }
+        { id: "partnerId", headerNameKey: 'manualAdjudicationServices.partnerId' },
+        { id: "orgName", headerNameKey: "manualAdjudicationServices.orgName" },
+        { id: "policyGroupName", headerNameKey: "manualAdjudicationServices.policyGroup" },
+        { id: "policyName", headerNameKey: "manualAdjudicationServices.policyName" },
+        { id: "apiKeyLabel", headerNameKey: "manualAdjudicationServices.apiKeyName" },
+        { id: "createdDateTime", headerNameKey: "manualAdjudicationServices.creationDate" },
+        { id: "status", headerNameKey: "manualAdjudicationServices.status" },
+        { id: "action", headerNameKey: 'manualAdjudicationServices.action' }
     ];
 
     const generateApiKey = () => {
@@ -35,7 +36,7 @@ function ManualAdjudicationServices() {
                     <EmptyList
                         tableHeaders={tableHeaders}
                         showCustomButton={true}
-                        customButtonName='apiKeysList.generateApiKey'
+                        customButtonName='manualAdjudicationServices.generateApiKey'
                         buttonId='generate_api_key'
                         onClickButton={generateApiKey}
                     />
