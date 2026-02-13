@@ -848,15 +848,15 @@ function Dashboard() {
               </>
             )}
             {(isPolicyManager || isPartnerAdmin) && (
-              <div role='button' id='dashboard_policies_card' onClick={policiesInAdmin} className="min-h-[50%] p-6 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, policiesInAdmin)}>
+              <div role='button' id='dashboard_admin_policies_card' onClick={policiesInAdmin} className="min-h-[50%] p-6 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, policiesInAdmin)}>
                 <div className="flex justify-center mb-5">
                   <img id='admin_policies_icon' src={admin_policies_icon} alt="" className="w-8 h-8" />
                 </div>
                 <div>
-                  <h5 id='dashboard_policies_card_header' className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
+                  <h5 id='dashboard_admin_policies_card_header' className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
                     {t('dashboard.policies')}
                   </h5>
-                  <p id='dashboard_policies_card_description' className="mb-3 text-xs font-normal text-gray-400">
+                  <p id='dashboard_admin_policies_card_description' className="mb-3 text-xs font-normal text-gray-400">
                     {t('dashboard.policiesadminDesc')}
                   </p>
                 </div>
