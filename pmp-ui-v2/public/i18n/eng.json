@@ -99,7 +99,9 @@
         "mispPartnerServices": "MISP Services",
         "mispPartnerServicesDesc": "Generate, Regenerate, View or Deactivate MISP License Keys",
         "mispLicenseKeyExpiryCountDesc1": "{{expiringMispLicenseKeyCount}} MISP License Keys are expiring soon",
-        "mispLicenseKeyExpiryCountDesc2": "{{expiringMispLicenseKeyCount}} MISP License Key is expiring soon"
+        "mispLicenseKeyExpiryCountDesc2": "{{expiringMispLicenseKeyCount}} MISP License Key is expiring soon",
+        "manualAdjudication": "Manual Adjudication Services",
+        "manualAdjudicationDesc": "View, Generate API Keys"
     },
     "mispLicenseList": {
         "partnerId": "Partner ID",
@@ -654,6 +656,20 @@
     "deactivateApiKey": {
         "apiKeyName": "Do you want to Deactivate API Key",
         "description": "On clicking Confirm, you will not be able to use the API Key for authentication anymore."
+    },
+    "manualAdjudicationServices": {
+        "manualAdjudicationServices": "Manual Adjudication Services",
+        "partnerId": "Partner ID",
+        "orgName": "Organisation",
+        "policyGroup": "Policy Group",
+        "policyName": "Policy Name",
+        "apiKeyName": "API Key Name",
+        "creationDate": "Creation Date",
+        "status": "Status",
+        "action": "Action",
+        "generateApiKey": "Generate API Key",
+        "listOfManualAdjudicationApiKeys": "List of Manual Adjudication API Keys",
+        "errorInManualAdjudicationList": "While fetching Manual Adjudication details, we have encountered with an error."
     },
     "deviceProviderServices": {
         "listOfSbisAndDevices": "List Of SBIs And Devices",

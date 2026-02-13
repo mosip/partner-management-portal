@@ -65,6 +65,7 @@ import GenerateMispLicenseKey from './pages/admin/mispPartnerServices/GenerateMi
 import ViewMispLicenseKey from './pages/admin/mispPartnerServices/ViewMispLicenseKey.js';
 import RegenerateMispLicenseKey from './pages/admin/mispPartnerServices/RegenerateMispLicenseKey.js';
 import ViewMispLicenseKeyNotifications from './pages/admin/notifications/ViewMispLicenseKeyNotifications.js';
+import ManualAdjudicationServices from './pages/admin/manualAdjudication/ManualAdjudicationServices.js';
 
 function AppRoutes() {
 
@@ -168,7 +169,7 @@ function AppRoutes() {
         {
           path: 'admin/certificates/root-ca-certificate-list',
           element: <GuardedRoute><MainLayout><RootTrustList /></MainLayout></GuardedRoute>
-        },  
+        },
         {
           path: 'admin/certificates/view-root-ca-certificate-details',
           element: <GuardedRoute><MainLayout><ViewTrustDetails /></MainLayout></GuardedRoute>
@@ -368,6 +369,10 @@ function AppRoutes() {
         {
           path: 'runtimeError',
           element: <RuntimeError />,
+        },
+        {
+          path: 'admin/manual-adjudication-services',
+          element: <GuardedRoute><MainLayout><ManualAdjudicationServices /></MainLayout></GuardedRoute>,
         },
       ],
     },

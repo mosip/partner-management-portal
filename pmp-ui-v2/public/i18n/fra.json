@@ -97,7 +97,9 @@
         "mispPartnerServices": "Services MISP",
         "mispPartnerServicesDesc": "Générer, régénérer, afficher ou désactiver les clés de licence MISP",
         "mispLicenseKeyExpiryCountDesc1": "{{expiringMispLicenseKeyCount}} Les clés de licence MISP expirent bientôt",
-        "mispLicenseKeyExpiryCountDesc2": "{{expiringMispLicenseKeyCount}} La clé de licence MISP expire bientôt"
+        "mispLicenseKeyExpiryCountDesc2": "{{expiringMispLicenseKeyCount}} La clé de licence MISP expire bientôt",
+        "manualAdjudication": "Services d'arbitrage manuel",
+        "manualAdjudicationDesc": "Afficher, Générer des clés API"
     },
     "mispLicenseList": {
         "partnerId": "ID partenaire",
@@ -655,6 +657,20 @@
     "deactivateApiKey": {
         "apiKeyName": "Voulez-vous désactiver la clé API",
         "description": "En cliquant sur Confirmer, vous ne pourrez plus utiliser la clé API pour l'authentification."
+    },
+    "manualAdjudicationServices": {
+        "manualAdjudicationServices": "Services d'arbitrage manuel",
+        "partnerId": "ID partenaire",
+        "orgName": "Organisation",
+        "policyGroup": "Groupe de politiques",
+        "policyName": "Nom de la politique",
+        "apiKeyName": "Nom de la clé API",
+        "creationDate": "Date de création",
+        "status": "Statut",
+        "action": "Action",
+        "generateApiKey": "Générer une clé API",
+        "listOfManualAdjudicationApiKeys": "Liste des clés API d'arbitrage manuel",
+        "errorInManualAdjudicationList": "Lors de la récupération des détails de l'arbitrage manuel, nous avons rencontré une erreur."
     },
     "deviceProviderServices": {
         "listOfSbisAndDevices": "Liste des SBI et des appareilsBI - Device",
