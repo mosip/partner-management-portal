@@ -29,6 +29,7 @@ function GenerateApiKey() {
     const [partnerIdDropdownData, setPartnerIdDropdownData] = useState([]);
     const [policiesDropdownData, setPoliciesDropdownData] = useState([]);
     const [partnerId, setPartnerId] = useState("");
+    const [policyId, setPolicyId] = useState("");
     const [policyName, setPolicyName] = useState("");
     const [partnerType, setPartnerType] = useState("");
     const [policyGroupName, setPolicyGroupName] = useState("");
@@ -82,6 +83,7 @@ function GenerateApiKey() {
 
     const onChangePartnerId = async (fieldName, selectedValue) => {
         setPartnerId(selectedValue);
+        setPolicyId("");
         setPolicyName("");
         setPolicyGroupName("");
         setPoliciesDropdownData([]);
@@ -99,7 +101,15 @@ function GenerateApiKey() {
       };
 
     const onChangePolicyName = (fieldName, selectedValue) => {
-        setPolicyName(selectedValue);
+        setPolicyId(selectedValue);
+        const selectedPolicy = policyRequestsData.find(
+            item => item.policyId === selectedValue && item.partnerId === partnerId
+        );
+        setPolicyName(
+            selectedPolicy
+                ? (selectedPolicy.policyName || selectedPolicy.policyDescription || "")
+                : ""
+        );
     };
 
     const onChangeNameLabel = (value) => {
@@ -157,6 +167,7 @@ function GenerateApiKey() {
         setPartnerId("");
         setPartnerType("");
         setPolicyGroupName("");
+        setPolicyId("");
         setPolicyName("");
         setNameLabel("");
         setPoliciesDropdownData([]);
@@ -188,7 +199,7 @@ function GenerateApiKey() {
             apiKeyName: trimAndReplace(nameLabel)
         }, 'mosip.pms.generate.api.key.post', true);
         try {
-            const response = await HttpService.post(getPartnerManagerUrl(`/partners/${partnerId}/policies/${policyName}/api-keys`, process.env.NODE_ENV), request, {
+            const response = await HttpService.post(getPartnerManagerUrl(`/partners/${partnerId}/policies/${policyId}/api-keys`, process.env.NODE_ENV), request, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -299,7 +310,7 @@ function GenerateApiKey() {
                                                         onDropDownChangeEvent={onChangePolicyName}
                                                         fieldNameKey='requestPolicy.policyName*'
                                                         placeHolderKey='generateApiKey.selectedPolicyName'
-                                                        selectedDropdownValue={policyName}
+                                                        selectedDropdownValue={policyId}
                                                         searchKey='commons.search'
                                                         styleSet={styles}
                                                         addInfoIcon={true}
