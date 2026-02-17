@@ -22,7 +22,7 @@ function ManualAdjudicationServices() {
     ];
 
     const generateApiKey = () => {
-        // TODO: Navigate to generate API key page
+        navigate('/partnermanagement/admin/manual-adjudication-services/generate-api-key');
     };
 
     return (
