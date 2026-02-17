@@ -1,4 +1,3 @@
-import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../../../services/UserProfileService';
 import { isLangRTL} from '../../../utils/AppUtils';
@@ -7,7 +6,6 @@ import EmptyList from '../../common/EmptyList.js';
 
 function ManualAdjudicationServices() {
     const navigate = useNavigate();
-    const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
 
     const tableHeaders = [

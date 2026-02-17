@@ -44,7 +44,7 @@ function GenerateManualAdjudicationApiKey() {
   const [generateApiKeySuccess, setGenerateApiKeySuccess] = useState(false);
   const [confirmationData, setConfirmationData] = useState({});
 
-  const partnerTypeLabel = "Manual Adjudication Partner";
+  const partnerTypeLabel = t("manualAdjudicationServices.partnerType");
 
   const blocker = useBlocker(({ currentLocation, nextLocation }) => {
     if (isSubmitClicked || generateApiKeySuccess) {
@@ -64,7 +64,7 @@ function GenerateManualAdjudicationApiKey() {
     };
 
     const handleBeforeUnload = (event) => {
-      if (shouldWarnBeforeUnload() && !isSubmitClicked) {
+      if (shouldWarnBeforeUnload() && !isSubmitClicked && !generateApiKeySuccess ) {
         event.preventDefault();
         event.returnValue = "";
       }
@@ -75,7 +75,7 @@ function GenerateManualAdjudicationApiKey() {
     return () => {
       window.removeEventListener("beforeunload", handleBeforeUnload);
     };
-  }, [partnerId, policyName, apiKeyName, isSubmitClicked]);
+  }, [partnerId, policyName, apiKeyName, isSubmitClicked, generateApiKeySuccess]);
 
   useEffect(() => {
     const fetchManualAdjudicationPartners = async () => {
@@ -123,6 +123,7 @@ function GenerateManualAdjudicationApiKey() {
     setPartnerId("");
     setPolicyGroupName("");
     setPolicyName("");
+    setPolicyId("");
     setApiKeyName("");
     setInputError("");
     setPoliciesDropdownData([]);
@@ -159,6 +160,7 @@ function GenerateManualAdjudicationApiKey() {
   const onChangePartnerId = async (fieldName, selectedValue) => {
     setPartnerId(selectedValue);
     setPolicyName("");
+    setPolicyId("");
     setPolicyGroupName("");
     setPolicyList([]);
     setPoliciesDropdownData([]);
@@ -383,7 +385,7 @@ const onChangePolicyName = (fieldName, selectedValue) => {
                   <button
                     id="generate_manual_adjudication_clear_form"
                     onClick={clearForm}
-                    className={`w-40 h-10 mr-3 border-[#1447B2] ${isLoginLanguageRTL ? "mr-2" : "ml-2"} border rounded-md bg-white text-tory-blue text-sm font-semibold`}
+                    className={`w-40 h-10 border-[#1447B2] ${isLoginLanguageRTL ? "ml-3 mr-2" : "mr-3 ml-2"} border rounded-md bg-white text-tory-blue text-sm font-semibold`}
                   >
                     {t("requestPolicy.clearForm")}
                   </button>
