@@ -94,7 +94,7 @@ function GenerateApiKey() {
           );
           setPartnerType(getPartnerTypeDescription("AUTH_PARTNER", t));
           setPolicyGroupName(selectedPartner.policyGroupName);
-          setPoliciesDropdownData(createDropdownData('policyName', 'policyDescription', false, activePolicies, t));
+          setPoliciesDropdownData(createDropdownData('policyId', 'policyDescription', false, activePolicies, t));
         }
       };
 
@@ -185,11 +185,10 @@ function GenerateApiKey() {
         setErrorMsg("");
         setDataLoaded(false);
         let request = createRequest({
-            policyName: policyName,
-            label: trimAndReplace(nameLabel)
-        });
+            apiKeyName: trimAndReplace(nameLabel)
+        }, 'mosip.pms.generate.api.key.post', true);
         try {
-            const response = await HttpService.patch(getPartnerManagerUrl(`/partners/${partnerId}/generate/apikey`, process.env.NODE_ENV), request, {
+            const response = await HttpService.post(getPartnerManagerUrl(`/partners/${partnerId}/policies/${policyName}/api-keys`, process.env.NODE_ENV), request, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
