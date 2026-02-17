@@ -96,7 +96,13 @@ function GenerateApiKey() {
           );
           setPartnerType(getPartnerTypeDescription("AUTH_PARTNER", t));
           setPolicyGroupName(selectedPartner.policyGroupName);
-          setPoliciesDropdownData(createDropdownData('policyId', 'policyDescription', false, activePolicies, t));
+          setPoliciesDropdownData(
+            activePolicies.map(item => ({
+                fieldCode: item.policyName,
+                fieldValue: item.policyId,
+                fieldDescription: item.policyDescription
+            }))
+          );
         }
       };
 
@@ -105,11 +111,7 @@ function GenerateApiKey() {
         const selectedPolicy = policyRequestsData.find(
             item => item.policyId === selectedValue && item.partnerId === partnerId
         );
-        setPolicyName(
-            selectedPolicy
-                ? (selectedPolicy.policyName || selectedPolicy.policyDescription || "")
-                : ""
-        );
+        setPolicyName(selectedPolicy ? selectedPolicy.policyName : "");
     };
 
     const onChangeNameLabel = (value) => {
