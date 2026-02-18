@@ -664,6 +664,7 @@
         "orgName": "منظمة",
         "policyGroup": "مجموعة السياسات",
         "policyName": "اسم السياسة",
+        "partnerType": "شريك التحكيم اليدوي",
         "apiKeyName": "اسم مفتاح API",
         "creationDate": "تاريخ الإنشاء",
         "status": "حالة",

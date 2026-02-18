@@ -664,6 +664,7 @@
         "orgName": "Organisation",
         "policyGroup": "Groupe de politiques",
         "policyName": "Nom de la politique",
+        "partnerType": "Partenaire d’adjudication manuelle",
         "apiKeyName": "Nom de la clé API",
         "creationDate": "Date de création",
         "status": "Statut",

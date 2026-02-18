@@ -663,6 +663,7 @@
         "orgName": "Organisation",
         "policyGroup": "Policy Group",
         "policyName": "Policy Name",
+        "partnerType": "Manual Adjudication Partner",
         "apiKeyName": "API Key Name",
         "creationDate": "Creation Date",
         "status": "Status",
