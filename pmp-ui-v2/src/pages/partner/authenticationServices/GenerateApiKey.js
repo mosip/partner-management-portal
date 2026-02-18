@@ -96,22 +96,16 @@ function GenerateApiKey() {
           );
           setPartnerType(getPartnerTypeDescription("AUTH_PARTNER", t));
           setPolicyGroupName(selectedPartner.policyGroupName);
-          setPoliciesDropdownData(
-            activePolicies.map(item => ({
-                fieldCode: item.policyName,
-                fieldValue: item.policyId,
-                fieldDescription: item.policyDescription
-            }))
-          );
+          setPoliciesDropdownData(createDropdownData('policyName', 'policyDescription', false, activePolicies, t));
         }
       };
 
     const onChangePolicyName = (fieldName, selectedValue) => {
-        setPolicyId(selectedValue);
+        setPolicyName(selectedValue);
         const selectedPolicy = policyRequestsData.find(
-            item => item.policyId === selectedValue && item.partnerId === partnerId
+            item => item.policyName === selectedValue && item.partnerId === partnerId
         );
-        setPolicyName(selectedPolicy ? selectedPolicy.policyName : "");
+        setPolicyId(selectedPolicy ? selectedPolicy.policyId : "");
     };
 
     const onChangeNameLabel = (value) => {
@@ -312,7 +306,7 @@ function GenerateApiKey() {
                                                         onDropDownChangeEvent={onChangePolicyName}
                                                         fieldNameKey='requestPolicy.policyName*'
                                                         placeHolderKey='generateApiKey.selectedPolicyName'
-                                                        selectedDropdownValue={policyId}
+                                                        selectedDropdownValue={policyName}
                                                         searchKey='commons.search'
                                                         styleSet={styles}
                                                         addInfoIcon={true}
