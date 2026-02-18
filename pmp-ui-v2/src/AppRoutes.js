@@ -66,6 +66,7 @@ import ViewMispLicenseKey from './pages/admin/mispPartnerServices/ViewMispLicens
 import RegenerateMispLicenseKey from './pages/admin/mispPartnerServices/RegenerateMispLicenseKey.js';
 import ViewMispLicenseKeyNotifications from './pages/admin/notifications/ViewMispLicenseKeyNotifications.js';
 import ManualAdjudicationServices from './pages/admin/manualAdjudication/ManualAdjudicationServices.js';
+import GenerateManualAdjudicationApiKey from './pages/admin/manualAdjudication/GenerateManualAdjudicationApiKey.js';
 
 function AppRoutes() {
 
@@ -373,6 +374,10 @@ function AppRoutes() {
         {
           path: 'admin/manual-adjudication-services',
           element: <GuardedRoute><MainLayout><ManualAdjudicationServices /></MainLayout></GuardedRoute>,
+        },
+        {
+          path: 'admin/manual-adjudication-services/generate-api-key',
+          element: <GuardedRoute><MainLayout><GenerateManualAdjudicationApiKey /></MainLayout></GuardedRoute>,
         },
       ],
     },
