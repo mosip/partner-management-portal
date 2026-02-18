@@ -29,6 +29,7 @@ function GenerateApiKey() {
     const [partnerIdDropdownData, setPartnerIdDropdownData] = useState([]);
     const [policiesDropdownData, setPoliciesDropdownData] = useState([]);
     const [partnerId, setPartnerId] = useState("");
+    const [policyId, setPolicyId] = useState("");
     const [policyName, setPolicyName] = useState("");
     const [partnerType, setPartnerType] = useState("");
     const [policyGroupName, setPolicyGroupName] = useState("");
@@ -82,6 +83,7 @@ function GenerateApiKey() {
 
     const onChangePartnerId = async (fieldName, selectedValue) => {
         setPartnerId(selectedValue);
+        setPolicyId("");
         setPolicyName("");
         setPolicyGroupName("");
         setPoliciesDropdownData([]);
@@ -100,6 +102,10 @@ function GenerateApiKey() {
 
     const onChangePolicyName = (fieldName, selectedValue) => {
         setPolicyName(selectedValue);
+        const selectedPolicy = policyRequestsData.find(
+            item => item.policyName === selectedValue && item.partnerId === partnerId
+        );
+        setPolicyId(selectedPolicy ? selectedPolicy.policyId : "");
     };
 
     const onChangeNameLabel = (value) => {
@@ -157,6 +163,7 @@ function GenerateApiKey() {
         setPartnerId("");
         setPartnerType("");
         setPolicyGroupName("");
+        setPolicyId("");
         setPolicyName("");
         setNameLabel("");
         setPoliciesDropdownData([]);
@@ -185,11 +192,10 @@ function GenerateApiKey() {
         setErrorMsg("");
         setDataLoaded(false);
         let request = createRequest({
-            policyName: policyName,
-            label: trimAndReplace(nameLabel)
-        });
+            apiKeyName: trimAndReplace(nameLabel)
+        }, 'mosip.pms.generate.api.key.post', true);
         try {
-            const response = await HttpService.patch(getPartnerManagerUrl(`/partners/${partnerId}/generate/apikey`, process.env.NODE_ENV), request, {
+            const response = await HttpService.post(getPartnerManagerUrl(`/partners/${partnerId}/policies/${policyId}/api-keys`, process.env.NODE_ENV), request, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
