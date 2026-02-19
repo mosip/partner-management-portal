@@ -131,31 +131,47 @@ function GenerateManualAdjudicationApiKey() {
   };
 
   const getListOfPolicies = async (selectedPartner) => {
-    try {
-      setDataLoaded(false);
-      const response = await HttpService.get(
-        getPolicyManagerUrl(`/policies/active/group/${encodeURIComponent(selectedPartner.policyGroupName)}`, process.env.NODE_ENV),
+  try {
+    setDataLoaded(false);
+
+    const response = await HttpService({
+      method: "get",
+      url: getPolicyManagerUrl(
+        `/policies/active/group/${encodeURIComponent(
+          selectedPartner.policyGroupName
+        )}`,
+        process.env.NODE_ENV
+      ),
+      baseURL:
+        process.env.NODE_ENV === "production"
+          ? window._env_.REACT_APP_POLICY_MANAGER_API_BASE_URL
+          : undefined,
+    });
+
+    if (response?.data?.response) {
+      const responsePolicies = response.data.response;
+
+      const policies = Array.isArray(responsePolicies)
+        ? responsePolicies
+        : responsePolicies.policies || [];
+
+      setPolicyList(policies);
+
+      setPoliciesDropdownData(
+        createDropdownData("name", "descr", false, policies, t)
       );
-      if (response?.data?.response) {
-        const responsePolicies = response.data.response;
-        const policies = Array.isArray(responsePolicies)
-          ? responsePolicies
-          : (responsePolicies.policies || []);
-        setPolicyList(policies);
-        setPoliciesDropdownData(
-          createDropdownData("name", "descr", false, policies, t),
-        );
-      } else {
-        handleServiceErrors(response?.data, setErrorCode, setErrorMsg);
-      }
-    } catch (err) {
-      if (err.response?.status && err.response.status !== 401) {
-        setErrorMsg(err.toString());
-      }
-    } finally {
-      setDataLoaded(true);
+    } else {
+      handleServiceErrors(response?.data, setErrorCode, setErrorMsg);
     }
-  };
+  } catch (err) {
+    if (err.response?.status && err.response.status !== 401) {
+      setErrorMsg(err.response?.data?.errors?.[0]?.message || err.toString());
+    }
+  } finally {
+    setDataLoaded(true);
+  }
+};
+
 
   const onChangePartnerId = async (fieldName, selectedValue) => {
     setPartnerId(selectedValue);
