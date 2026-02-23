@@ -317,7 +317,7 @@ const onChangePolicyName = (fieldName, selectedValue) => {
                   <p id="generate_manual_adjudication_api_key_mandatory_fields_msg" className="text-base text-[#3D4468]">
                     {t("requestPolicy.mandatoryFieldsMsg1")} <span className="text-crimson-red">*</span> {t("requestPolicy.mandatoryFieldsMsg2")}
                   </p>
-                  <div>
+                  <form>
                     <div className="flex flex-col">
                       <div className="flex flex-row justify-between space-x-4 max-[450px]:space-x-0 my-[1%] max-[450px]:flex-col">
                         <div className="flex-col w-[48%] max-[450px]:w-full">
@@ -396,7 +396,7 @@ const onChangePolicyName = (fieldName, selectedValue) => {
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </form>
                 </div>
 
                 <div className="border bg-medium-gray" />
