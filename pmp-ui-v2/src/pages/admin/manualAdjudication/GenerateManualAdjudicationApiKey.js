@@ -1,11 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useBlocker, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../../services/UserProfileService";
 import {
   createDropdownData,
   getPartnerManagerUrl,
-  getPolicyManagerUrl,
   handleServiceErrors,
   isLangRTL,
   trimAndReplace,
@@ -43,6 +42,7 @@ function GenerateManualAdjudicationApiKey() {
   const [isSubmitClicked, setIsSubmitClicked] = useState(false);
   const [generateApiKeySuccess, setGenerateApiKeySuccess] = useState(false);
   const [confirmationData, setConfirmationData] = useState({});
+  const hasFetchedPartners = useRef(false);
 
   const partnerTypeLabel = t("manualAdjudicationServices.partnerType");
 
@@ -78,21 +78,23 @@ function GenerateManualAdjudicationApiKey() {
   }, [partnerId, policyName, apiKeyName, isSubmitClicked, generateApiKeySuccess]);
 
   useEffect(() => {
+        if (hasFetchedPartners.current) {
+      return;
+    }
+
+    hasFetchedPartners.current = true;
     const fetchManualAdjudicationPartners = async () => {
       try {
         setDataLoaded(false);
         const response = await HttpService.get(
           getPartnerManagerUrl(
-            "/partners/v3?status=approved&partnerType=Manual_Adjudication",
+            "/partners/v3?status=approved&partnerType=Manual_Adjudication&policyGroupAvailable=true",
             process.env.NODE_ENV,
           ),
         );
         if (response?.data?.response) {
           const approvedPartners = response.data.response;
           setPartnerData(approvedPartners);
-          setPartnerIdDropdownData(
-            createDropdownData("partnerId", "", false, approvedPartners, t),
-          );
         } else {
           handleServiceErrors(response?.data, setErrorCode, setErrorMsg);
         }
@@ -106,7 +108,13 @@ function GenerateManualAdjudicationApiKey() {
     };
 
     fetchManualAdjudicationPartners();
-  }, [t]);
+  }, []);
+
+  useEffect(() => {
+    setPartnerIdDropdownData(
+      createDropdownData("partnerId", "", false, partnerData, t),
+    );
+  }, [partnerData, t]);
 
   const cancelErrorMsg = () => {
     setErrorMsg("");
@@ -134,31 +142,26 @@ function GenerateManualAdjudicationApiKey() {
   try {
     setDataLoaded(false);
 
-    const response = await HttpService({
-      method: "get",
-      url: getPolicyManagerUrl(
-        `/policies/active/group/${encodeURIComponent(
-          selectedPartner.policyGroupName
-        )}`,
-        process.env.NODE_ENV
-      ),
-      baseURL:
-        process.env.NODE_ENV === "production"
-          ? window._env_.REACT_APP_POLICY_MANAGER_API_BASE_URL
-          : undefined,
-    });
+    const queryParams = new URLSearchParams();
+    queryParams.append("partnerId", selectedPartner.partnerId);
+    queryParams.append("partnerIdSearchType", "equals");
+    queryParams.append("policyGroupName", selectedPartner.policyGroupName);
+    queryParams.append("status", "approved");
+
+    const response = await HttpService.get(
+      `${getPartnerManagerUrl("/partner-policy-requests", process.env.NODE_ENV)}?${queryParams.toString()}`,
+    );
 
     if (response?.data?.response) {
       const responsePolicies = response.data.response;
-
-      const policies = Array.isArray(responsePolicies)
-        ? responsePolicies
-        : responsePolicies.policies || [];
+      const policies = Array.isArray(responsePolicies?.data)
+        ? responsePolicies.data
+        : [];
 
       setPolicyList(policies);
 
       setPoliciesDropdownData(
-        createDropdownData("name", "descr", false, policies, t)
+        createDropdownData("policyName", "policyDescription", false, policies, t)
       );
     } else {
       handleServiceErrors(response?.data, setErrorCode, setErrorMsg);
@@ -192,12 +195,12 @@ function GenerateManualAdjudicationApiKey() {
 
 const onChangePolicyName = (fieldName, selectedValue) => {
   const selectedPolicy = policyList.find(
-    (policy) => policy.name === selectedValue
+   (policy) => policy.policyName === selectedValue
   );
 
   if (selectedPolicy) {
-    setPolicyName(selectedPolicy.name);
-    setPolicyId(selectedPolicy.id);   
+    setPolicyName(selectedPolicy.policyName);
+    setPolicyId(selectedPolicy.policyId); 
   } else {
     setPolicyName(selectedValue);
     setPolicyId("");
@@ -314,7 +317,7 @@ const onChangePolicyName = (fieldName, selectedValue) => {
                   <p id="generate_manual_adjudication_api_key_mandatory_fields_msg" className="text-base text-[#3D4468]">
                     {t("requestPolicy.mandatoryFieldsMsg1")} <span className="text-crimson-red">*</span> {t("requestPolicy.mandatoryFieldsMsg2")}
                   </p>
-                  <form>
+                  <div>
                     <div className="flex flex-col">
                       <div className="flex flex-row justify-between space-x-4 max-[450px]:space-x-0 my-[1%] max-[450px]:flex-col">
                         <div className="flex-col w-[48%] max-[450px]:w-full">
@@ -393,7 +396,7 @@ const onChangePolicyName = (fieldName, selectedValue) => {
                         </div>
                       </div>
                     </div>
-                  </form>
+                  </div>
                 </div>
 
                 <div className="border bg-medium-gray" />
