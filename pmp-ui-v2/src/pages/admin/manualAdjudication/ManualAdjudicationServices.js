@@ -180,9 +180,12 @@ function ManualAdjudicationServices() {
     const editExpiryDate = (selectedApiKeyData) => {
         if (selectedApiKeyData.status !== 'deactivated') {
             setActionId(-1);
-            sessionStorage.setItem('selectedApiKeyAttributes', JSON.stringify(selectedApiKeyData));
-            sessionStorage.setItem('apiKeyListReturnPath', MANUAL_ADJUDICATION_RETURN_PATH);
-            navigate('/partnermanagement/admin/authentication-services/edit-api-key');
+            navigate('/partnermanagement/admin/authentication-services/edit-api-key', {
+                state: {
+                    selectedApiKeyAttributes: selectedApiKeyData,
+                    apiKeyListReturnPath: MANUAL_ADJUDICATION_RETURN_PATH,
+                },
+            });
         }
     };
 
@@ -199,9 +202,12 @@ function ManualAdjudicationServices() {
     };
 
     const viewApiKeyRequestDetails = (selectedApiKeyData) => {
-        sessionStorage.setItem('selectedApiKeyAttributes', JSON.stringify(selectedApiKeyData));
-        sessionStorage.setItem('apiKeyListReturnPath', MANUAL_ADJUDICATION_RETURN_PATH);
-        navigate('/partnermanagement/admin/authentication-services/view-api-key-details');
+        navigate('/partnermanagement/admin/authentication-services/view-api-key-details', {
+            state: {
+                selectedApiKeyAttributes: selectedApiKeyData,
+                apiKeyListReturnPath: MANUAL_ADJUDICATION_RETURN_PATH,
+            },
+        });
     };
 
     const generateApiKey = () => {

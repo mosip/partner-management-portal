@@ -188,9 +188,12 @@ function AdminApiKeysList() {
     const editExpiryDate = (selectedApiKeyData, index) => {
         if (selectedApiKeyData.status !== "deactivated") {
             setActionId(-1);
-            sessionStorage.setItem('selectedApiKeyAttributes', JSON.stringify(selectedApiKeyData));
-            sessionStorage.setItem('apiKeyListReturnPath', '/partnermanagement/admin/authentication-services/api-keys-list');
-            navigate('/partnermanagement/admin/authentication-services/edit-api-key');
+            navigate('/partnermanagement/admin/authentication-services/edit-api-key', {
+                state: {
+                    selectedApiKeyAttributes: selectedApiKeyData,
+                    apiKeyListReturnPath: '/partnermanagement/admin/authentication-services/api-keys-list',
+                },
+            });
         }
     };
 
@@ -207,9 +210,12 @@ function AdminApiKeysList() {
     };
 
     const viewApiKeyRequestDetails = (selectedApiKey) => {
-        sessionStorage.setItem('selectedApiKeyAttributes', JSON.stringify(selectedApiKey));
-        sessionStorage.setItem('apiKeyListReturnPath', '/partnermanagement/admin/authentication-services/api-keys-list');
-        navigate('/partnermanagement/admin/authentication-services/view-api-key-details');
+        navigate('/partnermanagement/admin/authentication-services/view-api-key-details', {
+            state: {
+                selectedApiKeyAttributes: selectedApiKey,
+                apiKeyListReturnPath: '/partnermanagement/admin/authentication-services/api-keys-list',
+            },
+        });
     };
 
     const cancelErrorMsg = () => {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useBlocker, useNavigate } from 'react-router-dom';
+import { useBlocker, useNavigate, useLocation } from 'react-router-dom';
 import { getUserProfile } from '../../../services/UserProfileService';
 import { 
     isLangRTL, 
@@ -23,6 +23,7 @@ import somethingWentWrongIcon from '../../../svg/something_went_wrong_icon.svg';
 function EditAdminApiKey() {
     const { t } = useTranslation();
     const navigate = useNavigate();
+    const location = useLocation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [dataLoaded, setDataLoaded] = useState(false);
     const [errorCode, setErrorCode] = useState("");
@@ -37,7 +38,7 @@ function EditAdminApiKey() {
     const [isSubmitClicked, setIsSubmitClicked] = useState(false);
     const [originalExpiryDate, setOriginalExpiryDate] = useState("");
 
-    const apiKeysListReturnPath = sessionStorage.getItem('apiKeyListReturnPath') || '/partnermanagement/admin/authentication-services/api-keys-list';
+    const apiKeysListReturnPath = location.state?.apiKeyListReturnPath || '/partnermanagement/admin/authentication-services/api-keys-list';
 
     const blocker = useBlocker(
         ({ currentLocation, nextLocation }) => {
@@ -52,22 +53,19 @@ function EditAdminApiKey() {
     );
 
     useEffect(() => {
-        const data = sessionStorage.getItem('selectedApiKeyAttributes');
-        if (!data) {
+        const apiKeyData = location.state?.selectedApiKeyAttributes;
+        if (!apiKeyData) {
             setUnexpectedError(true);
             setDataLoaded(true);
             return;
         }
         try {
-            const apiKeyData = JSON.parse(data);
             setApiKeyDetails(apiKeyData);
-            
-            // Initialize expiry date
+
             if (apiKeyData?.apiKeyExpiryDateTime) {
                 setSelectedDateStr(apiKeyData.apiKeyExpiryDateTime);
                 setOriginalExpiryDate(apiKeyData.apiKeyExpiryDateTime);
             } else {
-                // Initialize with tomorrow's start-of-day as default to satisfy "must be future" rule
                 const tomorrow = new Date();
                 tomorrow.setDate(tomorrow.getDate() + 1);
                 tomorrow.setHours(0, 0, 0, 0);
@@ -77,12 +75,12 @@ function EditAdminApiKey() {
             }
             setDataLoaded(true);
         } catch (error) {
-            console.error('Error parsing selectedApiKeyAttributes from sessionStorage:', error);
+            console.error('Error reading API key data from navigation state:', error);
             setUnexpectedError(true);
             setDataLoaded(true);
             return;
         }
-    }, []);
+    }, [location.state]);
 
     useEffect(() => {
         if (editExpirySuccess) {

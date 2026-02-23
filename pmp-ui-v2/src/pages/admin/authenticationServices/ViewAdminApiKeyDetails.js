@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { getUserProfile } from '../../../services/UserProfileService';
 import { bgOfStatus, formatDate, getStatusCode, isLangRTL } from '../../../utils/AppUtils';
 import somethingWentWrongIcon from '../../../svg/something_went_wrong_icon.svg';
@@ -9,25 +9,25 @@ import Title from '../../common/Title';
 function ViewAdminApiKeyDetails() {
     const { t } = useTranslation();
     const navigate = useNavigate();
+    const location = useLocation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [unexpectedError, setUnexpectedError] = useState(false);
     const [apiKeyDetails, setApiKeyDetails] = useState({});
 
-    const apiKeysListReturnPath = sessionStorage.getItem('apiKeyListReturnPath') || '/partnermanagement/admin/authentication-services/api-keys-list';
+    const apiKeysListReturnPath = location.state?.apiKeyListReturnPath || '/partnermanagement/admin/authentication-services/api-keys-list';
 
     const moveToApiClientsList = () => {
         navigate(apiKeysListReturnPath);
     };
 
     useEffect(() => {
-        const data = sessionStorage.getItem('selectedApiKeyAttributes');
-        if(!data){
+        const apiKeyData = location.state?.selectedApiKeyAttributes;
+        if (!apiKeyData) {
             setUnexpectedError(true);
-            return ;
+            return;
         }
-        const apiKeyData = JSON.parse(data);
         setApiKeyDetails(apiKeyData);
-    }, []);
+    }, [location.state]);
 
     return (
         <div className={`w-full p-4 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm mb-[2%] ${isLoginLanguageRTL ? "mr-24 ml-1" : "ml-24 mr-1"} overflow-x-scroll`}>
