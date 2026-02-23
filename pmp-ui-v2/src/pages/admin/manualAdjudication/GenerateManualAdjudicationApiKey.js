@@ -114,7 +114,7 @@ function GenerateManualAdjudicationApiKey() {
   };
 
   const clickOnCancel = () => {
-    navigate("/partnermanagement/admin/manual-adjudication-services");
+    navigate("/partnermanagement/admin/manual-adjudication-services/api-keys-list");
   };
 
   const clearForm = () => {
@@ -248,7 +248,7 @@ const onChangePolicyName = (fieldName, selectedValue) => {
     if (response?.data?.response) {
       const requireData = {
         title: "manualAdjudicationServices.generateApiKey",
-        backUrl: "/partnermanagement/admin/manual-adjudication-services",
+        backUrl: "/partnermanagement/admin/manual-adjudication-services/api-keys-list",
         header: "generateApiKey.generateApiKeySuccessHeader",
         description: "generateApiKey.apiKeySuccessMsg",
         subNavigation: "dashboard.manualAdjudication",
@@ -305,7 +305,7 @@ const onChangePolicyName = (fieldName, selectedValue) => {
               <Title
                 title="manualAdjudicationServices.generateApiKey"
                 subTitle="dashboard.manualAdjudication"
-                backLink="/partnermanagement/admin/manual-adjudication-services"
+                backLink="/partnermanagement/admin/manual-adjudication-services/api-keys-list"
               />
             </div>
             {!generateApiKeySuccess ? (

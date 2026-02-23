@@ -618,6 +618,7 @@
     },
     "apiKeysList": {
         "apiKeyName": "اسم مفتاح واجهة برمجة التطبيقات",
+        "partnerType": "نوع الشريك",
         "apiKeyId": "معرف مفتاح API",
         "apiKey": "مفتاح API",
         "generateApiKey": "إنشاء مفتاح API",

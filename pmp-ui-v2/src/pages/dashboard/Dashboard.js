@@ -966,7 +966,7 @@ function Dashboard() {
                     />
                   )}
                 </div>
-                <div role='button' id='dashboard_manual_adjudication_card' onClick={() => navigate('/partnermanagement/admin/manual-adjudication-services')} className="min-h-[50%] p-6 pt-16 bg-white border border-gray-200 shadow cursor-pointer text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => navigate('/partnermanagement/admin/manual-adjudication-services'))}>
+                <div role='button' id='dashboard_manual_adjudication_card' onClick={() => navigate('/partnermanagement/admin/manual-adjudication-services/api-keys-list')} className="min-h-[50%] p-6 pt-16 bg-white border border-gray-200 shadow cursor-pointer text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => navigate('/partnermanagement/admin/manual-adjudication-services/api-keys-list'))}>
                   <div className="flex justify-center mb-5">
                     <svg width="32" height="32" viewBox="-2 -2 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="#7a7e82" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />

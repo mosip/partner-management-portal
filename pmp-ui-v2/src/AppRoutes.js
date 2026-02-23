@@ -1,4 +1,4 @@
-import { createHashRouter, RouterProvider, redirect } from 'react-router-dom';
+import { createHashRouter, RouterProvider, redirect, Navigate } from 'react-router-dom';
 import GuardedRoute from './auth/GuardedRoute.js';
 import MainLayout from './nav/MainLayout.js';
 import PartnerCertificatesList from './pages/partner/certificates/PartnerCertificatesList.js';
@@ -373,6 +373,10 @@ function AppRoutes() {
         },
         {
           path: 'admin/manual-adjudication-services',
+          element: <Navigate to="/partnermanagement/admin/manual-adjudication-services/api-keys-list" replace />,
+        },
+        {
+          path: 'admin/manual-adjudication-services/api-keys-list',
           element: <GuardedRoute><MainLayout><ManualAdjudicationServices /></MainLayout></GuardedRoute>,
         },
         {

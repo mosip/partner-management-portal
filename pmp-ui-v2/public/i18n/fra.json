@@ -618,6 +618,7 @@
     },
     "apiKeysList": {
         "apiKeyName": "Nom de la clé API",
+        "partnerType": "Type de partenaire",
         "apiKeyId": "ID de clé API",
         "apiKey": "clé API",
         "generateApiKey": "Générer une clé API",

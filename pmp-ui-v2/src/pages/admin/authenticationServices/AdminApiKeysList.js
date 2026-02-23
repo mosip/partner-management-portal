@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { getUserProfile } from '../../../services/UserProfileService';
 import {
     isLangRTL, handleMouseClickForDropdown, resetPageNumber, onClickApplyFilter, setPageNumberAndPageSize,
-    getPartnerManagerUrl, handleServiceErrors, onResetFilter, formatDate, bgOfStatus, getStatusCode, onPressEnterKey, createRequest, setSubmenuRef
+    getPartnerManagerUrl, handleServiceErrors, onResetFilter, formatDate, bgOfStatus, getStatusCode, onPressEnterKey, createRequest, setSubmenuRef, getPartnerTypeDescription
 } from '../../../utils/AppUtils';
 import ErrorMessage from '../../common/ErrorMessage';
 import LoadingIcon from '../../common/LoadingIcon';
@@ -62,6 +62,7 @@ function AdminApiKeysList() {
     const tableHeaders = [
         { id: "partnerId", headerNameKey: 'oidcClientsList.partnerId' },
         { id: "orgName", headerNameKey: 'oidcClientsList.orgName' },
+        { id: "partnerType", headerNameKey: "apiKeysList.partnerType" },
         { id: "policyGroupName", headerNameKey: "oidcClientsList.policyGroup" },
         { id: "policyName", headerNameKey: "oidcClientsList.policyName" },
         { id: "apiKeyLabel", headerNameKey: "apiKeysList.apiKeyName" },
@@ -86,6 +87,7 @@ function AdminApiKeysList() {
         queryParams.append('pageNo', effectivePageNo);
         setResetPageNo(false);
 
+        queryParams.append('partnerType', 'Auth_Partner');
         if (filterAttributes.partnerId) queryParams.append('partnerId', filterAttributes.partnerId);
         if (filterAttributes.orgName) queryParams.append('orgName', filterAttributes.orgName);
         if (filterAttributes.policyGroupName) queryParams.append('policyGroupName', filterAttributes.policyGroupName);
@@ -188,6 +190,7 @@ function AdminApiKeysList() {
             setActionId(-1);
             // codeql[js/stored-xss]: Data stored in sessionStorage does not contain sensitive information
             sessionStorage.setItem('selectedApiKeyAttributes', JSON.stringify(selectedApiKeyData));
+            sessionStorage.setItem('apiKeyListReturnPath', '/partnermanagement/admin/authentication-services/api-keys-list');
             navigate('/partnermanagement/admin/authentication-services/edit-api-key');
         }
     };
@@ -207,6 +210,7 @@ function AdminApiKeysList() {
     const viewApiKeyRequestDetails = (selectedApiKey) => {
         // codeql[js/stored-xss]: Data stored in sessionStorage does not contain sensitive information
         sessionStorage.setItem('selectedApiKeyAttributes', JSON.stringify(selectedApiKey));
+        sessionStorage.setItem('apiKeyListReturnPath', '/partnermanagement/admin/authentication-services/api-keys-list');
         navigate('/partnermanagement/admin/authentication-services/view-api-key-details');
     };
 
@@ -297,6 +301,7 @@ function AdminApiKeysList() {
                                                                             className={`border-t border-[#E5EBFA] ${apiKey.status !== 'deactivated' ? 'cursor-pointer' : 'cursor-default'} text-[0.8rem] text-[#191919] font-semibold break-words ${apiKey.status === 'deactivated' ? "text-[#969696]" : "text-[#191919]"}`}>
                                                                             <td onClick={() => apiKey.status !== 'deactivated' && viewApiKeyRequestDetails(apiKey)} className="px-2">{apiKey.partnerId}</td>
                                                                             <td onClick={() => apiKey.status !== 'deactivated' && viewApiKeyRequestDetails(apiKey)} className="px-2">{apiKey.orgName ? apiKey.orgName : '-'}</td>
+                                                                            <td onClick={() => apiKey.status !== 'deactivated' && viewApiKeyRequestDetails(apiKey)} className="px-2">{apiKey.partnerType ? (getPartnerTypeDescription(apiKey.partnerType, t) || apiKey.partnerType) : '-'}</td>
                                                                             <td onClick={() => apiKey.status !== 'deactivated' && viewApiKeyRequestDetails(apiKey)} className="px-2">{apiKey.policyGroupName ? apiKey.policyGroupName : '-'}</td>
                                                                             <td onClick={() => apiKey.status !== 'deactivated' && viewApiKeyRequestDetails(apiKey)} className="px-2">{apiKey.policyName ? apiKey.policyName : '-'}</td>
                                                                             <td onClick={() => apiKey.status !== 'deactivated' && viewApiKeyRequestDetails(apiKey)} className="px-2">{apiKey.apiKeyLabel}</td>

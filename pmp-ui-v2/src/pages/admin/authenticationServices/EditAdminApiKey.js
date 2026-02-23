@@ -37,6 +37,8 @@ function EditAdminApiKey() {
     const [isSubmitClicked, setIsSubmitClicked] = useState(false);
     const [originalExpiryDate, setOriginalExpiryDate] = useState("");
 
+    const apiKeysListReturnPath = sessionStorage.getItem('apiKeyListReturnPath') || '/partnermanagement/admin/authentication-services/api-keys-list';
+
     const blocker = useBlocker(
         ({ currentLocation, nextLocation }) => {
             if (isSubmitClicked || editExpirySuccess) {
@@ -175,7 +177,7 @@ function EditAdminApiKey() {
             const responseData = response.data;
             if (responseData && responseData.response) {
                 const requiredData = {
-                    backUrl: '/partnermanagement/admin/authentication-services/api-keys-list',
+                    backUrl: apiKeysListReturnPath,
                     header: t('apiKeysList.expiryDateUpdatedForApiKey', { apiKeyName: apiKeyDetails.apiKeyLabel }),
                 };
                 setConfirmationData(requiredData);
@@ -201,7 +203,7 @@ function EditAdminApiKey() {
     };
 
     const clickOnCancel = () => {
-        navigate('/partnermanagement/admin/authentication-services/api-keys-list');
+        navigate(apiKeysListReturnPath);
     };
 
     const cancelErrorMsg = () => {
@@ -209,7 +211,7 @@ function EditAdminApiKey() {
     };
 
     const moveToApiKeysList = () => {
-        navigate('/partnermanagement/admin/authentication-services/api-keys-list');
+        navigate(apiKeysListReturnPath);
     };
 
     const isFormValid = () => {
@@ -246,7 +248,7 @@ function EditAdminApiKey() {
                             <Title 
                                 title='apiKeysList.editApiKeyExpiry' 
                                 subTitle='apiKeysList.listOfApiKeyRequests' 
-                                backLink='/partnermanagement/admin/authentication-services/api-keys-list' 
+                                backLink={apiKeysListReturnPath} 
                             />
                         </div>
 

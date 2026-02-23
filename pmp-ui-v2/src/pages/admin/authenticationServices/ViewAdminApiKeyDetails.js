@@ -13,8 +13,10 @@ function ViewAdminApiKeyDetails() {
     const [unexpectedError, setUnexpectedError] = useState(false);
     const [apiKeyDetails, setApiKeyDetails] = useState({});
 
+    const apiKeysListReturnPath = sessionStorage.getItem('apiKeyListReturnPath') || '/partnermanagement/admin/authentication-services/api-keys-list';
+
     const moveToApiClientsList = () => {
-        navigate('/partnermanagement/admin/authentication-services/api-keys-list');
+        navigate(apiKeysListReturnPath);
     };
 
     useEffect(() => {
@@ -31,7 +33,7 @@ function ViewAdminApiKeyDetails() {
         <div className={`w-full p-4 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm mb-[2%] ${isLoginLanguageRTL ? "mr-24 ml-1" : "ml-24 mr-1"} overflow-x-scroll`}>
             <div className={`flex-col mt-5 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm mb-[2%]`}>
                 <div className="flex justify-between mb-3">
-                    <Title title='viewApiKeyDetails.viewApiKeyDetails' subTitle='apiKeysList.listOfApiKeyRequests' backLink='/partnermanagement/admin/authentication-services/api-keys-list' />
+                    <Title title='viewApiKeyDetails.viewApiKeyDetails' subTitle='apiKeysList.listOfApiKeyRequests' backLink={apiKeysListReturnPath} />
                 </div>
 
                 {unexpectedError && (
