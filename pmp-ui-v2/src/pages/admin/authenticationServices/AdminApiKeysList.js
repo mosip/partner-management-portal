@@ -197,7 +197,7 @@ function AdminApiKeysList({
     const editExpiryDate = (selectedApiKeyData, index) => {
         if (selectedApiKeyData.status !== "deactivated") {
             setActionId(-1);
-            sessionStorage.setItem('selectedApiKeyAttributes', JSON.stringify(selectedApiKeyData)); // codeql[js/stored-xss] codeql[js/clear-text-storage-of-sensitive-data]
+            sessionStorage.setItem('selectedApiKeyAttributes', JSON.stringify(selectedApiKeyData)); // codeql[js/stored-xss, js/clear-text-storage-of-sensitive-data]
             sessionStorage.setItem('apiKeyListReturnPath', returnPath);
             navigate('/partnermanagement/admin/authentication-services/edit-api-key');
         }
@@ -216,7 +216,7 @@ function AdminApiKeysList({
     };
 
     const viewApiKeyRequestDetails = (selectedApiKey) => {
-        sessionStorage.setItem('selectedApiKeyAttributes', JSON.stringify(selectedApiKey)); // codeql[js/stored-xss] codeql[js/clear-text-storage-of-sensitive-data]
+        sessionStorage.setItem('selectedApiKeyAttributes', JSON.stringify(selectedApiKey)); // codeql[js/stored-xss, js/clear-text-storage-of-sensitive-data]
         sessionStorage.setItem('apiKeyListReturnPath', returnPath);
         navigate('/partnermanagement/admin/authentication-services/view-api-key-details');
     };
