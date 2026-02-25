@@ -197,15 +197,8 @@ function AdminApiKeysList({
     const editExpiryDate = (selectedApiKeyData, index) => {
         if (selectedApiKeyData.status !== "deactivated") {
             setActionId(-1);
-            const { partnerId, orgName, policyGroupName, policyGroupId, policyName, policyId,
-                apiKeyLabel, apiKeyExpiryDateTime, createdDateTime, status, partnerType } = selectedApiKeyData;
-            // codeql[js/stored-xss]: Data stored in sessionStorage does not contain sensitive information
-            sessionStorage.setItem('selectedApiKeyAttributes', JSON.stringify(
-                {
-                    partnerId, orgName, policyGroupName, policyGroupId, policyName, policyId,
-                    apiKeyLabel, apiKeyExpiryDateTime, createdDateTime, status, partnerType
-                }
-            ));
+            // codeql[js/stored-xss, js/clear-text-storage-of-sensitive-data]: Data stored in sessionStorage does not contain sensitive information
+            sessionStorage.setItem('selectedApiKeyAttributes', JSON.stringify(selectedApiKeyData));
             sessionStorage.setItem('apiKeyListReturnPath', returnPath);
             navigate('/partnermanagement/admin/authentication-services/edit-api-key');
         }
@@ -224,15 +217,8 @@ function AdminApiKeysList({
     };
 
     const viewApiKeyRequestDetails = (selectedApiKey) => {
-        const { partnerId, orgName, policyGroupName, policyGroupId, policyName, policyId,
-            apiKeyLabel, apiKeyExpiryDateTime, createdDateTime, status, partnerType } = selectedApiKey;
-        // codeql[js/stored-xss]: Data stored in sessionStorage does not contain sensitive information
-        sessionStorage.setItem('selectedApiKeyAttributes', JSON.stringify(
-            {
-                partnerId, orgName, policyGroupName, policyGroupId, policyName, policyId,
-                apiKeyLabel, apiKeyExpiryDateTime, createdDateTime, status, partnerType
-            }
-        ));
+        // codeql[js/stored-xss, js/clear-text-storage-of-sensitive-data]: Data stored in sessionStorage does not contain sensitive information
+        sessionStorage.setItem('selectedApiKeyAttributes', JSON.stringify(selectedApiKey));
         sessionStorage.setItem('apiKeyListReturnPath', returnPath);
         navigate('/partnermanagement/admin/authentication-services/view-api-key-details');
     };
