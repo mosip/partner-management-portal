@@ -296,7 +296,7 @@ function CreatePartner() {
                         title: "createPartner.createPartner",
                         backUrl: "/partnermanagement/admin/partners/partners-list",
                         header: isManualAdjudicationPartner ? "createPartner.manualAdjudicationPartnerSuccessHeader" :
-                            (isMispPartner ? "createPartner.mispPartnerSuccessHeader" : "createPartner.mispPartnerSuccessHeader"),
+                            (isMispPartner ? "createPartner.mispPartnerSuccessHeader" : "createPartner.abisPartnerSuccessHeader"),
                         subNavigation: "createPartner.listOfPartners",
                         customBtnName1: getUploadCertificateButtonName(partnerTypeValue),
                         customBtnName2: "commons.home",

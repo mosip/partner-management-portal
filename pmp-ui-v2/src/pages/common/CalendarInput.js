@@ -16,6 +16,9 @@ const CustomDateInput = React.forwardRef(
     />
   )
 );
+CustomDateInput.propTypes = {
+  'data-placeholder-id': PropTypes.string,
+};
 
 function CalendarInput({ isUsedAsFilter, showCalendar, addInfoIcon, infoKey, infoKey1, setShowCalender, placeholderText, placeholderId, label, onChange, styleSet, selectedDateStr, containsAsterisk, id, minDate, disabled}) {
   const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);

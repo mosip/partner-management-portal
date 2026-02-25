@@ -405,6 +405,7 @@
         "usernameMustStartWithLetter": "Username must start with a letter",
         "errorInCreatingPartner": "Error occurred while creating partner",
         "mispPartnerSuccessHeader": "Partner Created Successfully!",
+        "abisPartnerSuccessHeader": "Partner Created Successfully!",
         "uploadMispPartnerCertificate": "Upload MISP Partner Certificate",
         "uploadAbisPartnerCertificate": "Upload ABIS Partner Certificate",
         "uploadManualAdjudicationPartnerCertificate": "Upload Manual Adjudication Partner Certificate",
