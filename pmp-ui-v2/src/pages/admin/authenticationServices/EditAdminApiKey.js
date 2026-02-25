@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useBlocker, useNavigate, useLocation } from 'react-router-dom';
+import { useBlocker, useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../../../services/UserProfileService';
-import { 
-    isLangRTL, 
-    formatDate, 
-    bgOfStatus, 
-    getStatusCode, 
-    getPartnerManagerUrl, 
-    handleServiceErrors, 
-    createRequest 
+import {
+    isLangRTL,
+    formatDate,
+    bgOfStatus,
+    getStatusCode,
+    getPartnerManagerUrl,
+    handleServiceErrors,
+    createRequest
 } from '../../../utils/AppUtils';
 import { HttpService } from '../../../services/HttpService';
 import Title from '../../common/Title';
@@ -23,7 +23,7 @@ import somethingWentWrongIcon from '../../../svg/something_went_wrong_icon.svg';
 function EditAdminApiKey() {
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const location = useLocation();
+
     const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [dataLoaded, setDataLoaded] = useState(false);
     const [errorCode, setErrorCode] = useState("");
@@ -38,7 +38,7 @@ function EditAdminApiKey() {
     const [isSubmitClicked, setIsSubmitClicked] = useState(false);
     const [originalExpiryDate, setOriginalExpiryDate] = useState("");
 
-    const apiKeysListReturnPath = location.state?.apiKeyListReturnPath || '/partnermanagement/admin/authentication-services/api-keys-list';
+    const apiKeysListReturnPath = sessionStorage.getItem('apiKeyListReturnPath') || '/partnermanagement/admin/authentication-services/api-keys-list';
 
     const blocker = useBlocker(
         ({ currentLocation, nextLocation }) => {
@@ -46,20 +46,21 @@ function EditAdminApiKey() {
                 return false;
             }
             return (
-                selectedDateStr !== originalExpiryDate && 
+                selectedDateStr !== originalExpiryDate &&
                 currentLocation.pathname !== nextLocation.pathname
             );
         }
     );
 
     useEffect(() => {
-        const apiKeyData = location.state?.selectedApiKeyAttributes;
-        if (!apiKeyData) {
+        const storedApiKeyData = sessionStorage.getItem('selectedApiKeyAttributes');
+        if (!storedApiKeyData) {
             setUnexpectedError(true);
             setDataLoaded(true);
             return;
         }
         try {
+            const apiKeyData = JSON.parse(storedApiKeyData);
             setApiKeyDetails(apiKeyData);
 
             if (apiKeyData?.apiKeyExpiryDateTime) {
@@ -75,12 +76,12 @@ function EditAdminApiKey() {
             }
             setDataLoaded(true);
         } catch (error) {
-            console.error('Error reading API key data from navigation state:', error);
+            console.error('Error reading API key data from sessionStorage:', error);
             setUnexpectedError(true);
             setDataLoaded(true);
             return;
         }
-    }, [location.state]);
+    }, []);
 
     useEffect(() => {
         if (editExpirySuccess) {
@@ -108,14 +109,14 @@ function EditAdminApiKey() {
     const handleDateChange = (dateStr) => {
         setSelectedDateStr(dateStr);
         setDateError("");
-        
+
         // Validate that the date is in the future (not today or past)
         if (dateStr) {
             const today = new Date();
             today.setHours(0, 0, 0, 0);
             const selectedDate = new Date(dateStr);
             selectedDate.setHours(0, 0, 0, 0);
-            
+
             if (selectedDate <= today) {
                 setDateError(t('apiKeysList.expiryDateMustBeFuture'));
             } else {
@@ -126,7 +127,7 @@ function EditAdminApiKey() {
 
     const clickOnSubmit = async () => {
         setIsSubmitClicked(true);
-        
+
         if (!selectedDateStr) {
             setDateError(t('apiKeysList.expiryDateRequired'));
             setIsSubmitClicked(false);
@@ -145,7 +146,7 @@ function EditAdminApiKey() {
         today.setHours(0, 0, 0, 0);
         const selectedDate = new Date(selectedDateStr);
         selectedDate.setHours(0, 0, 0, 0);
-        
+
         if (selectedDate <= today) {
             setDateError(t('apiKeysList.expiryDateMustBeFuture'));
             setIsSubmitClicked(false);
@@ -243,10 +244,10 @@ function EditAdminApiKey() {
                     )}
                     <div className={`flex-col mt-5 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm mb-[2%]`}>
                         <div className="flex justify-between mb-3">
-                            <Title 
-                                title='apiKeysList.editApiKeyExpiry' 
-                                subTitle='apiKeysList.listOfApiKeyRequests' 
-                                backLink={apiKeysListReturnPath} 
+                            <Title
+                                title='apiKeysList.editApiKeyExpiry'
+                                subTitle='apiKeysList.listOfApiKeyRequests'
+                                backLink={apiKeysListReturnPath}
                             />
                         </div>
 
@@ -383,25 +384,25 @@ function EditAdminApiKey() {
                                     </div>
                                     <hr className="h-px w-full bg-gray-200 border-0" />
                                     <div className={`flex flex-row px-7 py-5 justify-between`}>
-                                        <button 
-                                            id="edit_admin_api_key_undo_changes_btn" 
-                                            onClick={undoChanges} 
+                                        <button
+                                            id="edit_admin_api_key_undo_changes_btn"
+                                            onClick={undoChanges}
                                             className={`w-40 min-w-fit px-3 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}
                                         >
                                             {t('commons.undoChanges')}
                                         </button>
                                         <div className={`flex flex-row space-x-3 w-full md:w-auto justify-end`}>
-                                            <button 
-                                                id="edit_admin_api_key_cancel_btn" 
-                                                onClick={clickOnCancel} 
+                                            <button
+                                                id="edit_admin_api_key_cancel_btn"
+                                                onClick={clickOnCancel}
                                                 className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}
                                             >
                                                 {t('requestPolicy.cancel')}
                                             </button>
-                                            <button 
-                                                id="edit_admin_api_key_submit_btn" 
-                                                disabled={!isFormValid()} 
-                                                onClick={clickOnSubmit} 
+                                            <button
+                                                id="edit_admin_api_key_submit_btn"
+                                                disabled={!isFormValid()}
+                                                onClick={clickOnSubmit}
                                                 className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}
                                             >
                                                 {t('requestPolicy.submit')}

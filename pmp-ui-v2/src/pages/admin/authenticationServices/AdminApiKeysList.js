@@ -21,8 +21,17 @@ import disableDeactivateIcon from "../../../svg/disable_deactivate_icon.svg";
 import editIcon from "../../../svg/edit_policy_icon.svg";
 import { useNavigate } from 'react-router-dom';
 import DeactivatePopup from '../../common/DeactivatePopup.js';
+import PropTypes from 'prop-types';
 
-function AdminApiKeysList() {
+function AdminApiKeysList({
+    partnerType = 'Auth_Partner',
+    title = 'authenticationServices.authenticationServices',
+    returnPath = '/partnermanagement/admin/authentication-services/api-keys-list',
+    showTab = true,
+    listTitle = 'apiKeysList.listOfApiKeyRequests',
+    errorMsgKey = 'apiKeysList.errorInApiKeysList',
+    generateApiKeyOptions = null,
+}) {
     const { t } = useTranslation();
     const navigate = useNavigate('');
     const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
@@ -62,7 +71,6 @@ function AdminApiKeysList() {
     const tableHeaders = [
         { id: "partnerId", headerNameKey: 'oidcClientsList.partnerId' },
         { id: "orgName", headerNameKey: 'oidcClientsList.orgName' },
-        { id: "partnerType", headerNameKey: "apiKeysList.partnerType" },
         { id: "policyGroupName", headerNameKey: "oidcClientsList.policyGroup" },
         { id: "policyName", headerNameKey: "oidcClientsList.policyName" },
         { id: "apiKeyLabel", headerNameKey: "apiKeysList.apiKeyName" },
@@ -87,7 +95,7 @@ function AdminApiKeysList() {
         queryParams.append('pageNo', effectivePageNo);
         setResetPageNo(false);
 
-        queryParams.append('partnerType', 'Auth_Partner');
+        queryParams.append('partnerType', partnerType);
         if (filterAttributes.partnerId) queryParams.append('partnerId', filterAttributes.partnerId);
         if (filterAttributes.orgName) queryParams.append('orgName', filterAttributes.orgName);
         if (filterAttributes.policyGroupName) queryParams.append('policyGroupName', filterAttributes.policyGroupName);
@@ -109,7 +117,7 @@ function AdminApiKeysList() {
                     handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                 }
             } else {
-                setErrorMsg(t('apiKeysList.errorInApiKeysList'));
+                setErrorMsg(t(errorMsgKey));
             }
             fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
             setFetchData(false);
@@ -188,12 +196,10 @@ function AdminApiKeysList() {
     const editExpiryDate = (selectedApiKeyData, index) => {
         if (selectedApiKeyData.status !== "deactivated") {
             setActionId(-1);
-            navigate('/partnermanagement/admin/authentication-services/edit-api-key', {
-                state: {
-                    selectedApiKeyAttributes: selectedApiKeyData,
-                    apiKeyListReturnPath: '/partnermanagement/admin/authentication-services/api-keys-list',
-                },
-            });
+            // codeql[js/stored-xss]: Data stored in sessionStorage does not contain sensitive information
+            sessionStorage.setItem('selectedApiKeyAttributes', JSON.stringify(selectedApiKeyData));
+            sessionStorage.setItem('apiKeyListReturnPath', returnPath);
+            navigate('/partnermanagement/admin/authentication-services/edit-api-key');
         }
     };
 
@@ -210,12 +216,16 @@ function AdminApiKeysList() {
     };
 
     const viewApiKeyRequestDetails = (selectedApiKey) => {
-        navigate('/partnermanagement/admin/authentication-services/view-api-key-details', {
-            state: {
-                selectedApiKeyAttributes: selectedApiKey,
-                apiKeyListReturnPath: '/partnermanagement/admin/authentication-services/api-keys-list',
-            },
-        });
+        // codeql[js/stored-xss]: Data stored in sessionStorage does not contain sensitive information
+        sessionStorage.setItem('selectedApiKeyAttributes', JSON.stringify(selectedApiKey));
+        sessionStorage.setItem('apiKeyListReturnPath', returnPath);
+        navigate('/partnermanagement/admin/authentication-services/view-api-key-details');
+    };
+
+    const onClickGenerateApiKey = () => {
+        if (generateApiKeyOptions?.path) {
+            navigate(generateApiKeyOptions.path);
+        }
     };
 
     const cancelErrorMsg = () => {
@@ -239,22 +249,38 @@ function AdminApiKeysList() {
                     )}
                     <div className="flex-col mt-5">
                         <div className="flex justify-between mb-5 max-470:flex-col">
-                            <Title title='authenticationServices.authenticationServices' backLink='/partnermanagement' />
+                            <Title title={title} backLink='/partnermanagement' />
+                            {generateApiKeyOptions && (
+                                <button
+                                    id={generateApiKeyOptions.buttonId || 'generate_api_key_btn'}
+                                    type="button"
+                                    onClick={onClickGenerateApiKey}
+                                    className="h-10 text-sm font-semibold px-5 rounded-md bg-tory-blue text-white"
+                                >
+                                    {t(generateApiKeyOptions.label)}
+                                </button>
+                            )}
                         </div>
-                        <AuthenticationServicesTab
+                        {showTab && <AuthenticationServicesTab
                             activeOidcClient={false}
                             oidcClientPath='/partnermanagement/admin/authentication-services/oidc-clients-list'
                             activeApiKey={true}
                             apiKeyPath='/partnermanagement/admin/authentication-services/api-keys-list'
-                        />
+                        />}
                         {!applyFilter && apiKeysList.length === 0 ? (
                             <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
-                                <EmptyList tableHeaders={tableHeaders} />
+                                <EmptyList
+                                    tableHeaders={tableHeaders}
+                                    showCustomButton={!!generateApiKeyOptions}
+                                    customButtonName={generateApiKeyOptions?.label}
+                                    buttonId={generateApiKeyOptions?.emptyButtonId || 'empty_generate_api_key_btn'}
+                                    onClickButton={onClickGenerateApiKey}
+                                />
                             </div>
                         ) : (
                             <div className={`bg-[#FCFCFC] w-full mt-1 rounded-t-xl shadow-lg pt-3 ${!tableDataLoaded && "py-6"}`}>
                                 <FilterButtons
-                                    listTitle='apiKeysList.listOfApiKeyRequests'
+                                    listTitle={listTitle}
                                     dataListLength={totalRecords}
                                     filter={expandFilter}
                                     onResetFilter={onResetFilter}
@@ -305,7 +331,6 @@ function AdminApiKeysList() {
                                                                             className={`border-t border-[#E5EBFA] ${apiKey.status !== 'deactivated' ? 'cursor-pointer' : 'cursor-default'} text-[0.8rem] text-[#191919] font-semibold break-words ${apiKey.status === 'deactivated' ? "text-[#969696]" : "text-[#191919]"}`}>
                                                                             <td onClick={() => apiKey.status !== 'deactivated' && viewApiKeyRequestDetails(apiKey)} className="px-2">{apiKey.partnerId}</td>
                                                                             <td onClick={() => apiKey.status !== 'deactivated' && viewApiKeyRequestDetails(apiKey)} className="px-2">{apiKey.orgName ? apiKey.orgName : '-'}</td>
-                                                                            <td onClick={() => apiKey.status !== 'deactivated' && viewApiKeyRequestDetails(apiKey)} className="px-2">{apiKey.partnerType ? (getPartnerTypeDescription(apiKey.partnerType, t) || apiKey.partnerType) : '-'}</td>
                                                                             <td onClick={() => apiKey.status !== 'deactivated' && viewApiKeyRequestDetails(apiKey)} className="px-2">{apiKey.policyGroupName ? apiKey.policyGroupName : '-'}</td>
                                                                             <td onClick={() => apiKey.status !== 'deactivated' && viewApiKeyRequestDetails(apiKey)} className="px-2">{apiKey.policyName ? apiKey.policyName : '-'}</td>
                                                                             <td onClick={() => apiKey.status !== 'deactivated' && viewApiKeyRequestDetails(apiKey)} className="px-2">{apiKey.apiKeyLabel}</td>
@@ -379,4 +404,19 @@ function AdminApiKeysList() {
         </div>
     );
 }
+AdminApiKeysList.propTypes = {
+    partnerType: PropTypes.string,
+    title: PropTypes.string,
+    returnPath: PropTypes.string,
+    showTab: PropTypes.bool,
+    listTitle: PropTypes.string,
+    errorMsgKey: PropTypes.string,
+    generateApiKeyOptions: PropTypes.shape({
+        path: PropTypes.string.isRequired,
+        label: PropTypes.string.isRequired,
+        buttonId: PropTypes.string,
+        emptyButtonId: PropTypes.string,
+    }),
+};
+
 export default AdminApiKeysList;
