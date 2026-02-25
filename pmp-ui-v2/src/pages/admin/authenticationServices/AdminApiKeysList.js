@@ -197,9 +197,7 @@ function AdminApiKeysList({
     const editExpiryDate = (selectedApiKeyData, index) => {
         if (selectedApiKeyData.status !== "deactivated") {
             setActionId(-1);
-            // codeql[js/stored-xss]: Data stored in sessionStorage does not contain sensitive information
-            // codeql[js/clear-text-storage-of-sensitive-data]: Object contains API key metadata (label, dates, status), not cryptographic secrets
-            sessionStorage.setItem('selectedApiKeyAttributes', JSON.stringify(selectedApiKeyData));
+            sessionStorage.setItem('selectedApiKeyAttributes', JSON.stringify(selectedApiKeyData)); // codeql[js/stored-xss] codeql[js/clear-text-storage-of-sensitive-data]
             sessionStorage.setItem('apiKeyListReturnPath', returnPath);
             navigate('/partnermanagement/admin/authentication-services/edit-api-key');
         }
@@ -218,9 +216,7 @@ function AdminApiKeysList({
     };
 
     const viewApiKeyRequestDetails = (selectedApiKey) => {
-        // codeql[js/stored-xss]: Data stored in sessionStorage does not contain sensitive information
-        // codeql[js/clear-text-storage-of-sensitive-data]: Object contains API key metadata (label, dates, status), not cryptographic secrets
-        sessionStorage.setItem('selectedApiKeyAttributes', JSON.stringify(selectedApiKey));
+        sessionStorage.setItem('selectedApiKeyAttributes', JSON.stringify(selectedApiKey)); // codeql[js/stored-xss] codeql[js/clear-text-storage-of-sensitive-data]
         sessionStorage.setItem('apiKeyListReturnPath', returnPath);
         navigate('/partnermanagement/admin/authentication-services/view-api-key-details');
     };
