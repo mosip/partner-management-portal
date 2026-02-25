@@ -31,6 +31,7 @@ function AdminApiKeysList({
     listTitle = 'apiKeysList.listOfApiKeyRequests',
     errorMsgKey = 'apiKeysList.errorInApiKeysList',
     generateApiKeyOptions = null,
+    enableActions = true,
 }) {
     const { t } = useTranslation();
     const navigate = useNavigate('');
@@ -348,20 +349,34 @@ function AdminApiKeysList({
                                                                                     </button>
                                                                                     {actionId === index && (
                                                                                         <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-10 text-right" : "right-11 text-left"}`}>
-                                                                                            <div role='button' className="flex justify-between hover:bg-gray-100" onClick={() => viewApiKeyRequestDetails(apiKey)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => viewApiKeyRequestDetails(apiKey))}>
-                                                                                                <p id="api_key_list_view_btn" className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerList.view")}</p>
-                                                                                                <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
-                                                                                            </div>
-                                                                                            <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                            <div role='button' className={`flex justify-between hover:bg-gray-100 ${apiKey.status !== 'deactivated' ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => editExpiryDate(apiKey, index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => editExpiryDate(apiKey, index))}>
-                                                                                                <p id="api_key_list_edit_expiry_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${apiKey.status !== 'deactivated' ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("apiKeysList.editExpiryDate") || "Edit Expiry Date"}</p>
-                                                                                                <img src={editIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
-                                                                                            </div>
-                                                                                            <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                            <div role='button' className={`flex justify-between hover:bg-gray-100 ${apiKey.status === 'activated' ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => deactivateApiKey(apiKey, index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => deactivateApiKey(apiKey, index))}>
-                                                                                                <p id="api_key_list_deactivate_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${apiKey.status === 'activated' ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("partnerList.deActivate")}</p>
-                                                                                                <img src={apiKey.status === 'activated' ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
-                                                                                            </div>
+                                                                                            {enableActions ? (
+                                                                                                <>
+                                                                                                    <div role='button' className="flex justify-between hover:bg-gray-100" onClick={() => viewApiKeyRequestDetails(apiKey)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => viewApiKeyRequestDetails(apiKey))}>
+                                                                                                        <p id="api_key_list_view_btn" className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerList.view")}</p>
+                                                                                                        <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
+                                                                                                    </div>
+                                                                                                    <hr className="h-px bg-gray-100 border-0 mx-1" />
+                                                                                                    <div role='button' className={`flex justify-between hover:bg-gray-100 ${apiKey.status !== 'deactivated' ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => editExpiryDate(apiKey, index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => editExpiryDate(apiKey, index))}>
+                                                                                                        <p id="api_key_list_edit_expiry_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${apiKey.status !== 'deactivated' ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("apiKeysList.editExpiryDate") || "Edit Expiry Date"}</p>
+                                                                                                        <img src={editIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
+                                                                                                    </div>
+                                                                                                    <hr className="h-px bg-gray-100 border-0 mx-1" />
+                                                                                                    <div role='button' className={`flex justify-between hover:bg-gray-100 ${apiKey.status === 'activated' ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => deactivateApiKey(apiKey, index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => deactivateApiKey(apiKey, index))}>
+                                                                                                        <p id="api_key_list_deactivate_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${apiKey.status === 'activated' ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("partnerList.deActivate")}</p>
+                                                                                                        <img src={apiKey.status === 'activated' ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
+                                                                                                    </div>
+                                                                                                </>
+                                                                                            ) : (
+                                                                                                <>
+                                                                                                    <div className={`flex justify-between py-1.5 px-4 cursor-default text-[#A5A5A5] ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>
+                                                                                                        <p id="api_key_list_view_btn">{t("partnerList.view")}</p>
+                                                                                                    </div>
+                                                                                                    <hr className="h-px bg-gray-100 border-0 mx-1" />
+                                                                                                    <div className={`flex justify-between py-1.5 px-4 cursor-default text-[#A5A5A5] ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>
+                                                                                                        <p id="api_key_list_deactivate_btn">{t("partnerList.deActivate")}</p>
+                                                                                                    </div>
+                                                                                                </>
+                                                                                            )}
                                                                                         </div>
                                                                                     )}
                                                                                     {showActiveIndexDeactivatePopup === index && (
@@ -417,6 +432,7 @@ AdminApiKeysList.propTypes = {
         buttonId: PropTypes.string,
         emptyButtonId: PropTypes.string,
     }),
+    enableActions: PropTypes.bool,
 };
 
 export default AdminApiKeysList;

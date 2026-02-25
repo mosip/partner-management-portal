@@ -9,6 +9,7 @@ function ManualAdjudicationServices() {
             showTab={false}
             listTitle="manualAdjudicationServices.listOfManualAdjudicationApiKeys"
             errorMsgKey="manualAdjudicationServices.errorInManualAdjudicationList"
+            enableActions={false}
             generateApiKeyOptions={{
                 path: '/partnermanagement/admin/manual-adjudication-services/generate-api-key',
                 label: 'manualAdjudicationServices.generateApiKey',
