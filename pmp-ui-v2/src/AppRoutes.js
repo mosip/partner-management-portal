@@ -372,7 +372,7 @@ function AppRoutes() {
           element: <RuntimeError />,
         },
         {
-          path: 'admin/manual-adjudication-services',
+          path: 'admin/manual-adjudication-services/api-keys-list',
           element: <GuardedRoute><MainLayout><ManualAdjudicationServices /></MainLayout></GuardedRoute>,
         },
         {

@@ -78,7 +78,7 @@ function GenerateManualAdjudicationApiKey() {
   }, [partnerId, policyName, apiKeyName, isSubmitClicked, generateApiKeySuccess]);
 
   useEffect(() => {
-        if (hasFetchedPartners.current) {
+    if (hasFetchedPartners.current) {
       return;
     }
 
@@ -122,7 +122,7 @@ function GenerateManualAdjudicationApiKey() {
   };
 
   const clickOnCancel = () => {
-    navigate("/partnermanagement/admin/manual-adjudication-services");
+    navigate("/partnermanagement/admin/manual-adjudication-services/api-keys-list");
   };
 
   const clearForm = () => {
@@ -139,41 +139,41 @@ function GenerateManualAdjudicationApiKey() {
   };
 
   const getListOfPolicies = async (selectedPartner) => {
-  try {
-    setDataLoaded(false);
+    try {
+      setDataLoaded(false);
 
-    const queryParams = new URLSearchParams();
-    queryParams.append("partnerId", selectedPartner.partnerId);
-    queryParams.append("partnerIdSearchType", "equals");
-    queryParams.append("policyGroupName", selectedPartner.policyGroupName);
-    queryParams.append("status", "approved");
+      const queryParams = new URLSearchParams();
+      queryParams.append("partnerId", selectedPartner.partnerId);
+      queryParams.append("partnerIdSearchType", "equals");
+      queryParams.append("policyGroupName", selectedPartner.policyGroupName);
+      queryParams.append("status", "approved");
 
-    const response = await HttpService.get(
-      `${getPartnerManagerUrl("/partner-policy-requests", process.env.NODE_ENV)}?${queryParams.toString()}`,
-    );
-
-    if (response?.data?.response) {
-      const responsePolicies = response.data.response;
-      const policies = Array.isArray(responsePolicies?.data)
-        ? responsePolicies.data
-        : [];
-
-      setPolicyList(policies);
-
-      setPoliciesDropdownData(
-        createDropdownData("policyName", "policyDescription", false, policies, t)
+      const response = await HttpService.get(
+        `${getPartnerManagerUrl("/partner-policy-requests", process.env.NODE_ENV)}?${queryParams.toString()}`,
       );
-    } else {
-      handleServiceErrors(response?.data, setErrorCode, setErrorMsg);
+
+      if (response?.data?.response) {
+        const responsePolicies = response.data.response;
+        const policies = Array.isArray(responsePolicies?.data)
+          ? responsePolicies.data
+          : [];
+
+        setPolicyList(policies);
+
+        setPoliciesDropdownData(
+          createDropdownData("policyName", "policyDescription", false, policies, t)
+        );
+      } else {
+        handleServiceErrors(response?.data, setErrorCode, setErrorMsg);
+      }
+    } catch (err) {
+      if (err.response?.status && err.response.status !== 401) {
+        setErrorMsg(err.response?.data?.errors?.[0]?.message || err.toString());
+      }
+    } finally {
+      setDataLoaded(true);
     }
-  } catch (err) {
-    if (err.response?.status && err.response.status !== 401) {
-      setErrorMsg(err.response?.data?.errors?.[0]?.message || err.toString());
-    }
-  } finally {
-    setDataLoaded(true);
-  }
-};
+  };
 
 
   const onChangePartnerId = async (fieldName, selectedValue) => {
@@ -193,19 +193,19 @@ function GenerateManualAdjudicationApiKey() {
     }
   };
 
-const onChangePolicyName = (fieldName, selectedValue) => {
-  const selectedPolicy = policyList.find(
-   (policy) => policy.policyName === selectedValue
-  );
+  const onChangePolicyName = (fieldName, selectedValue) => {
+    const selectedPolicy = policyList.find(
+      (policy) => policy.policyName === selectedValue
+    );
 
-  if (selectedPolicy) {
-    setPolicyName(selectedPolicy.policyName);
-    setPolicyId(selectedPolicy.policyId); 
-  } else {
-    setPolicyName(selectedValue);
-    setPolicyId("");
-  }
-};
+    if (selectedPolicy) {
+      setPolicyName(selectedPolicy.policyName);
+      setPolicyId(selectedPolicy.policyId);
+    } else {
+      setPolicyName(selectedValue);
+      setPolicyId("");
+    }
+  };
 
 
   const onChangeApiKeyName = (value) => {
@@ -219,59 +219,59 @@ const onChangePolicyName = (fieldName, selectedValue) => {
 
 
   const clickOnSubmit = async () => {
-  setShowPopup(false);
-  setIsSubmitClicked(true);
-  setErrorCode("");
-  setErrorMsg("");
-  setDataLoaded(false);
+    setShowPopup(false);
+    setIsSubmitClicked(true);
+    setErrorCode("");
+    setErrorMsg("");
+    setDataLoaded(false);
 
-  const request = {
-  id: "mosip.pms.generate.api.key.post",
-  version: "1.0",
-  requestTime: new Date().toISOString(),
-  request: {
-    apiKeyName: trimAndReplace(apiKeyName),
-  },
-};
+    const request = {
+      id: "mosip.pms.generate.api.key.post",
+      version: "1.0",
+      requestTime: new Date().toISOString(),
+      request: {
+        apiKeyName: trimAndReplace(apiKeyName),
+      },
+    };
 
-  try {
-    const response = await HttpService.post(
-      getPartnerManagerUrl(
-        `/partners/${partnerId}/policies/${policyId}/api-keys`,
-        process.env.NODE_ENV
-      ),
-      request,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
+    try {
+      const response = await HttpService.post(
+        getPartnerManagerUrl(
+          `/partners/${partnerId}/policies/${policyId}/api-keys`,
+          process.env.NODE_ENV
+        ),
+        request,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response?.data?.response) {
+        const requireData = {
+          title: "manualAdjudicationServices.generateApiKey",
+          backUrl: "/partnermanagement/admin/manual-adjudication-services/api-keys-list",
+          header: "generateApiKey.generateApiKeySuccessHeader",
+          description: "generateApiKey.apiKeySuccessMsg",
+          subNavigation: "dashboard.manualAdjudication",
+        };
+
+        setConfirmationData(requireData);
+        setApiKeyId(response.data.response.apiKey);
+        setShowPopup(true);
+      } else {
+        handleServiceErrors(response?.data, setErrorCode, setErrorMsg);
       }
-    );
-
-    if (response?.data?.response) {
-      const requireData = {
-        title: "manualAdjudicationServices.generateApiKey",
-        backUrl: "/partnermanagement/admin/manual-adjudication-services",
-        header: "generateApiKey.generateApiKeySuccessHeader",
-        description: "generateApiKey.apiKeySuccessMsg",
-        subNavigation: "dashboard.manualAdjudication",
-      };
-
-      setConfirmationData(requireData);
-      setApiKeyId(response.data.response.apiKey);
-      setShowPopup(true);
-    } else {
-      handleServiceErrors(response?.data, setErrorCode, setErrorMsg);
+    } catch (err) {
+      if (err.response?.status && err.response.status !== 401) {
+        setErrorMsg(err.response?.data?.errors?.[0]?.message || err.toString());
+      }
+    } finally {
+      setDataLoaded(true);
+      setIsSubmitClicked(false);
     }
-  } catch (err) {
-    if (err.response?.status && err.response.status !== 401) {
-      setErrorMsg(err.response?.data?.errors?.[0]?.message || err.toString());
-    }
-  } finally {
-    setDataLoaded(true);
-    setIsSubmitClicked(false);
-  }
-};
+  };
 
 
   const closePopUp = (state) => {
@@ -308,7 +308,7 @@ const onChangePolicyName = (fieldName, selectedValue) => {
               <Title
                 title="manualAdjudicationServices.generateApiKey"
                 subTitle="dashboard.manualAdjudication"
-                backLink="/partnermanagement/admin/manual-adjudication-services"
+                backLink="/partnermanagement/admin/manual-adjudication-services/api-keys-list"
               />
             </div>
             {!generateApiKeySuccess ? (

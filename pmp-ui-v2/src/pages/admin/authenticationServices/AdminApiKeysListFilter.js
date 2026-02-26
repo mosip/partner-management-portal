@@ -6,7 +6,7 @@ import { createDropdownData, getFilterDropdownStyle, getFilterTextFieldStyle, is
 import { getUserProfile } from '../../../services/UserProfileService';
 import PropTypes from 'prop-types';
 
-function AdminApiKeysListFilter({ onApplyFilter }) {
+function AdminApiKeysListFilter({ onApplyFilter, fieldNameKeys }) {
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [status, setStatus] = useState([]);
@@ -48,7 +48,7 @@ function AdminApiKeysListFilter({ onApplyFilter }) {
 
     const areFiltersEmpty = () => {
         return Object.values(filters).every(value => value === "") || invalidPartnerId
-        || invalidOrgName || invalidPolicyGroupName || invalidPolicyName || invalidApiKeyLabel;
+            || invalidOrgName || invalidPolicyGroupName || invalidPolicyName || invalidApiKeyLabel;
     };
 
     return (
@@ -56,7 +56,7 @@ function AdminApiKeysListFilter({ onApplyFilter }) {
             <TextInputComponent
                 fieldName="partnerId"
                 onTextChange={onFilterChangeEvent}
-                fieldNameKey="oidcClientsList.partnerId"
+                fieldNameKey={fieldNameKeys.partnerId}
                 placeHolderKey="partnerList.searchPartnerId"
                 styleSet={getFilterTextFieldStyle()}
                 id="partner_id_filter"
@@ -66,7 +66,7 @@ function AdminApiKeysListFilter({ onApplyFilter }) {
             <TextInputComponent
                 fieldName="orgName"
                 onTextChange={onFilterChangeEvent}
-                fieldNameKey="oidcClientsList.orgName"
+                fieldNameKey={fieldNameKeys.orgName}
                 placeHolderKey="partnerList.searchOrganisation"
                 styleSet={getFilterTextFieldStyle()}
                 id="org_name_filter"
@@ -76,7 +76,7 @@ function AdminApiKeysListFilter({ onApplyFilter }) {
             <TextInputComponent
                 fieldName="policyGroupName"
                 onTextChange={onFilterChangeEvent}
-                fieldNameKey="policiesList.policyGroup"
+                fieldNameKey={fieldNameKeys.policyGroupName}
                 placeHolderKey="policiesList.searchPolicyGroup"
                 styleSet={getFilterTextFieldStyle()}
                 id="policy_group_filter"
@@ -86,7 +86,7 @@ function AdminApiKeysListFilter({ onApplyFilter }) {
             <TextInputComponent
                 fieldName="policyName"
                 onTextChange={onFilterChangeEvent}
-                fieldNameKey="oidcClientsList.policyName"
+                fieldNameKey={fieldNameKeys.policyName}
                 placeHolderKey="policiesList.searchPolicyName"
                 styleSet={getFilterTextFieldStyle()}
                 id="policy_name_filter"
@@ -96,7 +96,7 @@ function AdminApiKeysListFilter({ onApplyFilter }) {
             <TextInputComponent
                 fieldName="apiKeyLabel"
                 onTextChange={onFilterChangeEvent}
-                fieldNameKey="apiKeysList.apiKeyName"
+                fieldNameKey={fieldNameKeys.apiKeyLabel}
                 placeHolderKey="apiKeysList.searchApiKeyName"
                 styleSet={getFilterTextFieldStyle()}
                 id="api_key_name_filter"
@@ -131,6 +131,13 @@ function AdminApiKeysListFilter({ onApplyFilter }) {
 
 AdminApiKeysListFilter.propTypes = {
     onApplyFilter: PropTypes.func.isRequired,
+    fieldNameKeys: PropTypes.shape({
+        partnerId: PropTypes.string.isRequired,
+        orgName: PropTypes.string.isRequired,
+        policyGroupName: PropTypes.string.isRequired,
+        policyName: PropTypes.string.isRequired,
+        apiKeyLabel: PropTypes.string.isRequired,
+    }).isRequired,
 };
 
 export default AdminApiKeysListFilter;
