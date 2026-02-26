@@ -47,6 +47,8 @@ function SideNav({ open, policyRequiredPartnerTypes }) {
             setActiveIcon("partnerPolicyMapping");
         } else if (selectedPath.includes('misp-partner-services')) {
             setActiveIcon("mispPartnerServices");
+        } else if (selectedPath.includes('manual-adjudication-services')) {
+            setActiveIcon("manualAdjudicationServices");
         }
         else {
             setActiveIcon("home");
