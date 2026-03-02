@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { getUserProfile } from '../../../services/UserProfileService';
+import { getUserProfile } from '../../../services/UserProfileService.js';
 import {
     isLangRTL, resetPageNumber, onClickApplyFilter, setPageNumberAndPageSize,
     getPartnerManagerUrl, handleServiceErrors, onResetFilter, formatDate, bgOfStatus, getStatusCode
-} from '../../../utils/AppUtils';
-import ErrorMessage from '../../common/ErrorMessage';
-import LoadingIcon from '../../common/LoadingIcon';
-import EmptyList from '../../common/EmptyList';
+} from '../../../utils/AppUtils.js';
+import ErrorMessage from '../../common/ErrorMessage.js';
+import LoadingIcon from '../../common/LoadingIcon.js';
+import EmptyList from '../../common/EmptyList.js';
 import Title from '../../common/Title.js';
 import { HttpService } from '../../../services/HttpService.js';
 import FilterButtons from '../../common/FilterButtons.js';
@@ -16,7 +16,7 @@ import SortingIcon from '../../common/SortingIcon.js';
 import Pagination from '../../common/Pagination.js';
 import { useNavigate } from 'react-router-dom';
 
-function ManualAdjudicationServices() {
+function ManualAdjudicationApiKeysList() {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
@@ -171,6 +171,11 @@ function ManualAdjudicationServices() {
                     <div className="flex-col mt-5">
                         <div className="flex justify-between mb-5 max-470:flex-col">
                             <Title title='dashboard.manualAdjudication' backLink='/partnermanagement' />
+                            {apiKeysList.length > 0 &&
+                                <button id='generate_api_key_btn' onClick={generateApiKey} className="h-10 text-sm font-semibold text-white px-7 rounded-md bg-tory-blue">
+                                    {t('manualAdjudicationServices.generateApiKey')}
+                                </button>
+                            }
                         </div>
                         {!applyFilter && apiKeysList.length === 0 ? (
                             <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
@@ -193,16 +198,7 @@ function ManualAdjudicationServices() {
                                 />
                                 <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
                                 {expandFilter && (
-                                    <AdminApiKeysListFilter
-                                        onApplyFilter={onApplyFilter}
-                                        fieldNameKeys={{
-                                            partnerId: "manualAdjudicationServices.partnerId",
-                                            orgName: "manualAdjudicationServices.orgName",
-                                            policyGroupName: "manualAdjudicationServices.policyGroup",
-                                            policyName: "manualAdjudicationServices.policyName",
-                                            apiKeyLabel: "manualAdjudicationServices.apiKeyName"
-                                        }}
-                                    />
+                                    <AdminApiKeysListFilter onApplyFilter={onApplyFilter} />
                                 )}
                                 {!tableDataLoaded ? (
                                     <LoadingIcon styleSet={styles} />
@@ -280,4 +276,4 @@ function ManualAdjudicationServices() {
     );
 }
 
-export default ManualAdjudicationServices;
+export default ManualAdjudicationApiKeysList;

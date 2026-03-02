@@ -254,16 +254,7 @@ function AdminApiKeysList() {
                                 />
                                 <hr className="h-0.5 mt-3 bg-gray-200 border-0" />
                                 {expandFilter && (
-                                    <AdminApiKeysListFilter
-                                        onApplyFilter={onApplyFilter}
-                                        fieldNameKeys={{
-                                            partnerId: "oidcClientsList.partnerId",
-                                            orgName: "oidcClientsList.orgName",
-                                            policyGroupName: "policiesList.policyGroup",
-                                            policyName: "oidcClientsList.policyName",
-                                            apiKeyLabel: "apiKeysList.apiKeyName"
-                                        }}
-                                    />
+                                    <AdminApiKeysListFilter onApplyFilter={onApplyFilter} />
                                 )}
                                 {!tableDataLoaded ? (
                                     <LoadingIcon styleSet={styles} />
