@@ -19,12 +19,15 @@ import viewIcon from "../../../svg/view_icon.svg";
 import deactivateIcon from "../../../svg/deactivate_icon.svg";
 import disableDeactivateIcon from "../../../svg/disable_deactivate_icon.svg";
 import editIcon from "../../../svg/edit_policy_icon.svg";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import DeactivatePopup from '../../common/DeactivatePopup.js';
 
 function AdminApiKeysList() {
     const { t } = useTranslation();
     const navigate = useNavigate('');
+    const location = useLocation();
+    const isManualAdjudication = location.pathname?.includes('manual-adjudication-services') ?? false;
+    const partnerType = isManualAdjudication ? 'Manual_Adjudication' : 'Auth_Partner';
     const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
@@ -80,7 +83,7 @@ function AdminApiKeysList() {
         queryParams.append('sortFieldName', sortFieldName);
         queryParams.append('sortType', sortType);
         queryParams.append('pageSize', pageSize);
-        queryParams.append('partnerType', 'Auth_Partner');
+        queryParams.append('partnerType', partnerType);
 
         //reset page number to 0 if filter applied or page number is out of bounds
         const effectivePageNo = resetPageNumber(totalRecords, pageNo, pageSize, resetPageNo);
@@ -101,14 +104,14 @@ function AdminApiKeysList() {
             if (response) {
                 const responseData = response.data;
                 if (responseData?.response) {
-                    const resData = responseData.response.data;
-                    setTotalRecords(responseData.response.totalResults);
+                    const resData = Array.isArray(responseData.response.data) ? responseData.response.data : [];
+                    setTotalRecords(responseData.response.totalResults ?? 0);
                     setApiKeysList(resData);
                 } else {
                     handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                 }
             } else {
-                setErrorMsg(t('apiKeysList.errorInApiKeysList'));
+                setErrorMsg(t(isManualAdjudication ? 'manualAdjudicationServices.errorInManualAdjudicationList' : 'apiKeysList.errorInApiKeysList'));
             }
             fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
             setFetchData(false);
@@ -124,7 +127,7 @@ function AdminApiKeysList() {
 
     useEffect(() => {
         fetchApiKeysListData();
-    }, [sortFieldName, sortType, pageNo, pageSize]);
+    }, [sortFieldName, sortType, pageNo, pageSize, partnerType]);
 
     useEffect(() => {
 
@@ -215,6 +218,10 @@ function AdminApiKeysList() {
         setErrorMsg("");
     };
 
+    const generateApiKey = () => {
+        navigate('/partnermanagement/admin/manual-adjudication-services/generate-api-key');
+    };
+
     const styles = {
         loadingDiv: "!py-[20%]",
         outerDiv: "!bg-opacity-[16%]"
@@ -228,26 +235,43 @@ function AdminApiKeysList() {
             {dataLoaded && (
                 <>
                     {errorMsg && (
-                        <ErrorMessage id='admin_api_key_list_error_msg' errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
+                        <ErrorMessage id={isManualAdjudication ? 'manual_adjudication_list_error_msg' : 'admin_api_key_list_error_msg'} errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
                     <div className="flex-col mt-5">
                         <div className="flex justify-between mb-5 max-470:flex-col">
-                            <Title title='authenticationServices.authenticationServices' backLink='/partnermanagement' />
+                            <Title title={isManualAdjudication ? 'dashboard.manualAdjudication' : 'authenticationServices.authenticationServices'} backLink='/partnermanagement' />
+                            {isManualAdjudication && apiKeysList.length > 0 && (
+                                <button id='generate_api_key_btn' onClick={generateApiKey} className="h-10 text-sm font-semibold text-white px-7 rounded-md bg-tory-blue">
+                                    {t('manualAdjudicationServices.generateApiKey')}
+                                </button>
+                            )}
                         </div>
-                        <AuthenticationServicesTab
-                            activeOidcClient={false}
-                            oidcClientPath='/partnermanagement/admin/authentication-services/oidc-clients-list'
-                            activeApiKey={true}
-                            apiKeyPath='/partnermanagement/admin/authentication-services/api-keys-list'
-                        />
+                        {!isManualAdjudication && (
+                            <AuthenticationServicesTab
+                                activeOidcClient={false}
+                                oidcClientPath='/partnermanagement/admin/authentication-services/oidc-clients-list'
+                                activeApiKey={true}
+                                apiKeyPath='/partnermanagement/admin/authentication-services/api-keys-list'
+                            />
+                        )}
                         {!applyFilter && apiKeysList.length === 0 ? (
                             <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
-                                <EmptyList tableHeaders={tableHeaders} />
+                                {isManualAdjudication ? (
+                                    <EmptyList
+                                        tableHeaders={tableHeaders}
+                                        showCustomButton={true}
+                                        customButtonName='manualAdjudicationServices.generateApiKey'
+                                        buttonId='generate_api_key'
+                                        onClickButton={generateApiKey}
+                                    />
+                                ) : (
+                                    <EmptyList tableHeaders={tableHeaders} />
+                                )}
                             </div>
                         ) : (
                             <div className={`bg-[#FCFCFC] w-full mt-1 rounded-t-xl shadow-lg pt-3 ${!tableDataLoaded && "py-6"}`}>
                                 <FilterButtons
-                                    listTitle='apiKeysList.listOfApiKeyRequests'
+                                    listTitle={isManualAdjudication ? 'manualAdjudicationServices.listOfManualAdjudicationApiKeys' : 'apiKeysList.listOfApiKeyRequests'}
                                     dataListLength={totalRecords}
                                     filter={expandFilter}
                                     onResetFilter={onResetFilter}
@@ -293,41 +317,43 @@ function AdminApiKeysList() {
                                                             </thead>
                                                             <tbody>
                                                                 {apiKeysList.map((apiKey, index) => {
+                                                                    const actionsDisabled = isManualAdjudication;
+                                                                    const cellClick = !actionsDisabled && apiKey.status !== 'deactivated' ? () => viewApiKeyRequestDetails(apiKey) : undefined;
                                                                     return (
-                                                                        <tr id={"api_key_list_item" + (index + 1)} key={index}
-                                                                            className={`border-t border-[#E5EBFA] ${apiKey.status !== 'deactivated' ? 'cursor-pointer' : 'cursor-default'} text-[0.8rem] text-[#191919] font-semibold break-words ${apiKey.status === 'deactivated' ? "text-[#969696]" : "text-[#191919]"}`}>
-                                                                            <td onClick={() => apiKey.status !== 'deactivated' && viewApiKeyRequestDetails(apiKey)} className="px-2">{apiKey.partnerId}</td>
-                                                                            <td onClick={() => apiKey.status !== 'deactivated' && viewApiKeyRequestDetails(apiKey)} className="px-2">{apiKey.orgName ? apiKey.orgName : '-'}</td>
-                                                                            <td onClick={() => apiKey.status !== 'deactivated' && viewApiKeyRequestDetails(apiKey)} className="px-2">{apiKey.policyGroupName ? apiKey.policyGroupName : '-'}</td>
-                                                                            <td onClick={() => apiKey.status !== 'deactivated' && viewApiKeyRequestDetails(apiKey)} className="px-2">{apiKey.policyName ? apiKey.policyName : '-'}</td>
-                                                                            <td onClick={() => apiKey.status !== 'deactivated' && viewApiKeyRequestDetails(apiKey)} className="px-2">{apiKey.apiKeyLabel}</td>
-                                                                            <td onClick={() => apiKey.status !== 'deactivated' && viewApiKeyRequestDetails(apiKey)} className="px-2">{formatDate(apiKey.createdDateTime, "date")}</td>
-                                                                            <td onClick={() => apiKey.status !== 'deactivated' && viewApiKeyRequestDetails(apiKey)} className="px-2">{apiKey.apiKeyExpiryDateTime ? formatDate(apiKey.apiKeyExpiryDateTime, 'date') : t('apiKeysList.noExpiry')}</td>
-                                                                            <td onClick={() => apiKey.status !== 'deactivated' && viewApiKeyRequestDetails(apiKey)}>
+                                                                        <tr id={(isManualAdjudication ? "manual_adjudication_list_item" : "api_key_list_item") + (index + 1)} key={index}
+                                                                            className={`border-t border-[#E5EBFA] ${!actionsDisabled && apiKey.status !== 'deactivated' ? 'cursor-pointer' : 'cursor-default'} text-[0.8rem] font-semibold break-words ${apiKey.status === 'deactivated' ? "text-[#969696]" : "text-[#191919]"}`}>
+                                                                            <td onClick={cellClick} className="px-2">{apiKey.partnerId}</td>
+                                                                            <td onClick={cellClick} className="px-2">{apiKey.orgName ? apiKey.orgName : '-'}</td>
+                                                                            <td onClick={cellClick} className="px-2">{apiKey.policyGroupName ? apiKey.policyGroupName : '-'}</td>
+                                                                            <td onClick={cellClick} className="px-2">{apiKey.policyName ? apiKey.policyName : '-'}</td>
+                                                                            <td onClick={cellClick} className="px-2">{apiKey.apiKeyLabel}</td>
+                                                                            <td onClick={cellClick} className="px-2">{formatDate(apiKey.createdDateTime, "date")}</td>
+                                                                            <td onClick={cellClick} className="px-2">{apiKey.apiKeyExpiryDateTime ? formatDate(apiKey.apiKeyExpiryDateTime, 'date') : t('apiKeysList.noExpiry')}</td>
+                                                                            <td onClick={cellClick}>
                                                                                 <div className={`${bgOfStatus(apiKey.status)} flex min-w-fit w-14 justify-center py-1.5 px-2 mx-2 my-3 text-xs font-semibold rounded-md`}>
                                                                                     {getStatusCode(apiKey.status, t)}
                                                                                 </div>
                                                                             </td>
                                                                             <td className="text-center cursor-default">
                                                                                 <div ref={setSubmenuRef(submenuRef, index)}>
-                                                                                    <button id={"api_key_list_action_view" + (index + 1)} onClick={() => setActionId(index === actionId ? null : index)} className={`font-semibold mb-0.5 text-[#191919] cursor-pointer text-center`}>
+                                                                                    <button id={"api_key_list_action_view" + (index + 1)} onClick={() => setActionId(index === actionId ? null : index)} className="font-semibold mb-0.5 text-[#191919] cursor-pointer text-center">
                                                                                         ...
                                                                                     </button>
                                                                                     {actionId === index && (
                                                                                         <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-10 text-right" : "right-11 text-left"}`}>
-                                                                                            <div role='button' className="flex justify-between hover:bg-gray-100" onClick={() => viewApiKeyRequestDetails(apiKey)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => viewApiKeyRequestDetails(apiKey))}>
-                                                                                                <p id="api_key_list_view_btn" className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerList.view")}</p>
+                                                                                            <div role={actionsDisabled ? 'presentation' : 'button'} className={`flex justify-between ${actionsDisabled ? 'cursor-default text-[#A5A5A5]' : 'hover:bg-gray-100 cursor-pointer text-[#3E3E3E]'}`} onClick={actionsDisabled ? undefined : () => viewApiKeyRequestDetails(apiKey)} tabIndex={actionsDisabled ? -1 : 0} onKeyDown={actionsDisabled ? undefined : (e) => onPressEnterKey(e, () => viewApiKeyRequestDetails(apiKey))}>
+                                                                                                <p id="api_key_list_view_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerList.view")}</p>
                                                                                                 <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                             </div>
                                                                                             <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                            <div role='button' className={`flex justify-between hover:bg-gray-100 ${apiKey.status !== 'deactivated' ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => editExpiryDate(apiKey, index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => editExpiryDate(apiKey, index))}>
-                                                                                                <p id="api_key_list_edit_expiry_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${apiKey.status !== 'deactivated' ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("apiKeysList.editExpiryDate") || "Edit Expiry Date"}</p>
+                                                                                            <div role={actionsDisabled ? 'presentation' : 'button'} className={`flex justify-between ${actionsDisabled ? 'cursor-default text-[#A5A5A5]' : apiKey.status !== 'deactivated' ? 'hover:bg-gray-100 cursor-pointer text-[#3E3E3E]' : 'cursor-default text-[#A5A5A5]'}`} onClick={actionsDisabled ? undefined : () => editExpiryDate(apiKey, index)} tabIndex={actionsDisabled ? -1 : 0} onKeyDown={actionsDisabled ? undefined : (e) => onPressEnterKey(e, () => editExpiryDate(apiKey, index))}>
+                                                                                                <p id="api_key_list_edit_expiry_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("apiKeysList.editExpiryDate") || "Edit Expiry Date"}</p>
                                                                                                 <img src={editIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                             </div>
                                                                                             <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                            <div role='button' className={`flex justify-between hover:bg-gray-100 ${apiKey.status === 'activated' ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => deactivateApiKey(apiKey, index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => deactivateApiKey(apiKey, index))}>
-                                                                                                <p id="api_key_list_deactivate_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${apiKey.status === 'activated' ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("partnerList.deActivate")}</p>
-                                                                                                <img src={apiKey.status === 'activated' ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
+                                                                                            <div role={actionsDisabled ? 'presentation' : 'button'} className={`flex justify-between ${actionsDisabled ? 'cursor-default text-[#A5A5A5]' : apiKey.status === 'activated' ? 'hover:bg-gray-100 cursor-pointer text-[#3E3E3E]' : 'cursor-default text-[#A5A5A5]'}`} onClick={actionsDisabled ? undefined : () => deactivateApiKey(apiKey, index)} tabIndex={actionsDisabled ? -1 : 0} onKeyDown={actionsDisabled ? undefined : (e) => onPressEnterKey(e, () => deactivateApiKey(apiKey, index))}>
+                                                                                                <p id="api_key_list_deactivate_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerList.deActivate")}</p>
+                                                                                                <img src={apiKey.status === 'activated' && !actionsDisabled ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                             </div>
                                                                                         </div>
                                                                                     )}
