@@ -24,7 +24,7 @@ import DeactivatePopup from '../../common/DeactivatePopup.js';
 
 function AdminApiKeysList() {
     const { t } = useTranslation();
-    const navigate = useNavigate('');
+    const navigate = useNavigate();
     const location = useLocation();
     const isManualAdjudication = location.pathname?.includes('manual-adjudication-services') ?? false;
     const partnerType = isManualAdjudication ? 'Manual_Adjudication' : 'Auth_Partner';
@@ -130,7 +130,6 @@ function AdminApiKeysList() {
     }, [sortFieldName, sortType, pageNo, pageSize, partnerType]);
 
     useEffect(() => {
-
         if (isApplyFilterClicked && pageNo === 0) {
             fetchApiKeysListData();
             setIsApplyFilterClicked(false);
@@ -256,17 +255,15 @@ function AdminApiKeysList() {
                         )}
                         {!applyFilter && apiKeysList.length === 0 ? (
                             <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
-                                {isManualAdjudication ? (
-                                    <EmptyList
-                                        tableHeaders={tableHeaders}
-                                        showCustomButton={true}
-                                        customButtonName='manualAdjudicationServices.generateApiKey'
-                                        buttonId='generate_api_key'
-                                        onClickButton={generateApiKey}
-                                    />
-                                ) : (
-                                    <EmptyList tableHeaders={tableHeaders} />
-                                )}
+                                <EmptyList
+                                    tableHeaders={tableHeaders}
+                                    {...(isManualAdjudication && {
+                                        showCustomButton: true,
+                                        customButtonName: 'manualAdjudicationServices.generateApiKey',
+                                        buttonId: 'generate_api_key',
+                                        onClickButton: generateApiKey
+                                    })}
+                                />
                             </div>
                         ) : (
                             <div className={`bg-[#FCFCFC] w-full mt-1 rounded-t-xl shadow-lg pt-3 ${!tableDataLoaded && "py-6"}`}>
@@ -346,7 +343,7 @@ function AdminApiKeysList() {
                                                                                                 <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                             </div>
                                                                                             <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                            {!isManualAdjudication && (
+                                                                                            {!actionsDisabled && (
                                                                                                 <>
                                                                                                     <div role='button' className={`flex justify-between ${apiKey.status !== 'deactivated' ? 'hover:bg-gray-100 cursor-pointer text-[#3E3E3E]' : 'cursor-default text-[#A5A5A5]'}`} onClick={() => editExpiryDate(apiKey, index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => editExpiryDate(apiKey, index))}>
                                                                                                         <p id="api_key_list_edit_expiry_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("apiKeysList.editExpiryDate") || "Edit Expiry Date"}</p>
