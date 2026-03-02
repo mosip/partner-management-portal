@@ -404,7 +404,6 @@
         "usernameMustStartWithLetter": "يجب أن يبدأ اسم المستخدم بحرف",
         "errorInCreatingPartner": "حدث خطأ أثناء إنشاء الشريك",
         "mispPartnerSuccessHeader": "تم إنشاء الشريك بنجاح!",
-        "abisPartnerSuccessHeader": "تم إنشاء شريك ABIS بنجاح!",
         "uploadMispPartnerCertificate": "تحميل شهادة شريك MISP",
         "uploadAbisPartnerCertificate": "تحميل شهادة شريك ABIS",
         "uploadManualAdjudicationPartnerCertificate": "تحميل شهادة شريك التحكيم اليدوي",

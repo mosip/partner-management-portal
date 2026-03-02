@@ -1638,7 +1638,7 @@ export const getOidcPlaceholderKeyForLanguage = (languageCode, fieldType, t) => 
 
 export const getOidcPlaceholderIdForLanguage = (languageCode, fieldType) => {
     const normalizedFieldType = fieldType
-        .replaceAll(/([A-Z])/g, '_$1')
+        .replace(/([A-Z])/g, '_$1')
         .replace(/^_/, '')
         .toLowerCase();
     const normalizedLanguage = !languageCode || languageCode === 'default' || languageCode === '@none'
