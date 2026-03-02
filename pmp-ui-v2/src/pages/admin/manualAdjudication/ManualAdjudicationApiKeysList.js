@@ -83,8 +83,10 @@ function ManualAdjudicationApiKeysList() {
             if (response) {
                 const responseData = response.data;
                 if (responseData?.response) {
-                    const resData = responseData.response.data;
-                    setTotalRecords(responseData.response.totalResults);
+                    const resData = Array.isArray(responseData.response.data)
+                        ? responseData.response.data
+                        : [];
+                    setTotalRecords(responseData.response.totalResults ?? 0);
                     setApiKeysList(resData);
                 } else {
                     handleServiceErrors(responseData, setErrorCode, setErrorMsg);
