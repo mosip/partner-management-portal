@@ -50,7 +50,7 @@ function EditAdminApiKey() {
     );
 
     useEffect(() => {
-        const data = sessionStorage.getItem('selectedRowData');
+        const data = sessionStorage.getItem('selectedApiKeyAttributes');
         if (!data) {
             setUnexpectedError(true);
             setDataLoaded(true);

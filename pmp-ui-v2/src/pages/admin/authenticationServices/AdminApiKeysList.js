@@ -1,25 +1,25 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { getUserProfile } from '../../services/UserProfileService';
+import { getUserProfile } from '../../../services/UserProfileService';
 import {
     isLangRTL, handleMouseClickForDropdown, resetPageNumber, onClickApplyFilter, setPageNumberAndPageSize,
     getPartnerManagerUrl, handleServiceErrors, onResetFilter, formatDate, bgOfStatus, getStatusCode, onPressEnterKey, createRequest, setSubmenuRef
-} from '../../utils/AppUtils';
-import ErrorMessage from '../common/ErrorMessage';
-import LoadingIcon from '../common/LoadingIcon';
-import EmptyList from '../common/EmptyList';
-import Title from '../common/Title.js';
-import { HttpService } from '../../services/HttpService.js';
-import AuthenticationServicesTab from '../common/AuthenticationServicesTab.js';
-import FilterButtons from '../common/FilterButtons.js';
-import AdminApiKeysListFilter from './authenticationServices/AdminApiKeysListFilter.js';
-import SortingIcon from '../common/SortingIcon.js';
-import Pagination from '../common/Pagination.js';
-import viewIcon from "../../svg/view_icon.svg";
-import deactivateIcon from "../../svg/deactivate_icon.svg";
-import disableDeactivateIcon from "../../svg/disable_deactivate_icon.svg";
-import editIcon from "../../svg/edit_policy_icon.svg";
-import DeactivatePopup from '../common/DeactivatePopup.js';
+} from '../../../utils/AppUtils';
+import ErrorMessage from '../../common/ErrorMessage';
+import LoadingIcon from '../../common/LoadingIcon';
+import EmptyList from '../../common/EmptyList';
+import Title from '../../common/Title.js';
+import { HttpService } from '../../../services/HttpService.js';
+import AuthenticationServicesTab from '../../common/AuthenticationServicesTab.js';
+import FilterButtons from '../../common/FilterButtons.js';
+import AdminApiKeysListFilter from './AdminApiKeysListFilter.js';
+import SortingIcon from '../../common/SortingIcon.js';
+import Pagination from '../../common/Pagination.js';
+import viewIcon from "../../../svg/view_icon.svg";
+import deactivateIcon from "../../../svg/deactivate_icon.svg";
+import disableDeactivateIcon from "../../../svg/disable_deactivate_icon.svg";
+import editIcon from "../../../svg/edit_policy_icon.svg";
+import DeactivatePopup from '../../common/DeactivatePopup.js';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 function AdminApiKeysList() {
@@ -172,13 +172,13 @@ function AdminApiKeysList() {
     };
 
 
-    const deactivateApiKey = (selectedRowData, index) => {
-        if (selectedRowData.status === "activated") {
+    const deactivateApiKey = (selectedApiKeyData, index) => {
+        if (selectedApiKeyData.status === "activated") {
             const request = createRequest({
                 status: "De-active"
             }, "mosip.pms.update.api.key.patch", true);
             setActionId(-1);
-            setSelectedApiKey(selectedRowData);
+            setSelectedApiKey(selectedApiKeyData);
             setDeactivateRequest(request);
             setShowActiveIndexDeactivatePopup(index);
             document.body.style.overflow = "hidden";
@@ -191,11 +191,11 @@ function AdminApiKeysList() {
         document.body.style.overflow = "auto";
     };
 
-    const editExpiryDate = (selectedRowData, index) => {
-        if (selectedRowData.status !== "deactivated") {
+    const editExpiryDate = (selectedApiKeyData, index) => {
+        if (selectedApiKeyData.status !== "deactivated") {
             setActionId(-1);
             // codeql[js/stored-xss]: Data stored in sessionStorage does not contain sensitive information
-            sessionStorage.setItem('selectedRowData', JSON.stringify(selectedRowData));
+            sessionStorage.setItem('selectedApiKeyAttributes', JSON.stringify(selectedApiKeyData));
             navigate('/partnermanagement/admin/authentication-services/edit-api-key');
         }
     };
@@ -212,9 +212,9 @@ function AdminApiKeysList() {
         }
     };
 
-    const viewApiKeyRequestDetails = (selectedKey) => {
+    const viewApiKeyRequestDetails = (selectedApiKey) => {
         // codeql[js/stored-xss]: Data stored in sessionStorage does not contain sensitive information
-        sessionStorage.setItem('selectedRowData', JSON.stringify(selectedKey));
+        sessionStorage.setItem('selectedApiKeyAttributes', JSON.stringify(selectedApiKey));
         navigate('/partnermanagement/admin/authentication-services/view-api-key-details');
     };
 
@@ -409,3 +409,4 @@ function AdminApiKeysList() {
     );
 }
 export default AdminApiKeysList;
+
