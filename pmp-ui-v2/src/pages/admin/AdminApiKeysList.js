@@ -110,9 +110,8 @@ function AdminApiKeysList() {
             if (response) {
                 const responseData = response.data;
                 if (responseData?.response) {
-                    const resData = Array.isArray(responseData.response.data) ? responseData.response.data : [];
                     setTotalRecords(responseData.response.totalResults);
-                    setApiKeysList(resData);
+                    setApiKeysList(responseData.response.data);
                 } else {
                     handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                 }
