@@ -22,21 +22,6 @@ import editIcon from "../../svg/edit_policy_icon.svg";
 import { useNavigate, useLocation } from 'react-router-dom';
 import DeactivatePopup from '../common/DeactivatePopup.js';
 
-const API_KEY_METADATA_KEYS = [
-    'partnerId', 'orgName', 'policyGroupName', 'policyName', 'apiKeyLabel', 'policyId',
-    'createdDateTime', 'apiKeyExpiryDateTime', 'status', 'policyGroupDescription', 'policyDescription'
-];
-
-function getApiKeyMetadataOnly(source) {
-    const metadata = {};
-    API_KEY_METADATA_KEYS.forEach((key) => {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-            metadata[key] = source[key];
-        }
-    });
-    return metadata;
-}
-
 function AdminApiKeysList() {
     const { t } = useTranslation();
     const navigate = useNavigate();
@@ -211,7 +196,7 @@ function AdminApiKeysList() {
         if (selectedApiKeyData.status !== "deactivated") {
             setActionId(-1);
             navigate('/partnermanagement/admin/authentication-services/edit-api-key', {
-                state: { selectedApiKeyAttributes: getApiKeyMetadataOnly(selectedApiKeyData) }
+                state: { selectedApiKeyAttributes: selectedApiKeyData }
             });
         }
     };
@@ -230,7 +215,7 @@ function AdminApiKeysList() {
 
     const viewApiKeyRequestDetails = (selectedApiKey) => {
         navigate('/partnermanagement/admin/authentication-services/view-api-key-details', {
-            state: { selectedApiKeyAttributes: getApiKeyMetadataOnly(selectedApiKey) }
+            state: { selectedApiKeyAttributes: selectedApiKey }
         });
     };
 
