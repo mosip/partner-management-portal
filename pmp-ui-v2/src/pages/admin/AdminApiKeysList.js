@@ -195,7 +195,7 @@ function AdminApiKeysList() {
         if (selectedApiKeyData.status !== "deactivated") {
             setActionId(-1);
             // codeql[js/stored-xss]: Data stored in sessionStorage does not contain sensitive information
-            sessionStorage.setItem('selectedAuthAttributes', JSON.stringify(selectedApiKeyData));
+            sessionStorage.setItem('selectedRowData', JSON.stringify(selectedApiKeyData));
             navigate('/partnermanagement/admin/authentication-services/edit-api-key');
         }
     };
@@ -214,7 +214,7 @@ function AdminApiKeysList() {
 
     const viewApiKeyRequestDetails = (selectedApiKey) => {
         // codeql[js/stored-xss]: Data stored in sessionStorage does not contain sensitive information
-        sessionStorage.setItem('selectedAuthAttributes', JSON.stringify(selectedApiKey));
+        sessionStorage.setItem('selectedRowData', JSON.stringify(selectedApiKey));
         navigate('/partnermanagement/admin/authentication-services/view-api-key-details');
     };
 

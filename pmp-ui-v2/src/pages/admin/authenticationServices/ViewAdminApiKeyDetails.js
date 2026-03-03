@@ -18,7 +18,7 @@ function ViewAdminApiKeyDetails() {
     };
 
     useEffect(() => {
-        const data = sessionStorage.getItem('selectedAuthAttributes');
+        const data = sessionStorage.getItem('selectedRowData');
         if (!data) {
             setUnexpectedError(true);
             return;
