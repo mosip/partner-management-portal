@@ -47,6 +47,8 @@ function SideNav({ open, policyRequiredPartnerTypes }) {
             setActiveIcon("partnerPolicyMapping");
         } else if (selectedPath.includes('misp-partner-services')) {
             setActiveIcon("mispPartnerServices");
+        } else if (selectedPath.includes('manual-adjudication-services')) {
+            setActiveIcon("manualAdjudicationServices");
         }
         else {
             setActiveIcon("home");
@@ -196,7 +198,7 @@ function SideNav({ open, policyRequiredPartnerTypes }) {
                                 <SideNavMenuItem title={t('dashboard.mispPartnerServices')} id='mispPartnerServices' isExpanded={open} activeIcon={activeIcon} />
                             </button>
 
-                            <button id='side_nav_manualAdjudicationServices_icon' className="duration-700 cursor-pointer" onClick={() => navigate('/partnermanagement/admin/manual-adjudication-services')}>
+                            <button id='side_nav_manualAdjudicationServices_icon' className="duration-700 cursor-pointer" onClick={() => navigate('/partnermanagement/admin/manual-adjudication-services/api-keys-list')}>
                                 <SideNavMenuItem title={t('dashboard.manualAdjudication')} id='manualAdjudicationServices' isExpanded={open} activeIcon={activeIcon} />
                             </button>
 
