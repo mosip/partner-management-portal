@@ -19,9 +19,9 @@ function ViewAdminApiKeyDetails() {
 
     useEffect(() => {
         const data = sessionStorage.getItem('selectedApiKeyAttributes');
-        if(!data){
+        if (!data) {
             setUnexpectedError(true);
-            return ;
+            return;
         }
         const apiKeyData = JSON.parse(data);
         setApiKeyDetails(apiKeyData);
