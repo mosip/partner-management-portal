@@ -56,7 +56,8 @@ function EditAdminApiKey() {
             setDataLoaded(true);
             return;
         }
-
+        
+        try {
         const apiKeyData = JSON.parse(data);
         setApiKeyDetails(apiKeyData);
 
@@ -74,6 +75,12 @@ function EditAdminApiKey() {
             setOriginalExpiryDate(tomorrowISO);
         }
         setDataLoaded(true);
+         } catch (error) {
+            console.error('Error parsing selectedApiKeyAttributes from sessionStorage:', error);
+            setUnexpectedError(true);
+            setDataLoaded(true);
+            return;
+        }
     }, []);
 
     useEffect(() => {
