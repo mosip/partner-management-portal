@@ -37,7 +37,7 @@ import PolicyRequestsList from './pages/admin/policyRequests/PolicyRequestsList.
 import ViewPolicyRequestDetails from './pages/admin/policyRequests/ViewPolicyRequestDetails.js';
 import EditPolicy from './pages/admin/policyManager/EditPolicy.js';
 import AdminOidcClientsList from './pages/admin/authenticationServices/AdminOidcClientsList.js';
-import AdminApiKeysList from './pages/admin/authenticationServices/AdminApiKeysList.js';
+import AdminApiKeysList from './pages/admin/AdminApiKeysList.js';
 import ViewAdminOidcClientDetails from './pages/admin/authenticationServices/ViewAdminOidcClientDetails.js';
 import ViewAdminApiKeyDetails from './pages/admin/authenticationServices/ViewAdminApiKeyDetails.js';
 import EditAdminApiKey from './pages/admin/authenticationServices/EditAdminApiKey.js';

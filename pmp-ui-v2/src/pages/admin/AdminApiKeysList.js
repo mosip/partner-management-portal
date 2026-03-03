@@ -1,26 +1,26 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { getUserProfile } from '../../../services/UserProfileService';
+import { getUserProfile } from '../../services/UserProfileService';
 import {
     isLangRTL, handleMouseClickForDropdown, resetPageNumber, onClickApplyFilter, setPageNumberAndPageSize,
     getPartnerManagerUrl, handleServiceErrors, onResetFilter, formatDate, bgOfStatus, getStatusCode, onPressEnterKey, createRequest, setSubmenuRef
-} from '../../../utils/AppUtils';
-import ErrorMessage from '../../common/ErrorMessage';
-import LoadingIcon from '../../common/LoadingIcon';
-import EmptyList from '../../common/EmptyList';
-import Title from '../../common/Title.js';
-import { HttpService } from '../../../services/HttpService.js';
-import AuthenticationServicesTab from '../../common/AuthenticationServicesTab.js';
-import FilterButtons from '../../common/FilterButtons.js';
-import AdminApiKeysListFilter from './AdminApiKeysListFilter.js';
-import SortingIcon from '../../common/SortingIcon.js';
-import Pagination from '../../common/Pagination.js';
-import viewIcon from "../../../svg/view_icon.svg";
-import deactivateIcon from "../../../svg/deactivate_icon.svg";
-import disableDeactivateIcon from "../../../svg/disable_deactivate_icon.svg";
-import editIcon from "../../../svg/edit_policy_icon.svg";
+} from '../../utils/AppUtils';
+import ErrorMessage from '../common/ErrorMessage';
+import LoadingIcon from '../common/LoadingIcon';
+import EmptyList from '../common/EmptyList';
+import Title from '../common/Title.js';
+import { HttpService } from '../../services/HttpService.js';
+import AuthenticationServicesTab from '../common/AuthenticationServicesTab.js';
+import FilterButtons from '../common/FilterButtons.js';
+import AdminApiKeysListFilter from './authenticationServices/AdminApiKeysListFilter.js';
+import SortingIcon from '../common/SortingIcon.js';
+import Pagination from '../common/Pagination.js';
+import viewIcon from "../../svg/view_icon.svg";
+import deactivateIcon from "../../svg/deactivate_icon.svg";
+import disableDeactivateIcon from "../../svg/disable_deactivate_icon.svg";
+import editIcon from "../../svg/edit_policy_icon.svg";
 import { useNavigate, useLocation } from 'react-router-dom';
-import DeactivatePopup from '../../common/DeactivatePopup.js';
+import DeactivatePopup from '../common/DeactivatePopup.js';
 
 function AdminApiKeysList() {
     const { t } = useTranslation();
@@ -29,6 +29,12 @@ function AdminApiKeysList() {
     const isManualAdjudication = location.pathname?.includes('manual-adjudication-services') ?? false;
     const partnerType = isManualAdjudication ? 'Manual_Adjudication' : 'Auth_Partner';
     const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
+
+    const errorMessageKey = isManualAdjudication ? 'manualAdjudicationServices.errorInManualAdjudicationList' : 'apiKeysList.errorInApiKeysList';
+    const errorMessageId = isManualAdjudication ? 'manual_adjudication_list_error_msg' : 'admin_api_key_list_error_msg';
+    const titleKey = isManualAdjudication ? 'dashboard.manualAdjudication' : 'authenticationServices.authenticationServices';
+    const listTitleKey = isManualAdjudication ? 'manualAdjudicationServices.listOfManualAdjudicationApiKeys' : 'apiKeysList.listOfApiKeyRequests';
+    const listItemIdPrefix = isManualAdjudication ? 'manual_adjudication_list_item' : 'api_key_list_item';
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [dataLoaded, setDataLoaded] = useState(true);
@@ -105,13 +111,13 @@ function AdminApiKeysList() {
                 const responseData = response.data;
                 if (responseData?.response) {
                     const resData = Array.isArray(responseData.response.data) ? responseData.response.data : [];
-                    setTotalRecords(responseData.response.totalResults ?? 0);
+                    setTotalRecords(responseData.response.totalResults);
                     setApiKeysList(resData);
                 } else {
                     handleServiceErrors(responseData, setErrorCode, setErrorMsg);
                 }
             } else {
-                setErrorMsg(t(isManualAdjudication ? 'manualAdjudicationServices.errorInManualAdjudicationList' : 'apiKeysList.errorInApiKeysList'));
+                setErrorMsg(t(errorMessageKey));
             }
             fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
             setFetchData(false);
@@ -221,6 +227,12 @@ function AdminApiKeysList() {
         navigate('/partnermanagement/admin/manual-adjudication-services/generate-api-key');
     };
 
+    const getRowActions = (apiKey) => {
+        const actionsDisabled = isManualAdjudication;
+        const cellClick = !actionsDisabled && apiKey.status !== 'deactivated' ? () => viewApiKeyRequestDetails(apiKey) : undefined;
+        return { actionsDisabled, cellClick };
+    };
+
     const styles = {
         loadingDiv: "!py-[20%]",
         outerDiv: "!bg-opacity-[16%]"
@@ -234,11 +246,11 @@ function AdminApiKeysList() {
             {dataLoaded && (
                 <>
                     {errorMsg && (
-                        <ErrorMessage id={isManualAdjudication ? 'manual_adjudication_list_error_msg' : 'admin_api_key_list_error_msg'} errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
+                        <ErrorMessage id={errorMessageId} errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
                     <div className="flex-col mt-5">
                         <div className="flex justify-between mb-5 max-470:flex-col">
-                            <Title title={isManualAdjudication ? 'dashboard.manualAdjudication' : 'authenticationServices.authenticationServices'} backLink='/partnermanagement' />
+                            <Title title={titleKey} backLink='/partnermanagement' />
                             {isManualAdjudication && apiKeysList.length > 0 && (
                                 <button id='generate_api_key_btn' onClick={generateApiKey} className="h-10 text-sm font-semibold text-white px-7 rounded-md bg-tory-blue">
                                     {t('manualAdjudicationServices.generateApiKey')}
@@ -268,7 +280,7 @@ function AdminApiKeysList() {
                         ) : (
                             <div className={`bg-[#FCFCFC] w-full mt-1 rounded-t-xl shadow-lg pt-3 ${!tableDataLoaded && "py-6"}`}>
                                 <FilterButtons
-                                    listTitle={isManualAdjudication ? 'manualAdjudicationServices.listOfManualAdjudicationApiKeys' : 'apiKeysList.listOfApiKeyRequests'}
+                                    listTitle={listTitleKey}
                                     dataListLength={totalRecords}
                                     filter={expandFilter}
                                     onResetFilter={onResetFilter}
@@ -314,10 +326,9 @@ function AdminApiKeysList() {
                                                             </thead>
                                                             <tbody>
                                                                 {apiKeysList.map((apiKey, index) => {
-                                                                    const actionsDisabled = isManualAdjudication;
-                                                                    const cellClick = !actionsDisabled && apiKey.status !== 'deactivated' ? () => viewApiKeyRequestDetails(apiKey) : undefined;
+                                                                    const { actionsDisabled, cellClick } = getRowActions(apiKey);
                                                                     return (
-                                                                        <tr id={(isManualAdjudication ? "manual_adjudication_list_item" : "api_key_list_item") + (index + 1)} key={index}
+                                                                        <tr id={listItemIdPrefix + (index + 1)} key={index}
                                                                             className={`border-t border-[#E5EBFA] ${!actionsDisabled && apiKey.status !== 'deactivated' ? 'cursor-pointer' : 'cursor-default'} text-[0.8rem] font-semibold break-words ${apiKey.status === 'deactivated' ? "text-[#969696]" : "text-[#191919]"}`}>
                                                                             <td onClick={cellClick} className="px-2">{apiKey.partnerId}</td>
                                                                             <td onClick={cellClick} className="px-2">{apiKey.orgName ? apiKey.orgName : '-'}</td>
@@ -338,7 +349,7 @@ function AdminApiKeysList() {
                                                                                     </button>
                                                                                     {actionId === index && (
                                                                                         <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-10 text-right" : "right-11 text-left"}`}>
-                                                                                            <div role={actionsDisabled ? 'presentation' : 'button'} className={`flex justify-between ${actionsDisabled ? 'cursor-default text-[#A5A5A5]' : 'hover:bg-gray-100 cursor-pointer text-[#3E3E3E]'}`} onClick={actionsDisabled ? undefined : () => viewApiKeyRequestDetails(apiKey)} tabIndex={actionsDisabled ? -1 : 0} onKeyDown={actionsDisabled ? undefined : (e) => onPressEnterKey(e, () => viewApiKeyRequestDetails(apiKey))}>
+                                                                                            <div role="button" className={`flex justify-between ${actionsDisabled ? 'cursor-default text-[#A5A5A5]' : 'hover:bg-gray-100 cursor-pointer text-[#3E3E3E]'}`} onClick={actionsDisabled ? undefined : () => viewApiKeyRequestDetails(apiKey)} tabIndex={actionsDisabled ? -1 : 0} onKeyDown={actionsDisabled ? undefined : (e) => onPressEnterKey(e, () => viewApiKeyRequestDetails(apiKey))}>
                                                                                                 <p id="api_key_list_view_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerList.view")}</p>
                                                                                                 <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                             </div>
@@ -352,7 +363,7 @@ function AdminApiKeysList() {
                                                                                                     <hr className="h-px bg-gray-100 border-0 mx-1" />
                                                                                                 </>
                                                                                             )}
-                                                                                            <div role={actionsDisabled ? 'presentation' : 'button'} className={`flex justify-between ${actionsDisabled ? 'cursor-default text-[#A5A5A5]' : apiKey.status === 'activated' ? 'hover:bg-gray-100 cursor-pointer text-[#3E3E3E]' : 'cursor-default text-[#A5A5A5]'}`} onClick={actionsDisabled ? undefined : () => deactivateApiKey(apiKey, index)} tabIndex={actionsDisabled ? -1 : 0} onKeyDown={actionsDisabled ? undefined : (e) => onPressEnterKey(e, () => deactivateApiKey(apiKey, index))}>
+                                                                                            <div role="button" className={`flex justify-between ${actionsDisabled ? 'cursor-default text-[#A5A5A5]' : apiKey.status === 'activated' ? 'hover:bg-gray-100 cursor-pointer text-[#3E3E3E]' : 'cursor-default text-[#A5A5A5]'}`} onClick={actionsDisabled ? undefined : () => deactivateApiKey(apiKey, index)} tabIndex={actionsDisabled ? -1 : 0} onKeyDown={actionsDisabled ? undefined : (e) => onPressEnterKey(e, () => deactivateApiKey(apiKey, index))}>
                                                                                                 <p id="api_key_list_deactivate_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerList.deActivate")}</p>
                                                                                                 <img src={apiKey.status === 'activated' && !actionsDisabled ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                             </div>
