@@ -19,8 +19,8 @@ import viewIcon from "../../svg/view_icon.svg";
 import deactivateIcon from "../../svg/deactivate_icon.svg";
 import disableDeactivateIcon from "../../svg/disable_deactivate_icon.svg";
 import editIcon from "../../svg/edit_policy_icon.svg";
-import { useNavigate, useLocation } from 'react-router-dom';
 import DeactivatePopup from '../common/DeactivatePopup.js';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 function AdminApiKeysList() {
     const { t } = useTranslation();
@@ -194,9 +194,9 @@ function AdminApiKeysList() {
     const editExpiryDate = (selectedApiKeyData, index) => {
         if (selectedApiKeyData.status !== "deactivated") {
             setActionId(-1);
-            navigate('/partnermanagement/admin/authentication-services/edit-api-key', {
-                state: { selectedApiKeyAttributes: selectedApiKeyData }
-            });
+            // codeql[js/stored-xss]: Data stored in sessionStorage does not contain sensitive information
+            sessionStorage.setItem('selectedAuthAttributes', JSON.stringify(selectedApiKeyData));
+            navigate('/partnermanagement/admin/authentication-services/edit-api-key');
         }
     };
 
@@ -213,9 +213,9 @@ function AdminApiKeysList() {
     };
 
     const viewApiKeyRequestDetails = (selectedApiKey) => {
-        navigate('/partnermanagement/admin/authentication-services/view-api-key-details', {
-            state: { selectedApiKeyAttributes: selectedApiKey }
-        });
+        // codeql[js/stored-xss]: Data stored in sessionStorage does not contain sensitive information
+        sessionStorage.setItem('selectedAuthAttributes', JSON.stringify(selectedApiKey));
+        navigate('/partnermanagement/admin/authentication-services/view-api-key-details');
     };
 
     const cancelErrorMsg = () => {

@@ -18,10 +18,10 @@ function ViewAdminApiKeyDetails() {
     };
 
     useEffect(() => {
-        const data = sessionStorage.getItem('selectedApiKeyAttributes');
-        if(!data){
+        const data = sessionStorage.getItem('selectedAuthAttributes');
+        if (!data) {
             setUnexpectedError(true);
-            return ;
+            return;
         }
         const apiKeyData = JSON.parse(data);
         setApiKeyDetails(apiKeyData);

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useBlocker, useLocation, useNavigate } from 'react-router-dom';
+import { useBlocker, useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../../../services/UserProfileService';
 import {
     isLangRTL,
@@ -23,7 +23,6 @@ import somethingWentWrongIcon from '../../../svg/something_went_wrong_icon.svg';
 function EditAdminApiKey() {
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const location = useLocation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [dataLoaded, setDataLoaded] = useState(false);
     const [errorCode, setErrorCode] = useState("");
@@ -51,35 +50,30 @@ function EditAdminApiKey() {
     );
 
     useEffect(() => {
-        const apiKeyData = location.state?.selectedApiKeyAttributes;
-        if (!apiKeyData) {
+        const data = sessionStorage.getItem('selectedAuthAttributes');
+        if (!data) {
             setUnexpectedError(true);
             setDataLoaded(true);
             return;
         }
-        try {
-            setApiKeyDetails(apiKeyData);
 
-            // Initialize expiry date
-            if (apiKeyData?.apiKeyExpiryDateTime) {
-                setSelectedDateStr(apiKeyData.apiKeyExpiryDateTime);
-                setOriginalExpiryDate(apiKeyData.apiKeyExpiryDateTime);
-            } else {
-                // Initialize with tomorrow's start-of-day as default to satisfy "must be future" rule
-                const tomorrow = new Date();
-                tomorrow.setDate(tomorrow.getDate() + 1);
-                tomorrow.setHours(0, 0, 0, 0);
-                const tomorrowISO = tomorrow.toISOString();
-                setSelectedDateStr(tomorrowISO);
-                setOriginalExpiryDate(tomorrowISO);
-            }
-            setDataLoaded(true);
-        } catch (error) {
-            console.error('Error with selectedApiKeyAttributes from location state:', error);
-            setUnexpectedError(true);
-            setDataLoaded(true);
-            return;
+        const apiKeyData = JSON.parse(data);
+        setApiKeyDetails(apiKeyData);
+
+        // Initialize expiry date
+        if (apiKeyData?.apiKeyExpiryDateTime) {
+            setSelectedDateStr(apiKeyData.apiKeyExpiryDateTime);
+            setOriginalExpiryDate(apiKeyData.apiKeyExpiryDateTime);
+        } else {
+            // Initialize with tomorrow's start-of-day as default to satisfy "must be future" rule
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            tomorrow.setHours(0, 0, 0, 0);
+            const tomorrowISO = tomorrow.toISOString();
+            setSelectedDateStr(tomorrowISO);
+            setOriginalExpiryDate(tomorrowISO);
         }
+        setDataLoaded(true);
     }, []);
 
     useEffect(() => {
