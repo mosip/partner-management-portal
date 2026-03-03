@@ -56,7 +56,6 @@ function EditAdminApiKey() {
             setDataLoaded(true);
             return;
         }
-        
         try {
         const apiKeyData = JSON.parse(data);
         setApiKeyDetails(apiKeyData);
