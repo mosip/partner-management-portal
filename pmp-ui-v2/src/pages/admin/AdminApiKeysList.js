@@ -172,13 +172,13 @@ function AdminApiKeysList() {
     };
 
 
-    const deactivateApiKey = (selectedApiKeyData, index) => {
-        if (selectedApiKeyData.status === "activated") {
+    const deactivateApiKey = (selectedRowData, index) => {
+        if (selectedRowData.status === "activated") {
             const request = createRequest({
                 status: "De-active"
             }, "mosip.pms.update.api.key.patch", true);
             setActionId(-1);
-            setSelectedApiKey(selectedApiKeyData);
+            setSelectedApiKey(selectedRowData);
             setDeactivateRequest(request);
             setShowActiveIndexDeactivatePopup(index);
             document.body.style.overflow = "hidden";
