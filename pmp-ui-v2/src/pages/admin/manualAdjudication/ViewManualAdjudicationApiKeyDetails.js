@@ -26,7 +26,7 @@ function ViewManualAdjudicationApiKeyDetails() {
             return;
         }
 
-        const data = sessionStorage.getItem('selectedApiKeyAttributes');
+        const data = sessionStorage.getItem('selectedManualAdjudicationApiKeyAttributes');
         if (!data) {
             setUnexpectedError(true);
             return;
@@ -37,7 +37,7 @@ function ViewManualAdjudicationApiKeyDetails() {
             setApiKeyDetails(apiKeyData);
             setUnexpectedError(false);
         } catch (error) {
-            sessionStorage.removeItem('selectedApiKeyAttributes');
+            sessionStorage.removeItem('selectedManualAdjudicationApiKeyAttributes');
             setUnexpectedError(true);
         }
     }, [location.state]);
