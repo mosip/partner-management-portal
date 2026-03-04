@@ -30,6 +30,10 @@ function AdminApiKeysList() {
     const partnerType = isManualAdjudication ? 'Manual_Adjudication' : 'Auth_Partner';
     const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
 
+    const apiKeysListPath = isManualAdjudication ? '/partnermanagement/admin/manual-adjudication-services/api-keys-list' : '/partnermanagement/admin/authentication-services/api-keys-list';
+    const viewApiKeyDetailsPath = isManualAdjudication ? '/partnermanagement/admin/manual-adjudication-services/view-api-key-details' : '/partnermanagement/admin/authentication-services/view-api-key-details';
+    const editApiKeyPath = isManualAdjudication ? '/partnermanagement/admin/manual-adjudication-services/edit-api-key' : '/partnermanagement/admin/authentication-services/edit-api-key';
+
     const errorMessageKey = isManualAdjudication ? 'manualAdjudicationServices.errorInManualAdjudicationList' : 'apiKeysList.errorInApiKeysList';
     const errorMessageId = isManualAdjudication ? 'manual_adjudication_list_error_msg' : 'admin_api_key_list_error_msg';
     const titleKey = isManualAdjudication ? 'dashboard.manualAdjudication' : 'authenticationServices.authenticationServices';
@@ -132,6 +136,7 @@ function AdminApiKeysList() {
 
     useEffect(() => {
         fetchApiKeysListData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps -- refetch only when sort/page/partnerType change
     }, [sortFieldName, sortType, pageNo, pageSize, partnerType]);
 
     useEffect(() => {
@@ -139,6 +144,7 @@ function AdminApiKeysList() {
             fetchApiKeysListData();
             setIsApplyFilterClicked(false);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps -- run only when filter is applied
     }, [isApplyFilterClicked]);
 
     const onApplyFilter = (updatedfilters) => {
@@ -196,7 +202,7 @@ function AdminApiKeysList() {
             setActionId(-1);
             // codeql[js/stored-xss]: Data stored in sessionStorage does not contain sensitive information
             sessionStorage.setItem('selectedApiKeyAttributes', JSON.stringify(selectedApiKeyData));
-            navigate('/partnermanagement/admin/authentication-services/edit-api-key');
+            navigate(editApiKeyPath);
         }
     };
 
@@ -215,7 +221,7 @@ function AdminApiKeysList() {
     const viewApiKeyRequestDetails = (selectedApiKey) => {
         // codeql[js/stored-xss]: Data stored in sessionStorage does not contain sensitive information
         sessionStorage.setItem('selectedApiKeyAttributes', JSON.stringify(selectedApiKey));
-        navigate('/partnermanagement/admin/authentication-services/view-api-key-details');
+        navigate(viewApiKeyDetailsPath);
     };
 
     const cancelErrorMsg = () => {
@@ -261,7 +267,7 @@ function AdminApiKeysList() {
                                 activeOidcClient={false}
                                 oidcClientPath='/partnermanagement/admin/authentication-services/oidc-clients-list'
                                 activeApiKey={true}
-                                apiKeyPath='/partnermanagement/admin/authentication-services/api-keys-list'
+                                apiKeyPath={apiKeysListPath}
                             />
                         )}
                         {!applyFilter && apiKeysList.length === 0 ? (
@@ -409,4 +415,3 @@ function AdminApiKeysList() {
     );
 }
 export default AdminApiKeysList;
-

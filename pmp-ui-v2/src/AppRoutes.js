@@ -37,9 +37,9 @@ import PolicyRequestsList from './pages/admin/policyRequests/PolicyRequestsList.
 import ViewPolicyRequestDetails from './pages/admin/policyRequests/ViewPolicyRequestDetails.js';
 import EditPolicy from './pages/admin/policyManager/EditPolicy.js';
 import AdminOidcClientsList from './pages/admin/authenticationServices/AdminOidcClientsList.js';
-import AdminApiKeysList from './pages/admin/authenticationServices/AdminApiKeysList.js';
+import AdminApiKeysList from './pages/admin/apiKeys/AdminApiKeysList.js';
 import ViewAdminOidcClientDetails from './pages/admin/authenticationServices/ViewAdminOidcClientDetails.js';
-import ViewAdminApiKeyDetails from './pages/admin/authenticationServices/ViewAdminApiKeyDetails.js';
+import ViewAdminApiKeyDetails from './pages/admin/apiKeys/ViewAdminApiKeyDetails.js';
 import EditAdminApiKey from './pages/admin/authenticationServices/EditAdminApiKey.js';
 import AdminFtmList from './pages/admin/ftmProviderServices/AdminFtmList.js';
 import ViewAdminFtmChipDetails from './pages/admin/ftmProviderServices/ViewAdminFtmChipDetails.js';
@@ -377,6 +377,10 @@ function AppRoutes() {
         {
           path: 'admin/manual-adjudication-services/generate-api-key',
           element: <GuardedRoute><MainLayout><GenerateManualAdjudicationApiKey /></MainLayout></GuardedRoute>,
+        },
+        {
+          path: 'admin/manual-adjudication-services/view-api-key-details',
+          element: <GuardedRoute><MainLayout><ViewAdminApiKeyDetails /></MainLayout></GuardedRoute>,
         },
       ],
     },
