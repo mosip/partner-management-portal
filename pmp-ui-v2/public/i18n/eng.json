@@ -54,6 +54,8 @@
         "policiesDesc": "Request and view your policies",
         "authenticationServices": "Authentication Services",
         "authenticationServicesDesc": "Request OIDC Client creation / API key generation for eSignet and API key based authentications",
+        "credentialServices": "Credential Services",
+        "credentialServicesDesc": "Credential Services",
         "deviceProviderServices": "Device Provider Services",
         "ftmChipProviderServices": "FTM Chip Provider Services",
         "ftmChipProviderServicesDesc": "Add, Deactivate FTM (Foundational Trust Module) , Upload, Reupload, Download FTM Chip Certificate",
@@ -101,6 +103,10 @@
         "mispLicenseKeyExpiryCountDesc2": "{{expiringMispLicenseKeyCount}} MISP License Key is expiring soon",
         "manualAdjudication": "Manual Adjudication Services",
         "manualAdjudicationDesc": "View, Generate API Keys"
+    },
+    "credentialServices": {
+        "title": "Credential Services",
+        "breadcrumb": "Credential Services"
     },
     "mispLicenseList": {
         "partnerId": "Partner ID",
@@ -1403,7 +1409,7 @@
         "PMS_PM_034": " Policy request already approved.",
         "PMS_PM_035": " Policy request already rejected.",
         "PMS_PM_045": " Status should be either Approved or Rejected",
-        "PMS_PM_051": " Extractors are not present. Please add extractors.",
+        "PMS_PM_051": "Extractors are not configured for this policy. Please add extractors in Policy Manager and try again.",
         "PMS_PM_058": " Status should be either Active or De_Active",
         "PMS_PM_059": "Error while fetching partner details.",
         "PMS_PM_060": "The certificate for the specified partner is not available in the store",
