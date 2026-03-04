@@ -103,11 +103,8 @@
         "manualAdjudicationDesc": "عرض، إنشاء مفاتيح API"
     },
     "credentialServices": {
-        "title": "Credential Services",
-        "breadcrumb": "Credential Services",
-        "comingSoonTitle": "Credential Services is coming soon",
-        "comingSoonDescription": "We are working on bringing Credential Services to this portal. Once available, you will be able to manage credential-related configurations and operations from here.",
-        "comingSoonNote": "If you believe you should already have access to this capability, please contact your MOSIP administrator."
+        "title": "خدمات بيانات الاعتماد",
+        "breadcrumb": "خدمات بيانات الاعتماد"
     },
     "mispLicenseList": {
         "partnerId": "معرف الشريك",
