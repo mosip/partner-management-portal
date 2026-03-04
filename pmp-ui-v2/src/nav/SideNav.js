@@ -19,6 +19,7 @@ function SideNav({ open, policyRequiredPartnerTypes }) {
     const [enableFtmServicesMenu, setEnableFtmServicesMenu] = useState(false);
     const [enablePartnerAdminMenu, setEnablePartnerAdminMenu] = useState(false);
     const [enablePolicyManagerMenu, setEnablePolicyManagerMenu] = useState(false);
+    const [isCredentialPartner, setIsCredentialPartner] = useState(false);
 
     useEffect(() => {
         if (selectedPath.includes('dashboard')) {
@@ -33,7 +34,7 @@ function SideNav({ open, policyRequiredPartnerTypes }) {
             setActiveIcon("organisationUsers");
         } else if (selectedPath.includes('policies')) {
             setActiveIcon("policies");
-        } else if (selectedPath.includes('authentication-services')) {
+        } else if (selectedPath.includes('authentication-services') || selectedPath.includes('credential-services')) {
             setActiveIcon("authenticationServices");
         } else if (selectedPath.includes('device-provider-services')) {
             setActiveIcon('deviceProviderServices');
@@ -66,8 +67,13 @@ function SideNav({ open, policyRequiredPartnerTypes }) {
         if (userRoles.some(role => policyRequiredPartnerTypes.includes(role))) {
             setEnablePoliciesMenu(true);
         }
-        if (rolesArray.includes("AUTH_PARTNER")) {
+
+        if (rolesArray.includes("AUTH_PARTNER") || rolesArray.includes("CREDENTIAL_PARTNER")) {
             setEnableAuthenticationServicesMenu(true);
+        }
+
+        if (rolesArray.includes("CREDENTIAL_PARTNER")) {
+            setIsCredentialPartner(true);
         }
         if (rolesArray.includes("DEVICE_PROVIDER")) {
             setEnableDeviceProviderServicesMenu(true);
@@ -96,7 +102,11 @@ function SideNav({ open, policyRequiredPartnerTypes }) {
         setActiveIcon("policies");
     };
     const showAuthenticationServices = () => {
-        navigate('/partnermanagement/authentication-services/oidc-clients-list');
+        if (isCredentialPartner) {
+            navigate('/partnermanagement/credential-services');
+        } else {
+            navigate('/partnermanagement/authentication-services/oidc-clients-list');
+        }
         setActiveIcon("authenticationServices");
     };
     const showDeviceProviderServices = () => {
@@ -147,7 +157,13 @@ function SideNav({ open, policyRequiredPartnerTypes }) {
                     }
                     {!enablePartnerAdminMenu && !enablePolicyManagerMenu && enableAuthenticationServicesMenu &&
                         <button id='side_nav_authentication_service_icon' className="duration-700 cursor-pointer" onClick={() => showAuthenticationServices()}>
-                            <SideNavMenuItem title={t('dashboard.authenticationServices')} id='authenticationServices' isExpanded={open} activeIcon={activeIcon} />
+                            <SideNavMenuItem
+                                title={isCredentialPartner ? t('dashboard.credentialServices') : t('dashboard.authenticationServices')}
+                                id='authenticationServices'
+                                isExpanded={open}
+                                activeIcon={activeIcon}
+                                useCredentialIcon={isCredentialPartner}
+                            />
                         </button>
                     }
                     {!enablePartnerAdminMenu && !enablePolicyManagerMenu && enableDeviceProviderServicesMenu &&

@@ -54,6 +54,8 @@
         "policiesDesc": "Request and view your policies",
         "authenticationServices": "Authentication Services",
         "authenticationServicesDesc": "Request OIDC Client creation / API key generation for eSignet and API key based authentications",
+        "credentialServices": "Credential Services",
+        "credentialServicesDesc": "Credential Services",
         "deviceProviderServices": "Device Provider Services",
         "ftmChipProviderServices": "FTM Chip Provider Services",
         "ftmChipProviderServicesDesc": "Add, Deactivate FTM (Foundational Trust Module) , Upload, Reupload, Download FTM Chip Certificate",
@@ -101,6 +103,13 @@
         "mispLicenseKeyExpiryCountDesc2": "{{expiringMispLicenseKeyCount}} MISP License Key is expiring soon",
         "manualAdjudication": "Manual Adjudication Services",
         "manualAdjudicationDesc": "View, Generate API Keys"
+    },
+    "credentialServices": {
+        "title": "Credential Services",
+        "breadcrumb": "Credential Services",
+        "comingSoonTitle": "Credential Services is coming soon",
+        "comingSoonDescription": "We are working on bringing Credential Services to this portal. Once available, you will be able to manage credential-related configurations and operations from here.",
+        "comingSoonNote": "If you believe you should already have access to this capability, please contact your MOSIP administrator."
     },
     "mispLicenseList": {
         "partnerId": "Partner ID",

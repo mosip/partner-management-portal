@@ -54,6 +54,8 @@
         "policiesDesc": "Demandez et consultez vos polices",
         "authenticationServices": "Services d'authentification",
         "authenticationServicesDesc": "Demander la création d'un client OIDC / la génération de clés API pour les concepteurs et l'authentification basée sur les clés API",
+        "credentialServices": "Credential Services",
+        "credentialServicesDesc": "Credential Services",
         "deviceProviderServices": "Services du fournisseur d'appareils",
         "ftmChipProviderServices": "Services de fournisseur de puces FTM",
         "ftmChipProviderServicesDesc": "Ajouter, désactiver FTM (Foundational Trust Module), télécharger, re-télécharger, télécharger le certificat de puce FTM",
@@ -99,6 +101,13 @@
         "mispLicenseKeyExpiryCountDesc2": "{{expiringMispLicenseKeyCount}} La clé de licence MISP expire bientôt",
         "manualAdjudication": "Services d'arbitrage manuel",
         "manualAdjudicationDesc": "Afficher, Générer des clés API"
+    },
+    "credentialServices": {
+        "title": "Credential Services",
+        "breadcrumb": "Credential Services",
+        "comingSoonTitle": "Credential Services is coming soon",
+        "comingSoonDescription": "We are working on bringing Credential Services to this portal. Once available, you will be able to manage credential-related configurations and operations from here.",
+        "comingSoonNote": "If you believe you should already have access to this capability, please contact your MOSIP administrator."
     },
     "mispLicenseList": {
         "partnerId": "ID partenaire",

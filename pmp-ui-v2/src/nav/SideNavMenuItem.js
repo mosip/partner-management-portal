@@ -1,10 +1,12 @@
 import { getUserProfile } from "../services/UserProfileService";
 import { isLangRTL } from "../utils/AppUtils";
 import PropTypes from 'prop-types';
+import credentialServicesIcon from "../svg/credential_services.png";
 
-export const SideNavMenuItem = ({ title, id, isExpanded, activeIcon }) => {
+export const SideNavMenuItem = ({ title, id, isExpanded, activeIcon, useCredentialIcon }) => {
 
     const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
+    const isActive = activeIcon === id;
 
     return (
         <div className="flex items-center gap-x-2 mt-2 font-inter">
@@ -62,16 +64,24 @@ export const SideNavMenuItem = ({ title, id, isExpanded, activeIcon }) => {
                         </g>
                     </svg>
                 }
-                {id === 'authenticationServices' &&
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="16" height="21" viewBox="0 1 16.289 20.57">
-                        <path id="encrypted_24dp_FILL0_wght300_GRAD0_opsz24"
-                            d="M186.777-845.2h2.735l-.614-3.429a1.845,1.845,0,0,0,.824-.688,1.838,1.838,0,0,0,.312-1.041,1.82,1.82,0,0,0-.554-1.335,1.82,1.82,0,0,0-1.335-.554,1.82,1.82,0,0,0-1.335.554,1.82,1.82,0,0,0-.554,1.335,1.838,1.838,0,0,0,.312,1.041,1.845,1.845,0,0,0,.824.688Zm1.368,7.309a10.489,10.489,0,0,1-5.834-4.147A11.848,11.848,0,0,1,180-849.163v-6.248l8.145-3.049,8.144,3.049v6.248a11.848,11.848,0,0,1-2.311,7.125A10.489,10.489,0,0,1,188.145-837.89Zm0-1.717a8.837,8.837,0,0,0,4.669-3.584,10.314,10.314,0,0,0,1.846-5.973v-5.131l-6.516-2.433-6.516,2.433v5.131a10.314,10.314,0,0,0,1.846,5.973A8.837,8.837,0,0,0,188.145-839.607ZM188.145-848.175Z"
-                            transform="translate(-180 858.46)"
-                            fill={activeIcon === 'authenticationServices' ? "#1447b2" : "#7a7e82"} />
-                    </svg>
-                }
+                {id === 'authenticationServices' && (
+                    useCredentialIcon ? (
+                        <img
+                            src={credentialServicesIcon}
+                            alt="Credential Services"
+                            className={`w-full h-full ${isActive ? "" : "grayscale opacity-60"}`}
+                        />
+                    ) : (
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16" height="21" viewBox="0 1 16.289 20.57">
+                            <path id="encrypted_24dp_FILL0_wght300_GRAD0_opsz24"
+                                d="M186.777-845.2h2.735l-.614-3.429a1.845,1.845,0,0,0,.824-.688,1.838,1.838,0,0,0,.312-1.041,1.82,1.82,0,0,0-.554-1.335,1.82,1.82,0,0,0-1.335-.554,1.82,1.82,0,0,0-1.335.554,1.82,1.82,0,0,0-.554,1.335,1.838,1.838,0,0,0,.312,1.041,1.845,1.845,0,0,0,.824.688Zm1.368,7.309a10.489,10.489,0,0,1-5.834-4.147A11.848,11.848,0,0,1,180-849.163v-6.248l8.145-3.049,8.144,3.049v6.248a11.848,11.848,0,0,1-2.311,7.125A10.489,10.489,0,0,1,188.145-837.89Zm0-1.717a8.837,8.837,0,0,0,4.669-3.584,10.314,10.314,0,0,0,1.846-5.973v-5.131l-6.516-2.433-6.516,2.433v5.131a10.314,10.314,0,0,0,1.846,5.973A8.837,8.837,0,0,0,188.145-839.607ZM188.145-848.175Z"
+                                transform="translate(-180 858.46)"
+                                fill={activeIcon === 'authenticationServices' ? "#1447b2" : "#7a7e82"} />
+                        </svg>
+                    )
+                )}
                 {id === 'deviceProviderServices' &&
                     <svg xmlns="http://www.w3.org/2000/svg"
                         width="20" height="18" viewBox="0 0 42.748 33.748">
@@ -180,4 +190,5 @@ SideNavMenuItem.propTypes = {
     id: PropTypes.string.isRequired,
     isExpanded: PropTypes.bool.isRequired,
     activeIcon: PropTypes.string.isRequired,
+    useCredentialIcon: PropTypes.bool,
 };

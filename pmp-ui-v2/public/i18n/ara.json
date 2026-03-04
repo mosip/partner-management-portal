@@ -54,6 +54,8 @@
         "policiesDesc": "طلب وعرض السياسات الخاصة بك.",
         "authenticationServices": "خدمات المصادقة",
         "authenticationServicesDesc": "طلب إنشاء عميل OIDC / إنشاء مفتاح API لمصممي التصميم والمصادقة المستندة إلى مفتاح API",
+        "credentialServices": "Credential Services",
+        "credentialServicesDesc": "Credential Services",
         "deviceProviderServices": "خدمات مزودي الأجهزة",
         "ftmChipProviderServices": "خدمات مزودي شريحة FTM",
         "ftmChipProviderServicesDesc": "إضافة، إلغاء تنشيط FTM (وحدة الثقة الأساسية)، تحميل، إعادة تحميل، تنزيل شهادة شريحة FTM",
@@ -99,6 +101,13 @@
         "mispLicenseKeyExpiryCountDesc2": "{{expiringMispLicenseKeyCount}} مفتاح ترخيص MISP سينتهي قريبًا",
         "manualAdjudication": "خدمات التحكيم اليدوي",
         "manualAdjudicationDesc": "عرض، إنشاء مفاتيح API"
+    },
+    "credentialServices": {
+        "title": "Credential Services",
+        "breadcrumb": "Credential Services",
+        "comingSoonTitle": "Credential Services is coming soon",
+        "comingSoonDescription": "We are working on bringing Credential Services to this portal. Once available, you will be able to manage credential-related configurations and operations from here.",
+        "comingSoonNote": "If you believe you should already have access to this capability, please contact your MOSIP administrator."
     },
     "mispLicenseList": {
         "partnerId": "معرف الشريك",
