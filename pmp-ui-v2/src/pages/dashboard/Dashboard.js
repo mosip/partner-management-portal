@@ -13,6 +13,7 @@ import PropTypes from 'prop-types';
 import partnerCertificateIcon from '../../svg/partner_certificate_icon.svg';
 import policiesIcon from '../../svg/policies_icon.svg';
 import authServiceIcon from '../../svg/auth_services_icon.svg';
+import credentialServicesIcon from '../../svg/credential_services.png';
 import deviceProviderServicesIcon from '../../svg/deviceProviderServices_icon.svg';
 import ftmServicesIcon from "../../svg/ftm_services_icon.svg";
 import partner_admin_icon from '../../svg/partner_admin_icon.svg';
@@ -32,6 +33,7 @@ function Dashboard() {
   const [dataLoaded, setDataLoaded] = useState(false);
   const [showPolicies, setShowPolicies] = useState(false);
   const [showAuthenticationServices, setShowAuthenticationServices] = useState(false);
+  const [showCredentialServices, setShowCredentialServices] = useState(false);
   const [showDeviceProviderServices, setShowDeviceProviderServices] = useState(false);
   const [showFtmServices, setShowFtmServices] = useState(false);
   const [showConsentPopup, setShowConsentPopup] = useState(false);
@@ -86,6 +88,9 @@ function Dashboard() {
         const userRoles = rolesArray;
         if (rolesArray.includes("AUTH_PARTNER")) {
           setShowAuthenticationServices(true);
+        }
+        if (rolesArray.includes("CREDENTIAL_PARTNER")) {
+          setShowCredentialServices(true);
         }
         if (rolesArray.includes("DEVICE_PROVIDER")) {
           setShowDeviceProviderServices(true);
@@ -585,6 +590,10 @@ function Dashboard() {
     navigate('/partnermanagement/device-provider-services/sbi-list')
   };
 
+  const credentialServices = () => {
+    navigate('/partnermanagement/credential-services');
+  };
+
   const ftmChipProviderServices = () => {
     navigate('/partnermanagement/ftm-chip-provider-services/ftm-list')
   };
@@ -721,6 +730,21 @@ function Dashboard() {
                   </h5>
                   <p id='dashboard_policies_card_description' className="mb-3 text-xs font-normal text-gray-400">
                     {t('dashboard.policiesDesc')}
+                  </p>
+                </div>
+              </div>
+            )}
+            {!isPartnerAdmin && !isPolicyManager && showCredentialServices && (
+              <div role='button' id='dashboard_credential_services_card' onClick={credentialServices} className="min-h-[50%] p-6 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, credentialServices)}>
+                <div className="flex justify-center mb-5">
+                  <img id='dashboard_credential_services_card_icon' src={credentialServicesIcon} alt="" className="w-8 h-8" />
+                </div>
+                <div>
+                  <h5 id='dashboard_credential_services_card_header' className="mb-2 text-sm font-semibold tracking-tight text-gray-600 ">
+                    {t('dashboard.credentialServices')}
+                  </h5>
+                  <p id='dashboard_credential_services_card_description' className="mb-3 text-xs font-normal text-gray-400">
+                    {t('dashboard.credentialServicesDesc')}
                   </p>
                 </div>
               </div>

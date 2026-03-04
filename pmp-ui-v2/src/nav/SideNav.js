@@ -15,6 +15,7 @@ function SideNav({ open, policyRequiredPartnerTypes }) {
     const { t } = useTranslation();
     const [enablePoliciesMenu, setEnablePoliciesMenu] = useState(false);
     const [enableAuthenticationServicesMenu, setEnableAuthenticationServicesMenu] = useState(false);
+    const [enableCredentialServicesMenu, setEnableCredentialServicesMenu] = useState(false);
     const [enableDeviceProviderServicesMenu, setEnableDeviceProviderServicesMenu] = useState(false);
     const [enableFtmServicesMenu, setEnableFtmServicesMenu] = useState(false);
     const [enablePartnerAdminMenu, setEnablePartnerAdminMenu] = useState(false);
@@ -35,6 +36,8 @@ function SideNav({ open, policyRequiredPartnerTypes }) {
             setActiveIcon("policies");
         } else if (selectedPath.includes('authentication-services')) {
             setActiveIcon("authenticationServices");
+        } else if (selectedPath.includes('credential-services')) {
+            setActiveIcon("credentialServices");
         } else if (selectedPath.includes('device-provider-services')) {
             setActiveIcon('deviceProviderServices');
         } else if (selectedPath.includes('ftm-chip-provider-services')) {
@@ -66,8 +69,13 @@ function SideNav({ open, policyRequiredPartnerTypes }) {
         if (userRoles.some(role => policyRequiredPartnerTypes.includes(role))) {
             setEnablePoliciesMenu(true);
         }
+
         if (rolesArray.includes("AUTH_PARTNER")) {
             setEnableAuthenticationServicesMenu(true);
+        }
+
+        if (rolesArray.includes("CREDENTIAL_PARTNER")) {
+            setEnableCredentialServicesMenu(true);
         }
         if (rolesArray.includes("DEVICE_PROVIDER")) {
             setEnableDeviceProviderServicesMenu(true);
@@ -98,6 +106,11 @@ function SideNav({ open, policyRequiredPartnerTypes }) {
     const showAuthenticationServices = () => {
         navigate('/partnermanagement/authentication-services/oidc-clients-list');
         setActiveIcon("authenticationServices");
+    };
+
+    const showCredentialServices = () => {
+        navigate('/partnermanagement/credential-services');
+        setActiveIcon("credentialServices");
     };
     const showDeviceProviderServices = () => {
         navigate('/partnermanagement/device-provider-services/sbi-list');
@@ -146,8 +159,23 @@ function SideNav({ open, policyRequiredPartnerTypes }) {
                         </button>
                     }
                     {!enablePartnerAdminMenu && !enablePolicyManagerMenu && enableAuthenticationServicesMenu &&
-                        <button id='side_nav_authentication_service_icon' className="duration-700 cursor-pointer" onClick={() => showAuthenticationServices()}>
-                            <SideNavMenuItem title={t('dashboard.authenticationServices')} id='authenticationServices' isExpanded={open} activeIcon={activeIcon} />
+                        <button id='side_nav_authentication_service_icon' className="duration-700 cursor-pointer" onClick={showAuthenticationServices}>
+                            <SideNavMenuItem
+                                title={t('dashboard.authenticationServices')}
+                                id='authenticationServices'
+                                isExpanded={open}
+                                activeIcon={activeIcon}
+                            />
+                        </button>
+                    }
+                    {!enablePartnerAdminMenu && !enablePolicyManagerMenu && enableCredentialServicesMenu &&
+                        <button id='side_nav_credential_service_icon' className="duration-700 cursor-pointer" onClick={showCredentialServices}>
+                            <SideNavMenuItem
+                                title={t('dashboard.credentialServices')}
+                                id='credentialServices'
+                                isExpanded={open}
+                                activeIcon={activeIcon}
+                            />
                         </button>
                     }
                     {!enablePartnerAdminMenu && !enablePolicyManagerMenu && enableDeviceProviderServicesMenu &&

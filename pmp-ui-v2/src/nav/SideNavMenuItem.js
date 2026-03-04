@@ -1,10 +1,12 @@
 import { getUserProfile } from "../services/UserProfileService";
 import { isLangRTL } from "../utils/AppUtils";
 import PropTypes from 'prop-types';
+import credentialServicesIcon from "../svg/credential_services.png";
 
 export const SideNavMenuItem = ({ title, id, isExpanded, activeIcon }) => {
 
     const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
+    const isActive = activeIcon === id;
 
     return (
         <div className="flex items-center gap-x-2 mt-2 font-inter">
@@ -62,7 +64,7 @@ export const SideNavMenuItem = ({ title, id, isExpanded, activeIcon }) => {
                         </g>
                     </svg>
                 }
-                {id === 'authenticationServices' &&
+                {id === 'authenticationServices' && (
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="16" height="21" viewBox="0 1 16.289 20.57">
@@ -71,7 +73,14 @@ export const SideNavMenuItem = ({ title, id, isExpanded, activeIcon }) => {
                             transform="translate(-180 858.46)"
                             fill={activeIcon === 'authenticationServices' ? "#1447b2" : "#7a7e82"} />
                     </svg>
-                }
+                )}
+                {id === 'credentialServices' && (
+                    <img
+                        src={credentialServicesIcon}
+                        alt={title}
+                        className={`w-full h-full ${isActive ? "" : "grayscale opacity-60"}`}
+                    />
+                )}
                 {id === 'deviceProviderServices' &&
                     <svg xmlns="http://www.w3.org/2000/svg"
                         width="20" height="18" viewBox="0 0 42.748 33.748">
