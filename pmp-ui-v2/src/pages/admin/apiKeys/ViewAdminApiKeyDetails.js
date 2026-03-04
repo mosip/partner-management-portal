@@ -18,6 +18,9 @@ function ViewAdminApiKeyDetails() {
     const apiKeysListBackLink = isManualAdjudication
         ? '/partnermanagement/admin/manual-adjudication-services/api-keys-list'
         : '/partnermanagement/admin/authentication-services/api-keys-list';
+    const apiKeysListSubTitle = isManualAdjudication
+        ? 'manualAdjudicationServices.listOfManualAdjudicationApiKeys'
+        : 'apiKeysList.listOfApiKeyRequests';
 
     const moveToApiClientsList = () => {
         navigate(apiKeysListBackLink);
@@ -37,7 +40,7 @@ function ViewAdminApiKeyDetails() {
         <div className={`w-full p-4 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm mb-[2%] ${isLoginLanguageRTL ? "mr-24 ml-1" : "ml-24 mr-1"} overflow-x-scroll`}>
             <div className={`flex-col mt-5 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm mb-[2%]`}>
                 <div className="flex justify-between mb-3">
-                    <Title title='viewApiKeyDetails.viewApiKeyDetails' subTitle='apiKeysList.listOfApiKeyRequests' backLink={apiKeysListBackLink} />
+                    <Title title='viewApiKeyDetails.viewApiKeyDetails' subTitle={apiKeysListSubTitle} backLink={apiKeysListBackLink} />
                 </div>
 
                 {unexpectedError && (
