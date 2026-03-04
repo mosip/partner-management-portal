@@ -67,6 +67,7 @@ import RegenerateMispLicenseKey from './pages/admin/mispPartnerServices/Regenera
 import ViewMispLicenseKeyNotifications from './pages/admin/notifications/ViewMispLicenseKeyNotifications.js';
 import GenerateManualAdjudicationApiKey from './pages/admin/manualAdjudicationServices/GenerateManualAdjudicationApiKey.js';
 import CredentialServices from './pages/partner/credentialServices/CredentialServices.js';
+import { getUserProfile } from './services/UserProfileService.js';
 
 function AppRoutes() {
 
@@ -109,6 +110,15 @@ function AppRoutes() {
         },
         {
           path: 'credential-services',
+          loader: () => {
+            const userProfile = getUserProfile();
+            const rolesString = userProfile?.roles ?? '';
+            const rolesArray = rolesString.split(',').map(r => r.trim()).filter(r => r.length > 0);
+            if (!rolesArray.includes('CREDENTIAL_PARTNER')) {
+              return redirect('/partnermanagement/runtimeError');
+            }
+            return null;
+          },
           element: <GuardedRoute><MainLayout><CredentialServices /></MainLayout></GuardedRoute>,
         },
         {

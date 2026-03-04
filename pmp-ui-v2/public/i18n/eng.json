@@ -1409,7 +1409,7 @@
         "PMS_PM_034": " Policy request already approved.",
         "PMS_PM_035": " Policy request already rejected.",
         "PMS_PM_045": " Status should be either Approved or Rejected",
-        "PMS_PM_051": " Extractors are not present. Please add extractors.",
+        "PMS_PM_051": "Extractors are not configured for this policy. Please add extractors in Policy Manager and try again.",
         "PMS_PM_058": " Status should be either Active or De_Active",
         "PMS_PM_059": "Error while fetching partner details.",
         "PMS_PM_060": "The certificate for the specified partner is not available in the store",

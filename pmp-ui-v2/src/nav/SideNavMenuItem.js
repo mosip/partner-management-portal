@@ -68,7 +68,7 @@ export const SideNavMenuItem = ({ title, id, isExpanded, activeIcon, useCredenti
                     useCredentialIcon ? (
                         <img
                             src={credentialServicesIcon}
-                            alt="Credential Services"
+                            alt={title}
                             className={`w-full h-full ${isActive ? "" : "grayscale opacity-60"}`}
                         />
                     ) : (
