@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { getUserProfile } from '../../../services/UserProfileService';
 import { bgOfStatus, formatDate, getStatusCode, isLangRTL } from '../../../utils/AppUtils';
 import somethingWentWrongIcon from '../../../svg/something_went_wrong_icon.svg';
@@ -9,12 +9,18 @@ import Title from '../../common/Title';
 function ViewAdminApiKeyDetails() {
     const { t } = useTranslation();
     const navigate = useNavigate();
+    const location = useLocation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [unexpectedError, setUnexpectedError] = useState(false);
     const [apiKeyDetails, setApiKeyDetails] = useState({});
 
+    const isManualAdjudication = location.pathname?.includes('manual-adjudication-services') ?? false;
+    const apiKeysListBackLink = isManualAdjudication
+        ? '/partnermanagement/admin/manual-adjudication-services/api-keys-list'
+        : '/partnermanagement/admin/authentication-services/api-keys-list';
+
     const moveToApiClientsList = () => {
-        navigate('/partnermanagement/admin/authentication-services/api-keys-list');
+        navigate(apiKeysListBackLink);
     };
 
     useEffect(() => {
@@ -31,7 +37,7 @@ function ViewAdminApiKeyDetails() {
         <div className={`w-full p-4 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm mb-[2%] ${isLoginLanguageRTL ? "mr-24 ml-1" : "ml-24 mr-1"} overflow-x-scroll`}>
             <div className={`flex-col mt-5 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm mb-[2%]`}>
                 <div className="flex justify-between mb-3">
-                    <Title title='viewApiKeyDetails.viewApiKeyDetails' subTitle='apiKeysList.listOfApiKeyRequests' backLink='/partnermanagement/admin/authentication-services/api-keys-list' />
+                    <Title title='viewApiKeyDetails.viewApiKeyDetails' subTitle='apiKeysList.listOfApiKeyRequests' backLink={apiKeysListBackLink} />
                 </div>
 
                 {unexpectedError && (
