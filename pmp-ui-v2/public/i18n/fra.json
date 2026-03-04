@@ -1265,6 +1265,10 @@
         "title": "Êtes-vous sûr de vouloir désactiver la clé API",
         "description": "En cliquant sur 'Confirmer', la clé API sera désactivée et ne pourra plus être utilisée pour l'authentification"
     },
+    "adminDeactivateManualAdjudicationApiKey": {
+        "title": "Êtes-vous sûr de vouloir désactiver la clé API",
+        "description": "En cliquant sur Confirmer, la clé API sera désactivée et ne pourra plus être utilisée pour les services d'arbitrage manuel."
+    },
     "notificationPopup": {
         "latest": "Dernier",
         "notification": "Notifications",
