@@ -21,7 +21,7 @@ import disableDeactivateIcon from "../../../svg/disable_deactivate_icon.svg";
 import editIcon from "../../../svg/edit_policy_icon.svg";
 import DeactivatePopup from '../../common/DeactivatePopup.js';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { openManualAdjudicationDeactivatePopup, handleManualAdjudicationDeactivateSuccess } from '../manualAdjudication/ManualAdjudicationApiKeyDeactivate';
+import { openManualAdjudicationDeactivatePopup, handleManualAdjudicationDeactivateSuccess } from './ManualAdjudicationApiKeyDeactivate.js';
 function AdminApiKeysList() {
     const { t } = useTranslation();
     const navigate = useNavigate();
