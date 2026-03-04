@@ -1700,5 +1700,9 @@
         "PMS_MSP_437": "The entered policy ID is invalid or does not exist in the database.",
         "PMS_MSP_438": "The policy ID provided has not been approved for partner policy linking.",
         "PMS_MSP_439": "No Active MISP License key found for the given Partner ID and Policy ID."
+        },
+    "adminDeactivateManualAdjudicationApiKey": {
+        "title": "Are you sure you want to Deactivate API Key",
+        "description": "On clicking Confirm, the API Key will be deactivated and can no longer be used for Manual Adjudication services."
     }
 }

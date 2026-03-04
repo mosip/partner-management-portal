@@ -21,7 +21,7 @@ import disableDeactivateIcon from "../../../svg/disable_deactivate_icon.svg";
 import editIcon from "../../../svg/edit_policy_icon.svg";
 import DeactivatePopup from '../../common/DeactivatePopup.js';
 import { useNavigate, useLocation } from 'react-router-dom';
-
+import { openManualAdjudicationDeactivatePopup, handleManualAdjudicationDeactivateSuccess } from '../manualAdjudication/ManualAdjudicationApiKeyDeactivate';
 function AdminApiKeysList() {
     const { t } = useTranslation();
     const navigate = useNavigate();
@@ -39,6 +39,8 @@ function AdminApiKeysList() {
     const titleKey = isManualAdjudication ? 'dashboard.manualAdjudication' : 'authenticationServices.authenticationServices';
     const listTitleKey = isManualAdjudication ? 'manualAdjudicationServices.listOfManualAdjudicationApiKeys' : 'apiKeysList.listOfApiKeyRequests';
     const listItemIdPrefix = isManualAdjudication ? 'manual_adjudication_list_item' : 'api_key_list_item';
+    const deactivateHeaderMsg = isManualAdjudication ? 'adminDeactivateManualAdjudicationApiKey.title' : 'adminDeactivateApiKey.title';
+    const deactivateDescriptionMsg = isManualAdjudication ? 'adminDeactivateManualAdjudicationApiKey.description' : 'adminDeactivateApiKey.description';
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [dataLoaded, setDataLoaded] = useState(true);
@@ -179,6 +181,17 @@ function AdminApiKeysList() {
 
 
     const deactivateApiKey = (selectedApiKeyData, index) => {
+        if (isManualAdjudication) {
+            openManualAdjudicationDeactivatePopup(
+                selectedApiKeyData,
+                index,
+                setActionId,
+                setSelectedApiKey,
+                setDeactivateRequest,
+                setShowActiveIndexDeactivatePopup
+            );
+            return;
+        }
         if (selectedApiKeyData.status === "activated") {
             const request = createRequest({
                 status: "De-active"
@@ -207,6 +220,16 @@ function AdminApiKeysList() {
     };
 
     const onClickConfirmDeactivate = (deactivationResponse, selectedApiKey) => {
+        if (isManualAdjudication) {
+            handleManualAdjudicationDeactivateSuccess(
+                deactivationResponse,
+                selectedApiKey,
+                setSelectedApiKey,
+                setShowActiveIndexDeactivatePopup,
+                setApiKeysList
+            );
+            return;
+        }
         if (deactivationResponse !== "") {
             setSelectedApiKey({});
             setShowActiveIndexDeactivatePopup(null);
@@ -219,9 +242,15 @@ function AdminApiKeysList() {
     };
 
     const viewApiKeyRequestDetails = (selectedApiKey) => {
-        // codeql[js/stored-xss]: Data stored in sessionStorage does not contain sensitive information
-        sessionStorage.setItem('selectedApiKeyAttributes', JSON.stringify(selectedApiKey));
+    sessionStorage.setItem('selectedApiKeyAttributes', JSON.stringify(selectedApiKey));
+    if (isManualAdjudication) {
+        navigate(
+            '/partnermanagement/admin/manual-adjudication-services/view-api-key-details',
+            { state: { selectedApiKey } }
+        );
+    } else {
         navigate(viewApiKeyDetailsPath);
+    }
     };
 
     const cancelErrorMsg = () => {
@@ -233,9 +262,8 @@ function AdminApiKeysList() {
     };
 
     const getRowActions = (apiKey) => {
-        const actionsDisabled = isManualAdjudication;
-        const cellClick = !actionsDisabled && apiKey.status !== 'deactivated' ? () => viewApiKeyRequestDetails(apiKey) : undefined;
-        return { actionsDisabled, cellClick };
+        const cellClick = apiKey.status !== 'deactivated' ? () => viewApiKeyRequestDetails(apiKey) : undefined;
+        return { cellClick };
     };
 
     const styles = {
@@ -331,10 +359,10 @@ function AdminApiKeysList() {
                                                             </thead>
                                                             <tbody>
                                                                 {apiKeysList.map((apiKey, index) => {
-                                                                    const { actionsDisabled, cellClick } = getRowActions(apiKey);
+                                                                    const { cellClick } = getRowActions(apiKey);
                                                                     return (
                                                                         <tr id={listItemIdPrefix + (index + 1)} key={index}
-                                                                            className={`border-t border-[#E5EBFA] ${!actionsDisabled && apiKey.status !== 'deactivated' ? 'cursor-pointer' : 'cursor-default'} text-[0.8rem] font-semibold break-words ${apiKey.status === 'deactivated' ? "text-[#969696]" : "text-[#191919]"}`}>
+                                                                             className={`border-t border-[#E5EBFA] ${apiKey.status !== 'deactivated' ? 'cursor-pointer' : 'cursor-default'} text-[0.8rem] font-semibold break-words ${apiKey.status === 'deactivated' ? "text-[#969696]" : "text-[#191919]"}`}>
                                                                             <td onClick={cellClick} className="px-2">{apiKey.partnerId}</td>
                                                                             <td onClick={cellClick} className="px-2">{apiKey.orgName ? apiKey.orgName : '-'}</td>
                                                                             <td onClick={cellClick} className="px-2">{apiKey.policyGroupName ? apiKey.policyGroupName : '-'}</td>
@@ -354,12 +382,12 @@ function AdminApiKeysList() {
                                                                                     </button>
                                                                                     {actionId === index && (
                                                                                         <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-10 text-right" : "right-11 text-left"}`}>
-                                                                                            <div role="button" className={`flex justify-between ${actionsDisabled ? 'cursor-default text-[#A5A5A5]' : 'hover:bg-gray-100 cursor-pointer text-[#3E3E3E]'}`} onClick={actionsDisabled ? undefined : () => viewApiKeyRequestDetails(apiKey)} tabIndex={actionsDisabled ? -1 : 0} onKeyDown={actionsDisabled ? undefined : (e) => onPressEnterKey(e, () => viewApiKeyRequestDetails(apiKey))}>
+                                                                                           <div role="button" className={`flex justify-between hover:bg-gray-100 cursor-pointer text-[#3E3E3E]`} onClick={() => viewApiKeyRequestDetails(apiKey)} tabIndex={0} onKeyDown={(e) => onPressEnterKey(e, () => viewApiKeyRequestDetails(apiKey))}>
                                                                                                 <p id="api_key_list_view_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerList.view")}</p>
                                                                                                 <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                             </div>
                                                                                             <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                            {!actionsDisabled && (
+                                                                                            {!isManualAdjudication && (
                                                                                                 <>
                                                                                                     <div role='button' className={`flex justify-between ${apiKey.status !== 'deactivated' ? 'hover:bg-gray-100 cursor-pointer text-[#3E3E3E]' : 'cursor-default text-[#A5A5A5]'}`} onClick={() => editExpiryDate(apiKey, index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => editExpiryDate(apiKey, index))}>
                                                                                                         <p id="api_key_list_edit_expiry_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("apiKeysList.editExpiryDate") || "Edit Expiry Date"}</p>
@@ -368,9 +396,9 @@ function AdminApiKeysList() {
                                                                                                     <hr className="h-px bg-gray-100 border-0 mx-1" />
                                                                                                 </>
                                                                                             )}
-                                                                                            <div role="button" className={`flex justify-between ${actionsDisabled ? 'cursor-default text-[#A5A5A5]' : apiKey.status === 'activated' ? 'hover:bg-gray-100 cursor-pointer text-[#3E3E3E]' : 'cursor-default text-[#A5A5A5]'}`} onClick={actionsDisabled ? undefined : () => deactivateApiKey(apiKey, index)} tabIndex={actionsDisabled ? -1 : 0} onKeyDown={actionsDisabled ? undefined : (e) => onPressEnterKey(e, () => deactivateApiKey(apiKey, index))}>
+                                                                                            <div role="button" className={`flex justify-between ${apiKey.status === 'activated' ? 'hover:bg-gray-100 cursor-pointer text-[#3E3E3E]' : 'cursor-default text-[#A5A5A5]'}`} onClick={() => deactivateApiKey(apiKey, index)} tabIndex={0} onKeyDown={(e) => onPressEnterKey(e, () => deactivateApiKey(apiKey, index))}>
                                                                                                 <p id="api_key_list_deactivate_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerList.deActivate")}</p>
-                                                                                                <img src={apiKey.status === 'activated' && !actionsDisabled ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
+                                                                                                <img src={apiKey.status === 'activated' ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                             </div>
                                                                                         </div>
                                                                                     )}
@@ -380,8 +408,8 @@ function AdminApiKeysList() {
                                                                                             onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, selectedApiKey)}
                                                                                             popupData={selectedApiKey}
                                                                                             request={deactivateRequest}
-                                                                                            headerMsg="adminDeactivateApiKey.title"
-                                                                                            descriptionMsg="adminDeactivateApiKey.description"
+                                                                                            headerMsg={deactivateHeaderMsg}
+                                                                                            descriptionMsg={deactivateDescriptionMsg}
                                                                                             headerKeyName={selectedApiKey.apiKeyLabel}
                                                                                         />
                                                                                     )}

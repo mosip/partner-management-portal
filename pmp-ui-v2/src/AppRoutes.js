@@ -40,6 +40,7 @@ import AdminOidcClientsList from './pages/admin/authenticationServices/AdminOidc
 import AdminApiKeysList from './pages/admin/apiKeys/AdminApiKeysList.js';
 import ViewAdminOidcClientDetails from './pages/admin/authenticationServices/ViewAdminOidcClientDetails.js';
 import ViewAdminApiKeyDetails from './pages/admin/apiKeys/ViewAdminApiKeyDetails.js';
+import ViewManualAdjudicationApiKeyDetails from './pages/admin/manualAdjudication/ViewManualAdjudicationApiKeyDetails.js';
 import EditAdminApiKey from './pages/admin/authenticationServices/EditAdminApiKey.js';
 import AdminFtmList from './pages/admin/ftmProviderServices/AdminFtmList.js';
 import ViewAdminFtmChipDetails from './pages/admin/ftmProviderServices/ViewAdminFtmChipDetails.js';
@@ -380,7 +381,7 @@ function AppRoutes() {
         },
         {
           path: 'admin/manual-adjudication-services/view-api-key-details',
-          element: <GuardedRoute><MainLayout><ViewAdminApiKeyDetails /></MainLayout></GuardedRoute>,
+          element: <GuardedRoute><MainLayout><ViewManualAdjudicationApiKeyDetails /></MainLayout></GuardedRoute>,
         },
       ],
     },
