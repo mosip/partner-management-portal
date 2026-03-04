@@ -242,7 +242,10 @@ function AdminApiKeysList() {
     };
 
     const viewApiKeyRequestDetails = (selectedApiKey) => {
-    sessionStorage.setItem('selectedApiKeyAttributes', JSON.stringify(selectedApiKey));
+       const selectedApiKeyStorageKey = isManualAdjudication
+       ? 'selectedManualAdjudicationApiKeyAttributes'
+       : 'selectedApiKeyAttributes';
+        sessionStorage.setItem(selectedApiKeyStorageKey, JSON.stringify(selectedApiKey));
     if (isManualAdjudication) {
         navigate(
             '/partnermanagement/admin/manual-adjudication-services/view-api-key-details',
