@@ -15,11 +15,11 @@ function SideNav({ open, policyRequiredPartnerTypes }) {
     const { t } = useTranslation();
     const [enablePoliciesMenu, setEnablePoliciesMenu] = useState(false);
     const [enableAuthenticationServicesMenu, setEnableAuthenticationServicesMenu] = useState(false);
+    const [enableCredentialServicesMenu, setEnableCredentialServicesMenu] = useState(false);
     const [enableDeviceProviderServicesMenu, setEnableDeviceProviderServicesMenu] = useState(false);
     const [enableFtmServicesMenu, setEnableFtmServicesMenu] = useState(false);
     const [enablePartnerAdminMenu, setEnablePartnerAdminMenu] = useState(false);
     const [enablePolicyManagerMenu, setEnablePolicyManagerMenu] = useState(false);
-    const [isCredentialPartner, setIsCredentialPartner] = useState(false);
 
     useEffect(() => {
         if (selectedPath.includes('dashboard')) {
@@ -34,8 +34,10 @@ function SideNav({ open, policyRequiredPartnerTypes }) {
             setActiveIcon("organisationUsers");
         } else if (selectedPath.includes('policies')) {
             setActiveIcon("policies");
-        } else if (selectedPath.includes('authentication-services') || selectedPath.includes('credential-services')) {
+        } else if (selectedPath.includes('authentication-services')) {
             setActiveIcon("authenticationServices");
+        } else if (selectedPath.includes('credential-services')) {
+            setActiveIcon("credentialServices");
         } else if (selectedPath.includes('device-provider-services')) {
             setActiveIcon('deviceProviderServices');
         } else if (selectedPath.includes('ftm-chip-provider-services')) {
@@ -68,12 +70,12 @@ function SideNav({ open, policyRequiredPartnerTypes }) {
             setEnablePoliciesMenu(true);
         }
 
-        if (rolesArray.includes("AUTH_PARTNER") || rolesArray.includes("CREDENTIAL_PARTNER")) {
+        if (rolesArray.includes("AUTH_PARTNER")) {
             setEnableAuthenticationServicesMenu(true);
         }
 
         if (rolesArray.includes("CREDENTIAL_PARTNER")) {
-            setIsCredentialPartner(true);
+            setEnableCredentialServicesMenu(true);
         }
         if (rolesArray.includes("DEVICE_PROVIDER")) {
             setEnableDeviceProviderServicesMenu(true);
@@ -102,12 +104,13 @@ function SideNav({ open, policyRequiredPartnerTypes }) {
         setActiveIcon("policies");
     };
     const showAuthenticationServices = () => {
-        if (isCredentialPartner) {
-            navigate('/partnermanagement/credential-services');
-        } else {
-            navigate('/partnermanagement/authentication-services/oidc-clients-list');
-        }
+        navigate('/partnermanagement/authentication-services/oidc-clients-list');
         setActiveIcon("authenticationServices");
+    };
+
+    const showCredentialServices = () => {
+        navigate('/partnermanagement/credential-services');
+        setActiveIcon("credentialServices");
     };
     const showDeviceProviderServices = () => {
         navigate('/partnermanagement/device-provider-services/sbi-list');
@@ -156,13 +159,22 @@ function SideNav({ open, policyRequiredPartnerTypes }) {
                         </button>
                     }
                     {!enablePartnerAdminMenu && !enablePolicyManagerMenu && enableAuthenticationServicesMenu &&
-                        <button id='side_nav_authentication_service_icon' className="duration-700 cursor-pointer" onClick={() => showAuthenticationServices()}>
+                        <button id='side_nav_authentication_service_icon' className="duration-700 cursor-pointer" onClick={showAuthenticationServices}>
                             <SideNavMenuItem
-                                title={isCredentialPartner ? t('dashboard.credentialServices') : t('dashboard.authenticationServices')}
+                                title={t('dashboard.authenticationServices')}
                                 id='authenticationServices'
                                 isExpanded={open}
                                 activeIcon={activeIcon}
-                                useCredentialIcon={isCredentialPartner}
+                            />
+                        </button>
+                    }
+                    {!enablePartnerAdminMenu && !enablePolicyManagerMenu && enableCredentialServicesMenu &&
+                        <button id='side_nav_credential_service_icon' className="duration-700 cursor-pointer" onClick={showCredentialServices}>
+                            <SideNavMenuItem
+                                title={t('dashboard.credentialServices')}
+                                id='credentialServices'
+                                isExpanded={open}
+                                activeIcon={activeIcon}
                             />
                         </button>
                     }
