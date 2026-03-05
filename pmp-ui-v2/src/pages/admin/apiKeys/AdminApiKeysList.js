@@ -39,6 +39,7 @@ function AdminApiKeysList() {
     const titleKey = isManualAdjudication ? 'dashboard.manualAdjudication' : 'authenticationServices.authenticationServices';
     const listTitleKey = isManualAdjudication ? 'manualAdjudicationServices.listOfManualAdjudicationApiKeys' : 'apiKeysList.listOfApiKeyRequests';
     const listItemIdPrefix = isManualAdjudication ? 'manual_adjudication_list_item' : 'api_key_list_item';
+    const deactivatePopupMsgKey = isManualAdjudication ? 'adminDeactivateManualAdjudicationApiKey' : 'adminDeactivateApiKey';
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [dataLoaded, setDataLoaded] = useState(true);
@@ -233,9 +234,10 @@ function AdminApiKeysList() {
     };
 
     const getRowActions = (apiKey) => {
-        const actionsDisabled = isManualAdjudication;
-        const cellClick = !actionsDisabled && apiKey.status !== 'deactivated' ? () => viewApiKeyRequestDetails(apiKey) : undefined;
-        return { actionsDisabled, cellClick };
+        const disableViewAndDeactivate = false;
+        const disableEditExpiryDate = isManualAdjudication;
+        const cellClick = !disableViewAndDeactivate && apiKey.status !== 'deactivated' ? () => viewApiKeyRequestDetails(apiKey) : undefined;
+        return { disableViewAndDeactivate, disableEditExpiryDate, cellClick };
     };
 
     const styles = {
@@ -331,10 +333,10 @@ function AdminApiKeysList() {
                                                             </thead>
                                                             <tbody>
                                                                 {apiKeysList.map((apiKey, index) => {
-                                                                    const { actionsDisabled, cellClick } = getRowActions(apiKey);
+                                                                   const { disableViewAndDeactivate, disableEditExpiryDate, cellClick } = getRowActions(apiKey);
                                                                     return (
                                                                         <tr id={listItemIdPrefix + (index + 1)} key={index}
-                                                                            className={`border-t border-[#E5EBFA] ${!actionsDisabled && apiKey.status !== 'deactivated' ? 'cursor-pointer' : 'cursor-default'} text-[0.8rem] font-semibold break-words ${apiKey.status === 'deactivated' ? "text-[#969696]" : "text-[#191919]"}`}>
+                                                                            className={`border-t border-[#E5EBFA] ${!disableViewAndDeactivate && apiKey.status !== 'deactivated' ? 'cursor-pointer' : 'cursor-default'} text-[0.8rem] font-semibold break-words ${apiKey.status === 'deactivated' ? "text-[#969696]" : "text-[#191919]"}`}>
                                                                             <td onClick={cellClick} className="px-2">{apiKey.partnerId}</td>
                                                                             <td onClick={cellClick} className="px-2">{apiKey.orgName ? apiKey.orgName : '-'}</td>
                                                                             <td onClick={cellClick} className="px-2">{apiKey.policyGroupName ? apiKey.policyGroupName : '-'}</td>
@@ -354,12 +356,11 @@ function AdminApiKeysList() {
                                                                                     </button>
                                                                                     {actionId === index && (
                                                                                         <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-10 text-right" : "right-11 text-left"}`}>
-                                                                                            <div role="button" className={`flex justify-between ${actionsDisabled ? 'cursor-default text-[#A5A5A5]' : 'hover:bg-gray-100 cursor-pointer text-[#3E3E3E]'}`} onClick={actionsDisabled ? undefined : () => viewApiKeyRequestDetails(apiKey)} tabIndex={actionsDisabled ? -1 : 0} onKeyDown={actionsDisabled ? undefined : (e) => onPressEnterKey(e, () => viewApiKeyRequestDetails(apiKey))}>
-                                                                                                <p id="api_key_list_view_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerList.view")}</p>
+                                                                                            <div role="button" className={`flex justify-between ${disableViewAndDeactivate ? 'cursor-default text-[#A5A5A5]' : 'hover:bg-gray-100 cursor-pointer text-[#3E3E3E]'}`} onClick={disableViewAndDeactivate ? undefined : () => viewApiKeyRequestDetails(apiKey)} tabIndex={disableViewAndDeactivate ? -1 : 0} onKeyDown={disableViewAndDeactivate ? undefined : (e) => onPressEnterKey(e, () => viewApiKeyRequestDetails(apiKey))}>    <p id="api_key_list_view_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerList.view")}</p>
                                                                                                 <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                             </div>
                                                                                             <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                            {!actionsDisabled && (
+                                                                                            {!disableEditExpiryDate && (
                                                                                                 <>
                                                                                                     <div role='button' className={`flex justify-between ${apiKey.status !== 'deactivated' ? 'hover:bg-gray-100 cursor-pointer text-[#3E3E3E]' : 'cursor-default text-[#A5A5A5]'}`} onClick={() => editExpiryDate(apiKey, index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => editExpiryDate(apiKey, index))}>
                                                                                                         <p id="api_key_list_edit_expiry_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("apiKeysList.editExpiryDate") || "Edit Expiry Date"}</p>
@@ -368,10 +369,18 @@ function AdminApiKeysList() {
                                                                                                     <hr className="h-px bg-gray-100 border-0 mx-1" />
                                                                                                 </>
                                                                                             )}
-                                                                                            <div role="button" className={`flex justify-between ${actionsDisabled ? 'cursor-default text-[#A5A5A5]' : apiKey.status === 'activated' ? 'hover:bg-gray-100 cursor-pointer text-[#3E3E3E]' : 'cursor-default text-[#A5A5A5]'}`} onClick={actionsDisabled ? undefined : () => deactivateApiKey(apiKey, index)} tabIndex={actionsDisabled ? -1 : 0} onKeyDown={actionsDisabled ? undefined : (e) => onPressEnterKey(e, () => deactivateApiKey(apiKey, index))}>
-                                                                                                <p id="api_key_list_deactivate_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerList.deActivate")}</p>
-                                                                                                <img src={apiKey.status === 'activated' && !actionsDisabled ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
-                                                                                            </div>
+                                                                                            <div
+                                                                                                role="button"
+                                                                                                aria-disabled={apiKey.status !== 'activated'}
+                                                                                                className={`flex justify-between ${apiKey.status === 'activated'
+                                                                                                ? 'hover:bg-gray-100 cursor-pointer text-[#3E3E3E]'
+                                                                                                : 'cursor-default text-[#A5A5A5]'}`}
+                                                                                                onClick={apiKey.status === 'activated' ? () => deactivateApiKey(apiKey, index) : undefined}
+                                                                                                tabIndex={apiKey.status === 'activated' ? 0 : -1}
+                                                                                                onKeyDown={apiKey.status === 'activated' ? (e) => onPressEnterKey(e, () => deactivateApiKey(apiKey, index)) : undefined}
+                                                                                            >
+                                                                                            <p id="api_key_list_deactivate_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerList.deActivate")}</p>
+                                                                                                <img src={apiKey.status === 'activated' && !disableViewAndDeactivate ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />                                                                                            </div>
                                                                                         </div>
                                                                                     )}
                                                                                     {showActiveIndexDeactivatePopup === index && (
@@ -380,8 +389,8 @@ function AdminApiKeysList() {
                                                                                             onClickConfirm={(deactivationResponse) => onClickConfirmDeactivate(deactivationResponse, selectedApiKey)}
                                                                                             popupData={selectedApiKey}
                                                                                             request={deactivateRequest}
-                                                                                            headerMsg="adminDeactivateApiKey.title"
-                                                                                            descriptionMsg="adminDeactivateApiKey.description"
+                                                                                            headerMsg={`${deactivatePopupMsgKey}.title`}
+                                                                                            descriptionMsg={`${deactivatePopupMsgKey}.description`}
                                                                                             headerKeyName={selectedApiKey.apiKeyLabel}
                                                                                         />
                                                                                     )}
