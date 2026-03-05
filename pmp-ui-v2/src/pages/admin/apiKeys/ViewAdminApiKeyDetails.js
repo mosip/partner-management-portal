@@ -21,6 +21,9 @@ function ViewAdminApiKeyDetails() {
     const apiKeysListSubTitle = isManualAdjudication
         ? 'manualAdjudicationServices.listOfManualAdjudicationApiKeys'
         : 'apiKeysList.listOfApiKeyRequests';
+        const partnerTypeDisplayKey = isManualAdjudication
+        ? 'partnerTypes.manualAdjudication'
+        : 'partnerTypes.authPartner';
 
     const moveToApiClientsList = () => {
         navigate(apiKeysListBackLink);
@@ -95,7 +98,7 @@ function ViewAdminApiKeyDetails() {
                                         {t("viewOidcClientDetails.partnerType")}
                                     </p>
                                     <p id='api_key_details_auth_partner_context' className="font-[600] text-vulcan text-base">
-                                        {t("partnerTypes.authPartner")}
+                                        {t(partnerTypeDisplayKey)}
                                     </p>
                                 </div>
                                 <div className="my-3 max-[600px]:w-[100%] w-[49%]">

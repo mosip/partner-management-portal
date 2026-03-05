@@ -1267,6 +1267,10 @@
         "title": "Are you sure you want to Deactivate API Key",
         "description": "On clicking ‘Confirm’, the API Key will be deactivated and can no longer be used for authentication"
     },
+    "adminDeactivateManualAdjudicationApiKey": {
+        "title": "Are you sure you want to Deactivate API Key",
+        "description": "On clicking Confirm, the API Key will be deactivated and can no longer be used for Manual Adjudication services."
+    },
     "notificationPopup": {
         "latest": "Latest",
         "notification": "Notifications",
