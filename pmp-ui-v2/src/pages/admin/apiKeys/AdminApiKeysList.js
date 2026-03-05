@@ -369,7 +369,17 @@ function AdminApiKeysList() {
                                                                                                     <hr className="h-px bg-gray-100 border-0 mx-1" />
                                                                                                 </>
                                                                                             )}
-                                                                                            <div role="button" className={`flex justify-between ${disableViewAndDeactivate ? 'cursor-default text-[#A5A5A5]' : apiKey.status === 'activated' ? 'hover:bg-gray-100 cursor-pointer text-[#3E3E3E]' : 'cursor-default text-[#A5A5A5]'}`} onClick={disableViewAndDeactivate ? undefined : () => deactivateApiKey(apiKey, index)} tabIndex={disableViewAndDeactivate ? -1 : 0} onKeyDown={disableViewAndDeactivate ? undefined : (e) => onPressEnterKey(e, () => deactivateApiKey(apiKey, index))}>                            <p id="api_key_list_deactivate_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerList.deActivate")}</p>
+                                                                                            <div
+                                                                                                role="button"
+                                                                                                aria-disabled={apiKey.status !== 'activated'}
+                                                                                                className={`flex justify-between ${apiKey.status === 'activated'
+                                                                                                ? 'hover:bg-gray-100 cursor-pointer text-[#3E3E3E]'
+                                                                                                : 'cursor-default text-[#A5A5A5]'}`}
+                                                                                                onClick={apiKey.status === 'activated' ? () => deactivateApiKey(apiKey, index) : undefined}
+                                                                                                tabIndex={apiKey.status === 'activated' ? 0 : -1}
+                                                                                                onKeyDown={apiKey.status === 'activated' ? (e) => onPressEnterKey(e, () => deactivateApiKey(apiKey, index)) : undefined}
+                                                                                            >
+                                                                                            <p id="api_key_list_deactivate_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerList.deActivate")}</p>
                                                                                                 <img src={apiKey.status === 'activated' && !disableViewAndDeactivate ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />                                                                                            </div>
                                                                                         </div>
                                                                                     )}
