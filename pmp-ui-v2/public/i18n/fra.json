@@ -56,6 +56,7 @@
         "authenticationServicesDesc": "Demander la création d'un client OIDC / la génération de clés API pour les concepteurs et l'authentification basée sur les clés API",
         "credentialServices": "Services d'identification",
         "credentialServicesDesc": "Gérer les services d'identification",
+        "adminCredentialServicesDesc": "Configurer, afficher et modifier les détails du fournisseur Biometric Extractor",
         "deviceProviderServices": "Services du fournisseur d'appareils",
         "ftmChipProviderServices": "Services de fournisseur de puces FTM",
         "ftmChipProviderServicesDesc": "Ajouter, désactiver FTM (Foundational Trust Module), télécharger, re-télécharger, télécharger le certificat de puce FTM",
@@ -104,7 +105,9 @@
     },
     "credentialServices": {
         "title": "Services d'identification",
-        "breadcrumb": "Services d'identification"
+        "breadcrumb": "Services d'identification",
+        "adminTitle": "Services Credential/Print Partner",
+        "adminBreadcrumb": "Services Credential/Print Partner"
     },
     "mispLicenseList": {
         "partnerId": "ID partenaire",

@@ -140,6 +140,10 @@ function SideNav({ open, policyRequiredPartnerTypes }) {
         navigate('/partnermanagement/admin/authentication-services/oidc-clients-list');
     };
 
+    const showAdminCredentialServices = () => {
+        navigate('/partnermanagement/admin/credential-services');
+    };
+
     return (
         <div className="flex font-inter bg-white h-screen z-40">
             <div className={`h-full ${open ? "absolute inset-y-14 w-[16rem]" : "absolute inset-y-14 w-[4.5rem]"} 
@@ -224,6 +228,10 @@ function SideNav({ open, policyRequiredPartnerTypes }) {
 
                             <button id='side_nav_mispServices_icon' className="duration-700 cursor-pointer" onClick={() => moveToMispPartnerServices(navigate)}>
                                 <SideNavMenuItem title={t('dashboard.mispPartnerServices')} id='mispPartnerServices' isExpanded={open} activeIcon={activeIcon} />
+                            </button>
+
+                            <button id='side_nav_adminCredentialServices_icon' className="duration-700 cursor-pointer" onClick={() => showAdminCredentialServices()}>
+                                <SideNavMenuItem title={t('dashboard.credentialServices')} id='credentialServices' isExpanded={open} activeIcon={activeIcon} />
                             </button>
 
                             <button id='side_nav_manualAdjudicationServices_icon' className="duration-700 cursor-pointer" onClick={() => navigate('/partnermanagement/admin/manual-adjudication-services/api-keys-list')}>
