@@ -392,15 +392,6 @@ function AppRoutes() {
         },
         {
           path: 'admin/credential-services',
-          loader: () => {
-            const userProfile = getUserProfile();
-            const rolesString = userProfile?.roles ?? '';
-            const rolesArray = rolesString.split(',').map(r => r.trim()).filter(r => r.length > 0);
-            if (!rolesArray.includes('PARTNER_ADMIN')) {
-              return redirect('/partnermanagement/runtimeError');
-            }
-            return null;
-          },
           element: <GuardedRoute><MainLayout><AdminCredentialServices /></MainLayout></GuardedRoute>,
         },
         {
