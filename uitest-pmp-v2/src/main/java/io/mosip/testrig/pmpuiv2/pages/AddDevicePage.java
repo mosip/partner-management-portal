@@ -61,10 +61,10 @@ public class AddDevicePage extends BasePage {
 	@FindBy(id = "add_device_device_sub_type_option1")
 	private WebElement addDeviceSubTypeOption;
 
-	@FindBy(id = "add_device_make_input")
+	@FindBy(xpath = "(//input[starts-with(@id,'add_device_make_input_')])[1]")
 	private WebElement addDeviceMakeTextbox;
 
-	@FindBy(id = "add_device_model_input")
+	@FindBy(xpath = "(//input[starts-with(@id,'add_device_model_input_')])[1]")
 	private WebElement addDeviceModelTextbox;
 
 	@FindBy(id = "add_device_back_sbi_list_btn")
@@ -247,13 +247,13 @@ public class AddDevicePage extends BasePage {
 
 	public void enterMakeNameWithPosition(String makeName, int position) {
 		WebElement addDeviceMakeTextbox = driver
-				.findElement(By.xpath("(//input[@id='add_device_make_input'])[" + position + "]"));
+				.findElement(By.xpath("(//input[starts-with(@id,'add_device_make_input_')])[" + position + "]"));
 		enter(addDeviceMakeTextbox, makeName);
 	}
 
 	public void enterModelNameWithPosition(String modelName, int position) {
 		WebElement addDeviceModelTextbox = driver
-				.findElement(By.xpath("(//input[@id='add_device_model_input'])[" + position + "]"));
+				.findElement(By.xpath("(//input[starts-with(@id,'add_device_model_input_')])[" + position + "]"));
 		enter(addDeviceModelTextbox, modelName);
 	}
 
