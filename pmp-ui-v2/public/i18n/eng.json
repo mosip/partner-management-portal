@@ -103,7 +103,8 @@
         "mispLicenseKeyExpiryCountDesc1": "{{expiringMispLicenseKeyCount}} MISP License Keys are expiring soon",
         "mispLicenseKeyExpiryCountDesc2": "{{expiringMispLicenseKeyCount}} MISP License Key is expiring soon",
         "manualAdjudication": "Manual Adjudication Services",
-        "manualAdjudicationDesc": "View, Generate API Keys"
+        "manualAdjudicationDesc": "View, Generate API Keys",
+        "adminCredentialServicesTitle": "Credential/Print Partner Services"
     },
     "credentialServices": {
         "title": "Credential Services",

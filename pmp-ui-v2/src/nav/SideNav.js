@@ -231,7 +231,7 @@ function SideNav({ open, policyRequiredPartnerTypes }) {
                             </button>
 
                             <button id='side_nav_adminCredentialServices_icon' className="duration-700 cursor-pointer" onClick={() => showAdminCredentialServices()}>
-                                <SideNavMenuItem title={t('dashboard.credentialServices')} id='credentialServices' isExpanded={open} activeIcon={activeIcon} />
+                                <SideNavMenuItem title={t('dashboard.adminCredentialServicesTitle')} id='credentialServices' isExpanded={open} activeIcon={activeIcon} />
                             </button>
 
                             <button id='side_nav_manualAdjudicationServices_icon' className="duration-700 cursor-pointer" onClick={() => navigate('/partnermanagement/admin/manual-adjudication-services/api-keys-list')}>

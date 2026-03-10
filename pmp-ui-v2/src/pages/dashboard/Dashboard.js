@@ -1000,7 +1000,7 @@ function Dashboard() {
                   </div>
                   <div>
                     <h5 id='dashboard_admin_credential_services_card_header' className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
-                      {t('dashboard.credentialServices')}
+                      {t('dashboard.adminCredentialServicesTitle')}
                     </h5>
                     <p id='dashboard_admin_credential_services_card_description' className="mb-3 text-xs font-normal text-gray-400">
                       {t('dashboard.adminCredentialServicesDesc')}
