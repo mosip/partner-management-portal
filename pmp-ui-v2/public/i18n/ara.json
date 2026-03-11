@@ -56,7 +56,7 @@
         "authenticationServicesDesc": "طلب إنشاء عميل OIDC / إنشاء مفتاح API لمصممي التصميم والمصادقة المستندة إلى مفتاح API",
         "credentialServices": "خدمات بيانات الاعتماد",
         "credentialServicesDesc": "إدارة خدمات بيانات الاعتماد",
-        "adminCredentialServicesDesc": "تكوين تفاصيل مزود Biometric Extractor وعرضها وتحريرها",
+        "adminCredentialServicesDesc": "تكوين تفاصيل مزود مستخرج القياسات الحيوية وعرضها وتحريرها",
         "deviceProviderServices": "خدمات مزودي الأجهزة",
         "ftmChipProviderServices": "خدمات مزودي شريحة FTM",
         "ftmChipProviderServicesDesc": "إضافة، إلغاء تنشيط FTM (وحدة الثقة الأساسية)، تحميل، إعادة تحميل، تنزيل شهادة شريحة FTM",

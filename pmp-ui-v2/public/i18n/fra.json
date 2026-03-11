@@ -107,8 +107,8 @@
     "credentialServices": {
         "title": "Services d'identification",
         "breadcrumb": "Services d'identification",
-        "adminTitle": "Services Credential/Print Partner",
-        "adminBreadcrumb": "Services Credential/Print Partner"
+        "adminTitle": "Services Partenaire Credential/Impression",
+        "adminBreadcrumb": "Services Partenaire Credential/Impression"
     },
     "mispLicenseList": {
         "partnerId": "ID partenaire",
