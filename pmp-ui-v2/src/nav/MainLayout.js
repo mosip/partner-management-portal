@@ -148,9 +148,9 @@ function MainLayout({ children }) {
     }, []);
 
     return (
-        <div className="min-h-screen flex flex-col bg-anti-flash-white font-inter">
+        <div className="flex flex-col justify-evenly bg-anti-flash-white font-inter">
             <HeaderNav open={open} setOpen={setOpen}></HeaderNav>
-            <div className='flex flex-row justify-stretch flex-1'>
+            <div className='flex flex-row justify-stretch h-full'>
                 <SideNav open={open} policyRequiredPartnerTypes={policyRequiredPartnerTypes}></SideNav>
                 {children}
             </div>
