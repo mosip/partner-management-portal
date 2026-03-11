@@ -247,13 +247,13 @@ public class AddDevicePage extends BasePage {
 
 	public void enterMakeNameWithPosition(String makeName, int position) {
 		WebElement addDeviceMakeTextbox = driver
-				.findElement(By.xpath("(//input[starts-with(@id,'add_device_make_input_')])[" + position + "]"));
+				.findElement(By.xpath("(//input[@id='add_device_make_input'])[" + position + "]"));
 		enter(addDeviceMakeTextbox, makeName);
 	}
 
 	public void enterModelNameWithPosition(String modelName, int position) {
 		WebElement addDeviceModelTextbox = driver
-				.findElement(By.xpath("(//input[starts-with(@id,'add_device_model_input_')])[" + position + "]"));
+				.findElement(By.xpath("(//input[@id='add_device_model_input'])[" + position + "]"));
 		enter(addDeviceModelTextbox, modelName);
 	}
 
