@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useBlocker } from "react-router-dom";
 import { getUserProfile } from '../../../services/UserProfileService.js';
@@ -28,6 +28,7 @@ function AddDevices() {
     const [previousPath, setPreviousPath] = useState(true);
     const [selectedSbidata, setSelectedSbidata] = useState(true);
     const [unexpectedError, setUnexpectedError] = useState(false);
+    const nextDeviceEntryId = useRef(1);
     const allowedFields = ['deviceType', 'deviceSubType', 'make', 'model'];
 
     const blocker = useBlocker(
@@ -93,8 +94,9 @@ function AddDevices() {
         setPreviousPath(path);
     }, [t]);
 
-    const createEmptyDeviceEntry = useCallback(async (deviceTypeData) => {
+    const createEmptyDeviceEntry = useCallback(async (deviceTypeData, stableId = nextDeviceEntryId.current++) => {
         return {
+            stableId,
             deviceType: "",
             deviceSubType: "",
             make: "",
@@ -173,7 +175,7 @@ function AddDevices() {
 
     const clearForm = async (index) => {
         const newEntries = [...deviceEntries];
-        newEntries[index] = await createEmptyDeviceEntry(deviceTypeDropdownData);
+        newEntries[index] = await createEmptyDeviceEntry(deviceTypeDropdownData, deviceEntries[index].stableId);
         setDeviceEntries(newEntries);
         updateButtonStates();
     };
@@ -344,7 +346,7 @@ function AddDevices() {
                             </div>
                         </div>
                         {deviceEntries.map((entry, index) => (
-                            <div key={index} className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
+                            <div key={entry.stableId} className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
                                 <div className="flex flex-col p-2">
                                     <div className={`flex justify-between ${entry.successMsg ? 'mb-16' : 'mb-2'} ${entry.errorMsg && 'mb-4'}`}>
                                         {!entry.isSubmitted && (
@@ -370,7 +372,7 @@ function AddDevices() {
                                                     disabled={entry.isSubmitted}
                                                     changeDropdownBackground={entry.isSubmitted}
                                                     styleSet={styles}
-                                                    id='add_device_device_type'>
+                                                    id={'add_device_device_type_' + (index + 1)}>
                                                 </DropdownComponent>
                                             </div>
                                             <div className="flex-col w-[24%] max-[850px]:w-[47%] max-[585px]:w-full">
@@ -384,7 +386,7 @@ function AddDevices() {
                                                     disabled={!entry.deviceType || entry.isSubmitted}
                                                     changeDropdownBackground={entry.isSubmitted}
                                                     styleSet={styles}
-                                                    id='add_device_device_sub_type'>
+                                                    id={'add_device_device_sub_type_' + (index + 1)}>
                                                 </DropdownComponent>
                                             </div>
                                             <div className="flex flex-col w-[22.5%] max-[850px]:w-[47%] max-[585px]:w-full">
