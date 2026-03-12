@@ -370,7 +370,7 @@ function AddDevices() {
                                                     disabled={entry.isSubmitted}
                                                     changeDropdownBackground={entry.isSubmitted}
                                                     styleSet={styles}
-                                                    id='add_device_device_type'>
+                                                    id={'add_device_device_type_' + (index + 1)}>
                                                 </DropdownComponent>
                                             </div>
                                             <div className="flex-col w-[24%] max-[850px]:w-[47%] max-[585px]:w-full">
@@ -384,7 +384,7 @@ function AddDevices() {
                                                     disabled={!entry.deviceType || entry.isSubmitted}
                                                     changeDropdownBackground={entry.isSubmitted}
                                                     styleSet={styles}
-                                                    id='add_device_device_sub_type'>
+                                                    id={'add_device_device_sub_type_' + (index + 1)}>
                                                 </DropdownComponent>
                                             </div>
                                             <div className="flex flex-col w-[22.5%] max-[850px]:w-[47%] max-[585px]:w-full">
