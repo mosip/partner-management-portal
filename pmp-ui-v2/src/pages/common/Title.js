@@ -20,18 +20,18 @@ function Title({ title, subTitle, subTitle2, backLink, backLink2, status, versio
     };
 
     return (
-        <div className="flex-col items-start">
+        <div className="flex-col items-start w-full min-w-0">
             <div className={`flex gap-x-2 ${isLoginLanguageRTL ? 'pr-[0.1rem]' : 'pl-[0.1rem]'}`}>
                 <button id='title_back_icon' onClick={goBack} className={`mt-1 cursor-pointer`} >
                     <img src={isLoginLanguageRTL ? backArrowReversed : backArrow} alt=""/>
                 </button>
-                <h1 id='page_title' className="font-semibold text-lg text-dark-blue">{t(title)}</h1>
+                <h1 id='page_title' className="font-semibold text-lg text-dark-blue break-words min-w-0">{t(title)}</h1>
             </div>
 
-            <div className={`flex-col w-full ${!isLoginLanguageRTL ? 'ml-7' : 'mr-7'}`}>
+            <div className={`flex-col min-w-0 ${!isLoginLanguageRTL ? 'ml-7' : 'mr-7'}`}>
                 {(status && version) && (
                     <div className="flex flex-wrap items-center gap-2 mb-1 min-w-0">
-                        <h1 id='sub_title_version' className={`font-semibold text-lg text-[#707070] break-words min-w-0 flex-shrink`}>{version + ' | '}</h1>
+                        <h1 id='sub_title_version' className={`font-semibold text-lg text-[#707070] break-all min-w-0`}>{version + ' | '}</h1>
                         <div id='sub_title_status' className={`${(status === 'deactivated') ? 'bg-[#A5A5A5] text-white' : bgOfStatus(status)} flex h-fit py-1.5 px-2 text-xs font-semibold rounded-md flex-shrink-0`}>
                             {getStatusCode(status, t)}
                         </div>
