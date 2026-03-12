@@ -141,10 +141,9 @@ function SideNav({ open, policyRequiredPartnerTypes }) {
     };
 
     return (
-        <div className="flex font-inter bg-white h-screen z-40">
-            <div className={`h-full ${open ? "absolute inset-y-14 w-[16rem]" : "absolute inset-y-14 w-[4.5rem]"} 
-            flex-col duration-500`}>
-                <div className={` flex flex-col pt-3 h-full space-y-[0.7rem] bg-[#FCFCFC] shadow-[rgba(0,0,0,0.13)_5px_2px_8px_-2px] overflow-y-auto pb-6`} style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+        <div className="font-inter bg-white z-40">
+            <div className={`fixed top-14 bottom-0 ${isLoginLanguageRTL ? "right-0" : "left-0"} ${open ? "w-[16rem]" : "w-[4.5rem]"} flex-col duration-500`}>
+                <div className={`flex flex-col pt-3 h-full space-y-[0.7rem] bg-[#FCFCFC] shadow-[rgba(0,0,0,0.13)_5px_2px_8px_-2px] overflow-y-auto pb-6`} style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
                     <button id='side_nav_home_icon' className="duration-700 cursor-pointer" onClick={() => showHome()}>
                         <SideNavMenuItem title={t('commons.home')} id='home' isExpanded={open} activeIcon={activeIcon} />
                     </button>
