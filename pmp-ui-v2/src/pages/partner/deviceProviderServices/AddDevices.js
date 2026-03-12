@@ -327,7 +327,7 @@ function AddDevices() {
                         <ErrorMessage id='add_devices_error_msg' errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
                     <div className="flex-col mt-8">
-                        <div className="flex justify-between mb-5">
+                        <div className="flex justify-between mb-5 w-full min-w-0">
                             <Title
                                 title='addDevices.addDevices'
                                 subTitle={previousPath.name}
