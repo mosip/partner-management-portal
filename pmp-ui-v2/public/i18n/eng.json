@@ -56,6 +56,7 @@
         "authenticationServicesDesc": "Request OIDC Client creation / API key generation for eSignet and API key based authentications",
         "credentialServices": "Credential Services",
         "credentialServicesDesc": "Credential Services",
+        "adminCredentialServicesDesc": "Configure, view & edit the Biometric Extractor provider details",
         "deviceProviderServices": "Device Provider Services",
         "ftmChipProviderServices": "FTM Chip Provider Services",
         "ftmChipProviderServicesDesc": "Add, Deactivate FTM (Foundational Trust Module) , Upload, Reupload, Download FTM Chip Certificate",
@@ -102,11 +103,14 @@
         "mispLicenseKeyExpiryCountDesc1": "{{expiringMispLicenseKeyCount}} MISP License Keys are expiring soon",
         "mispLicenseKeyExpiryCountDesc2": "{{expiringMispLicenseKeyCount}} MISP License Key is expiring soon",
         "manualAdjudication": "Manual Adjudication Services",
-        "manualAdjudicationDesc": "View, Generate API Keys"
+        "manualAdjudicationDesc": "View, Generate API Keys",
+        "adminCredentialServicesTitle": "Credential/Print Partner Services"
     },
     "credentialServices": {
         "title": "Credential Services",
-        "breadcrumb": "Credential Services"
+        "breadcrumb": "Credential Services",
+        "adminTitle": "Credential/Print Partner Services",
+        "adminBreadcrumb": "Credential/Print Partner Services"
     },
     "mispLicenseList": {
         "partnerId": "Partner ID",

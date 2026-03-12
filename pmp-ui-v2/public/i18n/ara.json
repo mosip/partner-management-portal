@@ -56,6 +56,7 @@
         "authenticationServicesDesc": "طلب إنشاء عميل OIDC / إنشاء مفتاح API لمصممي التصميم والمصادقة المستندة إلى مفتاح API",
         "credentialServices": "خدمات بيانات الاعتماد",
         "credentialServicesDesc": "إدارة خدمات بيانات الاعتماد",
+        "adminCredentialServicesDesc": "تكوين تفاصيل مزود مستخرج القياسات الحيوية وعرضها وتحريرها",
         "deviceProviderServices": "خدمات مزودي الأجهزة",
         "ftmChipProviderServices": "خدمات مزودي شريحة FTM",
         "ftmChipProviderServicesDesc": "إضافة، إلغاء تنشيط FTM (وحدة الثقة الأساسية)، تحميل، إعادة تحميل، تنزيل شهادة شريحة FTM",
@@ -100,11 +101,14 @@
         "mispLicenseKeyExpiryCountDesc1": "{{expiringMispLicenseKeyCount}} مفاتيح ترخيص MISP تنتهي صلاحيتها قريبًا",
         "mispLicenseKeyExpiryCountDesc2": "{{expiringMispLicenseKeyCount}} مفتاح ترخيص MISP سينتهي قريبًا",
         "manualAdjudication": "خدمات التحكيم اليدوي",
-        "manualAdjudicationDesc": "عرض، إنشاء مفاتيح API"
+        "manualAdjudicationDesc": "عرض، إنشاء مفاتيح API",
+        "adminCredentialServicesTitle": "خدمات شريك بيانات الاعتماد والطباعة"
     },
     "credentialServices": {
         "title": "خدمات بيانات الاعتماد",
-        "breadcrumb": "خدمات بيانات الاعتماد"
+        "breadcrumb": "خدمات بيانات الاعتماد",
+        "adminTitle": "خدمات شريك بيانات الاعتماد والطباعة",
+        "adminBreadcrumb": "خدمات شريك بيانات الاعتماد والطباعة"
     },
     "mispLicenseList": {
         "partnerId": "معرف الشريك",
