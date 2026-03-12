@@ -626,6 +626,10 @@ function Dashboard() {
     navigate('/partnermanagement/admin/device-provider-services/sbi-list');
   }
 
+  const adminCredentialServices = () => {
+    navigate('/partnermanagement/admin/credential-services');
+  }
+
   const cancelErrorMsg = () => {
     setErrorMsg("");
   };
@@ -989,6 +993,19 @@ function Dashboard() {
                       isExpiryHover={true}
                     />
                   )}
+                </div>
+                <div role='button' id='dashboard_admin_credential_services_card' onClick={adminCredentialServices} className="min-h-[50%] p-6 pt-16 bg-white border border-gray-200 shadow cursor-pointer text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, adminCredentialServices)}>
+                  <div className="flex justify-center mb-5">
+                    <img id='dashboard_admin_credential_services_icon' src={credentialServicesIcon} alt="" className="w-8 h-8" />
+                  </div>
+                  <div>
+                    <h5 id='dashboard_admin_credential_services_card_header' className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
+                      {t('dashboard.adminCredentialServicesTitle')}
+                    </h5>
+                    <p id='dashboard_admin_credential_services_card_description' className="mb-3 text-xs font-normal text-gray-400">
+                      {t('dashboard.adminCredentialServicesDesc')}
+                    </p>
+                  </div>
                 </div>
                 <div role='button' id='dashboard_manual_adjudication_card' onClick={() => navigate('/partnermanagement/admin/manual-adjudication-services/api-keys-list')} className="min-h-[50%] p-6 pt-16 bg-white border border-gray-200 shadow cursor-pointer text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => navigate('/partnermanagement/admin/manual-adjudication-services/api-keys-list'))}>
                   <div className="flex justify-center mb-5">
