@@ -18,7 +18,6 @@ public class WaitUtil {
 	public static void waitForVisibility(WebDriver driver, WebElement element) {
 	    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(TIMEOUT));
 	    wait.ignoring(StaleElementReferenceException.class)
-	        .ignoring(NoSuchElementException.class)
 	        .until(ExpectedConditions.visibilityOf(element));
 	}
 

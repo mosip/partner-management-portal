@@ -233,7 +233,7 @@ public class GlobalConstants {
 	public static final String MISP_EMAIL_ID2 = "misppmpui2@gmail.com";
 	public static final String INVALID_EMAIL_ID = "mi12#sp.34@gmail@com";
 	public static final String LENGTHY_STRING = "Shsgwdyfyfujfjfuhfufhurfmifefcefffdaddress";
-	public static final String MULTILINE_STRING = "123\\nMain\\nStreet";
+	public static final String MULTILINE_STRING = "123\nMain\nStreet";
 	public static final String INVALIDFORMAT_PHONENUMBER = "+123/4567890";
 	public static final String VANITY_PHONENUMBER = "1-800-CALL-NOW";
 	public static final String LEADINGZERO_PHONENUMBER = "0937394739";
