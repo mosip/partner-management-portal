@@ -374,6 +374,9 @@ public class FtmPage extends BasePage {
 
 	@FindBy(xpath = "//tr[@id='ftm_list_item1']/td[6]")
 	private WebElement ftmCertDetails;
+	
+	@FindBy(xpath = "//tr[`@id`='ftm_list_item1']/td[6][normalize-space(text())='']")
+	private WebElement ftmCertDetailsEmpty;
 
 	@FindBy(xpath = "//div[@class='px-[3.5%] py-[2%]']//h3")
 	private WebElement reUploadPopUpTitle;
@@ -953,7 +956,7 @@ public class FtmPage extends BasePage {
 	}
 
 	public boolean isFtmCertDetailsNotFound() {
-		return isElementDisplayed(ftmCertDetails);
+		return isElementDisplayed(ftmCertDetailsEmpty);
 	}
 
 	public boolean isReUploadPopUpPageTitleDisplayed() {

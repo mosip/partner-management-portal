@@ -574,11 +574,12 @@ public class BasePage {
 	}
 
 	public static void waitTime(int sec) {
-		try {
-			Thread.sleep(sec * 1000L);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+	    try {
+	        Thread.sleep(sec * 1000L);
+	    } catch (InterruptedException e) {
+	        Thread.currentThread().interrupt();
+	        throw new RuntimeException("Thread interrupted during waitTime", e);
+	    }
 	}
 
 	public void waitScrollAndClick(By option) {
