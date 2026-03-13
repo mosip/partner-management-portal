@@ -130,7 +130,7 @@ public class DashboardPage extends BasePage {
 	@FindBy(xpath = "//h5[text()='Authentication Services']")
 	private WebElement authenticationServices;
 
-	@FindBy(xpath = "//h5[text()='Partners']")
+	@FindBy(id = "dashboard_partner_card_header")
 	private WebElement partners;
 
 	@FindBy(xpath = "//button[contains(@class, 'bg-blue-50') and contains(@class, 'cursor-pointer')]")
@@ -144,6 +144,9 @@ public class DashboardPage extends BasePage {
 
 	@FindBy(id = "policy_group_selector_option_button_1")
 	private WebElement policyGroupOption;
+	
+	@FindBy(id = "admin_misp_partner_services_card_header")
+	private WebElement mispServices;
 
 	public DashboardPage(WebDriver driver) {
 		super(driver);
@@ -171,7 +174,8 @@ public class DashboardPage extends BasePage {
 	}
 
 	public void selectPolicyGroupDropdown(String policyGroupValue) {
-		clickOnElement(selectPolicyGroupDropdown);
+		By selectPolicyGroupDropdown = By.id("policy_group_selector_dropdown_button");
+		click(selectPolicyGroupDropdown);
 		enter(SearchBox, policyGroupValue);
 		By policyGroupOption = By.xpath("//span[normalize-space()='" + policyGroupValue + "']");
 		click(policyGroupOption);
@@ -403,6 +407,11 @@ public class DashboardPage extends BasePage {
 
 	public boolean isFooterDocumentationLinkDisplayed() {
 		return isElementDisplayed(footerDocumentationLink);
+	}
+	
+	public MispServicesPage clickOnMispServices() {
+		clickOnElement(mispServices);
+		return new MispServicesPage(driver);
 	}
 
 }

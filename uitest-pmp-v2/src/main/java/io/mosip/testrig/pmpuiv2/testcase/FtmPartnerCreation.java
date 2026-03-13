@@ -59,10 +59,10 @@ public class FtmPartnerCreation extends BaseClass {
 		ftmPage.clickOnAddFtmPartnerIdForNoCert();
 		assertTrue(ftmPage.isNoDataAvailableMessageDisplayed(), GlobalConstants.isNoDataTextDisplaed);
 
-		ftmPage.EnterInAddFtmMakeBox(GlobalConstants.AUTOFTMMAKE);
+		ftmPage.EnterInAddFtmMakeBox(GlobalConstants.AUTOFTM);
 		assertTrue(ftmPage.isAutoPopulatedMessageDisplayed(), GlobalConstants.isAutoPopulatedTextDisplaed);
 
-		ftmPage.EnterInAddFtmModelBox(GlobalConstants.AUTOFTMMODEL);
+		ftmPage.EnterInAddFtmModelBox(GlobalConstants.AUTOFTM);
 		assertEquals(ftmPage.isAddFtmSubmitButtonEnabled(), false);
 
 		ftmPage.clickOnAddFtmPartnerIdInfo();
@@ -72,8 +72,8 @@ public class FtmPartnerCreation extends BaseClass {
 		ftmPage.EnterInAddFtmModelBox(" ");
 		assertTrue(ftmPage.isInfoMessageDisplayed(), GlobalConstants.isInfoMessageDisplayed);
 
-		ftmPage.EnterInAddFtmMakeBox(GlobalConstants.AUTOFTMMAKE);
-		ftmPage.EnterInAddFtmModelBox(GlobalConstants.AUTOFTMMODEL);
+		ftmPage.EnterInAddFtmMakeBox(GlobalConstants.AUTOFTM);
+		ftmPage.EnterInAddFtmModelBox(GlobalConstants.AUTOFTM);
 		basePage.navigateBack();
 
 		ftmPage.clickOnBlockMesssageProceed();
@@ -81,8 +81,8 @@ public class FtmPartnerCreation extends BaseClass {
 				GlobalConstants.isPartnerCertificatePageDisplayed);
 
 		ftmPage.clickOnAddFtmButtonWioutRecord();
-		ftmPage.EnterInAddFtmMakeBox(GlobalConstants.AUTOFTMMAKE);
-		ftmPage.EnterInAddFtmModelBox(GlobalConstants.AUTOFTMMODEL);
+		ftmPage.EnterInAddFtmMakeBox(GlobalConstants.AUTOFTM);
+		ftmPage.EnterInAddFtmModelBox(GlobalConstants.AUTOFTM);
 
 		ftmPage.clickOnSideNavHomeIcon();
 		ftmPage.clickOnBlockMesssageProceed();

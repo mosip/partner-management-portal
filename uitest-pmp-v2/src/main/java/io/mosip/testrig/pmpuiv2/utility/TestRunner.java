@@ -111,7 +111,7 @@ public class TestRunner {
 					break;
 
 				// STEP 2
-				case "FTMDeviceTest":
+				case "FtmDeviceTest":
 					classes.add(ftmDeviceTest);
 					break;
 				case "SbiCreationTest":

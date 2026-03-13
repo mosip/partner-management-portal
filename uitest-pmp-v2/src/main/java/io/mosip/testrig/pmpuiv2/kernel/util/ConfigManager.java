@@ -634,12 +634,12 @@ public class ConfigManager {
 	}
 
 	public static int getTimeout() {
-		try {
-			return Integer.parseInt(propsKernel.getProperty("explicitWaitTimeout", "10"));
-		} catch (NumberFormatException e) {
-			logger.error("Invalid explicitWaitTimeout value in config.properties. Using default 10 seconds.");
-			return 10;
-		}
+	    try {
+	        return Integer.parseInt(propsKernel.getProperty("explicitWaitTimeout", "40"));
+	    } catch (NumberFormatException e) {
+	        logger.error("Invalid explicitWaitTimeout value in config.properties. Using default 40 seconds.");
+	        return 40;
+	    }
 	}
 
 }

@@ -92,10 +92,8 @@ public class GlobalConstants {
 	public static final String AUTOMATION_DEACTIVATING_5 = "AutomationDeactivating5";
 	public static final String DEACTIVATE_SBI_ASADMIN = "Deactivatesbiinadmin";
 	public static final String FTM_NOCERT_USER = "pmpui-ftmnocert";
-	public static final String AUTOFTMMAKE = "autoftmmake";
-	public static final String AUTOFTMMODEL = "autoftmmodel";
-	public static final String FTMMAKE1 = "ftmmake1";
-	public static final String FTMMODEL1 = "ftmmodel1";
+	public static final String AUTOFTM = "autoftm";
+	public static final String AUTOFTM1 = "autoftm1";
 	public static final String AUTHNOCERT = "pmpui-nocert";
 	public static final String AUTOFTMREJECT = "autoftmreject";
 	public static final String AUTOFTMDEACTIVATE = "autoftmdeactivate";
@@ -232,7 +230,15 @@ public class GlobalConstants {
 	public static final String MISP_ADDRESS = "mispaddress";
 	public static final String MISP_CONTACT_NUMBER = "9898767676";
 	public static final String MISP_EMAIL_ID = "misppmpui@gmail.com";
+	public static final String MISP_EMAIL_ID2 = "misppmpui2@gmail.com";
 	public static final String INVALID_EMAIL_ID = "mi12#sp.34@gmail@com";
+	public static final String LENGTHY_STRING = "Shsgwdyfyfujfjfuhfufhurfmifefcefffdaddress";
+	public static final String MULTILINE_STRING = "123\\nMain\\nStreet";
+	public static final String INVALIDFORMAT_PHONENUMBER = "+123/4567890";
+	public static final String VANITY_PHONENUMBER = "1-800-CALL-NOW";
+	public static final String LEADINGZERO_PHONENUMBER = "0937394739";
+	public static final String UNDERSCORE_PREFIXED_USERNAME = "_mispuser";
+	public static final String UNDERSCORE_STRING = "misp_autouser";
 	
 	public static final String isLogoutButtonDisplayed = "Verify if logout button is display on dashboard screen.";
 	public static final String isElementDisplayed = "Verify if Partners option shown in dashboard screen.";
@@ -1221,7 +1227,29 @@ public class GlobalConstants {
 	public static final String isSaveAsDraftButtonDisabled = "Verify if save as draft button disabled";
 	public static final String isSubmitButtonForAdminDisabled = "Verify if submit button for admin disabled";
 	public static final String isSubmitButtonForAdminEnabled = "Verify if submit button for admin enabled";
-
+	public static final String isFtmIdDisplayedAsFirstColumn = "Verify if ftm id displayed as first column";
+	public static final String isFtmIdDisplayedInThirdColumnOnPartnerAdminPage = "Verify if ftm id displayed as third column";
+	public static final String isFtmListApproveRejectOptionIsEnabled = "Verify if ftm list approve reject option enabled";
+	public static final String isFtmListViewIsEnabled = "Verify if frm list view is enabled";
+	public static final String isFtmListApproveRejectOptionIsDisabled = "Verify if ftm list approve reject option disabled";
+	public static final String isFtmListDeactivateOptionIsDisabled = "Verify if ftm list deactivate option disabled";
+	public static final String isFtmList1Displayed = "Verify if ftm list one displayed";
+	public static final String isFtmChipDetailsPartnerTypeLabelDisplayed = "Verify if ftm chip details partner type label displayed";
+	public static final String isFtmChipDetailsLabelMakeDisplayed = "Verify if ftm chip details label make displayed";
+	public static final String isFtmChipDetailsLabelPartnerTypeDisplayed = "Verify if ftm chip details label partner type displayed";
+	public static final String isFtmChipDetailsLabelModelDisplayed = "Verify if ftm chip details label model displayed";
+	public static final String isListOfFtmChipDisplayed = "Verify if list of ftm chip displayed";
+	public static final String isPartnerIdDisplayedInFirstColumn = "Verify if partner id displayed in first column";
+	public static final String isPolicyIdDisplayedInFourthColumnOnPoliciesPage = "Verify if policy id displayed in fourth column on policies page";
+	public static final String isDeviceIdDisplayedInFifthColumnOnSbiDevicePage = "Verify if device id displayed in fifth column on sbi device page";
+	public static final String isCreatePrtnerPageTitleDisplayed = "Verify if create partner page title displayed";
+	public static final String isCreatePartnerMandatoryFieldInfoDisplayed = "Verify if create partner mandatory field info displayed";
+	public static final String isCreatePartnerSuccessMsgHomeButtonDisplayed = "Verify if create partner success message home button displayed";
+	public static final String isUploadPartnerCertificateButtonDisplayed = "Verify if upload partner certificate button displayed";
+	public static final String isCreatePartnerSuccessMsgDisplayed = "Verify if create partner success message displayed";
+	public static final String isNoPolicyGroupDisplayed = "Verify if no policy group displayed";
+	public static final String isPartnerOrganizationPlaceholderDisplayed = "Verify if partner organization placeholder displayed";
+	public static final String isCreatePartnerSubmitButtonDisabled = "Verify if create partner submit button disabled";
+	public static final String isOrganizationNameInfoDisplayed = "Verify if organization name info displayed";
 	
-
 }
