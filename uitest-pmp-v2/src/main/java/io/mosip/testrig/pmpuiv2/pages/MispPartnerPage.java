@@ -82,19 +82,40 @@ public class MispPartnerPage extends BasePage {
 	private WebElement partnerOrgNameSpecialChNotAllowError;
 
 	@FindBy(id = "create_partner_contact_number_input_error")
-	private WebElement partnerContactSpecialChNotAllowError;
+	private WebElement partnerContactNumberNotAllowError;
 
 	@FindBy(id = "create_partner_email_id_input_error")
 	private WebElement partnerEmailIdSpecialChNotAllowError;
 
 	@FindBy(id = "create_partner_partner_id_input_error")
-	private WebElement partnerUserNameSpecialChNotAllowError;
+	private WebElement partnerUserNameNotAllowError;
 
 	@FindBy(xpath = "//input[@placeholder='Enter Partner Organization Name']")
 	private WebElement partnerOrganizationPlaceholder;
 
 	@FindBy(xpath = "//span[text()='Select Policy Group']")
 	private WebElement noPolicyGroup;
+	
+	@FindBy(id = "undefined_title")
+	private WebElement listOfPartners;
+	
+	@FindBy(id = "blocker_prompt_description")
+	private WebElement cancelConfirmationPopup;
+	
+	@FindBy(id = "block_messsage_proceed")
+	private WebElement cancelConfirmationPopupProceedButton;
+	
+	@FindBy(id = "block_message_cancel")
+	private WebElement cancelConfirmationPopupCancelButton;
+	
+	@FindBy(id = "create_partner_error_msg")
+	private WebElement createPartnerErrorMessage;
+	
+	@FindBy(id = "error_close_btn")
+	private WebElement errorMessageCloseButton;
+	
+	@FindBy(id = "create_partner_email_id_cancel_btn")
+	private WebElement partnerEmailIdCancelBtn;
 
 	public MispPartnerPage(WebDriver driver) {
 		super(driver);
@@ -205,7 +226,7 @@ public class MispPartnerPage extends BasePage {
 	}
 
 	public boolean isPartnerContactSpecialChNotAllowErrorDisplayed() {
-		return isElementDisplayed(partnerContactSpecialChNotAllowError);
+		return isElementDisplayed(partnerContactNumberNotAllowError);
 	}
 
 	public boolean isPartnerEmailIdSpecialChNotAllowErrorDisplayed() {
@@ -213,7 +234,7 @@ public class MispPartnerPage extends BasePage {
 	}
 
 	public boolean isPartnerUserNameSpecialChNotAllowErrorDisplayed() {
-		return isElementDisplayed(partnerUserNameSpecialChNotAllowError);
+		return isElementDisplayed(partnerUserNameNotAllowError);
 	}
 
 	public boolean isCreatePartnerSubmitButtonDisabled() {
@@ -234,6 +255,66 @@ public class MispPartnerPage extends BasePage {
 
 	public void clickOnCreatePartnerClearButton() {
 		clickOnElement(createPartnerClearButton);
+	}
+	
+	public void clickOnCreatePartnerCancelButton() {
+		clickOnElement(createPartnerCancelButton);
+	}
+	
+	public boolean isListOfPartnersDisplayed() {
+		return isElementDisplayed(listOfPartners);
+	}
+	
+	public boolean isCancelConfirmationPopupDisplayed() {
+		return isElementDisplayed(cancelConfirmationPopup);
+	}
+	
+	public boolean iscancelConfirmationPopupProceedButtonDisplayed() {
+		return isElementDisplayed(cancelConfirmationPopupProceedButton);
+	}
+	
+	public boolean isCancelConfirmationPopupCancelButtonDisplayed() {
+		return isElementDisplayed(cancelConfirmationPopupCancelButton);
+	}
+	
+	public void clickOnCancelConfirmationPopupProceedButton() {
+		clickOnElement(cancelConfirmationPopupProceedButton);
+	}
+	
+	public void clickOnCreatePartnerSubmitButton() {
+		clickOnElement(createPartnerSubmitButton);
+	}
+	
+	public void clickOnSuccessMsgHomeButton() {
+		clickOnElement(createPartnerSuccessMsgHomeButton);
+	}
+	
+	public boolean isPartnerContactNumberNotAllowErrorDisplayed() {
+		return isElementDisplayed(partnerContactNumberNotAllowError);
+	}
+	
+	public void clickOnPartnerEmailIdTextBox() {
+		clickOnElement(partnerEmailIdTextBox);
+	}
+	
+	public boolean isUsernameMustStartWithLetterErrorDisplayed() {
+		return isElementDisplayed(partnerUserNameNotAllowError);
+	}
+	
+	public boolean isEmailAddressIsAlreadyRegisteredErrorDisplayed() {
+		return isElementDisplayed(createPartnerErrorMessage);
+	}
+	
+	public void clickOnErrorMessageCloseButton() {
+		clickOnElement(errorMessageCloseButton);
+	}
+	
+	public void clickOnPartnerEmailIdCancelBtn() {
+		clickOnElement(partnerEmailIdCancelBtn);
+	}
+	
+	public boolean isUsernameAlreadyExistErrorDisplayed() {
+		return isElementDisplayed(createPartnerErrorMessage);
 	}
 
 }

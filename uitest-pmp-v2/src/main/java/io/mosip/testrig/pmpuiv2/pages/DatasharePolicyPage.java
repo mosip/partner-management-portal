@@ -1,7 +1,7 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
 import org.openqa.selenium.NoSuchElementException;
-
+import org.openqa.selenium.TimeoutException;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -812,16 +812,18 @@ public class DatasharePolicyPage extends BasePage {
 	}
 
 	public void selectPolicyGroupDropdown(String value) {
+
 		clickOnElement(policyGroupDropdown);
 		clearTextBox(policyGroupDropdownSearchInput);
 		enter(policyGroupDropdownSearchInput, value);
 
+		By policyGroupOption = By.xpath("//span[normalize-space()='" + value + "']");
+
 		try {
-			By policyGroupOption = By.xpath("//span[normalize-space()='" + value + "']");
-			click(policyGroupOption);
-		} catch (NoSuchElementException e) {
+			waitScrollAndClick(policyGroupOption);
+		} catch (TimeoutException | NoSuchElementException e) {
 			logger.warn("Policy group not found: " + value);
-			throw new NoSuchElementException("Failed to select policy group: " + value + ". Element not found.", e);
+			throw new NoSuchElementException("Failed to select policy group: " + value, e);
 		}
 	}
 

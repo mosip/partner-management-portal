@@ -83,9 +83,9 @@ public class DeviceCreationTest extends BaseClass {
 		addDevicePage.clickOnDeviceType();
 		assertEquals(addDevicePage.isDeviceTypeOptionDisplayed(), false);
 
-		addDevicePage.selectAddDeviceType(GlobalConstants.FACE);
+		addDevicePage.selectAddDeviceType();
 		assertEquals(addDevicePage.getDeviceTypeValue(), GlobalConstants.FACE);
-		assertTrue(addDevicePage.isDeviceSubTypeEnabled(), GlobalConstants.isDeviceSubTypeEnabled);
+		assertTrue(addDevicePage.waitForDeviceSubTypeEnabled(), GlobalConstants.isDeviceSubTypeEnabled);
 
 		addDevicePage.clickOnDeviceSubType();
 		assertTrue(addDevicePage.isDeviceSubTypeOptionDisplayed(), GlobalConstants.isDeviceSubTypeOptionsDisplayed);

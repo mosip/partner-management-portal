@@ -1,12 +1,16 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
 import java.io.IOException;
+import java.time.Duration;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
 public class AddDevicePage extends BasePage {
@@ -61,10 +65,10 @@ public class AddDevicePage extends BasePage {
 	@FindBy(id = "add_device_device_sub_type_option1")
 	private WebElement addDeviceSubTypeOption;
 
-	@FindBy(id = "add_device_make_input")
+	@FindBy(id = "add_device_make_input_1")
 	private WebElement addDeviceMakeTextbox;
 
-	@FindBy(id = "add_device_model_input")
+	@FindBy(id = "add_device_model_input_1")
 	private WebElement addDeviceModelTextbox;
 
 	@FindBy(id = "add_device_back_sbi_list_btn")
@@ -212,6 +216,13 @@ public class AddDevicePage extends BasePage {
 		}
 	}
 
+	public void selectAddDeviceType() {
+		By deviceTypeDropdown = By.id("add_device_device_type_dropdown_btn");
+		click(deviceTypeDropdown);
+		By option = By.id("add_device_device_type_option1");
+		click(option);
+	}
+
 	public void selectDeviceSubType(String value) {
 		try {
 			dropdown(addDeviceSubTypeSelectDropdown, value);
@@ -247,13 +258,13 @@ public class AddDevicePage extends BasePage {
 
 	public void enterMakeNameWithPosition(String makeName, int position) {
 		WebElement addDeviceMakeTextbox = driver
-				.findElement(By.xpath("(//input[@id='add_device_make_input'])[" + position + "]"));
+				.findElement(By.xpath("(//input[@id='add_device_make_input_1'])[" + position + "]"));
 		enter(addDeviceMakeTextbox, makeName);
 	}
 
 	public void enterModelNameWithPosition(String modelName, int position) {
 		WebElement addDeviceModelTextbox = driver
-				.findElement(By.xpath("(//input[@id='add_device_model_input'])[" + position + "]"));
+				.findElement(By.xpath("(//input[@id='add_device_model_input_1'])[" + position + "]"));
 		enter(addDeviceModelTextbox, modelName);
 	}
 
@@ -265,8 +276,15 @@ public class AddDevicePage extends BasePage {
 		return isElementDisabled(submitButton);
 	}
 
-	public boolean isDeviceSubTypeEnabled() {
-		return isElementEnabled(addDeviceSubTypeSelectDropdown);
+//	public boolean isDeviceSubTypeEnabled() {
+//		By addDeviceSubTypeSelectDropdown = By.id("add_device_device_sub_type_dropdown_btn");
+//		return isElementEnabled(addDeviceSubTypeSelectDropdown);
+//	}
+	
+	public boolean waitForDeviceSubTypeEnabled() {
+	    By subType = By.id("add_device_device_sub_type_dropdown_btn");
+	    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+	    return wait.until(ExpectedConditions.elementToBeClickable(subType)) != null;
 	}
 
 	public boolean isDeviceSubTypeDisabled() {

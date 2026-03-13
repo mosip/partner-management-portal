@@ -1,6 +1,8 @@
 package io.mosip.testrig.pmpuiv2.utility;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -14,8 +16,10 @@ public class WaitUtil {
 	private static final int TIMEOUT = ConfigManager.getTimeout();
 
 	public static void waitForVisibility(WebDriver driver, WebElement element) {
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(TIMEOUT));
-		wait.until(ExpectedConditions.refreshed(ExpectedConditions.visibilityOf(element)));
+	    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(TIMEOUT));
+	    wait.ignoring(StaleElementReferenceException.class)
+	        .ignoring(NoSuchElementException.class)
+	        .until(ExpectedConditions.visibilityOf(element));
 	}
 
 	public static void waitForClickability(WebDriver driver, WebElement element) {
