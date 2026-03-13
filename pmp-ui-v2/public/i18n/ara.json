@@ -914,7 +914,7 @@
         "uploadingCertMessage": "نحن نقوم بتحميل شهادتك",
         "partnerDomain": "مجال الشريك",
         "dropdownPlaceholder": "حدد مجال الشريك",
-        "successMsg": "تم تحميل شهادة الثقة لـ {{partnerDomain}} بنجاح!",
+        "successMsg": "تم تحميل شهادة جذر الثقة لـ {{partnerDomain}} بنجاح!",
         "downloadRootCertSuccessMsg": "تم تنزيل شهادة الجذر CA بنجاح",
         "downloadIntermediateCertSuccessMsg": "تم تنزيل سلسلة شهادات الثقة لشهادة CA الوسيطة المحددة بنجاح."
     },
