@@ -1,5 +1,6 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -720,4 +721,12 @@ public class PoliciesPage extends BasePage {
 	public void clickOnPolicyButton() {
 		clickOnElement(policyButton);
 	}
+	
+	public boolean isPolicyIdDisplayedInFourthColumnOnPoliciesPage() {
+	    By policyIdColumnHeader = By.xpath(
+	            "//table//thead//th[4]//div[@id='policies.policyId_header']"
+	    );
+	    return isDisplayed(policyIdColumnHeader);
+	}
+
 }

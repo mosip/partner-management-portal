@@ -2,6 +2,7 @@ package io.mosip.testrig.pmpuiv2.pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -501,18 +502,19 @@ public class AuthPolicyPage extends BasePage {
 		clickOnElement(createAuthPolicyButton);
 	}
 
-	public void selectPolicyGroupDropdown(String policyGroupValue) {
+	public void selectPolicyGroupDropdown(String value) {
+
 		clickOnElement(policyGroupDropdown);
 		clearTextBox(policyGroupDropdownSearchInput);
-		enter(policyGroupDropdownSearchInput, policyGroupValue);
+		enter(policyGroupDropdownSearchInput, value);
+
+		By policyGroupOption = By.xpath("//span[normalize-space()='" + value + "']");
 
 		try {
-			By policyGroupOption = By.xpath("//span[normalize-space()='" + policyGroupValue + "']");
-			click(policyGroupOption);
-		} catch (NoSuchElementException e) {
-			logger.warn("Policy group not found: " + policyGroupValue);
-			throw new NoSuchElementException(
-					"Failed to select policy group: " + policyGroupValue + ". Element not found.", e);
+			waitScrollAndClick(policyGroupOption);
+		} catch (TimeoutException | NoSuchElementException e) {
+			logger.warn("Policy group not found: " + value);
+			throw new NoSuchElementException("Failed to select policy group: " + value, e);
 		}
 	}
 
@@ -1103,7 +1105,8 @@ public class AuthPolicyPage extends BasePage {
 	}
 
 	public boolean isClonePolicyPopupTitleDisplayed() {
-		return isElementDisplayed(clonePolicyTitle);
+	    By clonePolicyTitle = By.id("clone_policy_popup_title");
+	    return isDisplayed(clonePolicyTitle);
 	}
 
 	public boolean isClonePolicyInfoMessageDisplayed() {

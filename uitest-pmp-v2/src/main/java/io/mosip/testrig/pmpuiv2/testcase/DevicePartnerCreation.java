@@ -25,13 +25,6 @@ public class DevicePartnerCreation extends BaseClass {
 		partnerCertificatePage = new PartnerCertificatePage(driver);
 		registerPage = new RegisterPage(driver);
 
-//		assertTrue(dashboardpage.isTermsAndConditionsPopUppDisplayed(),
-//				GlobalConstants.isTermsAndConditionsPopUppDisplayed);
-//		dashboardpage.clickOnCheckbox();
-//
-//		assertTrue(dashboardpage.isProceedButtonDisplayed(), GlobalConstants.isProceedButtonDisplayed);
-//		dashboardpage.clickOnProceedButton();
-
 		dashboardPage.clickOnProfileDropdown();
 		loginpage = dashboardPage.clickOnLogoutButton();
 		loginpage.clickRegisterButton();
