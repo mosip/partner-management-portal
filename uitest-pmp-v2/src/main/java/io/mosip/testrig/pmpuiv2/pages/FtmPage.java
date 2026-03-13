@@ -375,7 +375,7 @@ public class FtmPage extends BasePage {
 	@FindBy(xpath = "//tr[@id='ftm_list_item1']/td[6]")
 	private WebElement ftmCertDetails;
 	
-	@FindBy(xpath = "//tr[@id='ftm_list_item_1']/td[6][normalize-space()='']")
+	@FindBy(xpath = "//tr[@id='ftm_list_item1']/td[6][normalize-space()='']")
 	private WebElement ftmCertDetailsEmpty;
 
 	@FindBy(xpath = "//div[@class='px-[3.5%] py-[2%]']//h3")
