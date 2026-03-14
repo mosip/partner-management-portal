@@ -374,7 +374,7 @@ public class FtmPage extends BasePage {
 
 	@FindBy(xpath = "//tr[@id='ftm_list_item1']/td[6]")
 	private WebElement ftmCertDetails;
-	
+
 	@FindBy(xpath = "//tr[@id='ftm_list_item1']/td[6][normalize-space()='']")
 	private WebElement ftmCertDetailsEmpty;
 
@@ -984,11 +984,11 @@ public class FtmPage extends BasePage {
 	}
 
 	public boolean isReUploadPopUpPagePartnerTypeNameDisabled() {
-		return isElementDisplayed(reUploadPopUpPartnerTypeName);
+		return isElementDisabled(reUploadPopUpPartnerTypeName);
 	}
 
 	public boolean isReUploadPopUpPagePartnerDomainDisabled() {
-		return isElementDisplayed(reUploadPopUpPartnerDomain);
+		return isElementDisabled(reUploadPopUpPartnerDomain);
 	}
 
 	public boolean isReUploadPopUpPageFetchingCertMsgDisplayed() {
@@ -1008,7 +1008,7 @@ public class FtmPage extends BasePage {
 	}
 
 	public boolean isReUploadPopUpPageSubmitButtonDisabled() {
-		return isElementDisplayed(reUploadCertSubmitBtn);
+		return isElementDisabled(reUploadCertSubmitBtn);
 	}
 
 	public boolean isReUploadPopUpPageSubmitButtonEnabled() {
@@ -1044,15 +1044,15 @@ public class FtmPage extends BasePage {
 	}
 
 	public boolean isFtmListViewIsEnabled() {
-		return isElementDisplayed(ftmListViewOption);
+		return isElementEnabled(ftmListViewOption);
 	}
 
 	public boolean isFtmListApproveRejectOptionIsDisabled() {
-		return isElementEnabled(ftmListApproveRejectOption);
+		return isElementDisabled(ftmListApproveRejectOption);
 	}
 
 	public boolean isFtmListDeactivateOptionIsDisabled() {
-		return isElementEnabled(ftmListDeactivateOption);
+		return isElementDisabled(ftmListDeactivateOption);
 	}
 
 	public void clickOnCertificateUploadButton() {
@@ -1064,15 +1064,15 @@ public class FtmPage extends BasePage {
 	}
 
 	public boolean isApproveRejectCloseButtonDisplayed() {
-		return isElementEnabled(approveRejectPopupCloseBtn);
+		return isElementDisplayed(approveRejectPopupCloseBtn);
 	}
 
 	public boolean isRejectButtonDisplayed() {
-		return isElementEnabled(rejectButton);
+		return isElementDisplayed(rejectButton);
 	}
 
 	public boolean isApproveButtonDisplayed() {
-		return isElementEnabled(approveButton);
+		return isElementDisplayed(approveButton);
 	}
 
 	public void clickOnApproveRejectCloseButton() {

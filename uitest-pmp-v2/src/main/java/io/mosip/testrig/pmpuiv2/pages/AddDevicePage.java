@@ -145,9 +145,8 @@ public class AddDevicePage extends BasePage {
 		clickOnElement(addDeviceBackToSbiList);
 	}
 
-	private By pageTitle = By.id("page_title");
-
 	public boolean isAddDeviceTitleDisplayed() {
+		By pageTitle = By.id("page_title");
 		return isTextPresent(pageTitle, "Add Devices");
 	}
 
@@ -240,9 +239,7 @@ public class AddDevicePage extends BasePage {
 	}
 
 	public void selectAddDeviceTypeWithPosition(String value, int position) {
-
 		By dropdownLocator = By.xpath("(//button[@id='add_device_device_type_dropdown_btn'])[" + position + "]");
-
 		dropdownWithPosition(dropdownLocator, value, position);
 	}
 
@@ -276,15 +273,10 @@ public class AddDevicePage extends BasePage {
 		return isElementDisabled(submitButton);
 	}
 
-//	public boolean isDeviceSubTypeEnabled() {
-//		By addDeviceSubTypeSelectDropdown = By.id("add_device_device_sub_type_dropdown_btn");
-//		return isElementEnabled(addDeviceSubTypeSelectDropdown);
-//	}
-	
-	public boolean waitForDeviceSubTypeEnabled() {
-	    By subType = By.id("add_device_device_sub_type_dropdown_btn");
-	    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
-	    return wait.until(ExpectedConditions.elementToBeClickable(subType)) != null;
+	public boolean isDeviceSubTypeEnabled() {
+		By subType = By.id("add_device_device_sub_type_dropdown_btn");
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+		return wait.until(ExpectedConditions.elementToBeClickable(subType)) != null;
 	}
 
 	public boolean isDeviceSubTypeDisabled() {

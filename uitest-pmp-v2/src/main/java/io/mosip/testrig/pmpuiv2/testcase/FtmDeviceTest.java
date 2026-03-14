@@ -803,8 +803,6 @@ public class FtmDeviceTest extends BaseClass {
 		
 	}
 
-	
-
 	private void loginAsFtmPartner() {
 		dashboardpage.clickOnProfileDropdown();
 		loginpage = dashboardpage.clickOnLogoutButton();

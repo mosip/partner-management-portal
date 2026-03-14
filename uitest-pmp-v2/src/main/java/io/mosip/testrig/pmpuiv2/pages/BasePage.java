@@ -407,7 +407,6 @@ public class BasePage {
 	public static String getPreAppend() {
 		String preappend = null;
 		try {
-
 			preappend = ConfigManager.getpreappend();
 
 		} catch (Exception e) {
@@ -571,15 +570,6 @@ public class BasePage {
 			takeScreenshot();
 			throw e;
 		}
-	}
-
-	public static void waitTime(int sec) {
-	    try {
-	        Thread.sleep(sec * 1000L);
-	    } catch (InterruptedException e) {
-	        Thread.currentThread().interrupt();
-	        throw new RuntimeException("Thread interrupted during waitTime", e);
-	    }
 	}
 
 	public void waitScrollAndClick(By option) {
