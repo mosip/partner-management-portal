@@ -197,8 +197,8 @@ public class KeycloakUserManager extends BaseTestCaseFunc {
 			String name = obj.getString("n");
 //			obj.put("n", generateRandomString(340));
 			propsPublicKey = obj.toString();
-			System.out.println("n: " + name);
-			System.out.println("n: " + propsPublicKey);
+			logger.info("n: " + name);
+			logger.info("n: " + propsPublicKey);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -224,7 +224,7 @@ public class KeycloakUserManager extends BaseTestCaseFunc {
 		RealmResource realm = keycloak.realm(ConfigManager.getIAMRealmId());
 		List<UserRepresentation> users = realm.users().search(username);
 		if (users.isEmpty()) {
-			System.out.println("User not found: " + username);
+			logger.info("User not found: " + username);
 			return;
 		}
 		UserResource user = realm.users().get(users.get(0).getId());
