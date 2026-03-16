@@ -1215,10 +1215,10 @@ function EditOidcClient() {
                                         <div className="pb-3 pt-6 px-4 bg-snow-white mt-[1.5%] rounded-lg shadow-md">
                                             <div className="border bg-medium-gray" />
                                             <div className="flex flex-col md:flex-row px-[3%] py-6 justify-between gap-3">
-                                                <button id="oidc_edit_undo_changes_btn" onClick={() => undoChanges()} className="w-full md:w-40 min-w-fit px-3 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold">{t('commons.undoChanges')}</button>
+                                                <button type="button" tabIndex={0} id="oidc_edit_undo_changes_btn" onClick={() => undoChanges()} onKeyDown={(e) => onPressEnterKey(e, undoChanges)} className="w-full md:w-40 min-w-fit px-3 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold">{t('commons.undoChanges')}</button>
                                                 <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto justify-end">
-                                                    <button id="oidc_edit_cancel_btn" onClick={() => clickOnCancel()} className="w-full sm:w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold">{t('requestPolicy.cancel')}</button>
-                                                    <button id="oidc_edit_submit_btn" disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`w-full sm:w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white'}`}>{t('requestPolicy.submit')}</button>
+                                                    <button type="button" tabIndex={0} id="oidc_edit_cancel_btn" onClick={() => clickOnCancel()} onKeyDown={(e) => onPressEnterKey(e, clickOnCancel)} className="w-full sm:w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold">{t('requestPolicy.cancel')}</button>
+                                                    <button type="button" tabIndex={isFormValid() ? 0 : -1} id="oidc_edit_submit_btn" disabled={!isFormValid()} onClick={() => clickOnSubmit()} onKeyDown={(e) => { if(isFormValid()) onPressEnterKey(e, clickOnSubmit); }} className={`w-full sm:w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white'}`}>{t('requestPolicy.submit')}</button>
                                                 </div>
                                             </div>
                                         </div>

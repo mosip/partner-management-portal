@@ -742,7 +742,7 @@ function CreateOidcClient() {
                     {/* Mandatory Information Section */}
                     <div className="mb-4 px-7 py-4 bg-snow-white mt-[1.5%] rounded-lg shadow-md">
                       <div
-                        className="flex items-center justify-between cursor-pointer"
+                        className="flex items-center justify-between cursor-pointer rounded px-2"
                         onClick={() => setIsMandatoryInfoExpanded(!isMandatoryInfoExpanded)}
                         role="button"
                         tabIndex="0"
@@ -1024,10 +1024,10 @@ function CreateOidcClient() {
                 <div className="pb-3 pt-6 px-4 bg-snow-white mt-[1.5%] rounded-lg shadow-md">
                   <div className="border bg-medium-gray" />
                   <div className="flex flex-row px-[3%] py-6 justify-between">
-                    <button id="create_oidc_clear_form" onClick={() => clearForm()} className="mr-2 w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold">{t('requestPolicy.clearForm')}</button>
+                    <button type="button" tabIndex={0} id="create_oidc_clear_form" onClick={() => clearForm()} onKeyDown={(e) => onPressEnterKey(e, clearForm)} className="mr-2 w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold">{t('requestPolicy.clearForm')}</button>
                     <div className="flex flex-row space-x-3 w-full md:w-auto justify-end">
-                      <button id="create_oidc_cancel_btn" onClick={() => clickOnCancel()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.cancel')}</button>
-                      <button id="create_oidc_submit_btn" disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white'}`}>{t('requestPolicy.submit')}</button>
+                      <button type="button" tabIndex={0} id="create_oidc_cancel_btn" onClick={() => clickOnCancel()} onKeyDown={(e) => onPressEnterKey(e, clickOnCancel)} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.cancel')}</button>
+                      <button type="button" tabIndex={isFormValid() ? 0 : -1} id="create_oidc_submit_btn" disabled={!isFormValid()} onClick={() => clickOnSubmit()} onKeyDown={(e) => { if(isFormValid()) onPressEnterKey(e, clickOnSubmit); }} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white'}`}>{t('requestPolicy.submit')}</button>
                     </div>
                   </div>
                 </div>

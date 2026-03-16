@@ -44,7 +44,7 @@ function OidcClientAdditionalInfoSection({
   return (
     <div className="bg-snow-white px-7 py-4 mt-[1.5%] mb-4 rounded-lg shadow-md">
       <div
-        className="flex items-center justify-between cursor-pointer"
+        className="flex items-center justify-between cursor-pointer rounded px-2"
         onClick={() => setIsAdditionalInfoExpanded(!isAdditionalInfoExpanded)}
         role="button"
         tabIndex="0"
@@ -74,7 +74,7 @@ function OidcClientAdditionalInfoSection({
                   role="switch"
                   aria-checked={forgotPasswordBanner}
                   aria-label={t('createOidcClient.forgotPasswordBanner')}
-                  className={`relative inline-flex items-center cursor-pointer flex-shrink-0 ${isLoginLanguageRTL ? "" : "ml-7"} focus:outline focus:outline-2 focus:outline-[#1447B2] focus:outline-offset-2 rounded`}
+                  className={`relative inline-flex items-center cursor-pointer flex-shrink-0 ${isLoginLanguageRTL ? "" : "ml-7"} rounded`}
                   onClick={() => additionalConfigRequired && setForgotPasswordBanner(!forgotPasswordBanner)}
                   disabled={!additionalConfigRequired}
                   tabIndex={additionalConfigRequired ? 0 : -1}
@@ -108,7 +108,7 @@ function OidcClientAdditionalInfoSection({
                   role="switch"
                   aria-checked={signUpBanner}
                   aria-label={t('createOidcClient.signUpBanner')}
-                  className={`relative inline-flex items-center cursor-pointer flex-shrink-0 ${isLoginLanguageRTL ? "" : "ml-7"} focus:outline focus:outline-2 focus:outline-[#1447B2] focus:outline-offset-2 rounded`}
+                  className={`relative inline-flex items-center cursor-pointer flex-shrink-0 ${isLoginLanguageRTL ? "" : "ml-7"} rounded`}
                   onClick={() => additionalConfigRequired && setSignUpBanner(!signUpBanner)}
                   disabled={!additionalConfigRequired}
                   tabIndex={additionalConfigRequired ? 0 : -1}
@@ -248,7 +248,7 @@ function OidcClientAdditionalInfoSection({
                     <div
                       role="button"
                       id="add_purpose_title_language_link"
-                      className={`font-bold text-xs w-fit ${additionalConfigRequired ? 'text-[#1447b2] cursor-pointer' : 'text-gray-400'}`}
+                      className={`font-bold text-xs w-fit ${additionalConfigRequired ? 'text-[#1447b2] cursor-pointer' : 'text-gray-400'} rounded px-1`}
                       tabIndex={additionalConfigRequired ? 0 : -1}
                       onKeyDown={additionalConfigRequired ? (e) => onPressEnterKey(e, addPurposeTitleEntry) : undefined}
                       onClick={additionalConfigRequired ? addPurposeTitleEntry : undefined}
@@ -329,7 +329,7 @@ function OidcClientAdditionalInfoSection({
                     <div
                       role="button"
                       id="add_purpose_subtitle_language_link"
-                      className={`font-bold text-xs w-fit ${additionalConfigRequired ? 'text-[#1447b2] cursor-pointer' : 'text-gray-400'}`}
+                      className={`font-bold text-xs w-fit ${additionalConfigRequired ? 'text-[#1447b2] cursor-pointer' : 'text-gray-400'} rounded px-1`}
                       tabIndex={additionalConfigRequired ? 0 : -1}
                       onKeyDown={additionalConfigRequired ? (e) => onPressEnterKey(e, addPurposeSubtitleEntry) : undefined}
                       onClick={additionalConfigRequired ? addPurposeSubtitleEntry : undefined}
