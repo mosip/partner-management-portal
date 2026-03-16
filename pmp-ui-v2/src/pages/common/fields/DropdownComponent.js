@@ -44,14 +44,14 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
     };
 
     const handleKeyDown = (e) => {
-        if (!disabled && (e.key === 'Enter' || e.key === ' ')) {
+        if (!disabled && e.key === 'Enter') {
             e.preventDefault();
             openDropdown();
         }
     };
 
     const handleOptionKeyDown = (e, dropdownItemValue) => {
-        if (e.key === 'Enter' || e.key === ' ') {
+        if (e.key === 'Enter') {
             e.preventDefault();
             changeDropdownSelection(dropdownItemValue);
         } else if (e.key === 'Escape') {
@@ -94,10 +94,10 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
                                 {dropdownDataList.map((dropdownItem, index) => {
                                     return (
                                         <div key={index} className="min-h-3">
-                                            <button id={isPlaceHolderPresent ? (index > 0 ? id + '_option' + (index) : undefined) : id + '_option' + (index + 1)}
+                                            <button type="button" id={isPlaceHolderPresent ? (index > 0 ? id + '_option' + (index) : undefined) : id + '_option' + (index + 1)}
                                                 className={`block w-full h-auto px-4 py-1 text-sm text-dark-blue overflow-x-auto whitespace-normal no-scrollbar break-words
                                                     ${isPlaceHolderPresent && index === 0 ? 'text-gray-500' : 'text-dark-blue'}
-                                                    ${selectedDropdownEntry === dropdownItem.fieldValue ? 'bg-gray-100' : 'hover:bg-gray-100'} ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}
+                                                    ${selectedDropdownEntry === dropdownItem.fieldValue ? 'bg-gray-100' : 'hover:bg-gray-100 focus:bg-gray-100 focus:outline-none'} ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}
                                                 onClick={() => changeDropdownSelection(dropdownItem.fieldValue)}
                                                 onKeyDown={(e) => handleOptionKeyDown(e, dropdownItem.fieldValue)}
                                                 tabIndex={0}>
