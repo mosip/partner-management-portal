@@ -261,7 +261,9 @@
         "fileUploadError": "الشهادة التي تم تحميلها ليست بالتنسيق الصحيح. يُسمح فقط بتحميل الشهادات ذات التنسيق .cer أو .pem",
         "unableToUploadCertificate": "غير قادر على تحميل شهادة الشريك",
         "errorWhileUploadingCertificate": "بسبب حدوث خطأ، لم نتمكن من تحميل الشهادة. يرجى المحاولة مرة أخرى.",
-        "errorWhileGettingCertOrgName": "غير قادر على الحصول على اسم منظمة الشهادة"
+        "errorWhileGettingCertOrgName": "غير قادر على الحصول على اسم منظمة الشهادة",
+        "reuploadCertificateWarningMessage": "سيتم إبطال شهادتك الحالية بعد وقت قصير من رفع الشهادة الجديدة. تابع إذا كنت ترغب في المتابعة.",
+        "fetchCertificateSuccessMessage": "لقد نجحنا في جلب الشهادة من النظام المحلي."
     },
     "partnerTypes": {
         "deviceProvider": "مزود الجهاز",

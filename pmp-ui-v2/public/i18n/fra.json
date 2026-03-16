@@ -261,7 +261,9 @@
         "fileUploadError": "Le certificat téléversé n'est pas au bon format. Seuls les certificats au format .cer ou .pem peuvent être téléversés.",
         "unableToUploadCertificate": "Impossible de téléverser le certificat du partenaire",
         "errorWhileUploadingCertificate": "En raison d'une erreur, nous n'avons pas pu téléverser le certificat. Veuillez réessayer.",
-        "errorWhileGettingCertOrgName": "Impossible d'obtenir le nom de l'organisation du certificat"
+        "errorWhileGettingCertOrgName": "Impossible d'obtenir le nom de l'organisation du certificat",
+        "reuploadCertificateWarningMessage": "Votre certificat existant sera révoqué peu après le téléversement du nouveau certificat. Continuez si vous souhaitez poursuivre.",
+        "fetchCertificateSuccessMessage": "Nous avons récupéré avec succès le certificat depuis le système local."
     },
     "partnerTypes": {
         "deviceProvider": "Fournisseur d'appareil",
