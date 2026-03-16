@@ -54,7 +54,7 @@
         "policies": "Stratégies",
         "policiesDesc": "Demandez et consultez vos polices",
         "authenticationServices": "Services d'authentification",
-        "authenticationServicesDesc": "Demander la création d'un client OIDC / la génération de clés API pour les concepteurs et l'authentification basée sur les clés API",
+        "authenticationServicesDesc": "Demander la création d’un client OIDC / la génération de clés API pour eSignet et l’authentification par clé API",
         "credentialServices": "Services d'identification",
         "credentialServicesDesc": "Gérer les services d'identification",
         "adminCredentialServicesDesc": "Configurer, afficher et modifier les détails du fournisseur Biometric Extractor",
