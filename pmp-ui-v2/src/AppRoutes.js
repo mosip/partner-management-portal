@@ -66,6 +66,7 @@ import ViewMispLicenseKey from './pages/admin/mispPartnerServices/ViewMispLicens
 import RegenerateMispLicenseKey from './pages/admin/mispPartnerServices/RegenerateMispLicenseKey.js';
 import ViewMispLicenseKeyNotifications from './pages/admin/notifications/ViewMispLicenseKeyNotifications.js';
 import GenerateManualAdjudicationApiKey from './pages/admin/manualAdjudicationServices/GenerateManualAdjudicationApiKey.js';
+import BiometricProviderConfigurationList from './pages/admin/biometricProviderConfigurationList/BiometricProviderConfigurationList.js';
 import CredentialServices from './pages/partner/credentialServices/CredentialServices.js';
 import AdminCredentialServices from './pages/admin/credentialServices/AdminCredentialServices.js';
 import { getUserProfile } from './services/UserProfileService.js';
@@ -329,6 +330,19 @@ function AppRoutes() {
         {
           path: 'admin/device-provider-services/view-device-details',
           element: <GuardedRoute><MainLayout><ViewAdminDeviceDetails /></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'admin/biometric-provider-configuration/list',
+          loader: () => {
+            const userProfile = getUserProfile();
+            const rolesString = userProfile?.roles ?? '';
+            const rolesArray = rolesString.split(',').map(r => r.trim()).filter(r => r.length > 0);
+            if (!rolesArray.includes('PARTNER_ADMIN')) {
+              return redirect('/partnermanagement/runtimeError');
+            }
+            return null;
+          },
+          element: <GuardedRoute><MainLayout><BiometricProviderConfigurationList /></MainLayout></GuardedRoute>
         },
         {
           path: 'admin/partners/create-partner',

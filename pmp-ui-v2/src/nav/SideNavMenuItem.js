@@ -94,7 +94,7 @@ export const SideNavMenuItem = ({ title, id, isExpanded, activeIcon }) => {
                         </g>
                     </svg>
                 )}
-                {id === 'deviceProviderServices' &&
+                {(id === 'deviceProviderServices' || id === 'biometricProviderConfiguration')&&
                     <svg xmlns="http://www.w3.org/2000/svg"
                         width="20" height="18" viewBox="0 0 42.748 33.748">
                         <path id="tv_options_input_settings_24dp_FILL0_wght300_GRAD0_opsz24"

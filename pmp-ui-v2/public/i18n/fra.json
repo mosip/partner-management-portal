@@ -74,6 +74,8 @@
         "sbiDevice": "SBI - Appareil",
         "sbiDeviceDesc": "Voir, Désactiver, Approuver ou Rejeter les Détails du Dispositif SBI et des Appareils Liés",
         "ftmChip": "Puce FTM",
+        "biometricProviderConfiguration": "Configuration du fournisseur biométrique",
+        "biometricProviderConfigurationDesc": "Créer, afficher et désactiver les configurations du fournisseur d'extracteur biométrique",
         "ftmChipDesc": "Voir, Désactiver, Approuver ou Rejeter les Détails des Puces FTM",
         "adminAuthenticationServicesDesc": "Voir ou Désactiver les Détails des Clients OIDC et des Clés API",
         "partnerPolicyMappingRequestCountDesc": "{{partnerPolicyMappingRequestCount}} demandes de politique sont actuellement en attente",

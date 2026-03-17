@@ -40,6 +40,8 @@ function SideNav({ open, policyRequiredPartnerTypes }) {
             setActiveIcon("credentialServices");
         } else if (selectedPath.includes('device-provider-services')) {
             setActiveIcon('deviceProviderServices');
+        } else if (selectedPath.includes('biometric-provider-configuration')) {
+            setActiveIcon('biometricProviderConfiguration');
         } else if (selectedPath.includes('ftm-chip-provider-services')) {
             setActiveIcon('ftmChipProviderServices');
         } else if (selectedPath.includes('admin/certificates')) {
@@ -140,6 +142,10 @@ function SideNav({ open, policyRequiredPartnerTypes }) {
         navigate('/partnermanagement/admin/authentication-services/oidc-clients-list');
     };
 
+    const showBiometricProviderConfiguration = () => {
+        navigate('/partnermanagement/admin/biometric-provider-configuration/list');
+    };
+
     const showAdminCredentialServices = () => {
         navigate('/partnermanagement/admin/credential-services');
     };
@@ -215,6 +221,10 @@ function SideNav({ open, policyRequiredPartnerTypes }) {
 
                             <button id='side_nav_sbiDeviceDetails_icon' className="duration-700 cursor-pointer" onClick={() => showSbiDeviceDetails()}>
                                 <SideNavMenuItem title={t('dashboard.sbiDevice')} id='deviceProviderServices' isExpanded={open} activeIcon={activeIcon} />
+                            </button>
+
+                            <button id='side_nav_biometric_provider_configuration_icon' className="duration-700 cursor-pointer" onClick={() => showBiometricProviderConfiguration()}>
+                                <SideNavMenuItem title={t('dashboard.biometricProviderConfiguration')} id='biometricProviderConfiguration' isExpanded={open} activeIcon={activeIcon} />
                             </button>
 
                             <button id='side_nav_ftmDetails_icon' className="duration-700 cursor-pointer" onClick={() => showAdminFtmDetails()}>

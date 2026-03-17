@@ -74,6 +74,8 @@
         "sbiDevice": "SBI - Device",
         "sbiDeviceDesc": "View, Deactivate, Approve or Reject SBI and Linked Device Details",
         "ftmChip": "FTM Chip",
+        "biometricProviderConfiguration": "Biometric Provider Configuration",
+        "biometricProviderConfigurationDesc": "Create, view & deactivate the biometric extractor provider configurations",
         "ftmChipDesc": "View, Deactivate, Approve or Reject FTM Chip Details",
         "adminAuthenticationServicesDesc": "View or Deactivate OIDC Client and API Key Details",
         "partnerPolicyMappingRequestCountDesc": "{{partnerPolicyMappingRequestCount}} Policy requests are currently pending",

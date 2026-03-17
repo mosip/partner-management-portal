@@ -74,6 +74,8 @@
         "sbiDevice": "جهاز SBI",
         "sbiDeviceDesc": "عرض أو تعطيل أو الموافقة أو رفض تفاصيل جهاز SBI والأجهزة المرتبطة",
         "ftmChip": "شريحة FTM",
+        "biometricProviderConfiguration": "تهيئة مزود القياسات الحيوية",
+        "biometricProviderConfigurationDesc": "إنشاء وعرض وإلغاء تنشيط تكوينات مزود مستخرج القياسات الحيوية",
         "ftmChipDesc": "عرض أو تعطيل أو الموافقة أو رفض تفاصيل شريحة FTM",
         "adminAuthenticationServicesDesc": "عرض أو تعطيل تفاصيل عميل OIDC ومفاتيح API",
         "partnerPolicyMappingRequestCountDesc": "يوجد حاليًا {{partnerPolicyMappingRequestCount}} طلبات سياسة قيد الانتظار",
