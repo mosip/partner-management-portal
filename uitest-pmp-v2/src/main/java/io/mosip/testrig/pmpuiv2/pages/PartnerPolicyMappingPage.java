@@ -777,11 +777,8 @@ public class PartnerPolicyMappingPage extends BasePage {
 	}
 	
 	public boolean isPartnerIdDisplayedInFirstColumn() {
-	    By partnerIdColumnHeader = By.xpath(
-	            "//table//thead//th[1]//div[@id='partnerPolicyMappingRequestList.partnerId_header']"
-	    );
+	    By partnerIdColumnHeader = By.id("partnerPolicyMappingRequestList.partnerId_header");
 	    return isDisplayed(partnerIdColumnHeader);
 	}
-
 
 }

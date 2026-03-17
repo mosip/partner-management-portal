@@ -721,12 +721,10 @@ public class PoliciesPage extends BasePage {
 	public void clickOnPolicyButton() {
 		clickOnElement(policyButton);
 	}
-	
+
 	public boolean isPolicyIdDisplayedInFourthColumnOnPoliciesPage() {
-	    By policyIdColumnHeader = By.xpath(
-	            "//table//thead//th[4]//div[@id='policies.policyId_header']"
-	    );
-	    return isDisplayed(policyIdColumnHeader);
+		By policyIdColumnHeader = By.id("policies.policyId_header");
+		return isDisplayed(policyIdColumnHeader);
 	}
 
 }

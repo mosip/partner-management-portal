@@ -1250,9 +1250,7 @@ public class ListOfDevicesPage extends BasePage {
 	}
 	
 	public boolean isDeviceIdDisplayedInFifthColumnOnSbiDevicePage() {
-	    By deviceIdColumnHeader = By.xpath(
-	            "//table//thead//th[5]//div[@id='devicesList.deviceId_header']"
-	    );
+	    By deviceIdColumnHeader = By.id("devicesList.deviceId_header");
 	    return isDisplayed(deviceIdColumnHeader);
 	}
 
