@@ -907,12 +907,13 @@
     },
     "uploadTrustCertificate": {
         "uploadTrustCertificate": "Upload Trust Certificate",
+        "uploadRootOfTrustCertificateHeading": "Upload Root of Trust Certificate",
         "description": "Please select the partner domain and upload Root CA / Intermediate CA Certificate.",
         "uploadSectionDescription": "Please tap to select the Root CA / Intermediate CA Certificate",
         "uploadingCertMessage": "We’re uploading your certificate",
         "partnerDomain": "Partner Domain",
         "dropdownPlaceholder": "Select partner domain",
-        "successMsg": "Trust Certificate for {{partnerDomain}} is uploaded successfully!",
+        "successMsg": "Root of Trust certificate for {{partnerDomain}} is uploaded successfully!",
         "downloadRootCertSuccessMsg": "Root CA Certificate is downloaded successfully",
         "downloadIntermediateCertSuccessMsg": "Certificate Chain of Trust for the given Intermediate CA certificate is downloaded successfully."
     },
