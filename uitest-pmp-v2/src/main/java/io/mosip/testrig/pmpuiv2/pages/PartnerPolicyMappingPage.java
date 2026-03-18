@@ -775,5 +775,10 @@ public class PartnerPolicyMappingPage extends BasePage {
 				.findElement(By.xpath("//div[text()='Created On " + PmpTestUtil.todayDateWithoutZeroPadder + "']"));
 		return isElementDisplayed(createdDate);
 	}
+	
+	public boolean isPartnerIdDisplayedInFirstColumn() {
+	    By partnerIdColumnHeader = By.id("partnerPolicyMappingRequestList.partnerId_header");
+	    return isDisplayed(partnerIdColumnHeader);
+	}
 
 }

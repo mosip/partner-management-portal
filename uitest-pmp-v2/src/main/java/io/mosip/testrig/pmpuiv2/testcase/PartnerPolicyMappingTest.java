@@ -134,6 +134,7 @@ public class PartnerPolicyMappingTest extends BaseClass {
 		assertTrue(partnerPolicyMappingPage.isPartnerPolicyLinkingSubTitleDisplayed(),
 				GlobalConstants.isPartnerPolicyLinkingSubTitleDisplayed);
 		assertTrue(partnerPolicyMappingPage.isPartnerIdHeaderDisplayed(), GlobalConstants.isPartnerIdHeaderDisplayed);
+		assertTrue(partnerPolicyMappingPage.isPartnerIdDisplayedInFirstColumn(), GlobalConstants.isPartnerIdDisplayedInFirstColumn);
 		assertTrue(partnerPolicyMappingPage.isPartnerTypeHeaderDisplayed(),
 				GlobalConstants.isPartnerTypeHeaderDisplayed);
 		assertTrue(partnerPolicyMappingPage.isOrganisationNameHeaderDisplayed(),

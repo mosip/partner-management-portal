@@ -34,19 +34,16 @@ import io.mosip.testrig.pmpuiv2.utility.TestRunner;
 public class KeycloakUserManager extends BaseTestCaseFunc {
 	public static String moduleSpecificUser = null;
 	public static String passwordCred;
-	public static String publicKeytemp=PmpTestUtil.generateJWKPublicKey();
+	public static String publicKeytemp = PmpTestUtil.generateJWKPublicKey();
 
 	private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(KeycloakUserManager.class);
 
 	public static Properties propsKernel = getproperty(
 			TestRunner.getResourcePath() + "/" + "config/" + TestRunner.GetKernalFilename());
 
-
-
 	private static Keycloak getKeycloakInstance() {
 		Keycloak key = null;
 		try {
-
 			key = KeycloakBuilder.builder().serverUrl(ConfigManager.getIAMUrl()).realm(ConfigManager.getIAMRealmId())
 					.grantType(OAuth2Constants.CLIENT_CREDENTIALS).clientId(ConfigManager.getAutomationClientId())
 					.clientSecret(ConfigManager.getAutomationClientSecret()).build();
@@ -54,7 +51,6 @@ public class KeycloakUserManager extends BaseTestCaseFunc {
 			logger.info(key.toString() + key.realms());
 		} catch (Exception e) {
 			throw e;
-
 		}
 		return key;
 	}
@@ -71,12 +67,10 @@ public class KeycloakUserManager extends BaseTestCaseFunc {
 	}
 
 	public static void createUsers() {
-
 		List<String> needsToBeCreatedUsers = List.of(ConfigManager.getIAMUsersToCreate().split(","));
 		Keycloak keycloakInstance = getKeycloakInstance();
 		for (String needsToBeCreatedUser : needsToBeCreatedUsers) {
 			UserRepresentation user = new UserRepresentation();
-
 			if (needsToBeCreatedUser.equals("globaladmin")) {
 				moduleSpecificUser = needsToBeCreatedUser;
 			} else if (needsToBeCreatedUser.equals("masterdata-220005")) {
@@ -85,24 +79,21 @@ public class KeycloakUserManager extends BaseTestCaseFunc {
 				moduleSpecificUser = needsToBeCreatedUser;
 			} else if (needsToBeCreatedUser.equals("nocert")) {
 				moduleSpecificUser = needsToBeCreatedUser;
-			}else if (needsToBeCreatedUser.equals("device")) {
+			} else if (needsToBeCreatedUser.equals("device")) {
 				moduleSpecificUser = needsToBeCreatedUser;
-			}else if (needsToBeCreatedUser.equals("ftm")) {
+			} else if (needsToBeCreatedUser.equals("ftm")) {
 				moduleSpecificUser = needsToBeCreatedUser;
-			}else if (needsToBeCreatedUser.equals("ftmnocert")) {
+			} else if (needsToBeCreatedUser.equals("ftmnocert")) {
 				moduleSpecificUser = needsToBeCreatedUser;
-			}else if (needsToBeCreatedUser.equals("policyadmin")) {
+			} else if (needsToBeCreatedUser.equals("policyadmin")) {
 				moduleSpecificUser = needsToBeCreatedUser;
-			}else if (needsToBeCreatedUser.equals("policies")) {
+			} else if (needsToBeCreatedUser.equals("policies")) {
 				moduleSpecificUser = needsToBeCreatedUser;
-			}
-			
-			
-
-			else {
+			} else if (needsToBeCreatedUser.equals("deactivate")) {
+				moduleSpecificUser = needsToBeCreatedUser;
+			} else {
 				moduleSpecificUser = BaseTestCaseFunc.currentModule + "-" + needsToBeCreatedUser;
 			}
-
 			logger.info(moduleSpecificUser);
 			user.setEnabled(true);
 			user.setUsername(moduleSpecificUser);
@@ -115,28 +106,20 @@ public class KeycloakUserManager extends BaseTestCaseFunc {
 			// Create user (requires manage-users role)
 			Response response = null;
 			response = usersRessource.create(user);
-
 			logger.info("Repsonse: %s %s%n" + response.getStatus() + response.getStatusInfo());
 			if (response.getStatus() == 409) {
 				continue;
 			}
-
 			String userId = CreatedResponseUtil.getCreatedId(response);
 			logger.info("User created with userId: %s%n" + userId);
-
 			// Define password credential
 			CredentialRepresentation passwordCred = new CredentialRepresentation();
-
 			passwordCred.setTemporary(false);
 			passwordCred.setType(CredentialRepresentation.PASSWORD);
-
 			// passwordCred.setValue(userPassword.get(passwordIndex));
 			passwordCred.setValue("mosip123");
-
 			UserResource userResource = usersRessource.get(userId);
-
 			userResource.resetPassword(passwordCred);
-
 			List<RoleRepresentation> allRoles = realmResource.roles().list();
 			List<RoleRepresentation> availableRoles = new ArrayList<>();
 			List<String> toBeAssignedRoles = List.of(ConfigManager.getRolesForUser(needsToBeCreatedUser).split(","));
@@ -163,25 +146,16 @@ public class KeycloakUserManager extends BaseTestCaseFunc {
 		if (map != null)
 			user.setAttributes(map);
 		RealmResource realmResource = null;
-
 		realmResource = keycloakInstance.realm(ConfigManager.getIAMRealmId());
-
 		UsersResource usersRessource = realmResource.users();
-
 		try (Response response = usersRessource.create(user)) {
-
 			String userId = CreatedResponseUtil.getCreatedId(response);
-
 			CredentialRepresentation passwordCred = new CredentialRepresentation();
-
 			passwordCred.setTemporary(false);
 			passwordCred.setType(CredentialRepresentation.PASSWORD);
-
 			passwordCred.setValue(pwd);
-
 			UserResource userResource = usersRessource.get(userId);
 			userResource.resetPassword(passwordCred);
-
 			List<RoleRepresentation> allRoles = realmResource.roles().list();
 			List<RoleRepresentation> availableRoles = new ArrayList<>();
 			List<String> toBeAssignedRoles = List.of(propsKernel.getProperty(rolenum).split(","));
@@ -189,16 +163,13 @@ public class KeycloakUserManager extends BaseTestCaseFunc {
 				if (allRoles.stream().anyMatch((r -> r.getName().equalsIgnoreCase(role)))) {
 					if (allRoles.stream().filter(r -> r.getName().equals(role)).findFirst().isPresent())
 						availableRoles.add(allRoles.stream().filter(r -> r.getName().equals(role)).findFirst().get());
-
 				}
 				userResource.roles().realmLevel() //
 						.add((availableRoles.isEmpty() ? allRoles : availableRoles));
-
 			}
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}
-
 	}
 
 	public static void removeUser() {
@@ -208,7 +179,6 @@ public class KeycloakUserManager extends BaseTestCaseFunc {
 			String moduleSpecificUserToBeRemoved = BaseTestCaseFunc.currentModule + "-" + needsToBeRemovedUser;
 			RealmResource realmResource = keycloakInstance.realm(ConfigManager.getIAMRealmId());
 			UsersResource usersRessource = realmResource.users();
-
 			List<UserRepresentation> usersFromDB = usersRessource.search(moduleSpecificUserToBeRemoved);
 			if (!usersFromDB.isEmpty()) {
 				UserResource userResource = usersRessource.get(usersFromDB.get(0).getId());
@@ -217,7 +187,6 @@ public class KeycloakUserManager extends BaseTestCaseFunc {
 			} else {
 				logger.info("User not found with name: %s%n" + moduleSpecificUserToBeRemoved);
 			}
-
 		}
 	}
 
@@ -228,8 +197,8 @@ public class KeycloakUserManager extends BaseTestCaseFunc {
 			String name = obj.getString("n");
 //			obj.put("n", generateRandomString(340));
 			propsPublicKey = obj.toString();
-			System.out.println("n: " + name);
-			System.out.println("n: " + propsPublicKey);
+			logger.info("n: " + name);
+			logger.info("n: " + propsPublicKey);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -242,32 +211,24 @@ public class KeycloakUserManager extends BaseTestCaseFunc {
 		String alphabet = "abcdefghijklmnopqrstuvwxyz";
 		StringBuilder sb = new StringBuilder();
 		Random random = new Random();
-
 		for (int i = 0; i < length; i++) {
 			int index = random.nextInt(alphabet.length());
 			char randomChar = alphabet.charAt(index);
 			sb.append(randomChar);
 		}
-
 		return sb.toString();
 	}
-	
+
 	public static void assignRole(String username, String roleName) {
-	    Keycloak keycloak = getKeycloakInstance();
-	    RealmResource realm = keycloak.realm(ConfigManager.getIAMRealmId());
-
-	    List<UserRepresentation> users = realm.users().search(username);
-	    if (users.isEmpty()) {
-	        System.out.println("User not found: " + username);
-	        return;
-	    }
-
-	    UserResource user = realm.users().get(users.get(0).getId());
-
-	    RoleRepresentation role = realm.roles().get(roleName).toRepresentation();
-	    user.roles().realmLevel().add(List.of(role));
-
+		Keycloak keycloak = getKeycloakInstance();
+		RealmResource realm = keycloak.realm(ConfigManager.getIAMRealmId());
+		List<UserRepresentation> users = realm.users().search(username);
+		if (users.isEmpty()) {
+			logger.info("User not found: " + username);
+			return;
+		}
+		UserResource user = realm.users().get(users.get(0).getId());
+		RoleRepresentation role = realm.roles().get(roleName).toRepresentation();
+		user.roles().realmLevel().add(List.of(role));
 	}
-
-
 }

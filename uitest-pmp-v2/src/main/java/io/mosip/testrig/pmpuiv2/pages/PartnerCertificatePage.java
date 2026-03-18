@@ -587,7 +587,8 @@ public class PartnerCertificatePage extends BasePage {
 	}
 
 	public boolean isDashboardFtmChipProviderCardDisplayed() {
-		return isElementDisplayed(dashboardFtmChipProviderCardDashboard);
+	    By dashboardFtmChipProviderCard = By.id("dashboard_ftm_chip_provider_card");
+	    return isDisplayed(dashboardFtmChipProviderCard);
 	}
 
 	public boolean isSuccessMessageForFtmCertDisplayed() {
