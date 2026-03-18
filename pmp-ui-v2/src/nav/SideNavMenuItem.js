@@ -1,17 +1,22 @@
 import { getUserProfile } from "../services/UserProfileService";
 import { isLangRTL } from "../utils/AppUtils";
 import PropTypes from 'prop-types';
-import credentialServicesIcon from "../svg/credential_services.png";
+import credentialServicesIcon from "../svg/credential_partner_services_icon.svg";
+import manualAdjudicationServicesIcon from "../svg/manual_adjudication_partner_services_icon.svg";
 
 export const SideNavMenuItem = ({ title, id, isExpanded, activeIcon }) => {
 
     const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const isActive = activeIcon === id;
+    const shouldUseLargerRasterizedSvgIcon =
+        id === 'credentialServices' || id === 'manualAdjudicationServices';
 
     return (
         <div className="flex items-center gap-x-2 mt-2 font-inter">
             <div className={`h-6 pl-1 w-1 ${activeIcon === id ? 'bg-tory-blue' : null} rounded-e-md`}></div>
-            <div className="h-9 w-9 p-[0.65rem] bg-white ml-2 rounded-md shadow-md">
+            <div
+                className={`h-9 w-9 bg-white ml-2 rounded-md shadow-md ${shouldUseLargerRasterizedSvgIcon ? "flex items-center justify-center" : "p-[0.65rem]"}`}
+            >
                 {id === 'home' &&
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -78,7 +83,7 @@ export const SideNavMenuItem = ({ title, id, isExpanded, activeIcon }) => {
                     <img
                         src={credentialServicesIcon}
                         alt={title}
-                        className={`w-full h-full ${isActive ? "" : "grayscale opacity-60"}`}
+                        className={`w-[20px] h-[18px] ${isActive ? "" : "grayscale opacity-60"}`}
                     />
                 )}
                 {id === 'deviceProviderServices' &&
@@ -157,23 +162,11 @@ export const SideNavMenuItem = ({ title, id, isExpanded, activeIcon }) => {
                     </svg>
                 }
                 {id === 'manualAdjudicationServices' &&
-                    <svg
-                        width="16"
-                        height="18"
-                        viewBox="-1 -1 26 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"
-                            stroke={activeIcon === id ? "#1447b2" : "#7a7e82"}
-                            strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                        <circle cx="8.5" cy="7" r="4"
-                            stroke={activeIcon === id ? "#1447b2" : "#7a7e82"}
-                            strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                        <polyline points="17 11 19 13 23 9"
-                            stroke={activeIcon === id ? "#1447b2" : "#7a7e82"}
-                            strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
+                    <img
+                        src={manualAdjudicationServicesIcon}
+                        alt={title}
+                        className={`w-[20px] h-[18px] ${isActive ? "" : "grayscale opacity-60"}`}
+                    />
                 }
             </div>
             {isExpanded &&
