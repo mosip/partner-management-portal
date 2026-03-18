@@ -13,13 +13,14 @@ import PropTypes from 'prop-types';
 import partnerCertificateIcon from '../../svg/partner_certificate_icon.svg';
 import policiesIcon from '../../svg/policies_icon.svg';
 import authServiceIcon from '../../svg/auth_services_icon.svg';
-import credentialServicesIcon from '../../svg/credential_services.png';
+import credentialServicesIcon from '../../svg/credential_partner_services_icon.svg';
 import deviceProviderServicesIcon from '../../svg/deviceProviderServices_icon.svg';
 import ftmServicesIcon from "../../svg/ftm_services_icon.svg";
 import partner_admin_icon from '../../svg/partner_admin_icon.svg';
 import admin_policies_icon from '../../svg/admin_policies_icon.svg';
 import partner_policy_mapping_icon from '../../svg/partner_policy_mapping_icon.svg';
 import adminMispPartnerServicesIcon from '../../svg/admin_misp_partner_services_icon.svg';
+import manualAdjudicationServicesIcon from '../../svg/manual_adjudication_partner_services_icon.svg';
 import ConsentPopup from './ConsentPopup.js';
 import { getAppConfig } from '../../services/ConfigService.js';
 import OnboardingPartnerAlertPopup from './OnboardingPartnerAlertPopup.js';
@@ -996,7 +997,7 @@ function Dashboard() {
                 </div>
                 <div role='button' id='dashboard_admin_credential_services_card' onClick={adminCredentialServices} className="min-h-[50%] p-6 pt-16 bg-white border border-gray-200 shadow cursor-pointer text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, adminCredentialServices)}>
                   <div className="flex justify-center mb-5">
-                    <img id='dashboard_admin_credential_services_icon' src={credentialServicesIcon} alt="" className="w-8 h-8" />
+                  <img id='dashboard_admin_credential_services_icon' src={credentialServicesIcon} alt="" className="w-8 h-8" />
                   </div>
                   <div>
                     <h5 id='dashboard_admin_credential_services_card_header' className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
@@ -1009,11 +1010,7 @@ function Dashboard() {
                 </div>
                 <div role='button' id='dashboard_manual_adjudication_card' onClick={() => navigate('/partnermanagement/admin/manual-adjudication-services/api-keys-list')} className="min-h-[50%] p-6 pt-16 bg-white border border-gray-200 shadow cursor-pointer text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => navigate('/partnermanagement/admin/manual-adjudication-services/api-keys-list'))}>
                   <div className="flex justify-center mb-5">
-                    <svg width="32" height="32" viewBox="-2 -2 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="#7a7e82" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                      <circle cx="8.5" cy="7" r="4" stroke="#7a7e82" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                      <polyline points="17 11 19 13 23 9" stroke="#7a7e82" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
+                    <img id='dashboard_manual_adjudication_card_icon' src={manualAdjudicationServicesIcon} alt="" className="w-8 h-8" />
                   </div>
                   <div>
                     <h5 id='dashboard_manual_adjudication_header' className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
