@@ -24,6 +24,7 @@ import manualAdjudicationServicesIcon from '../../svg/manual_adjudication_partne
 import ConsentPopup from './ConsentPopup.js';
 import { getAppConfig } from '../../services/ConfigService.js';
 import OnboardingPartnerAlertPopup from './OnboardingPartnerAlertPopup.js';
+import biometricExtractorIcon from '../../svg/biometric_extractor_provider.svg';
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -939,27 +940,7 @@ function Dashboard() {
                       devicePendingApprovalRequestCount
                     }}
                   />
-                </div>
-                <div
-                  role='button'
-                  id='dashboard_biometric_provider_configuration_card'
-                  onClick={() => navigate('/partnermanagement/admin/biometric-provider-configuration/list')}
-                  className="relative min-h-[50%] p-6 pt-16 bg-white border border-gray-200 shadow cursor-pointer text-center rounded-xl"
-                  tabIndex="0"
-                  onKeyDown={(e) => onPressEnterKey(e, () => navigate('/partnermanagement/admin/biometric-provider-configuration/list'))}
-                >
-                  <div className="flex justify-center mb-5">
-                    <img id='dashboard_biometric_provider_configuration_icon' src={deviceProviderServicesIcon} alt="" className="w-8 h-8" />
-                  </div>
-                  <div>
-                    <h5 id='dashboard_biometric_provider_configuration_header' className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
-                      {t('dashboard.biometricProviderConfiguration')}
-                    </h5>
-                    <p id='dashboard_biometric_provider_configuration_description' className="mb-3 text-xs font-normal text-gray-400">
-                      {t('dashboard.biometricProviderConfigurationDesc')}
-                    </p>
-                  </div>
-                </div>    
+                </div> 
                 <div role='button' id='dashboard_ftm_chip_card' onClick={adminftmChipProviderServices} className="relative min-h-[50%] p-6 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, adminftmChipProviderServices)}>
                   <div className="flex justify-center mb-5">
                     <img id='ftmServicesIcon' src={ftmServicesIcon} alt="" className="w-8 h-8" />
@@ -1027,6 +1008,26 @@ function Dashboard() {
                     </p>
                   </div>
                 </div>
+                  <div
+                  role='button'
+                  id='dashboard_biometric_provider_configuration_card'
+                  onClick={() => navigate('/partnermanagement/admin/biometric-provider-configuration/list')}
+                  className="relative min-h-[50%] p-6 pt-16 bg-white border border-gray-200 shadow cursor-pointer text-center rounded-xl"
+                  tabIndex="0"
+                  onKeyDown={(e) => onPressEnterKey(e, () => navigate('/partnermanagement/admin/biometric-provider-configuration/list'))}
+                >
+                  <div className="flex justify-center mb-5">
+                    <img id='dashboard_biometric_provider_configuration_icon' src={biometricExtractorIcon} alt="Biometric Extractor Provider Icon" className="w-10 h-10"/>
+                  </div>
+                  <div>
+                    <h5 id='dashboard_biometric_provider_configuration_header' className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
+                      {t('dashboard.biometricProviderConfiguration')}
+                    </h5>
+                    <p id='dashboard_biometric_provider_configuration_description' className="mb-3 text-xs font-normal text-gray-400">
+                      {t('dashboard.biometricProviderConfigurationDesc')}
+                    </p>
+                  </div>
+                </div> 
                 <div role='button' id='dashboard_manual_adjudication_card' onClick={() => navigate('/partnermanagement/admin/manual-adjudication-services/api-keys-list')} className="min-h-[50%] p-6 pt-16 bg-white border border-gray-200 shadow cursor-pointer text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => navigate('/partnermanagement/admin/manual-adjudication-services/api-keys-list'))}>
                   <div className="flex justify-center mb-5">
                     <img id='dashboard_manual_adjudication_card_icon' src={manualAdjudicationServicesIcon} alt="" className="w-8 h-8" />

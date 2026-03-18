@@ -223,10 +223,6 @@ function SideNav({ open, policyRequiredPartnerTypes }) {
                                 <SideNavMenuItem title={t('dashboard.sbiDevice')} id='deviceProviderServices' isExpanded={open} activeIcon={activeIcon} />
                             </button>
 
-                            <button id='side_nav_biometric_provider_configuration_icon' className="duration-700 cursor-pointer" onClick={() => showBiometricProviderConfiguration()}>
-                                <SideNavMenuItem title={t('dashboard.biometricProviderConfiguration')} id='biometricProviderConfiguration' isExpanded={open} activeIcon={activeIcon} />
-                            </button>
-
                             <button id='side_nav_ftmDetails_icon' className="duration-700 cursor-pointer" onClick={() => showAdminFtmDetails()}>
                                 <SideNavMenuItem title={t('dashboard.ftmChip')} id='ftmChipProviderServices' isExpanded={open} activeIcon={activeIcon} />
                             </button>
@@ -241,6 +237,10 @@ function SideNav({ open, policyRequiredPartnerTypes }) {
 
                             <button id='side_nav_adminCredentialServices_icon' className="duration-700 cursor-pointer" onClick={() => showAdminCredentialServices()}>
                                 <SideNavMenuItem title={t('dashboard.adminCredentialServicesTitle')} id='credentialServices' isExpanded={open} activeIcon={activeIcon} />
+                            </button>
+
+                            <button id='side_nav_biometric_provider_configuration_icon' className="duration-700 cursor-pointer" onClick={() => showBiometricProviderConfiguration()}>
+                                <SideNavMenuItem title={t('dashboard.biometricProviderConfiguration')} id='biometricProviderConfiguration' isExpanded={open} activeIcon={activeIcon} />
                             </button>
 
                             <button id='side_nav_manualAdjudicationServices_icon' className="duration-700 cursor-pointer" onClick={() => navigate('/partnermanagement/admin/manual-adjudication-services/api-keys-list')}>

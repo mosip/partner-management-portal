@@ -332,19 +332,6 @@ function AppRoutes() {
           element: <GuardedRoute><MainLayout><ViewAdminDeviceDetails /></MainLayout></GuardedRoute>
         },
         {
-          path: 'admin/biometric-provider-configuration/list',
-          loader: () => {
-            const userProfile = getUserProfile();
-            const rolesString = userProfile?.roles ?? '';
-            const rolesArray = rolesString.split(',').map(r => r.trim()).filter(r => r.length > 0);
-            if (!rolesArray.includes('PARTNER_ADMIN')) {
-              return redirect('/partnermanagement/runtimeError');
-            }
-            return null;
-          },
-          element: <GuardedRoute><MainLayout><BiometricProviderConfigurationList /></MainLayout></GuardedRoute>
-        },
-        {
           path: 'admin/partners/create-partner',
           element: <GuardedRoute><MainLayout><CreatePartner /></MainLayout></GuardedRoute>,
         },
@@ -407,6 +394,10 @@ function AppRoutes() {
         {
           path: 'admin/credential-services',
           element: <GuardedRoute><MainLayout><AdminCredentialServices /></MainLayout></GuardedRoute>,
+        },
+        {
+          path: 'admin/biometric-provider-configuration/list',
+          element: <GuardedRoute><MainLayout><BiometricProviderConfigurationList /></MainLayout></GuardedRoute>
         },
         {
           path: 'admin/manual-adjudication-services/generate-api-key',

@@ -15,6 +15,9 @@ import ApprovePopup from "../../common/ApprovePopup";
 import PropTypes from 'prop-types';
 
 function RequestPolicy() {
+    const userProfile = getUserProfile();
+    const userRoles = (userProfile?.roles ?? '').split(',').map(role => role.trim()).filter(Boolean);
+    const isCredentialPartner = userRoles.includes('CREDENTIAL_PARTNER');
     const navigate = useNavigate();
     const location = useLocation();
     const { t } = useTranslation();
@@ -355,15 +358,15 @@ function RequestPolicy() {
                     )}
                     <div className="flex-col mt-5">
                         <Title title='requestPolicy.requestPolicy' subTitle={isAdminPath ? "viewPolicyRequest.listOfPolicyRequests" : 'requestPolicy.policies'} backLink={backUrl} />
+                        {isCredentialPartner && (
+                            <p id='request_policy_mandatory_mapping_msg' className="mt-3 rounded-md border border-[#F7D18D] bg-[#FFF8EA] px-3 py-2 text-sm text-[#684B00]">
+                                {t('requestPolicy.mandatoryMappingBanner')}
+                            </p>
+                        )}
                         {!requestPolicySuccess ?
                             <div className="w-[100%] bg-snow-white mt-[1%] rounded-lg shadow-md">
                                 <div className="p-7">
                                     <p id='request_policy_mandantory_msg' className="text-base text-[#3D4468]">{t('requestPolicy.mandatoryFieldsMsg1')} <span className="text-crimson-red">*</span> {t('requestPolicy.mandatoryFieldsMsg2')}</p>
-                                    {!isAdminPath && (
-                                        <p id='request_policy_mandatory_mapping_msg' className="mt-3 rounded-md border border-[#F7D18D] bg-[#FFF8EA] px-3 py-2 text-sm text-[#684B00]">
-                                            {t('requestPolicy.mandatoryMappingBanner')}
-                                        </p>
-                                    )}
                                     <form>
                                         <div className="flex flex-col w-full">
                                             <div className="flex flex-row justify-between space-x-4 my-[1%] max-[450px]:flex-col">
@@ -464,7 +467,7 @@ function RequestPolicy() {
                                     <button id="request_policies_form_clear_btn" onClick={() => clearForm()} className={`w-40 h-10 mr-3 border-[#1447B2] ${isLoginLanguageRTL ? "mr-2" : "ml-2"} border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.clearForm')}</button>
                                     <div className={`flex flex-row space-x-3 w-full md:w-auto justify-end`}>
                                         <button id="request_policies_form_cancel_btn" onClick={() => clickOnCancel()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.cancel')}</button>
-                                        <button id="request_policies_form_submit_btn" disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>{t('requestPolicy.submit')}</button>
+                                        <button id="request_policies_form_submit_btn" disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>{t(isCredentialPartner && !isAdminPath ? 'requestPolicy.saveAndProceed' : 'requestPolicy.submit')}</button>
                                     </div>
                                 </div>
                             </div>
