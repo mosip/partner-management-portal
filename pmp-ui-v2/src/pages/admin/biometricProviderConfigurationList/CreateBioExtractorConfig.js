@@ -74,7 +74,7 @@ function CreateBioExtractorConfig() {
             modality !== '';
 
         const handleBeforeUnload = (event) => {
-            if (isDirty() && !isSubmitClicked) {
+            if (isDirty() && !isSubmitClicked && !createSuccess) {
                 event.preventDefault();
                 event.returnValue = '';
             }
@@ -82,7 +82,7 @@ function CreateBioExtractorConfig() {
 
         window.addEventListener('beforeunload', handleBeforeUnload);
         return () => window.removeEventListener('beforeunload', handleBeforeUnload);
-    }, [configName, providerName, providerVersion, modality, isSubmitClicked]);
+    }, [configName, providerName, providerVersion, modality, isSubmitClicked, createSuccess]);
 
     const isFormValid = () =>
         configName.trim() &&
@@ -170,10 +170,21 @@ function CreateBioExtractorConfig() {
             }
         } catch (err) {
             if (err.response?.status && err.response.status !== 401) {
-                const url = err.config?.url;
-                setErrorMsg(url ? `${err.toString()} (url: ${url})` : err.toString());
+                const responseData = err.response?.data;
+                if (responseData?.errors?.length > 0) {
+                    handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+                } else {
+                    setErrorMsg(t('bioExtractorConfig.errorInCreateConfig'));
+                }
+            } else if (!err.response) {
+                setErrorMsg(t('commons.networkError'));
             }
-            console.error('Error creating biometric extractor config:', err);
+            console.error('Error creating biometric extractor config:', {
+                message: err?.message,
+                status: err?.response?.status,
+                url: err?.config?.url,
+                data: err?.response?.data,
+            });
         }
 
         setDataLoaded(true);
@@ -232,6 +243,7 @@ function CreateBioExtractorConfig() {
                                                 <div className="flex flex-col w-[48%] max-[450px]:w-full">
                                                     <label
                                                         id='config_name_label'
+                                                        htmlFor='config_name_input'
                                                         className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? 'mr-1' : 'ml-1'}`}
                                                     >
                                                         {t('bioExtractorConfig.configurationName')}
@@ -259,6 +271,7 @@ function CreateBioExtractorConfig() {
                                                 <div className="flex flex-col w-[48%] max-[450px]:w-full">
                                                     <label
                                                         id='provider_name_label'
+                                                        htmlFor='provider_name_input'
                                                         className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? 'mr-1' : 'ml-1'}`}
                                                     >
                                                         {t('bioExtractorConfig.providerName')}
@@ -290,6 +303,7 @@ function CreateBioExtractorConfig() {
                                                 <div className="flex flex-col w-[48%] max-[450px]:w-full">
                                                     <label
                                                         id='provider_version_label'
+                                                        htmlFor='provider_version_input'
                                                         className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? 'mr-1' : 'ml-1'}`}
                                                     >
                                                         {t('bioExtractorConfig.providerVersion')}
@@ -320,6 +334,7 @@ function CreateBioExtractorConfig() {
                                                 >
                                                     <label
                                                         id='modality_label'
+                                                        htmlFor='modality_dropdown_btn'
                                                         className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? 'mr-1' : 'ml-1'}`}
                                                     >
                                                         {t('bioExtractorConfig.biometricModality')}
@@ -360,6 +375,7 @@ function CreateBioExtractorConfig() {
                                                         <div
                                                             id='modality_dropdown_options'
                                                             role="listbox"
+                                                            aria-labelledby='modality_label'
                                                             className="absolute top-[4.5rem] z-10 w-full bg-white border border-[#707070] rounded-md shadow-lg"
                                                         >
                                                             {MODALITY_OPTIONS.map((option) => (
