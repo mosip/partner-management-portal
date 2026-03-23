@@ -103,7 +103,9 @@
         "mispLicenseKeyExpiryCountDesc2": "{{expiringMispLicenseKeyCount}} مفتاح ترخيص MISP سينتهي قريبًا",
         "manualAdjudication": "خدمات التحكيم اليدوي",
         "manualAdjudicationDesc": "عرض، إنشاء مفاتيح API",
-        "adminCredentialServicesTitle": "خدمات شريك بيانات الاعتماد والطباعة"
+        "adminCredentialServicesTitle": "خدمات شريك بيانات الاعتماد والطباعة",        
+        "biometricProviderConfiguration": "تهيئة مزود القياسات الحيوية",
+        "biometricProviderConfigurationDesc": "إنشاء وعرض وإلغاء تنشيط تكوينات مزود مستخرج القياسات الحيوية"
     },
     "credentialServices": {
         "title": "خدمات بيانات الاعتماد",

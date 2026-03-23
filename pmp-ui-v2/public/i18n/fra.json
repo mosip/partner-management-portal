@@ -103,7 +103,9 @@
         "mispLicenseKeyExpiryCountDesc2": "{{expiringMispLicenseKeyCount}} La clé de licence MISP expire bientôt",
         "manualAdjudication": "Services d'arbitrage manuel",
         "manualAdjudicationDesc": "Afficher, Générer des clés API",
-        "adminCredentialServicesTitle": "Services Credential/Print Partner"
+        "adminCredentialServicesTitle": "Services Credential/Print Partner",
+        "biometricProviderConfiguration": "تهيئة مزود القياسات الحيوية",
+        "biometricProviderConfigurationDesc": "إنشاء وعرض وإلغاء تنشيط تكوينات مزود مستخرج القياسات الحيوية"
     },
     "credentialServices": {
         "title": "Services d'identification",
