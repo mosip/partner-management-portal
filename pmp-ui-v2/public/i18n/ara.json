@@ -74,8 +74,6 @@
         "sbiDevice": "جهاز SBI",
         "sbiDeviceDesc": "عرض أو تعطيل أو الموافقة أو رفض تفاصيل جهاز SBI والأجهزة المرتبطة",
         "ftmChip": "شريحة FTM",
-        "biometricProviderConfiguration": "تهيئة مزود القياسات الحيوية",
-        "biometricProviderConfigurationDesc": "إنشاء وعرض وإلغاء تنشيط تكوينات مزود مستخرج القياسات الحيوية",
         "ftmChipDesc": "عرض أو تعطيل أو الموافقة أو رفض تفاصيل شريحة FTM",
         "adminAuthenticationServicesDesc": "عرض أو تعطيل تفاصيل عميل OIDC ومفاتيح API",
         "partnerPolicyMappingRequestCountDesc": "يوجد حاليًا {{partnerPolicyMappingRequestCount}} طلبات سياسة قيد الانتظار",
@@ -104,7 +102,9 @@
         "mispLicenseKeyExpiryCountDesc2": "{{expiringMispLicenseKeyCount}} مفتاح ترخيص MISP سينتهي قريبًا",
         "manualAdjudication": "خدمات التحكيم اليدوي",
         "manualAdjudicationDesc": "عرض، إنشاء مفاتيح API",
-        "adminCredentialServicesTitle": "خدمات شريك بيانات الاعتماد والطباعة"
+        "adminCredentialServicesTitle": "خدمات شريك بيانات الاعتماد والطباعة",        
+        "biometricProviderConfiguration": "تهيئة مزود القياسات الحيوية",
+        "biometricProviderConfigurationDesc": "إنشاء وعرض وإلغاء تنشيط تكوينات مزود مستخرج القياسات الحيوية"
     },
     "credentialServices": {
         "title": "خدمات بيانات الاعتماد",
@@ -338,7 +338,6 @@
         "policies": " سياسات",
         "mandatoryFieldsMsg1": "جميع الحقول تحمل علامة",
         "mandatoryFieldsMsg2": "إلزامية.",
-        "mandatoryMappingBanner": "ملاحظة: بالنسبة لشركاء بيانات الاعتماد، يُعد ربط السياسة بتكوين مستخرج القياسات الحيوية ونوع بيانات الاعتماد أمرًا إلزاميًا. إذا لم يكتمل هذا الربط، فلا يمكن الموافقة على طلب السياسة. يُرجى اتباع الخطوات الواردة في هذه الصفحة لإكمال الربط المطلوب.",
         "partnerId": "معرف الشريك",
         "partnerType": "نوع الشريك",
         "policyGroup": "مجموعة السياسات",
@@ -351,7 +350,6 @@
         "clearForm": "شكل واضح",
         "cancel": "يلغي",
         "submit": "يُقدِّم",
-        "saveAndProceed": "حفظ ومتابعة",
         "errorInResponse": "يوجد خطأ ما في جلب التفاصيل لجميع مجموعات السياسات المعتمدة. حاول مرة أخرى في وقت لاحق!",
         "errorInFetchingPolicyNames": "يوجد خطأ ما في جلب أسماء السياسات. حاول مرة أخرى في وقت لاحق!",
         "errorInMapPolicy": "أثناء طلب السياسة، واجهنا خطأ",

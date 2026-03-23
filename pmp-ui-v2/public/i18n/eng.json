@@ -74,8 +74,6 @@
         "sbiDevice": "SBI - Device",
         "sbiDeviceDesc": "View, Deactivate, Approve or Reject SBI and Linked Device Details",
         "ftmChip": "FTM Chip",
-        "biometricProviderConfiguration": "Biometric Provider Configuration",
-        "biometricProviderConfigurationDesc": "Create, view & deactivate the biometric extractor provider configurations",
         "ftmChipDesc": "View, Deactivate, Approve or Reject FTM Chip Details",
         "adminAuthenticationServicesDesc": "View or Deactivate OIDC Client and API Key Details",
         "partnerPolicyMappingRequestCountDesc": "{{partnerPolicyMappingRequestCount}} Policy requests are currently pending",
@@ -106,7 +104,9 @@
         "mispLicenseKeyExpiryCountDesc2": "{{expiringMispLicenseKeyCount}} MISP License Key is expiring soon",
         "manualAdjudication": "Manual Adjudication Services",
         "manualAdjudicationDesc": "View, Generate API Keys",
-        "adminCredentialServicesTitle": "Credential/Print Partner Services"
+        "adminCredentialServicesTitle": "Credential/Print Partner Services",
+        "biometricProviderConfiguration": "Biometric Provider Configuration",
+        "biometricProviderConfigurationDesc": "Create, view & deactivate the biometric extractor provider configurations"
     },
     "credentialServices": {
         "title": "Credential Services",
@@ -339,7 +339,6 @@
         "policies": "Policies",
         "mandatoryFieldsMsg1": "All fields marked with",
         "mandatoryFieldsMsg2": "are mandatory.",
-        "mandatoryMappingBanner": "Note: For Credential Partners, mapping the policy to a Biometric Extractor Configuration and Credential Type is mandatory. If this mapping is not completed, the policy request cannot be approved. Please follow the steps on this page to complete the required mapping",
         "partnerId": "Partner ID",
         "partnerType": "Partner Type",
         "policyGroup": "Policy Group",
@@ -352,7 +351,6 @@
         "clearForm": "Clear Form",
         "cancel": "Cancel",
         "submit": "Submit",
-        "saveAndProceed": "Save and Proceed",
         "errorInResponse": "There is some error in fetching the details for all approved policy groups. Try again later!",
         "errorInFetchingPolicyNames": "There is some error in fetching the policy names. Try again later!",
         "errorInMapPolicy": "While requesting a policy, we have encountered with an error",

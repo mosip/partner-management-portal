@@ -74,8 +74,6 @@
         "sbiDevice": "SBI - Appareil",
         "sbiDeviceDesc": "Voir, Désactiver, Approuver ou Rejeter les Détails du Dispositif SBI et des Appareils Liés",
         "ftmChip": "Puce FTM",
-        "biometricProviderConfiguration": "Configuration du fournisseur biométrique",
-        "biometricProviderConfigurationDesc": "Créer, afficher et désactiver les configurations du fournisseur d'extracteur biométrique",
         "ftmChipDesc": "Voir, Désactiver, Approuver ou Rejeter les Détails des Puces FTM",
         "adminAuthenticationServicesDesc": "Voir ou Désactiver les Détails des Clients OIDC et des Clés API",
         "partnerPolicyMappingRequestCountDesc": "{{partnerPolicyMappingRequestCount}} demandes de politique sont actuellement en attente",
@@ -104,7 +102,9 @@
         "mispLicenseKeyExpiryCountDesc2": "{{expiringMispLicenseKeyCount}} La clé de licence MISP expire bientôt",
         "manualAdjudication": "Services d'arbitrage manuel",
         "manualAdjudicationDesc": "Afficher, Générer des clés API",
-        "adminCredentialServicesTitle": "Services Credential/Print Partner"
+        "adminCredentialServicesTitle": "Services Credential/Print Partner",
+        "biometricProviderConfiguration": "تهيئة مزود القياسات الحيوية",
+        "biometricProviderConfigurationDesc": "إنشاء وعرض وإلغاء تنشيط تكوينات مزود مستخرج القياسات الحيوية"
     },
     "credentialServices": {
         "title": "Services d'identification",
@@ -338,7 +338,6 @@
         "policies": "Stratégies",
         "mandatoryFieldsMsg1": "Tous les champs marqués d'un",
         "mandatoryFieldsMsg2": "sont obligatoires.",
-        "mandatoryMappingBanner": "Remarque: Pour les partenaires d'identification, l'association de la politique à une configuration d'extracteur biométrique et à un type d'identifiant est obligatoire. Si cette association n'est pas effectuée, la demande de politique ne peut pas être approuvée. Veuillez suivre les étapes de cette page pour compléter l'association requise",
         "partnerId": "ID partenaire",
         "partnerType": "Type de partenaire",
         "policyGroup": "Groupe de politiques",
@@ -351,7 +350,6 @@
         "clearForm": "Forme claire",
         "cancel": "Annuler",
         "submit": "Soumettre",
-        "saveAndProceed": "Enregistrer et continuer",
         "errorInResponse": "Une erreur s'est produite lors de la récupération des détails de tous les groupes de stratégies approuvés. Réessayez plus tard!",
         "errorInFetchingPolicyNames": "Une erreur s'est produite lors de la récupération des noms de stratégie. Réessayez plus tard!",
         "errorInMapPolicy": "Lors de la demande d'une politique, nous avons rencontré une erreur",
