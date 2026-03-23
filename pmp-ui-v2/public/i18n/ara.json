@@ -1737,8 +1737,6 @@
         "enterProviderVersion": "أدخل إصدار المزود",
         "biometricModality": "الوسائط البيومترية",
         "selectBiometricModality": "اختر الوسائط البيومترية",
-        "comment": "التعليق",
-        "enterComment": "أدخل التعليق",
         "face": "الوجه",
         "finger": "الإصبع",
         "iris": "القزحية",

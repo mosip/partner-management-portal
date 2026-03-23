@@ -148,24 +148,11 @@ function CreateBioExtractorConfig() {
                 },
             };
 
-            let response = null;
-            try {
-                response = await HttpService.post(
-                    getPartnerManagerUrl('/bio-extractor-configurations', process.env.NODE_ENV),
-                    payload,
-                    { headers: { 'Content-Type': 'application/json' } }
-                );
-            } catch (postErr) {
-                if (postErr?.response?.status === 404) {
-                    response = await HttpService.post(
-                        getPartnerManagerUrl('/bioextractor/configurations', process.env.NODE_ENV),
-                        payload,
-                        { headers: { 'Content-Type': 'application/json' } }
-                    );
-                } else {
-                    throw postErr;
-                }
-            }
+            const response = await HttpService.post(
+                getPartnerManagerUrl('/bio-extractor-configurations', process.env.NODE_ENV),
+                payload,
+                { headers: { 'Content-Type': 'application/json' } }
+            );
 
             if (response && response.data) {
                 const responseData = response.data;
@@ -183,7 +170,6 @@ function CreateBioExtractorConfig() {
             }
         } catch (err) {
             if (err.response?.status && err.response.status !== 401) {
-                const status = err.response?.status;
                 const url = err.config?.url;
                 setErrorMsg(url ? `${err.toString()} (url: ${url})` : err.toString());
             }

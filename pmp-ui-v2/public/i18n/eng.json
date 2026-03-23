@@ -1733,8 +1733,6 @@
         "enterProviderVersion": "Enter provider version",
         "biometricModality": "Biometric Modality",
         "selectBiometricModality": "Select biometric modality",
-        "comment": "Comment",
-        "enterComment": "Enter comment",
         "face": "Face",
         "finger": "Finger",
         "iris": "Iris",

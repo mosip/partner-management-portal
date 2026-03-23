@@ -1737,8 +1737,6 @@
         "enterProviderVersion": "Saisissez la version du fournisseur",
         "biometricModality": "Modalité biométrique",
         "selectBiometricModality": "Sélectionnez une modalité biométrique",
-        "comment": "Commentaire",
-        "enterComment": "Saisissez le commentaire",
         "face": "Visage",
         "finger": "Doigt",
         "iris": "Iris",
