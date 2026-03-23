@@ -1725,5 +1725,25 @@
         "PMS_MSP_437": "معرف السياسة المدخل غير صالح أو غير موجود في قاعدة البيانات.",
         "PMS_MSP_438": "لم تتم الموافقة على معرف السياسة المقدم لربط سياسة الشريك.",
         "PMS_MSP_439": "لم يتم العثور على مفتاح ترخيص MISP النشط لمعرف الشريك ومعرف السياسة المحددين."
+    },
+    "bioExtractorConfig": {
+        "createBioExtractorConfig": "إنشاء تكوين مزود مستخرج القياسات الحيوية",
+        "bioExtractorConfigList": "تكوينات مزود مستخرج القياسات الحيوية",
+        "configurationName": "اسم التكوين",
+        "enterConfigurationName": "أدخل اسم التكوين",
+        "providerName": "اسم مزود مستخرج القياسات الحيوية",
+        "enterProviderName": "أدخل اسم المزود",
+        "providerVersion": "إصدار مزود مستخرج القياسات الحيوية",
+        "enterProviderVersion": "أدخل إصدار المزود",
+        "biometricModality": "الوسائط البيومترية",
+        "selectBiometricModality": "اختر الوسائط البيومترية",
+        "comment": "التعليق",
+        "enterComment": "أدخل التعليق",
+        "face": "الوجه",
+        "finger": "الإصبع",
+        "iris": "القزحية",
+        "configNameDuplicateError": "اسم التكوين موجود بالفعل",
+        "errorInCreateConfig": "حدث خطأ أثناء إنشاء تكوين مزود مستخرج القياسات الحيوية",
+        "createConfigSuccessHeader": "تمت إضافة تكوين مزود مستخرج القياسات الحيوية بنجاح!"
     }
 }

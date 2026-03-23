@@ -67,6 +67,7 @@ import RegenerateMispLicenseKey from './pages/admin/mispPartnerServices/Regenera
 import ViewMispLicenseKeyNotifications from './pages/admin/notifications/ViewMispLicenseKeyNotifications.js';
 import GenerateManualAdjudicationApiKey from './pages/admin/manualAdjudicationServices/GenerateManualAdjudicationApiKey.js';
 import BiometricProviderConfigurationList from './pages/admin/biometricProviderConfigurationList/BiometricProviderConfigurationList.js';
+import CreateBioExtractorConfig from './pages/admin/biometricProviderConfigurationList/CreateBioExtractorConfig.js';
 import CredentialServices from './pages/partner/credentialServices/CredentialServices.js';
 import AdminCredentialServices from './pages/admin/credentialServices/AdminCredentialServices.js';
 import { getUserProfile } from './services/UserProfileService.js';
@@ -398,6 +399,10 @@ function AppRoutes() {
         {
           path: 'admin/biometric-provider-configuration/list',
           element: <GuardedRoute><MainLayout><BiometricProviderConfigurationList /></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'admin/biometric-provider-configuration/create',
+          element: <GuardedRoute><MainLayout><CreateBioExtractorConfig /></MainLayout></GuardedRoute>
         },
         {
           path: 'admin/manual-adjudication-services/generate-api-key',
