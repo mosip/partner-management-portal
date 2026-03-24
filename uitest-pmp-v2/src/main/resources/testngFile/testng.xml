@@ -27,6 +27,7 @@
             <class name="io.mosip.testrig.pmpuiv2.testcase.AuthPartnerWithoutCertificateTest"/>
             <class name="io.mosip.testrig.pmpuiv2.testcase.AuthPolicyTest"/>
             <class name="io.mosip.testrig.pmpuiv2.testcase.PartnerPolicyMappingTest"/>
+            <class name="io.mosip.testrig.pmpuiv2.testcase.MispPartnerTest"/>
         </classes>
     </test>
 

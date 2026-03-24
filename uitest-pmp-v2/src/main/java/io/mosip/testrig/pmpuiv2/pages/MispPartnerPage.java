@@ -4,6 +4,8 @@ import java.io.IOException;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -72,7 +74,7 @@ public class MispPartnerPage extends BasePage {
 	@FindBy(id = "confirmation_custom_btn")
 	private WebElement uploadPartnerCertificateButton;
 
-	@FindBy(id = "confirmation_custom_btn_2")
+	@FindBy(id = "confirmation_home_btn")
 	private WebElement createPartnerSuccessMsgHomeButton;
 
 	@FindBy(id = "create_partner_address_input_error")
@@ -95,27 +97,36 @@ public class MispPartnerPage extends BasePage {
 
 	@FindBy(xpath = "//span[text()='Select Policy Group']")
 	private WebElement noPolicyGroup;
-	
+
 	@FindBy(id = "undefined_title")
 	private WebElement listOfPartners;
-	
+
 	@FindBy(id = "blocker_prompt_description")
 	private WebElement cancelConfirmationPopup;
-	
+
 	@FindBy(id = "block_messsage_proceed")
 	private WebElement cancelConfirmationPopupProceedButton;
-	
+
 	@FindBy(id = "block_message_cancel")
 	private WebElement cancelConfirmationPopupCancelButton;
-	
+
 	@FindBy(id = "create_partner_error_msg")
 	private WebElement createPartnerErrorMessage;
-	
+
 	@FindBy(id = "error_close_btn")
 	private WebElement errorMessageCloseButton;
-	
+
 	@FindBy(id = "create_partner_email_id_cancel_btn")
 	private WebElement partnerEmailIdCancelBtn;
+
+	@FindBy(id = "create_partner_partner_type_option3")
+	private WebElement mispPartner;
+	
+	@FindBy(id = "create_partner_organization_name_info")
+	private WebElement oragnizationInfoButton;
+	
+	@FindBy(id = "policy_group_selector_search_input")
+	private WebElement policyGroupDropdownSearchInput;
 
 	public MispPartnerPage(WebDriver driver) {
 		super(driver);
@@ -137,9 +148,8 @@ public class MispPartnerPage extends BasePage {
 		return isElementDisplayed(createPartnerMandatoryMsg);
 	}
 
-	public boolean isDefaultMispPartnerDisplayed(String partnerName) {
-		WebElement mispPartner = driver.findElement(By
-				.xpath("//button[@id='create_partner_partner_type_dropdown_btn']//span[text()='" + partnerName + "']"));
+	public boolean isDefaultMispPartnerDisplayed() {
+		clickOnElement(partnerTypeDropdown);
 		return isElementDisplayed(mispPartner);
 	}
 
@@ -147,22 +157,27 @@ public class MispPartnerPage extends BasePage {
 		clickOnElement(partnerTypeDropdown);
 	}
 
-	public boolean isMispPartnerOnlyDisplayedInDropdown(String partnerName) {
-		clickOnElement(partnerTypeDropdown);
-		WebElement mispPartner = driver.findElement(
-				By.xpath("//button[@id='create_partner_partner_type_option1']//span[text()='" + partnerName + "']"));
-		return isElementDisplayed(mispPartner);
-	}
-
 	public boolean isOrganizationNameInfoDisplayed() {
 		return isElementDisplayed(organizationNameInfo);
 	}
 
-	public void selectPolicyGroup(String defaultPolicyGroup) {
+	public void selectPolicyGroupDropdown(String value) {
 		clickOnElement(policyGroupDropdown);
-		WebElement policyGroup = driver.findElement(By.xpath(
-				"//button[@id='policy_group_selector_dropdown_button']//span[text()='" + defaultPolicyGroup + "']"));
-		clickOnElement(policyGroup);
+		clearTextBox(policyGroupDropdownSearchInput);
+		enter(policyGroupDropdownSearchInput, value);
+		By policyGroupOption = By.xpath("//span[normalize-space()='" + value + "']");
+		try {
+			waitScrollAndClick(policyGroupOption);
+		} catch (TimeoutException | NoSuchElementException e) {
+			logger.warn("Policy group not found: " + value);
+			throw new NoSuchElementException("Failed to select policy group: " + value, e);
+		}
+	}
+	
+	public void enterInvalidPolicyGroup(String value) {
+		clickOnElement(policyGroupDropdown);
+		clearTextBox(policyGroupDropdownSearchInput);
+		enter(policyGroupDropdownSearchInput, value);
 	}
 
 	public void selectPartnerType(String value) {
@@ -256,65 +271,73 @@ public class MispPartnerPage extends BasePage {
 	public void clickOnCreatePartnerClearButton() {
 		clickOnElement(createPartnerClearButton);
 	}
-	
+
 	public void clickOnCreatePartnerCancelButton() {
 		clickOnElement(createPartnerCancelButton);
 	}
-	
+
 	public boolean isListOfPartnersDisplayed() {
 		return isElementDisplayed(listOfPartners);
 	}
-	
+
 	public boolean isCancelConfirmationPopupDisplayed() {
 		return isElementDisplayed(cancelConfirmationPopup);
 	}
-	
+
 	public boolean iscancelConfirmationPopupProceedButtonDisplayed() {
 		return isElementDisplayed(cancelConfirmationPopupProceedButton);
 	}
-	
+
 	public boolean isCancelConfirmationPopupCancelButtonDisplayed() {
 		return isElementDisplayed(cancelConfirmationPopupCancelButton);
 	}
-	
+
 	public void clickOnCancelConfirmationPopupProceedButton() {
 		clickOnElement(cancelConfirmationPopupProceedButton);
 	}
-	
+
 	public void clickOnCreatePartnerSubmitButton() {
 		clickOnElement(createPartnerSubmitButton);
 	}
-	
+
 	public void clickOnSuccessMsgHomeButton() {
 		clickOnElement(createPartnerSuccessMsgHomeButton);
 	}
-	
+
 	public boolean isPartnerContactNumberNotAllowErrorDisplayed() {
 		return isElementDisplayed(partnerContactNumberNotAllowError);
 	}
-	
+
 	public void clickOnPartnerEmailIdTextBox() {
 		clickOnElement(partnerEmailIdTextBox);
 	}
-	
+
 	public boolean isUsernameMustStartWithLetterErrorDisplayed() {
 		return isElementDisplayed(partnerUserNameNotAllowError);
 	}
-	
+
 	public boolean isEmailAddressIsAlreadyRegisteredErrorDisplayed() {
 		return isElementDisplayed(createPartnerErrorMessage);
 	}
-	
+
 	public void clickOnErrorMessageCloseButton() {
 		clickOnElement(errorMessageCloseButton);
 	}
-	
+
 	public void clickOnPartnerEmailIdCancelBtn() {
 		clickOnElement(partnerEmailIdCancelBtn);
 	}
-	
+
 	public boolean isUsernameAlreadyExistErrorDisplayed() {
 		return isElementDisplayed(createPartnerErrorMessage);
+	}
+	
+	public void clickOnPartnerOragnizationInfoButton() {
+		clickOnElement(oragnizationInfoButton);
+	}
+	
+	public void clickOnUserNameTextBox() {
+		clickOnElement(userNameTextBox);
 	}
 
 }
