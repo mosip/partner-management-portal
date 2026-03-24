@@ -1721,5 +1721,23 @@
         "PMS_MSP_437": "The entered policy ID is invalid or does not exist in the database.",
         "PMS_MSP_438": "The policy ID provided has not been approved for partner policy linking.",
         "PMS_MSP_439": "No Active MISP License key found for the given Partner ID and Policy ID."
+    },
+    "bioExtractorConfig": {
+        "createBioExtractorConfig": "Create Biometric Extractor Provider Configuration",
+        "bioExtractorConfigList": "Biometric Extractor Provider Configurations",
+        "configurationName": "Configuration Name",
+        "enterConfigurationName": "Enter configuration name",
+        "providerName": "Biometric Extractor Provider Name",
+        "enterProviderName": "Enter provider name",
+        "providerVersion": "Biometric Extractor Provider Version",
+        "enterProviderVersion": "Enter provider version",
+        "biometricModality": "Biometric Modality",
+        "selectBiometricModality": "Select biometric modality",
+        "face": "Face",
+        "finger": "Finger",
+        "iris": "Iris",
+        "configNameDuplicateError": "Configuration name already exists",
+        "errorInCreateConfig": "An error occurred while creating the biometric extractor provider configuration",
+        "createConfigSuccessHeader": "Biometric Extractor Provider Configuration is added successfully!"
     }
 }

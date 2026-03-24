@@ -1725,5 +1725,23 @@
         "PMS_MSP_437": "L'ID de politique saisi n'est pas valide ou n'existe pas dans la base de données.",
         "PMS_MSP_438": "L'ID de politique fourni n'a pas été approuvé pour la liaison de politique partenaire.",
         "PMS_MSP_439": "Aucune clé de licence MISP active n'a été trouvée pour l'ID de partenaire et l'ID de politique donnés."
+    },
+    "bioExtractorConfig": {
+        "createBioExtractorConfig": "Créer la configuration du fournisseur d'extraction biométrique",
+        "bioExtractorConfigList": "Configurations du fournisseur d'extraction biométrique",
+        "configurationName": "Nom de configuration",
+        "enterConfigurationName": "Saisissez le nom de configuration",
+        "providerName": "Nom du fournisseur d'extraction biométrique",
+        "enterProviderName": "Saisissez le nom du fournisseur",
+        "providerVersion": "Version du fournisseur d'extraction biométrique",
+        "enterProviderVersion": "Saisissez la version du fournisseur",
+        "biometricModality": "Modalité biométrique",
+        "selectBiometricModality": "Sélectionnez une modalité biométrique",
+        "face": "Visage",
+        "finger": "Doigt",
+        "iris": "Iris",
+        "configNameDuplicateError": "Le nom de configuration existe déjà",
+        "errorInCreateConfig": "Une erreur est survenue lors de la création de la configuration du fournisseur d'extraction biométrique",
+        "createConfigSuccessHeader": "La configuration du fournisseur d'extraction biométrique a été ajoutée avec succès !"
     }
 }
