@@ -233,7 +233,7 @@ function BiometricProviderConfigurationList() {
             />
           )}
           <div className="flex-col mt-5">
-            <div className="flex justify-between mb-3">
+            <div className="flex justify-between mb-5 max-470:flex-col">
               <Title
                 title="dashboard.biometricProviderConfiguration"
                 subTitle="dashboard.biometricProviderConfigurationDesc"
@@ -245,9 +245,9 @@ function BiometricProviderConfigurationList() {
                   type="button"
                   onClick={gotoCreatePage}
                   onKeyDown={(e) => onPressEnterKey(e, gotoCreatePage)}
-                  className="h-10 text-sm font-semibold px-4 py-2 bg-tory-blue text-white border border-[#1447B2] rounded-md"
+                  className="min-h-10 h-auto whitespace-normal break-words leading-5 text-sm font-semibold text-white px-5 py-1 rounded-md bg-tory-blue max-850:mt-3 max-850:self-start"
                 >
-                  Create Biometric Extractor Provider Configuration
+                  {t("bioExtractorConfig.createBioExtractorConfig", "Create Biometric Extractor Provider Configuration")}
                 </button>
               )}
             </div>
