@@ -53,7 +53,7 @@
         "policies": "Stratégies",
         "policiesDesc": "Demandez et consultez vos polices",
         "authenticationServices": "Services d'authentification",
-        "authenticationServicesDesc": "Demander la création d'un client OIDC / la génération de clés API pour les concepteurs et l'authentification basée sur les clés API",
+        "authenticationServicesDesc": "Demander la création d’un client OIDC / la génération de clés API pour eSignet et l’authentification par clé API",
         "credentialServices": "Services d'identification",
         "credentialServicesDesc": "Gérer les services d'identification",
         "adminCredentialServicesDesc": "Configurer, afficher et modifier les détails du fournisseur Biometric Extractor",
@@ -102,7 +102,9 @@
         "mispLicenseKeyExpiryCountDesc2": "{{expiringMispLicenseKeyCount}} La clé de licence MISP expire bientôt",
         "manualAdjudication": "Services d'arbitrage manuel",
         "manualAdjudicationDesc": "Afficher, Générer des clés API",
-        "adminCredentialServicesTitle": "Services Credential/Print Partner"
+        "adminCredentialServicesTitle": "Services Credential/Print Partner",
+        "biometricProviderConfiguration": "تهيئة مزود القياسات الحيوية",
+        "biometricProviderConfigurationDesc": "إنشاء وعرض وإلغاء تنشيط تكوينات مزود مستخرج القياسات الحيوية"
     },
     "credentialServices": {
         "title": "Services d'identification",
@@ -260,7 +262,9 @@
         "fileUploadError": "Le certificat téléversé n'est pas au bon format. Seuls les certificats au format .cer ou .pem peuvent être téléversés.",
         "unableToUploadCertificate": "Impossible de téléverser le certificat du partenaire",
         "errorWhileUploadingCertificate": "En raison d'une erreur, nous n'avons pas pu téléverser le certificat. Veuillez réessayer.",
-        "errorWhileGettingCertOrgName": "Impossible d'obtenir le nom de l'organisation du certificat"
+        "errorWhileGettingCertOrgName": "Impossible d'obtenir le nom de l'organisation du certificat",
+        "reuploadCertificateWarningMessage": "Votre certificat existant sera révoqué peu après le téléversement du nouveau certificat. Continuez si vous souhaitez poursuivre.",
+        "fetchCertificateSuccessMessage": "Nous avons récupéré avec succès le certificat depuis le système local."
     },
     "partnerTypes": {
         "deviceProvider": "Fournisseur d'appareil",
@@ -334,6 +338,7 @@
         "policies": "Stratégies",
         "mandatoryFieldsMsg1": "Tous les champs marqués d'un",
         "mandatoryFieldsMsg2": "sont obligatoires.",
+        "mandatoryMappingBanner": "Remarque: Pour les partenaires d'identification, l'association de la politique à une configuration d'extracteur biométrique et à un type d'identifiant est obligatoire. Si cette association n'est pas effectuée, la demande de politique ne peut pas être approuvée. Veuillez suivre les étapes de cette page pour compléter l'association requise",
         "partnerId": "ID partenaire",
         "partnerType": "Type de partenaire",
         "policyGroup": "Groupe de politiques",
@@ -346,6 +351,7 @@
         "clearForm": "Forme claire",
         "cancel": "Annuler",
         "submit": "Soumettre",
+        "saveAndProceed": "Enregistrer et continuer",
         "errorInResponse": "Une erreur s'est produite lors de la récupération des détails de tous les groupes de stratégies approuvés. Réessayez plus tard!",
         "errorInFetchingPolicyNames": "Une erreur s'est produite lors de la récupération des noms de stratégie. Réessayez plus tard!",
         "errorInMapPolicy": "Lors de la demande d'une politique, nous avons rencontré une erreur",
@@ -908,12 +914,13 @@
     },
     "uploadTrustCertificate": {
         "uploadTrustCertificate": "Téléverser le certificat de confiance",
+        "uploadRootOfTrustCertificateHeading": "Téléverser le certificat racine de confiance",
         "description": "Veuillez sélectionner le domaine partenaire et téléverser le certificat CA racine / CA intermédiaire.",
         "uploadSectionDescription": "Veuillez appuyer pour sélectionner le certificat d'autorité de certification racine / intermédiaire",
         "uploadingCertMessage": "Nous téléversons votre certificat",
         "partnerDomain": "Domaine partenaire",
         "dropdownPlaceholder": "Sélectionnez un domaine partenaire",
-        "successMsg": "Le certificat de confiance pour {{partnerDomain}} a été téléversé avec succès !",
+        "successMsg": "Le certificat racine de confiance pour {{partnerDomain}} a été téléversé avec succès !",
         "downloadRootCertSuccessMsg": "Le certificat de l'autorité de certification racine a été téléchargé avec succès",
         "downloadIntermediateCertSuccessMsg": "La chaîne de certificats de confiance pour le certificat d'autorité de certification intermédiaire donné a été téléchargée avec succès."
     },
@@ -1659,7 +1666,7 @@
         "KER-PCM-011": "Domaine partenaire non valide",
         "KER-PCM-018": "Type de certificat non valide",
         "KER-PMS-019": "Aucun certificat CA n'a été trouvé pour l'ID donné.",
-        "KER-PMS-020": "Le téléchargement de certificats périmés n'est pas autorisé.",
+        "KER-PMS-020": "Le téléversement de certificats datés dans le futur n'est pas autorisé.",
         "KER-CRY-003": "Certificat invalide : corruption de fichier possible, falsification ou format non pris en charge. Assurez-vous qu’il est correctement codé en Base64 et réessayez.",
         "PMS_NOTIFICATION_ERROR_001": "Erreur lors de la mise à jour des notifications date et heure.",
         "PMS_NOTIFICATION_ERROR_002": "Horodatage de notification non valide vu.",
@@ -1718,5 +1725,23 @@
         "PMS_MSP_437": "L'ID de politique saisi n'est pas valide ou n'existe pas dans la base de données.",
         "PMS_MSP_438": "L'ID de politique fourni n'a pas été approuvé pour la liaison de politique partenaire.",
         "PMS_MSP_439": "Aucune clé de licence MISP active n'a été trouvée pour l'ID de partenaire et l'ID de politique donnés."
+    },
+    "bioExtractorConfig": {
+        "createBioExtractorConfig": "Créer la configuration du fournisseur d'extraction biométrique",
+        "bioExtractorConfigList": "Configurations du fournisseur d'extraction biométrique",
+        "configurationName": "Nom de configuration",
+        "enterConfigurationName": "Saisissez le nom de configuration",
+        "providerName": "Nom du fournisseur d'extraction biométrique",
+        "enterProviderName": "Saisissez le nom du fournisseur",
+        "providerVersion": "Version du fournisseur d'extraction biométrique",
+        "enterProviderVersion": "Saisissez la version du fournisseur",
+        "biometricModality": "Modalité biométrique",
+        "selectBiometricModality": "Sélectionnez une modalité biométrique",
+        "face": "Visage",
+        "finger": "Doigt",
+        "iris": "Iris",
+        "configNameDuplicateError": "Le nom de configuration existe déjà",
+        "errorInCreateConfig": "Une erreur est survenue lors de la création de la configuration du fournisseur d'extraction biométrique",
+        "createConfigSuccessHeader": "La configuration du fournisseur d'extraction biométrique a été ajoutée avec succès !"
     }
 }

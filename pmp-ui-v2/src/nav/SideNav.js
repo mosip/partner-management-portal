@@ -40,6 +40,8 @@ function SideNav({ open, policyRequiredPartnerTypes }) {
             setActiveIcon("credentialServices");
         } else if (selectedPath.includes('device-provider-services')) {
             setActiveIcon('deviceProviderServices');
+        } else if (selectedPath.includes('biometric-provider-configuration')) {
+            setActiveIcon('biometricProviderConfiguration');
         } else if (selectedPath.includes('ftm-chip-provider-services')) {
             setActiveIcon('ftmChipProviderServices');
         } else if (selectedPath.includes('admin/certificates')) {
@@ -140,6 +142,10 @@ function SideNav({ open, policyRequiredPartnerTypes }) {
         navigate('/partnermanagement/admin/authentication-services/oidc-clients-list');
     };
 
+    const showBiometricProviderConfiguration = () => {
+        navigate('/partnermanagement/admin/biometric-provider-configuration/list');
+    };
+
     const showAdminCredentialServices = () => {
         navigate('/partnermanagement/admin/credential-services');
     };
@@ -231,6 +237,10 @@ function SideNav({ open, policyRequiredPartnerTypes }) {
 
                             <button id='side_nav_adminCredentialServices_icon' className="duration-700 cursor-pointer" onClick={() => showAdminCredentialServices()}>
                                 <SideNavMenuItem title={t('dashboard.adminCredentialServicesTitle')} id='credentialServices' isExpanded={open} activeIcon={activeIcon} />
+                            </button>
+
+                            <button id='side_nav_biometric_provider_configuration_icon' className="duration-700 cursor-pointer" onClick={() => showBiometricProviderConfiguration()}>
+                                <SideNavMenuItem title={t('dashboard.biometricProviderConfiguration')} id='biometricProviderConfiguration' isExpanded={open} activeIcon={activeIcon} />
                             </button>
 
                             <button id='side_nav_manualAdjudicationServices_icon' className="duration-700 cursor-pointer" onClick={() => navigate('/partnermanagement/admin/manual-adjudication-services/api-keys-list')}>

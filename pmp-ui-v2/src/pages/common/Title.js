@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../../services/UserProfileService';
-import { isLangRTL, moveToHome, getStatusCode, bgOfStatus } from '../../utils/AppUtils';
+import { isLangRTL, moveToHome, getStatusCode, bgOfStatus, onPressEnterKey } from '../../utils/AppUtils';
 import backArrow from '../../svg/back_arrow.svg';
 import backArrowReversed from '../../svg/back_arrow_reversed.svg';
 import PropTypes from 'prop-types';
@@ -20,10 +20,10 @@ function Title({ title, subTitle, subTitle2, backLink, backLink2, status, versio
     };
 
     return (
-        <div className="flex-col items-start w-full min-w-0">
-            <div className={`flex gap-x-2 ${isLoginLanguageRTL ? 'pr-[0.1rem]' : 'pl-[0.1rem]'}`}>
-                <button id='title_back_icon' onClick={goBack} className={`mt-1 cursor-pointer`} >
-                    <img src={isLoginLanguageRTL ? backArrowReversed : backArrow} alt=""/>
+        <div className="flex-col items-start">
+            <div className={`flex gap-x-2 ${isLoginLanguageRTL ? 'pr-[0.5rem]' : 'pl-[0.5rem]'}`}>
+                <button type="button" id='title_back_icon' aria-label={t('commons.goBack')} onClick={goBack} onKeyDown={(e) => onPressEnterKey(e, goBack)} className={`mt-1 cursor-pointer rounded`} >
+                    <img src={isLoginLanguageRTL ? backArrowReversed : backArrow} alt="" />
                 </button>
                 <h1 id='page_title' className="font-semibold text-lg text-dark-blue break-words min-w-0">{t(title)}</h1>
             </div>
@@ -38,16 +38,16 @@ function Title({ title, subTitle, subTitle2, backLink, backLink2, status, versio
                     </div>
                 )}
                 <div className="flex space-x-1">
-                    <button id='sub_title_home_btn' onClick={() => moveToHome(navigate)} className="font-semibold text-tory-blue text-xs cursor-pointer">
+                    <button type="button" id='sub_title_home_btn' aria-label={t('commons.home')} onClick={() => moveToHome(navigate)} onKeyDown={(e) => onPressEnterKey(e, () => moveToHome(navigate))} className="font-semibold text-tory-blue text-xs cursor-pointer rounded px-2">
                         <p> {t('commons.home')} </p>
                     </button>
                     {subTitle && (
-                        <button id='sub_title_btn' onClick={() => navigate(backLink)} className="font-semibold text-tory-blue text-xs cursor-pointer">
+                        <button type="button" id='sub_title_btn' aria-label={t(subTitle)} onClick={() => navigate(backLink)} onKeyDown={(e) => onPressEnterKey(e, () => navigate(backLink))} className="font-semibold text-tory-blue text-xs cursor-pointer rounded px-2">
                             <p> / {t(subTitle)}  </p>
                         </button>
                     )}
                     {subTitle2 && (
-                        <button id='sub_title_two_btn' onClick={() => navigate(backLink2)} className="font-semibold text-tory-blue text-xs cursor-pointer">
+                        <button type="button" id='sub_title_two_btn' aria-label={t(subTitle2)} onClick={() => navigate(backLink2)} onKeyDown={(e) => onPressEnterKey(e, () => navigate(backLink2))} className="font-semibold text-tory-blue text-xs cursor-pointer rounded px-2">
                             <p> / {t(subTitle2)}</p>
                         </button>
                     )}

@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from '../../services/UserProfileService';
-import { isLangRTL, moveToHome } from '../../utils/AppUtils';
+import { isLangRTL, moveToHome, onPressEnterKey } from '../../utils/AppUtils';
 import successIcon from '../../svg/success_message_icon.svg';
 import PropTypes from 'prop-types';
 
@@ -29,13 +29,13 @@ function Confirmation({ id, confirmationData, onClickCustomBtn1, onClickCustomBt
                     {!confirmationData.customBtnName1 && (
                         <div className="grid grid-cols-2 gap-4 ustify-center p-2 max-450:flex max-450:flex-col max-450:items-center">
                             <div className="flex justify-end">
-                                <button id="confirmation_go_back_btn" onClick={() => navigate(confirmationData.backUrl)} type="button"
+                                <button tabIndex={0} id="confirmation_go_back_btn" onClick={() => navigate(confirmationData.backUrl)} onKeyDown={(e) => onPressEnterKey(e, () => navigate(confirmationData.backUrl))} type="button"
                                     className="text-white font-semibold bg-tory-blue rounded-md text-sm px-12 py-4 max-450:text-xs max-450:mx-6 max-450:mb-2">
                                     {t('commons.goBack')}
                                 </button>
                             </div>
                             <div className="flex justify-start">
-                                <button id="confirmation_home_btn" onClick={() => moveToHome(navigate)} type="button"
+                                <button tabIndex={0} id="confirmation_home_btn" onClick={() => moveToHome(navigate)} onKeyDown={(e) => onPressEnterKey(e, () => moveToHome(navigate))} type="button"
                                     className="text-[#1447b2] font-semibold bg-white border border-[#1447b2] rounded-md text-sm px-12 py-4 max-450:text-xs max-450:mx-6">
                                     {t('commons.home')}
                                 </button>
@@ -45,13 +45,13 @@ function Confirmation({ id, confirmationData, onClickCustomBtn1, onClickCustomBt
                     {confirmationData.customBtnName1 &&
                         <div className={confirmationData.customBtnName2 ? `flex justify-center items-center p-2 max-640:flex max-640:flex-col max-640:items-center max-640:gap-y-2` : ''}>
                             <div className={confirmationData.customBtnName2 ? `flex justify-end` : 'flex justify-center'}>
-                                <button id='confirmation_custom_btn' onClick={onClickCustomBtn1} type="button" className={`text-white font-semibold bg-tory-blue rounded-md mt-1 text-sm ${confirmationData.customBtnName2 ? 'px-12' : 'px-3'} py-4 mx-2`}>
+                                <button tabIndex={0} id='confirmation_custom_btn' onClick={onClickCustomBtn1} onKeyDown={(e) => onPressEnterKey(e, onClickCustomBtn1)} type="button" className={`text-white font-semibold bg-tory-blue rounded-md mt-1 text-sm ${confirmationData.customBtnName2 ? 'px-12' : 'px-3'} py-4 mx-2`}>
                                     {t(confirmationData.customBtnName1)}
                                 </button>
                             </div>
                             {confirmationData.customBtnName2 && (
                                 <div className="flex justify-start">
-                                    <button id={confirmationData.customBtn2Id} onClick={onClickCustomBtn2} type="button" className={`text-[#1447b2] mx-2 mt-1 font-semibold bg-white border border-[#1447b2] rounded-md text-sm px-12 py-4`}>
+                                    <button tabIndex={0} id={confirmationData.customBtn2Id} onClick={onClickCustomBtn2} onKeyDown={(e) => onPressEnterKey(e, onClickCustomBtn2)} type="button" className={`text-[#1447b2] mx-2 mt-1 font-semibold bg-white border border-[#1447b2] rounded-md text-sm px-12 py-4`}>
                                         {t(confirmationData.customBtnName2)}
                                     </button>
                                 </div>
