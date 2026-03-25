@@ -30,7 +30,6 @@ function BiometricProviderConfigurationList() {
   const [errorCode, setErrorCode] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [dataLoaded, setDataLoaded] = useState(true);
-  const [tableDataLoaded, setTableDataLoaded] = useState(true);
   const [expandFilter, setExpandFilter] = useState(false);
   const [applyFilter, setApplyFilter] = useState(false);
   const [actionId, setActionId] = useState(-1);
@@ -54,7 +53,7 @@ function BiometricProviderConfigurationList() {
   });
 
   useEffect(() => {
-    handleMouseClickForDropdown(submenuRef, () => setActionId(-1));
+    return handleMouseClickForDropdown(submenuRef, () => setActionId(-1));
   }, []);
 
   const tableHeaders = [
@@ -158,11 +157,9 @@ function BiometricProviderConfigurationList() {
   }, [filteredAndSortedConfigurations, firstIndex, selectedRecordsPerPage]);
 
   const onApplyFilter = (updatedFilters) => {
-    setTableDataLoaded(false);
     setFilterAttributes(updatedFilters);
     setApplyFilter(true);
     setFirstIndex(0);
-    setTableDataLoaded(true);
   };
 
   const onResetFilters = () => {
@@ -214,11 +211,6 @@ function BiometricProviderConfigurationList() {
     submenuRef.current[index] = el;
   };
 
-  const styles = {
-    loadingDiv: "!py-[20%]",
-    outerDiv: "!bg-opacity-35",
-  };
-
   return (
     <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} font-inter overflow-x-scroll`}>
       {!dataLoaded && <LoadingIcon />}
@@ -256,16 +248,22 @@ function BiometricProviderConfigurationList() {
                 <EmptyList
                   tableHeaders={tableHeaders.map((header) => ({ id: header.id, headerNameKey: header.headerName }))}
                   showCustomButton={true}
-                  customButtonName="Create Biometric Extractor Provider Configuration"
+                  customButtonName={t(
+                    "bioExtractorConfig.createBioExtractorConfig",
+                    "Create Biometric Extractor Provider Configuration"
+                  )}
                   buttonId="bio_extractor_config_create_btn_center"
                   onClickButton={gotoCreatePage}
                   disableBtn={false}
                 />
               </div>
             ) : (
-              <div className={`bg-[#FCFCFC] w-full mt-1 rounded-t-xl shadow-lg pt-3 ${!tableDataLoaded ? "py-6" : ""}`}>
+              <div className="bg-[#FCFCFC] w-full mt-1 rounded-t-xl shadow-lg pt-3">
                 <FilterButtons
-                  listTitle="List of Biometric Extractor Provider Configuration"
+                  listTitle={t(
+                    "bioExtractorConfig.bioExtractorConfigList",
+                    "Biometric Extractor Provider Configurations"
+                  )}
                   dataListLength={filteredAndSortedConfigurations.length}
                   filter={expandFilter}
                   onResetFilter={onResetFilters}
@@ -275,85 +273,79 @@ function BiometricProviderConfigurationList() {
                 {expandFilter && (
                   <BiometricProviderConfigurationListFilter onApplyFilter={onApplyFilter} />
                 )}
-                {!tableDataLoaded ? (
-                  <LoadingIcon styleSet={styles} />
+                {applyFilter && filteredAndSortedConfigurations.length === 0 ? (
+                  <EmptyList
+                    tableHeaders={tableHeaders.map((header) => ({ id: header.id, headerNameKey: header.headerName }))}
+                    showCustomButton={false}
+                  />
                 ) : (
-                  <>
-                    {applyFilter && filteredAndSortedConfigurations.length === 0 ? (
-                      <EmptyList
-                        tableHeaders={tableHeaders.map((header) => ({ id: header.id, headerNameKey: header.headerName }))}
-                        showCustomButton={false}
-                      />
-                    ) : (
-                      <div className="mx-[1.5rem] overflow-x-scroll">
-                        <table className="table-fixed">
-                          <thead>
-                            <tr>
-                              {tableHeaders.map((header, index) => (
-                                <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[13%]">
-                                  <div id={`${header.id}_header`} className={`mx-2 flex gap-x-0 items-center ${header.id === "action" ? "justify-center" : isLoginLanguageRTL ? "text-right" : "text-left"}`}>
-                                    {header.headerName}
-                                    {header.id !== "action" && (
-                                      <SortingIcon
-                                        headerId={header.id}
-                                        sortDescOrder={sortDescOrder}
-                                        sortAscOrder={sortAscOrder}
-                                        order={order}
-                                        activeSortDesc={activeDescIcon}
-                                        activeSortAsc={activeAscIcon}
-                                      />
-                                    )}
-                                  </div>
-                                </th>
-                              ))}
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {currentPageData.map((configuration, index) => (
-                              <tr
-                                id={`bio_extractor_config_list_item_${index + 1}`}
-                                key={`${configuration.configName}-${index}`}
-                                className={`border-t border-[#E5EBFA] cursor-pointer text-[0.8rem] text-[#191919] font-semibold break-words`}
-                              >
-                                <td className="px-2 py-3">{configuration.configName || "-"}</td>
-                                <td className="px-2 py-3">{configuration.bioextractorProviderName || "-"}</td>
-                                <td className="px-2 py-3">{configuration.bioextractorProviderVersion || "-"}</td>
-                                <td className="px-2 py-3">{getModalityLabel(configuration.bioModality)}</td>
-                                <td className="px-2 py-3">{formatDate(configuration.createdDateTime, "date")}</td>
-                                <td className="px-2 py-3 text-center cursor-default">
-                                  <div ref={setSubmenuRef(index)}>
-                                    <button
-                                      id={`bio_extractor_config_list_action_btn_${index + 1}`}
-                                      onClick={() => setActionId(index === actionId ? null : index)}
-                                      className={`font-semibold mb-0.5 text-[#191919] cursor-pointer text-center`}
+                  <div className="mx-[1.5rem] overflow-x-scroll">
+                    <table className="table-fixed">
+                      <thead>
+                        <tr>
+                          {tableHeaders.map((header, index) => (
+                            <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[13%]">
+                              <div id={`${header.id}_header`} className={`mx-2 flex gap-x-0 items-center ${header.id === "action" ? "justify-center" : isLoginLanguageRTL ? "text-right" : "text-left"}`}>
+                                {header.headerName}
+                                {header.id !== "action" && (
+                                  <SortingIcon
+                                    headerId={header.id}
+                                    sortDescOrder={sortDescOrder}
+                                    sortAscOrder={sortAscOrder}
+                                    order={order}
+                                    activeSortDesc={activeDescIcon}
+                                    activeSortAsc={activeAscIcon}
+                                  />
+                                )}
+                              </div>
+                            </th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {currentPageData.map((configuration, index) => (
+                          <tr
+                            id={`bio_extractor_config_list_item_${index + 1}`}
+                            key={`${configuration.configName}-${index}`}
+                            className={`border-t border-[#E5EBFA] cursor-pointer text-[0.8rem] text-[#191919] font-semibold break-words`}
+                          >
+                            <td className="px-2 py-3">{configuration.configName || "-"}</td>
+                            <td className="px-2 py-3">{configuration.bioextractorProviderName || "-"}</td>
+                            <td className="px-2 py-3">{configuration.bioextractorProviderVersion || "-"}</td>
+                            <td className="px-2 py-3">{getModalityLabel(configuration.bioModality)}</td>
+                            <td className="px-2 py-3">{formatDate(configuration.createdDateTime, "date")}</td>
+                            <td className="px-2 py-3 text-center cursor-default">
+                              <div ref={setSubmenuRef(index)}>
+                                <button
+                                  id={`bio_extractor_config_list_action_btn_${index + 1}`}
+                                  onClick={() => setActionId(index === actionId ? null : index)}
+                                  className={`font-semibold mb-0.5 text-[#191919] cursor-pointer text-center`}
+                                >
+                                  ...
+                                </button>
+                                {actionId === index && (
+                                  <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-10 text-right" : "right-11 text-left"}`}>
+                                    <div
+                                      role="button"
+                                      className="flex justify-between hover:bg-gray-100"
+                                      onClick={() => onViewConfiguration(configuration)}
+                                      tabIndex="0"
+                                      onKeyDown={(e) => onPressEnterKey(e, () => onViewConfiguration(configuration))}
                                     >
-                                      ...
-                                    </button>
-                                    {actionId === index && (
-                                      <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-10 text-right" : "right-11 text-left"}`}>
-                                        <div
-                                          role="button"
-                                          className="flex justify-between hover:bg-gray-100"
-                                          onClick={() => onViewConfiguration(configuration)}
-                                          tabIndex="0"
-                                          onKeyDown={(e) => onPressEnterKey(e, () => onViewConfiguration(configuration))}
-                                        >
-                                          <p id="bio_extractor_config_list_view_btn" className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>
-                                            {t("partnerList.view")}
-                                          </p>
-                                          <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
-                                        </div>
-                                      </div>
-                                    )}
+                                      <p id="bio_extractor_config_list_view_btn" className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>
+                                        {t("partnerList.view")}
+                                      </p>
+                                      <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
+                                    </div>
                                   </div>
-                                </td>
-                              </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                      </div>
-                    )}
-                  </>
+                                )}
+                              </div>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
                 )}
                 <Pagination
                   dataListLength={filteredAndSortedConfigurations.length}
