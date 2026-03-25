@@ -1277,7 +1277,7 @@ public class GlobalConstants {
 	public static final String isReUploadPopUpPagePartnerDomainDisabled = "Verify if reupload popup partner domain disabled";
 	public static final String isReUploadPopUpPageFetchingCertMsgDisplayed = "Verify if reupload popup fetching certificate message displayed";
 	public static final String isReUploadCertNameDisplayed = "Verify if reupload certificate name displayed";
-	public static final String isReUploadCertRemoveBtnDisplayed = "Verify if reupload certificate certificate button displayed";
+	public static final String isReUploadCertRemoveBtnDisplayed = "Verify if reupload certificate remove button displayed";
 	public static final String isReUploadPopUpPageSubmitButtonEnabled = "Verify if reupload popup submit button enabled";
 	public static final String isReUploadPopUpPageTitleDisplayed = "Verify if reupload popup page title displayed";
 	public static final String isFtmChipDetailsContextUploadDateTimeUpdated = "Verify if ftm chip details context upload date time updated";
