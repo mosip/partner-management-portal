@@ -318,7 +318,7 @@ function BiometricProviderConfigurationList() {
                               <div ref={setSubmenuRef(index)}>
                                 <button
                                   id={`bio_extractor_config_list_action_btn_${index + 1}`}
-                                  onClick={() => setActionId(index === actionId ? null : index)}
+                                      onClick={() => setActionId(index === actionId ? -1 : index)}
                                   className={`font-semibold mb-0.5 text-[#191919] cursor-pointer text-center`}
                                 >
                                   ...
