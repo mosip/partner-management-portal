@@ -39,30 +39,11 @@ function MapBiometricExtractorProvider() {
   const navigate = useNavigate();
   const { state } = useLocation();
   const hasRequiredState = Boolean(state?.partnerId && state?.policyId);
-  useEffect(() => {
-    if (!hasRequiredState) {
-      navigate("/partnermanagement/policies/request-policy");
-      }
-      }, [hasRequiredState, navigate]);
-      if (!hasRequiredState) {
-         return null;
-         }
   const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
-
   const [dataLoaded, setDataLoaded] = useState(true);
   const [errorCode, setErrorCode] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [rows, setRows] = useState([{ ...EMPTY_MAPPING_ROW }]);
-
-  const policyDetails = {
-    partnerId: state?.partnerId || "",
-    partnerType: state?.partnerType || "",
-    policyGroupName: state?.policyGroupName || "",
-    policyName: state?.policyName || "",
-    policyId: state?.policyId || "",
-    requestPayload: state?.requestPayload || null,
-    partnerComment: state?.partnerComment || ""
-  };
 
   const modalityDropdownData = useMemo(() => ([
     { fieldCode: t("bioExtractorConfig.face"), fieldValue: "FACE" },
@@ -76,6 +57,24 @@ function MapBiometricExtractorProvider() {
       fieldValue: config.configurationName
     }))
   ), []);
+  useEffect(() => {
+    if (!hasRequiredState) {
+      navigate("/partnermanagement/policies/request-policy");
+      }
+      }, [hasRequiredState, navigate]);
+      if (!hasRequiredState) {
+         return null;
+         }
+
+  const policyDetails = {
+    partnerId: state?.partnerId || "",
+    partnerType: state?.partnerType || "",
+    policyGroupName: state?.policyGroupName || "",
+    policyName: state?.policyName || "",
+    policyId: state?.policyId || "",
+    requestPayload: state?.requestPayload || null,
+    partnerComment: state?.partnerComment || ""
+  };
 
   const getSelectedConfig = (configurationName) => {
     return HARD_CODED_ACTIVE_CONFIGS.find(config => config.configurationName === configurationName);
@@ -234,10 +233,7 @@ function MapBiometricExtractorProvider() {
                           selectionBox: '!top-10'
                         };
                     return (
-                      <div key={`bio-mapping-row-${index}`} className="border border-[#E7E7E7] rounded-md p-4 mb-4">
-                        <div className="grid grid-cols-2 gap-4 my-2 max-[450px]:grid-cols-1 relative">
-                        </div>
-                        <div className="grid grid-cols-2 gap-4 my-2 max-[450px]:grid-cols-1">
+                      <div key={`bio-mapping-row-${index}`} className="border border-[#E7E7E7] rounded-md p-4 mb-4">                          <div className="grid grid-cols-2 gap-4 my-2 max-[450px]:grid-cols-1">
                           <div className="flex flex-col w-full ">
                             <div className="w-full">
                             <DropdownComponent
