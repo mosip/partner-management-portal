@@ -8,6 +8,7 @@ import Title from "../../common/Title";
 import ErrorMessage from "../../common/ErrorMessage";
 import LoadingIcon from "../../common/LoadingIcon";
 import DropdownComponent from "../../common/fields/DropdownComponent";
+import { handleServiceErrors } from "../../../utils/AppUtils";
 
 const HARD_CODED_ACTIVE_CONFIGS = [
   {
@@ -50,7 +51,8 @@ function MapBiometricExtractorProvider() {
     policyGroupName: state?.policyGroupName || "",
     policyName: state?.policyName || "",
     policyId: state?.policyId || "",
-    requestPayload: state?.requestPayload || null
+    requestPayload: state?.requestPayload || null,
+    partnerComment: state?.partnerComment || ""
   };
 
   const modalityDropdownData = useMemo(() => ([
@@ -103,7 +105,7 @@ function MapBiometricExtractorProvider() {
 
   const clickOnSaveAndProceed = async () => {
     if (!isFormValid()) {
-      setErrorMsg(t("mapBiometricExtractorProvider.validationMsg"));
+      setErrorMsg(t("bioExtractorConfig.mapBiometricExtractorProvider.validationMsg"));
       return;
     }
 
@@ -127,20 +129,24 @@ function MapBiometricExtractorProvider() {
         })
       });
 
-      await HttpService.post(
+      const response = await HttpService.post(
         getPartnerManagerUrl(`/partners/${policyDetails.partnerId}/bioextractors/${policyDetails.policyId}`, process.env.NODE_ENV),
         request
       );
-
+      
+      if (response?.data?.response) {
       navigate("/partnermanagement/policies/policies-list");
+      } else {
+        handleServiceErrors(response?.data, setErrorCode, setErrorMsg);
+        }
     } catch (err) {
       if (err.response?.status && err.response.status !== 401) {
         setErrorMsg(err.toString());
-      } else {
-        setErrorMsg(t("mapBiometricExtractorProvider.saveError"));
-      }
+        } else if (err.response?.status === 401) {
+          } else {
+             setErrorMsg(t("bioExtractorConfig.mapBiometricExtractorProvider.saveError"));
+            }
     }
-
     setDataLoaded(true);
   };
 
@@ -158,11 +164,22 @@ function MapBiometricExtractorProvider() {
             />
           )}
           <div className="flex-col mt-5">
-            <Title
-              title='mapBiometricExtractorProvider.title'
-              subTitle='requestPolicy.requestPolicy'
-              backLink='/partnermanagement/policies/request-policy'
-            />
+          <Title
+            title='bioExtractorConfig.mapBiometricExtractorProvider.title'
+            subTitle='requestPolicy.requestPolicy'
+            backLink={{
+              pathname: '/partnermanagement/policies/request-policy',
+              state: {
+                restoreRequestPolicy: true,
+                partnerId: policyDetails.partnerId,
+                partnerType: policyDetails.partnerType,
+                policyGroupName: policyDetails.policyGroupName,
+                policyName: policyDetails.policyName,
+                policyId: policyDetails.policyId,
+                partnerComment: policyDetails.partnerComment
+              }
+            }}
+          />
             <p id='map_bio_extractor_provider_mandatory_mapping_msg' className="mt-3 rounded-md border border-[#F7D18D] bg-[#FFF8EA] px-3 py-2 text-sm text-[#684B00]">
               {t("requestPolicy.mandatoryMappingBanner")}
             </p>
@@ -200,17 +217,6 @@ function MapBiometricExtractorProvider() {
                 <div className="mt-5 border border-[#D5D8E3] rounded-md p-4">
                   <p className="text-sm font-semibold text-dark-blue mb-3">{t('mapBiometricExtractorProvider.mappingSectionTitle')}</p>
                   {rows.map((row, index) => {
-                                              {rows.length > 1 && (
-                                                <button
-                                                  type="button"
-                                                  className="text-red-600 text-sm font-medium"
-                                                  onClick={() => {
-                                                    setRows(prev => prev.filter((_, i) => i !== index));
-                                                  }}
-                                                >
-                                                  Delete
-                                                </button>
-                                              )}
                     const selectedConfig = getSelectedConfig(row.biometricProviderConfiguration);
                     const styles = {
                           outerDiv: '!ml-0 !mb-0',
