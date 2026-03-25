@@ -43,9 +43,29 @@ function RequestPolicy() {
     const [approveRequest, setApproveRequest] = useState({});
     const [popupData, setPopupData] = useState({});
     const [partnerTypeDropdownData, setPartnerTypeDropdownData] = useState([]);
+    const [selectedPolicyId, setSelectedPolicyId] = useState("");
+    const [existingRequestData, setExistingRequestData] = useState(null);
 
     // Determine admin path at the top of component to avoid temporal dead zone
     const isAdminPath = location.pathname.includes('admin');
+    useEffect(() => {
+            if (location.state?.restoreRequestPolicy) {
+                setPartnerId(location.state.partnerId || "");
+                setPartnerType(location.state.partnerType || "");
+                setPolicyGroupName(location.state.policyGroupName || "");
+                setPolicyName(location.state.policyName || "");
+                setPartnerComment(location.state.partnerComment || "");
+                setSelectedPolicyId(location.state.policyId || "");
+                setExistingRequestData({
+                    partnerId: location.state.partnerId || "",
+                    partnerType: location.state.partnerType || "",
+                    policyGroupName: location.state.policyGroupName || "",
+                    policyName: location.state.policyName || "",
+                    partnerComment: location.state.partnerComment || "",
+                    policyId: location.state.policyId || ""
+                });
+            }
+        }, [location.state]);
 
     const cancelErrorMsg = () => {
         setErrorMsg("");
@@ -65,6 +85,18 @@ function RequestPolicy() {
             );
         }
     );
+    useEffect(() => {
+        const requestDataFromState = location.state?.requestData;
+
+        if (requestDataFromState) {
+            setExistingRequestData(requestDataFromState);
+            setPartnerId(requestDataFromState.partnerId || "");
+            setPartnerType(requestDataFromState.partnerType || "");
+            setPolicyGroupName(requestDataFromState.policyGroupName || "");
+            setPolicyName(requestDataFromState.policyName || "");
+            setPartnerComment(requestDataFromState.partnerComment || "");
+        }
+    }, [location.state]);
 
     useEffect(() => {
         const shouldWarnBeforeUnload = () => {
@@ -128,6 +160,7 @@ function RequestPolicy() {
         setPartnerType(selectedValue);
         setPartnerId("");
         setPolicyName("");
+        setSelectedPolicyId("");
         setPolicyGroupName("");
         setPoliciesDropdownData([]);
         setPartnerComment("");
@@ -187,6 +220,7 @@ function RequestPolicy() {
         const selectedPolicy = policyList.find(item => item.name === selectedValue);
         if (selectedPolicy) {
             setPolicyName(selectedValue);
+            setSelectedPolicyId(selectedPolicy.policyId || selectedPolicy.id || "");
         }
     };
 
@@ -226,6 +260,7 @@ function RequestPolicy() {
         setPartnerType("");
         setPolicyGroupName("");
         setPolicyName("");
+        setSelectedPolicyId("");
         setPartnerComment("");
         setPoliciesDropdownData([]);
         setInputError("");
@@ -239,6 +274,27 @@ function RequestPolicy() {
         navigate(cancelUrl);
     }
     const clickOnSubmit = async () => {
+        const requestData = {
+            partnerId,
+            partnerType,
+            policyGroupName,
+            policyName,
+            partnerComment
+        };
+
+        if (isCredentialPartner && !isAdminPath && existingRequestData?.mappingkey) {
+            const updatedCredentialPartnerRequestData = {
+                ...requestData,
+                mappingkey: existingRequestData.mappingkey
+            };
+            sessionStorage.setItem('credentialPartnerRequestPolicyDraft', JSON.stringify(updatedCredentialPartnerRequestData));
+            navigate('/partnermanagement/policies/map-biometric-extractor-provider', {
+                state: {
+                    requestData: updatedCredentialPartnerRequestData
+                }
+            });
+            return;
+        }
         setIsSubmitClicked(true);
         setErrorCode("");
         setErrorMsg("");
@@ -253,6 +309,29 @@ function RequestPolicy() {
                 const responseData = response.data;
                 if (responseData && responseData.response) {
                     const resData = responseData.response;
+                    if (isCredentialPartner && !isAdminPath) {
+                                            const requestPayload = existingRequestData || {
+                                                partnerId,
+                                                partnerType,
+                                                policyGroupName,
+                                                policyName,
+                                                partnerComment,
+                                                policyId: selectedPolicyId
+                                            };
+                                            navigate('/partnermanagement/policies/map-biometric-extractor-provider', {
+                                                state: {
+                                                    partnerId,
+                                                    partnerType,
+                                                    policyGroupName,
+                                                    policyName,
+                                                    policyId: selectedPolicyId,
+                                                    mappingKey: resData.mappingkey,
+                                                    requestPayload
+                                                }
+                                            });
+                                            setDataLoaded(true);
+                                            return;
+                                        }
                     setPopupData(isAdminPath ? {id: resData.mappingkey} : {});
                     const requiredData = {
                         title: "requestPolicy.requestPolicy",

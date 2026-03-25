@@ -1739,5 +1739,18 @@
         "configNameDuplicateError": "Configuration name already exists",
         "errorInCreateConfig": "An error occurred while creating the biometric extractor provider configuration",
         "createConfigSuccessHeader": "Biometric Extractor Provider Configuration is added successfully!"
+        },
+    "mapBiometricExtractorProvider": {
+        "title": "Map Biometric Extractor Provider",
+        "mappingSectionTitle": "Map Biometric Extractor Provider Configuration",
+        "biometricModality": "Biometric Modality",
+        "selectBiometricModality": "Select Biometric Modality",
+        "biometricProviderConfiguration": "Biometric Provider Configuration*",
+        "selectBiometricProviderConfiguration": "Select a Biometric Provider",
+        "autoPopulatedValue": "Auto populated based on configuration selected",
+        "addMore": "Add More",
+        "delete": "Delete",
+        "validationMsg": "Please map all biometric extractor provider fields before proceeding.",
+        "saveError": "Error while mapping biometric extractor provider configuration."
     }
 }
