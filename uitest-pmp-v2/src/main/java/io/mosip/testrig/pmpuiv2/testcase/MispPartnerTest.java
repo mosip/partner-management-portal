@@ -51,7 +51,7 @@ public class MispPartnerTest extends BaseClass {
 				GlobalConstants.BREADCUMB_TEXT_OF_CREATE_PARTNER);
 		assertTrue(mispPartnerPage.isCreatePartnerMandatoryFieldInfoDisplayed(),
 				GlobalConstants.isCreatePartnerMandatoryFieldInfoDisplayed);
-		assertTrue(mispPartnerPage.isDefaultMispPartnerDisplayed(),GlobalConstants.isDefaultMispPartnerDisplayed);
+		assertTrue(mispPartnerPage.isDefaultMispPartnerDisplayed(), GlobalConstants.isDefaultMispPartnerDisplayed);
 		mispPartnerPage.clickOnPartnerTypeDropdown();
 
 		mispPartnerPage.clickOnPartnerOragnizationInfoButton();
@@ -78,26 +78,20 @@ public class MispPartnerTest extends BaseClass {
 		assertTrue(partnerCertificatePage.isCertificateUploadSuccessMessageDisplayed(),
 				GlobalConstants.isCertificateUploadSuccessMessageDisplayed);
 		partnerCertificatePage.clickOnCloseButton();
-
 	}
 
-	@Test(priority = 02, description = "Create multiple misp partner with negative scenaros", dependsOnMethods = "createMispPartner")
+	@Test(priority = 02, description = "Create multiple misp partner with negative scenarios", dependsOnMethods = "createMispPartner")
 	public void createMultipleMispPartner() throws InterruptedException {
 		mispPartnerPage = new MispPartnerPage(driver);
 		dashboardPage = new DashboardPage(driver);
 		partnerCertificatePage = new PartnerCertificatePage(driver);
-		
+
 		dashboardPage.clickOnPartners();
-
 		mispPartnerPage.clickOnCreatePartnerButton();
-
 		verifyEnteringSpecialCharacterInAllMandatoryField();
-
 		mispPartnerPage.clickOnCreatePartnerClearButton();
-
 		assertTrue(mispPartnerPage.isPartnerOrganizationPlaceholderDisplayed(),
 				GlobalConstants.isPartnerOrganizationPlaceholderDisplayed);
-
 		mispPartnerPage.enterInvalidPolicyGroup(GlobalConstants.RANDOM_DATA);
 		assertTrue(mispPartnerPage.isNoPolicyGroupDisplayed(), GlobalConstants.isNoPolicyGroupDisplayed);
 
@@ -163,7 +157,6 @@ public class MispPartnerTest extends BaseClass {
 		assertTrue(mispPartnerPage.isCreatePartnerSuccessMsgDisplayed(),
 				GlobalConstants.isCreatePartnerSuccessMsgDisplayed);
 		mispPartnerPage.clickOnSuccessMsgHomeButton();
-
 	}
 
 	private void createMispPartner(String userName, String partnerType, String policyGroup, String notificaction,

@@ -436,7 +436,7 @@ public class PartnerCertificatePage extends BasePage {
 
 	@FindBy(id = "dashboard_ftm_chip_provider_card")
 	private WebElement dashboardFtmChipProviderCardDashboard;
-	
+
 	@FindBy(id = "upload_certificate_success_msg")
 	private WebElement certificateUploadSuccessMessage;
 
@@ -590,8 +590,8 @@ public class PartnerCertificatePage extends BasePage {
 	}
 
 	public boolean isDashboardFtmChipProviderCardDisplayed() {
-	    By dashboardFtmChipProviderCard = By.id("dashboard_ftm_chip_provider_card");
-	    return isDisplayed(dashboardFtmChipProviderCard);
+		By dashboardFtmChipProviderCard = By.id("dashboard_ftm_chip_provider_card");
+		return isDisplayed(dashboardFtmChipProviderCard);
 	}
 
 	public boolean isSuccessMessageForFtmCertDisplayed() {
@@ -1279,7 +1279,7 @@ public class PartnerCertificatePage extends BasePage {
 	public void uploadPolicyUserClientCertificate() {
 		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "policyUserClient.cer"));
 	}
-	
+
 	public void uploadCertificateMispRootCa() {
 		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "MispRootCA.cer"));
 	}
@@ -1287,11 +1287,11 @@ public class PartnerCertificatePage extends BasePage {
 	public void uploadCertificateMispSubCa() {
 		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "MispIntermediateCA.cer"));
 	}
-	
+
 	public void uploadCertificateMispClient() {
 		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "MipsClient.cer"));
 	}
-	
+
 	public boolean isCertificateUploadSuccessMessageDisplayed() {
 		return isElementDisplayed(certificateUploadSuccessMessage);
 	}
