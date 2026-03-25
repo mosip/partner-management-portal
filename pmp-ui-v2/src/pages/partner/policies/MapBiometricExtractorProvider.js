@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../../services/UserProfileService";
@@ -38,6 +38,15 @@ function MapBiometricExtractorProvider() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { state } = useLocation();
+  const hasRequiredState = Boolean(state?.partnerId && state?.policyId);
+  useEffect(() => {
+    if (!hasRequiredState) {
+      navigate("/partnermanagement/policies/request-policy");
+      }
+      }, [hasRequiredState, navigate]);
+      if (!hasRequiredState) {
+         return null;
+         }
   const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
 
   const [dataLoaded, setDataLoaded] = useState(true);
@@ -275,7 +284,7 @@ function MapBiometricExtractorProvider() {
                         <div className="flex w-full items-center mt-4">
                   {/* LEFT */}
                   <button
-                    id='map_bio_extractor_provider_add_more_btn'
+                    id={`map_bio_extractor_provider_add_more_btn_${index}`}
                     type='button'
                     className='text-tory-blue text-sm font-semibold'
                     onClick={() => setRows(prev => [...prev, { ...EMPTY_MAPPING_ROW }])}
