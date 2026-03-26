@@ -66,8 +66,8 @@ import ViewMispLicenseKey from './pages/admin/mispPartnerServices/ViewMispLicens
 import RegenerateMispLicenseKey from './pages/admin/mispPartnerServices/RegenerateMispLicenseKey.js';
 import ViewMispLicenseKeyNotifications from './pages/admin/notifications/ViewMispLicenseKeyNotifications.js';
 import GenerateManualAdjudicationApiKey from './pages/admin/manualAdjudicationServices/GenerateManualAdjudicationApiKey.js';
-import BiometricProviderConfigurationList from './pages/admin/biometricProviderConfigurationList/BiometricProviderConfigurationList.js';
-import CreateBioExtractorConfig from './pages/admin/biometricProviderConfigurationList/CreateBioExtractorConfig.js';
+import BiometricProviderConfigurationList from './pages/admin/biometricProviderConfiguration/BiometricProviderConfigurationList.js';
+import CreateBioExtractorConfig from './pages/admin/biometricProviderConfiguration/CreateBioExtractorConfig.js';
 import CredentialServices from './pages/partner/credentialServices/CredentialServices.js';
 import AdminCredentialServices from './pages/admin/credentialServices/AdminCredentialServices.js';
 import { getUserProfile } from './services/UserProfileService.js';
@@ -398,6 +398,10 @@ function AppRoutes() {
         },
         {
           path: 'admin/biometric-provider-configuration/list',
+          loader: () => redirect('/partnermanagement/admin/biometric-provider-configuration-list')
+        },
+        {
+          path: 'admin/biometric-provider-configuration-list',
           element: <GuardedRoute><MainLayout><BiometricProviderConfigurationList /></MainLayout></GuardedRoute>
         },
         {

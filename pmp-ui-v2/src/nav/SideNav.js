@@ -143,7 +143,7 @@ function SideNav({ open, policyRequiredPartnerTypes }) {
     };
 
     const showBiometricProviderConfiguration = () => {
-        navigate('/partnermanagement/admin/biometric-provider-configuration/list');
+        navigate('/partnermanagement/admin/biometric-provider-configuration-list');
     };
 
     const showAdminCredentialServices = () => {
