@@ -44,7 +44,6 @@ function RequestPolicy() {
     const [popupData, setPopupData] = useState({});
     const [partnerTypeDropdownData, setPartnerTypeDropdownData] = useState([]);
     const [selectedPolicyId, setSelectedPolicyId] = useState("");
-    const [existingRequestData, setExistingRequestData] = useState(null);
 
     // Determine admin path at the top of component to avoid temporal dead zone
     const isAdminPath = location.pathname.includes('admin');
@@ -60,19 +59,6 @@ function RequestPolicy() {
             }
         }
     );
-    useEffect(() => {
-        const requestDataFromState = location.state?.requestData;
-
-        if (requestDataFromState) {
-            setExistingRequestData(requestDataFromState);
-            setPartnerId(requestDataFromState.partnerId || "");
-            setPartnerType(requestDataFromState.partnerType || "");
-            setPolicyGroupName(requestDataFromState.policyGroupName || "");
-            setPolicyName(requestDataFromState.policyName || "");
-            setPartnerComment(requestDataFromState.partnerComment || "");
-        }
-    }, [location.state]);
-
     useEffect(() => {
         const shouldWarnBeforeUnload = () => {
             return partnerId !== "" ||
@@ -249,14 +235,6 @@ function RequestPolicy() {
         navigate(cancelUrl);
     }
     const clickOnSubmit = async () => {
-        const requestData = {
-            partnerId,
-            partnerType,
-            policyGroupName,
-            policyName,
-            partnerComment
-        };
-
         setIsSubmitClicked(true);
         setErrorCode("");
         setErrorMsg("");
@@ -272,7 +250,7 @@ function RequestPolicy() {
                 if (responseData && responseData.response) {
                     const resData = responseData.response;
                     if (isCredentialPartner && !isAdminPath) {
-                                            const requestPayload = existingRequestData || {
+                                            const requestPayload = {
                                                 partnerId,
                                                 partnerType,
                                                 policyGroupName,
