@@ -55,8 +55,13 @@ function RequestPolicy() {
         ({ currentLocation, nextLocation }) => {
             if (isSubmitClicked || requestPolicySuccess) {
                 setIsSubmitClicked(false);
-                return false;
+                return false;  
             }
+            return (
+                (partnerId !== "" || partnerType !== "" ||
+                    policyName !== "" || partnerComment !== "") &&
+                currentLocation.pathname !== nextLocation.pathname
+            );
         }
     );
     useEffect(() => {
