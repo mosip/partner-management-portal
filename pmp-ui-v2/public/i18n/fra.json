@@ -104,8 +104,8 @@
         "manualAdjudication": "Services d'arbitrage manuel",
         "manualAdjudicationDesc": "Afficher, Générer des clés API",
         "adminCredentialServicesTitle": "Services Credential/Print Partner",
-        "biometricProviderConfiguration": "تهيئة مزود القياسات الحيوية",
-        "biometricProviderConfigurationDesc": "إنشاء وعرض وإلغاء تنشيط تكوينات مزود مستخرج القياسات الحيوية"
+        "biometricProviderConfiguration": "Configuration du fournisseur biométrique",
+        "biometricProviderConfigurationDesc": "Créer, afficher et désactiver les configurations du fournisseur d’extracteur biométrique"
     },
     "credentialServices": {
         "title": "Services d'identification",

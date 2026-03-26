@@ -1011,10 +1011,10 @@ function Dashboard() {
                   <div
                   role='button'
                   id='dashboard_biometric_provider_configuration_card'
-                  onClick={() => navigate('/partnermanagement/admin/biometric-provider-configuration/list')}
+                  onClick={() => navigate('/partnermanagement/admin/biometric-provider-configuration-list')}
                   className="relative min-h-[50%] p-6 pt-16 bg-white border border-gray-200 shadow cursor-pointer text-center rounded-xl"
                   tabIndex="0"
-                  onKeyDown={(e) => onPressEnterKey(e, () => navigate('/partnermanagement/admin/biometric-provider-configuration/list'))}
+                  onKeyDown={(e) => onPressEnterKey(e, () => navigate('/partnermanagement/admin/biometric-provider-configuration-list'))}
                 >
                   <div className="flex justify-center mb-5">
                     <img id='dashboard_biometric_provider_configuration_icon' src={biometricExtractorIcon} alt="Biometric Extractor Provider Icon" className="w-10 h-10"/>
