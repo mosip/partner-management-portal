@@ -1,7 +1,7 @@
 package io.mosip.testrig.pmpuiv2.utility;
 
 public class GlobalConstants {
-	
+
 	public static final String TABLE = "</table>";
 	public static final String TR = "</tr>";
 	public static final String IGNORED_SUBSET_STRING = "feature not supported;Service not deployed";
@@ -231,6 +231,8 @@ public class GlobalConstants {
 	public static final String MISP_CONTACT_NUMBER = "9898767676";
 	public static final String MISP_EMAIL_ID = "misppmpui@gmail.com";
 	public static final String MISP_EMAIL_ID2 = "misppmpui2@gmail.com";
+	public static final String MISP_EMAIL_ID3 = "misppmpui3@gmail.com";
+	public static final String MISP_EMAIL_ID4 = "misppmpui4@gmail.com";
 	public static final String INVALID_EMAIL_ID = "mi12#sp.34@gmail@com";
 	public static final String LENGTHY_STRING = "Shsgwdyfyfujfjfuhfufhurfmifefcefffdaddress";
 	public static final String MULTILINE_STRING = "123\nMain\nStreet";
@@ -239,7 +241,7 @@ public class GlobalConstants {
 	public static final String LEADINGZERO_PHONENUMBER = "0937394739";
 	public static final String UNDERSCORE_PREFIXED_USERNAME = "_mispuser";
 	public static final String UNDERSCORE_STRING = "misp_autouser";
-	
+
 	public static final String isLogoutButtonDisplayed = "Verify if logout button is display on dashboard screen.";
 	public static final String isElementDisplayed = "Verify if Partners option shown in dashboard screen.";
 	public static final String isLoginPageDisplayed = "Verify if login page is displayed after clicking on logout button in dashboard page.";
@@ -1251,5 +1253,41 @@ public class GlobalConstants {
 	public static final String isPartnerOrganizationPlaceholderDisplayed = "Verify if partner organization placeholder displayed";
 	public static final String isCreatePartnerSubmitButtonDisabled = "Verify if create partner submit button disabled";
 	public static final String isOrganizationNameInfoDisplayed = "Verify if organization name info displayed";
-	
+	public static final String isApproveRejectCloseButtonDisplayed = "Verify if approve reject close button displayed";
+	public static final String isRejectButtonDisplayed = "Verify if reject button displayed";
+	public static final String isApproveButtonDisplayed = "Verify if approve button displayed";
+	public static final String isFtmModelCertifiateLableDisplayed = "Verify if ftm model certificate label displayed";
+	public static final String isFtmChipDetailsLabelUploadDateTimeDisplayed = "Verify if ftm chip details label upload date time displayed";
+	public static final String isFtmChipDetailsLabelExpiryDateTimeDisplayed = "Verify if ftm chip details label expiry date time displayed";
+	public static final String isDownloadButtonViewPageEnabled = "Verify if download button view page enabled";
+	public static final String isFtmListDeactivateOptionIsEnabled = "Verify if ftm list deactivate option is enabled";
+	public static final String isDeactivateFtmPopupTitleDisplayed = "Verify if deactivate ftm popup title displayed";
+	public static final String isDeactivateFtmPopupSubTitleDisplayed = "Verify if deactivate ftm popup subtitle displayed";
+	public static final String isViewFtmChipDetailsTitleDisplayed = "Verify if view ftm chip details title displayed";
+	public static final String isFtmDetailsSideNavIconDisplayed = "Verify if ftm details side nav icon displayed";
+	public static final String isDownloadSuccessMessageDisplayed = "Verify if download success message displayed";
+	public static final String isFtmCertDetailsNotFound = "Verify if ftm cert details not found";
+	public static final String isReUploadPopUpPageSubmitButtonDisabled = "Verify if reupload popup page submit button disabled";
+	public static final String isReUploadPopUpPagePartnerTypeNameDisplayed = "Verify if reupload popup partner type name displayed";
+	public static final String isReUploadPopUpPagePartnerDomainDisplayed = "Verify if reupload popup partner domain displayed";
+	public static final String isReUploadPopUpPageUploadIconDisplayed = "Verify if reupload popup upload icon displayed";
+	public static final String isReUploadPopUpPageCloseButtonDisplayed = "Verify if reupload popup close button displayed";
+	public static final String isReUploadPopUpPageSubmitButtonDisplayed = "Verify if reupload popup submit button displayed";
+	public static final String isReUploadPopUpPagePartnerTypeNameDisabled = "Verify if reupload popup partner type name disabled";
+	public static final String isReUploadPopUpPagePartnerDomainDisabled = "Verify if reupload popup partner domain disabled";
+	public static final String isReUploadPopUpPageFetchingCertMsgDisplayed = "Verify if reupload popup fetching certificate message displayed";
+	public static final String isReUploadCertNameDisplayed = "Verify if reupload certificate name displayed";
+	public static final String isReUploadCertRemoveBtnDisplayed = "Verify if reupload certificate remove button displayed";
+	public static final String isReUploadPopUpPageSubmitButtonEnabled = "Verify if reupload popup submit button enabled";
+	public static final String isReUploadPopUpPageTitleDisplayed = "Verify if reupload popup page title displayed";
+	public static final String isFtmChipDetailsContextUploadDateTimeUpdated = "Verify if ftm chip details context upload date time updated";
+	public static final String isPartnerContactNumberNotAllowErrorDisplayed = "Verify if partner contact number not allow error displayed";
+	public static final String isUsernameMustStartWithLetterErrorDisplayed = "Verify if username must start with letter error displayed";
+	public static final String isCancelConfirmationPopupDisplayed = "Verify if cancel confirmation popup displayed";
+	public static final String isListOfPartnersDisplayed = "Verify if list of partners displayed";
+	public static final String isEmailAddressIsAlreadyRegisteredErrorDisplayed = "Verify if email address is already registered error displayed";
+	public static final String isUsernameAlreadyExistErrorDisplayed = "Verify if username already exist error displayed";
+	public static final String isDefaultMispPartnerDisplayed = "Verify if misp partner displayed";
+	public static final String isCertificateUploadSuccessMessageDisplayed = "Verify if certificate upload success message displayed";
+
 }
