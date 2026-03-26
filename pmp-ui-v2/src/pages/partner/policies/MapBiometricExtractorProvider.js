@@ -179,19 +179,20 @@ const updateRow = (index, field, value) => {
       
       if (response?.data?.response) {
       navigate("/partnermanagement/policies/policies-list");
-      } else {
-        handleServiceErrors(response?.data, setErrorCode, setErrorMsg);
         }
+
+     handleServiceErrors(response?.data, setErrorCode, setErrorMsg);
+     setIsSubmitClicked(false);
     } catch (err) {
       if (err.response?.status && err.response.status !== 401) {
         setErrorMsg(err.toString());
-        } else if (err.response?.status === 401) {
-          } else {
-             setErrorMsg(t("mapBiometricExtractorProvider.saveError"));
-            }
-    }
-    setDataLoaded(true);
-  };
+      } else if (err.response?.status !== 401) {
+        setErrorMsg(t("mapBiometricExtractorProvider.saveError"));
+      }
+      setIsSubmitClicked(false);
+    } finally {
+      setDataLoaded(true);
+    }}
 
   return (
     <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll relative font-inter`}>
@@ -351,7 +352,7 @@ const updateRow = (index, field, value) => {
       )}
       <BlockerPrompt 
           blocker={blocker} 
-          message={t("unsavedChangesPopup.mappingMessage")} 
+          message={t("unsavedChangesPopup.message")} 
       />
     </div>
   );
