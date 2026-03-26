@@ -32,7 +32,7 @@ function BiometricProviderConfigurationList() {
 
   const [errorCode, setErrorCode] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
-  const [dataLoaded, setDataLoaded] = useState(true);
+  const [dataLoaded, setDataLoaded] = useState(false);
   const [tableDataLoaded, setTableDataLoaded] = useState(true);
   const [expandFilter, setExpandFilter] = useState(false);
   const [applyFilter, setApplyFilter] = useState(false);
@@ -85,6 +85,7 @@ function BiometricProviderConfigurationList() {
   const fetchConfigurations = async () => {
     setErrorCode("");
     setErrorMsg("");
+    setActionId(-1);
     fetchData ? setTableDataLoaded(false) : setDataLoaded(false);
     try {
       const queryParams = new URLSearchParams();
