@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../../services/UserProfileService";
@@ -8,10 +8,7 @@ import {
   handleMouseClickForDropdown,
   handleServiceErrors,
   isLangRTL,
-  onClickApplyFilter,
   onPressEnterKey,
-  resetPageNumber,
-  setPageNumberAndPageSize,
 } from "../../../utils/AppUtils";
 import { HttpService } from "../../../services/HttpService";
 import Title from "../../common/Title";
@@ -36,8 +33,6 @@ function BiometricProviderConfigurationList() {
   const [tableDataLoaded, setTableDataLoaded] = useState(true);
   const [expandFilter, setExpandFilter] = useState(false);
   const [applyFilter, setApplyFilter] = useState(false);
-  const [resetPageNo, setResetPageNo] = useState(false);
-  const [fetchData, setFetchData] = useState(false);
   const [isApplyFilterClicked, setIsApplyFilterClicked] = useState(false);
   const [actionId, setActionId] = useState(-1);
   const [order, setOrder] = useState("DESC");
@@ -82,20 +77,21 @@ function BiometricProviderConfigurationList() {
     return upperModality;
   };
 
-  const fetchConfigurations = useCallback(async () => {
+  const fetchConfigurations = async () => {
     setErrorCode("");
     setErrorMsg("");
     setActionId(-1);
-    fetchData ? setTableDataLoaded(false) : setDataLoaded(false);
+    if (!dataLoaded) {
+      setDataLoaded(false);
+    } else {
+      setTableDataLoaded(false);
+    }
     try {
       const queryParams = new URLSearchParams();
       queryParams.append("sortFieldName", sortFieldName);
       queryParams.append("sortType", sortType);
       queryParams.append("pageSize", pageSize);
-
-      const effectivePageNo = resetPageNumber(totalRecords, pageNo, pageSize, resetPageNo);
-      queryParams.append("pageNo", effectivePageNo);
-      setResetPageNo(false);
+      queryParams.append("pageNo", pageNo);
 
       if (filterAttributes.configName) queryParams.append("configName", filterAttributes.configName);
       if (filterAttributes.bioextractorProviderName) queryParams.append("bioextractorProviderName", filterAttributes.bioextractorProviderName);
@@ -136,40 +132,23 @@ function BiometricProviderConfigurationList() {
         setErrorMsg(t("commons.networkError"));
       }
     }
-    fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
-    setFetchData(false);
-  }, [
-    fetchData,
-    filterAttributes,
-    pageNo,
-    pageSize,
-    resetPageNo,
-    sortFieldName,
-    sortType,
-    t,
-    totalRecords,
-  ]);
+    if (!dataLoaded) {
+      setDataLoaded(true);
+    } else {
+      setTableDataLoaded(true);
+    }
+  };
 
   useEffect(() => {
     fetchConfigurations();
-  }, [fetchConfigurations]);
-
-  useEffect(() => {
-    if (isApplyFilterClicked && pageNo === 0) {
-      fetchConfigurations();
-      setIsApplyFilterClicked(false);
-    }
-  }, [fetchConfigurations, isApplyFilterClicked, pageNo]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filterAttributes, pageNo, pageSize, sortFieldName, sortType]);
 
   const onApplyFilter = (updatedFilters) => {
-    onClickApplyFilter(
-      updatedFilters,
-      setApplyFilter,
-      setResetPageNo,
-      setFetchData,
-      setFilterAttributes,
-      setIsApplyFilterClicked
-    );
+    setApplyFilter(true);
+    setFilterAttributes(updatedFilters);
+    setPageNo(0);
+    setIsApplyFilterClicked(true);
   };
 
   const onResetFilters = () => {
@@ -181,14 +160,12 @@ function BiometricProviderConfigurationList() {
     });
     setApplyFilter(false);
     setExpandFilter(false);
-    setResetPageNo(true);
-    setFetchData(true);
+    setPageNo(0);
     setIsApplyFilterClicked(true);
   };
 
   const sortAscOrder = (header) => {
     if (order !== "ASC" || activeAscIcon !== header) {
-      setFetchData(true);
       setSortFieldName(header);
       setSortType("asc");
       setOrder("ASC");
@@ -199,7 +176,6 @@ function BiometricProviderConfigurationList() {
 
   const sortDescOrder = (header) => {
     if (order !== "DESC" || activeDescIcon !== header) {
-      setFetchData(true);
       setSortFieldName(header);
       setSortType("desc");
       setOrder("DESC");
@@ -368,17 +344,12 @@ function BiometricProviderConfigurationList() {
                   selectedRecordsPerPage={pageSize}
                   setSelectedRecordsPerPage={setPageSize}
                   isServerSideFilter={true}
-                  getPaginationValues={(recordsPerPage, pageIndex) =>
-                    setPageNumberAndPageSize(
-                      recordsPerPage,
-                      pageIndex,
-                      pageNo,
-                      setPageNo,
-                      pageSize,
-                      setPageSize,
-                      setFetchData
-                    )
-                  }
+                  getPaginationValues={(recordsPerPage, pageIndex) => {
+                    if (pageNo !== pageIndex || pageSize !== recordsPerPage) {
+                      setPageNo(pageIndex);
+                      setPageSize(recordsPerPage);
+                    }
+                  }}
                   isApplyFilterClicked={isApplyFilterClicked}
                   setIsApplyFilterClicked={setIsApplyFilterClicked}
                 />
