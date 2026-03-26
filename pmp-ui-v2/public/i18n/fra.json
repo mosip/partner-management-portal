@@ -1756,5 +1756,10 @@
         "delete": "Supprimer",
         "validationMsg": "Veuillez mapper tous les champs du fournisseur d'extracteur biométrique avant de continuer.",
         "saveError": "Erreur lors de la configuration du fournisseur d'extracteur biométrique."
+    },
+    "unsavedChangesPopup": {
+        "message": "Vos modifications seront perdues, êtes-vous sûr de vouloir continuer ?",
+        "proceed": "Continuer",
+        "cancel": "Annuler"
     }
 }

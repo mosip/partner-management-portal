@@ -48,25 +48,6 @@ function RequestPolicy() {
 
     // Determine admin path at the top of component to avoid temporal dead zone
     const isAdminPath = location.pathname.includes('admin');
-    useEffect(() => {
-            if (location.state?.restoreRequestPolicy) {
-                setPartnerId(location.state.partnerId || "");
-                setPartnerType(location.state.partnerType || "");
-                setPolicyGroupName(location.state.policyGroupName || "");
-                setPolicyName(location.state.policyName || "");
-                setPartnerComment(location.state.partnerComment || "");
-                setSelectedPolicyId(location.state.policyId || "");
-                setExistingRequestData({
-                    partnerId: location.state.partnerId || "",
-                    partnerType: location.state.partnerType || "",
-                    policyGroupName: location.state.policyGroupName || "",
-                    policyName: location.state.policyName || "",
-                    partnerComment: location.state.partnerComment || "",
-                    policyId: location.state.policyId || ""
-                });
-            }
-        }, [location.state]);
-
     const cancelErrorMsg = () => {
         setErrorMsg("");
     };
@@ -77,12 +58,6 @@ function RequestPolicy() {
                 setIsSubmitClicked(false);
                 return false;
             }
-
-            return (
-                (partnerId !== "" || partnerType !== "" ||
-                    policyName !== "" || partnerComment !== "") &&
-                currentLocation.pathname !== nextLocation.pathname
-            );
         }
     );
     useEffect(() => {

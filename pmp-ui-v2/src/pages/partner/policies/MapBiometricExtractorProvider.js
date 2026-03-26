@@ -9,6 +9,8 @@ import ErrorMessage from "../../common/ErrorMessage";
 import LoadingIcon from "../../common/LoadingIcon";
 import DropdownComponent from "../../common/fields/DropdownComponent";
 import { handleServiceErrors } from "../../../utils/AppUtils";
+import BlockerPrompt from "../../common/BlockerPrompt";
+import { useBlocker } from "react-router-dom";
 
 const HARD_CODED_ACTIVE_CONFIGS = [
   {
@@ -39,12 +41,13 @@ function MapBiometricExtractorProvider() {
   const navigate = useNavigate();
   const { state } = useLocation();
   const hasRequiredState = Boolean(state?.partnerId && state?.policyId);
-  const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
+  const userProfile = getUserProfile();
+  const isLoginLanguageRTL = isLangRTL(userProfile?.locale || "en");
   const [dataLoaded, setDataLoaded] = useState(true);
   const [errorCode, setErrorCode] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [rows, setRows] = useState([{ ...EMPTY_MAPPING_ROW }]);
-
+  const [isSubmitClicked, setIsSubmitClicked] = useState(false);
   const modalityDropdownData = useMemo(() => ([
     { fieldCode: t("bioExtractorConfig.face"), fieldValue: "FACE" },
     { fieldCode: t("bioExtractorConfig.iris"), fieldValue: "IRIS" },
@@ -57,6 +60,24 @@ function MapBiometricExtractorProvider() {
       fieldValue: config.configurationName
     }))
   ), []);
+  
+const shouldBlockNavigation = () => {
+  return rows.some(
+    row => row.biometricModality || row.biometricProviderConfiguration
+  );
+};
+
+const blocker = useBlocker(({ currentLocation, nextLocation }) => {
+  if (isSubmitClicked) {
+    return false; // ✅ allow navigation without popup
+  }
+
+  return (
+    shouldBlockNavigation() &&
+    currentLocation.pathname !== nextLocation.pathname
+  );
+});
+
   useEffect(() => {
     if (!hasRequiredState) {
       navigate("/partnermanagement/policies/request-policy");
@@ -80,17 +101,28 @@ function MapBiometricExtractorProvider() {
     return HARD_CODED_ACTIVE_CONFIGS.find(config => config.configurationName === configurationName);
   };
 
-  const updateRow = (index, field, value) => {
-    setRows(prev => prev.map((row, rowIndex) => {
-      if (rowIndex !== index) {
-        return row;
-      }
-      return {
+const updateRow = (index, field, value) => {
+  setRows(prev =>
+    prev.map((row, rowIndex) => {
+      if (rowIndex !== index) return row;
+
+      const updatedRow = {
         ...row,
         [field]: value
       };
-    }));
-  };
+
+      
+      if (field === "biometricProviderConfiguration") {
+        const selectedConfig = getSelectedConfig(value);
+
+        updatedRow.bioextractorProviderName = selectedConfig?.bioextractorProviderName || "";
+        updatedRow.bioextractorProviderVersion = selectedConfig?.bioextractorProviderVersion || "";
+      }
+
+      return updatedRow;
+    })
+  );
+};
 
   const clearForm = () => {
     setRows([{ ...EMPTY_MAPPING_ROW }]);
@@ -98,7 +130,7 @@ function MapBiometricExtractorProvider() {
     setErrorMsg("");
   };
 
-  
+
 
   const clickOnCancel = () => {
     navigate("/partnermanagement/policies/policies-list");
@@ -112,8 +144,11 @@ function MapBiometricExtractorProvider() {
   };
 
   const clickOnSaveAndProceed = async () => {
+    setIsSubmitClicked(true); 
+
     if (!isFormValid()) {
-      setErrorMsg(t("bioExtractorConfig.mapBiometricExtractorProvider.validationMsg"));
+      setErrorMsg(t("mapBiometricExtractorProvider.validationMsg"));
+      setIsSubmitClicked(false); 
       return;
     }
 
@@ -152,7 +187,7 @@ function MapBiometricExtractorProvider() {
         setErrorMsg(err.toString());
         } else if (err.response?.status === 401) {
           } else {
-             setErrorMsg(t("bioExtractorConfig.mapBiometricExtractorProvider.saveError"));
+             setErrorMsg(t("mapBiometricExtractorProvider.saveError"));
             }
     }
     setDataLoaded(true);
@@ -173,20 +208,9 @@ function MapBiometricExtractorProvider() {
           )}
           <div className="flex-col mt-5">
           <Title
-            title='bioExtractorConfig.mapBiometricExtractorProvider.title'
+            title='mapBiometricExtractorProvider.title'
             subTitle='requestPolicy.requestPolicy'
-            backLink={{
-              pathname: '/partnermanagement/policies/request-policy',
-              state: {
-                restoreRequestPolicy: true,
-                partnerId: policyDetails.partnerId,
-                partnerType: policyDetails.partnerType,
-                policyGroupName: policyDetails.policyGroupName,
-                policyName: policyDetails.policyName,
-                policyId: policyDetails.policyId,
-                partnerComment: policyDetails.partnerComment
-              }
-            }}
+            backLink="/partnermanagement/policies/policies-list"
           />
             <p id='map_bio_extractor_provider_mandatory_mapping_msg' className="mt-3 rounded-md border border-[#F7D18D] bg-[#FFF8EA] px-3 py-2 text-sm text-[#684B00]">
               {t("requestPolicy.mandatoryMappingBanner")}
@@ -325,6 +349,10 @@ function MapBiometricExtractorProvider() {
           </div>
         </>
       )}
+      <BlockerPrompt 
+          blocker={blocker} 
+          message={t("unsavedChangesPopup.mappingMessage")} 
+      />
     </div>
   );
 }

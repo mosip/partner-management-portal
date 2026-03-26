@@ -1752,5 +1752,10 @@
         "delete": "Delete",
         "validationMsg": "Please map all biometric extractor provider fields before proceeding.",
         "saveError": "Error while mapping biometric extractor provider configuration."
+    },
+    "unsavedChangesPopup": {
+        "message": "Your changes will be lost, are you sure you want to proceed?",
+        "proceed": "Proceed",
+        "cancel": "Cancel"
     }
 }
