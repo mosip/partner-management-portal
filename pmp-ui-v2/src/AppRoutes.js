@@ -398,6 +398,10 @@ function AppRoutes() {
         },
         {
           path: 'admin/biometric-provider-configuration/list',
+          loader: () => redirect('/partnermanagement/admin/biometric-provider-configuration-list')
+        },
+        {
+          path: 'admin/biometric-provider-configuration-list',
           element: <GuardedRoute><MainLayout><BiometricProviderConfigurationList /></MainLayout></GuardedRoute>
         },
         {

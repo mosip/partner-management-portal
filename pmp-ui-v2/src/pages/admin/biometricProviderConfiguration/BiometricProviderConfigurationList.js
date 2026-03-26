@@ -8,7 +8,10 @@ import {
   handleMouseClickForDropdown,
   handleServiceErrors,
   isLangRTL,
+  onClickApplyFilter,
   onPressEnterKey,
+  resetPageNumber,
+  setPageNumberAndPageSize,
 } from "../../../utils/AppUtils";
 import { HttpService } from "../../../services/HttpService";
 import Title from "../../common/Title";
@@ -30,21 +33,26 @@ function BiometricProviderConfigurationList() {
   const [errorCode, setErrorCode] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [dataLoaded, setDataLoaded] = useState(true);
+  const [tableDataLoaded, setTableDataLoaded] = useState(true);
   const [expandFilter, setExpandFilter] = useState(false);
   const [applyFilter, setApplyFilter] = useState(false);
+  const [resetPageNo, setResetPageNo] = useState(false);
+  const [fetchData, setFetchData] = useState(false);
+  const [isApplyFilterClicked, setIsApplyFilterClicked] = useState(false);
   const [actionId, setActionId] = useState(-1);
   const [order, setOrder] = useState("DESC");
   const [activeAscIcon, setActiveAscIcon] = useState("");
   const [activeDescIcon, setActiveDescIcon] = useState("createdDateTime");
   const [sortFieldName, setSortFieldName] = useState("createdDateTime");
-  const [sortType, setSortType] = useState("DESC");
+  const [sortType, setSortType] = useState("desc");
   const [configurations, setConfigurations] = useState([]);
-  const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(
+  const [totalRecords, setTotalRecords] = useState(0);
+  const [pageNo, setPageNo] = useState(0);
+  const [pageSize, setPageSize] = useState(
     sessionStorage.getItem("itemsPerPage")
       ? Number(sessionStorage.getItem("itemsPerPage"))
       : 8
   );
-  const [firstIndex, setFirstIndex] = useState(0);
   const [filterAttributes, setFilterAttributes] = useState({
     configName: "",
     bioextractorProviderName: "",
@@ -77,13 +85,27 @@ function BiometricProviderConfigurationList() {
   const fetchConfigurations = async () => {
     setErrorCode("");
     setErrorMsg("");
-    setDataLoaded(false);
+    fetchData ? setTableDataLoaded(false) : setDataLoaded(false);
     try {
-      const response = await HttpService.get(
-        getPartnerManagerUrl("/bio-extractor-configurations", process.env.NODE_ENV)
-      );
+      const queryParams = new URLSearchParams();
+      queryParams.append("sortFieldName", sortFieldName);
+      queryParams.append("sortType", sortType);
+      queryParams.append("pageSize", pageSize);
+
+      const effectivePageNo = resetPageNumber(totalRecords, pageNo, pageSize, resetPageNo);
+      queryParams.append("pageNo", effectivePageNo);
+      setResetPageNo(false);
+
+      if (filterAttributes.configName) queryParams.append("configName", filterAttributes.configName);
+      if (filterAttributes.bioextractorProviderName) queryParams.append("bioextractorProviderName", filterAttributes.bioextractorProviderName);
+      if (filterAttributes.bioextractorProviderVersion) queryParams.append("bioextractorProviderVersion", filterAttributes.bioextractorProviderVersion);
+      if (filterAttributes.bioModality) queryParams.append("bioModality", filterAttributes.bioModality);
+
+      const url = `${getPartnerManagerUrl("/bio-extractor-configurations", process.env.NODE_ENV)}?${queryParams.toString()}`;
+      const response = await HttpService.get(url);
       if (response?.data?.response) {
-        const data = response.data.response.data || response.data.response || [];
+        const responsePayload = response.data.response;
+        const data = responsePayload.data || responsePayload || [];
         const normalizedData = Array.isArray(data)
           ? data.map((item) => ({
               configName: item.configName || "-",
@@ -94,6 +116,11 @@ function BiometricProviderConfigurationList() {
             }))
           : [];
         setConfigurations(normalizedData);
+        setTotalRecords(
+          typeof responsePayload.totalResults === "number"
+            ? responsePayload.totalResults
+            : normalizedData.length
+        );
       } else {
         handleServiceErrors(response?.data, setErrorCode, setErrorMsg);
       }
@@ -108,58 +135,30 @@ function BiometricProviderConfigurationList() {
         setErrorMsg(t("commons.networkError"));
       }
     }
-    setDataLoaded(true);
+    fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
+    setFetchData(false);
   };
 
   useEffect(() => {
     fetchConfigurations();
-  }, []);
+  }, [sortFieldName, sortType, pageNo, pageSize]);
 
-  const sortValue = (item, field) => {
-    if (field === "createdDateTime") {
-      const value = item[field];
-      return value ? new Date(value).getTime() : 0;
+  useEffect(() => {
+    if (isApplyFilterClicked && pageNo === 0) {
+      fetchConfigurations();
+      setIsApplyFilterClicked(false);
     }
-    if (field === "bioModality") {
-      return getModalityLabel(item[field]).toLowerCase();
-    }
-    return String(item[field] || "").toLowerCase();
-  };
-
-  const filteredAndSortedConfigurations = useMemo(() => {
-    const filtered = configurations.filter((item) => {
-      const byConfigName = !filterAttributes.configName ||
-        String(item.configName).toLowerCase().includes(filterAttributes.configName.toLowerCase());
-      const byProviderName = !filterAttributes.bioextractorProviderName ||
-        String(item.bioextractorProviderName).toLowerCase().includes(filterAttributes.bioextractorProviderName.toLowerCase());
-      const byVersion = !filterAttributes.bioextractorProviderVersion ||
-        String(item.bioextractorProviderVersion).toLowerCase().includes(filterAttributes.bioextractorProviderVersion.toLowerCase());
-      const byModality = !filterAttributes.bioModality ||
-        String(item.bioModality).toUpperCase() === String(filterAttributes.bioModality).toUpperCase();
-      return byConfigName && byProviderName && byVersion && byModality;
-    });
-
-    const sorted = [...filtered].sort((a, b) => {
-      const aValue = sortValue(a, sortFieldName);
-      const bValue = sortValue(b, sortFieldName);
-      if (aValue < bValue) return sortType === "ASC" ? -1 : 1;
-      if (aValue > bValue) return sortType === "ASC" ? 1 : -1;
-      return 0;
-    });
-    return sorted;
-  }, [configurations, filterAttributes, sortFieldName, sortType]);
-
-  const currentPageData = useMemo(() => {
-    return filteredAndSortedConfigurations.slice(
-      firstIndex,
-      firstIndex + selectedRecordsPerPage
-    );
-  }, [filteredAndSortedConfigurations, firstIndex, selectedRecordsPerPage]);
+  }, [isApplyFilterClicked]);
 
   const onApplyFilter = (updatedFilters) => {
-    setFilterAttributes(updatedFilters);
-    setApplyFilter(true);
-    setFirstIndex(0);
+    onClickApplyFilter(
+      updatedFilters,
+      setApplyFilter,
+      setResetPageNo,
+      setFetchData,
+      setFilterAttributes,
+      setIsApplyFilterClicked
+    );
   };
 
   const onResetFilters = () => {
@@ -171,13 +170,16 @@ function BiometricProviderConfigurationList() {
     });
     setApplyFilter(false);
     setExpandFilter(false);
-    setFirstIndex(0);
+    setResetPageNo(true);
+    setFetchData(true);
+    setIsApplyFilterClicked(true);
   };
 
   const sortAscOrder = (header) => {
     if (order !== "ASC" || activeAscIcon !== header) {
+      setFetchData(true);
       setSortFieldName(header);
-      setSortType("ASC");
+      setSortType("asc");
       setOrder("ASC");
       setActiveDescIcon("");
       setActiveAscIcon(header);
@@ -186,8 +188,9 @@ function BiometricProviderConfigurationList() {
 
   const sortDescOrder = (header) => {
     if (order !== "DESC" || activeDescIcon !== header) {
+      setFetchData(true);
       setSortFieldName(header);
-      setSortType("DESC");
+      setSortType("desc");
       setOrder("DESC");
       setActiveDescIcon(header);
       setActiveAscIcon("");
@@ -264,7 +267,7 @@ function BiometricProviderConfigurationList() {
                     "bioExtractorConfig.bioExtractorConfigList",
                     "Biometric Extractor Provider Configurations"
                   )}
-                  dataListLength={filteredAndSortedConfigurations.length}
+                  dataListLength={totalRecords}
                   filter={expandFilter}
                   onResetFilter={onResetFilters}
                   setFilter={setExpandFilter}
@@ -273,7 +276,9 @@ function BiometricProviderConfigurationList() {
                 {expandFilter && (
                   <BiometricProviderConfigurationListFilter onApplyFilter={onApplyFilter} />
                 )}
-                {applyFilter && filteredAndSortedConfigurations.length === 0 ? (
+                {!tableDataLoaded ? (
+                  <LoadingIcon />
+                ) : applyFilter && configurations.length === 0 ? (
                   <EmptyList
                     tableHeaders={tableHeaders.map((header) => ({ id: header.id, headerNameKey: header.headerName }))}
                     showCustomButton={false}
@@ -303,7 +308,7 @@ function BiometricProviderConfigurationList() {
                         </tr>
                       </thead>
                       <tbody>
-                        {currentPageData.map((configuration, index) => (
+                        {configurations.map((configuration, index) => (
                           <tr
                             id={`bio_extractor_config_list_item_${index + 1}`}
                             key={`${configuration.configName}-${index}`}
@@ -348,10 +353,23 @@ function BiometricProviderConfigurationList() {
                   </div>
                 )}
                 <Pagination
-                  dataListLength={filteredAndSortedConfigurations.length}
-                  selectedRecordsPerPage={selectedRecordsPerPage}
-                  setSelectedRecordsPerPage={setSelectedRecordsPerPage}
-                  setFirstIndex={setFirstIndex}
+                  dataListLength={totalRecords}
+                  selectedRecordsPerPage={pageSize}
+                  setSelectedRecordsPerPage={setPageSize}
+                  isServerSideFilter={true}
+                  getPaginationValues={(recordsPerPage, pageIndex) =>
+                    setPageNumberAndPageSize(
+                      recordsPerPage,
+                      pageIndex,
+                      pageNo,
+                      setPageNo,
+                      pageSize,
+                      setPageSize,
+                      setFetchData
+                    )
+                  }
+                  isApplyFilterClicked={isApplyFilterClicked}
+                  setIsApplyFilterClicked={setIsApplyFilterClicked}
                 />
               </div>
             )}

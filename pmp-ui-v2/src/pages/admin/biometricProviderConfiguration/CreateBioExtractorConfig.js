@@ -17,7 +17,7 @@ import ErrorMessage from '../../common/ErrorMessage';
 import { HttpService } from '../../../services/HttpService';
 import Confirmation from '../../common/Confirmation';
 
-const LIST_ROUTE = '/partnermanagement/admin/biometric-provider-configuration/list';
+const LIST_ROUTE = '/partnermanagement/admin/biometric-provider-configuration-list';
 
 const MODALITY_OPTIONS = [
     { value: 'FACE', labelKey: 'bioExtractorConfig.face' },
