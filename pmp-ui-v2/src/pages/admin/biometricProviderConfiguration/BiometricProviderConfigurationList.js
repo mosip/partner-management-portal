@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../../services/UserProfileService";
@@ -82,7 +82,7 @@ function BiometricProviderConfigurationList() {
     return upperModality;
   };
 
-  const fetchConfigurations = async () => {
+  const fetchConfigurations = useCallback(async () => {
     setErrorCode("");
     setErrorMsg("");
     setActionId(-1);
@@ -138,18 +138,28 @@ function BiometricProviderConfigurationList() {
     }
     fetchData ? setTableDataLoaded(true) : setDataLoaded(true);
     setFetchData(false);
-  };
+  }, [
+    fetchData,
+    filterAttributes,
+    pageNo,
+    pageSize,
+    resetPageNo,
+    sortFieldName,
+    sortType,
+    t,
+    totalRecords,
+  ]);
 
   useEffect(() => {
     fetchConfigurations();
-  }, [sortFieldName, sortType, pageNo, pageSize]);
+  }, [fetchConfigurations]);
 
   useEffect(() => {
     if (isApplyFilterClicked && pageNo === 0) {
       fetchConfigurations();
       setIsApplyFilterClicked(false);
     }
-  }, [isApplyFilterClicked]);
+  }, [fetchConfigurations, isApplyFilterClicked, pageNo]);
 
   const onApplyFilter = (updatedFilters) => {
     onClickApplyFilter(
@@ -247,7 +257,7 @@ function BiometricProviderConfigurationList() {
                 </button>
               )}
             </div>
-            {!applyFilter && configurations.length === 0 ? (
+            {!applyFilter && configurations.length === 0 && tableDataLoaded ? (
               <div className="bg-[#FCFCFC] w-full mt-3 rounded-lg shadow-lg items-center">
                 <EmptyList
                   tableHeaders={tableHeaders.map((header) => ({ id: header.id, headerNameKey: header.headerName }))}
