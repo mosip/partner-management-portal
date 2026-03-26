@@ -257,19 +257,6 @@ function RequestPolicy() {
             partnerComment
         };
 
-        if (isCredentialPartner && !isAdminPath && existingRequestData?.mappingkey) {
-            const updatedCredentialPartnerRequestData = {
-                ...requestData,
-                mappingkey: existingRequestData.mappingkey
-            };
-            sessionStorage.setItem('credentialPartnerRequestPolicyDraft', JSON.stringify(updatedCredentialPartnerRequestData));
-            navigate('/partnermanagement/policies/map-biometric-extractor-provider', {
-                state: {
-                    requestData: updatedCredentialPartnerRequestData
-                }
-            });
-            return;
-        }
         setIsSubmitClicked(true);
         setErrorCode("");
         setErrorMsg("");

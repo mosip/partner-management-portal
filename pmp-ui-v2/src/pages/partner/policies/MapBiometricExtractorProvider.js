@@ -69,7 +69,7 @@ const shouldBlockNavigation = () => {
 
 const blocker = useBlocker(({ currentLocation, nextLocation }) => {
   if (isSubmitClicked) {
-    return false; // ✅ allow navigation without popup
+    return false; 
   }
 
   return (

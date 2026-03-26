@@ -110,17 +110,6 @@ function AppRoutes() {
         },
         {
           path: 'policies/map-biometric-extractor-provider',
-            loader: () => {
-            const userProfile = getUserProfile();
-            const rolesArray = userProfile.roles
-                .split(',')
-                .map((r) => r.trim())
-                .filter((r) => r.length > 0);
-            if (!rolesArray.includes('CREDENTIAL_PARTNER')) {
-                return redirect('/partnermanagement/runtimeError');
-              }
-              return null;
-            },
           element: <GuardedRoute><MainLayout><MapBiometricExtractorProvider /></MainLayout></GuardedRoute>,
         },
         {
