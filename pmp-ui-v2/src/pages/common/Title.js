@@ -37,18 +37,18 @@ function Title({ title, subTitle, subTitle2, backLink, backLink2, status, versio
                         </div>
                     </div>
                 )}
-                <div className="flex space-x-1">
-                    <button type="button" id='sub_title_home_btn' aria-label={t('commons.home')} onClick={() => moveToHome(navigate)} onKeyDown={(e) => onPressEnterKey(e, () => moveToHome(navigate))} className="font-semibold text-tory-blue text-xs cursor-pointer rounded px-2">
-                        <p> {t('commons.home')} </p>
+                <div className="flex items-center gap-x-0.5">
+                    <button type="button" id='sub_title_home_btn' aria-label={t('commons.home')} onClick={() => moveToHome(navigate)} onKeyDown={(e) => onPressEnterKey(e, () => moveToHome(navigate))} className="font-semibold text-tory-blue text-xs cursor-pointer rounded px-0.5">
+                        <p>{t('commons.home')}</p>
                     </button>
                     {subTitle && (
-                        <button type="button" id='sub_title_btn' aria-label={t(subTitle)} onClick={() => navigate(backLink)} onKeyDown={(e) => onPressEnterKey(e, () => navigate(backLink))} className="font-semibold text-tory-blue text-xs cursor-pointer rounded px-2">
-                            <p> / {t(subTitle)}  </p>
+                        <button type="button" id='sub_title_btn' aria-label={t(subTitle)} onClick={() => navigate(backLink)} onKeyDown={(e) => onPressEnterKey(e, () => navigate(backLink))} className="font-semibold text-tory-blue text-xs cursor-pointer rounded px-0.5">
+                            <p>/ {t(subTitle)}</p>
                         </button>
                     )}
                     {subTitle2 && (
-                        <button type="button" id='sub_title_two_btn' aria-label={t(subTitle2)} onClick={() => navigate(backLink2)} onKeyDown={(e) => onPressEnterKey(e, () => navigate(backLink2))} className="font-semibold text-tory-blue text-xs cursor-pointer rounded px-2">
-                            <p> / {t(subTitle2)}</p>
+                        <button type="button" id='sub_title_two_btn' aria-label={t(subTitle2)} onClick={() => navigate(backLink2)} onKeyDown={(e) => onPressEnterKey(e, () => navigate(backLink2))} className="font-semibold text-tory-blue text-xs cursor-pointer rounded px-0.5">
+                            <p>/ {t(subTitle2)}</p>
                         </button>
                     )}
                 </div>

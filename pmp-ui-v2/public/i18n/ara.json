@@ -104,7 +104,7 @@
         "manualAdjudicationDesc": "عرض، إنشاء مفاتيح API",
         "adminCredentialServicesTitle": "خدمات شريك بيانات الاعتماد والطباعة",        
         "biometricProviderConfiguration": "تهيئة مزود القياسات الحيوية",
-        "biometricProviderConfigurationDesc": "إنشاء وعرض وإلغاء تنشيط تكوينات مزود مستخرج القياسات الحيوية"
+        "biometricProviderConfigurationDesc": "إنشاء وعرض تكوينات مزود مستخرج القياسات الحيوية"
     },
     "credentialServices": {
         "title": "خدمات بيانات الاعتماد",
@@ -1742,6 +1742,7 @@
         "iris": "القزحية",
         "configNameDuplicateError": "اسم التكوين موجود بالفعل",
         "errorInCreateConfig": "حدث خطأ أثناء إنشاء تكوين مزود مستخرج القياسات الحيوية",
-        "createConfigSuccessHeader": "تمت إضافة تكوين مزود مستخرج القياسات الحيوية بنجاح!"
+        "createConfigSuccessHeader": "تمت إضافة تكوين مزود مستخرج القياسات الحيوية بنجاح!",
+        "viewBioExtractorProviderConfig": "عرض تكوين مزود مستخرج القياسات الحيوية"
     }
 }
