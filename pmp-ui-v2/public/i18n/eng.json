@@ -1724,6 +1724,7 @@
     },
     "bioExtractorConfig": {
         "createBioExtractorConfig": "Create Biometric Extractor Provider Configuration",
+        "createConfiguration": "Create Configuration",
         "bioExtractorConfigList": "Biometric Extractor Provider Configurations",
         "configurationName": "Configuration Name",
         "enterConfigurationName": "Enter configuration name",

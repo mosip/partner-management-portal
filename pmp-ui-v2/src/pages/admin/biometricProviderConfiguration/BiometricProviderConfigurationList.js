@@ -228,7 +228,7 @@ function BiometricProviderConfigurationList() {
                   onKeyDown={(e) => onPressEnterKey(e, gotoCreatePage)}
                   className="min-h-10 h-auto whitespace-normal break-words leading-5 text-sm font-semibold text-white px-5 py-1 rounded-md bg-tory-blue max-850:mt-3 max-850:self-start"
                 >
-                  {t("bioExtractorConfig.createBioExtractorConfig", "Create Biometric Extractor Provider Configuration")}
+                  {t("bioExtractorConfig.createConfiguration", "Create Configuration")}
                 </button>
               )}
             </div>
@@ -238,8 +238,8 @@ function BiometricProviderConfigurationList() {
                   tableHeaders={tableHeaders.map((header) => ({ id: header.id, headerNameKey: header.headerName }))}
                   showCustomButton={true}
                   customButtonName={t(
-                    "bioExtractorConfig.createBioExtractorConfig",
-                    "Create Biometric Extractor Provider Configuration"
+                    "bioExtractorConfig.createConfiguration",
+                    "Create Configuration"
                   )}
                   buttonId="bio_extractor_config_create_btn_center"
                   onClickButton={gotoCreatePage}
@@ -271,14 +271,18 @@ function BiometricProviderConfigurationList() {
                   />
                 ) : (
                   <div className="mx-[1.5rem] overflow-x-scroll">
-                    <table className="w-full table-fixed">
+                    <table className="table-fixed">
                       <thead>
                         <tr>
                           {tableHeaders.map((header, index) => (
                             <th
                               key={index}
                               className={`py-4 text-sm font-semibold text-[#6F6E6E] ${
-                                header.id === "action" ? "w-[72px]" : ""
+                                header.id === "action"
+                                  ? "w-[6%] min-w-16"
+                                  : header.id === "createdDateTime"
+                                    ? "w-[14%] min-w-32"
+                                    : "w-[20%] min-w-40"
                               }`}
                             >
                               <div id={`${header.id}_header`} className={`mx-2 flex gap-x-0 items-center ${header.id === "action" ? "justify-center" : isLoginLanguageRTL ? "text-right" : "text-left"}`}>
