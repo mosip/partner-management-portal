@@ -313,7 +313,7 @@ function CreateBioExtractorConfig() {
                                                         id='provider_version_input'
                                                         value={providerVersion}
                                                         onChange={(e) => onChangeProviderVersion(e.target.value)}
-                                                        maxLength={64}
+                                                        maxLength={36}
                                                         className="h-10 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                                                         placeholder={t('bioExtractorConfig.enterProviderVersion')}
                                                         data-placeholder-id="provider_version_placeholder"

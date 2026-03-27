@@ -231,7 +231,7 @@ function BiometricProviderConfigurationList() {
                   onKeyDown={(e) => onPressEnterKey(e, gotoCreatePage)}
                   className="min-h-10 h-auto whitespace-normal break-words leading-5 text-sm font-semibold text-white px-5 py-1 rounded-md bg-tory-blue max-850:mt-3 max-850:self-start"
                 >
-                  {t("bioExtractorConfig.createBioExtractorConfig", "Create Biometric Extractor Provider Configuration")}
+                  {t("bioExtractorConfig.createConfiguration", "Create Configuration")}
                 </button>
               )}
             </div>
@@ -241,8 +241,8 @@ function BiometricProviderConfigurationList() {
                   tableHeaders={tableHeaders.map((header) => ({ id: header.id, headerNameKey: header.headerName }))}
                   showCustomButton={true}
                   customButtonName={t(
-                    "bioExtractorConfig.createBioExtractorConfig",
-                    "Create Biometric Extractor Provider Configuration"
+                    "bioExtractorConfig.createConfiguration",
+                    "Create Configuration"
                   )}
                   buttonId="bio_extractor_config_create_btn_center"
                   onClickButton={gotoCreatePage}
@@ -278,7 +278,16 @@ function BiometricProviderConfigurationList() {
                       <thead>
                         <tr>
                           {tableHeaders.map((header, index) => (
-                            <th key={index} className="py-4 text-sm font-semibold text-[#6F6E6E] w-[13%]">
+                            <th
+                              key={index}
+                              className={`py-4 text-sm font-semibold text-[#6F6E6E] ${
+                                header.id === "action"
+                                  ? "w-[6%] min-w-16"
+                                  : header.id === "createdDateTime"
+                                    ? "w-[14%] min-w-32"
+                                    : "w-[20%] min-w-40"
+                              }`}
+                            >
                               <div id={`${header.id}_header`} className={`mx-2 flex gap-x-0 items-center ${header.id === "action" ? "justify-center" : isLoginLanguageRTL ? "text-right" : "text-left"}`}>
                                 {header.headerName}
                                 {header.id !== "action" && (
@@ -302,6 +311,11 @@ function BiometricProviderConfigurationList() {
                             id={`bio_extractor_config_list_item_${index + 1}`}
                             key={`${configuration.configName}-${index}`}
                             className={`border-t border-[#E5EBFA] cursor-pointer text-[0.8rem] text-[#191919] font-semibold break-words`}
+                            tabIndex={0}
+                            onClick={() => onViewConfiguration(configuration)}
+                            onKeyDown={(e) =>
+                              onPressEnterKey(e, () => onViewConfiguration(configuration))
+                            }
                           >
                             <td className="px-2 py-3">{configuration.configName || "-"}</td>
                             <td className="px-2 py-3">{configuration.bioextractorProviderName || "-"}</td>
@@ -312,19 +326,33 @@ function BiometricProviderConfigurationList() {
                               <div ref={setSubmenuRef(index)}>
                                 <button
                                   id={`bio_extractor_config_list_action_btn_${index + 1}`}
-                                      onClick={() => setActionId(index === actionId ? -1 : index)}
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    setActionId(index === actionId ? -1 : index);
+                                  }}
                                   className={`font-semibold mb-0.5 text-[#191919] cursor-pointer text-center`}
                                 >
                                   ...
                                 </button>
                                 {actionId === index && (
-                                  <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-10 text-right" : "right-11 text-left"}`}>
+                                  <div
+                                    className={`absolute w-[110px] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border ${
+                                      isLoginLanguageRTL
+                                        ? "left-10 text-right"
+                                        : "right-11 text-left"
+                                    }`}
+                                  >
                                     <div
                                       role="button"
                                       className="flex justify-between hover:bg-gray-100"
-                                      onClick={() => onViewConfiguration(configuration)}
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        onViewConfiguration(configuration);
+                                      }}
                                       tabIndex="0"
-                                      onKeyDown={(e) => onPressEnterKey(e, () => onViewConfiguration(configuration))}
+                                      onKeyDown={(e) =>
+                                        onPressEnterKey(e, () => onViewConfiguration(configuration))
+                                      }
                                     >
                                       <p id="bio_extractor_config_list_view_btn" className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>
                                         {t("partnerList.view")}
