@@ -1737,9 +1737,9 @@
         "enterProviderVersion": "Saisissez la version du fournisseur",
         "biometricModality": "Modalité biométrique",
         "selectBiometricModality": "Sélectionnez une modalité biométrique",
-        "face": "Visage",
-        "finger": "Doigt",
-        "iris": "Iris",
+        "face": "visage",
+        "finger": "doigt",
+        "iris": "iris",
         "configNameDuplicateError": "Le nom de configuration existe déjà",
         "errorInCreateConfig": "Une erreur est survenue lors de la création de la configuration du fournisseur d'extraction biométrique",
         "createConfigSuccessHeader": "La configuration du fournisseur d'extraction biométrique a été ajoutée avec succès !"

@@ -11,28 +11,17 @@ import DropdownComponent from "../../common/fields/DropdownComponent";
 import { handleServiceErrors } from "../../../utils/AppUtils";
 import BlockerPrompt from "../../common/BlockerPrompt";
 import { useBlocker } from "react-router-dom";
-
-const HARD_CODED_ACTIVE_CONFIGS = [
-  {
-    configurationName: "BIO_CONFIG_FACE_01",
-    bioextractorProviderName: "Face Extractor Provider",
-    bioextractorProviderVersion: "1.0.0"
-  },
-  {
-    configurationName: "BIO_CONFIG_IRIS_01",
-    bioextractorProviderName: "Iris Extractor Provider",
-    bioextractorProviderVersion: "2.1.0"
-  },
-  {
-    configurationName: "BIO_CONFIG_FINGER_01",
-    bioextractorProviderName: "Finger Extractor Provider",
-    bioextractorProviderVersion: "3.0.2"
-  }
-];
+import DropdownWithSearchComponent from "../../common/fields/DropdownWithSearchComponent";
 
 const EMPTY_MAPPING_ROW = {
   biometricModality: "",
   biometricProviderConfiguration: ""
+};
+
+const biometricAttributeMap = {   
+  FACE: "photo",
+  IRIS: "iris",
+  FINGER: "fingerprint"
 };
 
 
@@ -40,7 +29,7 @@ function MapBiometricExtractorProvider() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { state } = useLocation();
-  const hasRequiredState = Boolean(state?.partnerId && state?.policyId);
+  const hasRequiredState = Boolean(state?.partnerId && state?.mappingKey);
   const userProfile = getUserProfile();
   const isLoginLanguageRTL = isLangRTL(userProfile?.locale || "en");
   const [dataLoaded, setDataLoaded] = useState(true);
@@ -48,19 +37,30 @@ function MapBiometricExtractorProvider() {
   const [errorMsg, setErrorMsg] = useState("");
   const [rows, setRows] = useState([{ ...EMPTY_MAPPING_ROW }]);
   const [isSubmitClicked, setIsSubmitClicked] = useState(false);
+  const [activeConfigs, setActiveConfigs] = useState({});
   const modalityDropdownData = useMemo(() => ([
     { fieldCode: t("bioExtractorConfig.face"), fieldValue: "FACE" },
     { fieldCode: t("bioExtractorConfig.iris"), fieldValue: "IRIS" },
     { fieldCode: t("bioExtractorConfig.finger"), fieldValue: "FINGER" }
   ]), [t]);
 
-  const biometricConfigDropdownData = useMemo(() => (
-    HARD_CODED_ACTIVE_CONFIGS.map(config => ({
-      fieldCode: config.configurationName,
-      fieldValue: config.configurationName
-    }))
-  ), []);
-  
+  const getAttributeName = (modality) => {
+  return biometricAttributeMap[(modality || "").toUpperCase()] || "";
+};
+
+const getConfigDropdownByModality = (index, selectedModality) => {
+  const configs = activeConfigs[index] || [];
+
+  return configs
+    .filter(cfg =>
+      !selectedModality ||
+      (cfg.biometricModality || "").toUpperCase() === (selectedModality || "").toUpperCase()
+    )
+    .map(cfg => ({
+      fieldCode: cfg.configurationName,
+      fieldValue: cfg.configurationName
+    }));
+};
 const shouldBlockNavigation = () => {
   return rows.some(
     row => row.biometricModality || row.biometricProviderConfiguration
@@ -83,6 +83,52 @@ const blocker = useBlocker(({ currentLocation, nextLocation }) => {
       navigate("/partnermanagement/policies/request-policy");
       }
       }, [hasRequiredState, navigate]);
+      const fetchBioExtractorConfigs = async (index, modality) => {
+        try {
+          setDataLoaded(false);
+
+          const response = await HttpService.get(
+            getPartnerManagerUrl(
+              `/bio-extractor-configurations?bioModality=${modality.toLowerCase()}`,
+              process.env.NODE_ENV
+            )
+          );
+
+          console.log("API RESPONSE:", response?.data);
+
+          if (response?.data?.response) {
+            const configs = response?.data?.response?.data || [];
+
+          const formattedConfigs = configs.map(item => ({
+            configurationName: item.configName,
+            bioextractorProviderName:
+              item.bioextractorProviderName ||
+              item.extractorProviderName ||
+              item.provider ||
+              "",
+            bioextractorProviderVersion:
+              item.bioextractorProviderVersion ||
+              item.extractorProviderVersion ||
+              item.version ||
+              "",
+            biometricModality: item.bioModality || ""
+          }));
+
+            setActiveConfigs(prev => ({
+              ...prev,
+              [index]: formattedConfigs
+            }));
+          } else {
+            setActiveConfigs([]);
+          }
+
+        } catch (err) {
+          console.error("API ERROR:", err);
+          setActiveConfigs([]);
+        } finally {
+          setDataLoaded(true);
+        }
+      };
       if (!hasRequiredState) {
          return null;
          }
@@ -93,13 +139,19 @@ const blocker = useBlocker(({ currentLocation, nextLocation }) => {
     policyGroupName: state?.policyGroupName || "",
     policyName: state?.policyName || "",
     policyId: state?.policyId || "",
+    mappingKey: state?.mappingKey || "",
     requestPayload: state?.requestPayload || null,
     partnerComment: state?.partnerComment || ""
   };
 
-  const getSelectedConfig = (configurationName) => {
-    return HARD_CODED_ACTIVE_CONFIGS.find(config => config.configurationName === configurationName);
-  };
+  const getSelectedConfig = (index, configurationName) => {
+  const configs = activeConfigs[index] || [];
+
+  return configs.find(
+    config => config.configurationName === configurationName
+  );
+};
+ 
 
 const updateRow = (index, field, value) => {
   setRows(prev =>
@@ -111,12 +163,22 @@ const updateRow = (index, field, value) => {
         [field]: value
       };
 
-      
-      if (field === "biometricProviderConfiguration") {
-        const selectedConfig = getSelectedConfig(value);
+if (field === "biometricModality") {
+  updatedRow.biometricProviderConfiguration = "";
 
-        updatedRow.bioextractorProviderName = selectedConfig?.bioextractorProviderName || "";
-        updatedRow.bioextractorProviderVersion = selectedConfig?.bioextractorProviderVersion || "";
+  if (value) {
+    fetchBioExtractorConfigs(index, value.toLowerCase());
+  } else {
+    setActiveConfigs([]);
+  }
+}
+
+      if (field === "biometricProviderConfiguration") {
+        const selectedConfig = getSelectedConfig(index, value);
+        updatedRow.bioextractorProviderName =
+          selectedConfig?.bioextractorProviderName || "";
+        updatedRow.bioextractorProviderVersion =
+          selectedConfig?.bioextractorProviderVersion || "";
       }
 
       return updatedRow;
@@ -137,10 +199,15 @@ const updateRow = (index, field, value) => {
   };
 
   const isFormValid = () => {
-    if (!policyDetails.partnerId || !policyDetails.policyId) {
-      return false;
-    }
-    return rows.every(row => row.biometricModality && row.biometricProviderConfiguration);
+    if (!policyDetails.partnerId || !policyDetails.mappingKey) return false;
+
+    return rows.every((row, index) => {
+      if (!row.biometricModality || !row.biometricProviderConfiguration) return false;
+
+      const selected = getSelectedConfig(index, row.biometricProviderConfiguration) || {};
+
+      return Boolean((selected.bioextractorProviderName || "").trim());
+    });
   };
 
   const clickOnSaveAndProceed = async () => {
@@ -158,18 +225,17 @@ const updateRow = (index, field, value) => {
 
     try {
       const request = createRequest({
-        extractors: rows.map(row => {
-          const selectedConfig = getSelectedConfig(row.biometricProviderConfiguration);
-          return {
-            biometric: row.biometricModality,              
-            attributeName: `${row.biometricModality}_${row.biometricProviderConfiguration}`,         
-            configurationName: row.biometricProviderConfiguration,
-            extractor: {
-              provider: selectedConfig?.bioextractorProviderName,
-              version: selectedConfig?.bioextractorProviderVersion
-            }
-          };
-        })
+       extractors: rows.map((row, index) => {
+  const selectedConfig = getSelectedConfig(index, row.biometricProviderConfiguration) || {};
+  return {
+    biometric: (row.biometricModality || "").toLowerCase(),
+    attributeName: getAttributeName(row.biometricModality),
+    extractor: {
+      provider: selectedConfig.bioextractorProviderName,
+      version: selectedConfig.bioextractorProviderVersion
+    }
+  };
+})
       });
 
       const response = await HttpService.post(
@@ -250,7 +316,7 @@ const updateRow = (index, field, value) => {
                 <div className="mt-5 border border-[#D5D8E3] rounded-md p-4">
                   <p className="text-sm font-semibold text-dark-blue mb-3">{t('mapBiometricExtractorProvider.mappingSectionTitle')}</p>
                   {rows.map((row, index) => {
-                    const selectedConfig = getSelectedConfig(row.biometricProviderConfiguration);
+                    const selectedConfig = getSelectedConfig(index, row.biometricProviderConfiguration) || {};
                     const styles = {
                           outerDiv: '!ml-0 !mb-0',
                           dropdownLabel: '!text-sm !mb-1',
@@ -265,7 +331,7 @@ const updateRow = (index, field, value) => {
                               fieldName='biometricModality'
                               dropdownDataList={modalityDropdownData}
                               onDropDownChangeEvent={(fieldName, selectedValue) => updateRow(index, fieldName, selectedValue)}
-                              fieldNameKey='mapBiometricExtractorProvider.biometricModality'
+                              fieldNameKey='mapBiometricExtractorProvider.biometricModality*'
                               placeHolderKey='mapBiometricExtractorProvider.selectBiometricModality'
                               selectedDropdownValue={row.biometricModality}
                               styleSet={styles}
@@ -275,14 +341,19 @@ const updateRow = (index, field, value) => {
                           </div>
                           <div className="flex flex-col w-full">
                             <div className="w-full">
-                            <DropdownComponent
+                            <DropdownWithSearchComponent
                               fieldName='biometricProviderConfiguration'
-                              dropdownDataList={biometricConfigDropdownData}
-                              onDropDownChangeEvent={(fieldName, selectedValue) => updateRow(index, fieldName, selectedValue)}
-                              fieldNameKey='mapBiometricExtractorProvider.biometricProviderConfiguration'
+                              dropdownDataList={
+                                getConfigDropdownByModality(index, row.biometricModality)
+                              }
+                              onDropDownChangeEvent={(fieldName, selectedValue) =>
+                                updateRow(index, fieldName, selectedValue)
+                              }
+                              fieldNameKey='mapBiometricExtractorProvider.biometricProviderConfiguration*'
                               placeHolderKey='mapBiometricExtractorProvider.selectBiometricProviderConfiguration'
                               selectedDropdownValue={row.biometricProviderConfiguration}
-                              styleSet={styles} 
+                              searchKey='commons.search'
+                              styleSet={styles}
                               id={`map_bio_extractor_provider_config_${index + 1}`}
                             />
                           </div>
@@ -307,18 +378,43 @@ const updateRow = (index, field, value) => {
                   <button
                     id={`map_bio_extractor_provider_add_more_btn_${index}`}
                     type='button'
-                    className='text-tory-blue text-sm font-semibold'
-                    onClick={() => setRows(prev => [...prev, { ...EMPTY_MAPPING_ROW }])}
+                    className={`text-tory-blue text-sm font-semibold ${
+                      rows.length >= 3 ? "opacity-50 cursor-not-allowed" : ""
+                    }`}
+                    disabled={rows.length >= 3}
+                    onClick={() => {
+                      if (rows.length < 3) {
+                        setRows(prev => [...prev, { ...EMPTY_MAPPING_ROW }]);
+                      }
+                    }}
                   >
                     + {t('mapBiometricExtractorProvider.addMore')}
-                  </button>                  
+                  </button>                 
                 
-                        {index > 0 && (
+                        {rows.length > 1 && (
                           <div className="ml-auto">
                             <button
                               type="button"
                               className="flex items-center gap-1 text-[#1447B2] text-sm font-medium"
-                              onClick={() => setRows(prev => prev.filter((_, i) => i !== index))}
+                              onClick={() => {
+                                setRows(prev => prev.filter((_, i) => i !== index));
+
+                                setActiveConfigs(prev => {
+                                  const updated = {};
+
+                                  Object.keys(prev).forEach(key => {
+                                    const numKey = Number(key);
+
+                                    if (numKey < index) {
+                                      updated[numKey] = prev[numKey];
+                                    } else if (numKey > index) {
+                                      updated[numKey - 1] = prev[numKey]; 
+                                    }
+                                  });
+
+                                  return updated;
+                                });
+                              }}
                             >
                               <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                                 <path strokeLinecap="round" strokeLinejoin="round"

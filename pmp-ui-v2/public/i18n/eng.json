@@ -1733,9 +1733,9 @@
         "enterProviderVersion": "Enter provider version",
         "biometricModality": "Biometric Modality",
         "selectBiometricModality": "Select biometric modality",
-        "face": "Face",
-        "finger": "Finger",
-        "iris": "Iris",
+        "face": "face",
+        "finger": "finger",
+        "iris": "iris",
         "configNameDuplicateError": "Configuration name already exists",
         "errorInCreateConfig": "An error occurred while creating the biometric extractor provider configuration",
         "createConfigSuccessHeader": "Biometric Extractor Provider Configuration is added successfully!"
