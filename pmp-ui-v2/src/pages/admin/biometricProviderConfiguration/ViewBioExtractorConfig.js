@@ -21,7 +21,6 @@ function ViewBioExtractorConfig() {
   const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
   const [unexpectedError, setUnexpectedError] = useState(false);
   const [configDetails, setConfigDetails] = useState({});
-  const [errorCode, setErrorCode] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [dataLoaded, setDataLoaded] = useState(false);
 
@@ -45,7 +44,6 @@ function ViewBioExtractorConfig() {
     bioextractorProviderName: item?.bioextractorProviderName || "-",
     bioextractorProviderVersion: item?.bioextractorProviderVersion || "-",
     bioModality: item?.bioModality || "-",
-    status: item?.status || "-",
     createdDateTime: item?.createdDateTime || item?.createdDate || null,
   });
 
@@ -70,10 +68,7 @@ function ViewBioExtractorConfig() {
     const fetchData = async () => {
       try {
         setDataLoaded(false);
-        const configurationId =
-          selectedConfig?.bioExtractorConfigurationId ||
-          selectedConfig?.bio_extractor_configuration_id ||
-          selectedConfig?.id;
+        const configurationId = normalizeConfigData(selectedConfig).bioExtractorConfigurationId;
 
         if (!configurationId) {
           setDataLoaded(true);
@@ -121,7 +116,7 @@ function ViewBioExtractorConfig() {
           {errorMsg && (
             <ErrorMessage
               id="view_bio_extractor_config_error_msg"
-              errorCode={errorCode}
+              errorCode=""
               errorMessage={errorMsg}
               clickOnCancel={cancelErrorMsg}
             />
