@@ -105,6 +105,8 @@ function BiometricProviderConfigurationList() {
         const data = responsePayload.data || responsePayload || [];
         const normalizedData = Array.isArray(data)
           ? data.map((item) => ({
+              bioExtractorConfigurationId:
+                item.bioExtractorConfigurationId || item.bio_extractor_configuration_id || item.id || null,
               configName: item.configName || "-",
               bioextractorProviderName: item.bioextractorProviderName || "-",
               bioextractorProviderVersion: item.bioextractorProviderVersion || "-",
@@ -195,6 +197,7 @@ function BiometricProviderConfigurationList() {
   const onViewConfiguration = (configuration) => {
     sessionStorage.setItem("selectedBioExtractorConfig", JSON.stringify(configuration));
     setActionId(-1);
+    navigate("/partnermanagement/admin/biometric-provider-configuration/view");
   };
 
   const setSubmenuRef = (index) => (el) => {
@@ -218,7 +221,6 @@ function BiometricProviderConfigurationList() {
             <div className="flex justify-between mb-5 max-470:flex-col">
               <Title
                 title="dashboard.biometricProviderConfiguration"
-                subTitle="dashboard.biometricProviderConfigurationDesc"
                 backLink="/partnermanagement"
               />
               {configurations.length > 0 && (

@@ -107,7 +107,7 @@
         "manualAdjudicationDesc": "View, Generate API Keys",
         "adminCredentialServicesTitle": "Credential/Print Partner Services",
         "biometricProviderConfiguration": "Biometric Provider Configuration",
-        "biometricProviderConfigurationDesc": "Create, view & deactivate the biometric extractor provider configurations"
+        "biometricProviderConfigurationDesc": "Create, view the biometric extractor provider configurations"
     },
     "credentialServices": {
         "title": "Credential Services",
@@ -1739,6 +1739,8 @@
         "iris": "Iris",
         "configNameDuplicateError": "Configuration name already exists",
         "errorInCreateConfig": "An error occurred while creating the biometric extractor provider configuration",
-        "createConfigSuccessHeader": "Biometric Extractor Provider Configuration is added successfully!"
+        "createConfigSuccessHeader": "Biometric Extractor Provider Configuration is added successfully!",
+        "viewBioExtractorConfigDetails": "View Biometric Extractor Configuration Details",
+        "viewBioExtractorProviderConfig": "View Biometric Extractor Provider Configuration"
     }
 }

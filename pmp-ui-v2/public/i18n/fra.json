@@ -105,7 +105,7 @@
         "manualAdjudicationDesc": "Afficher, Générer des clés API",
         "adminCredentialServicesTitle": "Services Credential/Print Partner",
         "biometricProviderConfiguration": "Configuration du fournisseur biométrique",
-        "biometricProviderConfigurationDesc": "Créer, afficher et désactiver les configurations du fournisseur d’extracteur biométrique"
+        "biometricProviderConfigurationDesc": "Créer, afficher les configurations du fournisseur d’extracteur biométrique"
     },
     "credentialServices": {
         "title": "Services d'identification",
@@ -1743,6 +1743,8 @@
         "iris": "Iris",
         "configNameDuplicateError": "Le nom de configuration existe déjà",
         "errorInCreateConfig": "Une erreur est survenue lors de la création de la configuration du fournisseur d'extraction biométrique",
-        "createConfigSuccessHeader": "La configuration du fournisseur d'extraction biométrique a été ajoutée avec succès !"
+        "createConfigSuccessHeader": "La configuration du fournisseur d'extraction biométrique a été ajoutée avec succès !",
+        "viewBioExtractorConfigDetails": "Afficher les détails de la configuration de l'extracteur biométrique",
+        "viewBioExtractorProviderConfig": "Afficher la configuration du fournisseur d'extracteur biométrique"
     }
 }
