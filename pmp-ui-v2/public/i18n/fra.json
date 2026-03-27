@@ -1742,7 +1742,9 @@
         "iris": "iris",
         "configNameDuplicateError": "Le nom de configuration existe déjà",
         "errorInCreateConfig": "Une erreur est survenue lors de la création de la configuration du fournisseur d'extraction biométrique",
-        "createConfigSuccessHeader": "La configuration du fournisseur d'extraction biométrique a été ajoutée avec succès !"
+        "createConfigSuccessHeader": "La configuration du fournisseur d'extraction biométrique a été ajoutée avec succès !",
+        "viewBioExtractorConfigDetails": "Afficher les détails de la configuration de l'extracteur biométrique",
+        "viewBioExtractorProviderConfig": "Afficher la configuration du fournisseur d'extracteur biométrique"
         },
     "mapBiometricExtractorProvider": {
         "title": "Associer le fournisseur d'extracteur biométrique",

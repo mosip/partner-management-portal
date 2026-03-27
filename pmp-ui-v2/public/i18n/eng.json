@@ -1738,7 +1738,9 @@
         "iris": "iris",
         "configNameDuplicateError": "Configuration name already exists",
         "errorInCreateConfig": "An error occurred while creating the biometric extractor provider configuration",
-        "createConfigSuccessHeader": "Biometric Extractor Provider Configuration is added successfully!"
+        "createConfigSuccessHeader": "Biometric Extractor Provider Configuration is added successfully!",
+        "viewBioExtractorConfigDetails": "View Biometric Extractor Configuration Details",
+        "viewBioExtractorProviderConfig": "View Biometric Extractor Provider Configuration"
         },
     "mapBiometricExtractorProvider": {
         "title": "Map Biometric Extractor Provider",
