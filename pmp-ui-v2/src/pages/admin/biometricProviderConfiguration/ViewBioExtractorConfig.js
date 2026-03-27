@@ -31,7 +31,10 @@ function ViewBioExtractorConfig() {
   const getModalityLabel = (modality) => {
     if (!modality) return "-";
     const upperModality = String(modality).toUpperCase();
-    return upperModality.charAt(0) + upperModality.slice(1).toLowerCase();
+    if (upperModality === "FACE") return t("bioExtractorConfig.face");
+    if (upperModality === "IRIS") return t("bioExtractorConfig.iris");
+    if (upperModality === "FINGER") return t("bioExtractorConfig.finger");
+    return upperModality;
   };
 
   const normalizeConfigData = (item) => ({
