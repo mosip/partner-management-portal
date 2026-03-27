@@ -87,7 +87,7 @@ function BiometricProviderConfigurationListFilter({ onApplyFilter }) {
         placeHolderKey="bioExtractorConfig.enterProviderVersion"
         styleSet={getFilterTextFieldStyle()}
         id="bio_extractor_provider_version_filter"
-        maxLength={64}
+        maxLength={36}
         inputError={invalidProviderVersion}
       />
       <DropdownComponent

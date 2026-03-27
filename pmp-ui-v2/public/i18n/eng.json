@@ -106,7 +106,7 @@
         "manualAdjudicationDesc": "View, Generate API Keys",
         "adminCredentialServicesTitle": "Credential/Print Partner Services",
         "biometricProviderConfiguration": "Biometric Provider Configuration",
-        "biometricProviderConfigurationDesc": "Create, view & deactivate the biometric extractor provider configurations"
+        "biometricProviderConfigurationDesc": "Create, view the biometric extractor provider configurations"
     },
     "credentialServices": {
         "title": "Credential Services",
@@ -1724,6 +1724,7 @@
     },
     "bioExtractorConfig": {
         "createBioExtractorConfig": "Create Biometric Extractor Provider Configuration",
+        "createConfiguration": "Create Configuration",
         "bioExtractorConfigList": "Biometric Extractor Provider Configurations",
         "configurationName": "Configuration Name",
         "enterConfigurationName": "Enter configuration name",
