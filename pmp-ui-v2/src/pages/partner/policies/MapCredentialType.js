@@ -119,14 +119,13 @@ function MapCredentialType() {
       setShowConfirmation(true);
     } else {
       handleServiceErrors(response?.data, setErrorCode, setErrorMsg);
-      if (!response?.data?.errors) {
+      if(!(response?.data?.errors?.length > 0)) {
         setErrorMsg(t("mapCredentialType.saveError"));
       }
-   }
-
+    }
     } catch (err) {
       handleServiceErrors(err?.response?.data, setErrorCode, setErrorMsg);
-      if (!err?.response?.data?.errors) {
+       if (!(err?.response?.data?.errors?.length > 0)) {
         setErrorMsg(t("mapCredentialType.saveError"));
       }
     } finally {
@@ -134,7 +133,6 @@ function MapCredentialType() {
       setIsSubmitClicked(false);
     }
   };
-  
 
   const confirmationData = {
     title: "requestPolicy.requestPolicy",
