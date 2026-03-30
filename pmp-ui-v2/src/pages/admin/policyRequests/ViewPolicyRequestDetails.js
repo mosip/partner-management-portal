@@ -135,7 +135,8 @@ function ViewPolicyRequestDetails() {
                         null;
 
                     if (Array.isArray(types)) {
-                        setCredentialType(types.filter(Boolean).join(', '));
+                        const first = types.find((x) => x !== null && x !== undefined && String(x).trim() !== '');
+                        setCredentialType(first ? String(first) : '');
                     } else {
                         setCredentialType(value ? String(value) : '');
                     }

@@ -1222,7 +1222,7 @@
     },
     "partnerPolicyRequestApproveRejectPopup": {
         "header": "Do you want to Approve/Reject the Policy?",
-        "description": "Please review the policy details carefully before taking appropriate action.",
+        "description": "Please review the policy details carefully before making your choice.",
         "bioModality": "Biometric Modality",
         "bioModalityLine1": "Biometric",
         "bioModalityLine2": "Modality",

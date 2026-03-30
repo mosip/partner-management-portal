@@ -1226,7 +1226,7 @@
     },
     "partnerPolicyRequestApproveRejectPopup": {
         "header": "هل ترغب في الموافقة على/رفض السياسة؟",
-        "description": "يرجى مراجعة تفاصيل السياسة بعناية قبل اتخاذ الإجراء المناسب.",
+        "description": "يرجى مراجعة تفاصيل السياسة بعناية قبل اتخاذ قرارك.",
         "bioModality": "النمط البيومتري",
         "bioModalityLine1": "النمط",
         "bioModalityLine2": "البيومتري",

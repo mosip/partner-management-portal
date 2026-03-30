@@ -138,7 +138,8 @@ function PartnerPolicyApproveRejectPopup({
             null;
 
           if (Array.isArray(types)) {
-            setCredentialType(types.filter(Boolean).join(', '));
+            const first = types.find((x) => x !== null && x !== undefined && String(x).trim() !== '');
+            setCredentialType(first ? String(first) : '');
           } else {
             setCredentialType(value ? String(value) : '');
           }
@@ -250,13 +251,17 @@ function PartnerPolicyApproveRejectPopup({
                     customStyle={customStyle}
                   />
                 )}
-                <div className="flex justify-between px-[1rem] my-4 w-full">
-                  <div className="flex-col space-y-2 break-words w-[85%]">
-                    <p className="text-sm font-bold">{title}</p>
+                <div className="relative px-[1rem] pt-4 pb-2 w-full">
+                  <div className="flex-col space-y-1 break-words pr-12 text-left">
+                    <p className="text-sm font-bold text-[#191919]">{title}</p>
                     {subtitle && <p className="text-[#A5A5A5] text-xs">{subtitle}</p>}
                   </div>
-                  <button aria-label={t('commons.close')} onClick={closingPopUp} className="h-6 hover:cursor-pointer">
-                    <img src={close_icon} alt="" />
+                  <button
+                    aria-label={t('commons.close')}
+                    onClick={closingPopUp}
+                    className="h-8 w-8 rounded-full bg-[#F2F4F8] flex items-center justify-center hover:cursor-pointer absolute top-3 right-4"
+                  >
+                    <img src={close_icon} alt="" className="h-4 w-4" />
                   </button>
                 </div>
 
@@ -283,12 +288,9 @@ function PartnerPolicyApproveRejectPopup({
                         </div>
                       </div>
 
-                      <p className={`mt-6 text-sm font-semibold text-[#191919] ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>
-                        {t('partnerPolicyRequestApproveRejectPopup.bioExtractorProviderMapping')}
-                      </p>
-
-                      <div className="mt-4 overflow-x-auto">
-                        <table className="min-w-full table-fixed border border-[#E5EBFA] rounded-md overflow-hidden">
+                      <div className="mt-6 border border-[#E5EBFA] rounded-md overflow-hidden bg-white">
+                        <div className="overflow-x-auto">
+                        <table className="min-w-full table-fixed">
                           <thead className="bg-[#F7F9FF] text-[#6F6E6E] text-xs">
                             <tr>
                               <th className={`w-1/4 px-3 py-2 font-semibold whitespace-normal leading-tight align-top ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>
@@ -347,10 +349,10 @@ function PartnerPolicyApproveRejectPopup({
                               })}
                           </tbody>
                         </table>
+                        </div>
                       </div>
 
-                      <hr className="h-px w-full bg-gray-200 border-0 my-6" />
-
+                      <div className="mt-6">
                       <p className={`text-[0.7rem] text-[#6F6E6E] font-semibold ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>
                         {t('partnerPolicyRequestApproveRejectPopup.credentialType')}
                       </p>
@@ -367,6 +369,7 @@ function PartnerPolicyApproveRejectPopup({
                           {credentialType || t('commons.notAvailable', 'Not available')}
                         </p>
                       )}
+                      </div>
                     </div>
                   </div>
                 )}
