@@ -7,7 +7,7 @@ import Title from '../../common/Title';
 import adminImage from "../../../svg/admin.png";
 import partnerImage from "../../../svg/partner.png";
 import dotImg from "../../../svg/dot.svg";
-import ApproveRejectPopup from '../../common/ApproveRejectPopup';
+import PartnerPolicyApproveRejectPopup from './PartnerPolicyApproveRejectPopup';
 
 function ViewPolicyRequestDetails() {
     const { t } = useTranslation();
@@ -79,7 +79,7 @@ function ViewPolicyRequestDetails() {
                                     </button>
                                 </div>
                                 {showApproveRejectPopup &&
-                                    <ApproveRejectPopup
+                                    <PartnerPolicyApproveRejectPopup
                                         popupData={{ ...policyRequestDetails, isPartnerPolicyRequest: true }}
                                         closePopUp={() => setShowApproveRejectPopup(false)}
                                         approveRejectResponse={(responseData, status) => onClickApproveReject(responseData, status)}
