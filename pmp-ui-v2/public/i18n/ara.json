@@ -1745,5 +1745,23 @@
         "errorInCreateConfig": "حدث خطأ أثناء إنشاء تكوين مزود مستخرج القياسات الحيوية",
         "createConfigSuccessHeader": "تمت إضافة تكوين مزود مستخرج القياسات الحيوية بنجاح!",
         "viewBioExtractorProviderConfig": "عرض تكوين مزود مستخرج القياسات الحيوية"
+        },
+    "mapBiometricExtractorProvider": {
+        "title": "ربط مزود مستخرج القياسات الحيوية",
+        "mappingSectionTitle": "إعداد مزود مستخرج القياسات الحيوية",
+        "biometricModality": "نوع القياسات الحيوية",
+        "selectBiometricModality": "اختر نوع القياسات الحيوية",
+        "biometricProviderConfiguration": "إعداد مزود القياسات الحيوية",
+        "selectBiometricProviderConfiguration": "اختر مزود القياسات الحيوية",
+        "autoPopulatedValue": "يتم التعبئة تلقائيًا بناءً على الإعداد المحدد",
+        "addMore": "إضافة",
+        "delete": "حذف",
+        "validationMsg": "يرجى ربط جميع حقول مزود مستخرج القياسات الحيوية قبل المتابعة.",
+        "saveError": "حدث خطأ أثناء ربط إعداد مزود مستخرج القياسات الحيوية."
+    },
+    "unsavedChangesPopup": {
+        "message": "سيتم فقدان التغييرات الخاصة بك، هل أنت متأكد أنك تريد المتابعة؟",
+        "proceed": "متابعة",
+        "cancel": "إلغاء"
     }
 }

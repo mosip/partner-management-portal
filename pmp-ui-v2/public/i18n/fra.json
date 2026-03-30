@@ -1738,13 +1738,31 @@
         "enterProviderVersion": "Saisissez la version du fournisseur",
         "biometricModality": "Modalité biométrique",
         "selectBiometricModality": "Sélectionnez une modalité biométrique",
-        "face": "Visage",
-        "finger": "Doigt",
-        "iris": "Iris",
+        "face": "visage",
+        "finger": "doigt",
+        "iris": "iris",
         "configNameDuplicateError": "Le nom de configuration existe déjà",
         "errorInCreateConfig": "Une erreur est survenue lors de la création de la configuration du fournisseur d'extraction biométrique",
         "createConfigSuccessHeader": "La configuration du fournisseur d'extraction biométrique a été ajoutée avec succès !",
         "viewBioExtractorConfigDetails": "Afficher les détails de la configuration de l'extracteur biométrique",
         "viewBioExtractorProviderConfig": "Afficher la configuration du fournisseur d'extracteur biométrique"
+        },
+    "mapBiometricExtractorProvider": {
+        "title": "Associer le fournisseur d'extracteur biométrique",
+        "mappingSectionTitle": "Configuration du fournisseur d'extracteur biométrique",
+        "biometricModality": "Modalité biométrique",
+        "selectBiometricModality": "Sélectionnez la modalité biométrique",
+        "biometricProviderConfiguration": "Configuration du fournisseur biométrique",
+        "selectBiometricProviderConfiguration": "Sélectionnez un fournisseur biométrique",
+        "autoPopulatedValue": "Rempli automatiquement en fonction de la configuration sélectionnée",
+        "addMore": "Ajouter",
+        "delete": "Supprimer",
+        "validationMsg": "Veuillez mapper tous les champs du fournisseur d'extracteur biométrique avant de continuer.",
+        "saveError": "Erreur lors de la configuration du fournisseur d'extracteur biométrique."
+    },
+    "unsavedChangesPopup": {
+        "message": "Vos modifications seront perdues, êtes-vous sûr de vouloir continuer ?",
+        "proceed": "Continuer",
+        "cancel": "Annuler"
     }
 }
