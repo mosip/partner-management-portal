@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { bgOfStatus, formatDate, getApproveRejectStatus, getPartnerManagerUrl, getPartnerTypeDescription, getStatusCode, handleServiceErrors, isLangRTL, onPressEnterKey } from '../../../utils/AppUtils';
+import { bgOfStatus, formatDate, getApproveRejectStatus, getPartnerTypeDescription, getStatusCode, isLangRTL, onPressEnterKey } from '../../../utils/AppUtils';
 import { getUserProfile } from '../../../services/UserProfileService';
 import { useNavigate } from 'react-router-dom';
 import Title from '../../common/Title';
 import adminImage from "../../../svg/admin.png";
 import partnerImage from "../../../svg/partner.png";
 import dotImg from "../../../svg/dot.svg";
-import PartnerPolicyApproveRejectPopup from './PartnerPolicyApproveRejectPopup';
-import { HttpService } from '../../../services/HttpService';
-import LoadingIcon from '../../common/LoadingIcon';
+import ApproveRejectPopup from '../../common/ApproveRejectPopup';
+import CredentialPartnerPolicyDetails from '../../common/CredentialPartnerPolicyDetails';
 
 function ViewPolicyRequestDetails() {
     const { t } = useTranslation();
@@ -17,13 +16,6 @@ function ViewPolicyRequestDetails() {
     const navigate = useNavigate();
     const [policyRequestDetails, setPolicyRequestDetails] = useState({});
     const [showApproveRejectPopup, setShowApproveRejectPopup] = useState(false);
-
-    const [bioLoading, setBioLoading] = useState(false);
-    const [bioError, setBioError] = useState('');
-    const [bioExtractors, setBioExtractors] = useState([]);
-    const [credentialTypeLoading, setCredentialTypeLoading] = useState(false);
-    const [credentialTypeError, setCredentialTypeError] = useState('');
-    const [credentialType, setCredentialType] = useState('');
 
     useEffect(() => {
         const policyRequestData = sessionStorage.getItem('selectedPartnerPolicyRequest');
@@ -42,122 +34,7 @@ function ViewPolicyRequestDetails() {
 
     const isCredentialPartner = (policyRequestDetails?.partnerType ?? '').toString().toUpperCase() === 'CREDENTIAL_PARTNER';
 
-    const normalizeBioRow = (item) => {
-        const modality =
-            item?.bioModality ??
-            item?.biometricModality ??
-            item?.modality ??
-            item?.bio_modality ??
-            item?.biometric ??
-            '-';
-        const configuration =
-            item?.bioExtractorConfigurationName ??
-            item?.bioExtractorConfigName ??
-            item?.configName ??
-            item?.bio_extractor_configuration_name ??
-            item?.bioExtractorConfigurationId ??
-            item?.bio_extractor_configuration_id ??
-            item?.attributeName ??
-            '-';
-        const providerVersion =
-            item?.bioextractorProviderVersion ??
-            item?.providerVersion ??
-            item?.version ??
-            item?.provider_version ??
-            item?.extractor?.version ??
-            '-';
-        const providerName =
-            item?.bioextractorProviderName ??
-            item?.providerName ??
-            item?.name ??
-            item?.provider_name ??
-            item?.extractor?.provider ??
-            '-';
-        return { modality, configuration, providerVersion, providerName };
-    };
-
-    useEffect(() => {
-        const fetchDetails = async () => {
-            if (!isCredentialPartner) return;
-            if (!policyRequestDetails?.partnerId || !policyRequestDetails?.policyId) return;
-
-            setBioError('');
-            setBioExtractors([]);
-            setCredentialTypeError('');
-            setCredentialType('');
-            setBioLoading(true);
-            setCredentialTypeLoading(true);
-
-            try {
-                const bioUrl = getPartnerManagerUrl(`/partners/${policyRequestDetails.partnerId}/bioextractors/${policyRequestDetails.policyId}`, process.env.NODE_ENV);
-                const credUrl = getPartnerManagerUrl(`/partners/${policyRequestDetails.partnerId}/policies/${policyRequestDetails.policyId}/credential-type`, process.env.NODE_ENV);
-
-                const [bioRes, credRes] = await Promise.all([
-                    HttpService.get(bioUrl),
-                    HttpService.get(credUrl),
-                ]);
-
-                const bioData = bioRes?.data;
-                if (bioData?.response) {
-                    const payload = bioData.response;
-                    const list = Array.isArray(payload)
-                        ? payload
-                        : (payload.extractors ??
-                            payload.data ??
-                            payload.bioExtractors ??
-                            payload.bioextractors ??
-                            payload.extractorList ??
-                            []);
-                    setBioExtractors(Array.isArray(list) ? list : []);
-                } else if (bioData) {
-                    handleServiceErrors(bioData, () => { }, (msg) => setBioError(msg), t);
-                } else {
-                    setBioError(t('commons.somethingWentWrong', 'Something went wrong.'));
-                }
-
-                const credData = credRes?.data;
-                if (credData?.response !== undefined) {
-                    const payload = credData.response;
-                    const value =
-                        (typeof payload === 'string' ? payload : null) ??
-                        payload?.credentialType ??
-                        payload?.credential_type ??
-                        payload?.type ??
-                        payload?.data?.credentialType ??
-                        payload?.data?.credential_type ??
-                        '';
-
-                    const types =
-                        payload?.credentialTypes ??
-                        payload?.credential_types ??
-                        payload?.data?.credentialTypes ??
-                        payload?.data?.credential_types ??
-                        null;
-
-                    if (Array.isArray(types)) {
-                        const first = types.find((x) => x !== null && x !== undefined && String(x).trim() !== '');
-                        setCredentialType(first ? String(first) : '');
-                    } else {
-                        setCredentialType(value ? String(value) : '');
-                    }
-                } else if (credData) {
-                    handleServiceErrors(credData, () => { }, (msg) => setCredentialTypeError(msg), t);
-                } else {
-                    setCredentialTypeError(t('commons.somethingWentWrong', 'Something went wrong.'));
-                }
-            } catch (err) {
-                if (err?.response?.status !== 401) {
-                    setBioError(err?.message || err?.toString() || t('commons.somethingWentWrong', 'Something went wrong.'));
-                    setCredentialTypeError(err?.message || err?.toString() || t('commons.somethingWentWrong', 'Something went wrong.'));
-                }
-            } finally {
-                setBioLoading(false);
-                setCredentialTypeLoading(false);
-            }
-        };
-
-        fetchDetails();
-    }, [isCredentialPartner, policyRequestDetails?.partnerId, policyRequestDetails?.policyId, t]);
+    const [isPolicyDetailsLoading, setIsPolicyDetailsLoading] = useState(false);
 
     const moveToPolicyRequestsList = () => {
         navigate('/partnermanagement/admin/policy-requests-list');
@@ -207,7 +84,7 @@ function ViewPolicyRequestDetails() {
                                     </button>
                                 </div>
                                 {showApproveRejectPopup &&
-                                    <PartnerPolicyApproveRejectPopup
+                                    <ApproveRejectPopup
                                         popupData={{ ...policyRequestDetails, isPartnerPolicyRequest: true }}
                                         closePopUp={() => setShowApproveRejectPopup(false)}
                                         approveRejectResponse={(responseData, status) => onClickApproveReject(responseData, status)}
@@ -281,90 +158,16 @@ function ViewPolicyRequestDetails() {
                             <>
                                 <hr className="h-px mt-3 w-full bg-gray-200 border-0" />
                                 <div className="py-4">
-                                    <div className="border border-[#E5EBFA] rounded-lg p-4">
-                                        <p className={`text-sm font-semibold text-[#191919] ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>
-                                            {t('partnerPolicyRequestApproveRejectPopup.bioExtractorProviderMapping')}
-                                        </p>
-
-                                        <div className="mt-1 overflow-x-auto">
-                                            <table className="min-w-full table-fixed border border-[#E5EBFA] rounded-md overflow-hidden">
-                                                <thead className="bg-[#F7F9FF] text-[#6F6E6E] text-xs">
-                                                    <tr>
-                                                        <th className={`w-1/4 px-3 py-2 font-semibold whitespace-normal leading-tight align-top ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>
-                                                            <span className="block whitespace-nowrap">{t('partnerPolicyRequestApproveRejectPopup.bioModalityLine1')}</span>
-                                                            <span className="block whitespace-nowrap">{t('partnerPolicyRequestApproveRejectPopup.bioModalityLine2')}</span>
-                                                        </th>
-                                                        <th className={`w-1/4 px-3 py-2 font-semibold whitespace-normal leading-tight align-top ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>
-                                                            <span className="block whitespace-nowrap">{t('partnerPolicyRequestApproveRejectPopup.bioExtractorConfigLine1')}</span>
-                                                            <span className="block whitespace-nowrap">{t('partnerPolicyRequestApproveRejectPopup.bioExtractorConfigLine2')}</span>
-                                                        </th>
-                                                        <th className={`w-1/4 px-3 py-2 font-semibold whitespace-normal leading-tight align-top ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>
-                                                            <span className="block whitespace-nowrap">{t('partnerPolicyRequestApproveRejectPopup.bioExtractorProviderVersionLine1')}</span>
-                                                            <span className="block whitespace-nowrap">{t('partnerPolicyRequestApproveRejectPopup.bioExtractorProviderVersionLine2')}</span>
-                                                        </th>
-                                                        <th className={`w-1/4 px-3 py-2 font-semibold whitespace-normal leading-tight align-top ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>
-                                                            <span className="block whitespace-nowrap">{t('partnerPolicyRequestApproveRejectPopup.bioExtractorProviderNameLine1')}</span>
-                                                            <span className="block whitespace-nowrap">{t('partnerPolicyRequestApproveRejectPopup.bioExtractorProviderNameLine2')}</span>
-                                                        </th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody className="text-[#191919] text-sm">
-                                                    {(bioLoading || credentialTypeLoading) && (
-                                                        <tr>
-                                                            <td colSpan={4} className="px-3 py-6">
-                                                                <LoadingIcon styleSet={{ loadingDiv: '!py-0' }} />
-                                                            </td>
-                                                        </tr>
-                                                    )}
-                                                    {!bioLoading && bioError && (
-                                                        <tr>
-                                                            <td colSpan={4} className="px-3 py-3 text-crimson-red font-semibold">
-                                                                {bioError}
-                                                            </td>
-                                                        </tr>
-                                                    )}
-                                                    {!bioLoading && !bioError && bioExtractors.length === 0 && (
-                                                        <tr>
-                                                            <td colSpan={4} className="px-3 py-3 text-[#6F6E6E] font-semibold">
-                                                                {t('partnerPolicyRequestApproveRejectPopup.noBioExtractors')}
-                                                            </td>
-                                                        </tr>
-                                                    )}
-                                                    {!bioLoading && !bioError && bioExtractors.map((item, idx) => {
-                                                        const row = normalizeBioRow(item);
-                                                        const stripe = idx % 2 === 1 ? 'bg-[#FBFCFF]' : 'bg-white';
-                                                        return (
-                                                            <tr key={idx} className={stripe}>
-                                                                <td className={`px-3 py-3 font-semibold whitespace-nowrap ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>{row.modality || '-'}</td>
-                                                                <td className={`px-3 py-3 font-semibold ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>{row.configuration || '-'}</td>
-                                                                <td className={`px-3 py-3 font-semibold whitespace-nowrap ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>{row.providerVersion || '-'}</td>
-                                                                <td className={`px-3 py-3 font-semibold ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>{row.providerName || '-'}</td>
-                                                            </tr>
-                                                        );
-                                                    })}
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-
-                                    <hr className="h-px w-full bg-gray-200 border-0 my-6" />
-
-                                    <p className={`text-[0.7rem] text-[#6F6E6E] font-semibold ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>
-                                        {t('partnerPolicyRequestApproveRejectPopup.credentialType')}
-                                    </p>
-                                    {credentialTypeLoading ? (
-                                        <p className={`text-base font-semibold text-[#191919] ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>
-                                            {t('commons.loading', 'Loading...')}
-                                        </p>
-                                    ) : credentialTypeError ? (
-                                        <p className={`text-sm font-semibold text-crimson-red ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>
-                                            {credentialTypeError}
-                                        </p>
-                                    ) : (
-                                        <p className={`text-base font-semibold text-[#191919] break-words ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>
-                                            {credentialType || t('commons.notAvailable', 'Not available')}
-                                        </p>
-                                    )}
+                                    <CredentialPartnerPolicyDetails
+                                        t={t}
+                                        isLoginLanguageRTL={isLoginLanguageRTL}
+                                        partnerId={policyRequestDetails?.partnerId}
+                                        policyId={policyRequestDetails?.policyId}
+                                        partnerTypeLabel={getPartnerTypeDescription(policyRequestDetails?.partnerType, t) ?? policyRequestDetails?.partnerType ?? '-'}
+                                        enabled={isCredentialPartner}
+                                        variant="view"
+                                        onLoadingChange={setIsPolicyDetailsLoading}
+                                    />
                                 </div>
                             </>
                         )}

@@ -29,7 +29,7 @@ import EmptyList from "../../common/EmptyList";
 import PolicyRequestsListFilter from "./PolicyRequestsListFilter";
 import approveRejectIcon from "../../../svg/approve_reject_icon.svg";
 import disabledApproveRejectIcon from "../../../svg/approve_reject_disabled_icon.svg";
-import PartnerPolicyApproveRejectPopup from "./PartnerPolicyApproveRejectPopup";
+import ApproveRejectPopup from "../../common/ApproveRejectPopup";
 
 function PolicyRequestsList() {
   const { t } = useTranslation();
@@ -351,7 +351,7 @@ function PolicyRequestsList() {
                                                 </div>
                                               )}
                                               {showActiveIndexPopup === index &&
-                                                <PartnerPolicyApproveRejectPopup
+                                                <ApproveRejectPopup
                                                   popupData={{ ...selectedPolicyRequest, isPartnerPolicyRequest: true }}
                                                   closePopUp={closePolicyRequestPopup}
                                                   approveRejectResponse={(responseData, status) => onClickApproveReject(responseData, status, selectedPolicyRequest)}
