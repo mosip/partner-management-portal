@@ -46,9 +46,10 @@ function PartnerPolicyApproveRejectPopup({
   }, [popupData?.partnerType]);
 
   useEffect(() => {
+    const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     return () => {
-      document.body.style.overflow = 'auto';
+      document.body.style.overflow = previousOverflow;
     };
   }, []);
 
@@ -236,12 +237,12 @@ function PartnerPolicyApproveRejectPopup({
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-35 z-50 font-inter cursor-default mx-1 break-normal">
       <FocusTrap focusTrapOptions={{ initialFocus: false, allowOutsideClick: true }}>
-        <div className={`bg-white mx-auto rounded-lg shadow-sm h-fit ${modalWidth}`}>
+        <div className={`bg-white mx-auto rounded-lg shadow-sm ${modalWidth} max-h-[90vh] flex flex-col`}>
           {!dataLoaded ? (
             <LoadingIcon styleSet={{ loadingDiv: '!py-[35%]' }} />
           ) : (
             <>
-              <div className="relative">
+              <div className="relative flex flex-col max-h-[90vh]">
                 {errorMsg && (
                   <ErrorMessage
                     id="partner_policy_approve_reject_popup_error_msg"
@@ -267,13 +268,14 @@ function PartnerPolicyApproveRejectPopup({
 
                 <hr className="h-px bg-gray-100 border-[0.02rem]" />
 
-                <div className="px-[1.5rem] py-3 text-center break-words">
-                  <p className="text-base font-semibold text-black">{header}</p>
-                  <p className="text-sm text-[#666666] py-3">{description}</p>
-                </div>
+                <div className="flex-1 overflow-y-auto">
+                  <div className="px-[1.5rem] py-3 text-center break-words">
+                    <p className="text-base font-semibold text-black">{header}</p>
+                    <p className="text-sm text-[#666666] py-3">{description}</p>
+                  </div>
 
-                {isCredentialPartner && (
-                  <div className="px-[1.5rem] pb-3">
+                  {isCredentialPartner && (
+                    <div className="px-[1.5rem] pb-3">
                     <div className="border border-[#E5EBFA] rounded-lg p-4">
                       <div className={`grid grid-cols-2 gap-x-28 gap-y-4 max-[600px]:grid-cols-1 ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>
                         <div className="min-w-0">
@@ -371,8 +373,9 @@ function PartnerPolicyApproveRejectPopup({
                       )}
                       </div>
                     </div>
-                  </div>
-                )}
+                    </div>
+                  )}
+                </div>
 
                 <hr className="h-px bg-gray-100 border-[0.02rem]" />
 
