@@ -248,7 +248,7 @@ if (field === "biometricModality") {
         row => row.biometricModality && row.biometricProviderConfiguration
       );
       if (validRows.length === 0) {
-        setErrorMsg("Please select Biometric Modality and Provider");
+        setErrorMsg(t("mapBiometricExtractorProvider.validationMsg"));
         setIsSubmitClicked(false);
         return;
       }
