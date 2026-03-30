@@ -244,8 +244,25 @@ if (field === "biometricModality") {
       );
       
       if (response?.data?.response) {
-      navigate("/partnermanagement/policies/policies-list");
+      const validRows = rows.filter(
+        row => row.biometricModality && row.biometricProviderConfiguration
+      );
+      if (validRows.length === 0) {
+        setErrorMsg("Please select Biometric Modality and Provider");
+        setIsSubmitClicked(false);
+        return;
+      }
+
+      navigate("/partnermanagement/policies/map-credential-type", {
+        state: {
+          ...policyDetails,
+          biometricMappings: validRows.map(row => ({
+            biometricModality: row.biometricModality,
+            biometricProviderConfiguration: row.biometricProviderConfiguration
+          }))
         }
+      });
+      }
 
      handleServiceErrors(response?.data, setErrorCode, setErrorMsg);
      setIsSubmitClicked(false);

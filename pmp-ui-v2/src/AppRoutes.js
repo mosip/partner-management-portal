@@ -7,6 +7,7 @@ import Dashboard from './pages/dashboard/Dashboard.js';
 import ViewPolicyDetails from './pages/partner/policies/ViewPolicyDetails.js';
 import RequestPolicy from './pages/partner/policies/RequestPolicy';
 import MapBiometricExtractorProvider from './pages/partner/policies/MapBiometricExtractorProvider.js';
+import MapCredentialType from './pages/partner/policies/MapCredentialType.js';
 import OidcClientsList from './pages/partner/authenticationServices/OidcClientsList.js';
 import CreateOidcClient from './pages/partner/authenticationServices/CreateOidcClient.js';
 import ViewOidcClientDetails from './pages/partner/authenticationServices/ViewOidcClientDetails.js';
@@ -112,6 +113,10 @@ function AppRoutes() {
         {
           path: 'policies/map-biometric-extractor-provider',
           element: <GuardedRoute><MainLayout><MapBiometricExtractorProvider /></MainLayout></GuardedRoute>,
+        },
+        {
+          path: 'policies/map-credential-type',
+          element: <GuardedRoute><MainLayout><MapCredentialType /></MainLayout></GuardedRoute>,
         },
         {
           path: 'authentication-services/oidc-clients-list',

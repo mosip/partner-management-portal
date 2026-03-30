@@ -364,6 +364,8 @@
         "guidenceForMispPartner": "Remarque : Si vous êtes partenaire MISP, les champs Groupe de politiques et Nom de la politique sont facultatifs. Nous vous recommandons néanmoins de sélectionner un nom de politique pour garantir la cohérence et la clarté de la gestion des politiques.",
         "policySuccessMsgForAdmin": "La demande de politique a été soumise avec succès. Veuillez approuver la demande d'activation du lien de politique partenaire.",
         "approvePopupTitle": "Voulez-vous approuver la demande de politique du partenaire ?",
+        "biometricModality": "Modalité biométrique",
+        "biometricProviderConfiguration": "Configuration du fournisseur biométrique",
         "approvePopupDesc": "En cliquant sur Confirmer, la liaison de la politique de partenariat sera approuvée."
     },
     "authenticationServices": {
@@ -1759,6 +1761,18 @@
         "delete": "Supprimer",
         "validationMsg": "Veuillez mapper tous les champs du fournisseur d'extracteur biométrique avant de continuer.",
         "saveError": "Erreur lors de la configuration du fournisseur d'extracteur biométrique."
+    },
+    "mapCredentialType": {
+        "title": "Associer le type d'identifiant",
+        "credentialType": "Type d'identifiant",
+        "selectCredentialType": "Sélectionner le type d'identifiant",
+        "addMore": "Ajouter plus",
+        "delete": "Supprimer",
+        "previousStep": "Étape précédente",
+        "validationMsg": "Veuillez sélectionner des correspondances de type d'identifiant valides avant de soumettre.",
+        "saveError": "Erreur lors de l'association du type d'identifiant.",
+        "successHeader": "Demande de politique envoyée avec succès",
+        "successDescription": "Votre demande de politique a été soumise avec succès et est en attente d'approbation par l'administrateur."
     },
     "unsavedChangesPopup": {
         "message": "Vos modifications seront perdues, êtes-vous sûr de vouloir continuer ?",

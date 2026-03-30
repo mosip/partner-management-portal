@@ -365,6 +365,9 @@
         "guidenceForMispPartner": "Note: If you are a MISP Partner, the Policy Group and Policy Name fields are optional. We still recommend selecting a Policy Name to help maintain consistency and clarity in policy management.",
         "policySuccessMsgForAdmin": "Policy request has been successfully submitted. Approve the request for the partner policy linking to be activated.",
         "approvePopupTitle": "Do you want to approve Partner- Policy Request?",
+        "biometricModality": "Biometric Modality",
+        "biometricProviderConfiguration": "Biometric Provider Configuration",
+        "autoPopulatedValue": "Auto-populated based on previous selection",
         "approvePopupDesc": "On clicking Confirm, the Partner Policy Linking will be approved."
     },
     "authenticationServices": {
@@ -1755,6 +1758,18 @@
         "delete": "Delete",
         "validationMsg": "Please map all biometric extractor provider fields before proceeding.",
         "saveError": "Error while mapping biometric extractor provider configuration."
+    },
+     "mapCredentialType": {
+        "title": "Map Credential Type",
+        "credentialType": "Credential Type",
+        "selectCredentialType": "Select Credential Type",
+        "addMore": "Add More",
+        "delete": "Delete",
+        "previousStep": "Previous Step",
+        "validationMsg": "Please select valid credential type mappings before submitting.",
+        "saveError": "Error while mapping credential type.",
+        "successHeader": "Policy Requested Successfully",
+        "successDescription": "Your policy request has been successfully submitted and is pending approval from the admin."
     },
     "unsavedChangesPopup": {
         "message": "Your changes will be lost, are you sure you want to proceed?",
