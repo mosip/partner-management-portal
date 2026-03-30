@@ -367,7 +367,6 @@
         "approvePopupTitle": "Do you want to approve Partner- Policy Request?",
         "biometricModality": "Biometric Modality",
         "biometricProviderConfiguration": "Biometric Provider Configuration",
-        "autoPopulatedValue": "Auto-populated based on previous selection",
         "approvePopupDesc": "On clicking Confirm, the Partner Policy Linking will be approved."
     },
     "authenticationServices": {

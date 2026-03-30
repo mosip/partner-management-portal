@@ -241,7 +241,7 @@ const selectedBiometricProviderConfigurations = policyDetails.biometricMappings
                             className="flex items-center justify-between w-full px-2 py-2 border border-[#C1C1C1] rounded-md bg-platinum-gray text-dark-blue"
                             >
                             <span className="w-full text-start">
-                                {selectedBiometricModalities  || t("requestPolicy.autoPopulatedValue")}
+                                {selectedBiometricModalities}
                             </span>
                             </button>
                         </div>
@@ -257,7 +257,7 @@ const selectedBiometricProviderConfigurations = policyDetails.biometricMappings
                             className="flex items-center justify-between w-full px-2 py-2 border border-[#C1C1C1] rounded-md bg-platinum-gray text-dark-blue"
                             >
                             <span className="w-full text-start">
-                                {selectedBiometricProviderConfigurations || t("requestPolicy.autoPopulatedValue")}
+                                {selectedBiometricProviderConfigurations}
                             </span>
                             </button>
                         </div>
