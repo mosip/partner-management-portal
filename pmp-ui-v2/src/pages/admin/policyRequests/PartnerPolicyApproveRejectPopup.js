@@ -255,8 +255,8 @@ function PartnerPolicyApproveRejectPopup({
                     <p className="text-sm font-bold">{title}</p>
                     {subtitle && <p className="text-[#A5A5A5] text-xs">{subtitle}</p>}
                   </div>
-                  <button onClick={closingPopUp} className="h-6 hover:cursor-pointer">
-                    <img src={close_icon} alt="close" />
+                  <button aria-label={t('commons.close')} onClick={closingPopUp} className="h-6 hover:cursor-pointer">
+                    <img src={close_icon} alt="" />
                   </button>
                 </div>
 
