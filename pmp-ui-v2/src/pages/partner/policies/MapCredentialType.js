@@ -107,7 +107,7 @@ function MapCredentialType() {
         policyMappingRequestId: policyDetails.mappingKey
       });
     if (!credentialType) return;
-    await HttpService.post(
+    const response = await HttpService.post(
         getPartnerManagerUrl(
             `/partners/${policyDetails.partnerId}/credentialtype/${encodeURIComponent(credentialType.toLowerCase())}/policies/${encodeURIComponent(policyDetails.policyName)}`,
             process.env.NODE_ENV
@@ -115,7 +115,15 @@ function MapCredentialType() {
         payload
         );
 
+      if (response?.data?.response) {
       setShowConfirmation(true);
+    } else {
+      handleServiceErrors(response?.data, setErrorCode, setErrorMsg);
+      if (!response?.data?.errors) {
+        setErrorMsg(t("mapCredentialType.saveError"));
+      }
+   }
+
     } catch (err) {
       handleServiceErrors(err?.response?.data, setErrorCode, setErrorMsg);
       if (!err?.response?.data?.errors) {
@@ -126,6 +134,7 @@ function MapCredentialType() {
       setIsSubmitClicked(false);
     }
   };
+  
 
   const confirmationData = {
     title: "requestPolicy.requestPolicy",
@@ -202,7 +211,7 @@ function MapCredentialType() {
                     fieldName='credentialType'
                     dropdownDataList={credentialTypeDropdownData}
                     onDropDownChangeEvent={(fieldName, selectedValue) => setCredentialType(selectedValue)}
-                    fieldNameKey='mapCredentialType.credentialType'
+                    fieldNameKey='mapCredentialType.credentialType*'
                     placeHolderKey='mapCredentialType.selectCredentialType'
                     selectedDropdownValue={credentialType}
                     styleSet={{
