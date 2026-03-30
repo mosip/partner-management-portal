@@ -256,10 +256,6 @@ if (field === "biometricModality") {
       navigate("/partnermanagement/policies/map-credential-type", {
         state: {
           ...policyDetails,
-          biometricMappings: validRows.map(row => ({
-            biometricModality: row.biometricModality,
-            biometricProviderConfiguration: row.biometricProviderConfiguration
-          }))
         }
       });
       }
