@@ -43,10 +43,10 @@ function RequestPolicy() {
     const [approveRequest, setApproveRequest] = useState({});
     const [popupData, setPopupData] = useState({});
     const [partnerTypeDropdownData, setPartnerTypeDropdownData] = useState([]);
+    const [selectedPolicyId, setSelectedPolicyId] = useState("");
 
     // Determine admin path at the top of component to avoid temporal dead zone
     const isAdminPath = location.pathname.includes('admin');
-
     const cancelErrorMsg = () => {
         setErrorMsg("");
     };
@@ -55,9 +55,8 @@ function RequestPolicy() {
         ({ currentLocation, nextLocation }) => {
             if (isSubmitClicked || requestPolicySuccess) {
                 setIsSubmitClicked(false);
-                return false;
+                return false;  
             }
-
             return (
                 (partnerId !== "" || partnerType !== "" ||
                     policyName !== "" || partnerComment !== "") &&
@@ -65,7 +64,6 @@ function RequestPolicy() {
             );
         }
     );
-
     useEffect(() => {
         const shouldWarnBeforeUnload = () => {
             return partnerId !== "" ||
@@ -128,6 +126,7 @@ function RequestPolicy() {
         setPartnerType(selectedValue);
         setPartnerId("");
         setPolicyName("");
+        setSelectedPolicyId("");
         setPolicyGroupName("");
         setPoliciesDropdownData([]);
         setPartnerComment("");
@@ -187,6 +186,7 @@ function RequestPolicy() {
         const selectedPolicy = policyList.find(item => item.name === selectedValue);
         if (selectedPolicy) {
             setPolicyName(selectedValue);
+            setSelectedPolicyId(selectedPolicy.policyId || selectedPolicy.id || "");
         }
     };
 
@@ -226,6 +226,7 @@ function RequestPolicy() {
         setPartnerType("");
         setPolicyGroupName("");
         setPolicyName("");
+        setSelectedPolicyId("");
         setPartnerComment("");
         setPoliciesDropdownData([]);
         setInputError("");
@@ -253,6 +254,29 @@ function RequestPolicy() {
                 const responseData = response.data;
                 if (responseData && responseData.response) {
                     const resData = responseData.response;
+                    if (isCredentialPartner && !isAdminPath) {
+                                            const requestPayload = {
+                                                partnerId,
+                                                partnerType,
+                                                policyGroupName,
+                                                policyName,
+                                                partnerComment,
+                                                policyId: selectedPolicyId
+                                            };
+                                            navigate('/partnermanagement/policies/map-biometric-extractor-provider', {
+                                                state: {
+                                                    partnerId,
+                                                    partnerType,
+                                                    policyGroupName,
+                                                    policyName,
+                                                    policyId: selectedPolicyId,
+                                                    mappingKey: resData.mappingkey,
+                                                    requestPayload
+                                                }
+                                            });
+                                            setDataLoaded(true);
+                                            return;
+                                        }
                     setPopupData(isAdminPath ? {id: resData.mappingkey} : {});
                     const requiredData = {
                         title: "requestPolicy.requestPolicy",
