@@ -1239,6 +1239,8 @@
         "bioExtractorProviderName": "اسم مزود مستخرج القياسات الحيوية",
         "bioExtractorProviderNameLine1": "مزود مستخرج",
         "bioExtractorProviderNameLine2": "اسم القياسات الحيوية",
+        "bioExtractorProviderMapping": "ربط مزود مستخرج القياسات الحيوية",
+        "credentialType": "نوع بيانات الاعتماد",
         "noBioExtractors": "لم يتم العثور على مستخرجات قياسات حيوية لهذه السياسة."
     },
     "ftmRequestApproveRejectPopup": {

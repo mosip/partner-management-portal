@@ -129,8 +129,13 @@ function ApproveRejectPopup({ popupData, closePopUp, approveRejectResponse, titl
                                                 <p id='approve-reject_popup_sub_title' className="text-[#A5A5A5] text-xs">{subtitle}</p>
                                             )}
                                         </div>
-                                        <button id="approve_reject_popup_close_icon" onClick={closingPopUp} className="h-6 hover:cursor-pointer">
-                                            <img src={close_icon} alt="close" />
+                                        <button
+                                            id="approve_reject_popup_close_icon"
+                                            aria-label={t('commons.close')}
+                                            onClick={closingPopUp}
+                                            className="h-6 hover:cursor-pointer"
+                                        >
+                                            <img src={close_icon} alt="" />
                                         </button>
                                     </div>
                                     <hr className="h-px bg-gray-100 border-[0.02rem]" />

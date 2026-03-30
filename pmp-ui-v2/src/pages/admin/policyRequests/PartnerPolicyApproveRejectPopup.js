@@ -36,6 +36,10 @@ function PartnerPolicyApproveRejectPopup({
   const [bioError, setBioError] = useState('');
   const [bioExtractors, setBioExtractors] = useState([]);
 
+  const [credentialTypeLoading, setCredentialTypeLoading] = useState(false);
+  const [credentialTypeError, setCredentialTypeError] = useState('');
+  const [credentialType, setCredentialType] = useState('');
+
   const isCredentialPartner = useMemo(() => {
     const partnerType = (popupData?.partnerType ?? '').toString().toUpperCase();
     return partnerType === 'CREDENTIAL_PARTNER';
@@ -97,6 +101,62 @@ function PartnerPolicyApproveRejectPopup({
     };
 
     fetchBioExtractors();
+  }, [isCredentialPartner, popupData?.partnerId, popupData?.policyId, t]);
+
+  useEffect(() => {
+    const fetchCredentialType = async () => {
+      if (!isCredentialPartner) return;
+      if (!popupData?.partnerId || !popupData?.policyId) return;
+
+      setCredentialTypeError('');
+      setCredentialType('');
+      setCredentialTypeLoading(true);
+      try {
+        const url = getPartnerManagerUrl(
+          `/partners/${popupData.partnerId}/policies/${popupData.policyId}/credential-type`,
+          process.env.NODE_ENV
+        );
+        const response = await HttpService.get(url);
+        const responseData = response?.data;
+
+        if (responseData?.response !== undefined) {
+          const payload = responseData.response;
+          const value =
+            (typeof payload === 'string' ? payload : null) ??
+            payload?.credentialType ??
+            payload?.credential_type ??
+            payload?.type ??
+            payload?.data?.credentialType ??
+            payload?.data?.credential_type ??
+            '';
+
+          const types =
+            payload?.credentialTypes ??
+            payload?.credential_types ??
+            payload?.data?.credentialTypes ??
+            payload?.data?.credential_types ??
+            null;
+
+          if (Array.isArray(types)) {
+            setCredentialType(types.filter(Boolean).join(', '));
+          } else {
+            setCredentialType(value ? String(value) : '');
+          }
+        } else if (responseData) {
+          handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+        } else {
+          setCredentialTypeError(t('commons.somethingWentWrong', 'Something went wrong.'));
+        }
+      } catch (err) {
+        if (err?.response?.status !== 401) {
+          setCredentialTypeError(err?.message || err?.toString() || t('commons.somethingWentWrong', 'Something went wrong.'));
+        }
+      } finally {
+        setCredentialTypeLoading(false);
+      }
+    };
+
+    fetchCredentialType();
   }, [isCredentialPartner, popupData?.partnerId, popupData?.policyId, t]);
 
   const cancelErrorMsg = () => setErrorMsg('');
@@ -170,6 +230,7 @@ function PartnerPolicyApproveRejectPopup({
   };
 
   const modalWidth = isCredentialPartner ? 'md:w-[48rem] w-[95%]' : 'md:w-[24rem] w-[55%]';
+  const isDetailsLoading = isCredentialPartner && (bioLoading || credentialTypeLoading);
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-35 z-50 font-inter cursor-default mx-1 break-normal">
@@ -221,6 +282,10 @@ function PartnerPolicyApproveRejectPopup({
                           </p>
                         </div>
                       </div>
+
+                      <p className={`mt-6 text-sm font-semibold text-[#191919] ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>
+                        {t('partnerPolicyRequestApproveRejectPopup.bioExtractorProviderMapping')}
+                      </p>
 
                       <div className="mt-4 overflow-x-auto">
                         <table className="min-w-full table-fixed border border-[#E5EBFA] rounded-md overflow-hidden">
@@ -283,6 +348,25 @@ function PartnerPolicyApproveRejectPopup({
                           </tbody>
                         </table>
                       </div>
+
+                      <hr className="h-px w-full bg-gray-200 border-0 my-6" />
+
+                      <p className={`text-[0.7rem] text-[#6F6E6E] font-semibold ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>
+                        {t('partnerPolicyRequestApproveRejectPopup.credentialType')}
+                      </p>
+                      {credentialTypeLoading ? (
+                        <p className={`text-base font-semibold text-[#191919] ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>
+                          {t('commons.loading', 'Loading...')}
+                        </p>
+                      ) : credentialTypeError ? (
+                        <p className={`text-sm font-semibold text-crimson-red ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>
+                          {credentialTypeError}
+                        </p>
+                      ) : (
+                        <p className={`text-base font-semibold text-[#191919] break-words ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>
+                          {credentialType || t('commons.notAvailable', 'Not available')}
+                        </p>
+                      )}
                     </div>
                   </div>
                 )}
@@ -293,9 +377,9 @@ function PartnerPolicyApproveRejectPopup({
                   <button
                     onClick={() => handleStatusChange('rejected')}
                     type="button"
-                    disabled={isCredentialPartner && bioLoading}
+                    disabled={isDetailsLoading}
                     className={`w-36 h-10 border-[#1447B2] border rounded-md text-tory-blue ${
-                      isCredentialPartner && bioLoading ? 'opacity-50 cursor-not-allowed' : ''
+                      isDetailsLoading ? 'opacity-50 cursor-not-allowed' : ''
                     }`}
                   >
                     {t('approveRejectPopup.reject')}
@@ -303,9 +387,9 @@ function PartnerPolicyApproveRejectPopup({
                   <button
                     onClick={() => handleStatusChange('approved')}
                     type="button"
-                    disabled={isCredentialPartner && bioLoading}
+                    disabled={isDetailsLoading}
                     className={`w-36 h-10 border-[#1447B2] border rounded-md bg-tory-blue text-white ${
-                      isCredentialPartner && bioLoading ? 'opacity-50 cursor-not-allowed' : ''
+                      isDetailsLoading ? 'opacity-50 cursor-not-allowed' : ''
                     }`}
                   >
                     {t('approveRejectPopup.approve')}

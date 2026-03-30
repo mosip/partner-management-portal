@@ -1235,6 +1235,8 @@
         "bioExtractorProviderName": "Biometric Extractor Provider Name",
         "bioExtractorProviderNameLine1": "Biometric Extractor",
         "bioExtractorProviderNameLine2": "Provider Name",
+        "bioExtractorProviderMapping": "Biometric Extractor Provider Mapping",
+        "credentialType": "Credential Type",
         "noBioExtractors": "No bio extractors found for this policy."
     },
     "ftmRequestApproveRejectPopup": {

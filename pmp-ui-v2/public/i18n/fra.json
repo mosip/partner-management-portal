@@ -1239,6 +1239,8 @@
         "bioExtractorProviderName": "Nom du fournisseur d’extracteur biométrique",
         "bioExtractorProviderNameLine1": "Extracteur biométrique",
         "bioExtractorProviderNameLine2": "Nom du fournisseur",
+        "bioExtractorProviderMapping": "Cartographie du fournisseur d’extracteur biométrique",
+        "credentialType": "Type d’identifiant",
         "noBioExtractors": "Aucun extracteur biométrique trouvé pour cette politique."
     },
     "ftmRequestApproveRejectPopup": {
