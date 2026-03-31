@@ -1226,7 +1226,22 @@
     },
     "partnerPolicyRequestApproveRejectPopup": {
         "header": "هل ترغب في الموافقة على/رفض السياسة؟",
-        "description": "يرجى مراجعة تفاصيل السياسة بعناية قبل اتخاذ الإجراء المناسب."
+        "description": "يرجى مراجعة تفاصيل السياسة بعناية قبل اتخاذ قرارك.",
+        "bioModality": "النمط البيومتري",
+        "bioModalityLine1": "النمط",
+        "bioModalityLine2": "البيومتري",
+        "bioExtractorConfig": "تهيئة مزود مستخرج القياسات الحيوية",
+        "bioExtractorConfigLine1": "مزود مستخرج",
+        "bioExtractorConfigLine2": "تهيئة القياسات الحيوية",
+        "bioExtractorProviderVersion": "إصدار مزود مستخرج القياسات الحيوية",
+        "bioExtractorProviderVersionLine1": "مزود مستخرج",
+        "bioExtractorProviderVersionLine2": "إصدار القياسات الحيوية",
+        "bioExtractorProviderName": "اسم مزود مستخرج القياسات الحيوية",
+        "bioExtractorProviderNameLine1": "مزود مستخرج",
+        "bioExtractorProviderNameLine2": "اسم القياسات الحيوية",
+        "bioExtractorProviderMapping": "ربط مزود مستخرج القياسات الحيوية",
+        "credentialType": "نوع بيانات الاعتماد",
+        "noBioExtractors": "لم يتم العثور على مستخرجات قياسات حيوية لهذه السياسة."
     },
     "ftmRequestApproveRejectPopup": {
         "header": "هل تريد الموافقة/الرفض على شريحة FTM {{make}}-{{model}}؟",

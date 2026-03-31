@@ -1226,7 +1226,22 @@
     },
     "partnerPolicyRequestApproveRejectPopup": {
         "header": "Voulez-vous Approuver/Rejeter la politique?",
-        "description": "Veuillez examiner attentivement les détails de la politique avant de prendre une décision appropriée."
+        "description": "Veuillez examiner attentivement les détails de la politique avant de faire votre choix.",
+        "bioModality": "Modalité biométrique",
+        "bioModalityLine1": "Modalité",
+        "bioModalityLine2": "biométrique",
+        "bioExtractorConfig": "Configuration du fournisseur d’extracteur biométrique",
+        "bioExtractorConfigLine1": "Extracteur biométrique",
+        "bioExtractorConfigLine2": "Configuration fournisseur",
+        "bioExtractorProviderVersion": "Version du fournisseur d’extracteur biométrique",
+        "bioExtractorProviderVersionLine1": "Extracteur biométrique",
+        "bioExtractorProviderVersionLine2": "Version fournisseur",
+        "bioExtractorProviderName": "Nom du fournisseur d’extracteur biométrique",
+        "bioExtractorProviderNameLine1": "Extracteur biométrique",
+        "bioExtractorProviderNameLine2": "Nom du fournisseur",
+        "bioExtractorProviderMapping": "Cartographie du fournisseur d’extracteur biométrique",
+        "credentialType": "Type d’identifiant",
+        "noBioExtractors": "Aucun extracteur biométrique trouvé pour cette politique."
     },
     "ftmRequestApproveRejectPopup": {
         "header": "Voulez-vous Approuver/Rejeter la puce FTM {{make}}-{{model}} ?",
