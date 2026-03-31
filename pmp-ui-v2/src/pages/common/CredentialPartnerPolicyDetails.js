@@ -117,7 +117,7 @@ function CredentialPartnerPolicyDetails({
       setCredentialType('');
       setCredentialTypeLoading(true);
       try {
-        const url = getPartnerManagerUrl(`/partners/${partnerId}/policies/${policyId}/credential-type`, process.env.NODE_ENV);
+        const url = getPartnerManagerUrl(`/partners/${partnerId}/policies/${policyId}/credential-types`, process.env.NODE_ENV);
         const response = await HttpService.get(url);
         const responseData = response?.data;
 
@@ -132,8 +132,10 @@ function CredentialPartnerPolicyDetails({
             null;
 
           if (Array.isArray(types)) {
-            const first = types.find((x) => x !== null && x !== undefined && String(x).trim() !== '');
-            setCredentialType(first ? String(first) : '');
+            const cleaned = types
+              .map((x) => (x === null || x === undefined ? '' : String(x).trim()))
+              .filter(Boolean);
+            setCredentialType(cleaned.join(', '));
             return;
           }
 
