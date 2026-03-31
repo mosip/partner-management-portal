@@ -32,6 +32,15 @@ function CredentialPartnerPolicyDetails({
     onLoadingChange(isLoading);
   }, [isLoading, onLoadingChange]);
 
+  const getModalityLabel = (modality) => {
+    if (!modality) return '-';
+    const upperModality = String(modality).toUpperCase();
+    if (upperModality === 'FACE') return t('bioExtractorConfig.face');
+    if (upperModality === 'IRIS') return t('bioExtractorConfig.iris');
+    if (upperModality === 'FINGER' || upperModality === 'FINGERPRINT') return t('bioExtractorConfig.finger');
+    return upperModality;
+  };
+
   const normalizeBioRow = (item) => {
     const modality =
       item?.bioModality ??
@@ -123,6 +132,20 @@ function CredentialPartnerPolicyDetails({
 
         if (responseData?.response !== undefined) {
           const payload = responseData.response;
+
+          // Some deployments may return a bare array or bare string in `response`
+          // instead of an object containing `credentialTypes`.
+          if (Array.isArray(payload)) {
+            const cleaned = payload
+              .map((x) => (x === null || x === undefined ? '' : String(x).trim()))
+              .filter(Boolean);
+            setCredentialType(cleaned.join(', '));
+            return;
+          }
+          if (typeof payload === 'string') {
+            setCredentialType(payload.trim());
+            return;
+          }
 
           const types =
             payload?.credentialTypes ??
@@ -217,7 +240,7 @@ function CredentialPartnerPolicyDetails({
                 const stripe = idx % 2 === 1 ? 'bg-[#FBFCFF]' : 'bg-white';
                 return (
                   <tr key={idx} className={stripe}>
-                    <td className={`px-3 py-3 font-semibold whitespace-nowrap ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>{row.modality || '-'}</td>
+                    <td className={`px-3 py-3 font-semibold whitespace-nowrap ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>{getModalityLabel(row.modality)}</td>
                     <td className={`px-3 py-3 font-semibold ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>{row.configuration || '-'}</td>
                     <td className={`px-3 py-3 font-semibold whitespace-nowrap ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>{row.providerVersion || '-'}</td>
                     <td className={`px-3 py-3 font-semibold ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>{row.providerName || '-'}</td>

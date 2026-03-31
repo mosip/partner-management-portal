@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { getPartnerManagerUrl, handleServiceErrors, createRequest, handleEscapeKey, getPartnerTypeDescription, isLangRTL } from '../../utils/AppUtils';
 import { HttpService } from '../../services/HttpService';
@@ -17,13 +17,11 @@ function ApproveRejectPopup({ popupData, closePopUp, approveRejectResponse, titl
     const [dataLoaded, setDataLoaded] = useState(true);
     const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
 
-    const isCredentialPolicyRequest = useMemo(() => {
-        const isPolicy = Boolean(popupData?.isPartnerPolicyRequest);
-        const partnerType = (popupData?.partnerType ?? '').toString().toUpperCase();
-        return isPolicy && partnerType === 'CREDENTIAL_PARTNER';
-    }, [popupData?.isPartnerPolicyRequest, popupData?.partnerType]);
+    const isCredentialPolicyRequest =
+        Boolean(popupData?.isPartnerPolicyRequest) &&
+        (popupData?.partnerType ?? '').toString().toUpperCase() === 'CREDENTIAL_PARTNER';
 
-    const [policyDetailsLoading, setPolicyDetailsLoading] = useState(false);
+    const [policyDetailsLoading, setPolicyDetailsLoading] = useState(() => Boolean(isCredentialPolicyRequest));
 
     useEffect(() => {
         const previousOverflow = document.body.style.overflow;
@@ -136,7 +134,9 @@ function ApproveRejectPopup({ popupData, closePopUp, approveRejectResponse, titl
                                 )}
                                 <>
                                     <div className="relative px-[1rem] pt-4 pb-2 w-full">
-                                        <div className="flex-col space-y-1 break-words pr-12 text-left">
+                                        <div
+                                            className={`flex-col space-y-1 break-words ${isLoginLanguageRTL ? 'pl-12 text-right' : 'pr-12 text-left'}`}
+                                        >
                                             <p id='approve-reject_popup_title' className="text-sm font-bold">{title}</p>
                                             {subtitle && (
                                                 <p id='approve-reject_popup_sub_title' className="text-[#A5A5A5] text-xs">{subtitle}</p>
@@ -146,7 +146,7 @@ function ApproveRejectPopup({ popupData, closePopUp, approveRejectResponse, titl
                                             id="approve_reject_popup_close_icon"
                                             aria-label={t('commons.close')}
                                             onClick={closingPopUp}
-                                            className="h-8 w-8 rounded-full bg-[#F2F4F8] flex items-center justify-center hover:cursor-pointer absolute top-3 right-4"
+                                            className={`h-8 w-8 rounded-full bg-[#F2F4F8] flex items-center justify-center hover:cursor-pointer absolute top-3 ${isLoginLanguageRTL ? 'left-4' : 'right-4'}`}
                                         >
                                             <img src={close_icon} alt="" className="h-4 w-4" />
                                         </button>
