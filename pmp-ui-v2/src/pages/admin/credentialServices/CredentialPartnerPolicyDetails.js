@@ -14,11 +14,11 @@ function CredentialPartnerPolicyDetails({
   variant,
   onLoadingChange,
 }) {
-  const [bioLoading, setBioLoading] = useState(false);
+  const [bioLoading, setBioLoading] = useState(() => Boolean(enabled));
   const [bioError, setBioError] = useState('');
   const [bioExtractors, setBioExtractors] = useState([]);
 
-  const [credentialTypeLoading, setCredentialTypeLoading] = useState(false);
+  const [credentialTypeLoading, setCredentialTypeLoading] = useState(() => Boolean(enabled));
   const [credentialTypeError, setCredentialTypeError] = useState('');
   const [credentialType, setCredentialType] = useState('');
 
@@ -26,6 +26,12 @@ function CredentialPartnerPolicyDetails({
     () => Boolean(enabled) && (bioLoading || credentialTypeLoading),
     [enabled, bioLoading, credentialTypeLoading]
   );
+
+  useEffect(() => {
+    if (enabled) return;
+    setBioLoading(false);
+    setCredentialTypeLoading(false);
+  }, [enabled]);
 
   useEffect(() => {
     if (!onLoadingChange) return;
@@ -81,8 +87,14 @@ function CredentialPartnerPolicyDetails({
 
   useEffect(() => {
     const fetchBioExtractors = async () => {
-      if (!enabled) return;
-      if (!partnerId || !policyId) return;
+      if (!enabled) {
+        setBioLoading(false);
+        return;
+      }
+      if (!partnerId || !policyId) {
+        setBioLoading(false);
+        return;
+      }
 
       setBioError('');
       setBioExtractors([]);
@@ -119,8 +131,14 @@ function CredentialPartnerPolicyDetails({
 
   useEffect(() => {
     const fetchCredentialType = async () => {
-      if (!enabled) return;
-      if (!partnerId || !policyId) return;
+      if (!enabled) {
+        setCredentialTypeLoading(false);
+        return;
+      }
+      if (!partnerId || !policyId) {
+        setCredentialTypeLoading(false);
+        return;
+      }
 
       setCredentialTypeError('');
       setCredentialType('');

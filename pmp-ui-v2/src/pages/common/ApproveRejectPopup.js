@@ -8,20 +8,26 @@ import close_icon from '../../svg/close_icon.svg';
 import FocusTrap from 'focus-trap-react';
 import PropTypes from 'prop-types';
 import { getUserProfile } from '../../services/UserProfileService';
-import CredentialPartnerPolicyDetails from '../admin/credentialServices/CredentialPartnerPolicyDetails';
 
-function ApproveRejectPopup({ popupData, closePopUp, approveRejectResponse, title, subtitle, header, description }) {
+function ApproveRejectPopup({
+    popupData,
+    closePopUp,
+    approveRejectResponse,
+    title,
+    subtitle,
+    header,
+    description,
+    renderPolicyDetails,
+}) {
     const { t } = useTranslation();
     const [errorCode, setErrorCode] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
     const [dataLoaded, setDataLoaded] = useState(true);
     const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
 
-    const isCredentialPolicyRequest =
-        Boolean(popupData?.isPartnerPolicyRequest) &&
-        (popupData?.partnerType ?? '').toString().toUpperCase() === 'CREDENTIAL_PARTNER';
+    const hasPolicyDetails = typeof renderPolicyDetails === 'function';
 
-    const [policyDetailsLoading, setPolicyDetailsLoading] = useState(() => Boolean(isCredentialPolicyRequest));
+    const [policyDetailsLoading, setPolicyDetailsLoading] = useState(() => Boolean(hasPolicyDetails));
 
     useEffect(() => {
         const previousOverflow = document.body.style.overflow;
@@ -118,7 +124,7 @@ function ApproveRejectPopup({ popupData, closePopUp, approveRejectResponse, titl
         innerDiv: "!flex !justify-between !items-center !rounded-xl !min-h-12 !p-3 !m-1 !-mb-2 w-full"
     }
 
-    const modalWidth = isCredentialPolicyRequest ? "md:w-[48rem] w-[95%]" : "md:w-[24rem] w-[55%]";
+    const modalWidth = hasPolicyDetails ? "md:w-[48rem] w-[95%]" : "md:w-[24rem] w-[55%]";
 
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-35 z-50 font-inter cursor-default mx-1 break-normal">
@@ -158,18 +164,15 @@ function ApproveRejectPopup({ popupData, closePopUp, approveRejectResponse, titl
                                             <p id='approve-reject_popup_description' className="text-sm text-[#666666] py-3">{description}</p>
                                         </div>
 
-                                        {isCredentialPolicyRequest && (
+                                        {hasPolicyDetails && (
                                             <div className="px-[1.5rem] pb-3">
-                                                <CredentialPartnerPolicyDetails
-                                                    t={t}
-                                                    isLoginLanguageRTL={isLoginLanguageRTL}
-                                                    partnerId={popupData?.partnerId}
-                                                    policyId={popupData?.policyId}
-                                                    partnerTypeLabel={getPartnerTypeDescription(popupData?.partnerType, t) ?? popupData?.partnerType ?? '-'}
-                                                    enabled={isCredentialPolicyRequest}
-                                                    variant="popup"
-                                                    onLoadingChange={setPolicyDetailsLoading}
-                                                />
+                                                {renderPolicyDetails({
+                                                    t,
+                                                    isLoginLanguageRTL,
+                                                    popupData,
+                                                    onLoadingChange: setPolicyDetailsLoading,
+                                                    getPartnerTypeDescription,
+                                                })}
                                             </div>
                                         )}
                                     </div>
@@ -212,6 +215,7 @@ ApproveRejectPopup.propTypes = {
     subtitle: PropTypes.string,
     header: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
+    renderPolicyDetails: PropTypes.func,
 };
 
 export default ApproveRejectPopup;

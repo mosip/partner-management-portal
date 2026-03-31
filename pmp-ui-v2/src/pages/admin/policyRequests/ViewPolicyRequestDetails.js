@@ -92,6 +92,24 @@ function ViewPolicyRequestDetails() {
                                         subtitle={`# ${policyRequestDetails.policyId}`}
                                         header={t('partnerPolicyRequestApproveRejectPopup.header')}
                                         description={t('partnerPolicyRequestApproveRejectPopup.description')}
+                                        renderPolicyDetails={({ t, isLoginLanguageRTL, popupData, onLoadingChange, getPartnerTypeDescription }) => {
+                                            const isCredential =
+                                                Boolean(popupData?.isPartnerPolicyRequest) &&
+                                                (popupData?.partnerType ?? '').toString().toUpperCase() === 'CREDENTIAL_PARTNER';
+                                            if (!isCredential) return null;
+                                            return (
+                                                <CredentialPartnerPolicyDetails
+                                                    t={t}
+                                                    isLoginLanguageRTL={isLoginLanguageRTL}
+                                                    partnerId={popupData?.partnerId}
+                                                    policyId={popupData?.policyId}
+                                                    partnerTypeLabel={getPartnerTypeDescription(popupData?.partnerType, t) ?? popupData?.partnerType ?? '-'}
+                                                    enabled={isCredential}
+                                                    variant="popup"
+                                                    onLoadingChange={onLoadingChange}
+                                                />
+                                            );
+                                        }}
                                     />
                                 }
                             </>
