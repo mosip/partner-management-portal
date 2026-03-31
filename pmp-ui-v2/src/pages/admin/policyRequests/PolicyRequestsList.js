@@ -30,6 +30,7 @@ import PolicyRequestsListFilter from "./PolicyRequestsListFilter";
 import approveRejectIcon from "../../../svg/approve_reject_icon.svg";
 import disabledApproveRejectIcon from "../../../svg/approve_reject_disabled_icon.svg";
 import ApproveRejectPopup from "../../common/ApproveRejectPopup";
+import CredentialPartnerPolicyDetails from "../credentialServices/CredentialPartnerPolicyDetails";
 
 function PolicyRequestsList() {
   const { t } = useTranslation();
@@ -359,6 +360,24 @@ function PolicyRequestsList() {
                                                   subtitle={`# ${selectedPolicyRequest.policyId}`}
                                                   header={t('partnerPolicyRequestApproveRejectPopup.header')}
                                                   description={t('partnerPolicyRequestApproveRejectPopup.description')}
+                                                  renderPolicyDetails={({ t, isLoginLanguageRTL, popupData, onLoadingChange, getPartnerTypeDescription }) => {
+                                                    const isCredential =
+                                                      Boolean(popupData?.isPartnerPolicyRequest) &&
+                                                      (popupData?.partnerType ?? '').toString().toUpperCase() === 'CREDENTIAL_PARTNER';
+                                                    if (!isCredential) return null;
+                                                    return (
+                                                      <CredentialPartnerPolicyDetails
+                                                        t={t}
+                                                        isLoginLanguageRTL={isLoginLanguageRTL}
+                                                        partnerId={popupData?.partnerId}
+                                                        policyId={popupData?.policyId}
+                                                        partnerTypeLabel={getPartnerTypeDescription(popupData?.partnerType, t) ?? popupData?.partnerType ?? '-'}
+                                                        enabled={isCredential}
+                                                        variant="popup"
+                                                        onLoadingChange={onLoadingChange}
+                                                      />
+                                                    );
+                                                  }}
                                                 />
                                               }
                                             </div>

@@ -1223,7 +1223,22 @@
     },
     "partnerPolicyRequestApproveRejectPopup": {
         "header": "Do you want to Approve/Reject the Policy?",
-        "description": "Please review the policy details carefully before taking appropriate action."
+        "description": "Please review the policy details carefully before making your choice.",
+        "bioModality": "Biometric Modality",
+        "bioModalityLine1": "Biometric",
+        "bioModalityLine2": "Modality",
+        "bioExtractorConfig": "Biometric Extractor Provider Configuration",
+        "bioExtractorConfigLine1": "Biometric Extractor",
+        "bioExtractorConfigLine2": "Provider Configuration",
+        "bioExtractorProviderVersion": "Biometric Extractor Provider Version",
+        "bioExtractorProviderVersionLine1": "Biometric Extractor",
+        "bioExtractorProviderVersionLine2": "Provider Version",
+        "bioExtractorProviderName": "Biometric Extractor Provider Name",
+        "bioExtractorProviderNameLine1": "Biometric Extractor",
+        "bioExtractorProviderNameLine2": "Provider Name",
+        "bioExtractorProviderMapping": "Biometric Extractor Provider Mapping",
+        "credentialType": "Credential Type",
+        "noBioExtractors": "No bio extractors found for this policy."
     },
     "ftmRequestApproveRejectPopup": {
         "header": "Do you want to Approve/Reject the FTM chip {{make}}-{{model}}?",
