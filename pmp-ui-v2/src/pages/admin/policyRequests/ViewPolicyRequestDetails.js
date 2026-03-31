@@ -8,7 +8,7 @@ import adminImage from "../../../svg/admin.png";
 import partnerImage from "../../../svg/partner.png";
 import dotImg from "../../../svg/dot.svg";
 import ApproveRejectPopup from '../../common/ApproveRejectPopup';
-import CredentialPartnerPolicyDetails from '../../common/CredentialPartnerPolicyDetails';
+import CredentialPartnerPolicyDetails from '../credentialServices/CredentialPartnerPolicyDetails';
 
 function ViewPolicyRequestDetails() {
     const { t } = useTranslation();

@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
-import LoadingIcon from './LoadingIcon';
-import { HttpService } from '../../services/HttpService';
-import { getPartnerManagerUrl } from '../../utils/AppUtils';
+import LoadingIcon from '../../common/LoadingIcon';
+import { HttpService } from '../../../services/HttpService';
+import { getPartnerManagerUrl } from '../../../utils/AppUtils';
 
 function CredentialPartnerPolicyDetails({
   t,
@@ -251,7 +251,6 @@ function CredentialPartnerPolicyDetails({
     </div>
   );
 
-  // Popup design: everything (including credential type) inside one card, no section heading.
   if (variant === 'popup') {
     return (
       <div className="border border-[#E5EBFA] rounded-lg p-4">
@@ -271,7 +270,6 @@ function CredentialPartnerPolicyDetails({
     );
   }
 
-  // View-page design: heading + boxed table, credential type below outside the box.
   return (
     <div>
       <div className="border border-[#E5EBFA] rounded-lg p-4">

@@ -8,7 +8,7 @@ import close_icon from '../../svg/close_icon.svg';
 import FocusTrap from 'focus-trap-react';
 import PropTypes from 'prop-types';
 import { getUserProfile } from '../../services/UserProfileService';
-import CredentialPartnerPolicyDetails from './CredentialPartnerPolicyDetails';
+import CredentialPartnerPolicyDetails from '../admin/credentialServices/CredentialPartnerPolicyDetails';
 
 function ApproveRejectPopup({ popupData, closePopUp, approveRejectResponse, title, subtitle, header, description }) {
     const { t } = useTranslation();
