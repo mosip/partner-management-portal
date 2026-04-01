@@ -1241,7 +1241,8 @@
         "bioExtractorProviderNameLine2": "اسم القياسات الحيوية",
         "bioExtractorProviderMapping": "ربط مزود مستخرج القياسات الحيوية",
         "credentialType": "نوع بيانات الاعتماد",
-        "noBioExtractors": "لم يتم العثور على مستخرجات قياسات حيوية لهذه السياسة."
+        "noBioExtractors": "لم يتم العثور على مستخرجات قياسات حيوية لهذه السياسة.",
+        "extractorsNotConfigured": "لم يتم تكوين المستخرجات."
     },
     "ftmRequestApproveRejectPopup": {
         "header": "هل تريد الموافقة/الرفض على شريحة FTM {{make}}-{{model}}؟",
