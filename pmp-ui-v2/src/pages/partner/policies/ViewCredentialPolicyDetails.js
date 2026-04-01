@@ -122,9 +122,30 @@ const biometricMappings = useMemo(() => {
   }));
 }, [mappedPolicy, NOT_MAPPED]);
 
-  const credentialType =
-  mappedPolicy?.credentialTypes?.credentialTypes?.join(", ") || "";
+  const credentialType = useMemo(() => {
+  const data = mappedPolicy?.credentialTypes;
 
+  if (!data) return "";
+
+  // array
+  if (Array.isArray(data)) {
+    return data.filter(Boolean).join(", ");
+  }
+
+  // string
+  if (typeof data === "string") {
+    return data.trim();
+  }
+
+  // nested object
+  const types = data?.credentialTypes || data?.credential_types;
+
+  if (Array.isArray(types)) {
+    return types.filter(Boolean).join(", ");
+  }
+
+  return "";
+}, [mappedPolicy]);
   return (
     <div className={`w-full p-5 bg-anti-flash-white h-full break-words font-inter mb-[2%] ${isLoginLanguageRTL ? "mr-20 ml-1" : "ml-20 mr-1"} overflow-x-scroll`}>
       {!dataLoaded && <LoadingIcon />}
