@@ -171,6 +171,7 @@
         "organisationName": "Nom de l'organisme",
         "address": "Adresse",
         "partnerType": "Type de partenaire",
+        "credentialPartner": "Partenaire d'identification",
         "phoneNumber": "Numéro de téléphone",
         "emailAddress": "Adresse e-mail",
         "userName": "Nom d'utilisateur",
@@ -331,7 +332,18 @@
         "adminComments": "Commentaires de l'administrateur",
         "partnerComment": "Commentaires du partenaire",
         "back": "Dos",
-        "createdOn": "Créé sur"
+        "createdOn": "Créé sur",
+        "policyRequestInformation": "Informations sur la demande de politique",
+        "biometricMapping": "Mappage du fournisseur d'extracteur biométrique",
+        "biometricModality": "Modalité biométrique",
+        "biometricProviderConfiguration": "Configuration du fournisseur d'extracteur biométrique",
+        "biometricProviderVersion": "Version du fournisseur d'extracteur biométrique",
+        "biometricProviderName": "Nom du fournisseur d'extracteur biométrique",
+        "credentialType": "Type d'identifiant",
+        "partnerAdmin": "Administrateur partenaire",
+        "partnerUser": "Utilisateur partenaire d'identification",
+        "noComments": "Aucun commentaire disponible",
+        "mappedPolicyFetchError": "Impossible de récupérer les détails de la politique mappée."
     },
     "requestPolicy": {
         "requestPolicy": "Demander une politique",
