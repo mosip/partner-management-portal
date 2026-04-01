@@ -273,14 +273,14 @@ function BiometricProviderConfigurationList() {
                     showCustomButton={false}
                   />
                 ) : (
-                  <div className="mx-[1.5rem] overflow-x-scroll">
-                    <table className="table-fixed">
+                  <div className="mx-[1.5rem] overflow-x-auto">
+                    <table className="w-full min-w-[900px] table-fixed">
                       <thead>
                         <tr>
                           {tableHeaders.map((header, index) => (
                             <th
                               key={index}
-                              className={`py-4 text-sm font-semibold text-[#6F6E6E] ${
+                              className={`px-2 py-4 text-sm font-semibold text-[#6F6E6E] ${
                                 header.id === "action"
                                   ? "w-[6%] min-w-16"
                                   : header.id === "createdDateTime"
@@ -288,7 +288,16 @@ function BiometricProviderConfigurationList() {
                                     : "w-[20%] min-w-40"
                               }`}
                             >
-                              <div id={`${header.id}_header`} className={`mx-2 flex gap-x-0 items-center ${header.id === "action" ? "justify-center" : isLoginLanguageRTL ? "text-right" : "text-left"}`}>
+                              <div
+                                id={`${header.id}_header`}
+                                className={`flex gap-x-0 items-center ${
+                                  header.id === "action"
+                                    ? "justify-center"
+                                    : isLoginLanguageRTL
+                                      ? "text-right"
+                                      : "text-left"
+                                }`}
+                              >
                                 {header.headerName}
                                 {header.id !== "action" && (
                                   <SortingIcon
@@ -317,8 +326,12 @@ function BiometricProviderConfigurationList() {
                               onPressEnterKey(e, () => onViewConfiguration(configuration))
                             }
                           >
-                            <td className="px-2 py-3">{configuration.configName || "-"}</td>
-                            <td className="px-2 py-3">{configuration.bioextractorProviderName || "-"}</td>
+                            <td className="px-2 py-3 whitespace-normal break-words leading-5">
+                              {configuration.configName || "-"}
+                            </td>
+                            <td className="px-2 py-3 whitespace-normal break-words leading-5">
+                              {configuration.bioextractorProviderName || "-"}
+                            </td>
                             <td className="px-2 py-3">{configuration.bioextractorProviderVersion || "-"}</td>
                             <td className="px-2 py-3">{getModalityLabel(configuration.bioModality)}</td>
                             <td className="px-2 py-3">{formatDate(configuration.createdDateTime, "date")}</td>

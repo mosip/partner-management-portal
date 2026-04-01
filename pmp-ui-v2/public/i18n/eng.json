@@ -1237,7 +1237,8 @@
         "bioExtractorProviderNameLine2": "Provider Name",
         "bioExtractorProviderMapping": "Biometric Extractor Provider Mapping",
         "credentialType": "Credential Type",
-        "noBioExtractors": "No bio extractors found for this policy."
+        "noBioExtractors": "No bio extractors found for this policy.",
+        "extractorsNotConfigured": "Extractors are not configured."
     },
     "ftmRequestApproveRejectPopup": {
         "header": "Do you want to Approve/Reject the FTM chip {{make}}-{{model}}?",

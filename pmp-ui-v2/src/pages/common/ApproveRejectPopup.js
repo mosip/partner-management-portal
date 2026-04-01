@@ -124,7 +124,7 @@ function ApproveRejectPopup({
         innerDiv: "!flex !justify-between !items-center !rounded-xl !min-h-12 !p-3 !m-1 !-mb-2 w-full"
     }
 
-    const modalWidth = hasPolicyDetails ? "md:w-[48rem] w-[95%]" : "md:w-[24rem] w-[55%]";
+    const modalWidth = hasPolicyDetails ? "md:w-[42rem] w-[92%]" : "md:w-[24rem] w-[55%]";
 
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-35 z-50 font-inter cursor-default mx-1 break-normal">
@@ -158,7 +158,13 @@ function ApproveRejectPopup({
                                         </button>
                                     </div>
                                     <hr className="h-px bg-gray-100 border-[0.02rem]" />
-                                    <div className="flex-1 overflow-y-auto">
+                                    <div
+                                        className={`flex-1 overflow-y-auto ${
+                                            hasPolicyDetails
+                                                ? '[-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden'
+                                                : ''
+                                        }`}
+                                    >
                                         <div className="px-[1.5rem] py-3 text-center break-words">
                                             <p id='approve-reject_popup_header' className="text-base font-semibold text-black">{header}</p>
                                             <p id='approve-reject_popup_description' className="text-sm text-[#666666] py-3">{description}</p>
@@ -177,13 +183,13 @@ function ApproveRejectPopup({
                                         )}
                                     </div>
                                     <hr className="h-px bg-gray-100 border-[0.02rem]" />
-                                    <div className="flex items-center justify-between space-x-3 p-[6%]">
+                                    <div className="flex items-center justify-between gap-3 px-6 py-4">
                                         <button
                                             id="reject_btn"
                                             onClick={() => handleStatusChange('rejected')}
                                             type="button"
                                             disabled={policyDetailsLoading}
-                                            className={`w-36 h-10 border-[#1447B2] border rounded-md text-tory-blue ${policyDetailsLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                            className={`w-32 h-9 border-[#1447B2] border rounded-md text-tory-blue ${policyDetailsLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
                                         >
                                             {t('approveRejectPopup.reject')}
                                         </button>
@@ -192,7 +198,7 @@ function ApproveRejectPopup({
                                             onClick={() => handleStatusChange('approved')}
                                             type="button"
                                             disabled={policyDetailsLoading}
-                                            className={`w-36 h-10 border-[#1447B2] border rounded-md bg-tory-blue text-white ${policyDetailsLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                            className={`w-32 h-9 border-[#1447B2] border rounded-md bg-tory-blue text-white ${policyDetailsLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
                                         >
                                             {t('approveRejectPopup.approve')}
                                         </button>
