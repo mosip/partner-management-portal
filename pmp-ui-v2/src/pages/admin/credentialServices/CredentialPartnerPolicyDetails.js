@@ -115,7 +115,17 @@ function CredentialPartnerPolicyDetails({
                 []);
           setBioExtractors(Array.isArray(list) ? list : []);
         } else {
-          setBioError(t('commons.somethingWentWrong', 'Something went wrong.'));
+          const firstCode = responseData?.errors?.[0]?.errorCode;
+          if (firstCode === 'PMS_PRT_064') {
+            setBioError(
+              t(
+                'partnerPolicyRequestApproveRejectPopup.extractorsNotConfigured',
+                'Extractors are not configured.'
+              )
+            );
+          } else {
+            setBioError(t('commons.somethingWentWrong', 'Something went wrong.'));
+          }
         }
       } catch (err) {
         if (err?.response?.status !== 401) {
@@ -211,19 +221,19 @@ function CredentialPartnerPolicyDetails({
         <table className="min-w-full table-fixed">
           <thead className="bg-[#F7F9FF] text-[#6F6E6E] text-xs">
             <tr>
-              <th className={`w-1/4 px-3 py-2 font-semibold whitespace-normal leading-tight align-top ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>
+              <th className={`w-[18%] px-4 py-2 font-semibold whitespace-normal leading-tight align-top ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>
                 <span className="block whitespace-nowrap">{t('partnerPolicyRequestApproveRejectPopup.bioModalityLine1')}</span>
                 <span className="block whitespace-nowrap">{t('partnerPolicyRequestApproveRejectPopup.bioModalityLine2')}</span>
               </th>
-              <th className={`w-1/4 px-3 py-2 font-semibold whitespace-normal leading-tight align-top ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>
+              <th className={`w-[34%] px-4 py-2 font-semibold whitespace-normal leading-tight align-top ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>
                 <span className="block whitespace-nowrap">{t('partnerPolicyRequestApproveRejectPopup.bioExtractorConfigLine1')}</span>
                 <span className="block whitespace-nowrap">{t('partnerPolicyRequestApproveRejectPopup.bioExtractorConfigLine2')}</span>
               </th>
-              <th className={`w-1/4 px-3 py-2 font-semibold whitespace-normal leading-tight align-top ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>
+              <th className={`w-[24%] px-4 py-2 font-semibold whitespace-normal leading-tight align-top ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>
                 <span className="block whitespace-nowrap">{t('partnerPolicyRequestApproveRejectPopup.bioExtractorProviderVersionLine1')}</span>
                 <span className="block whitespace-nowrap">{t('partnerPolicyRequestApproveRejectPopup.bioExtractorProviderVersionLine2')}</span>
               </th>
-              <th className={`w-1/4 px-3 py-2 font-semibold whitespace-normal leading-tight align-top ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>
+              <th className={`w-[24%] px-4 py-2 font-semibold whitespace-normal leading-tight align-top ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>
                 <span className="block whitespace-nowrap">{t('partnerPolicyRequestApproveRejectPopup.bioExtractorProviderNameLine1')}</span>
                 <span className="block whitespace-nowrap">{t('partnerPolicyRequestApproveRejectPopup.bioExtractorProviderNameLine2')}</span>
               </th>
@@ -232,21 +242,21 @@ function CredentialPartnerPolicyDetails({
           <tbody className="text-[#191919] text-sm">
             {bioLoading && (
               <tr>
-                <td colSpan={4} className="px-3 py-6">
+                <td colSpan={4} className="px-4 py-6">
                   <LoadingIcon styleSet={{ loadingDiv: '!py-0' }} />
                 </td>
               </tr>
             )}
             {!bioLoading && bioError && (
               <tr>
-                <td colSpan={4} className="px-3 py-3 text-crimson-red font-semibold">
+                <td colSpan={4} className="px-4 py-3 text-crimson-red font-semibold">
                   {bioError}
                 </td>
               </tr>
             )}
             {!bioLoading && !bioError && bioExtractors.length === 0 && (
               <tr>
-                <td colSpan={4} className="px-3 py-3 text-[#6F6E6E] font-semibold">
+                <td colSpan={4} className="px-4 py-3 text-[#6F6E6E] font-semibold">
                   {t('partnerPolicyRequestApproveRejectPopup.noBioExtractors')}
                 </td>
               </tr>
@@ -258,10 +268,10 @@ function CredentialPartnerPolicyDetails({
                 const stripe = idx % 2 === 1 ? 'bg-[#FBFCFF]' : 'bg-white';
                 return (
                   <tr key={idx} className={stripe}>
-                    <td className={`px-3 py-3 font-semibold whitespace-nowrap ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>{getModalityLabel(row.modality)}</td>
-                    <td className={`px-3 py-3 font-semibold ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>{row.configuration || '-'}</td>
-                    <td className={`px-3 py-3 font-semibold whitespace-nowrap ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>{row.providerVersion || '-'}</td>
-                    <td className={`px-3 py-3 font-semibold ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>{row.providerName || '-'}</td>
+                    <td className={`px-4 py-3 font-semibold whitespace-nowrap ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>{getModalityLabel(row.modality)}</td>
+                    <td className={`px-4 py-3 font-semibold ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>{row.configuration || '-'}</td>
+                    <td className={`px-4 py-3 font-semibold whitespace-nowrap ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>{row.providerVersion || '-'}</td>
+                    <td className={`px-4 py-3 font-semibold ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>{row.providerName || '-'}</td>
                   </tr>
                 );
               })}
@@ -273,7 +283,11 @@ function CredentialPartnerPolicyDetails({
 
   const credentialTypeBlock = (
     <div className="mt-6">
-      <p className={`text-[0.7rem] text-[#6F6E6E] font-semibold ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>
+      <p
+        className={`text-[#6F6E6E] font-semibold ${
+          variant === 'view' ? 'text-sm' : 'text-[0.7rem]'
+        } ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}
+      >
         {t('partnerPolicyRequestApproveRejectPopup.credentialType')}
       </p>
       {credentialTypeLoading ? (
