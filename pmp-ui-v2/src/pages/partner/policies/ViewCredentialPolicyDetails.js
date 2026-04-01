@@ -11,7 +11,7 @@ import LoadingIcon from "../../common/LoadingIcon";
 
 function ViewPolicyDetails() {
       const { t } = useTranslation();
-      const NOT_MAPPED = t("common.notMapped");
+      const NOT_MAPPED = t("commons.notMapped");
       const navigate = useNavigate();
       const { state } = useLocation();
       const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
