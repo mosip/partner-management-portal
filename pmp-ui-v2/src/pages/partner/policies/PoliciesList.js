@@ -87,7 +87,9 @@ function PoliciesList() {
 
   const showViewPolicyDetails = (selectedPolicyData) => {
     sessionStorage.setItem('selectedPolicyAttributes', JSON.stringify(selectedPolicyData));
-    navigate('/partnermanagement/policies/view-policy-details')
+    navigate('/partnermanagement/policies/view-policy-details', {
+      state: { selectedPolicyData }
+    });
   };
 
   const cancelErrorMsg = () => {
