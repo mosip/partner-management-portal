@@ -73,6 +73,7 @@ import ViewBioExtractorConfig from './pages/admin/biometricProviderConfiguration
 import CredentialServices from './pages/partner/credentialServices/CredentialServices.js';
 import AdminCredentialServices from './pages/admin/credentialServices/AdminCredentialServices.js';
 import { getUserProfile } from './services/UserProfileService.js';
+import ViewCredentialPolicyDetails from './pages/partner/policies/ViewCredentialPolicyDetails.js';
 
 function AppRoutes() {
 
@@ -134,6 +135,16 @@ function AppRoutes() {
           path: 'authentication-services/create-oidc-client',
           element: <GuardedRoute><MainLayout><CreateOidcClient /></MainLayout></GuardedRoute>,
         },
+        {
+  path: "policies/view-credential-policy-details",
+  element: (
+    <GuardedRoute>
+      <MainLayout>
+        <ViewCredentialPolicyDetails />
+      </MainLayout>
+    </GuardedRoute>
+  )
+},
         {
           path: 'authentication-services/view-oidc-client-details',
           element: <GuardedRoute><MainLayout><ViewOidcClientDetails /></MainLayout></GuardedRoute>,

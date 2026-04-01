@@ -1,339 +1,199 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import React from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../../services/UserProfileService";
-import { HttpService } from "../../../services/HttpService";
-import { bgOfStatus, formatDate, getPartnerManagerUrl, getStatusCode, isLangRTL } from "../../../utils/AppUtils";
+import { isLangRTL, formatDate, moveToPolicies, getStatusCode, getPartnerTypeDescription, bgOfStatus } from "../../../utils/AppUtils";
+import adminImage from "../../../svg/admin.png";
+import partnerImage from "../../../svg/partner.png";
 import Title from "../../common/Title";
-import ErrorMessage from "../../common/ErrorMessage";
-import LoadingIcon from "../../common/LoadingIcon";
-
-const NOT_MAPPED = "Not Mapped";
-const isCredentialPartnerType = (partnerType = "") =>
-  String(partnerType).toLowerCase().includes("credential");
 
 function ViewPolicyDetails() {
-      const { t } = useTranslation();
-  const navigate = useNavigate();
-  const { state } = useLocation();
-  const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
-  const [policyDetails, setPolicyDetails] = useState({});
-  const [mappedPolicy, setMappedPolicy] = useState({});
-  const [dataLoaded, setDataLoaded] = useState(true);
-  const [errorMsg, setErrorMsg] = useState("");
+    const { t } = useTranslation();
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
+    const navigate = useNavigate();
+    const [policyDetails, setPolicyDetails] = useState([]);
 
-  useEffect(() => {
-    const selectedPolicy = state?.selectedPolicyData;
-    if (selectedPolicy) {
-      if (!isCredentialPartnerType(selectedPolicy.partnerType)) {
-        navigate("/partnermanagement/policies/policies-list");
-        return;
-      }
-      setPolicyDetails(selectedPolicy);
-      return;
-    }
-
-    const partnerData = sessionStorage.getItem("selectedPolicyAttributes");
-    if (partnerData) {
-      try {
-        const parsedData = JSON.parse(partnerData);
-        if (!isCredentialPartnerType(parsedData.partnerType)) {
-          navigate("/partnermanagement/policies/policies-list");
-          return;
+    useEffect(() => {
+        const partnerData = sessionStorage.getItem('selectedPolicyAttributes');
+        if (partnerData) {
+            try {
+                const selectedPartner = JSON.parse(partnerData);
+                setPolicyDetails(selectedPartner);
+            } catch (error) {
+                navigate('/partnermanagement/policies/policies-list');
+                console.error('Error in viewPolicyDetails page :', error);
+            }
+        } else {
+            navigate('/partnermanagement/policies/policies-list');
         }
-        setPolicyDetails(parsedData);
-      } catch (error) {
-        console.error("Error in viewPolicyDetails page :", error);
-        navigate("/partnermanagement/policies/policies-list");
-      }
-      return;
+    }, [navigate]);
+
+    const style = {
+        backArrowIcon: "!mt-[6%]"
     }
 
-    navigate("/partnermanagement/policies/policies-list");
-  }, [navigate, state]);
-
-useEffect(() => {
-  const fetchAllData = async () => {
-  const partnerId = policyDetails?.partnerId;
-  const policyId = policyDetails?.policyId;
-
-  if (!partnerId || !policyId) return;
-
-  try {
-    setDataLoaded(false);
-
-    // ✅ Credential Types API
-    const credentialResponse = await HttpService.get(
-      getPartnerManagerUrl(
-        `/partners/${partnerId}/policies/${policyId}/credential-types`,
-        process.env.NODE_ENV
-      )
+    return (
+        <>
+            <div className={`w-full p-5 bg-anti-flash-white h-full break-words font-inter mb-[2%] ${isLoginLanguageRTL ? "mr-20 ml-1" : "ml-20 mr-1"} overflow-x-scroll`}>
+                <div className="flex justify-between mb-5">
+                    <Title title='viewPolicyDetails.viewPolicyDetails' subTitle='viewPolicyDetails.policySection' backLink='/partnermanagement/policies/policies-list' styleSet={style} />
+                </div>
+                <div className="bg-snow-white h-fit mt-1 rounded-t-xl shadow-lg ml-3">
+                    <div className={`flex-col ${isLoginLanguageRTL ? "pr-8" : "pl-8"} pt-6 pb-5`}>
+                        <p id='view_policy_details_policy_id' className="text-lg text-dark-blue mb-3">{t('policies.policyId')}: <span className="font-semibold">{policyDetails.policyId}</span></p>
+                        <div className="flex items-center justify-start">
+                            <div id='view_policy_details_status'
+                                className={`${bgOfStatus(
+                                    policyDetails.status
+                                )}flex w-fit py-1.5 px-3 text-sm rounded-md font-semibold`}
+                            >
+                                {getStatusCode(policyDetails.status, t)}
+                            </div>
+                            <div id='view_policy_details_created_on' className={`font-semibold ${isLoginLanguageRTL ? "mr-3" : "ml-3"} text-sm text-dark-blue`}>
+                                {t("viewPolicyDetails.createdOn") + ' ' +
+                                    formatDate(policyDetails.createdDateTime, "date")}
+                            </div>
+                            <div className="mx-3 text-gray-300">|</div>
+                            <div id='view_policy_details_created_date-time' className="font-semibold text-sm text-dark-blue">
+                                {formatDate(policyDetails.createdDateTime, "time")}
+                            </div>
+                        </div>
+                    </div>
+                    <hr className="h-px w-full bg-gray-200 border-0" />
+                    <div className={`${isLoginLanguageRTL ? "pr-8 ml-8" : "pl-8 mr-8"} pt-6 mb-4`}>
+                        <div className="flex flex-wrap">
+                            <div className={`w-[49%] mb-4 ${isLoginLanguageRTL ? "ml-[1%]" : "mr-[1%]"}`}>
+                                <p id='policy_details_partner_id_label' className="font-semibold text-suva-gray text-sm">
+                                    {t("viewPolicyDetails.partnerId")}
+                                </p>
+                                <p id='policy_details_partner_id_context' className="font-semibold text-vulcan text-base">
+                                    {policyDetails.partnerId}
+                                </p>
+                            </div>
+                            <div className="mb-5 w-[50%]">
+                                <p id='policy_details_partner_type_label' className="font-semibold text-suva-gray text-sm">
+                                    {t("viewPolicyDetails.partnerType")}
+                                </p>
+                                <p id='policy_details_partner_type_context' className="font-semibold text-vulcan text-base">
+                                    {getPartnerTypeDescription(policyDetails.partnerType, t)}
+                                </p>
+                            </div>
+                        </div>
+                        <hr className="h-px w-full bg-gray-200 border-0" />
+                        <div className="flex flex-wrap pt-4">
+                            <div className={`w-[49%] ${isLoginLanguageRTL ? "ml-[1%]" : "mr-[1%]"}`}>
+                                <p id='policy_details_policy_group_name_label' className="font-semibold text-suva-gray text-sm">
+                                    {t("viewPolicyDetails.policyGroupName")}
+                                </p>
+                                <p id='policy_details_policy_group_name_context' className="font-semibold text-vulcan text-base">
+                                    {policyDetails.policyGroupName}
+                                </p>
+                            </div>
+                            <div className="w-[50%]">
+                                <p id='policy_details_policy_name_label' className="font-semibold text-suva-gray text-sm">
+                                    {t("viewPolicyDetails.policyName")}
+                                </p>
+                                <p id='policy_details_policy_name_context' className="font-semibold text-vulcan text-base">
+                                    {policyDetails.policyName}
+                                </p>
+                            </div>
+                            <div className={`w-[49%] my-5 ${isLoginLanguageRTL ? "ml-[1%]" : "mr-[1%]"}`}>
+                                <p id='policy_details_policy_group_description_label' className="font-semibold text-suva-gray text-sm">
+                                    {t("viewPolicyDetails.policyGroupDescription")}
+                                </p>
+                                <p id='policy_details_policy_group_description_context' className="font-semibold text-vulcan text-base">
+                                    {policyDetails.policyGroupDescription}
+                                </p>
+                            </div>
+                            <div className="w-[50%]  my-5">
+                                <p id='policy_details_policy_name_description_label' className="font-semibold text-suva-gray text-sm">
+                                    {t("viewPolicyDetails.policyNameDescription")}
+                                </p>
+                                <p id='policy_details_policy_name_description_context' className="font-semibold text-vulcan text-base">
+                                    {policyDetails.policyDescription}
+                                </p>
+                            </div>
+                        </div>
+                        <hr className="h-px w-full bg-gray-200 border-0" />
+                        <div className="mt-3">
+                            <p id='policy_details_comments' className="font-semibold text-vulcan text-base mb-3">
+                                {t("viewPolicyDetails.comments")}
+                            </p>
+                            <div>
+                                <div className="flex font-semibold">
+                                    <span className={`w-8 h-8 rounded-full flex justify-center items-center ${isLoginLanguageRTL ? "ml-3" : "mr-3"} text-sm text-white lg:w-10 lg:h-10`}>
+                                        <div className={`relative flex-1 after:content-['']  after:w-0.5 after:h-[4rem] after:bg-gray-200 after:inline-block after:absolute ${isLoginLanguageRTL ? "after:right-[1.2rem]" : "after:left-[1.2rem]"} after:mt-7`}></div>
+                                        <img src={adminImage} alt="Example" className="w-8 h-8" id='admin_image' />
+                                    </span>
+                                    <div className="flex bg-floral-white w-full flex-col p-4 relative rounded-md overflow-hidden">
+                                        <div className={`w-0 h-0 border-t-[0.5rem] border-t-transparent border-b-[0.5rem] border-b-transparent absolute top-4 ${isLoginLanguageRTL ? "-right-[0.38rem] border-l-[7px] border-l-[#FFF9F0]" : "-left-[0.38rem] border-r-[7px] border-r-[#FFF9F0]"}`}></div>
+                                        <h4 id='policy_details_admin_comments' className="text-sm  text-[#031640]">
+                                            {t("viewPolicyDetails.adminComments")}
+                                        </h4>
+                                        <div className="flex items-center justify-start mt-4 w-[79rem]">
+                                            <div id='policy_details_status' className={`${bgOfStatus(policyDetails.status)}flex w-fit py-1.5 px-3 text-sm rounded-md`}>
+                                                {getStatusCode(policyDetails.status, t)}
+                                            </div>
+                                            <div>
+                                                {policyDetails.updatedDateTime && (
+                                                    <div className="flex">
+                                                        <div id='policy_details_updated_date' className={`font-semibold ${isLoginLanguageRTL ? "mr-3" : "ml-3"} text-sm text-dark-blue`}>
+                                                            {formatDate(policyDetails.updatedDateTime, "date")}
+                                                        </div>
+                                                        <div className="mx-3 text-gray-300">|</div>
+                                                        <div id='policy_details_updated_time' className="font-semibold text-sm text-dark-blue">
+                                                            {formatDate(policyDetails.updatedDateTime, "time")}
+                                                        </div>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="mt-4">
+                                    <div className="flex font-semibold">
+                                        <span className={`w-8 h-8 rounded-full flex justify-center items-center ${isLoginLanguageRTL ? "ml-3" : "mr-3"} text-sm lg:w-10 lg:h-10`}>
+                                            <img src={partnerImage} alt="Example" className="w-8 h-8" />
+                                        </span>
+                                        <div className="flex bg-alice-green w-full flex-col p-4 relative rounded-md overflow-hidden">
+                                            <div className={`w-0 h-0 border-t-[0.5rem] border-t-transparent border-b-[0.5rem] border-b-transparent absolute top-4 ${isLoginLanguageRTL ? "-right-[0.38rem] border-l-[#F2F5FC] border-l-[7px]" : "-left-[0.38rem] border-r-[#F2F5FC] border-r-[7px]"}`}></div>
+                                            <h4 id='policy_details_partner_comments_label' className="text-sm text-[#031640]">
+                                                {t("viewPolicyDetails.partnerComment")}
+                                            </h4>
+                                            <span id='policy_details_partner_comments_context' className="text-sm mt-3 break-words">
+                                                {policyDetails.partnerComment}
+                                            </span>
+                                            <hr className="h-px w-full bg-gray-200 border-0 my-4" />
+                                            <div className="flex items-center justify-start">
+                                                <div id='policy_details_created_on' className="font-semibold text-sm text-dark-blue">
+                                                    {t("viewPolicyDetails.createdOn") + ' ' +
+                                                        formatDate(policyDetails.createdDateTime, "date")}
+                                                </div>
+                                                <div className="mx-3 text-gray-300">|</div>
+                                                <div id='policy_details_created_date_time' className="font-semibold text-sm text-dark-blue">
+                                                    {formatDate(policyDetails.createdDateTime, "time")}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr className="h-px w-full bg-gray-200 border-0" />
+                    <div className={`flex justify-end py-5 ${isLoginLanguageRTL ? "ml-8" : "mr-8"}`}>
+                        <button id="view_policy_back_btn"
+                            onClick={() => moveToPolicies(navigate)}
+                            className="h-10 w-28 text-sm p-3 py-2 text-tory-blue bg-white border border-blue-800 font-semibold rounded-md text-center"
+                        >
+                            {t("viewPolicyDetails.back")}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </>
     );
-
-    const credentialData = credentialResponse?.data?.response || {};
-
-    // ✅ Bio Extractors API
-    const bioResponse = await HttpService.get(
-      getPartnerManagerUrl(
-        `/partners/${partnerId}/bioextractors/${policyId}`,
-        process.env.NODE_ENV
-      )
-    );
-
-    const bioExtractors =
-      bioResponse?.data?.response?.extractors ||
-      bioResponse?.data?.response ||
-      [];
-
-    setMappedPolicy({
-      extractors: bioExtractors,
-      credentialTypes: credentialData   // 👈 important
-    });
-
-  } catch (error) {
-    console.error("Error fetching data:", error);
-    setErrorMsg(t("viewPolicyDetails.mappedPolicyFetchError"));
-  } finally {
-    setDataLoaded(true);
-  }
-};
-
-  fetchAllData();
-
-}, [policyDetails]);
-
-const resolvedPolicyDetails = policyDetails;
-
-    const viewLabel = (value) => value || NOT_MAPPED;
-
-  const biometricMappings = useMemo(() => {
-  const possibleMappings = mappedPolicy?.extractors || [];
-
-  const mappings = possibleMappings;
-
-  return mappings.map((mapping) => {
-    return {
-      biometricModality:
-        mapping?.bioModality ||
-        mapping?.biometric ||
-        mapping?.bio_modality ||
-        "",
-
-      biometricProviderConfiguration:
-        mapping?.configName ||                          
-        mapping?.bioExtractorConfigurationName ||
-        mapping?.bioExtractorConfigName ||
-        mapping?.attributeName ||                       
-        "Not Mapped",
-
-      providerVersion:
-        mapping?.bioextractorProviderVersion ||        
-        mapping?.extractor?.version ||                 
-        "Not Mapped",
-
-      providerName:
-        mapping?.bioextractorProviderName ||            
-        mapping?.extractor?.provider ||                 
-        "Not Mapped"
-    };
-  });
-  }, [mappedPolicy]);
-
-  const credentialType =
-  mappedPolicy?.credentialTypes?.credentialTypes?.join(", ") || "";
-
-  return (
-    <div className={`w-full p-5 bg-anti-flash-white h-full break-words font-inter mb-[2%] ${isLoginLanguageRTL ? "mr-20 ml-1" : "ml-20 mr-1"} overflow-x-scroll`}>
-      {!dataLoaded && <LoadingIcon />}
-      {errorMsg && (
-        <ErrorMessage
-          id='view_policy_details_error_msg'
-          errorCode=''
-          errorMessage={errorMsg}
-          clickOnCancel={() => setErrorMsg("")}
-        />
-      )}
-      <div className="flex justify-between mb-5">
-        <Title title='viewPolicyDetails.viewPolicyDetails' subTitle='viewPolicyDetails.policySection' backLink='/partnermanagement/policies/policies-list' />
-      </div>
-
-      <div className="bg-snow-white h-fit mt-1 rounded-t-xl shadow-lg mx-4 px-4 pb-4">
-        <div className={`flex-col ${isLoginLanguageRTL ? "pr-8" : "pl-8"} pt-6 pb-5`}>
-          <p id='view_policy_details_policy_name_title' className='text-lg text-dark-blue mb-3 font-semibold'>
-            {viewLabel(resolvedPolicyDetails.policyName)}
-          </p>
-          <div className='flex items-center justify-start flex-wrap gap-y-2'>
-            <div id='view_policy_details_status' className={`${bgOfStatus(resolvedPolicyDetails.status)} flex w-fit py-1.5 px-3 text-sm rounded-md font-semibold`}>
-              {getStatusCode(resolvedPolicyDetails.status, t)}
-            </div>
-            <div id='view_policy_details_created_on' className={`font-semibold ${isLoginLanguageRTL ? "mr-3" : "ml-3"} text-sm text-dark-blue`}>
-              {t("viewPolicyDetails.createdOn")} {formatDate(resolvedPolicyDetails.createdDateTime, "date")}
-            </div>
-            <div className='mx-3 text-gray-300'>|</div>
-            <div id='view_policy_details_created_date-time' className='font-semibold text-sm text-dark-blue'>
-              {formatDate(resolvedPolicyDetails.createdDateTime, "time")}
-            </div>
-          </div>
-        </div>
-
-      <div className="px-8 py-6 space-y-6">
-
-        {/* ROW 1 */}
-        <div className="grid grid-cols-2 gap-10">
-          <div>
-            <p className="text-suva-gray text-sm font-semibold">
-              {t("viewPolicyDetails.partnerId")}
-            </p>
-            <p className="text-vulcan text-base font-semibold">
-              {viewLabel(resolvedPolicyDetails.partnerId)}
-            </p>
-          </div>
-
-          <div>
-            <p className="text-suva-gray text-sm font-semibold">
-              {t("viewPolicyDetails.partnerType")}
-            </p>
-            <p className="text-vulcan text-base font-semibold">
-              {t("partnerTypes.credentialPartner")}
-            </p>
-          </div>
-        </div>
-
-        <hr className="border-gray-200" />
-
-        {/* ROW 2 */}
-        <div className="grid grid-cols-2 gap-10">
-          <div>
-            <p className="text-suva-gray text-sm font-semibold">
-              {t("viewPolicyDetails.policyGroupName")}
-            </p>
-            <p className="text-vulcan text-base font-semibold">
-              {viewLabel(resolvedPolicyDetails.policyGroupName)}
-            </p>
-          </div>
-
-          <div>
-            <p className="text-suva-gray text-sm font-semibold">
-              {t("viewPolicyDetails.policyName")}
-            </p>
-            <p className="text-vulcan text-base font-semibold">
-              {viewLabel(resolvedPolicyDetails.policyName)}
-            </p>
-          </div>
-        </div>
-
-        {/* ROW 3 */}
-        <div className="grid grid-cols-2 gap-10">
-          <div>
-            <p className="text-suva-gray text-sm font-semibold">
-              {t("viewPolicyDetails.policyGroupDescription")}
-            </p>
-            <p className="text-vulcan text-base font-semibold">
-              {viewLabel(resolvedPolicyDetails.policyGroupDescription)}
-            </p>
-          </div>
-
-          <div>
-            <p className="text-suva-gray text-sm font-semibold">
-              {t("viewPolicyDetails.policyNameDescription")}
-            </p>
-            <p className="text-vulcan text-base font-semibold">
-              {viewLabel(resolvedPolicyDetails.policyDescription)}
-            </p>
-          </div>
-        </div>
-
-      </div>
-
-                    <div className='mt-6 border border-[#D5D8E3] rounded-md'>
-
-            {/* HEADER */}
-            <div className='px-6 py-4 bg-anti-flash-white border-b border-[#D5D8E3]'>
-              <p className='font-semibold text-vulcan text-base'>
-                {t("viewPolicyDetails.biometricMapping")}
-              </p>
-            </div>
-            <div className='p-6'>  
-
-          <table className='text-left text-sm border border-[#E7E7E7] w-full mx-auto border-separate border-spacing-0'>
-
-                <thead className='text-suva-gray'>
-                  <tr>
-                    <th className='p-3 font-semibold border-b border-[#E7E7E7]'>
-                      {t("viewPolicyDetails.biometricModality")}
-                    </th>
-                    <th className='p-3 font-semibold border-b border-[#E7E7E7]'>
-                      {t("viewPolicyDetails.biometricProviderConfiguration")}
-                    </th>
-                    <th className='p-3 font-semibold border-b border-[#E7E7E7]'>
-                      {t("viewPolicyDetails.biometricProviderVersion")}
-                    </th>
-                    <th className='p-3 font-semibold border-b border-[#E7E7E7]'>
-                      {t("viewPolicyDetails.biometricProviderName")}
-                    </th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                  {biometricMappings.length > 0 ? (
-                    biometricMappings.map((mapping, index) => (
-                      <tr key={index} className='even:bg-[#F8F8F8]'>
-                        <td className='p-3 border-b border-[#E7E7E7] break-words max-w-[200px] whitespace-normal'>
-                          {viewLabel(mapping.biometricModality)}
-                        </td>
-                        <td className='p-3 border-b border-[#E7E7E7] break-words max-w-[200px] whitespace-normal'>
-                          {viewLabel(mapping.biometricProviderConfiguration)}
-                        </td>
-                        <td className='p-3 border-b border-[#E7E7E7] break-words max-w-[200px] whitespace-normal'>
-                          {viewLabel(mapping.providerVersion)}
-                        </td>
-                        <td className='p-3 border-b border-[#E7E7E7] break-words max-w-[200px] whitespace-normal'>
-                          {viewLabel(mapping.providerName)}
-                        </td>
-                      </tr>
-                    ))
-                  ) : (
-                    <tr>
-                      <td className='p-3 border-b'>Not Mapped</td>
-                      <td className='p-3 border-b'>Not Mapped</td>
-                      <td className='p-3 border-b'>Not Mapped</td>
-                      <td className='p-3 border-b'>Not Mapped</td>
-                    </tr>
-                  )}
-                </tbody>
-
-              </table>
-            
-            </div>
-
-          </div>
-
-          <hr className='h-px w-full bg-gray-200 border-0 mt-6' />
-
-          <div className='mt-6 px-6 py-4'>
-            <p className='font-semibold text-suva-gray text-sm'>{t("viewPolicyDetails.credentialType")}</p>
-            <p className='font-semibold text-vulcan text-base'>{viewLabel(credentialType)}</p>
-          </div>
-
-          <hr className='h-px w-full bg-gray-200 border-0' />
-
-          
-        
-
-        <hr className='h-px w-full bg-gray-200 border-0' />
-        <div className={`flex justify-end py-5 ${isLoginLanguageRTL ? "ml-8" : "mr-8"}`}>
-          <button
-            id='view_policy_back_btn'
-            onClick={() => navigate(-1)}
-            className='h-10 w-28 text-sm p-3 py-2 text-tory-blue bg-white border border-blue-800 font-semibold rounded-md text-center'
-          >
-            {t("viewPolicyDetails.back")}
-          </button>
-        </div>
-      </div>
-      </div>
-   
-  );
 }
 
 export default ViewPolicyDetails;

@@ -38,7 +38,8 @@
         "networkErrorDesc": "Please check your internet connection and try again.",
         "retry": "Retry",
         "yes": "Yes",
-        "no": "No"
+        "no": "No",
+        "notMapped": "Not Mapped"
     },
     "dashboard": {
         "welcomeMsg": "Welcome {{firstName}} {{lastName}}",

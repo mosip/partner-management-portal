@@ -38,7 +38,8 @@
         "networkErrorDesc": "يرجى التحقق من اتصالك بالإنترنت ثم المحاولة مرة أخرى.",
         "retry": "إعادة المحاولة",
         "yes": "نعم",
-        "no": "لا"
+        "no": "لا",
+        "notMapped": "غير متوفر"
     },
     "dashboard": {
         "welcomeMsg": "مرحباً {{firstName}} {{lastName}}",

@@ -87,9 +87,15 @@ function PoliciesList() {
 
   const showViewPolicyDetails = (selectedPolicyData) => {
     sessionStorage.setItem('selectedPolicyAttributes', JSON.stringify(selectedPolicyData));
-    navigate('/partnermanagement/policies/view-policy-details', {
-      state: { selectedPolicyData }
-    });
+    if (selectedPolicyData.partnerType?.toLowerCase().includes("credential")) {
+  navigate('/partnermanagement/policies/view-credential-policy-details', {
+    state: { selectedPolicyData }
+  });
+} else {
+  navigate('/partnermanagement/policies/view-policy-details', {
+    state: { selectedPolicyData }
+  });
+}
   };
 
   const cancelErrorMsg = () => {
