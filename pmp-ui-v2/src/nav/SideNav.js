@@ -15,7 +15,6 @@ function SideNav({ open, policyRequiredPartnerTypes }) {
     const { t } = useTranslation();
     const [enablePoliciesMenu, setEnablePoliciesMenu] = useState(false);
     const [enableAuthenticationServicesMenu, setEnableAuthenticationServicesMenu] = useState(false);
-    const [enableCredentialServicesMenu, setEnableCredentialServicesMenu] = useState(false);
     const [enableDeviceProviderServicesMenu, setEnableDeviceProviderServicesMenu] = useState(false);
     const [enableFtmServicesMenu, setEnableFtmServicesMenu] = useState(false);
     const [enablePartnerAdminMenu, setEnablePartnerAdminMenu] = useState(false);
@@ -36,8 +35,6 @@ function SideNav({ open, policyRequiredPartnerTypes }) {
             setActiveIcon("policies");
         } else if (selectedPath.includes('authentication-services')) {
             setActiveIcon("authenticationServices");
-        } else if (selectedPath.includes('credential-services')) {
-            setActiveIcon("credentialServices");
         } else if (selectedPath.includes('device-provider-services')) {
             setActiveIcon('deviceProviderServices');
         } else if (selectedPath.includes('biometric-provider-configuration')) {
@@ -52,8 +49,6 @@ function SideNav({ open, policyRequiredPartnerTypes }) {
             setActiveIcon("partnerPolicyMapping");
         } else if (selectedPath.includes('misp-partner-services')) {
             setActiveIcon("mispPartnerServices");
-        } else if (selectedPath.includes('manual-adjudication-services')) {
-            setActiveIcon("manualAdjudicationServices");
         }
         else {
             setActiveIcon("home");
@@ -71,13 +66,8 @@ function SideNav({ open, policyRequiredPartnerTypes }) {
         if (userRoles.some(role => policyRequiredPartnerTypes.includes(role))) {
             setEnablePoliciesMenu(true);
         }
-
         if (rolesArray.includes("AUTH_PARTNER")) {
             setEnableAuthenticationServicesMenu(true);
-        }
-
-        if (rolesArray.includes("CREDENTIAL_PARTNER")) {
-            setEnableCredentialServicesMenu(true);
         }
         if (rolesArray.includes("DEVICE_PROVIDER")) {
             setEnableDeviceProviderServicesMenu(true);
@@ -108,11 +98,6 @@ function SideNav({ open, policyRequiredPartnerTypes }) {
     const showAuthenticationServices = () => {
         navigate('/partnermanagement/authentication-services/oidc-clients-list');
         setActiveIcon("authenticationServices");
-    };
-
-    const showCredentialServices = () => {
-        navigate('/partnermanagement/credential-services');
-        setActiveIcon("credentialServices");
     };
     const showDeviceProviderServices = () => {
         navigate('/partnermanagement/device-provider-services/sbi-list');
@@ -146,10 +131,6 @@ function SideNav({ open, policyRequiredPartnerTypes }) {
         navigate('/partnermanagement/admin/biometric-provider-configuration-list');
     };
 
-    const showAdminCredentialServices = () => {
-        navigate('/partnermanagement/admin/credential-services');
-    };
-
     return (
         <div className="font-inter bg-white z-40">
             <div className={`fixed top-14 bottom-0 ${isLoginLanguageRTL ? "right-0" : "left-0"} ${open ? "w-[16rem]" : "w-[4.5rem]"} flex-col duration-500`}>
@@ -168,23 +149,8 @@ function SideNav({ open, policyRequiredPartnerTypes }) {
                         </button>
                     }
                     {!enablePartnerAdminMenu && !enablePolicyManagerMenu && enableAuthenticationServicesMenu &&
-                        <button id='side_nav_authentication_service_icon' className="duration-700 cursor-pointer" onClick={showAuthenticationServices}>
-                            <SideNavMenuItem
-                                title={t('dashboard.authenticationServices')}
-                                id='authenticationServices'
-                                isExpanded={open}
-                                activeIcon={activeIcon}
-                            />
-                        </button>
-                    }
-                    {!enablePartnerAdminMenu && !enablePolicyManagerMenu && enableCredentialServicesMenu &&
-                        <button id='side_nav_credential_service_icon' className="duration-700 cursor-pointer" onClick={showCredentialServices}>
-                            <SideNavMenuItem
-                                title={t('dashboard.credentialServices')}
-                                id='credentialServices'
-                                isExpanded={open}
-                                activeIcon={activeIcon}
-                            />
+                        <button id='side_nav_authentication_service_icon' className="duration-700 cursor-pointer" onClick={() => showAuthenticationServices()}>
+                            <SideNavMenuItem title={t('dashboard.authenticationServices')} id='authenticationServices' isExpanded={open} activeIcon={activeIcon} />
                         </button>
                     }
                     {!enablePartnerAdminMenu && !enablePolicyManagerMenu && enableDeviceProviderServicesMenu &&
@@ -235,21 +201,12 @@ function SideNav({ open, policyRequiredPartnerTypes }) {
                                 <SideNavMenuItem title={t('dashboard.mispPartnerServices')} id='mispPartnerServices' isExpanded={open} activeIcon={activeIcon} />
                             </button>
 
-                            <button id='side_nav_adminCredentialServices_icon' className="duration-700 cursor-pointer" onClick={() => showAdminCredentialServices()}>
-                                <SideNavMenuItem title={t('dashboard.adminCredentialServicesTitle')} id='credentialServices' isExpanded={open} activeIcon={activeIcon} />
-                            </button>
-
                             <button id='side_nav_biometric_provider_configuration_icon' className="duration-700 cursor-pointer" onClick={() => showBiometricProviderConfiguration()}>
                                 <SideNavMenuItem title={t('dashboard.biometricProviderConfiguration')} id='biometricProviderConfiguration' isExpanded={open} activeIcon={activeIcon} />
                             </button>
 
-                            <button id='side_nav_manualAdjudicationServices_icon' className="duration-700 cursor-pointer" onClick={() => navigate('/partnermanagement/admin/manual-adjudication-services/api-keys-list')}>
-                                <SideNavMenuItem title={t('dashboard.manualAdjudication')} id='manualAdjudicationServices' isExpanded={open} activeIcon={activeIcon} />
-                            </button>
-
                         </>
                     )}
-                    <div className="pb-6"></div>
                 </div>
             </div>
         </div>
