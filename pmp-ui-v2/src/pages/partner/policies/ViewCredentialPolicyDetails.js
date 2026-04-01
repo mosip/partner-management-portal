@@ -53,7 +53,6 @@ useEffect(() => {
   try {
     setDataLoaded(false);
 
-    // ✅ Credential Types API
     const credentialResponse = await HttpService.get(
       getPartnerManagerUrl(
         `/partners/${partnerId}/policies/${policyId}/credential-types`,
@@ -63,7 +62,6 @@ useEffect(() => {
 
     const credentialData = credentialResponse?.data?.response || {};
 
-    // ✅ Bio Extractors API
     const bioResponse = await HttpService.get(
       getPartnerManagerUrl(
         `/partners/${partnerId}/bioextractors/${policyId}`,
@@ -78,7 +76,7 @@ useEffect(() => {
 
     setMappedPolicy({
       extractors: bioExtractors,
-      credentialTypes: credentialData   // 👈 important
+      credentialTypes: credentialData   
     });
 
   } catch (error) {
