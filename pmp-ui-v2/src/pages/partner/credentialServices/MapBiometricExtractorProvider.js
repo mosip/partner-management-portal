@@ -30,14 +30,18 @@ function MapBiometricExtractorProvider() {
   const userProfile = getUserProfile();
   const isLoginLanguageRTL = isLangRTL(userProfile?.locale || "en");
 
+  const rowIdSeqRef = useRef(0);
+  const nextRowId = () => `row_${Date.now()}_${rowIdSeqRef.current++}`;
+  const initialRowIdRef = useRef(nextRowId());
+
   const [dataLoaded, setDataLoaded] = useState(true);
   const [errorCode, setErrorCode] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
-  const rowIdSeqRef = useRef(0);
-  const nextRowId = () => `row_${Date.now()}_${rowIdSeqRef.current++}`;
-  const [rows, setRows] = useState([{ id: nextRowId(), ...EMPTY_MAPPING_ROW }]);
+  const [rows, setRows] = useState([{ id: initialRowIdRef.current, ...EMPTY_MAPPING_ROW }]);
   const [isSubmitClicked, setIsSubmitClicked] = useState(false);
-  const [activeConfigs, setActiveConfigs] = useState({});
+  const [activeConfigs, setActiveConfigs] = useState(() => ({
+    [initialRowIdRef.current]: [],
+  }));
   const [configFetchErrorByRowId, setConfigFetchErrorByRowId] = useState({});
   const configReqVersionRef = useRef({});
 
