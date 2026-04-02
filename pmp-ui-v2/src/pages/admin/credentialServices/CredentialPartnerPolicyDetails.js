@@ -13,6 +13,7 @@ function CredentialPartnerPolicyDetails({
   enabled,
   variant,
   onLoadingChange,
+  onEligibilityChange,
 }) {
   const [bioLoading, setBioLoading] = useState(() => Boolean(enabled));
   const [bioError, setBioError] = useState('');
@@ -37,6 +38,17 @@ function CredentialPartnerPolicyDetails({
     if (!onLoadingChange) return;
     onLoadingChange(isLoading);
   }, [isLoading, onLoadingChange]);
+
+  const actionsDisabled = useMemo(() => {
+    if (!enabled) return false;
+    if (bioLoading) return false; // keep disabled state controlled by loading in popup
+    return Boolean(bioError) || bioExtractors.length === 0;
+  }, [enabled, bioLoading, bioError, bioExtractors.length]);
+
+  useEffect(() => {
+    if (!onEligibilityChange) return;
+    onEligibilityChange(actionsDisabled);
+  }, [actionsDisabled, onEligibilityChange]);
 
   const getModalityLabel = (modality) => {
     if (!modality) return '-';
@@ -300,7 +312,7 @@ function CredentialPartnerPolicyDetails({
         </p>
       ) : (
         <p className={`text-base font-semibold text-[#191919] break-words ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>
-          {credentialType || t('commons.notAvailable', 'Not available')}
+          {credentialType || 'NA'}
         </p>
       )}
     </div>
@@ -348,6 +360,7 @@ CredentialPartnerPolicyDetails.propTypes = {
   enabled: PropTypes.bool,
   variant: PropTypes.oneOf(['popup', 'view']).isRequired,
   onLoadingChange: PropTypes.func,
+  onEligibilityChange: PropTypes.func,
 };
 
 export default CredentialPartnerPolicyDetails;

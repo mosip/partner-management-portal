@@ -354,6 +354,19 @@
         "approvePopupTitle": "Voulez-vous approuver la demande de politique du partenaire ?",
         "approvePopupDesc": "En cliquant sur Confirmer, la liaison de la politique de partenariat sera approuvée."
     },
+    "mapCredentialType": {
+        "title": "Mapper le type d’identifiant",
+        "mappingSectionTitle": "Cartographie du type d’identifiant",
+        "credentialType*": "Type d’identifiant",
+        "selectCredentialType": "Sélectionnez le type d’identifiant",
+        "addMore": "Ajouter plus",
+        "delete": "Supprimer",
+        "validationMsg": "Veuillez sélectionner le type d’identifiant pour toutes les lignes.",
+        "saveError": "Lors de l’enregistrement de la cartographie du type d’identifiant, nous avons rencontré une erreur.",
+        "successHeader": "Tous les détails ont été soumis avec succès !",
+        "successMsgLine1": "La demande de politique, y compris la cartographie du fournisseur d’extracteur biométrique et du type d’identifiant, a été soumise avec succès.",
+        "successMsgLine2": "L’approbation est en attente auprès de l’administrateur."
+    },
     "authenticationServices": {
         "authenticationServices": "Services d'authentification",
         "oidcClient": "Client OIDC",
@@ -1215,7 +1228,7 @@
         "bioExtractorProviderMapping": "Cartographie du fournisseur d’extracteur biométrique",
         "credentialType": "Type d’identifiant",
         "noBioExtractors": "Aucun extracteur biométrique trouvé pour cette politique.",
-        "extractorsNotConfigured": "Les extracteurs ne sont pas configurés."
+        "extractorsNotConfigured": "Les extracteurs biométriques ne sont pas configurés. Veuillez demander au partenaire de configurer des extracteurs biométriques pour cette politique, puis réessayez."
     },
     "ftmRequestApproveRejectPopup": {
         "header": "Voulez-vous Approuver/Rejeter la puce FTM {{make}}-{{model}} ?",
@@ -1734,6 +1747,7 @@
         },
     "mapBiometricExtractorProvider": {
         "title": "Associer le fournisseur d'extracteur biométrique",
+        "addBioextractors": "Ajouter des bio-extracteurs",
         "mappingSectionTitle": "Configuration du fournisseur d'extracteur biométrique",
         "biometricModality": "Modalité biométrique",
         "selectBiometricModality": "Sélectionnez la modalité biométrique",

@@ -355,6 +355,19 @@
         "approvePopupTitle": "Do you want to approve Partner- Policy Request?",
         "approvePopupDesc": "On clicking Confirm, the Partner Policy Linking will be approved."
     },
+    "mapCredentialType": {
+        "title": "Map Credential Type",
+        "mappingSectionTitle": "Credential Type Mapping",
+        "credentialType*": "Credential Type",
+        "selectCredentialType": "Select Credential Type",
+        "addMore": "Add More",
+        "delete": "Delete",
+        "validationMsg": "Please select credential type for all rows.",
+        "saveError": "While saving credential type mapping, we have encountered with an error.",
+        "successHeader": "All Details Submitted Successfully!",
+        "successMsgLine1": "Policy request, including biometric extractor provider and credential type mappings, has been successfully submitted.",
+        "successMsgLine2": "Approval is pending with the administrator."
+    },
     "authenticationServices": {
         "authenticationServices": "Authentication Services",
         "oidcClient": "OIDC Client",
@@ -1211,7 +1224,7 @@
         "bioExtractorProviderMapping": "Biometric Extractor Provider Mapping",
         "credentialType": "Credential Type",
         "noBioExtractors": "No bio extractors found for this policy.",
-        "extractorsNotConfigured": "Extractors are not configured."
+        "extractorsNotConfigured": "Bio extractors are not configured. Please ask the partner to configure bio extractors for this policy, then try again."
     },
     "ftmRequestApproveRejectPopup": {
         "header": "Do you want to Approve/Reject the FTM chip {{make}}-{{model}}?",
@@ -1730,6 +1743,7 @@
         },
     "mapBiometricExtractorProvider": {
         "title": "Map Biometric Extractor Provider",
+        "addBioextractors": "Add Bioextractors",
         "mappingSectionTitle": "Map Biometric Extractor Provider Configuration",
         "biometricModality": "Biometric Modality",
         "selectBiometricModality": "Select Biometric Modality",

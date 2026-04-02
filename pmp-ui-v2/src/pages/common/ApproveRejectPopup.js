@@ -28,6 +28,7 @@ function ApproveRejectPopup({
     const hasPolicyDetails = typeof renderPolicyDetails === 'function';
 
     const [policyDetailsLoading, setPolicyDetailsLoading] = useState(() => Boolean(hasPolicyDetails));
+    const [policyActionsDisabled, setPolicyActionsDisabled] = useState(false);
 
     useEffect(() => {
         const previousOverflow = document.body.style.overflow;
@@ -177,6 +178,7 @@ function ApproveRejectPopup({
                                                     isLoginLanguageRTL,
                                                     popupData,
                                                     onLoadingChange: setPolicyDetailsLoading,
+                                                    onEligibilityChange: setPolicyActionsDisabled,
                                                     getPartnerTypeDescription,
                                                 })}
                                             </div>
@@ -188,8 +190,8 @@ function ApproveRejectPopup({
                                             id="reject_btn"
                                             onClick={() => handleStatusChange('rejected')}
                                             type="button"
-                                            disabled={policyDetailsLoading}
-                                            className={`w-32 h-9 border-[#1447B2] border rounded-md text-tory-blue ${policyDetailsLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                            disabled={policyDetailsLoading || policyActionsDisabled}
+                                            className={`w-32 h-9 border-[#1447B2] border rounded-md text-tory-blue ${(policyDetailsLoading || policyActionsDisabled) ? 'opacity-50 cursor-not-allowed' : ''}`}
                                         >
                                             {t('approveRejectPopup.reject')}
                                         </button>
@@ -197,8 +199,8 @@ function ApproveRejectPopup({
                                             id="approve_btn"
                                             onClick={() => handleStatusChange('approved')}
                                             type="button"
-                                            disabled={policyDetailsLoading}
-                                            className={`w-32 h-9 border-[#1447B2] border rounded-md bg-tory-blue text-white ${policyDetailsLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                            disabled={policyDetailsLoading || policyActionsDisabled}
+                                            className={`w-32 h-9 border-[#1447B2] border rounded-md bg-tory-blue text-white ${(policyDetailsLoading || policyActionsDisabled) ? 'opacity-50 cursor-not-allowed' : ''}`}
                                         >
                                             {t('approveRejectPopup.approve')}
                                         </button>

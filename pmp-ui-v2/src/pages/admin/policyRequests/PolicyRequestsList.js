@@ -362,7 +362,7 @@ function PolicyRequestsList() {
                                                   description={t('partnerPolicyRequestApproveRejectPopup.description')}
                                                   renderPolicyDetails={
                                                     String(selectedPolicyRequest?.partnerType ?? '').toUpperCase() === 'CREDENTIAL_PARTNER'
-                                                      ? ({ t, isLoginLanguageRTL, popupData, onLoadingChange, getPartnerTypeDescription }) => (
+                                                      ? ({ t, isLoginLanguageRTL, popupData, onLoadingChange, onEligibilityChange, getPartnerTypeDescription }) => (
                                                           <CredentialPartnerPolicyDetails
                                                             t={t}
                                                             isLoginLanguageRTL={isLoginLanguageRTL}
@@ -372,6 +372,7 @@ function PolicyRequestsList() {
                                                             enabled={true}
                                                             variant="popup"
                                                             onLoadingChange={onLoadingChange}
+                                                            onEligibilityChange={onEligibilityChange}
                                                           />
                                                         )
                                                       : undefined

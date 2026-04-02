@@ -354,6 +354,19 @@
         "approvePopupTitle": "هل تريد الموافقة على طلب سياسة الشريك؟",
         "approvePopupDesc": "عند النقر فوق تأكيد، سيتم الموافقة على ربط سياسة الشريك."
     },
+    "mapCredentialType": {
+        "title": "ربط نوع بيانات الاعتماد",
+        "mappingSectionTitle": "ربط نوع بيانات الاعتماد",
+        "credentialType*": "نوع بيانات الاعتماد",
+        "selectCredentialType": "اختر نوع بيانات الاعتماد",
+        "addMore": "إضافة المزيد",
+        "delete": "حذف",
+        "validationMsg": "يرجى اختيار نوع بيانات الاعتماد لجميع الصفوف.",
+        "saveError": "أثناء حفظ ربط نوع بيانات الاعتماد، واجهنا خطأ.",
+        "successHeader": "تم إرسال جميع التفاصيل بنجاح!",
+        "successMsgLine1": "تم إرسال طلب السياسة، بما في ذلك ربط مزود مستخرج القياسات الحيوية وربط نوع بيانات الاعتماد، بنجاح.",
+        "successMsgLine2": "الموافقة قيد الانتظار لدى المسؤول."
+    },
     "authenticationServices": {
         "authenticationServices": "خدمات المصادقة",
         "oidcClient": "عميل OIDC",
@@ -1215,7 +1228,7 @@
         "bioExtractorProviderMapping": "ربط مزود مستخرج القياسات الحيوية",
         "credentialType": "نوع بيانات الاعتماد",
         "noBioExtractors": "لم يتم العثور على مستخرجات قياسات حيوية لهذه السياسة.",
-        "extractorsNotConfigured": "لم يتم تكوين المستخرجات."
+        "extractorsNotConfigured": "لم يتم تكوين مستخرجات القياسات الحيوية. يُرجى مطالبة الشريك بتكوين مستخرجات القياسات الحيوية لهذه السياسة ثم المحاولة مرة أخرى."
     },
     "ftmRequestApproveRejectPopup": {
         "header": "هل تريد الموافقة/الرفض على شريحة FTM {{make}}-{{model}}؟",
@@ -1733,6 +1746,7 @@
         },
     "mapBiometricExtractorProvider": {
         "title": "ربط مزود مستخرج القياسات الحيوية",
+        "addBioextractors": "إضافة مستخرجات حيوية",
         "mappingSectionTitle": "إعداد مزود مستخرج القياسات الحيوية",
         "biometricModality": "نوع القياسات الحيوية",
         "selectBiometricModality": "اختر نوع القياسات الحيوية",

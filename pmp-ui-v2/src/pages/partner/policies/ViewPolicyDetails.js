@@ -7,6 +7,7 @@ import { isLangRTL, formatDate, moveToPolicies, getStatusCode, getPartnerTypeDes
 import adminImage from "../../../svg/admin.png";
 import partnerImage from "../../../svg/partner.png";
 import Title from "../../common/Title";
+import CredentialPartnerPolicyDetails from "../../admin/credentialServices/CredentialPartnerPolicyDetails";
 
 function ViewPolicyDetails() {
     const { t } = useTranslation();
@@ -32,6 +33,8 @@ function ViewPolicyDetails() {
     const style = {
         backArrowIcon: "!mt-[6%]"
     }
+
+    const isCredentialPartner = String(policyDetails?.partnerType ?? '').toUpperCase() === 'CREDENTIAL_PARTNER';
 
     return (
         <>
@@ -115,6 +118,24 @@ function ViewPolicyDetails() {
                                 </p>
                             </div>
                         </div>
+
+                        {isCredentialPartner && (
+                            <>
+                                <hr className="h-px w-full bg-gray-200 border-0" />
+                                <div className="pt-6">
+                                    <CredentialPartnerPolicyDetails
+                                        t={t}
+                                        isLoginLanguageRTL={isLoginLanguageRTL}
+                                        partnerId={policyDetails?.partnerId}
+                                        policyId={policyDetails?.policyId}
+                                        partnerTypeLabel={getPartnerTypeDescription(policyDetails?.partnerType, t) ?? policyDetails?.partnerType ?? '-'}
+                                        enabled={true}
+                                        variant="view"
+                                    />
+                                </div>
+                            </>
+                        )}
+
                         <hr className="h-px w-full bg-gray-200 border-0" />
                         <div className="mt-3">
                             <p id='policy_details_comments' className="font-semibold text-vulcan text-base mb-3">
