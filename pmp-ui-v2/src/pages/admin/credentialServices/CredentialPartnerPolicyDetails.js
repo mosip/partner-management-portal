@@ -322,7 +322,7 @@ function CredentialPartnerPolicyDetails({
         </p>
       ) : (
         <p className={`text-base font-semibold text-[#191919] break-words ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>
-          {credentialType || 'NA'}
+          {credentialType || t('statusCodes.notAvailable')}
         </p>
       )}
     </div>

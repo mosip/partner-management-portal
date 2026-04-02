@@ -1757,6 +1757,7 @@
         "addMore": "Ajouter",
         "delete": "Supprimer",
         "validationMsg": "Veuillez mapper tous les champs du fournisseur d'extracteur biométrique avant de continuer.",
+        "configFetchError": "Impossible de charger les configurations du fournisseur biométrique. Veuillez réessayer.",
         "saveError": "Erreur lors de la configuration du fournisseur d'extracteur biométrique."
     },
     "unsavedChangesPopup": {

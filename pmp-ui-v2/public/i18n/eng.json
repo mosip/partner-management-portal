@@ -1753,6 +1753,7 @@
         "addMore": "Add More",
         "delete": "Delete",
         "validationMsg": "Please map all biometric extractor provider fields before proceeding.",
+        "configFetchError": "Unable to load biometric provider configurations. Please try again.",
         "saveError": "Error while mapping biometric extractor provider configuration."
     },
     "unsavedChangesPopup": {
