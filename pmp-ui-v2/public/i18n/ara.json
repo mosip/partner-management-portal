@@ -357,7 +357,7 @@
     "mapCredentialType": {
         "title": "ربط نوع بيانات الاعتماد",
         "mappingSectionTitle": "ربط نوع بيانات الاعتماد",
-        "credentialType*": "نوع بيانات الاعتماد",
+        "credentialType": "نوع بيانات الاعتماد",
         "selectCredentialType": "اختر نوع بيانات الاعتماد",
         "addMore": "إضافة المزيد",
         "delete": "حذف",

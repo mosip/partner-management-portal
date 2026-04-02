@@ -357,7 +357,7 @@
     "mapCredentialType": {
         "title": "Mapper le type d’identifiant",
         "mappingSectionTitle": "Cartographie du type d’identifiant",
-        "credentialType*": "Type d’identifiant",
+        "credentialType": "Type d’identifiant",
         "selectCredentialType": "Sélectionnez le type d’identifiant",
         "addMore": "Ajouter plus",
         "delete": "Supprimer",

@@ -358,7 +358,7 @@
     "mapCredentialType": {
         "title": "Map Credential Type",
         "mappingSectionTitle": "Credential Type Mapping",
-        "credentialType*": "Credential Type",
+        "credentialType": "Credential Type",
         "selectCredentialType": "Select Credential Type",
         "addMore": "Add More",
         "delete": "Delete",
