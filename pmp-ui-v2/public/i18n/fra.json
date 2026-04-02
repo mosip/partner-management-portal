@@ -1232,7 +1232,7 @@
         "bioExtractorProviderMapping": "Cartographie du fournisseur d’extracteur biométrique",
         "credentialType": "Type d’identifiant",
         "noBioExtractors": "Aucun extracteur biométrique trouvé pour cette politique.",
-        "extractorsNotConfigured": "Les extracteurs biométriques ne sont pas configurés. Veuillez demander au partenaire de configurer des extracteurs biométriques pour cette politique, puis réessayez."
+        "extractorsNotConfigured": "Les extracteurs biométriques ne sont pas configurés. Ajoutez des extracteurs biométriques pour cette politique."
     },
     "ftmRequestApproveRejectPopup": {
         "header": "Voulez-vous Approuver/Rejeter la puce FTM {{make}}-{{model}} ?",
