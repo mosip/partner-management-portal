@@ -122,7 +122,7 @@ function ViewPolicyDetails() {
                         {isCredentialPartner && (
                             <>
                                 <hr className="h-px w-full bg-gray-200 border-0" />
-                                <div className="pt-6">
+                                <div className="pt-6 pb-6">
                                     <CredentialPartnerPolicyDetails
                                         t={t}
                                         isLoginLanguageRTL={isLoginLanguageRTL}
@@ -137,7 +137,7 @@ function ViewPolicyDetails() {
                         )}
 
                         <hr className="h-px w-full bg-gray-200 border-0" />
-                        <div className="mt-3">
+                        <div className="mt-6">
                             <p id='policy_details_comments' className="font-semibold text-vulcan text-base mb-3">
                                 {t("viewPolicyDetails.comments")}
                             </p>
