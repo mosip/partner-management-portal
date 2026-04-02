@@ -971,7 +971,7 @@ function Dashboard() {
                   role='button'
                   id='dashboard_biometric_provider_configuration_card'
                   onClick={() => navigate('/partnermanagement/admin/biometric-provider-configuration-list')}
-                  className="relative min-h-[50%] p-6 pt-16 bg-white border border-gray-200 shadow cursor-pointer text-center rounded-xl"
+                  className="relative min-h-[50%] p-6 pt-16 bg-white border border-gray-200 shadow cursor-pointer text-center rounded-xl mb-4"
                   tabIndex="0"
                   onKeyDown={(e) => onPressEnterKey(e, () => navigate('/partnermanagement/admin/biometric-provider-configuration-list'))}
                 >
