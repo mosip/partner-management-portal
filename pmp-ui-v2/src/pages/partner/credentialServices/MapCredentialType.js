@@ -149,12 +149,21 @@ function MapCredentialType() {
       }
 
       if (credentialTypes.length > 0) {
+        const hasBioMappingContext =
+          selectedBioModalities.length > 0 || selectedBioProviderConfigurations.length > 0;
+
         setConfirmationData({
           title: "mapCredentialType.title",
           backUrl: "/partnermanagement/policies/policies-list",
-          header: "mapCredentialType.successHeader",
-          description: "mapCredentialType.successMsgLine1",
-          description1: "mapCredentialType.successMsgLine2",
+          header: hasBioMappingContext
+            ? "mapCredentialType.successHeader"
+            : "mapCredentialType.credentialOnlySuccessHeader",
+          description: hasBioMappingContext
+            ? "mapCredentialType.successMsgLine1"
+            : "mapCredentialType.credentialOnlySuccessMsgLine1",
+          description1: hasBioMappingContext
+            ? "mapCredentialType.successMsgLine2"
+            : "mapCredentialType.credentialOnlySuccessMsgLine2",
           subNavigation: "requestPolicy.policies",
         });
         setRequestPolicySuccess(true);

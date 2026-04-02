@@ -366,7 +366,10 @@
         "saveError": "أثناء حفظ ربط نوع بيانات الاعتماد، واجهنا خطأ.",
         "successHeader": "تم إرسال جميع التفاصيل بنجاح!",
         "successMsgLine1": "تم إرسال طلب السياسة، بما في ذلك ربط مزود مستخرج القياسات الحيوية وربط نوع بيانات الاعتماد، بنجاح.",
-        "successMsgLine2": "الموافقة قيد الانتظار لدى المسؤول."
+        "successMsgLine2": "الموافقة قيد الانتظار لدى المسؤول.",
+        "credentialOnlySuccessHeader": "تم إرسال نوع بيانات الاعتماد بنجاح!",
+        "credentialOnlySuccessMsgLine1": "تم إرسال ربط نوع بيانات الاعتماد بنجاح.",
+        "credentialOnlySuccessMsgLine2": "ستظل الموافقة محجوبة حتى يتم إكمال ربط مستخرجات القياسات الحيوية."
     },
     "authenticationServices": {
         "authenticationServices": "خدمات المصادقة",

@@ -366,7 +366,10 @@
         "saveError": "Lors de l’enregistrement de la cartographie du type d’identifiant, nous avons rencontré une erreur.",
         "successHeader": "Tous les détails ont été soumis avec succès !",
         "successMsgLine1": "La demande de politique, y compris la cartographie du fournisseur d’extracteur biométrique et du type d’identifiant, a été soumise avec succès.",
-        "successMsgLine2": "L’approbation est en attente auprès de l’administrateur."
+        "successMsgLine2": "L’approbation est en attente auprès de l’administrateur.",
+        "credentialOnlySuccessHeader": "Type d’identifiant soumis avec succès !",
+        "credentialOnlySuccessMsgLine1": "La cartographie du type d’identifiant a été soumise avec succès.",
+        "credentialOnlySuccessMsgLine2": "L’approbation restera bloquée tant que la cartographie des extracteurs biométriques n’est pas terminée."
     },
     "authenticationServices": {
         "authenticationServices": "Services d'authentification",

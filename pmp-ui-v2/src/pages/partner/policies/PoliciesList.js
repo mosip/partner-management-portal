@@ -107,6 +107,7 @@ function PoliciesList() {
     const mappingKey =
       selectedPolicyData?.mappingKey ??
       selectedPolicyData?.mappingkey ??
+      selectedPolicyData?.credentialSubType ??
       selectedPolicyData?.id ??
       selectedPolicyData?.mappingId ??
       "";
@@ -137,7 +138,7 @@ function PoliciesList() {
     // optimistic: allow until proven mapped (except approved/rejected)
     setActionEligibilityByKey((prev) => ({
       ...prev,
-      [key]: { loaded: false, bioMapped: false, credentialMapped: false, loading: true },
+      [key]: { loaded: false, bioMapped: false, credentialMapped: false, loading: true, error: false },
     }));
 
     try {
@@ -166,6 +167,8 @@ function PoliciesList() {
         return Boolean(String(provider || "").trim()) || Boolean(String(version || "").trim());
       };
 
+      let eligibilityError = false;
+
       // bioextractors mapping check
       if (partnerId && policyId) {
         const url = getPartnerManagerUrl(`/partners/${partnerId}/bioextractors/${policyId}`, process.env.NODE_ENV);
@@ -181,8 +184,8 @@ function PoliciesList() {
           const firstCode = data?.errors?.[0]?.errorCode;
           // PMS_PRT_064 => not configured yet => not mapped
           if (firstCode && firstCode !== "PMS_PRT_064") {
-            // unknown error: keep as not mapped (so user can try)
-            bioMapped = false;
+            // unknown error: fail closed until eligibility can be fetched reliably
+            eligibilityError = true;
           }
         }
       }
@@ -204,6 +207,9 @@ function PoliciesList() {
               credentialMapped = Boolean(String(value || "").trim());
             }
           }
+        } else {
+          // unexpected response shape => fail closed
+          eligibilityError = true;
         }
       } else if (partnerId && policyName) {
         // If we don't have policyId, we can't reliably check. Keep enabled.
@@ -212,12 +218,12 @@ function PoliciesList() {
 
       setActionEligibilityByKey((prev) => ({
         ...prev,
-        [key]: { loaded: true, bioMapped, credentialMapped, loading: false },
+        [key]: { loaded: true, bioMapped, credentialMapped, loading: false, error: eligibilityError },
       }));
     } catch (e) {
       setActionEligibilityByKey((prev) => ({
         ...prev,
-        [key]: { loaded: true, bioMapped: false, credentialMapped: false, loading: false },
+        [key]: { loaded: true, bioMapped: false, credentialMapped: false, loading: false, error: true },
       }));
     }
   };
@@ -389,8 +395,8 @@ function PoliciesList() {
                                               const eligibility = actionEligibilityByKey[key] || {};
                                               const finalStatus = isFinalStatus(partner?.status);
                                               const isEligibilityLoading = eligibility.loading || !eligibility.loaded;
-                                              const disableBio = finalStatus || isEligibilityLoading || Boolean(eligibility.bioMapped);
-                                              const disableCredential = finalStatus || isEligibilityLoading || Boolean(eligibility.credentialMapped);
+                                              const disableBio = finalStatus || isEligibilityLoading || Boolean(eligibility.error) || Boolean(eligibility.bioMapped);
+                                              const disableCredential = finalStatus || isEligibilityLoading || Boolean(eligibility.error) || Boolean(eligibility.credentialMapped);
 
                                               const disabledItemClass = "text-[#A5A5A5] cursor-default pointer-events-none";
                                               const enabledItemClass = "cursor-pointer hover:bg-gray-100";

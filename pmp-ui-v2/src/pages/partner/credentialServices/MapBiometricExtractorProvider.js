@@ -26,7 +26,8 @@ function MapBiometricExtractorProvider() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { state } = useLocation();
-  const hasRequiredState = Boolean(state?.partnerId && state?.mappingKey);
+  // Required for submit + next step
+  const hasRequiredState = Boolean(state?.partnerId && state?.policyId && state?.policyName);
   const userProfile = getUserProfile();
   const isLoginLanguageRTL = isLangRTL(userProfile?.locale || "en");
 
@@ -206,7 +207,7 @@ function MapBiometricExtractorProvider() {
   };
 
   const isFormValid = () => {
-    if (!policyDetails.partnerId || !policyDetails.mappingKey) return false;
+    if (!policyDetails.partnerId || !policyDetails.policyId) return false;
     return rows.every((row) => {
       if (!row.biometricModality || !row.biometricProviderConfiguration) return false;
       const selected = getSelectedConfig(row.id, row.biometricProviderConfiguration) || {};

@@ -367,7 +367,10 @@
         "saveError": "While saving credential type mapping, we have encountered with an error.",
         "successHeader": "All Details Submitted Successfully!",
         "successMsgLine1": "Policy request, including biometric extractor provider and credential type mappings, has been successfully submitted.",
-        "successMsgLine2": "Approval is pending with the administrator."
+        "successMsgLine2": "Approval is pending with the administrator.",
+        "credentialOnlySuccessHeader": "Credential Type Submitted Successfully!",
+        "credentialOnlySuccessMsgLine1": "Credential type mapping has been successfully submitted.",
+        "credentialOnlySuccessMsgLine2": "Approval will remain blocked until biometric extractor mappings are completed."
     },
     "authenticationServices": {
         "authenticationServices": "Authentication Services",
