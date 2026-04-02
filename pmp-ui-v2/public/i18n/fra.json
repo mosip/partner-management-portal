@@ -362,6 +362,7 @@
         "addMore": "Ajouter plus",
         "delete": "Supprimer",
         "validationMsg": "Veuillez sélectionner le type d’identifiant pour toutes les lignes.",
+        "partialFailureMsg": "{{succeeded}} sur {{total}} types d’identifiant ont été associés. Échec pour : {{failed}}. Veuillez réessayer.",
         "saveError": "Lors de l’enregistrement de la cartographie du type d’identifiant, nous avons rencontré une erreur.",
         "successHeader": "Tous les détails ont été soumis avec succès !",
         "successMsgLine1": "La demande de politique, y compris la cartographie du fournisseur d’extracteur biométrique et du type d’identifiant, a été soumise avec succès.",

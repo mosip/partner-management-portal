@@ -388,8 +388,9 @@ function PoliciesList() {
                                               const key = getRowKey(partner);
                                               const eligibility = actionEligibilityByKey[key] || {};
                                               const finalStatus = isFinalStatus(partner?.status);
-                                              const disableBio = finalStatus || Boolean(eligibility.bioMapped);
-                                              const disableCredential = finalStatus || Boolean(eligibility.credentialMapped);
+                                              const isEligibilityLoading = eligibility.loading || !eligibility.loaded;
+                                              const disableBio = finalStatus || isEligibilityLoading || Boolean(eligibility.bioMapped);
+                                              const disableCredential = finalStatus || isEligibilityLoading || Boolean(eligibility.credentialMapped);
 
                                               const disabledItemClass = "text-[#A5A5A5] cursor-default pointer-events-none";
                                               const enabledItemClass = "cursor-pointer hover:bg-gray-100";

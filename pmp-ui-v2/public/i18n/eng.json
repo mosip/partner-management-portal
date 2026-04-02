@@ -363,6 +363,7 @@
         "addMore": "Add More",
         "delete": "Delete",
         "validationMsg": "Please select credential type for all rows.",
+        "partialFailureMsg": "Mapped {{succeeded}} of {{total}} credential types. Failed for: {{failed}}. Please try again.",
         "saveError": "While saving credential type mapping, we have encountered with an error.",
         "successHeader": "All Details Submitted Successfully!",
         "successMsgLine1": "Policy request, including biometric extractor provider and credential type mappings, has been successfully submitted.",

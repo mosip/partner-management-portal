@@ -101,26 +101,51 @@ function MapCredentialType() {
     try {
       const credentialTypes = Array.from(new Set(rows.map((r) => String(r.credentialType || "").trim()).filter(Boolean)));
       const request = createRequest({});
-
-      for (const credentialType of credentialTypes) {
-        const url = getPartnerManagerUrl(
+      const buildUrl = (credentialType) =>
+        getPartnerManagerUrl(
           `/partners/${state.partnerId}/credentialtype/${encodeURIComponent(credentialType)}/policies/${encodeURIComponent(
             state.policyName
           )}`,
           process.env.NODE_ENV
         );
 
-        const response = await HttpService.post(url, request, {
-          headers: { "Content-Type": "application/json" },
-        });
+      const tasks = credentialTypes.map((credentialType) => ({
+        credentialType,
+        promise: (async () => {
+          const url = buildUrl(credentialType);
+          const response = await HttpService.post(url, request, {
+            headers: { "Content-Type": "application/json" },
+          });
+          const responseData = response?.data;
+          if (responseData?.response === undefined) {
+            const error = new Error("credentialTypeMappingFailed");
+            error.responseData = responseData;
+            throw error;
+          }
+          return true;
+        })(),
+      }));
 
-        const responseData = response?.data;
-        if (responseData?.response === undefined) {
-          handleServiceErrors(responseData, setErrorCode, setErrorMsg);
-          setIsSubmitClicked(false);
-          setDataLoaded(true);
-          return;
-        }
+      const results = await Promise.allSettled(tasks.map((t) => t.promise));
+
+      const succeeded = tasks
+        .filter((_, i) => results[i]?.status === "fulfilled")
+        .map((t) => t.credentialType);
+      const failed = tasks
+        .filter((_, i) => results[i]?.status === "rejected")
+        .map((t) => t.credentialType);
+
+      if (failed.length > 0) {
+        setErrorMsg(
+          t("mapCredentialType.partialFailureMsg", {
+            succeeded: succeeded.length,
+            total: credentialTypes.length,
+            failed: failed.join(", "),
+          })
+        );
+        setIsSubmitClicked(false);
+        setDataLoaded(true);
+        return;
       }
 
       if (credentialTypes.length > 0) {
