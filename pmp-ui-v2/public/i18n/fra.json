@@ -53,10 +53,7 @@
         "policies": "Stratégies",
         "policiesDesc": "Demandez et consultez vos polices",
         "authenticationServices": "Services d'authentification",
-        "authenticationServicesDesc": "Demander la création d’un client OIDC / la génération de clés API pour eSignet et l’authentification par clé API",
-        "credentialServices": "Services d'identification",
-        "credentialServicesDesc": "Gérer les services d'identification",
-        "adminCredentialServicesDesc": "Configurer, afficher et modifier les détails du fournisseur Biometric Extractor",
+        "authenticationServicesDesc": "Demander la création d'un client OIDC / la génération de clés API pour eSignet et les authentifications basées sur les clés API",
         "deviceProviderServices": "Services du fournisseur d'appareils",
         "ftmChipProviderServices": "Services de fournisseur de puces FTM",
         "ftmChipProviderServicesDesc": "Ajouter, désactiver FTM (Foundational Trust Module), télécharger, re-télécharger, télécharger le certificat de puce FTM",
@@ -100,17 +97,8 @@
         "mispPartnerServicesDesc": "Générer, régénérer, afficher ou désactiver les clés de licence MISP",
         "mispLicenseKeyExpiryCountDesc1": "{{expiringMispLicenseKeyCount}} Les clés de licence MISP expirent bientôt",
         "mispLicenseKeyExpiryCountDesc2": "{{expiringMispLicenseKeyCount}} La clé de licence MISP expire bientôt",
-        "manualAdjudication": "Services d'arbitrage manuel",
-        "manualAdjudicationDesc": "Afficher, Générer des clés API",
-        "adminCredentialServicesTitle": "Services Credential/Print Partner",
         "biometricProviderConfiguration": "Configuration du fournisseur biométrique",
         "biometricProviderConfigurationDesc": "Créer, afficher les configurations du fournisseur d’extracteur biométrique"
-    },
-    "credentialServices": {
-        "title": "Services d'identification",
-        "breadcrumb": "Services d'identification",
-        "adminTitle": "Services Partenaire Credential/Impression",
-        "adminBreadcrumb": "Services Partenaire Credential/Impression"
     },
     "mispLicenseList": {
         "partnerId": "ID partenaire",
@@ -673,21 +661,6 @@
     "deactivateApiKey": {
         "apiKeyName": "Voulez-vous désactiver la clé API",
         "description": "En cliquant sur Confirmer, vous ne pourrez plus utiliser la clé API pour l'authentification."
-    },
-    "manualAdjudicationServices": {
-        "manualAdjudicationServices": "Services d'arbitrage manuel",
-        "partnerId": "ID partenaire",
-        "orgName": "Organisation",
-        "policyGroup": "Groupe de politiques",
-        "policyName": "Nom de la politique",
-        "partnerType": "Partenaire d’adjudication manuelle",
-        "apiKeyName": "Nom de la clé API",
-        "creationDate": "Date de création",
-        "status": "Statut",
-        "action": "Action",
-        "generateApiKey": "Générer une clé API",
-        "listOfManualAdjudicationApiKeys": "Liste des clés API d'arbitrage manuel",
-        "errorInManualAdjudicationList": "Lors de la récupération des détails de l'arbitrage manuel, nous avons rencontré une erreur."
     },
     "deviceProviderServices": {
         "listOfSbisAndDevices": "Liste des SBI et des appareilsBI - Device",
@@ -1297,10 +1270,6 @@
     "adminDeactivateApiKey": {
         "title": "Êtes-vous sûr de vouloir désactiver la clé API",
         "description": "En cliquant sur 'Confirmer', la clé API sera désactivée et ne pourra plus être utilisée pour l'authentification"
-    },
-    "adminDeactivateManualAdjudicationApiKey": {
-        "title": "Êtes-vous sûr de vouloir désactiver la clé API",
-        "description": "En cliquant sur Confirmer, la clé API sera désactivée et ne pourra plus être utilisée pour les services d'arbitrage manuel."
     },
     "notificationPopup": {
         "latest": "Dernier",

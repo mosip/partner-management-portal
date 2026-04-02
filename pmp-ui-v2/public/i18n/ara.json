@@ -54,9 +54,6 @@
         "policiesDesc": "طلب وعرض السياسات الخاصة بك.",
         "authenticationServices": "خدمات المصادقة",
         "authenticationServicesDesc": "طلب إنشاء عميل OIDC / إنشاء مفتاح API لمصممي التصميم والمصادقة المستندة إلى مفتاح API",
-        "credentialServices": "خدمات بيانات الاعتماد",
-        "credentialServicesDesc": "إدارة خدمات بيانات الاعتماد",
-        "adminCredentialServicesDesc": "تكوين تفاصيل مزود مستخرج القياسات الحيوية وعرضها وتحريرها",
         "deviceProviderServices": "خدمات مزودي الأجهزة",
         "ftmChipProviderServices": "خدمات مزودي شريحة FTM",
         "ftmChipProviderServicesDesc": "إضافة، إلغاء تنشيط FTM (وحدة الثقة الأساسية)، تحميل، إعادة تحميل، تنزيل شهادة شريحة FTM",
@@ -100,17 +97,8 @@
         "mispPartnerServicesDesc": "إنشاء أو إعادة إنشاء أو عرض أو إلغاء تنشيط مفاتيح ترخيص MISP",
         "mispLicenseKeyExpiryCountDesc1": "{{expiringMispLicenseKeyCount}} مفاتيح ترخيص MISP تنتهي صلاحيتها قريبًا",
         "mispLicenseKeyExpiryCountDesc2": "{{expiringMispLicenseKeyCount}} مفتاح ترخيص MISP سينتهي قريبًا",
-        "manualAdjudication": "خدمات التحكيم اليدوي",
-        "manualAdjudicationDesc": "عرض، إنشاء مفاتيح API",
-        "adminCredentialServicesTitle": "خدمات شريك بيانات الاعتماد والطباعة",        
         "biometricProviderConfiguration": "تهيئة مزود القياسات الحيوية",
         "biometricProviderConfigurationDesc": "إنشاء وعرض تكوينات مزود مستخرج القياسات الحيوية"
-    },
-    "credentialServices": {
-        "title": "خدمات بيانات الاعتماد",
-        "breadcrumb": "خدمات بيانات الاعتماد",
-        "adminTitle": "خدمات شريك بيانات الاعتماد والطباعة",
-        "adminBreadcrumb": "خدمات شريك بيانات الاعتماد والطباعة"
     },
     "mispLicenseList": {
         "partnerId": "معرف الشريك",
@@ -673,21 +661,6 @@
     "deactivateApiKey": {
         "apiKeyName": "هل تريد إلغاء تنشيط مفتاح API؟",
         "description": "عند النقر فوق تأكيد، لن تتمكن من استخدام مفتاح API للمصادقة بعد الآن."
-    },
-    "manualAdjudicationServices": {
-        "manualAdjudicationServices": "خدمات التحكيم اليدوي",
-        "partnerId": "معرف الشريك",
-        "orgName": "منظمة",
-        "policyGroup": "مجموعة السياسات",
-        "policyName": "اسم السياسة",
-        "partnerType": "شريك التحكيم اليدوي",
-        "apiKeyName": "اسم مفتاح API",
-        "creationDate": "تاريخ الإنشاء",
-        "status": "الحالة",
-        "action": "إجراء",
-        "generateApiKey": "إنشاء مفتاح API",
-        "listOfManualAdjudicationApiKeys": "قائمة مفاتيح API للتحكيم اليدوي",
-        "errorInManualAdjudicationList": "أثناء جلب تفاصيل التحكيم اليدوي، واجهنا خطأ."
     },
     "deviceProviderServices": {
         "listOfSbisAndDevices": "قائمة الهيئات الفرعية للتنفيذ والأجهزة",
@@ -1297,10 +1270,6 @@
     "adminDeactivateApiKey": {
         "title": "هل أنت متأكد أنك تريد إلغاء تفعيل مفتاح API",
         "description": "عند الضغط على 'تأكيد'، سيتم إلغاء تفعيل مفتاح API ولن يكون قابلاً للاستخدام للمصادقة"
-    },
-    "adminDeactivateManualAdjudicationApiKey": {
-        "title": "هل أنت متأكد أنك تريد إلغاء تفعيل مفتاح API",
-        "description": "عند الضغط على تأكيد، سيتم إلغاء تفعيل مفتاح API ولن يكون قابلاً للاستخدام لخدمات التحكيم اليدوي."
     },
     "notificationPopup": {
         "latest": "أحدث",
