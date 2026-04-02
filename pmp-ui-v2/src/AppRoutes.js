@@ -38,9 +38,9 @@ import PolicyRequestsList from './pages/admin/policyRequests/PolicyRequestsList.
 import ViewPolicyRequestDetails from './pages/admin/policyRequests/ViewPolicyRequestDetails.js';
 import EditPolicy from './pages/admin/policyManager/EditPolicy.js';
 import AdminOidcClientsList from './pages/admin/authenticationServices/AdminOidcClientsList.js';
-import AdminApiKeysList from './pages/admin/apiKeys/AdminApiKeysList.js';
+import AdminApiKeysList from './pages/admin/authenticationServices/AdminApiKeysList.js';
 import ViewAdminOidcClientDetails from './pages/admin/authenticationServices/ViewAdminOidcClientDetails.js';
-import ViewAdminApiKeyDetails from './pages/admin/apiKeys/ViewAdminApiKeyDetails.js';
+import ViewAdminApiKeyDetails from './pages/admin/authenticationServices/ViewAdminApiKeyDetails.js';
 import EditAdminApiKey from './pages/admin/authenticationServices/EditAdminApiKey.js';
 import AdminFtmList from './pages/admin/ftmProviderServices/AdminFtmList.js';
 import ViewAdminFtmChipDetails from './pages/admin/ftmProviderServices/ViewAdminFtmChipDetails.js';
@@ -66,14 +66,10 @@ import GenerateMispLicenseKey from './pages/admin/mispPartnerServices/GenerateMi
 import ViewMispLicenseKey from './pages/admin/mispPartnerServices/ViewMispLicenseKey.js';
 import RegenerateMispLicenseKey from './pages/admin/mispPartnerServices/RegenerateMispLicenseKey.js';
 import ViewMispLicenseKeyNotifications from './pages/admin/notifications/ViewMispLicenseKeyNotifications.js';
-import GenerateManualAdjudicationApiKey from './pages/admin/manualAdjudicationServices/GenerateManualAdjudicationApiKey.js';
 import BiometricProviderConfigurationList from './pages/admin/biometricProviderConfiguration/BiometricProviderConfigurationList.js';
 import CreateBioExtractorConfig from './pages/admin/biometricProviderConfiguration/CreateBioExtractorConfig.js';
 import ViewBioExtractorConfig from './pages/admin/biometricProviderConfiguration/ViewBioExtractorConfig.js';
-import CredentialServices from './pages/partner/credentialServices/CredentialServices.js';
-import AdminCredentialServices from './pages/admin/credentialServices/AdminCredentialServices.js';
 import { getUserProfile } from './services/UserProfileService.js';
-import ViewCredentialPolicyDetails from './pages/partner/policies/ViewCredentialPolicyDetails.js';
 
 function AppRoutes() {
 
@@ -117,19 +113,6 @@ function AppRoutes() {
         {
           path: 'authentication-services/oidc-clients-list',
           element: <GuardedRoute><MainLayout><OidcClientsList /></MainLayout></GuardedRoute>,
-        },
-        {
-          path: 'credential-services',
-          loader: () => {
-            const userProfile = getUserProfile();
-            const rolesString = userProfile?.roles ?? '';
-            const rolesArray = rolesString.split(',').map(r => r.trim()).filter(r => r.length > 0);
-            if (!rolesArray.includes('CREDENTIAL_PARTNER')) {
-              return redirect('/partnermanagement/runtimeError');
-            }
-            return null;
-          },
-          element: <GuardedRoute><MainLayout><CredentialServices /></MainLayout></GuardedRoute>,
         },
         {
           path: 'authentication-services/create-oidc-client',
@@ -204,7 +187,7 @@ function AppRoutes() {
         {
           path: 'admin/certificates/root-ca-certificate-list',
           element: <GuardedRoute><MainLayout><RootTrustList /></MainLayout></GuardedRoute>
-        },
+        },  
         {
           path: 'admin/certificates/view-root-ca-certificate-details',
           element: <GuardedRoute><MainLayout><ViewTrustDetails /></MainLayout></GuardedRoute>
@@ -406,14 +389,6 @@ function AppRoutes() {
           element: <RuntimeError />,
         },
         {
-          path: 'admin/manual-adjudication-services/api-keys-list',
-          element: <GuardedRoute><MainLayout><AdminApiKeysList /></MainLayout></GuardedRoute>,
-        },
-        {
-          path: 'admin/credential-services',
-          element: <GuardedRoute><MainLayout><AdminCredentialServices /></MainLayout></GuardedRoute>,
-        },
-        {
           path: 'admin/biometric-provider-configuration/list',
           loader: () => redirect('/partnermanagement/admin/biometric-provider-configuration-list')
         },
@@ -428,14 +403,6 @@ function AppRoutes() {
         {
           path: 'admin/biometric-provider-configuration/view',
           element: <GuardedRoute><MainLayout><ViewBioExtractorConfig /></MainLayout></GuardedRoute>
-        },
-        {
-          path: 'admin/manual-adjudication-services/generate-api-key',
-          element: <GuardedRoute><MainLayout><GenerateManualAdjudicationApiKey /></MainLayout></GuardedRoute>,
-        },
-        {
-          path: 'admin/manual-adjudication-services/view-api-key-details',
-          element: <GuardedRoute><MainLayout><ViewAdminApiKeyDetails /></MainLayout></GuardedRoute>,
         },
       ],
     },
