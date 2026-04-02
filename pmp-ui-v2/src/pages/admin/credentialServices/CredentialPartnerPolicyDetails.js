@@ -13,7 +13,7 @@ function CredentialPartnerPolicyDetails({
   enabled,
   variant,
   onLoadingChange,
-  onEligibilityChange,
+  onApproveBlockedChange,
 }) {
   const [bioLoading, setBioLoading] = useState(() => Boolean(enabled));
   const [bioError, setBioError] = useState('');
@@ -39,16 +39,26 @@ function CredentialPartnerPolicyDetails({
     onLoadingChange(isLoading);
   }, [isLoading, onLoadingChange]);
 
-  const actionsDisabled = useMemo(() => {
+  const isApproveBlocked = useMemo(() => {
     if (!enabled) return false;
-    if (bioLoading) return false; // keep disabled state controlled by loading in popup
-    return Boolean(bioError) || bioExtractors.length === 0;
-  }, [enabled, bioLoading, bioError, bioExtractors.length]);
+    if (bioLoading || credentialTypeLoading) return true;
+    const noBio = Boolean(bioError) || bioExtractors.length === 0;
+    const noCredentialType = Boolean(credentialTypeError) || !String(credentialType || "").trim();
+    return noBio || noCredentialType;
+  }, [
+    enabled,
+    bioLoading,
+    credentialTypeLoading,
+    bioError,
+    bioExtractors.length,
+    credentialTypeError,
+    credentialType,
+  ]);
 
   useEffect(() => {
-    if (!onEligibilityChange) return;
-    onEligibilityChange(actionsDisabled);
-  }, [actionsDisabled, onEligibilityChange]);
+    if (!onApproveBlockedChange) return;
+    onApproveBlockedChange(isApproveBlocked);
+  }, [isApproveBlocked, onApproveBlockedChange]);
 
   const getModalityLabel = (modality) => {
     if (!modality) return '-';
@@ -360,7 +370,7 @@ CredentialPartnerPolicyDetails.propTypes = {
   enabled: PropTypes.bool,
   variant: PropTypes.oneOf(['popup', 'view']).isRequired,
   onLoadingChange: PropTypes.func,
-  onEligibilityChange: PropTypes.func,
+  onApproveBlockedChange: PropTypes.func,
 };
 
 export default CredentialPartnerPolicyDetails;
