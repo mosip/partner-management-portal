@@ -226,7 +226,7 @@ function MapCredentialType() {
                 {t("requestPolicy.mandatoryMappingBanner")}
               </p>
 
-              <div className="w-[100%] bg-snow-white mt-[1%] rounded-lg shadow-md border border-[#2B66F6]">
+              <div className="w-[100%] bg-snow-white mt-[1%] rounded-lg shadow-md">
                 <div className="p-7">
                   <p className="text-base text-[#3D4468]">
                     {t("requestPolicy.mandatoryFieldsMsg1")} <span className="text-crimson-red">*</span> {t("requestPolicy.mandatoryFieldsMsg2")}
