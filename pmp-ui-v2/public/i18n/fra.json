@@ -362,6 +362,7 @@
         "addMore": "Ajouter plus",
         "delete": "Supprimer",
         "validationMsg": "Veuillez sélectionner le type d’identifiant pour toutes les lignes.",
+        "duplicateSelectionMsg": "Les types d’identifiant en double ne sont pas autorisés. Veuillez choisir un type d’identifiant différent pour chaque ligne.",
         "partialFailureMsg": "{{succeeded}} sur {{total}} types d’identifiant ont été associés. Échec pour : {{failed}}. Veuillez réessayer.",
         "duplicateCredentialTypeMsg": "Une cartographie existe déjà entre ce partenaire et le(s) type(s) d’identifiant : {{types}}. Veuillez choisir un autre type d’identifiant et réessayer.",
         "saveError": "Lors de l’enregistrement de la cartographie du type d’identifiant, nous avons rencontré une erreur.",
@@ -1210,7 +1211,10 @@
         "approve": "Approuver",
         "reject": "Rejeter",
         "comments": "Commentaires",
-        "commentPlaceholder": "Écrivez votre commentaire ici"
+        "commentPlaceholder": "Écrivez votre commentaire ici",
+        "mappingsMissingGeneric": "Les cartographies requises (extracteurs biométriques et type d’identifiant) sont manquantes. Veuillez les configurer puis réessayer.",
+        "mappingsMissingBoth": "Les bio-extracteurs et le type d’identifiant ne sont pas configurés pour cette politique. Veuillez les configurer puis réessayer.",
+        "credentialTypeNotMapped": "Le type d’identifiant n’est pas configuré pour cette politique. Veuillez mapper un type d’identifiant puis réessayer."
     },
     "partnerPolicyRequestApproveRejectPopup": {
         "header": "Voulez-vous Approuver/Rejeter la politique?",

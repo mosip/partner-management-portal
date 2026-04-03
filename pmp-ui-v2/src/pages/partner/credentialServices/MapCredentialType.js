@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate, useBlocker } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../../services/UserProfileService";
@@ -36,6 +36,7 @@ function MapCredentialType() {
   const [isSubmitClicked, setIsSubmitClicked] = useState(false);
   const [requestPolicySuccess, setRequestPolicySuccess] = useState(false);
   const [confirmationData, setConfirmationData] = useState({});
+  const isSubmittingRef = useRef(false);
 
   const credentialTypeDropdownData = useMemo(
     () =>
@@ -45,6 +46,21 @@ function MapCredentialType() {
       })),
     []
   );
+
+  const getCredentialTypeDropdownDataForRow = (rowIndex) => {
+    const usedElsewhere = new Set(
+      rows
+        .filter((_, idx) => idx !== rowIndex)
+        .map((r) => String(r.credentialType || "").trim())
+        .filter(Boolean)
+    );
+    const current = String(rows[rowIndex]?.credentialType || "").trim();
+    return credentialTypeDropdownData.filter((item) => {
+      const val = String(item.fieldValue || "").trim();
+      if (current && val === current) return true;
+      return !usedElsewhere.has(val);
+    });
+  };
 
   const hasUnsavedChanges = useMemo(
     () => rows.some((r) => Boolean((r.credentialType || "").trim())),
@@ -82,15 +98,22 @@ function MapCredentialType() {
   const isFormValid = () => {
     if (!hasRequiredState) return false;
     if (rows.length === 0) return false;
-    return rows.every((r) => Boolean((r.credentialType || "").trim()));
+    const cleaned = rows.map((r) => String(r.credentialType || "").trim());
+    if (!cleaned.every(Boolean)) return false;
+    return new Set(cleaned).size === cleaned.length;
   };
 
   const clickOnSubmit = async () => {
+    if (isSubmittingRef.current) return;
+    isSubmittingRef.current = true;
     setIsSubmitClicked(true);
 
     if (!isFormValid()) {
-      setErrorMsg(t("mapCredentialType.validationMsg"));
+      const cleaned = rows.map((r) => String(r.credentialType || "").trim()).filter(Boolean);
+      const hasDuplicates = new Set(cleaned).size !== cleaned.length;
+      setErrorMsg(hasDuplicates ? t("mapCredentialType.duplicateSelectionMsg") : t("mapCredentialType.validationMsg"));
       setIsSubmitClicked(false);
+      isSubmittingRef.current = false;
       return;
     }
 
@@ -178,6 +201,7 @@ function MapCredentialType() {
         }
         setIsSubmitClicked(false);
         setDataLoaded(true);
+        isSubmittingRef.current = false;
         return;
       }
 
@@ -201,6 +225,7 @@ function MapCredentialType() {
     } finally {
       setDataLoaded(true);
       setIsSubmitClicked(false);
+      isSubmittingRef.current = false;
     }
   };
 
@@ -328,7 +353,7 @@ function MapCredentialType() {
                       <div className="flex flex-col w-full">
                         <DropdownComponent
                           fieldName="credentialType"
-                          dropdownDataList={credentialTypeDropdownData}
+                          dropdownDataList={getCredentialTypeDropdownDataForRow(index)}
                           onDropDownChangeEvent={(fieldName, selectedValue) => updateRow(index, fieldName, selectedValue)}
                           fieldNameKey="mapCredentialType.credentialType*"
                           placeHolderKey="mapCredentialType.selectCredentialType"

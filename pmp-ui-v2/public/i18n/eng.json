@@ -363,6 +363,7 @@
         "addMore": "Add More",
         "delete": "Delete",
         "validationMsg": "Please select credential type for all rows.",
+        "duplicateSelectionMsg": "Duplicate credential types are not allowed. Please choose a different credential type for each row.",
         "partialFailureMsg": "Mapped {{succeeded}} of {{total}} credential types. Failed for: {{failed}}. Please try again.",
         "duplicateCredentialTypeMsg": "Mapping already exists between this partner and credential type(s): {{types}}. Please choose a different credential type and try again.",
         "saveError": "While saving credential type mapping, we have encountered with an error.",
@@ -1206,7 +1207,10 @@
         "approve": "Approve",
         "reject": "Reject",
         "comments": "Comments",
-        "commentPlaceholder": "Write your comment here"
+        "commentPlaceholder": "Write your comment here",
+        "mappingsMissingGeneric": "Required biometric extractor and credential type mappings are missing. Please configure them and try again.",
+        "mappingsMissingBoth": "Bio extractors and credential type are not configured for this policy. Please configure them and try again.",
+        "credentialTypeNotMapped": "Credential type is not configured for this policy. Please map a credential type and try again."
     },
     "partnerPolicyRequestApproveRejectPopup": {
         "header": "Do you want to Approve/Reject the Policy?",

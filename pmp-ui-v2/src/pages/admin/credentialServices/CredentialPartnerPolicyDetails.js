@@ -14,6 +14,8 @@ function CredentialPartnerPolicyDetails({
   variant,
   onLoadingChange,
   onApproveBlockedChange,
+  onApproveBlockedMsgChange,
+  onApproveBlockedCodeChange,
 }) {
   const [bioLoading, setBioLoading] = useState(() => Boolean(enabled));
   const [bioError, setBioError] = useState('');
@@ -59,6 +61,47 @@ function CredentialPartnerPolicyDetails({
     if (!onApproveBlockedChange) return;
     onApproveBlockedChange(isApproveBlocked);
   }, [isApproveBlocked, onApproveBlockedChange]);
+
+  useEffect(() => {
+    if (!enabled) return;
+    if (!onApproveBlockedMsgChange && !onApproveBlockedCodeChange) return;
+    if (bioLoading || credentialTypeLoading) {
+      onApproveBlockedMsgChange?.("");
+      onApproveBlockedCodeChange?.("");
+      return;
+    }
+
+    const noBio = Boolean(bioError) || bioExtractors.length === 0;
+    const noCredentialType = Boolean(credentialTypeError) || !String(credentialType || "").trim();
+
+    let msg = "";
+    let code = "";
+
+    if (noBio && noCredentialType) {
+      msg = t("approveRejectPopup.mappingsMissingBoth");
+      code = bioError ? "" : "PMS_PRT_064";
+    } else if (noBio) {
+      msg = bioError || t("partnerPolicyRequestApproveRejectPopup.extractorsNotConfigured");
+      code = bioError ? "" : "PMS_PRT_064";
+    } else if (noCredentialType) {
+      msg = credentialTypeError || t("approveRejectPopup.credentialTypeNotMapped");
+      code = credentialTypeError ? "" : "";
+    }
+
+    onApproveBlockedMsgChange?.(msg);
+    onApproveBlockedCodeChange?.(code);
+  }, [
+    enabled,
+    t,
+    bioLoading,
+    credentialTypeLoading,
+    bioError,
+    bioExtractors.length,
+    credentialTypeError,
+    credentialType,
+    onApproveBlockedMsgChange,
+    onApproveBlockedCodeChange,
+  ]);
 
   const getModalityLabel = (modality) => {
     if (!modality) return '-';
@@ -371,6 +414,8 @@ CredentialPartnerPolicyDetails.propTypes = {
   variant: PropTypes.oneOf(['popup', 'view']).isRequired,
   onLoadingChange: PropTypes.func,
   onApproveBlockedChange: PropTypes.func,
+  onApproveBlockedMsgChange: PropTypes.func,
+  onApproveBlockedCodeChange: PropTypes.func,
 };
 
 export default CredentialPartnerPolicyDetails;
