@@ -28,6 +28,9 @@ function ApproveRejectPopup({
     const hasPolicyDetails = typeof renderPolicyDetails === 'function';
 
     const [policyDetailsLoading, setPolicyDetailsLoading] = useState(() => Boolean(hasPolicyDetails));
+    const [areActionsBlocked, setAreActionsBlocked] = useState(false);
+    const [actionsBlockedMsg, setActionsBlockedMsg] = useState("");
+    const [actionsBlockedCode, setActionsBlockedCode] = useState("");
 
     useEffect(() => {
         const previousOverflow = document.body.style.overflow;
@@ -45,6 +48,16 @@ function ApproveRejectPopup({
     const cancelErrorMsg = () => setErrorMsg("");
     const closingPopUp = () => {
         closePopUp();
+    };
+
+    const attemptStatusChange = async (status) => {
+        if (policyDetailsLoading) return;
+        if (areActionsBlocked) {
+            setErrorCode(actionsBlockedCode || "");
+            setErrorMsg(actionsBlockedMsg || t("approveRejectPopup.mappingsMissingGeneric"));
+            return;
+        }
+        await handleStatusChange(status);
     };
 
     const handleStatusChange = async (status) => {
@@ -177,6 +190,9 @@ function ApproveRejectPopup({
                                                     isLoginLanguageRTL,
                                                     popupData,
                                                     onLoadingChange: setPolicyDetailsLoading,
+                                                    onApproveBlockedChange: setAreActionsBlocked,
+                                                    onApproveBlockedMsgChange: setActionsBlockedMsg,
+                                                    onApproveBlockedCodeChange: setActionsBlockedCode,
                                                     getPartnerTypeDescription,
                                                 })}
                                             </div>
@@ -186,7 +202,7 @@ function ApproveRejectPopup({
                                     <div className="flex items-center justify-between gap-3 px-6 py-4">
                                         <button
                                             id="reject_btn"
-                                            onClick={() => handleStatusChange('rejected')}
+                                            onClick={() => attemptStatusChange('rejected')}
                                             type="button"
                                             disabled={policyDetailsLoading}
                                             className={`w-32 h-9 border-[#1447B2] border rounded-md text-tory-blue ${policyDetailsLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
@@ -195,7 +211,7 @@ function ApproveRejectPopup({
                                         </button>
                                         <button
                                             id="approve_btn"
-                                            onClick={() => handleStatusChange('approved')}
+                                            onClick={() => attemptStatusChange('approved')}
                                             type="button"
                                             disabled={policyDetailsLoading}
                                             className={`w-32 h-9 border-[#1447B2] border rounded-md bg-tory-blue text-white ${policyDetailsLoading ? 'opacity-50 cursor-not-allowed' : ''}`}

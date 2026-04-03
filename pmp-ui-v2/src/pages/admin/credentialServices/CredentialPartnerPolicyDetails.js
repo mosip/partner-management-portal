@@ -13,6 +13,9 @@ function CredentialPartnerPolicyDetails({
   enabled,
   variant,
   onLoadingChange,
+  onApproveBlockedChange,
+  onApproveBlockedMsgChange,
+  onApproveBlockedCodeChange,
 }) {
   const [bioLoading, setBioLoading] = useState(() => Boolean(enabled));
   const [bioError, setBioError] = useState('');
@@ -37,6 +40,68 @@ function CredentialPartnerPolicyDetails({
     if (!onLoadingChange) return;
     onLoadingChange(isLoading);
   }, [isLoading, onLoadingChange]);
+
+  const isApproveBlocked = useMemo(() => {
+    if (!enabled) return false;
+    if (bioLoading || credentialTypeLoading) return true;
+    const noBio = Boolean(bioError) || bioExtractors.length === 0;
+    const noCredentialType = Boolean(credentialTypeError) || !String(credentialType || "").trim();
+    return noBio || noCredentialType;
+  }, [
+    enabled,
+    bioLoading,
+    credentialTypeLoading,
+    bioError,
+    bioExtractors.length,
+    credentialTypeError,
+    credentialType,
+  ]);
+
+  useEffect(() => {
+    if (!onApproveBlockedChange) return;
+    onApproveBlockedChange(isApproveBlocked);
+  }, [isApproveBlocked, onApproveBlockedChange]);
+
+  useEffect(() => {
+    if (!enabled) return;
+    if (!onApproveBlockedMsgChange && !onApproveBlockedCodeChange) return;
+    if (bioLoading || credentialTypeLoading) {
+      onApproveBlockedMsgChange?.("");
+      onApproveBlockedCodeChange?.("");
+      return;
+    }
+
+    const noBio = Boolean(bioError) || bioExtractors.length === 0;
+    const noCredentialType = Boolean(credentialTypeError) || !String(credentialType || "").trim();
+
+    let msg = "";
+    let code = "";
+
+    if (noBio && noCredentialType) {
+      msg = t("approveRejectPopup.mappingsMissingBoth");
+      code = bioError ? "" : "PMS_PRT_064";
+    } else if (noBio) {
+      msg = bioError || t("partnerPolicyRequestApproveRejectPopup.extractorsNotConfigured");
+      code = bioError ? "" : "PMS_PRT_064";
+    } else if (noCredentialType) {
+      msg = credentialTypeError || t("approveRejectPopup.credentialTypeNotMapped");
+      code = credentialTypeError ? "" : "";
+    }
+
+    onApproveBlockedMsgChange?.(msg);
+    onApproveBlockedCodeChange?.(code);
+  }, [
+    enabled,
+    t,
+    bioLoading,
+    credentialTypeLoading,
+    bioError,
+    bioExtractors.length,
+    credentialTypeError,
+    credentialType,
+    onApproveBlockedMsgChange,
+    onApproveBlockedCodeChange,
+  ]);
 
   const getModalityLabel = (modality) => {
     if (!modality) return '-';
@@ -300,7 +365,7 @@ function CredentialPartnerPolicyDetails({
         </p>
       ) : (
         <p className={`text-base font-semibold text-[#191919] break-words ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>
-          {credentialType || t('commons.notAvailable', 'Not available')}
+          {credentialType || t('statusCodes.notAvailable')}
         </p>
       )}
     </div>
@@ -348,6 +413,9 @@ CredentialPartnerPolicyDetails.propTypes = {
   enabled: PropTypes.bool,
   variant: PropTypes.oneOf(['popup', 'view']).isRequired,
   onLoadingChange: PropTypes.func,
+  onApproveBlockedChange: PropTypes.func,
+  onApproveBlockedMsgChange: PropTypes.func,
+  onApproveBlockedCodeChange: PropTypes.func,
 };
 
 export default CredentialPartnerPolicyDetails;

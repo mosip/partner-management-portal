@@ -191,11 +191,19 @@ function GenerateApiKey() {
         setErrorCode("");
         setErrorMsg("");
         setDataLoaded(false);
-        let request = createRequest({
-            apiKeyName: trimAndReplace(nameLabel)
-        }, 'mosip.pms.generate.api.key.post', true);
+        const request = {
+            ...createRequest(
+                {
+                    policyName: policyName.trim(),
+                    label: trimAndReplace(nameLabel),
+                },
+                'mosip.pms.generate.api.key.patch',
+                false
+            ),
+            metadata: {},
+        };
         try {
-            const response = await HttpService.post(getPartnerManagerUrl(`/partners/${partnerId}/policies/${policyId}/api-keys`, process.env.NODE_ENV), request, {
+            const response = await HttpService.patch(getPartnerManagerUrl(`/partners/${partnerId}/generate/apikey`, process.env.NODE_ENV), request, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
