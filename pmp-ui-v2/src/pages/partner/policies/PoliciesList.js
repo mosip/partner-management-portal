@@ -418,14 +418,23 @@ function PoliciesList() {
                                               const eligibility = actionEligibilityByKey[key] || {};
                                               const finalStatus = isFinalStatus(partner?.status);
                                               const isEligibilityLoading = eligibility.loading || !eligibility.loaded;
-                                              const disableBio = finalStatus || isEligibilityLoading || Boolean(eligibility.error) || Boolean(eligibility.bioMapped);
+                                              const hasBioNavPrereqs = Boolean(partner?.partnerId && partner?.policyId && partner?.policyName);
+                                              const hasCredentialNavPrereqs = Boolean(partner?.partnerId && partner?.policyId && partner?.policyName);
+
+                                              const disableBio =
+                                                finalStatus ||
+                                                isEligibilityLoading ||
+                                                Boolean(eligibility.error) ||
+                                                Boolean(eligibility.bioMapped) ||
+                                                !hasBioNavPrereqs;
                                               // Credential mapping is only available after biometric extractors are mapped for this policy.
                                               const disableCredential =
                                                 finalStatus ||
                                                 isEligibilityLoading ||
                                                 Boolean(eligibility.error) ||
                                                 Boolean(eligibility.credentialMapped) ||
-                                                !eligibility.bioMapped;
+                                                !eligibility.bioMapped ||
+                                                !hasCredentialNavPrereqs;
 
                                               const disabledItemClass = "text-[#A5A5A5] cursor-default pointer-events-none";
                                               const enabledItemClass = "cursor-pointer hover:bg-gray-100";
