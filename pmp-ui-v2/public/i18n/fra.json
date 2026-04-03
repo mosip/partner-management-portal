@@ -363,13 +363,11 @@
         "delete": "Supprimer",
         "validationMsg": "Veuillez sélectionner le type d’identifiant pour toutes les lignes.",
         "partialFailureMsg": "{{succeeded}} sur {{total}} types d’identifiant ont été associés. Échec pour : {{failed}}. Veuillez réessayer.",
+        "duplicateCredentialTypeMsg": "Une cartographie existe déjà entre ce partenaire et le(s) type(s) d’identifiant : {{types}}. Veuillez choisir un autre type d’identifiant et réessayer.",
         "saveError": "Lors de l’enregistrement de la cartographie du type d’identifiant, nous avons rencontré une erreur.",
         "successHeader": "Tous les détails ont été soumis avec succès !",
         "successMsgLine1": "La demande de politique, y compris la cartographie du fournisseur d’extracteur biométrique et du type d’identifiant, a été soumise avec succès.",
-        "successMsgLine2": "L’approbation est en attente auprès de l’administrateur.",
-        "credentialOnlySuccessHeader": "Type d’identifiant soumis avec succès !",
-        "credentialOnlySuccessMsgLine1": "La cartographie du type d’identifiant a été soumise avec succès.",
-        "credentialOnlySuccessMsgLine2": "L’approbation restera bloquée tant que la cartographie des extracteurs biométriques n’est pas terminée."
+        "successMsgLine2": "L’approbation est en attente auprès de l’administrateur."
     },
     "authenticationServices": {
         "authenticationServices": "Services d'authentification",
@@ -1751,7 +1749,7 @@
         },
     "mapBiometricExtractorProvider": {
         "title": "Associer le fournisseur d'extracteur biométrique",
-        "addBioextractors": "Ajouter des bio-extracteurs",
+        "addBioextractors": "Mapper l'extracteur biométrique",
         "mappingSectionTitle": "Configuration du fournisseur d'extracteur biométrique",
         "biometricModality": "Modalité biométrique",
         "selectBiometricModality": "Sélectionnez la modalité biométrique",
@@ -1762,7 +1760,9 @@
         "delete": "Supprimer",
         "validationMsg": "Veuillez mapper tous les champs du fournisseur d'extracteur biométrique avant de continuer.",
         "configFetchError": "Impossible de charger les configurations du fournisseur biométrique. Veuillez réessayer.",
-        "saveError": "Erreur lors de la configuration du fournisseur d'extracteur biométrique."
+        "saveError": "Erreur lors de la configuration du fournisseur d'extracteur biométrique.",
+        "saveConfirmTitle": "Enregistrer les extracteurs biométriques ?",
+        "saveConfirmMessage": "Une fois enregistrées, ces cartographies d’extracteurs biométriques ne pourront plus être modifiées. Voulez-vous continuer ?"
     },
     "unsavedChangesPopup": {
         "message": "Vos modifications seront perdues, êtes-vous sûr de vouloir continuer ?",

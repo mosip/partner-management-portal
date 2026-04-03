@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate, useBlocker } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../../services/UserProfileService";
-import { createRequest, getPartnerManagerUrl, handleServiceErrors, isLangRTL } from "../../../utils/AppUtils";
+import { createRequest, getPartnerManagerUrl, isLangRTL } from "../../../utils/AppUtils";
 import { HttpService } from "../../../services/HttpService";
 import Title from "../../common/Title";
 import ErrorMessage from "../../common/ErrorMessage";
@@ -109,21 +109,37 @@ function MapCredentialType() {
           process.env.NODE_ENV
         );
 
-      const tasks = credentialTypes.map((credentialType) => ({
-        credentialType,
-        promise: (async () => {
-          const url = buildUrl(credentialType);
+      const postCredentialType = async (credentialType) => {
+        const url = buildUrl(credentialType);
+        let responseData;
+        try {
           const response = await HttpService.post(url, request, {
             headers: { "Content-Type": "application/json" },
           });
-          const responseData = response?.data;
-          if (responseData?.response === undefined) {
-            const error = new Error("credentialTypeMappingFailed");
-            error.responseData = responseData;
-            throw error;
-          }
-          return true;
-        })(),
+          responseData = response?.data;
+        } catch (err) {
+          responseData = err?.response?.data;
+          if (!responseData) throw err;
+        }
+        if (responseData?.errors?.length) {
+          const error = new Error("credentialTypeMappingFailed");
+          error.responseData = responseData;
+          error.credentialType = credentialType;
+          throw error;
+        }
+        // Backend may return response: null with errors[] (handled above) or null without success payload
+        if (responseData?.response == null) {
+          const error = new Error("credentialTypeMappingFailed");
+          error.responseData = responseData;
+          error.credentialType = credentialType;
+          throw error;
+        }
+        return true;
+      };
+
+      const tasks = credentialTypes.map((credentialType) => ({
+        credentialType,
+        promise: postCredentialType(credentialType),
       }));
 
       const results = await Promise.allSettled(tasks.map((t) => t.promise));
@@ -131,39 +147,47 @@ function MapCredentialType() {
       const succeeded = tasks
         .filter((_, i) => results[i]?.status === "fulfilled")
         .map((t) => t.credentialType);
-      const failed = tasks
-        .filter((_, i) => results[i]?.status === "rejected")
-        .map((t) => t.credentialType);
 
-      if (failed.length > 0) {
-        setErrorMsg(
-          t("mapCredentialType.partialFailureMsg", {
-            succeeded: succeeded.length,
-            total: credentialTypes.length,
-            failed: failed.join(", "),
-          })
-        );
+      const failedDetails = [];
+      for (let i = 0; i < results.length; i++) {
+        if (results[i]?.status === "rejected") {
+          const reason = results[i].reason;
+          const ct = tasks[i].credentialType;
+          const code =
+            reason?.responseData?.errors?.[0]?.errorCode ??
+            reason?.response?.data?.errors?.[0]?.errorCode;
+          failedDetails.push({ credentialType: ct, errorCode: code });
+        }
+      }
+
+      if (failedDetails.length > 0) {
+        const failedTypes = failedDetails.map((f) => f.credentialType);
+        const allDuplicate = failedDetails.every((f) => f.errorCode === "PMS_PRT_007");
+        if (failedDetails.length === credentialTypes.length && allDuplicate) {
+          setErrorCode("PMS_PRT_007");
+          setErrorMsg(t("mapCredentialType.duplicateCredentialTypeMsg", { types: failedTypes.join(", ") }));
+        } else {
+          setErrorCode(failedDetails[0]?.errorCode || "");
+          setErrorMsg(
+            t("mapCredentialType.partialFailureMsg", {
+              succeeded: succeeded.length,
+              total: credentialTypes.length,
+              failed: failedTypes.join(", "),
+            })
+          );
+        }
         setIsSubmitClicked(false);
         setDataLoaded(true);
         return;
       }
 
       if (credentialTypes.length > 0) {
-        const hasBioMappingContext =
-          selectedBioModalities.length > 0 || selectedBioProviderConfigurations.length > 0;
-
         setConfirmationData({
           title: "mapCredentialType.title",
           backUrl: "/partnermanagement/policies/policies-list",
-          header: hasBioMappingContext
-            ? "mapCredentialType.successHeader"
-            : "mapCredentialType.credentialOnlySuccessHeader",
-          description: hasBioMappingContext
-            ? "mapCredentialType.successMsgLine1"
-            : "mapCredentialType.credentialOnlySuccessMsgLine1",
-          description1: hasBioMappingContext
-            ? "mapCredentialType.successMsgLine2"
-            : "mapCredentialType.credentialOnlySuccessMsgLine2",
+          header: "mapCredentialType.successHeader",
+          description: "mapCredentialType.successMsgLine1",
+          description1: "mapCredentialType.successMsgLine2",
           subNavigation: "requestPolicy.policies",
         });
         setRequestPolicySuccess(true);

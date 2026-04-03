@@ -364,13 +364,11 @@
         "delete": "Delete",
         "validationMsg": "Please select credential type for all rows.",
         "partialFailureMsg": "Mapped {{succeeded}} of {{total}} credential types. Failed for: {{failed}}. Please try again.",
+        "duplicateCredentialTypeMsg": "Mapping already exists between this partner and credential type(s): {{types}}. Please choose a different credential type and try again.",
         "saveError": "While saving credential type mapping, we have encountered with an error.",
         "successHeader": "All Details Submitted Successfully!",
         "successMsgLine1": "Policy request, including biometric extractor provider and credential type mappings, has been successfully submitted.",
-        "successMsgLine2": "Approval is pending with the administrator.",
-        "credentialOnlySuccessHeader": "Credential Type Submitted Successfully!",
-        "credentialOnlySuccessMsgLine1": "Credential type mapping has been successfully submitted.",
-        "credentialOnlySuccessMsgLine2": "Approval will remain blocked until biometric extractor mappings are completed."
+        "successMsgLine2": "Approval is pending with the administrator."
     },
     "authenticationServices": {
         "authenticationServices": "Authentication Services",
@@ -1747,7 +1745,7 @@
         },
     "mapBiometricExtractorProvider": {
         "title": "Map Biometric Extractor Provider",
-        "addBioextractors": "Add Bioextractors",
+        "addBioextractors": "Map Biometric Extractor",
         "mappingSectionTitle": "Map Biometric Extractor Provider Configuration",
         "biometricModality": "Biometric Modality",
         "selectBiometricModality": "Select Biometric Modality",
@@ -1758,7 +1756,9 @@
         "delete": "Delete",
         "validationMsg": "Please map all biometric extractor provider fields before proceeding.",
         "configFetchError": "Unable to load biometric provider configurations. Please try again.",
-        "saveError": "Error while mapping biometric extractor provider configuration."
+        "saveError": "Error while mapping biometric extractor provider configuration.",
+        "saveConfirmTitle": "Save biometric extractors?",
+        "saveConfirmMessage": "Once saved, these biometric extractor mappings cannot be edited. Do you want to continue?"
     },
     "unsavedChangesPopup": {
         "message": "Your changes will be lost, are you sure you want to proceed?",

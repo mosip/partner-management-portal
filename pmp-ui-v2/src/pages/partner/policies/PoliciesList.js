@@ -18,6 +18,39 @@ import Pagination from '../../common/Pagination';
 import Title from '../../common/Title';
 import EmptyList from '../../common/EmptyList';
 
+/** True if GET .../credential-types payload indicates at least one mapped type (see CredentialPartnerPolicyDetails). */
+function credentialTypesResponseIndicatesMapped(payload) {
+  if (payload === null || payload === undefined) return false;
+  if (Array.isArray(payload)) {
+    return payload.map((x) => String(x ?? '').trim()).filter(Boolean).length > 0;
+  }
+  if (typeof payload === 'string') {
+    return Boolean(payload.trim());
+  }
+  const types =
+    payload?.credentialTypes ??
+    payload?.credential_types ??
+    payload?.data?.credentialTypes ??
+    payload?.data?.credential_types;
+  if (Array.isArray(types)) {
+    return types.map((x) => String(x ?? '').trim()).filter(Boolean).length > 0;
+  }
+  if (Array.isArray(payload?.data) && payload.data.length > 0) {
+    const cleaned = payload.data
+      .map((x) => (x === null || x === undefined ? '' : String(x).trim()))
+      .filter(Boolean);
+    if (cleaned.length > 0) return true;
+  }
+  const value =
+    payload?.credentialType ??
+    payload?.credential_type ??
+    payload?.type ??
+    payload?.data?.credentialType ??
+    payload?.data?.credential_type ??
+    '';
+  return Boolean(String(value || '').trim());
+}
+
 function PoliciesList() {
 
   const { t } = useTranslation();
@@ -133,9 +166,9 @@ function PoliciesList() {
 
   const ensureEligibilityLoaded = async (row) => {
     const key = getRowKey(row);
-    if (!key || actionEligibilityByKey[key]?.loaded) return;
+    if (!key || actionEligibilityByKey[key]?.loading) return;
 
-    // optimistic: allow until proven mapped (except approved/rejected)
+    // Refetch each time the menu opens so mapping actions stay accurate after bio/credential updates.
     setActionEligibilityByKey((prev) => ({
       ...prev,
       [key]: { loaded: false, bioMapped: false, credentialMapped: false, loading: true, error: false },
@@ -196,17 +229,7 @@ function PoliciesList() {
         const res = await HttpService.get(url);
         const data = res?.data;
         if (data?.response !== undefined) {
-          const payload = data.response;
-          if (Array.isArray(payload)) credentialMapped = payload.map((x) => String(x ?? "").trim()).filter(Boolean).length > 0;
-          else if (typeof payload === "string") credentialMapped = Boolean(payload.trim());
-          else {
-            const types = payload?.credentialTypes ?? payload?.credential_types ?? payload?.data?.credentialTypes ?? payload?.data?.credential_types;
-            if (Array.isArray(types)) credentialMapped = types.map((x) => String(x ?? "").trim()).filter(Boolean).length > 0;
-            else {
-              const value = payload?.credentialType ?? payload?.credential_type ?? payload?.type ?? payload?.data?.credentialType ?? payload?.data?.credential_type;
-              credentialMapped = Boolean(String(value || "").trim());
-            }
-          }
+          credentialMapped = credentialTypesResponseIndicatesMapped(data.response);
         } else {
           // unexpected response shape => fail closed
           eligibilityError = true;
@@ -396,7 +419,13 @@ function PoliciesList() {
                                               const finalStatus = isFinalStatus(partner?.status);
                                               const isEligibilityLoading = eligibility.loading || !eligibility.loaded;
                                               const disableBio = finalStatus || isEligibilityLoading || Boolean(eligibility.error) || Boolean(eligibility.bioMapped);
-                                              const disableCredential = finalStatus || isEligibilityLoading || Boolean(eligibility.error) || Boolean(eligibility.credentialMapped);
+                                              // Credential mapping is only available after biometric extractors are mapped for this policy.
+                                              const disableCredential =
+                                                finalStatus ||
+                                                isEligibilityLoading ||
+                                                Boolean(eligibility.error) ||
+                                                Boolean(eligibility.credentialMapped) ||
+                                                !eligibility.bioMapped;
 
                                               const disabledItemClass = "text-[#A5A5A5] cursor-default pointer-events-none";
                                               const enabledItemClass = "cursor-pointer hover:bg-gray-100";
@@ -406,7 +435,7 @@ function PoliciesList() {
                                             <hr className="h-px bg-gray-100 border-0 my-1" />
                                             <div
                                               role="button"
-                                              id="policy_list_add_bioextractors"
+                                              id="policy_list_map_biometric_extractor"
                                               onClick={() => !disableBio && showAddBioextractors(partner)}
                                               tabIndex="0"
                                               onKeyDown={(e) => !disableBio && onPressEnterKey(e, () => showAddBioextractors(partner))}
