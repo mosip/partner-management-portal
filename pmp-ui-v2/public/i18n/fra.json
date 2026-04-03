@@ -355,6 +355,22 @@
         "approvePopupTitle": "Voulez-vous approuver la demande de politique du partenaire ?",
         "approvePopupDesc": "En cliquant sur Confirmer, la liaison de la politique de partenariat sera approuvée."
     },
+    "mapCredentialType": {
+        "title": "Mapper le type d’identifiant",
+        "mappingSectionTitle": "Cartographie du type d’identifiant",
+        "credentialType": "Type d’identifiant",
+        "selectCredentialType": "Sélectionnez le type d’identifiant",
+        "addMore": "Ajouter plus",
+        "delete": "Supprimer",
+        "validationMsg": "Veuillez sélectionner le type d’identifiant pour toutes les lignes.",
+        "duplicateSelectionMsg": "Les types d’identifiant en double ne sont pas autorisés. Veuillez choisir un type d’identifiant différent pour chaque ligne.",
+        "partialFailureMsg": "{{succeeded}} sur {{total}} types d’identifiant ont été associés. Échec pour : {{failed}}. Veuillez réessayer.",
+        "duplicateCredentialTypeMsg": "Une cartographie existe déjà entre ce partenaire et le(s) type(s) d’identifiant : {{types}}. Veuillez choisir un autre type d’identifiant et réessayer.",
+        "saveError": "Lors de l’enregistrement de la cartographie du type d’identifiant, nous avons rencontré une erreur.",
+        "successHeader": "Tous les détails ont été soumis avec succès !",
+        "successMsgLine1": "La demande de politique, y compris la cartographie du fournisseur d’extracteur biométrique et du type d’identifiant, a été soumise avec succès.",
+        "successMsgLine2": "L’approbation est en attente auprès de l’administrateur."
+    },
     "authenticationServices": {
         "authenticationServices": "Services d'authentification",
         "oidcClient": "Client OIDC",
@@ -1196,7 +1212,10 @@
         "approve": "Approuver",
         "reject": "Rejeter",
         "comments": "Commentaires",
-        "commentPlaceholder": "Écrivez votre commentaire ici"
+        "commentPlaceholder": "Écrivez votre commentaire ici",
+        "mappingsMissingGeneric": "Les cartographies requises (extracteurs biométriques et type d’identifiant) sont manquantes. Veuillez les configurer puis réessayer.",
+        "mappingsMissingBoth": "Les bio-extracteurs et le type d’identifiant ne sont pas configurés pour cette politique. Veuillez les configurer puis réessayer.",
+        "credentialTypeNotMapped": "Le type d’identifiant n’est pas configuré pour cette politique. Veuillez mapper un type d’identifiant puis réessayer."
     },
     "partnerPolicyRequestApproveRejectPopup": {
         "header": "Voulez-vous Approuver/Rejeter la politique?",
@@ -1216,7 +1235,7 @@
         "bioExtractorProviderMapping": "Cartographie du fournisseur d’extracteur biométrique",
         "credentialType": "Type d’identifiant",
         "noBioExtractors": "Aucun extracteur biométrique trouvé pour cette politique.",
-        "extractorsNotConfigured": "Les extracteurs ne sont pas configurés."
+        "extractorsNotConfigured": "Les extracteurs biométriques ne sont pas configurés. Ajoutez des extracteurs biométriques pour cette politique."
     },
     "ftmRequestApproveRejectPopup": {
         "header": "Voulez-vous Approuver/Rejeter la puce FTM {{make}}-{{model}} ?",
@@ -1735,6 +1754,7 @@
         },
     "mapBiometricExtractorProvider": {
         "title": "Associer le fournisseur d'extracteur biométrique",
+        "addBioextractors": "Mapper l'extracteur biométrique",
         "mappingSectionTitle": "Configuration du fournisseur d'extracteur biométrique",
         "biometricModality": "Modalité biométrique",
         "selectBiometricModality": "Sélectionnez la modalité biométrique",
@@ -1744,7 +1764,10 @@
         "addMore": "Ajouter",
         "delete": "Supprimer",
         "validationMsg": "Veuillez mapper tous les champs du fournisseur d'extracteur biométrique avant de continuer.",
-        "saveError": "Erreur lors de la configuration du fournisseur d'extracteur biométrique."
+        "configFetchError": "Impossible de charger les configurations du fournisseur biométrique. Veuillez réessayer.",
+        "saveError": "Erreur lors de la configuration du fournisseur d'extracteur biométrique.",
+        "saveConfirmTitle": "Enregistrer les extracteurs biométriques ?",
+        "saveConfirmMessage": "Une fois enregistrées, ces cartographies d’extracteurs biométriques ne pourront plus être modifiées. Voulez-vous continuer ?"
     },
     "unsavedChangesPopup": {
         "message": "Vos modifications seront perdues, êtes-vous sûr de vouloir continuer ?",

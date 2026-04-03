@@ -356,6 +356,22 @@
         "approvePopupTitle": "Do you want to approve Partner- Policy Request?",
         "approvePopupDesc": "On clicking Confirm, the Partner Policy Linking will be approved."
     },
+    "mapCredentialType": {
+        "title": "Map Credential Type",
+        "mappingSectionTitle": "Credential Type Mapping",
+        "credentialType": "Credential Type",
+        "selectCredentialType": "Select Credential Type",
+        "addMore": "Add More",
+        "delete": "Delete",
+        "validationMsg": "Please select credential type for all rows.",
+        "duplicateSelectionMsg": "Duplicate credential types are not allowed. Please choose a different credential type for each row.",
+        "partialFailureMsg": "Mapped {{succeeded}} of {{total}} credential types. Failed for: {{failed}}. Please try again.",
+        "duplicateCredentialTypeMsg": "Mapping already exists between this partner and credential type(s): {{types}}. Please choose a different credential type and try again.",
+        "saveError": "While saving credential type mapping, we have encountered with an error.",
+        "successHeader": "All Details Submitted Successfully!",
+        "successMsgLine1": "Policy request, including biometric extractor provider and credential type mappings, has been successfully submitted.",
+        "successMsgLine2": "Approval is pending with the administrator."
+    },
     "authenticationServices": {
         "authenticationServices": "Authentication Services",
         "oidcClient": "OIDC Client",
@@ -1192,7 +1208,10 @@
         "approve": "Approve",
         "reject": "Reject",
         "comments": "Comments",
-        "commentPlaceholder": "Write your comment here"
+        "commentPlaceholder": "Write your comment here",
+        "mappingsMissingGeneric": "Required biometric extractor and credential type mappings are missing. Please configure them and try again.",
+        "mappingsMissingBoth": "Bio extractors and credential type are not configured for this policy. Please configure them and try again.",
+        "credentialTypeNotMapped": "Credential type is not configured for this policy. Please map a credential type and try again."
     },
     "partnerPolicyRequestApproveRejectPopup": {
         "header": "Do you want to Approve/Reject the Policy?",
@@ -1212,7 +1231,7 @@
         "bioExtractorProviderMapping": "Biometric Extractor Provider Mapping",
         "credentialType": "Credential Type",
         "noBioExtractors": "No bio extractors found for this policy.",
-        "extractorsNotConfigured": "Extractors are not configured."
+        "extractorsNotConfigured": "Bio extractors are not configured. Add bio extractors for this policy."
     },
     "ftmRequestApproveRejectPopup": {
         "header": "Do you want to Approve/Reject the FTM chip {{make}}-{{model}}?",
@@ -1731,6 +1750,7 @@
         },
     "mapBiometricExtractorProvider": {
         "title": "Map Biometric Extractor Provider",
+        "addBioextractors": "Map Biometric Extractor",
         "mappingSectionTitle": "Map Biometric Extractor Provider Configuration",
         "biometricModality": "Biometric Modality",
         "selectBiometricModality": "Select Biometric Modality",
@@ -1740,7 +1760,10 @@
         "addMore": "Add More",
         "delete": "Delete",
         "validationMsg": "Please map all biometric extractor provider fields before proceeding.",
-        "saveError": "Error while mapping biometric extractor provider configuration."
+        "configFetchError": "Unable to load biometric provider configurations. Please try again.",
+        "saveError": "Error while mapping biometric extractor provider configuration.",
+        "saveConfirmTitle": "Save biometric extractors?",
+        "saveConfirmMessage": "Once saved, these biometric extractor mappings cannot be edited. Do you want to continue?"
     },
     "unsavedChangesPopup": {
         "message": "Your changes will be lost, are you sure you want to proceed?",

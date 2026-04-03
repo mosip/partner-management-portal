@@ -23,7 +23,9 @@ function Confirmation({ id, confirmationData, onClickCustomBtn1, onClickCustomBt
                     <p id={id + '_description'} className="text-[#666666] text-sm font-semibold max-450:text-xs">
                     {confirmationData.descriptionParams ? t(confirmationData.description, confirmationData.descriptionParams) : t(confirmationData.description)}
                         {confirmationData.description1 && (
-                            <span className="text-[#666666] text-sm font-semibold max-450:text-xs">{t(confirmationData.description1)}</span>
+                            <span className="block text-[#666666] text-sm font-semibold max-450:text-xs mt-1">
+                                {t(confirmationData.description1)}
+                            </span>
                         )}
                     </p>
                     {!confirmationData.customBtnName1 && (
