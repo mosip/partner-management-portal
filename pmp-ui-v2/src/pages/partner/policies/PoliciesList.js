@@ -127,11 +127,11 @@ function PoliciesList() {
   const showMapCredentialType = (selectedPolicyData) => {
     navigate('/partnermanagement/policies/map-credential-type', {
       state: {
-        partnerId: selectedPolicyData?.partnerId,
-        partnerType: selectedPolicyData?.partnerType,
-        policyGroupName: selectedPolicyData?.policyGroupName,
-        policyName: selectedPolicyData?.policyName,
-        policyId: selectedPolicyData?.policyId,
+        partnerId: selectedPolicyData?.partnerId ?? selectedPolicyData?.partner_id,
+        partnerType: selectedPolicyData?.partnerType ?? selectedPolicyData?.partner_type,
+        policyGroupName: selectedPolicyData?.policyGroupName ?? selectedPolicyData?.policy_group_name,
+        policyName: selectedPolicyData?.policyName ?? selectedPolicyData?.policy_name,
+        policyId: selectedPolicyData?.policyId ?? selectedPolicyData?.policy_id,
       }
     });
   };

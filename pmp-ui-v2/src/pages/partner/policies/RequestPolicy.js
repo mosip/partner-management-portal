@@ -371,7 +371,7 @@ function RequestPolicy() {
     };
 
     return (
-        <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll relative font-inter`}>
+        <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-auto relative font-inter`}>
             {!dataLoaded && (
                 <LoadingIcon></LoadingIcon>
             )}
@@ -388,8 +388,8 @@ function RequestPolicy() {
                             </p>
                         )}
                         {!requestPolicySuccess ?
-                            <div className="w-[100%] bg-snow-white mt-[1%] rounded-lg shadow-md">
-                                <div className="p-7">
+                            <div className="w-[100%] bg-snow-white mt-[1%] rounded-lg shadow-md overflow-visible">
+                                <div className="p-7 overflow-visible">
                                     <p id='request_policy_mandantory_msg' className="text-base text-[#3D4468]">{t('requestPolicy.mandatoryFieldsMsg1')} <span className="text-crimson-red">*</span> {t('requestPolicy.mandatoryFieldsMsg2')}</p>
                                     <form>
                                         <div className="flex flex-col w-full">
