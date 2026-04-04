@@ -63,9 +63,10 @@ const handleKeyDown = (event) => {
                     <Information infoKey={infoKey} id={id + "_info"} />
                 )}
             </label>
-            <div className="relative w-full" ref={dropdownRef}>
-                <button id={id + '_dropdown_btn'} onClick={openDropdown} disabled={disabled} tabIndex={disabled ? -1 : 0} className={`flex items-center justify-between w-fit h-auto px-2 py-2 border border-[#707070] bg-white rounded-[4px] text-[15px] ${selectedDropdownEntry ? 'text-[#343434]' : 'text-grayish-blue'} leading-tight
-                    focus:shadow-none overflow-x-auto whitespace-nowrap no-scrollbar ${(styleSet && styleSet.dropdownButton) ? styleSet.dropdownButton : ''}`} type="button">
+            <div className="relative w-full z-20" ref={dropdownRef}>
+                <button id={id + '_dropdown_btn'} onClick={openDropdown} disabled={disabled} tabIndex={disabled ? -1 : 0} className={`flex items-center justify-between w-full h-auto px-2 py-2 border border-[#707070] bg-white rounded-[4px] text-[15px] ${selectedDropdownEntry ? 'text-[#343434]' : 'text-grayish-blue'} leading-tight
+                    outline-none focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1447B2]/35 focus-visible:ring-offset-0 focus-visible:border-[#1447B2]
+                    overflow-x-auto whitespace-nowrap no-scrollbar ${(styleSet && styleSet.dropdownButton) ? styleSet.dropdownButton : ''}`} type="button">
                     <span className='w-full break-all text-wrap text-start'>{
                         selectedDropdownEntry ?
                             dropdownDataList.map(dropdownItem => { return (selectedDropdownEntry === dropdownItem.fieldValue ? dropdownItem.fieldCode : '') })
@@ -78,7 +79,7 @@ const handleKeyDown = (event) => {
                 {isDropdownOpen && (
                     loading ? (
                         <div className={`${!selectPolicyPopup && 'absolute'} mt-auto left-0 w-full ${(styleSet && styleSet.selectionBox) ? styleSet.selectionBox : ''}`}>
-                            <div className="absolute z-10 border border-gray-400 bg-white rounded-md shadow-lg w-full">
+                            <div className="absolute z-50 border border-gray-400 bg-white rounded-md shadow-lg w-full">
                                 <div className="flex items-center justify-center p-8">
                                     <LoadingIcon />
                                 </div>
@@ -86,7 +87,7 @@ const handleKeyDown = (event) => {
                         </div>
                     ) : (
                         <div className={`${!selectPolicyPopup && 'absolute'} mt-auto left-0 w-full ${(styleSet && styleSet.selectionBox) ? styleSet.selectionBox : ''}`}>
-                            <div className="absolute z-10 border border-gray-400 bg-white rounded-md shadow-lg w-full cursor-pointer">
+                            <div className="absolute z-50 border border-gray-400 bg-white rounded-md shadow-lg w-full cursor-pointer">
                                 <div className="p-2 border-b border-gray-200 shadow-sm relative">
                                     <span className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-4 text-black mx-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">

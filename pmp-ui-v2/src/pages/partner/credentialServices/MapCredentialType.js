@@ -11,9 +11,84 @@ import DropdownComponent from "../../common/fields/DropdownComponent";
 import BlockerPrompt from "../../common/BlockerPrompt";
 import Confirmation from "../../common/Confirmation";
 
-const EMPTY_ROW = { credentialType: "" };
-
 const CREDENTIAL_TYPE_OPTIONS = ["auth", "qrcode", "euin", "reprint", "vercred", "opencrvs"];
+
+/** Same shape checks as PoliciesList / CredentialPartnerPolicyDetails for GET .../bioextractors/{policyId}. */
+function hasMeaningfulBioMapping(item) {
+  if (!item) return false;
+  const extractor = item?.extractor ?? item?.mapping?.extractor ?? null;
+  const provider =
+    extractor?.provider ??
+    item?.provider ??
+    item?.bioextractorProviderName ??
+    item?.extractorProviderName ??
+    "";
+  const version =
+    extractor?.version ??
+    item?.version ??
+    item?.bioextractorProviderVersion ??
+    item?.extractorProviderVersion ??
+    "";
+  return Boolean(String(provider || "").trim()) || Boolean(String(version || "").trim());
+}
+
+/** Align with CredentialPartnerPolicyDetails.normalizeBioRow — API field names vary by deployment. */
+function resolveBioConfigurationLabel(item) {
+  const configuration =
+    item?.bioExtractorConfigurationName ??
+    item?.bioExtractorConfigName ??
+    item?.configName ??
+    item?.bio_extractor_configuration_name ??
+    item?.configurationName ??
+    item?.bioExtractorConfigurationId ??
+    item?.bio_extractor_configuration_id ??
+    item?.attributeName ??
+    "";
+  const trimmed = configuration === null || configuration === undefined ? "" : String(configuration).trim();
+  return trimmed || "-";
+}
+
+/** Parse GET .../bioextractors/{policyId} response into parallel display arrays (modalities + config names). */
+function extractBioDisplayFromResponse(responsePayload) {
+  const list = Array.isArray(responsePayload)
+    ? responsePayload
+    : (responsePayload?.extractors ??
+        responsePayload?.data ??
+        responsePayload?.content ??
+        responsePayload?.bioExtractors ??
+        responsePayload?.bioextractors ??
+        responsePayload?.extractorList ??
+        []);
+  if (!Array.isArray(list)) return { modalities: [], configs: [] };
+
+  const modalities = [];
+  const configs = [];
+
+  for (const item of list) {
+    const rawModality =
+      item?.bioModality ??
+      item?.biometricModality ??
+      item?.modality ??
+      item?.bio_modality ??
+      item?.biometric ??
+      "";
+    let modality = String(rawModality || "").trim().toUpperCase();
+    if (modality === "FINGERPRINT") modality = "FINGER";
+
+    const configLabel = resolveBioConfigurationLabel(item);
+
+    const hasRow =
+      hasMeaningfulBioMapping(item) ||
+      Boolean(modality) ||
+      (configLabel && configLabel !== "-");
+    if (!hasRow) continue;
+
+    modalities.push(modality || String(rawModality || "").trim() || "-");
+    configs.push(configLabel);
+  }
+
+  return { modalities, configs };
+}
 
 function MapCredentialType() {
   const { t } = useTranslation();
@@ -24,48 +99,73 @@ function MapCredentialType() {
   const isLoginLanguageRTL = isLangRTL(userProfile?.locale || "en");
 
   const hasRequiredState = Boolean(state?.partnerId && state?.policyName);
-  const selectedBioModalities = Array.isArray(state?.selectedBioModalities) ? state.selectedBioModalities : [];
-  const selectedBioProviderConfigurations = Array.isArray(state?.selectedBioProviderConfigurations)
-    ? state.selectedBioProviderConfigurations
-    : [];
+  /** Policy list / APIs may use camelCase or snake_case */
+  const policyIdForApi = state?.policyId ?? state?.policy_id ?? "";
+
+  const [selectedBioModalities, setSelectedBioModalities] = useState(() =>
+    Array.isArray(state?.selectedBioModalities) ? state.selectedBioModalities : []
+  );
+  const [selectedBioProviderConfigurations, setSelectedBioProviderConfigurations] = useState(() =>
+    Array.isArray(state?.selectedBioProviderConfigurations) ? state.selectedBioProviderConfigurations : []
+  );
+
+  const needsBioFetch = useMemo(
+    () =>
+      !(Array.isArray(state?.selectedBioModalities) && state.selectedBioModalities.length > 0) &&
+      Boolean(state?.partnerId && policyIdForApi),
+    [state?.partnerId, policyIdForApi, state?.selectedBioModalities]
+  );
+
+  const [bioMetaLoaded, setBioMetaLoaded] = useState(() => !needsBioFetch);
 
   const [dataLoaded, setDataLoaded] = useState(true);
   const [errorCode, setErrorCode] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
-  const [rows, setRows] = useState([{ ...EMPTY_ROW }]);
+  const [credentialType, setCredentialType] = useState("");
   const [isSubmitClicked, setIsSubmitClicked] = useState(false);
   const [requestPolicySuccess, setRequestPolicySuccess] = useState(false);
   const [confirmationData, setConfirmationData] = useState({});
   const isSubmittingRef = useRef(false);
 
+  /** First row is placeholder (empty value); no default credential type selected */
   const credentialTypeDropdownData = useMemo(
-    () =>
-      CREDENTIAL_TYPE_OPTIONS.map((value) => ({
+    () => [
+      { fieldCode: t("mapCredentialType.selectCredentialType"), fieldValue: "" },
+      ...CREDENTIAL_TYPE_OPTIONS.map((value) => ({
         fieldCode: value,
         fieldValue: value,
       })),
-    []
+    ],
+    [t]
   );
 
-  const getCredentialTypeDropdownDataForRow = (rowIndex) => {
-    const usedElsewhere = new Set(
-      rows
-        .filter((_, idx) => idx !== rowIndex)
-        .map((r) => String(r.credentialType || "").trim())
-        .filter(Boolean)
-    );
-    const current = String(rows[rowIndex]?.credentialType || "").trim();
-    return credentialTypeDropdownData.filter((item) => {
-      const val = String(item.fieldValue || "").trim();
-      if (current && val === current) return true;
-      return !usedElsewhere.has(val);
-    });
-  };
+  useEffect(() => {
+    if (!needsBioFetch) return;
 
-  const hasUnsavedChanges = useMemo(
-    () => rows.some((r) => Boolean((r.credentialType || "").trim())),
-    [rows]
-  );
+    let cancelled = false;
+    (async () => {
+      try {
+        const url = getPartnerManagerUrl(`/partners/${state.partnerId}/bioextractors/${policyIdForApi}`, process.env.NODE_ENV);
+        const res = await HttpService.get(url);
+        if (cancelled) return;
+        if (res?.data?.response) {
+          const { modalities, configs } = extractBioDisplayFromResponse(res.data.response);
+          setSelectedBioModalities(modalities);
+          setSelectedBioProviderConfigurations(configs);
+        }
+      } catch {
+        /* keep empty; page still usable for credential mapping */
+      } finally {
+        if (!cancelled) setBioMetaLoaded(true);
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [needsBioFetch, state?.partnerId, policyIdForApi]);
+
+  const hasUnsavedChanges = useMemo(() => Boolean((credentialType || "").trim()), [credentialType]);
 
   const blocker = useBlocker(({ currentLocation, nextLocation }) => {
     if (isSubmitClicked || requestPolicySuccess) return false;
@@ -78,7 +178,7 @@ function MapCredentialType() {
   }, [hasRequiredState, navigate]);
 
   const clearForm = () => {
-    setRows([{ ...EMPTY_ROW }]);
+    setCredentialType("");
     setErrorCode("");
     setErrorMsg("");
   };
@@ -87,20 +187,13 @@ function MapCredentialType() {
     navigate("/partnermanagement/policies/policies-list");
   };
 
-  const updateRow = (index, fieldName, selectedValue) => {
-    setRows((prev) => prev.map((row, i) => (i === index ? { ...row, [fieldName]: selectedValue } : row)));
-  };
-
-  const deleteRow = (index) => {
-    setRows((prev) => prev.filter((_, i) => i !== index));
+  const updateCredentialType = (fieldName, selectedValue) => {
+    setCredentialType(selectedValue ?? "");
   };
 
   const isFormValid = () => {
     if (!hasRequiredState) return false;
-    if (rows.length === 0) return false;
-    const cleaned = rows.map((r) => String(r.credentialType || "").trim());
-    if (!cleaned.every(Boolean)) return false;
-    return new Set(cleaned).size === cleaned.length;
+    return Boolean(String(credentialType || "").trim());
   };
 
   const clickOnSubmit = async () => {
@@ -109,9 +202,7 @@ function MapCredentialType() {
     setIsSubmitClicked(true);
 
     if (!isFormValid()) {
-      const cleaned = rows.map((r) => String(r.credentialType || "").trim()).filter(Boolean);
-      const hasDuplicates = new Set(cleaned).size !== cleaned.length;
-      setErrorMsg(hasDuplicates ? t("mapCredentialType.duplicateSelectionMsg") : t("mapCredentialType.validationMsg"));
+      setErrorMsg(t("mapCredentialType.validationMsg"));
       setIsSubmitClicked(false);
       isSubmittingRef.current = false;
       return;
@@ -122,18 +213,19 @@ function MapCredentialType() {
     setDataLoaded(false);
 
     try {
-      const credentialTypes = Array.from(new Set(rows.map((r) => String(r.credentialType || "").trim()).filter(Boolean)));
+      const ct = String(credentialType || "").trim();
+      const credentialTypes = [ct];
       const request = createRequest({});
-      const buildUrl = (credentialType) =>
+      const buildUrl = (type) =>
         getPartnerManagerUrl(
-          `/partners/${state.partnerId}/credentialtype/${encodeURIComponent(credentialType)}/policies/${encodeURIComponent(
+          `/partners/${state.partnerId}/credentialtype/${encodeURIComponent(type)}/policies/${encodeURIComponent(
             state.policyName
           )}`,
           process.env.NODE_ENV
         );
 
-      const postCredentialType = async (credentialType) => {
-        const url = buildUrl(credentialType);
+      const postCredentialType = async (type) => {
+        const url = buildUrl(type);
         let responseData;
         try {
           const response = await HttpService.post(url, request, {
@@ -147,39 +239,38 @@ function MapCredentialType() {
         if (responseData?.errors?.length) {
           const error = new Error("credentialTypeMappingFailed");
           error.responseData = responseData;
-          error.credentialType = credentialType;
+          error.credentialType = type;
           throw error;
         }
-        // Backend may return response: null with errors[] (handled above) or null without success payload
         if (responseData?.response == null) {
           const error = new Error("credentialTypeMappingFailed");
           error.responseData = responseData;
-          error.credentialType = credentialType;
+          error.credentialType = type;
           throw error;
         }
         return true;
       };
 
-      const tasks = credentialTypes.map((credentialType) => ({
-        credentialType,
-        promise: postCredentialType(credentialType),
+      const tasks = credentialTypes.map((type) => ({
+        credentialType: type,
+        promise: postCredentialType(type),
       }));
 
-      const results = await Promise.allSettled(tasks.map((t) => t.promise));
+      const results = await Promise.allSettled(tasks.map((task) => task.promise));
 
       const succeeded = tasks
         .filter((_, i) => results[i]?.status === "fulfilled")
-        .map((t) => t.credentialType);
+        .map((task) => task.credentialType);
 
       const failedDetails = [];
       for (let i = 0; i < results.length; i++) {
         if (results[i]?.status === "rejected") {
           const reason = results[i].reason;
-          const ct = tasks[i].credentialType;
+          const ctFailed = tasks[i].credentialType;
           const code =
             reason?.responseData?.errors?.[0]?.errorCode ??
             reason?.response?.data?.errors?.[0]?.errorCode;
-          failedDetails.push({ credentialType: ct, errorCode: code });
+          failedDetails.push({ credentialType: ctFailed, errorCode: code });
         }
       }
 
@@ -229,11 +320,15 @@ function MapCredentialType() {
     }
   };
 
-  const styles = {
+  const credentialTypeDropdownStyles = {
     outerDiv: "!ml-0 !mb-0",
-    dropdownLabel: "!text-sm !mb-1",
-    dropdownButton: "!w-full min-h-10 !rounded-md !text-base !text-start",
+    /** Match form copy color (#3D4468); avoid default near-black label */
+    dropdownLabel: "!text-sm !mb-1 !block !font-semibold !text-[#3D4468]",
+    /** Do not force text color — placeholder uses grayish-blue, value uses #343434 */
+    dropdownButton: "!w-full !min-h-10 !rounded-md !text-base !text-start",
     selectionBox: "!top-10",
+    /** Shorter open list (default max-h-40 is tall for only a few credential types) */
+    optionsList: "!max-h-28",
   };
 
   const getModalityLabel = (modality) => {
@@ -250,9 +345,9 @@ function MapCredentialType() {
   if (!hasRequiredState) return null;
 
   return (
-    <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll relative font-inter`}>
-      {!dataLoaded && <LoadingIcon />}
-      {dataLoaded && (
+    <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-auto relative font-inter`}>
+      {(!dataLoaded || !bioMetaLoaded) && <LoadingIcon />}
+      {dataLoaded && bioMetaLoaded && (
         <>
           {blocker?.state === "blocked" && <BlockerPrompt blocker={blocker} />}
           {errorMsg && (
@@ -275,8 +370,8 @@ function MapCredentialType() {
                 {t("requestPolicy.mandatoryMappingBanner")}
               </p>
 
-              <div className="w-[100%] bg-snow-white mt-[1%] rounded-lg shadow-md">
-                <div className="p-7">
+              <div className="w-[100%] bg-snow-white mt-[1%] rounded-lg shadow-md overflow-visible">
+                <div className="p-7 overflow-visible">
                   <p className="text-base text-[#3D4468]">
                     {t("requestPolicy.mandatoryFieldsMsg1")} <span className="text-crimson-red">*</span> {t("requestPolicy.mandatoryFieldsMsg2")}
                   </p>
@@ -348,43 +443,22 @@ function MapCredentialType() {
                     </div>
                   </div>
 
-                  {rows.map((row, index) => (
-                    <div key={`credential-type-row-${index}`} className="grid grid-cols-2 gap-4 my-2 max-[450px]:grid-cols-1">
-                      <div className="flex flex-col w-full">
-                        <DropdownComponent
-                          fieldName="credentialType"
-                          dropdownDataList={getCredentialTypeDropdownDataForRow(index)}
-                          onDropDownChangeEvent={(fieldName, selectedValue) => updateRow(index, fieldName, selectedValue)}
-                          fieldNameKey="mapCredentialType.credentialType*"
-                          placeHolderKey="mapCredentialType.selectCredentialType"
-                          selectedDropdownValue={row.credentialType}
-                          styleSet={styles}
-                          id={`map_credential_type_${index + 1}`}
-                        />
-                      </div>
-                      <div className="flex items-end justify-end">
-                        {rows.length > 1 && (
-                          <button
-                            id={`map_credential_type_delete_${index + 1}`}
-                            type="button"
-                            onClick={() => deleteRow(index)}
-                            className="h-10 px-4 border border-[#1447B2] rounded-md bg-white text-tory-blue text-sm font-semibold"
-                          >
-                            {t("mapCredentialType.delete")}
-                          </button>
-                        )}
-                      </div>
+                  <div className="grid grid-cols-2 gap-4 my-2 max-[450px]:grid-cols-1">
+                    <div className="flex flex-col w-full">
+                      <DropdownComponent
+                        fieldName="credentialType"
+                        dropdownDataList={credentialTypeDropdownData}
+                        onDropDownChangeEvent={updateCredentialType}
+                        fieldNameKey="mapCredentialType.credentialType*"
+                        placeHolderKey="mapCredentialType.selectCredentialType"
+                        selectedDropdownValue={credentialType}
+                        styleSet={credentialTypeDropdownStyles}
+                        isPlaceHolderPresent={true}
+                        id="map_credential_type_1"
+                      />
                     </div>
-                  ))}
-
-                  <button
-                    id="map_credential_type_add_more"
-                    type="button"
-                    onClick={() => setRows((prev) => [...prev, { ...EMPTY_ROW }])}
-                    className="text-tory-blue font-semibold text-sm mt-2"
-                  >
-                    + {t("mapCredentialType.addMore")}
-                  </button>
+                    <div className="flex items-end justify-end" aria-hidden="true" />
+                  </div>
 
                   <div className="flex flex-col md:flex-row justify-between mt-8 border-t border-[#D5D8E3] pt-5">
                     <div className="flex flex-wrap justify-start">
@@ -435,4 +509,3 @@ function MapCredentialType() {
 }
 
 export default MapCredentialType;
-
