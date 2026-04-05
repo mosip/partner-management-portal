@@ -13,14 +13,12 @@ import PropTypes from 'prop-types';
 import partnerCertificateIcon from '../../svg/partner_certificate_icon.svg';
 import policiesIcon from '../../svg/policies_icon.svg';
 import authServiceIcon from '../../svg/auth_services_icon.svg';
-import credentialServicesIcon from '../../svg/credential_partner_services_icon.svg';
 import deviceProviderServicesIcon from '../../svg/deviceProviderServices_icon.svg';
 import ftmServicesIcon from "../../svg/ftm_services_icon.svg";
 import partner_admin_icon from '../../svg/partner_admin_icon.svg';
 import admin_policies_icon from '../../svg/admin_policies_icon.svg';
 import partner_policy_mapping_icon from '../../svg/partner_policy_mapping_icon.svg';
 import adminMispPartnerServicesIcon from '../../svg/admin_misp_partner_services_icon.svg';
-import manualAdjudicationServicesIcon from '../../svg/manual_adjudication_partner_services_icon.svg';
 import ConsentPopup from './ConsentPopup.js';
 import { getAppConfig } from '../../services/ConfigService.js';
 import OnboardingPartnerAlertPopup from './OnboardingPartnerAlertPopup.js';
@@ -35,7 +33,6 @@ function Dashboard() {
   const [dataLoaded, setDataLoaded] = useState(false);
   const [showPolicies, setShowPolicies] = useState(false);
   const [showAuthenticationServices, setShowAuthenticationServices] = useState(false);
-  const [showCredentialServices, setShowCredentialServices] = useState(false);
   const [showDeviceProviderServices, setShowDeviceProviderServices] = useState(false);
   const [showFtmServices, setShowFtmServices] = useState(false);
   const [showConsentPopup, setShowConsentPopup] = useState(false);
@@ -90,9 +87,6 @@ function Dashboard() {
         const userRoles = rolesArray;
         if (rolesArray.includes("AUTH_PARTNER")) {
           setShowAuthenticationServices(true);
-        }
-        if (rolesArray.includes("CREDENTIAL_PARTNER")) {
-          setShowCredentialServices(true);
         }
         if (rolesArray.includes("DEVICE_PROVIDER")) {
           setShowDeviceProviderServices(true);
@@ -154,11 +148,11 @@ function Dashboard() {
           console.log(`user's email exist in db: ${resData.partnerExists}`);
 
           //check if duplicate exists then show the account error popup
-          if (resData.duplicateExists) {
-            setOnboardingPartnerAlertType('verificationError');
-            setShowOnboardingPartnerAlertPopup(true);
-            setDataLoaded(true);
-            return;
+          if(resData.duplicateExists){
+              setOnboardingPartnerAlertType('verificationError');
+              setShowOnboardingPartnerAlertPopup(true);
+              setDataLoaded(true);
+              return;
           }
           setIsEmailVerified(resData.partnerExists);
           if (!resData.partnerExists) {
@@ -216,7 +210,7 @@ function Dashboard() {
             setShowPolicies(true);
           }
         } else {
-          setErrorMsg(t('dashboard.verifyEmailError'));
+            setErrorMsg(t('dashboard.verifyEmailError'));
         }
         setDataLoaded(true);
       } catch (err) {
@@ -225,7 +219,7 @@ function Dashboard() {
           setErrorMsg(err.toString());
           setDataLoaded(true);
         }
-
+        
       }
     };
     fetchData();
@@ -256,7 +250,7 @@ function Dashboard() {
       let pageNo = 0;
       let totalResults = 0;
       let filteredCerts = [];
-
+    
       try {
         while (true) {
           const queryParams = new URLSearchParams();
@@ -264,43 +258,43 @@ function Dashboard() {
           queryParams.append('caCertificateType', certType);
           queryParams.append('pageSize', pageSize);
           queryParams.append('pageNo', pageNo);
-
+    
           const url = `${getPartnerManagerUrl('/trust-chain-certificates', process.env.NODE_ENV)}?${queryParams.toString()}`;
-
+    
           const response = await HttpService.get(url);
           const responseData = response?.data;
-
+    
           if (responseData && responseData.response) {
             const { data, totalResults: total } = responseData.response;
             totalResults = total;
 
             const validCerts = data.filter(cert => cert.status === true);
             filteredCerts = [...filteredCerts, ...validCerts];
-
+    
             const totalPages = Math.ceil(totalResults / pageSize);
             pageNo++;
-
+    
             if (pageNo >= totalPages) break;
           } else {
             handleServiceErrors(responseData, setErrorCode, setErrorMsg);
             break;
           }
         }
-
+    
         // After loop completes, set final count
         if (certType === "ROOT") {
           setRootCertExpiryCount(filteredCerts.length);
         } else if (certType === "INTERMEDIATE") {
           setIntermediateCertExpiryCount(filteredCerts.length)
         }
-
+    
       } catch (err) {
         if (err.response?.status && err.response.status !== 401) {
           setErrorMsg(t('dashboard.requestCountFetchError'));
         }
         console.error("Error fetching data:", err);
       }
-    };
+    };    
 
     const fetchPartnerCertExpiryCount = async () => {
       const queryParams = new URLSearchParams();
@@ -311,7 +305,7 @@ function Dashboard() {
         if (response) {
           const responseData = response.data;
           if (responseData && responseData.response) {
-            setPartnerCertExpiryCount(responseData.response.length)
+              setPartnerCertExpiryCount(responseData.response.length)
           } else {
             handleServiceErrors(responseData, setErrorCode, setErrorMsg);
           }
@@ -432,7 +426,7 @@ function Dashboard() {
       }
     };
 
-    const fetchFtmCertificateExpiryCount = async () => {
+     const fetchFtmCertificateExpiryCount = async () => {
       const queryParams = new URLSearchParams();
       queryParams.append('expiryPeriod', 30);
       const url = `${getPartnerManagerUrl('/ftpchipdetail', process.env.NODE_ENV)}?${queryParams.toString()}`;
@@ -592,10 +586,6 @@ function Dashboard() {
     navigate('/partnermanagement/device-provider-services/sbi-list')
   };
 
-  const credentialServices = () => {
-    navigate('/partnermanagement/credential-services');
-  };
-
   const ftmChipProviderServices = () => {
     navigate('/partnermanagement/ftm-chip-provider-services/ftm-list')
   };
@@ -628,17 +618,13 @@ function Dashboard() {
     navigate('/partnermanagement/admin/device-provider-services/sbi-list');
   }
 
-  const adminCredentialServices = () => {
-    navigate('/partnermanagement/admin/credential-services');
-  }
-
   const cancelErrorMsg = () => {
     setErrorMsg("");
   };
 
   const CountWithHover = ({ countLabel, descriptionKey, descriptionParams, isExpiryHover }) => (
     <div className={`absolute flex items-center ${isLoginLanguageRTL ? "-top-3 -left-3" : "-top-3 -right-3"} min-w-fit w-10 h-8 ${isExpiryHover ? 'bg-[#FAD6D1]' : 'bg-[#FEF1C6]'} rounded-md text-[#6D1C00] text-sm shadow-md`}>
-      <div id='hover_count_label' role='button' onClick={(e) => e.stopPropagation()} className="relative group flex items-center justify-center w-full" tabIndex="0"
+      <div id='hover_count_label' role='button' onClick={(e) => e.stopPropagation()} className="relative group flex items-center justify-center w-full" tabIndex="0" 
         onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); e.stopPropagation(); } }}>
         <span className="font-medium p-2 rounded">
           {countLabel ?? <LoadingCount />}
@@ -667,17 +653,17 @@ function Dashboard() {
     if (rootCertExpiryCount > 0 && intermediateCertExpiryCount > 0) {
       if (rootCertExpiryCount > 1 && intermediateCertExpiryCount > 1) {
         return "dashboard.bothTrustCertExpiryCountPlural";
-      }
+      } 
       if (rootCertExpiryCount === 1 && intermediateCertExpiryCount === 1) {
         return "dashboard.bothTrustCertExpiryCountSingular";
-      }
+      } 
       if (rootCertExpiryCount === 1 && intermediateCertExpiryCount > 1) {
         return "dashboard.rootTrustCertExpiryCountSingular";
-      }
+      } 
       if (rootCertExpiryCount > 1 && intermediateCertExpiryCount === 1) {
         return "dashboard.intermediateTrustCertExpiryCountSingular";
       }
-    }
+    } 
     if (rootCertExpiryCount > 0) {
       return rootCertExpiryCount > 1 ? "dashboard.rootCertExpiryCountPlural" : "dashboard.rootCertExpiryCountSingular";
     }
@@ -736,21 +722,6 @@ function Dashboard() {
                   </h5>
                   <p id='dashboard_policies_card_description' className="mb-3 text-xs font-normal text-gray-400">
                     {t('dashboard.policiesDesc')}
-                  </p>
-                </div>
-              </div>
-            )}
-            {!isPartnerAdmin && !isPolicyManager && showCredentialServices && (
-              <div role='button' id='dashboard_credential_services_card' onClick={credentialServices} className="min-h-[50%] p-6 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, credentialServices)}>
-                <div className="flex justify-center mb-5">
-                  <img id='dashboard_credential_services_card_icon' src={credentialServicesIcon} alt="" className="w-8 h-8" />
-                </div>
-                <div>
-                  <h5 id='dashboard_credential_services_card_header' className="mb-2 text-sm font-semibold tracking-tight text-gray-600 ">
-                    {t('dashboard.credentialServices')}
-                  </h5>
-                  <p id='dashboard_credential_services_card_description' className="mb-3 text-xs font-normal text-gray-400">
-                    {t('dashboard.credentialServicesDesc')}
                   </p>
                 </div>
               </div>
@@ -824,7 +795,7 @@ function Dashboard() {
                 )}
               </div>
             )}
-            {isPartnerAdmin && (
+             {isPartnerAdmin && (
               <>
                 <div role='button' id='dashboard_certificate_trust_store_card' onClick={rootTrustCertificateList} className="relative min-h-[50%] p-6 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, rootTrustCertificateList)}>
                   <div className="flex justify-center mb-5">
@@ -844,20 +815,20 @@ function Dashboard() {
                         rootCertExpiryCount > 0 && intermediateCertExpiryCount > 0
                           ? `${rootCertExpiryCount} | ${intermediateCertExpiryCount}`
                           : rootCertExpiryCount > 0
-                            ? `${rootCertExpiryCount}`
-                            : intermediateCertExpiryCount > 0
-                              ? `${intermediateCertExpiryCount}`
-                              : null
+                          ? `${rootCertExpiryCount}`
+                          : intermediateCertExpiryCount > 0
+                          ? `${intermediateCertExpiryCount}`
+                          : null
                       }
                       descriptionKey={getTrustCertExpiryCountDescription()}
                       descriptionParams={
                         rootCertExpiryCount > 0 && intermediateCertExpiryCount > 0
                           ? { rootCertExpiryCount, intermediateCertExpiryCount }
                           : rootCertExpiryCount > 0
-                            ? { rootCertExpiryCount }
-                            : intermediateCertExpiryCount > 0
-                              ? { intermediateCertExpiryCount }
-                              : {}}
+                          ? { rootCertExpiryCount }
+                          : intermediateCertExpiryCount > 0
+                          ? { intermediateCertExpiryCount }
+                          : {}}
                       isExpiryHover={true}
                     />
                   )}
@@ -875,102 +846,103 @@ function Dashboard() {
                     </p>
                   </div>
                 </div>
-              </>
-            )}
-            {(isPolicyManager || isPartnerAdmin) && (
-              <div role='button' id='dashboard_admin_policies_card' onClick={policiesInAdmin} className="min-h-[50%] p-6 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, policiesInAdmin)}>
-                <div className="flex justify-center mb-5">
-                  <img id='admin_policies_icon' src={admin_policies_icon} alt="" className="w-8 h-8" />
-                </div>
-                <div>
-                  <h5 id='dashboard_admin_policies_card_header' className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
-                    {t('dashboard.policies')}
-                  </h5>
-                  <p id='dashboard_admin_policies_card_description' className="mb-3 text-xs font-normal text-gray-400">
-                    {t('dashboard.policiesadminDesc')}
-                  </p>
-                </div>
-              </div>
-            )}
-            {isPartnerAdmin && (
-              <>
-                <div role='button' id='dashboard_partner_policy_linking_card' onClick={partnerPolicyMappingRequestList} className="relative min-h-[50%] p-6 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, partnerPolicyMappingRequestList)}>
+                </>
+              )}
+              {(isPolicyManager || isPartnerAdmin) && (
+                <div role='button' id='dashboard_policies_card' onClick={policiesInAdmin} className="min-h-[50%] p-6 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, policiesInAdmin)}>
                   <div className="flex justify-center mb-5">
-                    <img id='partner_policy_mapping_icon' src={partner_policy_mapping_icon} alt="" className="w-8 h-8" />
+                    <img id='admin_policies_icon' src={admin_policies_icon} alt="" className="w-8 h-8" />
                   </div>
                   <div>
-                    <h5 id='dashboard_partner_policy_linking_card_header' className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
-                      {t('dashboard.partnerPolicyMapping')}
+                    <h5 id='dashboard_policies_card_header' className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
+                      {t('dashboard.policies')}
                     </h5>
-                    <p id='dashboard_partner_policy_linking_card_description' className="mb-3 text-xs font-normal text-gray-400">
-                      {t('dashboard.partnerPolicyMappingDesc')}
+                    <p id='dashboard_policies_card_description' className="mb-3 text-xs font-normal text-gray-400">
+                      {t('dashboard.policiesadminDesc')}
                     </p>
                   </div>
-                  <CountWithHover
-                    countLabel={partnerPolicyMappingRequestCount}
-                    descriptionKey="dashboard.partnerPolicyMappingRequestCountDesc"
-                    descriptionParams={{ partnerPolicyMappingRequestCount }}
-                  />
                 </div>
+              )}
+              {isPartnerAdmin && (
+                <>
+                  <div role='button' id='dashboard_partner_policy_linking_card' onClick={partnerPolicyMappingRequestList} className="relative min-h-[50%] p-6 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, partnerPolicyMappingRequestList)}>
+                    <div className="flex justify-center mb-5">
+                      <img id='partner_policy_mapping_icon' src={partner_policy_mapping_icon} alt="" className="w-8 h-8" />
+                    </div>
+                    <div>
+                      <h5 id='dashboard_partner_policy_linking_card_header' className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
+                        {t('dashboard.partnerPolicyMapping')}
+                      </h5>
+                      <p id='dashboard_partner_policy_linking_card_description' className="mb-3 text-xs font-normal text-gray-400">
+                        {t('dashboard.partnerPolicyMappingDesc')}
+                      </p>
+                    </div>
+                    <CountWithHover
+                      countLabel={partnerPolicyMappingRequestCount}
+                      descriptionKey="dashboard.partnerPolicyMappingRequestCountDesc"
+                      descriptionParams={{ partnerPolicyMappingRequestCount }}
+                    />
+                  </div>
 
-                <div role='button' id='dashboard_sbi_device_card' onClick={adminDeviceProviderServices} className="relative min-h-[50%] p-6 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, adminDeviceProviderServices)}>
-                  <div className="flex justify-center mb-5">
-                    <img id='deviceProviderServicesIcon' src={deviceProviderServicesIcon} alt="" className="w-8 h-8" />
-                  </div>
-                  <div>
-                    <h5 id='dashboard_sbi_device_card_header' className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
-                      {t('dashboard.sbiDevice')}
-                    </h5>
-                    <p id='dashboard_sbi_device_card_description' className="mb-3 text-xs font-normal text-gray-400">
-                      {t('dashboard.sbiDeviceDesc')}
-                    </p>
-                  </div>
-                  <CountWithHover
-                    countLabel={
-                      sbiPendingApprovalRequestCount !== null &&
+                  <div role='button' id='dashboard_sbi_device_card' onClick={adminDeviceProviderServices} className="relative min-h-[50%] p-6 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, adminDeviceProviderServices)}>
+                    <div className="flex justify-center mb-5">
+                      <img id='deviceProviderServicesIcon' src={deviceProviderServicesIcon} alt="" className="w-8 h-8" />
+                    </div>
+                    <div>
+                      <h5 id='dashboard_sbi_device_card_header' className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
+                        {t('dashboard.sbiDevice')}
+                      </h5>
+                      <p id='dashboard_sbi_device_card_description' className="mb-3 text-xs font-normal text-gray-400">
+                        {t('dashboard.sbiDeviceDesc')}
+                      </p>
+                    </div>
+                    <CountWithHover
+                      countLabel={
+                        sbiPendingApprovalRequestCount !== null &&
                         sbiPendingApprovalRequestCount !== undefined &&
                         devicePendingApprovalRequestCount !== null &&
                         devicePendingApprovalRequestCount !== undefined
-                        ? `${sbiPendingApprovalRequestCount} | ${devicePendingApprovalRequestCount}`
-                        : null
-                    }
-                    descriptionKey="dashboard.sbiAndDevicePendingApprovalRequestCountDesc"
-                    descriptionParams={{
-                      sbiPendingApprovalRequestCount,
-                      devicePendingApprovalRequestCount
-                    }}
-                  />
-                </div> 
-                <div role='button' id='dashboard_ftm_chip_card' onClick={adminftmChipProviderServices} className="relative min-h-[50%] p-6 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, adminftmChipProviderServices)}>
-                  <div className="flex justify-center mb-5">
-                    <img id='ftmServicesIcon' src={ftmServicesIcon} alt="" className="w-8 h-8" />
+                          ? `${sbiPendingApprovalRequestCount} | ${devicePendingApprovalRequestCount}`
+                          : null
+                      }
+                      descriptionKey="dashboard.sbiAndDevicePendingApprovalRequestCountDesc"
+                      descriptionParams={{
+                        sbiPendingApprovalRequestCount,
+                        devicePendingApprovalRequestCount
+                      }}
+                    />
                   </div>
-                  <div>
-                    <h5 id='dashboard_ftm_chip_card_header' className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
-                      {t('dashboard.ftmChip')}
-                    </h5>
-                    <p id='dashboard_ftm_chip_card_description' className="mb-3 text-xs font-normal text-gray-400">
-                      {t('dashboard.ftmChipDesc')}
-                    </p>
-                  </div>
-                  <CountWithHover
-                    countLabel={ftmPendingApprovalRequestCount}
-                    descriptionKey="dashboard.ftmPendingApprovalRequestCountDesc"
-                    descriptionParams={{ ftmPendingApprovalRequestCount }}
-                  />
-                </div>
 
-                <div role='button' id='dashboard_admin_authentication_services_card' onClick={adminAuthenticationServices} className="min-h-[50%] p-6 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, adminAuthenticationServices)}>
-                  <div className="flex justify-center mb-5">
-                    <img id='admin_auth_service_icon' src={authServiceIcon} alt="" className="w-8 h-8" />
+                  <div role='button' id='dashboard_ftm_chip_card' onClick={adminftmChipProviderServices} className="relative min-h-[50%] p-6 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, adminftmChipProviderServices)}>
+                    <div className="flex justify-center mb-5">
+                      <img id='ftmServicesIcon' src={ftmServicesIcon} alt="" className="w-8 h-8" />
+                    </div>
+                    <div>
+                      <h5 id='dashboard_ftm_chip_card_header' className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
+                        {t('dashboard.ftmChip')}
+                      </h5>
+                      <p id='dashboard_ftm_chip_card_description' className="mb-3 text-xs font-normal text-gray-400">
+                        {t('dashboard.ftmChipDesc')}
+                      </p>
+                    </div>
+                    <CountWithHover
+                      countLabel={ftmPendingApprovalRequestCount}
+                      descriptionKey="dashboard.ftmPendingApprovalRequestCountDesc"
+                      descriptionParams={{ ftmPendingApprovalRequestCount }}
+                    />
                   </div>
-                  <div>
-                    <h5 id='dashboard_admin_authentication_services_card_header' className="mb-2 text-sm font-semibold tracking-tight text-gray-600 ">
-                      {t('dashboard.authenticationServices')}
-                    </h5>
-                    <p id='dashboard_admin_authentication_services_card_description' className="mb-3 text-xs font-normal text-gray-400">
-                      {t('dashboard.adminAuthenticationServicesDesc')}
-                    </p>
+
+                  <div role='button' id='dashboard_admin_authentication_services_card' onClick={adminAuthenticationServices} className="min-h-[50%] p-6 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, adminAuthenticationServices)}>
+                    <div className="flex justify-center mb-5">
+                      <img id='admin_auth_service_icon' src={authServiceIcon} alt="" className="w-8 h-8" />
+                    </div>
+                    <div>
+                      <h5 id='dashboard_admin_authentication_services_card_header' className="mb-2 text-sm font-semibold tracking-tight text-gray-600 ">
+                        {t('dashboard.authenticationServices')}
+                      </h5>
+                      <p id='dashboard_admin_authentication_services_card_description' className="mb-3 text-xs font-normal text-gray-400">
+                        {t('dashboard.adminAuthenticationServicesDesc')}
+                      </p>
                   </div>
                 </div>
 
@@ -995,26 +967,13 @@ function Dashboard() {
                     />
                   )}
                 </div>
-                <div role='button' id='dashboard_admin_credential_services_card' onClick={adminCredentialServices} className="min-h-[50%] p-6 pt-16 bg-white border border-gray-200 shadow cursor-pointer text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, adminCredentialServices)}>
-                  <div className="flex justify-center mb-5">
-                  <img id='dashboard_admin_credential_services_icon' src={credentialServicesIcon} alt="" className="w-8 h-8" />
-                  </div>
-                  <div>
-                    <h5 id='dashboard_admin_credential_services_card_header' className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
-                      {t('dashboard.adminCredentialServicesTitle')}
-                    </h5>
-                    <p id='dashboard_admin_credential_services_card_description' className="mb-3 text-xs font-normal text-gray-400">
-                      {t('dashboard.adminCredentialServicesDesc')}
-                    </p>
-                  </div>
-                </div>
                   <div
                   role='button'
                   id='dashboard_biometric_provider_configuration_card'
-                  onClick={() => navigate('/partnermanagement/admin/biometric-provider-configuration/list')}
-                  className="relative min-h-[50%] p-6 pt-16 bg-white border border-gray-200 shadow cursor-pointer text-center rounded-xl"
+                  onClick={() => navigate('/partnermanagement/admin/biometric-provider-configuration-list')}
+                  className="relative min-h-[50%] p-6 pt-16 bg-white border border-gray-200 shadow cursor-pointer text-center rounded-xl mb-4"
                   tabIndex="0"
-                  onKeyDown={(e) => onPressEnterKey(e, () => navigate('/partnermanagement/admin/biometric-provider-configuration/list'))}
+                  onKeyDown={(e) => onPressEnterKey(e, () => navigate('/partnermanagement/admin/biometric-provider-configuration-list'))}
                 >
                   <div className="flex justify-center mb-5">
                     <img id='dashboard_biometric_provider_configuration_icon' src={biometricExtractorIcon} alt="Biometric Extractor Provider Icon" className="w-10 h-10"/>
@@ -1028,23 +987,9 @@ function Dashboard() {
                     </p>
                   </div>
                 </div> 
-                <div role='button' id='dashboard_manual_adjudication_card' onClick={() => navigate('/partnermanagement/admin/manual-adjudication-services/api-keys-list')} className="min-h-[50%] p-6 pt-16 bg-white border border-gray-200 shadow cursor-pointer text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => navigate('/partnermanagement/admin/manual-adjudication-services/api-keys-list'))}>
-                  <div className="flex justify-center mb-5">
-                    <img id='dashboard_manual_adjudication_card_icon' src={manualAdjudicationServicesIcon} alt="" className="w-8 h-8" />
-                  </div>
-                  <div>
-                    <h5 id='dashboard_manual_adjudication_header' className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
-                      {t('dashboard.manualAdjudication')}
-                    </h5>
-                    <p id='dashboard_manual_adjudication_description' className="mb-3 text-xs font-normal text-gray-400">
-                      {t('dashboard.manualAdjudicationDesc')}
-                    </p>
-                  </div>
-                </div>
               </>
             )}
           </div>
-          <div className="mb-8"></div>
           {showPopup && (
             <SelectPolicyPopup />
           )}
@@ -1052,7 +997,7 @@ function Dashboard() {
             <ConsentPopup />
           )}
           {showOnboardingPartnerAlertPopup && (
-            <OnboardingPartnerAlertPopup
+            <OnboardingPartnerAlertPopup 
               errorType={onboardingPartnerAlertType}
             />
           )}

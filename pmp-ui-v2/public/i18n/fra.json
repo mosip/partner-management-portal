@@ -53,10 +53,7 @@
         "policies": "Stratégies",
         "policiesDesc": "Demandez et consultez vos polices",
         "authenticationServices": "Services d'authentification",
-        "authenticationServicesDesc": "Demander la création d’un client OIDC / la génération de clés API pour eSignet et l’authentification par clé API",
-        "credentialServices": "Services d'identification",
-        "credentialServicesDesc": "Gérer les services d'identification",
-        "adminCredentialServicesDesc": "Configurer, afficher et modifier les détails du fournisseur Biometric Extractor",
+        "authenticationServicesDesc": "Demander la création d'un client OIDC / la génération de clés API pour eSignet et les authentifications basées sur les clés API",
         "deviceProviderServices": "Services du fournisseur d'appareils",
         "ftmChipProviderServices": "Services de fournisseur de puces FTM",
         "ftmChipProviderServicesDesc": "Ajouter, désactiver FTM (Foundational Trust Module), télécharger, re-télécharger, télécharger le certificat de puce FTM",
@@ -100,17 +97,8 @@
         "mispPartnerServicesDesc": "Générer, régénérer, afficher ou désactiver les clés de licence MISP",
         "mispLicenseKeyExpiryCountDesc1": "{{expiringMispLicenseKeyCount}} Les clés de licence MISP expirent bientôt",
         "mispLicenseKeyExpiryCountDesc2": "{{expiringMispLicenseKeyCount}} La clé de licence MISP expire bientôt",
-        "manualAdjudication": "Services d'arbitrage manuel",
-        "manualAdjudicationDesc": "Afficher, Générer des clés API",
-        "adminCredentialServicesTitle": "Services Credential/Print Partner",
-        "biometricProviderConfiguration": "تهيئة مزود القياسات الحيوية",
-        "biometricProviderConfigurationDesc": "إنشاء وعرض وإلغاء تنشيط تكوينات مزود مستخرج القياسات الحيوية"
-    },
-    "credentialServices": {
-        "title": "Services d'identification",
-        "breadcrumb": "Services d'identification",
-        "adminTitle": "Services Partenaire Credential/Impression",
-        "adminBreadcrumb": "Services Partenaire Credential/Impression"
+        "biometricProviderConfiguration": "Configuration du fournisseur biométrique",
+        "biometricProviderConfigurationDesc": "Créer, afficher les configurations du fournisseur d’extracteur biométrique"
     },
     "mispLicenseList": {
         "partnerId": "ID partenaire",
@@ -365,6 +353,22 @@
         "policySuccessMsgForAdmin": "La demande de politique a été soumise avec succès. Veuillez approuver la demande d'activation du lien de politique partenaire.",
         "approvePopupTitle": "Voulez-vous approuver la demande de politique du partenaire ?",
         "approvePopupDesc": "En cliquant sur Confirmer, la liaison de la politique de partenariat sera approuvée."
+    },
+    "mapCredentialType": {
+        "title": "Mapper le type d’identifiant",
+        "mappingSectionTitle": "Cartographie du type d’identifiant",
+        "credentialType": "Type d’identifiant",
+        "selectCredentialType": "Sélectionnez le type d’identifiant",
+        "addMore": "Ajouter plus",
+        "delete": "Supprimer",
+        "validationMsg": "Veuillez sélectionner le type d’identifiant pour toutes les lignes.",
+        "duplicateSelectionMsg": "Les types d’identifiant en double ne sont pas autorisés. Veuillez choisir un type d’identifiant différent pour chaque ligne.",
+        "partialFailureMsg": "{{succeeded}} sur {{total}} types d’identifiant ont été associés. Échec pour : {{failed}}. Veuillez réessayer.",
+        "duplicateCredentialTypeMsg": "Une cartographie existe déjà entre ce partenaire et le(s) type(s) d’identifiant : {{types}}. Veuillez choisir un autre type d’identifiant et réessayer.",
+        "saveError": "Lors de l’enregistrement de la cartographie du type d’identifiant, nous avons rencontré une erreur.",
+        "successHeader": "Tous les détails ont été soumis avec succès !",
+        "successMsgLine1": "La demande de politique, y compris la cartographie du fournisseur d’extracteur biométrique et du type d’identifiant, a été soumise avec succès.",
+        "successMsgLine2": "L’approbation est en attente auprès de l’administrateur."
     },
     "authenticationServices": {
         "authenticationServices": "Services d'authentification",
@@ -673,21 +677,6 @@
     "deactivateApiKey": {
         "apiKeyName": "Voulez-vous désactiver la clé API",
         "description": "En cliquant sur Confirmer, vous ne pourrez plus utiliser la clé API pour l'authentification."
-    },
-    "manualAdjudicationServices": {
-        "manualAdjudicationServices": "Services d'arbitrage manuel",
-        "partnerId": "ID partenaire",
-        "orgName": "Organisation",
-        "policyGroup": "Groupe de politiques",
-        "policyName": "Nom de la politique",
-        "partnerType": "Partenaire d’adjudication manuelle",
-        "apiKeyName": "Nom de la clé API",
-        "creationDate": "Date de création",
-        "status": "Statut",
-        "action": "Action",
-        "generateApiKey": "Générer une clé API",
-        "listOfManualAdjudicationApiKeys": "Liste des clés API d'arbitrage manuel",
-        "errorInManualAdjudicationList": "Lors de la récupération des détails de l'arbitrage manuel, nous avons rencontré une erreur."
     },
     "deviceProviderServices": {
         "listOfSbisAndDevices": "Liste des SBI et des appareilsBI - Device",
@@ -1222,11 +1211,30 @@
         "approve": "Approuver",
         "reject": "Rejeter",
         "comments": "Commentaires",
-        "commentPlaceholder": "Écrivez votre commentaire ici"
+        "commentPlaceholder": "Écrivez votre commentaire ici",
+        "mappingsMissingGeneric": "Les cartographies requises (extracteurs biométriques et type d’identifiant) sont manquantes. Veuillez les configurer puis réessayer.",
+        "mappingsMissingBoth": "Les bio-extracteurs et le type d’identifiant ne sont pas configurés pour cette politique. Veuillez les configurer puis réessayer.",
+        "credentialTypeNotMapped": "Le type d’identifiant n’est pas configuré pour cette politique. Veuillez mapper un type d’identifiant puis réessayer."
     },
     "partnerPolicyRequestApproveRejectPopup": {
         "header": "Voulez-vous Approuver/Rejeter la politique?",
-        "description": "Veuillez examiner attentivement les détails de la politique avant de prendre une décision appropriée."
+        "description": "Veuillez examiner attentivement les détails de la politique avant de faire votre choix.",
+        "bioModality": "Modalité biométrique",
+        "bioModalityLine1": "Modalité",
+        "bioModalityLine2": "biométrique",
+        "bioExtractorConfig": "Configuration du fournisseur d’extracteur biométrique",
+        "bioExtractorConfigLine1": "Extracteur biométrique",
+        "bioExtractorConfigLine2": "Configuration fournisseur",
+        "bioExtractorProviderVersion": "Version du fournisseur d’extracteur biométrique",
+        "bioExtractorProviderVersionLine1": "Extracteur biométrique",
+        "bioExtractorProviderVersionLine2": "Version fournisseur",
+        "bioExtractorProviderName": "Nom du fournisseur d’extracteur biométrique",
+        "bioExtractorProviderNameLine1": "Extracteur biométrique",
+        "bioExtractorProviderNameLine2": "Nom du fournisseur",
+        "bioExtractorProviderMapping": "Cartographie du fournisseur d’extracteur biométrique",
+        "credentialType": "Type d’identifiant",
+        "noBioExtractors": "Aucun extracteur biométrique trouvé pour cette politique.",
+        "extractorsNotConfigured": "Les extracteurs biométriques ne sont pas configurés. Ajoutez des extracteurs biométriques pour cette politique."
     },
     "ftmRequestApproveRejectPopup": {
         "header": "Voulez-vous Approuver/Rejeter la puce FTM {{make}}-{{model}} ?",
@@ -1281,10 +1289,6 @@
     "adminDeactivateApiKey": {
         "title": "Êtes-vous sûr de vouloir désactiver la clé API",
         "description": "En cliquant sur 'Confirmer', la clé API sera désactivée et ne pourra plus être utilisée pour l'authentification"
-    },
-    "adminDeactivateManualAdjudicationApiKey": {
-        "title": "Êtes-vous sûr de vouloir désactiver la clé API",
-        "description": "En cliquant sur Confirmer, la clé API sera désactivée et ne pourra plus être utilisée pour les services d'arbitrage manuel."
     },
     "notificationPopup": {
         "latest": "Dernier",
@@ -1728,6 +1732,7 @@
     },
     "bioExtractorConfig": {
         "createBioExtractorConfig": "Créer la configuration du fournisseur d'extraction biométrique",
+        "createConfiguration": "Créer la configuration",
         "bioExtractorConfigList": "Configurations du fournisseur d'extraction biométrique",
         "configurationName": "Nom de configuration",
         "enterConfigurationName": "Saisissez le nom de configuration",
@@ -1737,11 +1742,35 @@
         "enterProviderVersion": "Saisissez la version du fournisseur",
         "biometricModality": "Modalité biométrique",
         "selectBiometricModality": "Sélectionnez une modalité biométrique",
-        "face": "Visage",
-        "finger": "Doigt",
-        "iris": "Iris",
+        "face": "visage",
+        "finger": "doigt",
+        "iris": "iris",
         "configNameDuplicateError": "Le nom de configuration existe déjà",
         "errorInCreateConfig": "Une erreur est survenue lors de la création de la configuration du fournisseur d'extraction biométrique",
-        "createConfigSuccessHeader": "La configuration du fournisseur d'extraction biométrique a été ajoutée avec succès !"
+        "createConfigSuccessHeader": "La configuration du fournisseur d'extraction biométrique a été ajoutée avec succès !",
+        "viewBioExtractorConfigDetails": "Afficher les détails de la configuration de l'extracteur biométrique",
+        "viewBioExtractorProviderConfig": "Afficher la configuration du fournisseur d'extracteur biométrique"
+        },
+    "mapBiometricExtractorProvider": {
+        "title": "Associer le fournisseur d'extracteur biométrique",
+        "addBioextractors": "Mapper l'extracteur biométrique",
+        "mappingSectionTitle": "Configuration du fournisseur d'extracteur biométrique",
+        "biometricModality": "Modalité biométrique",
+        "selectBiometricModality": "Sélectionnez la modalité biométrique",
+        "biometricProviderConfiguration": "Configuration du fournisseur biométrique",
+        "selectBiometricProviderConfiguration": "Sélectionnez un fournisseur biométrique",
+        "autoPopulatedValue": "Rempli automatiquement en fonction de la configuration sélectionnée",
+        "addMore": "Ajouter",
+        "delete": "Supprimer",
+        "validationMsg": "Veuillez mapper tous les champs du fournisseur d'extracteur biométrique avant de continuer.",
+        "configFetchError": "Impossible de charger les configurations du fournisseur biométrique. Veuillez réessayer.",
+        "saveError": "Erreur lors de la configuration du fournisseur d'extracteur biométrique.",
+        "saveConfirmTitle": "Enregistrer les extracteurs biométriques ?",
+        "saveConfirmMessage": "Une fois enregistrées, ces cartographies d’extracteurs biométriques ne pourront plus être modifiées. Voulez-vous continuer ?"
+    },
+    "unsavedChangesPopup": {
+        "message": "Vos modifications seront perdues, êtes-vous sûr de vouloir continuer ?",
+        "proceed": "Continuer",
+        "cancel": "Annuler"
     }
 }

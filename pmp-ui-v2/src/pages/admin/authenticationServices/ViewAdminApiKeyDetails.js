@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../../../services/UserProfileService';
 import { bgOfStatus, formatDate, getStatusCode, isLangRTL } from '../../../utils/AppUtils';
 import somethingWentWrongIcon from '../../../svg/something_went_wrong_icon.svg';
@@ -9,31 +9,19 @@ import Title from '../../common/Title';
 function ViewAdminApiKeyDetails() {
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const location = useLocation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [unexpectedError, setUnexpectedError] = useState(false);
     const [apiKeyDetails, setApiKeyDetails] = useState({});
 
-    const isManualAdjudication = location.pathname?.includes('manual-adjudication-services') ?? false;
-    const apiKeysListBackLink = isManualAdjudication
-        ? '/partnermanagement/admin/manual-adjudication-services/api-keys-list'
-        : '/partnermanagement/admin/authentication-services/api-keys-list';
-    const apiKeysListSubTitle = isManualAdjudication
-        ? 'manualAdjudicationServices.listOfManualAdjudicationApiKeys'
-        : 'apiKeysList.listOfApiKeyRequests';
-        const partnerTypeDisplayKey = isManualAdjudication
-        ? 'partnerTypes.manualAdjudication'
-        : 'partnerTypes.authPartner';
-
     const moveToApiClientsList = () => {
-        navigate(apiKeysListBackLink);
+        navigate('/partnermanagement/admin/authentication-services/api-keys-list');
     };
 
     useEffect(() => {
         const data = sessionStorage.getItem('selectedApiKeyAttributes');
-        if (!data) {
+        if(!data){
             setUnexpectedError(true);
-            return;
+            return ;
         }
         const apiKeyData = JSON.parse(data);
         setApiKeyDetails(apiKeyData);
@@ -43,7 +31,7 @@ function ViewAdminApiKeyDetails() {
         <div className={`w-full p-4 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm mb-[2%] ${isLoginLanguageRTL ? "mr-24 ml-1" : "ml-24 mr-1"} overflow-x-scroll`}>
             <div className={`flex-col mt-5 bg-anti-flash-white h-full font-inter break-words max-[450px]:text-sm mb-[2%]`}>
                 <div className="flex justify-between mb-3">
-                    <Title title='viewApiKeyDetails.viewApiKeyDetails' subTitle={apiKeysListSubTitle} backLink={apiKeysListBackLink} />
+                    <Title title='viewApiKeyDetails.viewApiKeyDetails' subTitle='apiKeysList.listOfApiKeyRequests' backLink='/partnermanagement/admin/authentication-services/api-keys-list' />
                 </div>
 
                 {unexpectedError && (
@@ -98,7 +86,7 @@ function ViewAdminApiKeyDetails() {
                                         {t("viewOidcClientDetails.partnerType")}
                                     </p>
                                     <p id='api_key_details_auth_partner_context' className="font-[600] text-vulcan text-base">
-                                        {t(partnerTypeDisplayKey)}
+                                        {t("partnerTypes.authPartner")}
                                     </p>
                                 </div>
                                 <div className="my-3 max-[600px]:w-[100%] w-[49%]">

@@ -30,6 +30,7 @@ import PolicyRequestsListFilter from "./PolicyRequestsListFilter";
 import approveRejectIcon from "../../../svg/approve_reject_icon.svg";
 import disabledApproveRejectIcon from "../../../svg/approve_reject_disabled_icon.svg";
 import ApproveRejectPopup from "../../common/ApproveRejectPopup";
+import CredentialPartnerPolicyDetails from "../credentialServices/CredentialPartnerPolicyDetails";
 
 function PolicyRequestsList() {
   const { t } = useTranslation();
@@ -359,6 +360,23 @@ function PolicyRequestsList() {
                                                   subtitle={`# ${selectedPolicyRequest.policyId}`}
                                                   header={t('partnerPolicyRequestApproveRejectPopup.header')}
                                                   description={t('partnerPolicyRequestApproveRejectPopup.description')}
+                                                  renderPolicyDetails={
+                                                    String(selectedPolicyRequest?.partnerType ?? '').toUpperCase() === 'CREDENTIAL_PARTNER'
+                                                      ? ({ t, isLoginLanguageRTL, popupData, onLoadingChange, onApproveBlockedChange, getPartnerTypeDescription }) => (
+                                                          <CredentialPartnerPolicyDetails
+                                                            t={t}
+                                                            isLoginLanguageRTL={isLoginLanguageRTL}
+                                                            partnerId={popupData?.partnerId}
+                                                            policyId={popupData?.policyId}
+                                                            partnerTypeLabel={getPartnerTypeDescription(popupData?.partnerType, t) ?? popupData?.partnerType ?? '-'}
+                                                            enabled={true}
+                                                            variant="popup"
+                                                            onLoadingChange={onLoadingChange}
+                                                            onApproveBlockedChange={onApproveBlockedChange}
+                                                          />
+                                                        )
+                                                      : undefined
+                                                  }
                                                 />
                                               }
                                             </div>

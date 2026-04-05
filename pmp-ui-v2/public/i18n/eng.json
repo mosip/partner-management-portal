@@ -54,9 +54,6 @@
         "policiesDesc": "Request and view your policies",
         "authenticationServices": "Authentication Services",
         "authenticationServicesDesc": "Request OIDC Client creation / API key generation for eSignet and API key based authentications",
-        "credentialServices": "Credential Services",
-        "credentialServicesDesc": "Credential Services",
-        "adminCredentialServicesDesc": "Configure, view & edit the Biometric Extractor provider details",
         "deviceProviderServices": "Device Provider Services",
         "ftmChipProviderServices": "FTM Chip Provider Services",
         "ftmChipProviderServicesDesc": "Add, Deactivate FTM (Foundational Trust Module) , Upload, Reupload, Download FTM Chip Certificate",
@@ -102,17 +99,8 @@
         "mispPartnerServicesDesc": "Generate, Regenerate, View or Deactivate MISP License Keys",
         "mispLicenseKeyExpiryCountDesc1": "{{expiringMispLicenseKeyCount}} MISP License Keys are expiring soon",
         "mispLicenseKeyExpiryCountDesc2": "{{expiringMispLicenseKeyCount}} MISP License Key is expiring soon",
-        "manualAdjudication": "Manual Adjudication Services",
-        "manualAdjudicationDesc": "View, Generate API Keys",
-        "adminCredentialServicesTitle": "Credential/Print Partner Services",
         "biometricProviderConfiguration": "Biometric Provider Configuration",
-        "biometricProviderConfigurationDesc": "Create, view & deactivate the biometric extractor provider configurations"
-    },
-    "credentialServices": {
-        "title": "Credential Services",
-        "breadcrumb": "Credential Services",
-        "adminTitle": "Credential/Print Partner Services",
-        "adminBreadcrumb": "Credential/Print Partner Services"
+        "biometricProviderConfigurationDesc": "Create, view the biometric extractor provider configurations"
     },
     "mispLicenseList": {
         "partnerId": "Partner ID",
@@ -366,6 +354,22 @@
         "policySuccessMsgForAdmin": "Policy request has been successfully submitted. Approve the request for the partner policy linking to be activated.",
         "approvePopupTitle": "Do you want to approve Partner- Policy Request?",
         "approvePopupDesc": "On clicking Confirm, the Partner Policy Linking will be approved."
+    },
+    "mapCredentialType": {
+        "title": "Map Credential Type",
+        "mappingSectionTitle": "Credential Type Mapping",
+        "credentialType": "Credential Type",
+        "selectCredentialType": "Select Credential Type",
+        "addMore": "Add More",
+        "delete": "Delete",
+        "validationMsg": "Please select credential type for all rows.",
+        "duplicateSelectionMsg": "Duplicate credential types are not allowed. Please choose a different credential type for each row.",
+        "partialFailureMsg": "Mapped {{succeeded}} of {{total}} credential types. Failed for: {{failed}}. Please try again.",
+        "duplicateCredentialTypeMsg": "Mapping already exists between this partner and credential type(s): {{types}}. Please choose a different credential type and try again.",
+        "saveError": "While saving credential type mapping, we have encountered with an error.",
+        "successHeader": "All Details Submitted Successfully!",
+        "successMsgLine1": "Policy request, including biometric extractor provider and credential type mappings, has been successfully submitted.",
+        "successMsgLine2": "Approval is pending with the administrator."
     },
     "authenticationServices": {
         "authenticationServices": "Authentication Services",
@@ -672,21 +676,6 @@
     "deactivateApiKey": {
         "apiKeyName": "Do you want to Deactivate API Key",
         "description": "On clicking Confirm, you will not be able to use the API Key for authentication anymore."
-    },
-    "manualAdjudicationServices": {
-        "manualAdjudicationServices": "Manual Adjudication Services",
-        "partnerId": "Partner ID",
-        "orgName": "Organisation",
-        "policyGroup": "Policy Group",
-        "policyName": "Policy Name",
-        "partnerType": "Manual Adjudication Partner",
-        "apiKeyName": "API Key Name",
-        "creationDate": "Creation Date",
-        "status": "Status",
-        "action": "Action",
-        "generateApiKey": "Generate API Key",
-        "listOfManualAdjudicationApiKeys": "List of Manual Adjudication API Keys",
-        "errorInManualAdjudicationList": "While fetching Manual Adjudication details, we have encountered with an error."
     },
     "deviceProviderServices": {
         "listOfSbisAndDevices": "List Of SBIs And Devices",
@@ -1218,11 +1207,30 @@
         "approve": "Approve",
         "reject": "Reject",
         "comments": "Comments",
-        "commentPlaceholder": "Write your comment here"
+        "commentPlaceholder": "Write your comment here",
+        "mappingsMissingGeneric": "Required biometric extractor and credential type mappings are missing. Please configure them and try again.",
+        "mappingsMissingBoth": "Bio extractors and credential type are not configured for this policy. Please configure them and try again.",
+        "credentialTypeNotMapped": "Credential type is not configured for this policy. Please map a credential type and try again."
     },
     "partnerPolicyRequestApproveRejectPopup": {
         "header": "Do you want to Approve/Reject the Policy?",
-        "description": "Please review the policy details carefully before taking appropriate action."
+        "description": "Please review the policy details carefully before making your choice.",
+        "bioModality": "Biometric Modality",
+        "bioModalityLine1": "Biometric",
+        "bioModalityLine2": "Modality",
+        "bioExtractorConfig": "Biometric Extractor Provider Configuration",
+        "bioExtractorConfigLine1": "Biometric Extractor",
+        "bioExtractorConfigLine2": "Provider Configuration",
+        "bioExtractorProviderVersion": "Biometric Extractor Provider Version",
+        "bioExtractorProviderVersionLine1": "Biometric Extractor",
+        "bioExtractorProviderVersionLine2": "Provider Version",
+        "bioExtractorProviderName": "Biometric Extractor Provider Name",
+        "bioExtractorProviderNameLine1": "Biometric Extractor",
+        "bioExtractorProviderNameLine2": "Provider Name",
+        "bioExtractorProviderMapping": "Biometric Extractor Provider Mapping",
+        "credentialType": "Credential Type",
+        "noBioExtractors": "No bio extractors found for this policy.",
+        "extractorsNotConfigured": "Bio extractors are not configured. Add bio extractors for this policy."
     },
     "ftmRequestApproveRejectPopup": {
         "header": "Do you want to Approve/Reject the FTM chip {{make}}-{{model}}?",
@@ -1277,10 +1285,6 @@
     "adminDeactivateApiKey": {
         "title": "Are you sure you want to Deactivate API Key",
         "description": "On clicking ‘Confirm’, the API Key will be deactivated and can no longer be used for authentication"
-    },
-    "adminDeactivateManualAdjudicationApiKey": {
-        "title": "Are you sure you want to Deactivate API Key",
-        "description": "On clicking Confirm, the API Key will be deactivated and can no longer be used for Manual Adjudication services."
     },
     "notificationPopup": {
         "latest": "Latest",
@@ -1424,7 +1428,7 @@
         "PMS_PM_034": " Policy request already approved.",
         "PMS_PM_035": " Policy request already rejected.",
         "PMS_PM_045": " Status should be either Approved or Rejected",
-        "PMS_PM_051": "Extractors are not configured for this policy. Please add extractors in Policy Manager and try again.",
+        "PMS_PM_051": " Extractors are not present. Please add extractors.",
         "PMS_PM_058": " Status should be either Active or De_Active",
         "PMS_PM_059": "Error while fetching partner details.",
         "PMS_PM_060": "The certificate for the specified partner is not available in the store",
@@ -1724,6 +1728,7 @@
     },
     "bioExtractorConfig": {
         "createBioExtractorConfig": "Create Biometric Extractor Provider Configuration",
+        "createConfiguration": "Create Configuration",
         "bioExtractorConfigList": "Biometric Extractor Provider Configurations",
         "configurationName": "Configuration Name",
         "enterConfigurationName": "Enter configuration name",
@@ -1733,11 +1738,35 @@
         "enterProviderVersion": "Enter provider version",
         "biometricModality": "Biometric Modality",
         "selectBiometricModality": "Select biometric modality",
-        "face": "Face",
-        "finger": "Finger",
-        "iris": "Iris",
+        "face": "face",
+        "finger": "finger",
+        "iris": "iris",
         "configNameDuplicateError": "Configuration name already exists",
         "errorInCreateConfig": "An error occurred while creating the biometric extractor provider configuration",
-        "createConfigSuccessHeader": "Biometric Extractor Provider Configuration is added successfully!"
+        "createConfigSuccessHeader": "Biometric Extractor Provider Configuration is added successfully!",
+        "viewBioExtractorConfigDetails": "View Biometric Extractor Configuration Details",
+        "viewBioExtractorProviderConfig": "View Biometric Extractor Provider Configuration"
+        },
+    "mapBiometricExtractorProvider": {
+        "title": "Map Biometric Extractor Provider",
+        "addBioextractors": "Map Biometric Extractor",
+        "mappingSectionTitle": "Map Biometric Extractor Provider Configuration",
+        "biometricModality": "Biometric Modality",
+        "selectBiometricModality": "Select Biometric Modality",
+        "biometricProviderConfiguration": "Biometric Provider Configuration*",
+        "selectBiometricProviderConfiguration": "Select a Biometric Provider",
+        "autoPopulatedValue": "Auto populated based on configuration selected",
+        "addMore": "Add More",
+        "delete": "Delete",
+        "validationMsg": "Please map all biometric extractor provider fields before proceeding.",
+        "configFetchError": "Unable to load biometric provider configurations. Please try again.",
+        "saveError": "Error while mapping biometric extractor provider configuration.",
+        "saveConfirmTitle": "Save biometric extractors?",
+        "saveConfirmMessage": "Once saved, these biometric extractor mappings cannot be edited. Do you want to continue?"
+    },
+    "unsavedChangesPopup": {
+        "message": "Your changes will be lost, are you sure you want to proceed?",
+        "proceed": "Proceed",
+        "cancel": "Cancel"
     }
 }

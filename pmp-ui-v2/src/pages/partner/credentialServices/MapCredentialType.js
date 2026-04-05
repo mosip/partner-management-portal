@@ -1,0 +1,511 @@
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useLocation, useNavigate, useBlocker } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { getUserProfile } from "../../../services/UserProfileService";
+import { createRequest, getPartnerManagerUrl, isLangRTL } from "../../../utils/AppUtils";
+import { HttpService } from "../../../services/HttpService";
+import Title from "../../common/Title";
+import ErrorMessage from "../../common/ErrorMessage";
+import LoadingIcon from "../../common/LoadingIcon";
+import DropdownComponent from "../../common/fields/DropdownComponent";
+import BlockerPrompt from "../../common/BlockerPrompt";
+import Confirmation from "../../common/Confirmation";
+
+const CREDENTIAL_TYPE_OPTIONS = ["auth", "qrcode", "euin", "reprint", "vercred", "opencrvs"];
+
+/** Same shape checks as PoliciesList / CredentialPartnerPolicyDetails for GET .../bioextractors/{policyId}. */
+function hasMeaningfulBioMapping(item) {
+  if (!item) return false;
+  const extractor = item?.extractor ?? item?.mapping?.extractor ?? null;
+  const provider =
+    extractor?.provider ??
+    item?.provider ??
+    item?.bioextractorProviderName ??
+    item?.extractorProviderName ??
+    "";
+  const version =
+    extractor?.version ??
+    item?.version ??
+    item?.bioextractorProviderVersion ??
+    item?.extractorProviderVersion ??
+    "";
+  return Boolean(String(provider || "").trim()) || Boolean(String(version || "").trim());
+}
+
+/** Align with CredentialPartnerPolicyDetails.normalizeBioRow — API field names vary by deployment. */
+function resolveBioConfigurationLabel(item) {
+  const configuration =
+    item?.bioExtractorConfigurationName ??
+    item?.bioExtractorConfigName ??
+    item?.configName ??
+    item?.bio_extractor_configuration_name ??
+    item?.configurationName ??
+    item?.bioExtractorConfigurationId ??
+    item?.bio_extractor_configuration_id ??
+    item?.attributeName ??
+    "";
+  const trimmed = configuration === null || configuration === undefined ? "" : String(configuration).trim();
+  return trimmed || "-";
+}
+
+/** Parse GET .../bioextractors/{policyId} response into parallel display arrays (modalities + config names). */
+function extractBioDisplayFromResponse(responsePayload) {
+  const list = Array.isArray(responsePayload)
+    ? responsePayload
+    : (responsePayload?.extractors ??
+        responsePayload?.data ??
+        responsePayload?.content ??
+        responsePayload?.bioExtractors ??
+        responsePayload?.bioextractors ??
+        responsePayload?.extractorList ??
+        []);
+  if (!Array.isArray(list)) return { modalities: [], configs: [] };
+
+  const modalities = [];
+  const configs = [];
+
+  for (const item of list) {
+    const rawModality =
+      item?.bioModality ??
+      item?.biometricModality ??
+      item?.modality ??
+      item?.bio_modality ??
+      item?.biometric ??
+      "";
+    let modality = String(rawModality || "").trim().toUpperCase();
+    if (modality === "FINGERPRINT") modality = "FINGER";
+
+    const configLabel = resolveBioConfigurationLabel(item);
+
+    const hasRow =
+      hasMeaningfulBioMapping(item) ||
+      Boolean(modality) ||
+      (configLabel && configLabel !== "-");
+    if (!hasRow) continue;
+
+    modalities.push(modality || String(rawModality || "").trim() || "-");
+    configs.push(configLabel);
+  }
+
+  return { modalities, configs };
+}
+
+function MapCredentialType() {
+  const { t } = useTranslation();
+  const navigate = useNavigate();
+  const { state } = useLocation();
+
+  const userProfile = getUserProfile();
+  const isLoginLanguageRTL = isLangRTL(userProfile?.locale || "en");
+
+  const hasRequiredState = Boolean(state?.partnerId && state?.policyName);
+  /** Policy list / APIs may use camelCase or snake_case */
+  const policyIdForApi = state?.policyId ?? state?.policy_id ?? "";
+
+  const [selectedBioModalities, setSelectedBioModalities] = useState(() =>
+    Array.isArray(state?.selectedBioModalities) ? state.selectedBioModalities : []
+  );
+  const [selectedBioProviderConfigurations, setSelectedBioProviderConfigurations] = useState(() =>
+    Array.isArray(state?.selectedBioProviderConfigurations) ? state.selectedBioProviderConfigurations : []
+  );
+
+  const needsBioFetch = useMemo(
+    () =>
+      !(Array.isArray(state?.selectedBioModalities) && state.selectedBioModalities.length > 0) &&
+      Boolean(state?.partnerId && policyIdForApi),
+    [state?.partnerId, policyIdForApi, state?.selectedBioModalities]
+  );
+
+  const [bioMetaLoaded, setBioMetaLoaded] = useState(() => !needsBioFetch);
+
+  const [dataLoaded, setDataLoaded] = useState(true);
+  const [errorCode, setErrorCode] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
+  const [credentialType, setCredentialType] = useState("");
+  const [isSubmitClicked, setIsSubmitClicked] = useState(false);
+  const [requestPolicySuccess, setRequestPolicySuccess] = useState(false);
+  const [confirmationData, setConfirmationData] = useState({});
+  const isSubmittingRef = useRef(false);
+
+  /** First row is placeholder (empty value); no default credential type selected */
+  const credentialTypeDropdownData = useMemo(
+    () => [
+      { fieldCode: t("mapCredentialType.selectCredentialType"), fieldValue: "" },
+      ...CREDENTIAL_TYPE_OPTIONS.map((value) => ({
+        fieldCode: value,
+        fieldValue: value,
+      })),
+    ],
+    [t]
+  );
+
+  useEffect(() => {
+    if (!needsBioFetch) return;
+
+    let cancelled = false;
+    (async () => {
+      try {
+        const url = getPartnerManagerUrl(`/partners/${state.partnerId}/bioextractors/${policyIdForApi}`, process.env.NODE_ENV);
+        const res = await HttpService.get(url);
+        if (cancelled) return;
+        if (res?.data?.response) {
+          const { modalities, configs } = extractBioDisplayFromResponse(res.data.response);
+          setSelectedBioModalities(modalities);
+          setSelectedBioProviderConfigurations(configs);
+        }
+      } catch {
+        /* keep empty; page still usable for credential mapping */
+      } finally {
+        if (!cancelled) setBioMetaLoaded(true);
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [needsBioFetch, state?.partnerId, policyIdForApi]);
+
+  const hasUnsavedChanges = useMemo(() => Boolean((credentialType || "").trim()), [credentialType]);
+
+  const blocker = useBlocker(({ currentLocation, nextLocation }) => {
+    if (isSubmitClicked || requestPolicySuccess) return false;
+    return hasUnsavedChanges && currentLocation.pathname !== nextLocation.pathname;
+  });
+
+  useEffect(() => {
+    if (hasRequiredState) return;
+    navigate("/partnermanagement/runtimeError");
+  }, [hasRequiredState, navigate]);
+
+  const clearForm = () => {
+    setCredentialType("");
+    setErrorCode("");
+    setErrorMsg("");
+  };
+
+  const clickOnCancel = () => {
+    navigate("/partnermanagement/policies/policies-list");
+  };
+
+  const updateCredentialType = (fieldName, selectedValue) => {
+    setCredentialType(selectedValue ?? "");
+  };
+
+  const isFormValid = () => {
+    if (!hasRequiredState) return false;
+    return Boolean(String(credentialType || "").trim());
+  };
+
+  const clickOnSubmit = async () => {
+    if (isSubmittingRef.current) return;
+    isSubmittingRef.current = true;
+    setIsSubmitClicked(true);
+
+    if (!isFormValid()) {
+      setErrorMsg(t("mapCredentialType.validationMsg"));
+      setIsSubmitClicked(false);
+      isSubmittingRef.current = false;
+      return;
+    }
+
+    setErrorCode("");
+    setErrorMsg("");
+    setDataLoaded(false);
+
+    try {
+      const ct = String(credentialType || "").trim();
+      const credentialTypes = [ct];
+      const request = createRequest({});
+      const buildUrl = (type) =>
+        getPartnerManagerUrl(
+          `/partners/${state.partnerId}/credentialtype/${encodeURIComponent(type)}/policies/${encodeURIComponent(
+            state.policyName
+          )}`,
+          process.env.NODE_ENV
+        );
+
+      const postCredentialType = async (type) => {
+        const url = buildUrl(type);
+        let responseData;
+        try {
+          const response = await HttpService.post(url, request, {
+            headers: { "Content-Type": "application/json" },
+          });
+          responseData = response?.data;
+        } catch (err) {
+          responseData = err?.response?.data;
+          if (!responseData) throw err;
+        }
+        if (responseData?.errors?.length) {
+          const error = new Error("credentialTypeMappingFailed");
+          error.responseData = responseData;
+          error.credentialType = type;
+          throw error;
+        }
+        if (responseData?.response == null) {
+          const error = new Error("credentialTypeMappingFailed");
+          error.responseData = responseData;
+          error.credentialType = type;
+          throw error;
+        }
+        return true;
+      };
+
+      const tasks = credentialTypes.map((type) => ({
+        credentialType: type,
+        promise: postCredentialType(type),
+      }));
+
+      const results = await Promise.allSettled(tasks.map((task) => task.promise));
+
+      const succeeded = tasks
+        .filter((_, i) => results[i]?.status === "fulfilled")
+        .map((task) => task.credentialType);
+
+      const failedDetails = [];
+      for (let i = 0; i < results.length; i++) {
+        if (results[i]?.status === "rejected") {
+          const reason = results[i].reason;
+          const ctFailed = tasks[i].credentialType;
+          const code =
+            reason?.responseData?.errors?.[0]?.errorCode ??
+            reason?.response?.data?.errors?.[0]?.errorCode;
+          failedDetails.push({ credentialType: ctFailed, errorCode: code });
+        }
+      }
+
+      if (failedDetails.length > 0) {
+        const failedTypes = failedDetails.map((f) => f.credentialType);
+        const allDuplicate = failedDetails.every((f) => f.errorCode === "PMS_PRT_007");
+        if (failedDetails.length === credentialTypes.length && allDuplicate) {
+          setErrorCode("PMS_PRT_007");
+          setErrorMsg(t("mapCredentialType.duplicateCredentialTypeMsg", { types: failedTypes.join(", ") }));
+        } else {
+          setErrorCode(failedDetails[0]?.errorCode || "");
+          setErrorMsg(
+            t("mapCredentialType.partialFailureMsg", {
+              succeeded: succeeded.length,
+              total: credentialTypes.length,
+              failed: failedTypes.join(", "),
+            })
+          );
+        }
+        setIsSubmitClicked(false);
+        setDataLoaded(true);
+        isSubmittingRef.current = false;
+        return;
+      }
+
+      if (credentialTypes.length > 0) {
+        setConfirmationData({
+          title: "mapCredentialType.title",
+          backUrl: "/partnermanagement/policies/policies-list",
+          header: "mapCredentialType.successHeader",
+          description: "mapCredentialType.successMsgLine1",
+          description1: "mapCredentialType.successMsgLine2",
+          subNavigation: "requestPolicy.policies",
+        });
+        setRequestPolicySuccess(true);
+      }
+    } catch (err) {
+      if (err?.response?.status && err.response.status !== 401) {
+        setErrorMsg(err.toString());
+      } else if (err?.response?.status !== 401) {
+        setErrorMsg(t("mapCredentialType.saveError"));
+      }
+    } finally {
+      setDataLoaded(true);
+      setIsSubmitClicked(false);
+      isSubmittingRef.current = false;
+    }
+  };
+
+  const credentialTypeDropdownStyles = {
+    outerDiv: "!ml-0 !mb-0",
+    /** Match form copy color (#3D4468); avoid default near-black label */
+    dropdownLabel: "!text-sm !mb-1 !block !font-semibold !text-[#3D4468]",
+    /** Do not force text color — placeholder uses grayish-blue, value uses #343434 */
+    dropdownButton: "!w-full !min-h-10 !rounded-md !text-base !text-start",
+    selectionBox: "!top-10",
+    /** Shorter open list (default max-h-40 is tall for only a few credential types) */
+    optionsList: "!max-h-28",
+  };
+
+  const getModalityLabel = (modality) => {
+    const upper = String(modality || "").toUpperCase();
+    if (upper === "FACE") return t("bioExtractorConfig.face");
+    if (upper === "IRIS") return t("bioExtractorConfig.iris");
+    if (upper === "FINGER" || upper === "FINGERPRINT") return t("bioExtractorConfig.finger");
+    return upper || "-";
+  };
+
+  const modalityCsv = selectedBioModalities.length > 0 ? selectedBioModalities.map(getModalityLabel).join(", ") : "";
+  const providerCfgCsv = selectedBioProviderConfigurations.length > 0 ? selectedBioProviderConfigurations.join(", ") : "";
+
+  if (!hasRequiredState) return null;
+
+  return (
+    <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-auto relative font-inter`}>
+      {(!dataLoaded || !bioMetaLoaded) && <LoadingIcon />}
+      {dataLoaded && bioMetaLoaded && (
+        <>
+          {blocker?.state === "blocked" && <BlockerPrompt blocker={blocker} />}
+          {errorMsg && (
+            <ErrorMessage
+              id="map_credential_type_error_msg"
+              errorCode={errorCode}
+              errorMessage={errorMsg}
+              clickOnCancel={() => setErrorMsg("")}
+            />
+          )}
+
+          {!requestPolicySuccess ? (
+            <div className="flex-col mt-5">
+              <Title title="mapCredentialType.title" subTitle="requestPolicy.requestPolicy" backLink="/partnermanagement/policies/policies-list" />
+
+              <p
+                id="map_credential_type_mandatory_mapping_msg"
+                className="mt-3 rounded-md border border-[#F7D18D] bg-[#FFF8EA] px-3 py-2 text-sm text-[#684B00]"
+              >
+                {t("requestPolicy.mandatoryMappingBanner")}
+              </p>
+
+              <div className="w-[100%] bg-snow-white mt-[1%] rounded-lg shadow-md overflow-visible">
+                <div className="p-7 overflow-visible">
+                  <p className="text-base text-[#3D4468]">
+                    {t("requestPolicy.mandatoryFieldsMsg1")} <span className="text-crimson-red">*</span> {t("requestPolicy.mandatoryFieldsMsg2")}
+                  </p>
+
+                  <div className="grid grid-cols-2 gap-4 my-2 max-[450px]:grid-cols-1">
+                    <div className="flex flex-col w-full">
+                      <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+                        {t("requestPolicy.partnerId")}
+                        <span className="text-crimson-red mx-1">*</span>
+                      </label>
+                      <button disabled className="flex items-center justify-between w-full h-auto px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-dark-blue bg-platinum-gray leading-tight overflow-x-auto whitespace-normal no-scrollbar" type="button">
+                        <span className="w-full break-words text-wrap text-start">{state.partnerId || "-"}</span>
+                      </button>
+                    </div>
+                    <div className="flex flex-col w-full">
+                      <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+                        {t("requestPolicy.partnerType")}
+                        <span className="text-crimson-red mx-1">*</span>
+                      </label>
+                      <button disabled className="flex items-center justify-between w-full h-auto px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-dark-blue bg-platinum-gray leading-tight overflow-x-auto whitespace-normal no-scrollbar" type="button">
+                        <span className="w-full break-words text-wrap text-start">{state.partnerType || "-"}</span>
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4 my-2 max-[450px]:grid-cols-1">
+                    <div className="flex flex-col w-full">
+                      <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+                        {t("requestPolicy.policyGroup")}
+                        <span className="text-crimson-red mx-1">*</span>
+                      </label>
+                      <button disabled className="flex items-center justify-between w-full h-auto px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-dark-blue bg-platinum-gray leading-tight overflow-x-auto whitespace-normal no-scrollbar" type="button">
+                        <span className="w-full break-words text-wrap text-start">{state.policyGroupName || "-"}</span>
+                      </button>
+                    </div>
+                    <div className="flex flex-col w-full">
+                      <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+                        {t("requestPolicy.policyName")}
+                        <span className="text-crimson-red mx-1">*</span>
+                      </label>
+                      <button disabled className="flex items-center justify-between w-full h-auto px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-dark-blue bg-platinum-gray leading-tight overflow-x-auto whitespace-normal no-scrollbar" type="button">
+                        <span className="w-full break-words text-wrap text-start">{state.policyName || "-"}</span>
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4 my-4 max-[450px]:grid-cols-1">
+                    <div className="flex flex-col w-full">
+                      <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+                        {t("mapBiometricExtractorProvider.biometricModality")}
+                        <span className="text-crimson-red mx-1">*</span>
+                      </label>
+                      <button disabled className="flex items-center justify-between w-full h-auto px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-dark-blue bg-platinum-gray leading-tight overflow-x-auto whitespace-normal no-scrollbar" type="button">
+                        <span className="w-full break-words text-wrap text-start">
+                          {modalityCsv || t("mapBiometricExtractorProvider.autoPopulatedValue")}
+                        </span>
+                      </button>
+                    </div>
+                    <div className="flex flex-col w-full">
+                      <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+                        {t("mapBiometricExtractorProvider.biometricProviderConfiguration")}
+                        <span className="text-crimson-red mx-1">*</span>
+                      </label>
+                      <button disabled className="flex items-center justify-between w-full h-auto px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-dark-blue bg-platinum-gray leading-tight overflow-x-auto whitespace-normal no-scrollbar" type="button">
+                        <span className="w-full break-words text-wrap text-start">
+                          {providerCfgCsv || t("mapBiometricExtractorProvider.autoPopulatedValue")}
+                        </span>
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4 my-2 max-[450px]:grid-cols-1">
+                    <div className="flex flex-col w-full">
+                      <DropdownComponent
+                        fieldName="credentialType"
+                        dropdownDataList={credentialTypeDropdownData}
+                        onDropDownChangeEvent={updateCredentialType}
+                        fieldNameKey="mapCredentialType.credentialType*"
+                        placeHolderKey="mapCredentialType.selectCredentialType"
+                        selectedDropdownValue={credentialType}
+                        styleSet={credentialTypeDropdownStyles}
+                        isPlaceHolderPresent={true}
+                        id="map_credential_type_1"
+                      />
+                    </div>
+                    <div className="flex items-end justify-end" aria-hidden="true" />
+                  </div>
+
+                  <div className="flex flex-col md:flex-row justify-between mt-8 border-t border-[#D5D8E3] pt-5">
+                    <div className="flex flex-wrap justify-start">
+                      <button
+                        id="map_credential_type_clear_btn"
+                        onClick={clearForm}
+                        type="button"
+                        className={`w-40 h-10 border-[#1447B2] ${isLoginLanguageRTL ? "mr-2" : "ml-2"} border rounded-md bg-white text-tory-blue text-sm font-semibold`}
+                      >
+                        {t("requestPolicy.clearForm")}
+                      </button>
+                    </div>
+
+                    <div className="flex flex-row space-x-3 w-full md:w-auto justify-end mt-4 md:mt-0">
+                      <button
+                        id="map_credential_type_cancel_btn"
+                        onClick={clickOnCancel}
+                        type="button"
+                        className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}
+                      >
+                        {t("requestPolicy.cancel")}
+                      </button>
+                      <button
+                        id="map_credential_type_submit_btn"
+                        disabled={!isFormValid()}
+                        onClick={clickOnSubmit}
+                        type="button"
+                        className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border rounded-md text-sm font-semibold ${
+                          isFormValid()
+                            ? "border-[#1447B2] bg-tory-blue text-white"
+                            : "border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed"
+                        }`}
+                      >
+                        {t("requestPolicy.submit")}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <Confirmation id="map_credential_type_confirmation" confirmationData={confirmationData} />
+          )}
+        </>
+      )}
+    </div>
+  );
+}
+
+export default MapCredentialType;

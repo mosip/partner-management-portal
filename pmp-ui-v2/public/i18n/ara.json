@@ -54,9 +54,6 @@
         "policiesDesc": "طلب وعرض السياسات الخاصة بك.",
         "authenticationServices": "خدمات المصادقة",
         "authenticationServicesDesc": "طلب إنشاء عميل OIDC / إنشاء مفتاح API لمصممي التصميم والمصادقة المستندة إلى مفتاح API",
-        "credentialServices": "خدمات بيانات الاعتماد",
-        "credentialServicesDesc": "إدارة خدمات بيانات الاعتماد",
-        "adminCredentialServicesDesc": "تكوين تفاصيل مزود مستخرج القياسات الحيوية وعرضها وتحريرها",
         "deviceProviderServices": "خدمات مزودي الأجهزة",
         "ftmChipProviderServices": "خدمات مزودي شريحة FTM",
         "ftmChipProviderServicesDesc": "إضافة، إلغاء تنشيط FTM (وحدة الثقة الأساسية)، تحميل، إعادة تحميل، تنزيل شهادة شريحة FTM",
@@ -100,17 +97,8 @@
         "mispPartnerServicesDesc": "إنشاء أو إعادة إنشاء أو عرض أو إلغاء تنشيط مفاتيح ترخيص MISP",
         "mispLicenseKeyExpiryCountDesc1": "{{expiringMispLicenseKeyCount}} مفاتيح ترخيص MISP تنتهي صلاحيتها قريبًا",
         "mispLicenseKeyExpiryCountDesc2": "{{expiringMispLicenseKeyCount}} مفتاح ترخيص MISP سينتهي قريبًا",
-        "manualAdjudication": "خدمات التحكيم اليدوي",
-        "manualAdjudicationDesc": "عرض، إنشاء مفاتيح API",
-        "adminCredentialServicesTitle": "خدمات شريك بيانات الاعتماد والطباعة",        
         "biometricProviderConfiguration": "تهيئة مزود القياسات الحيوية",
-        "biometricProviderConfigurationDesc": "إنشاء وعرض وإلغاء تنشيط تكوينات مزود مستخرج القياسات الحيوية"
-    },
-    "credentialServices": {
-        "title": "خدمات بيانات الاعتماد",
-        "breadcrumb": "خدمات بيانات الاعتماد",
-        "adminTitle": "خدمات شريك بيانات الاعتماد والطباعة",
-        "adminBreadcrumb": "خدمات شريك بيانات الاعتماد والطباعة"
+        "biometricProviderConfigurationDesc": "إنشاء وعرض تكوينات مزود مستخرج القياسات الحيوية"
     },
     "mispLicenseList": {
         "partnerId": "معرف الشريك",
@@ -365,6 +353,22 @@
         "policySuccessMsgForAdmin": "تم تقديم طلب السياسة بنجاح. وافق على طلب تفعيل ربط سياسة الشريك.",
         "approvePopupTitle": "هل تريد الموافقة على طلب سياسة الشريك؟",
         "approvePopupDesc": "عند النقر فوق تأكيد، سيتم الموافقة على ربط سياسة الشريك."
+    },
+    "mapCredentialType": {
+        "title": "ربط نوع بيانات الاعتماد",
+        "mappingSectionTitle": "ربط نوع بيانات الاعتماد",
+        "credentialType": "نوع بيانات الاعتماد",
+        "selectCredentialType": "اختر نوع بيانات الاعتماد",
+        "addMore": "إضافة المزيد",
+        "delete": "حذف",
+        "validationMsg": "يرجى اختيار نوع بيانات الاعتماد لجميع الصفوف.",
+        "duplicateSelectionMsg": "لا يُسمح بتكرار نوع بيانات الاعتماد. يرجى اختيار نوع مختلف لكل صف.",
+        "partialFailureMsg": "تم ربط {{succeeded}} من أصل {{total}} من أنواع بيانات الاعتماد. فشل الربط لـ: {{failed}}. يرجى المحاولة مرة أخرى.",
+        "duplicateCredentialTypeMsg": "يوجد ربط مسبق بين هذا الشريك ونوع (أنواع) بيانات الاعتماد: {{types}}. يرجى اختيار نوع بيانات اعتماد مختلف والمحاولة مرة أخرى.",
+        "saveError": "أثناء حفظ ربط نوع بيانات الاعتماد، واجهنا خطأ.",
+        "successHeader": "تم إرسال جميع التفاصيل بنجاح!",
+        "successMsgLine1": "تم إرسال طلب السياسة، بما في ذلك ربط مزود مستخرج القياسات الحيوية وربط نوع بيانات الاعتماد، بنجاح.",
+        "successMsgLine2": "الموافقة قيد الانتظار لدى المسؤول."
     },
     "authenticationServices": {
         "authenticationServices": "خدمات المصادقة",
@@ -673,21 +677,6 @@
     "deactivateApiKey": {
         "apiKeyName": "هل تريد إلغاء تنشيط مفتاح API؟",
         "description": "عند النقر فوق تأكيد، لن تتمكن من استخدام مفتاح API للمصادقة بعد الآن."
-    },
-    "manualAdjudicationServices": {
-        "manualAdjudicationServices": "خدمات التحكيم اليدوي",
-        "partnerId": "معرف الشريك",
-        "orgName": "منظمة",
-        "policyGroup": "مجموعة السياسات",
-        "policyName": "اسم السياسة",
-        "partnerType": "شريك التحكيم اليدوي",
-        "apiKeyName": "اسم مفتاح API",
-        "creationDate": "تاريخ الإنشاء",
-        "status": "الحالة",
-        "action": "إجراء",
-        "generateApiKey": "إنشاء مفتاح API",
-        "listOfManualAdjudicationApiKeys": "قائمة مفاتيح API للتحكيم اليدوي",
-        "errorInManualAdjudicationList": "أثناء جلب تفاصيل التحكيم اليدوي، واجهنا خطأ."
     },
     "deviceProviderServices": {
         "listOfSbisAndDevices": "قائمة الهيئات الفرعية للتنفيذ والأجهزة",
@@ -1222,11 +1211,30 @@
         "approve": "يعتمد",
         "reject": "يرفض",
         "comments": "تعليقات",
-        "commentPlaceholder": "اكتب تعليقك هنا"
+        "commentPlaceholder": "اكتب تعليقك هنا",
+        "mappingsMissingGeneric": "عمليات الربط المطلوبة (مستخرجات القياسات الحيوية ونوع بيانات الاعتماد) غير متوفرة. يرجى إعدادها ثم المحاولة مرة أخرى.",
+        "mappingsMissingBoth": "مستخرجات القياسات الحيوية ونوع بيانات الاعتماد غير مُعدّين لهذه السياسة. يرجى إعدادهما ثم المحاولة مرة أخرى.",
+        "credentialTypeNotMapped": "نوع بيانات الاعتماد غير مُعدّ لهذه السياسة. يرجى ربط نوع بيانات اعتماد ثم المحاولة مرة أخرى."
     },
     "partnerPolicyRequestApproveRejectPopup": {
         "header": "هل ترغب في الموافقة على/رفض السياسة؟",
-        "description": "يرجى مراجعة تفاصيل السياسة بعناية قبل اتخاذ الإجراء المناسب."
+        "description": "يرجى مراجعة تفاصيل السياسة بعناية قبل اتخاذ قرارك.",
+        "bioModality": "النمط البيومتري",
+        "bioModalityLine1": "النمط",
+        "bioModalityLine2": "البيومتري",
+        "bioExtractorConfig": "تهيئة مزود مستخرج القياسات الحيوية",
+        "bioExtractorConfigLine1": "مزود مستخرج",
+        "bioExtractorConfigLine2": "تهيئة القياسات الحيوية",
+        "bioExtractorProviderVersion": "إصدار مزود مستخرج القياسات الحيوية",
+        "bioExtractorProviderVersionLine1": "مزود مستخرج",
+        "bioExtractorProviderVersionLine2": "إصدار القياسات الحيوية",
+        "bioExtractorProviderName": "اسم مزود مستخرج القياسات الحيوية",
+        "bioExtractorProviderNameLine1": "مزود مستخرج",
+        "bioExtractorProviderNameLine2": "اسم القياسات الحيوية",
+        "bioExtractorProviderMapping": "ربط مزود مستخرج القياسات الحيوية",
+        "credentialType": "نوع بيانات الاعتماد",
+        "noBioExtractors": "لم يتم العثور على مستخرجات قياسات حيوية لهذه السياسة.",
+        "extractorsNotConfigured": "لم يتم تكوين مستخرجات القياسات الحيوية. أضِف مستخرجات القياسات الحيوية لهذه السياسة."
     },
     "ftmRequestApproveRejectPopup": {
         "header": "هل تريد الموافقة/الرفض على شريحة FTM {{make}}-{{model}}؟",
@@ -1281,10 +1289,6 @@
     "adminDeactivateApiKey": {
         "title": "هل أنت متأكد أنك تريد إلغاء تفعيل مفتاح API",
         "description": "عند الضغط على 'تأكيد'، سيتم إلغاء تفعيل مفتاح API ولن يكون قابلاً للاستخدام للمصادقة"
-    },
-    "adminDeactivateManualAdjudicationApiKey": {
-        "title": "هل أنت متأكد أنك تريد إلغاء تفعيل مفتاح API",
-        "description": "عند الضغط على تأكيد، سيتم إلغاء تفعيل مفتاح API ولن يكون قابلاً للاستخدام لخدمات التحكيم اليدوي."
     },
     "notificationPopup": {
         "latest": "أحدث",
@@ -1728,6 +1732,7 @@
     },
     "bioExtractorConfig": {
         "createBioExtractorConfig": "إنشاء تكوين مزود مستخرج القياسات الحيوية",
+        "createConfiguration": "إنشاء التكوين",
         "bioExtractorConfigList": "تكوينات مزود مستخرج القياسات الحيوية",
         "configurationName": "اسم التكوين",
         "enterConfigurationName": "أدخل اسم التكوين",
@@ -1742,6 +1747,29 @@
         "iris": "القزحية",
         "configNameDuplicateError": "اسم التكوين موجود بالفعل",
         "errorInCreateConfig": "حدث خطأ أثناء إنشاء تكوين مزود مستخرج القياسات الحيوية",
-        "createConfigSuccessHeader": "تمت إضافة تكوين مزود مستخرج القياسات الحيوية بنجاح!"
+        "createConfigSuccessHeader": "تمت إضافة تكوين مزود مستخرج القياسات الحيوية بنجاح!",
+        "viewBioExtractorProviderConfig": "عرض تكوين مزود مستخرج القياسات الحيوية"
+        },
+    "mapBiometricExtractorProvider": {
+        "title": "ربط مزود مستخرج القياسات الحيوية",
+        "addBioextractors": "ربط مستخرج القياسات الحيوية",
+        "mappingSectionTitle": "إعداد مزود مستخرج القياسات الحيوية",
+        "biometricModality": "نوع القياسات الحيوية",
+        "selectBiometricModality": "اختر نوع القياسات الحيوية",
+        "biometricProviderConfiguration": "إعداد مزود القياسات الحيوية",
+        "selectBiometricProviderConfiguration": "اختر مزود القياسات الحيوية",
+        "autoPopulatedValue": "يتم التعبئة تلقائيًا بناءً على الإعداد المحدد",
+        "addMore": "إضافة",
+        "delete": "حذف",
+        "validationMsg": "يرجى ربط جميع حقول مزود مستخرج القياسات الحيوية قبل المتابعة.",
+        "configFetchError": "تعذر تحميل إعدادات مزود القياسات الحيوية. يرجى المحاولة مرة أخرى.",
+        "saveError": "حدث خطأ أثناء ربط إعداد مزود مستخرج القياسات الحيوية.",
+        "saveConfirmTitle": "حفظ مستخرجات القياسات الحيوية؟",
+        "saveConfirmMessage": "بعد الحفظ، لن يمكن تعديل عمليات ربط مستخرجات القياسات الحيوية هذه. هل تريد المتابعة؟"
+    },
+    "unsavedChangesPopup": {
+        "message": "سيتم فقدان التغييرات الخاصة بك، هل أنت متأكد أنك تريد المتابعة؟",
+        "proceed": "متابعة",
+        "cancel": "إلغاء"
     }
 }

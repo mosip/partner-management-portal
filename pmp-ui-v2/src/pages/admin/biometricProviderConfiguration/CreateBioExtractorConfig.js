@@ -17,7 +17,7 @@ import ErrorMessage from '../../common/ErrorMessage';
 import { HttpService } from '../../../services/HttpService';
 import Confirmation from '../../common/Confirmation';
 
-const LIST_ROUTE = '/partnermanagement/admin/biometric-provider-configuration/list';
+const LIST_ROUTE = '/partnermanagement/admin/biometric-provider-configuration-list';
 
 const MODALITY_OPTIONS = [
     { value: 'FACE', labelKey: 'bioExtractorConfig.face' },
@@ -313,7 +313,7 @@ function CreateBioExtractorConfig() {
                                                         id='provider_version_input'
                                                         value={providerVersion}
                                                         onChange={(e) => onChangeProviderVersion(e.target.value)}
-                                                        maxLength={64}
+                                                        maxLength={36}
                                                         className="h-10 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
                                                         placeholder={t('bioExtractorConfig.enterProviderVersion')}
                                                         data-placeholder-id="provider_version_placeholder"

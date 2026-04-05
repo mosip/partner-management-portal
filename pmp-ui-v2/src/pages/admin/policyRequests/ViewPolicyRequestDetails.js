@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { bgOfStatus, formatDate, getApproveRejectStatus, getStatusCode, isLangRTL, onPressEnterKey } from '../../../utils/AppUtils';
+import { bgOfStatus, formatDate, getApproveRejectStatus, getPartnerTypeDescription, getStatusCode, isLangRTL, onPressEnterKey } from '../../../utils/AppUtils';
 import { getUserProfile } from '../../../services/UserProfileService';
 import { useNavigate } from 'react-router-dom';
 import Title from '../../common/Title';
@@ -8,6 +8,7 @@ import adminImage from "../../../svg/admin.png";
 import partnerImage from "../../../svg/partner.png";
 import dotImg from "../../../svg/dot.svg";
 import ApproveRejectPopup from '../../common/ApproveRejectPopup';
+import CredentialPartnerPolicyDetails from '../credentialServices/CredentialPartnerPolicyDetails';
 
 function ViewPolicyRequestDetails() {
     const { t } = useTranslation();
@@ -30,6 +31,10 @@ function ViewPolicyRequestDetails() {
             navigate('/partnermanagement/admin/policy-requests-list');
         }
     }, [navigate]);
+
+    const isCredentialPartner = (policyRequestDetails?.partnerType ?? '').toString().toUpperCase() === 'CREDENTIAL_PARTNER';
+
+    const [isPolicyDetailsLoading, setIsPolicyDetailsLoading] = useState(false);
 
     const moveToPolicyRequestsList = () => {
         navigate('/partnermanagement/admin/policy-requests-list');
@@ -87,6 +92,23 @@ function ViewPolicyRequestDetails() {
                                         subtitle={`# ${policyRequestDetails.policyId}`}
                                         header={t('partnerPolicyRequestApproveRejectPopup.header')}
                                         description={t('partnerPolicyRequestApproveRejectPopup.description')}
+                                        renderPolicyDetails={
+                                            String(policyRequestDetails?.partnerType ?? '').toUpperCase() === 'CREDENTIAL_PARTNER'
+                                                ? ({ t, isLoginLanguageRTL, popupData, onLoadingChange, onApproveBlockedChange, getPartnerTypeDescription }) => (
+                                                    <CredentialPartnerPolicyDetails
+                                                        t={t}
+                                                        isLoginLanguageRTL={isLoginLanguageRTL}
+                                                        partnerId={popupData?.partnerId}
+                                                        policyId={popupData?.policyId}
+                                                        partnerTypeLabel={getPartnerTypeDescription(popupData?.partnerType, t) ?? popupData?.partnerType ?? '-'}
+                                                        enabled={true}
+                                                        variant="popup"
+                                                        onLoadingChange={onLoadingChange}
+                                                        onApproveBlockedChange={onApproveBlockedChange}
+                                                    />
+                                                )
+                                                : undefined
+                                        }
                                     />
                                 }
                             </>
@@ -99,7 +121,7 @@ function ViewPolicyRequestDetails() {
                                     {t("viewPolicyRequest.partnerType")}
                                 </p>
                                 <p id='view_partner_policy_request_partner_type_context' className="font-[600] text-vulcan text-base">
-                                    {policyRequestDetails.partnerType}
+                                    {getPartnerTypeDescription(policyRequestDetails.partnerType, t) ?? policyRequestDetails.partnerType}
                                 </p>
                             </div>
                             <div className="w-[50%] max-[600px]:w-[100%] mb-3 px-2">
@@ -149,6 +171,24 @@ function ViewPolicyRequestDetails() {
                                 </p>
                             </div>
                         </div>
+                        {isCredentialPartner && (
+                            <>
+                                <hr className="h-px mt-3 w-full bg-gray-200 border-0" />
+                                <div className="py-4">
+                                    <CredentialPartnerPolicyDetails
+                                        t={t}
+                                        isLoginLanguageRTL={isLoginLanguageRTL}
+                                        partnerId={policyRequestDetails?.partnerId}
+                                        policyId={policyRequestDetails?.policyId}
+                                        partnerTypeLabel={getPartnerTypeDescription(policyRequestDetails?.partnerType, t) ?? policyRequestDetails?.partnerType ?? '-'}
+                                        enabled={isCredentialPartner}
+                                        variant="view"
+                                        onLoadingChange={setIsPolicyDetailsLoading}
+                                    />
+                                </div>
+                            </>
+                        )}
+
                         <hr className="h-px mt-3 w-full bg-gray-200 border-0" />
                         <div className="py-3">
                             <p id='view_partner_policy_request_comments_label' className="font-semibold text-vulcan text-base mb-3">
