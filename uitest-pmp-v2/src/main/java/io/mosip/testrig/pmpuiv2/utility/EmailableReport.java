@@ -19,6 +19,7 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
@@ -28,6 +29,7 @@ import org.testng.ISuiteResult;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.Reporter;
+import org.testng.SkipException;
 import org.testng.collections.Lists;
 import org.testng.internal.Utils;
 import org.testng.log4testng.Logger;
@@ -187,7 +189,6 @@ public class EmailableReport implements IReporter {
 			LOG.error(e.getMessage());
 			return "";
 		}
-
 	}
 
 	private static String convertMillisToTime(long milliseconds) {
@@ -223,8 +224,11 @@ public class EmailableReport implements IReporter {
 	protected void writeStylesheet() {
 		writer.print("<style type=\"text/css\">");
 		writer.print("table {margin-bottom:10px;border-collapse:collapse;empty-cells:show;width: 100%;}");
-		writer.print("th,td {border:1px solid #009;padding:.25em .5em;width: 25%;}"); // Set a fixed width for uniform
-																						// cell sizes
+		writer.print("th,td {border:1px solid #009;padding:.25em .5em;}"); // Set a fixed width for uniform
+																			// cell sizes
+		writer.print("#summaryTable {width:100%;border-collapse:collapse;table-layout:fixed;}");
+		writer.print(
+				"#summaryTable th, #summaryTable td {border:1px solid #009;padding:.5em;text-align:center;word-break:break-word;}");
 		writer.print("th {vertical-align:bottom}");
 		writer.print("td {vertical-align:top}");
 		writer.print("table a {font-weight:bold}");
@@ -268,7 +272,6 @@ public class EmailableReport implements IReporter {
 		String formattedDate = null;
 		String branch = null;
 
-		// Format the current date as per your requirement
 		try {
 
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -286,41 +289,62 @@ public class EmailableReport implements IReporter {
 		totalFailedTests = 0;
 		totalDuration = 0;
 
-		writer.print("<table>");
+		writer.print("<table id='summaryTable' style='width:100%;'>");
+
+		int totalColumns = 6;
+		if (reportIgnoredTestCases)
+			totalColumns++;
+		if (reportKnownIssueTestCases)
+			totalColumns++;
+		writer.print("<colgroup>");
+		for (int i = 0; i < totalColumns; i++) {
+			writer.print("<col style='width:" + (100.0 / totalColumns) + "%;'>");
+		}
+		writer.print("</colgroup>");
 
 		int testIndex = 0;
 		for (SuiteResult suiteResult : suiteResults) {
-			writer.print("<tr><th colspan=\"9\">");
+			writer.print("<tr><th colspan=\"" + totalColumns + "\">");
 			writer.print(Utils.escapeHtml(suiteResult.getSuiteName() + " ---- " + "Report Date: " + formattedDate
 					+ " ---- " + "Tested Environment: "
 					+ ConfigManager.getiam_apienvuser().replaceAll(".*?\\.([^\\.]+)\\..*", "$1") + " ---- "
 					+ getCommitId()));
+
+			writer.print("<tr>");
+
+			// Left label
+			writer.print("<th colspan=\"2\" style=\"text-align:center;vertical-align:middle;\">");
+			writer.print("Server Component Details");
+			writer.print("</th>");
+
+			// Right content
+			writer.print("<td colspan=\"" + (totalColumns - 2) + "\"><pre>");
+			writer.print(AdminTestUtil.getServerComponentsDetails());
+			writer.print("</pre></td>");
+
+			writer.print("</tr>");
 			writer.print(GlobalConstants.TRTR);
 
 			// Left column: "Tested Component Details" with central alignment
-			writer.print(
-					"<th style=\"text-align: center; vertical-align: middle;\" colspan=\"1\"><span class=\"not-bold\"><pre>");
-			writer.print(Utils.escapeHtml("Server Component Details"));
-			writer.print("</span></th>");
+			totalColumns = 6;
 
-			// Right column: Details from AdminTestUtil.getServerComponentsDetails() without
-			// bold formatting
-			writer.print("<td colspan=\"8\"><pre>");
-			writer.print(Utils.escapeHtml(AdminTestUtil.getServerComponentsDetails()));
+			if (reportIgnoredTestCases)
+				totalColumns++;
+			if (reportKnownIssueTestCases)
+				totalColumns++;
+
+			writer.print("<tr>");
+
+			// Left label
+			writer.print("<th colspan=\"2\" style=\"text-align:center;vertical-align:middle;\">");
+			writer.print("End Points used");
+			writer.print("</th>");
+
+			// Right content
+			writer.print("<td colspan=\"" + (totalColumns - 2) + "\"><pre>");
 			writer.print("</pre></td>");
-			writer.print(GlobalConstants.TRTR);
 
-			// Left column: "Tested Component Details" with central alignment
-			writer.print(
-					"<th style=\"text-align: center; vertical-align: middle;\" colspan=\"1\"><span class=\"not-bold\"><pre>");
-			writer.print(Utils.escapeHtml("End Points used"));
-			writer.print("</span></th>");
-
-			// Right column: Details from AdminTestUtil.getServerComponentsDetails() without
-			// bold formatting
-			writer.print("<td colspan=\"8\"><pre>");
-//			writer.print(Utils.escapeHtml(GlobalMethods.getComponentDetails()));
-			writer.print("</pre></td>");
+			writer.print("</tr>");
 			writer.print(GlobalConstants.TRTR);
 
 //			if (GlobalMethods.getServerErrors().equals("No server errors")) {
@@ -477,7 +501,6 @@ public class EmailableReport implements IReporter {
 							// Add only results which are not skipped due to feature not supported
 							testResultsSubList.add(result);
 						} else {
-							// Skip the test result
 						}
 					}
 				}
@@ -512,20 +535,23 @@ public class EmailableReport implements IReporter {
 		Class<?> realClass = result.getTestClass().getRealClass();
 		String className = realClass != null ? realClass.getSimpleName() : "";
 
-		List<String> issues = AdminTestUtil.getKnownIssues();
+		Map<String, String> issues = AdminTestUtil.getKnownIssues();
 		if (issues == null || methodName == null) {
 			return false;
 		}
 
-		for (String knownIssue : issues) {
+		for (Map.Entry<String, String> entry : issues.entrySet()) {
+
+			String key = entry.getKey(); // method or class name
+			String bugId = entry.getValue(); // BUG ID
 
 			// Method-level known issue
-			if (knownIssue.equalsIgnoreCase(methodName)) {
+			if (key.equalsIgnoreCase(methodName)) {
 				return true;
 			}
 
 			// Class-level known issue
-			if (knownIssue.equalsIgnoreCase(className)) {
+			if (key.equalsIgnoreCase(className)) {
 				return true;
 			}
 		}
@@ -578,7 +604,7 @@ public class EmailableReport implements IReporter {
 				}
 
 				if (reportKnownIssueTestCases) {
-					scenarioIndex += writeScenarioSummary(testName + " &#8212; known_issues",
+					scenarioIndex += writeScenarioSummary(testName + " &#8212; Skipped due to Known Issue",
 							testResult.getKnownIssueTestResults(), "known_issues", scenarioIndex);
 				}
 
@@ -820,7 +846,33 @@ public class EmailableReport implements IReporter {
 				writer.print("\"");
 			}
 			writer.print(">");
-			writeStackTrace(throwable);
+			Object bug = result.getAttribute("KNOWN_ISSUE");
+
+			writer.print("<tr><td");
+			if (parameterCount > 1) {
+				writer.print(GlobalConstants.colspan);
+				writer.print(parameterCount);
+				writer.print("\"");
+			}
+			writer.print(">");
+
+			if (bug != null && throwable instanceof SkipException) {
+
+				String bugId = bug.toString();
+				String jiraUrl = "https://mosip.atlassian.net/browse/" + bugId;
+
+				writer.print("<div style='color:#CC5500;font-weight:bold;'>");
+				writer.print("Skipped due to Known Issue → " + "<a href='" + jiraUrl + "' target='_blank'>" + bugId
+						+ "</a>");
+				writer.print("</div>");
+
+			} else {
+				writer.print("<div class=\"stacktrace\">");
+				writer.print(Utils.shortStackTrace(throwable, true));
+				writer.print("</div>");
+			}
+
+			writer.print(GlobalConstants.TDTR);
 			writer.print(GlobalConstants.TDTR);
 		}
 
