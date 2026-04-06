@@ -155,30 +155,31 @@ public class AdminTestUtil extends BaseTestCaseFunc {
 
 	static {
 		try (InputStream is = AdminTestUtil.class.getClassLoader().getResourceAsStream("config/knownIssues.txt")) {
-
 			if (is == null) {
 				LOG.warn("knownIssues.txt not found in classpath");
 			} else {
 				try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
 					String line;
 					while ((line = br.readLine()) != null) {
-						if (!line.trim().isEmpty()) {
-							while ((line = br.readLine()) != null) {
-								if (!line.trim().isEmpty()) {
+						line = line.trim();
+						if (line.isEmpty()) {
+							continue;
+						}
+						if (line.startsWith("#")) {
+							continue;
+						}
+						String[] parts = line.split("=", 2);
+						if (parts.length == 2) {
+							String key = parts[0].trim(); // class/method
+							String bugId = parts[1].trim(); // bug id
 
-									String[] parts = line.split("=");
-
-									if (parts.length == 2) {
-										String key = parts[0].trim(); // class/method
-										String bugId = parts[1].trim(); // bug id
-
-										knownIssues.put(key, bugId);
-									}
-								}
-							}
+							knownIssues.put(key, bugId);
+						} else {
+							LOG.warn("Invalid entry in knownIssues.txt: " + line);
 						}
 					}
 				}
+
 				LOG.info("Known Issues Loaded: " + knownIssues);
 			}
 

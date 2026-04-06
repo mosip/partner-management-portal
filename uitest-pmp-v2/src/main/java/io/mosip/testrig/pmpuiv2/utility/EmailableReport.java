@@ -304,15 +304,19 @@ public class EmailableReport implements IReporter {
 
 		int testIndex = 0;
 		for (SuiteResult suiteResult : suiteResults) {
-			writer.print("<tr><th colspan=\"" + totalColumns + "\">");
+			writer.print("<tr>");
+			writer.print("<th colspan=\"" + totalColumns + "\">");
+
 			writer.print(Utils.escapeHtml(suiteResult.getSuiteName() + " ---- " + "Report Date: " + formattedDate
 					+ " ---- " + "Tested Environment: "
 					+ ConfigManager.getiam_apienvuser().replaceAll(".*?\\.([^\\.]+)\\..*", "$1") + " ---- "
 					+ getCommitId()));
 
-			writer.print("<tr>");
+			writer.print("</th>");
+			writer.print("</tr>");
 
 			// Left label
+			writer.print("<tr>");
 			writer.print("<th colspan=\"2\" style=\"text-align:center;vertical-align:middle;\">");
 			writer.print("Server Component Details");
 			writer.print("</th>");
@@ -321,17 +325,7 @@ public class EmailableReport implements IReporter {
 			writer.print("<td colspan=\"" + (totalColumns - 2) + "\"><pre>");
 			writer.print(AdminTestUtil.getServerComponentsDetails());
 			writer.print("</pre></td>");
-
 			writer.print("</tr>");
-			writer.print(GlobalConstants.TRTR);
-
-			// Left column: "Tested Component Details" with central alignment
-			totalColumns = 6;
-
-			if (reportIgnoredTestCases)
-				totalColumns++;
-			if (reportKnownIssueTestCases)
-				totalColumns++;
 
 			writer.print("<tr>");
 
@@ -345,15 +339,7 @@ public class EmailableReport implements IReporter {
 			writer.print("</pre></td>");
 
 			writer.print("</tr>");
-			writer.print(GlobalConstants.TRTR);
 
-//			if (GlobalMethods.getServerErrors().equals("No server errors")) {
-//				writer.print("<tr><th colspan=\"9\"><span class=\"not-bold\"><pre>");
-//			} else {
-//				writer.print(
-//						"<tr style=\"background-color: red;\"><th colspan=\"9\"><span class=\"not-bold\"><pre>");
-//			}
-//			writer.print(Utils.escapeHtml("Server Errors " + "\n" + GlobalMethods.getServerErrors()));
 			writer.print("</pre></span>");
 			writer.print(GlobalConstants.TRTR);
 
@@ -871,7 +857,7 @@ public class EmailableReport implements IReporter {
 				writer.print(Utils.shortStackTrace(throwable, true));
 				writer.print("</div>");
 			}
-
+			writer.print("</td></tr>");
 			writer.print(GlobalConstants.TDTR);
 			writer.print(GlobalConstants.TDTR);
 		}
