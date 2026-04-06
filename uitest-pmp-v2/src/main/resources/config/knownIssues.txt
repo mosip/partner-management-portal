@@ -2,4 +2,4 @@
 #Class Name=bug id
 #Ex-MispPartnerTest=MOSIP-1234
 #Method Name=bug id
-#createMultipleMispPartner=MOSIP-1234
+createMultipleMispPartner=MOSIP-1234
