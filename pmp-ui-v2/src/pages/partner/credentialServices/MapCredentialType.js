@@ -359,10 +359,15 @@ function MapCredentialType() {
             />
           )}
 
-          {!requestPolicySuccess ? (
-            <div className="flex-col mt-5">
-              <Title title="mapCredentialType.title" subTitle="requestPolicy.requestPolicy" backLink="/partnermanagement/policies/policies-list" />
+          <div className="flex-col mt-5">
+            <Title
+              title={requestPolicySuccess ? "requestPolicy.requestPolicy" : "mapCredentialType.title"}
+              subTitle={requestPolicySuccess ? "requestPolicy.policies" : "requestPolicy.requestPolicy"}
+              backLink="/partnermanagement/policies/policies-list"
+            />
 
+            {!requestPolicySuccess ? (
+              <>
               <p
                 id="map_credential_type_mandatory_mapping_msg"
                 className="mt-3 rounded-md border border-[#F7D18D] bg-[#FFF8EA] px-3 py-2 text-sm text-[#684B00]"
@@ -498,10 +503,11 @@ function MapCredentialType() {
                   </div>
                 </div>
               </div>
-            </div>
-          ) : (
-            <Confirmation id="map_credential_type_confirmation" confirmationData={confirmationData} />
-          )}
+              </>
+            ) : (
+              <Confirmation id="map_credential_type_confirmation" confirmationData={confirmationData} />
+            )}
+          </div>
         </>
       )}
     </div>
