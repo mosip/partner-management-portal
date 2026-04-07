@@ -237,18 +237,19 @@ public class EmailableReport implements IReporter {
 		writer.print(".orange-bg {background-color: #FFA500}");
 		writer.print(".grey-bg {background-color: #808080}");
 		writer.print(".thich-orange-bg {background-color: #CC5500}");
-		writer.print(".green-bg {background-color: #0A0}");
+		writer.print(".green-bg {background-color: #3F3}");
 		writer.print(".attn {background-color: #D00}");
 		writer.print(".passedodd td {background-color: #3F3}");
-		writer.print(".passedeven td {background-color: #0A0}");
+		writer.print(".passedeven td {background-color: #3F3}");
 		writer.print(".skippedodd td {background-color: #FFA500}");
 		writer.print(".skippedeven td,.stripe {background-color: #FFA500}");
 		writer.print(".failedodd td {background-color: #F33}");
-		writer.print(".failedeven td,.stripe {background-color: #D00}");
+		writer.print(".failedeven td,.stripe {background-color: #F33}");
 		writer.print(".ignoredodd td {background-color: #808080}");
 		writer.print(".ignoredeven td {background-color: #808080}");
-		writer.print(".known_issuesodd td {background-color: #CC5500}");
-		writer.print(".known_issueseven td {background-color: #CC5500}");
+		writer.print(".known_issuesodd td {background-color: #FFE5B4}");
+		writer.print(".known_issueseven td {background-color: #FFE5B4}");
+		writer.print(".known_issues { background-color:#FFE5B4 !important; color:#8B4513; font-weight:bold; }");
 		writer.print(".stacktrace {white-space:pre;font-family:monospace}");
 		writer.print(".totop {font-size:85%;text-align:center;border-bottom:2px solid #000}");
 		writer.print("</style>");
@@ -357,8 +358,6 @@ public class EmailableReport implements IReporter {
 				writer.print("<th># Known_Issues</th>");
 			}
 			writer.print("<th>Execution Time (HH:MM:SS)</th>");
-//			writer.print("<th>Included Groups</th>");
-//			writer.print("<th>Excluded Groups</th>");
 			writer.print(GlobalConstants.TR);
 
 			for (TestResult testResult : suiteResult.getTestResults()) {
@@ -383,9 +382,6 @@ public class EmailableReport implements IReporter {
 					continue;
 
 				writer.print("<tr");
-//				if ((testIndex % 2) == 1) {
-//					writer.print(" class=\"stripe\"");
-//				}
 				writer.print(">");
 
 				buffer.setLength(0);
@@ -404,11 +400,9 @@ public class EmailableReport implements IReporter {
 
 				if (reportKnownIssueTestCases) {
 					writeTableData(integerFormat.format(knownIssueTests),
-							(knownIssueTests > 0 ? "num thich-orange-bg" : "num"));
+							(knownIssueTests > 0 ? "num known_issues" : "num"));
 				}
 				writeTableData(convertMillisToTime(duration), "num");
-//				writeTableData(testResult.getIncludedGroups());
-//				writeTableData(testResult.getExcludedGroups());
 
 				writer.print(GlobalConstants.TR);
 
@@ -502,10 +496,10 @@ public class EmailableReport implements IReporter {
 
 		for (String str : stringsToCheckFor) {
 			if (stringToCheckIn.contains(str)) {
-				return true; // If any string is found, return true
+				return true;
 			}
 		}
-		return false; // If none of the strings are found, return false
+		return false;
 	}
 
 	/**
@@ -618,19 +612,6 @@ public class EmailableReport implements IReporter {
 			return result.getMethod().getDescription();
 	}
 
-//	private String getTestCaseUniqueIdentifier(ITestResult result) {
-//		Object[] parameters = result.getParameters();
-//		if (parameters != null && parameters.length > 0 && parameters[0] instanceof TestCaseDTO) {
-//			TestCaseDTO testCase = (TestCaseDTO) parameters[0];
-//			if (testCase.getUniqueIdentifier()  == null)
-//				return "";
-//			else
-//				return testCase.getUniqueIdentifier();
-//		}
-//
-//		return "";
-//	}
-
 	/**
 	 * Writes the scenario summary for the results of a given state for a single
 	 * test.
@@ -692,11 +673,6 @@ public class EmailableReport implements IReporter {
 				writer.print(GlobalConstants.TRCLASS);
 				writer.print(cssClass);
 				writer.print("\">");
-//				writer.print(GlobalConstants.TDROWSPAN);
-//				writer.print(scenariosPerClass);
-//				writer.print("\">");
-//				writer.print(Utils.escapeHtml(classResult.getClassName()));
-//				writer.print("</td>");
 				writer.print(buffer);
 
 				classIndex++;
@@ -834,14 +810,6 @@ public class EmailableReport implements IReporter {
 			writer.print(">");
 			Object bug = result.getAttribute("KNOWN_ISSUE");
 
-			writer.print("<tr><td");
-			if (parameterCount > 1) {
-				writer.print(GlobalConstants.colspan);
-				writer.print(parameterCount);
-				writer.print("\"");
-			}
-			writer.print(">");
-
 			if (bug != null && throwable instanceof SkipException) {
 
 				String bugId = bug.toString();
@@ -858,7 +826,6 @@ public class EmailableReport implements IReporter {
 				writer.print("</div>");
 			}
 			writer.print("</td></tr>");
-			writer.print(GlobalConstants.TDTR);
 			writer.print(GlobalConstants.TDTR);
 		}
 
