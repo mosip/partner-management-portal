@@ -237,10 +237,10 @@ public class EmailableReport implements IReporter {
 		writer.print(".orange-bg {background-color: #FFA500}");
 		writer.print(".grey-bg {background-color: #808080}");
 		writer.print(".thich-orange-bg {background-color: #CC5500}");
-		writer.print(".green-bg {background-color: #3F3}");
+		writer.print(".green-bg {background-color: #00AA00}");
 		writer.print(".attn {background-color: #D00}");
-		writer.print(".passedodd td {background-color: #3F3}");
-		writer.print(".passedeven td {background-color: #3F3}");
+		writer.print(".passedodd td {background-color: #00AA00}");
+		writer.print(".passedeven td {background-color: #00AA00}");
 		writer.print(".skippedodd td {background-color: #FFA500}");
 		writer.print(".skippedeven td,.stripe {background-color: #FFA500}");
 		writer.print(".failedodd td {background-color: #F33}");
