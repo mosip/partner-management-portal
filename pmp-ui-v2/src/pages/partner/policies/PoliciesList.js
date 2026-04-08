@@ -432,24 +432,33 @@ function PoliciesList() {
                                       onClick={() => {
                                         const next = index === viewPolicyId ? null : index;
                                         setViewPolicyId(next);
-                                        if (next !== null) ensureEligibilityLoaded(partner);
+                                        // Eligibility calls (bio/credential mapping checks) are only relevant for credential partners.
+                                        if (next !== null && String(partner?.partnerType ?? '').toUpperCase() === 'CREDENTIAL_PARTNER') {
+                                          ensureEligibilityLoaded(partner);
+                                        }
                                       }}
                                       className={`font-semibold mb-0.5 text-center cursor-pointer`}
                                     >
                                       ...
                                     </button>
                                     {viewPolicyId === index && (
-                                      <div className={`border bg-white absolute text-xs font-semibold rounded-md shadow-md w-[12rem] px-1.5 py-2 z-20 ${isLoginLanguageRTL ? "left-[4.5rem] text-right" : "right-[4.5rem] text-left"}`}>
+                                      <div
+                                        className={`border bg-[#FFFFFF] absolute text-xs font-semibold rounded-md shadow-md z-20 ${
+                                          String(partner?.partnerType ?? '').toUpperCase() === 'CREDENTIAL_PARTNER'
+                                            ? `w-[12rem] px-1.5 py-2 ${isLoginLanguageRTL ? "left-[4.5rem] text-right" : "right-[4.5rem] text-left"}`
+                                            : `w-[96px] h-[33.33px] p-0 ${isLoginLanguageRTL ? "left-[4.5rem] text-right" : "right-[4.5rem] text-left"}`
+                                        }`}
+                                      >
                                         <div
                                           role='button'
                                           id='policy_list_view_card'
                                           onClick={() => showViewPolicyDetails(partner)}
                                           tabIndex="0"
                                           onKeyDown={(e) => onPressEnterKey(e, () => showViewPolicyDetails(partner))}
-                                          className="flex justify-between items-center cursor-pointer hover:bg-gray-100 px-2 py-1 rounded"
+                                          className="flex items-center justify-between cursor-pointer bg-[#FFFFFF] hover:bg-gray-100 w-[96px] h-[33.33px] box-border px-1.5 py-2 rounded"
                                         >
-                                          <p>{t('policies.view')}</p>
-                                          <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
+                                          <p className="whitespace-nowrap leading-none">{t('policies.view')}</p>
+                                          <img src={viewIcon} alt="" className={`shrink-0 ${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                         </div>
 
                                         {String(partner?.partnerType ?? '').toUpperCase() === 'CREDENTIAL_PARTNER' && (
