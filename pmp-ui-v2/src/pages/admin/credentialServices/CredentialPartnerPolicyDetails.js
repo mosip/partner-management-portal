@@ -179,9 +179,9 @@ function CredentialPartnerPolicyDetails({
           const list = Array.isArray(payload)
             ? payload
             : (payload.extractors ??
-                payload.data ??
                 payload.data?.bioExtractors ??
                 payload.data?.bioextractors ??
+                payload.data ??
                 payload.bioExtractors ??
                 payload.bioextractors ??
                 payload.response?.bioExtractors ??

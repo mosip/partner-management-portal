@@ -55,9 +55,9 @@ function extractBioDisplayFromResponse(responsePayload) {
   const list = Array.isArray(responsePayload)
     ? responsePayload
     : (responsePayload?.extractors ??
-        responsePayload?.data ??
         responsePayload?.data?.bioExtractors ??
         responsePayload?.data?.bioextractors ??
+        responsePayload?.data ??
         responsePayload?.content ??
         responsePayload?.bioExtractors ??
         responsePayload?.bioextractors ??
