@@ -166,7 +166,20 @@ function PoliciesList() {
     });
   };
 
-  const getRowKey = (row) => `${row?.partnerId || ""}::${row?.policyId || ""}::${row?.policyName || ""}`;
+  const getRequestIdFromRow = (row) =>
+    row?.mappingKey ??
+    row?.mappingkey ??
+    row?.credentialSubType ??
+    row?.id ??
+    row?.mappingId ??
+    "";
+
+  const getRowKey = (row) => {
+    const requestId = getRequestIdFromRow(row);
+    // Eligibility is fetched per partner-policy request id; include it to avoid collisions
+    // when multiple requests exist for the same partnerId+policyId.
+    return `${requestId || ""}::${row?.partnerId || ""}::${row?.policyId || ""}::${row?.policyName || ""}`;
+  };
 
   const isFinalStatus = (status) => {
     const normalized = String(status || "").toLowerCase();
@@ -215,13 +228,7 @@ function PoliciesList() {
 
       // bioextractors mapping check
       {
-        const requestId =
-          row?.mappingKey ??
-          row?.mappingkey ??
-          row?.credentialSubType ??
-          row?.id ??
-          row?.mappingId ??
-          "";
+        const requestId = getRequestIdFromRow(row);
 
         if (requestId) {
           const url = getPartnerManagerUrl(`/partners/partner-policy-requests/${requestId}/bio-extractors`, process.env.NODE_ENV);
@@ -250,8 +257,10 @@ function PoliciesList() {
             }
           }
         } else if (partnerId && policyId) {
-          // If we don't have a partner-policy request id on this row, we can't check reliably.
-          eligibilityError = true;
+          // If we don't have a partner-policy request id on this row, treat it as "not mapped yet"
+          // so the user can still proceed with adding bioextractors.
+          bioMapped = false;
+          eligibilityError = false;
         }
       }
 
