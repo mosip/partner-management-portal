@@ -180,8 +180,12 @@ function CredentialPartnerPolicyDetails({
             ? payload
             : (payload.extractors ??
                 payload.data ??
+                payload.data?.bioExtractors ??
+                payload.data?.bioextractors ??
                 payload.bioExtractors ??
                 payload.bioextractors ??
+                payload.response?.bioExtractors ??
+                payload.response?.bioextractors ??
                 payload.extractorList ??
                 []);
           setBioExtractors(Array.isArray(list) ? list : []);

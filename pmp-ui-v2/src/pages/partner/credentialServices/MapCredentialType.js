@@ -56,9 +56,13 @@ function extractBioDisplayFromResponse(responsePayload) {
     ? responsePayload
     : (responsePayload?.extractors ??
         responsePayload?.data ??
+        responsePayload?.data?.bioExtractors ??
+        responsePayload?.data?.bioextractors ??
         responsePayload?.content ??
         responsePayload?.bioExtractors ??
         responsePayload?.bioextractors ??
+        responsePayload?.response?.bioExtractors ??
+        responsePayload?.response?.bioextractors ??
         responsePayload?.extractorList ??
         []);
   if (!Array.isArray(list)) return { modalities: [], configs: [] };

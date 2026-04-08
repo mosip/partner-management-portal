@@ -231,7 +231,15 @@ function PoliciesList() {
             const payload = data.response;
             const list = Array.isArray(payload)
               ? payload
-              : (payload.extractors ?? payload.data ?? payload.bioExtractors ?? payload.bioextractors ?? []);
+              : (payload.extractors ??
+                  payload.data ??
+                  payload.data?.bioExtractors ??
+                  payload.data?.bioextractors ??
+                  payload.bioExtractors ??
+                  payload.bioextractors ??
+                  payload.response?.bioExtractors ??
+                  payload.response?.bioextractors ??
+                  []);
             bioMapped = Array.isArray(list) && list.some(hasMeaningfulBioMapping);
           } else {
             const firstCode = data?.errors?.[0]?.errorCode;
