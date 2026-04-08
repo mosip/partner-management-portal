@@ -368,6 +368,7 @@ function PolicyRequestsList() {
                                                             isLoginLanguageRTL={isLoginLanguageRTL}
                                                             partnerId={popupData?.partnerId}
                                                             policyId={popupData?.policyId}
+                                                            requestId={popupData?.id ?? ""}
                                                             partnerTypeLabel={getPartnerTypeDescription(popupData?.partnerType, t) ?? popupData?.partnerType ?? '-'}
                                                             enabled={true}
                                                             variant="popup"

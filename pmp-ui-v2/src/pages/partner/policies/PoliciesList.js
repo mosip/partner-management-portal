@@ -125,6 +125,14 @@ function PoliciesList() {
   };
 
   const showMapCredentialType = (selectedPolicyData) => {
+    const mappingKey =
+      selectedPolicyData?.mappingKey ??
+      selectedPolicyData?.mappingkey ??
+      selectedPolicyData?.credentialSubType ??
+      selectedPolicyData?.id ??
+      selectedPolicyData?.mappingId ??
+      "";
+
     navigate('/partnermanagement/policies/map-credential-type', {
       state: {
         partnerId: selectedPolicyData?.partnerId ?? selectedPolicyData?.partner_id,
@@ -132,6 +140,7 @@ function PoliciesList() {
         policyGroupName: selectedPolicyData?.policyGroupName ?? selectedPolicyData?.policy_group_name,
         policyName: selectedPolicyData?.policyName ?? selectedPolicyData?.policy_name,
         policyId: selectedPolicyData?.policyId ?? selectedPolicyData?.policy_id,
+        mappingKey,
       }
     });
   };
@@ -187,12 +196,14 @@ function PoliciesList() {
         const extractor = item.extractor ?? item?.data?.extractor ?? item?.mapping?.extractor ?? null;
         const provider =
           extractor?.provider ??
+          item?.extractorProvider ??
           item?.provider ??
           item?.bioextractorProviderName ??
           item?.extractorProviderName ??
           "";
         const version =
           extractor?.version ??
+          item?.extractorProviderVersion ??
           item?.version ??
           item?.bioextractorProviderVersion ??
           item?.extractorProviderVersion ??
@@ -203,27 +214,40 @@ function PoliciesList() {
       let eligibilityError = false;
 
       // bioextractors mapping check
-      if (partnerId && policyId) {
-        const url = getPartnerManagerUrl(`/partners/${partnerId}/bioextractors/${policyId}`, process.env.NODE_ENV);
-        const res = await HttpService.get(url);
-        const data = res?.data;
-        if (data?.response) {
-          const payload = data.response;
-          const list = Array.isArray(payload)
-            ? payload
-            : (payload.extractors ?? payload.data ?? payload.bioExtractors ?? payload.bioextractors ?? []);
-          bioMapped = Array.isArray(list) && list.some(hasMeaningfulBioMapping);
-        } else {
-          const firstCode = data?.errors?.[0]?.errorCode;
-          // PMS_PRT_064 => not configured yet => not mapped
-          if (firstCode && firstCode !== "PMS_PRT_064") {
-            // unknown error: fail closed until eligibility can be fetched reliably
-            eligibilityError = true;
+      {
+        const requestId =
+          row?.mappingKey ??
+          row?.mappingkey ??
+          row?.credentialSubType ??
+          row?.id ??
+          row?.mappingId ??
+          "";
+
+        if (requestId) {
+          const url = getPartnerManagerUrl(`/partners/partner-policy-requests/${requestId}/bio-extractors`, process.env.NODE_ENV);
+          const res = await HttpService.get(url);
+          const data = res?.data;
+          if (data?.response) {
+            const payload = data.response;
+            const list = Array.isArray(payload)
+              ? payload
+              : (payload.extractors ?? payload.data ?? payload.bioExtractors ?? payload.bioextractors ?? []);
+            bioMapped = Array.isArray(list) && list.some(hasMeaningfulBioMapping);
+          } else {
+            const firstCode = data?.errors?.[0]?.errorCode;
+            // PMS_PRT_064 => not configured yet => not mapped
+            if (firstCode && firstCode !== "PMS_PRT_064") {
+              // unknown error: fail closed until eligibility can be fetched reliably
+              eligibilityError = true;
+            }
           }
+        } else if (partnerId && policyId) {
+          // If we don't have a partner-policy request id on this row, we can't check reliably.
+          eligibilityError = true;
         }
       }
 
-      // credential type mapping check (reuse existing read endpoint used elsewhere)
+      // credential type mapping check
       if (partnerId && policyId) {
         const url = getPartnerManagerUrl(`/partners/${partnerId}/policies/${policyId}/credential-types`, process.env.NODE_ENV);
         const res = await HttpService.get(url);
