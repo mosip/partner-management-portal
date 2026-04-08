@@ -1480,7 +1480,7 @@ export const validateUsernameRegex = (input, setInputError, t) => {
     }
 
     // Check if the rest of the username contains only valid characters
-    const validPattern = /^[\p{L}][\p{L}\p{N}\p{M}._-]*$/u;
+    const validPattern = /^[\p{L}][\p{L}\p{N}\p{M}@#&()\\_'?!":;=_-]*$/u;
 
     if (validPattern.test(input)) {
         setInputError("");
