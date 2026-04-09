@@ -125,6 +125,13 @@ function PoliciesList() {
   };
 
   const showMapCredentialType = (selectedPolicyData) => {
+    const mappingKey =
+      selectedPolicyData?.mappingKey ??
+      selectedPolicyData?.mappingkey ??
+      selectedPolicyData?.id ??
+      selectedPolicyData?.mappingId ??
+      "";
+
     navigate('/partnermanagement/policies/map-credential-type', {
       state: {
         partnerId: selectedPolicyData?.partnerId ?? selectedPolicyData?.partner_id,
@@ -132,6 +139,7 @@ function PoliciesList() {
         policyGroupName: selectedPolicyData?.policyGroupName ?? selectedPolicyData?.policy_group_name,
         policyName: selectedPolicyData?.policyName ?? selectedPolicyData?.policy_name,
         policyId: selectedPolicyData?.policyId ?? selectedPolicyData?.policy_id,
+        mappingKey,
       }
     });
   };
@@ -140,7 +148,6 @@ function PoliciesList() {
     const mappingKey =
       selectedPolicyData?.mappingKey ??
       selectedPolicyData?.mappingkey ??
-      selectedPolicyData?.credentialSubType ??
       selectedPolicyData?.id ??
       selectedPolicyData?.mappingId ??
       "";
@@ -157,7 +164,19 @@ function PoliciesList() {
     });
   };
 
-  const getRowKey = (row) => `${row?.partnerId || ""}::${row?.policyId || ""}::${row?.policyName || ""}`;
+  const getRequestIdFromRow = (row) =>
+    row?.mappingKey ??
+    row?.mappingkey ??
+    row?.id ??
+    row?.mappingId ??
+    "";
+
+  const getRowKey = (row) => {
+    const requestId = getRequestIdFromRow(row);
+    // Eligibility is fetched per partner-policy request id; include it to avoid collisions
+    // when multiple requests exist for the same partnerId+policyId.
+    return `${requestId || ""}::${row?.partnerId || ""}::${row?.policyId || ""}::${row?.policyName || ""}`;
+  };
 
   const isFinalStatus = (status) => {
     const normalized = String(status || "").toLowerCase();
@@ -187,12 +206,14 @@ function PoliciesList() {
         const extractor = item.extractor ?? item?.data?.extractor ?? item?.mapping?.extractor ?? null;
         const provider =
           extractor?.provider ??
+          item?.extractorProvider ??
           item?.provider ??
           item?.bioextractorProviderName ??
           item?.extractorProviderName ??
           "";
         const version =
           extractor?.version ??
+          item?.extractorProviderVersion ??
           item?.version ??
           item?.bioextractorProviderVersion ??
           item?.extractorProviderVersion ??
@@ -203,27 +224,45 @@ function PoliciesList() {
       let eligibilityError = false;
 
       // bioextractors mapping check
-      if (partnerId && policyId) {
-        const url = getPartnerManagerUrl(`/partners/${partnerId}/bioextractors/${policyId}`, process.env.NODE_ENV);
-        const res = await HttpService.get(url);
-        const data = res?.data;
-        if (data?.response) {
-          const payload = data.response;
-          const list = Array.isArray(payload)
-            ? payload
-            : (payload.extractors ?? payload.data ?? payload.bioExtractors ?? payload.bioextractors ?? []);
-          bioMapped = Array.isArray(list) && list.some(hasMeaningfulBioMapping);
-        } else {
-          const firstCode = data?.errors?.[0]?.errorCode;
-          // PMS_PRT_064 => not configured yet => not mapped
-          if (firstCode && firstCode !== "PMS_PRT_064") {
-            // unknown error: fail closed until eligibility can be fetched reliably
-            eligibilityError = true;
+      {
+        const requestId = getRequestIdFromRow(row);
+
+        if (requestId) {
+          const url = getPartnerManagerUrl(`/partners/partner-policy-requests/${requestId}/bio-extractors`, process.env.NODE_ENV);
+          const res = await HttpService.get(url);
+          const data = res?.data;
+          if (data?.response) {
+            const payload = data.response;
+            const list = Array.isArray(payload)
+              ? payload
+              : (payload.extractors ??
+                  payload.data?.bioExtractors ??
+                  payload.data?.bioextractors ??
+                  payload.data ??
+                  payload.bioExtractors ??
+                  payload.bioextractors ??
+                  payload.response?.bioExtractors ??
+                  payload.response?.bioextractors ??
+                  payload.extractorList ??
+                  []);
+            bioMapped = Array.isArray(list) && list.some(hasMeaningfulBioMapping);
+          } else {
+            const firstCode = data?.errors?.[0]?.errorCode;
+            // PMS_PRT_064 => not configured yet => not mapped
+            if (firstCode && firstCode !== "PMS_PRT_064") {
+              // unknown error: fail closed until eligibility can be fetched reliably
+              eligibilityError = true;
+            }
           }
+        } else if (partnerId && policyId) {
+          // If we don't have a partner-policy request id on this row, treat it as "not mapped yet"
+          // so the user can still proceed with adding bioextractors.
+          bioMapped = false;
+          eligibilityError = false;
         }
       }
 
-      // credential type mapping check (reuse existing read endpoint used elsewhere)
+      // credential type mapping check
       if (partnerId && policyId) {
         const url = getPartnerManagerUrl(`/partners/${partnerId}/policies/${policyId}/credential-types`, process.env.NODE_ENV);
         const res = await HttpService.get(url);
@@ -391,27 +430,59 @@ function PoliciesList() {
                                       onClick={() => {
                                         const next = index === viewPolicyId ? null : index;
                                         setViewPolicyId(next);
-                                        if (next !== null) ensureEligibilityLoaded(partner);
+                                        // Eligibility calls (bio/credential mapping checks) are only relevant for credential partners.
+                                        if (next !== null && String(partner?.partnerType ?? '').toUpperCase() === 'CREDENTIAL_PARTNER') {
+                                          ensureEligibilityLoaded(partner);
+                                        }
                                       }}
                                       className={`font-semibold mb-0.5 text-center cursor-pointer`}
                                     >
                                       ...
                                     </button>
-                                    {viewPolicyId === index && (
-                                      <div className={`border bg-white absolute text-xs font-semibold rounded-md shadow-md w-[12rem] px-1.5 py-2 z-20 ${isLoginLanguageRTL ? "left-[4.5rem] text-right" : "right-[4.5rem] text-left"}`}>
+                                    {viewPolicyId === index && (() => {
+                                      const isCredentialPartnerRow =
+                                        String(partner?.partnerType ?? '').toUpperCase() === 'CREDENTIAL_PARTNER';
+                                      const menuPosition = isLoginLanguageRTL ? "left-[4.5rem]" : "right-[4.5rem]";
+                                      const credentialMenuRowBase =
+                                        "flex w-full items-center gap-2.5 px-3 py-2.5 text-[#3E3E3E] rounded";
+                                      const credentialMenuRowRtl = isLoginLanguageRTL ? "flex-row-reverse text-right" : "";
+
+                                      return (
+                                      <div
+                                        className={`absolute z-20 rounded-md border border-[#E5EBFA] bg-[#FFFFFF] text-xs font-semibold shadow-md ${
+                                          isCredentialPartnerRow
+                                            ? `w-max min-w-[12rem] max-w-[min(22rem,92vw)] py-1 ${menuPosition} ${isLoginLanguageRTL ? "text-right" : "text-left"}`
+                                            : `h-[33.33px] w-[96px] p-0 ${menuPosition}`
+                                        }`}
+                                      >
                                         <div
                                           role='button'
                                           id='policy_list_view_card'
                                           onClick={() => showViewPolicyDetails(partner)}
                                           tabIndex="0"
                                           onKeyDown={(e) => onPressEnterKey(e, () => showViewPolicyDetails(partner))}
-                                          className="flex justify-between items-center cursor-pointer hover:bg-gray-100 px-2 py-1 rounded"
+                                          className={
+                                            isCredentialPartnerRow
+                                              ? `${credentialMenuRowBase} ${credentialMenuRowRtl} cursor-pointer hover:bg-[#F7F9FF]`
+                                              : "box-border flex h-[33.33px] w-[96px] cursor-pointer items-center justify-between rounded bg-[#FFFFFF] px-1.5 py-2 hover:bg-gray-100"
+                                          }
                                         >
-                                          <p>{t('policies.view')}</p>
-                                          <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
+                                          {isCredentialPartnerRow ? (
+                                            <>
+                                              <span className="inline-flex h-[10px] w-[14px] shrink-0 items-center justify-center">
+                                                <img src={viewIcon} alt="" className="h-[10px] w-[14px]" />
+                                              </span>
+                                              <span className="whitespace-nowrap leading-tight">{t('policies.view')}</span>
+                                            </>
+                                          ) : (
+                                            <>
+                                              <p className="whitespace-nowrap leading-none">{t('policies.view')}</p>
+                                              <img src={viewIcon} alt="" className={`shrink-0 ${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
+                                            </>
+                                          )}
                                         </div>
 
-                                        {String(partner?.partnerType ?? '').toUpperCase() === 'CREDENTIAL_PARTNER' && (
+                                        {isCredentialPartnerRow && (
                                           <>
                                             {(() => {
                                               const key = getRowKey(partner);
@@ -427,7 +498,6 @@ function PoliciesList() {
                                                 Boolean(eligibility.error) ||
                                                 Boolean(eligibility.bioMapped) ||
                                                 !hasBioNavPrereqs;
-                                              // Credential mapping is only available after biometric extractors are mapped for this policy.
                                               const disableCredential =
                                                 finalStatus ||
                                                 isEligibilityLoading ||
@@ -437,45 +507,46 @@ function PoliciesList() {
                                                 !hasCredentialNavPrereqs;
 
                                               const disabledItemClass = "text-[#A5A5A5] cursor-default pointer-events-none";
-                                              const enabledItemClass = "cursor-pointer hover:bg-gray-100";
+                                              const enabledItemClass = "cursor-pointer hover:bg-[#F7F9FF]";
 
                                               return (
                                                 <>
-                                            <hr className="h-px bg-gray-100 border-0 my-1" />
-                                            <div
-                                              role="button"
-                                              id="policy_list_map_biometric_extractor"
-                                              onClick={() => !disableBio && showAddBioextractors(partner)}
-                                              tabIndex="0"
-                                              onKeyDown={(e) => !disableBio && onPressEnterKey(e, () => showAddBioextractors(partner))}
-                                              className={`flex justify-between items-center px-2 py-1 rounded ${disableBio ? disabledItemClass : enabledItemClass}`}
-                                            >
-                                              <p className="flex items-center gap-2">
-                                                <span className="text-base leading-none">+</span>
-                                                <span>{t('mapBiometricExtractorProvider.addBioextractors')}</span>
-                                              </p>
-                                            </div>
-                                            <hr className="h-px bg-gray-100 border-0 my-1" />
-                                            <div
-                                              role="button"
-                                              id="policy_list_map_credential_type"
-                                              onClick={() => !disableCredential && showMapCredentialType(partner)}
-                                              tabIndex="0"
-                                              onKeyDown={(e) => !disableCredential && onPressEnterKey(e, () => showMapCredentialType(partner))}
-                                              className={`flex justify-between items-center px-2 py-1 rounded ${disableCredential ? disabledItemClass : enabledItemClass}`}
-                                            >
-                                              <p className="flex items-center gap-2">
-                                                <span className="text-base leading-none">+</span>
-                                                <span>{t('mapCredentialType.title')}</span>
-                                              </p>
-                                            </div>
+                                                  <hr className="mx-2 h-px border-0 bg-[#E5EBFA]" />
+                                                  <div
+                                                    role="button"
+                                                    id="policy_list_map_biometric_extractor"
+                                                    onClick={() => !disableBio && showAddBioextractors(partner)}
+                                                    tabIndex="0"
+                                                    onKeyDown={(e) => !disableBio && onPressEnterKey(e, () => showAddBioextractors(partner))}
+                                                    className={`${credentialMenuRowBase} ${credentialMenuRowRtl} ${disableBio ? disabledItemClass : enabledItemClass}`}
+                                                  >
+                                                    <span className="inline-flex h-[10px] w-[14px] shrink-0 items-center justify-center text-base font-medium leading-none text-[#5F6368]">
+                                                      +
+                                                    </span>
+                                                    <span className="leading-tight">{t('mapBiometricExtractorProvider.addBioextractors')}</span>
+                                                  </div>
+                                                  <hr className="mx-2 h-px border-0 bg-[#E5EBFA]" />
+                                                  <div
+                                                    role="button"
+                                                    id="policy_list_map_credential_type"
+                                                    onClick={() => !disableCredential && showMapCredentialType(partner)}
+                                                    tabIndex="0"
+                                                    onKeyDown={(e) => !disableCredential && onPressEnterKey(e, () => showMapCredentialType(partner))}
+                                                    className={`${credentialMenuRowBase} ${credentialMenuRowRtl} ${disableCredential ? disabledItemClass : enabledItemClass}`}
+                                                  >
+                                                    <span className="inline-flex h-[10px] w-[14px] shrink-0 items-center justify-center text-base font-medium leading-none text-[#5F6368]">
+                                                      +
+                                                    </span>
+                                                    <span className="leading-tight">{t('mapCredentialType.title')}</span>
+                                                  </div>
                                                 </>
                                               );
                                             })()}
                                           </>
                                         )}
                                       </div>
-                                    )}
+                                      );
+                                    })()}
                                   </div>
                                 </td>
                               </tr>

@@ -28,9 +28,6 @@ function ApproveRejectPopup({
     const hasPolicyDetails = typeof renderPolicyDetails === 'function';
 
     const [policyDetailsLoading, setPolicyDetailsLoading] = useState(() => Boolean(hasPolicyDetails));
-    const [areActionsBlocked, setAreActionsBlocked] = useState(false);
-    const [actionsBlockedMsg, setActionsBlockedMsg] = useState("");
-    const [actionsBlockedCode, setActionsBlockedCode] = useState("");
 
     useEffect(() => {
         const previousOverflow = document.body.style.overflow;
@@ -52,11 +49,6 @@ function ApproveRejectPopup({
 
     const attemptStatusChange = async (status) => {
         if (policyDetailsLoading) return;
-        if (areActionsBlocked) {
-            setErrorCode(actionsBlockedCode || "");
-            setErrorMsg(actionsBlockedMsg || t("approveRejectPopup.mappingsMissingGeneric"));
-            return;
-        }
         await handleStatusChange(status);
     };
 
@@ -190,9 +182,6 @@ function ApproveRejectPopup({
                                                     isLoginLanguageRTL,
                                                     popupData,
                                                     onLoadingChange: setPolicyDetailsLoading,
-                                                    onApproveBlockedChange: setAreActionsBlocked,
-                                                    onApproveBlockedMsgChange: setActionsBlockedMsg,
-                                                    onApproveBlockedCodeChange: setActionsBlockedCode,
                                                     getPartnerTypeDescription,
                                                 })}
                                             </div>

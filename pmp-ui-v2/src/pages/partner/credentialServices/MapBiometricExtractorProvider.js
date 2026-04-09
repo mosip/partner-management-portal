@@ -261,6 +261,8 @@ function MapBiometricExtractorProvider() {
 
   const isFormValid = () => {
     if (!policyDetails.partnerId || !policyDetails.policyId) return false;
+
+    if (!policyDetails.mappingKey) return false;
     if (!rows.some(isRowFullyMapped)) return false;
     return rows.every((row) => isRowEmpty(row) || isRowFullyMapped(row));
   };
@@ -292,15 +294,14 @@ function MapBiometricExtractorProvider() {
     try {
       const mappedRows = getMappedRowsForSubmit();
       const request = createRequest({
+        partnerPolicyRequestId: policyDetails.mappingKey,
         extractors: mappedRows.map((row) => {
           const selectedConfig = getSelectedConfig(row.id, row.biometricProviderConfiguration) || {};
           return {
             biometric: (row.biometricModality || "").toLowerCase(),
             attributeName: getAttributeName(row.biometricModality),
-            extractor: {
-              provider: selectedConfig.bioextractorProviderName,
-              version: selectedConfig.bioextractorProviderVersion,
-            },
+            extractorProvider: selectedConfig.bioextractorProviderName,
+            extractorProviderVersion: selectedConfig.bioextractorProviderVersion,
           };
         }),
       });

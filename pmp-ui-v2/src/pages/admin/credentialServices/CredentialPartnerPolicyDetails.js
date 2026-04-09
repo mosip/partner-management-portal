@@ -9,6 +9,7 @@ function CredentialPartnerPolicyDetails({
   isLoginLanguageRTL,
   partnerId,
   policyId,
+  requestId,
   partnerTypeLabel,
   enabled,
   variant,
@@ -133,6 +134,7 @@ function CredentialPartnerPolicyDetails({
 
     const providerVersion =
       item?.bioextractorProviderVersion ??
+      item?.extractorProviderVersion ??
       item?.providerVersion ??
       item?.version ??
       item?.provider_version ??
@@ -141,6 +143,7 @@ function CredentialPartnerPolicyDetails({
 
     const providerName =
       item?.bioextractorProviderName ??
+      item?.extractorProvider ??
       item?.providerName ??
       item?.name ??
       item?.provider_name ??
@@ -156,7 +159,8 @@ function CredentialPartnerPolicyDetails({
         setBioLoading(false);
         return;
       }
-      if (!partnerId || !policyId) {
+
+      if (!requestId && (!partnerId || !policyId)) {
         setBioLoading(false);
         return;
       }
@@ -165,7 +169,9 @@ function CredentialPartnerPolicyDetails({
       setBioExtractors([]);
       setBioLoading(true);
       try {
-        const url = getPartnerManagerUrl(`/partners/${partnerId}/bioextractors/${policyId}`, process.env.NODE_ENV);
+        const url = requestId
+          ? getPartnerManagerUrl(`/partners/partner-policy-requests/${requestId}/bio-extractors`, process.env.NODE_ENV)
+          : getPartnerManagerUrl(`/partners/${partnerId}/bioextractors/${policyId}`, process.env.NODE_ENV);
         const response = await HttpService.get(url);
         const responseData = response?.data;
         if (responseData?.response) {
@@ -173,9 +179,13 @@ function CredentialPartnerPolicyDetails({
           const list = Array.isArray(payload)
             ? payload
             : (payload.extractors ??
+                payload.data?.bioExtractors ??
+                payload.data?.bioextractors ??
                 payload.data ??
                 payload.bioExtractors ??
                 payload.bioextractors ??
+                payload.response?.bioExtractors ??
+                payload.response?.bioextractors ??
                 payload.extractorList ??
                 []);
           setBioExtractors(Array.isArray(list) ? list : []);
@@ -409,6 +419,7 @@ CredentialPartnerPolicyDetails.propTypes = {
   isLoginLanguageRTL: PropTypes.bool.isRequired,
   partnerId: PropTypes.string,
   policyId: PropTypes.string,
+  requestId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   partnerTypeLabel: PropTypes.string,
   enabled: PropTypes.bool,
   variant: PropTypes.oneOf(['popup', 'view']).isRequired,
