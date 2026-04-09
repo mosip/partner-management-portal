@@ -128,7 +128,6 @@ function PoliciesList() {
     const mappingKey =
       selectedPolicyData?.mappingKey ??
       selectedPolicyData?.mappingkey ??
-      selectedPolicyData?.credentialSubType ??
       selectedPolicyData?.id ??
       selectedPolicyData?.mappingId ??
       "";
@@ -149,7 +148,6 @@ function PoliciesList() {
     const mappingKey =
       selectedPolicyData?.mappingKey ??
       selectedPolicyData?.mappingkey ??
-      selectedPolicyData?.credentialSubType ??
       selectedPolicyData?.id ??
       selectedPolicyData?.mappingId ??
       "";
@@ -169,7 +167,6 @@ function PoliciesList() {
   const getRequestIdFromRow = (row) =>
     row?.mappingKey ??
     row?.mappingkey ??
-    row?.credentialSubType ??
     row?.id ??
     row?.mappingId ??
     "";
@@ -246,6 +243,7 @@ function PoliciesList() {
                   payload.bioextractors ??
                   payload.response?.bioExtractors ??
                   payload.response?.bioextractors ??
+                  payload.extractorList ??
                   []);
             bioMapped = Array.isArray(list) && list.some(hasMeaningfulBioMapping);
           } else {
