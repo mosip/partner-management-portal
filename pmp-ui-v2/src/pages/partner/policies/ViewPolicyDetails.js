@@ -128,6 +128,13 @@ function ViewPolicyDetails() {
                                         isLoginLanguageRTL={isLoginLanguageRTL}
                                         partnerId={policyDetails?.partnerId}
                                         policyId={policyDetails?.policyId}
+                                        requestId={
+                                            policyDetails?.mappingKey ??
+                                            policyDetails?.mappingkey ??
+                                            policyDetails?.mappingId ??
+                                            policyDetails?.id ??
+                                            ""
+                                        }
                                         partnerTypeLabel={getPartnerTypeDescription(policyDetails?.partnerType, t) ?? policyDetails?.partnerType ?? '-'}
                                         enabled={true}
                                         variant="view"

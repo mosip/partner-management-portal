@@ -13,18 +13,20 @@ import Confirmation from "../../common/Confirmation";
 
 const CREDENTIAL_TYPE_OPTIONS = ["auth", "qrcode", "euin", "reprint", "vercred", "opencrvs"];
 
-/** Same shape checks as PoliciesList / CredentialPartnerPolicyDetails for GET .../bioextractors/{policyId}. */
+
 function hasMeaningfulBioMapping(item) {
   if (!item) return false;
   const extractor = item?.extractor ?? item?.mapping?.extractor ?? null;
   const provider =
     extractor?.provider ??
+    item?.extractorProvider ??
     item?.provider ??
     item?.bioextractorProviderName ??
     item?.extractorProviderName ??
     "";
   const version =
     extractor?.version ??
+    item?.extractorProviderVersion ??
     item?.version ??
     item?.bioextractorProviderVersion ??
     item?.extractorProviderVersion ??
@@ -32,7 +34,7 @@ function hasMeaningfulBioMapping(item) {
   return Boolean(String(provider || "").trim()) || Boolean(String(version || "").trim());
 }
 
-/** Align with CredentialPartnerPolicyDetails.normalizeBioRow — API field names vary by deployment. */
+
 function resolveBioConfigurationLabel(item) {
   const configuration =
     item?.bioExtractorConfigurationName ??
@@ -48,15 +50,19 @@ function resolveBioConfigurationLabel(item) {
   return trimmed || "-";
 }
 
-/** Parse GET .../bioextractors/{policyId} response into parallel display arrays (modalities + config names). */
+
 function extractBioDisplayFromResponse(responsePayload) {
   const list = Array.isArray(responsePayload)
     ? responsePayload
     : (responsePayload?.extractors ??
+        responsePayload?.data?.bioExtractors ??
+        responsePayload?.data?.bioextractors ??
         responsePayload?.data ??
         responsePayload?.content ??
         responsePayload?.bioExtractors ??
         responsePayload?.bioextractors ??
+        responsePayload?.response?.bioExtractors ??
+        responsePayload?.response?.bioextractors ??
         responsePayload?.extractorList ??
         []);
   if (!Array.isArray(list)) return { modalities: [], configs: [] };
@@ -99,8 +105,14 @@ function MapCredentialType() {
   const isLoginLanguageRTL = isLangRTL(userProfile?.locale || "en");
 
   const hasRequiredState = Boolean(state?.partnerId && state?.policyName);
-  /** Policy list / APIs may use camelCase or snake_case */
+
   const policyIdForApi = state?.policyId ?? state?.policy_id ?? "";
+  const requestIdForBioApi =
+    state?.mappingKey ??
+    state?.mappingkey ??
+    state?.partnerPolicyRequestId ??
+    state?.requestId ??
+    "";
 
   const [selectedBioModalities, setSelectedBioModalities] = useState(() =>
     Array.isArray(state?.selectedBioModalities) ? state.selectedBioModalities : []
@@ -112,8 +124,8 @@ function MapCredentialType() {
   const needsBioFetch = useMemo(
     () =>
       !(Array.isArray(state?.selectedBioModalities) && state.selectedBioModalities.length > 0) &&
-      Boolean(state?.partnerId && policyIdForApi),
-    [state?.partnerId, policyIdForApi, state?.selectedBioModalities]
+      Boolean(requestIdForBioApi),
+    [requestIdForBioApi, state?.selectedBioModalities]
   );
 
   const [bioMetaLoaded, setBioMetaLoaded] = useState(() => !needsBioFetch);
@@ -127,7 +139,7 @@ function MapCredentialType() {
   const [confirmationData, setConfirmationData] = useState({});
   const isSubmittingRef = useRef(false);
 
-  /** First row is placeholder (empty value); no default credential type selected */
+
   const credentialTypeDropdownData = useMemo(
     () => [
       { fieldCode: t("mapCredentialType.selectCredentialType"), fieldValue: "" },
@@ -145,7 +157,7 @@ function MapCredentialType() {
     let cancelled = false;
     (async () => {
       try {
-        const url = getPartnerManagerUrl(`/partners/${state.partnerId}/bioextractors/${policyIdForApi}`, process.env.NODE_ENV);
+        const url = getPartnerManagerUrl(`/partners/partner-policy-requests/${requestIdForBioApi}/bio-extractors`, process.env.NODE_ENV);
         const res = await HttpService.get(url);
         if (cancelled) return;
         if (res?.data?.response) {
@@ -154,7 +166,7 @@ function MapCredentialType() {
           setSelectedBioProviderConfigurations(configs);
         }
       } catch {
-        /* keep empty; page still usable for credential mapping */
+
       } finally {
         if (!cancelled) setBioMetaLoaded(true);
       }
@@ -163,7 +175,7 @@ function MapCredentialType() {
     return () => {
       cancelled = true;
     };
-  }, [needsBioFetch, state?.partnerId, policyIdForApi]);
+  }, [needsBioFetch, requestIdForBioApi]);
 
   const hasUnsavedChanges = useMemo(() => Boolean((credentialType || "").trim()), [credentialType]);
 
@@ -322,12 +334,9 @@ function MapCredentialType() {
 
   const credentialTypeDropdownStyles = {
     outerDiv: "!ml-0 !mb-0",
-    /** Match form copy color (#3D4468); avoid default near-black label */
     dropdownLabel: "!text-sm !mb-1 !block !font-semibold !text-[#3D4468]",
-    /** Do not force text color — placeholder uses grayish-blue, value uses #343434 */
     dropdownButton: "!w-full !min-h-10 !rounded-md !text-base !text-start",
     selectionBox: "!top-10",
-    /** Shorter open list (default max-h-40 is tall for only a few credential types) */
     optionsList: "!max-h-28",
   };
 

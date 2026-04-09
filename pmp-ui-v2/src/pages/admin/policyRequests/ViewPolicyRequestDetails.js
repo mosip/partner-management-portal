@@ -100,6 +100,7 @@ function ViewPolicyRequestDetails() {
                                                         isLoginLanguageRTL={isLoginLanguageRTL}
                                                         partnerId={popupData?.partnerId}
                                                         policyId={popupData?.policyId}
+                                                        requestId={popupData?.id ?? ""}
                                                         partnerTypeLabel={getPartnerTypeDescription(popupData?.partnerType, t) ?? popupData?.partnerType ?? '-'}
                                                         enabled={true}
                                                         variant="popup"
@@ -180,6 +181,7 @@ function ViewPolicyRequestDetails() {
                                         isLoginLanguageRTL={isLoginLanguageRTL}
                                         partnerId={policyRequestDetails?.partnerId}
                                         policyId={policyRequestDetails?.policyId}
+                                        requestId={policyRequestDetails?.id ?? ""}
                                         partnerTypeLabel={getPartnerTypeDescription(policyRequestDetails?.partnerType, t) ?? policyRequestDetails?.partnerType ?? '-'}
                                         enabled={isCredentialPartner}
                                         variant="view"
