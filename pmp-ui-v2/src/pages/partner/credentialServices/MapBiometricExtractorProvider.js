@@ -300,10 +300,8 @@ function MapBiometricExtractorProvider() {
           return {
             biometric: (row.biometricModality || "").toLowerCase(),
             attributeName: getAttributeName(row.biometricModality),
-            extractor: {
-              provider: selectedConfig.bioextractorProviderName,
-              version: selectedConfig.bioextractorProviderVersion,
-            },
+            extractorProvider: selectedConfig.bioextractorProviderName,
+            extractorProviderVersion: selectedConfig.bioextractorProviderVersion,
           };
         }),
       });
