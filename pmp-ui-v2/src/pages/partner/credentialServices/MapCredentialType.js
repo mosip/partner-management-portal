@@ -237,14 +237,35 @@ function MapCredentialType() {
       );
 
       let responseData;
+      let httpStatus;
       try {
         const response = await HttpService.post(url, request, {
           headers: { "Content-Type": "application/json" },
         });
         responseData = response?.data;
+        httpStatus = response?.status;
       } catch (err) {
         responseData = err?.response?.data;
+        httpStatus = err?.response?.status;
         if (!responseData) throw err;
+      }
+
+      const is2xx = typeof httpStatus === "number" && httpStatus >= 200 && httpStatus < 300;
+
+      // Don't let non-2xx responses fall through to success confirmation,
+      // even if the payload isn't in our usual { errors: [...] } envelope.
+      if (!is2xx) {
+        if (responseData?.errors?.length) {
+          setErrorCode(responseData?.errors?.[0]?.errorCode || "");
+          setErrorMsg(responseData?.errors?.[0]?.message || t("mapCredentialType.saveError"));
+        } else {
+          setErrorCode("");
+          setErrorMsg(t("mapCredentialType.saveError"));
+        }
+        setIsSubmitClicked(false);
+        setDataLoaded(true);
+        isSubmittingRef.current = false;
+        return;
       }
 
       if (responseData?.errors?.length) {
