@@ -160,14 +160,17 @@ function MapCredentialType() {
 
         setAllowedCredentialTypes(normalizedCredentialTypes);
       } catch (error) {
+        if (cancelled) return;
         console.error("Error fetching allowed credential types:", error);
+        setAllowedCredentialTypes([]);
+        setErrorMsg(t("mapCredentialType.saveError"));
       }
     })();
 
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [t]);
 
   useEffect(() => {
     if (!needsBioFetch) return;
