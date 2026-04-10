@@ -228,7 +228,10 @@ function PoliciesList() {
         const requestId = getRequestIdFromRow(row);
 
         if (requestId) {
-          const url = getPartnerManagerUrl(`/partners/partner-policy-requests/${requestId}/bio-extractors`, process.env.NODE_ENV);
+          const url = getPartnerManagerUrl(
+            `/partners/partner-policy-requests/${requestId}/bio-extractors-request`,
+            process.env.NODE_ENV
+          );
           const res = await HttpService.get(url);
           const data = res?.data;
           if (data?.response) {
@@ -255,27 +258,31 @@ function PoliciesList() {
             }
           }
         } else if (partnerId && policyId) {
-          // If we don't have a partner-policy request id on this row, treat it as "not mapped yet"
-          // so the user can still proceed with adding bioextractors.
+
           bioMapped = false;
           eligibilityError = false;
         }
       }
 
       // credential type mapping check
-      if (partnerId && policyId) {
-        const url = getPartnerManagerUrl(`/partners/${partnerId}/policies/${policyId}/credential-types`, process.env.NODE_ENV);
-        const res = await HttpService.get(url);
-        const data = res?.data;
-        if (data?.response !== undefined) {
-          credentialMapped = credentialTypesResponseIndicatesMapped(data.response);
-        } else {
-          // unexpected response shape => fail closed
-          eligibilityError = true;
+      {
+        const requestId = getRequestIdFromRow(row);
+        if (requestId) {
+          const url = getPartnerManagerUrl(
+            `/partners/partner-policy-requests/${requestId}/credential-types-request`,
+            process.env.NODE_ENV
+          );
+          const res = await HttpService.get(url);
+          const data = res?.data;
+          if (data?.response !== undefined) {
+            credentialMapped = credentialTypesResponseIndicatesMapped(data.response);
+          } else {
+            // unexpected response shape => fail closed
+            eligibilityError = true;
+          }
+        } else if (partnerId && policyName) {
+          credentialMapped = false;
         }
-      } else if (partnerId && policyName) {
-        // If we don't have policyId, we can't reliably check. Keep enabled.
-        credentialMapped = false;
       }
 
       setActionEligibilityByKey((prev) => ({

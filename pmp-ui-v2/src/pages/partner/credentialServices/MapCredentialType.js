@@ -157,7 +157,10 @@ function MapCredentialType() {
     let cancelled = false;
     (async () => {
       try {
-        const url = getPartnerManagerUrl(`/partners/partner-policy-requests/${requestIdForBioApi}/bio-extractors`, process.env.NODE_ENV);
+        const url = getPartnerManagerUrl(
+          `/partners/partner-policy-requests/${requestIdForBioApi}/bio-extractors-request`,
+          process.env.NODE_ENV
+        );
         const res = await HttpService.get(url);
         if (cancelled) return;
         if (res?.data?.response) {
