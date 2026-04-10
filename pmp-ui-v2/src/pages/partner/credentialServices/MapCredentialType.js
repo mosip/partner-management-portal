@@ -10,8 +10,8 @@ import LoadingIcon from "../../common/LoadingIcon";
 import DropdownComponent from "../../common/fields/DropdownComponent";
 import BlockerPrompt from "../../common/BlockerPrompt";
 import Confirmation from "../../common/Confirmation";
+import { getAppConfig } from "../../../services/ConfigService";
 
-const CREDENTIAL_TYPE_OPTIONS = ["auth", "qrcode", "euin", "reprint", "vercred", "opencrvs"];
 
 /** Same shape checks as PoliciesList / CredentialPartnerPolicyDetails for GET .../bioextractors/{policyId}. */
 function hasMeaningfulBioMapping(item) {
@@ -125,19 +125,49 @@ function MapCredentialType() {
   const [isSubmitClicked, setIsSubmitClicked] = useState(false);
   const [requestPolicySuccess, setRequestPolicySuccess] = useState(false);
   const [confirmationData, setConfirmationData] = useState({});
+  const [allowedCredentialTypes, setAllowedCredentialTypes] = useState([]);
   const isSubmittingRef = useRef(false);
 
   /** First row is placeholder (empty value); no default credential type selected */
   const credentialTypeDropdownData = useMemo(
     () => [
       { fieldCode: t("mapCredentialType.selectCredentialType"), fieldValue: "" },
-      ...CREDENTIAL_TYPE_OPTIONS.map((value) => ({
+      ...allowedCredentialTypes.map((value) => ({
         fieldCode: value,
         fieldValue: value,
       })),
     ],
-    [t]
+    [allowedCredentialTypes, t]
   );
+  useEffect(() => {
+    let cancelled = false;
+
+    (async () => {
+      try {
+        const appConfig = await getAppConfig();
+        if (cancelled) return;
+
+        const credentialTypes = appConfig?.allowedCredentialTypes;
+        const parsedCredentialTypes = Array.isArray(credentialTypes)
+          ? credentialTypes
+          : typeof credentialTypes === "string"
+            ? credentialTypes.split(",")
+            : [];
+
+        const normalizedCredentialTypes = parsedCredentialTypes
+          .map((value) => String(value || "").trim())
+          .filter(Boolean);
+
+        setAllowedCredentialTypes(normalizedCredentialTypes);
+      } catch (error) {
+        console.error("Error fetching allowed credential types:", error);
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   useEffect(() => {
     if (!needsBioFetch) return;
