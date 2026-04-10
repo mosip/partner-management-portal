@@ -220,7 +220,9 @@ function CredentialPartnerPolicyDetails({
         setCredentialTypeLoading(false);
         return;
       }
-      if (!partnerId || !policyId) {
+      // Credential types are now fetched by partner-policy-request id.
+      // Backend removed /partners/{partnerId}/policies/{policyId}/credential-types.
+      if (!requestId) {
         setCredentialTypeLoading(false);
         return;
       }
@@ -229,8 +231,26 @@ function CredentialPartnerPolicyDetails({
       setCredentialType('');
       setCredentialTypeLoading(true);
       try {
-        const url = getPartnerManagerUrl(`/partners/${partnerId}/policies/${policyId}/credential-types`, process.env.NODE_ENV);
-        const response = await HttpService.get(url);
+        const primaryUrl = getPartnerManagerUrl(
+          `/partners/partner-policy-requests/${requestId}/credential-types-request`,
+          process.env.NODE_ENV
+        );
+        const fallbackUrl = getPartnerManagerUrl(
+          `/partner-policy-requests/${requestId}/credential-types-request`,
+          process.env.NODE_ENV
+        );
+
+        let response;
+        try {
+          response = await HttpService.get(primaryUrl);
+        } catch (e) {
+          // Some deployments mount partner-policy-requests without the `/partners` prefix.
+          if (e?.response?.status === 404) {
+            response = await HttpService.get(fallbackUrl);
+          } else {
+            throw e;
+          }
+        }
         const responseData = response?.data;
 
         if (responseData?.response !== undefined) {
@@ -288,7 +308,7 @@ function CredentialPartnerPolicyDetails({
     };
 
     fetchCredentialType();
-  }, [enabled, partnerId, policyId, t]);
+  }, [enabled, requestId, t]);
 
   const table = (
     <div className="mt-6 border border-[#E5EBFA] rounded-md overflow-hidden bg-white">

@@ -263,19 +263,41 @@ function PoliciesList() {
       }
 
       // credential type mapping check
-      if (partnerId && policyId) {
-        const url = getPartnerManagerUrl(`/partners/${partnerId}/policies/${policyId}/credential-types`, process.env.NODE_ENV);
-        const res = await HttpService.get(url);
-        const data = res?.data;
-        if (data?.response !== undefined) {
-          credentialMapped = credentialTypesResponseIndicatesMapped(data.response);
-        } else {
-          // unexpected response shape => fail closed
-          eligibilityError = true;
+      {
+        const requestId = getRequestIdFromRow(row);
+        if (requestId) {
+          const primaryUrl = getPartnerManagerUrl(
+            `/partners/partner-policy-requests/${requestId}/credential-types-request`,
+            process.env.NODE_ENV
+          );
+          const fallbackUrl = getPartnerManagerUrl(
+            `/partner-policy-requests/${requestId}/credential-types-request`,
+            process.env.NODE_ENV
+          );
+
+          let res;
+          try {
+            res = await HttpService.get(primaryUrl);
+          } catch (e) {
+            // Some deployments mount partner-policy-requests without the `/partners` prefix.
+            if (e?.response?.status === 404) {
+              res = await HttpService.get(fallbackUrl);
+            } else {
+              throw e;
+            }
+          }
+          const data = res?.data;
+          if (data?.response !== undefined) {
+            credentialMapped = credentialTypesResponseIndicatesMapped(data.response);
+          } else {
+            // unexpected response shape => fail closed
+            eligibilityError = true;
+          }
+        } else if (partnerId && policyName) {
+          // If we don't have a partner-policy request id on this row, treat it as "not mapped yet"
+          // so the user can still proceed.
+          credentialMapped = false;
         }
-      } else if (partnerId && policyName) {
-        // If we don't have policyId, we can't reliably check. Keep enabled.
-        credentialMapped = false;
       }
 
       setActionEligibilityByKey((prev) => ({
