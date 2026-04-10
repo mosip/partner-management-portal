@@ -11,6 +11,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONObject;
 
@@ -150,22 +151,35 @@ public class AdminTestUtil extends BaseTestCaseFunc {
 	}
 
 	private static final Logger LOG = Logger.getLogger(AdminTestUtil.class);
-	private static final List<String> knownIssues = new ArrayList<>();
+	private static Map<String, String> knownIssues = new HashMap<>();
 
 	static {
 		try (InputStream is = AdminTestUtil.class.getClassLoader().getResourceAsStream("config/knownIssues.txt")) {
-
 			if (is == null) {
 				LOG.warn("knownIssues.txt not found in classpath");
 			} else {
 				try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
 					String line;
 					while ((line = br.readLine()) != null) {
-						if (!line.trim().isEmpty()) {
-							knownIssues.add(line.trim());
+						line = line.trim();
+						if (line.isEmpty()) {
+							continue;
+						}
+						if (line.startsWith("#")) {
+							continue;
+						}
+						String[] parts = line.split("=", 2);
+						if (parts.length == 2) {
+							String key = parts[0].trim(); // class/method
+							String bugId = parts[1].trim(); // bug id
+
+							knownIssues.put(key, bugId);
+						} else {
+							LOG.warn("Invalid entry in knownIssues.txt: " + line);
 						}
 					}
 				}
+
 				LOG.info("Known Issues Loaded: " + knownIssues);
 			}
 
@@ -174,7 +188,7 @@ public class AdminTestUtil extends BaseTestCaseFunc {
 		}
 	}
 
-	public static List<String> getKnownIssues() {
+	public static Map<String, String> getKnownIssues() {
 		return knownIssues;
 	}
 

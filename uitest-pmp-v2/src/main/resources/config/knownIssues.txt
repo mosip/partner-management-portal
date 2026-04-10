@@ -1,0 +1,6 @@
+#Add the Known Issue scenario with its bug id here
+#Class Name=bug id
+#Ex-MispPartnerTest=MOSIP-1234
+#Method Name=bug id
+#createMultipleMispPartner=MOSIP-1234
+

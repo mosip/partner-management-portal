@@ -1,17 +1,17 @@
 package io.mosip.testrig.pmpuiv2.utility;
 
 import org.apache.log4j.Logger;
-import org.testng.IInvokedMethod;
-import org.testng.IInvokedMethodListener;
-import org.testng.ITestResult;
-import org.testng.SkipException;
+import org.testng.*;
 
 import io.mosip.testrig.pmpuiv2.fw.util.AdminTestUtil;
+
+import java.util.Map;
 
 public class KnownIssues implements IInvokedMethodListener {
 
 	private static final Logger logger = Logger.getLogger(KnownIssues.class);
 
+	@Override
 	public void beforeInvocation(IInvokedMethod method, ITestResult testResult) {
 
 		if (!method.isTestMethod())
@@ -19,21 +19,18 @@ public class KnownIssues implements IInvokedMethodListener {
 
 		String methodName = testResult.getMethod().getMethodName();
 		String className = testResult.getTestClass().getRealClass().getSimpleName();
-
-		for (String knownIssue : AdminTestUtil.getKnownIssues()) {
-
-			if (knownIssue.equalsIgnoreCase(className)) {
-				logger.warn("Skipping Known Issue CLASS: " + className + "." + methodName);
-				throw new SkipException("KNOWN_ISSUE: " + className);
-			}
-
-			if (knownIssue.equalsIgnoreCase(methodName)) {
-				logger.warn("Skipping Known Issue METHOD: " + className + "." + methodName);
-				throw new SkipException("KNOWN_ISSUE: " + methodName);
-			}
+		Map<String, String> knownIssues = AdminTestUtil.getKnownIssues();
+		if (knownIssues == null || knownIssues.isEmpty())
+			return;
+		String bugId = knownIssues.get(methodName);
+		if (bugId == null) {
+			bugId = knownIssues.get(className);
 		}
-	}
 
-	public void afterInvocation(IInvokedMethod method, ITestResult testResult) {
+		if (bugId != null) {
+			logger.warn("Skipping Known Issue: " + className + "." + methodName + " | Bug: " + bugId);
+			testResult.setAttribute("KNOWN_ISSUE", bugId);
+			throw new SkipException("Skipped due to Known Issue → " + bugId);
+		}
 	}
 }
