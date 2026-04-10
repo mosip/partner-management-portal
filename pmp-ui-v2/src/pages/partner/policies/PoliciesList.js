@@ -228,7 +228,10 @@ function PoliciesList() {
         const requestId = getRequestIdFromRow(row);
 
         if (requestId) {
-          const url = getPartnerManagerUrl(`/partners/partner-policy-requests/${requestId}/bio-extractors`, process.env.NODE_ENV);
+          const url = getPartnerManagerUrl(
+            `/partners/partner-policy-requests/${requestId}/bio-extractors-request`,
+            process.env.NODE_ENV
+          );
           const res = await HttpService.get(url);
           const data = res?.data;
           if (data?.response) {
@@ -266,26 +269,11 @@ function PoliciesList() {
       {
         const requestId = getRequestIdFromRow(row);
         if (requestId) {
-          const primaryUrl = getPartnerManagerUrl(
+          const url = getPartnerManagerUrl(
             `/partners/partner-policy-requests/${requestId}/credential-types-request`,
             process.env.NODE_ENV
           );
-          const fallbackUrl = getPartnerManagerUrl(
-            `/partner-policy-requests/${requestId}/credential-types-request`,
-            process.env.NODE_ENV
-          );
-
-          let res;
-          try {
-            res = await HttpService.get(primaryUrl);
-          } catch (e) {
-            // Some deployments mount partner-policy-requests without the `/partners` prefix.
-            if (e?.response?.status === 404) {
-              res = await HttpService.get(fallbackUrl);
-            } else {
-              throw e;
-            }
-          }
+          const res = await HttpService.get(url);
           const data = res?.data;
           if (data?.response !== undefined) {
             credentialMapped = credentialTypesResponseIndicatesMapped(data.response);
