@@ -160,7 +160,8 @@ function CredentialPartnerPolicyDetails({
         return;
       }
 
-      if (!requestId && (!partnerId || !policyId)) {
+      // Bio mappings are fetched by partner-policy-request id.
+      if (!requestId) {
         setBioLoading(false);
         return;
       }
@@ -169,75 +170,41 @@ function CredentialPartnerPolicyDetails({
       setBioExtractors([]);
       setBioLoading(true);
       try {
-        if (requestId) {
-          const url = getPartnerManagerUrl(
-            `/partners/partner-policy-requests/${requestId}/bio-extractors-request`,
-            process.env.NODE_ENV
-          );
-          const response = await HttpService.get(url);
-          const responseData = response?.data;
-          if (responseData?.response) {
-            const payload = responseData.response;
-            const list = Array.isArray(payload)
-              ? payload
-              : (payload.extractors ??
-                  payload.data?.bioExtractors ??
-                  payload.data?.bioextractors ??
-                  payload.data ??
-                  payload.bioExtractors ??
-                  payload.bioextractors ??
-                  payload.response?.bioExtractors ??
-                  payload.response?.bioextractors ??
-                  payload.extractorList ??
-                  []);
-            setBioExtractors(Array.isArray(list) ? list : []);
-          } else {
-            const firstCode = responseData?.errors?.[0]?.errorCode;
-            if (firstCode === 'PMS_PRT_064') {
-              setBioError(
-                t(
-                  'partnerPolicyRequestApproveRejectPopup.extractorsNotConfigured',
-                  'Extractors are not configured.'
-                )
-              );
-            } else {
-              setBioError(t('commons.somethingWentWrong', 'Something went wrong.'));
-            }
-          }
-          return;
+        // Backend now serves request-scoped bio mappings via `.../bio-extractors-request`.
+        // Using the older partnerId/policyId based endpoint is no longer supported.
+        const url = getPartnerManagerUrl(
+          `/partners/partner-policy-requests/${requestId}/bio-extractors-request`,
+          process.env.NODE_ENV
+        );
+        const response = await HttpService.get(url);
+        const responseData = response?.data;
+        if (responseData?.response) {
+          const payload = responseData.response;
+          const list = Array.isArray(payload)
+            ? payload
+            : (payload.extractors ??
+                payload.data?.bioExtractors ??
+                payload.data?.bioextractors ??
+                payload.data ??
+                payload.bioExtractors ??
+                payload.bioextractors ??
+                payload.response?.bioExtractors ??
+                payload.response?.bioextractors ??
+                payload.extractorList ??
+                []);
+          setBioExtractors(Array.isArray(list) ? list : []);
         } else {
-          const legacyUrl = getPartnerManagerUrl(`/partners/${partnerId}/bioextractors/${policyId}`, process.env.NODE_ENV);
-          const response = await HttpService.get(legacyUrl);
-          const responseData = response?.data;
-          if (responseData?.response) {
-            const payload = responseData.response;
-            const list = Array.isArray(payload)
-              ? payload
-              : (payload.extractors ??
-                  payload.data?.bioExtractors ??
-                  payload.data?.bioextractors ??
-                  payload.data ??
-                  payload.bioExtractors ??
-                  payload.bioextractors ??
-                  payload.response?.bioExtractors ??
-                  payload.response?.bioextractors ??
-                  payload.extractorList ??
-                  []);
-            setBioExtractors(Array.isArray(list) ? list : []);
+          const firstCode = responseData?.errors?.[0]?.errorCode;
+          if (firstCode === 'PMS_PRT_064') {
+            setBioError(
+              t(
+                'partnerPolicyRequestApproveRejectPopup.extractorsNotConfigured',
+                'Extractors are not configured.'
+              )
+            );
           } else {
-            const firstCode = responseData?.errors?.[0]?.errorCode;
-            if (firstCode === 'PMS_PRT_064') {
-              setBioError(
-                t(
-                  'partnerPolicyRequestApproveRejectPopup.extractorsNotConfigured',
-                  'Extractors are not configured.'
-                )
-              );
-            } else {
-              setBioError(t('commons.somethingWentWrong', 'Something went wrong.'));
-            }
+            setBioError(t('commons.somethingWentWrong', 'Something went wrong.'));
           }
-          return;
         }
       } catch (err) {
         if (err?.response?.status !== 401) {
@@ -249,7 +216,7 @@ function CredentialPartnerPolicyDetails({
     };
 
     fetchBioExtractors();
-  }, [enabled, requestId, partnerId, policyId, t]);
+  }, [enabled, requestId, t]);
 
   useEffect(() => {
     const fetchCredentialType = async () => {
