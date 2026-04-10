@@ -258,8 +258,7 @@ function PoliciesList() {
             }
           }
         } else if (partnerId && policyId) {
-          // If we don't have a partner-policy request id on this row, treat it as "not mapped yet"
-          // so the user can still proceed with adding bioextractors.
+
           bioMapped = false;
           eligibilityError = false;
         }
@@ -282,8 +281,6 @@ function PoliciesList() {
             eligibilityError = true;
           }
         } else if (partnerId && policyName) {
-          // If we don't have a partner-policy request id on this row, treat it as "not mapped yet"
-          // so the user can still proceed.
           credentialMapped = false;
         }
       }

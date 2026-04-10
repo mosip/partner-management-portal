@@ -257,8 +257,7 @@ function CredentialPartnerPolicyDetails({
         setCredentialTypeLoading(false);
         return;
       }
-      // Credential types are now fetched by partner-policy-request id.
-      // Backend removed /partners/{partnerId}/policies/{policyId}/credential-types.
+ 
       if (!requestId) {
         setCredentialTypeLoading(false);
         return;
