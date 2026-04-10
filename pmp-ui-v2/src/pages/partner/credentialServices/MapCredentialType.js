@@ -104,8 +104,6 @@ function MapCredentialType() {
   const userProfile = getUserProfile();
   const isLoginLanguageRTL = isLangRTL(userProfile?.locale || "en");
 
-  const hasRequiredState = Boolean(state?.partnerId && state?.policyName);
-
   const policyIdForApi = state?.policyId ?? state?.policy_id ?? "";
   const requestIdForBioApi =
     state?.mappingKey ??
@@ -113,6 +111,8 @@ function MapCredentialType() {
     state?.partnerPolicyRequestId ??
     state?.requestId ??
     "";
+
+  const hasRequiredState = Boolean(state?.partnerId && state?.policyName && policyIdForApi && requestIdForBioApi);
 
   const [selectedBioModalities, setSelectedBioModalities] = useState(() =>
     Array.isArray(state?.selectedBioModalities) ? state.selectedBioModalities : []
@@ -225,82 +225,42 @@ function MapCredentialType() {
     setDataLoaded(false);
 
     try {
-      const ct = String(credentialType || "").trim();
-      const credentialTypes = [ct];
-      const request = createRequest({});
-      const buildUrl = (type) =>
-        getPartnerManagerUrl(
-          `/partners/${state.partnerId}/credentialtype/${encodeURIComponent(type)}/policies/${encodeURIComponent(
-            state.policyName
-          )}`,
-          process.env.NODE_ENV
-        );
+      const ct = String(credentialType || "").trim().toLowerCase();
+      const request = createRequest({
+        partnerPolicyRequestId: requestIdForBioApi,
+        credentialType: ct,
+      });
 
-      const postCredentialType = async (type) => {
-        const url = buildUrl(type);
-        let responseData;
-        try {
-          const response = await HttpService.post(url, request, {
-            headers: { "Content-Type": "application/json" },
-          });
-          responseData = response?.data;
-        } catch (err) {
-          responseData = err?.response?.data;
-          if (!responseData) throw err;
-        }
-        if (responseData?.errors?.length) {
-          const error = new Error("credentialTypeMappingFailed");
-          error.responseData = responseData;
-          error.credentialType = type;
-          throw error;
-        }
-        if (responseData?.response == null) {
-          const error = new Error("credentialTypeMappingFailed");
-          error.responseData = responseData;
-          error.credentialType = type;
-          throw error;
-        }
-        return true;
-      };
+      const url = getPartnerManagerUrl(
+        `/partners/${state.partnerId}/policies/${policyIdForApi}/credential-types-request`,
+        process.env.NODE_ENV
+      );
 
-      const tasks = credentialTypes.map((type) => ({
-        credentialType: type,
-        promise: postCredentialType(type),
-      }));
-
-      const results = await Promise.allSettled(tasks.map((task) => task.promise));
-
-      const succeeded = tasks
-        .filter((_, i) => results[i]?.status === "fulfilled")
-        .map((task) => task.credentialType);
-
-      const failedDetails = [];
-      for (let i = 0; i < results.length; i++) {
-        if (results[i]?.status === "rejected") {
-          const reason = results[i].reason;
-          const ctFailed = tasks[i].credentialType;
-          const code =
-            reason?.responseData?.errors?.[0]?.errorCode ??
-            reason?.response?.data?.errors?.[0]?.errorCode;
-          failedDetails.push({ credentialType: ctFailed, errorCode: code });
-        }
+      let responseData;
+      let httpStatus;
+      try {
+        const response = await HttpService.post(url, request, {
+          headers: { "Content-Type": "application/json" },
+        });
+        responseData = response?.data;
+        httpStatus = response?.status;
+      } catch (err) {
+        responseData = err?.response?.data;
+        httpStatus = err?.response?.status;
+        if (!responseData) throw err;
       }
 
-      if (failedDetails.length > 0) {
-        const failedTypes = failedDetails.map((f) => f.credentialType);
-        const allDuplicate = failedDetails.every((f) => f.errorCode === "PMS_PRT_007");
-        if (failedDetails.length === credentialTypes.length && allDuplicate) {
-          setErrorCode("PMS_PRT_007");
-          setErrorMsg(t("mapCredentialType.duplicateCredentialTypeMsg", { types: failedTypes.join(", ") }));
+      const is2xx = typeof httpStatus === "number" && httpStatus >= 200 && httpStatus < 300;
+
+      // Don't let non-2xx responses fall through to success confirmation,
+      // even if the payload isn't in our usual { errors: [...] } envelope.
+      if (!is2xx) {
+        if (responseData?.errors?.length) {
+          setErrorCode(responseData?.errors?.[0]?.errorCode || "");
+          setErrorMsg(responseData?.errors?.[0]?.message || t("mapCredentialType.saveError"));
         } else {
-          setErrorCode(failedDetails[0]?.errorCode || "");
-          setErrorMsg(
-            t("mapCredentialType.partialFailureMsg", {
-              succeeded: succeeded.length,
-              total: credentialTypes.length,
-              failed: failedTypes.join(", "),
-            })
-          );
+          setErrorCode("");
+          setErrorMsg(t("mapCredentialType.saveError"));
         }
         setIsSubmitClicked(false);
         setDataLoaded(true);
@@ -308,17 +268,24 @@ function MapCredentialType() {
         return;
       }
 
-      if (credentialTypes.length > 0) {
-        setConfirmationData({
-          title: "mapCredentialType.title",
-          backUrl: "/partnermanagement/policies/policies-list",
-          header: "mapCredentialType.successHeader",
-          description: "mapCredentialType.successMsgLine1",
-          description1: "mapCredentialType.successMsgLine2",
-          subNavigation: "requestPolicy.policies",
-        });
-        setRequestPolicySuccess(true);
+      if (responseData?.errors?.length) {
+        setErrorCode(responseData?.errors?.[0]?.errorCode || "");
+        setErrorMsg(responseData?.errors?.[0]?.message || t("mapCredentialType.saveError"));
+        setIsSubmitClicked(false);
+        setDataLoaded(true);
+        isSubmittingRef.current = false;
+        return;
       }
+
+      setConfirmationData({
+        title: "mapCredentialType.title",
+        backUrl: "/partnermanagement/policies/policies-list",
+        header: "mapCredentialType.successHeader",
+        description: "mapCredentialType.successMsgLine1",
+        description1: "mapCredentialType.successMsgLine2",
+        subNavigation: "requestPolicy.policies",
+      });
+      setRequestPolicySuccess(true);
     } catch (err) {
       if (err?.response?.status && err.response.status !== 401) {
         setErrorMsg(err.toString());
