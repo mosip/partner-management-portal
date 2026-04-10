@@ -160,7 +160,7 @@ function CredentialPartnerPolicyDetails({
         return;
       }
 
-      if (!requestId && (!partnerId || !policyId)) {
+      if (!requestId) {
         setBioLoading(false);
         return;
       }
@@ -169,9 +169,10 @@ function CredentialPartnerPolicyDetails({
       setBioExtractors([]);
       setBioLoading(true);
       try {
-        const url = requestId
-          ? getPartnerManagerUrl(`/partners/partner-policy-requests/${requestId}/bio-extractors`, process.env.NODE_ENV)
-          : getPartnerManagerUrl(`/partners/${partnerId}/bioextractors/${policyId}`, process.env.NODE_ENV);
+        const url = getPartnerManagerUrl(
+          `/partners/partner-policy-requests/${requestId}/bio-extractors-request`,
+          process.env.NODE_ENV
+        );
         const response = await HttpService.get(url);
         const responseData = response?.data;
         if (responseData?.response) {
@@ -212,7 +213,7 @@ function CredentialPartnerPolicyDetails({
     };
 
     fetchBioExtractors();
-  }, [enabled, partnerId, policyId, t]);
+  }, [enabled, requestId, t]);
 
   useEffect(() => {
     const fetchCredentialType = async () => {
@@ -220,7 +221,8 @@ function CredentialPartnerPolicyDetails({
         setCredentialTypeLoading(false);
         return;
       }
-      if (!partnerId || !policyId) {
+ 
+      if (!requestId) {
         setCredentialTypeLoading(false);
         return;
       }
@@ -229,7 +231,10 @@ function CredentialPartnerPolicyDetails({
       setCredentialType('');
       setCredentialTypeLoading(true);
       try {
-        const url = getPartnerManagerUrl(`/partners/${partnerId}/policies/${policyId}/credential-types`, process.env.NODE_ENV);
+        const url = getPartnerManagerUrl(
+          `/partners/partner-policy-requests/${requestId}/credential-types-request`,
+          process.env.NODE_ENV
+        );
         const response = await HttpService.get(url);
         const responseData = response?.data;
 
@@ -288,7 +293,7 @@ function CredentialPartnerPolicyDetails({
     };
 
     fetchCredentialType();
-  }, [enabled, partnerId, policyId, t]);
+  }, [enabled, requestId, t]);
 
   const table = (
     <div className="mt-6 border border-[#E5EBFA] rounded-md overflow-hidden bg-white">
