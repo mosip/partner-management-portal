@@ -160,7 +160,6 @@ function CredentialPartnerPolicyDetails({
         return;
       }
 
-      // Bio mappings are fetched by partner-policy-request id.
       if (!requestId) {
         setBioLoading(false);
         return;
@@ -170,8 +169,6 @@ function CredentialPartnerPolicyDetails({
       setBioExtractors([]);
       setBioLoading(true);
       try {
-        // Backend now serves request-scoped bio mappings via `.../bio-extractors-request`.
-        // Using the older partnerId/policyId based endpoint is no longer supported.
         const url = getPartnerManagerUrl(
           `/partners/partner-policy-requests/${requestId}/bio-extractors-request`,
           process.env.NODE_ENV
