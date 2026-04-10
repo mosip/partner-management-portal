@@ -10,8 +10,8 @@ import LoadingIcon from "../../common/LoadingIcon";
 import DropdownComponent from "../../common/fields/DropdownComponent";
 import BlockerPrompt from "../../common/BlockerPrompt";
 import Confirmation from "../../common/Confirmation";
+import { getAppConfig } from "../../../services/ConfigService";
 
-const CREDENTIAL_TYPE_OPTIONS = ["auth", "qrcode", "euin", "reprint", "vercred", "opencrvs"];
 
 
 function hasMeaningfulBioMapping(item) {
@@ -137,19 +137,52 @@ function MapCredentialType() {
   const [isSubmitClicked, setIsSubmitClicked] = useState(false);
   const [requestPolicySuccess, setRequestPolicySuccess] = useState(false);
   const [confirmationData, setConfirmationData] = useState({});
+  const [allowedCredentialTypes, setAllowedCredentialTypes] = useState([]);
   const isSubmittingRef = useRef(false);
 
 
   const credentialTypeDropdownData = useMemo(
     () => [
       { fieldCode: t("mapCredentialType.selectCredentialType"), fieldValue: "" },
-      ...CREDENTIAL_TYPE_OPTIONS.map((value) => ({
+      ...allowedCredentialTypes.map((value) => ({
         fieldCode: value,
         fieldValue: value,
       })),
     ],
-    [t]
+    [allowedCredentialTypes, t]
   );
+  useEffect(() => {
+    let cancelled = false;
+
+    (async () => {
+      try {
+        const appConfig = await getAppConfig();
+        if (cancelled) return;
+
+        const credentialTypes = appConfig?.allowedCredentialTypes;
+        const parsedCredentialTypes = Array.isArray(credentialTypes)
+          ? credentialTypes
+          : typeof credentialTypes === "string"
+            ? credentialTypes.split(",")
+            : [];
+
+        const normalizedCredentialTypes = parsedCredentialTypes
+          .map((value) => String(value || "").trim())
+          .filter(Boolean);
+
+        setAllowedCredentialTypes(normalizedCredentialTypes);
+      } catch (error) {
+        if (cancelled) return;
+        console.error("Error fetching allowed credential types:", error);
+        setAllowedCredentialTypes([]);
+        setErrorMsg(t("mapCredentialType.saveError"));
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [t]);
 
   useEffect(() => {
     if (!needsBioFetch) return;
