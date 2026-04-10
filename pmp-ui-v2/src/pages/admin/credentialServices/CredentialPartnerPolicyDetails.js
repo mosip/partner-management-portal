@@ -249,7 +249,7 @@ function CredentialPartnerPolicyDetails({
     };
 
     fetchBioExtractors();
-  }, [enabled, partnerId, policyId, t]);
+  }, [enabled, requestId, partnerId, policyId, t]);
 
   useEffect(() => {
     const fetchCredentialType = async () => {
