@@ -191,7 +191,7 @@ function MapCredentialType() {
     (async () => {
       try {
         const url = getPartnerManagerUrl(
-          `/partners/partner-policy-requests/${requestIdForBioApi}/bio-extractors-request`,
+          `/partner-policy-requests/${requestIdForBioApi}/bio-extractors-request`,
           process.env.NODE_ENV
         );
         const res = await HttpService.get(url);
