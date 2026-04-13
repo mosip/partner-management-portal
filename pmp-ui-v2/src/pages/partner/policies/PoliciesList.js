@@ -229,7 +229,7 @@ function PoliciesList() {
 
         if (requestId) {
           const url = getPartnerManagerUrl(
-            `/partners/partner-policy-requests/${requestId}/bio-extractors-request`,
+            `/partner-policy-requests/${requestId}/bio-extractors-request`,
             process.env.NODE_ENV
           );
           const res = await HttpService.get(url);
@@ -269,7 +269,7 @@ function PoliciesList() {
         const requestId = getRequestIdFromRow(row);
         if (requestId) {
           const url = getPartnerManagerUrl(
-            `/partners/partner-policy-requests/${requestId}/credential-types-request`,
+            `/partner-policy-requests/${requestId}/credential-types-request`,
             process.env.NODE_ENV
           );
           const res = await HttpService.get(url);

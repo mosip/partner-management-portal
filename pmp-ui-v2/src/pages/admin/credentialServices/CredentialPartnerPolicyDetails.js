@@ -170,7 +170,7 @@ function CredentialPartnerPolicyDetails({
       setBioLoading(true);
       try {
         const url = getPartnerManagerUrl(
-          `/partners/partner-policy-requests/${requestId}/bio-extractors-request`,
+          `/partner-policy-requests/${requestId}/bio-extractors-request`,
           process.env.NODE_ENV
         );
         const response = await HttpService.get(url);
@@ -232,7 +232,7 @@ function CredentialPartnerPolicyDetails({
       setCredentialTypeLoading(true);
       try {
         const url = getPartnerManagerUrl(
-          `/partners/partner-policy-requests/${requestId}/credential-types-request`,
+          `/partner-policy-requests/${requestId}/credential-types-request`,
           process.env.NODE_ENV
         );
         const response = await HttpService.get(url);
