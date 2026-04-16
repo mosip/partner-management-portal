@@ -259,7 +259,7 @@ function HeaderNav({ open, setOpen }) {
                             </button>
                         )}
                         { openNotification && (
-                            <div className={`inset-0 bg-black bg-opacity-0 z-40 cursor-default`}>
+                            <div className={`absolute top-0 z-40 w-[320px] max-w-[calc(100vw-16px)] ${isLoginLanguageRTL ? "left-[-100px]" : "right-[-100px]"}`}>
                                 <NotificationPopup
                                     closeNotification={closeNotificationPanel}
                                 />
