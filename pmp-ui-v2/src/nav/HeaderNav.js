@@ -206,8 +206,7 @@ function HeaderNav({ open, setOpen }) {
     }
 
     return (
-        <nav className="sticky top-0 z-50 bg-white flex justify-between w-full h-14 font-inter 
-            shadow-[rgba(0,0,0,0.13)_5px_2px_8px_0px] ">
+        <nav className="sticky top-0 left-0 right-0 z-50 bg-white flex justify-between h-14 w-full">
             <div className={`flex gap-x-4 h-14 items-center shadow-sm`}>
                 {!open && (
                     <div className={`flex items-center ${isLoginLanguageRTL ? "pr-5" : "pl-6"}`}>
