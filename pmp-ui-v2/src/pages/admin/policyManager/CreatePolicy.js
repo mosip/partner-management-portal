@@ -222,7 +222,7 @@ function CreatePolicy() {
     }
 
     const isFormValid = () => {
-        return (selectedPolicyGroup?.name) && policyName && policyDescription.trim() && policyData.trim() && !invalidPolicyNameError && !invalidPolicyDescError;
+        return (selectedPolicyGroup?.name) && policyName.trim() && policyDescription.trim() && policyData.trim() && !invalidPolicyNameError && !invalidPolicyDescError;
     };
 
     const handlePolicyDescriptionChange = (e) => {
@@ -256,7 +256,7 @@ function CreatePolicy() {
 
     const onTextChange = (fieldName, fieldValue) => {
         setPolicyName(fieldValue);
-        validateInputRegex(fieldValue, setInvalidPolicyNameError, t);
+        validateInputRegex(fieldValue.trim(), setInvalidPolicyNameError, t);
     };
 
     const styleSet = {
