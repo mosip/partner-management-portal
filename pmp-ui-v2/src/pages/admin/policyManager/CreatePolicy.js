@@ -313,18 +313,27 @@ function CreatePolicy() {
                                                     />
                                                 </div>
                                                 <div className={`flex flex-col w-2/4 ${isLoginLanguageRTL ? "mr-4" : "ml-4"}`}>
-                                                    <TextInputComponent
-                                                        fieldName="policyName"
-                                                        textBoxValue={policyName}
-                                                        onTextChange={onTextChange}
-                                                        fieldNameKey="createPolicy.policyName*"
-                                                        placeHolderKey={policyNamePlaceHolderKey}
-                                                        styleSet={styleSet}
-                                                        id="policy_name_box"
-                                                        maxLength={128}
-                                                    />
-                                                    {invalidPolicyNameError && <span id='create_policy_invalid_policy_name' className="text-sm text-crimson-red font-semibold">{invalidPolicyNameError}</span>}
-                                                </div>
+
+                                            <label className="text-dark-blue text-sm font-semibold mb-1">
+                                                {t('createPolicy.policyName')}<span className="text-crimson-red">*</span>
+                                            </label>
+
+                                            <textarea
+                                                id="policy_name_box"
+                                                value={policyName}
+                                                onChange={(e) => onTextChange("policyName", e.target.value)}
+                                                className="w-full h-[56px] h-auto px-2 py-1 border border-[#C1C1C1] rounded-md text-base text-vulcan bg-white leading-tight focus:outline-none focus:shadow-outline whitespace-pre-wrap break-words resize-none overflow-hidden"
+                                                placeholder={t(policyNamePlaceHolderKey)}
+                                                maxLength={128}
+                                            />
+
+                                            {invalidPolicyNameError && (
+                                                <span className="text-sm text-crimson-red font-semibold">
+                                                {invalidPolicyNameError}
+                                                </span>
+                                            )}
+
+                                            </div>
                                             </div>
                                             <div className="flex my-2">
                                                 <div className="flex flex-col w-full">
@@ -336,7 +345,7 @@ function CreatePolicy() {
                                                         ref={policyDescriptionRef}
                                                         value={policyDescription}
                                                         onChange={(e) => handlePolicyDescriptionChange(e)}
-                                                        className="w-full min-h-11 h-11 p-3 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-pre-wrap no-scrollbar"
+                                                        className="w-full min-h-[80px] h-auto p-3 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline whitespace-pre-wrap break-words resize-none overflow-hidden"
                                                         placeholder={t(policyDescriptionPlaceHolderKey)}
                                                         data-placeholder-id="policy_description_box_placeholder"
                                                         maxLength={256}
