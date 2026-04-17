@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import DropdownComponent from "../../common/fields/DropdownComponent.js";
@@ -22,7 +22,10 @@ function AdminAuthCommonFilter({
   const { t } = useTranslation();
   const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
 
-  const [status, setStatus] = useState([]);
+  const status = useMemo(
+    () => createDropdownData("status", "", true, statusDropdownData, t, t(statusPlaceholderKey)),
+    [statusDropdownData, statusPlaceholderKey, t]
+  );
 
   const initialFilters = useMemo(
     () => ({
@@ -44,10 +47,6 @@ function AdminAuthCommonFilter({
   const [invalidPolicyName, setInvalidPolicyName] = useState("");
   const [invalidExtraField, setInvalidExtraField] = useState("");
 
-  useEffect(() => {
-    setStatus(createDropdownData("status", "", true, statusDropdownData, t, t(statusPlaceholderKey)));
-  }, [statusDropdownData, statusPlaceholderKey, t]);
-
   const onFilterChangeEvent = (fieldName, selectedFilter) => {
     setFilters((prevFilters) => ({
       ...prevFilters,
@@ -62,12 +61,14 @@ function AdminAuthCommonFilter({
   };
 
   const areFiltersEmpty = () =>
-    Object.values(filters).every((value) => value === "") ||
-    invalidPartnerId ||
-    invalidOrgName ||
-    invalidPolicyGroupName ||
-    invalidPolicyName ||
-    invalidExtraField;
+    Boolean(
+      Object.values(filters).every((value) => value === "") ||
+        invalidPartnerId ||
+        invalidOrgName ||
+        invalidPolicyGroupName ||
+        invalidPolicyName ||
+        invalidExtraField
+    );
 
   return (
     <div className="flex w-full p-3 justify-start bg-[#F7F7F7] flex-wrap">
