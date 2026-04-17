@@ -6,6 +6,8 @@ import PoliciesList from './pages/partner/policies/PoliciesList.js';
 import Dashboard from './pages/dashboard/Dashboard.js';
 import ViewPolicyDetails from './pages/partner/policies/ViewPolicyDetails.js';
 import RequestPolicy from './pages/partner/policies/RequestPolicy';
+import MapBiometricExtractorProvider from './pages/partner/credentialServices/MapBiometricExtractorProvider.js';
+import MapCredentialType from './pages/partner/credentialServices/MapCredentialType.js';
 import OidcClientsList from './pages/partner/authenticationServices/OidcClientsList.js';
 import CreateOidcClient from './pages/partner/authenticationServices/CreateOidcClient.js';
 import ViewOidcClientDetails from './pages/partner/authenticationServices/ViewOidcClientDetails.js';
@@ -65,6 +67,9 @@ import GenerateMispLicenseKey from './pages/admin/mispPartnerServices/GenerateMi
 import ViewMispLicenseKey from './pages/admin/mispPartnerServices/ViewMispLicenseKey.js';
 import RegenerateMispLicenseKey from './pages/admin/mispPartnerServices/RegenerateMispLicenseKey.js';
 import ViewMispLicenseKeyNotifications from './pages/admin/notifications/ViewMispLicenseKeyNotifications.js';
+import BiometricProviderConfigurationList from './pages/admin/biometricProviderConfiguration/BiometricProviderConfigurationList.js';
+import CreateBioExtractorConfig from './pages/admin/biometricProviderConfiguration/CreateBioExtractorConfig.js';
+import ViewBioExtractorConfig from './pages/admin/biometricProviderConfiguration/ViewBioExtractorConfig.js';
 
 function AppRoutes() {
 
@@ -100,6 +105,14 @@ function AppRoutes() {
         {
           path: 'policies/request-policy',
           element: <GuardedRoute><MainLayout><RequestPolicy /></MainLayout></GuardedRoute>,
+        },
+        {
+          path: 'policies/map-biometric-extractor-provider',
+          element: <GuardedRoute><MainLayout><MapBiometricExtractorProvider /></MainLayout></GuardedRoute>,
+        },
+        {
+          path: 'policies/map-credential-type',
+          element: <GuardedRoute><MainLayout><MapCredentialType /></MainLayout></GuardedRoute>,
         },
         {
           path: 'authentication-services/oidc-clients-list',
@@ -368,6 +381,22 @@ function AppRoutes() {
         {
           path: 'runtimeError',
           element: <RuntimeError />,
+        },
+        {
+          path: 'admin/biometric-provider-configuration/list',
+          loader: () => redirect('/partnermanagement/admin/biometric-provider-configuration-list')
+        },
+        {
+          path: 'admin/biometric-provider-configuration-list',
+          element: <GuardedRoute><MainLayout><BiometricProviderConfigurationList /></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'admin/biometric-provider-configuration/create',
+          element: <GuardedRoute><MainLayout><CreateBioExtractorConfig /></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'admin/biometric-provider-configuration/view',
+          element: <GuardedRoute><MainLayout><ViewBioExtractorConfig /></MainLayout></GuardedRoute>
         },
       ],
     },

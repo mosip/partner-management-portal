@@ -218,7 +218,7 @@ function UploadTrustCertificate() {
                                 {!uploadSuccess ?
                                     <div className="w-[100%] bg-snow-white mt-[1.5%] rounded-lg shadow-md p-1">
                                         <div className={`flex-col text-center text-base my-5`}>
-                                            <h1 id='upload_trust_certificate_header' className='font-semibold text-dark-blue'>{t('uploadTrustCertificate.uploadTrustCertificate')}</h1>
+                                            <h1 id='upload_trust_certificate_header' className='font-semibold text-dark-blue'>{t('uploadTrustCertificate.uploadRootOfTrustCertificateHeading')}</h1>
                                             <p id='upload_trust_certificate_description' className='text-light-gray py-1'>{t('uploadTrustCertificate.description')}</p>
                                         </div>
                                         <div className='flex-col w-full'>

@@ -23,7 +23,7 @@ function CreatePartner() {
     const [dataLoaded, setDataLoaded] = useState(true);
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
-    const [partnerTypeValue, setPartnerTypeValue] = useState("MISP_PARTNER");
+    const [partnerTypeValue, setPartnerTypeValue] = useState("Manual_Adjudication");
     const [address, setAddress] = useState("");
     const [organizationName, setOrganizationName] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
@@ -43,7 +43,7 @@ function CreatePartner() {
     const [invalidUsernameError, setInvalidUsernameError] = useState("");
     const [partnerIdMaxLength, setPartnerIdMaxLength] = useState(36);
     const [phoneNumberMaxLength, setPhoneNumberMaxLength] = useState(16);
-    
+
     const [uploadCertificateData, setUploadCertificateData] = useState({});
     const [showPopup, setShowPopup] = useState(false);
     const [uploadCertificateRequest, setUploadCertificateRequest] = useState({});
@@ -60,7 +60,7 @@ function CreatePartner() {
         }
 
         return (
-            (address !== "" || organizationName !== "" || phoneNumber !== "" || 
+            (address !== "" || organizationName !== "" || phoneNumber !== "" ||
                 email !== "" || username !== "" || selectedPolicyGroup !== null || notificationLanguage !== "") &&
             currentLocation.pathname !== nextLocation.pathname
         );
@@ -68,7 +68,7 @@ function CreatePartner() {
 
     useEffect(() => {
         const shouldWarnBeforeUnload = () => {
-            return address !== "" || organizationName !== "" || phoneNumber !== "" || 
+            return address !== "" || organizationName !== "" || phoneNumber !== "" ||
                 email !== "" || username !== "" || selectedPolicyGroup !== null || notificationLanguage !== "";
         };
 
@@ -156,8 +156,7 @@ function CreatePartner() {
         setInvalidEmailError("");
         setInvalidUsernameError("");
         setSelectedPolicyGroup(null);
-        setLanguageDropdownData([]);
-        setPartnerTypeValue("MISP_PARTNER");
+        setPartnerTypeValue("Manual_Adjudication");
     };
 
     const clickOnUpload = () => {
@@ -192,6 +191,8 @@ function CreatePartner() {
             return "MISP_Partner";
         } else if (partnerType === "ABIS_PARTNER") {
             return "ABIS_Partner";
+        } else if (partnerType === "Manual_Adjudication") {
+            return "Manual_Adjudication";
         }
     };
 
@@ -200,6 +201,8 @@ function CreatePartner() {
             return "createPartner.uploadMispPartnerCertificate";
         } else if (partnerType === "ABIS_PARTNER") {
             return "createPartner.uploadAbisPartnerCertificate";
+        } else if (partnerType === "Manual_Adjudication") {
+            return "createPartner.uploadManualAdjudicationPartnerCertificate";
         }
     };
 
@@ -209,6 +212,10 @@ function CreatePartner() {
             try {
                 // Initialize partner type dropdown data with MISP Partner and ABIS Partner
                 const partnerTypeData = [
+                    {
+                        partnerType: "Manual_Adjudication",
+                        description: getPartnerTypeDescription("Manual_Adjudication", t)
+                    },
                     {
                         partnerType: "MISP_PARTNER",
                         description: getPartnerTypeDescription("MISP_PARTNER", t)
@@ -283,18 +290,20 @@ function CreatePartner() {
                     // Determine button text and certificate data based on partner type
                     const isMispPartner = partnerTypeValue === "MISP_PARTNER";
                     const isAbisPartner = partnerTypeValue === "ABIS_PARTNER";
-                    
+                    const isManualAdjudicationPartner = partnerTypeValue === "Manual_Adjudication";
+
                     const requiredData = {
                         title: "createPartner.createPartner",
                         backUrl: "/partnermanagement/admin/partners/partners-list",
-                        header: "createPartner.mispPartnerSuccessHeader",
+                        header: isManualAdjudicationPartner ? "createPartner.manualAdjudicationPartnerSuccessHeader" :
+                            (isMispPartner ? "createPartner.mispPartnerSuccessHeader" : "createPartner.abisPartnerSuccessHeader"),
                         subNavigation: "createPartner.listOfPartners",
                         customBtnName1: getUploadCertificateButtonName(partnerTypeValue),
                         customBtnName2: "commons.home",
                         customBtn2Id: "confirmation_home_btn"
                     };
                     setConfirmationData(requiredData);
-                    
+
                     // Set upload certificate data based on partner type
                     const partnerTypeForDomain = getPartnerTypeForDomain(partnerTypeValue);
                     const requiredDataForCertUpload = {
@@ -303,9 +312,10 @@ function CreatePartner() {
                         isUploadPartnerCertificate: true,
                         isMispPartnerCertificate: isMispPartner,
                         isAbisPartnerCertificate: isAbisPartner,
+                        isManualAdjudicationPartnerCertificate: isManualAdjudicationPartner
                     }
                     setUploadCertificateData(requiredDataForCertUpload);
-                    
+
                     setCreatePartnerSuccess(true);
                     console.log(`Response data: ${resData.length}`);
                 } else {
@@ -325,14 +335,14 @@ function CreatePartner() {
     };
 
     const isFormValid = () => {
-        const isPolicyGroupRequired = partnerTypeValue === "ABIS_PARTNER";
+        const isPolicyGroupRequired = partnerTypeValue === "ABIS_PARTNER" || partnerTypeValue === "Manual_Adjudication";
         const isPolicyGroupValid = !isPolicyGroupRequired || selectedPolicyGroup !== null;
-        
-        return address.trim() && organizationName.trim() && phoneNumber.trim() && 
-               email.trim() && username.trim() && notificationLanguage && 
-               isPolicyGroupValid &&
-               !invalidAddressError && !invalidOrganizationNameError && 
-               !invalidPhoneNumberError && !invalidEmailError && !invalidUsernameError;
+
+        return address.trim() && organizationName.trim() && phoneNumber.trim() &&
+            email.trim() && username.trim() && notificationLanguage &&
+            isPolicyGroupValid &&
+            !invalidAddressError && !invalidOrganizationNameError &&
+            !invalidPhoneNumberError && !invalidEmailError && !invalidUsernameError;
     };
 
     const styles = {
@@ -388,12 +398,12 @@ function CreatePartner() {
                                                         selectedPolicyGroup={selectedPolicyGroup}
                                                         placeholderKey='createPartner.selectPolicyGroup'
                                                         isPlaceHolderPresent={true}
-                                                        containsAsterisk={partnerTypeValue === "ABIS_PARTNER"}
+                                                        containsAsterisk={partnerTypeValue === "ABIS_PARTNER" || partnerTypeValue === "Manual_Adjudication"}
                                                     />
                                                 </div>
                                             </div>
                                             <div className="flex flex-row justify-between space-x-4 my-[1%] max-[450px]:flex-col">
-                                            <div className="flex flex-col w-[48%] max-[450px]:w-full">
+                                                <div className="flex flex-col w-[48%] max-[450px]:w-full">
                                                     <TextInputComponent
                                                         fieldName='address'
                                                         fieldNameKey='createPartner.address*'

@@ -30,7 +30,7 @@ function SbiNotificationFilter({ onApplyFilter }) {
     const handleExpiryDateChange = (newDateStr) => {
         onFilterChangeEvent("expiryDate", newDateStr);
     };
-        
+
     const areFiltersEmpty = () => {
         return Object.values(filters).every(value => value === "") || invalidSbiId || invalidSbiVersion;
     };
@@ -50,6 +50,7 @@ function SbiNotificationFilter({ onApplyFilter }) {
                     placeHolderKey='sbiList.searchSbiId'
                     styleSet={getFilterTextFieldStyle()}
                     id='sbi_expiry_sbi_id_filter'
+                    maxLength={36}
                     inputError={invalidSbiId}
                 />
                 <TextInputComponent
@@ -59,6 +60,7 @@ function SbiNotificationFilter({ onApplyFilter }) {
                     placeHolderKey='sbiList.searchVersion'
                     styleSet={getFilterTextFieldStyle()}
                     id='sbi_expiry_sbi_version_filter'
+                    maxLength={64}
                     inputError={invalidSbiVersion}
                 />
                 <CalendarInput
@@ -71,6 +73,7 @@ function SbiNotificationFilter({ onApplyFilter }) {
                     isUsedAsFilter={true}
                     styleSet={calenderStyleSet}
                     placeholderText={t('partnerCertificatesList.searchExpiryDate')}
+                    placeholderId="sbi_expiry_date_calender_placeholder"
                     id='sbi_expiry_date_calender'
                 />
                 <div className={`mt-6 mr-6 ${isLoginLanguageRTL ? "mr-auto" : "ml-auto"}`}>

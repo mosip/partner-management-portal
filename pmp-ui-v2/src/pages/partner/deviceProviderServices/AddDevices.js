@@ -327,7 +327,7 @@ function AddDevices() {
                         <ErrorMessage id='add_devices_error_msg' errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
                     <div className="flex-col mt-8">
-                        <div className="flex justify-between mb-5">
+                        <div className="flex justify-between mb-5 w-full min-w-0">
                             <Title
                                 title='addDevices.addDevices'
                                 subTitle={previousPath.name}
@@ -370,7 +370,7 @@ function AddDevices() {
                                                     disabled={entry.isSubmitted}
                                                     changeDropdownBackground={entry.isSubmitted}
                                                     styleSet={styles}
-                                                    id='add_device_device_type'>
+                                                    id={'add_device_device_type_' + (index + 1)}>
                                                 </DropdownComponent>
                                             </div>
                                             <div className="flex-col w-[24%] max-[850px]:w-[47%] max-[585px]:w-full">
@@ -384,21 +384,25 @@ function AddDevices() {
                                                     disabled={!entry.deviceType || entry.isSubmitted}
                                                     changeDropdownBackground={entry.isSubmitted}
                                                     styleSet={styles}
-                                                    id='add_device_device_sub_type'>
+                                                    id={'add_device_device_sub_type_' + (index + 1)}>
                                                 </DropdownComponent>
                                             </div>
                                             <div className="flex flex-col w-[22.5%] max-[850px]:w-[47%] max-[585px]:w-full">
                                                 <label id='add_devices_make_label' className={`block text-dark-blue text-base font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('addDevices.make')}<span className="text-crimson-red mx-1">*</span></label>
                                                 <input disabled={entry.isSubmitted} value={entry.make} onChange={(e) => handleInputChange(index, 'make', e.target.value)} maxLength={36}
                                                     className={`h-10 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue ${entry.isSubmitted ? 'bg-[#EBEBEB]' : 'bg-white'} leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar`}
-                                                    placeholder={t('addDevices.enterMake')} id='add_device_make_input'/>
+                                                    placeholder={t('addDevices.enterMake')}
+                                                    data-placeholder-id="add_device_make_input_placeholder"
+                                                    id={'add_device_make_input_' + (index + 1)}/>
                                                 {entry.invalidMakeError && <span id='add_devices_invalid_make' className="text-sm text-crimson-red font-semibold">{entry.invalidMakeError}</span>}
                                             </div>
                                             <div className="flex flex-col w-[22.5%] max-[850px]:w-[47%] max-[585px]:w-full">
                                                 <label id='add_devices_model_label' className={`block text-dark-blue text-base font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('addDevices.model')}<span className="text-crimson-red mx-1">*</span></label>
                                                 <input disabled={entry.isSubmitted} value={entry.model} onChange={(e) => handleInputChange(index, 'model', e.target.value)} maxLength={36}
                                                     className={`h-10 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue ${entry.isSubmitted ? 'bg-[#EBEBEB]' : 'bg-white'} leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar`}
-                                                    placeholder={t('addDevices.enterModel')} id='add_device_model_input'/>
+                                                    placeholder={t('addDevices.enterModel')}
+                                                    data-placeholder-id="add_device_model_input_placeholder"
+                                                    id={'add_device_model_input_' + (index + 1)}/>
                                                 {entry.invalidModelError && <span id='add_devices_invalid_model' className="text-sm text-crimson-red font-semibold">{entry.invalidModelError}</span>}
                                             </div>
                                         </div>

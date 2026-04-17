@@ -80,6 +80,7 @@ function AdminApiKeysList() {
         queryParams.append('sortFieldName', sortFieldName);
         queryParams.append('sortType', sortType);
         queryParams.append('pageSize', pageSize);
+        queryParams.append('partnerType', 'Auth_Partner');
 
         //reset page number to 0 if filter applied or page number is out of bounds
         const effectivePageNo = resetPageNumber(totalRecords, pageNo, pageSize, resetPageNo);

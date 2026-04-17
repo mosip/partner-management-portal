@@ -372,6 +372,7 @@ function EditAdminApiKey() {
                                                 styleSet={calenderStyleSet}
                                                 isUsedAsFilter={false}
                                                 placeholderText={t('apiKeysList.selectExpiryDatePlaceholder')}
+                                                placeholderId="edit_admin_api_key_expiry_date_placeholder"
                                                 disabled={false}
                                                 minDate={minSelectableDate}
                                             />

@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 import PropTypes from "prop-types";
-import { onPressEnterKey, isLangRTL, getOidcPlaceholderForLanguage, getAvailableOidcLanguages } from "../../utils/AppUtils";
+import { onPressEnterKey, isLangRTL, getOidcPlaceholderForLanguage, getOidcPlaceholderIdForLanguage, getAvailableOidcLanguages } from "../../utils/AppUtils";
 import DropdownComponent from "./fields/DropdownComponent";
 import Information from "./fields/Information";
 import TextInputComponentWithDeleteButton from "./fields/TextInputComponentWithDeleteButton";
@@ -44,7 +44,7 @@ function OidcClientAdditionalInfoSection({
   return (
     <div className="bg-snow-white px-7 py-4 mt-[1.5%] mb-4 rounded-lg shadow-md">
       <div
-        className="flex items-center justify-between cursor-pointer"
+        className="flex items-center justify-between cursor-pointer rounded px-2"
         onClick={() => setIsAdditionalInfoExpanded(!isAdditionalInfoExpanded)}
         role="button"
         tabIndex="0"
@@ -74,9 +74,10 @@ function OidcClientAdditionalInfoSection({
                   role="switch"
                   aria-checked={forgotPasswordBanner}
                   aria-label={t('createOidcClient.forgotPasswordBanner')}
-                  className={`relative inline-flex items-center cursor-pointer flex-shrink-0 ${isLoginLanguageRTL ? "" : "ml-7"} focus:outline focus:outline-2 focus:outline-[#1447B2] focus:outline-offset-2 rounded`}
+                  className={`relative inline-flex items-center cursor-pointer flex-shrink-0 ${isLoginLanguageRTL ? "" : "ml-7"} rounded`}
                   onClick={() => additionalConfigRequired && setForgotPasswordBanner(!forgotPasswordBanner)}
                   disabled={!additionalConfigRequired}
+                  tabIndex={additionalConfigRequired ? 0 : -1}
                 >
                   <input
                     type="checkbox"
@@ -107,9 +108,10 @@ function OidcClientAdditionalInfoSection({
                   role="switch"
                   aria-checked={signUpBanner}
                   aria-label={t('createOidcClient.signUpBanner')}
-                  className={`relative inline-flex items-center cursor-pointer flex-shrink-0 ${isLoginLanguageRTL ? "" : "ml-7"} focus:outline focus:outline-2 focus:outline-[#1447B2] focus:outline-offset-2 rounded`}
+                  className={`relative inline-flex items-center cursor-pointer flex-shrink-0 ${isLoginLanguageRTL ? "" : "ml-7"} rounded`}
                   onClick={() => additionalConfigRequired && setSignUpBanner(!signUpBanner)}
                   disabled={!additionalConfigRequired}
+                  tabIndex={additionalConfigRequired ? 0 : -1}
                 >
                   <input
                     type="checkbox"
@@ -141,6 +143,7 @@ function OidcClientAdditionalInfoSection({
                 onChange={(e) => handleConsentExpiryChange(e.target.value)}
                 className={`h-10 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue ${additionalConfigRequired ? "bg-white" : "bg-platinum-gray"}  leading-tight focus:outline-none focus:shadow-outline w-full`}
                 placeholder={t('createOidcClient.consentExpiryPlaceholder')}
+                data-placeholder-id="consent_expiry_input_placeholder"
                 readOnly={!additionalConfigRequired}
               />
               {consentExpiryError && <span id="consent_expiry_error" className="text-sm text-crimson-red font-semibold mt-1">{consentExpiryError}</span>}
@@ -229,6 +232,7 @@ function OidcClientAdditionalInfoSection({
                             onChange={(e) => updatePurposeTitleEntry(entry.id, 'text', e.target.value)}
                             onDelete={() => deletePurposeTitleEntry(entry.id)}
                             placeholder={getOidcPlaceholderForLanguage(entry.language, 'PurposeTitle', t)}
+                            placeholderId={getOidcPlaceholderIdForLanguage(entry.language, 'PurposeTitle', t)}
                             id={`purpose_title_text_${entry.id}`}
                             showDelete={purposeTitleEntries.length > 0}
                             errorMessage={purposeTitleErrors[entry.id]}
@@ -244,7 +248,7 @@ function OidcClientAdditionalInfoSection({
                     <div
                       role="button"
                       id="add_purpose_title_language_link"
-                      className={`font-bold text-xs w-fit ${additionalConfigRequired ? 'text-[#1447b2] cursor-pointer' : 'text-gray-400'}`}
+                      className={`font-bold text-xs w-fit ${additionalConfigRequired ? 'text-[#1447b2] cursor-pointer' : 'text-gray-400'} rounded px-1`}
                       tabIndex={additionalConfigRequired ? 0 : -1}
                       onKeyDown={additionalConfigRequired ? (e) => onPressEnterKey(e, addPurposeTitleEntry) : undefined}
                       onClick={additionalConfigRequired ? addPurposeTitleEntry : undefined}
@@ -309,6 +313,7 @@ function OidcClientAdditionalInfoSection({
                             onChange={(e) => updatePurposeSubtitleEntry(entry.id, 'text', e.target.value)}
                             onDelete={() => deletePurposeSubtitleEntry(entry.id)}
                             placeholder={getOidcPlaceholderForLanguage(entry.language, 'PurposeSubtitle', t)}
+                            placeholderId={getOidcPlaceholderIdForLanguage(entry.language, 'PurposeSubtitle')}
                             id={`purpose_subtitle_text_${entry.id}`}
                             showDelete={purposeSubtitleEntries.length > 0}
                             errorMessage={purposeSubtitleErrors[entry.id]}
@@ -324,7 +329,7 @@ function OidcClientAdditionalInfoSection({
                     <div
                       role="button"
                       id="add_purpose_subtitle_language_link"
-                      className={`font-bold text-xs w-fit ${additionalConfigRequired ? 'text-[#1447b2] cursor-pointer' : 'text-gray-400'}`}
+                      className={`font-bold text-xs w-fit ${additionalConfigRequired ? 'text-[#1447b2] cursor-pointer' : 'text-gray-400'} rounded px-1`}
                       tabIndex={additionalConfigRequired ? 0 : -1}
                       onKeyDown={additionalConfigRequired ? (e) => onPressEnterKey(e, addPurposeSubtitleEntry) : undefined}
                       onClick={additionalConfigRequired ? addPurposeSubtitleEntry : undefined}

@@ -307,7 +307,7 @@ function AdminOidcClientsList() {
                                             : (
                                                 <>
                                                     <div className="mx-[1.5rem] overflow-x-scroll">
-                                                        <table className="table-fixed w-full">
+                                                        <table className="table-fixed">
                                                             <thead>
                                                                 <tr>
                                                                     {tableHeaders.map((header, index) => {

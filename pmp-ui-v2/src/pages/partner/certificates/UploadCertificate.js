@@ -19,6 +19,7 @@ function UploadCertificate({ closePopup, popupData, request }) {
     const [uploading, setUploading] = useState(false);
     const [fileName, setFileName] = useState('');
     const [uploadSuccess, setUploadSuccess] = useState(false);
+    const [certificateFetchSuccess, setCertificateFetchSuccess] = useState(false);
     const [uploadFailure, setUploadFailure] = useState(false);
     const [errorCode, setErrorCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
@@ -50,6 +51,7 @@ function UploadCertificate({ closePopup, popupData, request }) {
         setSuccessMsg("");
         setErrorCode("");
         setErrorMsg("");
+        setCertificateFetchSuccess(false);
         if (uploadSuccess) {
             closePopup(true, 'close');
         } else {
@@ -149,11 +151,13 @@ function UploadCertificate({ closePopup, popupData, request }) {
     const cancelUpload = () => {
         setFileName("");
         setUploading(false);
+        setCertificateFetchSuccess(false);
     };
     const removeUpload = () => {
         setFileName("");
         setUploadSuccess(false);
         setUploading(false);
+        setCertificateFetchSuccess(false);
     };
     const cancelErrorMsg = () => {
         setErrorMsg("");
@@ -165,6 +169,7 @@ function UploadCertificate({ closePopup, popupData, request }) {
     const handleFileChange = (event) => {
         setErrorMsg("");
         setErrorCode("");
+        setCertificateFetchSuccess(false);
         const file = event.target.files[0];
         if (file) {
             const fileName = file.name;
@@ -178,7 +183,8 @@ function UploadCertificate({ closePopup, popupData, request }) {
                     setFileName(fileName);
                     setCertificateData(fileData);
                     setTimeout(() => {
-                        setUploading(false);
+                    setUploading(false);
+                    setCertificateFetchSuccess(true);
                     }, 2000);
                 }
                 reader.readAsText(file);
@@ -223,7 +229,7 @@ function UploadCertificate({ closePopup, popupData, request }) {
                         <>
                             <div className={`px-[3.5%] py-[2%] ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
                                 <h3 id='upload_certificate_popup_title' className="text-base font-bold text-[#333333]">{popupData.isCertificateAvailable ? t(popupData.reUploadHeader) : t(popupData.uploadHeader)}</h3>
-                                {popupData.isMispOrAbisPartnerCertificate ? (
+                                {popupData.isMispOrAbisPartnerCertificate || popupData.isManualAdjudicationPartnerCertificate ? (
                                     <p
                                         id='upload_certificate_popup_partner_id_field'
                                         className={`text-xs font-bold text-[#717171]`}
@@ -247,6 +253,14 @@ function UploadCertificate({ closePopup, popupData, request }) {
                                 {uploadSuccess && successMsg && (
                                     <SuccessMessage id='upload_certificate_success_msg' successMsg={successMsg} clickOnCancel={cancelSuccessMsg} customStyle={successcustomStyle} />
                                 )}
+                                {!uploadSuccess && certificateFetchSuccess && (
+                                    <SuccessMessage
+                                        id='fetch_certificate_success_msg'
+                                        successMsg={t('uploadCertificate.fetchCertificateSuccessMessage')}
+                                        clickOnCancel={() => setCertificateFetchSuccess(false)}
+                                        customStyle={successcustomStyle}
+                                    />
+                                )}
                                 <div className="px-[4%] py-[2%]">
                                     <form>
                                         <div className="mb-2">
@@ -260,6 +274,11 @@ function UploadCertificate({ closePopup, popupData, request }) {
                                                 value={partnerDomainType} disabled />
                                         </div>
                                     </form>
+                                    {popupData.isCertificateAvailable && (
+                                        <p id='upload_certificate_warning_message' className="text-sm text-[#D17B00] font-medium mt-1 mb-2">
+                                            {t('uploadCertificate.reuploadCertificateWarningMessage')}
+                                        </p>
+                                    )}
                                     <div className={`flex items-center p-2 justify-center w-full min-h-36 h-fit border-2 border-[#9CB2E0] rounded-xl bg-[#F8FBFF] bg-opacity-100 text-center  ${uploadSuccess ? 'pointer-events-none' : 'cursor-pointer'} relative`}>
                                         {uploading && (
                                             <div className={`flex flex-col items-center justify-center mb-1 cursor-pointer`}>
@@ -306,10 +325,10 @@ function UploadCertificate({ closePopup, popupData, request }) {
                                         )}
                                     </div>
                                     {popupData.isCertificateAvailable && !removeLastUploadDate && (
-                                       <p id='last_certificate_upload_date'className="text-sm text-gray-800 text-center mt-1">
-                                       {t('uploadCertificate.lastcertificateUploadDate')}{' '}
-                                       <span className="whitespace-nowrap">{formattedDate}</span>
-                                     </p>
+                                        <p id='last_certificate_upload_date' className="text-sm text-gray-800 text-center mt-1">
+                                            {t('uploadCertificate.lastcertificateUploadDate')}{' '}
+                                            <span className="whitespace-nowrap">{formattedDate}</span>
+                                        </p>
                                     )}
                                 </div>
                                 <div className="border-gray-200 border-opacity-50 border-t"></div>

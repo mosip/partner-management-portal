@@ -22,6 +22,7 @@ import adminMispPartnerServicesIcon from '../../svg/admin_misp_partner_services_
 import ConsentPopup from './ConsentPopup.js';
 import { getAppConfig } from '../../services/ConfigService.js';
 import OnboardingPartnerAlertPopup from './OnboardingPartnerAlertPopup.js';
+import biometricExtractorIcon from '../../svg/biometric_extractor_provider.svg';
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -111,7 +112,20 @@ function Dashboard() {
         }
 
         // Extract partnerType from roles if not present in userProfile
-        const partnerType = await getPartnerType(userProfile);
+        let partnerType;
+        try {
+          partnerType = await getPartnerType(userProfile);
+        } catch (err) {
+          // Handle 403 error when user doesn't have valid roles
+          if (err.response?.status === 403) {
+            setOnboardingPartnerAlertType('invalidPartnerTypeError');
+            setShowOnboardingPartnerAlertPopup(true);
+            setDataLoaded(true);
+            return;
+          }
+          // Re-throw other errors to be handled by outer catch block
+          throw err;
+        }
 
         // Check if no valid partner type is found
         if (!partnerType) {
@@ -953,6 +967,26 @@ function Dashboard() {
                     />
                   )}
                 </div>
+                  <div
+                  role='button'
+                  id='dashboard_biometric_provider_configuration_card'
+                  onClick={() => navigate('/partnermanagement/admin/biometric-provider-configuration-list')}
+                  className="relative min-h-[50%] p-6 pt-16 bg-white border border-gray-200 shadow cursor-pointer text-center rounded-xl mb-4"
+                  tabIndex="0"
+                  onKeyDown={(e) => onPressEnterKey(e, () => navigate('/partnermanagement/admin/biometric-provider-configuration-list'))}
+                >
+                  <div className="flex justify-center mb-5">
+                    <img id='dashboard_biometric_provider_configuration_icon' src={biometricExtractorIcon} alt="Biometric Extractor Provider Icon" className="w-10 h-10"/>
+                  </div>
+                  <div>
+                    <h5 id='dashboard_biometric_provider_configuration_header' className="mb-2 text-sm font-semibold tracking-tight text-gray-600">
+                      {t('dashboard.biometricProviderConfiguration')}
+                    </h5>
+                    <p id='dashboard_biometric_provider_configuration_description' className="mb-3 text-xs font-normal text-gray-400">
+                      {t('dashboard.biometricProviderConfigurationDesc')}
+                    </p>
+                  </div>
+                </div> 
               </>
             )}
           </div>

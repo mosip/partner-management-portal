@@ -54,7 +54,7 @@
         "policies": "Stratégies",
         "policiesDesc": "Demandez et consultez vos polices",
         "authenticationServices": "Services d'authentification",
-        "authenticationServicesDesc": "Demander la création d'un client OIDC / la génération de clés API pour les concepteurs et l'authentification basée sur les clés API",
+        "authenticationServicesDesc": "Demander la création d'un client OIDC / la génération de clés API pour eSignet et les authentifications basées sur les clés API",
         "deviceProviderServices": "Services du fournisseur d'appareils",
         "ftmChipProviderServices": "Services de fournisseur de puces FTM",
         "ftmChipProviderServicesDesc": "Ajouter, désactiver FTM (Foundational Trust Module), télécharger, re-télécharger, télécharger le certificat de puce FTM",
@@ -97,7 +97,9 @@
         "mispPartnerServices": "Services MISP",
         "mispPartnerServicesDesc": "Générer, régénérer, afficher ou désactiver les clés de licence MISP",
         "mispLicenseKeyExpiryCountDesc1": "{{expiringMispLicenseKeyCount}} Les clés de licence MISP expirent bientôt",
-        "mispLicenseKeyExpiryCountDesc2": "{{expiringMispLicenseKeyCount}} La clé de licence MISP expire bientôt"
+        "mispLicenseKeyExpiryCountDesc2": "{{expiringMispLicenseKeyCount}} La clé de licence MISP expire bientôt",
+        "biometricProviderConfiguration": "Configuration du fournisseur biométrique",
+        "biometricProviderConfigurationDesc": "Créer, afficher les configurations du fournisseur d’extracteur biométrique"
     },
     "mispLicenseList": {
         "partnerId": "ID partenaire",
@@ -213,14 +215,14 @@
     "partnerCertificatesList": {
         "partnerCertificate": "Certificat de partenaire",
         "noPartnerTypesAreMapped": "Aucun type de partenaire n'est mappé à votre identifiant utilisateur",
-        "uploadPartnerCertificate": "Télécharger le certificat de partenaire signé par une autorité de certification",
-        "certificateFormatMsg": "Seuls les formats de certificat .cer ou .pem sont autorisés pour le téléchargement",
-        "reUpload": "Re-télécharger",
-        "upload": "Télécharger",
+        "uploadPartnerCertificate": "Téléverser le certificat de partenaire signé par une autorité de certification",
+        "uploadCertificate": "Téléverser un certificat",
+        "reUpload": "Re-téléverser",
+        "upload": "Téléverser",
         "partnerType": "Type de partenaire",
         "expiryDate": "Date d'expiration",
         "searchExpiryDate": "Date d'expiration de la recherche",
-        "timeOfUpload": "Heure de téléchargement",
+        "timeOfUpload": "Heure de téléversement",
         "errorMsgForOriginalCertificate": "Cette fonctionnalité est en cours de développement.",
         "errorWhileDownloadingCertificate": "Une erreur s'est produite lors du téléchargement du certificat. Réessayez plus tard!",
         "errorInCertificateList": "Une erreur s'est produite lors de la récupération des certificats. Réessayez plus tard!",
@@ -232,24 +234,26 @@
         "compatibilityMsg": "<italic>Le téléchargement du certificat d'origine</italic> n'est pas pris en charge dans la version actuelle de la plateforme MOSIP."
     },
     "uploadCertificate": {
-        "uploadPartnerCertificate": "Télécharger le certificat de partenaire",
-        "reUploadPartnerCertificate": "Re-télécharger le certificat de partenaire",
+        "uploadPartnerCertificate": "Téléverser le certificat de partenaire",
+        "reUploadPartnerCertificate": "Re-téléverser le certificat de partenaire",
         "selectFieldsMsg": "Veuillez sélectionner tous les champs et télécharger le certificat",
         "partnerTypeLabel": "Type de partenaire",
         "partnerDomainType": "Type de domaine partenaire",
         "selectingFile": "Nous récupérons votre certificat...",
         "cancel": "Annuler",
         "selectCertificate": "Veuillez appuyer pour sélectionner le certificat",
-        "certificateFormat": "Seuls les formats de certificat .cer ou .pem sont autorisés pour le téléchargement",
+        "certificateFormat": "Seuls les formats de certificat .cer ou .pem sont autorisés pour le téléversement",
         "remove": "Retirer",
         "close": "Fermer",
         "submit": "Soumettre",
-        "successMsg": "Le certificat partenaire pour {{partnerType}} a été téléchargé avec succès.",
-        "lastcertificateUploadDate": "Le dernier certificat a été téléchargé le",
-        "fileUploadError": "Le certificat téléchargé n'est pas au bon format. Seuls les certificats au format .cer ou .pem peuvent être téléchargés.",
-        "unableToUploadCertificate": "Impossible de télécharger le certificat de partenaire",
-        "errorWhileUploadingCertificate": "En raison d'une erreur, nous n'avons pas pu télécharger le certificat. Veuillez réessayer.",
-        "errorWhileGettingCertOrgName": "Impossible d'obtenir le nom de l'organisation du certificat"
+        "successMsg": "Le certificat partenaire pour {{partnerType}} a été téléversé avec succès.",
+        "lastcertificateUploadDate": "Le dernier certificat a été téléversé le",
+        "fileUploadError": "Le certificat téléversé n'est pas au bon format. Seuls les certificats au format .cer ou .pem peuvent être téléversés.",
+        "unableToUploadCertificate": "Impossible de téléverser le certificat du partenaire",
+        "errorWhileUploadingCertificate": "En raison d'une erreur, nous n'avons pas pu téléverser le certificat. Veuillez réessayer.",
+        "errorWhileGettingCertOrgName": "Impossible d'obtenir le nom de l'organisation du certificat",
+        "reuploadCertificateWarningMessage": "Votre certificat existant sera révoqué peu après le téléversement du nouveau certificat. Continuez si vous souhaitez poursuivre.",
+        "fetchCertificateSuccessMessage": "Nous avons récupéré avec succès le certificat depuis le système local."
     },
     "partnerTypes": {
         "deviceProvider": "Fournisseur d'appareil",
@@ -262,7 +266,7 @@
         "sdkPartner": "Partenaire SDK",
         "printPartner": "Partenaire d'impression",
         "internalPartner": "Partenaire interne",
-        "manualAdjudication": "Arbitrage manuelle",
+        "manualAdjudication": "Partenaire d'arbitrage manuel",
         "partnerAdmin": "Administrateur partenaire"
     },
     "statusCodes": {
@@ -272,13 +276,13 @@
         "deactivated": "Désactivé",
         "active": "Actif",
         "inactive": "Inactif",
-        "pendingCertUpload": "En attente de téléchargement du certificat",
-        "expired": "Expiré",
-        "uploaded": "Téléchargé",
-        "notUploaded": "Non téléchargé",
+        "pendingCertUpload": "En attente de téléversement du certificat",
+        "certificateExpired": "Le certificat a expiré",
+        "uploaded": "Téléversé",
+        "notUploaded": "Non téléversé",
         "draft": "Brouillon",
         "valid": "Valide",
-        "notAvailable":"Pas disponible"
+        "notAvailable": "Pas disponible"
     },
     "policies": {
         "policies": "Stratégies",
@@ -287,7 +291,7 @@
         "partnerId": "ID partenaire",
         "partnerType": "Type de partenaire",
         "policyGroupName": "Groupe de politiques",
-        "policyId":"ID de la politique",
+        "policyId": "ID de la politique",
         "policyName": "Nom de la politique",
         "creationDate": "Date de création",
         "status": "Statut",
@@ -323,6 +327,7 @@
         "policies": "Stratégies",
         "mandatoryFieldsMsg1": "Tous les champs marqués d'un",
         "mandatoryFieldsMsg2": "sont obligatoires.",
+        "mandatoryMappingBanner": "Remarque: Pour les partenaires d'identification, l'association de la politique à une configuration d'extracteur biométrique et à un type d'identifiant est obligatoire. Si cette association n'est pas effectuée, la demande de politique ne peut pas être approuvée. Veuillez suivre les étapes de cette page pour compléter l'association requise",
         "partnerId": "ID partenaire",
         "partnerType": "Type de partenaire",
         "policyGroup": "Groupe de politiques",
@@ -335,6 +340,7 @@
         "clearForm": "Forme claire",
         "cancel": "Annuler",
         "submit": "Soumettre",
+        "saveAndProceed": "Enregistrer et continuer",
         "errorInResponse": "Une erreur s'est produite lors de la récupération des détails de tous les groupes de stratégies approuvés. Réessayez plus tard!",
         "errorInFetchingPolicyNames": "Une erreur s'est produite lors de la récupération des noms de stratégie. Réessayez plus tard!",
         "errorInMapPolicy": "Lors de la demande d'une politique, nous avons rencontré une erreur",
@@ -348,6 +354,22 @@
         "policySuccessMsgForAdmin": "La demande de politique a été soumise avec succès. Veuillez approuver la demande d'activation du lien de politique partenaire.",
         "approvePopupTitle": "Voulez-vous approuver la demande de politique du partenaire ?",
         "approvePopupDesc": "En cliquant sur Confirmer, la liaison de la politique de partenariat sera approuvée."
+    },
+    "mapCredentialType": {
+        "title": "Mapper le type d’identifiant",
+        "mappingSectionTitle": "Cartographie du type d’identifiant",
+        "credentialType": "Type d’identifiant",
+        "selectCredentialType": "Sélectionnez le type d’identifiant",
+        "addMore": "Ajouter plus",
+        "delete": "Supprimer",
+        "validationMsg": "Veuillez sélectionner le type d’identifiant pour toutes les lignes.",
+        "duplicateSelectionMsg": "Les types d’identifiant en double ne sont pas autorisés. Veuillez choisir un type d’identifiant différent pour chaque ligne.",
+        "partialFailureMsg": "{{succeeded}} sur {{total}} types d’identifiant ont été associés. Échec pour : {{failed}}. Veuillez réessayer.",
+        "duplicateCredentialTypeMsg": "Une cartographie existe déjà entre ce partenaire et le(s) type(s) d’identifiant : {{types}}. Veuillez choisir un autre type d’identifiant et réessayer.",
+        "saveError": "Lors de l’enregistrement de la cartographie du type d’identifiant, nous avons rencontré une erreur.",
+        "successHeader": "Tous les détails ont été soumis avec succès !",
+        "successMsgLine1": "La demande de politique, y compris la cartographie du fournisseur d’extracteur biométrique et du type d’identifiant, a été soumise avec succès.",
+        "successMsgLine2": "L’approbation est en attente auprès de l’administrateur."
     },
     "authenticationServices": {
         "authenticationServices": "Services d'authentification",
@@ -403,8 +425,11 @@
         "usernameMustStartWithLetter": "Le nom d'utilisateur doit commencer par une lettre",
         "errorInCreatingPartner": "Une erreur est survenue lors de la création du partenaire",
         "mispPartnerSuccessHeader": "Partenaire créé avec succès !",
+        "abisPartnerSuccessHeader": "Partenaire ABIS créé avec succès !",
         "uploadMispPartnerCertificate": "Télécharger le certificat partenaire MISP",
-        "uploadAbisPartnerCertificate": "Télécharger le certificat partenaire ABIS"
+        "uploadAbisPartnerCertificate": "Télécharger le certificat partenaire ABIS",
+        "uploadManualAdjudicationPartnerCertificate": "Télécharger le certificat de partenaire d'arbitrage manuel",
+        "manualAdjudicationPartnerSuccessHeader": "Partenaire d'arbitrage manuel créé avec succès !"
     },
     "languages": {
         "english": "Anglais",
@@ -565,7 +590,7 @@
         "selectStatus": "Sélectionnez le statut",
         "searchOidcClientName": "Rechercher le nom du client OIDC",
         "errorInOidcClientsList": "Lors de la récupération de la liste des clients OIDC, nous avons rencontré une erreur.",
-        "compatibilityMsg":"Remarque : <italic>Les fonctionnalités liées au client OIDC</italic> ne sont pas prises en charge dans la version actuelle de la plateforme MOSIP."
+        "compatibilityMsg": "Remarque : <italic>Les fonctionnalités liées au client OIDC</italic> ne sont pas prises en charge dans la version actuelle de la plateforme MOSIP."
     },
     "viewOidcClientDetails": {
         "viewOidcClientDetails": "Afficher les détails du client OIDC",
@@ -744,7 +769,7 @@
     },
     "addDevices": {
         "addDevices": "Ajouter des appareils",
-        "guidence": "En cliquant sur le bouton « Soumettre », chaque demande de création d'appareil sera envoyée à l'administrateur pour approbation. Vous pouvez ajouter d'autres appareils associés à ce SBI en cliquant sur le bouton « Ajouter un appareil ». Une fois terminé, vous pouvez revenir à l'écran « Liste des SBI et des appareils ». ",
+        "guidence": "En cliquant sur le bouton 'Soumettre', chaque demande de création d'appareil sera envoyée à l'administrateur pour approbation. Vous pouvez ajouter d'autres appareils associés à ce SBI en cliquant sur le bouton 'Ajouter un appareil'. Une fois terminé, vous pouvez revenir à l'écran 'Liste des SBI et des appareils'. ",
         "deviceType": "Type d'appareil",
         "selectDeviceType": "Sélectionner le type d'appareil",
         "deviceSubType": "Sous-type d'appareil",
@@ -792,7 +817,7 @@
         "model": "Modèle",
         "creationDate": "Date de création",
         "certificateExpiryDate": "Date d'expiration du certificat",
-        "certificateUploadDate": "Heure de téléchargement du certificat",
+        "certificateUploadDate": "Heure de téléversement du certificat",
         "certExpiryStatus": "Statut d'expiration du certificat",
         "certificateExpiryStatus": "Statut d'expiration du certificat",
         "selectCertificateExpiryStatus": "Sélectionner le statut d'expiration du certificat",
@@ -821,15 +846,15 @@
         "infoPartnerId": "Seuls les identifiants de partenaire du fournisseur de puces FTM dont le certificat partenaire est téléchargé sont disponibles dans la liste déroulante. Si vous ne trouvez pas votre identifiant de partenaire, veuillez d'abord télécharger le certificat partenaire",
         "enterMake": "Entrez la marque",
         "enterModel": "Entrez le modèle",
-        "uploadFtmCertificate": "Télécharger le certificat de la puce FTM",
-        "certificateFormatMsg": "Seuls les formats de certificat .cer ou .pem signés par une autorité de certification autorisée sont autorisés pour le téléchargement.",
+        "uploadFtmCertificate": "Téléverser le certificat de la puce FTM",
+        "certificateFormatMsg": "Seuls les formats de certificat .cer ou .pem signés par une autorité de certification autorisée sont autorisés pour le téléversement.",
         "errorInAddingFtm": "Lors de l'ajout de SBI, nous avons rencontré une erreur.",
         "addFtmSuccessHeader": "Détails de la puce FTM soumis avec succès!",
         "addFtmSuccessMsg": "La demande de création de puce FTM a été soumise avec succès et est en attente d'approbation par l'administrateur.",
         "addFtmSuccessMsg1": "Dans l'étape suivante, téléchargez le certificat de puce FTM pour continuer.",
-        "uploadFtmCertHeader": "Télécharger le certificat de la puce FTM",
-        "reUploadFtmCertHeader": "Re-télécharger le certificat de la puce FTM",
-        "uploadFtmCertSuccessMsg": "Le certificat de la puce FTM a été téléchargé avec succès"
+        "uploadFtmCertHeader": "Téléverser le certificat de la puce FTM",
+        "reUploadFtmCertHeader": "Re-téléverser le certificat de la puce FTM",
+        "uploadFtmCertSuccessMsg": "Le certificat de la puce FTM a été téléversé avec succès"
     },
     "viewFtmChipDetails": {
         "viewFtmChipDetails": "Afficher les détails de la puce FTM",
@@ -841,8 +866,8 @@
     "manageFtmChipCertificate": {
         "manageFtmChipCertificate": "Gérer le certificat de puce FTM",
         "listOfFtmChipDetails": "Liste des détails de la puce FTM",
-        "uploadFtmCertificate": "Télécharger le certificat de la puce FTM",
-        "certificateFormatMsg": "Seuls les certificats au format .cer ou .pem signés par une autorité de certification autorisée sont autorisés pour le téléchargement."
+        "uploadFtmCertificate": "Téléverser le certificat de la puce FTM",
+        "certificateFormatMsg": "Seuls les certificats au format .cer ou .pem signés par une autorité de certification autorisée sont autorisés pour le téléversement."
     },
     "deactivateFtmPopup": {
         "headerMsg": "Voulez-vous désactiver la puce FTM ",
@@ -860,10 +885,10 @@
         "issuedBy": "Délivré par",
         "validFrom": "Valable à partir de",
         "validTo": "Valable jusqu'aue",
-        "timeOfUpload": "Téléchargé le",
+        "timeOfUpload": "Téléversé le",
         "validityStatus": "Statut de validité",
         "action": "Action",
-        "UploadCertBtn": "Télécharger le certificat",
+        "UploadCertBtn": "Téléverser le certificat",
         "listOfCertificates": "Liste des certificats Root of Trust",
         "searchCertificateId": "Rechercher l'ID du certificat",
         "selectPartnerDomain": "Sélectionner le domaine du partenaire",
@@ -878,30 +903,31 @@
         "compatibilityMsg": "Remarque : la <italic>Liste des certificats</italic> n'est pas disponible car cette fonctionnalité n'est pas prise en charge dans la version actuelle de la plateforme MOSIP."
     },
     "uploadTrustCertificate": {
-        "uploadTrustCertificate": "Télécharger le certificat de confiance",
-        "description": "Veuillez sélectionner le domaine partenaire et télécharger le certificat CA racine / CA intermédiaire.",
+        "uploadTrustCertificate": "Téléverser le certificat de confiance",
+        "uploadRootOfTrustCertificateHeading": "Téléverser le certificat racine de confiance",
+        "description": "Veuillez sélectionner le domaine partenaire et téléverser le certificat CA racine / CA intermédiaire.",
         "uploadSectionDescription": "Veuillez appuyer pour sélectionner le certificat d'autorité de certification racine / intermédiaire",
-        "uploadingCertMessage": "Nous téléchargeons votre certificat",
-        "partnerDomain": "Domaine partenaire", 
+        "uploadingCertMessage": "Nous téléversons votre certificat",
+        "partnerDomain": "Domaine partenaire",
         "dropdownPlaceholder": "Sélectionnez un domaine partenaire",
-        "successMsg": "Le certificat de confiance pour {{partnerDomain}} a été téléchargé avec succès !",
+        "successMsg": "Le certificat racine de confiance pour {{partnerDomain}} a été téléversé avec succès !",
         "downloadRootCertSuccessMsg": "Le certificat de l'autorité de certification racine a été téléchargé avec succès",
         "downloadIntermediateCertSuccessMsg": "La chaîne de certificats de confiance pour le certificat d'autorité de certification intermédiaire donné a été téléchargée avec succès."
     },
     "rootTrustList": {
-        "uploadRootCaTrust": "Télécharger le certificat d'autorité de certification racine",
+        "uploadRootCaTrust": "Téléverser le certificat d'autorité de certification racine",
         "subTitle": "Liste des certificats d'autorité de certification racine",
         "downloadTrust": "Télécharger"
     },
     "intermediateTrustList": {
-        "uploadIntermediateCaTrust": "Télécharger le CA certification intermédiaire",
+        "uploadIntermediateCaTrust": "Téléverser le CA certification intermédiaire",
         "subTitle": "Liste des certificats CA intermédiaires",
         "downloadTrust": "Télécharger la chaîne de certificats"
     },
     "viewCertificateDetails": {
         "viewRootCaCertificateDetails": "Afficher les détails du CA certification racine",
         "viewIntermediateCaCertificateDetails": "Afficher les détails du CA certification intermédiaire",
-        "uploadedOn": "Téléchargé le",
+        "uploadedOn": "Téléversé le",
         "rootCaCertificate": "CA certification racine",
         "intermediateCaCertificate": "Certificat CA intermédiaire",
         "errorWhileGettingRootCertDetails": "Lors de la récupération des détails du certificat, nous avons rencontré une erreur.",
@@ -917,7 +943,7 @@
         "partnerType": "Type de partenaire",
         "policyGroup": "Groupe de politiques",
         "email": "Adresse email",
-        "certUploadStatus": "Cert. Statut de téléchargement",
+        "certUploadStatus": "Cert. Statut de téléversement",
         "status": "Statut",
         "action": "Action",
         "noResultsFound": "Aucun résultat trouvé",
@@ -930,7 +956,7 @@
         "selectPolicyGroup": "Sélectionnez un groupe de stratégies",
         "selectStatus": "Sélectionnez le statut",
         "errorInPartnersList": "Lors de la récupération des détails des partenaires, nous avons rencontré une erreur.",
-        "selectCertUploadStatus": "Sélectionnez Cert. Statut de téléchargement",
+        "selectCertUploadStatus": "Sélectionnez Cert. Statut de téléversement",
         "applyFilter": "Postulez maintenant",
         "searchPartnerId": "ID du partenaire de recherche",
         "searchOrganisation": "Rechercher une organisation",
@@ -956,7 +982,7 @@
     },
     "deactivatePartner": {
         "headerMsg": "Souhaitez-vous désactiver le partenaire avec l'ID de partenaire : {{partnerId}} appartenant à l'organisation : {{organisationName}}",
-        "description": "En cliquant sur « Confirmer », le partenaire sélectionné sera désactivé et n’aura plus accès pour effectuer aucune opération dans le portail PMS."
+        "description": "En cliquant sur 'Confirmer', le partenaire sélectionné sera désactivé et n’aura plus accès pour effectuer aucune opération dans le portail PMS."
     },
     "createPolicyGroup": {
         "listOfPolicyGroups": "Liste des groupes de politiques",
@@ -1066,8 +1092,8 @@
         "dataSharePolicyConfirmationMessage": "La stratégie de partage de données pour le groupe de stratégies : {{policyGroupName}} a été mise à jour et soumise avec succès. Pour publier la politique, sélectionnez l'option « Publier » dans le menu d'action de l'écran 'Liste des politiques de partage de données'.",
         "mispPolicyConfirmationMessage": "La politique MISP du groupe de politiques: {{policyGroupName}} a été mise à jour et soumise. Pour la publier, sélectionnez l'option « Publier » dans le menu d'actions de l'écran « Liste des politiques MISP ».",
         "errorInEditPolicy": "Lors de l'édition de la politique, nous avons rencontré une erreur.",
-        "reUploadPolicyData": "Re-télécharger les données de politique",
-        "reuploadBtn": "Re-télécharger",
+        "reUploadPolicyData": "Re-téléverser les données de politique",
+        "reuploadBtn": "Re-téléverser",
         "policyIdNotExist": "Détails de la politique non trouvés : l’ID de politique fourni n’existe pas."
     },
     "viewDataSharePoliciesList": {
@@ -1083,14 +1109,14 @@
         "selectPolicyGroup": "Sélectionner un groupe de politique",
         "policyName": "Nom de la Politique",
         "policyDescription": "Description de la Politique",
-        "policyDataDesc": "Téléchargez le fichier JSON avec succès pour afficher son contenu ici",
-        "upload": "Télécharger",
+        "policyDataDesc": "Téléversez le fichier JSON avec succès pour afficher son contenu ici",
+        "upload": "Téléverser",
         "uploadFileError": "Veuillez sélectionner un fichier JSON valide",
         "jsonParseError": "Veuillez fournir des données JSON valides",
         "policyDatalengthExceedError": "Les données de politique ne doivent pas dépasser 5120 caractères.",
-        "uploadPolicyDataFile": "Télécharger les données de la politique",
-        "uploadPolicyDataFileDesc": "Seul le format de fichier .json est autorisé pour le téléchargement",
-        "fileUploadSuccessMsg": "Les données de la politique ont été téléchargées avec succès",
+        "uploadPolicyDataFile": "Téléverser les données de la politique",
+        "uploadPolicyDataFileDesc": "Seul le format de fichier .json est autorisé pour le téléversement",
+        "fileUploadSuccessMsg": "Les données de la politique ont été téléversées avec succès",
         "createAuthPolicyTitle": "Créer une Politique d'Authentification",
         "createDataSharePolicyTitle": "Créer une Politique de Partage de Données",
         "createMispPolicyTitle": "Créer une politique MISP",
@@ -1186,11 +1212,30 @@
         "approve": "Approuver",
         "reject": "Rejeter",
         "comments": "Commentaires",
-        "commentPlaceholder": "Écrivez votre commentaire ici"
+        "commentPlaceholder": "Écrivez votre commentaire ici",
+        "mappingsMissingGeneric": "Les cartographies requises (extracteurs biométriques et type d’identifiant) sont manquantes. Veuillez les configurer puis réessayer.",
+        "mappingsMissingBoth": "Les bio-extracteurs et le type d’identifiant ne sont pas configurés pour cette politique. Veuillez les configurer puis réessayer.",
+        "credentialTypeNotMapped": "Le type d’identifiant n’est pas configuré pour cette politique. Veuillez mapper un type d’identifiant puis réessayer."
     },
     "partnerPolicyRequestApproveRejectPopup": {
         "header": "Voulez-vous Approuver/Rejeter la politique?",
-        "description": "Veuillez examiner attentivement les détails de la politique avant de prendre une décision appropriée."
+        "description": "Veuillez examiner attentivement les détails de la politique avant de faire votre choix.",
+        "bioModality": "Modalité biométrique",
+        "bioModalityLine1": "Modalité",
+        "bioModalityLine2": "biométrique",
+        "bioExtractorConfig": "Configuration du fournisseur d’extracteur biométrique",
+        "bioExtractorConfigLine1": "Extracteur biométrique",
+        "bioExtractorConfigLine2": "Configuration fournisseur",
+        "bioExtractorProviderVersion": "Version du fournisseur d’extracteur biométrique",
+        "bioExtractorProviderVersionLine1": "Extracteur biométrique",
+        "bioExtractorProviderVersionLine2": "Version fournisseur",
+        "bioExtractorProviderName": "Nom du fournisseur d’extracteur biométrique",
+        "bioExtractorProviderNameLine1": "Extracteur biométrique",
+        "bioExtractorProviderNameLine2": "Nom du fournisseur",
+        "bioExtractorProviderMapping": "Cartographie du fournisseur d’extracteur biométrique",
+        "credentialType": "Type d’identifiant",
+        "noBioExtractors": "Aucun extracteur biométrique trouvé pour cette politique.",
+        "extractorsNotConfigured": "Les extracteurs biométriques ne sont pas configurés. Ajoutez des extracteurs biométriques pour cette politique."
     },
     "ftmRequestApproveRejectPopup": {
         "header": "Voulez-vous Approuver/Rejeter la puce FTM {{make}}-{{model}} ?",
@@ -1208,7 +1253,7 @@
     },
     "viewAdminFtmDetails": {
         "errorWhileGettingFtmDetails": "Lors de la récupération des détails du certificat, nous avons rencontré une erreur.",
-        "compatibilityMsg":"<italic>Le téléchargement du certificat FTM</italic> n'est pas pris en charge dans la version actuelle de la plateforme MOSIP."
+        "compatibilityMsg": "<italic>Le téléchargement du certificat FTM</italic> n'est pas pris en charge dans la version actuelle de la plateforme MOSIP."
     },
     "viewSbiDetails": {
         "viewSbiDetails": "Voir les détails du SBI",
@@ -1226,7 +1271,7 @@
         "header": "Voulez-vous approuver ou rejeter l'appareil ?",
         "description": "Veuillez examiner attentivement les détails de l'appareil avant de prendre une décision appropriée.",
         "rejectHeader": "Confirmer le rejet de l'appareil",
-        "rejectDescription":"Cet appareil n'est associé à aucun SBI, il doit donc être rejeté."
+        "rejectDescription": "Cet appareil n'est associé à aucun SBI, il doit donc être rejeté."
     },
     "consentPopup": {
         "title": "Termes et conditions",
@@ -1287,11 +1332,11 @@
         "intermediateCertExpiryDescription": "Le certificat CA intermédiaire <span>{{certificateId}}</span> délivré à <span>{{issuedTo}}</span> par <span>{{issuedBy}}</span> pour le domaine <span>{{partnerDomain}}</span> expirera le <span>{{expiryDateTime}}</span>. Renouvelez-le dès maintenant pour éviter toute interruption."
     },
     "partnerNotificationsTab": {
-        "partnerCertificate":"Certificat de partenaire",
+        "partnerCertificate": "Certificat de partenaire",
         "apikey": "Clé API",
         "ftmCertificate": "Certificat de puce FTM",
         "sbi": "SBI",
-        "partnerCertExpiryDescription":"Le certificat partenaire délivré à <span>{{issuedTo}}</span> par <span>{{issuedBy}}</span> pour le domaine <span>{{partnerDomain}}</span> expirera le <span>{{expiryDateTime}}</span>. Renouvelez-le dès maintenant pour éviter toute interruption."
+        "partnerCertExpiryDescription": "Le certificat partenaire délivré à <span>{{issuedTo}}</span> par <span>{{issuedBy}}</span> pour le domaine <span>{{partnerDomain}}</span> expirera le <span>{{expiryDateTime}}</span>. Renouvelez-le dès maintenant pour éviter toute interruption."
     },
     "viewAllNotifications": {
         "listOfNotifications": "Liste des notifications",
@@ -1626,7 +1671,7 @@
         "KER-PCM-011": "Domaine partenaire non valide",
         "KER-PCM-018": "Type de certificat non valide",
         "KER-PMS-019": "Aucun certificat CA n'a été trouvé pour l'ID donné.",
-        "KER-PMS-020": "Le téléchargement de certificats périmés n'est pas autorisé.",
+        "KER-PMS-020": "Le téléversement de certificats datés dans le futur n'est pas autorisé.",
         "KER-CRY-003": "Certificat invalide : corruption de fichier possible, falsification ou format non pris en charge. Assurez-vous qu’il est correctement codé en Base64 et réessayez.",
         "PMS_NOTIFICATION_ERROR_001": "Erreur lors de la mise à jour des notifications date et heure.",
         "PMS_NOTIFICATION_ERROR_002": "Horodatage de notification non valide vu.",
@@ -1685,5 +1730,48 @@
         "PMS_MSP_437": "L'ID de politique saisi n'est pas valide ou n'existe pas dans la base de données.",
         "PMS_MSP_438": "L'ID de politique fourni n'a pas été approuvé pour la liaison de politique partenaire.",
         "PMS_MSP_439": "Aucune clé de licence MISP active n'a été trouvée pour l'ID de partenaire et l'ID de politique donnés."
+    },
+    "bioExtractorConfig": {
+        "createBioExtractorConfig": "Créer la configuration du fournisseur d'extraction biométrique",
+        "createConfiguration": "Créer la configuration",
+        "bioExtractorConfigList": "Configurations du fournisseur d'extraction biométrique",
+        "configurationName": "Nom de configuration",
+        "enterConfigurationName": "Saisissez le nom de configuration",
+        "providerName": "Nom du fournisseur d'extraction biométrique",
+        "enterProviderName": "Saisissez le nom du fournisseur",
+        "providerVersion": "Version du fournisseur d'extraction biométrique",
+        "enterProviderVersion": "Saisissez la version du fournisseur",
+        "biometricModality": "Modalité biométrique",
+        "selectBiometricModality": "Sélectionnez une modalité biométrique",
+        "face": "visage",
+        "finger": "doigt",
+        "iris": "iris",
+        "configNameDuplicateError": "Le nom de configuration existe déjà",
+        "errorInCreateConfig": "Une erreur est survenue lors de la création de la configuration du fournisseur d'extraction biométrique",
+        "createConfigSuccessHeader": "La configuration du fournisseur d'extraction biométrique a été ajoutée avec succès !",
+        "viewBioExtractorConfigDetails": "Afficher les détails de la configuration de l'extracteur biométrique",
+        "viewBioExtractorProviderConfig": "Afficher la configuration du fournisseur d'extracteur biométrique"
+        },
+    "mapBiometricExtractorProvider": {
+        "title": "Associer le fournisseur d'extracteur biométrique",
+        "addBioextractors": "Mapper l'extracteur biométrique",
+        "mappingSectionTitle": "Configuration du fournisseur d'extracteur biométrique",
+        "biometricModality": "Modalité biométrique",
+        "selectBiometricModality": "Sélectionnez la modalité biométrique",
+        "biometricProviderConfiguration": "Configuration du fournisseur biométrique",
+        "selectBiometricProviderConfiguration": "Sélectionnez un fournisseur biométrique",
+        "autoPopulatedValue": "Rempli automatiquement en fonction de la configuration sélectionnée",
+        "addMore": "Ajouter",
+        "delete": "Supprimer",
+        "validationMsg": "Veuillez mapper tous les champs du fournisseur d'extracteur biométrique avant de continuer.",
+        "configFetchError": "Impossible de charger les configurations du fournisseur biométrique. Veuillez réessayer.",
+        "saveError": "Erreur lors de la configuration du fournisseur d'extracteur biométrique.",
+        "saveConfirmTitle": "Enregistrer les extracteurs biométriques ?",
+        "saveConfirmMessage": "Une fois enregistrées, ces cartographies d’extracteurs biométriques ne pourront plus être modifiées. Voulez-vous continuer ?"
+    },
+    "unsavedChangesPopup": {
+        "message": "Vos modifications seront perdues, êtes-vous sûr de vouloir continuer ?",
+        "proceed": "Continuer",
+        "cancel": "Annuler"
     }
 }
