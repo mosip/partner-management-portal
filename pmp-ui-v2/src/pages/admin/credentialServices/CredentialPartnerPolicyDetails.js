@@ -86,7 +86,7 @@ function CredentialPartnerPolicyDetails({
       code = bioError ? "" : "PMS_PRT_064";
     } else if (noCredentialType) {
       msg = credentialTypeError || t("approveRejectPopup.credentialTypeNotMapped");
-      code = credentialTypeError ? "" : "";
+      code = "";
     }
 
     onApproveBlockedMsgChange?.(msg);
