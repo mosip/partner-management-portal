@@ -606,14 +606,17 @@ function MapBiometricExtractorProvider() {
         <div
           className="fixed inset-0 z-[60] flex items-center justify-center bg-black bg-opacity-35 font-inter px-4"
           role="presentation"
-          onClick={() => setShowSaveConfirm(false)}
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setShowSaveConfirm(false);
+            }
+          }}
         >
           <div
             role="dialog"
             aria-modal="true"
             aria-labelledby="map_bio_extractor_save_confirm_title"
             className="bg-white rounded-lg shadow-lg max-w-md w-full p-6"
-            onClick={(e) => e.stopPropagation()}
           >
             <h2 id="map_bio_extractor_save_confirm_title" className="text-lg font-semibold text-dark-blue mb-3">
               {t("mapBiometricExtractorProvider.saveConfirmTitle")}
