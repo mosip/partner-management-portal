@@ -981,7 +981,7 @@
     },
     "deactivatePartner": {
         "headerMsg": "Souhaitez-vous désactiver le partenaire avec l'ID de partenaire : {{partnerId}} appartenant à l'organisation : {{organisationName}}",
-        "description": "En cliquant sur « Confirmer », le partenaire sélectionné sera désactivé et n’aura plus accès pour effectuer aucune opération dans le portail PMS."
+        "description": "En cliquant sur 'Confirmer', le partenaire sélectionné sera désactivé et n’aura plus accès pour effectuer aucune opération dans le portail PMS."
     },
     "createPolicyGroup": {
         "listOfPolicyGroups": "Liste des groupes de politiques",

@@ -9,6 +9,7 @@ function CredentialPartnerPolicyDetails({
   isLoginLanguageRTL,
   partnerId,
   policyId,
+  requestId,
   partnerTypeLabel,
   enabled,
   variant,
@@ -85,7 +86,7 @@ function CredentialPartnerPolicyDetails({
       code = bioError ? "" : "PMS_PRT_064";
     } else if (noCredentialType) {
       msg = credentialTypeError || t("approveRejectPopup.credentialTypeNotMapped");
-      code = credentialTypeError ? "" : "";
+      code = "";
     }
 
     onApproveBlockedMsgChange?.(msg);
@@ -133,6 +134,7 @@ function CredentialPartnerPolicyDetails({
 
     const providerVersion =
       item?.bioextractorProviderVersion ??
+      item?.extractorProviderVersion ??
       item?.providerVersion ??
       item?.version ??
       item?.provider_version ??
@@ -141,6 +143,7 @@ function CredentialPartnerPolicyDetails({
 
     const providerName =
       item?.bioextractorProviderName ??
+      item?.extractorProvider ??
       item?.providerName ??
       item?.name ??
       item?.provider_name ??
@@ -156,7 +159,8 @@ function CredentialPartnerPolicyDetails({
         setBioLoading(false);
         return;
       }
-      if (!partnerId || !policyId) {
+
+      if (!requestId) {
         setBioLoading(false);
         return;
       }
@@ -165,7 +169,10 @@ function CredentialPartnerPolicyDetails({
       setBioExtractors([]);
       setBioLoading(true);
       try {
-        const url = getPartnerManagerUrl(`/partners/${partnerId}/bioextractors/${policyId}`, process.env.NODE_ENV);
+        const url = getPartnerManagerUrl(
+          `/partner-policy-requests/${requestId}/bio-extractors-request`,
+          process.env.NODE_ENV
+        );
         const response = await HttpService.get(url);
         const responseData = response?.data;
         if (responseData?.response) {
@@ -173,9 +180,13 @@ function CredentialPartnerPolicyDetails({
           const list = Array.isArray(payload)
             ? payload
             : (payload.extractors ??
+                payload.data?.bioExtractors ??
+                payload.data?.bioextractors ??
                 payload.data ??
                 payload.bioExtractors ??
                 payload.bioextractors ??
+                payload.response?.bioExtractors ??
+                payload.response?.bioextractors ??
                 payload.extractorList ??
                 []);
           setBioExtractors(Array.isArray(list) ? list : []);
@@ -202,7 +213,7 @@ function CredentialPartnerPolicyDetails({
     };
 
     fetchBioExtractors();
-  }, [enabled, partnerId, policyId, t]);
+  }, [enabled, requestId, t]);
 
   useEffect(() => {
     const fetchCredentialType = async () => {
@@ -210,7 +221,8 @@ function CredentialPartnerPolicyDetails({
         setCredentialTypeLoading(false);
         return;
       }
-      if (!partnerId || !policyId) {
+ 
+      if (!requestId) {
         setCredentialTypeLoading(false);
         return;
       }
@@ -219,7 +231,10 @@ function CredentialPartnerPolicyDetails({
       setCredentialType('');
       setCredentialTypeLoading(true);
       try {
-        const url = getPartnerManagerUrl(`/partners/${partnerId}/policies/${policyId}/credential-types`, process.env.NODE_ENV);
+        const url = getPartnerManagerUrl(
+          `/partner-policy-requests/${requestId}/credential-types-request`,
+          process.env.NODE_ENV
+        );
         const response = await HttpService.get(url);
         const responseData = response?.data;
 
@@ -278,7 +293,7 @@ function CredentialPartnerPolicyDetails({
     };
 
     fetchCredentialType();
-  }, [enabled, partnerId, policyId, t]);
+  }, [enabled, requestId, t]);
 
   const table = (
     <div className="mt-6 border border-[#E5EBFA] rounded-md overflow-hidden bg-white">
@@ -409,6 +424,7 @@ CredentialPartnerPolicyDetails.propTypes = {
   isLoginLanguageRTL: PropTypes.bool.isRequired,
   partnerId: PropTypes.string,
   policyId: PropTypes.string,
+  requestId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   partnerTypeLabel: PropTypes.string,
   enabled: PropTypes.bool,
   variant: PropTypes.oneOf(['popup', 'view']).isRequired,

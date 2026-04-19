@@ -10,21 +10,23 @@ import LoadingIcon from "../../common/LoadingIcon";
 import DropdownComponent from "../../common/fields/DropdownComponent";
 import BlockerPrompt from "../../common/BlockerPrompt";
 import Confirmation from "../../common/Confirmation";
+import { getAppConfig } from "../../../services/ConfigService";
 
-const CREDENTIAL_TYPE_OPTIONS = ["auth", "qrcode", "euin", "reprint", "vercred", "opencrvs"];
 
-/** Same shape checks as PoliciesList / CredentialPartnerPolicyDetails for GET .../bioextractors/{policyId}. */
+
 function hasMeaningfulBioMapping(item) {
   if (!item) return false;
   const extractor = item?.extractor ?? item?.mapping?.extractor ?? null;
   const provider =
     extractor?.provider ??
+    item?.extractorProvider ??
     item?.provider ??
     item?.bioextractorProviderName ??
     item?.extractorProviderName ??
     "";
   const version =
     extractor?.version ??
+    item?.extractorProviderVersion ??
     item?.version ??
     item?.bioextractorProviderVersion ??
     item?.extractorProviderVersion ??
@@ -32,7 +34,7 @@ function hasMeaningfulBioMapping(item) {
   return Boolean(String(provider || "").trim()) || Boolean(String(version || "").trim());
 }
 
-/** Align with CredentialPartnerPolicyDetails.normalizeBioRow — API field names vary by deployment. */
+
 function resolveBioConfigurationLabel(item) {
   const configuration =
     item?.bioExtractorConfigurationName ??
@@ -48,15 +50,19 @@ function resolveBioConfigurationLabel(item) {
   return trimmed || "-";
 }
 
-/** Parse GET .../bioextractors/{policyId} response into parallel display arrays (modalities + config names). */
+
 function extractBioDisplayFromResponse(responsePayload) {
   const list = Array.isArray(responsePayload)
     ? responsePayload
     : (responsePayload?.extractors ??
+        responsePayload?.data?.bioExtractors ??
+        responsePayload?.data?.bioextractors ??
         responsePayload?.data ??
         responsePayload?.content ??
         responsePayload?.bioExtractors ??
         responsePayload?.bioextractors ??
+        responsePayload?.response?.bioExtractors ??
+        responsePayload?.response?.bioextractors ??
         responsePayload?.extractorList ??
         []);
   if (!Array.isArray(list)) return { modalities: [], configs: [] };
@@ -98,9 +104,15 @@ function MapCredentialType() {
   const userProfile = getUserProfile();
   const isLoginLanguageRTL = isLangRTL(userProfile?.locale || "en");
 
-  const hasRequiredState = Boolean(state?.partnerId && state?.policyName);
-  /** Policy list / APIs may use camelCase or snake_case */
   const policyIdForApi = state?.policyId ?? state?.policy_id ?? "";
+  const requestIdForBioApi =
+    state?.mappingKey ??
+    state?.mappingkey ??
+    state?.partnerPolicyRequestId ??
+    state?.requestId ??
+    "";
+
+  const hasRequiredState = Boolean(state?.partnerId && state?.policyName && policyIdForApi && requestIdForBioApi);
 
   const [selectedBioModalities, setSelectedBioModalities] = useState(() =>
     Array.isArray(state?.selectedBioModalities) ? state.selectedBioModalities : []
@@ -112,8 +124,8 @@ function MapCredentialType() {
   const needsBioFetch = useMemo(
     () =>
       !(Array.isArray(state?.selectedBioModalities) && state.selectedBioModalities.length > 0) &&
-      Boolean(state?.partnerId && policyIdForApi),
-    [state?.partnerId, policyIdForApi, state?.selectedBioModalities]
+      Boolean(requestIdForBioApi),
+    [requestIdForBioApi, state?.selectedBioModalities]
   );
 
   const [bioMetaLoaded, setBioMetaLoaded] = useState(() => !needsBioFetch);
@@ -125,19 +137,52 @@ function MapCredentialType() {
   const [isSubmitClicked, setIsSubmitClicked] = useState(false);
   const [requestPolicySuccess, setRequestPolicySuccess] = useState(false);
   const [confirmationData, setConfirmationData] = useState({});
+  const [allowedCredentialTypes, setAllowedCredentialTypes] = useState([]);
   const isSubmittingRef = useRef(false);
 
-  /** First row is placeholder (empty value); no default credential type selected */
+
   const credentialTypeDropdownData = useMemo(
     () => [
       { fieldCode: t("mapCredentialType.selectCredentialType"), fieldValue: "" },
-      ...CREDENTIAL_TYPE_OPTIONS.map((value) => ({
+      ...allowedCredentialTypes.map((value) => ({
         fieldCode: value,
         fieldValue: value,
       })),
     ],
-    [t]
+    [allowedCredentialTypes, t]
   );
+  useEffect(() => {
+    let cancelled = false;
+
+    (async () => {
+      try {
+        const appConfig = await getAppConfig();
+        if (cancelled) return;
+
+        const credentialTypes = appConfig?.allowedCredentialTypes;
+        const parsedCredentialTypes = Array.isArray(credentialTypes)
+          ? credentialTypes
+          : typeof credentialTypes === "string"
+            ? credentialTypes.split(",")
+            : [];
+
+        const normalizedCredentialTypes = parsedCredentialTypes
+          .map((value) => String(value || "").trim())
+          .filter(Boolean);
+
+        setAllowedCredentialTypes(normalizedCredentialTypes);
+      } catch (error) {
+        if (cancelled) return;
+        console.error("Error fetching allowed credential types:", error);
+        setAllowedCredentialTypes([]);
+        setErrorMsg(t("mapCredentialType.saveError"));
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [t]);
 
   useEffect(() => {
     if (!needsBioFetch) return;
@@ -145,7 +190,10 @@ function MapCredentialType() {
     let cancelled = false;
     (async () => {
       try {
-        const url = getPartnerManagerUrl(`/partners/${state.partnerId}/bioextractors/${policyIdForApi}`, process.env.NODE_ENV);
+        const url = getPartnerManagerUrl(
+          `/partner-policy-requests/${requestIdForBioApi}/bio-extractors-request`,
+          process.env.NODE_ENV
+        );
         const res = await HttpService.get(url);
         if (cancelled) return;
         if (res?.data?.response) {
@@ -154,7 +202,7 @@ function MapCredentialType() {
           setSelectedBioProviderConfigurations(configs);
         }
       } catch {
-        /* keep empty; page still usable for credential mapping */
+
       } finally {
         if (!cancelled) setBioMetaLoaded(true);
       }
@@ -163,7 +211,7 @@ function MapCredentialType() {
     return () => {
       cancelled = true;
     };
-  }, [needsBioFetch, state?.partnerId, policyIdForApi]);
+  }, [needsBioFetch, requestIdForBioApi]);
 
   const hasUnsavedChanges = useMemo(() => Boolean((credentialType || "").trim()), [credentialType]);
 
@@ -213,82 +261,42 @@ function MapCredentialType() {
     setDataLoaded(false);
 
     try {
-      const ct = String(credentialType || "").trim();
-      const credentialTypes = [ct];
-      const request = createRequest({});
-      const buildUrl = (type) =>
-        getPartnerManagerUrl(
-          `/partners/${state.partnerId}/credentialtype/${encodeURIComponent(type)}/policies/${encodeURIComponent(
-            state.policyName
-          )}`,
-          process.env.NODE_ENV
-        );
+      const ct = String(credentialType || "").trim().toLowerCase();
+      const request = createRequest({
+        partnerPolicyRequestId: requestIdForBioApi,
+        credentialType: ct,
+      });
 
-      const postCredentialType = async (type) => {
-        const url = buildUrl(type);
-        let responseData;
-        try {
-          const response = await HttpService.post(url, request, {
-            headers: { "Content-Type": "application/json" },
-          });
-          responseData = response?.data;
-        } catch (err) {
-          responseData = err?.response?.data;
-          if (!responseData) throw err;
-        }
-        if (responseData?.errors?.length) {
-          const error = new Error("credentialTypeMappingFailed");
-          error.responseData = responseData;
-          error.credentialType = type;
-          throw error;
-        }
-        if (responseData?.response == null) {
-          const error = new Error("credentialTypeMappingFailed");
-          error.responseData = responseData;
-          error.credentialType = type;
-          throw error;
-        }
-        return true;
-      };
+      const url = getPartnerManagerUrl(
+        `/partners/${state.partnerId}/policies/${policyIdForApi}/credential-types-request`,
+        process.env.NODE_ENV
+      );
 
-      const tasks = credentialTypes.map((type) => ({
-        credentialType: type,
-        promise: postCredentialType(type),
-      }));
-
-      const results = await Promise.allSettled(tasks.map((task) => task.promise));
-
-      const succeeded = tasks
-        .filter((_, i) => results[i]?.status === "fulfilled")
-        .map((task) => task.credentialType);
-
-      const failedDetails = [];
-      for (let i = 0; i < results.length; i++) {
-        if (results[i]?.status === "rejected") {
-          const reason = results[i].reason;
-          const ctFailed = tasks[i].credentialType;
-          const code =
-            reason?.responseData?.errors?.[0]?.errorCode ??
-            reason?.response?.data?.errors?.[0]?.errorCode;
-          failedDetails.push({ credentialType: ctFailed, errorCode: code });
-        }
+      let responseData;
+      let httpStatus;
+      try {
+        const response = await HttpService.post(url, request, {
+          headers: { "Content-Type": "application/json" },
+        });
+        responseData = response?.data;
+        httpStatus = response?.status;
+      } catch (err) {
+        responseData = err?.response?.data;
+        httpStatus = err?.response?.status;
+        if (!responseData) throw err;
       }
 
-      if (failedDetails.length > 0) {
-        const failedTypes = failedDetails.map((f) => f.credentialType);
-        const allDuplicate = failedDetails.every((f) => f.errorCode === "PMS_PRT_007");
-        if (failedDetails.length === credentialTypes.length && allDuplicate) {
-          setErrorCode("PMS_PRT_007");
-          setErrorMsg(t("mapCredentialType.duplicateCredentialTypeMsg", { types: failedTypes.join(", ") }));
+      const is2xx = typeof httpStatus === "number" && httpStatus >= 200 && httpStatus < 300;
+
+      // Don't let non-2xx responses fall through to success confirmation,
+      // even if the payload isn't in our usual { errors: [...] } envelope.
+      if (!is2xx) {
+        if (responseData?.errors?.length) {
+          setErrorCode(responseData?.errors?.[0]?.errorCode || "");
+          setErrorMsg(responseData?.errors?.[0]?.message || t("mapCredentialType.saveError"));
         } else {
-          setErrorCode(failedDetails[0]?.errorCode || "");
-          setErrorMsg(
-            t("mapCredentialType.partialFailureMsg", {
-              succeeded: succeeded.length,
-              total: credentialTypes.length,
-              failed: failedTypes.join(", "),
-            })
-          );
+          setErrorCode("");
+          setErrorMsg(t("mapCredentialType.saveError"));
         }
         setIsSubmitClicked(false);
         setDataLoaded(true);
@@ -296,17 +304,24 @@ function MapCredentialType() {
         return;
       }
 
-      if (credentialTypes.length > 0) {
-        setConfirmationData({
-          title: "mapCredentialType.title",
-          backUrl: "/partnermanagement/policies/policies-list",
-          header: "mapCredentialType.successHeader",
-          description: "mapCredentialType.successMsgLine1",
-          description1: "mapCredentialType.successMsgLine2",
-          subNavigation: "requestPolicy.policies",
-        });
-        setRequestPolicySuccess(true);
+      if (responseData?.errors?.length) {
+        setErrorCode(responseData?.errors?.[0]?.errorCode || "");
+        setErrorMsg(responseData?.errors?.[0]?.message || t("mapCredentialType.saveError"));
+        setIsSubmitClicked(false);
+        setDataLoaded(true);
+        isSubmittingRef.current = false;
+        return;
       }
+
+      setConfirmationData({
+        title: "mapCredentialType.title",
+        backUrl: "/partnermanagement/policies/policies-list",
+        header: "mapCredentialType.successHeader",
+        description: "mapCredentialType.successMsgLine1",
+        description1: "mapCredentialType.successMsgLine2",
+        subNavigation: "requestPolicy.policies",
+      });
+      setRequestPolicySuccess(true);
     } catch (err) {
       if (err?.response?.status && err.response.status !== 401) {
         setErrorMsg(err.toString());
@@ -322,12 +337,9 @@ function MapCredentialType() {
 
   const credentialTypeDropdownStyles = {
     outerDiv: "!ml-0 !mb-0",
-    /** Match form copy color (#3D4468); avoid default near-black label */
     dropdownLabel: "!text-sm !mb-1 !block !font-semibold !text-[#3D4468]",
-    /** Do not force text color — placeholder uses grayish-blue, value uses #343434 */
     dropdownButton: "!w-full !min-h-10 !rounded-md !text-base !text-start",
     selectionBox: "!top-10",
-    /** Shorter open list (default max-h-40 is tall for only a few credential types) */
     optionsList: "!max-h-28",
   };
 
@@ -359,10 +371,15 @@ function MapCredentialType() {
             />
           )}
 
-          {!requestPolicySuccess ? (
-            <div className="flex-col mt-5">
-              <Title title="mapCredentialType.title" subTitle="requestPolicy.requestPolicy" backLink="/partnermanagement/policies/policies-list" />
+          <div className="flex-col mt-5">
+            <Title
+              title={requestPolicySuccess ? "requestPolicy.requestPolicy" : "mapCredentialType.title"}
+              subTitle={requestPolicySuccess ? "requestPolicy.policies" : "requestPolicy.requestPolicy"}
+              backLink="/partnermanagement/policies/policies-list"
+            />
 
+            {!requestPolicySuccess ? (
+              <>
               <p
                 id="map_credential_type_mandatory_mapping_msg"
                 className="mt-3 rounded-md border border-[#F7D18D] bg-[#FFF8EA] px-3 py-2 text-sm text-[#684B00]"
@@ -498,10 +515,11 @@ function MapCredentialType() {
                   </div>
                 </div>
               </div>
-            </div>
-          ) : (
-            <Confirmation id="map_credential_type_confirmation" confirmationData={confirmationData} />
-          )}
+              </>
+            ) : (
+              <Confirmation id="map_credential_type_confirmation" confirmationData={confirmationData} />
+            )}
+          </div>
         </>
       )}
     </div>
