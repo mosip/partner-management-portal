@@ -53,16 +53,16 @@ public class AddDevicePage extends BasePage {
 	@FindBy(id = "header_user_profile_title")
 	private WebElement headerUserProfile;
 
-	@FindBy(id = "add_device_device_type_dropdown_btn")
+	@FindBy(id = "add_device_device_type_1_dropdown_btn")
 	private WebElement addDeviceTypeSelectDropdown;
 
-	@FindBy(id = "add_device_device_sub_type_dropdown_btn")
+	@FindBy(id = "add_device_device_sub_type_1_dropdown_btn")
 	private WebElement addDeviceSubTypeSelectDropdown;
 
-	@FindBy(id = "add_device_device_type_option1")
+	@FindBy(id = "add_device_device_type_1_option1")
 	private WebElement addDeviceTypeOption;
 
-	@FindBy(id = "add_device_device_sub_type_option1")
+	@FindBy(id = "add_device_device_sub_type_1_option1")
 	private WebElement addDeviceSubTypeOption;
 
 	@FindBy(id = "add_device_make_input_1")
@@ -207,19 +207,19 @@ public class AddDevicePage extends BasePage {
 		return isElementDisplayed(headerUserProfile);
 	}
 
+	public void selectAddDeviceType() {
+		By deviceTypeDropdown = By.id("add_device_device_type_1_dropdown_btn");
+		click(deviceTypeDropdown);
+		By option = By.id("add_device_device_type_1_option1");
+		click(option);
+	}
+
 	public void selectAddDeviceType(String value) {
 		try {
 			dropdown(addDeviceTypeSelectDropdown, value);
 		} catch (IOException e) {
 			logger.info(e.getMessage());
 		}
-	}
-
-	public void selectAddDeviceType() {
-		By deviceTypeDropdown = By.id("add_device_device_type_dropdown_btn");
-		click(deviceTypeDropdown);
-		By option = By.id("add_device_device_type_option1");
-		click(option);
 	}
 
 	public void selectDeviceSubType(String value) {
@@ -239,29 +239,33 @@ public class AddDevicePage extends BasePage {
 	}
 
 	public void selectAddDeviceTypeWithPosition(String value, int position) {
-		By dropdownLocator = By.xpath("(//button[@id='add_device_device_type_dropdown_btn'])[" + position + "]");
-		dropdownWithPosition(dropdownLocator, value, position);
+		try {
+			By locator = By.id("add_device_device_type_" + position + "_dropdown_btn");
+			waitForElementClickable(locator);
+			WebElement element = driver.findElement(locator);
+			dropdownWithPosition(element, value, position);
+		} catch (IOException e) {
+			logger.info(e.getMessage());
+		}
 	}
 
 	public void selectDeviceSubTypeWithPosition(String value, int position) {
-		WebElement addDeviceSubTypeSelectDropdown = driver
-				.findElement(By.xpath("(//button[@id='add_device_device_sub_type_dropdown_btn'])[" + position + "]"));
 		try {
-			dropdownWithPosition(addDeviceSubTypeSelectDropdown, value, position);
+			WebElement element = driver.findElement(By.id("add_device_device_sub_type_" + position + "_dropdown_btn"));
+			waitForElementClickable(element);
+			dropdownWithPosition(element, value, position);
 		} catch (IOException e) {
 			logger.info(e.getMessage());
 		}
 	}
 
 	public void enterMakeNameWithPosition(String makeName, int position) {
-		WebElement addDeviceMakeTextbox = driver
-				.findElement(By.xpath("(//input[@id='add_device_make_input_1'])[" + position + "]"));
+		WebElement addDeviceMakeTextbox = driver.findElement(By.id("add_device_make_input_" + position));
 		enter(addDeviceMakeTextbox, makeName);
 	}
 
 	public void enterModelNameWithPosition(String modelName, int position) {
-		WebElement addDeviceModelTextbox = driver
-				.findElement(By.xpath("(//input[@id='add_device_model_input_1'])[" + position + "]"));
+		WebElement addDeviceModelTextbox = driver.findElement(By.id("add_device_model_input_" + position));
 		enter(addDeviceModelTextbox, modelName);
 	}
 
@@ -274,7 +278,7 @@ public class AddDevicePage extends BasePage {
 	}
 
 	public boolean isDeviceSubTypeEnabled() {
-		By subType = By.id("add_device_device_sub_type_dropdown_btn");
+		By subType = By.id("add_device_device_sub_type_1_dropdown_btn");
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
 		return wait.until(ExpectedConditions.elementToBeClickable(subType)) != null;
 	}

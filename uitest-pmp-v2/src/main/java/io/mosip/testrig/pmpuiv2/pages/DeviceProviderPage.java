@@ -69,7 +69,7 @@ public class DeviceProviderPage extends BasePage {
 	@FindBy(xpath = "//*[contains(@class, 'w-full break-words')]")
 	private WebElement partnerType;
 
-	@FindBy(xpath = "//*[contains(@class, 'flex items-center justify-between w-full')]")
+	@FindBy(id = "add_sbi_partner_type")
 	private WebElement partnerTypeBox;
 
 	@FindBy(xpath = "//*[contains(@class, 'react-datepicker__day react-datepicker__day--024')]")
