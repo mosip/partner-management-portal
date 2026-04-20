@@ -11,6 +11,15 @@ import {
   validateInputRegex,
 } from "../../../utils/AppUtils";
 import { getUserProfile } from "../../../services/UserProfileService";
+import { getAppConfig } from "../../../services/ConfigService";
+
+const parseModalitiesFromConfig = (configData) => {
+  const raw = configData?.allowedBioextractorModalities;
+
+  const list = Array.isArray(raw) ? raw : typeof raw === "string" ? raw.split(",") : [];
+  const normalized = list.map((m) => String(m || "").trim()).filter(Boolean);
+  return Array.from(new Set(normalized));
+};
 
 function BiometricProviderConfigurationListFilter({ onApplyFilter }) {
   const { t } = useTranslation();
@@ -27,10 +36,34 @@ function BiometricProviderConfigurationListFilter({ onApplyFilter }) {
   const [invalidProviderVersion, setInvalidProviderVersion] = useState("");
 
   useEffect(() => {
-    const modalities = [{ modality: "FACE" }, { modality: "IRIS" }, { modality: "FINGER" }];
-    setModalityOptions(
-      createDropdownData("modality", "", true, modalities, t, t("bioExtractorConfig.selectBiometricModality"))
-    );
+    let cancelled = false;
+    (async () => {
+      try {
+        const configData = await getAppConfig();
+        if (cancelled) return;
+        const modalities = parseModalitiesFromConfig(configData).map((m) => ({ modality: m }));
+        setModalityOptions(
+          createDropdownData(
+            "modality",
+            "",
+            true,
+            modalities,
+            t,
+            t("bioExtractorConfig.selectBiometricModality")
+          )
+        );
+      } catch (error) {
+        if (cancelled) return;
+        console.error("Error fetching modalities from system-config:", error);
+        setModalityOptions(
+          createDropdownData("modality", "", true, [], t, t("bioExtractorConfig.selectBiometricModality"))
+        );
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
   }, [t]);
 
   const onFilterChangeEvent = (fieldName, selectedFilter) => {

@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../../services/UserProfileService";
 import { createRequest, getPartnerManagerUrl, handleEscapeKey, handleServiceErrors, isLangRTL } from "../../../utils/AppUtils";
 import { HttpService } from "../../../services/HttpService";
+import { getAppConfig } from "../../../services/ConfigService";
 import Title from "../../common/Title";
 import ErrorMessage from "../../common/ErrorMessage";
 import LoadingIcon from "../../common/LoadingIcon";
@@ -16,14 +17,10 @@ const EMPTY_MAPPING_ROW = {
   biometricProviderConfiguration: "",
 };
 
-const biometricAttributeMap = {
-  FACE: "photo",
-  IRIS: "iris",
-  FINGER: "fingerprint",
+const parseCsvOrArray = (raw) => {
+  const list = Array.isArray(raw) ? raw : typeof raw === "string" ? raw.split(",") : [];
+  return list.map((v) => String(v || "").trim()).filter(Boolean);
 };
-
-/** All supported modalities; each can appear at most once across rows. */
-const ALL_MODALITY_VALUES = ["FACE", "IRIS", "FINGER"];
 
 function MapBiometricExtractorProvider() {
   const { t } = useTranslation();
@@ -50,13 +47,46 @@ function MapBiometricExtractorProvider() {
   const configReqVersionRef = useRef({});
   const [showSaveConfirm, setShowSaveConfirm] = useState(false);
 
+  const [allowedModalities, setAllowedModalities] = useState([]);
+  const [attributeNameByModality, setAttributeNameByModality] = useState({});
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const configData = await getAppConfig();
+        if (cancelled) return;
+
+        const modalities = parseCsvOrArray(configData?.allowedBioextractorModalities);
+        const attributeNames = parseCsvOrArray(configData?.allowedBioextractorAttributeNames);
+
+        setAllowedModalities(modalities);
+
+        const map = {};
+        modalities.forEach((modality, index) => {
+          map[modality] = attributeNames[index] || "";
+        });
+        setAttributeNameByModality(map);
+      } catch (error) {
+        if (cancelled) return;
+        console.error("Error fetching bio-extractor config from system-config:", error);
+        setAllowedModalities([]);
+        setAttributeNameByModality({});
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   const modalityDropdownData = useMemo(
-    () => [
-      { fieldCode: t("bioExtractorConfig.face"), fieldValue: "FACE" },
-      { fieldCode: t("bioExtractorConfig.iris"), fieldValue: "IRIS" },
-      { fieldCode: t("bioExtractorConfig.finger"), fieldValue: "FINGER" },
-    ],
-    [t]
+    () =>
+      allowedModalities.map((value) => ({
+        fieldCode: value,
+        fieldValue: value,
+      })),
+    [allowedModalities]
   );
 
   /** Options for one row: unselected modalities elsewhere, plus this row's current value (any order). */
@@ -82,10 +112,11 @@ function MapBiometricExtractorProvider() {
     ).size;
   }, [rows]);
 
-  const canAddMoreRow = rows.length < ALL_MODALITY_VALUES.length && distinctSelectedModalitiesCount < ALL_MODALITY_VALUES.length;
+  const canAddMoreRow =
+    rows.length < allowedModalities.length && distinctSelectedModalitiesCount < allowedModalities.length;
 
   const getAttributeName = (modality) => {
-    return biometricAttributeMap[(modality || "").toUpperCase()] || "";
+    return attributeNameByModality[String(modality || "").trim()] || "";
   };
 
   const getConfigDropdownByModality = (rowId, selectedModality) => {
