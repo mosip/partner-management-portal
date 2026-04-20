@@ -1209,8 +1209,8 @@
         "comments": "Comments",
         "commentPlaceholder": "Write your comment here",
         "mappingsMissingGeneric": "Required biometric extractor and credential type mappings are missing. Please configure them and try again.",
-        "mappingsMissingBoth": "Bio extractors and credential type are not configured for this policy. Please configure them and try again.",
-        "credentialTypeNotMapped": "Credential type is not configured for this policy. Please map a credential type and try again."
+        "mappingsMissingBoth": "This policy cannot be approved as the required Biometric Extractor Provider Configuration and Credential Type mappings are incomplete.",
+        "credentialTypeNotMapped": "This policy cannot be approved as the Credential Type mapping is incomplete."
     },
     "partnerPolicyRequestApproveRejectPopup": {
         "header": "Do you want to Approve/Reject the Policy?",
@@ -1229,7 +1229,7 @@
         "bioExtractorProviderNameLine2": "Provider Name",
         "bioExtractorProviderMapping": "Biometric Extractor Provider Mapping",
         "credentialType": "Credential Type",
-        "noBioExtractors": "No bio extractors found for this policy.",
+        "noBioExtractors": "No Biometric Extractor Provider Configuration has been mapped to this policy.",
         "extractorsNotConfigured": "Bio extractors are not configured. Add bio extractors for this policy."
     },
     "ftmRequestApproveRejectPopup": {

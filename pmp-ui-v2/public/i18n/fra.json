@@ -1213,8 +1213,8 @@
         "comments": "Commentaires",
         "commentPlaceholder": "Écrivez votre commentaire ici",
         "mappingsMissingGeneric": "Les cartographies requises (extracteurs biométriques et type d’identifiant) sont manquantes. Veuillez les configurer puis réessayer.",
-        "mappingsMissingBoth": "Les bio-extracteurs et le type d’identifiant ne sont pas configurés pour cette politique. Veuillez les configurer puis réessayer.",
-        "credentialTypeNotMapped": "Le type d’identifiant n’est pas configuré pour cette politique. Veuillez mapper un type d’identifiant puis réessayer."
+        "mappingsMissingBoth": "Cette politique ne peut pas être approuvée car les mappages requis de Configuration du fournisseur d’extracteur biométrique et de Type d’identifiant sont incomplets.",
+        "credentialTypeNotMapped": "Cette politique ne peut pas être approuvée car le mappage du Type d’identifiant est incomplet."
     },
     "partnerPolicyRequestApproveRejectPopup": {
         "header": "Voulez-vous Approuver/Rejeter la politique?",
@@ -1233,7 +1233,7 @@
         "bioExtractorProviderNameLine2": "Nom du fournisseur",
         "bioExtractorProviderMapping": "Cartographie du fournisseur d’extracteur biométrique",
         "credentialType": "Type d’identifiant",
-        "noBioExtractors": "Aucun extracteur biométrique trouvé pour cette politique.",
+        "noBioExtractors": "Aucune Configuration du fournisseur d’extracteur biométrique n’a été mappée à cette politique.",
         "extractorsNotConfigured": "Les extracteurs biométriques ne sont pas configurés. Ajoutez des extracteurs biométriques pour cette politique."
     },
     "ftmRequestApproveRejectPopup": {
