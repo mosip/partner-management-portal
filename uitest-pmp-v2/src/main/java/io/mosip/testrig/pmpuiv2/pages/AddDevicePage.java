@@ -251,10 +251,11 @@ public class AddDevicePage extends BasePage {
 
 	public void selectDeviceSubTypeWithPosition(String value, int position) {
 		try {
-			WebElement element = driver.findElement(By.id("add_device_device_sub_type_" + position + "_dropdown_btn"));
-			waitForElementClickable(element);
+			By locator = By.id("add_device_device_sub_type_" + position + "_dropdown_btn");
+			waitForElementClickable(locator);
+			WebElement element = driver.findElement(locator);
 			dropdownWithPosition(element, value, position);
-		} catch (IOException e) {
+		} catch (Exception e) {
 			logger.info(e.getMessage());
 		}
 	}
