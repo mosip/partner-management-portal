@@ -255,7 +255,7 @@ public class AddDevicePage extends BasePage {
 			waitForElementClickable(locator);
 			WebElement element = driver.findElement(locator);
 			dropdownWithPosition(element, value, position);
-		} catch (Exception e) {
+		} catch (IOException e) {
 			logger.info(e.getMessage());
 		}
 	}
