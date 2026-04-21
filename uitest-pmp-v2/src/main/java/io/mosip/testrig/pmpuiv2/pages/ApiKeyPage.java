@@ -4,7 +4,6 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
@@ -453,34 +452,29 @@ public class ApiKeyPage extends BasePage {
 	}
 
 	public boolean selectPolicyNameDropdown(String value) {
-	    By policyNameDropdown = By.id("generate_policy_name_dropdown_btn");
-	    By noDataText = By.xpath("//*[text()='No Data Available']");
-	    By policyOptions = By.xpath("//div[@role='listbox']//button");
-	    By policyNameOption = By.xpath(
-	            "//button[.//span[normalize-space()='" + value + "']]"
-	    );
+		By policyNameDropdown = By.id("generate_policy_name_dropdown_btn");
+		By noDataText = By.xpath("//*[text()='No Data Available']");
+		By policyOptions = By.xpath("//div[@role='listbox']//button");
+		By policyNameOption = By.xpath("//button[.//span[normalize-space()='" + value + "']]");
 
-	    click(policyNameDropdown);
-	    enter(generatePolicyNameSearchInputBox, value);
+		click(policyNameDropdown);
+		enter(generatePolicyNameSearchInputBox, value);
 
-	    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
 
-	    try {
-	        // wait until either data loads OR "No Data Available" disappears
-	        wait.until(ExpectedConditions.or(
-	                ExpectedConditions.invisibilityOfElementLocated(noDataText),
-	                ExpectedConditions.numberOfElementsToBeMoreThan(policyOptions, 0)
-	        ));
+		try {
+			// wait until either data loads OR "No Data Available" disappears
+			wait.until(ExpectedConditions.or(ExpectedConditions.invisibilityOfElementLocated(noDataText),
+					ExpectedConditions.numberOfElementsToBeMoreThan(policyOptions, 0)));
 
-	        wait.until(ExpectedConditions.elementToBeClickable(policyNameOption)).click();
-	        return true;
+			wait.until(ExpectedConditions.elementToBeClickable(policyNameOption)).click();
+			return true;
 
-	    } catch (TimeoutException e) {
-	        logger.warn("Policy name not found or not loaded: " + value);
-	        return false;
-	    }
+		} catch (TimeoutException e) {
+			logger.warn("Policy name not found or not loaded: " + value);
+			return false;
+		}
 	}
-
 
 	public void enterDeactivePolicyNameInDropdown(String value) {
 		clickOnElement(policyNameDropdown);

@@ -57,6 +57,10 @@ public class BasePage {
 		WaitUtil.waitForClickability(driver, element);
 	}
 
+	protected void waitForElementClickable(By locator) {
+		WaitUtil.waitForClickable(driver, locator);
+	}
+
 	public void clickOnElement(WebElement element) {
 		LogUtil.action("Clicking on element", element);
 		int attempts = 0;
@@ -249,24 +253,29 @@ public class BasePage {
 
 	public void dropdownWithPosition(WebElement element, String value, int position) throws IOException {
 		LogUtil.action("Selecting dropdown position " + position + " for element: ", element);
+
 		try {
 			waitForElementVisible(element);
 			clickOnElement(element);
-			click(By.xpath("(//*[contains(text(),'" + value + "')])[" + position + "]"));
+
+			click(By.xpath("(//*[normalize-space(text())='" + value + "' and not(contains(@class,'hidden'))])["
+					+ position + "]"));
 			return;
+
 		} catch (StaleElementReferenceException e) {
 			LogUtil.step("Retrying dropdownWithPosition due to stale element");
 			LogUtil.step("Page URL: " + driver.getCurrentUrl());
 			LogUtil.step("Page Title: " + driver.getTitle());
-			click(By.xpath("(//*[contains(text(),'" + value + "')])[" + position + "]"));
+
+			click(By.xpath("(//*[normalize-space(text())='" + value + "' and not(contains(@class,'hidden'))])["
+					+ position + "]"));
 			return;
 		}
-
 	}
 
 	public void dropdownWithPosition(By dropdownLocator, String value, int position) {
 
-		LogUtil.action("Selecting dropdown position " + position + "with locator" + dropdownLocator);
+		LogUtil.action("Selecting dropdown position " + position + " with locator " + dropdownLocator);
 
 		int attempts = 0;
 
@@ -277,7 +286,8 @@ public class BasePage {
 
 				dropdown.click();
 
-				By optionLocator = By.xpath("(//*[contains(text(),'" + value + "')])[" + position + "]");
+				// 🔥 FIX: remove position, target visible dropdown options
+				By optionLocator = By.xpath("//div[contains(@class,'menu')]//*[contains(text(),'" + value + "')]");
 
 				WebElement option = new WebDriverWait(driver, Duration.ofSeconds(ConfigManager.getTimeout()))
 						.until(ExpectedConditions.elementToBeClickable(optionLocator));
@@ -288,8 +298,6 @@ public class BasePage {
 			} catch (StaleElementReferenceException e) {
 				attempts++;
 				LogUtil.step("Retrying dropdownWithPosition due to stale element");
-				LogUtil.step("Page URL: " + driver.getCurrentUrl());
-				LogUtil.step("Page Title: " + driver.getTitle());
 			}
 		}
 

@@ -375,7 +375,7 @@ public class GlobalConstants {
 	public static final String isResetFilterButtonDisplayed = "Verify if reset filter button displayed";
 	public static final String isApproveRejectPopupHeaderDisplayed = "Verify if approve reject popup header displayed";
 	public static final String isApproveRejectPopupSubHeaderDisplayed = "Verify if approve reject popup subheader displayed";
-	public static final String isMakeAndModelTitleDisplayed = "Verify if make and model title for popup displayed";
+	public static final String isApproveRejectPopupDisplayed = "Verify if approve reject popup displayed";
 	public static final String isFilterButtonDisplayedOrEnabled = "Verify if filter button displayed or enabled";
 	public static final String isFilterButtonEnabled = "Verify if filter button enabled";
 	public static final String isGoBackButtonDisplayed = "Verify if go back button displayed";

@@ -63,7 +63,10 @@ const handleKeyDown = (event) => {
                     <Information infoKey={infoKey} id={id + "_info"} />
                 )}
             </label>
-            <div className="relative w-full z-20" ref={dropdownRef}>
+            <div
+                className={`relative w-full ${isDropdownOpen ? "z-50" : "z-20"}`}
+                ref={dropdownRef}
+            >
                 <button id={id + '_dropdown_btn'} onClick={openDropdown} disabled={disabled} tabIndex={disabled ? -1 : 0} className={`flex items-center justify-between w-full h-auto px-2 py-2 border border-[#707070] bg-white rounded-[4px] text-[15px] ${selectedDropdownEntry ? 'text-[#343434]' : 'text-grayish-blue'} leading-tight
                     outline-none focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1447B2]/35 focus-visible:ring-offset-0 focus-visible:border-[#1447B2]
                     overflow-x-auto whitespace-nowrap no-scrollbar ${(styleSet && styleSet.dropdownButton) ? styleSet.dropdownButton : ''}`} type="button">
