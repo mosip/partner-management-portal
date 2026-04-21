@@ -100,9 +100,10 @@ public class FtmDeviceTest extends BaseClass {
 		loginAsPartnerAdmin();
 
 		dashboardpage.clickOnFTMChipTab();
-		
-		assertTrue(ftmPage.isFtmIdDisplayedInThirdColumnOnPartnerAdminPage(), GlobalConstants.isFtmIdDisplayedInThirdColumnOnPartnerAdminPage);
-		
+
+		assertTrue(ftmPage.isFtmIdDisplayedInThirdColumnOnPartnerAdminPage(),
+				GlobalConstants.isFtmIdDisplayedInThirdColumnOnPartnerAdminPage);
+
 		ftmPage.clickOnFilterButton();
 		assertTrue(ftmPage.isListOfFtmChipDisplayed(), GlobalConstants.isListOfFtmChipTextDisplayed);
 
@@ -262,10 +263,9 @@ public class FtmDeviceTest extends BaseClass {
 		ftmPage.clickOnFtmListActionMenuEllipsisButton();
 		ftmPage.clickOnFtmListApproveRejectOption();
 
-		assertTrue(ftmPage.isMakAndModeTitelForPopupDisplayed(), GlobalConstants.isMakeAndModelTitleDisplayed);
-		assertTrue(ftmPage.isDoYouWantToApproveAndRejecPopupHeaderDisplayed(),
-				GlobalConstants.isApproveRejectPopupHeaderDisplayed);
-		assertTrue(ftmPage.isPleaseReviewTheFtmChipPopupSubHeaderDisplayed(),
+		assertTrue(ftmPage.isApproveRejectPopupDisplayed(), GlobalConstants.isApproveRejectPopupDisplayed);
+		assertTrue(ftmPage.isApproveRejectPopupHeaderDisplayed(), GlobalConstants.isApproveRejectPopupHeaderDisplayed);
+		assertTrue(ftmPage.isApproveRejectPopupSubHeaderDisplayed(),
 				GlobalConstants.isApproveRejectPopupSubHeaderDisplayed);
 
 		ftmPage.clickOnRejectButton();
@@ -434,7 +434,7 @@ public class FtmDeviceTest extends BaseClass {
 		assertTrue(ftmPage.isFtmListApproveRejectOptionIsEnabled(), GlobalConstants.isElementIsDisabled);
 
 	}
-	
+
 	@Test(priority = 5, description = "ftm chip tabular view", dependsOnMethods = "addFtmWithoutUploadingFtmChipCert")
 	public void ftmChipTabularView() throws InterruptedException {
 
@@ -609,19 +609,20 @@ public class FtmDeviceTest extends BaseClass {
 		ftmPage.clickOnApplyFilterButton();
 
 		ftmPage.clickOnFtmListActionMenuEllipsisButton();
-		assertTrue(ftmPage.isFtmListApproveRejectOptionIsEnabled(), GlobalConstants.isFtmListApproveRejectOptionIsEnabled);
+		assertTrue(ftmPage.isFtmListApproveRejectOptionIsEnabled(),
+				GlobalConstants.isFtmListApproveRejectOptionIsEnabled);
 		assertTrue(ftmPage.isFtmListViewIsEnabled(), GlobalConstants.isFtmListViewIsEnabled);
 		assertTrue(ftmPage.isFtmListDeactivateOptionIsDisabled(), GlobalConstants.isElementIsDisabled);
 
 		ftmPage.clickOnFtmListApproveRejectOption();
-		assertTrue(ftmPage.isMakAndModeTitelForPopupDisplayed(), GlobalConstants.isMakeAndModelTitleDisplayed);
-		assertTrue(ftmPage.isDoYouWantToApproveAndRejecPopupHeaderDisplayed(),
-				GlobalConstants.isApproveRejectPopupHeaderDisplayed);
-		assertTrue(ftmPage.isPleaseReviewTheFtmChipPopupSubHeaderDisplayed(),
+		assertTrue(ftmPage.isApproveRejectPopupDisplayed(), GlobalConstants.isApproveRejectPopupDisplayed);
+		assertTrue(ftmPage.isApproveRejectPopupHeaderDisplayed(), GlobalConstants.isApproveRejectPopupHeaderDisplayed);
+		assertTrue(ftmPage.isApproveRejectPopupSubHeaderDisplayed(),
 				GlobalConstants.isApproveRejectPopupSubHeaderDisplayed);
 		ftmPage.clickOnRejectButton();
 		ftmPage.clickOnFtmListActionMenuEllipsisButton();
-		assertTrue(ftmPage.isFtmListApproveRejectOptionIsDisabled(), GlobalConstants.isFtmListApproveRejectOptionIsDisabled);
+		assertTrue(ftmPage.isFtmListApproveRejectOptionIsDisabled(),
+				GlobalConstants.isFtmListApproveRejectOptionIsDisabled);
 		assertTrue(ftmPage.isFtmListViewIsEnabled(), GlobalConstants.isFtmListViewIsEnabled);
 		assertTrue(ftmPage.isFtmListDeactivateOptionIsDisabled(), GlobalConstants.isFtmListDeactivateOptionIsDisabled);
 
@@ -691,8 +692,7 @@ public class FtmDeviceTest extends BaseClass {
 				GlobalConstants.isPendingForUploadCertTextDisplayed);
 		ftmPage.clickOnFtmListActionMenuEllipsisButton();
 		ftmPage.clickOnFtmListApproveRejectOption();
-		assertFalse(ftmPage.isDoYouWantToApproveAndRejecPopupHeaderDisplayed(),
-				GlobalConstants.isApproveRejectPopupHeaderDisplayed);
+		assertFalse(ftmPage.isApproveRejectPopupHeaderDisplayed(), GlobalConstants.isApproveRejectPopupHeaderDisplayed);
 
 		dashboardpage.clickOnProfileDropdown();
 		dashboardpage.clickOnLogoutButton();
@@ -781,13 +781,15 @@ public class FtmDeviceTest extends BaseClass {
 		assertTrue(ftmPage.isFtmChipDetailsContextPartnerIdDisplayed(), GlobalConstants.isPartnerIdDropdownDisplayed);
 		assertTrue(ftmPage.isFtmChipDetailsLabelMakeDisplayed(), GlobalConstants.isFtmChipDetailsLabelMakeDisplayed);
 		assertTrue(ftmPage.isFtmChipDetailsContextMakeDisplayed(), GlobalConstants.isFtmChipMakeValueDisplayed);
-		assertTrue(ftmPage.isFtmChipDetailsLabelPartnerTypeDisplayed(), GlobalConstants.isFtmChipDetailsLabelPartnerTypeDisplayed);
+		assertTrue(ftmPage.isFtmChipDetailsLabelPartnerTypeDisplayed(),
+				GlobalConstants.isFtmChipDetailsLabelPartnerTypeDisplayed);
 		assertTrue(ftmPage.isFtmChipDetailsContextPartnerTypeDisplayed(), GlobalConstants.isPartnerTypeValueDisplayed);
 		assertTrue(ftmPage.isFtmChipDetailsLabelModelDisplayed(), GlobalConstants.isFtmChipDetailsLabelModelDisplayed);
 		assertTrue(ftmPage.isFtmChipdetailsContextModelDisplayed(), GlobalConstants.isFtmModelValueDisplayed);
 		assertTrue(ftmPage.isFtmChipDetailsCertificatelabelDisplayed(),
 				GlobalConstants.isFtmChipDetailsCertificatelabelDisplayed);
-		assertTrue(ftmPage.isFtmChipDetailsPartnerTypeLabelDisplayed(), GlobalConstants.isFtmChipDetailsPartnerTypeLabelDisplayed);
+		assertTrue(ftmPage.isFtmChipDetailsPartnerTypeLabelDisplayed(),
+				GlobalConstants.isFtmChipDetailsPartnerTypeLabelDisplayed);
 		assertTrue(ftmPage.isFtmChipDetailsPartnerTypeContextDisplayed(), GlobalConstants.isPartnerTypeValueDisplayed);
 		assertTrue(ftmPage.isFtmViewBackButtonDisplayed(), GlobalConstants.isBackButton);
 
@@ -800,7 +802,7 @@ public class FtmDeviceTest extends BaseClass {
 		ftmPage.clickOnApplyFilterButton();
 		ftmPage.clickOnModelDescIcon();
 		ftmPage.clickOnModelAscIcon();
-		
+
 	}
 
 	private void loginAsFtmPartner() {

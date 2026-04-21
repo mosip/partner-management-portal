@@ -207,14 +207,14 @@ public class FtmPage extends BasePage {
 	@FindBy(id = "ftm_list_approve_reject_option")
 	private WebElement ftmListApproveRejectOption;
 
-	@FindBy(xpath = "//*[@class='text-sm font-bold']")
-	private WebElement makAndModeTitelForPopup;
+	@FindBy(id = "approve-reject_popup_title")
+	private WebElement approveRejectPopup;
 
-	@FindBy(xpath = "//*[@class='text-base font-semibold text-black']")
-	private WebElement doYouWantToApproveAndRejecPopupHeader;
+	@FindBy(id = "approve-reject_popup_header")
+	private WebElement approveRejectPopupHeader;
 
-	@FindBy(xpath = "//*[@class='text-sm text-[#666666] py-3']")
-	private WebElement pleaseReviewTheFtmChipPopupSubHeader;
+	@FindBy(id = "approve-reject_popup_description")
+	private WebElement approveRejectPopupSubHeader;
 
 	@FindBy(id = "approve_btn")
 	private WebElement approveButton;
@@ -285,7 +285,7 @@ public class FtmPage extends BasePage {
 	@FindBy(id = "certificate_reupload_btn")
 	private WebElement certificateReuploadButton;
 
-	@FindBy(xpath = "//*[@class='font-semibold text-lg text-dark-blue']")
+	@FindBy(id = "page_title")
 	private WebElement manageFtmChipCertText;
 
 	@FindBy(id = "ftm_list_deactivate_option")
@@ -413,6 +413,9 @@ public class FtmPage extends BasePage {
 
 	@FindBy(id = "ftm_partner_id_filter_dropdown_btn")
 	private WebElement ftmPartnerIdFilterDropdownButton;
+
+	@FindBy(id = "deactivate_popup_header")
+	private WebElement deactivatePopup;
 
 	public FtmPage(WebDriver driver) {
 		super(driver);
@@ -747,16 +750,16 @@ public class FtmPage extends BasePage {
 		return isElementDisplayed(DeactivatedText);
 	}
 
-	public boolean isMakAndModeTitelForPopupDisplayed() {
-		return isElementDisplayed(makAndModeTitelForPopup);
+	public boolean isApproveRejectPopupDisplayed() {
+		return isElementDisplayed(approveRejectPopup);
 	}
 
-	public boolean isDoYouWantToApproveAndRejecPopupHeaderDisplayed() {
-		return isElementDisplayed(doYouWantToApproveAndRejecPopupHeader);
+	public boolean isApproveRejectPopupHeaderDisplayed() {
+		return isElementDisplayed(approveRejectPopupHeader);
 	}
 
-	public boolean isPleaseReviewTheFtmChipPopupSubHeaderDisplayed() {
-		return isElementDisplayed(pleaseReviewTheFtmChipPopupSubHeader);
+	public boolean isApproveRejectPopupSubHeaderDisplayed() {
+		return isElementDisplayed(approveRejectPopupSubHeader);
 	}
 
 	public boolean isDeactivateSubmitButtonDisplayed() {
@@ -1048,11 +1051,13 @@ public class FtmPage extends BasePage {
 	}
 
 	public boolean isFtmListApproveRejectOptionIsDisabled() {
-		return isElementDisabled(ftmListApproveRejectOption);
+		clickOnFtmListApproveRejectOption();
+		return !isApproveRejectPopupDisplayed();
 	}
 
 	public boolean isFtmListDeactivateOptionIsDisabled() {
-		return isElementDisabled(ftmListDeactivateOption);
+		clickOnFtmListDeactivateOption();
+		return !isDeactivatePopupDisplayed();
 	}
 
 	public void clickOnCertificateUploadButton() {
@@ -1097,6 +1102,10 @@ public class FtmPage extends BasePage {
 
 	public void clickOnFtmPartnerIdFilterDropdownButton() {
 		clickOnElement(ftmPartnerIdFilterDropdownButton);
+	}
+
+	public boolean isDeactivatePopupDisplayed() {
+		return isElementDisplayed(deactivatePopup);
 	}
 
 }

@@ -63,7 +63,7 @@ public class PartnerPolicyMappingPage extends BasePage {
 	@FindBy(xpath = "//p[contains(text(), 'Do you want to Approve/Reject the Policy')]")
 	private WebElement confirmationPopup;
 
-	@FindBy(xpath = "//p[contains(text(), 'Please review the policy details carefully before taking appropriate action.')]")
+	@FindBy(id = "approve-reject_popup_description")
 	private WebElement confirmationPopupDetailedMessage;
 
 	@FindBy(id = "approve_btn")
