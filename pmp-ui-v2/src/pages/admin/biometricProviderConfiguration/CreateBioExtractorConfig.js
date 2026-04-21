@@ -20,19 +20,67 @@ import { getAppConfig } from '../../../services/ConfigService';
 
 const LIST_ROUTE = '/partnermanagement/admin/biometric-provider-configuration-list';
 
+const parseCsvOrArray = (raw) => {
+    const list = Array.isArray(raw) ? raw : typeof raw === 'string' ? raw.split(',') : [];
+    return list.map((v) => String(v || '').trim()).filter(Boolean);
+};
+
+const parseModalityAttributeNameMapFromConfig = (configData) => {
+    const raw =
+        configData?.allowedBioextractorModalitiesAttributeNameMap ??
+        configData?.allowedBioextractorModalitiesAttributeNameMapString ??
+        configData?.allowedBioextractorModalityAttributeNameMap ??
+        configData?.allowedBioextractorModalityAttributeNameMapString ??
+        configData?.['mosip.pms.bioextractor.allowed.modalities.attribute.name.map'];
+
+    const result = {};
+    const rawStr = typeof raw === 'string' ? raw.trim() : '';
+
+    if (raw && typeof raw === 'object' && !Array.isArray(raw) && !rawStr) {
+        Object.entries(raw).forEach(([k, v]) => {
+            const modality = String(k || '').trim();
+            if (!modality) return;
+            result[modality.toUpperCase()] = String(v || '').trim();
+        });
+        return result;
+    }
+
+    if (!rawStr) return result;
+
+    // Robust parsing:
+    // - preferred: "face:photo,iris:iris,finger:fingerprint"
+    // - tolerated: "face:photo,iris:iris:finger:fingerprint" (extra pairs accidentally chained)
+    rawStr
+        .split(',')
+        .map((t) => t.trim())
+        .filter(Boolean)
+        .forEach((segment) => {
+            const parts = segment.split(':').map((p) => p.trim()).filter(Boolean);
+            if (parts.length < 2) return;
+            for (let i = 0; i + 1 < parts.length; i += 2) {
+                const modality = parts[i];
+                const attr = parts[i + 1];
+                if (!modality) continue;
+                result[String(modality).toUpperCase()] = String(attr || '').trim();
+            }
+        });
+
+    return result;
+};
+
 const parseModalitiesFromConfig = (configData) => {
-    const raw = configData?.allowedBioextractorModalities;
+    const map = parseModalityAttributeNameMapFromConfig(configData);
+    const modalitiesFromMap = Object.keys(map)
+        .map((k) => String(k || '').trim())
+        .filter(Boolean)
+        .map((m) => m.toLowerCase());
 
-    const list = Array.isArray(raw)
-        ? raw
-        : typeof raw === 'string'
-            ? raw.split(',')
-            : [];
+    if (modalitiesFromMap.length > 0) {
+        return Array.from(new Set(modalitiesFromMap)).map((value) => ({ value }));
+    }
 
-    const normalized = list
-        .map((m) => String(m || '').trim())
-        .filter(Boolean);
-
+    // Backward-compatible fallback (older system-config fields)
+    const normalized = parseCsvOrArray(configData?.allowedBioextractorModalities).map((m) => String(m).toLowerCase());
     const unique = Array.from(new Set(normalized));
     return unique.map((value) => ({ value }));
 };

@@ -22,6 +22,43 @@ const parseCsvOrArray = (raw) => {
   return list.map((v) => String(v || "").trim()).filter(Boolean);
 };
 
+const parseModalityAttributeNameMapFromConfig = (configData) => {
+  const raw =
+    configData?.allowedBioextractorModalitiesAttributeNameMap ??
+    configData?.allowedBioextractorModalitiesAttributeNameMapString ??
+    configData?.allowedBioextractorModalityAttributeNameMap ??
+    configData?.allowedBioextractorModalityAttributeNameMapString ??
+    configData?.["mosip.pms.bioextractor.allowed.modalities.attribute.name.map"];
+
+  const result = {};
+  const rawStr = typeof raw === "string" ? raw.trim() : "";
+
+  if (raw && typeof raw === "object" && !Array.isArray(raw) && !rawStr) {
+    Object.entries(raw).forEach(([k, v]) => {
+      const modality = String(k || "").trim();
+      if (!modality) return;
+      result[modality.toUpperCase()] = String(v || "").trim();
+    });
+    return result;
+  }
+
+  if (!rawStr) return result;
+
+  rawStr
+    .split(",")
+    .map((t) => t.trim())
+    .filter(Boolean)
+    .forEach((segment) => {
+      const parts = segment.split(":").map((p) => p.trim()).filter(Boolean);
+      if (parts.length < 2) return;
+      for (let i = 0; i + 1 < parts.length; i += 2) {
+        result[String(parts[i]).toUpperCase()] = String(parts[i + 1] || "").trim();
+      }
+    });
+
+  return result;
+};
+
 function MapBiometricExtractorProvider() {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -57,16 +94,33 @@ function MapBiometricExtractorProvider() {
         const configData = await getAppConfig();
         if (cancelled) return;
 
-        const modalities = parseCsvOrArray(configData?.allowedBioextractorModalities);
-        const attributeNames = parseCsvOrArray(configData?.allowedBioextractorAttributeNames);
+        const modalityAttrMap = parseModalityAttributeNameMapFromConfig(configData);
+        const modalitiesFromMap = Object.keys(modalityAttrMap)
+          .map((m) => String(m || "").trim())
+          .filter(Boolean)
+          .map((m) => m.toLowerCase());
 
-        setAllowedModalities(modalities);
+        if (modalitiesFromMap.length > 0) {
+          setAllowedModalities(Array.from(new Set(modalitiesFromMap)));
 
-        const map = {};
-        modalities.forEach((modality, index) => {
-          map[modality] = attributeNames[index] || "";
-        });
-        setAttributeNameByModality(map);
+          const map = {};
+          Object.entries(modalityAttrMap).forEach(([modalityUpper, attr]) => {
+            map[String(modalityUpper || "").toUpperCase()] = String(attr || "").trim();
+          });
+          setAttributeNameByModality(map);
+        } else {
+          // Backward-compatible fallback (older system-config fields)
+          const modalities = parseCsvOrArray(configData?.allowedBioextractorModalities).map((m) => String(m).toLowerCase());
+          const attributeNames = parseCsvOrArray(configData?.allowedBioextractorAttributeNames);
+
+          setAllowedModalities(modalities);
+
+          const map = {};
+          modalities.forEach((modality, index) => {
+            map[String(modality || "").toUpperCase()] = String(attributeNames[index] || "").trim();
+          });
+          setAttributeNameByModality(map);
+        }
       } catch (error) {
         if (cancelled) return;
         console.error("Error fetching bio-extractor config from system-config:", error);
@@ -116,7 +170,7 @@ function MapBiometricExtractorProvider() {
     rows.length < allowedModalities.length && distinctSelectedModalitiesCount < allowedModalities.length;
 
   const getAttributeName = (modality) => {
-    return attributeNameByModality[String(modality || "").trim()] || "";
+    return attributeNameByModality[String(modality || "").trim().toUpperCase()] || "";
   };
 
   const getConfigDropdownByModality = (rowId, selectedModality) => {

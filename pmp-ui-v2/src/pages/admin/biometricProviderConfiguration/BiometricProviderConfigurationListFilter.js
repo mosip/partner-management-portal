@@ -13,12 +13,60 @@ import {
 import { getUserProfile } from "../../../services/UserProfileService";
 import { getAppConfig } from "../../../services/ConfigService";
 
-const parseModalitiesFromConfig = (configData) => {
-  const raw = configData?.allowedBioextractorModalities;
-
+const parseCsvOrArray = (raw) => {
   const list = Array.isArray(raw) ? raw : typeof raw === "string" ? raw.split(",") : [];
-  const normalized = list.map((m) => String(m || "").trim()).filter(Boolean);
-  return Array.from(new Set(normalized));
+  return list.map((v) => String(v || "").trim()).filter(Boolean);
+};
+
+const parseModalityAttributeNameMapFromConfig = (configData) => {
+  const raw =
+    configData?.allowedBioextractorModalitiesAttributeNameMap ??
+    configData?.allowedBioextractorModalitiesAttributeNameMapString ??
+    configData?.allowedBioextractorModalityAttributeNameMap ??
+    configData?.allowedBioextractorModalityAttributeNameMapString ??
+    configData?.["mosip.pms.bioextractor.allowed.modalities.attribute.name.map"];
+
+  const result = {};
+  const rawStr = typeof raw === "string" ? raw.trim() : "";
+
+  if (raw && typeof raw === "object" && !Array.isArray(raw) && !rawStr) {
+    Object.entries(raw).forEach(([k, v]) => {
+      const modality = String(k || "").trim();
+      if (!modality) return;
+      result[modality.toUpperCase()] = String(v || "").trim();
+    });
+    return result;
+  }
+
+  if (!rawStr) return result;
+
+  rawStr
+    .split(",")
+    .map((t) => t.trim())
+    .filter(Boolean)
+    .forEach((segment) => {
+      const parts = segment.split(":").map((p) => p.trim()).filter(Boolean);
+      if (parts.length < 2) return;
+      for (let i = 0; i + 1 < parts.length; i += 2) {
+        result[String(parts[i]).toUpperCase()] = String(parts[i + 1] || "").trim();
+      }
+    });
+
+  return result;
+};
+
+const parseModalitiesFromConfig = (configData) => {
+  const map = parseModalityAttributeNameMapFromConfig(configData);
+  const modalitiesFromMap = Object.keys(map)
+    .map((k) => String(k || "").trim())
+    .filter(Boolean)
+    .map((m) => m.toLowerCase());
+
+  if (modalitiesFromMap.length > 0) {
+    return Array.from(new Set(modalitiesFromMap));
+  }
+
+  return Array.from(new Set(parseCsvOrArray(configData?.allowedBioextractorModalities).map((m) => String(m).toLowerCase())));
 };
 
 function BiometricProviderConfigurationListFilter({ onApplyFilter }) {
