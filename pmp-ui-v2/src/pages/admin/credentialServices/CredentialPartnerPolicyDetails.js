@@ -80,13 +80,13 @@ function CredentialPartnerPolicyDetails({
 
     if (noBio && noCredentialType) {
       msg = t("approveRejectPopup.mappingsMissingBoth");
-      code = bioError ? "" : "PMS_PRT_064";
+      code = bioError ? "" : "PMS_PM_051";
     } else if (noBio) {
       msg = bioError || t("partnerPolicyRequestApproveRejectPopup.extractorsNotConfigured");
-      code = bioError ? "" : "PMS_PRT_064";
+      code = bioError ? "" : "PMS_PM_051";
     } else if (noCredentialType) {
       msg = credentialTypeError || t("approveRejectPopup.credentialTypeNotMapped");
-      code = "";
+      code = credentialTypeError ? "" : "PMS_PRT_289";
     }
 
     onApproveBlockedMsgChange?.(msg);
@@ -380,7 +380,7 @@ function CredentialPartnerPolicyDetails({
         </p>
       ) : (
         <p className={`text-base font-semibold text-[#191919] break-words ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>
-          {credentialType || t('statusCodes.notAvailable')}
+          {credentialType || '-'}
         </p>
       )}
     </div>
