@@ -1209,8 +1209,8 @@
         "comments": "Comments",
         "commentPlaceholder": "Write your comment here",
         "mappingsMissingGeneric": "Required biometric extractor and credential type mappings are missing. Please configure them and try again.",
-        "mappingsMissingBoth": "Bio extractors and credential type are not configured for this policy. Please configure them and try again.",
-        "credentialTypeNotMapped": "Credential type is not configured for this policy. Please map a credential type and try again."
+        "mappingsMissingBoth": "This policy cannot be approved as the required Biometric Extractor Provider Configuration and Credential Type mappings are incomplete.",
+        "credentialTypeNotMapped": "This policy cannot be approved as the Credential Type mapping is incomplete."
     },
     "partnerPolicyRequestApproveRejectPopup": {
         "header": "Do you want to Approve/Reject the Policy?",
@@ -1229,7 +1229,7 @@
         "bioExtractorProviderNameLine2": "Provider Name",
         "bioExtractorProviderMapping": "Biometric Extractor Provider Mapping",
         "credentialType": "Credential Type",
-        "noBioExtractors": "No bio extractors found for this policy.",
+        "noBioExtractors": "No Biometric Extractor Provider Configuration has been mapped to this policy.",
         "extractorsNotConfigured": "Bio extractors are not configured. Add bio extractors for this policy."
     },
     "ftmRequestApproveRejectPopup": {
@@ -1396,6 +1396,7 @@
         "PMS_PRT_062": "Partner api key request is approved already. Cann't add extractors now.",
         "PMS_PRT_063": "Biometric extractors can be added only for:",
         "PMS_PRT_064": "No details found",
+        "PMS_PRT_289": "This policy cannot be approved as the Credential Type mapping is incomplete.",
         "PMS_PRT_070": "Credential mapping allowed only for :",
         "PMS_PRT_071": "Error occured while parsing policy string to json object",
         "PMS_PRT_072": "Given credential type is not allowed. Allowed credential types : ",
@@ -1428,7 +1429,7 @@
         "PMS_PM_034": " Policy request already approved.",
         "PMS_PM_035": " Policy request already rejected.",
         "PMS_PM_045": " Status should be either Approved or Rejected",
-        "PMS_PM_051": " Extractors are not present. Please add extractors.",
+        "PMS_PM_051": " This policy cannot be approved as the required Biometric Extractor Provider Configuration and Credential Type mappings are incomplete.",
         "PMS_PM_058": " Status should be either Active or De_Active",
         "PMS_PM_059": "Error while fetching partner details.",
         "PMS_PM_060": "The certificate for the specified partner is not available in the store",
