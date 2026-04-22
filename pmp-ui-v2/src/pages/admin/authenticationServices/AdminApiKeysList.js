@@ -18,6 +18,7 @@ import Pagination from '../../common/Pagination.js';
 import viewIcon from "../../../svg/view_icon.svg";
 import deactivateIcon from "../../../svg/deactivate_icon.svg";
 import disableDeactivateIcon from "../../../svg/disable_deactivate_icon.svg";
+import editIcon from "../../../svg/edit_policy_icon.svg";
 import { useNavigate } from 'react-router-dom';
 import DeactivatePopup from '../../common/DeactivatePopup.js';
 
@@ -34,11 +35,11 @@ function AdminApiKeysList() {
     const [activeAscIcon, setActiveAscIcon] = useState("");
     const [activeDescIcon, setActiveDescIcon] = useState("createdDateTime");
     const [actionId, setActionId] = useState(-1);
-    const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
+    const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(sessionStorage.getItem('itemsPerPage') ? Number(sessionStorage.getItem('itemsPerPage')) : 8);
     const [sortFieldName, setSortFieldName] = useState("createdDateTime");
     const [sortType, setSortType] = useState("desc");
     const [pageNo, setPageNo] = useState(0);
-    const [pageSize, setPageSize] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
+    const [pageSize, setPageSize] = useState(sessionStorage.getItem('itemsPerPage') ? Number(sessionStorage.getItem('itemsPerPage')) : 8);
     const [fetchData, setFetchData] = useState(false);
     const [tableDataLoaded, setTableDataLoaded] = useState(true);
     const [totalRecords, setTotalRecords] = useState(0);
@@ -79,6 +80,7 @@ function AdminApiKeysList() {
         queryParams.append('sortFieldName', sortFieldName);
         queryParams.append('sortType', sortType);
         queryParams.append('pageSize', pageSize);
+        queryParams.append('partnerType', 'Auth_Partner');
 
         //reset page number to 0 if filter applied or page number is out of bounds
         const effectivePageNo = resetPageNumber(totalRecords, pageNo, pageSize, resetPageNo);
@@ -166,9 +168,8 @@ function AdminApiKeysList() {
     const deactivateApiKey = (selectedApiKeyData, index) => {
         if (selectedApiKeyData.status === "activated") {
             const request = createRequest({
-                label: selectedApiKeyData.apiKeyLabel,
-                status: "De-Active"
-            });
+                status: "De-active"
+            }, "mosip.pms.update.api.key.patch", true);
             setActionId(-1);
             setSelectedApiKey(selectedApiKeyData);
             setDeactivateRequest(request);
@@ -181,6 +182,15 @@ function AdminApiKeysList() {
         setSelectedApiKey({});
         setShowActiveIndexDeactivatePopup(null);
         document.body.style.overflow = "auto";
+    };
+
+    const editExpiryDate = (selectedApiKeyData, index) => {
+        if (selectedApiKeyData.status !== "deactivated") {
+            setActionId(-1);
+            // codeql[js/stored-xss]: Data stored in sessionStorage does not contain sensitive information
+            sessionStorage.setItem('selectedApiKeyAttributes', JSON.stringify(selectedApiKeyData));
+            navigate('/partnermanagement/admin/authentication-services/edit-api-key');
+        }
     };
 
     const onClickConfirmDeactivate = (deactivationResponse, selectedApiKey) => {
@@ -196,7 +206,8 @@ function AdminApiKeysList() {
     };
 
     const viewApiKeyRequestDetails = (selectedApiKey) => {
-        localStorage.setItem('selectedApiKeyAttributes', JSON.stringify(selectedApiKey));
+        // codeql[js/stored-xss]: Data stored in sessionStorage does not contain sensitive information
+        sessionStorage.setItem('selectedApiKeyAttributes', JSON.stringify(selectedApiKey));
         navigate('/partnermanagement/admin/authentication-services/view-api-key-details');
     };
 
@@ -307,6 +318,11 @@ function AdminApiKeysList() {
                                                                                             <div role='button' className="flex justify-between hover:bg-gray-100" onClick={() => viewApiKeyRequestDetails(apiKey)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => viewApiKeyRequestDetails(apiKey))}>
                                                                                                 <p id="api_key_list_view_btn" className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerList.view")}</p>
                                                                                                 <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
+                                                                                            </div>
+                                                                                            <hr className="h-px bg-gray-100 border-0 mx-1" />
+                                                                                            <div role='button' className={`flex justify-between hover:bg-gray-100 ${apiKey.status !== 'deactivated' ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => editExpiryDate(apiKey, index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => editExpiryDate(apiKey, index))}>
+                                                                                                <p id="api_key_list_edit_expiry_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${apiKey.status !== 'deactivated' ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("apiKeysList.editExpiryDate") || "Edit Expiry Date"}</p>
+                                                                                                <img src={editIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                             </div>
                                                                                             <hr className="h-px bg-gray-100 border-0 mx-1" />
                                                                                             <div role='button' className={`flex justify-between hover:bg-gray-100 ${apiKey.status === 'activated' ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => deactivateApiKey(apiKey, index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => deactivateApiKey(apiKey, index))}>

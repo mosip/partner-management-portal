@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { isLangRTL, handleMouseClickForDropdown } from '../../../utils/AppUtils';
-import {  } from '../../../utils/AppUtils';
 import { getUserProfile } from '../../../services/UserProfileService';
 import Information from './Information';
 import PropTypes from 'prop-types';
@@ -44,19 +43,37 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
         }
     };
 
+    const handleKeyDown = (e) => {
+        if (!disabled && e.key === 'Enter') {
+            e.preventDefault();
+            openDropdown();
+        }
+    };
+
+    const handleOptionKeyDown = (e, dropdownItemValue) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            changeDropdownSelection(dropdownItemValue);
+        } else if (e.key === 'Escape') {
+            e.preventDefault();
+            setIsDropdownOpen(false);
+        }
+    };
+
     return (
         <div key={fieldName} className={`ml-4 mb-2 ${(styleSet && styleSet.outerDiv) ? styleSet.outerDiv : ''}`}>
-            <label className={`flex items-center text-dark-blue text-sm mb-2 ${(styleSet && styleSet.dropdownLabel) ? styleSet.dropdownLabel : ''} ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
-                <p id={id + '_label'} className={`font-semibold`}>{t(fieldNameKey)}{containsAsterisk && <span className={`text-crimson-red mx-1`}>*</span>}</p>
+            <label className={`flex items-center gap-1 text-dark-blue text-sm mb-2 ${(styleSet && styleSet.dropdownLabel) ? styleSet.dropdownLabel : ''} ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+                <p id={id + '_label'} className="font-semibold text-inherit">{t(fieldNameKey)}{containsAsterisk && <span className={`text-crimson-red mx-1`}>*</span>}</p>
                 {addInfoIcon && (
                     <Information infoKey={infoKey} id={id + '_info'}/>
                 )}
             </label>
 
             <div className="relative w-full" ref={dropdownRef}>
-                <button id={id + '_dropdown_btn'} onClick={openDropdown} disabled={disabled} className={`flex items-center justify-between w-fit h-auto px-2 py-2 border border-[#707070] ${disabled ? 'bg-platinum-gray' : changeDropdownBackground ? 'bg-[#EBEBEB]' : 'bg-white'}
-                 rounded-[4px] text-[15px] ${selectedDropdownEntry ? 'text-[#343434]' : 'text-grayish-blue'} leading-tight
-                    focus:shadow-none overflow-x-auto whitespace-normal no-scrollbar ${(styleSet && styleSet.dropdownButton) ? styleSet.dropdownButton : ''}`} type="button">
+                <button id={id + '_dropdown_btn'} onClick={openDropdown} onKeyDown={handleKeyDown} disabled={disabled} tabIndex={disabled ? -1 : 0} className={`flex items-center justify-between w-full min-h-10 h-auto px-2 py-2 border border-[#C1C1C1] ${disabled ? 'bg-platinum-gray' : changeDropdownBackground ? 'bg-[#EBEBEB]' : 'bg-white'}
+                 rounded-md text-base ${selectedDropdownEntry ? 'text-[#343434]' : 'text-grayish-blue'} leading-tight
+                    outline-none focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1447B2]/35 focus-visible:ring-offset-0 focus-visible:border-[#C1C1C1]
+                    overflow-x-auto whitespace-normal no-scrollbar ${(styleSet && styleSet.dropdownButton) ? styleSet.dropdownButton : ''}`} type="button">
                     <span className='w-full break-all text-wrap text-start'>{
                         selectedDropdownEntry ?
                             dropdownDataList.map(dropdownItem => { return (selectedDropdownEntry === dropdownItem.fieldValue ? dropdownItem.fieldCode : '') })
@@ -68,21 +85,23 @@ function DropdownComponent({ fieldName, dropdownDataList, onDropDownChangeEvent,
                 </button>
                 {isDropdownOpen && (
                     <div className={`z-30 top-10 left-0 w-full ${(styleSet && styleSet.selectionBox) ? styleSet.selectionBox : ''}`}>
-                        <div className="absolute mt-auto z-10 border border-gray-400 scroll-auto bg-white rounded-t-[2px] shadow-lg w-full cursor-pointer">
+                        <div className="absolute mt-auto z-50 border border-[#C1C1C1] scroll-auto bg-white rounded-md shadow-lg w-full cursor-pointer">
                             {dropdownDataList.length === 0 && (
                                 <div className="min-h-3 p-4 cursor-auto">
                                     <p id={id + '_no_data_available'} className="text-base text-dark-blue font-semibold">{t('commons.emptyMsg')}</p>
                                 </div>
                             )}
-                            <div className="max-h-40 overflow-y-auto">
+                            <div className={`max-h-40 overflow-y-auto ${(styleSet && styleSet.optionsList) ? styleSet.optionsList : ''}`}>
                                 {dropdownDataList.map((dropdownItem, index) => {
                                     return (
                                         <div key={index} className="min-h-3">
-                                            <button id={isPlaceHolderPresent ? (index > 0 ? id + '_option' + (index) : undefined) : id + '_option' + (index + 1)}
+                                            <button type="button" id={isPlaceHolderPresent ? (index > 0 ? id + '_option' + (index) : undefined) : id + '_option' + (index + 1)}
                                                 className={`block w-full h-auto px-4 py-1 text-sm text-dark-blue overflow-x-auto whitespace-normal no-scrollbar break-words
                                                     ${isPlaceHolderPresent && index === 0 ? 'text-gray-500' : 'text-dark-blue'}
-                                                    ${selectedDropdownEntry === dropdownItem.fieldValue ? 'bg-gray-100' : 'hover:bg-gray-100'} ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}
-                                                onClick={() => changeDropdownSelection(dropdownItem.fieldValue)}>
+                                                    ${selectedDropdownEntry === dropdownItem.fieldValue ? 'bg-gray-100' : 'hover:bg-gray-100 focus:bg-gray-100 focus:outline-none'} ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}
+                                                onClick={() => changeDropdownSelection(dropdownItem.fieldValue)}
+                                                onKeyDown={(e) => handleOptionKeyDown(e, dropdownItem.fieldValue)}
+                                                tabIndex={0}>
                                                 {dropdownItem.fieldCode}
                                             </button>
                                             <div className="border-gray-200 border-t mx-2"></div>

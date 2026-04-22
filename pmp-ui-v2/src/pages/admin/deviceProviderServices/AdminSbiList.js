@@ -36,11 +36,11 @@ function AdminSbiList() {
     const [activeAscIcon, setActiveAscIcon] = useState("");
     const [activeDescIcon, setActiveDescIcon] = useState("createdDateTime");
     const [actionId, setActionId] = useState(-1);
-    const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
+    const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(sessionStorage.getItem('itemsPerPage') ? Number(sessionStorage.getItem('itemsPerPage')) : 8);
     const [sortFieldName, setSortFieldName] = useState("createdDateTime");
     const [sortType, setSortType] = useState("desc");
     const [pageNo, setPageNo] = useState(0);
-    const [pageSize, setPageSize] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
+    const [pageSize, setPageSize] = useState(sessionStorage.getItem('itemsPerPage') ? Number(sessionStorage.getItem('itemsPerPage')) : 8);
     const [fetchData, setFetchData] = useState(false);
     const [tableDataLoaded, setTableDataLoaded] = useState(true);
     const [showActiveIndexSbiApproveRejectPopUp, setShowActiveIndexSbiApproveRejectPopUp] = useState(null);
@@ -168,7 +168,7 @@ function AdminSbiList() {
     };
 
     const viewSbiDetails = (selectedSbi) => {
-        localStorage.setItem('selectedSbiAttributes', JSON.stringify(selectedSbi));
+        sessionStorage.setItem('selectedSbiAttributes', JSON.stringify(selectedSbi));
         navigate("/partnermanagement/admin/device-provider-services/view-sbi-details");
     };
 
@@ -326,7 +326,7 @@ function AdminSbiList() {
                                                                             <td onClick={() => sbi.status !== 'deactivated' && viewSbiDetails(sbi)} className={`px-2 ${(sbi.status !== 'deactivated' && sbi.sbiExpiryStatus === 'expired') && 'text-crimson-red'}`}>{getStatusCode(sbi.sbiExpiryStatus, t)}</td>
                                                                             <td onClick={() => sbi.status !== 'deactivated' && viewSbiDetails(sbi)} className="px-2">{formatDate(sbi.createdDateTime, "date")}</td>
                                                                             <td onClick={() => sbi.status !== 'deactivated' && viewSbiDetails(sbi)}>
-                                                                                <div className={`${bgOfStatus(sbi.status)} flex min-w-fit w-14 justify-center py-1.5 px-2 mx-2 my-3 text-xs font-semibold rounded-md`}>
+                                                                                <div className={`${bgOfStatus(sbi.status)} flex min-w-fit justify-center py-1.5 px-2 mx-2 my-3 text-xs font-semibold rounded-md`}>
                                                                                     {getStatusCode(sbi.status, t)}
                                                                                 </div>
                                                                             </td>

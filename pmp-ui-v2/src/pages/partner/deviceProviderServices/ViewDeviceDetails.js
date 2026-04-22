@@ -19,7 +19,7 @@ function ViewDeviceDetails() {
     };
 
     useEffect(() => {
-        const selectedSbi = localStorage.getItem('selectedSbiData');
+        const selectedSbi = sessionStorage.getItem('selectedSbiData');
         if (!selectedSbi) {
             setUnexpectedError(true);
             return;
@@ -27,7 +27,7 @@ function ViewDeviceDetails() {
         let sbiData = JSON.parse(selectedSbi);
         setSelectedSbidata(sbiData);
 
-        const deviceData = localStorage.getItem('selectedDeviceData');
+        const deviceData = sessionStorage.getItem('selectedDeviceData');
         if (!deviceData) {
             setUnexpectedError(true);
             return;

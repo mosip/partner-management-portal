@@ -10,18 +10,45 @@ function Information({ infoKey, infoKey1, id }) {
     const { t } = useTranslation();
     const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const [showTooltip, setShowTooltip] = useState(false);
+    const [tooltipPosition, setTooltipPosition] = useState('center');
     const tooltipRef = useRef(null);
+    const iconRef = useRef(null);
 
     useEffect(() => {
         handleMouseClickForDropdown(tooltipRef, () => setShowTooltip(false));
     }, [tooltipRef])
+
+    useEffect(() => {
+        if (showTooltip && iconRef.current) {
+            const iconRect = iconRef.current.getBoundingClientRect();
+            const viewportWidth = window.innerWidth;
+            const tooltipWidth = 200;
+
+            const spaceOnLeft = iconRect.left;
+            const spaceOnRight = viewportWidth - iconRect.right;
+
+            if (spaceOnLeft > 140 && spaceOnRight > 140) {
+                setTooltipPosition('center');
+            } else if (spaceOnRight > 260) {
+                setTooltipPosition('left');
+            } else if (spaceOnLeft > 260) {
+                setTooltipPosition('right');
+            } else {
+                setTooltipPosition('center');
+            }
+        }
+    }, [showTooltip]);
+
+
+
     return (
-        <div>
-            <div ref={tooltipRef} className="absolute mx-2 flex items-center">
+        <div className="relative inline-flex items-center">
+            <div ref={tooltipRef} className="flex items-center">
                 <div
+                    ref={iconRef}
                     id={id}
                     onClick={() => setShowTooltip(!showTooltip)}
-                    className="cursor-pointer h-[13px] w-[13px] ml-1 -mt-1.5"
+                    className="cursor-pointer h-[13px] w-[13px] ml-1 flex-shrink-0"
                     role="button"
                     tabIndex="0"
                     onKeyDown={(e) => e.key === 'Enter' && setShowTooltip(!showTooltip)}
@@ -29,7 +56,16 @@ function Information({ infoKey, infoKey1, id }) {
                     <img src={infoIcon} alt="info" />
                 </div>
                 {showTooltip && (
-                    <div className={`absolute z-20 p-4 w-[20vw] max-w-[300px] max-h-[20vh] overflow-y-auto max-[800px]:h-32 max-[800px]:w-32 shadow-lg bg-white border border-gray-300 rounded ${isLoginLanguageRTL ? 'right-6' : 'left-6'} mt-2`}>
+                    <div
+                        className={`
+                        absolute z-50 p-4 font-normal
+                        w-[min(200px,calc(100vw-4rem))] max-h-[30vh] overflow-y-auto overflow-x-hidden
+                        shadow-lg bg-white border border-gray-300 rounded
+                        ${tooltipPosition === 'left' ? 'left-0' : tooltipPosition === 'right' ? 'right-0' : 'left-1/2 -translate-x-1/2'} top-full mt-2
+                        break-words
+                        ${isLoginLanguageRTL ? 'text-right' : 'text-left'}
+                        `}
+                    >
                         <p id={id + '_info_description'} className="text-black text-sm">{t(infoKey)}</p>
                         {infoKey1 && (
                             <p id={id + '_info_description1'} className="text-black text-sm">{t(infoKey1)}</p>

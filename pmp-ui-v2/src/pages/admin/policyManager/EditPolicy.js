@@ -60,7 +60,7 @@ function EditPolicy() {
         const fetchData = async () => {
             setDataLoaded(false);
             try {
-                const storedPolicyType = localStorage.getItem('activeTab');
+                const storedPolicyType = sessionStorage.getItem('activeTab');
                 if (!storedPolicyType) {
                     console.err('policy Type not found');
                     navigate('/partnermanagement/policy-manager/policy-group-list')
@@ -90,7 +90,7 @@ function EditPolicy() {
                     setConfirmationMessage('editPolicy.mispPolicyConfirmationMessage');
                     setBackLink('/partnermanagement/policy-manager/misp-policies-list');
                 }
-                const selectedPolicyId = localStorage.getItem('policyId');
+                const selectedPolicyId = sessionStorage.getItem('policyId');
                 if (selectedPolicyId) {
                     setPolicyId(selectedPolicyId)
                     let policyInfo = await getPolicyDetails(HttpService, selectedPolicyId, setErrorCode, setErrorMsg, t);
@@ -342,6 +342,7 @@ function EditPolicy() {
                                                         onChange={(e) => handlePolicyDescriptionChange(e)}
                                                         className="w-full min-h-11 h-11 p-3 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-pre-wrap no-scrollbar"
                                                         placeholder={t(policyDescriptionPlaceHolderKey)}
+                                                        data-placeholder-id="policy_description_box_placeholder"
                                                         maxLength={256}
                                                     />
                                                     {invalidPolicyDescError && <span id='edit_policy_invalid_policy_description' className="text-sm text-crimson-red font-semibold">{invalidPolicyDescError}</span>}
@@ -381,6 +382,7 @@ function EditPolicy() {
                                                             onChange={(e) => handlePolicyDataChange(e)}
                                                             className="w-full min-h-11 p-3 max-h-80 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-pre-wrap"
                                                             placeholder={t('createPolicy.policyDataDesc')}
+                                                            data-placeholder-id="policy_data_box_placeholder"
                                                             disabled={!policyData}
                                                         />
                                                     </div>

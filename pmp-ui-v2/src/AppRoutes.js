@@ -6,6 +6,8 @@ import PoliciesList from './pages/partner/policies/PoliciesList.js';
 import Dashboard from './pages/dashboard/Dashboard.js';
 import ViewPolicyDetails from './pages/partner/policies/ViewPolicyDetails.js';
 import RequestPolicy from './pages/partner/policies/RequestPolicy';
+import MapBiometricExtractorProvider from './pages/partner/credentialServices/MapBiometricExtractorProvider.js';
+import MapCredentialType from './pages/partner/credentialServices/MapCredentialType.js';
 import OidcClientsList from './pages/partner/authenticationServices/OidcClientsList.js';
 import CreateOidcClient from './pages/partner/authenticationServices/CreateOidcClient.js';
 import ViewOidcClientDetails from './pages/partner/authenticationServices/ViewOidcClientDetails.js';
@@ -40,6 +42,7 @@ import AdminOidcClientsList from './pages/admin/authenticationServices/AdminOidc
 import AdminApiKeysList from './pages/admin/authenticationServices/AdminApiKeysList.js';
 import ViewAdminOidcClientDetails from './pages/admin/authenticationServices/ViewAdminOidcClientDetails.js';
 import ViewAdminApiKeyDetails from './pages/admin/authenticationServices/ViewAdminApiKeyDetails.js';
+import EditAdminApiKey from './pages/admin/authenticationServices/EditAdminApiKey.js';
 import AdminFtmList from './pages/admin/ftmProviderServices/AdminFtmList.js';
 import ViewAdminFtmChipDetails from './pages/admin/ftmProviderServices/ViewAdminFtmChipDetails.js';
 import AdminSbiList from './pages/admin/deviceProviderServices/AdminSbiList.js';
@@ -63,6 +66,10 @@ import MispLicenseList from './pages/admin/mispPartnerServices/MispLicenseList.j
 import GenerateMispLicenseKey from './pages/admin/mispPartnerServices/GenerateMispLicenseKey.js';
 import ViewMispLicenseKey from './pages/admin/mispPartnerServices/ViewMispLicenseKey.js';
 import RegenerateMispLicenseKey from './pages/admin/mispPartnerServices/RegenerateMispLicenseKey.js';
+import ViewMispLicenseKeyNotifications from './pages/admin/notifications/ViewMispLicenseKeyNotifications.js';
+import BiometricProviderConfigurationList from './pages/admin/biometricProviderConfiguration/BiometricProviderConfigurationList.js';
+import CreateBioExtractorConfig from './pages/admin/biometricProviderConfiguration/CreateBioExtractorConfig.js';
+import ViewBioExtractorConfig from './pages/admin/biometricProviderConfiguration/ViewBioExtractorConfig.js';
 
 function AppRoutes() {
 
@@ -98,6 +105,14 @@ function AppRoutes() {
         {
           path: 'policies/request-policy',
           element: <GuardedRoute><MainLayout><RequestPolicy /></MainLayout></GuardedRoute>,
+        },
+        {
+          path: 'policies/map-biometric-extractor-provider',
+          element: <GuardedRoute><MainLayout><MapBiometricExtractorProvider /></MainLayout></GuardedRoute>,
+        },
+        {
+          path: 'policies/map-credential-type',
+          element: <GuardedRoute><MainLayout><MapCredentialType /></MainLayout></GuardedRoute>,
         },
         {
           path: 'authentication-services/oidc-clients-list',
@@ -280,6 +295,10 @@ function AppRoutes() {
           element: <GuardedRoute><MainLayout><ViewAdminApiKeyDetails /></MainLayout></GuardedRoute>
         },
         {
+          path: 'admin/authentication-services/edit-api-key',
+          element: <GuardedRoute><MainLayout><EditAdminApiKey /></MainLayout></GuardedRoute>
+        },
+        {
           path: 'admin/ftm-chip-provider-services/ftm-list',
           element: <GuardedRoute><MainLayout><AdminFtmList /></MainLayout></GuardedRoute>
         },
@@ -336,6 +355,10 @@ function AppRoutes() {
           element: <GuardedRoute><MainLayout><ViewIntermediateTrustNotifications /></MainLayout></GuardedRoute>,
         },
         {
+          path: 'admin/notifications/view-misp-license-key-expiry',
+          element: <GuardedRoute><MainLayout><ViewMispLicenseKeyNotifications /></MainLayout></GuardedRoute>,
+        },
+        {
           path: 'admin/notifications/view-partner-created-items-expiry',
           element: <GuardedRoute><MainLayout><ViewPartnerNotifications /></MainLayout></GuardedRoute>,
         },
@@ -358,6 +381,22 @@ function AppRoutes() {
         {
           path: 'runtimeError',
           element: <RuntimeError />,
+        },
+        {
+          path: 'admin/biometric-provider-configuration/list',
+          loader: () => redirect('/partnermanagement/admin/biometric-provider-configuration-list')
+        },
+        {
+          path: 'admin/biometric-provider-configuration-list',
+          element: <GuardedRoute><MainLayout><BiometricProviderConfigurationList /></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'admin/biometric-provider-configuration/create',
+          element: <GuardedRoute><MainLayout><CreateBioExtractorConfig /></MainLayout></GuardedRoute>
+        },
+        {
+          path: 'admin/biometric-provider-configuration/view',
+          element: <GuardedRoute><MainLayout><ViewBioExtractorConfig /></MainLayout></GuardedRoute>
         },
       ],
     },

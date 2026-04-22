@@ -70,7 +70,7 @@ function RegenerateMispLicenseKey() {
     }, [licenseKeyName, isSubmitClicked]);
 
     useEffect(() => {
-        const data = localStorage.getItem('selectedMispLicenseKey');
+        const data = sessionStorage.getItem('selectedMispLicenseKey');
         if (!data) {
             setUnexpectedError(true);
             return;
@@ -243,7 +243,9 @@ function RegenerateMispLicenseKey() {
                                                             <label id='regenerate_license_key_name_label' className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('generateLicenseKey.mispLicenseKeyName')}<span className="text-crimson-red mx-1">*</span></label>
                                                             <input value={licenseKeyName} onChange={(e) => onChangeLicenseKeyName(e.target.value)} maxLength={128}
                                                                 className="h-10 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
-                                                                placeholder={t('generateLicenseKey.enterLicenseKeyName')} id="regenerate_license_key_name" />
+                                                                placeholder={t('generateLicenseKey.enterLicenseKeyName')}
+                                                                data-placeholder-id="regenerate_license_key_name_placeholder"
+                                                                id="regenerate_license_key_name" />
                                                             {invalidLicenseKeyNameError && <span id='regenerate_license_key_invalid_license_key_name' className="text-sm text-crimson-red font-semibold">{invalidLicenseKeyNameError}</span>}
                                                         </div>
                                                         <CalendarInput

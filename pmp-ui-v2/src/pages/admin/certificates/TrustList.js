@@ -47,10 +47,10 @@ function TrustList({ trustListType, subTitle, downloadBtnName }) {
   const [sortFieldName, setSortFieldName] = useState("uploadedDateTime");
   const [sortType, setSortType] = useState("desc");
   const [pageNo, setPageNo] = useState(0);
-  const [pageSize, setPageSize] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
+  const [pageSize, setPageSize] = useState(sessionStorage.getItem('itemsPerPage') ? Number(sessionStorage.getItem('itemsPerPage')) : 8);
   const [fetchData, setFetchData] = useState(false);
   const [resetPageNo, setResetPageNo] = useState(false);
-  const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
+  const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(sessionStorage.getItem('itemsPerPage') ? Number(sessionStorage.getItem('itemsPerPage')) : 8);
   const [tableDataLoaded, setTableDataLoaded] = useState(true);
   const [totalRecords, setTotalRecords] = useState(0);
   const [applyFilter, setApplyFilter] = useState(false);
@@ -173,7 +173,7 @@ function TrustList({ trustListType, subTitle, downloadBtnName }) {
     }
 
     const requiredData = { breadcrumb, backLink };
-    localStorage.setItem('uploadTrustAttributes', JSON.stringify(requiredData));
+    sessionStorage.setItem('uploadTrustAttributes', JSON.stringify(requiredData));
   };
 
   const viewTrustDetails = (selectedData) => {
@@ -205,7 +205,7 @@ function TrustList({ trustListType, subTitle, downloadBtnName }) {
       backLink
     };
 
-    localStorage.setItem('selectedTrustAttributes', JSON.stringify(requiredData));
+    sessionStorage.setItem('selectedTrustAttributes', JSON.stringify(requiredData));
     navigate(navigateUrl);
   };
 

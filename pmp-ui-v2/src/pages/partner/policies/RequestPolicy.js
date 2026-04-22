@@ -15,6 +15,9 @@ import ApprovePopup from "../../common/ApprovePopup";
 import PropTypes from 'prop-types';
 
 function RequestPolicy() {
+    const userProfile = getUserProfile();
+    const userRoles = (userProfile?.roles ?? '').split(',').map(role => role.trim()).filter(Boolean);
+    const isCredentialPartner = userRoles.includes('CREDENTIAL_PARTNER');
     const navigate = useNavigate();
     const location = useLocation();
     const { t } = useTranslation();
@@ -39,7 +42,11 @@ function RequestPolicy() {
     const [showApprovePopup, setShowApprovePopup] = useState(false);
     const [approveRequest, setApproveRequest] = useState({});
     const [popupData, setPopupData] = useState({});
+    const [partnerTypeDropdownData, setPartnerTypeDropdownData] = useState([]);
+    const [selectedPolicyId, setSelectedPolicyId] = useState("");
 
+    // Determine admin path at the top of component to avoid temporal dead zone
+    const isAdminPath = location.pathname.includes('admin');
     const cancelErrorMsg = () => {
         setErrorMsg("");
     };
@@ -48,20 +55,19 @@ function RequestPolicy() {
         ({ currentLocation, nextLocation }) => {
             if (isSubmitClicked || requestPolicySuccess) {
                 setIsSubmitClicked(false);
-                return false;
+                return false;  
             }
-
             return (
-                (partnerId !== "" || policyName !== "" ||
-                    partnerComment !== "") &&
+                (partnerId !== "" || partnerType !== "" ||
+                    policyName !== "" || partnerComment !== "") &&
                 currentLocation.pathname !== nextLocation.pathname
             );
         }
     );
-
     useEffect(() => {
         const shouldWarnBeforeUnload = () => {
             return partnerId !== "" ||
+                partnerType !== "" ||
                 partnerComment !== "" ||
                 policyName !== "";
         };
@@ -78,32 +84,34 @@ function RequestPolicy() {
         return () => {
             window.removeEventListener('beforeunload', handleBeforeUnload);
         };
-    }, [partnerId, partnerComment, policyName, isSubmitClicked]);
+    }, [partnerId, partnerType, partnerComment, policyName, isSubmitClicked]);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                setDataLoaded(false);
-                // Check if URL contains 'admin'
                 const isAdmin = location.pathname.includes('admin');
-                let apiUrl = '/partners/v3?status=approved&policyGroupAvailable=true';
+
+                // Initialize partner type dropdown data with MISP Partner and ABIS Partner
                 if (isAdmin) {
-                    apiUrl = '/partners/v3?status=approved&partnerType=MISP_Partner';
-                }
-                const response = await HttpService.get(getPartnerManagerUrl(apiUrl, process.env.NODE_ENV));
-                if (response) {
-                    const responseData = response.data;
-                    if (responseData && responseData.response) {
-                        const resData = responseData.response;
-                        setPartnerData(resData);
-                        setPartnerIdDropdownData(createDropdownData('partnerId', '', false, resData, t));
-                    } else {
-                        handleServiceErrors(responseData, setErrorCode, setErrorMsg);
-                    }
+                const partnerTypeData = [
+             {
+                partnerType: "MISP_Partner",
+                description: getPartnerTypeDescription("MISP_Partner", t)
+             },
+             {
+                 partnerType: "ABIS_Partner",
+                 description: getPartnerTypeDescription("ABIS_Partner", t)
+             },
+             {
+                partnerType: "Manual_Adjudication",
+                description: getPartnerTypeDescription("Manual_Adjudication", t)
+             }
+            ];
+                    setPartnerTypeDropdownData(createDropdownData('partnerType', 'description', false, partnerTypeData, t));
                 } else {
-                    setErrorMsg(t('commons.errorInResponse'));
+                    const apiUrl = '/partners/v3?status=approved&policyGroupAvailable=true';
+                    await fetchPartnerList(apiUrl);
                 }
-                setDataLoaded(true);
             } catch (err) {
                 console.error('Error fetching data:', err);
                 if (err.response?.status && err.response.status !== 401) {
@@ -114,6 +122,45 @@ function RequestPolicy() {
         fetchData();
     }, [t]);
 
+    const onChangePartnerType = async (fieldName, selectedValue) => {
+        setPartnerType(selectedValue);
+        setPartnerId("");
+        setPolicyName("");
+        setSelectedPolicyId("");
+        setPolicyGroupName("");
+        setPoliciesDropdownData([]);
+        setPartnerComment("");
+        const apiUrl = `/partners/v3?status=approved&partnerType=${selectedValue}`;
+        await fetchPartnerList(apiUrl);
+    }
+
+    const fetchPartnerList = async (apiUrl) => {
+        try {
+            setDataLoaded(false);
+            const response = await HttpService.get(getPartnerManagerUrl(apiUrl, process.env.NODE_ENV));
+            if (response) {
+                const responseData = response.data;
+                if (responseData && responseData.response) {
+                    const resData = responseData.response;
+                    setPartnerData(resData);
+                    setPartnerIdDropdownData(createDropdownData('partnerId', '', false, resData, t));
+                } else {
+                    handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+                }
+            } else {
+                setErrorMsg(t('commons.errorInResponse'));
+            }
+            setDataLoaded(true);
+        } catch (err) {
+            console.error('Error fetching data:', err);
+            if (err.response?.status && err.response.status !== 401) {
+                setErrorMsg(err.toString());
+            }
+            setDataLoaded(true);
+        }
+    };
+
+
     const onChangePartnerId = async (fieldName, selectedValue) => {
         setPartnerId(selectedValue);
         setPolicyName("");
@@ -121,7 +168,9 @@ function RequestPolicy() {
         const selectedPartner = partnerData.find(item => item.partnerId === selectedValue);
         console.log("Selected Partner Data: ", selectedPartner);
         if (selectedPartner) {
-            setPartnerType(getPartnerTypeDescription(selectedPartner.partnerType, t));
+            if (!isAdminPath) {
+                setPartnerType(getPartnerTypeDescription(selectedPartner.partnerType, t));
+            }
             if (selectedPartner.partnerType === 'MISP_Partner' && isAdminPath) {
                 setPolicyGroupName(selectedPartner.policyGroupName || t('requestPolicy.policyGroupNotAvailable'));
             } else {
@@ -137,6 +186,7 @@ function RequestPolicy() {
         const selectedPolicy = policyList.find(item => item.name === selectedValue);
         if (selectedPolicy) {
             setPolicyName(selectedValue);
+            setSelectedPolicyId(selectedPolicy.policyId || selectedPolicy.id || "");
         }
     };
 
@@ -176,13 +226,13 @@ function RequestPolicy() {
         setPartnerType("");
         setPolicyGroupName("");
         setPolicyName("");
+        setSelectedPolicyId("");
         setPartnerComment("");
         setPoliciesDropdownData([]);
         setInputError("");
     };
 
     // Determine backUrl and cancelUrl based on admin path
-    const isAdminPath = location.pathname.includes('admin');
     const backUrl = isAdminPath ? '/partnermanagement/admin/policy-requests-list' : '/partnermanagement/policies/policies-list';
     const cancelUrl = backUrl;
 
@@ -204,6 +254,29 @@ function RequestPolicy() {
                 const responseData = response.data;
                 if (responseData && responseData.response) {
                     const resData = responseData.response;
+                    if (isCredentialPartner && !isAdminPath) {
+                                            const requestPayload = {
+                                                partnerId,
+                                                partnerType,
+                                                policyGroupName,
+                                                policyName,
+                                                partnerComment,
+                                                policyId: selectedPolicyId
+                                            };
+                                            navigate('/partnermanagement/policies/map-biometric-extractor-provider', {
+                                                state: {
+                                                    partnerId,
+                                                    partnerType,
+                                                    policyGroupName,
+                                                    policyName,
+                                                    policyId: selectedPolicyId,
+                                                    mappingKey: resData.mappingkey,
+                                                    requestPayload
+                                                }
+                                            });
+                                            setDataLoaded(true);
+                                            return;
+                                        }
                     setPopupData(isAdminPath ? {id: resData.mappingkey} : {});
                     const requiredData = {
                         title: "requestPolicy.requestPolicy",
@@ -213,6 +286,7 @@ function RequestPolicy() {
                         subNavigation: isAdminPath ? "viewPolicyRequest.listOfPolicyRequests" : "requestPolicy.policies",
                         customBtnName1: isAdminPath ? "approveRejectPopup.approve" : undefined,
                         customBtnName2: isAdminPath ? "commons.goBack" : undefined,
+                        customBtn2Id: isAdminPath ? "confirmation_go_back_btn": undefined
                     }
                     setConfirmationData(requiredData);
                     setRequestPolicySuccess(true);
@@ -233,7 +307,7 @@ function RequestPolicy() {
     }
 
     const isFormValid = () => {
-        return partnerId && policyName && partnerComment.trim() && !inputError;
+        return partnerId && partnerType && policyName && partnerComment.trim() && !inputError;
     };
 
     const handleCommentChange = (e) => {
@@ -269,7 +343,7 @@ function RequestPolicy() {
 
     const PartnerTypeLabel = ({ isAdmin }) => (
         <div className="flex flex-col w-[48%] max-[450px]:w-full">
-            <label id='request_policy_partner_type_label' className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('requestPolicy.partnerType')}<span className="text-crimson-red">*</span></label>
+            <label id='request_policy_partner_type_label' className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('requestPolicy.partnerType')}<span className="text-crimson-red mx-1">*</span></label>
             <button id='request_policy_partner_type' disabled className="flex items-center justify-between w-full h-auto px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-dark-blue bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
         overflow-x-auto whitespace-normal no-scrollbar" type="button">
                 <span className={`w-full break-words ${(partnerType || isAdmin) ? 'text-dark-blue' : 'text-gray-400'} text-wrap text-start`}>{isAdmin ? t('partnerTypes.mispPartner') : partnerType || t('commons.partnersHelpText')}</span>
@@ -297,7 +371,7 @@ function RequestPolicy() {
     };
 
     return (
-        <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-scroll relative font-inter`}>
+        <div className={`mt-2 w-[100%] ${isLoginLanguageRTL ? "mr-28 ml-5" : "ml-28 mr-5"} overflow-x-auto relative font-inter`}>
             {!dataLoaded && (
                 <LoadingIcon></LoadingIcon>
             )}
@@ -308,16 +382,32 @@ function RequestPolicy() {
                     )}
                     <div className="flex-col mt-5">
                         <Title title='requestPolicy.requestPolicy' subTitle={isAdminPath ? "viewPolicyRequest.listOfPolicyRequests" : 'requestPolicy.policies'} backLink={backUrl} />
+                        {isCredentialPartner && (
+                            <p id='request_policy_mandatory_mapping_msg' className="mt-3 rounded-md border border-[#F7D18D] bg-[#FFF8EA] px-3 py-2 text-sm text-[#684B00]">
+                                {t('requestPolicy.mandatoryMappingBanner')}
+                            </p>
+                        )}
                         {!requestPolicySuccess ?
-                            <div className="w-[100%] bg-snow-white mt-[1%] rounded-lg shadow-md">
-                                <div className="p-7">
+                            <div className="w-[100%] bg-snow-white mt-[1%] rounded-lg shadow-md overflow-visible">
+                                <div className="p-7 overflow-visible">
                                     <p id='request_policy_mandantory_msg' className="text-base text-[#3D4468]">{t('requestPolicy.mandatoryFieldsMsg1')} <span className="text-crimson-red">*</span> {t('requestPolicy.mandatoryFieldsMsg2')}</p>
                                     <form>
                                         <div className="flex flex-col w-full">
                                             <div className="flex flex-row justify-between space-x-4 my-[1%] max-[450px]:flex-col">
                                                 {isAdminPath ?
                                                     <>
-                                                        <PartnerTypeLabel isAdmin={true} />
+                                                        <div className="flex flex-col w-[48%] max-[450px]:w-full">
+                                                            <DropdownComponent
+                                                                fieldName='partnerType'
+                                                                dropdownDataList={partnerTypeDropdownData}
+                                                                onDropDownChangeEvent={onChangePartnerType}
+                                                                fieldNameKey='requestPolicy.partnerType*'
+                                                                placeHolderKey='policies.selectPartnerType'
+                                                                selectedDropdownValue={partnerType}
+                                                                styleSet={styles}
+                                                                id='request_policy_partner_type'>
+                                                            </DropdownComponent>
+                                                        </div>
                                                         <div className="flex flex-col w-[48%] max-[450px]:w-full">
                                                             <DropdownWithSearchComponent
                                                                 fieldName='partnerId'
@@ -329,6 +419,7 @@ function RequestPolicy() {
                                                                 searchKey='commons.search'
                                                                 styleSet={styleForSearch}
                                                                 addInfoIcon
+                                                                disabled={!partnerType}
                                                                 infoKey='requestPolicy.info'
                                                                 id='request_policy_partner_id'>
                                                             </DropdownWithSearchComponent>
@@ -357,7 +448,7 @@ function RequestPolicy() {
                                             <div className="flex flex-row justify-between space-x-4 max-[450px]:flex-col">
                                                 <div className="flex flex-col w-[48%] max-[450px]:w-full">
                                                     <label id='request_policy_policy_group_label' className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('requestPolicy.policyGroup')}
-                                                        <span className="text-crimson-red">*</span>
+                                                        <span className="text-crimson-red mx-1">*</span>
                                                     </label>
                                                     <button id='request_policy_policy_group' disabled className="flex items-center justify-between w-full h-auto px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-dark-blue bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
                                                 overflow-x-auto whitespace-normal no-scrollbar" type="button">
@@ -384,10 +475,10 @@ function RequestPolicy() {
                                             <div className="flex my-[1%]">
                                                 <div className="flex flex-col w-full">
                                                     <label id='request_policy_comment_label' className={`block text-dark-blue text-sm font-semibold mb-1  ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
-                                                        {t('requestPolicy.comments')}<span className="text-crimson-red">*</span>
+                                                        {t('requestPolicy.comments')}<span className="text-crimson-red mx-1">*</span>
                                                     </label>
                                                     <textarea id="request_policy_comment_box" maxLength={500} ref={textareaRef} value={partnerComment} onChange={(e) => handleCommentChange(e)} className="w-full px-2 py-2 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline
-                                                overflow-x-auto whitespace-pre-wrap no-scrollbar" placeholder={t('requestPolicy.commentBoxDesc')}>
+                                                overflow-x-auto whitespace-pre-wrap no-scrollbar" placeholder={t('requestPolicy.commentBoxDesc')} data-placeholder-id="request_policy_comment_box_placeholder">
                                                     </textarea>
                                                     {inputError && <span id='request_policy_invalid_comment' className="text-sm text-crimson-red font-semibold">{inputError}</span>}
                                                 </div>
@@ -400,7 +491,7 @@ function RequestPolicy() {
                                     <button id="request_policies_form_clear_btn" onClick={() => clearForm()} className={`w-40 h-10 mr-3 border-[#1447B2] ${isLoginLanguageRTL ? "mr-2" : "ml-2"} border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.clearForm')}</button>
                                     <div className={`flex flex-row space-x-3 w-full md:w-auto justify-end`}>
                                         <button id="request_policies_form_cancel_btn" onClick={() => clickOnCancel()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.cancel')}</button>
-                                        <button id="request_policies_form_submit_btn" disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>{t('requestPolicy.submit')}</button>
+                                        <button id="request_policies_form_submit_btn" disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>{t(isCredentialPartner && !isAdminPath ? 'requestPolicy.saveAndProceed' : 'requestPolicy.submit')}</button>
                                     </div>
                                 </div>
                             </div>

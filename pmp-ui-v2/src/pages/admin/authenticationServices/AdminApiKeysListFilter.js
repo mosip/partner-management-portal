@@ -1,126 +1,21 @@
-import { useState, useEffect } from "react";
-import DropdownComponent from "../../common/fields/DropdownComponent.js";
-import TextInputComponent from "../../common/fields/TextInputComponent.js";
-import { useTranslation } from "react-i18next";
-import { createDropdownData, getFilterDropdownStyle, getFilterTextFieldStyle, isLangRTL, validateInputRegex } from "../../../utils/AppUtils.js";
-import { getUserProfile } from '../../../services/UserProfileService';
 import PropTypes from 'prop-types';
+import AdminAuthCommonFilter from "./AdminAuthCommonFilter.js";
 
 function AdminApiKeysListFilter({ onApplyFilter }) {
-    const { t } = useTranslation();
-    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
-    const [status, setStatus] = useState([]);
-    const [filters, setFilters] = useState({
-        partnerId: "",
-        orgName: "",
-        policyGroupName: "",
-        policyName: "",
-        apiKeyLabel: "",
-        status: ""
-    });
-    const [invalidPartnerId, setInvalidPartnerId] = useState("");
-    const [invalidOrgName, setInvalidOrgName] = useState("");
-    const [invalidPolicyGroupName, setInvalidPolicyGroupName] = useState("");
-    const [invalidPolicyName, setInvalidPolicyName] = useState("");
-    const [invalidApiKeyLabel, setInvalidApiKeyLabel] = useState("");
-
-    useEffect(() => {
-        const fetchData = async () => {
-            const statusDropdownData = [{ status: 'activated' },{ status: 'deactivated' }];
-            setStatus(
-                createDropdownData("status", "", true, statusDropdownData, t, t("partnerList.selectStatus"))
-            );
-        };
-        fetchData();
-    }, [t]);
-
-    const onFilterChangeEvent = (fieldName, selectedFilter) => {
-        setFilters((prevFilters) => ({
-            ...prevFilters,
-            [fieldName]: selectedFilter
-        }));
-        if (fieldName === 'partnerId') { validateInputRegex(selectedFilter, setInvalidPartnerId, t); }
-        if (fieldName === 'orgName') { validateInputRegex(selectedFilter, setInvalidOrgName, t); }
-        if (fieldName === 'policyGroupName') { validateInputRegex(selectedFilter, setInvalidPolicyGroupName, t); }
-        if (fieldName === 'policyName') { validateInputRegex(selectedFilter, setInvalidPolicyName, t); }
-        if (fieldName === 'apiKeyLabel') { validateInputRegex(selectedFilter, setInvalidApiKeyLabel, t); }
-    };
-
-    const areFiltersEmpty = () => {
-        return Object.values(filters).every(value => value === "") || invalidPartnerId
-        || invalidOrgName || invalidPolicyGroupName || invalidPolicyName || invalidApiKeyLabel;
-    };
-
     return (
-        <div className="flex w-full p-3 justify-start bg-[#F7F7F7] flex-wrap">
-            <TextInputComponent
-                fieldName="partnerId"
-                onTextChange={onFilterChangeEvent}
-                fieldNameKey="oidcClientsList.partnerId"
-                placeHolderKey="partnerList.searchPartnerId"
-                styleSet={getFilterTextFieldStyle()}
-                id="partner_id_filter"
-                inputError={invalidPartnerId}
-            />
-            <TextInputComponent
-                fieldName="orgName"
-                onTextChange={onFilterChangeEvent}
-                fieldNameKey="oidcClientsList.orgName"
-                placeHolderKey="partnerList.searchOrganisation"
-                styleSet={getFilterTextFieldStyle()}
-                id="org_name_filter"
-                inputError={invalidOrgName}
-            />
-            <TextInputComponent
-                fieldName="policyGroupName"
-                onTextChange={onFilterChangeEvent}
-                fieldNameKey="policiesList.policyGroup"
-                placeHolderKey="policiesList.searchPolicyGroup"
-                styleSet={getFilterTextFieldStyle()}
-                id="policy_group_filter"
-                inputError={invalidPolicyGroupName}
-            />
-            <TextInputComponent
-                fieldName="policyName"
-                onTextChange={onFilterChangeEvent}
-                fieldNameKey="oidcClientsList.policyName"
-                placeHolderKey="policiesList.searchPolicyName"
-                styleSet={getFilterTextFieldStyle()}
-                id="policy_name_filter"
-                inputError={invalidPolicyName}
-            />
-            <TextInputComponent
-                fieldName="apiKeyLabel"
-                onTextChange={onFilterChangeEvent}
-                fieldNameKey="apiKeysList.apiKeyName"
-                placeHolderKey="apiKeysList.searchApiKeyName"
-                styleSet={getFilterTextFieldStyle()}
-                id="api_key_name_filter"
-                inputError={invalidApiKeyLabel}
-            />
-            <DropdownComponent
-                fieldName="status"
-                dropdownDataList={status}
-                onDropDownChangeEvent={onFilterChangeEvent}
-                fieldNameKey="partnerList.status"
-                placeHolderKey="partnerList.selectStatus"
-                styleSet={getFilterDropdownStyle()}
-                isPlaceHolderPresent={true}
-                id="status_filter"
-            />
-            <div className={`mt-6 mr-6 ${isLoginLanguageRTL ? "mr-auto" : "ml-auto"}`}>
-                <button
-                    id="apply_filter_btn"
-                    onClick={() => onApplyFilter(filters)}
-                    type="button"
-                    disabled={areFiltersEmpty()}
-                    className={`h-10 text-sm font-semibold px-7 text-white rounded-md ml-6 
-                    ${areFiltersEmpty() ? 'bg-[#A5A5A5] cursor-auto' : 'bg-tory-blue'}`}
-                >
-                    {t("partnerList.applyFilter")}
-                </button>
-            </div>
-        </div>
+        <AdminAuthCommonFilter
+            onApplyFilter={onApplyFilter}
+            statusDropdownData={[{ status: 'activated' }, { status: 'deactivated' }]}
+            statusPlaceholderKey="partnerList.selectStatus"
+            extraTextField={{
+                fieldName: "apiKeyLabel",
+                fieldNameKey: "apiKeysList.apiKeyName",
+                placeHolderKey: "apiKeysList.searchApiKeyName",
+                id: "api_key_name_filter",
+                maxLength: 36,
+            }}
+            applyButtonId="apply_filter_btn"
+        />
     );
 }
 

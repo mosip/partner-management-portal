@@ -33,7 +33,7 @@ function FtmChipCertNotificationFilter( { onApplyFilter }) {
     const handleExpiryDateChange = (newDateStr) => {
         onFilterChangeEvent("expiryDate", newDateStr);
     };
-        
+
     const areFiltersEmpty = () => {
         return Object.values(filters).every(value => value === "") || invalidFtmId || invalidMake || invalidModel;
     };
@@ -53,6 +53,7 @@ function FtmChipCertNotificationFilter( { onApplyFilter }) {
                     placeHolderKey='ftmList.searchFtmId'
                     styleSet={getFilterTextFieldStyle()}
                     id='ftm_chip_cert_expiry_ftm_id_filter'
+                    maxLength={36}
                     inputError={invalidFtmId}
                 />
                 <TextInputComponent
@@ -62,6 +63,7 @@ function FtmChipCertNotificationFilter( { onApplyFilter }) {
                     placeHolderKey='ftmList.searchMake'
                     styleSet={getFilterTextFieldStyle()}
                     id='ftm_chip_cert_expiry_make_filter'
+                    maxLength={36}
                     inputError={invalidMake}
                 />
                 <TextInputComponent
@@ -71,6 +73,7 @@ function FtmChipCertNotificationFilter( { onApplyFilter }) {
                     placeHolderKey='ftmList.searchModel'
                     styleSet={getFilterTextFieldStyle()}
                     id='ftm_chip_cert_expiry_model_filter'
+                    maxLength={36}
                     inputError={invalidModel}
                 />
                 <CalendarInput
@@ -83,6 +86,7 @@ function FtmChipCertNotificationFilter( { onApplyFilter }) {
                     isUsedAsFilter={true}
                     styleSet={calenderStyleSet}
                     placeholderText={t('partnerCertificatesList.searchExpiryDate')}
+                    placeholderId="ftm_chip_cert_expiry_date_calender_placeholder"
                     id='ftm_chip_cert_expiry_date_calender'
                 />
                 <div className={`mt-6 mr-6 ${isLoginLanguageRTL ? "mr-auto" : "ml-auto"}`}>

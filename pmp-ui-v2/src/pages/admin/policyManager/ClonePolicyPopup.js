@@ -5,8 +5,9 @@ import LoadingIcon from '../../common/LoadingIcon.js';
 import PolicyGroupSelector from '../../common/PolicyGroupSelector.js';
 import FocusTrap from 'focus-trap-react';
 import { HttpService } from '../../../services/HttpService.js';
-import { getPolicyManagerUrl, createRequest, getPolicyDetails, handleEscapeKey } from '../../../utils/AppUtils.js';
+import { getPolicyManagerUrl, createRequest, getPolicyDetails, handleEscapeKey, isLangRTL } from '../../../utils/AppUtils.js';
 import SuccessMessage from '../../common/SuccessMessage.js';
+import { getUserProfile } from '../../../services/UserProfileService.js';
 import closeIcon from "../../../svg/close_icon.svg";
 import PropTypes from 'prop-types';
 
@@ -17,6 +18,7 @@ function ClonePolicyPopup ({policyDetails, closePopUp}) {
     const [successMsg, setSuccessMsg] = useState("");
     const [cloneSuccess, setCloneSccesss] = useState(false);
     const [dataLoaded, setDataLoaded] = useState(true);
+    const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
     const { t } = useTranslation();
 
     useEffect(() => {
@@ -143,7 +145,7 @@ function ClonePolicyPopup ({policyDetails, closePopUp}) {
                                 <SuccessMessage id='clone_policy_popup_success_msg' successMsg={successMsg} clickOnCancel={cancelSuccessMsg} customStyle={customStyle}/>
                             )}
                             <div className="py-2 px-6">
-                                <p id='clone_policy_popup_description' className="text-sm font-normal text-[#414141] break-words">{t('clonePolicyPopup.description1')} 
+                                <p id='clone_policy_popup_description' className={`text-sm ${isLoginLanguageRTL ? 'text-right' : 'text-left'} font-normal text-[#414141] break-words`}>{t('clonePolicyPopup.description1')} 
                                     <span className="font-bold"> {policyDetails.policyName}</span> {t('clonePolicyPopup.description2')}
                                 </p>
                             </div>

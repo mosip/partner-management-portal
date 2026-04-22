@@ -30,6 +30,7 @@ import PolicyRequestsListFilter from "./PolicyRequestsListFilter";
 import approveRejectIcon from "../../../svg/approve_reject_icon.svg";
 import disabledApproveRejectIcon from "../../../svg/approve_reject_disabled_icon.svg";
 import ApproveRejectPopup from "../../common/ApproveRejectPopup";
+import CredentialPartnerPolicyDetails from "../credentialServices/CredentialPartnerPolicyDetails";
 
 function PolicyRequestsList() {
   const { t } = useTranslation();
@@ -44,11 +45,11 @@ function PolicyRequestsList() {
   const [activeSortAsc, setActiveSortAsc] = useState("");
   const [activeSortDesc, setActiveSortDesc] = useState("createdDateTime");
   const [viewPartnerId, setViewPartnersId] = useState(-1);
-  const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
+  const [selectedRecordsPerPage, setSelectedRecordsPerPage] = useState(sessionStorage.getItem('itemsPerPage') ? Number(sessionStorage.getItem('itemsPerPage')) : 8);
   const [sortFieldName, setSortFieldName] = useState("createdDateTime");
   const [sortType, setSortType] = useState("desc");
   const [pageNo, setPageNo] = useState(0);
-  const [pageSize, setPageSize] = useState(localStorage.getItem('itemsPerPage') ? Number(localStorage.getItem('itemsPerPage')) : 8);
+  const [pageSize, setPageSize] = useState(sessionStorage.getItem('itemsPerPage') ? Number(sessionStorage.getItem('itemsPerPage')) : 8);
   const [triggerServerMethod, setTriggerServerMethod] = useState(false);
   const [totalRecords, setTotalRecords] = useState(0);
   const [tableDataLoaded, setTableDataLoaded] = useState(true);
@@ -152,7 +153,7 @@ function PolicyRequestsList() {
   }
 
   const viewPartnerPolicyRequestDetails = (selectedPartnerPolicyRequest) => {
-    localStorage.setItem('selectedPartnerPolicyRequest', JSON.stringify(selectedPartnerPolicyRequest));
+    sessionStorage.setItem('selectedPartnerPolicyRequest', JSON.stringify(selectedPartnerPolicyRequest));
     navigate('/partnermanagement/admin/view-policy-request');
   };
 
@@ -359,6 +360,24 @@ function PolicyRequestsList() {
                                                   subtitle={`# ${selectedPolicyRequest.policyId}`}
                                                   header={t('partnerPolicyRequestApproveRejectPopup.header')}
                                                   description={t('partnerPolicyRequestApproveRejectPopup.description')}
+                                                  renderPolicyDetails={
+                                                    String(selectedPolicyRequest?.partnerType ?? '').toUpperCase() === 'CREDENTIAL_PARTNER'
+                                                      ? ({ t, isLoginLanguageRTL, popupData, onLoadingChange, onApproveBlockedChange, getPartnerTypeDescription }) => (
+                                                          <CredentialPartnerPolicyDetails
+                                                            t={t}
+                                                            isLoginLanguageRTL={isLoginLanguageRTL}
+                                                            partnerId={popupData?.partnerId}
+                                                            policyId={popupData?.policyId}
+                                                            requestId={popupData?.id ?? ""}
+                                                            partnerTypeLabel={getPartnerTypeDescription(popupData?.partnerType, t) ?? popupData?.partnerType ?? '-'}
+                                                            enabled={true}
+                                                            variant="popup"
+                                                            onLoadingChange={onLoadingChange}
+                                                            onApproveBlockedChange={onApproveBlockedChange}
+                                                          />
+                                                        )
+                                                      : undefined
+                                                  }
                                                 />
                                               }
                                             </div>

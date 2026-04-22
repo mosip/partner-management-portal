@@ -25,7 +25,7 @@ function ViewTrustDetails() {
     const [viewCertDetails, setViewCertDetails] = useState(true);
 
     useEffect(() => {
-        const data = localStorage.getItem('selectedTrustAttributes')
+        const data = sessionStorage.getItem('selectedTrustAttributes')
         if (!data) {
             setUnexpectedError(true);
             return;

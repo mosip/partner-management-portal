@@ -3,6 +3,7 @@ import { Trans } from "react-i18next";
 import { HttpService } from "../services/HttpService";
 import { getLoginRedirectUrl } from "../services/LoginRedirectService";
 import { updateHeaderNotifications } from "../notificationsSlice";
+import { v4 as uuidv4 } from 'uuid';
 
 export const formatDate = (dateString, format) => {
     if (!dateString) return '-';
@@ -48,6 +49,7 @@ export const getPartnerTypeDescription = (partnerType, t) => {
         "PRINT_PARTNER": 'partnerTypes.printPartner',
         "INTERNAL_PARTNER": 'partnerTypes.internalPartner',
         "MANUAL_ADJUDICATION": 'partnerTypes.manualAdjudication',
+        "MANUAL_ADJUDICATION_PARTNER": 'partnerTypes.manualAdjudication',
         "PARTNER_ADMIN": 'partnerTypes.partnerAdmin',
     };
 
@@ -60,54 +62,110 @@ export const getPartnerTypeDescription = (partnerType, t) => {
     }
 }
 
-export const getPartnerType = (userProfile) => {
-    // Return partnerType if already present
-    if (userProfile.partnerType) {
-      return userProfile.partnerType;
+/**
+ * Fetches partner types from the backend
+ */
+export const fetchPartnerTypes = async () => {
+    try {
+        const request = createRequest({
+            "filters": [],
+            "pagination": { "pageFetch": 100, "pageStart": 0 },
+            "sort": []
+        });
+
+        const response = await HttpService.post(
+            getPartnerManagerUrl(`/partners/partnertype/search`, process.env.NODE_ENV),
+            request
+        );
+
+        if (response && response.data) {
+            const responseData = response.data;
+            if (responseData.response && responseData.response.data) {
+                const partnerTypeCodes = responseData.response.data
+                    .map(item => item.code)
+                    .filter(Boolean)
+                    .map(code => code.toLowerCase());
+                return new Set(partnerTypeCodes);
+            }
+        }
+
+        console.error('Failed to fetch partner types from backend');
+        return null;
+    } catch (err) {
+        console.error('Error fetching partner types from backend:', err);
+        // Re-throw 403 errors so they can be handled specifically
+        if (err.response?.status === 403) {
+            throw err;
+        }
+        return null;
     }
-  
-    // if partnertype is not present in userProfile then extract it from roles
-    // allowed partner types (same as roles)
-    const validPartnerTypes = new Set([
-      'AUTH_PARTNER',
-      'DEVICE_PROVIDER',
-      'FTM_PROVIDER',
-      'CREDENTIAL_PARTNER',
-      'ONLINE_VERIFICATION_PARTNER',
-      'ABIS_PARTNER',
-      'MISP_PARTNER',
-      'SDK_PARTNER',
-      'PRINT_PARTNER',
-      'INTERNAL_PARTNER',
-      'MANUAL_ADJUDICATION',
-    ]);
+};
 
-    const userRoles = (userProfile.roles ?? '')
-        .split(',')                // turn "A,B,C" into ["A", "B", "C"]
-        .map(role => role.trim())  // remove extra spaces from each role
-        .filter(role => role);     // drop empty entries
+export const getPartnerType = async (userProfile) => {
+    try {
+        // Fetch partner types from backend
+        const validPartnerTypes = await fetchPartnerTypes();
 
-    // Return first role that is a valid partner type
-    return userRoles.find(role => validPartnerTypes.has(role)) ?? null;
-  }; 
+        if (!validPartnerTypes) {
+            return null;
+        }
+
+        const userRoles = (userProfile.roles ?? '')
+            .split(',')                // turn "A,B,C" into ["A", "B", "C"]
+            .map(role => role.trim())  // remove extra spaces from each role
+            .filter(role => role);     // drop empty entries
+
+        // Return first role that is a valid partner type (case-insensitive)
+        return userRoles.find(role => validPartnerTypes.has(role.toLowerCase())) ?? null;
+    } catch (err) {
+        // Re-throw 403 errors so they can be handled specifically
+        if (err.response?.status === 403) {
+            throw err;
+        }
+        return null;
+    }
+};
 
 export const getLanguageLabel = (languageCode, t) => {
     const languageMap = {
-        "eng": 'languages.english',
-        "hin": 'languages.hindi',
-        "ara": 'languages.arabic',
-        "fra": 'languages.french',
-        "tam": 'languages.tamil',
-        "kan": 'languages.kannada'
+        "eng": "English",
+        "hin": "हिन्दी",
+        "ara": "العربية",
+        "fra": "Français",
+        "tam": "தமிழ்",
+        "kan": "ಕನ್ನಡ"
     };
 
     if (languageCode) {
         const languageLabel = languageMap[languageCode.toLowerCase()];
         if (languageLabel) {
-            return t(languageLabel);
+            return languageLabel;
         }
     }
     return languageCode; // fallback to code if no translation found
+}
+
+export const getLanguageDisplayName = (languageCode, t) => {
+    if (languageCode === '@none' || languageCode === 'default') {
+        return t('createOidcClient.default');
+    }
+
+    const displayNameMap = {
+        "eng": "English",
+        "hin": "हिन्दी",
+        "ara": "العربية",
+        "fra": "Français",
+        "tam": "தமிழ்",
+        "kan": "ಕನ್ನಡ"
+    };
+
+    if (languageCode) {
+        const displayName = displayNameMap[languageCode.toLowerCase()];
+        if (displayName) {
+            return displayName;
+        }
+    }
+    return languageCode; // fallback to code if no display name found
 }
 
 export const getStatusCode = (status, t) => {
@@ -254,7 +312,6 @@ export const moveToMispPartnerServices = (navigate) => {
 };
 
 export const logout = async () => {
-    localStorage.clear();
     sessionStorage.clear();
     let redirectUrl = process.env.NODE_ENV !== 'production' ? '' : window._env_.REACT_APP_PARTNER_MANAGER_API_BASE_URL;
 
@@ -534,6 +591,12 @@ export const getPartnerDomainType = (partnerType) => {
         else if (partnerType === "MISP_Partner".toUpperCase()) {
             return 'MISP';
         }
+        else if (partnerType === "ABIS_Partner".toUpperCase()) {
+            return 'AUTH';
+        }
+        else if (partnerType === "Manual_Adjudication".toUpperCase()) {
+            return 'AUTH';
+        }
         else {
             return 'AUTH';
         }
@@ -701,16 +764,13 @@ export const handleFileChange = (event, setErrorCode, setErrorMsg, setSuccessMsg
     event.target.value = '';
 };
 
-export const getClientNameEng = (clientName) => {
+export const getClientNameDefault = (clientName) => {
     try {
         const jsonObj = JSON.parse(clientName);
-        if (jsonObj['eng']) {
-            return jsonObj['eng'];
-        }
         if (jsonObj['@none']) {
             return jsonObj['@none'];
         }
-        // If neither "eng" nor "@none" is present, return the original string
+        // If "@none" is not present, return the original string
         return clientName;
     } catch {
         // If the string is not a valid JSON, return as it is
@@ -724,25 +784,18 @@ export const populateClientNames = (data) => {
         return {
             ...item,
             clientNameJson: item.clientName,
-            clientNameEng: getClientNameEng(item.clientName)
+            clientNameEng: getClientNameDefault(item.clientName)
         };
     });
     return extractedList;
 };
 
-export const getClientNameLangMap = (clientNameEng, clientNameJson) => {
-    try {
-        const jsonObject = JSON.parse(clientNameJson);
-        const newJsonObject = {};
-        Object.keys(jsonObject).forEach(key => {
-            if (key !== '@none') {
-                newJsonObject[key] = clientNameEng;
-            }
-        });
-        return newJsonObject;
-    } catch {
+export const getClientNameLangMap = (clientName, clientNameLangMap) => {
+    if (clientNameLangMap && typeof clientNameLangMap === 'object' && Object.keys(clientNameLangMap).length > 0) {
+        return clientNameLangMap;
+    } else {
         const newJsonObject = {
-            eng: clientNameEng
+            eng: clientName
         }
         return newJsonObject;
     }
@@ -750,7 +803,7 @@ export const getClientNameLangMap = (clientNameEng, clientNameJson) => {
 
 export const getOidcClientDetails = async (HttpService, clientId, setErrorCode, setErrorMsg) => {
     try {
-        const response = await HttpService.get(getPartnerManagerUrl(`/oauth/client/${clientId}`, process.env.NODE_ENV));
+        const response = await HttpService.get(getPartnerManagerUrl(`/oidc-clients/${clientId}`, process.env.NODE_ENV));
         if (response) {
             const responseData = response.data;
             if (responseData && responseData.response) {
@@ -932,14 +985,14 @@ export const handleKeymanagerErrors = (responseData, setErrorCode, setErrorMsg, 
         const errorCode = responseData.errors[0].errorCode;
         const errorMessage = responseData.errors[0].message;
         if (errorCode === "PMS_KKS_001") {
-          setErrorMsg(t('trustList.errorWhileDownloadingCertificate'));
+            setErrorMsg(t('trustList.errorWhileDownloadingCertificate'));
         } else {
-          setErrorCode(errorCode);
-          setErrorMsg(errorMessage);
+            setErrorCode(errorCode);
+            setErrorMsg(errorMessage);
         }
         console.error('Error:', errorMessage);
     }
-  }
+}
 
 export const setSubmenuRef = (refArray, index) => (el) => {
     if (el) refArray.current[index] = el;
@@ -967,6 +1020,78 @@ export const isOidcClientAvailable = async () => {
     }
 };
 
+export const isOidcClientAdditionalInfoRequired = async () => {
+    try {
+        const configData = await getAppConfig();
+        const isRequired = configData.isOidcClientAdditionalInfoRequired === "true" ? true : false;
+        return isRequired;
+    } catch (error) {
+        console.error("Error fetching or parsing app config: ", error);
+        return false;
+    }
+};
+
+export const createDeactivateRequest = async (selectedClientdata, setTableDataLoaded, setDeactivateRequest, setErrorCode, setErrorMsg, t) => {
+    setTableDataLoaded(false);
+    try {
+        const response = await HttpService.get(getPartnerManagerUrl(`/oidc-clients/${selectedClientdata.clientId}`, process.env.NODE_ENV));
+        if (response) {
+            const responseData = response.data;
+            if (responseData && responseData.response) {
+                const clientData = responseData.response;
+                const request = createRequest({
+                    logoUri: clientData.logoUri,
+                    redirectUris: clientData.redirectUris,
+                    status: "INACTIVE",
+                    grantTypes: clientData.grantTypes,
+                    clientName: clientData.name,
+                    clientAuthMethods: clientData.clientAuthMethods,
+                    clientNameLangMap: getClientNameLangMap(clientData.name, clientData.clientNameLangMap)
+                });
+                setDeactivateRequest(request);
+            } else {
+                handleServiceErrors(responseData, setErrorCode, setErrorMsg);
+            }
+        } else {
+            setErrorMsg(t('oidcClientsList.errorInOidcClientsList'))
+        }
+    } catch (err) {
+        console.error('Error fetching data:', err);
+        if (err.response?.status && err.response.status !== 401) {
+            setErrorMsg(err.toString());
+        }
+    }
+    setTableDataLoaded(true);
+};
+
+export const buildClientNameLangMap = (entries, additionalConfigRequired, clientName) => {
+    const langMap = {};
+
+    const applyEntries = () => {
+        entries?.forEach(entry => {
+            if (entry.language && entry.text && entry.text.trim() !== '') {
+                langMap[entry.language] = trimAndReplace(entry.text);
+            }
+        });
+    };
+
+    if (additionalConfigRequired) {
+        // Case 1: Use entries ONLY
+        applyEntries();
+        return langMap;
+    }
+
+    // Case 2: additionalConfigRequired === false
+    applyEntries();
+
+    // If no valid entries found - fallback to English clientName
+    if (Object.keys(langMap).length === 0) {
+        langMap["eng"] = trimAndReplace(clientName);
+    }
+
+    return langMap;
+};
+
 export const isRootIntermediateCertAvailable = async () => {
     try {
         const configData = await getAppConfig();
@@ -978,7 +1103,7 @@ export const isRootIntermediateCertAvailable = async () => {
     }
 };
 
-export const checkCertificateExpired = (expiryDateTime) => { 
+export const checkCertificateExpired = (expiryDateTime) => {
     if (!expiryDateTime) return false; // treat as non expired if no date
 
     const currentUTC = new Date().toISOString(); // current UTC time
@@ -1019,7 +1144,7 @@ export const getWeeklySummaryDescription = (notification, isLoginLanguageRTL, t)
 export const getNotificationDescription = (notification, isLoginLanguageRTL, t) => {
     if (notification.notificationType === 'ROOT_CERT_EXPIRY') {
         return (
-            <Trans 
+            <Trans
                 i18nKey="notificationsTab.rootCertExpiryDescription"
                 values={{
                     certificateId: notification.notificationDetails.certificateDetails[0].certificateId,
@@ -1033,7 +1158,7 @@ export const getNotificationDescription = (notification, isLoginLanguageRTL, t) 
         );
     } else if (notification.notificationType === 'INTERMEDIATE_CERT_EXPIRY') {
         return (
-            <Trans 
+            <Trans
                 i18nKey="notificationsTab.intermediateCertExpiryDescription"
                 values={{
                     certificateId: notification.notificationDetails.certificateDetails[0].certificateId,
@@ -1047,7 +1172,7 @@ export const getNotificationDescription = (notification, isLoginLanguageRTL, t) 
         );
     } else if (notification.notificationType === 'PARTNER_CERT_EXPIRY') {
         return (
-            <Trans 
+            <Trans
                 i18nKey="partnerNotificationsTab.partnerCertExpiryDescription"
                 values={{
                     issuedTo: notification.notificationDetails.certificateDetails[0].issuedTo,
@@ -1060,7 +1185,7 @@ export const getNotificationDescription = (notification, isLoginLanguageRTL, t) 
         );
     } else if (notification.notificationType === 'FTM_CHIP_CERT_EXPIRY') {
         return (
-            <Trans 
+            <Trans
                 i18nKey="viewAllNotifications.ftmChipCertExpiryDescription"
                 values={{
                     make: notification.notificationDetails.ftmDetails[0].make,
@@ -1073,7 +1198,7 @@ export const getNotificationDescription = (notification, isLoginLanguageRTL, t) 
         );
     } else if (notification.notificationType === 'API_KEY_EXPIRY') {
         return (
-            <Trans 
+            <Trans
                 i18nKey="viewAllNotifications.apiKeyExpiryDescription"
                 values={{
                     apiKeyName: notification.notificationDetails.apiKeyDetails[0].apiKeyName,
@@ -1085,7 +1210,7 @@ export const getNotificationDescription = (notification, isLoginLanguageRTL, t) 
         );
     } else if (notification.notificationType === 'SBI_EXPIRY') {
         return (
-            <Trans 
+            <Trans
                 i18nKey="viewAllNotifications.sbiExpiryDescription"
                 values={{
                     sbiId: notification.notificationDetails.sbiDetails[0].sbiId,
@@ -1097,80 +1222,106 @@ export const getNotificationDescription = (notification, isLoginLanguageRTL, t) 
         );
     } else if (notification.notificationType === 'WEEKLY_SUMMARY') {
         return getWeeklySummaryDescription(notification, isLoginLanguageRTL, t);
+    } else if (notification.notificationType === 'MISP_LICENSE_KEY_EXPIRY') {
+        const mispLicenseKeyDetail = notification.notificationDetails?.mispLicenseKeyDetails?.[0] || null;
+        return (
+            <Trans
+                i18nKey="viewAllNotifications.mispLicenseKeyExpiryDescription"
+                values={{
+                    mispLicenseKeyName: mispLicenseKeyDetail?.mispLicenseKeyName || '-',
+                    mispPartnerId: mispLicenseKeyDetail?.mispPartnerId || '-',
+                    expiryDateTime: formatDate(mispLicenseKeyDetail?.expiryDateTime, 'dateInWords')
+                }}
+                components={{ span: <span className={`font-semibold md:whitespace-nowrap md:break-words break-all`} /> }}
+            />
+        );
     }
 };
 
 export const getNotificationPanelDescription = (notification, isLoginLanguageRTL, t) => {
     if (notification.notificationType === 'ROOT_CERT_EXPIRY') {
         return (
-            <Trans 
+            <Trans
                 i18nKey="notificationPopup.rootCertExpiryDescription"
                 values={{
                     certificateId: notification.notificationDetails.certificateDetails[0].certificateId,
                     partnerDomain: notification.notificationDetails.certificateDetails[0].partnerDomain,
                     expiryDateTime: formatDate(notification.notificationDetails.certificateDetails[0].expiryDateTime, 'dateInWords')
                 }}
-                components={{ span: <span className={`font-semibold ${isLoginLanguageRTL && 'whitespace-nowrap'}`} /> }}
+                components={{ span: <span className="font-semibold break-words" /> }}
             />
         );
     } else if (notification.notificationType === 'INTERMEDIATE_CERT_EXPIRY') {
         return (
-            <Trans 
+            <Trans
                 i18nKey="notificationPopup.intermediateCertExpiryDescription"
                 values={{
                     certificateId: notification.notificationDetails.certificateDetails[0].certificateId,
                     partnerDomain: notification.notificationDetails.certificateDetails[0].partnerDomain,
                     expiryDateTime: formatDate(notification.notificationDetails.certificateDetails[0].expiryDateTime, 'dateInWords')
                 }}
-                components={{ span: <span className={`font-semibold ${isLoginLanguageRTL && 'whitespace-nowrap'}`} /> }}
+                components={{ span: <span className="font-semibold break-words" /> }}
             />
         );
     } else if (notification.notificationType === 'PARTNER_CERT_EXPIRY') {
         return (
-            <Trans 
+            <Trans
                 i18nKey="notificationPopup.partnerCertExpiryDescription"
                 values={{
                     partnerDomain: notification.notificationDetails.certificateDetails[0].partnerDomain,
                     expiryDateTime: formatDate(notification.notificationDetails.certificateDetails[0].expiryDateTime, 'dateInWords')
                 }}
-                components={{ span: <span className={`font-semibold ${isLoginLanguageRTL && 'whitespace-nowrap'}`} /> }}
+                components={{ span: <span className="font-semibold break-words" /> }}
             />
         );
     } else if (notification.notificationType === 'FTM_CHIP_CERT_EXPIRY') {
         return (
-            <Trans 
+            <Trans
                 i18nKey="notificationPopup.ftmChipCertExpiryDescription"
                 values={{
                     ftmId: notification.notificationDetails.ftmDetails[0].ftmId,
                     expiryDateTime: formatDate(notification.notificationDetails.ftmDetails[0].expiryDateTime, 'dateInWords')
                 }}
-                components={{ span: <span className={`font-semibold ${isLoginLanguageRTL && 'whitespace-nowrap'}`} /> }}
+                components={{ span: <span className="font-semibold break-words" /> }}
             />
         );
     } else if (notification.notificationType === 'API_KEY_EXPIRY') {
         return (
-            <Trans 
+            <Trans
                 i18nKey="notificationPopup.apiKeyExpiryDescription"
                 values={{
                     apiKeyName: notification.notificationDetails.apiKeyDetails[0].apiKeyName,
                     expiryDateTime: formatDate(notification.notificationDetails.apiKeyDetails[0].expiryDateTime, 'dateInWords')
                 }}
-                components={{ span: <span className={`font-semibold ${isLoginLanguageRTL && 'whitespace-nowrap'}`} /> }}
+                components={{ span: <span className="font-semibold break-words" /> }}
             />
         );
     } else if (notification.notificationType === 'SBI_EXPIRY') {
         return (
-            <Trans 
+            <Trans
                 i18nKey="notificationPopup.sbiExpiryDescription"
                 values={{
                     sbiId: notification.notificationDetails.sbiDetails[0].sbiId,
                     expiryDateTime: formatDate(notification.notificationDetails.sbiDetails[0].expiryDateTime, 'dateInWords')
                 }}
-                components={{ span: <span className={`font-semibold ${isLoginLanguageRTL && 'whitespace-nowrap'}`} /> }}
+                components={{ span: <span className="font-semibold break-words" /> }}
             />
         );
     } else if (notification.notificationType === 'WEEKLY_SUMMARY') {
-        return getWeeklySummaryDescription (notification, isLoginLanguageRTL, t);
+        return getWeeklySummaryDescription(notification, isLoginLanguageRTL, t);
+    } else if (notification.notificationType === 'MISP_LICENSE_KEY_EXPIRY') {
+        const mispLicenseKeyDetail = notification.notificationDetails?.mispLicenseKeyDetails?.[0] || null;
+        return (
+            <Trans
+                i18nKey="notificationPopup.mispLicenseKeyExpiryDescription"
+                values={{
+                    mispLicenseKeyName: mispLicenseKeyDetail?.mispLicenseKeyName || '-',
+                    mispPartnerId: mispLicenseKeyDetail?.mispPartnerId || '-',
+                    expiryDateTime: formatDate(mispLicenseKeyDetail?.expiryDateTime, 'dateInWords')
+                }}
+                components={{ span: <span className="font-semibold break-words" /> }}
+            />
+        );
     }
 };
 
@@ -1189,6 +1340,8 @@ export const getNotificationTitle = (notification, t) => {
         return t('notificationPopup.sbiExpiry');
     } else if (notification.notificationType === 'WEEKLY_SUMMARY') {
         return t('notificationPopup.expiringItems') + " (" + formatDate(notification.createdDateTime, 'dateInWords') + t('notificationPopup.to') + formatDate(getWeeklySummaryDate(notification.createdDateTime), 'dateInWords') + ")";
+    } else if (notification.notificationType === 'MISP_LICENSE_KEY_EXPIRY') {
+        return t('notificationPopup.mispLicenseKeyExpiry');
     }
 };
 
@@ -1257,6 +1410,38 @@ export const fetchNotificationsList = async (dispatch) => {
     }
 };
 
+export const fetchUserConsent = async () => {
+    // Return immediately if consent was already confirmed in this session
+    const userConsent = sessionStorage.getItem('userConsentGiven');
+    if (userConsent === 'true') {
+        return true;
+    }
+
+    // Consent not confirmed yet in this session, so verify from backend
+    try {
+        const response = await HttpService.get(
+            getPartnerManagerUrl('/users/user-consent', process.env.NODE_ENV)
+        );
+
+        if (response?.data?.response) {
+            const consentGiven = response.data.response.consentGiven;
+
+            // Persist only a positive consent decision for the current session
+            if (consentGiven) {
+                sessionStorage.setItem('userConsentGiven', 'true');
+            }
+
+            return consentGiven;
+        }
+
+        return false;
+    } catch (err) {
+        console.error('Error fetching user consent:', err);
+        return false;
+    }
+};
+
+
 export const getOuterDivWidth = (text) => {
     if (text.length > 30) {
         return 'min-w-[21rem]';
@@ -1285,22 +1470,22 @@ export const validateUsernameRegex = (input, setInputError, t) => {
         setInputError("");
         return;
     }
-    
+
     // Check if username starts with a letter (any language)
     const startsWithLetter = /^[\p{L}]/u.test(input);
-    
+
     if (!startsWithLetter) {
         setInputError(t('createPartner.usernameMustStartWithLetter'));
         return;
     }
-    
+
     // Check if the rest of the username contains only valid characters
-    const validPattern = /^[\p{L}][\p{L}\p{N}\p{M}._-]*$/u;
-    
+    const validPattern = /^[\p{L}][\p{L}\p{N}\p{M}@#&()\\_'?!":;=_-]*$/u;
+
     if (validPattern.test(input)) {
         setInputError("");
     } else {
-        setInputError(t('commons.inputError'));
+        setInputError(t('commons.usernameError'));
     }
 }
 
@@ -1309,10 +1494,10 @@ export const validateEmailRegex = (email, setEmailError, t) => {
         setEmailError("");
         return;
     }
-    
+
     // Email validation: alphanumeric characters and symbols ( . _ - +) are allowed. @ is mandatory
     const emailPattern = /^[\w-+]+(\.[\w]+)*@[\w-]+(\.[\w]+)*(\.[a-z]{2,})$/;
-    
+
     if (emailPattern.test(email)) {
         setEmailError("");
     } else {
@@ -1325,10 +1510,10 @@ export const validateContactNumberRegex = (contactNumber, setContactNumberError,
         setContactNumberError("");
         return;
     }
-    
+
     // Contact number validation: only digits, spaces, hyphens, plus signs, and parentheses are allowed
     const contactNumberPattern = /^[0-9\s\-+()]+$/;
-    
+
     if (contactNumberPattern.test(contactNumber)) {
         setContactNumberError("");
     } else {
@@ -1374,5 +1559,184 @@ export const fetchPartnerDetails = async (HttpService, partnerId, setErrorCode, 
             setErrorMsg(err.toString());
         }
         return null;
+    }
+};
+
+// OIDC Client Helper Functions
+/**
+ * Creates a new entry object for language-based fields (client name, purpose title/subtitle)
+ */
+export const createOidcClientEntry = (language, type) => {
+    const baseId = uuidv4();
+    let uniqueId;
+
+    switch (type) {
+        case 'clientName':
+            uniqueId = `oidc_name_${baseId}`;
+            break;
+        case 'purposeTitle':
+            uniqueId = `purpose_title_${baseId}`;
+            break;
+        case 'purposeSubtitle':
+            uniqueId = `purpose_subtitle_${baseId}`;
+            break;
+        default:
+            uniqueId = `entry_${type}_${baseId}`;
+    }
+
+    return {
+        id: uniqueId,
+        language: language,
+        text: ''
+    };
+};
+
+/**
+ * Finds an available language from the dropdown data that hasn't been used
+ */
+export const findAvailableOidcLanguage = (usedLanguages, languageDropdownData) => {
+    return languageDropdownData.find(lang => !usedLanguages.includes(lang.fieldValue));
+};
+
+/**
+ * Validates entry text for language-based fields
+ */
+export const validateOidcEntryText = (value, entry, requiredErrorKey, errors, setErrors, t) => {
+    const newErrors = { ...errors };
+    let inputError = "";
+
+    validateInputRegex(value, (error) => {
+        inputError = error;
+    }, t);
+
+    // Determine which error to show (priority: required > regex)
+    if (value.trim() === '') {
+        newErrors[entry.id] = t(requiredErrorKey);
+    } else if (inputError) {
+        newErrors[entry.id] = inputError;
+    } else {
+        delete newErrors[entry.id];
+    }
+    setErrors(newErrors);
+};
+
+/**
+ * Gets placeholder text based on language code and field type
+ */
+export const getOidcPlaceholderKeyForLanguage = (languageCode, fieldType, t) => {
+    const fallbackKey = `createOidcClient.enter${fieldType}Default`;
+
+    if (!languageCode || languageCode === 'default') {
+        return fallbackKey;
+    }
+
+    const langCode = languageCode.toLowerCase();
+    const placeholderKey = `createOidcClient.enter${fieldType}In${langCode.charAt(0).toUpperCase() + langCode.slice(1)}`;
+    const placeholder = t(placeholderKey);
+    return placeholder === placeholderKey ? fallbackKey : placeholderKey;
+};
+
+export const getOidcPlaceholderIdForLanguage = (languageCode, fieldType) => {
+    const normalizedFieldType = fieldType
+        .replaceAll(/([A-Z])/g, '_$1')
+        .replace(/^_/, '')
+        .toLowerCase();
+    const normalizedLanguage = !languageCode || languageCode === 'default' || languageCode === '@none'
+        ? 'default'
+        : languageCode.toLowerCase();
+
+    return `oidc_client_${normalizedFieldType}_${normalizedLanguage}_placeholder`;
+};
+
+export const getOidcPlaceholderForLanguage = (languageCode, fieldType, t) => {
+    return t(getOidcPlaceholderKeyForLanguage(languageCode, fieldType, t));
+};
+
+/**
+ * Gets available languages for a specific entry, excluding already used languages
+ */
+export const getAvailableOidcLanguages = (currentEntryId, entries, languageDropdownData, excludeDefault = false) => {
+    const currentEntry = entries.find(e => e.id === currentEntryId);
+    const currentLanguage = currentEntry ? currentEntry.language : '';
+    const usedLanguages = entries
+        .filter(e => e.id !== currentEntryId && e.language)
+        .map(e => e.language);
+
+    return languageDropdownData.filter(lang => {
+        if (excludeDefault && lang.fieldValue === 'default') {
+            return false;
+        }
+        return !usedLanguages.includes(lang.fieldValue) || lang.fieldValue === currentLanguage;
+    });
+};
+
+/**
+ * Initializes User Info Response Type dropdown data
+ */
+export const initializeUserInfoResponseTypeDropdown = (t) => {
+    const userInfoResponseTypeData = [
+        { fieldCode: t('createOidcClient.jws'), fieldValue: 'JWS' },
+        { fieldCode: t('createOidcClient.jwe'), fieldValue: 'JWE' }
+    ];
+    // Add blank entry
+    const dropdownData = createDropdownData("fieldValue", "", true, userInfoResponseTypeData, t, t("createOidcClient.selectUserInfoResponseType"));
+
+    const finalData = dropdownData.map(item => {
+        if (item.fieldValue === '') return item; // Keep blank entry as is
+        const originalItem = userInfoResponseTypeData.find(d => d.fieldValue === item.fieldValue);
+        return originalItem ? { ...item, fieldCode: originalItem.fieldCode } : item;
+    });
+    return finalData;
+};
+
+/**
+ * Initializes Purpose Type dropdown data
+ */
+export const initializePurposeTypeDropdown = (t) => {
+    const purposeTypeData = [
+        { fieldCode: t('createOidcClient.login'), fieldValue: 'login' },
+        { fieldCode: t('createOidcClient.link'), fieldValue: 'link' },
+        { fieldCode: t('createOidcClient.verify'), fieldValue: 'verify' }
+    ];
+    // Add blank entry
+    const dropdownData = createDropdownData("fieldValue", "", true, purposeTypeData, t, t("createOidcClient.selectPurposeType"));
+    const finalData = dropdownData.map(item => {
+        if (item.fieldValue === '') return item; // Keep blank entry as is
+        const originalItem = purposeTypeData.find(d => d.fieldValue === item.fieldValue);
+        return originalItem ? { ...item, fieldCode: originalItem.fieldCode } : item;
+    });
+    return finalData;
+};
+
+/**
+ * Initializes Language dropdown data
+ */
+export const initializeLanguageDropdown = async (t) => {
+    try {
+        const appConfig = await getAppConfig();
+        const supportedLanguages = appConfig && appConfig.supportedOidcLanguages;
+        let languageCodes = [];
+        if (Array.isArray(supportedLanguages)) {
+            languageCodes = supportedLanguages;
+        } else if (typeof supportedLanguages === 'string') {
+            languageCodes = supportedLanguages.split(',').map(code => code.trim()).filter(code => code);
+        }
+
+        const languageData = languageCodes.map(langCode => ({
+            languageCode: langCode,
+            name: getLanguageDisplayName(langCode, t)
+        }));
+
+        // Add "Default" option at the beginning
+        const defaultOption = { languageCode: 'default', name: t('createOidcClient.default') };
+        const allLanguages = [defaultOption, ...languageData.map(lang => ({
+            languageCode: lang.languageCode,
+            name: lang.name
+        }))];
+
+        return createDropdownData('languageCode', 'name', false, allLanguages, t);
+    } catch (err) {
+        console.error('Error fetching languages:', err);
+        return [];
     }
 };

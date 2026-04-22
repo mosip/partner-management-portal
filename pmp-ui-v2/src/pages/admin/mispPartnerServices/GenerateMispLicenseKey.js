@@ -287,8 +287,8 @@ function GenerateMispLicenseKey() {
                                     <p id='generate_license_key_mandantory_msg' className="text-base mb-2 text-[#3D4468]">{t('requestPolicy.mandatoryFieldsMsg1')} <span className="text-crimson-red">*</span> {t('requestPolicy.mandatoryFieldsMsg2')}</p>
                                     <form>
                                         <div className="flex flex-col w-full">
-                                            <div className="flex flex-row justify-between space-x-4 my-2 max-[450px]:flex-col">
-                                                <div className="flex flex-col w-[48%] max-[450px]:w-full">
+                                            <div className={`flex flex-row justify-between space-x-4 ${isLoginLanguageRTL && 'space-x-reverse'} my-2 max-450:flex-col max-450:space-x-0 max-450:space-y-4`}>
+                                                <div className="flex flex-col w-[48%] max-450:w-full">
                                                     <DropdownWithSearchComponent
                                                         fieldName='partnerId'
                                                         dropdownDataList={partnerIdDropdownData}
@@ -303,7 +303,7 @@ function GenerateMispLicenseKey() {
                                                         id='generate_license_key_partner_id'>
                                                     </DropdownWithSearchComponent>
                                                 </div>
-                                                <div className="flex flex-col w-[48%] max-[450px]:w-full">
+                                                <div className="flex flex-col w-[48%] max-450:w-full">
                                                     <label id='generate_license_key_partner_type_label' className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('requestPolicy.partnerType')}<span className="text-crimson-red mx-1">*</span></label>
                                                     <button id='generate_license_key_partner_type' disabled className="flex items-center justify-between w-full h-auto px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-dark-blue bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
                                             overflow-x-auto whitespace-normal no-scrollbar" type="button">
@@ -314,11 +314,11 @@ function GenerateMispLicenseKey() {
                                                     </button>
                                                 </div>
                                             </div>
-                                            <div className="flex flex-row justify-between space-x-4 my-2 max-[450px]:flex-col">
-                                                <div className="flex flex-col w-[48%] max-[450px]:w-full">
+                                            <div className={`flex flex-row justify-between space-x-4 ${isLoginLanguageRTL && 'space-x-reverse'} my-2 max-450:flex-col max-450:space-x-0 max-450:space-y-4`}>
+                                                <div className="flex flex-col w-[48%] max-450:w-full">
                                                     <label id='generate_license_key_policy_group_label' className={`flex items-center text-dark-blue text-sm mb-2 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                                                         <p className="font-semibold">{t('requestPolicy.policyGroup')}</p>
-                                                        <Information infoKey="generateLicenseKey.policyGroupInfoMsg" id="generate_license_key_policy_group_info"/>
+                                                        <Information infoKey="generateLicenseKey.policyGroupInfoMsg" id="generate_license_key_policy_group_info" />
                                                     </label>
                                                     <button id='generate_license_key_policy_group' disabled className="flex items-center justify-between w-full h-auto px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-dark-blue bg-platinum-gray leading-tight focus:outline-none focus:shadow-outline
                                             overflow-x-auto whitespace-normal no-scrollbar" type="button">
@@ -328,7 +328,7 @@ function GenerateMispLicenseKey() {
                                                         </svg>
                                                     </button>
                                                 </div>
-                                                <div className="flex flex-col w-[48%] max-[450px]:w-full">
+                                                <div className="flex flex-col w-[48%] max-450:w-full">
                                                     <DropdownWithSearchComponent
                                                         fieldName='policyName'
                                                         dropdownDataList={policiesDropdownData}
@@ -350,13 +350,15 @@ function GenerateMispLicenseKey() {
                                                     <p id='generate_misp_license_key_guidence' className="text-sm font-medium text-[#8B6105]">{t('generateLicenseKey.guidence')}</p>
                                                 </div>
                                             </div>
-                                            <div className="flex flex-row justify-between space-x-4 my-2 max-[450px]:flex-col">
-                                                <div className="flex flex-col w-[48%] max-[450px]:w-full">
+                                            <div className={`flex flex-row justify-between space-x-4 ${isLoginLanguageRTL && 'space-x-reverse'} my-2 max-450:flex-col max-450:space-x-0 max-450:space-y-4`}>
+                                                <div className="flex flex-col w-[48%] max-450:w-full">
                                                     <label id='generate_license_key_name_label' className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>{t('generateLicenseKey.mispLicenseKeyName')}<span className="text-crimson-red mx-1">*</span></label>
                                                     <input value={licenseKeyName} onChange={(e) => onChangeLicenseKeyName(e.target.value)} maxLength={128}
                                                         className="h-10 px-2 py-3 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline overflow-x-auto whitespace-nowrap no-scrollbar"
-                                                        placeholder={t('generateLicenseKey.enterLicenseKeyName')} id="generate_license_key_name" />
-                                                    {invalidLicenseKeyNameError && <span id='generate_license_key_invalid_license_key_name' className="text-sm text-crimson-red font-semibold">{invalidLicenseKeyNameError}</span>}
+                                                        placeholder={t('generateLicenseKey.enterLicenseKeyName')}
+                                                        data-placeholder-id="generate_license_key_name_placeholder"
+                                                        id="generate_license_key_name" />
+                                                        {invalidLicenseKeyNameError && <span id='generate_license_key_invalid_license_key_name' className="text-sm text-crimson-red font-semibold">{invalidLicenseKeyNameError}</span>}
                                                 </div>
                                                 <CalendarInput
                                                     label={t('generateLicenseKey.expirationDuration')}
@@ -381,9 +383,9 @@ function GenerateMispLicenseKey() {
                                     </form>
                                 </div>
                                 <div className="border bg-medium-gray" />
-                                <div className="flex flex-row max-[450px]:flex-col px-[3%] py-5 justify-between max-[450px]:space-y-2">
+                                <div className="flex flex-row max-450:flex-col px-[3%] py-5 justify-between max-450:space-y-2">
                                     <button id="generate_license_key_clear_form" onClick={() => clearForm()} className={`w-40 h-10 mr-3 border-[#1447B2] ${isLoginLanguageRTL ? "mr-2" : "ml-2"} border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.clearForm')}</button>
-                                    <div className={`flex flex-row max-[450px]:flex-col space-x-3 max-[450px]:space-x-0 max-[450px]:space-y-2 w-full md:w-auto justify-end`}>
+                                    <div className={`flex flex-row max-450:flex-col space-x-3 max-450:space-x-0 max-450:space-y-2 w-full md:w-auto justify-end`}>
                                         <button id="generate_license_key_cancel_btn" onClick={() => clickOnCancel()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.cancel')}</button>
                                         <button id="generate_license_key_submit_btn" disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>{t('requestPolicy.submit')}</button>
                                         {(showPopup && !errorMsg) && (
