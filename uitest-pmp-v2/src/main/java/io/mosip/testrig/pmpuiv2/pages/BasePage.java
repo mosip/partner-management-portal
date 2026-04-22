@@ -5,6 +5,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
+import org.openqa.selenium.NoSuchElementException;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -15,6 +16,7 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
@@ -53,6 +55,10 @@ public class BasePage {
 
 	protected void waitForElementClickable(WebElement element) {
 		WaitUtil.waitForClickability(driver, element);
+	}
+
+	protected void waitForElementClickable(By locator) {
+		WaitUtil.waitForClickable(driver, locator);
 	}
 
 	public void clickOnElement(WebElement element) {
@@ -116,11 +122,18 @@ public class BasePage {
 				LogUtil.step("Click intercepted. Falling back to JS click.");
 				jsClick(locator);
 				return;
-
 			} catch (TimeoutException e) {
 				takeScreenshot();
 				throw e;
+			} catch (WebDriverException e) {
+				if (e.getMessage() != null && e.getMessage().contains("does not belong to the document")) {
+					attempts++;
+					LogUtil.step("DOM refreshed. Retrying " + attempts + "/" + STALE_RETRY);
+				} else {
+					throw e;
+				}
 			}
+
 		}
 
 		takeScreenshot();
@@ -240,24 +253,29 @@ public class BasePage {
 
 	public void dropdownWithPosition(WebElement element, String value, int position) throws IOException {
 		LogUtil.action("Selecting dropdown position " + position + " for element: ", element);
+
 		try {
 			waitForElementVisible(element);
 			clickOnElement(element);
-			click(By.xpath("(//*[contains(text(),'" + value + "')])[" + position + "]"));
+
+			click(By.xpath("(//*[normalize-space(text())='" + value + "' and not(contains(@class,'hidden'))])["
+					+ position + "]"));
 			return;
+
 		} catch (StaleElementReferenceException e) {
 			LogUtil.step("Retrying dropdownWithPosition due to stale element");
 			LogUtil.step("Page URL: " + driver.getCurrentUrl());
 			LogUtil.step("Page Title: " + driver.getTitle());
-			click(By.xpath("(//*[contains(text(),'" + value + "')])[" + position + "]"));
+
+			click(By.xpath("(//*[normalize-space(text())='" + value + "' and not(contains(@class,'hidden'))])["
+					+ position + "]"));
 			return;
 		}
-
 	}
 
 	public void dropdownWithPosition(By dropdownLocator, String value, int position) {
 
-		LogUtil.action("Selecting dropdown position " + position + "with locator" + dropdownLocator);
+		LogUtil.action("Selecting dropdown position " + position + " with locator " + dropdownLocator);
 
 		int attempts = 0;
 
@@ -268,7 +286,8 @@ public class BasePage {
 
 				dropdown.click();
 
-				By optionLocator = By.xpath("(//*[contains(text(),'" + value + "')])[" + position + "]");
+				// 🔥 FIX: remove position, target visible dropdown options
+				By optionLocator = By.xpath("//div[contains(@class,'menu')]//*[contains(text(),'" + value + "')]");
 
 				WebElement option = new WebDriverWait(driver, Duration.ofSeconds(ConfigManager.getTimeout()))
 						.until(ExpectedConditions.elementToBeClickable(optionLocator));
@@ -279,8 +298,6 @@ public class BasePage {
 			} catch (StaleElementReferenceException e) {
 				attempts++;
 				LogUtil.step("Retrying dropdownWithPosition due to stale element");
-				LogUtil.step("Page URL: " + driver.getCurrentUrl());
-				LogUtil.step("Page Title: " + driver.getTitle());
 			}
 		}
 
@@ -398,7 +415,6 @@ public class BasePage {
 	public static String getPreAppend() {
 		String preappend = null;
 		try {
-
 			preappend = ConfigManager.getpreappend();
 
 		} catch (Exception e) {
@@ -520,10 +536,16 @@ public class BasePage {
 		try {
 			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(ConfigManager.getTimeout()));
 
-			WebElement element = wait
-					.until(ExpectedConditions.refreshed(ExpectedConditions.visibilityOfElementLocated(locator)));
-			return element.isDisplayed();
-		} catch (TimeoutException | StaleElementReferenceException e) {
+			return wait.until(driver -> {
+				try {
+					WebElement el = driver.findElement(locator);
+					return el.isDisplayed() && el.getSize().getHeight() > 0;
+				} catch (StaleElementReferenceException | NoSuchElementException e) {
+					return false;
+				}
+			});
+
+		} catch (TimeoutException e) {
 			LogUtil.step("Page URL: " + driver.getCurrentUrl());
 			LogUtil.step("Page Title: " + driver.getTitle());
 			return false;
@@ -557,4 +579,13 @@ public class BasePage {
 			throw e;
 		}
 	}
+
+	public void waitScrollAndClick(By option) {
+
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+		WebElement el = wait.until(ExpectedConditions.visibilityOfElementLocated(option));
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", el);
+		((JavascriptExecutor) driver).executeScript("arguments[0].click();", el);
+	}
+
 }

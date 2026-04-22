@@ -4,7 +4,6 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
@@ -230,7 +229,7 @@ public class ApiKeyPage extends BasePage {
 	@FindBy(id = "generate_cancel_btn")
 	private WebElement cancelButton;
 
-	@FindBy(xpath = "//p[contains(text(), 'Entered API Key name already exists. Provide a unique API Key name and submit.')]")
+	@FindBy(id = "generate_api_key_error_msg")
 	private WebElement duplicateApiKeyNameErrorMessage;
 
 	@FindBy(id = "error_close_btn")
@@ -453,15 +452,26 @@ public class ApiKeyPage extends BasePage {
 	}
 
 	public boolean selectPolicyNameDropdown(String value) {
-		clickOnElement(policyNameDropdown);
+		By policyNameDropdown = By.id("generate_policy_name_dropdown_btn");
+		By noDataText = By.xpath("//*[text()='No Data Available']");
+		By policyOptions = By.xpath("//div[@role='listbox']//button");
+		By policyNameOption = By.xpath("//button[.//span[normalize-space()='" + value + "']]");
+
+		click(policyNameDropdown);
 		enter(generatePolicyNameSearchInputBox, value);
+
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+
 		try {
-			WebElement policyNameOption = driver
-					.findElement(By.xpath("//button[.//span[normalize-space(text())='" + value + "']]"));
-			clickOnElement(policyNameOption);
+			// wait until either data loads OR "No Data Available" disappears
+			wait.until(ExpectedConditions.or(ExpectedConditions.invisibilityOfElementLocated(noDataText),
+					ExpectedConditions.numberOfElementsToBeMoreThan(policyOptions, 0)));
+
+			wait.until(ExpectedConditions.elementToBeClickable(policyNameOption)).click();
 			return true;
-		} catch (NoSuchElementException e) {
-			logger.warn("Policy name not found: " + value);
+
+		} catch (TimeoutException e) {
+			logger.warn("Policy name not found or not loaded: " + value);
 			return false;
 		}
 	}

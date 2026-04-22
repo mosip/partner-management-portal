@@ -1,19 +1,14 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
-import io.mosip.testrig.pmpuiv2.utility.WaitUtil;
 
 public class PartnerCertificatePage extends BasePage {
 
@@ -437,6 +432,9 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(id = "dashboard_ftm_chip_provider_card")
 	private WebElement dashboardFtmChipProviderCardDashboard;
 
+	@FindBy(id = "upload_certificate_success_msg")
+	private WebElement certificateUploadSuccessMessage;
+
 	public PartnerCertificatePage(WebDriver driver) {
 		super(driver);
 	}
@@ -587,7 +585,8 @@ public class PartnerCertificatePage extends BasePage {
 	}
 
 	public boolean isDashboardFtmChipProviderCardDisplayed() {
-		return isElementDisplayed(dashboardFtmChipProviderCardDashboard);
+		By dashboardFtmChipProviderCard = By.id("dashboard_ftm_chip_provider_card");
+		return isDisplayed(dashboardFtmChipProviderCard);
 	}
 
 	public boolean isSuccessMessageForFtmCertDisplayed() {
@@ -1274,6 +1273,22 @@ public class PartnerCertificatePage extends BasePage {
 
 	public void uploadPolicyUserClientCertificate() {
 		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "policyUserClient.cer"));
+	}
+
+	public void uploadCertificateMispRootCa() {
+		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "MispRootCA.cer"));
+	}
+
+	public void uploadCertificateMispSubCa() {
+		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "MispIntermediateCA.cer"));
+	}
+
+	public void uploadCertificateMispClient() {
+		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "MipsClient.cer"));
+	}
+
+	public boolean isCertificateUploadSuccessMessageDisplayed() {
+		return isElementDisplayed(certificateUploadSuccessMessage);
 	}
 
 }

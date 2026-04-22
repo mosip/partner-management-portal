@@ -1248,5 +1248,11 @@ public class ListOfDevicesPage extends BasePage {
 	public void clickOnStatusDescIconInAdmin() {
 		clickOnElement(statusDescIconInAdmin);
 	}
+	
+	public boolean isDeviceIdDisplayedInFifthColumnOnSbiDevicePage() {
+	    By deviceIdColumnHeader = By.id("devicesList.deviceId_header");
+	    return isDisplayed(deviceIdColumnHeader);
+	}
+
 
 }

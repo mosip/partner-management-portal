@@ -3,7 +3,6 @@ package io.mosip.testrig.pmpuiv2.pages;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;

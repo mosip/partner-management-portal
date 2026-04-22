@@ -48,7 +48,7 @@ public class DeviceCreationTest extends BaseClass {
 		assertTrue(addDevicePage.isHomeButtonDisplayed(), GlobalConstants.isHomeButtonDisplayed);
 		assertEquals(addDevicePage.getSubTitle(), GlobalConstants.LIST_OF_SBI);
 
-		fillDeviceDetails(GlobalConstants.FACE, GlobalConstants.FULL_FACE, GlobalConstants.AUTOMATION_TEMP,
+		fillDeviceDetail(GlobalConstants.FACE, GlobalConstants.FULL_FACE, GlobalConstants.AUTOMATION_TEMP,
 				GlobalConstants.AUTOMATION_TEMP);
 		addDevicePage.clickOnSubmit();
 		assertTrue(addDevicePage.isSuccessMessageDisplayed(), GlobalConstants.isSuccessMessageDisplayed);
@@ -83,7 +83,7 @@ public class DeviceCreationTest extends BaseClass {
 		addDevicePage.clickOnDeviceType();
 		assertEquals(addDevicePage.isDeviceTypeOptionDisplayed(), false);
 
-		addDevicePage.selectAddDeviceType(GlobalConstants.FACE);
+		addDevicePage.selectAddDeviceType();
 		assertEquals(addDevicePage.getDeviceTypeValue(), GlobalConstants.FACE);
 		assertTrue(addDevicePage.isDeviceSubTypeEnabled(), GlobalConstants.isDeviceSubTypeEnabled);
 
@@ -93,8 +93,9 @@ public class DeviceCreationTest extends BaseClass {
 		assertEquals(addDevicePage.isDeviceSubTypeOptionDisplayed(), false);
 		addDevicePage.selectDeviceSubType(GlobalConstants.FULL_FACE);
 		assertTrue(addDevicePage.isSubmitDisabled(), GlobalConstants.isSubmitButtonDisabled);
+		addDevicePage.clickOnClear();
 
-		fillDeviceDetails(GlobalConstants.FACE, GlobalConstants.FULL_FACE, GlobalConstants.AUTOMATION,
+		fillDeviceDetail(GlobalConstants.FACE, GlobalConstants.FULL_FACE, GlobalConstants.AUTOMATION,
 				GlobalConstants.AUTOMATION);
 		addDevicePage.clickOnClear();
 		assertEquals(addDevicePage.getDeviceTypeValue(), GlobalConstants.INITIAL_DEVICE_TYPE);
@@ -107,7 +108,7 @@ public class DeviceCreationTest extends BaseClass {
 				GlobalConstants.isSpecialCharacterErrorMessageDisplayed);
 		addDevicePage.clickOnClear();
 
-		fillDeviceDetails(GlobalConstants.FACE, GlobalConstants.FULL_FACE, GlobalConstants.AUTOMATION,
+		fillDeviceDetail(GlobalConstants.FACE, GlobalConstants.FULL_FACE, GlobalConstants.AUTOMATION,
 				GlobalConstants.AUTOMATION);
 		addDevicePage.reload();
 //		assertEquals(deviceProviderPage.getAlertText(), GlobalConstants.RELOAD_MESSAGE);
@@ -169,12 +170,12 @@ public class DeviceCreationTest extends BaseClass {
 		addDevices(GlobalConstants.FACE, GlobalConstants.FULL_FACE, GlobalConstants.CHARACTER_WITH_SPACE,
 				GlobalConstants.CHARACTER_WITH_SPACE);
 
-		fillDeviceDetails(GlobalConstants.FACE, GlobalConstants.FULL_FACE, GlobalConstants.CHARACTER_WITH_SPACE,
+		fillDeviceDetail(GlobalConstants.FACE, GlobalConstants.FULL_FACE, GlobalConstants.CHARACTER_WITH_SPACE,
 				GlobalConstants.CHARACTER_WITH_SPACE);
 		addDevicePage.clickOnSubmit();
 		assertEquals(addDevicePage.getDuplicateDeviceErrorMessage(), GlobalConstants.DUPLICATE_DEVICE_ERROR_MESSAGE);
 		addDevicePage.clickOnClear();
-		fillDeviceDetails(GlobalConstants.FACE, GlobalConstants.FULL_FACE, GlobalConstants.AUTOMATION,
+		fillDeviceDetail(GlobalConstants.FACE, GlobalConstants.FULL_FACE, GlobalConstants.AUTOMATION,
 				GlobalConstants.AUTOMATION);
 		addDevicePage.clickOnSubmit();
 		assertTrue(addDevicePage.isSuccessMessageDisplayed(), GlobalConstants.isSuccessMessageDisplayed);
@@ -182,7 +183,7 @@ public class DeviceCreationTest extends BaseClass {
 
 		addDevicePage.clickOnBackToDevices();
 		listOfDevicesPage.clickOnAddDeviceButtonFromDeviceList();
-		fillDeviceDetails(GlobalConstants.FACE, GlobalConstants.FULL_FACE, GlobalConstants.CHARACTER_WITH_SPACE,
+		fillDeviceDetail(GlobalConstants.FACE, GlobalConstants.FULL_FACE, GlobalConstants.CHARACTER_WITH_SPACE,
 				GlobalConstants.CHARACTER_WITH_SPACE);
 		addDevicePage.clickOnBackToDevices();
 		addDevicePage.clickOnProceed();
@@ -519,7 +520,7 @@ public class DeviceCreationTest extends BaseClass {
 		assertTrue(addDevicePage.isHeaderUserProfileDisplayed(), GlobalConstants.isUserProfileIconDisplayed);
 	}
 
-	private void fillDeviceDetails(String deviceType, String deviceSubType, String make, String model) {
+	private void fillDeviceDetail(String deviceType, String deviceSubType, String make, String model) {
 		addDevicePage.selectAddDeviceType(deviceType);
 		addDevicePage.selectDeviceSubType(deviceSubType);
 		addDevicePage.enterMakeName(make);
@@ -528,7 +529,7 @@ public class DeviceCreationTest extends BaseClass {
 	}
 
 	private void addDevices(String deviceType, String deviceSubType, String make, String model) {
-		fillDeviceDetails(deviceType, deviceSubType, make, model);
+		fillDeviceDetail(deviceType, deviceSubType, make, model);
 		addDevicePage.clickOnSubmit();
 		assertTrue(addDevicePage.isSuccessMessageDisplayed(), GlobalConstants.isSuccessMessageDisplayed);
 		addDevicePage.closeSuccessMessage();

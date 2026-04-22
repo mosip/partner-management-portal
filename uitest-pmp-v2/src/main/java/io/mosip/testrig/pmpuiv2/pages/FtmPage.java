@@ -1,5 +1,6 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -189,7 +190,7 @@ public class FtmPage extends BasePage {
 	private WebElement ftmStatusFilterDeactivated;
 
 	@FindBy(id = "status_filter_option3")
-	private WebElement ftmStatusFilterOption3;
+	private WebElement statusFilterOption3;
 
 	@FindBy(xpath = "//*[contains(text(), 'Pending For Approval')]")
 	private WebElement pendingForApproval;
@@ -206,14 +207,14 @@ public class FtmPage extends BasePage {
 	@FindBy(id = "ftm_list_approve_reject_option")
 	private WebElement ftmListApproveRejectOption;
 
-	@FindBy(xpath = "//*[@class='text-sm font-bold']")
-	private WebElement makAndModeTitelForPopup;
+	@FindBy(id = "approve-reject_popup_title")
+	private WebElement approveRejectPopup;
 
-	@FindBy(xpath = "//*[@class='text-base font-semibold text-black']")
-	private WebElement doYouWantToApproveAndRejecPopupHeader;
+	@FindBy(id = "approve-reject_popup_header")
+	private WebElement approveRejectPopupHeader;
 
-	@FindBy(xpath = "//*[@class='text-sm text-[#666666] py-3']")
-	private WebElement pleaseReviewTheFtmChipPopupSubHeader;
+	@FindBy(id = "approve-reject_popup_description")
+	private WebElement approveRejectPopupSubHeader;
 
 	@FindBy(id = "approve_btn")
 	private WebElement approveButton;
@@ -284,7 +285,7 @@ public class FtmPage extends BasePage {
 	@FindBy(id = "certificate_reupload_btn")
 	private WebElement certificateReuploadButton;
 
-	@FindBy(xpath = "//*[@class='font-semibold text-lg text-dark-blue']")
+	@FindBy(id = "page_title")
 	private WebElement manageFtmChipCertText;
 
 	@FindBy(id = "ftm_list_deactivate_option")
@@ -326,11 +327,95 @@ public class FtmPage extends BasePage {
 	@FindBy(id = "status_filter_dropdown_btn")
 	private WebElement statusFilter;
 
-	@FindBy(id = "status_filter_option3")
-	private WebElement statusFilterOption3;
-
 	@FindBy(xpath = "//*[contains(text(), 'No Results Found')]")
 	private WebElement noResultsFound;
+
+	@FindBy(id = "ftm_status_filter_option1")
+	private WebElement ftmStatusFilterOption1;
+
+	@FindBy(id = "ftm_list_view_option")
+	private WebElement ftmListViewOption;
+
+	@FindBy(id = "approve_reject_popup_close_icon")
+	private WebElement approveRejectPopupCloseBtn;
+
+	@FindBy(id = "ftm_status_filter_option2")
+	private WebElement ftmStatusFilterOption2;
+
+	@FindBy(id = "ftm_status_filter_option3")
+	private WebElement ftmStatusFilterOption3;
+
+	@FindBy(id = "ftm_status_filter_option4")
+	private WebElement ftmStatusFilterOption4;
+
+	@FindBy(id = "ftm_status_filter_option5")
+	private WebElement ftmStatusFilterOption5;
+
+	@FindBy(xpath = "//p[@class='text-base leading-snug font-semibold text-black break-words px-[1.5rem]']")
+	private WebElement deactivateTitleForPopup;
+
+	@FindBy(xpath = "//p[@class='text-sm font-semibold text-[#666666] break-normal py-[5%]']")
+	private WebElement deactivateSubTitleForPopup;
+
+	@FindBy(id = "side_nav_ftmDetails_icon")
+	private WebElement ftmDetailsIcon;
+
+	@FindBy(xpath = "//div[contains(text(), 'Created On')]")
+	private WebElement createdOnLabel;
+
+	@FindBy(xpath = "//p[contains(text(), 'FTM Chip certificate is downloaded successfully.')]")
+	private WebElement downloadSuccessMessage;
+
+	@FindBy(xpath = "//h1[contains(text(), 'View FTM Chip Details')]")
+	private WebElement viewFtmChipDetails;
+
+	@FindBy(xpath = "//div[contains(text(), 'Pending For Approval')]")
+	private WebElement pendingForApprovalStatus;
+
+	@FindBy(xpath = "//tr[@id='ftm_list_item1']/td[6]")
+	private WebElement ftmCertDetails;
+
+	@FindBy(xpath = "//tr[@id='ftm_list_item1']/td[6][normalize-space()='']")
+	private WebElement ftmCertDetailsEmpty;
+
+	@FindBy(xpath = "//div[@class='px-[3.5%] py-[2%]']//h3")
+	private WebElement reUploadPopUpTitle;
+
+	@FindBy(xpath = "//input[@value='FTM Chip Provider']")
+	private WebElement reUploadPopUpPartnerTypeName;
+
+	@FindBy(xpath = "//input[@value='FTM']")
+	private WebElement reUploadPopUpPartnerDomain;
+
+	@FindBy(xpath = "//img[contains(@src, 'file_upload_certificate')]")
+	private WebElement reUploadPopUpUploadIcon;
+
+	@FindBy(id = "certificate_upload_cancel_btn")
+	private WebElement reUploadCertCloseBtn;
+
+	@FindBy(xpath = "//button[@disabled and text()='Submit']")
+	private WebElement reUploadCertSubmitBtn;
+
+	@FindBy(id = "remove_certificate_card")
+	private WebElement reUploadCertFetchingMsg;
+
+	@FindBy(xpath = "//*[@id='remove_certificate_card']/h5")
+	private WebElement reUploadCertName;
+
+	@FindBy(id = "remove_certificate_btn")
+	private WebElement reUploadCertRemoveBtn;
+
+	@FindBy(id = "model_desc_icon")
+	private WebElement modelDescIcon;
+
+	@FindBy(id = "model_asc_icon")
+	private WebElement modelAscIcon;
+
+	@FindBy(id = "ftm_partner_id_filter_dropdown_btn")
+	private WebElement ftmPartnerIdFilterDropdownButton;
+
+	@FindBy(id = "deactivate_popup_header")
+	private WebElement deactivatePopup;
 
 	public FtmPage(WebDriver driver) {
 		super(driver);
@@ -665,16 +750,16 @@ public class FtmPage extends BasePage {
 		return isElementDisplayed(DeactivatedText);
 	}
 
-	public boolean isMakAndModeTitelForPopupDisplayed() {
-		return isElementDisplayed(makAndModeTitelForPopup);
+	public boolean isApproveRejectPopupDisplayed() {
+		return isElementDisplayed(approveRejectPopup);
 	}
 
-	public boolean isDoYouWantToApproveAndRejecPopupHeaderDisplayed() {
-		return isElementDisplayed(doYouWantToApproveAndRejecPopupHeader);
+	public boolean isApproveRejectPopupHeaderDisplayed() {
+		return isElementDisplayed(approveRejectPopupHeader);
 	}
 
-	public boolean isPleaseReviewTheFtmChipPopupSubHeaderDisplayed() {
-		return isElementDisplayed(pleaseReviewTheFtmChipPopupSubHeader);
+	public boolean isApproveRejectPopupSubHeaderDisplayed() {
+		return isElementDisplayed(approveRejectPopupSubHeader);
 	}
 
 	public boolean isDeactivateSubmitButtonDisplayed() {
@@ -797,4 +882,230 @@ public class FtmPage extends BasePage {
 	public void clickOnStatusFilter() {
 		clickOnElement(statusFilter);
 	}
+
+	public boolean isFtmIdDisplayedAsFirstColumn() {
+		By ftmIdHeader = By.xpath("(//h6[@id='ftmId'])[1]");
+		return isDisplayed(ftmIdHeader);
+	}
+
+	public boolean isFtmIdDisplayedInThirdColumnOnPartnerAdminPage() {
+		By ftmIdColumnHeader = By.xpath("//table//thead//th[3][.//div[normalize-space()='FTM ID']]");
+		return isDisplayed(ftmIdColumnHeader);
+	}
+
+	public void clickOnFtmStatusFilterOption3() {
+		clickOnElement(ftmStatusFilterOption3);
+	}
+
+	public void clickOnFtmStatusFilterOption4() {
+		clickOnElement(ftmStatusFilterOption4);
+	}
+
+	public void clickOnFtmStatusFilterOption5() {
+		clickOnElement(ftmStatusFilterOption5);
+	}
+
+	public boolean isFtmListDeactivateOptionIsEnabled() {
+		return isElementEnabled(ftmListDeactivateOption);
+	}
+
+	public boolean isDoYouWantToDeactivateFtmChipPopupTitleDisplayed() {
+		return isElementDisplayed(deactivateTitleForPopup);
+	}
+
+	public boolean isonClickingConfirmYourFtmChipDetailsWillBeDeactivatedSubTitleDisplayed() {
+		return isElementDisplayed(deactivateSubTitleForPopup);
+	}
+
+	public boolean isDeactivateCancelButtonDisplayed() {
+		return isElementDisplayed(deactivateCancelButton);
+	}
+
+	public void clickOnSubTitleHomeButton() {
+		clickOnElement(subTitleHomeButton);
+	}
+
+	public boolean isFtmDetailsSideNavIconDisplayed() {
+		return isElementDisplayed(ftmDetailsIcon);
+	}
+
+	public void clickOnFtmDetailsSideNavIcon() {
+		clickOnElement(ftmDetailsIcon);
+	}
+
+	public boolean isCreatedDateDisplayed() {
+		By createdDate = By.xpath("//div[text()='Created On " + PmpTestUtil.todayDateWithoutZeroPadder + "']");
+		return isDisplayed(createdDate);
+	}
+
+	public boolean isCreatedOnLabelDisplayed() {
+		return isElementDisplayed(createdOnLabel);
+	}
+
+	public void clickOnDownloadButton() {
+		clickOnElement(downloadButtonViewPage);
+	}
+
+	public boolean isDownloadSuccessMessageDisplayed() {
+		return isElementDisplayed(downloadSuccessMessage);
+	}
+
+	public boolean isViewFtmChipDetailsTitleDisplayed() {
+		return isElementDisplayed(viewFtmChipDetails);
+	}
+
+	public boolean isPendingForApprovalStatusDisplayed() {
+		return isElementDisplayed(pendingForApprovalStatus);
+	}
+
+	public boolean isFtmCertDetailsNotFound() {
+		return isElementDisplayed(ftmCertDetailsEmpty);
+	}
+
+	public boolean isReUploadPopUpPageTitleDisplayed() {
+		return isElementDisplayed(reUploadPopUpTitle);
+	}
+
+	public boolean isReUploadPopUpPagePartnerTypeNameDisplayed() {
+		return isElementDisplayed(reUploadPopUpPartnerTypeName);
+	}
+
+	public boolean isReUploadPopUpPagePartnerDomainDisplayed() {
+		return isElementDisplayed(reUploadPopUpPartnerDomain);
+	}
+
+	public boolean isReUploadPopUpPageUploadIconDisplayed() {
+		return isElementDisplayed(reUploadPopUpUploadIcon);
+	}
+
+	public boolean isReUploadPopUpPageCloseButtonDisplayed() {
+		return isElementDisplayed(reUploadCertCloseBtn);
+	}
+
+	public boolean isReUploadPopUpPageSubmitButtonDisplayed() {
+		return isElementDisplayed(reUploadCertSubmitBtn);
+	}
+
+	public boolean isReUploadPopUpPagePartnerTypeNameDisabled() {
+		return isElementDisabled(reUploadPopUpPartnerTypeName);
+	}
+
+	public boolean isReUploadPopUpPagePartnerDomainDisabled() {
+		return isElementDisabled(reUploadPopUpPartnerDomain);
+	}
+
+	public boolean isReUploadPopUpPageFetchingCertMsgDisplayed() {
+		return isElementDisplayed(reUploadCertFetchingMsg);
+	}
+
+	public boolean isReUploadCertNameDisplayed() {
+		return isElementDisplayed(reUploadCertName);
+	}
+
+	public boolean isReUploadCertRemoveBtnDisplayed() {
+		return isElementDisplayed(reUploadCertRemoveBtn);
+	}
+
+	public void clickOnReUploadCancelButton() {
+		clickOnElement(reUploadCertCloseBtn);
+	}
+
+	public boolean isReUploadPopUpPageSubmitButtonDisabled() {
+		return isElementDisabled(reUploadCertSubmitBtn);
+	}
+
+	public boolean isReUploadPopUpPageSubmitButtonEnabled() {
+		return isElementEnabled(certificateUploadSubmitButton);
+	}
+
+	public boolean isFtmChipDetailsContextUploadDateTimeUpdated() {
+		return isElementDisplayed(ftmChipDetailsContextUploadDateTime);
+	}
+
+	public void clickOnModelDescIcon() {
+		clickOnElement(modelDescIcon);
+	}
+
+	public boolean isFtmListSortedInDescendingOrder() {
+		return isElementDisplayed(modelDescIcon);
+	}
+
+	public void clickOnModelAscIcon() {
+		clickOnElement(modelAscIcon);
+	}
+
+	public boolean isFtmListSortedInAscendingOrder() {
+		return isElementDisplayed(modelAscIcon);
+	}
+
+	public void clickOnFtmListItem1() {
+		clickOnElement(ftmListItem1);
+	}
+
+	public boolean isFtmList1Displayed() {
+		return isElementDisplayed(ftmListItem1);
+	}
+
+	public boolean isFtmListViewIsEnabled() {
+		return isElementEnabled(ftmListViewOption);
+	}
+
+	public boolean isFtmListApproveRejectOptionIsDisabled() {
+		clickOnFtmListApproveRejectOption();
+		return !isApproveRejectPopupDisplayed();
+	}
+
+	public boolean isFtmListDeactivateOptionIsDisabled() {
+		clickOnFtmListDeactivateOption();
+		return !isDeactivatePopupDisplayed();
+	}
+
+	public void clickOnCertificateUploadButton() {
+		clickOnElement(certificateReuploadButton);
+	}
+
+	public void clickOnTitleBackIcon() {
+		clickOnElement(titleBackIcon);
+	}
+
+	public boolean isApproveRejectCloseButtonDisplayed() {
+		return isElementDisplayed(approveRejectPopupCloseBtn);
+	}
+
+	public boolean isRejectButtonDisplayed() {
+		return isElementDisplayed(rejectButton);
+	}
+
+	public boolean isApproveButtonDisplayed() {
+		return isElementDisplayed(approveButton);
+	}
+
+	public void clickOnApproveRejectCloseButton() {
+		clickOnElement(approveRejectPopupCloseBtn);
+	}
+
+	public void clickOnViewButton() {
+		clickOnElement(ftmListViewOption);
+	}
+
+	public boolean isDownloadButtonViewPageEnabled() {
+		return isElementEnabled(downloadButtonViewPage);
+	}
+
+	public void clickOnFtmStatusFilterOption2() {
+		clickOnElement(ftmStatusFilterOption2);
+	}
+
+	public void clickOnFtmStatusFilterOption1() {
+		clickOnElement(ftmStatusFilterOption1);
+	}
+
+	public void clickOnFtmPartnerIdFilterDropdownButton() {
+		clickOnElement(ftmPartnerIdFilterDropdownButton);
+	}
+
+	public boolean isDeactivatePopupDisplayed() {
+		return isElementDisplayed(deactivatePopup);
+	}
+
 }
