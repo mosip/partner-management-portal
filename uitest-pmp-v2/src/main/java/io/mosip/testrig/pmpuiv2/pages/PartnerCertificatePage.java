@@ -1,16 +1,12 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
-import java.time.Duration;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
+
 import org.openqa.selenium.By;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
 
@@ -433,6 +429,12 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(id = "upload_certificate_popup_title")
 	private WebElement mispPartnerCertificatePopup;
 
+	@FindBy(id = "dashboard_ftm_chip_provider_card")
+	private WebElement dashboardFtmChipProviderCardDashboard;
+
+	@FindBy(id = "upload_certificate_success_msg")
+	private WebElement certificateUploadSuccessMessage;
+
 	public PartnerCertificatePage(WebDriver driver) {
 		super(driver);
 	}
@@ -582,10 +584,9 @@ public class PartnerCertificatePage extends BasePage {
 		clickOnElement(partnerDomainSelectorDropdownOptionFtm);
 	}
 
-	private By dashboardFtmChipProviderCardDashboard = By.id("dashboard_ftm_chip_provider_card");
-
 	public boolean isDashboardFtmChipProviderCardDisplayed() {
-		return isDisplayed(dashboardFtmChipProviderCardDashboard);
+		By dashboardFtmChipProviderCard = By.id("dashboard_ftm_chip_provider_card");
+		return isDisplayed(dashboardFtmChipProviderCard);
 	}
 
 	public boolean isSuccessMessageForFtmCertDisplayed() {
@@ -739,6 +740,14 @@ public class PartnerCertificatePage extends BasePage {
 
 	public boolean isSubmitButtonForAdminDisplayed() {
 		return isElementDisplayed(SubmitButtonForAdmin);
+	}
+
+	public boolean isSubmitButtonForAdminDisabled() {
+		return isElementDisabled(SubmitButtonForAdmin);
+	}
+
+	public boolean isSubmitButtonForAdminEnabled() {
+		return isElementEnabled(SubmitButtonForAdmin);
 	}
 
 	public void clickOnTitleBackButton() {
@@ -1077,26 +1086,26 @@ public class PartnerCertificatePage extends BasePage {
 	}
 
 	public boolean isValidFromDateTimeFormatValid() {
-		String browserTime = trustCertificateContextUploadDateTime.getText();
-		String datePart = browserTime.split(",")[0].trim();
-		DateTimeFormatter dateFormatter = PmpTestUtil.dateFormatter;
+		String uiDateTime = trustCertificateContextUploadDateTime.getText().replaceAll("\\s+", " ").trim();
 
 		try {
-			LocalDate.parse(datePart, dateFormatter);
-			return true;
+			LocalDateTime parsed = LocalDateTime.parse(uiDateTime, PmpTestUtil.browserFormatter);
+			String reformatted = parsed.format(PmpTestUtil.browserFormatter);
+
+			return uiDateTime.equals(reformatted);
 		} catch (DateTimeParseException e) {
 			return false;
 		}
 	}
 
 	public boolean isValidToDateTimeFormatValid() {
-		String browserTime = trustCertificateContextExpiryDateTime.getText();
-		String datePart = browserTime.split(",")[0].trim();
-		DateTimeFormatter dateFormatter = PmpTestUtil.dateFormatter;
+		String uiDateTime = trustCertificateContextExpiryDateTime.getText().replaceAll("\\s+", " ").trim();
 
 		try {
-			LocalDate.parse(datePart, dateFormatter);
-			return true;
+			LocalDateTime parsed = LocalDateTime.parse(uiDateTime, PmpTestUtil.browserFormatter);
+			String reformatted = parsed.format(PmpTestUtil.browserFormatter);
+
+			return uiDateTime.equals(reformatted);
 		} catch (DateTimeParseException e) {
 			return false;
 		}
@@ -1235,15 +1244,15 @@ public class PartnerCertificatePage extends BasePage {
 	}
 
 	public void uploadDeactivateUserRootCaCert() {
-		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "deactivateca.cer"));
+		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "deactivateUserRootCA.cer"));
 	}
 
 	public void uploadDeactivateUserIntermediateCaCert() {
-		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "deactivatesubca.cer"));
+		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "deactivateUserIntermediateCA.cer"));
 	}
 
 	public void uploadDeactivateUserClientCertificate() {
-		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "deactivatesubca.cer"));
+		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "deactivateUserClient.cer"));
 	}
 
 	public void uploadPolicyAdminUserRootCaCert() {
@@ -1255,15 +1264,31 @@ public class PartnerCertificatePage extends BasePage {
 	}
 
 	public void uploadPolicyUserRootCaCert() {
-		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "policyUserCACert.cer"));
+		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "policyUserRootCA.cer"));
 	}
 
 	public void uploadPolicyUserIntermediateCaCert() {
-		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "policyUserInterCACert.cer"));
+		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "policyUserIntermediateCA.cer"));
 	}
 
 	public void uploadPolicyUserClientCertificate() {
-		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "policiesintermidiate.cer"));
+		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "policyUserClient.cer"));
+	}
+
+	public void uploadCertificateMispRootCa() {
+		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "MispRootCA.cer"));
+	}
+
+	public void uploadCertificateMispSubCa() {
+		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "MispIntermediateCA.cer"));
+	}
+
+	public void uploadCertificateMispClient() {
+		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "MipsClient.cer"));
+	}
+
+	public boolean isCertificateUploadSuccessMessageDisplayed() {
+		return isElementDisplayed(certificateUploadSuccessMessage);
 	}
 
 }

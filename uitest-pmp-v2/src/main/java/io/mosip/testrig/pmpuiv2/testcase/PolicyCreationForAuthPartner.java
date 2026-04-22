@@ -13,7 +13,7 @@ import io.mosip.testrig.pmpuiv2.pages.PoliciesPage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
-@Test(dependsOnGroups = {"AuthPartnerCreation"}, groups = {"PolicyCreationForAuthPartner"})
+@Test(dependsOnGroups = { "AuthPartnerCreation" }, groups = { "PolicyCreationForAuthPartner" })
 public class PolicyCreationForAuthPartner extends BaseClass {
 	private BasePage basePage;
 	private DashboardPage dashboardPage;
@@ -87,8 +87,9 @@ public class PolicyCreationForAuthPartner extends BaseClass {
 		policiesPage.enterComments(GlobalConstants.DEFAULT_POLICY);
 		assertTrue(policiesPage.isSubmitButtonDisplayed(), GlobalConstants.isSubmitButtonDisplayed);
 		policiesPage.clickSubmitButton();
-		assertTrue(policiesPage.isPolicySubmittedSuccessfullyDisplayed(), GlobalConstants.isPolicySubmittedSuccessfullyDisplayed);
-		
+		assertTrue(policiesPage.isPolicySubmittedSuccessfullyDisplayed(),
+				GlobalConstants.isPolicySubmittedSuccessfullyDisplayed);
+
 		policiesPage.clickOnHomeButton();
 		dashboardPage.clickOnPoliciesTitle();
 		assertTrue(policiesPage.isListOfPolicyRequestedDisplayed(),
@@ -125,15 +126,19 @@ public class PolicyCreationForAuthPartner extends BaseClass {
 		assertTrue(policiesPage.isPolicyViewPageBackButtonEnabled(), GlobalConstants.isPolicyViewPageBackButtonEnabled);
 		policiesPage.clickOnBackButton();
 
+		assertTrue(policiesPage.isPolicyIdDisplayedInFourthColumnOnPoliciesPage(), GlobalConstants.isPolicyIdDisplayedInFourthColumnOnPoliciesPage);
+		
 		assertTrue(policiesPage.isPartnerIdDescIconDisplayed(), GlobalConstants.isPartnerIdDescIconDisplayed);
 		assertTrue(policiesPage.isPartnerIdAscIconDisplayed(), GlobalConstants.isPartnerIdAscIconDisplayed);
 		assertTrue(policiesPage.isPartnerTypeDescIconDisplayed(), GlobalConstants.isPartnerTypeDescIcon);
 		assertTrue(policiesPage.isPartnerTypeAscIconDisplayed(), GlobalConstants.isPartnerTypeAscIcon);
-		assertTrue(policiesPage.isPolicyGroupNameDescIconDisplayed(), GlobalConstants.isPolicyGroupNameDescIconDisplayed);
+		assertTrue(policiesPage.isPolicyGroupNameDescIconDisplayed(),
+				GlobalConstants.isPolicyGroupNameDescIconDisplayed);
 		assertTrue(policiesPage.isPolicyGroupNameAscIconDisplayed(), GlobalConstants.isPolicyGroupNameAscIconDisplayed);
 		assertTrue(policiesPage.isPolicyNameDescIconDisplayed(), GlobalConstants.isPolicyNameDescIconDisplayed);
 		assertTrue(policiesPage.isPolicyNameAscIconDisplayed(), GlobalConstants.isPolicyNameAscIconDisplayed);
-		assertTrue(policiesPage.isCreatedDateTimeDescIconDisplayed(), GlobalConstants.isCreatedDateTimeDescIconDisplayed);
+		assertTrue(policiesPage.isCreatedDateTimeDescIconDisplayed(),
+				GlobalConstants.isCreatedDateTimeDescIconDisplayed);
 		assertTrue(policiesPage.isCreatedDateTimeAscIconDisplayed(), GlobalConstants.isCreatedDateTimeAscIconDisplayed);
 
 		policiesPage.clickOnFilterButton();
@@ -152,13 +157,14 @@ public class PolicyCreationForAuthPartner extends BaseClass {
 		assertTrue(policiesPage.isTitleBackIconDisplayed(), GlobalConstants.isBackArrow);
 		policiesPage.clickOnTitleBackIcon();
 		assertTrue(policiesPage.isTitleOfPolicyPageDisplayed(), GlobalConstants.isTitleOfPolicyPageDisplayed);
-		assertTrue(policiesPage.isRequestPolicyButtonDisplayed(), GlobalConstants.isRequestPolicyButtonDisplayed);
+		assertTrue(policiesPage.isTabularRequestPolicyButtonDisplayed(),
+				GlobalConstants.isRequestPolicyButtonDisplayed);
 
 		requestPolicy(GlobalConstants.PENDING_POLICY);
 
 		requestPolicy(GlobalConstants.AUTHPOLICY02);
 
-		policiesPage.clickOnRequestPolicyButtonOfTabularPage();
+		policiesPage.clickOnRequestPolicyButton();
 		policiesPage.selectPartnerIdDropdown();
 		policiesPage.enterInvalidPolicyNameDropdown(GlobalConstants.DEACTIVATE_AUTHPOLICY);
 		assertTrue(policiesPage.isNoDataAvailableDisplayed(), GlobalConstants.isNoDataAvailableDisplayed);
@@ -235,6 +241,7 @@ public class PolicyCreationForAuthPartner extends BaseClass {
 	}
 
 	private void filterAndDeactivateAuthPolicy(String policyNameFilterValue) {
+		authPolicyPage.clickOnFilterResetButton();
 		authPolicyPage.clickOnFilterButton();
 		authPolicyPage.enterPolicyNameInFilter(policyNameFilterValue);
 		authPolicyPage.clickOnApplyFilterButton();
@@ -250,7 +257,7 @@ public class PolicyCreationForAuthPartner extends BaseClass {
 	}
 
 	private void requestPolicy(String authPolicyName) {
-		policiesPage.clickOnRequestPolicyButtonOfTabularPage();
+		policiesPage.clickOnRequestPolicyButton();
 		policiesPage.selectPartnerIdDropdown();
 		policiesPage.enterAuthPolicyNameDropdown(authPolicyName);
 		policiesPage.enterComments(GlobalConstants.DEFAULT_POLICY);

@@ -1,5 +1,6 @@
 package io.mosip.testrig.pmpuiv2.testcase;
 
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 import org.testng.annotations.Test;
@@ -13,11 +14,11 @@ import io.mosip.testrig.pmpuiv2.pages.RegisterPage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
-@Test(dependsOnGroups = {"PartnerAdminCreation"}, groups = {"FtmPartnerCreation"})
+@Test(dependsOnGroups = { "PartnerAdminCreation" }, groups = { "FtmPartnerCreation" })
 public class FtmPartnerCreation extends BaseClass {
 
 	private BasePage basePage;
-	private DashboardPage dashboardpage;
+	private DashboardPage dashboardPage;
 	private PartnerCertificatePage partnerCertificatePage;
 	private RegisterPage registerPage;
 	private FtmPage ftmPage;
@@ -25,14 +26,14 @@ public class FtmPartnerCreation extends BaseClass {
 
 	@Test(priority = 1, description = "Register ftm partner without uploading certificate")
 	public void registerNewUserForFtmNoCert() throws InterruptedException {
-		dashboardpage = new DashboardPage(driver);
+		dashboardPage = new DashboardPage(driver);
 		basePage = new BasePage(driver);
 		partnerCertificatePage = new PartnerCertificatePage(driver);
 		registerPage = new RegisterPage(driver);
 		ftmPage = new FtmPage(driver);
 
-		dashboardpage.clickOnProfileDropdown();
-		loginpage = dashboardpage.clickOnLogoutButton();
+		dashboardPage.clickOnProfileDropdown();
+		loginpage = dashboardPage.clickOnLogoutButton();
 		loginpage.clickRegisterButton();
 		registerPage.enterFirstName(GlobalConstants.FTM_NOCERT_USER);
 		registerPage.enterLastName(GlobalConstants.FTM_NOCERT_USER);
@@ -45,12 +46,9 @@ public class FtmPartnerCreation extends BaseClass {
 		registerPage.enterUsername(GlobalConstants.FTM_NOCERT_USER);
 		registerPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
 		registerPage.enterPasswordConfirm(GlobalConstants.PARTNER_PASSWORD);
-		dashboardpage = registerPage.clickSubmitButton();
+		dashboardPage = registerPage.clickSubmitButton();
 
-		dashboardpage.clickOnCheckbox();
-		dashboardpage.clickOnProceedButton();
-
-		dashboardpage.waitForDashboardReady();
+		handleTermsAndCondition();
 
 		assertTrue(partnerCertificatePage.isDashboardFtmChipProviderCardDisplayed(),
 				GlobalConstants.isDashboardFtmChipProviderCardDisplayed);
@@ -61,22 +59,21 @@ public class FtmPartnerCreation extends BaseClass {
 		ftmPage.clickOnAddFtmPartnerIdForNoCert();
 		assertTrue(ftmPage.isNoDataAvailableMessageDisplayed(), GlobalConstants.isNoDataTextDisplaed);
 
-		ftmPage.EnterInAddFtmMakeBox(data);
+		ftmPage.EnterInAddFtmMakeBox(GlobalConstants.AUTOFTM);
 		assertTrue(ftmPage.isAutoPopulatedMessageDisplayed(), GlobalConstants.isAutoPopulatedTextDisplaed);
 
-		ftmPage.EnterInAddFtmModelBox(data);
-		ftmPage.clickOnAddFtmSubmitButton();
+		ftmPage.EnterInAddFtmModelBox(GlobalConstants.AUTOFTM);
+		assertEquals(ftmPage.isAddFtmSubmitButtonEnabled(), false);
 
 		ftmPage.clickOnAddFtmPartnerIdInfo();
 		assertTrue(ftmPage.isInfoMessageDisplayed(), GlobalConstants.isInfoMessageDisplayed);
 
 		ftmPage.EnterInAddFtmMakeBox(" ");
 		ftmPage.EnterInAddFtmModelBox(" ");
-		ftmPage.clickOnAddFtmSubmitButton();
 		assertTrue(ftmPage.isInfoMessageDisplayed(), GlobalConstants.isInfoMessageDisplayed);
 
-		ftmPage.EnterInAddFtmMakeBox(data);
-		ftmPage.EnterInAddFtmModelBox(data);
+		ftmPage.EnterInAddFtmMakeBox(GlobalConstants.AUTOFTM);
+		ftmPage.EnterInAddFtmModelBox(GlobalConstants.AUTOFTM);
 		basePage.navigateBack();
 
 		ftmPage.clickOnBlockMesssageProceed();
@@ -84,8 +81,8 @@ public class FtmPartnerCreation extends BaseClass {
 				GlobalConstants.isPartnerCertificatePageDisplayed);
 
 		ftmPage.clickOnAddFtmButtonWioutRecord();
-		ftmPage.EnterInAddFtmMakeBox(data);
-		ftmPage.EnterInAddFtmModelBox(data);
+		ftmPage.EnterInAddFtmMakeBox(GlobalConstants.AUTOFTM);
+		ftmPage.EnterInAddFtmModelBox(GlobalConstants.AUTOFTM);
 
 		ftmPage.clickOnSideNavHomeIcon();
 		ftmPage.clickOnBlockMesssageProceed();
@@ -96,17 +93,11 @@ public class FtmPartnerCreation extends BaseClass {
 
 	@Test(priority = 2, description = "Register ftm partner with valid certificate", dependsOnMethods = "registerNewUserForFtmNoCert")
 	public void registerNewUserForFtm() throws InterruptedException {
-		dashboardpage = new DashboardPage(driver);
+		dashboardPage = new DashboardPage(driver);
 		partnerCertificatePage = new PartnerCertificatePage(driver);
 		registerPage = new RegisterPage(driver);
 
-//		assertTrue(dashboardpage.isTermsAndConditionsPopUppDisplayed(), GlobalConstants.isTermsAndConditionsPopUppDisplayed);
-//		dashboardpage.clickOnCheckbox();
-//
-//		assertTrue(dashboardpage.isProceedButtonDisplayed(), GlobalConstants.isProceedButtonDisplayed);
-//		dashboardpage.clickOnProceedButton();
-
-		dashboardpage.clickOnRootOFTrustCertText();
+		dashboardPage.clickOnRootOFTrustCertText();
 		partnerCertificatePage.clickOnRootUploadTrustCertificateButtonInAdmin();
 		partnerCertificatePage.clickOnpartnerDomainSelectorDropdown();
 		partnerCertificatePage.clickOnPartnerDomainSelectorDropdownOptionFtm();
@@ -122,8 +113,8 @@ public class FtmPartnerCreation extends BaseClass {
 		partnerCertificatePage.clickonSubmitButtonForAdmin();
 		partnerCertificatePage.clickOnGoBackButton();
 
-		dashboardpage.clickOnProfileDropdown();
-		loginpage = dashboardpage.clickOnLogoutButton();
+		dashboardPage.clickOnProfileDropdown();
+		loginpage = dashboardPage.clickOnLogoutButton();
 		loginpage.clickRegisterButton();
 		registerPage.enterFirstName(GlobalConstants.FTM_PARTNER_ID);
 		registerPage.enterLastName(GlobalConstants.FTM_PARTNER_ID);
@@ -136,14 +127,14 @@ public class FtmPartnerCreation extends BaseClass {
 		registerPage.enterUsername(GlobalConstants.FTM_PARTNER_ID);
 		registerPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
 		registerPage.enterPasswordConfirm(GlobalConstants.PARTNER_PASSWORD);
-		dashboardpage = registerPage.clickSubmitButton();
+		dashboardPage = registerPage.clickSubmitButton();
 
-		assertTrue(dashboardpage.isTermsAndConditionsPopupDisplayed(),
+		assertTrue(dashboardPage.isTermsAndConditionsPopupDisplayed(),
 				GlobalConstants.isTermsAndConditionsPopUpDisplayed);
-		dashboardpage.clickOnCheckbox();
-		dashboardpage.clickOnProceedButton();
+		dashboardPage.clickOnCheckbox();
+		dashboardPage.clickOnProceedButton();
 
-		dashboardpage.clickOnDashboardPartnerCertificateListHeader();
+		dashboardPage.clickOnDashboardPartnerCertificateListHeader();
 
 		assertTrue(partnerCertificatePage.isPartnerCertificatePageDisplayed(),
 				GlobalConstants.isPartnerCertificatePageDisplayed);
@@ -158,9 +149,9 @@ public class FtmPartnerCreation extends BaseClass {
 				GlobalConstants.isSuccessMessageDisplayed);
 		partnerCertificatePage.clickOnSuccessMsgCloseButton();
 		partnerCertificatePage.certifiCateUploadCancelButton();
-		dashboardpage = partnerCertificatePage.clickOnHomeButton();
+		dashboardPage = partnerCertificatePage.clickOnHomeButton();
 
-		dashboardpage.clickOnPartnerCertificateTitle();
+		dashboardPage.clickOnPartnerCertificateTitle();
 		partnerCertificatePage.clickOnPartnerCertificateReuploadButton();
 
 		assertTrue(partnerCertificatePage.isReUploadPartnerCertificateTextDisplayed(),
@@ -191,6 +182,14 @@ public class FtmPartnerCreation extends BaseClass {
 		partnerCertificatePage.clickOnSubmitButton();
 		assertTrue(partnerCertificatePage.isSuccessMessageForFtmCertDisplayed(),
 				GlobalConstants.isSuccessMessageForFtmCertDisplayed);
+	}
+
+	private void handleTermsAndCondition() {
+		if (dashboardPage.isTermsAndConditionsPopupDisplayed()) {
+			dashboardPage.clickOnCheckbox();
+			assertTrue(dashboardPage.isProceedButtonDisplayed(), GlobalConstants.isProceedButtonDisplayed);
+			dashboardPage.clickOnProceedButton();
+		}
 	}
 
 }

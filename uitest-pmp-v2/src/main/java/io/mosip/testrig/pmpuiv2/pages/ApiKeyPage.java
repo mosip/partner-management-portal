@@ -1,17 +1,21 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import org.openqa.selenium.NoSuchElementException;
-
+import org.openqa.selenium.TimeoutException;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
+import io.mosip.testrig.pmpuiv2.kernel.util.ConfigManager;
+import io.mosip.testrig.pmpuiv2.utility.LogUtil;
 
 public class ApiKeyPage extends BasePage {
 
@@ -34,7 +38,7 @@ public class ApiKeyPage extends BasePage {
 	private WebElement generatePolicyNameOption1;
 
 	@FindBy(id = "generate_api_key")
-	private WebElement generateAPIKey;
+	private WebElement generateApiKey;
 
 	@FindBy(xpath = "(//*[@id='columnheaderName'])[1]")
 	private WebElement partnerIDHeaderText;
@@ -225,7 +229,7 @@ public class ApiKeyPage extends BasePage {
 	@FindBy(id = "generate_cancel_btn")
 	private WebElement cancelButton;
 
-	@FindBy(xpath = "//p[contains(text(), 'Entered API Key name already exists. Provide a unique API Key name and submit.')]")
+	@FindBy(id = "generate_api_key_error_msg")
 	private WebElement duplicateApiKeyNameErrorMessage;
 
 	@FindBy(id = "error_close_btn")
@@ -423,6 +427,7 @@ public class ApiKeyPage extends BasePage {
 	public ApiKeyPage(WebDriver driver) {
 		super(driver);
 	}
+
 	private static final Logger logger = Logger.getLogger(ApiKeyPage.class);
 
 	public void enterNameOfApiKeyTextBox(String apiKeyTextBoxValue) {
@@ -447,16 +452,27 @@ public class ApiKeyPage extends BasePage {
 	}
 
 	public boolean selectPolicyNameDropdown(String value) {
-		clickOnElement(policyNameDropdown);
+		By policyNameDropdown = By.id("generate_policy_name_dropdown_btn");
+		By noDataText = By.xpath("//*[text()='No Data Available']");
+		By policyOptions = By.xpath("//div[@role='listbox']//button");
+		By policyNameOption = By.xpath("//button[.//span[normalize-space()='" + value + "']]");
+
+		click(policyNameDropdown);
 		enter(generatePolicyNameSearchInputBox, value);
+
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+
 		try {
-			WebElement policyNameOption = driver
-					.findElement(By.xpath("//button[.//span[normalize-space(text())='" + value + "']]"));
-			clickOnElement(policyNameOption);
-			 return true;
-		} catch (NoSuchElementException e) {
-			logger.warn("Policy name not found: " + value);
-			 return false;
+			// wait until either data loads OR "No Data Available" disappears
+			wait.until(ExpectedConditions.or(ExpectedConditions.invisibilityOfElementLocated(noDataText),
+					ExpectedConditions.numberOfElementsToBeMoreThan(policyOptions, 0)));
+
+			wait.until(ExpectedConditions.elementToBeClickable(policyNameOption)).click();
+			return true;
+
+		} catch (TimeoutException e) {
+			logger.warn("Policy name not found or not loaded: " + value);
+			return false;
 		}
 	}
 
@@ -465,12 +481,18 @@ public class ApiKeyPage extends BasePage {
 		enter(generatePolicyNameSearchInputBox, value);
 	}
 
-	public boolean isGenerateAPIKeyDisplayed() {
-		return isElementDisplayed(generateAPIKey);
+	public boolean isGenerateApiKeyDisplayed() {
+		return isElementDisplayed(generateApiKey);
 	}
 
-	public void clickOnAPIKeyDisplayed() {
-		clickOnElement(generateAPIKey);
+	public void clickOnCreateApiKey() {
+		if (isElementDisplayed(apiKeyListPageGenerateApiKeyBtn)) {
+			clickOnElement(apiKeyListPageGenerateApiKeyBtn);
+		} else if (isElementDisplayed(generateApiKey)) {
+			clickOnElement(generateApiKey);
+		} else {
+			throw new RuntimeException("Create API Key button is not visible on the page");
+		}
 	}
 
 	public void clickOnSubmitButton() {
@@ -1158,16 +1180,32 @@ public class ApiKeyPage extends BasePage {
 
 	public boolean isApiKeyCreationDateSameAsBrowserDateFormat() {
 
-		WebElement dateCell = driver.findElement(By.xpath("//tr[@id='api_key_list_item1']/td[6]"));
-		String browserTime = dateCell.getText().trim();
+		By dateCellLocator = By.xpath("//tr[starts-with(@id,'api_key_list_item')][1]/td[6]");
 
-		DateTimeFormatter dateFormatter = PmpTestUtil.nonZeroPadderDateFormatter;
 		try {
-			LocalDate.parse(browserTime, dateFormatter);
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(ConfigManager.getTimeout()));
+
+			WebElement dateCell = wait.until(ExpectedConditions.visibilityOfElementLocated(dateCellLocator));
+
+			String browserTime = dateCell.getText().trim();
+
+			LogUtil.step("API key creation date from UI: " + browserTime);
+			LogUtil.step("Thread: " + Thread.currentThread().getName());
+
+			DateTimeFormatter formatter = PmpTestUtil.nonZeroPadderDateFormatter;
+
+			LocalDate.parse(browserTime, formatter);
 			return true;
+
+		} catch (TimeoutException e) {
+			LogUtil.error("API key table row not visible in time");
+			takeScreenshot();
+			return false;
+
 		} catch (DateTimeParseException e) {
+			LogUtil.error("Date format mismatch: " + e.getMessage());
+			takeScreenshot();
 			return false;
 		}
-
 	}
 }

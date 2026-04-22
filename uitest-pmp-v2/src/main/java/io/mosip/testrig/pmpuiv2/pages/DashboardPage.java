@@ -1,15 +1,9 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
-import java.time.Duration;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import io.mosip.testrig.pmpuiv2.driver.DriverManager;
 
 public class DashboardPage extends BasePage {
 
@@ -51,9 +45,6 @@ public class DashboardPage extends BasePage {
 
 	@FindBy(id = "consent_proceed_btn")
 	private WebElement proceedButton;
-
-	@FindBy(id = "dashboard_partner_certificate_list_header")
-	private WebElement partnerCertificateTitle;
 
 	@FindBy(id = "dashboard_policies_card")
 	private WebElement policiesTitle;
@@ -139,7 +130,7 @@ public class DashboardPage extends BasePage {
 	@FindBy(xpath = "//h5[text()='Authentication Services']")
 	private WebElement authenticationServices;
 
-	@FindBy(xpath = "//h5[text()='Partners']")
+	@FindBy(id = "dashboard_partner_card_header")
 	private WebElement partners;
 
 	@FindBy(xpath = "//button[contains(@class, 'bg-blue-50') and contains(@class, 'cursor-pointer')]")
@@ -150,6 +141,12 @@ public class DashboardPage extends BasePage {
 
 	@FindBy(id = "footer_documentation_link")
 	private WebElement footerDocumentationLink;
+
+	@FindBy(id = "policy_group_selector_option_button_1")
+	private WebElement policyGroupOption;
+	
+	@FindBy(id = "admin_misp_partner_services_card_header")
+	private WebElement mispServices;
 
 	public DashboardPage(WebDriver driver) {
 		super(driver);
@@ -177,11 +174,11 @@ public class DashboardPage extends BasePage {
 	}
 
 	public void selectPolicyGroupDropdown(String policyGroupValue) {
-		clickOnElement(selectPolicyGroupDropdown);
+		By selectPolicyGroupDropdown = By.id("policy_group_selector_dropdown_button");
+		click(selectPolicyGroupDropdown);
 		enter(SearchBox, policyGroupValue);
-		WebElement policyGroupOption = driver.findElement(
-				By.xpath("//span[@id='policy_group_selector_option_name_1' and text()='" + policyGroupValue + "']"));
-		clickOnElement(policyGroupOption);
+		By policyGroupOption = By.xpath("//span[normalize-space()='" + policyGroupValue + "']");
+		click(policyGroupOption);
 	}
 
 	public void closePolicyGroupDropdown() {
@@ -212,10 +209,8 @@ public class DashboardPage extends BasePage {
 		clickOnElement(proceedButton);
 	}
 
-	private By partnerCertificateTitleDashboard = By.id("dashboard_partner_certificate_list_header");
-
 	public boolean isPartnerCertificateTitleDisplayed() {
-		return isDisplayed(partnerCertificateTitleDashboard);
+		return isElementDisplayed(dashboardPartnerCertificateListHeader);
 	}
 
 	public boolean isPoliciesTitleDisplayed() {
@@ -240,7 +235,8 @@ public class DashboardPage extends BasePage {
 	}
 
 	public PartnerCertificatePage clickOnPartnerCertificateTitle() {
-		clickOnElement(partnerCertificateTitle);
+		By dashboardPartnerCertificateListTitel = By.id("dashboard_partner_certificate_list_header");
+		click(dashboardPartnerCertificateListTitel);
 		return new PartnerCertificatePage(driver);
 	}
 
@@ -413,14 +409,9 @@ public class DashboardPage extends BasePage {
 		return isElementDisplayed(footerDocumentationLink);
 	}
 	
-	private By partnerCertificateCard =
-	        By.id("dashboard_partner_certificate_list_card");
-
-	private By ftmChipProviderCard =
-	        By.id("dashboard_ftm_chip_provider_card");
-
-	public void waitForDashboardReady() {
-	    waitUntilAnyElementVisible(partnerCertificateCard, ftmChipProviderCard);
+	public MispServicesPage clickOnMispServices() {
+		clickOnElement(mispServices);
+		return new MispServicesPage(driver);
 	}
 
 }

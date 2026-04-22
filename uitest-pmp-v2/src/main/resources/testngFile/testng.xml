@@ -17,16 +17,17 @@
             <class name="io.mosip.testrig.pmpuiv2.testcase.SbiCreationTest"/>
             <class name="io.mosip.testrig.pmpuiv2.testcase.PolicyCreationForAuthPartner"/>
             <class name="io.mosip.testrig.pmpuiv2.testcase.OidcClientAuthPartnerTest"/>
-            <class name="io.mosip.testrig.pmpuiv2.testcase.DeviceCreationTest"/>  
+            <class name="io.mosip.testrig.pmpuiv2.testcase.DeviceCreationTest"/>
             <class name="io.mosip.testrig.pmpuiv2.testcase.PolicyGroupTest"/>
+            <class name="io.mosip.testrig.pmpuiv2.testcase.PartnerDetailsTest"/>
             <class name="io.mosip.testrig.pmpuiv2.testcase.CertificateTrustStoreTest"/>
             <class name="io.mosip.testrig.pmpuiv2.testcase.ApiKeyAuthPartnerTest"/>
             <class name="io.mosip.testrig.pmpuiv2.testcase.DatasharePolicyTest"/>
             <class name="io.mosip.testrig.pmpuiv2.testcase.SbiDeviceProviderTest"/>
             <class name="io.mosip.testrig.pmpuiv2.testcase.AuthPartnerWithoutCertificateTest"/>
-            <class name="io.mosip.testrig.pmpuiv2.testcase.PartnerDetailsTest"/>
             <class name="io.mosip.testrig.pmpuiv2.testcase.AuthPolicyTest"/>
             <class name="io.mosip.testrig.pmpuiv2.testcase.PartnerPolicyMappingTest"/>
+            <class name="io.mosip.testrig.pmpuiv2.testcase.MispPartnerTest"/>
         </classes>
     </test>
 

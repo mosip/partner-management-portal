@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
-@Test(dependsOnGroups = { "DeactivatePartnerCreation" }, groups = { "PolicyGroupTest" })
+@Test(dependsOnGroups = { "PolicyAdminAndPartnerCreation" }, groups = { "PolicyGroupTest" })
 public class PolicyGroupTest extends BaseClass {
 	private BasePage basePage;
 	private DashboardPage dashboardPage;
@@ -172,6 +172,7 @@ public class PolicyGroupTest extends BaseClass {
 		policygroupPage.clickOnDeactivateButton();
 		policygroupPage.clickOnDeactivateConfirmButton();
 
+		policygroupPage.clickOnFilterResetButton();
 		policygroupPage.clickOnFilterButton();
 		policygroupPage.clickOnPolicyGroupNameFilter(GlobalConstants.DEACTIVATE_POLICYGROUP);
 		policygroupPage.clickOnApplyFilterButton();
@@ -179,6 +180,7 @@ public class PolicyGroupTest extends BaseClass {
 		assertFalse(policygroupPage.isViewPolicyGroupPageTitleDisplayed(),
 				GlobalConstants.isViewPolicyGroupPageTitleDisplayed);
 
+		policygroupPage.clickOnFilterResetButton();
 		policygroupPage.clickOnFilterButton();
 		policygroupPage.clickOnPolicyGroupNameFilter(GlobalConstants.INVALID_DATA);
 		policygroupPage.clickOnApplyFilterButton();

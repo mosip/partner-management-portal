@@ -1,6 +1,5 @@
 package io.mosip.testrig.pmpuiv2.testcase;
 
-import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
@@ -17,7 +16,7 @@ import io.mosip.testrig.pmpuiv2.pages.PolicyGroupPage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
-@Test(dependsOnGroups = { "CertificateTrustStoreTest" }, groups = { "PartnerPolicyMappingTest" })
+@Test(dependsOnGroups = { "AuthPartnerCreation" }, groups = { "PartnerPolicyMappingTest" })
 public class PartnerPolicyMappingTest extends BaseClass {
 	private BasePage basePage;
 	private DashboardPage dashboardPage;
@@ -135,6 +134,7 @@ public class PartnerPolicyMappingTest extends BaseClass {
 		assertTrue(partnerPolicyMappingPage.isPartnerPolicyLinkingSubTitleDisplayed(),
 				GlobalConstants.isPartnerPolicyLinkingSubTitleDisplayed);
 		assertTrue(partnerPolicyMappingPage.isPartnerIdHeaderDisplayed(), GlobalConstants.isPartnerIdHeaderDisplayed);
+		assertTrue(partnerPolicyMappingPage.isPartnerIdDisplayedInFirstColumn(), GlobalConstants.isPartnerIdDisplayedInFirstColumn);
 		assertTrue(partnerPolicyMappingPage.isPartnerTypeHeaderDisplayed(),
 				GlobalConstants.isPartnerTypeHeaderDisplayed);
 		assertTrue(partnerPolicyMappingPage.isOrganisationNameHeaderDisplayed(),
@@ -156,6 +156,8 @@ public class PartnerPolicyMappingTest extends BaseClass {
 		assertTrue(partnerPolicyMappingPage.isFilterButtonDisabled(), GlobalConstants.isFilterButtonDisabled);
 		assertTrue(partnerPolicyMappingPage.isFilterResetButtonEnabled(), GlobalConstants.isFilterResetButtonEnabled);
 		assertTrue(partnerPolicyMappingPage.isApplyFilterButtonDisabled(), GlobalConstants.isApplyFilterButtonDisabled);
+
+		partnerPolicyMappingPage.clickOnFilterResetButton();
 		partnerPolicyMappingPage.clickOnFilterButton();
 		assertFalse(partnerPolicyMappingPage.isFilterButtonEnabled(), GlobalConstants.isFilterButtonEnabled);
 
@@ -213,8 +215,8 @@ public class PartnerPolicyMappingTest extends BaseClass {
 				GlobalConstants.isCancelButtonOfTextBoxDisplayed);
 		partnerPolicyMappingPage.clickOnCancelButtonOfTextBox();
 		partnerPolicyMappingPage.enterPendingPolicyNameInFilter("authPollink");
-		partnerPolicyMappingPage.clickOnFilterResetButton();
 
+		partnerPolicyMappingPage.clickOnFilterResetButton();
 		partnerPolicyMappingPage.clickOnFilterButton();
 		assertTrue(partnerPolicyMappingPage.isPartnerIdDescIconDisplayed(),
 				GlobalConstants.isPartnerIdDescIconDisplayed);
@@ -450,7 +452,7 @@ public class PartnerPolicyMappingTest extends BaseClass {
 
 		PoliciesPage policiesPage = dashboardPage.clickOnPoliciesTitle();
 
-		policiesPage.clickOnRequestPolicyButtonOfTabularPage();
+		policiesPage.clickOnRequestPolicyButton();
 
 		policiesPage.selectPartnerIdDropdown();
 
@@ -479,7 +481,7 @@ public class PartnerPolicyMappingTest extends BaseClass {
 
 		policiesPage = dashboardPage.clickOnPoliciesTitle();
 
-		policiesPage.clickOnRequestPolicyButtonOfTabularPage();
+		policiesPage.clickOnRequestPolicyButton();
 
 		assertTrue(policiesPage.isPartnerIdDropdownDisplayed(), GlobalConstants.isPartnerIdDropdownDisplayed);
 		policiesPage.selectPartnerIdDropdown();
@@ -514,7 +516,7 @@ public class PartnerPolicyMappingTest extends BaseClass {
 	}
 
 	private void requestPolicy(String authPolicyName) {
-		policiesPage.clickOnRequestPolicyButtonOfTabularPage();
+		policiesPage.clickOnRequestPolicyButton();
 		policiesPage.selectPartnerIdDropdown();
 		policiesPage.enterAuthPolicyNameDropdown(authPolicyName);
 		policiesPage.enterComments(GlobalConstants.DEFAULT_POLICY);

@@ -14,7 +14,7 @@ import io.mosip.testrig.pmpuiv2.pages.OidcClientPage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
-@Test(dependsOnGroups = {"PolicyCreationForAuthPartner"}, groups = {"ApiKeyAuthPartnerTest"})
+@Test(dependsOnGroups = { "PolicyCreationForAuthPartner" }, groups = { "ApiKeyAuthPartnerTest" })
 public class ApiKeyAuthPartnerTest extends BaseClass {
 	private BasePage basePage;
 	private DashboardPage dashboardPage;
@@ -35,8 +35,8 @@ public class ApiKeyAuthPartnerTest extends BaseClass {
 
 		assertTrue(oidcClientPage.isApiKeyTabDisplayed(), GlobalConstants.isApiKeyTabDisplayed);
 		oidcClientPage.clickOnApiKeyTab();
-		assertTrue(apiKeyPage.isGenerateAPIKeyDisplayed(), GlobalConstants.isGenerateAPIKeyDisplayed);
-		apiKeyPage.clickOnAPIKeyDisplayed();
+		assertTrue(apiKeyPage.isGenerateApiKeyDisplayed(), GlobalConstants.isGenerateAPIKeyDisplayed);
+		apiKeyPage.clickOnCreateApiKey();
 		assertTrue(apiKeyPage.isPartnerIdDropdownDisplayed(), GlobalConstants.isPartnerIdDropdownDisplayed);
 		apiKeyPage.selectPartnerIdDropdown();
 
@@ -79,7 +79,7 @@ public class ApiKeyAuthPartnerTest extends BaseClass {
 
 		assertTrue(apiKeyPage.isApiKeyListPageGenerateApiKeyBtnDisplayed(),
 				GlobalConstants.isApiKeyListPageGenerateApiKeyBtnDisplayed);
-		apiKeyPage.clickOnApiKeyListPageGenerateApiKeyBtn();
+		apiKeyPage.clickOnCreateApiKey();
 		assertTrue(apiKeyPage.isPartnerIdHelpTextDisplayed(), GlobalConstants.isPartnerIdHelpTextDisplayed);
 		assertTrue(apiKeyPage.isPolicyNameHelpTextDisplayed(), GlobalConstants.isPolicyNameHelpTextDisplayed);
 		apiKeyPage.selectPartnerIdDropdown();
@@ -109,7 +109,7 @@ public class ApiKeyAuthPartnerTest extends BaseClass {
 				GlobalConstants.isAuthenticationServicesDisplayed);
 		dashboardPage.clickOnAuthenticationServicesTitle();
 		oidcClientPage.clickOnApiKeyTab();
-		apiKeyPage.clickOnApiKeyListPageGenerateApiKeyBtn();
+		apiKeyPage.clickOnCreateApiKey();
 		apiKeyPage.selectPartnerIdDropdown();
 		apiKeyPage.selectPolicyNameDropdown(GlobalConstants.DEFAULT_POLICY);
 		apiKeyPage.enterNameOfApiKeyTextBox(GlobalConstants.AUTOMATION);
@@ -267,7 +267,7 @@ public class ApiKeyAuthPartnerTest extends BaseClass {
 
 		dashboardPage.clickOnAuthenticationServicesTitle();
 		oidcClientPage.clickOnApiKeyTab();
-		apiKeyPage.clickOnApiKeyListPageGenerateApiKeyBtn();
+		apiKeyPage.clickOnCreateApiKey();
 		apiKeyPage.selectPartnerIdDropdown();
 		apiKeyPage.selectPolicyNameDropdown(GlobalConstants.DEFAULT_POLICY);
 		apiKeyPage.enterNameOfApiKeyTextBox(GlobalConstants.DEACTIVATE_APIKEY);
@@ -312,8 +312,7 @@ public class ApiKeyAuthPartnerTest extends BaseClass {
 		assertTrue(apiKeyPage.isPolicyGroupNameAscIconDisplayed(), GlobalConstants.isPolicyGroupNameAscIconDisplayed);
 		assertTrue(apiKeyPage.isPolicyNameDescIconDisplayed(), GlobalConstants.isPolicyNameDescIconDisplayed);
 		assertTrue(apiKeyPage.isPolicyNameAscIconDisplayed(), GlobalConstants.isPolicyNameAscIconDisplayed);
-		assertTrue(apiKeyPage.isCreatedDateTimeDescIconDisplayed(),
-				GlobalConstants.isCreatedDateTimeDescIconDisplayed);
+		assertTrue(apiKeyPage.isCreatedDateTimeDescIconDisplayed(), GlobalConstants.isCreatedDateTimeDescIconDisplayed);
 		assertTrue(apiKeyPage.isCreatedDateTimeAscIconDisplayed(), GlobalConstants.isCreatedDateTimeAscIconDisplayed);
 		assertTrue(apiKeyPage.isStatusDescIconDisplayed(), GlobalConstants.isStatusDescIconDisplayed);
 		assertTrue(apiKeyPage.isStatusAscIconDisplayed(), GlobalConstants.isStatusAscIconDisplayed);
@@ -526,7 +525,7 @@ public class ApiKeyAuthPartnerTest extends BaseClass {
 	}
 
 	private void createApiKey(String apiKeyTextBoxValue) {
-		apiKeyPage.clickOnApiKeyListPageGenerateApiKeyBtn();
+		apiKeyPage.clickOnCreateApiKey();
 		apiKeyPage.selectPartnerIdDropdown();
 		apiKeyPage.selectPolicyNameDropdown(GlobalConstants.DEFAULT_POLICY);
 		apiKeyPage.enterNameOfApiKeyTextBox(apiKeyTextBoxValue);

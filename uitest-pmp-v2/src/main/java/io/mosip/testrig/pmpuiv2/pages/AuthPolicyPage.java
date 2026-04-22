@@ -1,13 +1,11 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
-import java.time.Duration;
-
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
 
@@ -493,6 +491,9 @@ public class AuthPolicyPage extends BasePage {
 	@FindBy(xpath = "//li[text()='No policy groups found']")
 	private WebElement noPolicyGroupFound;
 
+	@FindBy(id = "policy_group_selector_option_button_1")
+	private WebElement clonePolicyGroupOption;
+
 	public AuthPolicyPage(WebDriver driver) {
 		super(driver);
 	}
@@ -501,14 +502,20 @@ public class AuthPolicyPage extends BasePage {
 		clickOnElement(createAuthPolicyButton);
 	}
 
-	public void selectPolicyGroupDropdown(String policyGroupValue) {
+	public void selectPolicyGroupDropdown(String value) {
+
 		clickOnElement(policyGroupDropdown);
-		enter(policyGroupDropdownSearchInput, policyGroupValue);
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-		By optionLocator = By.xpath(
-				"//span[@class='font-semibold text-dark-blue' and normalize-space(text())='" + policyGroupValue + "']");
-		WebElement policyGroupOption = wait.until(ExpectedConditions.elementToBeClickable(optionLocator));
-		clickOnElement(policyGroupOption);
+		clearTextBox(policyGroupDropdownSearchInput);
+		enter(policyGroupDropdownSearchInput, value);
+
+		By policyGroupOption = By.xpath("//span[normalize-space()='" + value + "']");
+
+		try {
+			waitScrollAndClick(policyGroupOption);
+		} catch (TimeoutException | NoSuchElementException e) {
+			logger.warn("Policy group not found: " + value);
+			throw new NoSuchElementException("Failed to select policy group: " + value, e);
+		}
 	}
 
 	public void selectDeactivatePolicyGroupInDropdown(String policyGroupValue) {
@@ -1065,7 +1072,8 @@ public class AuthPolicyPage extends BasePage {
 	public void selectPolicyGroupDropdownForClone(String value) {
 		clickOnElement(clonePolicyGroupDropdown);
 		enter(clonePolicyGroupsearchInput, value);
-		clickOnElement(clonePolicyGroupDropdownOption1);
+		By policyGroupOption = By.xpath("//span[normalize-space()='" + value + "']");
+		click(policyGroupOption);
 	}
 
 	public boolean isPolicySavedAsDraftMessageDisplayed() {
@@ -1074,6 +1082,10 @@ public class AuthPolicyPage extends BasePage {
 
 	public boolean isSaveAsDraftButtonEnabled() {
 		return isElementEnabled(saveAsDraftButton);
+	}
+
+	public boolean isSaveAsDraftButtonDisabled() {
+		return isElementDisabled(saveAsDraftButton);
 	}
 
 	public void clickOnPolicyCancelButton() {
@@ -1093,7 +1105,8 @@ public class AuthPolicyPage extends BasePage {
 	}
 
 	public boolean isClonePolicyPopupTitleDisplayed() {
-		return isElementDisplayed(clonePolicyTitle);
+	    By clonePolicyTitle = By.id("clone_policy_popup_title");
+	    return isDisplayed(clonePolicyTitle);
 	}
 
 	public boolean isClonePolicyInfoMessageDisplayed() {
@@ -1128,21 +1141,22 @@ public class AuthPolicyPage extends BasePage {
 		clickOnElement(clonePolicyGroupDropdown);
 		clickOnElement(clonePolicyGroupDropdownSearchInput);
 		enter(clonePolicyGroupDropdownSearchInput, value);
-		clickOnElement(clonePolicyGroupDropdownOption1);
+		By policyGroupOption = By.xpath("//span[normalize-space()='" + value + "']");
+		click(policyGroupOption);
 	}
 
 	public void selectPolicyGroupForClonePolicy(String value) {
 		enter(clonePolicyGroupDropdownSearchInput, value);
-		clickOnElement(clonePolicyGroupDropdownOption1);
+		By policyGroupOption = By.xpath("//span[normalize-space()='" + value + "']");
+		click(policyGroupOption);
 	}
 
 	public void selectValidPolicyGroupForClone(String value) {
 		clickOnElement(clonePolicyGroupDropdown);
 		clickOnElement(clonePolicyGroupDropdownSearchInput);
 		enter(clonePolicyGroupDropdownSearchInput, value);
-		WebElement policyGroupOption = driver.findElement(By.xpath(
-				"//span[@id='policy_group_selector_option_name_1' and normalize-space(text())='" + value + "']"));
-		clickOnElement(policyGroupOption);
+		By policyGroupOption = By.xpath("//span[normalize-space()='" + value + "']");
+		click(policyGroupOption);
 	}
 
 	public boolean isClonePolicyButtonAvailable() {

@@ -12,6 +12,7 @@ import java.util.Properties;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -25,6 +26,7 @@ import io.mosip.testrig.pmpuiv2.driver.DriverManager;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.mosip.testrig.pmpuiv2.kernel.util.ConfigManager;
 import io.mosip.testrig.pmpuiv2.pages.BasePage;
+import io.mosip.testrig.pmpuiv2.pages.LoginPage;
 
 public class BaseClass {
 	protected WebDriver driver;
@@ -40,7 +42,7 @@ public class BaseClass {
 	protected String[] allpassword = ConfigManager.getIAMUsersPassword().split(",");
 	protected String password = allpassword[0];
 	public static final Logger logger = Logger.getLogger(BaseClass.class);
-	public static String data = BasePage.appendDate.substring(0, BasePage.getSplitdigit());
+	public static String data;
 
 	@BeforeMethod
 	public void setUp(Method method) throws Exception {
@@ -55,27 +57,44 @@ public class BaseClass {
 		}
 
 		ChromeOptions options = new ChromeOptions();
-		String headless = ConfigManager.getheadless();
-		if (headless.equalsIgnoreCase("yes")) {
-			logger.info("Running is headless mode");
-			options.addArguments("--headless", "--disable-gpu", "--no-sandbox", "--window-size=1920x1080",
-					"--disable-dev-shm-usage");
-		}
+	    boolean isHeadless = ConfigManager.getheadless().equalsIgnoreCase("yes");
 
-		WebDriver createdDriver = new ChromeDriver(options);
+	    if (isHeadless) {
+	        logger.info("Running in HEADLESS mode");
 
-		DriverManager.setDriver(createdDriver);
+	        options.addArguments(
+	            "--headless=new",
+	            "--disable-gpu",
+	            "--no-sandbox",
+	            "--disable-dev-shm-usage",
+	            "--window-size=1920,1080",
+	            "--force-device-scale-factor=1",
+	            "--high-dpi-support=1"
+	        );
+	    } else {
+	        logger.info("Running in HEADED mode");
+	    }
 
-		this.driver = DriverManager.getDriver();
+	    WebDriver driver = new ChromeDriver(options);
+	    DriverManager.setDriver(driver);
+	    this.driver = driver;
 
-		js = (JavascriptExecutor) this.driver;
-		vars = new HashMap<String, Object>();
+	    driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
 
-		this.driver.get(envPathPmpUiv2);
-		logger.info("launch url --" + envPathPmpUiv2);
-		this.driver.manage().window().maximize();
-		this.driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10)); // Configurable if needed
-		this.driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
+	    if (!isHeadless) {
+	        driver.manage().window().maximize();
+	    } else {
+	        driver.manage().window().setSize(new Dimension(1920, 1080));
+	    }
+
+	    driver.get(envPathPmpUiv2);
+	    logger.info("Launched URL: {"+envPathPmpUiv2+"}");
+
+	    if (isHeadless) {
+	        ((JavascriptExecutor) driver).executeScript(
+	            "window.resizeTo(1920,1080);"
+	        );
+	    }
 
 		String testName = method.getName();
 		String description = method.getAnnotation(Test.class) != null ? method.getAnnotation(Test.class).description()
@@ -85,10 +104,12 @@ public class BaseClass {
 		LogUtil.step("Description: " + description);
 		LogUtil.step("--------------------------------------------------");
 
-		BasePage basePage = new BasePage(this.driver);
-		basePage.enter(this.driver.findElement(By.id("username")), userid);
-		basePage.enter(this.driver.findElement(By.id("password")), password);
-		this.driver.findElement(By.xpath("//input[@name='login']")).click();
+		String rawData = BasePage.getPreAppend() + BasePage.getDateTime();
+		BaseClass.data = rawData.substring(0, BasePage.getSplitdigit());
+		logger.info("Test data suffix generated: " + BaseClass.data);
+
+		LoginPage loginPage = new LoginPage(driver);
+		loginPage.login(userid, password);
 	}
 
 	@AfterMethod

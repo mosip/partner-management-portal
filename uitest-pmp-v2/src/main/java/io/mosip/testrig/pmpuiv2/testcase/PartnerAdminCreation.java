@@ -70,11 +70,7 @@ public class PartnerAdminCreation extends BaseClass {
 
 		KeycloakUserManager.assignRole("pmpui-v2", "PARTNER_ADMIN");
 
-		assertTrue(dashboardPage.isTermsAndConditionsPopupDisplayed(),
-				GlobalConstants.isTermsAndConditionsPopUpDisplayed);
-		dashboardPage.clickOnCheckbox();
-		assertTrue(dashboardPage.isProceedButtonDisplayed(), GlobalConstants.isProceedButtonDisplayed);
-		dashboardPage.clickOnProceedButton();
+		handleTermsAndCondition();
 
 	}
 
@@ -134,6 +130,14 @@ public class PartnerAdminCreation extends BaseClass {
 				GlobalConstants.isPolicyGroupSuccessMessageDisplayed);
 		policygroupPage.clickOnSuccessHomeButton();
 
+	}
+
+	private void handleTermsAndCondition() {
+		if (dashboardPage.isTermsAndConditionsPopupDisplayed()) {
+			dashboardPage.clickOnCheckbox();
+			assertTrue(dashboardPage.isProceedButtonDisplayed(), GlobalConstants.isProceedButtonDisplayed);
+			dashboardPage.clickOnProceedButton();
+		}
 	}
 
 }

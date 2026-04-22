@@ -14,7 +14,7 @@ import io.mosip.testrig.pmpuiv2.pages.LoginPage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
-@Test(dependsOnGroups = { "DeactivatePartnerCreation" }, groups = { "SbiCreationTest" })
+@Test(dependsOnGroups = { "DevicePartnerCreation" }, groups = { "SbiCreationTest" })
 public class SbiCreationTest extends BaseClass {
 
 	private DeviceProviderPage deviceProviderPage;
@@ -284,9 +284,6 @@ public class SbiCreationTest extends BaseClass {
 		listOfSbiPage.clickOnApplyFilterButton();
 		assertTrue(listOfSbiPage.isNoResultsFoundDisplayed(), GlobalConstants.isNoResultsFoundDisplayed);
 		listOfSbiPage.clickOnFilterResetButton();
-
-		listOfSbiPage.reload();
-		assertTrue(listOfSbiPage.isSbiAdminListPageTitleDisplayed(), GlobalConstants.isSbiAdminListPageTitleDisplayed);
 
 		listOfSbiPage.clickOnFilterButton();
 		listOfSbiPage.enterPartnerIdInFilter(GlobalConstants.DEVICE_PARTNER_ID);

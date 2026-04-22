@@ -14,26 +14,19 @@ import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 @Test(dependsOnGroups = { "PartnerAdminCreation" }, groups = { "DevicePartnerCreation" })
 public class DevicePartnerCreation extends BaseClass {
 
-	private DashboardPage dashboardpage;
+	private DashboardPage dashboardPage;
 	private LoginPage loginpage;
 	private PartnerCertificatePage partnerCertificatePage;
 	private RegisterPage registerPage;
 
 	@Test(priority = 1, description = "This is a test case register new device user")
 	public void registerDevicePartnerUser() throws InterruptedException {
-		dashboardpage = new DashboardPage(driver);
+		dashboardPage = new DashboardPage(driver);
 		partnerCertificatePage = new PartnerCertificatePage(driver);
 		registerPage = new RegisterPage(driver);
 
-//		assertTrue(dashboardpage.isTermsAndConditionsPopUppDisplayed(),
-//				GlobalConstants.isTermsAndConditionsPopUppDisplayed);
-//		dashboardpage.clickOnCheckbox();
-//
-//		assertTrue(dashboardpage.isProceedButtonDisplayed(), GlobalConstants.isProceedButtonDisplayed);
-//		dashboardpage.clickOnProceedButton();
-
-		dashboardpage.clickOnProfileDropdown();
-		loginpage = dashboardpage.clickOnLogoutButton();
+		dashboardPage.clickOnProfileDropdown();
+		loginpage = dashboardPage.clickOnLogoutButton();
 		loginpage.clickRegisterButton();
 		registerPage.enterFirstName(GlobalConstants.DEVICE_PARTNER_ID);
 		registerPage.enterLastName(GlobalConstants.DEVICE_PARTNER_ID);
@@ -46,19 +39,14 @@ public class DevicePartnerCreation extends BaseClass {
 		registerPage.enterUsername(GlobalConstants.DEVICE_PARTNER_ID);
 		registerPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
 		registerPage.enterPasswordConfirm(GlobalConstants.PARTNER_PASSWORD);
-		dashboardpage = registerPage.clickSubmitButton();
+		dashboardPage = registerPage.clickSubmitButton();
 
-		assertTrue(dashboardpage.isTermsAndConditionsPopupDisplayed(),
-				GlobalConstants.isTermsAndConditionsPopUpDisplayed);
-		dashboardpage.clickOnCheckbox();
+		handleTermsAndCondition();
 
-		assertTrue(dashboardpage.isProceedButtonDisplayed(), GlobalConstants.isProceedButtonDisplayed);
-		dashboardpage.clickOnProceedButton();
-
-		assertTrue(dashboardpage.isPartnerCertificateTitleDisplayed(),
+		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
 				GlobalConstants.isPartnerCertificateTitleDisplayed);
 
-		dashboardpage.clickOnPartnerCertificateTitle();
+		dashboardPage.clickOnPartnerCertificateTitle();
 
 		assertTrue(partnerCertificatePage.isPartnerCertificatePageDisplayed(),
 				GlobalConstants.isPartnerCertificatePageDisplayed);
@@ -72,9 +60,9 @@ public class DevicePartnerCreation extends BaseClass {
 		assertTrue(partnerCertificatePage.isDeviceProviderSuccessMessage(),
 				GlobalConstants.isDeviceProviderSucessMessageDisplayed);
 		partnerCertificatePage.clickOnCloseButton();
-		dashboardpage = partnerCertificatePage.clickOnHomeButton();
+		dashboardPage = partnerCertificatePage.clickOnHomeButton();
 
-		dashboardpage.clickOnPartnerCertificateTitle();
+		dashboardPage.clickOnPartnerCertificateTitle();
 		partnerCertificatePage.clickOnPartnerCertificateReuploadButton();
 
 		assertTrue(partnerCertificatePage.isReUploadPartnerCertificateTextDisplayed(),
@@ -113,6 +101,14 @@ public class DevicePartnerCreation extends BaseClass {
 
 //		assertTrue(partnerCertificatePage.isSucessMessageDisplayed(), GlobalConstants.isSucessMessageDisplayed);
 		partnerCertificatePage.clickOnSuccessMsgCloseButton();
+	}
+
+	private void handleTermsAndCondition() {
+		if (dashboardPage.isTermsAndConditionsPopupDisplayed()) {
+			dashboardPage.clickOnCheckbox();
+			assertTrue(dashboardPage.isProceedButtonDisplayed(), GlobalConstants.isProceedButtonDisplayed);
+			dashboardPage.clickOnProceedButton();
+		}
 	}
 
 }

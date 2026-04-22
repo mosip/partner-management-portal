@@ -11,7 +11,7 @@ import io.mosip.testrig.pmpuiv2.pages.RegisterPage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
-@Test(dependsOnGroups = {"PartnerAdminCreation"}, groups = {"AuthPartnerCreation"})
+@Test(dependsOnGroups = { "PartnerAdminCreation" }, groups = { "AuthPartnerCreation" })
 public class AuthPartnerCreation extends BaseClass {
 
 	private DashboardPage dashboardPage;
@@ -49,7 +49,7 @@ public class AuthPartnerCreation extends BaseClass {
 		logoutFromPartner();
 
 		registerPage = loginPage.clickRegisterButton();
-	
+
 		registerPage.enterFirstName(GlobalConstants.AUTH_PARTNER_ID);
 		registerPage.enterLastName(GlobalConstants.AUTH_PARTNER_ID);
 		registerPage.enterOrganizationName(GlobalConstants.ORGANISATION_NAME);
@@ -66,10 +66,7 @@ public class AuthPartnerCreation extends BaseClass {
 		dashboardPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULT_POLICYGROUP);
 		dashboardPage.clickOnSubmitButton();
 
-		assertTrue(dashboardPage.isTermsAndConditionsPopupDisplayed(),
-				GlobalConstants.isTermsAndConditionsPopUpDisplayed);
-		dashboardPage.clickOnCheckbox();
-		dashboardPage.clickOnProceedButton();
+		handleTermsAndCondition();
 
 		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
 				GlobalConstants.isPartnerCertificateTitleDisplayed);
@@ -148,9 +145,59 @@ public class AuthPartnerCreation extends BaseClass {
 		partnerCertificatePage.clickOnTitleBackButton();
 	}
 
+	@Test(priority = 2, description = "Register auth user with out uploading certificates")
+	public void registerAuthUserWithoutUploadingCertificates() throws InterruptedException {
+
+		dashboardPage = new DashboardPage(driver);
+		registerPage = new RegisterPage(driver);
+		loginPage = new LoginPage(driver);
+
+		logoutFromPartner();
+
+		registerPage = loginPage.clickRegisterButton();
+
+		registerPage.enterFirstName(GlobalConstants.AUTHNOCERT);
+		registerPage.enterLastName("  ");
+		registerPage.enterOrganizationName(GlobalConstants.ORGANISATION_NAME);
+		registerPage.selectPartnerTypeDropdown(2);
+		registerPage.enterAddress("0" + data);
+		registerPage.enterEmail(data + "nocert" + "@gmail.com");
+		registerPage.enterPhone("  ");
+		registerPage.selectNotificationLanguageDropdown();
+		registerPage.enterUsername(GlobalConstants.AUTHNOCERT);
+		registerPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
+		registerPage.enterPasswordConfirm(GlobalConstants.PARTNER_PASSWORD);
+		dashboardPage = registerPage.clickSubmitButton();
+
+		assertTrue(registerPage.isPhoneNumberWarningMessageDisplayed(),
+				GlobalConstants.isPhoneNumberWarningMessageDisplayed);
+		registerPage.selectPartnerTypeDropdown(2);
+		registerPage.enterPhone("8098768903");
+		registerPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
+		registerPage.enterPasswordConfirm(GlobalConstants.PARTNER_PASSWORD);
+		dashboardPage = registerPage.clickSubmitButton();
+
+		dashboardPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULT_POLICYGROUP);
+		dashboardPage.clickOnSubmitButton();
+
+		handleTermsAndCondition();
+
+		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
+				GlobalConstants.isPartnerCertificateTitleDisplayed);
+
+	}
+
 	private void logoutFromPartner() {
 		dashboardPage.clickOnProfileDropdown();
 		loginPage = dashboardPage.clickOnLogoutButton();
+	}
+
+	private void handleTermsAndCondition() {
+		if (dashboardPage.isTermsAndConditionsPopupDisplayed()) {
+			dashboardPage.clickOnCheckbox();
+			assertTrue(dashboardPage.isProceedButtonDisplayed(), GlobalConstants.isProceedButtonDisplayed);
+			dashboardPage.clickOnProceedButton();
+		}
 	}
 
 }

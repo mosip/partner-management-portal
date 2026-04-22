@@ -1,13 +1,12 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
 import org.openqa.selenium.NoSuchElementException;
-
+import org.openqa.selenium.TimeoutException;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-
 
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
 
@@ -433,7 +432,7 @@ public class DatasharePolicyPage extends BasePage {
 	@FindBy(id = "alert_error_popup_okay_btn")
 	private WebElement alertErrorOkButton;
 
-	@FindBy(xpath = "//p[text()='Error: Partner - Policy Request Detected!']")
+	@FindBy(id = "alert_error_popup_header_msg")
 	private WebElement partnerPolicyLinkPending;
 
 	@FindBy(id = "policy_edit_btn")
@@ -551,6 +550,10 @@ public class DatasharePolicyPage extends BasePage {
 		enter(policyGroupDropdownSearchInput, value);
 	}
 
+	public void clearSearchedPolicyGroup() {
+		clearTextBox(policyGroupDropdownSearchInput);
+	}
+
 	public boolean isPolicyGroupNameDisplayed() {
 		return isElementDisplayed(policyGroupName);
 	}
@@ -562,7 +565,13 @@ public class DatasharePolicyPage extends BasePage {
 	public void selectPolicyGroup(String value) {
 		clickOnElement(policyGroupDropdown);
 		enter(policyGroupDropdownSearchInput, value);
-		clickOnElement(policyGroupDropdownOption1);
+		try {
+			By policyGroupOption = By.xpath("//span[normalize-space()='" + value + "']");
+			click(policyGroupOption);
+		} catch (NoSuchElementException e) {
+			logger.warn("Policy group not found: " + value);
+			throw new NoSuchElementException("Failed to select policy group: " + value + ". Element not found.", e);
+		}
 	}
 
 	public boolean isPolicyNameTextLabelDisplayed() {
@@ -803,16 +812,18 @@ public class DatasharePolicyPage extends BasePage {
 	}
 
 	public void selectPolicyGroupDropdown(String value) {
+
 		clickOnElement(policyGroupDropdown);
+		clearTextBox(policyGroupDropdownSearchInput);
 		enter(policyGroupDropdownSearchInput, value);
 
+		By policyGroupOption = By.xpath("//span[normalize-space()='" + value + "']");
+
 		try {
-			WebElement policyGroupValue = driver.findElement(By.xpath("//span[contains(@class,'font-semibold') "
-					+ "and contains(@class,'text-dark-blue') " + "and normalize-space(text())='" + value + "']"));
-			clickOnElement(policyGroupValue);
-		} catch (NoSuchElementException e) {
+			waitScrollAndClick(policyGroupOption);
+		} catch (TimeoutException | NoSuchElementException e) {
 			logger.warn("Policy group not found: " + value);
-			throw new NoSuchElementException("Failed to select policy group: " + value + ". Element not found.", e);
+			throw new NoSuchElementException("Failed to select policy group: " + value, e);
 		}
 	}
 
@@ -1223,16 +1234,16 @@ public class DatasharePolicyPage extends BasePage {
 		clickOnElement(clonePolicyGroupDropdown);
 		clickOnElement(clonePolicyGroupDropdownSearchInput);
 		enter(clonePolicyGroupDropdownSearchInput, value);
-		clickOnElement(clonePolicyGroupDropdownOption1);
+		By policyGroupOption = By.xpath("//span[normalize-space()='" + value + "']");
+		click(policyGroupOption);
 	}
 
 	public void selectValidPolicyGroupForClone(String value) {
 		clickOnElement(clonePolicyGroupDropdown);
 		clickOnElement(clonePolicyGroupDropdownSearchInput);
 		enter(clonePolicyGroupDropdownSearchInput, value);
-		WebElement policyGroupOption = driver.findElement(By.xpath(
-				"//span[@id='policy_group_selector_option_name_1' and normalize-space(text())='" + value + "']"));
-		clickOnElement(policyGroupOption);
+		By policyGroupOption = By.xpath("//span[normalize-space()='" + value + "']");
+		click(policyGroupOption);
 	}
 
 	public boolean isClonePolicyButtonAvailable() {
@@ -1446,6 +1457,7 @@ public class DatasharePolicyPage extends BasePage {
 
 	public void selectPolicyGroupForClonePolicy(String value) {
 		enter(clonePolicyGroupDropdownSearchInput, value);
-		clickOnElement(clonePolicyGroupDropdownOption1);
+		By policyGroupOption = By.xpath("//span[normalize-space()='" + value + "']");
+		click(policyGroupOption);
 	}
 }

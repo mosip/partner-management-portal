@@ -83,6 +83,7 @@ public class TestRunner {
 			XmlClass authPolicyTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.AuthPolicyTest");
 			XmlClass partnerPolicyMappingTest = new XmlClass(
 					"io.mosip.testrig.pmpuiv2.testcase.PartnerPolicyMappingTest");
+			XmlClass mispPartnerTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.MispPartnerTest");
 
 			List<XmlClass> classes = new ArrayList<>();
 			String[] scenarioNames = ConfigManager.gettestcases().split(",");
@@ -159,6 +160,9 @@ public class TestRunner {
 				case "PartnerPolicyMappingTest":
 					classes.add(partnerPolicyMappingTest);
 					break;
+				case "MispPartnerTest":
+					classes.add(mispPartnerTest);
+					break;
 
 				// Unknown test name
 				default:
@@ -220,7 +224,7 @@ public class TestRunner {
 
 	public static String getResourcePath() {
 		if (checkRunType().equalsIgnoreCase("JAR")) {
-			return new File(jarUrl).getParentFile().getAbsolutePath().toString() + "/resources/";
+			return new File(jarUrl).getParentFile().getAbsolutePath().toString() + "/resources";
 		} else if (checkRunType().equalsIgnoreCase("IDE")) {
 			String path = System.getProperty("user.dir") + System.getProperty("path.config");
 

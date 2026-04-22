@@ -279,6 +279,8 @@ public class SbiDeviceProviderTest extends BaseClass {
 		assertTrue(listOfDevicesPage.isListOfDevicesTitleDisplayed(), GlobalConstants.isListOfDevicesTitleDisplayed);
 		assertTrue(listOfDevicesPage.isHomeBreadcumbDisplayed(), GlobalConstants.isHomeBreadcumbDisplayed);
 
+		assertTrue(listOfDevicesPage.isDeviceIdDisplayedInFifthColumnOnSbiDevicePage(),
+				GlobalConstants.isDeviceIdDisplayedInFifthColumnOnSbiDevicePage);
 		assertTrue(listOfDevicesPage.isCreationDateSameAsBrowserDateFormat(),
 				GlobalConstants.isCreationDateSameAsBrowserDateFormat);
 
@@ -339,8 +341,9 @@ public class SbiDeviceProviderTest extends BaseClass {
 		listOfDevicesPage.clickOnFilterButton();
 		listOfDevicesPage.enterPartnerIdInFilterInAdmin(GlobalConstants.DEVICE_PARTNER_ID);
 		listOfDevicesPage.selectDeviceTypeFilterInAdmin(GlobalConstants.FACE);
+		listOfDevicesPage.clickOnApplyFilterButton();
 
-		//required for later
+		// required for later
 //		assertEquals(listOfDevicesPage.getListOfDevicesTitle(), GlobalConstants.LIST_OF_DEVICES_TITLE_COUNT_28);
 		assertTrue(authPolicyPage.isPaginationDisplayed(), GlobalConstants.isPaginationDisplayed);
 		assertTrue(authPolicyPage.isPreviusPageButtonDisplayed(), GlobalConstants.isPreviusPageButtonDisplayed);

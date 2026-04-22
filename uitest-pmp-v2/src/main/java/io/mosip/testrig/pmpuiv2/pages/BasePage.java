@@ -4,25 +4,28 @@ import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 import java.util.Random;
+import org.openqa.selenium.NoSuchElementException;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.ElementNotInteractableException;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Reporter;
 import org.apache.log4j.Logger;
 
-import io.mosip.testrig.pmpuiv2.driver.DriverManager;
 import io.mosip.testrig.pmpuiv2.kernel.util.ConfigManager;
 import io.mosip.testrig.pmpuiv2.utility.JsonUtil;
 import io.mosip.testrig.pmpuiv2.utility.LogUtil;
@@ -32,12 +35,12 @@ import io.mosip.testrig.pmpuiv2.utility.WaitUtil;
 public class BasePage {
 
 	protected WebDriver driver;
-	public static String appendDate = getPreAppend() + getDateTime();
-	private static final Logger logger = Logger.getLogger(BasePage.class);
+	protected static final int STALE_RETRY = 2;
+	protected static final Logger logger = Logger.getLogger(BasePage.class);
 
 	public BasePage(WebDriver driver) {
 		this.driver = driver;
-		PageFactory.initElements(driver, this);
+		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 15), this);
 	}
 
 	public static String getDateTime() {
@@ -54,62 +57,134 @@ public class BasePage {
 		WaitUtil.waitForClickability(driver, element);
 	}
 
+	protected void waitForElementClickable(By locator) {
+		WaitUtil.waitForClickable(driver, locator);
+	}
+
 	public void clickOnElement(WebElement element) {
-		LogUtil.action("Clicking on element: ", element);
-		try {
-			waitForElementClickable(element);
-			element.click();
-		} catch (Exception e) {
-			LogUtil.step("Standard click failed, trying JS click: " + element.toString());
+		LogUtil.action("Clicking on element", element);
+		int attempts = 0;
+		while (attempts < 2) {
 			try {
-				JavascriptExecutor executor = (JavascriptExecutor) driver;
-				executor.executeScript("arguments[0].click();", element);
-			} catch (Exception jsEx) {
-				LogUtil.error("JS click failed on element: " + element.toString());
-				LogUtil.error("Exception: " + jsEx.getMessage());
+				// Normal Selenium click
+				WaitUtil.waitForVisibility(driver, element);
+				WaitUtil.waitForClickability(driver, element);
+				element.click();
+				return;
+
+			} catch (StaleElementReferenceException stale) {
+				attempts++;
+				LogUtil.step("Page URL: " + driver.getCurrentUrl());
+				LogUtil.step("Page Title: " + driver.getTitle());
+				LogUtil.step("Stale element detected. Retry " + attempts + "/" + STALE_RETRY);
+			} catch (ElementClickInterceptedException intercepted) {
+				LogUtil.step("Click intercepted. Falling back to JS click.");
+				jsClick(element);
+				return;
+			} catch (ElementNotInteractableException ei) {
+				LogUtil.step("Click intercepted. Falling back to JS click.");
+				jsClick(element);
+				return;
+			} catch (TimeoutException timeout) {
+				LogUtil.error("Element not clickable within timeout");
 				takeScreenshot();
-				throw jsEx;
+				throw timeout;
+			} catch (Exception e) {
+				LogUtil.error("Unexpected click failure: " + e.getClass().getSimpleName());
+				takeScreenshot();
+				throw new RuntimeException("Click failed for element: " + element, e);
 			}
 		}
+
+		takeScreenshot();
+		throw new RuntimeException("Failed to click element after " + STALE_RETRY + " stale retries");
+	}
+
+	public void click(By locator) throws ElementClickInterceptedException {
+		LogUtil.action("Clicking on element :" + locator);
+
+		int attempts = 0;
+		while (attempts < STALE_RETRY) {
+			try {
+				WebElement element = WaitUtil.waitForClickable(driver, locator);
+				element.click();
+				return;
+
+			} catch (StaleElementReferenceException e) {
+				attempts++;
+				LogUtil.step("Stale element. Retrying " + attempts + "/" + STALE_RETRY);
+
+			} catch (ElementClickInterceptedException intercepted) {
+				LogUtil.step("Click intercepted. Falling back to JS click.");
+				jsClick(locator);
+				return;
+			} catch (ElementNotInteractableException e) {
+				LogUtil.step("Click intercepted. Falling back to JS click.");
+				jsClick(locator);
+				return;
+			} catch (TimeoutException e) {
+				takeScreenshot();
+				throw e;
+			} catch (WebDriverException e) {
+				if (e.getMessage() != null && e.getMessage().contains("does not belong to the document")) {
+					attempts++;
+					LogUtil.step("DOM refreshed. Retrying " + attempts + "/" + STALE_RETRY);
+				} else {
+					throw e;
+				}
+			}
+
+		}
+
+		takeScreenshot();
+		throw new RuntimeException("Failed to click element after retries: " + locator);
+	}
+
+	private void jsClick(By locator) {
+		WebElement element = driver.findElement(locator);
+		((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
 	}
 
 	public void enter(WebElement element, String value) {
 		LogUtil.action("Entering value '" + value + "' into element: ", element);
-		try {
-			waitForElementVisible(element);
-			element.clear();
-			element.sendKeys(value);
-		} catch (Exception e) {
-			LogUtil.step("Standard entry failed, trying JS click before typing: " + element.toString());
+		int attempts = 0;
+
+		while (attempts < STALE_RETRY) {
 			try {
-				JavascriptExecutor executor = (JavascriptExecutor) driver;
-				executor.executeScript("arguments[0].click();", element);
-			} catch (Exception jsEx) {
-				LogUtil.error("JS click failed before typing: " + element.toString());
-				LogUtil.error("Exception: " + jsEx.getMessage());
-				takeScreenshot();
-				throw jsEx;
+				waitForElementVisible(element);
+				element.clear();
+				element.sendKeys(value);
+				return;
+			} catch (StaleElementReferenceException e) {
+				attempts++;
+				LogUtil.step("Page URL: " + driver.getCurrentUrl());
+				LogUtil.step("Page Title: " + driver.getTitle());
+				LogUtil.step("Retrying enter due to stale element");
 			}
 		}
+		takeScreenshot();
+		throw new RuntimeException("Element still stale after retry while entering text");
 	}
 
 	public void enter(WebElement element, CharSequence[] value) {
 		LogUtil.action("Entering value '" + value + "' into element: ", element);
-		try {
-			waitForElementVisible(element);
-			element.clear();
-			element.sendKeys(value);
-		} catch (Exception e) {
-			LogUtil.step("Standard entry failed, trying JS click before typing: " + element.toString());
+		int attempts = 0;
+
+		while (attempts < STALE_RETRY) {
 			try {
-				JavascriptExecutor executor = (JavascriptExecutor) driver;
-				executor.executeScript("arguments[0].click();", element);
-			} catch (Exception jsEx) {
-				LogUtil.error("JS click failed before typing: " + element.toString());
-				takeScreenshot();
-				throw jsEx;
+				waitForElementVisible(element);
+				element.clear();
+				element.sendKeys(value);
+				return;
+			} catch (StaleElementReferenceException e) {
+				attempts++;
+				LogUtil.step("Page URL: " + driver.getCurrentUrl());
+				LogUtil.step("Page Title: " + driver.getTitle());
+				LogUtil.step("Retrying enter due to stale element");
 			}
 		}
+		takeScreenshot();
+		throw new RuntimeException("Element still stale after retry while entering text");
 	}
 
 	public void uploadImage(WebElement element, String path) {
@@ -127,6 +202,12 @@ public class BasePage {
 				element.sendKeys(path);
 			}
 
+		} catch (StaleElementReferenceException e) {
+			LogUtil.step("Retrying image upload due to stale element");
+			LogUtil.step("Page URL: " + driver.getCurrentUrl());
+			LogUtil.step("Page Title: " + driver.getTitle());
+			WaitUtil.waitForVisibility(driver, element);
+			element.sendKeys(path);
 		} catch (Exception e) {
 			LogUtil.step("Image upload failed for element: " + element.toString());
 			takeScreenshot();
@@ -136,23 +217,21 @@ public class BasePage {
 
 	public void dropdownByIndex(WebElement element, int index) {
 		LogUtil.action("Selecting dropdown index " + index + " for element: ", element);
-		try {
-			waitForElementVisible(element);
-			clickOnElement(element);
-			Select dropdown = new Select(element);
-			dropdown.selectByIndex(index);
-
-		} catch (Exception e) {
-			LogUtil.step("Dropdown index select failed, trying JS click: " + element.toString());
+		int attempts = 0;
+		while (attempts < STALE_RETRY) {
 			try {
-				JavascriptExecutor executor = (JavascriptExecutor) driver;
-				executor.executeScript("arguments[0].click();", element);
-			} catch (Exception jsEx) {
-				LogUtil.error("Dropdown index select failed: " + element.toString());
-				takeScreenshot();
-				throw jsEx;
+				waitForElementVisible(element);
+				new Select(element).selectByIndex(index);
+				return;
+			} catch (StaleElementReferenceException e) {
+				attempts++;
+				LogUtil.step("Page URL: " + driver.getCurrentUrl());
+				LogUtil.step("Page Title: " + driver.getTitle());
+				LogUtil.step("Retrying dropdown selection due to stale element");
 			}
 		}
+		takeScreenshot();
+		throw new RuntimeException("Dropdown still stale after retry");
 	}
 
 	public void dropdown(WebElement element, String value) throws IOException {
@@ -161,56 +240,88 @@ public class BasePage {
 			waitForElementVisible(element);
 			clickOnElement(element);
 			click(By.xpath("//*[text()='" + value + "']"));
-		} catch (Exception e) {
-			LogUtil.step("Dropdown text select failed, trying JS click: " + element.toString());
-			try {
-				JavascriptExecutor executor = (JavascriptExecutor) driver;
-				executor.executeScript("arguments[0].click();", element);
-			} catch (Exception jsEx) {
-				LogUtil.error("Dropdown text select failed: " + element.toString());
-				takeScreenshot();
-				throw jsEx;
-			}
+			return;
+		} catch (StaleElementReferenceException e) {
+			LogUtil.step("Retrying dropdown selection due to stale element");
+			LogUtil.step("Page URL: " + driver.getCurrentUrl());
+			LogUtil.step("Page Title: " + driver.getTitle());
+			click(By.xpath("//*[text()='" + value + "']"));
 		}
+		takeScreenshot();
+		throw new RuntimeException("Dropdown still stale after retry");
 	}
 
 	public void dropdownWithPosition(WebElement element, String value, int position) throws IOException {
 		LogUtil.action("Selecting dropdown position " + position + " for element: ", element);
+
 		try {
 			waitForElementVisible(element);
 			clickOnElement(element);
-			click(By.xpath("(//*[contains(text(),'" + value + "')])[" + position + "]"));
-		} catch (Exception e) {
-			LogUtil.step("Dropdown position select failed, trying JS click: " + element.toString());
+
+			click(By.xpath("(//*[normalize-space(text())='" + value + "' and not(contains(@class,'hidden'))])["
+					+ position + "]"));
+			return;
+
+		} catch (StaleElementReferenceException e) {
+			LogUtil.step("Retrying dropdownWithPosition due to stale element");
+			LogUtil.step("Page URL: " + driver.getCurrentUrl());
+			LogUtil.step("Page Title: " + driver.getTitle());
+
+			click(By.xpath("(//*[normalize-space(text())='" + value + "' and not(contains(@class,'hidden'))])["
+					+ position + "]"));
+			return;
+		}
+	}
+
+	public void dropdownWithPosition(By dropdownLocator, String value, int position) {
+
+		LogUtil.action("Selecting dropdown position " + position + " with locator " + dropdownLocator);
+
+		int attempts = 0;
+
+		while (attempts < 2) {
 			try {
-				((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
-				WebElement option = driver
-						.findElement(By.xpath("(//*[contains(text(),'" + value + "')])[" + position + "]"));
-				((JavascriptExecutor) driver).executeScript("arguments[0].click();", option);
-			} catch (Exception jsEx) {
-				LogUtil.error("Dropdown text select failed: " + element.toString());
-				takeScreenshot();
-				throw new RuntimeException("Failed to select dropdown value '" + value + "' at position " + position,
-						jsEx);
+				WebElement dropdown = new WebDriverWait(driver, Duration.ofSeconds(ConfigManager.getTimeout()))
+						.until(ExpectedConditions.elementToBeClickable(dropdownLocator));
+
+				dropdown.click();
+
+				// 🔥 FIX: remove position, target visible dropdown options
+				By optionLocator = By.xpath("//div[contains(@class,'menu')]//*[contains(text(),'" + value + "')]");
+
+				WebElement option = new WebDriverWait(driver, Duration.ofSeconds(ConfigManager.getTimeout()))
+						.until(ExpectedConditions.elementToBeClickable(optionLocator));
+
+				option.click();
+				return;
+
+			} catch (StaleElementReferenceException e) {
+				attempts++;
+				LogUtil.step("Retrying dropdownWithPosition due to stale element");
 			}
 		}
+
+		takeScreenshot();
+		throw new RuntimeException("Failed to select dropdown value: " + value);
 	}
 
 	public void selectByValueInDropdown(WebElement element, String value) {
 		LogUtil.action("Selecting dropdown value '" + value + "' for element: ", element);
-		Select select = new Select(element);
-		select.selectByValue(value);
-	}
-
-	protected void click(By by) {
-		try {
-			WebElement element = driver.findElement(by);
-			LogUtil.action("Clicking on element: ", element);
-			waitForElementClickable(element);
-			element.click();
-		} catch (Exception e) {
-			throw new RuntimeException("Failed to click on element: " + by, e);
+		int attempts = 0;
+		while (attempts < STALE_RETRY) {
+			try {
+				WaitUtil.waitForVisibility(driver, element);
+				new Select(element).selectByValue(value);
+				return;
+			} catch (StaleElementReferenceException e) {
+				attempts++;
+				LogUtil.step("Page URL: " + driver.getCurrentUrl());
+				LogUtil.step("Page Title: " + driver.getTitle());
+				LogUtil.step("Retrying selectByValue due to stale element");
+			}
 		}
+		takeScreenshot();
+		throw new RuntimeException("Dropdown still stale after " + STALE_RETRY + " retries: value=" + value);
 	}
 
 	public String generateRandomAlphabetString() {
@@ -229,53 +340,81 @@ public class BasePage {
 	protected boolean isElementDisplayed(WebElement element) {
 		LogUtil.verify("Checking is element is displayed: ", element);
 		try {
-			waitForElementToBeVisible(element);
+			WaitUtil.waitForVisibility(driver, element);
 			return true;
 		} catch (Exception e) {
+			LogUtil.error("isElementDisplayed failed: " + e.getClass().getSimpleName());
 			takeScreenshot();
 			return false;
 		}
 	}
 
 	protected boolean isElementDisabled(WebElement element) {
-		LogUtil.verify("Checking is element is disabled: ", element);
+		LogUtil.verify("Checking if element is disabled: ", element);
 		try {
-			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-			return wait.until(driver -> !element.isEnabled());
+			WaitUtil.waitForVisibility(driver, element);
+			return !element.isEnabled();
+		} catch (StaleElementReferenceException e) {
+			LogUtil.step("Element became stale while checking disabled state");
+			LogUtil.step("Page URL: " + driver.getCurrentUrl());
+			LogUtil.step("Page Title: " + driver.getTitle());
+			return true; // treat stale as disabled
 		} catch (Exception e) {
+			LogUtil.error("isElementDisabled failed: " + e.getClass().getSimpleName());
 			takeScreenshot();
 			return false;
 		}
 	}
 
 	protected boolean isElementEnabled(WebElement element) {
-		LogUtil.verify("Checking is element is enabled: ", element);
+		LogUtil.verify("Checking if element is enabled: ", element);
 		try {
-			waitForElementClickable(element);
+			WaitUtil.waitForVisibility(driver, element);
 			return element.isEnabled();
+		} catch (StaleElementReferenceException e) {
+			LogUtil.step("Element became stale while checking enabled state");
+			LogUtil.step("Page URL: " + driver.getCurrentUrl());
+			LogUtil.step("Page Title: " + driver.getTitle());
+			return false;
 		} catch (Exception e) {
+			LogUtil.error("isElementEnabled failed: " + e.getClass().getSimpleName());
 			takeScreenshot();
 			return false;
 		}
 	}
 
-	protected void waitForElementToBeVisible(WebElement element) {
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-		wait.until(ExpectedConditions.visibilityOf(element));
-	}
+	protected boolean isElementEnabled(By locator) {
+		LogUtil.verify("Checking if element is enabled: ", locator);
 
-	public static void wait(int wait) {
 		try {
-			Thread.sleep(wait);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+			WebElement element = new WebDriverWait(driver, Duration.ofSeconds(ConfigManager.getTimeout()))
+					.until(ExpectedConditions.visibilityOfElementLocated(locator));
+
+			return element.isEnabled();
+
+		} catch (TimeoutException e) {
+			LogUtil.step("Element not present within timeout: " + locator);
+			takeScreenshot();
+			return false;
+
+		} catch (StaleElementReferenceException e) {
+			LogUtil.step("Element became stale while checking enabled state: " + locator);
+			LogUtil.step("Page URL: " + driver.getCurrentUrl());
+			LogUtil.step("Page Title: " + driver.getTitle());
+			takeScreenshot();
+			return false;
+
+		} catch (Exception e) {
+			LogUtil.error("isElementEnabled failed for locator: " + locator);
+			LogUtil.error("Exception: " + e.getClass().getSimpleName());
+			takeScreenshot();
+			return false;
 		}
 	}
 
 	public static String getPreAppend() {
 		String preappend = null;
 		try {
-
 			preappend = ConfigManager.getpreappend();
 
 		} catch (Exception e) {
@@ -355,8 +494,10 @@ public class BasePage {
 	}
 
 	protected void clearTextBox(WebElement element) {
-		this.waitForElementToBeVisible(element);
-		element.clear();
+		WaitUtil.waitForVisibility(driver, element);
+		element.click();
+		element.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+		element.sendKeys(Keys.DELETE);
 	}
 
 	public void scrollToEndPage() {
@@ -371,7 +512,7 @@ public class BasePage {
 
 	}
 
-	private void takeScreenshot() {
+	protected void takeScreenshot() {
 		try {
 			String base64Image = Screenshot.ClickScreenshot(driver);
 			String html = "<p><img src='data:image/png;base64," + base64Image + "' width='900' height='450'/></p>";
@@ -384,62 +525,67 @@ public class BasePage {
 	}
 
 	public void scrollIntoView(WebElement element) {
-		JavascriptExecutor js = (JavascriptExecutor) driver;
-		js.executeScript("arguments[0].scrollIntoView(true);", element);
+		try {
+			((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
+		} catch (StaleElementReferenceException e) {
+			LogUtil.step("Element stale while scrolling into view");
+		}
 	}
 
 	public boolean isDisplayed(By locator) {
 		try {
-			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-			wait.ignoring(StaleElementReferenceException.class);
-			return wait.until(d -> d.findElement(locator).isDisplayed());
-		} catch (Exception e) {
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(ConfigManager.getTimeout()));
+
+			return wait.until(driver -> {
+				try {
+					WebElement el = driver.findElement(locator);
+					return el.isDisplayed() && el.getSize().getHeight() > 0;
+				} catch (StaleElementReferenceException | NoSuchElementException e) {
+					return false;
+				}
+			});
+
+		} catch (TimeoutException e) {
+			LogUtil.step("Page URL: " + driver.getCurrentUrl());
+			LogUtil.step("Page Title: " + driver.getTitle());
 			return false;
 		}
 	}
 
 	public boolean isTextPresent(By locator, String expectedText) {
 		try {
-			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-			return wait.until(ExpectedConditions.textToBePresentInElementLocated(locator, expectedText));
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(ConfigManager.getTimeout()));
+
+			return wait.until(ExpectedConditions
+					.refreshed(ExpectedConditions.textToBePresentInElementLocated(locator, expectedText)));
 		} catch (TimeoutException e) {
+			return false;
+		} catch (StaleElementReferenceException e) {
+			LogUtil.step("Text check failed due to stale element: " + locator);
+			LogUtil.step("Page URL: " + driver.getCurrentUrl());
+			LogUtil.step("Page Title: " + driver.getTitle());
 			return false;
 		}
 	}
 
-	protected static final long DEFAULT_TIMEOUT_MS = 30_000;
-	protected static final long POLL_INTERVAL_MS = 300;
-	protected static final Duration QUICK_CHECK_TIMEOUT = Duration.ofMillis(500);
-
-	protected void waitUntilAnyElementVisible(By first, By second) {
-		long endTime = System.currentTimeMillis() + DEFAULT_TIMEOUT_MS;
-
-		while (System.currentTimeMillis() < endTime) {
-			if (isDisplayedQuick(first) || isDisplayedQuick(second)) {
-				return;
-			}
-			try {
-				Thread.sleep(POLL_INTERVAL_MS);
-			} catch (InterruptedException e) {
-				Thread.currentThread().interrupt();
-				throw new RuntimeException("Thread interrupted while waiting for dashboard", e);
-			}
-		}
-		throw new RuntimeException("Dashboard not ready");
-	}
-
-	protected boolean isDisplayedQuick(By locator) {
+	private void jsClick(WebElement element) {
 		try {
-			WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), QUICK_CHECK_TIMEOUT);
-
-			return wait.until(driver -> {
-				List<WebElement> elements = driver.findElements(locator);
-				return !elements.isEmpty() && elements.get(0).isDisplayed();
-			});
-
-		} catch (TimeoutException e) {
-			return false;
+			((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block:'center'});", element);
+			((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
+			LogUtil.step("JS click executed successfully");
+		} catch (Exception e) {
+			LogUtil.error("JS click failed");
+			takeScreenshot();
+			throw e;
 		}
+	}
+
+	public void waitScrollAndClick(By option) {
+
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+		WebElement el = wait.until(ExpectedConditions.visibilityOfElementLocated(option));
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", el);
+		((JavascriptExecutor) driver).executeScript("arguments[0].click();", el);
 	}
 
 }

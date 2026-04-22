@@ -1,5 +1,6 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -260,12 +261,18 @@ public class PoliciesPage extends BasePage {
 
 	@FindBy(id = "block_messsage_proceed")
 	private WebElement dataLostProcceedButton;
-	
+
 	@FindBy(xpath = "//span[text()='Select policy name']")
 	private WebElement policyNamePlaceholder;
-	
+
 	@FindBy(xpath = "//textarea[@placeholder='Mention the purpose of requesting the policy']")
 	private WebElement policyCommentBoxPlaceholder;
+
+	@FindBy(id = "show_request_policy")
+	private WebElement middleRequestPolicyButton;
+
+	@FindBy(id = "policies_request_btn")
+	private WebElement tabularPoliciesRequestButton;
 
 	public PoliciesPage(WebDriver driver) {
 		super(driver);
@@ -276,12 +283,15 @@ public class PoliciesPage extends BasePage {
 	}
 
 	public void clickOnRequestPolicyButton() {
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+		if (isTabularRequestPolicyButtonDisplayed()) {
+			clickOnElement(tabularPoliciesRequestButton);
+
+		} else if (isMiddleRequestPolicyButtonDisplayed()) {
+			clickOnElement(middleRequestPolicyButton);
+
+		} else {
+			throw new RuntimeException("Request Policy button not found in middle or tabular view");
 		}
-		clickOnElement(requestPolicyButton);
 	}
 
 	public void clickOnRequestPolicyButtonOfTabularPage() {
@@ -341,7 +351,15 @@ public class PoliciesPage extends BasePage {
 	}
 
 	public boolean isPoliciesEmptyTableEnabled() {
-		return isElementEnabled(requestPolicyButton);
+		if (isMiddleRequestPolicyButtonDisplayed()) {
+			return isElementEnabled(middleRequestPolicyButton);
+
+		} else if (isTabularRequestPolicyButtonDisplayed()) {
+			return isElementEnabled(tabularPoliciesRequestButton);
+
+		} else {
+			return false;
+		}
 	}
 
 	public void clickOnHomeButton() {
@@ -547,7 +565,7 @@ public class PoliciesPage extends BasePage {
 	public boolean isPolicyNamePlaceHolderDisplayed() {
 		return isElementDisplayed(policyNamePlaceholder);
 	}
-	
+
 	public boolean isPolicyCommentBoxPlaceholderDisplayed() {
 		return isElementDisplayed(policyCommentBoxPlaceholder);
 	}
@@ -600,8 +618,12 @@ public class PoliciesPage extends BasePage {
 		return isElementDisplayed(backButton);
 	}
 
-	public boolean isRequestPolicyButtonDisplayed() {
-		return isElementDisplayed(policies_request_btn);
+	public boolean isMiddleRequestPolicyButtonDisplayed() {
+		return isElementDisplayed(middleRequestPolicyButton);
+	}
+
+	public boolean isTabularRequestPolicyButtonDisplayed() {
+		return isElementDisplayed(tabularPoliciesRequestButton);
 	}
 
 	public boolean isTitleOfPolicyPageDisplayed() {
@@ -699,4 +721,10 @@ public class PoliciesPage extends BasePage {
 	public void clickOnPolicyButton() {
 		clickOnElement(policyButton);
 	}
+
+	public boolean isPolicyIdDisplayedInFourthColumnOnPoliciesPage() {
+		By policyIdColumnHeader = By.id("policies.policyId_header");
+		return isDisplayed(policyIdColumnHeader);
+	}
+
 }
