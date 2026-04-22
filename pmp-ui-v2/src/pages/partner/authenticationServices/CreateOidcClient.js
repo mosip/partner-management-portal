@@ -419,11 +419,7 @@ function CreateOidcClient() {
     setConsentExpiry(numValue);
     if (!numValue || numValue.trim() === '') {
       setConsentExpiryError(t('createOidcClient.consentExpiryRequired'));
-    } else if (
-  Number.isNaN(Number.parseInt(numValue, 10)) ||
-  Number.parseInt(numValue, 10) <= 0 ||
-  Number.parseInt(numValue, 10) > 10
-)     {
+    } else if (Number.isNaN(Number.parseInt(numValue, 10)) || Number.parseInt(numValue, 10) < 10) {
       setConsentExpiryError(t('createOidcClient.consentExpiryValidation'));
     } else {
       setConsentExpiryError("");
