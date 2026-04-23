@@ -346,14 +346,15 @@
         "errorInMapPolicy": "While requesting a policy, we have encountered with an error",
         "policySuccessHeader": "Policy Request has been submitted successfully!",
         "policySuccessMsg": "Policy request process has been successfully submitted. Approval is pending with admin.",
-        "info": "Only those partner IDs whose partner certificate is uploaded are available in the dropdown. If you don't find your partner ID, please upload partner certificate first.",
+        "info": "Only partner IDs with uploaded and signed partner certificates are available in this dropdown. If your partner ID is not listed, upload and sign the partner certificate first.",
         "mispPartnerInfo": "Only those MISP partner IDs whose partner certificate is uploaded is available in the dropdown. If you don't find your partner ID, please upload partner certificate first",
         "commentTooLong": "Comments should not allow more than 500 characters.",
         "policyGroupNotAvailable": "No policy group linked to the given Partner ID.",
         "guidenceForMispPartner": "Note: If you are a MISP Partner, the Policy Group and Policy Name fields are optional. We still recommend selecting a Policy Name to help maintain consistency and clarity in policy management.",
         "policySuccessMsgForAdmin": "Policy request has been successfully submitted. Approve the request for the partner policy linking to be activated.",
         "approvePopupTitle": "Do you want to approve Partner- Policy Request?",
-        "approvePopupDesc": "On clicking Confirm, the Partner Policy Linking will be approved."
+        "approvePopupDesc": "On clicking Confirm, the Partner Policy Linking will be approved.",
+        "characters": "characters"
     },
     "mapCredentialType": {
         "title": "Map Credential Type",
