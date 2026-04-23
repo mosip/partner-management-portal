@@ -345,7 +345,7 @@
         "errorInMapPolicy": "Lors de la demande d'une politique, nous avons rencontré une erreur",
         "policySuccessHeader": "La demande de politique a été soumise avec succès !",
         "policySuccessMsg": "Le processus de demande de politique a été soumis avec succès. L'approbation est en attente auprès de l'administrateur.",
-        "info": "Seuls les identifiants partenaires dont le certificat partenaire est téléversé et signé sont disponibles dans cette liste déroulante. Si votre identifiant partenaire n'apparaît pas, téléversez et signez d'abord le certificat partenaire.",
+        "info": "Seuls les ID de partenaire dont le certificat de partenaire est téléchargé sont disponibles dans la liste déroulante. Si vous ne trouvez pas votre identifiant de partenaire, veuillez d'abord télécharger le certificat de partenaire",
         "mispPartnerInfo": "Seuls les identifiants partenaires MISP dont le certificat est téléchargé sont disponibles dans la liste déroulante. Si vous ne trouvez pas votre identifiant partenaire, veuillez d'abord télécharger le certificat.",
         "commentTooLong": "Les commentaires ne doivent pas contenir plus de 500 caractères.",
         "policyGroupNotAvailable": "Aucun groupe de politiques n'est lié à l'ID de partenaire donné.",
