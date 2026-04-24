@@ -354,7 +354,8 @@
         "guidenceForMispPartner": "Remarque : Si vous êtes partenaire MISP, les champs Groupe de politiques et Nom de la politique sont facultatifs. Nous vous recommandons néanmoins de sélectionner un nom de politique pour garantir la cohérence et la clarté de la gestion des politiques.",
         "policySuccessMsgForAdmin": "La demande de politique a été soumise avec succès. Veuillez approuver la demande d'activation du lien de politique partenaire.",
         "approvePopupTitle": "Voulez-vous approuver la demande de politique du partenaire ?",
-        "approvePopupDesc": "En cliquant sur Confirmer, la liaison de la politique de partenariat sera approuvée."
+        "approvePopupDesc": "En cliquant sur Confirmer, la liaison de la politique de partenariat sera approuvée.",
+        "characters": "caractères"
     },
     "mapCredentialType": {
         "title": "Mapper le type d’identifiant",
