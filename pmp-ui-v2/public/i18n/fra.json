@@ -1420,6 +1420,7 @@
         "PMS_PRT_500": "Impossible de traiter la demande.",
         "PMS_PMP_016": "Votre compte partenaire pour un type de partenaire donné a été désactivé par l'administrateur, vous ne pourrez donc plus effectuer cette activité",
         "PMS_PRT_098": "La politique donnée dans le groupe de politiques du partenaire n'existe pas.",
+        "PMS_PRT_099": "Entrée non valide pour le champ « Durée d'expiration du consentement (en minutes) ». Attendu : un entier dans les limites autorisées par le système.",
         "PMS_PMP_019": "La stratégie n'est pas active.",
         "PMS_PMP_023": "Le groupe de stratégies n'est pas actif.",
         "PMS_DTS_001": "  La réponse DataShare est nulle",
