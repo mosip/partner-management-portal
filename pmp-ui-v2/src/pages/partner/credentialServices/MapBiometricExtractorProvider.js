@@ -389,7 +389,9 @@ function MapBiometricExtractorProvider() {
             extractorProviderVersion: selectedConfig.bioextractorProviderVersion,
           };
         }),
-      });
+      },
+        "mosip.pms.partners.bioextractors.request.post"  
+      );
 
       const response = await HttpService.post(
         getPartnerManagerUrl(`/partners/${policyDetails.partnerId}/policies/${policyDetails.policyId}/bio-extractors-request`, process.env.NODE_ENV),
