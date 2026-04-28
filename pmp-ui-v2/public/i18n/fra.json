@@ -1751,6 +1751,9 @@
         "configNameDuplicateError": "Le nom de configuration existe déjà",
         "errorInCreateConfig": "Une erreur est survenue lors de la création de la configuration du fournisseur d'extraction biométrique",
         "createConfigSuccessHeader": "La configuration du fournisseur d'extraction biométrique a été ajoutée avec succès !",
+        "delete": "Supprimer",
+        "deleteConfirmHeader": "Supprimer la configuration de l’extracteur biométrique",
+        "deleteConfirmDescription": "En cliquant sur Confirmer, la configuration sélectionnée sera supprimée.",
         "viewBioExtractorConfigDetails": "Afficher les détails de la configuration de l'extracteur biométrique",
         "viewBioExtractorProviderConfig": "Afficher la configuration du fournisseur d'extracteur biométrique"
         },
