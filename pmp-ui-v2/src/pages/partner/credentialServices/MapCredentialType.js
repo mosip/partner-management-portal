@@ -265,8 +265,9 @@ function MapCredentialType() {
       const request = createRequest({
         partnerPolicyRequestId: requestIdForBioApi,
         credentialType: ct,
-      });
-
+       },
+        "mosip.pms.partners.credentialtypes.request.post"
+    );
       const url = getPartnerManagerUrl(
         `/partners/${state.partnerId}/policies/${policyIdForApi}/credential-types-request`,
         process.env.NODE_ENV
