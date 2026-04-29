@@ -215,10 +215,7 @@ function MapCredentialType() {
 
   const hasUnsavedChanges = useMemo(() => Boolean((credentialType || "").trim()), [credentialType]);
 
-  const blocker = useBlocker(({ currentLocation, nextLocation }) => {
-    if (isSubmitClicked || requestPolicySuccess) return false;
-    return hasUnsavedChanges && currentLocation.pathname !== nextLocation.pathname;
-  });
+ const blocker = null;
 
   useEffect(() => {
     if (hasRequiredState) return;
@@ -362,7 +359,6 @@ function MapCredentialType() {
       {(!dataLoaded || !bioMetaLoaded) && <LoadingIcon />}
       {dataLoaded && bioMetaLoaded && (
         <>
-          {blocker?.state === "blocked" && <BlockerPrompt blocker={blocker} />}
           {errorMsg && (
             <ErrorMessage
               id="map_credential_type_error_msg"
