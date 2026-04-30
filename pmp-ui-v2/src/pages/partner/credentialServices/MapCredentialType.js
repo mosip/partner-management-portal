@@ -265,6 +265,8 @@ function MapCredentialType() {
        },
         "mosip.pms.partners.credentialtypes.request.post"
     );
+        const timestamp = new Date().toISOString();
+    request.requestTime = timestamp;
       const url = getPartnerManagerUrl(
         `/partners/${state.partnerId}/policies/${policyIdForApi}/credential-types-request`,
         process.env.NODE_ENV
