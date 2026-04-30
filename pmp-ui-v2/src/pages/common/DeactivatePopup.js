@@ -102,6 +102,16 @@ function DeactivatePopup({ onClickConfirm, closePopUp, popupData, request, heade
                         'Content-Type': 'application/json'
                     }
                 });
+            } else if (popupData.isDeleteBioExtractorConfig) {
+                response = await HttpService.patch(
+                    getPartnerManagerUrl(`/bio-extractor-configurations/${popupData.bioExtractorConfigurationId}`, process.env.NODE_ENV),
+                    request,
+                    {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    }
+                );
             }
             const responseData = response.data;
             if (responseData && responseData.response) {

@@ -1747,6 +1747,9 @@
         "configNameDuplicateError": "Configuration name already exists",
         "errorInCreateConfig": "An error occurred while creating the biometric extractor provider configuration",
         "createConfigSuccessHeader": "Biometric Extractor Provider Configuration is added successfully!",
+        "delete": "Delete",
+        "deleteConfirmHeader": "Delete Biometric Extractor Configuration",
+        "deleteConfirmDescription": "On clicking Confirm, the selected configuration will be deleted.",
         "viewBioExtractorConfigDetails": "View Biometric Extractor Configuration Details",
         "viewBioExtractorProviderConfig": "View Biometric Extractor Provider Configuration"
         },
