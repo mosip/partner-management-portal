@@ -1751,6 +1751,9 @@
         "configNameDuplicateError": "اسم التكوين موجود بالفعل",
         "errorInCreateConfig": "حدث خطأ أثناء إنشاء تكوين مزود مستخرج القياسات الحيوية",
         "createConfigSuccessHeader": "تمت إضافة تكوين مزود مستخرج القياسات الحيوية بنجاح!",
+        "delete": "حذف",
+        "deleteConfirmHeader": "حذف تكوين مستخرج القياسات الحيوية",
+        "deleteConfirmDescription": "عند النقر على تأكيد، سيتم حذف التكوين المحدد.",
         "viewBioExtractorProviderConfig": "عرض تكوين مزود مستخرج القياسات الحيوية"
         },
     "mapBiometricExtractorProvider": {
