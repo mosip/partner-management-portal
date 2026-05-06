@@ -1447,7 +1447,7 @@
         "PMS_PM_066": "L'ID du partenaire est obligatoire lorsque le type de recherche du partenaire est « égal ».",
         "PMS_PMP_010": "La politique n'appartient pas au groupe de politiques du gestionnaire de partenaires",
         "PMS_PMP_015": "Aucune demande de clé API partenaire pour le groupe de règles",
-        "PMS_PMP_007": "La clé API du partenaire n'existe pas",
+        "PMS_PMP_007": "La clé de mappage n'existe pas",
         "PMS_PMP_011": "La clé API du partenaire n'existe pas",
         "PMS_PMP_009": " Pour le partenaire donné et le mappage apikey n'existe pas.",
         "PMS_PMP_013": "Le partenaire n'existe pas",
