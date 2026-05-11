@@ -1759,7 +1759,7 @@
         "mappingSectionTitle": "Map Biometric Extractor Provider Configuration",
         "biometricModality": "Biometric Modality",
         "selectBiometricModality": "Select Biometric Modality",
-        "biometricProviderConfiguration": "Biometric Provider Configuration*",
+        "biometricProviderConfiguration": "Biometric Provider Configuration",
         "selectBiometricProviderConfiguration": "Select a Biometric Provider",
         "autoPopulatedValue": "Auto populated based on configuration selected",
         "addMore": "Add More",
