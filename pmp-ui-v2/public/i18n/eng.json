@@ -1443,7 +1443,7 @@
         "PMS_PM_066": "PartnerId is mandatory when partnerIdSearchType is 'equals'.",
         "PMS_PMP_010": "Policy does not belong to the Policy Group of the Partner Manger",
         "PMS_PMP_015": "No Partner api key requests for the Policy Group",
-        "PMS_PMP_007": "Partner api key does not exist",
+        "PMS_PMP_007": "Mapping key does not exist",
         "PMS_PMP_011": "Partner api key does not exist",
         "PMS_PMP_009": " For given partner and apikey mapping not exists.",
         "PMS_PMP_013": "Partner does not exist",
