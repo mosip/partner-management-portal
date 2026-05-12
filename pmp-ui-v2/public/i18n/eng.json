@@ -346,8 +346,6 @@
         "errorInMapPolicy": "While requesting a policy, we have encountered with an error",
         "policySuccessHeader": "Policy Request has been submitted successfully!",
         "policySuccessMsg": "Policy request process has been successfully submitted. Approval is pending with admin.",
-        "credentialTypeMapSuccessHeader": "Policy Requested Successfully",
-        "credentialTypeMapSuccessMsg": "Your policy request has been successfully submitted and is pending approval from the admin.",
         "info": "Only those partner IDs whose partner certificate is uploaded are available in the dropdown. If you don't find your partner ID, please upload partner certificate first.",
         "mispPartnerInfo": "Only those MISP partner IDs whose partner certificate is uploaded is available in the dropdown. If you don't find your partner ID, please upload partner certificate first",
         "commentTooLong": "Comments should not allow more than 500 characters.",
