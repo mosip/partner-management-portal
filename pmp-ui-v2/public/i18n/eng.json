@@ -368,8 +368,8 @@
         "partialFailureMsg": "Mapped {{succeeded}} of {{total}} credential types. Failed for: {{failed}}. Please try again.",
         "duplicateCredentialTypeMsg": "Mapping already exists between this partner and credential type(s): {{types}}. Please choose a different credential type and try again.",
         "saveError": "While saving credential type mapping, we have encountered with an error.",
-        "successHeader": "All Details Submitted Successfully!",
-        "successMsgLine1": "Policy request, including biometric extractor provider and credential type mappings, has been successfully submitted.",
+        "successHeader": "Policy Requested Successfully",
+        "successMsgLine1": "Your policy request has been successfully submitted and is pending approval from the admin.",
         "successMsgLine2": "Approval is pending with the administrator."
     },
     "authenticationServices": {
