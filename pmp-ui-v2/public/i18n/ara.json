@@ -429,7 +429,9 @@
         "uploadMispPartnerCertificate": "تحميل شهادة شريك MISP",
         "uploadAbisPartnerCertificate": "تحميل شهادة شريك ABIS",
         "uploadManualAdjudicationPartnerCertificate": "تحميل شهادة شريك التحكيم اليدوي",
-        "manualAdjudicationPartnerSuccessHeader": "تم إنشاء شريك التحكيم اليدوي بنجاح!"
+        "manualAdjudicationPartnerSuccessHeader": "تم إنشاء شريك التحكيم اليدوي بنجاح!",
+        "onlineVerificationPartnerSuccessHeader": "تم إنشاء شريك التحقق عبر الإنترنت بنجاح!",
+        "uploadOnlineVerificationPartnerCertificate": "تحميل شهادة شريك التحقق عبر الإنترنت"
     },
     "languages": {
         "english": "الإنجليزية",

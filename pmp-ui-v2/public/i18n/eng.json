@@ -430,7 +430,9 @@
         "uploadMispPartnerCertificate": "Upload MISP Partner Certificate",
         "uploadAbisPartnerCertificate": "Upload ABIS Partner Certificate",
         "uploadManualAdjudicationPartnerCertificate": "Upload Manual Adjudication Partner Certificate",
-        "manualAdjudicationPartnerSuccessHeader": "Partner Created Successfully!"
+        "manualAdjudicationPartnerSuccessHeader": "Partner Created Successfully!",
+        "onlineVerificationPartnerSuccessHeader": "Online Verification Partner Created Successfully!",
+        "uploadOnlineVerificationPartnerCertificate": "Upload Online Verification Partner Certificate"
     },
     "languages": {
         "english": "English",

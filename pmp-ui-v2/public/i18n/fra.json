@@ -429,7 +429,9 @@
         "uploadMispPartnerCertificate": "Télécharger le certificat partenaire MISP",
         "uploadAbisPartnerCertificate": "Télécharger le certificat partenaire ABIS",
         "uploadManualAdjudicationPartnerCertificate": "Télécharger le certificat de partenaire d'arbitrage manuel",
-        "manualAdjudicationPartnerSuccessHeader": "Partenaire d'arbitrage manuel créé avec succès !"
+        "manualAdjudicationPartnerSuccessHeader": "Partenaire d'arbitrage manuel créé avec succès !",
+        "onlineVerificationPartnerSuccessHeader": "Partenaire de vérification en ligne créé avec succès !",
+        "uploadOnlineVerificationPartnerCertificate": "Télécharger le certificat de partenaire de vérification en ligne"
     },
     "languages": {
         "english": "Anglais",
