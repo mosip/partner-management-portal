@@ -261,7 +261,7 @@
         "ftmProvider": "FTM Chip Provider",
         "authPartner": "Authentication Partner",
         "credentialPartner": "Credential Partner",
-        "onlineVerficationPartner": "Online Verification Partner",
+        "onlineVerificationPartner": "Online Verification Partner",
         "abisPartner": "ABIS Partner",
         "mispPartner": "MISP Partner",
         "sdkPartner": "SDK Partner",

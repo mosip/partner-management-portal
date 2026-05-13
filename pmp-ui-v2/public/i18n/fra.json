@@ -259,7 +259,7 @@
         "ftmProvider": "Fournisseur de puces FTM",
         "authPartner": "Partenaire d'authentification",
         "credentialPartner": "Partenaire d'identification",
-        "onlineVerficationPartner": "Partenaire de vérification en ligne",
+        "onlineVerificationPartner": "Partenaire de vérification en ligne",
         "abisPartner": "Partenaire ABIS",
         "mispPartner": "Partenaire MISP",
         "sdkPartner": "Partenaire SDK",

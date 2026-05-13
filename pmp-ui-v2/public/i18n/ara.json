@@ -259,7 +259,7 @@
         "ftmProvider": "مزود شريحة FTM",
         "authPartner": "شريك المصادقة",
         "credentialPartner": "شريك الاعتماد",
-        "onlineVerficationPartner": "شريك التحقق عبر الإنترنت",
+        "onlineVerificationPartner": "شريك التحقق عبر الإنترنت",
         "abisPartner": "شريك ABIS",
         "mispPartner": "شريك MISP",
         "sdkPartner": "شريك SDK",
