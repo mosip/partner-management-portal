@@ -229,7 +229,7 @@ function UploadCertificate({ closePopup, popupData, request }) {
                         <>
                             <div className={`px-[3.5%] py-[2%] ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
                                 <h3 id='upload_certificate_popup_title' className="text-base font-bold text-[#333333]">{popupData.isCertificateAvailable ? t(popupData.reUploadHeader) : t(popupData.uploadHeader)}</h3>
-                                {popupData.isMispOrAbisPartnerCertificate || popupData.isManualAdjudicationPartnerCertificate ? (
+                                {popupData.showPartnerIdSubtitle ? (
                                     <p
                                         id='upload_certificate_popup_partner_id_field'
                                         className={`text-xs font-bold text-[#717171]`}
