@@ -42,7 +42,7 @@ export const getPartnerTypeDescription = (partnerType, t) => {
         "FTM_PROVIDER": 'partnerTypes.ftmProvider',
         "AUTH_PARTNER": 'partnerTypes.authPartner',
         "CREDENTIAL_PARTNER": 'partnerTypes.credentialPartner',
-        "ONLINE_VERIFICATION_PARTNER": 'partnerTypes.onlineVerficationPartner',
+        "ONLINE_VERIFICATION_PARTNER": 'partnerTypes.onlineVerificationPartner',
         "ABIS_PARTNER": 'partnerTypes.abisPartner',
         "MISP_PARTNER": 'partnerTypes.mispPartner',
         "SDK_PARTNER": 'partnerTypes.sdkPartner',

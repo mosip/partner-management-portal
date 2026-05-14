@@ -262,7 +262,7 @@
         "ftmProvider": "FTM Chip Provider",
         "authPartner": "Authentication Partner",
         "credentialPartner": "Credential Partner",
-        "onlineVerficationPartner": "Online Verification Partner",
+        "onlineVerificationPartner": "Online Verification Partner",
         "abisPartner": "ABIS Partner",
         "mispPartner": "MISP Partner",
         "sdkPartner": "SDK Partner",
@@ -430,7 +430,9 @@
         "uploadMispPartnerCertificate": "Upload MISP Partner Certificate",
         "uploadAbisPartnerCertificate": "Upload ABIS Partner Certificate",
         "uploadManualAdjudicationPartnerCertificate": "Upload Manual Adjudication Partner Certificate",
-        "manualAdjudicationPartnerSuccessHeader": "Partner Created Successfully!"
+        "manualAdjudicationPartnerSuccessHeader": "Partner Created Successfully!",
+        "onlineVerificationPartnerSuccessHeader": "Online Verification Partner Created Successfully!",
+        "uploadOnlineVerificationPartnerCertificate": "Upload Online Verification Partner Certificate"
     },
     "languages": {
         "english": "English",
