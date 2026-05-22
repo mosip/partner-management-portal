@@ -268,7 +268,7 @@ function MapCredentialType() {
         const timestamp = new Date().toISOString();
     request.requestTime = timestamp;
       const url = getPartnerManagerUrl(
-        `/partner-policy-requests/${requestIdForBioApi}/credential-types-request`,
+        `/partners/partner-policy-requests/${requestIdForBioApi}/credential-types-request`,
         process.env.NODE_ENV
       );
 
