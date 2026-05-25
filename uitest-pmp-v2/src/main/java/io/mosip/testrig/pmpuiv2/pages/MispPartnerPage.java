@@ -413,35 +413,19 @@ public class MispPartnerPage extends BasePage {
 		clickOnElement(userNameTextBox);
 	}
 
-	// ----------------------------------------------------------------
-	// Cancel confirmation popup
-	// ----------------------------------------------------------------
-
 	public String getCancelConfirmationPopupText() {
 		return getTextFromLocator(cancelConfirmationPopup);
 	}
 
-	// ----------------------------------------------------------------
-	// Form field value retrieval (for Clear Form verification)
-	// ----------------------------------------------------------------
-
 	public String getPartnerOrganisationFieldValue() {
 		return getTextFromAttribute(partnerOrganisationNameTextBox, "value");
 	}
-
-	// ----------------------------------------------------------------
-	// Partner list — first row access (for top-of-list verification)
-	// ----------------------------------------------------------------
 
 	public String getFirstPartnerIdText() {
 		WebElement cell = driver.findElement(By.xpath("//tr[@id='partner_list_item1']/td[1]"));
 		waitForElementVisible(cell);
 		return cell.getText().trim();
 	}
-
-	// ----------------------------------------------------------------
-	// Partner list — row lookup by partner ID (for status verification)
-	// ----------------------------------------------------------------
 
 	public boolean isPartnerInList(String partnerId) {
 		return isDisplayed(By.xpath("//tr[./td[normalize-space()='" + partnerId + "']]"));
@@ -476,17 +460,9 @@ public class MispPartnerPage extends BasePage {
 				"//tr[./td[normalize-space()='" + partnerId + "']]//*[contains(text(),'Upload Certificate')]"));
 	}
 
-	// ----------------------------------------------------------------
-	// Error message retrieval
-	// ----------------------------------------------------------------
-
 	public String getEmailAlreadyRegisteredErrorText() {
 		return getTextFromLocator(createPartnerErrorMessage);
 	}
-
-	// ----------------------------------------------------------------
-	// Field introspection — placeholder and value helpers
-	// ----------------------------------------------------------------
 
 	public String getOrganizationNamePlaceholderText() {
 		return getTextFromAttribute(partnerOrganisationNameTextBox, "placeholder");
@@ -528,10 +504,6 @@ public class MispPartnerPage extends BasePage {
 		return getTextFromLocator(partnerContactNumberNotAllowError);
 	}
 
-	// ----------------------------------------------------------------
-	// Username field helpers
-	// ----------------------------------------------------------------
-
 	public String getUserNameFieldValue() {
 		return getTextFromAttribute(userNameTextBox, "value");
 	}
@@ -543,10 +515,6 @@ public class MispPartnerPage extends BasePage {
 	public String getUserNameValidationErrorText() {
 		return getTextFromLocator(partnerUserNameNotAllowError);
 	}
-
-	// ----------------------------------------------------------------
-	// Notification language dropdown helpers
-	// ----------------------------------------------------------------
 
 	public boolean isNotificationLanguageDropdownDisplayed() {
 		return isElementDisplayed(notificationDropdown);
@@ -564,10 +532,6 @@ public class MispPartnerPage extends BasePage {
 		return getTextFromLocator(notificationDropdown);
 	}
 
-	// ----------------------------------------------------------------
-	// Policy Group dropdown helpers
-	// ----------------------------------------------------------------
-
 	public void openPolicyGroupDropdown() {
 		clickOnElement(policyGroupDropdown);
 	}
@@ -579,10 +543,6 @@ public class MispPartnerPage extends BasePage {
 	public boolean isPolicyGroupOptionVisible(String value) {
 		return isDisplayed(By.xpath("//span[normalize-space()='" + value + "']"));
 	}
-
-	// ----------------------------------------------------------------
-	// Partner list — upload cert action from actions menu
-	// ----------------------------------------------------------------
 
 	public void clickUploadCertActionForPartner(String partnerId) {
 		By directButton = By.xpath(
