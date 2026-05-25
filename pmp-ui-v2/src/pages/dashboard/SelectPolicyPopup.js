@@ -110,10 +110,10 @@ function SelectPolicyPopup({
             partnerType: userProfile.partnerType,
             policyGroup: selectedPolicyGroup ? selectedPolicyGroup.name : "",
             langCode: userProfile.langCode,
-        });
-        
+        }, "mosip.pms.create.partner.post", true);
+
         const registerUserResponse = await HttpService.post(
-            getPartnerManagerUrl('/partners', process.env.NODE_ENV), 
+            getPartnerManagerUrl('/partners/v3', process.env.NODE_ENV),
             registerUserRequest
         );
         
