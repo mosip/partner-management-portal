@@ -627,7 +627,7 @@ public class AbisPartnerTest extends BaseClass {
         page.enterPartnerOrganisation(GlobalConstants.ORGANISATION_NAME);
         page.clickOnCreatePartnerCancelButton();
         page.clickOnCancelConfirmationPopupProceedButton();
-        soft.assertTrue(page.isListOfPartnersDisplayed(), GlobalConstants.isBackArrowNavigatesToPartnerList);
+        soft.assertTrue(page.isListOfPartnersDisplayed(), GlobalConstants.isCancelNavigatesBackToPartnerList);
 
         driver.manage().window().setSize(new Dimension(768, 1024));
         page.clickOnCreatePartnerButton();
