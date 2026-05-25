@@ -1,6 +1,8 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
@@ -119,6 +121,9 @@ public class MispPartnerPage extends BasePage {
 	@FindBy(id = "create_partner_email_id_cancel_btn")
 	private WebElement partnerEmailIdCancelBtn;
 
+	@FindBy(id = "create_partner_partner_type_option1")
+	private WebElement abisPartnerOption;
+
 	@FindBy(id = "create_partner_partner_type_option3")
 	private WebElement mispPartner;
 
@@ -136,21 +141,89 @@ public class MispPartnerPage extends BasePage {
 		clickOnElement(createPartnerButton);
 	}
 
+	public boolean isCreatePartnerButtonDisplayed() {
+		return isElementDisplayed(createPartnerButton);
+	}
+
+	public boolean isCreatePartnerButtonEnabled() {
+		return isElementEnabled(createPartnerButton);
+	}
+
 	public boolean isCreatePrtnerPageTitleDisplayed() {
 		return isElementDisplayed(createPrtnerPageTitle);
+	}
+
+	public String getCreatePartnerPageTitleText() {
+		return getTextFromLocator(createPrtnerPageTitle);
 	}
 
 	public String getBreadcrumbTextOfCreatePartnerPage() {
 		return getTextFromLocator(homeButton) + getTextFromLocator(listOfPartnerButton);
 	}
 
+	public boolean isHomeButtonDisplayed() {
+		return isElementDisplayed(homeButton);
+	}
+
+	public boolean isListOfPartnerButtonDisplayed() {
+		return isElementDisplayed(listOfPartnerButton);
+	}
+
 	public boolean isCreatePartnerMandatoryFieldInfoDisplayed() {
 		return isElementDisplayed(createPartnerMandatoryMsg);
+	}
+
+	public String getCreatePartnerMandatoryFieldInfoText() {
+		return getTextFromLocator(createPartnerMandatoryMsg);
+	}
+
+	public boolean isPartnerTypeDropdownDisplayed() {
+		return isElementDisplayed(partnerTypeDropdown);
 	}
 
 	public boolean isDefaultMispPartnerDisplayed() {
 		clickOnElement(partnerTypeDropdown);
 		return isElementDisplayed(mispPartner);
+	}
+
+	public boolean isAbisPartnerOptionDisplayed() {
+		return isElementDisplayed(abisPartnerOption);
+	}
+
+	public void clickOnAbisPartnerOption() {
+		clickOnElement(abisPartnerOption);
+	}
+
+	public boolean isMispPartnerOptionDisplayed() {
+		return isElementDisplayed(mispPartner);
+	}
+
+	public void clickOnMispPartnerOption() {
+		clickOnElement(mispPartner);
+	}
+
+	public String getSelectedPartnerTypeText() {
+		return getTextFromLocator(partnerTypeDropdown);
+	}
+
+	public String getOrganizationNameInfoText() {
+		return getTextFromLocator(organizationNameInfo);
+	}
+
+	public int getPartnerTypeDropdownOptionCount() {
+		List<WebElement> options = driver.findElements(
+				By.xpath("//*[contains(@id, 'create_partner_partner_type_option')]"));
+		return options.size();
+	}
+
+	public List<String> getPartnerTypeDropdownOptionTexts() {
+		List<WebElement> options = driver.findElements(
+				By.xpath("//*[contains(@id, 'create_partner_partner_type_option')]"));
+		List<String> texts = new ArrayList<>();
+		for (WebElement option : options) {
+			texts.add(option.getText().trim());
+		}
+		return texts;
 	}
 
 	public void clickOnPartnerTypeDropdown() {
@@ -338,5 +411,187 @@ public class MispPartnerPage extends BasePage {
 
 	public void clickOnUserNameTextBox() {
 		clickOnElement(userNameTextBox);
+	}
+
+	// ----------------------------------------------------------------
+	// Cancel confirmation popup
+	// ----------------------------------------------------------------
+
+	public String getCancelConfirmationPopupText() {
+		return getTextFromLocator(cancelConfirmationPopup);
+	}
+
+	// ----------------------------------------------------------------
+	// Form field value retrieval (for Clear Form verification)
+	// ----------------------------------------------------------------
+
+	public String getPartnerOrganisationFieldValue() {
+		return getTextFromAttribute(partnerOrganisationNameTextBox, "value");
+	}
+
+	// ----------------------------------------------------------------
+	// Partner list — first row access (for top-of-list verification)
+	// ----------------------------------------------------------------
+
+	public String getFirstPartnerIdText() {
+		WebElement cell = driver.findElement(By.xpath("//tr[@id='partner_list_item1']/td[1]"));
+		waitForElementVisible(cell);
+		return cell.getText().trim();
+	}
+
+	// ----------------------------------------------------------------
+	// Partner list — row lookup by partner ID (for status verification)
+	// ----------------------------------------------------------------
+
+	public boolean isPartnerInList(String partnerId) {
+		return isDisplayed(By.xpath("//tr[./td[normalize-space()='" + partnerId + "']]"));
+	}
+
+	public String getCertUploadStatusForPartner(String partnerId) {
+		WebElement row = driver.findElement(
+				By.xpath("//tr[./td[normalize-space()='" + partnerId + "']]"));
+		waitForElementVisible(row);
+		return row.findElement(By.xpath("./td[6]")).getText().trim();
+	}
+
+	public String getPartnerStatusForPartner(String partnerId) {
+		WebElement row = driver.findElement(
+				By.xpath("//tr[./td[normalize-space()='" + partnerId + "']]"));
+		waitForElementVisible(row);
+		return row.findElement(By.xpath("./td[7]")).getText().trim();
+	}
+
+	public boolean isCertStatusDisplayedInRed(String partnerId) {
+		return isDisplayed(By.xpath(
+				"//tr[./td[normalize-space()='" + partnerId + "']]/td[6]//*[contains(@class,'red')]"));
+	}
+
+	public boolean isUploadCertActionAvailableForPartner(String partnerId) {
+		By directButton = By.xpath(
+				"//tr[./td[normalize-space()='" + partnerId + "']]//*[contains(@id,'upload_cert')]");
+		if (isDisplayed(directButton)) {
+			return true;
+		}
+		return isDisplayed(By.xpath(
+				"//tr[./td[normalize-space()='" + partnerId + "']]//*[contains(text(),'Upload Certificate')]"));
+	}
+
+	// ----------------------------------------------------------------
+	// Error message retrieval
+	// ----------------------------------------------------------------
+
+	public String getEmailAlreadyRegisteredErrorText() {
+		return getTextFromLocator(createPartnerErrorMessage);
+	}
+
+	// ----------------------------------------------------------------
+	// Field introspection — placeholder and value helpers
+	// ----------------------------------------------------------------
+
+	public String getOrganizationNamePlaceholderText() {
+		return getTextFromAttribute(partnerOrganisationNameTextBox, "placeholder");
+	}
+
+	public String getPartnerAddressFieldValue() {
+		return getTextFromAttribute(partnerAddressTextbox, "value");
+	}
+
+	public String getPartnerAddressPlaceholderText() {
+		return getTextFromAttribute(partnerAddressTextbox, "placeholder");
+	}
+
+	public void clickOnPartnerAddressTextBox() {
+		clickOnElement(partnerAddressTextbox);
+	}
+
+	public String getEmailPlaceholderText() {
+		return getTextFromAttribute(partnerEmailIdTextBox, "placeholder");
+	}
+
+	public String getEmailFieldValue() {
+		return getTextFromAttribute(partnerEmailIdTextBox, "value");
+	}
+
+	public String getEmailValidationErrorText() {
+		return getTextFromLocator(partnerEmailIdSpecialChNotAllowError);
+	}
+
+	public String getContactNumberPlaceholderText() {
+		return getTextFromAttribute(partnerContactNumberTextBox, "placeholder");
+	}
+
+	public String getContactNumberFieldValue() {
+		return getTextFromAttribute(partnerContactNumberTextBox, "value");
+	}
+
+	public String getContactNumberValidationErrorText() {
+		return getTextFromLocator(partnerContactNumberNotAllowError);
+	}
+
+	// ----------------------------------------------------------------
+	// Username field helpers
+	// ----------------------------------------------------------------
+
+	public String getUserNameFieldValue() {
+		return getTextFromAttribute(userNameTextBox, "value");
+	}
+
+	public String getUserNamePlaceholderText() {
+		return getTextFromAttribute(userNameTextBox, "placeholder");
+	}
+
+	public String getUserNameValidationErrorText() {
+		return getTextFromLocator(partnerUserNameNotAllowError);
+	}
+
+	// ----------------------------------------------------------------
+	// Notification language dropdown helpers
+	// ----------------------------------------------------------------
+
+	public boolean isNotificationLanguageDropdownDisplayed() {
+		return isElementDisplayed(notificationDropdown);
+	}
+
+	public void clickOnNotificationLanguageDropdown() {
+		clickOnElement(notificationDropdown);
+	}
+
+	public boolean isNotificationLanguageOptionVisible(String language) {
+		return isDisplayed(By.xpath("//span[normalize-space()='" + language + "']"));
+	}
+
+	public String getSelectedNotificationLanguageText() {
+		return getTextFromLocator(notificationDropdown);
+	}
+
+	// ----------------------------------------------------------------
+	// Policy Group dropdown helpers
+	// ----------------------------------------------------------------
+
+	public void openPolicyGroupDropdown() {
+		clickOnElement(policyGroupDropdown);
+	}
+
+	public boolean isPolicyGroupSearchBarDisplayed() {
+		return isElementDisplayed(policyGroupDropdownSearchInput);
+	}
+
+	public boolean isPolicyGroupOptionVisible(String value) {
+		return isDisplayed(By.xpath("//span[normalize-space()='" + value + "']"));
+	}
+
+	// ----------------------------------------------------------------
+	// Partner list — upload cert action from actions menu
+	// ----------------------------------------------------------------
+
+	public void clickUploadCertActionForPartner(String partnerId) {
+		By directButton = By.xpath(
+				"//tr[./td[normalize-space()='" + partnerId + "']]//*[contains(@id,'upload_cert')]");
+		if (isDisplayed(directButton)) {
+			click(directButton);
+		} else {
+			click(By.xpath(
+					"//tr[./td[normalize-space()='" + partnerId + "']]//*[contains(text(),'Upload Certificate')]"));
+		}
 	}
 }
