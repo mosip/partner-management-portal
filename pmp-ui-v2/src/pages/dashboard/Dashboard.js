@@ -193,8 +193,8 @@ function Dashboard() {
                 emailId: userProfile.email,
                 partnerType: partnerType,
                 langCode: userProfile.langCode,
-              });
-              const registerUserResponse = await HttpService.post(getPartnerManagerUrl('/partners', process.env.NODE_ENV), registerUserRequest);
+              }, "mosip.pms.create.partner.post", true);
+              const registerUserResponse = await HttpService.post(getPartnerManagerUrl('/partners/v3', process.env.NODE_ENV), registerUserRequest);
               const registerUserResponseData = registerUserResponse.data;
               if (registerUserResponseData && registerUserResponseData.response) {
                 callUserConsentPopup();
@@ -687,7 +687,7 @@ function Dashboard() {
               {t('dashboard.welcomeMsg', { firstName: getUserProfile().firstName, lastName: getUserProfile().lastName })}!
             </p>
           </div>
-          <div className="grid grid-cols-[repeat(auto-fill,minmax(256px,1fr))] gap-4 mt-2 ml-[1.8rem] mr-[1.8rem] break-words">
+          <div className="grid grid-cols-[repeat(auto-fill,minmax(256px,1fr))] gap-4 mt-2 ml-[1.8rem] mr-[1.8rem] pb-4 break-words">
             {!isPartnerAdmin && !isPolicyManager &&
               <div role='button' id='dashboard_partner_certificate_list_card' onClick={() => partnerCertificatesList()} className="relative min-h-[50%] p-6 pt-16 bg-white border border-gray-200 shadow cursor-pointer  text-center rounded-xl" tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => partnerCertificatesList())}>
                 <div className="flex justify-center mb-5">
@@ -971,12 +971,12 @@ function Dashboard() {
                   role='button'
                   id='dashboard_biometric_provider_configuration_card'
                   onClick={() => navigate('/partnermanagement/admin/biometric-provider-configuration-list')}
-                  className="relative min-h-[50%] p-6 pt-16 bg-white border border-gray-200 shadow cursor-pointer text-center rounded-xl mb-4"
+                  className="relative min-h-[50%] p-6 pt-16 bg-white border border-gray-200 shadow cursor-pointer text-center rounded-xl"
                   tabIndex="0"
                   onKeyDown={(e) => onPressEnterKey(e, () => navigate('/partnermanagement/admin/biometric-provider-configuration-list'))}
                 >
                   <div className="flex justify-center mb-5">
-                    <img id='dashboard_biometric_provider_configuration_icon' src={biometricExtractorIcon} alt="Biometric Extractor Provider Icon" className="w-10 h-10"/>
+                    <img id='dashboard_biometric_provider_configuration_icon' src={biometricExtractorIcon} alt="Biometric Extractor Provider Icon" className="w-8 h-8"/>
                   </div>
                   <div>
                     <h5 id='dashboard_biometric_provider_configuration_header' className="mb-2 text-sm font-semibold tracking-tight text-gray-600">

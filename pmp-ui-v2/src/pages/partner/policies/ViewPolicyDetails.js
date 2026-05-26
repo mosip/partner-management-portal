@@ -39,9 +39,25 @@ function ViewPolicyDetails() {
     return (
         <>
             <div className={`w-full p-5 bg-anti-flash-white h-full break-words font-inter mb-[2%] ${isLoginLanguageRTL ? "mr-20 ml-1" : "ml-20 mr-1"} overflow-x-scroll`}>
-                <div className="flex justify-between mb-5">
-                    <Title title='viewPolicyDetails.viewPolicyDetails' subTitle='viewPolicyDetails.policySection' backLink='/partnermanagement/policies/policies-list' styleSet={style} />
-                </div>
+                                {isCredentialPartner ? (
+                    <div className="mb-5">
+                        <div className="flex justify-between">
+                            <Title title='viewPolicyDetails.viewPolicyDetails' subTitle='viewPolicyDetails.policySection' backLink='/partnermanagement/policies/policies-list' styleSet={style} />
+                        </div>
+                        <div className={`mt-2 ml-3 ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
+                            <p id='view_policy_details_policy_name_subtitle' className="text-sm font-semibold text-suva-gray">
+                                {t("viewPolicyDetails.policyName")}
+                            </p>
+                            <p id='view_policy_details_policy_name_value' className="text-base font-semibold text-dark-blue">
+                                {policyDetails?.policyName || '-'}
+                            </p>
+                        </div>
+                    </div>
+                ) : (
+                    <div className="flex justify-between mb-5">
+                        <Title title='viewPolicyDetails.viewPolicyDetails' subTitle='viewPolicyDetails.policySection' backLink='/partnermanagement/policies/policies-list' styleSet={style} />
+                    </div>
+                )}
                 <div className="bg-snow-white h-fit mt-1 rounded-t-xl shadow-lg ml-3">
                     <div className={`flex-col ${isLoginLanguageRTL ? "pr-8" : "pl-8"} pt-6 pb-5`}>
                         <p id='view_policy_details_policy_id' className="text-lg text-dark-blue mb-3">{t('policies.policyId')}: <span className="font-semibold">{policyDetails.policyId}</span></p>
