@@ -395,7 +395,7 @@ function MapBiometricExtractorProvider() {
       request.requestTime = timestamp;
 
       const response = await HttpService.post(
-        getPartnerManagerUrl(`/partners/partner-policy-requests/${policyDetails.mappingKey}/bio-extractors-request`, process.env.NODE_ENV),
+        getPartnerManagerUrl(`/partner-policy-requests/${policyDetails.mappingKey}/bio-extractors-request`, process.env.NODE_ENV),
         request
       );
 
