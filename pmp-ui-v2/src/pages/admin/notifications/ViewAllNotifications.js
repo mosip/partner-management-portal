@@ -341,15 +341,15 @@ function ViewAllNotifications({ notificationType }) {
                             <Title title='notificationPopup.notification' backLink='/partnermanagement' />
                         </div>
                     </div>
-                    {(notificationType === "root" || notificationType === "intermediate" || notificationType === "misp" || notificationType === "weekly") ? (
+                    {(notificationType === "ROOT_CERT_EXPIRY" || notificationType === "INTERMEDIATE_CERT_EXPIRY" || notificationType === "MISP_LICENSE_KEY_EXPIRY" || notificationType === "WEEKLY_SUMMARY") ? (
                         <AdminNotificationsTab
-                            activeRootCA={notificationType === 'root' ? true : false}
+                            activeRootCA={notificationType === 'ROOT_CERT_EXPIRY' ? true : false}
                             rootCaPath={'/partnermanagement/admin/notifications/view-root-certificate-expiry'}
-                            activeIntermediateCA={notificationType === 'intermediate' ? true : false}
+                            activeIntermediateCA={notificationType === 'INTERMEDIATE_CERT_EXPIRY' ? true : false}
                             intermediateCaPath={'/partnermanagement/admin/notifications/view-intermediate-certificate-expiry'}
-                            activeMispLicenseKey={notificationType === 'misp' ? true : false}
+                            activeMispLicenseKey={notificationType === 'MISP_LICENSE_KEY_EXPIRY' ? true : false}
                             mispLicenseKeyPath={'/partnermanagement/admin/notifications/view-misp-license-key-expiry'}
-                            activePartner={notificationType === 'weekly' ? true : false}
+                            activePartner={notificationType === 'WEEKLY_SUMMARY' ? true : false}
                             partnerCertPath={'/partnermanagement/admin/notifications/view-partner-created-items-expiry'}
                         />
                     ) : (
@@ -385,25 +385,25 @@ function ViewAllNotifications({ notificationType }) {
                                     <div className={showExpiringItems ? "hidden" : "block"}>
                                         {filter && (
                                             <>
-                                                {(notificationType === "root" || notificationType === "intermediate") && (
+                                                {(notificationType === "ROOT_CERT_EXPIRY" || notificationType === "INTERMEDIATE_CERT_EXPIRY") && (
                                                     <CertificateNotificationsFilter onApplyFilter={onApplyFilter} />
                                                 )}
-                                                {(notificationType === "misp") && (
+                                                {(notificationType === "MISP_LICENSE_KEY_EXPIRY") && (
                                                     <MispLicenseKeyNotificationFilter onApplyFilter={onApplyFilter} />
                                                 )}
-                                                {(notificationType === "weekly") && (
+                                                {(notificationType === "WEEKLY_SUMMARY") && (
                                                     <WeeklyNotificationsFilter onApplyFilter={onApplyFilter} />
                                                 )}
-                                                {(notificationType === "partner") && (
+                                                {(notificationType === "PARTNER_CERT_EXPIRY") && (
                                                     <PartnerCertificateNotificationsFilter onApplyFilter={onApplyFilter} />
                                                 )}
-                                                {(notificationType === "ftm-chip") && (
+                                                {(notificationType === "FTM_CHIP_CERT_EXPIRY") && (
                                                     <FtmChipCertNotificationFilter onApplyFilter={onApplyFilter} />
                                                 )}
-                                                {(notificationType === "apikey") && (
+                                                {(notificationType === "API_KEY_EXPIRY") && (
                                                     <ApiKeyNotificationFilter onApplyFilter={onApplyFilter} setErrorCode={setErrorCode} setErrorMsg={setErrorMsg} />
                                                 )}
-                                                {(notificationType === "sbi") && (
+                                                {(notificationType === "SBI_EXPIRY") && (
                                                     <SbiNotificationFilter onApplyFilter={onApplyFilter} />
                                                 )}
                                             </>
@@ -434,7 +434,7 @@ function ViewAllNotifications({ notificationType }) {
                                                                     <hr className="h-0.5 my-4 bg-[#BCC5E5] border" />
                                                                     <div className={`flex space-x-4 ${isLoginLanguageRTL && 'space-x-reverse'}`}>
                                                                         <button id={'notification_dismiss_btn_' + (index + 1)} onClick={() => dismissNotification(notification.notificationId)} className="text-tory-blue font-semibold text-sm px-4 py-[6px] rounded-md bg-[#F7F9FF]">{t('notificationPopup.dismiss')}</button>
-                                                                        {(notificationType === "weekly") && (
+                                                                        {(notificationType === "WEEKLY_SUMMARY") && (
                                                                             <button id={'notification_view_expiring_item_btn_' + (index + 1)} onClick={() => viewExpiringItems(notification)} className="text-tory-blue font-semibold text-sm px-4 py-[6px] rounded-md bg-[#F7F9FF]">{t('viewAllNotifications.viewExpiringItems')}</button>
                                                                         )}
                                                                     </div>
