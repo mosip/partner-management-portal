@@ -4,7 +4,7 @@ function ViewRootTrustNotifications() {
 
     return (
         <ViewAllNotifications
-            notificationType='root'
+            notificationType='ROOT_CERT_EXPIRY'
         />
     )
 }
