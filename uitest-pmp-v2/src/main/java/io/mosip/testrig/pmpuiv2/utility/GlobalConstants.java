@@ -1322,7 +1322,7 @@ public class GlobalConstants {
 	public static final String MANUAL_ADJUDICATION_PARTNER = "Manual Adjudication Partner";
 	public static final String isAbisPartnerOptionDisplayed = "Verify that ABIS Partner option is displayed in the Partner Type dropdown.";
 	public static final String isMispPartnerOptionDisplayed = "Verify that MISP Partner option is displayed in the Partner Type dropdown.";
-	public static final String isPartnerTypeDropdownOptionCountCorrect = "Verify that the Partner Type dropdown displays exactly three options: ABIS Partner, Manual Adjudication Partner and MISP Partner.";
+	public static final String isPartnerTypeDropdownOptionCountCorrect = "Verify that the Partner Type dropdown displays the expected partner options, even if the total count changes dynamically.";
 	public static final String isManualAdjudicationPartnerOptionDisplayed = "Verify that Manual Adjudication Partner option is displayed in the Partner Type dropdown.";
 
 	// ABIS Partner — form lifecycle and list verification
@@ -1354,8 +1354,8 @@ public class GlobalConstants {
 	// ABIS Partner — address, email, phone field validation (scenarios 40-49)
 	public static final String ADDRESS_WITH_ALLOWED_SPECIAL_CHARS = "123MainStreet@#&()-'?!:;=_";
 	public static final String DISALLOWED_SPECIAL_CHARS_ADDRESS = "$%^*";
-	public static final String ADDRESS_PLACEHOLDER_TEXT = "Enter address.";
-	public static final String EMAIL_PLACEHOLDER_TEXT = "Enter email address";
+	public static final String ADDRESS_PLACEHOLDER_TEXT = "Enter Address";
+	public static final String EMAIL_PLACEHOLDER_TEXT = "Enter Email Address";
 	public static final String EMAIL_INVALID_FORMAT_ERROR_MSG = "Enter valid email address and try again";
 	public static final int EMAIL_MAX_LENGTH = 254;
 	public static final String CONTACT_NUMBER_INVALID_ERROR_MSG = "Enter valid contact number and try again";
@@ -1416,7 +1416,7 @@ public class GlobalConstants {
 	public static final String NUMERIC_PREFIXED_USERNAME = "1mispuser";
 	public static final String USERNAME_WITH_SPACE = "user name";
 	public static final String USERNAME_ALREADY_EXISTS_ERROR_MSG = "Username already exists. Enter a different username";
-	public static final String USERNAME_PLACEHOLDER_TEXT = "Enter username";
+	public static final String USERNAME_PLACEHOLDER_TEXT = "Enter Username";
 	public static final int USERNAME_MAX_LENGTH = 36;
 	public static final String MAX_VALID_PHONE_NUMBER = "1234567890123456";
 

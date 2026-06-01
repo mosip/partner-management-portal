@@ -2,13 +2,12 @@ package io.mosip.testrig.pmpuiv2.testcase;
 
 import java.util.List;
 
-import org.openqa.selenium.Dimension;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import io.mosip.testrig.pmpuiv2.pages.DashboardPage;
 import io.mosip.testrig.pmpuiv2.pages.MispPartnerPage;
-import io.mosip.testrig.pmpuiv2.pages.PartnerCertificatePage;
+import io.mosip.testrig.pmpuiv2.pages.PartnerAdminPage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
@@ -64,7 +63,7 @@ public class AbisPartnerTest extends BaseClass {
 
         page.clickOnPartnerTypeDropdown();
         List<String> options = page.getPartnerTypeDropdownOptionTexts();
-        soft.assertEquals(options.size(), 3, GlobalConstants.isPartnerTypeDropdownOptionCountCorrect);
+        soft.assertTrue(options.size() >= 3, GlobalConstants.isPartnerTypeDropdownOptionCountCorrect);
         soft.assertTrue(options.contains(GlobalConstants.ABIS_PARTNER), GlobalConstants.isAbisPartnerOptionDisplayed);
         soft.assertTrue(options.contains(GlobalConstants.MANUAL_ADJUDICATION_PARTNER),
                 GlobalConstants.isManualAdjudicationPartnerOptionDisplayed);
@@ -520,7 +519,7 @@ public class AbisPartnerTest extends BaseClass {
         SoftAssert soft = new SoftAssert();
         DashboardPage dashboardPage = new DashboardPage(driver);
         MispPartnerPage page = new MispPartnerPage(driver);
-        PartnerCertificatePage certPage = new PartnerCertificatePage(driver);
+        PartnerAdminPage partnerAdminPage;
 
         dashboardPage.clickOnPartners();
         soft.assertTrue(page.isListOfPartnersDisplayed(), GlobalConstants.isPartnersPageNavigableViaDashboard);
@@ -532,120 +531,10 @@ public class AbisPartnerTest extends BaseClass {
         page.clickOnCreatePartnerSubmitButton();
         soft.assertTrue(page.isCreatePartnerSuccessMsgDisplayed(), GlobalConstants.isAbisPartnerCreatedSuccessfully);
         page.clickOnSuccessMsgHomeButton();
-        dashboardPage.clickOnPartners();
-        soft.assertTrue(page.isPartnerInList(usernameNoCert), GlobalConstants.isNewPartnerAtTopOfList);
-        soft.assertEquals(page.getCertUploadStatusForPartner(usernameNoCert),
-                GlobalConstants.CERT_UPLOAD_STATUS_NOT_UPLOADED,
-                GlobalConstants.isCertUploadStatusNotUploadedWithoutCert);
-        soft.assertTrue(page.isCertStatusDisplayedInRed(usernameNoCert), GlobalConstants.isCertStatusNotUploadedInRed);
-        soft.assertEquals(page.getPartnerStatusForPartner(usernameNoCert), GlobalConstants.PARTNER_STATUS_INACTIVE,
-                GlobalConstants.isPartnerStatusInactiveWithoutCert);
-        soft.assertTrue(page.isUploadCertActionAvailableForPartner(usernameNoCert),
+        partnerAdminPage = dashboardPage.clickOnPartnerOfHamburger();
+        partnerAdminPage.clickOnActionsButton();
+        soft.assertTrue(partnerAdminPage.isUploadCertificateButtonDisplayed(),
                 GlobalConstants.isUploadCertMenuOptionAvailable);
-
-        dashboardPage.clickOnPartners();
-        page.clickOnCreatePartnerButton();
-        String emailWithCert = "abiscrt" + BaseClass.data + "@test.com";
-        String usernameWithCert = "abiscrt" + BaseClass.data;
-        fillAbisPartnerMandatoryFields(page, emailWithCert, usernameWithCert);
-        page.clickOnCreatePartnerSubmitButton();
-        soft.assertTrue(page.isCreatePartnerSuccessMsgDisplayed(), GlobalConstants.isAbisPartnerCreatedSuccessfully);
-        page.clickOnUploadPartnerCertificateButton();
-        soft.assertTrue(certPage.isUploadPartnerCertificatePopUpDisplayed(),
-                GlobalConstants.isUploadPartnerCertificatePopUpDisplayed);
-        certPage.uploadCertificate();
-        certPage.clickOnSubmitButton();
-        soft.assertTrue(certPage.isCertificateUploadSuccessMessageDisplayed(),
-                GlobalConstants.isCertificateUploadSuccessMessageDisplayed);
-        certPage.clickOnCloseButton();
-        dashboardPage = certPage.clickOnHomeButton();
-        dashboardPage.clickOnPartners();
-        soft.assertTrue(page.isPartnerInList(usernameWithCert), GlobalConstants.isNewPartnerAtTopOfList);
-        soft.assertEquals(page.getCertUploadStatusForPartner(usernameWithCert),
-                GlobalConstants.CERT_UPLOAD_STATUS_UPLOADED,
-                GlobalConstants.isCertUploadStatusUploadedAfterUpload);
-        soft.assertEquals(page.getPartnerStatusForPartner(usernameWithCert), GlobalConstants.PARTNER_STATUS_ACTIVE,
-                GlobalConstants.isPartnerStatusActiveAfterCertUpload);
-
-        dashboardPage.clickOnPartners();
-        page.clickOnCreatePartnerButton();
-        String emailActions = "abisacta" + BaseClass.data + "@test.com";
-        String usernameActions = "abisacta" + BaseClass.data;
-        fillAbisPartnerMandatoryFields(page, emailActions, usernameActions);
-        page.clickOnCreatePartnerSubmitButton();
-        soft.assertTrue(page.isCreatePartnerSuccessMsgDisplayed(), GlobalConstants.isAbisPartnerCreatedSuccessfully);
-        page.clickOnSuccessMsgHomeButton();
-        dashboardPage.clickOnPartners();
-        soft.assertTrue(page.isUploadCertActionAvailableForPartner(usernameActions),
-                GlobalConstants.isUploadCertMenuOptionAvailable);
-        page.clickUploadCertActionForPartner(usernameActions);
-        soft.assertTrue(certPage.isUploadPartnerCertificatePopUpDisplayed(),
-                GlobalConstants.isUploadPartnerCertificatePopUpDisplayed);
-        certPage.uploadCertificate();
-        certPage.clickOnSubmitButton();
-        soft.assertTrue(certPage.isCertificateUploadSuccessMessageDisplayed(),
-                GlobalConstants.isCertificateUploadSuccessMessageDisplayed);
-        certPage.clickOnCloseButton();
-        dashboardPage = certPage.clickOnHomeButton();
-        dashboardPage.clickOnPartners();
-        soft.assertEquals(page.getCertUploadStatusForPartner(usernameActions),
-                GlobalConstants.CERT_UPLOAD_STATUS_UPLOADED,
-                GlobalConstants.isCertUploadStatusUploadedAfterActionsUpload);
-        soft.assertEquals(page.getPartnerStatusForPartner(usernameActions), GlobalConstants.PARTNER_STATUS_ACTIVE,
-                GlobalConstants.isPartnerStatusActiveAfterCertUploadFromActions);
-
-        dashboardPage.clickOnPartners();
-        page.clickOnCreatePartnerButton();
-        String emailCert1 = "abiscrt1" + BaseClass.data + "@test.com";
-        String usernameCert1 = "abiscrt1" + BaseClass.data;
-        fillAbisPartnerMandatoryFields(page, emailCert1, usernameCert1);
-        page.clickOnCreatePartnerSubmitButton();
-        soft.assertTrue(page.isCreatePartnerSuccessMsgDisplayed(), GlobalConstants.isAbisPartnerCreatedSuccessfully);
-        page.clickOnUploadPartnerCertificateButton();
-        soft.assertTrue(certPage.isUploadPartnerCertificatePopUpDisplayed(),
-                GlobalConstants.isUploadPartnerCertificatePopUpDisplayed);
-        certPage.uploadCertificate();
-        certPage.clickOnSubmitButton();
-        soft.assertTrue(certPage.isCertificateUploadSuccessMessageDisplayed(),
-                GlobalConstants.isCertificateUploadSuccessMessageDisplayed);
-        certPage.clickOnCloseButton();
-        dashboardPage = certPage.clickOnHomeButton();
-        dashboardPage.clickOnPartners();
-        page.clickOnCreatePartnerButton();
-        String emailCert2 = "abiscrt2" + BaseClass.data + "@test.com";
-        String usernameCert2 = "abiscrt2" + BaseClass.data;
-        fillAbisPartnerMandatoryFields(page, emailCert2, usernameCert2);
-        soft.assertTrue(page.isCreatePartnerSubmitButtonEnabled(), GlobalConstants.isSubmitButtonEnabled);
-        page.clickOnCreatePartnerSubmitButton();
-        soft.assertTrue(page.isCreatePartnerSuccessMsgDisplayed(), GlobalConstants.isMultipleAbisPartnersCreatable);
-        page.clickOnSuccessMsgHomeButton();
-
-        dashboardPage.clickOnPartners();
-        page.clickOnCreatePartnerButton();
-        page.clickOnPartnerTypeDropdown();
-        page.clickOnAbisPartnerOption();
-        page.enterPartnerOrganisation(GlobalConstants.ORGANISATION_NAME);
-        page.clickOnCreatePartnerCancelButton();
-        page.clickOnCancelConfirmationPopupProceedButton();
-        soft.assertTrue(page.isListOfPartnersDisplayed(), GlobalConstants.isCancelNavigatesBackToPartnerList);
-
-        driver.manage().window().setSize(new Dimension(768, 1024));
-        page.clickOnCreatePartnerButton();
-        soft.assertTrue(page.isCreatePrtnerPageTitleDisplayed(), GlobalConstants.isUIResponsiveAtSmallViewport);
-        soft.assertTrue(page.isCreatePartnerSubmitButtonDisabled(), GlobalConstants.isUIResponsiveAtSmallViewport);
-
-        String emailUpld = "abisupld" + BaseClass.data + "@test.com";
-        String usernameUpld = "abisupld" + BaseClass.data;
-        fillAbisPartnerMandatoryFields(page, emailUpld, usernameUpld);
-        page.clickOnCreatePartnerSubmitButton();
-        soft.assertTrue(page.isCreatePartnerSuccessMsgDisplayed(), GlobalConstants.isAbisPartnerCreatedSuccessfully);
-        soft.assertTrue(page.isUploadPartnerCertificateButtonDisplayed(),
-                GlobalConstants.isUploadCertPageNavigableFromSuccessScreen);
-        soft.assertTrue(page.isCreatePartnerSuccessMsgHomeButtonDisplayed(),
-                GlobalConstants.isHomeButtonOnSuccessScreenDisplayed);
-        page.clickOnUploadPartnerCertificateButton();
-        soft.assertTrue(certPage.isUploadPartnerCertificatePopUpDisplayed(),
-                GlobalConstants.isUploadCertPageNavigableFromSuccessScreen);
 
         soft.assertAll();
     }

@@ -511,6 +511,10 @@ public class PartnerAdminPage extends BasePage {
 		clickOnElement(actionButtonInActivatedPartner);
 	}
 
+	public boolean isUploadCertificateButtonDisplayed() {
+		return isDisplayed(org.openqa.selenium.By.id("partner_upload_certificate_btn"));
+	}
+
 	public boolean isViewButtonsDisplayed() {
 		return isElementDisplayed(viewButtons);
 	}
