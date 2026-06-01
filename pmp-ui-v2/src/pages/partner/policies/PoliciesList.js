@@ -551,7 +551,6 @@ function PoliciesList() {
                                             })()}
                                           </>
                                         )}
-
                                       </div>
                                       );
                                     })()}
