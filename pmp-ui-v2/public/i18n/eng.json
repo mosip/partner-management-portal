@@ -329,6 +329,7 @@
         "mandatoryFieldsMsg1": "All fields marked with",
         "mandatoryFieldsMsg2": "are mandatory.",
         "mandatoryMappingBanner": "Note: For Credential Partners, mapping the policy to a Biometric Extractor Configuration and Credential Type is mandatory. If this mapping is not completed, the policy request cannot be approved. Please follow the steps on this page to complete the required mapping",
+        "ovpMandatoryMappingBanner": "Note: For Online Verification Partners, mapping the policy to a Biometric Extractor Configuration and Credential Type is mandatory. If this mapping is not completed, the policy request cannot be approved. Please follow the steps on this page to complete the required mapping",
         "partnerId": "Partner ID",
         "partnerType": "Partner Type",
         "policyGroup": "Policy Group",
