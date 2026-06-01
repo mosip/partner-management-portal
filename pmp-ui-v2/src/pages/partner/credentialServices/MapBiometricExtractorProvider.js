@@ -63,6 +63,7 @@ function MapBiometricExtractorProvider() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { state } = useLocation();
+  const isAdminPath = Boolean(state?.isAdminPath);
   // Required for submit + next step
   const hasRequiredState = Boolean(state?.partnerId && state?.policyId && state?.policyName);
   const userProfile = getUserProfile();
@@ -199,8 +200,10 @@ function MapBiometricExtractorProvider() {
 
   useEffect(() => {
     if (hasRequiredState) return;
-    navigate("/partnermanagement/policies/request-policy");
-  }, [hasRequiredState, navigate]);
+    navigate(isAdminPath
+      ? "/partnermanagement/admin/request-policy"
+      : "/partnermanagement/policies/request-policy");
+  }, [hasRequiredState, navigate, isAdminPath]);
 
   useEffect(() => {
     if (!showSaveConfirm) return;
@@ -341,7 +344,9 @@ function MapBiometricExtractorProvider() {
   };
 
   const clickOnCancel = () => {
-    navigate("/partnermanagement/policies/policies-list");
+    navigate(isAdminPath
+      ? "/partnermanagement/admin/policy-requests-list"
+      : "/partnermanagement/policies/policies-list");
   };
 
   const isFormValid = () => {
@@ -411,6 +416,7 @@ function MapBiometricExtractorProvider() {
             requestPayload: policyDetails.requestPayload,
             selectedBioModalities,
             selectedBioProviderConfigurations,
+            isAdminPath,
           },
         });
         return;
@@ -444,7 +450,7 @@ function MapBiometricExtractorProvider() {
             />
           )}
           <div className="flex-col mt-5">
-            <Title title="mapBiometricExtractorProvider.title" subTitle="requestPolicy.requestPolicy" backLink="/partnermanagement/policies/policies-list" />
+            <Title title="mapBiometricExtractorProvider.title" subTitle="requestPolicy.requestPolicy" backLink={isAdminPath ? "/partnermanagement/admin/policy-requests-list" : "/partnermanagement/policies/policies-list"} />
             <p
               id="map_bio_extractor_provider_mandatory_mapping_msg"
               className="mt-3 rounded-md border border-[#F7D18D] bg-[#FFF8EA] px-3 py-2 text-sm text-[#684B00]"

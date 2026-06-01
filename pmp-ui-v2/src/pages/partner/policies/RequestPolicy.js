@@ -18,6 +18,7 @@ function RequestPolicy() {
     const userProfile = getUserProfile();
     const userRoles = (userProfile?.roles ?? '').split(',').map(role => role.trim()).filter(Boolean);
     const isCredentialPartner = userRoles.includes('CREDENTIAL_PARTNER');
+    const isOnlineVerificationPartner = (userProfile?.partnerType ?? '').toUpperCase() === 'ONLINE_VERIFICATION_PARTNER';
     const navigate = useNavigate();
     const location = useLocation();
     const { t } = useTranslation();
@@ -105,6 +106,10 @@ function RequestPolicy() {
              {
                 partnerType: "Manual_Adjudication",
                 description: getPartnerTypeDescription("Manual_Adjudication", t)
+             },
+             {
+                partnerType: "Online_Verification_Partner",
+                description: getPartnerTypeDescription("ONLINE_VERIFICATION_PARTNER", t)
              }
             ];
                     setPartnerTypeDropdownData(createDropdownData('partnerType', 'description', false, partnerTypeData, t));
@@ -277,6 +282,32 @@ function RequestPolicy() {
                                             setDataLoaded(true);
                                             return;
                                         }
+                                        const selectedPartnerData = partnerData.find(p => p.partnerId === partnerId);
+                                        const selectedRawPartnerType = (selectedPartnerData?.partnerType ?? '').toUpperCase();
+                                        if (selectedRawPartnerType === 'ONLINE_VERIFICATION_PARTNER') {
+                                            const requestPayload = {
+                                                partnerId,
+                                                partnerType,
+                                                policyGroupName,
+                                                policyName,
+                                                partnerComment,
+                                                policyId: selectedPolicyId
+                                            };
+                                            navigate('/partnermanagement/policies/map-biometric-extractor-provider', {
+                                                state: {
+                                                    partnerId,
+                                                    partnerType,
+                                                    policyGroupName,
+                                                    policyName,
+                                                    policyId: selectedPolicyId,
+                                                    mappingKey: resData.mappingkey,
+                                                    requestPayload,
+                                                    isAdminPath
+                                                }
+                                            });
+                                            setDataLoaded(true);
+                                            return;
+                                        }
                     setPopupData(isAdminPath ? {id: resData.mappingkey} : {});
                     const requiredData = {
                         title: "requestPolicy.requestPolicy",
@@ -387,6 +418,16 @@ function RequestPolicy() {
                                 {t('requestPolicy.mandatoryMappingBanner')}
                             </p>
                         )}
+                        {isOnlineVerificationPartner && (
+                            <p id='request_policy_ovp_mandatory_mapping_msg' className="mt-3 rounded-md border border-[#F7D18D] bg-[#FFF8EA] px-3 py-2 text-sm text-[#684B00]">
+                                {t('requestPolicy.ovpMandatoryMappingBanner')}
+                            </p>
+                        )}
+                        {isAdminPath && partnerType.toUpperCase() === 'ONLINE_VERIFICATION_PARTNER' && (
+                            <p id='request_policy_ovp_admin_mandatory_mapping_msg' className="mt-3 rounded-md border border-[#F7D18D] bg-[#FFF8EA] px-3 py-2 text-sm text-[#684B00]">
+                                {t('requestPolicy.ovpMandatoryMappingBanner')}
+                            </p>
+                        )}
                         {!requestPolicySuccess ?
                             <div className="w-[100%] bg-snow-white mt-[1%] rounded-lg shadow-md overflow-visible">
                                 <div className="p-7 overflow-visible">
@@ -494,7 +535,13 @@ function RequestPolicy() {
                                     <button id="request_policies_form_clear_btn" onClick={() => clearForm()} className={`w-40 h-10 mr-3 border-[#1447B2] ${isLoginLanguageRTL ? "mr-2" : "ml-2"} border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.clearForm')}</button>
                                     <div className={`flex flex-row space-x-3 w-full md:w-auto justify-end`}>
                                         <button id="request_policies_form_cancel_btn" onClick={() => clickOnCancel()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md bg-white text-tory-blue text-sm font-semibold`}>{t('requestPolicy.cancel')}</button>
-                                        <button id="request_policies_form_submit_btn" disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>{t(isCredentialPartner && !isAdminPath ? 'requestPolicy.saveAndProceed' : 'requestPolicy.submit')}</button>
+                                        <button id="request_policies_form_submit_btn" disabled={!isFormValid()} onClick={() => clickOnSubmit()} className={`${isLoginLanguageRTL ? "ml-2" : "mr-2"} w-11/12 md:w-40 h-10 border-[#1447B2] border rounded-md text-sm font-semibold ${isFormValid() ? 'bg-tory-blue text-white' : 'border-[#A5A5A5] bg-[#A5A5A5] text-white cursor-not-allowed'}`}>{t(isCredentialPartner && !isAdminPath
+    ? 'requestPolicy.saveAndProceed'
+    : isOnlineVerificationPartner && !isAdminPath
+        ? 'requestPolicy.saveAndProceed'
+        : isAdminPath && partnerType.toUpperCase() === 'ONLINE_VERIFICATION_PARTNER'
+            ? 'requestPolicy.saveAndProceed'
+            : 'requestPolicy.submit')}</button>
                                     </div>
                                 </div>
                             </div>

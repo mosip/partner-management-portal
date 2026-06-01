@@ -100,6 +100,7 @@ function MapCredentialType() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { state } = useLocation();
+  const isAdminPath = Boolean(state?.isAdminPath);
 
   const userProfile = getUserProfile();
   const isLoginLanguageRTL = isLangRTL(userProfile?.locale || "en");
@@ -230,7 +231,9 @@ function MapCredentialType() {
   };
 
   const clickOnCancel = () => {
-    navigate("/partnermanagement/policies/policies-list");
+    navigate(isAdminPath
+      ? "/partnermanagement/admin/policy-requests-list"
+      : "/partnermanagement/policies/policies-list");
   };
 
   const updateCredentialType = (fieldName, selectedValue) => {
@@ -316,11 +319,13 @@ function MapCredentialType() {
 
       setConfirmationData({
         title: "mapCredentialType.title",
-        backUrl: "/partnermanagement/policies/policies-list",
+        backUrl: isAdminPath
+          ? "/partnermanagement/admin/policy-requests-list"
+          : "/partnermanagement/policies/policies-list",
         header: "mapCredentialType.successHeader",
         description: "mapCredentialType.successMsgLine1",
         description1: "mapCredentialType.successMsgLine2",
-        subNavigation: "requestPolicy.policies",
+        subNavigation: isAdminPath ? "viewPolicyRequest.listOfPolicyRequests" : "requestPolicy.policies",
       });
       setRequestPolicySuccess(true);
     } catch (err) {
@@ -375,7 +380,7 @@ function MapCredentialType() {
             <Title
               title={requestPolicySuccess ? "requestPolicy.requestPolicy" : "mapCredentialType.title"}
               subTitle={requestPolicySuccess ? "requestPolicy.policies" : "requestPolicy.requestPolicy"}
-              backLink="/partnermanagement/policies/policies-list"
+              backLink={isAdminPath ? "/partnermanagement/admin/policy-requests-list" : "/partnermanagement/policies/policies-list"}
             />
 
             {!requestPolicySuccess ? (
