@@ -159,15 +159,16 @@ function MapCredentialType() {
         const appConfig = await getAppConfig();
         if (cancelled) return;
 
-        const credentialTypes = appConfig?.allowedCredentialTypes;
-        const parsedCredentialTypes = Array.isArray(credentialTypes)
-          ? credentialTypes
-          : typeof credentialTypes === "string"
-            ? credentialTypes.split(",")
-            : [];
+      const credentialTypes =
+        appConfig?.allowedCredentialTypes ??
+        appConfig?.["pmp.allowed.credential.types"] ??
+        "";
 
-        const normalizedCredentialTypes = parsedCredentialTypes
-          .map((value) => String(value || "").trim())
+      const normalizedCredentialTypes =
+        (Array.isArray(credentialTypes)
+          ? credentialTypes
+          : String(credentialTypes).split(","))
+          .map(value => String(value || "").trim())
           .filter(Boolean);
 
         setAllowedCredentialTypes(normalizedCredentialTypes);

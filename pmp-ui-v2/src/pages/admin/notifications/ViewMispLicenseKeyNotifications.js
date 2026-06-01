@@ -3,7 +3,7 @@ import ViewAllNotifications from "./ViewAllNotifications";
 function ViewMispLicenseKeyNotifications() {
     return (
         <ViewAllNotifications
-            notificationType='misp'
+            notificationType='MISP_LICENSE_KEY_EXPIRY'
         />
     )
 }

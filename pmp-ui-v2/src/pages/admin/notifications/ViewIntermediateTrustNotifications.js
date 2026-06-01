@@ -3,7 +3,7 @@ import ViewAllNotifications from "./ViewAllNotifications";
 function ViewIntermediateTrustNotifications() {
     return (
         <ViewAllNotifications
-            notificationType='intermediate'
+            notificationType='INTERMEDIATE_CERT_EXPIRY'
         />
     )
 }
