@@ -259,7 +259,7 @@
         "ftmProvider": "Fournisseur de puces FTM",
         "authPartner": "Partenaire d'authentification",
         "credentialPartner": "Partenaire d'identification",
-        "onlineVerficationPartner": "Partenaire de vérification en ligne",
+        "onlineVerificationPartner": "Partenaire de vérification en ligne",
         "abisPartner": "Partenaire ABIS",
         "mispPartner": "Partenaire MISP",
         "sdkPartner": "Partenaire SDK",
@@ -352,7 +352,8 @@
         "guidenceForMispPartner": "Remarque : Si vous êtes partenaire MISP, les champs Groupe de politiques et Nom de la politique sont facultatifs. Nous vous recommandons néanmoins de sélectionner un nom de politique pour garantir la cohérence et la clarté de la gestion des politiques.",
         "policySuccessMsgForAdmin": "La demande de politique a été soumise avec succès. Veuillez approuver la demande d'activation du lien de politique partenaire.",
         "approvePopupTitle": "Voulez-vous approuver la demande de politique du partenaire ?",
-        "approvePopupDesc": "En cliquant sur Confirmer, la liaison de la politique de partenariat sera approuvée."
+        "approvePopupDesc": "En cliquant sur Confirmer, la liaison de la politique de partenariat sera approuvée.",
+        "characters": "caractères"
     },
     "mapCredentialType": {
         "title": "Mapper le type d’identifiant",
@@ -366,8 +367,8 @@
         "partialFailureMsg": "{{succeeded}} sur {{total}} types d’identifiant ont été associés. Échec pour : {{failed}}. Veuillez réessayer.",
         "duplicateCredentialTypeMsg": "Une cartographie existe déjà entre ce partenaire et le(s) type(s) d’identifiant : {{types}}. Veuillez choisir un autre type d’identifiant et réessayer.",
         "saveError": "Lors de l’enregistrement de la cartographie du type d’identifiant, nous avons rencontré une erreur.",
-        "successHeader": "Tous les détails ont été soumis avec succès !",
-        "successMsgLine1": "La demande de politique, y compris la cartographie du fournisseur d’extracteur biométrique et du type d’identifiant, a été soumise avec succès.",
+        "successHeader": "Demande de politique soumise avec succès",
+"successMsgLine1": "Votre demande de politique a été soumise avec succès et est en attente d’approbation de l’administrateur.",
         "successMsgLine2": "L’approbation est en attente auprès de l’administrateur."
     },
     "authenticationServices": {
@@ -428,7 +429,9 @@
         "uploadMispPartnerCertificate": "Télécharger le certificat partenaire MISP",
         "uploadAbisPartnerCertificate": "Télécharger le certificat partenaire ABIS",
         "uploadManualAdjudicationPartnerCertificate": "Télécharger le certificat de partenaire d'arbitrage manuel",
-        "manualAdjudicationPartnerSuccessHeader": "Partenaire d'arbitrage manuel créé avec succès !"
+        "manualAdjudicationPartnerSuccessHeader": "Partenaire d'arbitrage manuel créé avec succès !",
+        "onlineVerificationPartnerSuccessHeader": "Partenaire de vérification en ligne créé avec succès !",
+        "uploadOnlineVerificationPartnerCertificate": "Télécharger le certificat de partenaire de vérification en ligne"
     },
     "languages": {
         "english": "Anglais",
@@ -1213,8 +1216,8 @@
         "comments": "Commentaires",
         "commentPlaceholder": "Écrivez votre commentaire ici",
         "mappingsMissingGeneric": "Les cartographies requises (extracteurs biométriques et type d’identifiant) sont manquantes. Veuillez les configurer puis réessayer.",
-        "mappingsMissingBoth": "Les bio-extracteurs et le type d’identifiant ne sont pas configurés pour cette politique. Veuillez les configurer puis réessayer.",
-        "credentialTypeNotMapped": "Le type d’identifiant n’est pas configuré pour cette politique. Veuillez mapper un type d’identifiant puis réessayer."
+        "mappingsMissingBoth": "Cette politique ne peut pas être approuvée car les mappages requis de Configuration du fournisseur d’extracteur biométrique et de Type d’identifiant sont incomplets.",
+        "credentialTypeNotMapped": "Cette politique ne peut pas être approuvée car le mappage du Type d’identifiant est incomplet."
     },
     "partnerPolicyRequestApproveRejectPopup": {
         "header": "Voulez-vous Approuver/Rejeter la politique?",
@@ -1233,7 +1236,7 @@
         "bioExtractorProviderNameLine2": "Nom du fournisseur",
         "bioExtractorProviderMapping": "Cartographie du fournisseur d’extracteur biométrique",
         "credentialType": "Type d’identifiant",
-        "noBioExtractors": "Aucun extracteur biométrique trouvé pour cette politique.",
+        "noBioExtractors": "Aucune Configuration du fournisseur d’extracteur biométrique n’a été mappée à cette politique.",
         "extractorsNotConfigured": "Les extracteurs biométriques ne sont pas configurés. Ajoutez des extracteurs biométriques pour cette politique."
     },
     "ftmRequestApproveRejectPopup": {
@@ -1400,6 +1403,7 @@
         "PMS_PRT_062": "La demande de clé API du partenaire est déjà approuvée. Impossible d'ajouter des extracteurs maintenant.",
         "PMS_PRT_063": "Les extracteurs biométriques peuvent être ajoutés uniquement pour :",
         "PMS_PRT_064": "Aucun détail trouvé",
+        "PMS_PRT_289": "Cette politique ne peut pas être approuvée car le mappage du type d'identifiant est incomplet.",
         "PMS_PRT_070": "Mappage des identifiants autorisé uniquement pour :",
         "PMS_PRT_071": "Une erreur s'est produite lors de l'analyse de la chaîne de stratégie en objet json",
         "PMS_PRT_072": "Le type d'informations d'identification donné n'est pas autorisé. Types d'identifiants autorisés :",
@@ -1418,6 +1422,7 @@
         "PMS_PRT_500": "Impossible de traiter la demande.",
         "PMS_PMP_016": "Votre compte partenaire pour un type de partenaire donné a été désactivé par l'administrateur, vous ne pourrez donc plus effectuer cette activité",
         "PMS_PRT_098": "La politique donnée dans le groupe de politiques du partenaire n'existe pas.",
+        "PMS_PRT_099": "Entrée non valide pour le champ « Durée d'expiration du consentement (en minutes) ». Attendu : un entier dans les limites autorisées par le système.",
         "PMS_PMP_019": "La stratégie n'est pas active.",
         "PMS_PMP_023": "Le groupe de stratégies n'est pas actif.",
         "PMS_DTS_001": "  La réponse DataShare est nulle",
@@ -1432,7 +1437,7 @@
         "PMS_PM_034": " Demande de politique déjà approuvée.",
         "PMS_PM_035": " Demande de stratégie déjà rejetée.",
         "PMS_PM_045": " Le statut doit être Approuvé ou Rejeté",
-        "PMS_PM_051": "Les extracteurs ne sont pas présents. Veuillez ajouter des extracteurs.",
+        "PMS_PM_051": "Cette politique ne peut pas être approuvée car la configuration requise du fournisseur d’extraction biométrique et le mappage du type d’identifiant sont incomplets.",
         "PMS_PM_058": "L'état doit être Actif ou Désactivé",
         "PMS_PM_059": "Erreur lors de la récupération des détails du partenaire.",
         "PMS_PM_060": "Le certificat du partenaire spécifié n'est pas disponible dans la boutique",
@@ -1444,7 +1449,7 @@
         "PMS_PM_066": "L'ID du partenaire est obligatoire lorsque le type de recherche du partenaire est « égal ».",
         "PMS_PMP_010": "La politique n'appartient pas au groupe de politiques du gestionnaire de partenaires",
         "PMS_PMP_015": "Aucune demande de clé API partenaire pour le groupe de règles",
-        "PMS_PMP_007": "La clé API du partenaire n'existe pas",
+        "PMS_PMP_007": "La clé de mappage n'existe pas",
         "PMS_PMP_011": "La clé API du partenaire n'existe pas",
         "PMS_PMP_009": " Pour le partenaire donné et le mappage apikey n'existe pas.",
         "PMS_PMP_013": "Le partenaire n'existe pas",
@@ -1748,6 +1753,9 @@
         "configNameDuplicateError": "Le nom de configuration existe déjà",
         "errorInCreateConfig": "Une erreur est survenue lors de la création de la configuration du fournisseur d'extraction biométrique",
         "createConfigSuccessHeader": "La configuration du fournisseur d'extraction biométrique a été ajoutée avec succès !",
+        "delete": "Supprimer",
+        "deleteConfirmHeader": "Supprimer la configuration de l’extracteur biométrique",
+        "deleteConfirmDescription": "En cliquant sur Confirmer, la configuration sélectionnée sera supprimée.",
         "viewBioExtractorConfigDetails": "Afficher les détails de la configuration de l'extracteur biométrique",
         "viewBioExtractorProviderConfig": "Afficher la configuration du fournisseur d'extracteur biométrique"
         },

@@ -3,7 +3,7 @@ import ViewAllNotifications from "../../admin/notifications/ViewAllNotifications
 function ViewSbiNotifications() {
     return (
         <ViewAllNotifications
-            notificationType='sbi'
+            notificationType='SBI_EXPIRY'
         />
     );
 }

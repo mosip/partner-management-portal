@@ -16,14 +16,74 @@ import LoadingIcon from '../../common/LoadingIcon';
 import ErrorMessage from '../../common/ErrorMessage';
 import { HttpService } from '../../../services/HttpService';
 import Confirmation from '../../common/Confirmation';
+import { getAppConfig } from '../../../services/ConfigService';
 
 const LIST_ROUTE = '/partnermanagement/admin/biometric-provider-configuration-list';
 
-const MODALITY_OPTIONS = [
-    { value: 'FACE', labelKey: 'bioExtractorConfig.face' },
-    { value: 'FINGER', labelKey: 'bioExtractorConfig.finger' },
-    { value: 'IRIS', labelKey: 'bioExtractorConfig.iris' },
-];
+const parseCsvOrArray = (raw) => {
+    const list = Array.isArray(raw) ? raw : typeof raw === 'string' ? raw.split(',') : [];
+    return list.map((v) => String(v || '').trim()).filter(Boolean);
+};
+
+const parseModalityAttributeNameMapFromConfig = (configData) => {
+    const raw =
+        configData?.allowedBioextractorModalitiesAttributeNameMap ??
+        configData?.allowedBioextractorModalitiesAttributeNameMapString ??
+        configData?.allowedBioextractorModalityAttributeNameMap ??
+        configData?.allowedBioextractorModalityAttributeNameMapString ??
+        configData?.['mosip.pms.bioextractor.allowed.modalities.attribute.name.map'];
+
+    const result = {};
+    const rawStr = typeof raw === 'string' ? raw.trim() : '';
+
+    if (raw && typeof raw === 'object' && !Array.isArray(raw) && !rawStr) {
+        Object.entries(raw).forEach(([k, v]) => {
+            const modality = String(k || '').trim();
+            if (!modality) return;
+            result[modality.toUpperCase()] = String(v || '').trim();
+        });
+        return result;
+    }
+
+    if (!rawStr) return result;
+
+    // Robust parsing:
+    // - preferred: "face:photo,iris:iris,finger:fingerprint"
+    // - tolerated: "face:photo,iris:iris:finger:fingerprint" (extra pairs accidentally chained)
+    rawStr
+        .split(',')
+        .map((t) => t.trim())
+        .filter(Boolean)
+        .forEach((segment) => {
+            const parts = segment.split(':').map((p) => p.trim()).filter(Boolean);
+            if (parts.length < 2) return;
+            for (let i = 0; i + 1 < parts.length; i += 2) {
+                const modality = parts[i];
+                const attr = parts[i + 1];
+                if (!modality) continue;
+                result[String(modality).toUpperCase()] = String(attr || '').trim();
+            }
+        });
+
+    return result;
+};
+
+const parseModalitiesFromConfig = (configData) => {
+    const map = parseModalityAttributeNameMapFromConfig(configData);
+    const modalitiesFromMap = Object.keys(map)
+        .map((k) => String(k || '').trim())
+        .filter(Boolean)
+        .map((m) => m.toLowerCase());
+
+    if (modalitiesFromMap.length > 0) {
+        return Array.from(new Set(modalitiesFromMap)).map((value) => ({ value }));
+    }
+
+    // Backward-compatible fallback (older system-config fields)
+    const normalized = parseCsvOrArray(configData?.allowedBioextractorModalities).map((m) => String(m).toLowerCase());
+    const unique = Array.from(new Set(normalized));
+    return unique.map((value) => ({ value }));
+};
 
 function CreateBioExtractorConfig() {
     const { t } = useTranslation();
@@ -41,6 +101,7 @@ function CreateBioExtractorConfig() {
     const [providerName, setProviderName] = useState('');
     const [providerVersion, setProviderVersion] = useState('');
     const [modality, setModality] = useState('');
+    const [modalityOptions, setModalityOptions] = useState([]);
 
     const [invalidConfigName, setInvalidConfigName] = useState('');
     const [invalidProviderName, setInvalidProviderName] = useState('');
@@ -51,6 +112,26 @@ function CreateBioExtractorConfig() {
 
     useEffect(() => {
         return handleMouseClickForDropdown(modalityRef, () => setModalityOpen(false));
+    }, []);
+
+    useEffect(() => {
+        let cancelled = false;
+        (async () => {
+            try {
+                const configData = await getAppConfig();
+                if (cancelled) return;
+                const options = parseModalitiesFromConfig(configData);
+                setModalityOptions(options);
+            } catch (error) {
+                if (cancelled) return;
+                console.error('Error fetching modalities from system-config:', error);
+                setModalityOptions([]);
+            }
+        })();
+
+        return () => {
+            cancelled = true;
+        };
     }, []);
 
     const blocker = useBlocker(({ currentLocation, nextLocation }) => {
@@ -196,8 +277,7 @@ function CreateBioExtractorConfig() {
     };
 
     const getModalityLabel = (value) => {
-        const option = MODALITY_OPTIONS.find((o) => o.value === value);
-        return option ? t(option.labelKey) : '';
+        return String(value || '').trim();
     };
 
     return (
@@ -349,6 +429,7 @@ function CreateBioExtractorConfig() {
                                                         }
                                                         aria-haspopup="listbox"
                                                         aria-expanded={modalityOpen}
+                                                        disabled={modalityOptions.length === 0}
                                                         className="flex items-center justify-between h-10 px-2 py-2 border border-[#707070] rounded-md text-base bg-white leading-tight focus:outline-none focus:shadow-outline"
                                                     >
                                                         <span className={modality ? 'text-dark-blue' : 'text-gray-400'}>
@@ -378,7 +459,7 @@ function CreateBioExtractorConfig() {
                                                             aria-labelledby='modality_label'
                                                             className="absolute top-[4.5rem] z-10 w-full bg-white border border-[#707070] rounded-md shadow-lg"
                                                         >
-                                                            {MODALITY_OPTIONS.map((option) => (
+                                                            {modalityOptions.map((option) => (
                                                                 <button
                                                                     key={option.value}
                                                                     id={`modality_option_${option.value.toLowerCase()}`}
@@ -401,7 +482,7 @@ function CreateBioExtractorConfig() {
                                                                             : 'text-dark-blue'
                                                                     }`}
                                                                 >
-                                                                    {t(option.labelKey)}
+                                                                    {option.value}
                                                                 </button>
                                                             ))}
                                                         </div>

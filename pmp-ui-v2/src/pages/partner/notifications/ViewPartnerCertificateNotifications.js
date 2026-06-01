@@ -5,7 +5,7 @@ function ViewPartnerCertificateNotifications() {
 
     return (
         <ViewAllNotifications
-            notificationType='partner'
+            notificationType='PARTNER_CERT_EXPIRY'
         />
 
     );
