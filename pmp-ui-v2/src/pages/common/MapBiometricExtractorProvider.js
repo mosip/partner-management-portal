@@ -1,16 +1,16 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate, useBlocker } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { getUserProfile } from "../../../services/UserProfileService";
-import { createRequest, getPartnerManagerUrl, handleEscapeKey, handleServiceErrors, isLangRTL } from "../../../utils/AppUtils";
-import { HttpService } from "../../../services/HttpService";
-import { getAppConfig } from "../../../services/ConfigService";
-import Title from "../../common/Title";
-import ErrorMessage from "../../common/ErrorMessage";
-import LoadingIcon from "../../common/LoadingIcon";
-import DropdownComponent from "../../common/fields/DropdownComponent";
-import BlockerPrompt from "../../common/BlockerPrompt";
-import DropdownWithSearchComponent from "../../common/fields/DropdownWithSearchComponent";
+import { getUserProfile } from "../../services/UserProfileService";
+import { createRequest, getPartnerManagerUrl, handleEscapeKey, handleServiceErrors, isLangRTL } from "../../utils/AppUtils";
+import { HttpService } from "../../services/HttpService";
+import { getAppConfig } from "../../services/ConfigService";
+import Title from "./Title";
+import ErrorMessage from "./ErrorMessage";
+import LoadingIcon from "./LoadingIcon";
+import DropdownComponent from "./fields/DropdownComponent";
+import BlockerPrompt from "./BlockerPrompt";
+import DropdownWithSearchComponent from "./fields/DropdownWithSearchComponent";
 
 const EMPTY_MAPPING_ROW = {
   biometricModality: "",

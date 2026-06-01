@@ -1,16 +1,16 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate, useBlocker } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { getUserProfile } from "../../../services/UserProfileService";
-import { createRequest, getPartnerManagerUrl, isLangRTL } from "../../../utils/AppUtils";
-import { HttpService } from "../../../services/HttpService";
-import Title from "../../common/Title";
-import ErrorMessage from "../../common/ErrorMessage";
-import LoadingIcon from "../../common/LoadingIcon";
-import DropdownComponent from "../../common/fields/DropdownComponent";
-import BlockerPrompt from "../../common/BlockerPrompt";
-import Confirmation from "../../common/Confirmation";
-import { getAppConfig } from "../../../services/ConfigService";
+import { getUserProfile } from "../../services/UserProfileService";
+import { createRequest, getPartnerManagerUrl, isLangRTL } from "../../utils/AppUtils";
+import { HttpService } from "../../services/HttpService";
+import Title from "./Title";
+import ErrorMessage from "./ErrorMessage";
+import LoadingIcon from "./LoadingIcon";
+import DropdownComponent from "./fields/DropdownComponent";
+import BlockerPrompt from "./BlockerPrompt";
+import Confirmation from "./Confirmation";
+import { getAppConfig } from "../../services/ConfigService";
 
 
 
