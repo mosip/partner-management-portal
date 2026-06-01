@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../../services/UserProfileService";
 import {
   formatDate,
+  createRequest,
   getPartnerManagerUrl,
   handleMouseClickForDropdown,
   handleServiceErrors,
@@ -19,7 +20,9 @@ import FilterButtons from "../../common/FilterButtons";
 import SortingIcon from "../../common/SortingIcon";
 import Pagination from "../../common/Pagination";
 import viewIcon from "../../../svg/view_icon.svg";
+import deleteIcon from "../../../svg/delete_icon.svg";
 import BiometricProviderConfigurationListFilter from "./BiometricProviderConfigurationListFilter";
+import DeactivatePopup from "../../common/DeactivatePopup";
 
 function BiometricProviderConfigurationList() {
   const { t } = useTranslation();
@@ -54,6 +57,9 @@ function BiometricProviderConfigurationList() {
     bioextractorProviderVersion: "",
     bioModality: "",
   });
+  const [showActiveIndexDeletePopup, setShowActiveIndexDeletePopup] = useState(null);
+  const [deleteRequest, setDeleteRequest] = useState({});
+  const [selectedConfiguration, setSelectedConfiguration] = useState({});
 
   useEffect(() => {
     return handleMouseClickForDropdown(submenuRef, () => setActionId(-1));
@@ -200,6 +206,34 @@ function BiometricProviderConfigurationList() {
     navigate("/partnermanagement/admin/biometric-provider-configuration/view");
   };
 
+  const deleteConfiguration = async (configuration, index) => {
+    const configurationId = configuration?.bioExtractorConfigurationId;
+    if (!configurationId) {
+      setErrorMsg(t("commons.unexpectedError"));
+      return;
+    }
+
+    setSelectedConfiguration(configuration);
+    const request = createRequest(
+      { status: "DELETED" },
+      "mosip.pms.bioextractor.configuration.delete.patch",
+      true
+    );
+    setDeleteRequest(request);
+    setActionId(-1);
+    setShowActiveIndexDeletePopup(index);
+  };
+
+  const closeDeletePopup = () => {
+    setSelectedConfiguration({});
+    setShowActiveIndexDeletePopup(null);
+  };
+
+  const onClickConfirmDelete = async () => {
+    closeDeletePopup();
+    await fetchConfigurations();
+  };
+
   const setSubmenuRef = (index) => (el) => {
     submenuRef.current[index] = el;
   };
@@ -319,22 +353,58 @@ function BiometricProviderConfigurationList() {
                           <tr
                             id={`bio_extractor_config_list_item_${index + 1}`}
                             key={`${configuration.configName}-${index}`}
-                            className={`border-t border-[#E5EBFA] cursor-pointer text-[0.8rem] text-[#191919] font-semibold break-words`}
-                            tabIndex={0}
-                            onClick={() => onViewConfiguration(configuration)}
-                            onKeyDown={(e) =>
-                              onPressEnterKey(e, () => onViewConfiguration(configuration))
-                            }
+                            className={`border-t border-[#E5EBFA] text-[0.8rem] text-[#191919] font-semibold break-words`}
                           >
-                            <td className="px-2 py-3 whitespace-normal break-words leading-5">
+                            <td
+                              className="px-2 py-3 whitespace-normal break-words leading-5 cursor-pointer"
+                              tabIndex={0}
+                              onClick={() => onViewConfiguration(configuration)}
+                              onKeyDown={(e) =>
+                                onPressEnterKey(e, () => onViewConfiguration(configuration))
+                              }
+                            >
                               {configuration.configName || "-"}
                             </td>
-                            <td className="px-2 py-3 whitespace-normal break-words leading-5">
+                            <td
+                              className="px-2 py-3 whitespace-normal break-words leading-5 cursor-pointer"
+                              tabIndex={0}
+                              onClick={() => onViewConfiguration(configuration)}
+                              onKeyDown={(e) =>
+                                onPressEnterKey(e, () => onViewConfiguration(configuration))
+                              }
+                            >
                               {configuration.bioextractorProviderName || "-"}
                             </td>
-                            <td className="px-2 py-3">{configuration.bioextractorProviderVersion || "-"}</td>
-                            <td className="px-2 py-3">{getModalityLabel(configuration.bioModality)}</td>
-                            <td className="px-2 py-3">{formatDate(configuration.createdDateTime, "date")}</td>
+                            <td
+                              className="px-2 py-3 cursor-pointer"
+                              tabIndex={0}
+                              onClick={() => onViewConfiguration(configuration)}
+                              onKeyDown={(e) =>
+                                onPressEnterKey(e, () => onViewConfiguration(configuration))
+                              }
+                            >
+                              {configuration.bioextractorProviderVersion || "-"}
+                            </td>
+                            <td
+                              className="px-2 py-3 cursor-pointer"
+                              tabIndex={0}
+                              onClick={() => onViewConfiguration(configuration)}
+                              onKeyDown={(e) =>
+                                onPressEnterKey(e, () => onViewConfiguration(configuration))
+                              }
+                            >
+                              {getModalityLabel(configuration.bioModality)}
+                            </td>
+                            <td
+                              className="px-2 py-3 cursor-pointer"
+                              tabIndex={0}
+                              onClick={() => onViewConfiguration(configuration)}
+                              onKeyDown={(e) =>
+                                onPressEnterKey(e, () => onViewConfiguration(configuration))
+                              }
+                            >
+                              {formatDate(configuration.createdDateTime, "date")}
+                            </td>
                             <td className="px-2 py-3 text-center cursor-default">
                               <div ref={setSubmenuRef(index)}>
                                 <button
@@ -349,7 +419,7 @@ function BiometricProviderConfigurationList() {
                                 </button>
                                 {actionId === index && (
                                   <div
-                                    className={`absolute w-[110px] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border ${
+                                    className={`absolute w-[169px] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border ${
                                       isLoginLanguageRTL
                                         ? "left-10 text-right"
                                         : "right-11 text-left"
@@ -357,7 +427,7 @@ function BiometricProviderConfigurationList() {
                                   >
                                     <div
                                       role="button"
-                                      className="flex justify-between hover:bg-gray-100"
+                                      className="flex items-center justify-between hover:bg-gray-100 h-7"
                                       onClick={(e) => {
                                         e.stopPropagation();
                                         onViewConfiguration(configuration);
@@ -370,9 +440,51 @@ function BiometricProviderConfigurationList() {
                                       <p id="bio_extractor_config_list_view_btn" className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>
                                         {t("partnerList.view")}
                                       </p>
-                                      <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
+                                      <img
+                                        src={viewIcon}
+                                        alt=""
+                                        className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`}
+                                      />
+                                    </div>
+                                    <hr className="h-px bg-gray-100 border-0 mx-1" />
+                                    <div
+                                      role="button"
+                                      className="flex items-center justify-between hover:bg-gray-100 cursor-pointer h-7"
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        deleteConfiguration(configuration, index);
+                                      }}
+                                      tabIndex="0"
+                                      onKeyDown={(e) =>
+                                        onPressEnterKey(e, () => deleteConfiguration(configuration, index))
+                                      }
+                                    >
+                                      <p
+                                        id="bio_extractor_config_list_delete_btn"
+                                        className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] ${
+                                          isLoginLanguageRTL ? "pl-10" : "pr-10"
+                                        }`}
+                                      >
+                                        {t("bioExtractorConfig.delete", "Delete")}
+                                      </p>
+                                      <img
+                                        src={deleteIcon}
+                                        alt=""
+                                        className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"} w-5 h-5 object-contain`}
+                                      />
                                     </div>
                                   </div>
+                                )}
+                                {showActiveIndexDeletePopup === index && (
+                                  <DeactivatePopup
+                                    closePopUp={closeDeletePopup}
+                                    onClickConfirm={onClickConfirmDelete}
+                                    popupData={{ ...selectedConfiguration, isDeleteBioExtractorConfig: true }}
+                                    request={deleteRequest}
+                                    headerMsg="bioExtractorConfig.deleteConfirmHeader"
+                                    descriptionMsg="bioExtractorConfig.deleteConfirmDescription"
+                                    headerKeyName={selectedConfiguration.configName}
+                                  />
                                 )}
                               </div>
                             </td>

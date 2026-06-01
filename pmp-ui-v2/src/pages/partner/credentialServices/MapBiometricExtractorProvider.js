@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../../services/UserProfileService";
 import { createRequest, getPartnerManagerUrl, handleEscapeKey, handleServiceErrors, isLangRTL } from "../../../utils/AppUtils";
 import { HttpService } from "../../../services/HttpService";
+import { getAppConfig } from "../../../services/ConfigService";
 import Title from "../../common/Title";
 import ErrorMessage from "../../common/ErrorMessage";
 import LoadingIcon from "../../common/LoadingIcon";
@@ -16,14 +17,47 @@ const EMPTY_MAPPING_ROW = {
   biometricProviderConfiguration: "",
 };
 
-const biometricAttributeMap = {
-  FACE: "photo",
-  IRIS: "iris",
-  FINGER: "fingerprint",
+const parseCsvOrArray = (raw) => {
+  const list = Array.isArray(raw) ? raw : typeof raw === "string" ? raw.split(",") : [];
+  return list.map((v) => String(v || "").trim()).filter(Boolean);
 };
 
-/** All supported modalities; each can appear at most once across rows. */
-const ALL_MODALITY_VALUES = ["FACE", "IRIS", "FINGER"];
+const parseModalityAttributeNameMapFromConfig = (configData) => {
+  const raw =
+    configData?.allowedBioextractorModalitiesAttributeNameMap ??
+    configData?.allowedBioextractorModalitiesAttributeNameMapString ??
+    configData?.allowedBioextractorModalityAttributeNameMap ??
+    configData?.allowedBioextractorModalityAttributeNameMapString ??
+    configData?.["mosip.pms.bioextractor.allowed.modalities.attribute.name.map"];
+
+  const result = {};
+  const rawStr = typeof raw === "string" ? raw.trim() : "";
+
+  if (raw && typeof raw === "object" && !Array.isArray(raw) && !rawStr) {
+    Object.entries(raw).forEach(([k, v]) => {
+      const modality = String(k || "").trim();
+      if (!modality) return;
+      result[modality.toUpperCase()] = String(v || "").trim();
+    });
+    return result;
+  }
+
+  if (!rawStr) return result;
+
+  rawStr
+    .split(",")
+    .map((t) => t.trim())
+    .filter(Boolean)
+    .forEach((segment) => {
+      const parts = segment.split(":").map((p) => p.trim()).filter(Boolean);
+      if (parts.length < 2) return;
+      for (let i = 0; i + 1 < parts.length; i += 2) {
+        result[String(parts[i]).toUpperCase()] = String(parts[i + 1] || "").trim();
+      }
+    });
+
+  return result;
+};
 
 function MapBiometricExtractorProvider() {
   const { t } = useTranslation();
@@ -50,13 +84,63 @@ function MapBiometricExtractorProvider() {
   const configReqVersionRef = useRef({});
   const [showSaveConfirm, setShowSaveConfirm] = useState(false);
 
+  const [allowedModalities, setAllowedModalities] = useState([]);
+  const [attributeNameByModality, setAttributeNameByModality] = useState({});
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const configData = await getAppConfig();
+        if (cancelled) return;
+
+        const modalityAttrMap = parseModalityAttributeNameMapFromConfig(configData);
+        const modalitiesFromMap = Object.keys(modalityAttrMap)
+          .map((m) => String(m || "").trim())
+          .filter(Boolean)
+          .map((m) => m.toLowerCase());
+
+        if (modalitiesFromMap.length > 0) {
+          setAllowedModalities(Array.from(new Set(modalitiesFromMap)));
+
+          const map = {};
+          Object.entries(modalityAttrMap).forEach(([modalityUpper, attr]) => {
+            map[String(modalityUpper || "").toUpperCase()] = String(attr || "").trim();
+          });
+          setAttributeNameByModality(map);
+        } else {
+          // Backward-compatible fallback (older system-config fields)
+          const modalities = parseCsvOrArray(configData?.allowedBioextractorModalities).map((m) => String(m).toLowerCase());
+          const attributeNames = parseCsvOrArray(configData?.allowedBioextractorAttributeNames);
+
+          setAllowedModalities(modalities);
+
+          const map = {};
+          modalities.forEach((modality, index) => {
+            map[String(modality || "").toUpperCase()] = String(attributeNames[index] || "").trim();
+          });
+          setAttributeNameByModality(map);
+        }
+      } catch (error) {
+        if (cancelled) return;
+        console.error("Error fetching bio-extractor config from system-config:", error);
+        setAllowedModalities([]);
+        setAttributeNameByModality({});
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   const modalityDropdownData = useMemo(
-    () => [
-      { fieldCode: t("bioExtractorConfig.face"), fieldValue: "FACE" },
-      { fieldCode: t("bioExtractorConfig.iris"), fieldValue: "IRIS" },
-      { fieldCode: t("bioExtractorConfig.finger"), fieldValue: "FINGER" },
-    ],
-    [t]
+    () =>
+      allowedModalities.map((value) => ({
+        fieldCode: value,
+        fieldValue: value,
+      })),
+    [allowedModalities]
   );
 
   /** Options for one row: unselected modalities elsewhere, plus this row's current value (any order). */
@@ -82,10 +166,11 @@ function MapBiometricExtractorProvider() {
     ).size;
   }, [rows]);
 
-  const canAddMoreRow = rows.length < ALL_MODALITY_VALUES.length && distinctSelectedModalitiesCount < ALL_MODALITY_VALUES.length;
+  const canAddMoreRow =
+    rows.length < allowedModalities.length && distinctSelectedModalitiesCount < allowedModalities.length;
 
   const getAttributeName = (modality) => {
-    return biometricAttributeMap[(modality || "").toUpperCase()] || "";
+    return attributeNameByModality[String(modality || "").trim().toUpperCase()] || "";
   };
 
   const getConfigDropdownByModality = (rowId, selectedModality) => {
@@ -294,7 +379,6 @@ function MapBiometricExtractorProvider() {
     try {
       const mappedRows = getMappedRowsForSubmit();
       const request = createRequest({
-        partnerPolicyRequestId: policyDetails.mappingKey,
         extractors: mappedRows.map((row) => {
           const selectedConfig = getSelectedConfig(row.id, row.biometricProviderConfiguration) || {};
           return {
@@ -304,10 +388,14 @@ function MapBiometricExtractorProvider() {
             extractorProviderVersion: selectedConfig.bioextractorProviderVersion,
           };
         }),
-      });
+      },
+        "mosip.pms.partners.bioextractors.request.post"
+      );
+      const timestamp = new Date().toISOString();
+      request.requestTime = timestamp;
 
       const response = await HttpService.post(
-        getPartnerManagerUrl(`/partners/${policyDetails.partnerId}/policies/${policyDetails.policyId}/bio-extractors-request`, process.env.NODE_ENV),
+        getPartnerManagerUrl(`/partner-policy-requests/${policyDetails.mappingKey}/bio-extractors-request`, process.env.NODE_ENV),
         request
       );
 
