@@ -34,9 +34,9 @@ public class AbisPartnerTest extends BaseClass {
         page.enterUserName(username);
     }
 
-    @Test(priority = 1, groups = { "S1_FormStructure" },
+    @Test(priority = 1,
           description = "Verify form structure, partner type dropdown options, notification language dropdown, and org name info tooltip.")
-    public void s1_formStructureAndDropdowns() {
+    public void formStructureAndDropdowns() {
         MispPartnerPage page = navigateToCreatePartnerPage();
 
         Assert.assertTrue(page.isCreatePrtnerPageTitleDisplayed(), GlobalConstants.isDesignSpecCompliant);
@@ -87,9 +87,9 @@ public class AbisPartnerTest extends BaseClass {
                 GlobalConstants.isNotificationLanguageSelectable);
     }
 
-    @Test(priority = 2, groups = { "S2_MandatoryFields" },
+    @Test(priority = 2,
           description = "Verify submit button state as mandatory fields are filled and that multiple simultaneous invalid inputs block submission.")
-    public void s2_mandatoryFieldGateAndMultiFieldValidation() {
+    public void mandatoryFieldGateAndMultiFieldValidation() {
         MispPartnerPage page = navigateToCreatePartnerPage();
 
         page.clickOnPartnerTypeDropdown();
@@ -143,9 +143,9 @@ public class AbisPartnerTest extends BaseClass {
         Assert.assertTrue(page.isCreatePartnerSubmitButtonDisabled(), GlobalConstants.isAllValidationErrorsDisplayed);
     }
 
-    @Test(priority = 3, groups = { "S3_OrgNameValidation" },
+    @Test(priority = 3,
           description = "Verify Organization Name field placeholder, valid input, allowed/disallowed special chars, and max length.")
-    public void s3_organizationNameValidation() {
+    public void organizationNameValidation() {
         MispPartnerPage page = navigateToCreatePartnerPage();
         page.clickOnPartnerTypeDropdown();
         page.clickOnAbisPartnerOption();
@@ -174,9 +174,9 @@ public class AbisPartnerTest extends BaseClass {
                 GlobalConstants.isOrgNameMaxLengthEnforced);
     }
 
-    @Test(priority = 4, groups = { "S4_AddressValidation" },
+    @Test(priority = 4,
           description = "Verify Address field placeholder, valid input, long word, multiline, allowed/disallowed chars, and max length.")
-    public void s4_addressFieldValidation() {
+    public void addressFieldValidation() {
         MispPartnerPage page = navigateToCreatePartnerPage();
         page.clickOnPartnerTypeDropdown();
         page.clickOnAbisPartnerOption();
@@ -211,9 +211,9 @@ public class AbisPartnerTest extends BaseClass {
                 GlobalConstants.isAddressInvalidSpecialCharsRejected);
     }
 
-    @Test(priority = 5, groups = { "S5_EmailValidation" },
+    @Test(priority = 5,
           description = "Verify Email field placeholder, valid input, invalid format error on blur, max length, and duplicate-email error on submit.")
-    public void s5_emailFieldValidation() {
+    public void emailFieldValidation() {
         DashboardPage dashboardPage = new DashboardPage(driver);
         MispPartnerPage page = new MispPartnerPage(driver);
         dashboardPage.clickOnPartners();
@@ -260,9 +260,9 @@ public class AbisPartnerTest extends BaseClass {
                 GlobalConstants.isEmailAlreadyRegisteredErrorTextCorrect);
     }
 
-    @Test(priority = 6, groups = { "S6_PhoneValidation" },
+    @Test(priority = 6,
           description = "Verify Contact Number placeholder, valid input, short/long length, symbol/letter rejection, leading zeros, and reused phone acceptance.")
-    public void s6_phoneNumberFieldValidation() {
+    public void phoneNumberFieldValidation() {
         DashboardPage dashboardPage = new DashboardPage(driver);
         MispPartnerPage page = new MispPartnerPage(driver);
         dashboardPage.clickOnPartners();
@@ -331,9 +331,9 @@ public class AbisPartnerTest extends BaseClass {
         page.clickOnSuccessMsgHomeButton();
     }
 
-    @Test(priority = 7, groups = { "S7_UsernameValidation" },
+    @Test(priority = 7,
           description = "Verify Username field placeholder, valid input, invalid start chars, whitespace, max length, and duplicate-username error.")
-    public void s7_usernameFieldValidation() {
+    public void usernameFieldValidation() {
         DashboardPage dashboardPage = new DashboardPage(driver);
         MispPartnerPage page = new MispPartnerPage(driver);
         dashboardPage.clickOnPartners();
@@ -390,13 +390,13 @@ public class AbisPartnerTest extends BaseClass {
         page.clickOnCreatePartnerSubmitButton();
         Assert.assertTrue(page.isUsernameAlreadyExistErrorDisplayed(),
                 GlobalConstants.isUsernameAlreadyExistErrorDisplayed);
-        Assert.assertEquals(page.getEmailAlreadyRegisteredErrorText(), GlobalConstants.USERNAME_ALREADY_EXISTS_ERROR_MSG,
+        Assert.assertEquals(page.getUsernameAlreadyExistErrorText(), GlobalConstants.USERNAME_ALREADY_EXISTS_ERROR_MSG,
                 GlobalConstants.isUsernameAlreadyExistsErrorTextCorrect);
     }
 
-    @Test(priority = 8, groups = { "S8_PolicyGroupValidation" },
-          description = "Verify Policy Group dropdown shows active groups, hides deactivated groups, has search bar, and renders long names.")
-    public void s8_policyGroupDropdownValidation() {
+    @Test(priority = 8,
+          description = "Verify Policy Group dropdown shows active groups, hides deactivated groups, and supports search filtering.")
+    public void policyGroupDropdownValidation() {
         MispPartnerPage page = navigateToCreatePartnerPage();
         page.clickOnPartnerTypeDropdown();
         page.clickOnAbisPartnerOption();
@@ -419,9 +419,9 @@ public class AbisPartnerTest extends BaseClass {
                 GlobalConstants.isLongPolicyGroupNameVisible);
     }
 
-    @Test(priority = 9, groups = { "S9_FormLifecycle" },
+    @Test(priority = 9,
           description = "Verify create-partner lifecycle: submit to success screen, Home nav, cancel popup, clear form, alternate-flow error correction.")
-    public void s9_formLifecycle() {
+    public void formLifecycle() {
         DashboardPage dashboardPage = new DashboardPage(driver);
         MispPartnerPage page = new MispPartnerPage(driver);
 
@@ -486,9 +486,9 @@ public class AbisPartnerTest extends BaseClass {
         Assert.assertTrue(page.isCreatePartnerSubmitButtonEnabled(), GlobalConstants.isAlternateFlowsHandledCorrectly);
     }
 
-    @Test(priority = 10, groups = { "S10_PartnerListAndNavigation" },
-          description = "Verify dashboard nav, partner statuses (no-cert/with-cert), multiple partners, cert-popup nav, back arrow, and responsive viewport.")
-    public void s10_partnerListAndNavigation() {
+    @Test(priority = 10,
+          description = "Verify dashboard navigation to the partner list, ABIS partner creation, and upload-certificate action availability.")
+    public void partnerListAndNavigation() {
         DashboardPage dashboardPage = new DashboardPage(driver);
         MispPartnerPage page = new MispPartnerPage(driver);
         PartnerAdminPage partnerAdminPage;

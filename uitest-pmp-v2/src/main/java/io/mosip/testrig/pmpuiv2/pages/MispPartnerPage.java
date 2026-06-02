@@ -484,6 +484,10 @@ public class MispPartnerPage extends BasePage {
 		return getTextFromLocator(createPartnerErrorMessage);
 	}
 
+	public String getUsernameAlreadyExistErrorText() {
+		return getTextFromLocator(createPartnerErrorMessage);
+	}
+
 	public String getOrganizationNamePlaceholderText() {
 		return getTextFromAttribute(partnerOrganisationNameTextBox, "placeholder");
 	}
