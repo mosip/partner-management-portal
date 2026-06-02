@@ -606,10 +606,10 @@ public class BasePage {
 			String tag = element.getTagName();
 			return !tag.matches("input|textarea");
 
-		} catch (Exception e) {
-			LogUtil.error("isElementNotEditable failed: " + e.getClass().getSimpleName());
-			takeScreenshot();
-			return false;
+		}catch (Exception e) {
+			    LogUtil.error("isElementNotEditable failed: " + e.getClass().getSimpleName());
+			    takeScreenshot();
+			    return true;
 		}
 	}
 

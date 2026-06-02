@@ -10,7 +10,6 @@ import io.mosip.testrig.pmpuiv2.pages.DashboardPage;
 import io.mosip.testrig.pmpuiv2.pages.FtmPage;
 import io.mosip.testrig.pmpuiv2.pages.LoginPage;
 import io.mosip.testrig.pmpuiv2.pages.PartnerCertificatePage;
-import io.mosip.testrig.pmpuiv2.pages.RegisterPage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
