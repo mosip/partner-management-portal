@@ -66,7 +66,6 @@ public class BasePage {
 		int attempts = 0;
 		while (attempts < 2) {
 			try {
-				// Normal Selenium click
 				WaitUtil.waitForVisibility(driver, element);
 				WaitUtil.waitForClickability(driver, element);
 				element.click();
@@ -286,7 +285,6 @@ public class BasePage {
 
 				dropdown.click();
 
-				// 🔥 FIX: remove position, target visible dropdown options
 				By optionLocator = By.xpath("//div[contains(@class,'menu')]//*[contains(text(),'" + value + "')]");
 
 				WebElement option = new WebDriverWait(driver, Duration.ofSeconds(ConfigManager.getTimeout()))
@@ -423,6 +421,31 @@ public class BasePage {
 		}
 	}
 
+	protected boolean isElementNotEditable(WebElement element) {
+		LogUtil.verify("Checking element is not editable: ", element);
+		try {
+			WaitUtil.waitForVisibility(driver, element);
+			String editableAttr = element.getAttribute("contenteditable");
+			if ("true".equalsIgnoreCase(editableAttr)) {
+				return false;
+			}
+			try {
+				WebElement parent = element.findElement(By.xpath("./ancestor::button"));
+				if (parent.getAttribute("disabled") != null) {
+					return true;
+				}
+			} catch (Exception ignored) {
+			}
+			String tag = element.getTagName();
+			return !tag.matches("input|textarea");
+
+		} catch (Exception e) {
+			LogUtil.error("isElementNotEditable failed: " + e.getClass().getSimpleName());
+			takeScreenshot();
+			return true;
+		}
+	}
+
 	public static String getPreAppend() {
 		String preappend = null;
 		try {
@@ -514,13 +537,11 @@ public class BasePage {
 	public void scrollToEndPage() {
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
-
 	}
 
 	public void scrollToStartPage() {
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript("window.scrollTo(0, 0);");
-
 	}
 
 	protected void takeScreenshot() {
@@ -532,7 +553,6 @@ public class BasePage {
 		} catch (IOException e) {
 			logger.error("Failed to take screenshot", e);
 		}
-
 	}
 
 	public void scrollIntoView(WebElement element) {
@@ -592,7 +612,6 @@ public class BasePage {
 	}
 
 	public void waitScrollAndClick(By option) {
-
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
 		WebElement el = wait.until(ExpectedConditions.visibilityOfElementLocated(option));
 		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", el);
