@@ -588,4 +588,29 @@ public class BasePage {
 		((JavascriptExecutor) driver).executeScript("arguments[0].click();", el);
 	}
 
+	protected boolean isElementNotEditable(WebElement element) {
+		LogUtil.verify("Checking element is not editable: ", element);
+		try {
+			WaitUtil.waitForVisibility(driver, element);
+			String editableAttr = element.getAttribute("contenteditable");
+			if ("true".equalsIgnoreCase(editableAttr)) {
+				return false;
+			}
+			try {
+				WebElement parent = element.findElement(By.xpath("./ancestor::button"));
+				if (parent.getAttribute("disabled") != null) {
+					return true;
+				}
+			} catch (Exception ignored) {
+			}
+			String tag = element.getTagName();
+			return !tag.matches("input|textarea");
+
+		}catch (Exception e) {
+			    LogUtil.error("isElementNotEditable failed: " + e.getClass().getSimpleName());
+			    takeScreenshot();
+			    return true;
+		}
+	}
+
 }
