@@ -1290,4 +1290,172 @@ public class GlobalConstants {
 	public static final String isDefaultMispPartnerDisplayed = "Verify if misp partner displayed";
 	public static final String isCertificateUploadSuccessMessageDisplayed = "Verify if certificate upload success message displayed";
 
+	// ABIS Partner
+	public static final String CREATE_PARTNER_PAGE_TITLE = "Create Partner";
+	public static final String MANDATORY_FIELD_INFO_TEXT = "All fields marked with * are mandatory.";
+	public static final String isCreatePartnerPageTitleCorrect = "Verify that the page title is displayed correctly on the Create Partner page.";
+	public static final String isCreatePartnerButtonVisible = "Verify that the Create Partner button is visible in the Partners tabular view.";
+	public static final String isCreatePartnerButtonEnabled = "Verify that the Create Partner button is enabled and accessible.";
+	public static final String isPartnerTypeDropdownVisible = "Verify that the Partner Type field is displayed as a dropdown.";
+	public static final String isBreadcrumbClickable = "Verify that breadcrumb navigation is clickable and accessible.";
+	public static final String isMandatoryFieldInfoTextCorrect = "Verify that the sub-title displays: All fields marked with * are mandatory.";
+	public static final String ABIS_PARTNER = "ABIS Partner";
+	public static final String ABIS_PARTNER_USER = "pmpui-abis";
+	public static final String ABIS_PARTNER_USER_2 = "pmpui-abis2";
+	public static final String ABIS_EMAIL_ID = "abispmpui@gmail.com";
+	public static final String ABIS_EMAIL_ID_2 = "abispmpui2@gmail.com";
+	public static final String ABIS_ADDRESS = "abisaddress";
+	public static final String ABIS_CONTACT_NUMBER = "9898989898";
+	public static final String ABIS_NOTIFICATION_LANGUAGE = "English";
+	public static final String ORG_NAME_INFO_TEXT = "Enter the organization name as mentioned in the ORGANIZATION attribute of CERTIFICATE subject in the CA Signed Certificate.";
+	public static final String ORG_NAME_WITH_ALLOWED_SPECIAL_CHARS = "TestOrg@#&()-'?!:;=_";
+	public static final String DISALLOWED_SPECIAL_CHARS_ORG = "$%^*";
+	public static final String isAbisPartnerSelectedSuccessfully = "Verify that ABIS Partner is successfully selected from the Partner Type dropdown.";
+	public static final String isMispPartnerSelectedSuccessfully = "Verify that MISP Partner is successfully selected from the Partner Type dropdown.";
+	public static final String isOrgNameInfoTextCorrect = "Verify that the Organization Name info message is displayed correctly.";
+	public static final String isOrgAllowedSpecialCharsAccepted = "Verify that allowed special characters are accepted in the Organization Name field.";
+	public static final String isOrgInvalidSpecialCharsRejected = "Verify that disallowed special characters are rejected in the Organization Name field.";
+	public static final String isSubmitEnabledAfterValidData = "Verify that Submit button is enabled after all mandatory fields are filled with valid data.";
+	public static final String isAbisPartnerCreatedSuccessfully = "Verify that ABIS Partner is created successfully.";
+	public static final String isMultipleAbisPartnersCreatable = "Verify that multiple ABIS Partners can be created using the same Organization Certificate.";
+	public static final String isCreatePartnerPageNavigationDisplayed = "Verify that when the user clicks Create Partner in the tabular view, the system navigates to the Create Partner page.";
+	public static final String MANUAL_ADJUDICATION_PARTNER = "Manual Adjudication Partner";
+	public static final String isAbisPartnerOptionDisplayed = "Verify that ABIS Partner option is displayed in the Partner Type dropdown.";
+	public static final String isMispPartnerOptionDisplayed = "Verify that MISP Partner option is displayed in the Partner Type dropdown.";
+	public static final String isPartnerTypeDropdownOptionCountCorrect = "Verify that the Partner Type dropdown displays the expected partner options, even if the total count changes dynamically.";
+	public static final String isManualAdjudicationPartnerOptionDisplayed = "Verify that Manual Adjudication Partner option is displayed in the Partner Type dropdown.";
+
+	// ABIS Partner — form lifecycle and list verification
+	public static final String CANCEL_CONFIRMATION_POPUP_TEXT = "Your changes will be lost, are you sure you want to proceed?";
+	public static final String CERT_UPLOAD_STATUS_UPLOADED = "Uploaded";
+	public static final String CERT_UPLOAD_STATUS_NOT_UPLOADED = "Not Uploaded";
+	public static final String PARTNER_STATUS_ACTIVE = "Active";
+	public static final String PARTNER_STATUS_INACTIVE = "Inactive";
+
+	public static final String isFormSubmittedSuccessfully = "Verify that clicking Submit with all mandatory fields filled successfully submits the form.";
+	public static final String isSuccessScreenDisplayed = "Verify that a success screen appears after successful form submission.";
+	public static final String isUploadCertButtonOnSuccessScreenDisplayed = "Verify that the Upload ABIS Partner Certificate button is displayed on the success screen.";
+	public static final String isHomeButtonOnSuccessScreenDisplayed = "Verify that the Home button is displayed on the success screen.";
+	public static final String isCancelNavigatesBackToPartnerList = "Verify that clicking Cancel and confirming the popup navigates back to the Partners list without saving data.";
+	public static final String isCancelPopupDisplayed = "Verify that a confirmation popup appears when Cancel is clicked on the Create Partner form.";
+	public static final String isCancelPopupTextCorrect = "Verify that the cancel confirmation popup displays the correct warning message.";
+	public static final String isCancelPopupProceedButtonDisplayed = "Verify that the Proceed button is displayed in the cancel confirmation popup.";
+	public static final String isCancelPopupCancelButtonDisplayed = "Verify that the Cancel button is displayed in the cancel confirmation popup.";
+	public static final String isClearFormClearsAllFields = "Verify that clicking Clear Form clears all entered data from the form fields.";
+	public static final String isSubmitDisabledWithIncompleteFields = "Verify that the Submit button remains disabled when at least one mandatory field is left empty.";
+	public static final String isNewPartnerAtTopOfList = "Verify that the newly created ABIS Partner appears at the top of the Partner List.";
+	public static final String isPartnerStatusActiveAfterCertUpload = "Verify that the partner status shows Active after the partner certificate is uploaded.";
+	public static final String isCertUploadStatusUploadedAfterUpload = "Verify that the certificate upload status shows Uploaded after the partner certificate is uploaded.";
+	public static final String isPartnerStatusInactiveWithoutCert = "Verify that the partner status shows Inactive when no certificate has been uploaded.";
+	public static final String isCertUploadStatusNotUploadedWithoutCert = "Verify that the certificate upload status shows Not Uploaded when no certificate has been uploaded.";
+	public static final String isCertStatusNotUploadedInRed = "Verify that the Not Uploaded certificate status text is displayed in red.";
+	public static final String isUploadCertMenuOptionAvailable = "Verify that the Upload Certificate action option is available for a partner without an uploaded certificate.";
+
+	// ABIS Partner — address, email, phone field validation (scenarios 40-49)
+	public static final String ADDRESS_WITH_ALLOWED_SPECIAL_CHARS = "123MainStreet@#&()-'?!:;=_";
+	public static final String DISALLOWED_SPECIAL_CHARS_ADDRESS = "$%^*";
+	public static final String ADDRESS_PLACEHOLDER_TEXT = "Enter Address";
+	public static final String EMAIL_PLACEHOLDER_TEXT = "Enter Email Address";
+	public static final String EMAIL_INVALID_FORMAT_ERROR_MSG = "Enter valid email address and try again";
+	public static final int EMAIL_MAX_LENGTH = 254;
+	public static final String CONTACT_NUMBER_INVALID_ERROR_MSG = "Enter valid contact number and try again";
+	public static final String CONTACT_NUMBER_PLACEHOLDER_TEXT = "Enter phone number";
+	public static final int CONTACT_NUMBER_MAX_LENGTH = 16;
+	public static final String SHORT_PHONE_NUMBER = "12345";
+
+	public static final String isAddressAllowedSpecialCharsAccepted = "Verify that alphanumeric characters and allowed special characters (@, #, &, (, ), -, ', ?, !, :, ;, =, _) are accepted in the Address field without a validation error.";
+	public static final String isAddressInvalidSpecialCharsRejected = "Verify that invalid special characters trigger a validation error in the Address field.";
+	public static final String isAddressPlaceholderTextCorrect = "Verify that the Address field displays the correct placeholder text.";
+	public static final String isEmailPlaceholderTextCorrect = "Verify that the Email field displays the correct placeholder text before any input is entered.";
+	public static final String isEmailPlaceholderDisappearsOnTyping = "Verify that the Email field placeholder text is replaced by the entered value once the user starts typing.";
+	public static final String isEmailInvalidFormatErrorDisplayed = "Verify that a validation error appears when an invalid email format is entered and focus moves away from the field.";
+	public static final String isEmailInvalidFormatErrorTextCorrect = "Verify that the email validation error text exactly matches the expected message.";
+	public static final String isEmailMaxLengthEnforced = "Verify that the Email field does not accept more than 254 characters.";
+	public static final String isValidPhoneNumberAccepted = "Verify that a valid phone number is accepted in the Contact Number field without a validation error.";
+	public static final String isInvalidPhoneNumberLengthErrorDisplayed = "Verify that a validation error appears when a phone number shorter than the minimum allowed length is entered.";
+	public static final String isInvalidPhoneNumberLengthErrorTextCorrect = "Verify that the phone number validation error text exactly matches the expected message.";
+	public static final String isPhoneNumberPlaceholderTextCorrect = "Verify that the Contact Number field displays the correct placeholder text before any input is entered.";
+	public static final String isPhoneNumberPlaceholderDisappearsOnTyping = "Verify that the Contact Number field placeholder text is replaced by the entered value once the user starts typing.";
+	public static final String isPhoneNumberMaxLengthEnforced = "Verify that the Contact Number field does not accept more than 16 digits.";
+
+	// ABIS Partner — org name and address field validation (scenarios 30-39)
+	public static final int ORG_NAME_MAX_LENGTH = 128;
+	public static final int ADDRESS_MAX_LENGTH = 2000;
+	public static final String ORG_NAME_PLACEHOLDER_TEXT = "Enter Partner Organization Name";
+	public static final String LENGTHY_SINGLE_WORD_ADDRESS = "shsgwdyfyfujfjfuhfufhurfmifefcefffdaddressabcdefghijklmnopqrstuvwxyzmnopqrstuvwxyz01234567890987654321";
+
+	public static final String isValidOrgNameAccepted = "Verify that a valid Organization Name containing alphanumeric characters and allowed symbols is accepted without a validation error.";
+	public static final String isSubmitDisabledWhenOrgNameEmpty = "Verify that the Submit button is disabled when the Organization Name field is left empty and all other mandatory fields are filled.";
+	public static final String isOrgNameMaxLengthEnforced = "Verify that the Organization Name field does not accept more than 128 characters.";
+	public static final String isOrgNamePlaceholderTextCorrect = "Verify that the Organization Name placeholder text is displayed correctly before any input is entered.";
+	public static final String isOrgNamePlaceholderDisappearsOnTyping = "Verify that the placeholder text is replaced by the entered value once the user starts typing in the Organization Name field.";
+	public static final String isAllowedSpecialCharsAcceptedInOrgName = "Verify that allowed special characters (@, #, &, (, ), \\, -, ', ?, !, :, ;, =, _) are accepted in the Organization Name field without a validation error.";
+	public static final String isInvalidSpecialCharsRejectedInOrgName = "Verify that invalid special characters trigger a validation error in the Organization Name field.";
+	public static final String isValidAddressAccepted = "Verify that a valid Address value is accepted in the Address field without a validation error.";
+	public static final String isLongSingleWordAddressProperlyDisplayed = "Verify that an extremely long single-word address is accepted and displayed properly without breaking the UI layout.";
+	public static final String isMultilineAddressAccepted = "Verify that the Address field accepts multiline input containing line breaks.";
+	public static final String isAddressMaxLengthEnforced = "Verify that the Address field does not accept more than 2000 characters.";
+
+	// ABIS Partner — scenarios 20-29
+	public static final String EMAIL_ALREADY_REGISTERED_ERROR_MSG = "The provided email address is already registered. Please provide a different email address.";
+	public static final String isCertStatusRedForNewPartner = "Verify that the Not Uploaded certificate status is displayed in red for a newly created ABIS partner without a certificate.";
+	public static final String isValidEmailAccepted = "Verify that a valid email address is accepted in the Email ID field without triggering any validation error.";
+	public static final String isEmailAlreadyRegisteredErrorDisplayed = "Verify that an error message is displayed when attempting to register with an already-registered email address.";
+	public static final String isEmailAlreadyRegisteredErrorTextCorrect = "Verify that the already-registered email error message text is correct.";
+	public static final String isDashboardDisplayedAfterHomeButton = "Verify that clicking the Home button on the success screen navigates back to the Dashboard without uploading the certificate.";
+	public static final String isNewPartnerInactiveNotUploadedRedAtTop = "Verify that the newly created ABIS Partner appears at the top of the list with Inactive status and Not Uploaded certificate status in red.";
+	public static final String isPartnerStatusActiveAfterCertUploadFromActions = "Verify that the partner status shows Active after uploading the certificate from the actions menu in the Partners list.";
+	public static final String isCertUploadStatusUploadedAfterActionsUpload = "Verify that the certificate upload status shows Uploaded after uploading the certificate from the actions menu.";
+	public static final String isActivePolicyGroupInDropdown = "Verify that active policy groups are displayed in the Policy Group dropdown on the Create Partner form.";
+	public static final String isDeactivatedPolicyGroupNotInDropdown = "Verify that a deactivated policy group does not appear in the Policy Group dropdown.";
+	public static final String isPolicyGroupSearchBarVisible = "Verify that the Policy Group dropdown contains a visible search bar to filter policy groups.";
+	public static final String isPolicyGroupSearchFiltersResults = "Verify that entering text in the Policy Group search bar filters and shows matching policy group results.";
+	public static final String isLongPolicyGroupNameVisible = "Verify that a policy group with a long name is fully visible and properly aligned in the dropdown.";
+
+	// ABIS Partner — phone, username, notification language, navigation (scenarios 50-84)
+	public static final String NUMERIC_PREFIXED_USERNAME = "1mispuser";
+	public static final String USERNAME_WITH_SPACE = "user name";
+	public static final String USERNAME_ALREADY_EXISTS_ERROR_MSG = "Username already exists. Enter a different username";
+	public static final String USERNAME_PLACEHOLDER_TEXT = "Enter Username";
+	public static final int USERNAME_MAX_LENGTH = 36;
+	public static final String MAX_VALID_PHONE_NUMBER = "1234567890123456";
+
+	public static final String isReusedPhoneNumberAccepted = "Verify that the same phone number can be used by different partners without triggering a validation error.";
+	public static final String isCountryCodePrefixDisplayed = "Verify that the Contact Number field displays the configured country code prefix.";
+	public static final String isCountryCodeNotConfigurableByUser = "Verify that the country code prefix in the Contact Number field is non-editable and cannot be changed by the user.";
+	public static final String isPhoneLengthValidationOnTabOut = "Verify that a validation error appears when the phone number does not meet the required minimum length and focus moves away from the field.";
+	public static final String isInvalidPhoneFormatWithSymbolsRejected = "Verify that a phone number entered with unsupported format characters is either rejected with a validation error or has the invalid characters silently stripped.";
+	public static final String isPhoneWithLettersRejected = "Verify that entering letters or vanity characters in the Contact Number field is either rejected with a validation error or has the non-numeric characters silently stripped.";
+	public static final String isLeadingZerosAcceptedInPhone = "Verify that a phone number beginning with one or more leading zeros is accepted without triggering a validation error.";
+	public static final String isValidLengthPhoneAccepted = "Verify that a phone number containing the maximum allowed number of digits (16) is accepted in the Contact Number field without a validation error.";
+
+	public static final String isValidUsernameAccepted = "Verify that a valid username containing alphanumeric characters and underscore is accepted without any validation error.";
+	public static final String isUsernameAlreadyExistsErrorTextCorrect = "Verify that the already-registered username error message text exactly matches the expected message.";
+	public static final String isUsernamePlaceholderTextCorrect = "Verify that the Username field displays the correct placeholder text before any input is entered.";
+	public static final String isUsernamePlaceholderDisappearsOnTyping = "Verify that the Username field placeholder text is replaced by the entered value once the user starts typing.";
+	public static final String isUsernameAlphanumericAndUnderscoreAccepted = "Verify that the Username field accepts a mix of alphanumeric characters and underscores without triggering a validation error.";
+	public static final String isUsernameStartWithLetterEnforced = "Verify that the Username field rejects values that do not start with a letter and displays an appropriate validation error.";
+	public static final String isUsernameInvalidStartingCharsRejected = "Verify that a username starting with a digit or special character is rejected with a validation error.";
+	public static final String isWhitespaceRejectedInUsername = "Verify that a username containing whitespace characters is either rejected with a validation error or has the whitespace silently stripped.";
+	public static final String isUsernameMaxLengthEnforced = "Verify that the Username field does not accept more than 36 characters.";
+
+	public static final String isNotificationLanguageDropdownHasOptions = "Verify that the Notification Language dropdown contains at least one selectable language option.";
+	public static final String isNotificationLanguageSelectable = "Verify that the user can successfully select a notification language from the Notification Language dropdown.";
+	public static final String isPartnersPageNavigableViaDashboard = "Verify that clicking the Partners card on the dashboard navigates to the Partners list page.";
+	public static final String isDuplicateRegistrationBlockedAcrossBrowsers = "Verify that attempting simultaneous partner registration with the same identifier from multiple browsers is properly handled.";
+	public static final String isArabicLocalizationSupported = "Verify that the Create Partner form is displayed correctly when the application locale is set to Arabic.";
+	public static final String isFrenchLocalizationSupported = "Verify that the Create Partner form is displayed correctly when the application locale is set to French.";
+	public static final String isUIResponsiveAtSmallViewport = "Verify that the Create Partner form remains accessible and functional at reduced browser viewport widths.";
+	public static final String isUploadCertPageNavigableFromSuccessScreen = "Verify that clicking the Upload ABIS Partner Certificate button on the success screen opens the certificate upload popup.";
+	public static final String isFormKeyboardAccessible = "Verify that all form fields and action buttons on the Create Partner form are navigable and operable using keyboard controls only.";
+	public static final String is401ErrorHandledGracefully = "Verify that the application displays a user-friendly error message when the server returns a 401 Unauthorized response.";
+	public static final String is503ErrorHandledGracefully = "Verify that the application displays a user-friendly error message when the server returns a 503 Service Unavailable response.";
+	public static final String is403ErrorHandledGracefully = "Verify that the application displays a user-friendly error message when the server returns a 403 Forbidden response.";
+	public static final String isBackArrowNavigatesToPartnerList = "Verify that clicking the breadcrumb back navigation on the Create Partner page returns the user to the Partners list.";
+	public static final String isUICorrectOnMacBookScreen = "Verify that the Create Partner form displays without layout issues or overlapping elements on MacBook screen resolutions.";
+	public static final String isDatabaseValuesMatchUIInput = "Verify that the values submitted via the Create Partner form are correctly stored in the backend database.";
+	public static final String isAllValidationErrorsDisplayed = "Verify that appropriate validation error messages appear for all fields containing invalid input data.";
+	public static final String isDesignSpecCompliant = "Verify that the Create Partner page UI elements including labels, placeholders, and button states match the design specification.";
+	public static final String isAlternateFlowsHandledCorrectly = "Verify that edge case alternate flows such as submitting with invalid field data are handled gracefully without data corruption.";
+
 }
