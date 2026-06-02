@@ -327,6 +327,7 @@
         "mandatoryFieldsMsg1": "Tous les champs marqués d'un",
         "mandatoryFieldsMsg2": "sont obligatoires.",
         "mandatoryMappingBanner": "Remarque: Pour les partenaires d'identification, l'association de la politique à une configuration d'extracteur biométrique et à un type d'identifiant est obligatoire. Si cette association n'est pas effectuée, la demande de politique ne peut pas être approuvée. Veuillez suivre les étapes de cette page pour compléter l'association requise",
+        "ovpMandatoryMappingBanner": "Remarque: Pour les partenaires de vérification en ligne, l'association de la politique à une configuration d'extracteur biométrique et à un type d'identifiant est obligatoire. Si cette association n'est pas effectuée, la demande de politique ne peut pas être approuvée. Veuillez suivre les étapes de cette page pour compléter l'association requise",
         "partnerId": "ID partenaire",
         "partnerType": "Type de partenaire",
         "policyGroup": "Groupe de politiques",

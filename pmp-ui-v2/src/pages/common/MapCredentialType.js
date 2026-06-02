@@ -1,16 +1,16 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate, useBlocker } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { getUserProfile } from "../../../services/UserProfileService";
-import { createRequest, getPartnerManagerUrl, isLangRTL } from "../../../utils/AppUtils";
-import { HttpService } from "../../../services/HttpService";
-import Title from "../../common/Title";
-import ErrorMessage from "../../common/ErrorMessage";
-import LoadingIcon from "../../common/LoadingIcon";
-import DropdownComponent from "../../common/fields/DropdownComponent";
-import BlockerPrompt from "../../common/BlockerPrompt";
-import Confirmation from "../../common/Confirmation";
-import { getAppConfig } from "../../../services/ConfigService";
+import { getUserProfile } from "../../services/UserProfileService";
+import { createRequest, getPartnerManagerUrl, isLangRTL } from "../../utils/AppUtils";
+import { HttpService } from "../../services/HttpService";
+import Title from "./Title";
+import ErrorMessage from "./ErrorMessage";
+import LoadingIcon from "./LoadingIcon";
+import DropdownComponent from "./fields/DropdownComponent";
+import BlockerPrompt from "./BlockerPrompt";
+import Confirmation from "./Confirmation";
+import { getAppConfig } from "../../services/ConfigService";
 
 
 
@@ -100,6 +100,7 @@ function MapCredentialType() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { state } = useLocation();
+  const isAdminPath = Boolean(state?.isAdminPath);
 
   const userProfile = getUserProfile();
   const isLoginLanguageRTL = isLangRTL(userProfile?.locale || "en");
@@ -230,7 +231,9 @@ function MapCredentialType() {
   };
 
   const clickOnCancel = () => {
-    navigate("/partnermanagement/policies/policies-list");
+    navigate(isAdminPath
+      ? "/partnermanagement/admin/policy-requests-list"
+      : "/partnermanagement/policies/policies-list");
   };
 
   const updateCredentialType = (fieldName, selectedValue) => {
@@ -316,11 +319,13 @@ function MapCredentialType() {
 
       setConfirmationData({
         title: "mapCredentialType.title",
-        backUrl: "/partnermanagement/policies/policies-list",
+        backUrl: isAdminPath
+          ? "/partnermanagement/admin/policy-requests-list"
+          : "/partnermanagement/policies/policies-list",
         header: "mapCredentialType.successHeader",
         description: "mapCredentialType.successMsgLine1",
         description1: "mapCredentialType.successMsgLine2",
-        subNavigation: "requestPolicy.policies",
+        subNavigation: isAdminPath ? "viewPolicyRequest.listOfPolicyRequests" : "requestPolicy.policies",
       });
       setRequestPolicySuccess(true);
     } catch (err) {
@@ -375,7 +380,7 @@ function MapCredentialType() {
             <Title
               title={requestPolicySuccess ? "requestPolicy.requestPolicy" : "mapCredentialType.title"}
               subTitle={requestPolicySuccess ? "requestPolicy.policies" : "requestPolicy.requestPolicy"}
-              backLink="/partnermanagement/policies/policies-list"
+              backLink={isAdminPath ? "/partnermanagement/admin/policy-requests-list" : "/partnermanagement/policies/policies-list"}
             />
 
             {!requestPolicySuccess ? (

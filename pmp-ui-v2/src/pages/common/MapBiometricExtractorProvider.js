@@ -1,16 +1,16 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate, useBlocker } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { getUserProfile } from "../../../services/UserProfileService";
-import { createRequest, getPartnerManagerUrl, handleEscapeKey, handleServiceErrors, isLangRTL } from "../../../utils/AppUtils";
-import { HttpService } from "../../../services/HttpService";
-import { getAppConfig } from "../../../services/ConfigService";
-import Title from "../../common/Title";
-import ErrorMessage from "../../common/ErrorMessage";
-import LoadingIcon from "../../common/LoadingIcon";
-import DropdownComponent from "../../common/fields/DropdownComponent";
-import BlockerPrompt from "../../common/BlockerPrompt";
-import DropdownWithSearchComponent from "../../common/fields/DropdownWithSearchComponent";
+import { getUserProfile } from "../../services/UserProfileService";
+import { createRequest, getPartnerManagerUrl, handleEscapeKey, handleServiceErrors, isLangRTL } from "../../utils/AppUtils";
+import { HttpService } from "../../services/HttpService";
+import { getAppConfig } from "../../services/ConfigService";
+import Title from "./Title";
+import ErrorMessage from "./ErrorMessage";
+import LoadingIcon from "./LoadingIcon";
+import DropdownComponent from "./fields/DropdownComponent";
+import BlockerPrompt from "./BlockerPrompt";
+import DropdownWithSearchComponent from "./fields/DropdownWithSearchComponent";
 
 const EMPTY_MAPPING_ROW = {
   biometricModality: "",
@@ -63,6 +63,7 @@ function MapBiometricExtractorProvider() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { state } = useLocation();
+  const isAdminPath = Boolean(state?.isAdminPath);
   // Required for submit + next step
   const hasRequiredState = Boolean(state?.partnerId && state?.policyId && state?.policyName);
   const userProfile = getUserProfile();
@@ -199,8 +200,10 @@ function MapBiometricExtractorProvider() {
 
   useEffect(() => {
     if (hasRequiredState) return;
-    navigate("/partnermanagement/policies/request-policy");
-  }, [hasRequiredState, navigate]);
+    navigate(isAdminPath
+      ? "/partnermanagement/admin/request-policy"
+      : "/partnermanagement/policies/request-policy");
+  }, [hasRequiredState, navigate, isAdminPath]);
 
   useEffect(() => {
     if (!showSaveConfirm) return;
@@ -341,7 +344,9 @@ function MapBiometricExtractorProvider() {
   };
 
   const clickOnCancel = () => {
-    navigate("/partnermanagement/policies/policies-list");
+    navigate(isAdminPath
+      ? "/partnermanagement/admin/policy-requests-list"
+      : "/partnermanagement/policies/policies-list");
   };
 
   const isFormValid = () => {
@@ -411,6 +416,7 @@ function MapBiometricExtractorProvider() {
             requestPayload: policyDetails.requestPayload,
             selectedBioModalities,
             selectedBioProviderConfigurations,
+            isAdminPath,
           },
         });
         return;
@@ -444,7 +450,7 @@ function MapBiometricExtractorProvider() {
             />
           )}
           <div className="flex-col mt-5">
-            <Title title="mapBiometricExtractorProvider.title" subTitle="requestPolicy.requestPolicy" backLink="/partnermanagement/policies/policies-list" />
+            <Title title="mapBiometricExtractorProvider.title" subTitle="requestPolicy.requestPolicy" backLink={isAdminPath ? "/partnermanagement/admin/policy-requests-list" : "/partnermanagement/policies/policies-list"} />
             <p
               id="map_bio_extractor_provider_mandatory_mapping_msg"
               className="mt-3 rounded-md border border-[#F7D18D] bg-[#FFF8EA] px-3 py-2 text-sm text-[#684B00]"
