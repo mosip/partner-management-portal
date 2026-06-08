@@ -10,6 +10,7 @@ function CredentialPartnerPolicyDetails({
   partnerId,
   policyId,
   requestId,
+  status,
   partnerTypeLabel,
   enabled,
   variant,
@@ -160,7 +161,10 @@ function CredentialPartnerPolicyDetails({
         return;
       }
 
-      if (!requestId) {
+      const isApproved = String(status || '').toLowerCase() === 'approved';
+      const usePartnerEndpoint = isApproved && partnerId && policyId;
+
+      if (!usePartnerEndpoint && !requestId) {
         setBioLoading(false);
         return;
       }
@@ -169,10 +173,9 @@ function CredentialPartnerPolicyDetails({
       setBioExtractors([]);
       setBioLoading(true);
       try {
-        const url = getPartnerManagerUrl(
-          `/partner-policy-requests/${requestId}/bio-extractors-request`,
-          process.env.NODE_ENV
-        );
+        const url = usePartnerEndpoint
+          ? getPartnerManagerUrl(`/partners/${partnerId}/bioextractors/${policyId}`, process.env.NODE_ENV)
+          : getPartnerManagerUrl(`/partner-policy-requests/${requestId}/bio-extractors-request`, process.env.NODE_ENV);
         const response = await HttpService.get(url);
         const responseData = response?.data;
         if (responseData?.response) {
@@ -213,7 +216,7 @@ function CredentialPartnerPolicyDetails({
     };
 
     fetchBioExtractors();
-  }, [enabled, requestId, t]);
+  }, [enabled, requestId, partnerId, policyId, status, t]);
 
   useEffect(() => {
     const fetchCredentialType = async () => {
@@ -221,8 +224,11 @@ function CredentialPartnerPolicyDetails({
         setCredentialTypeLoading(false);
         return;
       }
- 
-      if (!requestId) {
+
+      const isApproved = String(status || '').toLowerCase() === 'approved';
+      const usePartnerEndpoint = isApproved && partnerId && policyId;
+
+      if (!usePartnerEndpoint && !requestId) {
         setCredentialTypeLoading(false);
         return;
       }
@@ -231,10 +237,9 @@ function CredentialPartnerPolicyDetails({
       setCredentialType('');
       setCredentialTypeLoading(true);
       try {
-        const url = getPartnerManagerUrl(
-          `/partner-policy-requests/${requestId}/credential-types-request`,
-          process.env.NODE_ENV
-        );
+        const url = usePartnerEndpoint
+          ? getPartnerManagerUrl(`/partners/${partnerId}/credentialtypes/${policyId}`, process.env.NODE_ENV)
+          : getPartnerManagerUrl(`/partner-policy-requests/${requestId}/credential-types-request`, process.env.NODE_ENV);
         const response = await HttpService.get(url);
         const responseData = response?.data;
 
@@ -293,7 +298,7 @@ function CredentialPartnerPolicyDetails({
     };
 
     fetchCredentialType();
-  }, [enabled, requestId, t]);
+  }, [enabled, requestId, partnerId, policyId, status, t]);
 
   const table = (
     <div className="mt-6 border border-[#E5EBFA] rounded-md overflow-hidden bg-white">
@@ -425,6 +430,7 @@ CredentialPartnerPolicyDetails.propTypes = {
   partnerId: PropTypes.string,
   policyId: PropTypes.string,
   requestId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  status: PropTypes.string,
   partnerTypeLabel: PropTypes.string,
   enabled: PropTypes.bool,
   variant: PropTypes.oneOf(['popup', 'view']).isRequired,

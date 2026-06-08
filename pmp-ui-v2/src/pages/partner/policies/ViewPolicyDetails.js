@@ -151,6 +151,7 @@ function ViewPolicyDetails() {
                                             policyDetails?.id ??
                                             ""
                                         }
+                                        status={policyDetails?.status}
                                         partnerTypeLabel={getPartnerTypeDescription(policyDetails?.partnerType, t) ?? policyDetails?.partnerType ?? '-'}
                                         enabled={true}
                                         variant="view"
