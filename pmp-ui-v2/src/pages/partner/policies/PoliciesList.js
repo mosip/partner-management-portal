@@ -272,7 +272,7 @@ function PoliciesList() {
 
         if (usePartnerEndpoint || requestId) {
           const url = usePartnerEndpoint
-            ? getPartnerManagerUrl(`/partners/${partnerId}/policies/${policyId}/credentialTypes`, process.env.NODE_ENV)
+            ? getPartnerManagerUrl(`/partners/${partnerId}/policies/${policyId}/credential-types`, process.env.NODE_ENV)
             : getPartnerManagerUrl(`/partner-policy-requests/${requestId}/credential-types-request`, process.env.NODE_ENV);
           const res = await HttpService.get(url);
           const data = res?.data;
@@ -311,6 +311,10 @@ function PoliciesList() {
 
   const sortDescOrder = (header) => {
     const isDateCol = (header === "createdDateTime") ? true : false;
+    toggleSortDescOrder(header, isDateCol, filteredPoliciesList, setFilteredPoliciesList, order, setOrder, isDescending, setIsDescending, activeSortAsc, setActiveSortAsc, activeSortDesc, setActiveSortDesc);
+    toggleSortDescOrder(header, isDateCol, filteredPoliciesList, setFilteredPoliciesList, order, setOrder, isDescending, setIsDescending, activeSortAsc, setActiveSortAsc, activeSortDesc, setActiveSortDesc);
+    toggleSortDescOrder(header, isDateCol, filteredPoliciesList, setFilteredPoliciesList, order, setOrder, isDescending, setIsDescending, activeSortAsc, setActiveSortAsc, activeSortDesc, setActiveSortDesc);
+    toggleSortDescOrder(header, isDateCol, filteredPoliciesList, setFilteredPoliciesList, order, setOrder, isDescending, setIsDescending, activeSortAsc, setActiveSortAsc, activeSortDesc, setActiveSortDesc);
     toggleSortDescOrder(header, isDateCol, filteredPoliciesList, setFilteredPoliciesList, order, setOrder, isDescending, setIsDescending, activeSortAsc, setActiveSortAsc, activeSortDesc, setActiveSortDesc);
   }
 
