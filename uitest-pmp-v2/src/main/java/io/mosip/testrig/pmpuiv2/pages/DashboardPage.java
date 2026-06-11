@@ -115,6 +115,9 @@ public class DashboardPage extends BasePage {
 	@FindBy(id = "side_nav_partner_certificate_icon")
 	private WebElement partnerCertificateOfHamburger;
 
+	@FindBy(id = "side_nav_partner_icon")
+	private WebElement partnerOfHamburger;
+
 	@FindBy(id = "side_nav_policies_icon")
 	private WebElement policiesOfHamburger;
 
@@ -341,6 +344,11 @@ public class DashboardPage extends BasePage {
 
 	public void clickOnPartnerCertificateOfHamburger() {
 		clickOnElement(partnerCertificateOfHamburger);
+	}
+
+	public PartnerAdminPage clickOnPartnerOfHamburger() {
+		clickOnElement(partnerOfHamburger);
+		return new PartnerAdminPage(driver);
 	}
 
 	public void clickOnPoliciesOfHamburger() {

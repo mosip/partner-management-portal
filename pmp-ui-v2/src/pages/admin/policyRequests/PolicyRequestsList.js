@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getUserProfile } from "../../../services/UserProfileService";
@@ -202,6 +202,86 @@ function PolicyRequestsList() {
     setSelectedPolicyRequest({});
   };
 
+  const [actionEligibilityByKey, setActionEligibilityByKey] = useState({});
+
+  const isFinalStatus = (status) => {
+    const s = String(status || '').toLowerCase();
+    return s === 'approved' || s === 'rejected';
+  };
+
+  const ensureEligibilityLoaded = useCallback(async (policyRequest) => {
+    const key = policyRequest.id;
+    if (!key) return;
+    setActionEligibilityByKey(prev => {
+      if (prev[key]?.loaded || prev[key]?.loading) return prev;
+      return { ...prev, [key]: { loading: true, loaded: false } };
+    });
+    let bioMapped = false;
+    let credentialMapped = false;
+    let eligibilityError = false;
+    const isApproved = String(policyRequest.status || '').toLowerCase() === 'approved';
+    const usePartnerEndpoint = isApproved && policyRequest.partnerId && policyRequest.policyId;
+    try {
+      const [bioResp, credResp] = await Promise.all([
+        usePartnerEndpoint
+          ? HttpService.get(getPartnerManagerUrl(`/partners/${policyRequest.partnerId}/bioextractors/${policyRequest.policyId}`, process.env.NODE_ENV))
+          : HttpService.get(getPartnerManagerUrl(`/partner-policy-requests/${key}/bio-extractors-request`, process.env.NODE_ENV)),
+        usePartnerEndpoint
+          ? HttpService.get(getPartnerManagerUrl(`/partners/${policyRequest.partnerId}/credentialtypes/${policyRequest.policyId}`, process.env.NODE_ENV))
+          : HttpService.get(getPartnerManagerUrl(`/partner-policy-requests/${key}/credential-types-request`, process.env.NODE_ENV))
+      ]);
+      if (bioResp?.data?.response) {
+        const payload = bioResp.data.response;
+        const list = Array.isArray(payload) ? payload : (payload?.extractors ?? payload?.bioExtractors ?? payload?.bioextractors ?? []);
+        bioMapped = Array.isArray(list) && list.length > 0;
+      }
+      if (credResp?.data?.response !== undefined) {
+        const payload = credResp.data.response;
+        if (typeof payload === 'string') credentialMapped = Boolean(payload.trim());
+        else if (Array.isArray(payload)) credentialMapped = payload.some(x => Boolean(String(x || '').trim()));
+        else credentialMapped = Boolean(
+          payload?.credentialType ||
+          (Array.isArray(payload?.credentialTypes) && payload.credentialTypes.some(x => Boolean(String(x || '').trim()))) ||
+          (Array.isArray(payload?.data?.credentialTypes) && payload.data.credentialTypes.some(x => Boolean(String(x || '').trim())))
+        );
+      }
+    } catch {
+      eligibilityError = true;
+    }
+    setActionEligibilityByKey(prev => ({
+      ...prev,
+      [key]: { loaded: true, loading: false, bioMapped, credentialMapped, error: eligibilityError }
+    }));
+  }, []);
+
+  const showAddBioextractors = (policyRequest) => {
+    navigate('/partnermanagement/policies/map-biometric-extractor-provider', {
+      state: {
+        partnerId: policyRequest.partnerId,
+        partnerType: getPartnerTypeDescription(policyRequest.partnerType, t),
+        policyGroupName: policyRequest.policyGroupName,
+        policyName: policyRequest.policyName,
+        policyId: policyRequest.policyId,
+        mappingKey: policyRequest.id,
+        isAdminPath: true
+      }
+    });
+  };
+
+  const showMapCredentialType = (policyRequest) => {
+    navigate('/partnermanagement/policies/map-credential-type', {
+      state: {
+        partnerId: policyRequest.partnerId,
+        partnerType: getPartnerTypeDescription(policyRequest.partnerType, t),
+        policyGroupName: policyRequest.policyGroupName,
+        policyName: policyRequest.policyName,
+        policyId: policyRequest.policyId,
+        mappingKey: policyRequest.id,
+        isAdminPath: true
+      }
+    });
+  };
+
   const approveRejectPolicyRequest = (policyRequest, index) => {
     if (policyRequest.status === 'InProgress') {
       setShowActiveIndexPopup(index);
@@ -335,22 +415,67 @@ function PolicyRequestsList() {
                                           </td>
                                           <td className="text-center cursor-default">
                                             <div ref={setSubmenuRef(submenuRef, index)}>
-                                              <button id={"partner_list_view" + (index + 1)} onClick={() => setViewPartnersId(index === viewPartnerId ? null : index)} className={`font-semibold mb-0.5 cursor-pointer text-center text-[#191919]`}>
+                                              <button id={"partner_list_view" + (index + 1)} onClick={() => {
+                                                const next = index === viewPartnerId ? null : index;
+                                                setViewPartnersId(next);
+                                                if (next !== null && String(policyRequest?.partnerType ?? '').toUpperCase() === 'ONLINE_VERIFICATION_PARTNER') {
+                                                  ensureEligibilityLoaded(policyRequest);
+                                                }
+                                              }} className={`font-semibold mb-0.5 cursor-pointer text-center text-[#191919]`}>
                                                 ...
                                               </button>
-                                              {viewPartnerId === index && (
-                                                <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-9 text-right" : "right-9 text-left"}`}>
-                                                  <div role='button' disabled={policyRequest.status !== 'InProgress'} onClick={() => approveRejectPolicyRequest(policyRequest, index)} className={`flex justify-between ${policyRequest.status === 'InProgress' && 'hover:bg-gray-100'} `} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => approveRejectPolicyRequest(policyRequest, index))}>
-                                                    <p id="partner_details_approve_or_reject_btn" className={`py-1.5 px-4 ${policyRequest.status === 'InProgress' ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-default'} ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("approveRejectPopup.approveReject")}</p>
-                                                    <img src={policyRequest.status === 'InProgress' ? approveRejectIcon : disabledApproveRejectIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
+                                              {viewPartnerId === index && (() => {
+                                                const isOvpRow = String(policyRequest?.partnerType ?? '').toUpperCase() === 'ONLINE_VERIFICATION_PARTNER';
+                                                const eligibility = actionEligibilityByKey[policyRequest.id] || {};
+                                                const finalStatus = isFinalStatus(policyRequest?.status);
+                                                const isEligibilityLoading = isOvpRow && (eligibility.loading || !eligibility.loaded);
+                                                const hasBioNavPrereqs = Boolean(policyRequest?.partnerId && policyRequest?.policyId && policyRequest?.policyName);
+                                                const disableBio = finalStatus || isEligibilityLoading || Boolean(eligibility.error) || Boolean(eligibility.bioMapped) || !hasBioNavPrereqs;
+                                                const disableCredential = finalStatus || isEligibilityLoading || Boolean(eligibility.error) || Boolean(eligibility.credentialMapped) || !eligibility.bioMapped || !hasBioNavPrereqs;
+                                                const disabledItemClass = "text-[#A5A5A5] cursor-default pointer-events-none";
+                                                const enabledItemClass = "cursor-pointer hover:bg-gray-100";
+                                                return (
+                                                  <div className={`absolute z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isOvpRow ? 'w-max min-w-[14rem]' : 'w-[7%]'} ${isLoginLanguageRTL ? "left-9 text-right" : "right-9 text-left"}`}>
+                                                    <div role='button' disabled={policyRequest.status !== 'InProgress'} onClick={() => approveRejectPolicyRequest(policyRequest, index)} className={`flex justify-between ${policyRequest.status === 'InProgress' && 'hover:bg-gray-100'} `} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => approveRejectPolicyRequest(policyRequest, index))}>
+                                                      <p id="partner_details_approve_or_reject_btn" className={`py-1.5 px-4 ${policyRequest.status === 'InProgress' ? 'text-[#3E3E3E] cursor-pointer' : 'text-[#A5A5A5] cursor-default'} ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("approveRejectPopup.approveReject")}</p>
+                                                      <img src={policyRequest.status === 'InProgress' ? approveRejectIcon : disabledApproveRejectIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
+                                                    </div>
+                                                    <hr className="h-px bg-gray-100 border-0 mx-1" />
+                                                    <div role='button' className="flex justify-between hover:bg-gray-100" onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => viewPartnerPolicyRequestDetails(policyRequest))}>
+                                                      <p id="partner_details_view_btn" className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerPolicyMappingRequestList.view")}</p>
+                                                      <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
+                                                    </div>
+                                                    {isOvpRow && (
+                                                      <>
+                                                        <hr className="h-px bg-gray-100 border-0 mx-1" />
+                                                        <div
+                                                          role="button"
+                                                          id={"policy_requests_ovp_map_biometric_extractor_" + (index + 1)}
+                                                          onClick={() => !disableBio && showAddBioextractors(policyRequest)}
+                                                          tabIndex="0"
+                                                          onKeyDown={(e) => !disableBio && onPressEnterKey(e, () => showAddBioextractors(policyRequest))}
+                                                          className={`flex items-center gap-2.5 px-4 py-2 ${disableBio ? disabledItemClass : enabledItemClass}`}
+                                                        >
+                                                          <span className="text-base font-medium leading-none text-[#5F6368]">+</span>
+                                                          <span>{t('mapBiometricExtractorProvider.addBioextractors')}</span>
+                                                        </div>
+                                                        <hr className="h-px bg-gray-100 border-0 mx-1" />
+                                                        <div
+                                                          role="button"
+                                                          id={"policy_requests_ovp_map_credential_type_" + (index + 1)}
+                                                          onClick={() => !disableCredential && showMapCredentialType(policyRequest)}
+                                                          tabIndex="0"
+                                                          onKeyDown={(e) => !disableCredential && onPressEnterKey(e, () => showMapCredentialType(policyRequest))}
+                                                          className={`flex items-center gap-2.5 px-4 py-2 ${disableCredential ? disabledItemClass : enabledItemClass}`}
+                                                        >
+                                                          <span className="text-base font-medium leading-none text-[#5F6368]">+</span>
+                                                          <span>{t('mapCredentialType.title')}</span>
+                                                        </div>
+                                                      </>
+                                                    )}
                                                   </div>
-                                                  <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                  <div role='button' className="flex justify-between hover:bg-gray-100" onClick={() => viewPartnerPolicyRequestDetails(policyRequest)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => viewPartnerPolicyRequestDetails(policyRequest))}>
-                                                    <p id="partner_details_view_btn" className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerPolicyMappingRequestList.view")}</p>
-                                                    <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
-                                                  </div>
-                                                </div>
-                                              )}
+                                                );
+                                              })()}
                                               {showActiveIndexPopup === index &&
                                                 <ApproveRejectPopup
                                                   popupData={{ ...selectedPolicyRequest, isPartnerPolicyRequest: true }}
@@ -369,6 +494,7 @@ function PolicyRequestsList() {
                                                             partnerId={popupData?.partnerId}
                                                             policyId={popupData?.policyId}
                                                             requestId={popupData?.id ?? ""}
+                                                            status={popupData?.status}
                                                             partnerTypeLabel={getPartnerTypeDescription(popupData?.partnerType, t) ?? popupData?.partnerType ?? '-'}
                                                             enabled={true}
                                                             variant="popup"
@@ -376,7 +502,23 @@ function PolicyRequestsList() {
                                                             onApproveBlockedChange={onApproveBlockedChange}
                                                           />
                                                         )
-                                                      : undefined
+                                                      : String(selectedPolicyRequest?.partnerType ?? '').toUpperCase() === 'ONLINE_VERIFICATION_PARTNER'
+                                                        ? ({ t, isLoginLanguageRTL, popupData, onLoadingChange, onApproveBlockedChange, getPartnerTypeDescription }) => (
+                                                            <CredentialPartnerPolicyDetails
+                                                              t={t}
+                                                              isLoginLanguageRTL={isLoginLanguageRTL}
+                                                              partnerId={popupData?.partnerId}
+                                                              policyId={popupData?.policyId}
+                                                              requestId={popupData?.id ?? ""}
+                                                              status={popupData?.status}
+                                                              partnerTypeLabel={getPartnerTypeDescription(popupData?.partnerType, t) ?? popupData?.partnerType ?? '-'}
+                                                              enabled={true}
+                                                              variant="popup"
+                                                              onLoadingChange={onLoadingChange}
+                                                              onApproveBlockedChange={onApproveBlockedChange}
+                                                            />
+                                                          )
+                                                        : undefined
                                                   }
                                                 />
                                               }

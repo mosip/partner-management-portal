@@ -16,6 +16,7 @@ function ViewPolicyRequestDetails() {
     const navigate = useNavigate();
     const [policyRequestDetails, setPolicyRequestDetails] = useState({});
     const [showApproveRejectPopup, setShowApproveRejectPopup] = useState(false);
+    const [isPolicyDetailsLoading, setIsPolicyDetailsLoading] = useState(false);
 
     useEffect(() => {
         const policyRequestData = sessionStorage.getItem('selectedPartnerPolicyRequest');
@@ -34,7 +35,7 @@ function ViewPolicyRequestDetails() {
 
     const isCredentialPartner = (policyRequestDetails?.partnerType ?? '').toString().toUpperCase() === 'CREDENTIAL_PARTNER';
 
-    const [isPolicyDetailsLoading, setIsPolicyDetailsLoading] = useState(false);
+    const isOnlineVerificationPartner = (policyRequestDetails?.partnerType ?? '').toString().toUpperCase() === 'ONLINE_VERIFICATION_PARTNER';
 
     const moveToPolicyRequestsList = () => {
         navigate('/partnermanagement/admin/policy-requests-list');
@@ -101,6 +102,7 @@ function ViewPolicyRequestDetails() {
                                                         partnerId={popupData?.partnerId}
                                                         policyId={popupData?.policyId}
                                                         requestId={popupData?.id ?? ""}
+                                                        status={popupData?.status}
                                                         partnerTypeLabel={getPartnerTypeDescription(popupData?.partnerType, t) ?? popupData?.partnerType ?? '-'}
                                                         enabled={true}
                                                         variant="popup"
@@ -172,7 +174,7 @@ function ViewPolicyRequestDetails() {
                                 </p>
                             </div>
                         </div>
-                        {isCredentialPartner && (
+                        {(isCredentialPartner || isOnlineVerificationPartner) && (
                             <>
                                 <hr className="h-px mt-3 w-full bg-gray-200 border-0" />
                                 <div className="py-4">
@@ -182,8 +184,9 @@ function ViewPolicyRequestDetails() {
                                         partnerId={policyRequestDetails?.partnerId}
                                         policyId={policyRequestDetails?.policyId}
                                         requestId={policyRequestDetails?.id ?? ""}
+                                        status={policyRequestDetails?.status}
                                         partnerTypeLabel={getPartnerTypeDescription(policyRequestDetails?.partnerType, t) ?? policyRequestDetails?.partnerType ?? '-'}
-                                        enabled={isCredentialPartner}
+                                        enabled={isCredentialPartner || isOnlineVerificationPartner}
                                         variant="view"
                                         onLoadingChange={setIsPolicyDetailsLoading}
                                     />
