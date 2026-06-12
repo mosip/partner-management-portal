@@ -3,7 +3,6 @@ package io.mosip.testrig.pmpuiv2.testcase;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-import org.openqa.selenium.By;
 import org.testng.annotations.Test;
 
 import io.mosip.testrig.pmpuiv2.pages.BasePage;

@@ -714,7 +714,7 @@ public class MispPartnerPage extends BasePage {
 	}
 
 	public String getPolicyGroupText(String partnerId) {
-		By policyGroup = By.xpath("//tr[td[text()='" + partnerId + "']]/td[4]");
+		By policyGroup = By.xpath("//tr[td[normalize-space()='" + partnerId + "']]/td[4]");
 		return getTextFromLocator(policyGroup);
 	}
 }
