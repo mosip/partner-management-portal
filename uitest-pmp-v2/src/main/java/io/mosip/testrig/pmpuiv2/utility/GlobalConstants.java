@@ -229,10 +229,12 @@ public class GlobalConstants {
 	public static final String MISP_NOTIFICATION_LANGUAGE = "English";
 	public static final String MISP_ADDRESS = "mispaddress";
 	public static final String MISP_CONTACT_NUMBER = "9898767676";
+	public static final String MISP_CONTACT_NUMBER1 = "9898676767";
 	public static final String MISP_EMAIL_ID = "misppmpui@gmail.com";
 	public static final String MISP_EMAIL_ID2 = "misppmpui2@gmail.com";
 	public static final String MISP_EMAIL_ID3 = "misppmpui3@gmail.com";
 	public static final String MISP_EMAIL_ID4 = "misppmpui4@gmail.com";
+	public static final String MISP_EMAIL_ID5 = "misppmpui5@gmail.com";
 	public static final String INVALID_EMAIL_ID = "mi12#sp.34@gmail@com";
 	public static final String LENGTHY_STRING = "Shsgwdyfyfujfjfuhfufhurfmifefcefffdaddress";
 	public static final String MULTILINE_STRING = "123\nMain\nStreet";
@@ -241,6 +243,17 @@ public class GlobalConstants {
 	public static final String LEADINGZERO_PHONENUMBER = "0937394739";
 	public static final String UNDERSCORE_PREFIXED_USERNAME = "_mispuser";
 	public static final String UNDERSCORE_STRING = "misp_autouser";
+	public static final String MISP_POLICY_01 = "misppolicy01";
+	public static final String MISP_POLICY_02 = "misppolicy02";
+	public static final String MISP_POLICY_01_DESCRIPTION = "misppolicy 01";
+	public static final String MISP_POLICY_02_DESCRIPTION = "misppolicy 02";
+	public static final String MISP_PART_01 = "misppart01";
+	public static final String UPLOADED_STATUS = "Uploaded";
+	public static final String MISP_DOMAINTYPE = "MISP";
+	public static final String MISP_LICENSEKEY_01 = "misplicensekey01";
+	public static final String INACTIVE_STATUS = "Inactive";
+	public static final String NOTUPLOADED_STATUS = "Not Uploaded";
+	public static final String ACTIVE_STATUS = "Active";
 
 	public static final String isLogoutButtonDisplayed = "Verify if logout button is display on dashboard screen.";
 	public static final String isElementDisplayed = "Verify if Partners option shown in dashboard screen.";
@@ -1412,7 +1425,8 @@ public class GlobalConstants {
 	public static final String isPolicyGroupSearchFiltersResults = "Verify that entering text in the Policy Group search bar filters and shows matching policy group results.";
 	public static final String isLongPolicyGroupNameVisible = "Verify that a policy group with a long name is fully visible and properly aligned in the dropdown.";
 
-	// ABIS Partner — phone, username, notification language, navigation (scenarios 50-84)
+	// ABIS Partner — phone, username, notification language, navigation (scenarios
+	// 50-84)
 	public static final String NUMERIC_PREFIXED_USERNAME = "1mispuser";
 	public static final String USERNAME_WITH_SPACE = "user name";
 	public static final String USERNAME_ALREADY_EXISTS_ERROR_MSG = "Username already exists. Enter a different username";
@@ -1457,5 +1471,24 @@ public class GlobalConstants {
 	public static final String isAllValidationErrorsDisplayed = "Verify that appropriate validation error messages appear for all fields containing invalid input data.";
 	public static final String isDesignSpecCompliant = "Verify that the Create Partner page UI elements including labels, placeholders, and button states match the design specification.";
 	public static final String isAlternateFlowsHandledCorrectly = "Verify that edge case alternate flows such as submitting with invalid field data are handled gracefully without data corruption.";
+	public static final String isMispPartnerCertificatePopupDisplayed = "Verify if misp partner certificate popup displayed";
+	public static final String isReUploadPartnerCertificateDisplayed = "Verify if reupload partner certificate displayed";
+	public static final String isCorrespondingPartnerIdDisplayed = "Verify if corresponding partner id displayed";
+	public static final String isLastUploadTimeAndDateTextDisplayed = "Verify if last upload time and date text displayed";
+	public static final String isCertificateFormatTextNotEditable = "Verify if certificate format text not editable";
+	public static final String isCertificateExpiredErrorDisplayed = "Verify if certificate expired error displayed";
+	public static final String isListOfMispPoliciesButtonDisplayed = "Verify if list of misp policies displayed";
+	public static final String isFieldsMarkedWithMandatoryLabelDisplayed = "Verify if fields marked with mandatory label displayed";
+	public static final String isPolicyGroupPopupSubmitButtonEnabled = "Verify if policy group popup submit button enabled";
+	public static final String isPolicyGroupPopupSuccessMessageDisplayed = "Verify if policy group popup success message displayed";
+	public static final String isPolicyGroupPopupPolicyGroupNameDisplayed = "Verify if policy group popup policy group name displayed";
+	public static final String isPolicyGroupPopupPolicyGroupDescriptionDisplayed = "Verify if policy group popup policy group description displayed";
+	public static final String isPolicyGroupPopupSearchInputDisplayed = "Verify if policy group popup search input displayed";
+	public static final String isPolicyGroupPopupSubmitButtonDisabled = "Verify if policy group popup submit button disabled";
+	public static final String isPolicyGroupPopupTitleDisplayed = "Verify if policy group popup title displayed";
+	public static final String isPolicyGroupPopupSubTitleDisplayed = "Verify if policy group popup subtitle displayed";
+	public static final String isPolicyGroupPopupDescriptionDisplayed = "Verify if policy group popup description displayed";
+	public static final String isPolicyGroupPopupPartnerTypeDisplayed = "Verify if policy group popup partner type displayed";
+	public static final String isPolicyGroupPopupPolicyGroupDropdownDisplayed = "Verify if policy group popup policy group dropdown displayed";
 
 }
