@@ -4,37 +4,54 @@
 <!-- Suite: preserve order; tests decide their own parallelism -->
 <suite name="PMP uiv2 UI TestRig" preserve-order="true" parallel="false">
 
-    <!-- STEP 1: runs test classes in parallel with 4 threads -->
-    <test name="PartnerManagementService" preserve-order="false" parallel="classes" thread-count="4">
-        <classes>
-            <class name="io.mosip.testrig.pmpuiv2.testcase.PartnerAdminCreation"/>
-            <class name="io.mosip.testrig.pmpuiv2.testcase.AuthPartnerCreation"/>
-            <class name="io.mosip.testrig.pmpuiv2.testcase.DevicePartnerCreation"/>
-            <class name="io.mosip.testrig.pmpuiv2.testcase.FtmPartnerCreation"/>
-            <class name="io.mosip.testrig.pmpuiv2.testcase.PolicyAdminAndPartnerCreation"/>
-            <class name="io.mosip.testrig.pmpuiv2.testcase.DeactivatePartnerCreation"/>
-            <class name="io.mosip.testrig.pmpuiv2.testcase.FtmDeviceTest"/>
-            <class name="io.mosip.testrig.pmpuiv2.testcase.SbiCreationTest"/>
-            <class name="io.mosip.testrig.pmpuiv2.testcase.PolicyCreationForAuthPartner"/>
-            <class name="io.mosip.testrig.pmpuiv2.testcase.OidcClientAuthPartnerTest"/>
-            <class name="io.mosip.testrig.pmpuiv2.testcase.DeviceCreationTest"/>
-            <class name="io.mosip.testrig.pmpuiv2.testcase.PolicyGroupTest"/>
-            <class name="io.mosip.testrig.pmpuiv2.testcase.PartnerDetailsTest"/>
-            <class name="io.mosip.testrig.pmpuiv2.testcase.CertificateTrustStoreTest"/>
-            <class name="io.mosip.testrig.pmpuiv2.testcase.ApiKeyAuthPartnerTest"/>
-            <class name="io.mosip.testrig.pmpuiv2.testcase.DatasharePolicyTest"/>
-            <class name="io.mosip.testrig.pmpuiv2.testcase.SbiDeviceProviderTest"/>
-            <class name="io.mosip.testrig.pmpuiv2.testcase.AuthPartnerWithoutCertificateTest"/>
-            <class name="io.mosip.testrig.pmpuiv2.testcase.AuthPolicyTest"/>
-            <class name="io.mosip.testrig.pmpuiv2.testcase.PartnerPolicyMappingTest"/>
-            <class name="io.mosip.testrig.pmpuiv2.testcase.MispPartnerTest"/>
-            <class name="io.mosip.testrig.pmpuiv2.testcase.AbisPartnerTest"/>
-        </classes>
-    </test>
+<!-- Note: 
+- Class dependencies are implemented within the test classes. 
+- This suite is organized based on flow for easier understanding. 
+- Classes are executed in parallel using 4 threads. 
+-->
 
-    <listeners>
-        <listener class-name="io.mosip.testrig.pmpuiv2.utility.EmailableReport"/>
-        <listener class-name="io.mosip.testrig.pmpuiv2.utility.KnownIssues"/>
-    </listeners>
+	<!-- Runs test classes in parallel with 4 threads -->
+	<test name="PartnerManagementService" preserve-order="false" parallel="classes" thread-count="4">
+		
+		<classes> 
+		 <!-- PARTNER ADMIN SETUP -->
+			<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerAdminCreation" /> 
+			 <!--AUTH PARTNER FLOW-->
+			<class name="io.mosip.testrig.pmpuiv2.testcase.AuthPartnerCreation" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.PolicyCreationForAuthPartner" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.OidcClientAuthPartnerTest" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.ApiKeyAuthPartnerTest" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.AuthPartnerWithoutCertificateTest" />
+			<!--DEVICE PARTNER FLOW--> 
+			<class name="io.mosip.testrig.pmpuiv2.testcase.DevicePartnerCreation" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.SbiCreationTest" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.DeviceCreationTest" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.SbiDeviceProviderTest" /> 
+			<!--FTM PARTNER FLOW-->
+			<class name="io.mosip.testrig.pmpuiv2.testcase.FtmPartnerCreation" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.FtmDeviceTest" /> 
+			<!--POLICY ADMINISTRATION FLOW-->
+			<class name="io.mosip.testrig.pmpuiv2.testcase.PolicyAdminAndPartnerCreation" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.PolicyGroupTest" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.DatasharePolicyTest" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.AuthPolicyTest" /> 
+			<!--MISP PARTNER FLOW-->
+			<class name="io.mosip.testrig.pmpuiv2.testcase.MispPartnerTest" />
+			<!--ABIS PARTNER FLOW-->
+			<class name="io.mosip.testrig.pmpuiv2.testcase.AbisPartnerTest" />
+			<!--PARTNER VALIDATION & MANAGEMENT --> 
+			<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerDetailsTest" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.CertificateTrustStoreTest" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerPolicyMappingTest" />
+			
+			 <!--Deactivate PARTNER FLOW --> 
+			<class name="io.mosip.testrig.pmpuiv2.testcase.DeactivatePartnerCreation" />
+		</classes>
+	</test>
+
+	<listeners>
+		<listener class-name="io.mosip.testrig.pmpuiv2.utility.EmailableReport" />
+		<listener class-name="io.mosip.testrig.pmpuiv2.utility.KnownIssues" />
+	</listeners>
 
 </suite>
