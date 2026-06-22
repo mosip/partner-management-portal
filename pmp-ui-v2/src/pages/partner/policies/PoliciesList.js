@@ -223,15 +223,17 @@ function PoliciesList() {
 
       let eligibilityError = false;
 
+      const isApproved = String(row?.status || '').toLowerCase() === 'approved';
+
       // bioextractors mapping check
       {
         const requestId = getRequestIdFromRow(row);
+        const usePartnerEndpoint = isApproved && partnerId && policyId;
 
-        if (requestId) {
-          const url = getPartnerManagerUrl(
-            `/partner-policy-requests/${requestId}/bio-extractors-request`,
-            process.env.NODE_ENV
-          );
+        if (usePartnerEndpoint || requestId) {
+          const url = usePartnerEndpoint
+            ? getPartnerManagerUrl(`/partners/${partnerId}/bioextractors/${policyId}`, process.env.NODE_ENV)
+            : getPartnerManagerUrl(`/partner-policy-requests/${requestId}/bio-extractors-request`, process.env.NODE_ENV);
           const res = await HttpService.get(url);
           const data = res?.data;
           if (data?.response) {
@@ -258,7 +260,6 @@ function PoliciesList() {
             }
           }
         } else if (partnerId && policyId) {
-
           bioMapped = false;
           eligibilityError = false;
         }
@@ -267,11 +268,12 @@ function PoliciesList() {
       // credential type mapping check
       {
         const requestId = getRequestIdFromRow(row);
-        if (requestId) {
-          const url = getPartnerManagerUrl(
-            `/partner-policy-requests/${requestId}/credential-types-request`,
-            process.env.NODE_ENV
-          );
+        const usePartnerEndpoint = isApproved && partnerId && policyId;
+
+        if (usePartnerEndpoint || requestId) {
+          const url = usePartnerEndpoint
+            ? getPartnerManagerUrl(`/partners/${partnerId}/policies/${policyId}/credential-types`, process.env.NODE_ENV)
+            : getPartnerManagerUrl(`/partner-policy-requests/${requestId}/credential-types-request`, process.env.NODE_ENV);
           const res = await HttpService.get(url);
           const data = res?.data;
           if (data?.response !== undefined) {

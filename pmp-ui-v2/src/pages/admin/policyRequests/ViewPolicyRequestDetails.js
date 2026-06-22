@@ -102,6 +102,7 @@ function ViewPolicyRequestDetails() {
                                                         partnerId={popupData?.partnerId}
                                                         policyId={popupData?.policyId}
                                                         requestId={popupData?.id ?? ""}
+                                                        status={popupData?.status}
                                                         partnerTypeLabel={getPartnerTypeDescription(popupData?.partnerType, t) ?? popupData?.partnerType ?? '-'}
                                                         enabled={true}
                                                         variant="popup"
@@ -183,6 +184,7 @@ function ViewPolicyRequestDetails() {
                                         partnerId={policyRequestDetails?.partnerId}
                                         policyId={policyRequestDetails?.policyId}
                                         requestId={policyRequestDetails?.id ?? ""}
+                                        status={policyRequestDetails?.status}
                                         partnerTypeLabel={getPartnerTypeDescription(policyRequestDetails?.partnerType, t) ?? policyRequestDetails?.partnerType ?? '-'}
                                         enabled={isCredentialPartner || isOnlineVerificationPartner}
                                         variant="view"

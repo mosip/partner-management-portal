@@ -618,4 +618,10 @@ public class BasePage {
 		((JavascriptExecutor) driver).executeScript("arguments[0].click();", el);
 	}
 
+	protected String getTextFromLocator(By locator) {
+		WebElement element = driver.findElement(locator);
+		waitForElementVisible(element);
+		return element.getText();
+	}
+
 }

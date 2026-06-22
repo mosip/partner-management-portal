@@ -219,10 +219,16 @@ function PolicyRequestsList() {
     let bioMapped = false;
     let credentialMapped = false;
     let eligibilityError = false;
+    const isApproved = String(policyRequest.status || '').toLowerCase() === 'approved';
+    const usePartnerEndpoint = isApproved && policyRequest.partnerId && policyRequest.policyId;
     try {
       const [bioResp, credResp] = await Promise.all([
-        HttpService.get(getPartnerManagerUrl(`/partner-policy-requests/${key}/bio-extractors-request`, process.env.NODE_ENV)),
-        HttpService.get(getPartnerManagerUrl(`/partner-policy-requests/${key}/credential-types-request`, process.env.NODE_ENV))
+        usePartnerEndpoint
+          ? HttpService.get(getPartnerManagerUrl(`/partners/${policyRequest.partnerId}/bioextractors/${policyRequest.policyId}`, process.env.NODE_ENV))
+          : HttpService.get(getPartnerManagerUrl(`/partner-policy-requests/${key}/bio-extractors-request`, process.env.NODE_ENV)),
+        usePartnerEndpoint
+          ? HttpService.get(getPartnerManagerUrl(`/partners/${policyRequest.partnerId}/policies/${policyRequest.policyId}/credential-types`, process.env.NODE_ENV))
+          : HttpService.get(getPartnerManagerUrl(`/partner-policy-requests/${key}/credential-types-request`, process.env.NODE_ENV))
       ]);
       if (bioResp?.data?.response) {
         const payload = bioResp.data.response;
@@ -488,6 +494,7 @@ function PolicyRequestsList() {
                                                             partnerId={popupData?.partnerId}
                                                             policyId={popupData?.policyId}
                                                             requestId={popupData?.id ?? ""}
+                                                            status={popupData?.status}
                                                             partnerTypeLabel={getPartnerTypeDescription(popupData?.partnerType, t) ?? popupData?.partnerType ?? '-'}
                                                             enabled={true}
                                                             variant="popup"
@@ -503,6 +510,7 @@ function PolicyRequestsList() {
                                                               partnerId={popupData?.partnerId}
                                                               policyId={popupData?.policyId}
                                                               requestId={popupData?.id ?? ""}
+                                                              status={popupData?.status}
                                                               partnerTypeLabel={getPartnerTypeDescription(popupData?.partnerType, t) ?? popupData?.partnerType ?? '-'}
                                                               enabled={true}
                                                               variant="popup"
