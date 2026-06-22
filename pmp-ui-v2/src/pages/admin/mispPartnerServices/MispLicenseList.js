@@ -168,15 +168,9 @@ function MispLicenseList() {
         }
     };
 
-    const isLicenseActivated = (status) => {
-        const normalized = status?.toLowerCase();
-        return normalized === "activated" || normalized === "active";
-    };
+    const isLicenseActivated = (status) => status?.toUpperCase() === "ACTIVE";
 
-    const isLicenseDeactivated = (status) => {
-        const normalized = status?.toLowerCase();
-        return normalized === "deactivated" || normalized === "inactive";
-    };
+    const isLicenseDeactivated = (status) => status?.toUpperCase() === "INACTIVE";
 
     const openLicenseKeyPopUp = (license, index) => {
         if (isLicenseActivated(license.status)) {
@@ -220,7 +214,7 @@ function MispLicenseList() {
             setShowActiveIndexDeactivatePopup(null);
             setMispLicenseList((prevList) =>
                 prevList.map(misp =>
-                    misp.mispLicenseId === licenseKey.mispLicenseId ? { ...misp, status: "deactivated" } : misp
+                    misp.mispLicenseId === licenseKey.mispLicenseId ? { ...misp, status: "INACTIVE" } : misp
                 )
             );
         }

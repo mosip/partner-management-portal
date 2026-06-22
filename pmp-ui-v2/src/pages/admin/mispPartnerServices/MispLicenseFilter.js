@@ -26,7 +26,7 @@ function MispLicenseFilter ({ onApplyFilter }) {
 
     useEffect(() => {
         const fetchData = async () => {
-            const statusDropdownData= [{ status: 'activated' },{ status: 'deactivated'}];
+            const statusDropdownData= [{ status: 'ACTIVE' },{ status: 'INACTIVE'}];
             setStatus(
                 createDropdownData("status", "", true, statusDropdownData, t, t("partnerList.selectStatus"))
             );
