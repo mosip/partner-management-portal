@@ -227,7 +227,7 @@ function PolicyRequestsList() {
           ? HttpService.get(getPartnerManagerUrl(`/partners/${policyRequest.partnerId}/bioextractors/${policyRequest.policyId}`, process.env.NODE_ENV))
           : HttpService.get(getPartnerManagerUrl(`/partner-policy-requests/${key}/bio-extractors-request`, process.env.NODE_ENV)),
         usePartnerEndpoint
-          ? HttpService.get(getPartnerManagerUrl(`/partners/${policyRequest.partnerId}/credentialtypes/${policyRequest.policyId}`, process.env.NODE_ENV))
+          ? HttpService.get(getPartnerManagerUrl(`/partners/${policyRequest.partnerId}/policies/${policyRequest.policyId}/credential-types`, process.env.NODE_ENV))
           : HttpService.get(getPartnerManagerUrl(`/partner-policy-requests/${key}/credential-types-request`, process.env.NODE_ENV))
       ]);
       if (bioResp?.data?.response) {
