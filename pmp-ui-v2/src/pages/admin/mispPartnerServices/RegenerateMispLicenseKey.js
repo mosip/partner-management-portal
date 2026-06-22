@@ -113,13 +113,14 @@ function RegenerateMispLicenseKey() {
         setDataLoaded(false);
 
         let request = createRequest({
+            partnerId: mispLicenseKeyDetails.partnerId,
             policyId: mispLicenseKeyDetails.policyId,
             licenseKeyName: licenseKeyName.trim(),
             expiryDate: expiryDate === "" ? new Date().toISOString().split("T")[0] : new Date(expiryDate).toISOString().split("T")[0]
-        }, "mosip.pms.regenerate.misp.license.put", true);
+        }, "mosip.pms.misp.generate.license.post", true);
 
         try {
-            const response = await HttpService.put(getPartnerManagerUrl(`/misp-licenses/${mispLicenseKeyDetails.partnerId}`, process.env.NODE_ENV), request, {
+            const response = await HttpService.post(getPartnerManagerUrl(`/misp-licenses`, process.env.NODE_ENV), request, {
                 headers: {
                     'Content-Type': 'application/json'
                 }

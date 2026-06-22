@@ -17,6 +17,7 @@ import eyeIcon from "../../../svg/eye_icon.svg";
 import disabledEyeIcon from "../../../svg/disable_eye_icon.svg";
 import deactivateIcon from "../../../svg/deactivate_icon.svg";
 import disableDeactivateIcon from "../../../svg/disable_deactivate_icon.svg";
+import regenerateIcon from "../../../svg/regenerate_icon.svg";
 import FilterButtons from '../../common/FilterButtons.js';
 import SortingIcon from '../../common/SortingIcon.js';
 import Pagination from '../../common/Pagination.js';
@@ -189,6 +190,12 @@ function MispLicenseList() {
         navigate('/partnermanagement/admin/misp-partner-services/generate-misp-license-key');
     };
 
+    const regenerateMispLicenseKey = (license) => {
+        setActionId(-1);
+        sessionStorage.setItem('selectedMispLicenseKey', JSON.stringify(license));
+        navigate('/partnermanagement/admin/misp-partner-services/regenerate-misp-license-key');
+    };
+
     const deactivateLicenseKey = (license, index) => {
         if (isLicenseActivated(license.status)) {
             const request = createRequest({
@@ -349,6 +356,11 @@ function MispLicenseList() {
                                                                                             <div role='button' className="flex justify-between hover:bg-gray-100" onClick={() => viewMispLicenseDetails(license)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => viewMispLicenseDetails(license))}>
                                                                                                 <p id="misp_license_list_view_btn" className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerList.view")}</p>
                                                                                                 <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
+                                                                                            </div>
+                                                                                            <hr className="h-px bg-gray-100 border-0 mx-1" />
+                                                                                            <div role='button' className="flex justify-between hover:bg-gray-100 cursor-pointer" onClick={() => regenerateMispLicenseKey(license)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => regenerateMispLicenseKey(license))}>
+                                                                                                <p id="misp_license_list_regenerate_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} text-[#3E3E3E]`}>{t("mispLicenseList.regenerate")}</p>
+                                                                                                <img src={regenerateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                             </div>
                                                                                             <hr className="h-px bg-gray-100 border-0 mx-1" />
                                                                                             <div role='button' className={`flex justify-between hover:bg-gray-100 ${activated ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => deactivateLicenseKey(license, index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => deactivateLicenseKey(license, index))}>

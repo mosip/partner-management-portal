@@ -65,6 +65,7 @@ import CreatePartner from './pages/admin/partners/CreatePartner.js';
 import MispLicenseList from './pages/admin/mispPartnerServices/MispLicenseList.js';
 import GenerateMispLicenseKey from './pages/admin/mispPartnerServices/GenerateMispLicenseKey.js';
 import ViewMispLicenseKey from './pages/admin/mispPartnerServices/ViewMispLicenseKey.js';
+import RegenerateMispLicenseKey from './pages/admin/mispPartnerServices/RegenerateMispLicenseKey.js';
 import ViewMispLicenseKeyNotifications from './pages/admin/notifications/ViewMispLicenseKeyNotifications.js';
 import BiometricProviderConfigurationList from './pages/admin/biometricProviderConfiguration/BiometricProviderConfigurationList.js';
 import CreateBioExtractorConfig from './pages/admin/biometricProviderConfiguration/CreateBioExtractorConfig.js';
@@ -340,6 +341,10 @@ function AppRoutes() {
         {
           path: 'admin/misp-partner-services/view-misp-license-key',
           element: <GuardedRoute><MainLayout><ViewMispLicenseKey /></MainLayout></GuardedRoute>,
+        },
+        {
+          path: 'admin/misp-partner-services/regenerate-misp-license-key',
+          element: <GuardedRoute><MainLayout><RegenerateMispLicenseKey /></MainLayout></GuardedRoute>,
         },
         {
           path: 'admin/notifications/view-root-certificate-expiry',
