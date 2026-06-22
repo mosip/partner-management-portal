@@ -238,7 +238,7 @@ function CredentialPartnerPolicyDetails({
       setCredentialTypeLoading(true);
       try {
         const url = usePartnerEndpoint
-          ? getPartnerManagerUrl(`/partners/${partnerId}/credentialtypes/${policyId}`, process.env.NODE_ENV)
+          ? getPartnerManagerUrl(`/partners/${partnerId}/policies/${policyId}/credential-types`, process.env.NODE_ENV)
           : getPartnerManagerUrl(`/partner-policy-requests/${requestId}/credential-types-request`, process.env.NODE_ENV);
         const response = await HttpService.get(url);
         const responseData = response?.data;
