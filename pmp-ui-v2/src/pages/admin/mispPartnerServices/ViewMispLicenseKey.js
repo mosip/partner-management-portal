@@ -31,11 +31,7 @@ function ViewMispLicenseKey() {
         }
         const mispKeyData = JSON.parse(data);
 
-        const queryParams = new URLSearchParams();
-        if (mispKeyData.policyId) queryParams.append('policyId', mispKeyData.policyId);
-        if (mispKeyData.mispLicenseKeyName) queryParams.append('mispLicenseKeyName', mispKeyData.mispLicenseKeyName);
-
-        const url = `${getPartnerManagerUrl(`/misp-licenses/${mispKeyData.partnerId}`, process.env.NODE_ENV)}?${queryParams.toString()}`;
+        const url = getPartnerManagerUrl(`/misp-licenses/${mispKeyData.mispLicenseId}`, process.env.NODE_ENV);
 
         const fetchData = async () => {
             try {
