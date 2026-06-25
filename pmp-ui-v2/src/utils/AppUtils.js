@@ -1539,7 +1539,7 @@ export const getFilterTextFieldStyle = () => {
 
 export const fetchPartnerDetails = async (HttpService, partnerId, setErrorCode, setErrorMsg, t) => {
     try {
-        const response = await HttpService.get(getPartnerManagerUrl(`/admin-partners/${partnerId}`, process.env.NODE_ENV));
+        const response = await HttpService.get(getPartnerManagerUrl(`/admin-partners/v2/${partnerId}`, process.env.NODE_ENV));
         if (response) {
             const responseData = response.data;
             if (responseData && responseData.response) {
