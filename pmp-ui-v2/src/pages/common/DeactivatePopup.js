@@ -97,7 +97,7 @@ function DeactivatePopup({ onClickConfirm, closePopUp, popupData, request, heade
                     }
                 });
             } else if (popupData.isDeactivateMispLicense) {
-                response = await HttpService.patch(getPartnerManagerUrl(`/misp-licenses/${popupData.partnerId}`, process.env.NODE_ENV), request, {
+                response = await HttpService.patch(getPartnerManagerUrl(`/misp-licenses/${popupData.mispLicenseId}`, process.env.NODE_ENV), request, {
                     headers: {
                         'Content-Type': 'application/json'
                     }
