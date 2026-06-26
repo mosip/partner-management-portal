@@ -28,8 +28,8 @@ function MispLicenseFilter ({ onApplyFilter }) {
         const fetchData = async () => {
             setStatus([
                 { fieldCode: t("partnerList.selectStatus"), fieldValue: "" },
-                { fieldCode: 'ACTIVE', fieldValue: 'ACTIVE' },
-                { fieldCode: 'INACTIVE', fieldValue: 'INACTIVE' },
+                { fieldCode: t("statusCodes.active"), fieldValue: 'ACTIVE' },
+                { fieldCode: t("statusCodes.inactive"), fieldValue: 'INACTIVE' },
             ]);
         };
         fetchData();
