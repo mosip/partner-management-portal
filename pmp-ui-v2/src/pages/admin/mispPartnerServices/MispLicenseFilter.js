@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import DropdownComponent from "../../common/fields/DropdownComponent.js";
 import TextInputComponent from "../../common/fields/TextInputComponent.js";
 import { useTranslation } from "react-i18next";
-import { createDropdownData, getFilterDropdownStyle, getFilterTextFieldStyle, isLangRTL, validateInputRegex } from "../../../utils/AppUtils.js";
+import { getFilterDropdownStyle, getFilterTextFieldStyle, isLangRTL, validateInputRegex } from "../../../utils/AppUtils.js";
 import { getUserProfile } from '../../../services/UserProfileService';
 import PropTypes from 'prop-types';
 
@@ -26,10 +26,11 @@ function MispLicenseFilter ({ onApplyFilter }) {
 
     useEffect(() => {
         const fetchData = async () => {
-            const statusDropdownData= [{ status: 'activated' },{ status: 'deactivated'}];
-            setStatus(
-                createDropdownData("status", "", true, statusDropdownData, t, t("partnerList.selectStatus"))
-            );
+            setStatus([
+                { fieldCode: t("partnerList.selectStatus"), fieldValue: "" },
+                { fieldCode: t("statusCodes.active"), fieldValue: 'ACTIVE' },
+                { fieldCode: t("statusCodes.inactive"), fieldValue: 'INACTIVE' },
+            ]);
         };
         fetchData();
     }, [t]);
