@@ -37,6 +37,7 @@
 			<class name="io.mosip.testrig.pmpuiv2.testcase.AuthPolicyTest" /> 
 			<!--MISP PARTNER FLOW-->
 			<class name="io.mosip.testrig.pmpuiv2.testcase.MispPartnerTest" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.MispPolicyTest" />
 			<!--ABIS PARTNER FLOW-->
 			<class name="io.mosip.testrig.pmpuiv2.testcase.AbisPartnerTest" />
 			<!--PARTNER VALIDATION & MANAGEMENT --> 

@@ -84,6 +84,7 @@ public class TestRunner {
 			XmlClass partnerPolicyMappingTest = new XmlClass(
 					"io.mosip.testrig.pmpuiv2.testcase.PartnerPolicyMappingTest");
 			XmlClass mispPartnerTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.MispPartnerTest");
+			XmlClass mispPolicyTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.MispPolicyTest");
 
 			List<XmlClass> classes = new ArrayList<>();
 			String[] scenarioNames = ConfigManager.gettestcases().split(",");
@@ -162,6 +163,9 @@ public class TestRunner {
 					break;
 				case "MispPartnerTest":
 					classes.add(mispPartnerTest);
+					break;
+				case "MispPolicyTest":
+					classes.add(mispPolicyTest);
 					break;
 
 				// Unknown test name

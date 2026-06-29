@@ -400,7 +400,7 @@ public class PartnerPolicyMappingTest extends BaseClass {
 		partnerPolicyMappingPage.clickOnApplyFilterButton();
 		partnerPolicyMappingPage.clickOnPartnerListViewElipsisButton();
 		assertTrue(partnerPolicyMappingPage.isViewButtoEnabled(), GlobalConstants.isViewButtoEnabled);
-		partnerPolicyMappingPage.clickOnviewButton();
+		partnerPolicyMappingPage.clickOnViewButton();
 
 		assertTrue(partnerPolicyMappingPage.isPartnerPolicyDetailsPageDisplayed(),
 				GlobalConstants.isPartnerPolicyDetailsPageDisplayed);
