@@ -15,6 +15,8 @@ import DropdownWithSearchComponent from "./fields/DropdownWithSearchComponent";
 const EMPTY_MAPPING_ROW = {
   biometricModality: "",
   biometricProviderConfiguration: "",
+  credentialDataFormat: "",
+  attributeName: "",
 };
 
 const parseCsvOrArray = (raw) => {
@@ -242,6 +244,8 @@ function MapBiometricExtractorProvider() {
           bioextractorProviderName: item.bioextractorProviderName || item.extractorProviderName || item.provider || "",
           bioextractorProviderVersion: item.bioextractorProviderVersion || item.extractorProviderVersion || item.version || "",
           biometricModality: item.bioModality || "",
+          credentialDataFormat: item.credentialDataFormat || item.credential_data_format || "",
+          attributeName: item.attributeName || item.attribute_name || "",
         }));
 
         setActiveConfigs((prev) => {
@@ -326,6 +330,8 @@ function MapBiometricExtractorProvider() {
           const selectedConfig = getSelectedConfig(rowId, value);
           updatedRow.bioextractorProviderName = selectedConfig?.bioextractorProviderName || "";
           updatedRow.bioextractorProviderVersion = selectedConfig?.bioextractorProviderVersion || "";
+          updatedRow.credentialDataFormat = selectedConfig?.credentialDataFormat || "";
+          updatedRow.attributeName = selectedConfig?.attributeName || "";
         }
 
         return updatedRow;
@@ -388,7 +394,8 @@ function MapBiometricExtractorProvider() {
           const selectedConfig = getSelectedConfig(row.id, row.biometricProviderConfiguration) || {};
           return {
             biometric: (row.biometricModality || "").toLowerCase(),
-            attributeName: getAttributeName(row.biometricModality),
+            attributeName: row.attributeName || getAttributeName(row.biometricModality),
+            credentialDataFormat: row.credentialDataFormat || "",
             extractorProvider: selectedConfig.bioextractorProviderName,
             extractorProviderVersion: selectedConfig.bioextractorProviderVersion,
           };
@@ -609,6 +616,39 @@ function MapBiometricExtractorProvider() {
                             >
                               <span className="w-full break-words text-wrap text-start">
                                 {selectedConfig?.bioextractorProviderVersion || t("mapBiometricExtractorProvider.autoPopulatedValue")}
+                              </span>
+                            </button>
+                          </div>
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-4 my-2 max-[450px]:grid-cols-1">
+                          <div className="flex flex-col w-full max-[450px]:w-full">
+                            <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+                              {t("bioExtractorConfig.credentialDataFormat")}
+                              <span className="text-crimson-red mx-1">*</span>
+                            </label>
+                            <button
+                              disabled
+                              className="flex items-center justify-between w-full h-auto px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-dark-blue bg-platinum-gray leading-tight overflow-x-auto whitespace-normal no-scrollbar"
+                              type="button"
+                            >
+                              <span className="w-full break-words text-wrap text-start">
+                                {row.credentialDataFormat || t("mapBiometricExtractorProvider.autoPopulatedValue")}
+                              </span>
+                            </button>
+                          </div>
+                          <div className="flex flex-col w-full max-[450px]:w-full">
+                            <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+                              {t("bioExtractorConfig.attributeName")}
+                              <span className="text-crimson-red mx-1">*</span>
+                            </label>
+                            <button
+                              disabled
+                              className="flex items-center justify-between w-full h-auto px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-dark-blue bg-platinum-gray leading-tight overflow-x-auto whitespace-normal no-scrollbar"
+                              type="button"
+                            >
+                              <span className="w-full break-words text-wrap text-start">
+                                {row.attributeName || t("mapBiometricExtractorProvider.autoPopulatedValue")}
                               </span>
                             </button>
                           </div>
