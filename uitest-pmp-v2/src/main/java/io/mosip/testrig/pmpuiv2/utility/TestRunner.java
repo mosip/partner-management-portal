@@ -85,6 +85,7 @@ public class TestRunner {
 					"io.mosip.testrig.pmpuiv2.testcase.PartnerPolicyMappingTest");
 			XmlClass mispPartnerTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.MispPartnerTest");
 			XmlClass mispPolicyTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.MispPolicyTest");
+			XmlClass abisPartnerTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.AbisPartnerTest");
 
 			List<XmlClass> classes = new ArrayList<>();
 			String[] scenarioNames = ConfigManager.gettestcases().split(",");
@@ -94,78 +95,88 @@ public class TestRunner {
 
 				// STEP 1
 				case "PartnerAdminCreation":
-					classes.add(partnerAdminCreation);
+					addClassIfAbsent(classes, partnerAdminCreation);
 					break;
 				case "AuthPartnerCreation":
-					classes.add(authPartnerCreation);
+					addClassIfAbsent(classes, partnerAdminCreation, authPartnerCreation);
 					break;
 				case "DevicePartnerCreation":
-					classes.add(devicePartnerCreation);
+					addClassIfAbsent(classes, partnerAdminCreation, devicePartnerCreation);
 					break;
 				case "FtmPartnerCreation":
-					classes.add(ftmPartnerCreation);
+					addClassIfAbsent(classes, partnerAdminCreation, ftmPartnerCreation);
 					break;
 				case "PolicyAdminAndPartnerCreation":
-					classes.add(policyAdminAndPartnerCreation);
+					addClassIfAbsent(classes, partnerAdminCreation, policyAdminAndPartnerCreation);
 					break;
 				case "DeactivatePartnerCreation":
-					classes.add(deactivatePartnerCreation);
+					addClassIfAbsent(classes, partnerAdminCreation, deactivatePartnerCreation);
 					break;
 
 				// STEP 2
 				case "FtmDeviceTest":
-					classes.add(ftmDeviceTest);
+					addClassIfAbsent(classes, partnerAdminCreation, ftmPartnerCreation, ftmDeviceTest);
 					break;
 				case "SbiCreationTest":
-					classes.add(sbiCreationTest);
+					addClassIfAbsent(classes, partnerAdminCreation, devicePartnerCreation, sbiCreationTest);
 					break;
 				case "PolicyCreationForAuthPartner":
-					classes.add(policyCreationForAuthPartner);
+					addClassIfAbsent(classes, partnerAdminCreation, authPartnerCreation, policyCreationForAuthPartner);
 					break;
 
 				// STEP 3
 				case "OidcClientAuthPartnerTest":
-					classes.add(oidcClientAuthPartnerTest);
+					addClassIfAbsent(classes, partnerAdminCreation, authPartnerCreation, policyCreationForAuthPartner,
+							oidcClientAuthPartnerTest);
 					break;
 				case "DeviceCreationTest":
-					classes.add(deviceCreationTest);
+					addClassIfAbsent(classes, partnerAdminCreation, devicePartnerCreation, sbiCreationTest,
+							deviceCreationTest);
 					break;
 				case "PolicyGroupTest":
-					classes.add(policyGroupTest);
+					addClassIfAbsent(classes, partnerAdminCreation, policyAdminAndPartnerCreation, policyGroupTest);
 					break;
 
 				// STEP 4
 				case "CertificateTrustStoreTest":
-					classes.add(certificateTrustStoreTest);
+					addClassIfAbsent(classes, partnerAdminCreation, certificateTrustStoreTest);
 					break;
 				case "ApiKeyAuthPartnerTest":
-					classes.add(apiKeyAuthPartnerTest);
+					addClassIfAbsent(classes, partnerAdminCreation, authPartnerCreation, policyCreationForAuthPartner,
+							apiKeyAuthPartnerTest);
 					break;
 				case "DatasharePolicyTest":
-					classes.add(datasharePolicyTest);
+					addClassIfAbsent(classes, partnerAdminCreation, policyAdminAndPartnerCreation, policyGroupTest,
+							datasharePolicyTest);
 					break;
 				case "SbiDeviceProviderTest":
-					classes.add(sbiDeviceProviderTest);
+					addClassIfAbsent(classes, partnerAdminCreation, devicePartnerCreation, sbiCreationTest,
+							deviceCreationTest, sbiDeviceProviderTest);
 					break;
 
 				// STEP 5
 				case "AuthPartnerWithoutCertificateTest":
-					classes.add(authPartnerWithoutCertificateTest);
+					addClassIfAbsent(classes, partnerAdminCreation, authPartnerCreation,
+							authPartnerWithoutCertificateTest);
 					break;
 				case "PartnerDetailsTest":
-					classes.add(partnerDetailsTest);
+					addClassIfAbsent(classes, partnerAdminCreation, deactivatePartnerCreation, partnerDetailsTest);
 					break;
 				case "AuthPolicyTest":
-					classes.add(authPolicyTest);
+					addClassIfAbsent(classes, partnerAdminCreation, policyAdminAndPartnerCreation, policyGroupTest,
+							authPolicyTest);
 					break;
 				case "PartnerPolicyMappingTest":
-					classes.add(partnerPolicyMappingTest);
+					addClassIfAbsent(classes, partnerAdminCreation, authPartnerCreation, partnerPolicyMappingTest);
 					break;
 				case "MispPartnerTest":
-					classes.add(mispPartnerTest);
+					addClassIfAbsent(classes, partnerAdminCreation, mispPartnerTest);
 					break;
 				case "MispPolicyTest":
-					classes.add(mispPolicyTest);
+					addClassIfAbsent(classes, partnerAdminCreation, mispPartnerTest, mispPolicyTest);
+					break;
+				case "AbisPartnerTest":
+					addClassIfAbsent(classes, partnerAdminCreation, abisPartnerTest);
 					break;
 
 				// Unknown test name
@@ -211,6 +222,14 @@ public class TestRunner {
 		// DB cleanup
 		DBManager.cleanUpPartnerUiV2Data();
 		System.exit(0);
+	}
+
+	private static void addClassIfAbsent(List<XmlClass> classes, XmlClass... xmlClasses) {
+		for (XmlClass xmlClass : xmlClasses) {
+			if (!classes.contains(xmlClass)) {
+				classes.add(xmlClass);
+			}
+		}
 	}
 
 	public static String getGlobalResourcePath() {

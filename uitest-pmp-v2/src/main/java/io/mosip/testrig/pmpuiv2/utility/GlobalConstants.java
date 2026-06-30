@@ -272,6 +272,9 @@ public class GlobalConstants {
 	public static final String MISP_POLICYGROUP = "misppolicygroup";
 	public static final String MISPPARTNER_WITHOUTPOLICYGROUP = "misppartnerwithoutpolicygroup";
 	public static final String DEACTIVATE_MISPPARTNER = "deactivatemisppartner";
+	public static final String EDIT_MISP_POLICY_PAGE = "Edit MISP Policy";
+	public static final String VIEW_MISP_POLICY_PAGE = "View MISP Policy";
+	public static final String VIEW_PARTNER_POLICY_PAGE = "View Partner-Policy Linking";
 
 	public static final String isLogoutButtonDisplayed = "Verify if logout button is display on dashboard screen.";
 	public static final String isElementDisplayed = "Verify if Partners option shown in dashboard screen.";
@@ -1551,5 +1554,6 @@ public class GlobalConstants {
 	public static final String isPolicyDataPlaceholderDisplayed = "Verify if policy data placeholder displayed";
 	public static final String isPolicyDataUploadHeaderDisplayed = "Verify if policy data upload header displayed";
 	public static final String isPolicyDataUploadDescriptionDisplayed = "Verify if policy data upload description displayed";
+	public static final String isStatusDisplayedForPolicyName = "Verify if status displayed for policy name";
 
 }

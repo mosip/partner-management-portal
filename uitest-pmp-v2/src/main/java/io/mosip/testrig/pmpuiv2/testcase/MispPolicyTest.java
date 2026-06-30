@@ -79,7 +79,7 @@ public class MispPolicyTest extends BaseClass {
 		mispPolicyPage.clickOnGoBackButton();
 
 		clickOnEditMispPolicy(GlobalConstants.MISP_POLICY_EDIT);
-		assertTrue(mispPolicyPage.isEditMispPolicyPageDisplayed(), GlobalConstants.isEditMispPolicyPageDisplayed);
+		assertEquals(mispPolicyPage.getPageTitle(), GlobalConstants.EDIT_MISP_POLICY_PAGE);
 		mispPolicyPage.enterpolicyDescription(GlobalConstants.MISP_POLICY2_EDIT_DESCRIPTION);
 		mispPolicyPage.clickOnEditPolicyFormSubmitButton();
 		mispPolicyPage.clickOnGoBackButton();
@@ -102,7 +102,7 @@ public class MispPolicyTest extends BaseClass {
 		mispPolicyPage.clickOnDeactivateConfirmButton();
 
 		clickOnPartnerPolicyLinkingViewButton(GlobalConstants.MISP_POLICY_DEACTIVATE);
-		assertTrue(mispPolicyPage.isViewPolicyPageDisplayed(), GlobalConstants.isViewPolicyPageDisplayed);
+		assertEquals(mispPolicyPage.getPageTitle(), GlobalConstants.VIEW_MISP_POLICY_PAGE);
 		mispPolicyPage.clickOnListOfMispPoliciesButton();
 
 		mispPolicyPage.clickOnCreateMispPolicyButton();
@@ -262,9 +262,8 @@ public class MispPolicyTest extends BaseClass {
 
 		clickOnActionButton(GlobalConstants.MISP_POLICY_03);
 		partnerPolicyMappingPage.clickOnViewButton();
-		assertTrue(partnerPolicyMappingPage.isViewPartnerPolicyLinkingPageTitleDisplayed(),
-				GlobalConstants.isViewPartnerPolicyLinkingPageTitleDisplayed);
-		mispPolicyPage.clickOnListOfMispPoliciesButton();
+		assertEquals(mispPolicyPage.getPageTitle(), GlobalConstants.VIEW_PARTNER_POLICY_PAGE);
+		partnerPolicyMappingPage.clickOnTitleBackIcon();
 
 	}
 
@@ -361,7 +360,8 @@ public class MispPolicyTest extends BaseClass {
 	}
 
 	private void verifyStatusOfPartnerPolicyMapping(String policyName, String status) {
-		partnerPolicyMappingPage.isStatusDisplayedForPolicyName(policyName, status);
+		assertTrue(partnerPolicyMappingPage.isStatusDisplayedForPolicyName(policyName, status),
+				GlobalConstants.isRequestPoliciesFormSubmitButtonEnabled);
 	}
 
 	private void clickOnActionButton(String policyName) {
@@ -370,7 +370,7 @@ public class MispPolicyTest extends BaseClass {
 		partnerPolicyMappingPage.enterPendingPolicyNameInFilter(policyName);
 		partnerPolicyMappingPage.clickOnApplyFilterButton();
 		partnerPolicyMappingPage.clickOnPartnerListViewElipsisButton();
-		
+
 	}
 
 }
