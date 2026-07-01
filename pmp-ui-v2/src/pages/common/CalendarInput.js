@@ -98,8 +98,6 @@ function CalendarInput({ isUsedAsFilter, showCalendar, addInfoIcon, infoKey, inf
           disabled={disabled}
           popperPlacement="bottom-start"
           popperProps={{ strategy: "fixed" }}
-          portalId="calendar-root"
-          customInput={<CustomDateInput />}
         />
       </div>
     </div>
