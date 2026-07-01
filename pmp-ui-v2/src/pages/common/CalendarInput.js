@@ -96,6 +96,10 @@ function CalendarInput({ isUsedAsFilter, showCalendar, addInfoIcon, infoKey, inf
           isClearable={isUsedAsFilter ? true : false}
           minDate={minDate}
           disabled={disabled}
+          popperPlacement="bottom-start"
+          popperProps={{ strategy: "fixed" }}
+          portalId="calendar-root"
+          customInput={<CustomDateInput />}
         />
       </div>
     </div>
