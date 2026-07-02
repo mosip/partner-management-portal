@@ -434,13 +434,13 @@ public class PartnerCertificatePage extends BasePage {
 
 	@FindBy(id = "upload_certificate_success_msg")
 	private WebElement certificateUploadSuccessMessage;
-	
+
 	@FindBy(id = "upload_certificate_popup_partner_id_field")
 	private WebElement correspondingPartnerId;
-	
+
 	@FindBy(id = "upload_popup_partner_type_context")
 	private WebElement partnerTypeContext;
-	
+
 	@FindBy(id = "upload_popup_partner_domain_type_context")
 	private WebElement partnerDomainTypeContext;
 
@@ -1299,33 +1299,33 @@ public class PartnerCertificatePage extends BasePage {
 	public boolean isCertificateUploadSuccessMessageDisplayed() {
 		return isElementDisplayed(certificateUploadSuccessMessage);
 	}
-	
+
 	public void uploadExpiredCertificate() {
 		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "expiredRoot.cer"));
 	}
-	
+
 	public boolean isCertificateExpiredErrorDisplayed() {
 		return isElementDisplayed(InvalidFormatErrorPopup);
 	}
-	
+
 	public boolean isReUploadPartnerCertificateDisplayed() {
 		return isElementDisplayed(mispPartnerCertificatePopup);
 	}
-	
+
 	public boolean isCorrespondingPartnerIdDisplayed() {
 		return isElementDisplayed(correspondingPartnerId);
 	}
-	
+
 	public String getPartnerType() {
-		return getTextFromLocator(partnerTypeContext);
+		return getTextFromAttribute(partnerTypeContext, "value");
 	}
-	
+
 	public String getPartnerDomainType() {
-		return getTextFromLocator(partnerDomainTypeContext);
+		return getTextFromAttribute(partnerDomainTypeContext, "value");
 	}
-	
+
 	public boolean isCertificateFormatTextNotEditable() {
-	    return isElementNotEditable(certificateFormatText);
+		return isElementNotEditable(certificateFormatText);
 	}
 
 }

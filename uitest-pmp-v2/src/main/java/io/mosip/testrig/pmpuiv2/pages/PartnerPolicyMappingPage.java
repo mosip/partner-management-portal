@@ -1,15 +1,14 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
 
 public class PartnerPolicyMappingPage extends BasePage {
 
-	@FindBy(xpath = "//h1[text()='Partner - Policy Linking']")
+	@FindBy(id = "page_title")
 	private WebElement partnerPolicyLinkingTitle;
 
 	@FindBy(xpath = "//p[contains(text(),'List of Partner-Policy Linkages')]")
@@ -66,11 +65,17 @@ public class PartnerPolicyMappingPage extends BasePage {
 	@FindBy(id = "approve-reject_popup_description")
 	private WebElement confirmationPopupDetailedMessage;
 
+	@FindBy(id = "approve_popup_description")
+	private WebElement confirmPopupDetailedMessage;
+
 	@FindBy(id = "approve_btn")
 	private WebElement approveButton;
 
 	@FindBy(id = "reject_btn")
 	private WebElement rejectButton;
+
+	@FindBy(id = "confirmation_custom_btn")
+	private WebElement confirmationCustomButton;
 
 	@FindBy(id = "policy_name_filter")
 	private WebElement policyNameFilter;
@@ -210,7 +215,7 @@ public class PartnerPolicyMappingPage extends BasePage {
 	@FindBy(id = "status_asc_icon")
 	private WebElement status_asc_icon;
 
-	@FindBy(xpath = "//p[text()='authpolpartlink']")
+	@FindBy(id = "approve-reject_popup_title")
 	private WebElement policyNameInPopup;
 
 	@FindBy(xpath = "//div[text()='Approved']")
@@ -275,6 +280,105 @@ public class PartnerPolicyMappingPage extends BasePage {
 
 	@FindBy(id = "view_partner_policy_request_status")
 	private WebElement partnerPolicyRequestStatus;
+
+	@FindBy(id = "request_policy_btn")
+	private WebElement requestPolicyButton;
+
+	@FindBy(id = "page_title")
+	private WebElement pageTitle;
+
+	@FindBy(id = "sub_title_two_btn")
+	private WebElement requestPolicyBreadcrumb;
+
+	@FindBy(id = "sub_title_home_btn")
+	private WebElement requestPolicyHomeButton;
+
+	@FindBy(id = "request_policy_mandantory_msg")
+	private WebElement requestPolicyMandatoryMsg;
+
+	@FindBy(id = "request_policy_partner_type_dropdown_btn")
+	private WebElement requestPolicyPartnerTypeDropdown;
+
+	@FindBy(id = "request_policy_partner_id_dropdown_btn")
+	private WebElement requestPolicyPartnerIdDropdown;
+
+	@FindBy(id = "request_policy_partner_id_search_input")
+	private WebElement requestPolicyPartnerIdSearchInput;
+
+	@FindBy(id = "request_policy_partner_id_no_data_available")
+	private WebElement requestPolicyPartnerIdNoDataAvailable;
+
+	@FindBy(id = "request_policy_policy_group")
+	private WebElement requestPolicyPolicyGroup;
+
+	@FindBy(id = "request_policies_policy_name_dropdown_btn")
+	private WebElement requestPoliciesPolicyNameDropdown;
+
+	@FindBy(id = "request_policies_policy_name_search_input")
+	private WebElement requestPoliciesPolicyNameSearchInput;
+
+	@FindBy(id = "request_policies_policy_name_option1")
+	private WebElement requestPoliciesPolicyNameOption1;
+
+	@FindBy(id = "request_policies_policy_name_description_1")
+	private WebElement requestPoliciesPolicyNameDescription1;
+
+	@FindBy(id = "request_policy_comment_box")
+	private WebElement requestPolicyCommentBox;
+
+	@FindBy(id = "request_policy_partner_id_info")
+	private WebElement requestPolicyPartnerIdInfo;
+
+	@FindBy(id = "request_policy_policy_group")
+	private WebElement requestPolicyGroup;
+
+	@FindBy(id = "request_policies_form_clear_btn")
+	private WebElement requestPoliciesFormClearButton;
+
+	@FindBy(id = "request_policies_form_cancel_btn")
+	private WebElement requestPoliciesFormCancelButton;
+
+	@FindBy(id = "request_policies_form_submit_btn")
+	private WebElement requestPoliciesFormSubmitButton;
+
+	@FindBy(id = "blocker_prompt_description")
+	private WebElement blockerPromptDescription;
+
+	@FindBy(id = "block_messsage_proceed")
+	private WebElement blockMessageProceedButton;
+
+	@FindBy(id = "block_message_cancel")
+	private WebElement blockMessageCancelButton;
+
+	@FindBy(id = "confirmation_success_icon")
+	private WebElement confirmationSuccessIcon;
+
+	@FindBy(id = "request_policy_confirmation_header")
+	private WebElement requestPolicyConfirmationHeader;
+
+	@FindBy(id = "request_policy_confirmation_description")
+	private WebElement requestPolicyConfirmationDescription;
+
+	@FindBy(id = "confirmation_go_back_btn")
+	private WebElement confirmationGoBackButton;
+
+	@FindBy(id = "approve_popup_title")
+	private WebElement approvePopupTitle;
+
+	@FindBy(id = "approve_popup_cancel_btn")
+	private WebElement approvePopupCancelButton;
+
+	@FindBy(id = "approve_popup_submit_btn")
+	private WebElement approvePopupSubmitButton;
+
+	@FindBy(id = "request_policy_error_msg")
+	private WebElement requestPolicyErrorMsg;
+
+	@FindBy(id = "approve-reject_popup_title")
+	private WebElement approveRejectPopupTitle;
+
+	@FindBy(id = "approve-reject_popup_sub_title")
+	private WebElement approveRejectPopupSubTitle;
 
 	public PartnerPolicyMappingPage(WebDriver driver) {
 		super(driver);
@@ -376,6 +480,10 @@ public class PartnerPolicyMappingPage extends BasePage {
 		return isElementEnabled(confirmationPopupDetailedMessage);
 	}
 
+	public boolean isConfirmPopupDetailedMessageDisplayed() {
+		return isElementEnabled(confirmPopupDetailedMessage);
+	}
+
 	public boolean isApproveRejectButtonDisplayed() {
 		return isElementEnabled(rejectButton);
 	}
@@ -390,6 +498,14 @@ public class PartnerPolicyMappingPage extends BasePage {
 
 	public void clickOnApproveSubmitButton() {
 		clickOnElement(approveButton);
+	}
+
+	public boolean isConfirmationCustomButtonDisplayed() {
+		return isElementDisplayed(confirmationCustomButton);
+	}
+
+	public void clickOnConfirmationCustomButton() {
+		clickOnElement(confirmationCustomButton);
 	}
 
 	public void enterPendingPolicyNameInFilter(String value) {
@@ -688,7 +804,7 @@ public class PartnerPolicyMappingPage extends BasePage {
 		return isElementDisplayed(pendingForApproval);
 	}
 
-	public void clickOnviewButton() {
+	public void clickOnViewButton() {
 		clickOnElement(viewButton);
 	}
 
@@ -735,7 +851,7 @@ public class PartnerPolicyMappingPage extends BasePage {
 	}
 
 	public boolean isPartnerTypeContextDisplayed() {
-		return isElementDisplayed(policyGroupContext);
+		return isElementDisplayed(partnerTypeContext);
 	}
 
 	public boolean isOrgNameLabelDisplayed() {
@@ -751,7 +867,7 @@ public class PartnerPolicyMappingPage extends BasePage {
 	}
 
 	public boolean isPartnerStatusActivatedDisplayed() {
-		return isElementDisplayed(partnerPolicyRequestStatus);
+		return isElementDisplayed(partnerStatusActivated);
 	}
 
 	public boolean isCommentsLabelDisplayed() {
@@ -775,10 +891,287 @@ public class PartnerPolicyMappingPage extends BasePage {
 				.findElement(By.xpath("//div[text()='Created On " + PmpTestUtil.todayDateWithoutZeroPadder + "']"));
 		return isElementDisplayed(createdDate);
 	}
-	
+
 	public boolean isPartnerIdDisplayedInFirstColumn() {
-	    By partnerIdColumnHeader = By.id("partnerPolicyMappingRequestList.partnerId_header");
-	    return isDisplayed(partnerIdColumnHeader);
+		By partnerIdColumnHeader = By.id("partnerPolicyMappingRequestList.partnerId_header");
+		return isDisplayed(partnerIdColumnHeader);
+	}
+
+	public void clickOnRequestPolicyButton() {
+		clickOnElement(requestPolicyButton);
+	}
+
+	public void clickOnPartnerPolicyLinkingActionButton(String policyName) {
+		By actionButton = By.xpath(
+				"//td[normalize-space()='" + policyName + "']/parent::tr//button[contains(@id,'partner_list_view')]");
+		click(actionButton);
+	}
+
+	public String getPageTitle() {
+		return getTextFromLocator(pageTitle);
+	}
+
+	public boolean isRequestPolicyBreadcrumbDisplayed() {
+		return isElementDisplayed(requestPolicyBreadcrumb);
+	}
+
+	public boolean isRequestPolicyHomeButtonDisplayed() {
+		return isElementDisplayed(requestPolicyHomeButton);
+	}
+
+	public boolean isRequestPolicyMandatoryMsgDisplayed() {
+		return isElementDisplayed(requestPolicyMandatoryMsg);
+	}
+
+	public boolean isRequestPolicyPartnerTypeDropdownDisplayed() {
+		return isElementDisplayed(requestPolicyPartnerTypeDropdown);
+	}
+
+	public void clickOnRequestPolicyPartnerTypeDropdown() {
+		clickOnElement(requestPolicyPartnerTypeDropdown);
+	}
+
+	public boolean isRequestPolicyPartnerIdDropdownDisplayed() {
+		return isElementDisplayed(requestPolicyPartnerIdDropdown);
+	}
+
+	public void clickOnRequestPolicyPartnerIdDropdown() {
+		clickOnElement(requestPolicyPartnerIdDropdown);
+	}
+
+	public boolean isRequestPolicyPartnerIdNoDataAvailableDisplayed() {
+		return isElementDisplayed(requestPolicyPartnerIdNoDataAvailable);
+	}
+
+	public boolean isRequestPolicyPolicyGroupDisplayed() {
+		return isElementDisplayed(requestPolicyPolicyGroup);
+	}
+
+	public String getRequestPolicyPolicyGroupText() {
+		return getTextFromLocator(requestPolicyPolicyGroup);
+	}
+
+	public boolean isRequestPoliciesPolicyNameDropdownDisplayed() {
+		return isElementDisplayed(requestPoliciesPolicyNameDropdown);
+	}
+
+	public void clickOnRequestPoliciesPolicyNameDropdown() {
+		clickOnElement(requestPoliciesPolicyNameDropdown);
+	}
+
+	public boolean isRequestPoliciesPolicyNameOptionDisplayed() {
+		return isElementDisplayed(requestPoliciesPolicyNameOption1);
+	}
+
+	public String getRequestPoliciesPolicyNameOption1Text() {
+		return getTextFromLocator(requestPoliciesPolicyNameOption1);
+	}
+
+	public void clickOnRequestPoliciesPolicyNameOption1() {
+		clickOnElement(requestPoliciesPolicyNameOption1);
+	}
+
+	public boolean isRequestPoliciesPolicyNameDescriptionDisplayed() {
+		return isElementDisplayed(requestPoliciesPolicyNameDescription1);
+	}
+
+	public String getRequestPoliciesPolicyNameDescriptionText() {
+		return getTextFromLocator(requestPoliciesPolicyNameDescription1);
+	}
+
+	public boolean isRequestPolicyCommentBoxDisplayed() {
+		return isElementDisplayed(requestPolicyCommentBox);
+	}
+
+	public void enterRequestPolicyComment(String comment) {
+		enter(requestPolicyCommentBox, comment);
+	}
+
+	public String getRequestPolicyCommentBoxPlaceholderText() {
+		return getTextFromAttribute(requestPolicyCommentBox, GlobalConstants.PLACEHOLDER);
+	}
+
+	public boolean isRequestPolicyPartnerIdInfoDisplayed() {
+		return isElementDisplayed(requestPolicyPartnerIdInfo);
+	}
+
+	public void clickOnRequestPolicyPartnerIdInfo() {
+		clickOnElement(requestPolicyPartnerIdInfo);
+	}
+
+	public void selectPartnerType(String partnerType) {
+		clickOnElement(requestPolicyPartnerTypeDropdown);
+		By partnerTypeOption = By
+				.xpath("//button[contains(@id,'request_policy_partner_type_option') and text()='" + partnerType + "']");
+		click(partnerTypeOption);
+	}
+
+	public String getPartnerType() {
+		return getTextFromLocator(requestPolicyPartnerTypeDropdown);
+	}
+
+	public void selectPartnerIdDropdown(String value) {
+		clickOnElement(requestPolicyPartnerIdDropdown);
+		clearTextBox(requestPolicyPartnerIdSearchInput);
+		enter(requestPolicyPartnerIdSearchInput, value);
+
+		By partnerIdOption = By.xpath("//span[normalize-space()='" + value + "']");
+
+		try {
+			waitScrollAndClick(partnerIdOption);
+		} catch (TimeoutException | NoSuchElementException e) {
+			logger.warn("Partner ID not found: " + value);
+			throw new NoSuchElementException("Failed to select partner ID: " + value, e);
+		}
+	}
+
+	public void searchPartnerIdInDropdown(String value) {
+		clickOnElement(requestPolicyPartnerIdDropdown);
+		clearTextBox(requestPolicyPartnerIdSearchInput);
+		enter(requestPolicyPartnerIdSearchInput, value);
+	}
+
+	public String getRequestPolicyPartnerIdDropdown() {
+		return getTextFromAttribute(requestPolicyPartnerIdDropdown, GlobalConstants.PLACEHOLDER);
+	}
+
+	public boolean isRequestPolicyGroupDisabled() {
+		return isElementDisabled(requestPolicyGroup);
+	}
+
+	public String getRequestPoliciesPolicyNameDropdown() {
+		return getTextFromAttribute(requestPoliciesPolicyNameDropdown, GlobalConstants.PLACEHOLDER);
+	}
+
+	public boolean isRequestPoliciesPolicyNameSearchInputDisplayed() {
+		return isElementDisplayed(requestPoliciesPolicyNameSearchInput);
+	}
+
+	public void searchPolicyNameInDropdown(String value) {
+		clickOnElement(requestPoliciesPolicyNameDropdown);
+		clearTextBox(requestPoliciesPolicyNameSearchInput);
+		enter(requestPoliciesPolicyNameSearchInput, value);
+	}
+
+	public boolean isRequestPoliciesFormClearButtonDisplayed() {
+		return isElementDisplayed(requestPoliciesFormClearButton);
+	}
+
+	public void clickOnRequestPoliciesFormClearButton() {
+		clickOnElement(requestPoliciesFormClearButton);
+	}
+
+	public boolean isRequestPoliciesFormCancelButtonDisplayed() {
+		return isElementDisplayed(requestPoliciesFormCancelButton);
+	}
+
+	public void clickOnRequestPoliciesFormCancelButton() {
+		clickOnElement(requestPoliciesFormCancelButton);
+	}
+
+	public boolean isRequestPoliciesFormSubmitButtonDisplayed() {
+		return isElementDisplayed(requestPoliciesFormSubmitButton);
+	}
+
+	public boolean isRequestPoliciesFormSubmitButtonEnabled() {
+		return isElementEnabled(requestPoliciesFormSubmitButton);
+	}
+
+	public boolean isRequestPoliciesFormSubmitButtonDisabled() {
+		return isElementDisabled(requestPoliciesFormSubmitButton);
+	}
+
+	public void clickOnRequestPoliciesFormSubmitButton() {
+		clickOnElement(requestPoliciesFormSubmitButton);
+	}
+
+	public boolean isBlockerPromptDescriptionDisplayed() {
+		return isElementDisplayed(blockerPromptDescription);
+	}
+
+	public String getBlockerPromptDescriptionText() {
+		return getTextFromLocator(blockerPromptDescription);
+	}
+
+	public void clickOnBlockMessageProceedButton() {
+		clickOnElement(blockMessageProceedButton);
+	}
+
+	public void clickOnBlockMessageCancelButton() {
+		clickOnElement(blockMessageCancelButton);
+	}
+
+	public void selectPolicyName(String value) {
+		searchPolicyNameInDropdown(value);
+		By policyNameOption = By.xpath("//span[normalize-space()='" + value + "']");
+		try {
+			waitScrollAndClick(policyNameOption);
+		} catch (TimeoutException | NoSuchElementException e) {
+			logger.warn("Policy name not found: " + value);
+			throw new NoSuchElementException("Failed to select policy name: " + value, e);
+		}
+	}
+
+	public boolean isConfirmationSuccessIconDisplayed() {
+		return isElementDisplayed(confirmationSuccessIcon);
+	}
+
+	public boolean isRequestPolicyConfirmationHeaderDisplayed() {
+		return isElementDisplayed(requestPolicyConfirmationHeader);
+	}
+
+	public boolean isRequestPolicyConfirmationDescriptionDisplayed() {
+		return isElementDisplayed(requestPolicyConfirmationDescription);
+	}
+
+	public boolean isConfirmationGoBackButtonDisplayed() {
+		return isElementDisplayed(confirmationGoBackButton);
+	}
+
+	public void clickOnConfirmationGoBackButton() {
+		clickOnElement(confirmationGoBackButton);
+	}
+
+	public boolean isApprovePopupTitleDisplayed() {
+		return isElementDisplayed(approvePopupTitle);
+	}
+
+	public boolean isApprovePopupCancelButtonDisplayed() {
+		return isElementDisplayed(approvePopupCancelButton);
+	}
+
+	public void clickOnApprovePopupCancelButton() {
+		clickOnElement(approvePopupCancelButton);
+	}
+
+	public boolean isApprovePopupSubmitButtonDisplayed() {
+		return isElementDisplayed(approvePopupSubmitButton);
+	}
+
+	public void clickOnApprovePopupSubmitButton() {
+		clickOnElement(approvePopupSubmitButton);
+	}
+
+	public boolean isRequestPolicyErrorMsgDisplayed() {
+		return isElementDisplayed(requestPolicyErrorMsg);
+	}
+
+	public String getRequestPolicyErrorMsgText() {
+		return getTextFromLocator(requestPolicyErrorMsg);
+	}
+
+	public boolean isStatusDisplayedForPolicyName(String policyName, String statusText) {
+		By statusElement = By.xpath(
+				"//tr[.//td[normalize-space()='" + policyName + "']]//div[normalize-space()='" + statusText + "']");
+		return isDisplayed(statusElement);
+	}
+
+	public boolean isApproveRejectPopupTitleDisplayed() {
+		return isElementDisplayed(approveRejectPopupTitle);
+	}
+
+	public boolean isApproveRejectPopupSubTitleDisplayed() {
+		return isElementDisplayed(approveRejectPopupSubTitle);
 	}
 
 }
