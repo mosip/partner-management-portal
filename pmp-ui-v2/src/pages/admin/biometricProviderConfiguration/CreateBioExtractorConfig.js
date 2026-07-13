@@ -24,7 +24,7 @@ const LIST_ROUTE = '/partnermanagement/admin/biometric-provider-configuration-li
 const RAW_DATA_VALUE = 'rawData';
 const TEMPLATE_DATA_VALUE = 'templateData';
 
-const RAW_DATA_ATTRIBUTE_NAMES = ['photo', 'iris', 'finger'];
+const isCredentialDataFormat = (value, target) => String(value || '').trim().toLowerCase() === target.toLowerCase();
 
 const parseCsvOrArray = (raw) => {
     const list = Array.isArray(raw) ? raw : typeof raw === 'string' ? raw.split(',') : [];
@@ -124,6 +124,7 @@ function CreateBioExtractorConfig() {
     const [credentialDataFormat, setCredentialDataFormat] = useState('');
     const [attributeName, setAttributeName] = useState('');
     const [templateAttributeNameOptions, setTemplateAttributeNameOptions] = useState([]);
+    const [attributeNameByModality, setAttributeNameByModality] = useState({});
 
     const [invalidConfigName, setInvalidConfigName] = useState('');
     const [invalidProviderName, setInvalidProviderName] = useState('');
@@ -159,11 +160,14 @@ function CreateBioExtractorConfig() {
                 setModalityOptions(options);
                 const templateNames = parseTemplateAttributeNamesFromConfig(configData);
                 setTemplateAttributeNameOptions(templateNames);
+                const modalityAttrMap = parseModalityAttributeNameMapFromConfig(configData);
+                setAttributeNameByModality(modalityAttrMap);
             } catch (error) {
                 if (cancelled) return;
                 console.error('Error fetching config from system-config:', error);
                 setModalityOptions([]);
                 setTemplateAttributeNameOptions([]);
+                setAttributeNameByModality({});
             }
         })();
 
@@ -172,11 +176,16 @@ function CreateBioExtractorConfig() {
         };
     }, []);
 
+    const getRawDataAttributeName = (modalityValue) => {
+        return attributeNameByModality[String(modalityValue || '').trim().toUpperCase()] || '';
+    };
+
     const getAttributeNameOptions = () => {
-        if (credentialDataFormat === RAW_DATA_VALUE) {
-            return RAW_DATA_ATTRIBUTE_NAMES;
+        if (isCredentialDataFormat(credentialDataFormat, RAW_DATA_VALUE)) {
+            const mappedAttribute = getRawDataAttributeName(modality);
+            return mappedAttribute ? [mappedAttribute] : [];
         }
-        if (credentialDataFormat === TEMPLATE_DATA_VALUE) {
+        if (isCredentialDataFormat(credentialDataFormat, TEMPLATE_DATA_VALUE)) {
             return templateAttributeNameOptions;
         }
         return [];
@@ -184,8 +193,16 @@ function CreateBioExtractorConfig() {
 
     const onChangeCredentialDataFormat = (value) => {
         setCredentialDataFormat(value);
-        setAttributeName('');
+        setAttributeName(isCredentialDataFormat(value, RAW_DATA_VALUE) ? getRawDataAttributeName(modality) : '');
         setCredentialDataFormatOpen(false);
+    };
+
+    const onChangeModality = (value) => {
+        setModality(value);
+        setModalityOpen(false);
+        if (isCredentialDataFormat(credentialDataFormat, RAW_DATA_VALUE)) {
+            setAttributeName(getRawDataAttributeName(value));
+        }
     };
 
     const blocker = useBlocker(({ currentLocation, nextLocation }) => {
@@ -345,8 +362,8 @@ function CreateBioExtractorConfig() {
     };
 
     const getCredentialDataFormatLabel = (value) => {
-        if (value === RAW_DATA_VALUE) return t('bioExtractorConfig.rawData');
-        if (value === TEMPLATE_DATA_VALUE) return t('bioExtractorConfig.templateData');
+        if (isCredentialDataFormat(value, RAW_DATA_VALUE)) return t('bioExtractorConfig.rawData');
+        if (isCredentialDataFormat(value, TEMPLATE_DATA_VALUE)) return t('bioExtractorConfig.templateData');
         return value;
     };
 
@@ -542,15 +559,9 @@ function CreateBioExtractorConfig() {
                                                                     type="button"
                                                                     role="option"
                                                                     aria-selected={modality === option.value}
-                                                                    onClick={() => {
-                                                                        setModality(option.value);
-                                                                        setModalityOpen(false);
-                                                                    }}
+                                                                    onClick={() => onChangeModality(option.value)}
                                                                     onKeyDown={(e) =>
-                                                                        onPressEnterKey(e, () => {
-                                                                            setModality(option.value);
-                                                                            setModalityOpen(false);
-                                                                        })
+                                                                        onPressEnterKey(e, () => onChangeModality(option.value))
                                                                     }
                                                                     className={`w-full text-left px-4 py-2 text-sm hover:bg-[#F0F5FF] ${
                                                                         modality === option.value
