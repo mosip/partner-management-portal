@@ -462,7 +462,11 @@ function MapBiometricExtractorProvider() {
               id="map_bio_extractor_provider_mandatory_mapping_msg"
               className="mt-3 rounded-md border border-[#F7D18D] bg-[#FFF8EA] px-3 py-2 text-sm text-[#684B00]"
             >
-              {t("requestPolicy.mandatoryMappingBanner")}
+              {t(
+                String(policyDetails?.partnerType ?? "").toUpperCase() === "ONLINE_VERIFICATION_PARTNER"
+                  ? "requestPolicy.ovpMandatoryMappingBanner"
+                  : "requestPolicy.mandatoryMappingBanner"
+              )}
             </p>
             <div className="w-[100%] bg-snow-white mt-[1%] rounded-lg shadow-md">
               <div className="p-7">
