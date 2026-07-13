@@ -94,7 +94,7 @@ function ViewPolicyRequestDetails() {
                                         header={t('partnerPolicyRequestApproveRejectPopup.header')}
                                         description={t('partnerPolicyRequestApproveRejectPopup.description')}
                                         renderPolicyDetails={
-                                            String(policyRequestDetails?.partnerType ?? '').toUpperCase() === 'CREDENTIAL_PARTNER'
+                                            (isCredentialPartner || isOnlineVerificationPartner)
                                                 ? ({ t, isLoginLanguageRTL, popupData, onLoadingChange, onApproveBlockedChange, getPartnerTypeDescription }) => (
                                                     <CredentialPartnerPolicyDetails
                                                         t={t}

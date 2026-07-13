@@ -130,6 +130,8 @@ function CredentialPartnerPolicyDetails({
       item?.bio_extractor_configuration_name ??
       item?.bioExtractorConfigurationId ??
       item?.bio_extractor_configuration_id ??
+      item?.attributeName ??
+      item?.attribute_name ??
       '-';
 
     const providerVersion =
