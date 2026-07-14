@@ -274,6 +274,7 @@ function PolicyRequestsList() {
       state: {
         partnerId: policyRequest.partnerId,
         partnerType: getPartnerTypeDescription(policyRequest.partnerType, t),
+        rawPartnerType: (policyRequest.partnerType ?? '').toUpperCase(),
         policyGroupName: policyRequest.policyGroupName,
         policyName: policyRequest.policyName,
         policyId: policyRequest.policyId,
