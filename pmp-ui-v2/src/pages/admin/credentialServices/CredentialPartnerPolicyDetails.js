@@ -131,13 +131,7 @@ function CredentialPartnerPolicyDetails({
       item?.biometric ??
       '-';
 
-    const configuration =
-      item?.bioExtractorConfigurationName ??
-      item?.bioExtractorConfigName ??
-      item?.configName ??
-      item?.bio_extractor_configuration_name ??
-      item?.bioExtractorConfigurationId ??
-      item?.bio_extractor_configuration_id ??
+    const attributeName =
       item?.attributeName ??
       item?.attribute_name ??
       '-';
@@ -165,7 +159,7 @@ function CredentialPartnerPolicyDetails({
       item?.credential_data_format ??
       '-';
 
-    return { modality, configuration, providerVersion, providerName, credentialDataFormat };
+    return { modality, attributeName, providerVersion, providerName, credentialDataFormat };
   };
 
   useEffect(() => {
@@ -325,16 +319,15 @@ function CredentialPartnerPolicyDetails({
                 <span className="block whitespace-nowrap">{t('partnerPolicyRequestApproveRejectPopup.bioModalityLine2')}</span>
               </th>
               <th className={`w-[27%] px-4 py-2 font-semibold whitespace-normal leading-tight align-top ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>
-                <span className="block whitespace-nowrap">{t('partnerPolicyRequestApproveRejectPopup.bioExtractorConfigLine1')}</span>
-                <span className="block whitespace-nowrap">{t('partnerPolicyRequestApproveRejectPopup.bioExtractorConfigLine2')}</span>
-              </th>
-              <th className={`w-[19%] px-4 py-2 font-semibold whitespace-normal leading-tight align-top ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>
-                <span className="block whitespace-nowrap">{t('partnerPolicyRequestApproveRejectPopup.bioExtractorProviderVersionLine1')}</span>
-                <span className="block whitespace-nowrap">{t('partnerPolicyRequestApproveRejectPopup.bioExtractorProviderVersionLine2')}</span>
+                <span className="block whitespace-nowrap">{t('bioExtractorConfig.attributeName')}</span>
               </th>
               <th className={`w-[19%] px-4 py-2 font-semibold whitespace-normal leading-tight align-top ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>
                 <span className="block whitespace-nowrap">{t('partnerPolicyRequestApproveRejectPopup.bioExtractorProviderNameLine1')}</span>
                 <span className="block whitespace-nowrap">{t('partnerPolicyRequestApproveRejectPopup.bioExtractorProviderNameLine2')}</span>
+              </th>
+              <th className={`w-[19%] px-4 py-2 font-semibold whitespace-normal leading-tight align-top ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>
+                <span className="block whitespace-nowrap">{t('partnerPolicyRequestApproveRejectPopup.bioExtractorProviderVersionLine1')}</span>
+                <span className="block whitespace-nowrap">{t('partnerPolicyRequestApproveRejectPopup.bioExtractorProviderVersionLine2')}</span>
               </th>
               <th className={`w-[20%] px-4 py-2 font-semibold whitespace-normal leading-tight align-top ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>
                 <span className="block whitespace-nowrap">{t('partnerPolicyRequestApproveRejectPopup.credentialDataFormatLine1')}</span>
@@ -372,9 +365,9 @@ function CredentialPartnerPolicyDetails({
                 return (
                   <tr key={idx} className={stripe}>
                     <td className={`px-4 py-3 font-semibold whitespace-nowrap ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>{getModalityLabel(row.modality)}</td>
-                    <td className={`px-4 py-3 font-semibold ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>{row.configuration || '-'}</td>
-                    <td className={`px-4 py-3 font-semibold whitespace-nowrap ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>{row.providerVersion || '-'}</td>
+                    <td className={`px-4 py-3 font-semibold ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>{row.attributeName || '-'}</td>
                     <td className={`px-4 py-3 font-semibold ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>{row.providerName || '-'}</td>
+                    <td className={`px-4 py-3 font-semibold whitespace-nowrap ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>{row.providerVersion || '-'}</td>
                     <td className={`px-4 py-3 font-semibold ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>{getCredentialDataFormatLabel(row.credentialDataFormat)}</td>
                   </tr>
                 );
@@ -423,6 +416,9 @@ function CredentialPartnerPolicyDetails({
             <p className="text-base font-semibold text-[#191919] break-words">{partnerTypeLabel ?? '-'}</p>
           </div>
         </div>
+        <p className={`text-sm font-semibold text-[#191919] mt-4 ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>
+          {t('partnerPolicyRequestApproveRejectPopup.bioExtractorProviderMapping')}
+        </p>
         {table}
         {credentialTypeBlock}
       </div>
