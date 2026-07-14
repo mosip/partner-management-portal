@@ -114,6 +114,14 @@ function CredentialPartnerPolicyDetails({
     return upperModality;
   };
 
+  const getCredentialDataFormatLabel = (value) => {
+    if (!value || value === '-') return '-';
+    const lowerValue = String(value).toLowerCase();
+    if (lowerValue === 'rawdata') return t('bioExtractorConfig.rawData');
+    if (lowerValue === 'templatedata') return t('bioExtractorConfig.templateData');
+    return value;
+  };
+
   const normalizeBioRow = (item) => {
     const modality =
       item?.bioModality ??
@@ -367,7 +375,7 @@ function CredentialPartnerPolicyDetails({
                     <td className={`px-4 py-3 font-semibold ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>{row.configuration || '-'}</td>
                     <td className={`px-4 py-3 font-semibold whitespace-nowrap ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>{row.providerVersion || '-'}</td>
                     <td className={`px-4 py-3 font-semibold ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>{row.providerName || '-'}</td>
-                    <td className={`px-4 py-3 font-semibold ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>{row.credentialDataFormat || '-'}</td>
+                    <td className={`px-4 py-3 font-semibold ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>{getCredentialDataFormatLabel(row.credentialDataFormat)}</td>
                   </tr>
                 );
               })}

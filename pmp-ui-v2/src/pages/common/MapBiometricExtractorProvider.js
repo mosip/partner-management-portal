@@ -75,6 +75,13 @@ function MapBiometricExtractorProvider() {
   const nextRowId = () => `row_${Date.now()}_${rowIdSeqRef.current++}`;
   const initialRowIdRef = useRef(nextRowId());
 
+  const getCredentialDataFormatLabel = (value) => {
+    if (!value) return "";
+    if (String(value).toLowerCase() === "rawdata") return t("bioExtractorConfig.rawData");
+    if (String(value).toLowerCase() === "templatedata") return t("bioExtractorConfig.templateData");
+    return value;
+  };
+
   const [dataLoaded, setDataLoaded] = useState(true);
   const [errorCode, setErrorCode] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
@@ -637,7 +644,7 @@ function MapBiometricExtractorProvider() {
                               type="button"
                             >
                               <span className="w-full break-words text-wrap text-start">
-                                {row.credentialDataFormat || t("mapBiometricExtractorProvider.autoPopulatedValue")}
+                                {getCredentialDataFormatLabel(row.credentialDataFormat) || t("mapBiometricExtractorProvider.autoPopulatedValue")}
                               </span>
                             </button>
                           </div>
