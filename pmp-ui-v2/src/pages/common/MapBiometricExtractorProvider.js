@@ -289,6 +289,7 @@ function MapBiometricExtractorProvider() {
   const policyDetails = {
     partnerId: state?.partnerId || "",
     partnerType: state?.partnerType || "",
+    rawPartnerType: state?.rawPartnerType || state?.partnerType || "",
     policyGroupName: state?.policyGroupName || "",
     policyName: state?.policyName || "",
     policyId: state?.policyId || "",
@@ -470,7 +471,9 @@ function MapBiometricExtractorProvider() {
               className="mt-3 rounded-md border border-[#F7D18D] bg-[#FFF8EA] px-3 py-2 text-sm text-[#684B00]"
             >
               {t(
-                String(policyDetails?.partnerType ?? "").toUpperCase() === "ONLINE_VERIFICATION_PARTNER"
+                String(policyDetails?.rawPartnerType ?? policyDetails?.partnerType ?? "")
+                  .toUpperCase()
+                  .replace(/[\s_-]+/g, "") === "ONLINEVERIFICATIONPARTNER"
                   ? "requestPolicy.ovpMandatoryMappingBanner"
                   : "requestPolicy.mandatoryMappingBanner"
               )}

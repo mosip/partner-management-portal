@@ -390,7 +390,9 @@ function MapCredentialType() {
                 className="mt-3 rounded-md border border-[#F7D18D] bg-[#FFF8EA] px-3 py-2 text-sm text-[#684B00]"
               >
                 {t(
-                  String(state?.partnerType ?? "").toUpperCase() === "ONLINE_VERIFICATION_PARTNER"
+                  String(state?.rawPartnerType ?? state?.partnerType ?? "")
+                    .toUpperCase()
+                    .replace(/[\s_-]+/g, "") === "ONLINEVERIFICATIONPARTNER"
                     ? "requestPolicy.ovpMandatoryMappingBanner"
                     : "requestPolicy.mandatoryMappingBanner"
                 )}
