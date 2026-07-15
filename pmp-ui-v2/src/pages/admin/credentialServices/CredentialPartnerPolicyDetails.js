@@ -310,7 +310,7 @@ function CredentialPartnerPolicyDetails({
 
   const table = (
     <div className="mt-6 border border-[#E5EBFA] rounded-md overflow-hidden bg-white">
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto thin-scrollbar">
         <table className="min-w-full table-fixed">
           <thead className="bg-[#F7F9FF] text-[#6F6E6E] text-xs">
             <tr>
