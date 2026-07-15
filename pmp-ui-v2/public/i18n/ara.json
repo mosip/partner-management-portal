@@ -1236,6 +1236,10 @@
         "bioExtractorProviderNameLine1": "مزود مستخرج",
         "bioExtractorProviderNameLine2": "اسم القياسات الحيوية",
         "bioExtractorProviderMapping": "ربط مزود مستخرج القياسات الحيوية",
+        "credentialDataFormat": "تنسيق بيانات الاعتماد",
+        "credentialDataFormatLine1": "تنسيق بيانات",
+        "credentialDataFormatLine2": "الاعتماد",
+        "attributeName": "اسم السمة",
         "credentialType": "نوع بيانات الاعتماد",
         "noBioExtractors": "لم يتم تعيين أي تكوين لموفّر مستخرج القياسات الحيوية لهذه السياسة.",
         "extractorsNotConfigured": "لم يتم تكوين مستخرجات القياسات الحيوية. أضِف مستخرجات القياسات الحيوية لهذه السياسة."
@@ -1757,7 +1761,21 @@
         "delete": "حذف",
         "deleteConfirmHeader": "حذف تكوين مستخرج القياسات الحيوية",
         "deleteConfirmDescription": "عند النقر على تأكيد، سيتم حذف التكوين المحدد.",
-        "viewBioExtractorProviderConfig": "عرض تكوين مزود مستخرج القياسات الحيوية"
+        "viewBioExtractorProviderConfig": "عرض تكوين مزود مستخرج القياسات الحيوية",
+        "credentialDataFormat": "تنسيق بيانات الاعتماد",
+        "selectCredentialDataFormat": "اختر تنسيق بيانات الاعتماد",
+        "rawData": "بيانات خام",
+        "templateData": "بيانات نموذج",
+        "attributeName": "اسم السمة",
+        "selectAttributeName": "اختر اسم السمة",
+        "configurationNameInfo": "أدخل اسماً فريداً وذا معنى لتحديد هذا التكوين بسهولة. فكر في تضمين الوسائط البيومترية والمزود والإصدار.",
+        "providerNameInfo": "اختر المزود الذي سيُستخدم مستخرجه البيومتري لمعالجة البيانات البيومترية.",
+        "providerVersionInfo": "اختر إصدار المستخرج البيومتري الذي سيُستخدم لاستخراج البيانات.",
+        "biometricModalityInfo": "اختر نوع البيانات البيومترية التي ينطبق عليها هذا التكوين، مثل الوجه أو بصمة الإصبع أو القزحية.",
+        "credentialDataFormatInfo": "يحدد كيفية تقديم بيانات الاعتماد للشريك.",
+        "attributeNameInfo": "يحدد السمة لمشاركة بيانات الاعتماد.",
+        "comment": "تعليق",
+        "enterComment": "اكتب تعليقك هنا"
         },
     "mapBiometricExtractorProvider": {
         "title": "ربط مزود مستخرج القياسات الحيوية",
