@@ -1232,6 +1232,10 @@
         "bioExtractorProviderNameLine1": "Biometric Extractor",
         "bioExtractorProviderNameLine2": "Provider Name",
         "bioExtractorProviderMapping": "Biometric Extractor Provider Mapping",
+        "credentialDataFormat": "Credential Data Format",
+        "credentialDataFormatLine1": "Credential Data",
+        "credentialDataFormatLine2": "Format",
+        "attributeName": "Attribute Name",
         "credentialType": "Credential Type",
         "noBioExtractors": "No Biometric Extractor Provider Configuration has been mapped to this policy.",
         "extractorsNotConfigured": "Bio extractors are not configured. Add bio extractors for this policy."
@@ -1754,7 +1758,21 @@
         "deleteConfirmHeader": "Delete Biometric Extractor Configuration",
         "deleteConfirmDescription": "On clicking Confirm, the selected configuration will be deleted.",
         "viewBioExtractorConfigDetails": "View Biometric Extractor Configuration Details",
-        "viewBioExtractorProviderConfig": "View Biometric Extractor Provider Configuration"
+        "viewBioExtractorProviderConfig": "View Biometric Extractor Provider Configuration",
+        "credentialDataFormat": "Credential Data Format",
+        "selectCredentialDataFormat": "Select Credential Data Format",
+        "rawData": "Raw Data",
+        "templateData": "Template Data",
+        "attributeName": "Attribute Name",
+        "selectAttributeName": "Select Attribute Name",
+        "configurationNameInfo": "Enter a unique and meaningful name to easily identify this configuration. Consider including the biometric modality, extractor Provider, and version.",
+        "providerNameInfo": "Select the Provider whose biometric extractor will be used to process biometric data.",
+        "providerVersionInfo": "Select the version of the biometric extractor that will be used for data extraction.",
+        "biometricModalityInfo": "Select the type of biometric data this configuration applies to, such as Face, Fingerprint, or Iris.",
+        "credentialDataFormatInfo": "Defines how credential data is presented to the partner.",
+        "attributeNameInfo": "Defines attribute for sharing credential data.",
+        "comment": "Comment",
+        "enterComment": "Write your comment here"
         },
     "mapBiometricExtractorProvider": {
         "title": "Map Biometric Extractor Provider",

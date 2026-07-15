@@ -45,3 +45,22 @@ code {
   content: 'x';
   font-weight: 700 !important;
 }
+
+.thin-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #C1C1C1 transparent;
+}
+
+.thin-scrollbar::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+}
+
+.thin-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.thin-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #C1C1C1;
+  border-radius: 9999px;
+}

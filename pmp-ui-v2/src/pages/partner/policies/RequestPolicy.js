@@ -272,6 +272,7 @@ function RequestPolicy() {
                                                 state: {
                                                     partnerId,
                                                     partnerType,
+                                                    rawPartnerType: 'CREDENTIAL_PARTNER',
                                                     policyGroupName,
                                                     policyName,
                                                     policyId: selectedPolicyId,
@@ -297,6 +298,7 @@ function RequestPolicy() {
                                                 state: {
                                                     partnerId,
                                                     partnerType,
+                                                    rawPartnerType: selectedRawPartnerType,
                                                     policyGroupName,
                                                     policyName,
                                                     policyId: selectedPolicyId,

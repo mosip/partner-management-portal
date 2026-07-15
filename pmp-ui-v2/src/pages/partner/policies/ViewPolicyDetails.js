@@ -36,6 +36,8 @@ function ViewPolicyDetails() {
 
     const isCredentialPartner = String(policyDetails?.partnerType ?? '').toUpperCase() === 'CREDENTIAL_PARTNER';
 
+    const isOnlineVerificationPartner = String(policyDetails?.partnerType ?? '').toUpperCase() === 'ONLINE_VERIFICATION_PARTNER';
+
     return (
         <>
             <div className={`w-full p-5 bg-anti-flash-white h-full break-words font-inter mb-[2%] ${isLoginLanguageRTL ? "mr-20 ml-1" : "ml-20 mr-1"} overflow-x-scroll`}>
@@ -135,7 +137,7 @@ function ViewPolicyDetails() {
                             </div>
                         </div>
 
-                        {isCredentialPartner && (
+                        {(isCredentialPartner || isOnlineVerificationPartner) && (
                             <>
                                 <hr className="h-px w-full bg-gray-200 border-0" />
                                 <div className="pt-6 pb-6">

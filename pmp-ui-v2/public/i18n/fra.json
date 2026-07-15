@@ -1236,6 +1236,10 @@
         "bioExtractorProviderNameLine1": "Extracteur biométrique",
         "bioExtractorProviderNameLine2": "Nom du fournisseur",
         "bioExtractorProviderMapping": "Cartographie du fournisseur d’extracteur biométrique",
+        "credentialDataFormat": "Format de données d’accréditation",
+        "credentialDataFormatLine1": "Données d’accréditation",
+        "credentialDataFormatLine2": "Format",
+        "attributeName": "Nom d’attribut",
         "credentialType": "Type d’identifiant",
         "noBioExtractors": "Aucune Configuration du fournisseur d’extracteur biométrique n’a été mappée à cette politique.",
         "extractorsNotConfigured": "Les extracteurs biométriques ne sont pas configurés. Ajoutez des extracteurs biométriques pour cette politique."
@@ -1758,7 +1762,21 @@
         "deleteConfirmHeader": "Supprimer la configuration de l’extracteur biométrique",
         "deleteConfirmDescription": "En cliquant sur Confirmer, la configuration sélectionnée sera supprimée.",
         "viewBioExtractorConfigDetails": "Afficher les détails de la configuration de l'extracteur biométrique",
-        "viewBioExtractorProviderConfig": "Afficher la configuration du fournisseur d'extracteur biométrique"
+        "viewBioExtractorProviderConfig": "Afficher la configuration du fournisseur d'extracteur biométrique",
+        "credentialDataFormat": "Format de données d'accréditation",
+        "selectCredentialDataFormat": "Sélectionnez le format de données d'accréditation",
+        "rawData": "Données brutes",
+        "templateData": "Données de gabarit",
+        "attributeName": "Nom d'attribut",
+        "selectAttributeName": "Sélectionnez le nom d'attribut",
+        "configurationNameInfo": "Saisissez un nom unique et significatif pour identifier facilement cette configuration. Pensez à inclure la modalité biométrique, le fournisseur et la version.",
+        "providerNameInfo": "Sélectionnez le fournisseur dont l'extracteur biométrique sera utilisé pour traiter les données biométriques.",
+        "providerVersionInfo": "Sélectionnez la version de l'extracteur biométrique qui sera utilisée pour l'extraction des données.",
+        "biometricModalityInfo": "Sélectionnez le type de données biométriques auquel cette configuration s'applique, comme le visage, l'empreinte digitale ou l'iris.",
+        "credentialDataFormatInfo": "Définit la manière dont les données d'accréditation sont présentées au partenaire.",
+        "attributeNameInfo": "Définit l'attribut pour le partage des données d'accréditation.",
+        "comment": "Commentaire",
+        "enterComment": "Saisissez votre commentaire ici"
         },
     "mapBiometricExtractorProvider": {
         "title": "Associer le fournisseur d'extracteur biométrique",
