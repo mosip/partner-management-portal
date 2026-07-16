@@ -314,45 +314,47 @@ function CredentialPartnerPolicyDetails({
         <table className="min-w-full table-fixed">
           <thead className="bg-[#F7F9FF] text-[#6F6E6E] text-xs">
             <tr>
-              <th className={`w-[15%] px-4 py-2 font-semibold whitespace-normal leading-tight align-top ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>
+              <th className={`${variant === 'popup' ? 'w-[15%]' : 'w-[18%]'} px-4 py-2 font-semibold whitespace-normal leading-tight align-top ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>
                 <span className="block whitespace-nowrap">{t('partnerPolicyRequestApproveRejectPopup.bioModalityLine1')}</span>
                 <span className="block whitespace-nowrap">{t('partnerPolicyRequestApproveRejectPopup.bioModalityLine2')}</span>
               </th>
-              <th className={`w-[27%] px-4 py-2 font-semibold whitespace-normal leading-tight align-top ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>
-                <span className="block whitespace-nowrap">{t('bioExtractorConfig.attributeName')}</span>
-              </th>
-              <th className={`w-[19%] px-4 py-2 font-semibold whitespace-normal leading-tight align-top ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>
+              <th className={`${variant === 'popup' ? 'w-[19%]' : 'w-[24%]'} px-4 py-2 font-semibold whitespace-normal leading-tight align-top ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>
                 <span className="block whitespace-nowrap">{t('partnerPolicyRequestApproveRejectPopup.bioExtractorProviderNameLine1')}</span>
                 <span className="block whitespace-nowrap">{t('partnerPolicyRequestApproveRejectPopup.bioExtractorProviderNameLine2')}</span>
               </th>
-              <th className={`w-[19%] px-4 py-2 font-semibold whitespace-normal leading-tight align-top ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>
+              <th className={`${variant === 'popup' ? 'w-[19%]' : 'w-[24%]'} px-4 py-2 font-semibold whitespace-normal leading-tight align-top ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>
                 <span className="block whitespace-nowrap">{t('partnerPolicyRequestApproveRejectPopup.bioExtractorProviderVersionLine1')}</span>
                 <span className="block whitespace-nowrap">{t('partnerPolicyRequestApproveRejectPopup.bioExtractorProviderVersionLine2')}</span>
               </th>
-              <th className={`w-[20%] px-4 py-2 font-semibold whitespace-normal leading-tight align-top ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>
-                <span className="block whitespace-nowrap">{t('partnerPolicyRequestApproveRejectPopup.credentialDataFormatLine1')}</span>
-                <span className="block whitespace-nowrap">{t('partnerPolicyRequestApproveRejectPopup.credentialDataFormatLine2')}</span>
+              <th className={`${variant === 'popup' ? 'w-[27%]' : 'w-[34%]'} px-4 py-2 font-semibold whitespace-normal leading-tight align-top ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>
+                <span className="block whitespace-nowrap">{t('bioExtractorConfig.attributeName')}</span>
               </th>
+              {variant === 'popup' && (
+                <th className={`w-[20%] px-4 py-2 font-semibold whitespace-normal leading-tight align-top ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>
+                  <span className="block whitespace-nowrap">{t('partnerPolicyRequestApproveRejectPopup.credentialDataFormatLine1')}</span>
+                  <span className="block whitespace-nowrap">{t('partnerPolicyRequestApproveRejectPopup.credentialDataFormatLine2')}</span>
+                </th>
+              )}
             </tr>
           </thead>
           <tbody className="text-[#191919] text-sm">
             {bioLoading && (
               <tr>
-                <td colSpan={5} className="px-4 py-6">
+                <td colSpan={variant === 'popup' ? 5 : 4} className="px-4 py-6">
                   <LoadingIcon styleSet={{ loadingDiv: '!py-0' }} />
                 </td>
               </tr>
             )}
             {!bioLoading && bioError && (
               <tr>
-                <td colSpan={5} className="px-4 py-3 text-crimson-red font-semibold">
+                <td colSpan={variant === 'popup' ? 5 : 4} className="px-4 py-3 text-crimson-red font-semibold">
                   {bioError}
                 </td>
               </tr>
             )}
             {!bioLoading && !bioError && bioExtractors.length === 0 && (
               <tr>
-                <td colSpan={5} className="px-4 py-3 text-[#6F6E6E] font-semibold">
+                <td colSpan={variant === 'popup' ? 5 : 4} className="px-4 py-3 text-[#6F6E6E] font-semibold">
                   {t('partnerPolicyRequestApproveRejectPopup.noBioExtractors')}
                 </td>
               </tr>
@@ -365,10 +367,12 @@ function CredentialPartnerPolicyDetails({
                 return (
                   <tr key={idx} className={stripe}>
                     <td className={`px-4 py-3 font-semibold whitespace-nowrap ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>{getModalityLabel(row.modality)}</td>
-                    <td className={`px-4 py-3 font-semibold ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>{row.attributeName || '-'}</td>
                     <td className={`px-4 py-3 font-semibold ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>{row.providerName || '-'}</td>
                     <td className={`px-4 py-3 font-semibold whitespace-nowrap ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>{row.providerVersion || '-'}</td>
-                    <td className={`px-4 py-3 font-semibold ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>{getCredentialDataFormatLabel(row.credentialDataFormat)}</td>
+                    <td className={`px-4 py-3 font-semibold ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>{row.attributeName || '-'}</td>
+                    {variant === 'popup' && (
+                      <td className={`px-4 py-3 font-semibold ${isLoginLanguageRTL ? 'text-right' : 'text-left'}`}>{getCredentialDataFormatLabel(row.credentialDataFormat)}</td>
+                    )}
                   </tr>
                 );
               })}

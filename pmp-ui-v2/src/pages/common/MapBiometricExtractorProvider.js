@@ -605,21 +605,6 @@ function MapBiometricExtractorProvider() {
                         <div className="grid grid-cols-2 gap-4 my-2 max-[450px]:grid-cols-1">
                           <div className="flex flex-col w-full max-[450px]:w-full">
                             <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
-                              {t("bioExtractorConfig.attributeName")}
-                              <span className="text-crimson-red mx-1">*</span>
-                            </label>
-                            <button
-                              disabled
-                              className="flex items-center justify-between w-full h-auto px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-dark-blue bg-platinum-gray leading-tight overflow-x-auto whitespace-normal no-scrollbar"
-                              type="button"
-                            >
-                              <span className="w-full break-words text-wrap text-start">
-                                {row.attributeName || t("mapBiometricExtractorProvider.autoPopulatedValue")}
-                              </span>
-                            </button>
-                          </div>
-                          <div className="flex flex-col w-full max-[450px]:w-full">
-                            <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                               {t("bioExtractorConfig.providerName")}
                               <span className="text-crimson-red mx-1">*</span>
                             </label>
@@ -633,9 +618,6 @@ function MapBiometricExtractorProvider() {
                               </span>
                             </button>
                           </div>
-                        </div>
-
-                        <div className="grid grid-cols-2 gap-4 my-2 max-[450px]:grid-cols-1">
                           <div className="flex flex-col w-full max-[450px]:w-full">
                             <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                               {t("bioExtractorConfig.providerVersion")}
@@ -648,6 +630,24 @@ function MapBiometricExtractorProvider() {
                             >
                               <span className="w-full break-words text-wrap text-start">
                                 {selectedConfig?.bioextractorProviderVersion || t("mapBiometricExtractorProvider.autoPopulatedValue")}
+                              </span>
+                            </button>
+                          </div>
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-4 my-2 max-[450px]:grid-cols-1">
+                          <div className="flex flex-col w-full max-[450px]:w-full">
+                            <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+                              {t("bioExtractorConfig.attributeName")}
+                              <span className="text-crimson-red mx-1">*</span>
+                            </label>
+                            <button
+                              disabled
+                              className="flex items-center justify-between w-full h-auto px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-dark-blue bg-platinum-gray leading-tight overflow-x-auto whitespace-normal no-scrollbar"
+                              type="button"
+                            >
+                              <span className="w-full break-words text-wrap text-start">
+                                {row.attributeName || t("mapBiometricExtractorProvider.autoPopulatedValue")}
                               </span>
                             </button>
                           </div>
