@@ -15,6 +15,8 @@ import DropdownWithSearchComponent from "./fields/DropdownWithSearchComponent";
 const EMPTY_MAPPING_ROW = {
   biometricModality: "",
   biometricProviderConfiguration: "",
+  credentialDataFormat: "",
+  attributeName: "",
 };
 
 const parseCsvOrArray = (raw) => {
@@ -72,6 +74,13 @@ function MapBiometricExtractorProvider() {
   const rowIdSeqRef = useRef(0);
   const nextRowId = () => `row_${Date.now()}_${rowIdSeqRef.current++}`;
   const initialRowIdRef = useRef(nextRowId());
+
+  const getCredentialDataFormatLabel = (value) => {
+    if (!value) return "";
+    if (String(value).toLowerCase() === "rawdata") return t("bioExtractorConfig.rawData");
+    if (String(value).toLowerCase() === "templatedata") return t("bioExtractorConfig.templateData");
+    return value;
+  };
 
   const [dataLoaded, setDataLoaded] = useState(true);
   const [errorCode, setErrorCode] = useState("");
@@ -242,6 +251,8 @@ function MapBiometricExtractorProvider() {
           bioextractorProviderName: item.bioextractorProviderName || item.extractorProviderName || item.provider || "",
           bioextractorProviderVersion: item.bioextractorProviderVersion || item.extractorProviderVersion || item.version || "",
           biometricModality: item.bioModality || "",
+          credentialDataFormat: item.credentialDataFormat || item.credential_data_format || "",
+          attributeName: item.attributeName || item.attribute_name || "",
         }));
 
         setActiveConfigs((prev) => {
@@ -278,6 +289,7 @@ function MapBiometricExtractorProvider() {
   const policyDetails = {
     partnerId: state?.partnerId || "",
     partnerType: state?.partnerType || "",
+    rawPartnerType: state?.rawPartnerType || state?.partnerType || "",
     policyGroupName: state?.policyGroupName || "",
     policyName: state?.policyName || "",
     policyId: state?.policyId || "",
@@ -326,6 +338,8 @@ function MapBiometricExtractorProvider() {
           const selectedConfig = getSelectedConfig(rowId, value);
           updatedRow.bioextractorProviderName = selectedConfig?.bioextractorProviderName || "";
           updatedRow.bioextractorProviderVersion = selectedConfig?.bioextractorProviderVersion || "";
+          updatedRow.credentialDataFormat = selectedConfig?.credentialDataFormat || "";
+          updatedRow.attributeName = selectedConfig?.attributeName || "";
         }
 
         return updatedRow;
@@ -388,7 +402,8 @@ function MapBiometricExtractorProvider() {
           const selectedConfig = getSelectedConfig(row.id, row.biometricProviderConfiguration) || {};
           return {
             biometric: (row.biometricModality || "").toLowerCase(),
-            attributeName: getAttributeName(row.biometricModality),
+            attributeName: row.attributeName || getAttributeName(row.biometricModality),
+            credentialDataFormat: row.credentialDataFormat || "",
             extractorProvider: selectedConfig.bioextractorProviderName,
             extractorProviderVersion: selectedConfig.bioextractorProviderVersion,
           };
@@ -455,7 +470,13 @@ function MapBiometricExtractorProvider() {
               id="map_bio_extractor_provider_mandatory_mapping_msg"
               className="mt-3 rounded-md border border-[#F7D18D] bg-[#FFF8EA] px-3 py-2 text-sm text-[#684B00]"
             >
-              {t("requestPolicy.mandatoryMappingBanner")}
+              {t(
+                String(policyDetails?.rawPartnerType ?? policyDetails?.partnerType ?? "")
+                  .toUpperCase()
+                  .replace(/[\s_-]+/g, "") === "ONLINEVERIFICATIONPARTNER"
+                  ? "requestPolicy.ovpMandatoryMappingBanner"
+                  : "requestPolicy.mandatoryMappingBanner"
+              )}
             </p>
             <div className="w-[100%] bg-snow-white mt-[1%] rounded-lg shadow-md">
               <div className="p-7">
@@ -584,6 +605,21 @@ function MapBiometricExtractorProvider() {
                         <div className="grid grid-cols-2 gap-4 my-2 max-[450px]:grid-cols-1">
                           <div className="flex flex-col w-full max-[450px]:w-full">
                             <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+                              {t("bioExtractorConfig.attributeName")}
+                              <span className="text-crimson-red mx-1">*</span>
+                            </label>
+                            <button
+                              disabled
+                              className="flex items-center justify-between w-full h-auto px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-dark-blue bg-platinum-gray leading-tight overflow-x-auto whitespace-normal no-scrollbar"
+                              type="button"
+                            >
+                              <span className="w-full break-words text-wrap text-start">
+                                {row.attributeName || t("mapBiometricExtractorProvider.autoPopulatedValue")}
+                              </span>
+                            </button>
+                          </div>
+                          <div className="flex flex-col w-full max-[450px]:w-full">
+                            <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                               {t("bioExtractorConfig.providerName")}
                               <span className="text-crimson-red mx-1">*</span>
                             </label>
@@ -597,6 +633,9 @@ function MapBiometricExtractorProvider() {
                               </span>
                             </button>
                           </div>
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-4 my-2 max-[450px]:grid-cols-1">
                           <div className="flex flex-col w-full max-[450px]:w-full">
                             <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
                               {t("bioExtractorConfig.providerVersion")}
@@ -609,6 +648,21 @@ function MapBiometricExtractorProvider() {
                             >
                               <span className="w-full break-words text-wrap text-start">
                                 {selectedConfig?.bioextractorProviderVersion || t("mapBiometricExtractorProvider.autoPopulatedValue")}
+                              </span>
+                            </button>
+                          </div>
+                          <div className="flex flex-col w-full max-[450px]:w-full">
+                            <label className={`block text-dark-blue text-sm font-semibold mb-1 ${isLoginLanguageRTL ? "mr-1" : "ml-1"}`}>
+                              {t("bioExtractorConfig.credentialDataFormat")}
+                              <span className="text-crimson-red mx-1">*</span>
+                            </label>
+                            <button
+                              disabled
+                              className="flex items-center justify-between w-full h-auto px-2 py-2 border border-[#C1C1C1] rounded-md text-base text-dark-blue bg-platinum-gray leading-tight overflow-x-auto whitespace-normal no-scrollbar"
+                              type="button"
+                            >
+                              <span className="w-full break-words text-wrap text-start">
+                                {getCredentialDataFormatLabel(row.credentialDataFormat) || t("mapBiometricExtractorProvider.autoPopulatedValue")}
                               </span>
                             </button>
                           </div>

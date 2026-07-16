@@ -47,11 +47,11 @@ function Information({ infoKey, infoKey1, id }) {
                 <div
                     ref={iconRef}
                     id={id}
-                    onClick={() => setShowTooltip(!showTooltip)}
+                    onClick={(e) => { e.preventDefault(); e.stopPropagation(); setShowTooltip(!showTooltip); }}
                     className="cursor-pointer h-[13px] w-[13px] ml-1 flex-shrink-0"
                     role="button"
                     tabIndex="0"
-                    onKeyDown={(e) => e.key === 'Enter' && setShowTooltip(!showTooltip)}
+                    onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); e.stopPropagation(); setShowTooltip(!showTooltip); } }}
                 >
                     <img src={infoIcon} alt="info" />
                 </div>
