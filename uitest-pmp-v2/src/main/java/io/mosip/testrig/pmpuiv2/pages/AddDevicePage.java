@@ -252,7 +252,7 @@ public class AddDevicePage extends BasePage {
 				logger.info("Device type selection did not apply, retrying: expected '" + value
 						+ "' but got '" + getTextFromLocator(locator) + "'");
 			} catch (IOException e) {
-				logger.info(e.getMessage());
+				logger.error(e.getMessage(), e);
 			}
 			attempts++;
 		}
