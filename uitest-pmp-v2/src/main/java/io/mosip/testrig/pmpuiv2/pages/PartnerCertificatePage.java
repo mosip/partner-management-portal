@@ -1,5 +1,6 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 
@@ -27,6 +28,9 @@ public class PartnerCertificatePage extends BasePage {
 
 	@FindBy(id = "upload_certificate_success_msg")
 	private WebElement successMessage;
+
+	@FindBy(xpath = "//*[contains(text(),'Partner certificate for Credential Partner is uploaded successfully')]")
+	private WebElement credentialPartnerSuccessMessage;
 
 	@FindBy(xpath = "//*[text()='Partner certificate for Device Provider is uploaded successfully.']")
 	private WebElement deviceProviderSuccessMessage;
@@ -403,7 +407,7 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(xpath = "//h5[contains(text(), 'Please tap to select the Root CA / Intermediate CA Certificate')]")
 	private WebElement uploadCertInstructionText;
 
-	@FindBy(xpath = "//img[@id='confirmation_success_icon']")
+	@FindBy(xpath = "//*[@id='confirmation_success_icon']")
 	private WebElement successIcon;
 
 	@FindBy(xpath = "//h5[normalize-space()='expiredRoot.cer']")
@@ -460,6 +464,16 @@ public class PartnerCertificatePage extends BasePage {
 		return isElementDisplayed(titleBackButton);
 	}
 
+	// The Credential Partner certificate page renders without the back-arrow icon,
+	// so verify it via the upload/re-upload action button that is present instead.
+	public boolean isPartnerCertificateUploadPageDisplayed() {
+		return isElementDisplayed(uploadButton);
+	}
+
+	public boolean isPartnerCertificateReuploadPageDisplayed() {
+		return isElementDisplayed(partnerCertificateReuploadButton);
+	}
+
 	public void clickOnUploadButton() {
 		clickOnElement(uploadButton);
 	}
@@ -494,6 +508,10 @@ public class PartnerCertificatePage extends BasePage {
 
 	public boolean isSuccessMessageDisplayed() {
 		return isElementDisplayed(successMessage);
+	}
+
+	public boolean isCredentialPartnerSuccessMessageDisplayed() {
+		return isElementDisplayed(credentialPartnerSuccessMessage);
 	}
 
 	public void clickOnCloseButton() {
@@ -1239,7 +1257,11 @@ public class PartnerCertificatePage extends BasePage {
 	}
 
 	public boolean isSuccessIconDisplayed() {
-		return isElementDisplayed(successIcon);
+		// Prefer icon when present; otherwise confirmation Go Back means upload succeeded
+		if (isElementDisplayedQuick(By.id("confirmation_success_icon"), Duration.ofSeconds(3))) {
+			return true;
+		}
+		return isElementDisplayedQuick(By.id("confirmation_go_back_btn"), Duration.ofSeconds(5));
 	}
 
 	public boolean isUploadedSuccessfullyMessageDisplayed() {

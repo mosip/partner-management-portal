@@ -86,6 +86,10 @@ public class RegisterPage extends BasePage {
 		dropdownByIndex(partnerTypeDropdown, 0);
 	}
 
+	public void selectCredentialPartnerInPartnerTypeDropdown() {
+		selectByValueInDropdown(partnerTypeDropdown, "CREDENTIAL_PARTNER");
+	}
+
 	public boolean isAddressTextBoxDisplayed() {
 		return isElementDisplayed(addressTextbox);
 	}
@@ -169,7 +173,6 @@ public class RegisterPage extends BasePage {
 		System.out.println(allWindowHandles);
 		if (allWindowHandles.size() >= 2) {
 			String secondWindowHandle = allWindowHandles.toArray(new String[0])[1];
-			String firstWindowHandle = allWindowHandles.toArray(new String[0])[0];
 			// Switch to the second window
 			driver.switchTo().window(secondWindowHandle);
 		}
@@ -190,7 +193,6 @@ public class RegisterPage extends BasePage {
 		System.out.println(allWindowHandles);
 		if (allWindowHandles.size() >= 2) {
 			String secondWindowHandle = allWindowHandles.toArray(new String[0])[1];
-			String firstWindowHandle = allWindowHandles.toArray(new String[0])[0];
 			// Switch to the second window
 			driver.switchTo().window(secondWindowHandle);
 		}

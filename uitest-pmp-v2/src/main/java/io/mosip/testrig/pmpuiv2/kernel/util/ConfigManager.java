@@ -82,10 +82,12 @@ public class ConfigManager {
 	private static String PolicyData = "policyData";// loginlang
 	private static String DataSharepolicyData = "dataSharepolicyData";
 	private static String Testcases = "pmpscenariosToExecute";
+	private static String TestngSuiteFile = "testngSuiteFile";
 	private static String ReportIgnoredTestCases = "reportIgnoredTestCases";
 	private static String ReportKnownIssueTestCases = "reportKnownIssueTestCases";
 
 	private static String testcases;
+	private static String testngSuiteFile;
 	private static String loginlang;
 	private static String langcode;
 	private static String docker;
@@ -322,7 +324,12 @@ public class ConfigManager {
 		dataSharepolicyData = System.getenv(DataSharepolicyData) == null ? propsKernel.getProperty(DataSharepolicyData)
 				: System.getenv(DataSharepolicyData);
 
-		testcases = System.getenv(Testcases) == null ? propsKernel.getProperty(Testcases) : System.getenv(Testcases);
+		testcases = System.getProperty(Testcases) != null ? System.getProperty(Testcases)
+				: (System.getenv(Testcases) == null ? propsKernel.getProperty(Testcases) : System.getenv(Testcases));
+
+		testngSuiteFile = System.getProperty(TestngSuiteFile) != null ? System.getProperty(TestngSuiteFile)
+				: (System.getenv(TestngSuiteFile) == null ? propsKernel.getProperty(TestngSuiteFile)
+						: System.getenv(TestngSuiteFile));
 		
 		 
 
@@ -330,6 +337,10 @@ public class ConfigManager {
 
 	public static String gettestcases() {
 		return testcases;
+	}
+
+	public static String getTestngSuiteFile() {
+		return testngSuiteFile;
 	}
 
 	public static String getpolicyData() {

@@ -91,6 +91,8 @@ public class KeycloakUserManager extends BaseTestCaseFunc {
 				moduleSpecificUser = needsToBeCreatedUser;
 			} else if (needsToBeCreatedUser.equals("deactivate")) {
 				moduleSpecificUser = needsToBeCreatedUser;
+			}else if (needsToBeCreatedUser.equals("credential")) {
+					moduleSpecificUser = needsToBeCreatedUser;
 			} else {
 				moduleSpecificUser = BaseTestCaseFunc.currentModule + "-" + needsToBeCreatedUser;
 			}

@@ -43,6 +43,7 @@ public class BaseClass {
 	protected String password = allpassword[0];
 	public static final Logger logger = Logger.getLogger(BaseClass.class);
 	public static String data;
+	private static boolean chromeDriverReady;
 
 	@BeforeMethod
 	public void setUp(Method method) throws Exception {
@@ -51,13 +52,16 @@ public class BaseClass {
 			logger.info("Docker start");
 			String configFilePath = "/usr/bin/chromedriver";
 			System.setProperty("webdriver.chrome.driver", configFilePath);
-		} else {
+		} else if (!chromeDriverReady) {
 			WebDriverManager.chromedriver().setup();
+			chromeDriverReady = true;
 			logger.info("window chrome driver start");
 		}
 
 		ChromeOptions options = new ChromeOptions();
 	    boolean isHeadless = ConfigManager.getheadless().equalsIgnoreCase("yes");
+
+	    options.addArguments("--disable-extensions", "--disable-notifications", "--disable-popup-blocking");
 
 	    if (isHeadless) {
 	        logger.info("Running in HEADLESS mode");
@@ -69,7 +73,8 @@ public class BaseClass {
 	            "--disable-dev-shm-usage",
 	            "--window-size=1920,1080",
 	            "--force-device-scale-factor=1",
-	            "--high-dpi-support=1"
+	            "--high-dpi-support=1",
+	            "--blink-settings=imagesEnabled=false"
 	        );
 	    } else {
 	        logger.info("Running in HEADED mode");
