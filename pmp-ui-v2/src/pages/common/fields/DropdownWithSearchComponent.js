@@ -92,13 +92,13 @@ const handleKeyDown = (event) => {
                         <div className={`${!selectPolicyPopup && 'absolute'} mt-auto left-0 w-full ${(styleSet && styleSet.selectionBox) ? styleSet.selectionBox : ''}`}>
                             <div className="absolute z-50 border border-gray-400 bg-white rounded-md shadow-lg w-full cursor-pointer">
                                 <div className="p-2 border-b border-gray-200 shadow-sm relative">
-                                    <span className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <span className={`absolute inset-y-0 ${isLoginLanguageRTL ? "right-0 pr-3" : "left-0 pl-3"} flex items-center pointer-events-none`}>
                                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-4 text-black mx-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 18a8 8 0 100-16 8 8 0 000 16zM21 21l-5.2-5.2" />
                                         </svg>
                                     </span>
                                     <input id={id + "_search_input"} type="text" placeholder={t(searchKey)} data-placeholder-id={`${id}_search_placeholder`} value={searchItem} onChange={(e) => setSearchItem(e.target.value)}
-                                        className="w-full h-8 pl-8 py-1 text-sm text-dark-blue border border-gray-400 rounded-md focus:outline-none" />
+                                        className={`w-full h-8 ${isLoginLanguageRTL ? "pr-8 pl-2 text-right" : "pl-8 pr-2 text-left"} py-1 text-sm text-dark-blue border border-gray-400 rounded-md focus:outline-none`} />
                                 </div>
                                 {filteredPolicyGroupList.length === 0 && (
                                     <div className="min-h-3 p-4 cursor-auto">
