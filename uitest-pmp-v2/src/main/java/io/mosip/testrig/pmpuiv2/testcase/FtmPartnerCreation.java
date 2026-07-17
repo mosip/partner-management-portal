@@ -159,7 +159,7 @@ public class FtmPartnerCreation extends BaseClass {
 //		assertTrue(partnerCertificatePage.isReUploadPartnerCertificateSubTextDisplayed(), GlobalConstants.isReUploadPartnerCertificateSubTextDisplayed);
 
 		assertTrue(partnerCertificatePage.isPleaseTabToSelectTextDisplayed(), GlobalConstants.isPleaseTabTextDisplayed);
-		assertTrue(partnerCertificatePage.isCertFormatesTextDisplayed(), GlobalConstants.isCertFormateDisplayed);
+		assertTrue(partnerCertificatePage.isPartnercertFormatesTextDisplayed(), GlobalConstants.isCertFormateDisplayed);
 		assertTrue(partnerCertificatePage.isLastUploadTimeAndDateTextDisplayed(),
 				GlobalConstants.isLastUploadTimeAndDateDisplayed);
 

@@ -76,6 +76,7 @@ public class GlobalConstants {
 	public static final String EXCEPTION_STRING_2 = "Exception ";
 	public static final String AUTOMATION = "Automation";
 	public static final String AUTOMATION_2 = "Automation2";
+	public static final String AUTOMATION_3 = "Automation3";
 	public static final String AUTOMATION_TEMP = "AutomationTemp";
 	public static final String AUTOMATION_25 = "Automation25";
 	public static final String AUTOMATION_9 = "Automation9";
@@ -1393,7 +1394,7 @@ public class GlobalConstants {
 	public static final String EMAIL_INVALID_FORMAT_ERROR_MSG = "Enter valid email address and try again";
 	public static final int EMAIL_MAX_LENGTH = 254;
 	public static final String CONTACT_NUMBER_INVALID_ERROR_MSG = "Enter valid contact number and try again";
-	public static final String CONTACT_NUMBER_PLACEHOLDER_TEXT = "Enter phone number";
+	public static final String CONTACT_NUMBER_PLACEHOLDER_TEXT = "Enter Phone Number";
 	public static final int CONTACT_NUMBER_MAX_LENGTH = 16;
 	public static final String SHORT_PHONE_NUMBER = "12345";
 
