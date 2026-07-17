@@ -254,7 +254,7 @@ public class PartnerPolicyMappingPage extends BasePage {
 	@FindBy(xpath = "//p[text()='automationui policy group']")
 	private WebElement policyGroupContext;
 
-	@FindBy(xpath = "//p[text()='Auth_Partner']")
+	@FindBy(id = "view_partner_policy_request_partner_type_context")
 	private WebElement partnerTypeContext;
 
 	@FindBy(xpath = "//p[text()='AABBCC']")
@@ -263,7 +263,7 @@ public class PartnerPolicyMappingPage extends BasePage {
 	@FindBy(xpath = "//p[text()='Partner Status']")
 	private WebElement partnerStatusLabel;
 
-	@FindBy(xpath = "//span[text()='Activated']")
+	@FindBy(xpath = "//span[text()='Active']")
 	private WebElement partnerStatusActivated;
 
 	@FindBy(xpath = "//p[text()='Comments']")

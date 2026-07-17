@@ -99,7 +99,7 @@ public class MispPartnerTest extends BaseClass {
 		assertEquals(partnerCertificatePage.getPartnerType(), GlobalConstants.MISP_PARTNER, "Verify partner type");
 		assertEquals(partnerCertificatePage.getPartnerDomainType(), GlobalConstants.MISP_DOMAINTYPE,
 				"Verify partner domain type");
-		assertTrue(partnerCertificatePage.isCertFormatesTextDisplayed(), GlobalConstants.isCertFormatesTextDisplayed);
+		assertTrue(partnerCertificatePage.isPartnercertFormatesTextDisplayed(), GlobalConstants.isCertFormatesTextDisplayed);
 		assertTrue(partnerCertificatePage.isLastUploadTimeAndDateTextDisplayed(),
 				GlobalConstants.isLastUploadTimeAndDateTextDisplayed);
 		assertTrue(partnerCertificatePage.isCertificateFormatTextNotEditable(),

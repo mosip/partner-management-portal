@@ -16,7 +16,7 @@ import io.mosip.testrig.pmpuiv2.pages.PolicyGroupPage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
-@Test(dependsOnGroups = { "AuthPartnerCreation" }, groups = { "PartnerPolicyMappingTest" })
+@Test(dependsOnGroups = { "PolicyCreationForAuthPartner" }, groups = { "PartnerPolicyMappingTest" })
 public class PartnerPolicyMappingTest extends BaseClass {
 	private BasePage basePage;
 	private DashboardPage dashboardPage;

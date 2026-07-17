@@ -143,7 +143,7 @@ public class PolicyAdminAndPartnerCreation extends BaseClass {
 				GlobalConstants.isUploadPartnerCertificatePopUpDisplayed);
 		assertTrue(partnerCertificatePage.isPleaseTabToSelectTextDisplayed(),
 				GlobalConstants.isPleaseTabToSelectTextDisplayed);
-		assertTrue(partnerCertificatePage.isCertFormatesTextDisplayed(), GlobalConstants.isCertFormatesTextDisplayed);
+		assertTrue(partnerCertificatePage.isPartnercertFormatesTextDisplayed(), GlobalConstants.isCertFormatesTextDisplayed);
 		partnerCertificatePage.uploadPolicyUserClientCertificate();
 		partnerCertificatePage.clickOnSubmitButton();
 		assertTrue(partnerCertificatePage.isSuccessMessageDisplayed(), GlobalConstants.isSuccessMessageDisplayed);
