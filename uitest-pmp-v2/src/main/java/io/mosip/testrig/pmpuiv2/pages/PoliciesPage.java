@@ -273,6 +273,9 @@ public class PoliciesPage extends BasePage {
 
 	@FindBy(id = "policies_request_btn")
 	private WebElement tabularPoliciesRequestButton;
+	
+	@FindBy(id = "policies_misp_policy_tab")
+	private WebElement mispPolicyTab;
 
 	public PoliciesPage(WebDriver driver) {
 		super(driver);
@@ -725,6 +728,10 @@ public class PoliciesPage extends BasePage {
 	public boolean isPolicyIdDisplayedInFourthColumnOnPoliciesPage() {
 		By policyIdColumnHeader = By.id("policies.policyId_header");
 		return isDisplayed(policyIdColumnHeader);
+	}
+	
+	public void clickOnMispPolicyTab() {
+		clickOnElement(mispPolicyTab);
 	}
 
 }

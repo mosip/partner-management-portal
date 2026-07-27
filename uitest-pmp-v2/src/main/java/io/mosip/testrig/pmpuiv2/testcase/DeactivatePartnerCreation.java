@@ -79,7 +79,7 @@ public class DeactivatePartnerCreation extends BaseClass {
 				GlobalConstants.isUploadPartnerCertificatePopUpDisplayed);
 		assertTrue(partnerCertificatePage.isPleaseTabToSelectTextDisplayed(),
 				GlobalConstants.isPleaseTabToSelectTextDisplayed);
-		assertTrue(partnerCertificatePage.isCertFormatesTextDisplayed(), GlobalConstants.isCertFormatesTextDisplayed);
+		assertTrue(partnerCertificatePage.isPartnercertFormatesTextDisplayed(), GlobalConstants.isCertFormatesTextDisplayed);
 		partnerCertificatePage.uploadDeactivateUserClientCertificate();
 		partnerCertificatePage.clickOnSubmitButton();
 		assertTrue(partnerCertificatePage.isSuccessMessageDisplayed(), GlobalConstants.isSuccessMessageDisplayed);

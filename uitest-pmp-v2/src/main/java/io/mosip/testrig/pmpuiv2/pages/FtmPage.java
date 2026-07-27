@@ -378,7 +378,7 @@ public class FtmPage extends BasePage {
 	@FindBy(xpath = "//tr[@id='ftm_list_item1']/td[6][normalize-space()='']")
 	private WebElement ftmCertDetailsEmpty;
 
-	@FindBy(xpath = "//div[@class='px-[3.5%] py-[2%]']//h3")
+	@FindBy(id = "upload_certificate_popup_title")
 	private WebElement reUploadPopUpTitle;
 
 	@FindBy(xpath = "//input[@value='FTM Chip Provider']")
@@ -699,7 +699,7 @@ public class FtmPage extends BasePage {
 	}
 
 	public boolean isDownloadButtonViewPageDisabled() {
-		return isElementEnabled(downloadButtonViewPage);
+		return isElementDisabled(downloadButtonViewPage);
 	}
 
 	public void clickOnFtmListManageCertificate() {

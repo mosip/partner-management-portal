@@ -1,6 +1,9 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
 import java.io.IOException;
+import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
@@ -13,6 +16,7 @@ import org.openqa.selenium.support.FindBy;
 public class MispPartnerPage extends BasePage {
 
 	private static final Logger logger = Logger.getLogger(MispPartnerPage.class);
+	private static final Duration INLINE_VALIDATION_TIMEOUT = Duration.ofSeconds(2);
 
 	@FindBy(id = "create_partner_btn")
 	private WebElement createPartnerButton;
@@ -32,9 +36,6 @@ public class MispPartnerPage extends BasePage {
 	@FindBy(id = "create_partner_partner_type_dropdown_btn")
 	private WebElement partnerTypeDropdown;
 
-	@FindBy(id = "policy_group_selector_search_input")
-	private WebElement policyGroupDropdownSearchOption;
-
 	@FindBy(id = "create_partner_address")
 	private WebElement partnerAddressTextbox;
 
@@ -52,6 +53,9 @@ public class MispPartnerPage extends BasePage {
 
 	@FindBy(id = "create_partner_lang_code_dropdown_btn")
 	private WebElement notificationDropdown;
+
+	@FindBy(id = "create_partner_lang_code_option1")
+	private WebElement notificationLanguageOption1;
 
 	@FindBy(id = "create_partner_organization_name_info_info_description")
 	private WebElement organizationNameInfo;
@@ -119,14 +123,59 @@ public class MispPartnerPage extends BasePage {
 	@FindBy(id = "create_partner_email_id_cancel_btn")
 	private WebElement partnerEmailIdCancelBtn;
 
+	@FindBy(id = "create_partner_partner_type_option1")
+	private WebElement abisPartnerOption;
+
 	@FindBy(id = "create_partner_partner_type_option3")
 	private WebElement mispPartner;
 
 	@FindBy(id = "create_partner_organization_name_info")
 	private WebElement oragnizationInfoButton;
 
-	@FindBy(id = "policy_group_selector_search_input")
+	@FindBy(xpath = "(//*[@id='policy_group_selector_search_input'])[1]")
 	private WebElement policyGroupDropdownSearchInput;
+
+	@FindBy(id = "partner_upload_certificate_btn")
+	private WebElement uploadOrReuploadCertificateButton;
+
+	@FindBy(id = "partner_select_policy_group_btn")
+	private WebElement selectPolicyGroupButton;
+
+	@FindBy(id = "select_policy_group_popup_title")
+	private WebElement policyGroupPopupTitle;
+
+	@FindBy(id = "select_policy_group_popup_subtitle")
+	private WebElement policyGroupPopupSubTitle;
+
+	@FindBy(id = "select_policy_group_popup_description")
+	private WebElement policyGroupPopupDescription;
+
+	@FindBy(id = "select_policyPopup_partner_type")
+	private WebElement policyGroupPopupPartnerType;
+
+	@FindBy(id = "policy_group_selector_dropdown_button")
+	private WebElement policyGroupPopupPolicyGroupDropdown;
+
+	@FindBy(id = "select_policy_group_view_text")
+	private WebElement viewMoreOption;
+
+	@FindBy(id = "policy_group_selector_search_input")
+	private WebElement policyGroupPopupSearchInput;
+
+	@FindBy(id = "policy_group_selector_option_name_1")
+	private WebElement policyGroupPopupPolicyGroupName;
+
+	@FindBy(id = "policy_group_selector_option_desc_1")
+	private WebElement policyGroupPopupPolicyGroupDescription;
+
+	@FindBy(id = "select_policy_group_cancel")
+	private WebElement policyGroupPopupCancelButton;
+
+	@FindBy(id = "select_policy_group_submit_btn")
+	private WebElement policyGroupPopupSubmitButton;
+
+	@FindBy(id = "partners_list_success_msg")
+	private WebElement policyGroupPopupSuccessMessage;
 
 	public MispPartnerPage(WebDriver driver) {
 		super(driver);
@@ -136,21 +185,89 @@ public class MispPartnerPage extends BasePage {
 		clickOnElement(createPartnerButton);
 	}
 
+	public boolean isCreatePartnerButtonDisplayed() {
+		return isElementDisplayed(createPartnerButton);
+	}
+
+	public boolean isCreatePartnerButtonEnabled() {
+		return isElementEnabled(createPartnerButton);
+	}
+
 	public boolean isCreatePrtnerPageTitleDisplayed() {
 		return isElementDisplayed(createPrtnerPageTitle);
+	}
+
+	public String getCreatePartnerPageTitleText() {
+		return getTextFromLocator(createPrtnerPageTitle);
 	}
 
 	public String getBreadcrumbTextOfCreatePartnerPage() {
 		return getTextFromLocator(homeButton) + getTextFromLocator(listOfPartnerButton);
 	}
 
+	public boolean isHomeButtonDisplayed() {
+		return isElementDisplayed(homeButton);
+	}
+
+	public boolean isListOfPartnerButtonDisplayed() {
+		return isElementDisplayed(listOfPartnerButton);
+	}
+
 	public boolean isCreatePartnerMandatoryFieldInfoDisplayed() {
 		return isElementDisplayed(createPartnerMandatoryMsg);
+	}
+
+	public String getCreatePartnerMandatoryFieldInfoText() {
+		return getTextFromLocator(createPartnerMandatoryMsg);
+	}
+
+	public boolean isPartnerTypeDropdownDisplayed() {
+		return isElementDisplayed(partnerTypeDropdown);
 	}
 
 	public boolean isDefaultMispPartnerDisplayed() {
 		clickOnElement(partnerTypeDropdown);
 		return isElementDisplayed(mispPartner);
+	}
+
+	public boolean isAbisPartnerOptionDisplayed() {
+		return isElementDisplayed(abisPartnerOption);
+	}
+
+	public void clickOnAbisPartnerOption() {
+		clickOnElement(abisPartnerOption);
+	}
+
+	public boolean isMispPartnerOptionDisplayed() {
+		return isElementDisplayed(mispPartner);
+	}
+
+	public void clickOnMispPartnerOption() {
+		clickOnElement(mispPartner);
+	}
+
+	public String getSelectedPartnerTypeText() {
+		return getTextFromLocator(partnerTypeDropdown);
+	}
+
+	public String getOrganizationNameInfoText() {
+		return getTextFromLocator(organizationNameInfo);
+	}
+
+	public int getPartnerTypeDropdownOptionCount() {
+		List<WebElement> options = driver
+				.findElements(By.xpath("//*[contains(@id, 'create_partner_partner_type_option')]"));
+		return options.size();
+	}
+
+	public List<String> getPartnerTypeDropdownOptionTexts() {
+		List<WebElement> options = driver
+				.findElements(By.xpath("//*[contains(@id, 'create_partner_partner_type_option')]"));
+		List<String> texts = new ArrayList<>();
+		for (WebElement option : options) {
+			texts.add(option.getText().trim());
+		}
+		return texts;
 	}
 
 	public void clickOnPartnerTypeDropdown() {
@@ -162,7 +279,7 @@ public class MispPartnerPage extends BasePage {
 	}
 
 	public void selectPolicyGroupDropdown(String value) {
-		clickOnElement(policyGroupDropdown);
+		ensurePolicyGroupDropdownOpen();
 		clearTextBox(policyGroupDropdownSearchInput);
 		enter(policyGroupDropdownSearchInput, value);
 		By policyGroupOption = By.xpath("//span[normalize-space()='" + value + "']");
@@ -175,9 +292,16 @@ public class MispPartnerPage extends BasePage {
 	}
 
 	public void enterInvalidPolicyGroup(String value) {
-		clickOnElement(policyGroupDropdown);
+		ensurePolicyGroupDropdownOpen();
 		clearTextBox(policyGroupDropdownSearchInput);
 		enter(policyGroupDropdownSearchInput, value);
+	}
+
+	private void ensurePolicyGroupDropdownOpen() {
+		if (!isElementDisplayedQuick(By.xpath("(//*[@id='policy_group_selector_search_input'])[1]"),
+				INLINE_VALIDATION_TIMEOUT)) {
+			clickOnElement(policyGroupDropdown);
+		}
 	}
 
 	public void selectPartnerType(String value) {
@@ -189,10 +313,18 @@ public class MispPartnerPage extends BasePage {
 	}
 
 	public void selectNotificationLanguage(String value) {
+		if (!isElementDisplayedQuick(By.id("create_partner_lang_code_option1"), INLINE_VALIDATION_TIMEOUT)) {
+			clickOnNotificationLanguageDropdown();
+		}
 		try {
-			dropdown(notificationDropdown, value);
-		} catch (IOException e) {
+			if (getTextFromLocator(notificationLanguageOption1).trim().equalsIgnoreCase(value)) {
+				clickOnElement(notificationLanguageOption1);
+				return;
+			}
+			click(By.xpath("//*[normalize-space()='" + value + "']"));
+		} catch (RuntimeException e) {
 			logger.info(e.getMessage());
+			throw e;
 		}
 	}
 
@@ -233,23 +365,24 @@ public class MispPartnerPage extends BasePage {
 	}
 
 	public boolean isPartnerAddressSpecialChNotAllowErrorDisplayed() {
-		return isElementDisplayed(partnerAddressSpecialChNotAllowError);
+		return isElementDisplayedQuick(By.id("create_partner_address_input_error"), INLINE_VALIDATION_TIMEOUT);
 	}
 
 	public boolean isPartnerOrgNameSpecialChNotAllowErrorDisplayed() {
-		return isElementDisplayed(partnerOrgNameSpecialChNotAllowError);
+		return isElementDisplayedQuick(By.id("create_partner_organization_name_input_error"),
+				INLINE_VALIDATION_TIMEOUT);
 	}
 
 	public boolean isPartnerContactSpecialChNotAllowErrorDisplayed() {
-		return isElementDisplayed(partnerContactNumberNotAllowError);
+		return isElementDisplayedQuick(By.id("create_partner_contact_number_input_error"), INLINE_VALIDATION_TIMEOUT);
 	}
 
 	public boolean isPartnerEmailIdSpecialChNotAllowErrorDisplayed() {
-		return isElementDisplayed(partnerEmailIdSpecialChNotAllowError);
+		return isElementDisplayedQuick(By.id("create_partner_email_id_input_error"), INLINE_VALIDATION_TIMEOUT);
 	}
 
 	public boolean isPartnerUserNameSpecialChNotAllowErrorDisplayed() {
-		return isElementDisplayed(partnerUserNameNotAllowError);
+		return isElementDisplayedQuick(By.id("create_partner_partner_id_input_error"), INLINE_VALIDATION_TIMEOUT);
 	}
 
 	public boolean isCreatePartnerSubmitButtonDisabled() {
@@ -305,7 +438,7 @@ public class MispPartnerPage extends BasePage {
 	}
 
 	public boolean isPartnerContactNumberNotAllowErrorDisplayed() {
-		return isElementDisplayed(partnerContactNumberNotAllowError);
+		return isElementDisplayedQuick(By.id("create_partner_contact_number_input_error"), INLINE_VALIDATION_TIMEOUT);
 	}
 
 	public void clickOnPartnerEmailIdTextBox() {
@@ -313,7 +446,7 @@ public class MispPartnerPage extends BasePage {
 	}
 
 	public boolean isUsernameMustStartWithLetterErrorDisplayed() {
-		return isElementDisplayed(partnerUserNameNotAllowError);
+		return isElementDisplayedQuick(By.id("create_partner_partner_id_input_error"), INLINE_VALIDATION_TIMEOUT);
 	}
 
 	public boolean isEmailAddressIsAlreadyRegisteredErrorDisplayed() {
@@ -338,5 +471,250 @@ public class MispPartnerPage extends BasePage {
 
 	public void clickOnUserNameTextBox() {
 		clickOnElement(userNameTextBox);
+	}
+
+	public String getCancelConfirmationPopupText() {
+		return getTextFromLocator(cancelConfirmationPopup);
+	}
+
+	public String getPartnerOrganisationFieldValue() {
+		return getTextFromAttribute(partnerOrganisationNameTextBox, "value");
+	}
+
+	public String getFirstPartnerIdText() {
+		WebElement cell = driver.findElement(By.xpath("//tr[@id='partner_list_item1']/td[1]"));
+		waitForElementVisible(cell);
+		return cell.getText().trim();
+	}
+
+	public boolean isPartnerInList(String partnerId) {
+		return isDisplayed(By.xpath("//tr[./td[normalize-space()='" + partnerId + "']]"));
+	}
+
+	public String getCertUploadStatusForPartner(String partnerId) {
+		WebElement row = driver.findElement(By.xpath("//tr[./td[normalize-space()='" + partnerId + "']]"));
+		waitForElementVisible(row);
+		return row.findElement(By.xpath("./td[6]")).getText().trim();
+	}
+
+	public String getPartnerStatusForPartner(String partnerId) {
+		WebElement row = driver.findElement(By.xpath("//tr[./td[normalize-space()='" + partnerId + "']]"));
+		waitForElementVisible(row);
+		return row.findElement(By.xpath("./td[7]")).getText().trim();
+	}
+
+	public boolean isCertStatusDisplayedInRed(String partnerId) {
+		return isDisplayed(
+				By.xpath("//tr[./td[normalize-space()='" + partnerId + "']]/td[6]//*[contains(@class,'red')]"));
+	}
+
+	public boolean isUploadCertActionAvailableForPartner(String partnerId) {
+		By directButton = By.xpath("//tr[./td[normalize-space()='" + partnerId + "']]//*[contains(@id,'upload_cert')]");
+		if (isDisplayed(directButton)) {
+			return true;
+		}
+		return isDisplayed(By
+				.xpath("//tr[./td[normalize-space()='" + partnerId + "']]//*[contains(text(),'Upload Certificate')]"));
+	}
+
+	public String getEmailAlreadyRegisteredErrorText() {
+		return getTextFromLocator(createPartnerErrorMessage);
+	}
+
+	public String getUsernameAlreadyExistErrorText() {
+		return getTextFromLocator(createPartnerErrorMessage);
+	}
+
+	public String getOrganizationNamePlaceholderText() {
+		return getTextFromAttribute(partnerOrganisationNameTextBox, "placeholder");
+	}
+
+	public String getPartnerAddressFieldValue() {
+		return getTextFromAttribute(partnerAddressTextbox, "value");
+	}
+
+	public String getPartnerAddressPlaceholderText() {
+		return getTextFromAttribute(partnerAddressTextbox, "placeholder");
+	}
+
+	public void clickOnPartnerAddressTextBox() {
+		clickOnElement(partnerAddressTextbox);
+	}
+
+	public String getEmailPlaceholderText() {
+		return getTextFromAttribute(partnerEmailIdTextBox, "placeholder");
+	}
+
+	public String getEmailFieldValue() {
+		return getTextFromAttribute(partnerEmailIdTextBox, "value");
+	}
+
+	public String getEmailValidationErrorText() {
+		return getTextFromLocator(partnerEmailIdSpecialChNotAllowError);
+	}
+
+	public String getContactNumberPlaceholderText() {
+		return getTextFromAttribute(partnerContactNumberTextBox, "placeholder");
+	}
+
+	public String getContactNumberFieldValue() {
+		return getTextFromAttribute(partnerContactNumberTextBox, "value");
+	}
+
+	public String getContactNumberValidationErrorText() {
+		return getTextFromLocator(partnerContactNumberNotAllowError);
+	}
+
+	public String getUserNameFieldValue() {
+		return getTextFromAttribute(userNameTextBox, "value");
+	}
+
+	public String getUserNamePlaceholderText() {
+		return getTextFromAttribute(userNameTextBox, "placeholder");
+	}
+
+	public String getUserNameValidationErrorText() {
+		return getTextFromLocator(partnerUserNameNotAllowError);
+	}
+
+	public boolean isNotificationLanguageDropdownDisplayed() {
+		return isElementDisplayed(notificationDropdown);
+	}
+
+	public void clickOnNotificationLanguageDropdown() {
+		clickOnElement(notificationDropdown);
+	}
+
+	public boolean isNotificationLanguageOptionVisible(String language) {
+		if (isElementDisplayedQuick(By.id("create_partner_lang_code_option1"), INLINE_VALIDATION_TIMEOUT)) {
+			return getTextFromLocator(notificationLanguageOption1).trim().equalsIgnoreCase(language);
+		}
+		return false;
+	}
+
+	public String getSelectedNotificationLanguageText() {
+		return getTextFromLocator(notificationDropdown);
+	}
+
+	public void openPolicyGroupDropdown() {
+		ensurePolicyGroupDropdownOpen();
+	}
+
+	public boolean isPolicyGroupSearchBarDisplayed() {
+		return isElementDisplayedQuick(By.xpath("(//*[@id='policy_group_selector_search_input'])[1]"),
+				INLINE_VALIDATION_TIMEOUT);
+	}
+
+	public boolean isPolicyGroupOptionVisible(String value) {
+		return isDisplayed(By.xpath("//span[normalize-space()='" + value + "']"));
+	}
+
+	public void clickUploadCertActionForPartner(String partnerId) {
+		By directButton = By.xpath("//tr[./td[normalize-space()='" + partnerId + "']]//*[contains(@id,'upload_cert')]");
+		if (isDisplayed(directButton)) {
+			click(directButton);
+		} else {
+			click(By.xpath(
+					"//tr[./td[normalize-space()='" + partnerId + "']]//*[contains(text(),'Upload Certificate')]"));
+		}
+	}
+
+	public void clickOnListOfPartnerButton() {
+		clickOnElement(listOfPartnerButton);
+	}
+
+	public boolean isMispPartnerRowStatusDisplayed(String partnerId, String certStatus, String status) {
+		By rowLocator = By.xpath("//td[normalize-space()='" + partnerId + "']/parent::tr" + "[.//td[normalize-space()='"
+				+ certStatus + "']" + " and .//td[normalize-space()='" + status + "']]");
+		return isDisplayed(rowLocator);
+	}
+
+	public void clickActionButtonByPartnerId(String partnerId) {
+		By actionBtn = By.xpath("//td[normalize-space()='" + partnerId + "']" + "/parent::tr//td//button");
+		click(actionBtn);
+	}
+
+	public void clickOnUploadOrReuploadCertificateButton() {
+		clickOnElement(uploadOrReuploadCertificateButton);
+	}
+
+	public boolean isSelectPolicyGroupButtonEnabled() {
+		return isElementEnabled(selectPolicyGroupButton);
+	}
+
+	public boolean isPolicyGroupPopupTitleDisplayed() {
+		return isElementDisplayed(policyGroupPopupTitle);
+	}
+
+	public boolean isPolicyGroupPopupSubTitleDisplayed() {
+		return isElementDisplayed(policyGroupPopupSubTitle);
+	}
+
+	public boolean isPolicyGroupPopupDescriptionDisplayed() {
+		return isElementDisplayed(policyGroupPopupDescription);
+	}
+
+	public boolean isPolicyGroupPopupPartnerTypeDisplayed() {
+		return isElementDisplayed(policyGroupPopupPartnerType);
+	}
+
+	public boolean isPolicyGroupPopupPolicyGroupDropdownDisplayed() {
+		return isElementDisplayed(policyGroupPopupPolicyGroupDropdown);
+	}
+
+	public boolean isPolicyGroupPopupSearchInputDisplayed() {
+		return isElementDisplayed(policyGroupPopupSearchInput);
+	}
+
+	public boolean isPolicyGroupPopupPolicyGroupNameDisplayed() {
+		return isElementDisplayed(policyGroupPopupPolicyGroupName);
+	}
+
+	public boolean isPolicyGroupPopupPolicyGroupDescriptionDisplayed() {
+		return isElementDisplayed(policyGroupPopupPolicyGroupDescription);
+	}
+
+	public boolean isPolicyGroupPopupSubmitButtonDisabled() {
+		return isElementDisabled(policyGroupPopupSubmitButton);
+	}
+
+	public boolean isPolicyGroupPopupSubmitButtonEnabled() {
+		return isElementEnabled(policyGroupPopupSubmitButton);
+	}
+
+	public void clickOnPolicyGroupPopupPolicyGroupDropdown() {
+		clickOnElement(policyGroupPopupPolicyGroupDropdown);
+	}
+
+	public void enterPolicyGroup(String value) {
+		enter(policyGroupPopupSearchInput, value);
+	}
+
+	public void selectPolicyGroup(String value) {
+		clickOnElement(policyGroupDropdown);
+		enter(policyGroupPopupSearchInput, value);
+		By policyGroupOption = By.xpath("//span[normalize-space()='" + value + "']");
+		click(policyGroupOption);
+	}
+
+	public void clickOnPolicyGroupPopupCancelButton() {
+		clickOnElement(policyGroupPopupCancelButton);
+	}
+
+	public void clickOnSelectPolicyGroupButton() {
+		clickOnElement(selectPolicyGroupButton);
+	}
+
+	public boolean isPolicyGroupPopupSuccessMessageDisplayed() {
+		return isElementDisplayed(policyGroupPopupSuccessMessage);
+	}
+
+	public void clickOnPolicyGroupPopupSubmitButton() {
+		clickOnElement(policyGroupPopupSubmitButton);
+	}
+
+	public String getPolicyGroupText(String partnerId) {
+		By policyGroup = By.xpath("//tr[td[normalize-space()='" + partnerId + "']]/td[4]");
+		return getTextFromLocator(policyGroup);
 	}
 }

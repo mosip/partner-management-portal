@@ -547,13 +547,13 @@ public class DatasharePolicyTest extends BaseClass {
 		datasharePolicyPage.clickOnApplyFilterButton();
 		datasharePolicyPage.clickOnActionButton();
 		datasharePolicyPage.clickOnEditButton();
-		datasharePolicyPage.enterPolicyName(GlobalConstants.AUTOMATION);
-		datasharePolicyPage.enterpolicyDescription(GlobalConstants.AUTOMATION);
+		datasharePolicyPage.enterPolicyName(GlobalConstants.AUTOMATION_3);
+		datasharePolicyPage.enterpolicyDescription(GlobalConstants.AUTOMATION_3);
 		datasharePolicyPage.clickOnEditPolicyFormSubmitButton();
 		datasharePolicyPage.clickOnGoBackButton();
 
 		datasharePolicyPage.clickOnFilterButton();
-		datasharePolicyPage.enterPolicyNameInFilter(GlobalConstants.AUTOMATION);
+		datasharePolicyPage.enterPolicyNameInFilter(GlobalConstants.AUTOMATION_3);
 		datasharePolicyPage.clickOnApplyFilterButton();
 		datasharePolicyPage.clickOnActionButton();
 		datasharePolicyPage.clickOnEditButton();
