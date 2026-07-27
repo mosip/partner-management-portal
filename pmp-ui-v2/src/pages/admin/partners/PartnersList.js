@@ -121,7 +121,7 @@ function PartnersList() {
     }
 
 
-    const url = `${getPartnerManagerUrl('/admin-partners', process.env.NODE_ENV)}?${queryParams.toString()}`;
+    const url = `${getPartnerManagerUrl('/admin-partners/v2', process.env.NODE_ENV)}?${queryParams.toString()}`;
     try {
       triggerServerMethod ? setTableDataLoaded(false) : setDataLoaded(false);
       const response = await HttpService.get(url);
@@ -233,11 +233,12 @@ function PartnersList() {
   };
 
   const isUploadCertificateEnabled = (partner) => {
-    // Upload certificate is enabled for MISP_Partner, ABIS_Partner and Manual_Adjudication
+    // Upload certificate is enabled for MISP_Partner, ABIS_Partner, Manual_Adjudication and Online_Verification_Partner
     // Disabled for deactivated state:
     return (partner.partnerType === "MISP_Partner" ||
       partner.partnerType === "ABIS_Partner" ||
-      partner.partnerType === "Manual_Adjudication") &&
+      partner.partnerType === "Manual_Adjudication" ||
+      partner.partnerType === "Online_Verification_Partner") &&
       !(partner.status === 'deactivated');
   };
 
@@ -331,8 +332,10 @@ function PartnersList() {
       reUploadHeader: "uploadCertificate.reUploadPartnerCertificate",
       isCertificateAvailable: isUploaded,
       certificateUploadDateTime: certificateUploadDateTime,
-      isMispOrAbisPartnerCertificate: partner.partnerType === "MISP_Partner" || partner.partnerType === "ABIS_Partner",
-      isManualAdjudicationPartnerCertificate: partner.partnerType === "Manual_Adjudication"
+      showPartnerIdSubtitle: partner.partnerType === "MISP_Partner" ||
+        partner.partnerType === "ABIS_Partner" ||
+        partner.partnerType === "Manual_Adjudication" ||
+        partner.partnerType === "Online_Verification_Partner"
     };
 
     // Update UI state

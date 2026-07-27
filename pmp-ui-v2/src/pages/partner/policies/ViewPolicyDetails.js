@@ -36,12 +36,30 @@ function ViewPolicyDetails() {
 
     const isCredentialPartner = String(policyDetails?.partnerType ?? '').toUpperCase() === 'CREDENTIAL_PARTNER';
 
+    const isOnlineVerificationPartner = String(policyDetails?.partnerType ?? '').toUpperCase() === 'ONLINE_VERIFICATION_PARTNER';
+
     return (
         <>
             <div className={`w-full p-5 bg-anti-flash-white h-full break-words font-inter mb-[2%] ${isLoginLanguageRTL ? "mr-20 ml-1" : "ml-20 mr-1"} overflow-x-scroll`}>
-                <div className="flex justify-between mb-5">
-                    <Title title='viewPolicyDetails.viewPolicyDetails' subTitle='viewPolicyDetails.policySection' backLink='/partnermanagement/policies/policies-list' styleSet={style} />
-                </div>
+                                {isCredentialPartner ? (
+                    <div className="mb-5">
+                        <div className="flex justify-between">
+                            <Title title='viewPolicyDetails.viewPolicyDetails' subTitle='viewPolicyDetails.policySection' backLink='/partnermanagement/policies/policies-list' styleSet={style} />
+                        </div>
+                        <div className={`mt-2 ml-3 ${isLoginLanguageRTL ? "text-right" : "text-left"}`}>
+                            <p id='view_policy_details_policy_name_subtitle' className="text-sm font-semibold text-suva-gray">
+                                {t("viewPolicyDetails.policyName")}
+                            </p>
+                            <p id='view_policy_details_policy_name_value' className="text-base font-semibold text-dark-blue">
+                                {policyDetails?.policyName || '-'}
+                            </p>
+                        </div>
+                    </div>
+                ) : (
+                    <div className="flex justify-between mb-5">
+                        <Title title='viewPolicyDetails.viewPolicyDetails' subTitle='viewPolicyDetails.policySection' backLink='/partnermanagement/policies/policies-list' styleSet={style} />
+                    </div>
+                )}
                 <div className="bg-snow-white h-fit mt-1 rounded-t-xl shadow-lg ml-3">
                     <div className={`flex-col ${isLoginLanguageRTL ? "pr-8" : "pl-8"} pt-6 pb-5`}>
                         <p id='view_policy_details_policy_id' className="text-lg text-dark-blue mb-3">{t('policies.policyId')}: <span className="font-semibold">{policyDetails.policyId}</span></p>
@@ -119,7 +137,7 @@ function ViewPolicyDetails() {
                             </div>
                         </div>
 
-                        {isCredentialPartner && (
+                        {(isCredentialPartner || isOnlineVerificationPartner) && (
                             <>
                                 <hr className="h-px w-full bg-gray-200 border-0" />
                                 <div className="pt-6 pb-6">
@@ -135,6 +153,7 @@ function ViewPolicyDetails() {
                                             policyDetails?.id ??
                                             ""
                                         }
+                                        status={policyDetails?.status}
                                         partnerTypeLabel={getPartnerTypeDescription(policyDetails?.partnerType, t) ?? policyDetails?.partnerType ?? '-'}
                                         enabled={true}
                                         variant="view"

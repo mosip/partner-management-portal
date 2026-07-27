@@ -1,16 +1,16 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate, useBlocker } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { getUserProfile } from "../../../services/UserProfileService";
-import { createRequest, getPartnerManagerUrl, isLangRTL } from "../../../utils/AppUtils";
-import { HttpService } from "../../../services/HttpService";
-import Title from "../../common/Title";
-import ErrorMessage from "../../common/ErrorMessage";
-import LoadingIcon from "../../common/LoadingIcon";
-import DropdownComponent from "../../common/fields/DropdownComponent";
-import BlockerPrompt from "../../common/BlockerPrompt";
-import Confirmation from "../../common/Confirmation";
-import { getAppConfig } from "../../../services/ConfigService";
+import { getUserProfile } from "../../services/UserProfileService";
+import { createRequest, getPartnerManagerUrl, isLangRTL } from "../../utils/AppUtils";
+import { HttpService } from "../../services/HttpService";
+import Title from "./Title";
+import ErrorMessage from "./ErrorMessage";
+import LoadingIcon from "./LoadingIcon";
+import DropdownComponent from "./fields/DropdownComponent";
+import BlockerPrompt from "./BlockerPrompt";
+import Confirmation from "./Confirmation";
+import { getAppConfig } from "../../services/ConfigService";
 
 
 
@@ -100,6 +100,7 @@ function MapCredentialType() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { state } = useLocation();
+  const isAdminPath = Boolean(state?.isAdminPath);
 
   const userProfile = getUserProfile();
   const isLoginLanguageRTL = isLangRTL(userProfile?.locale || "en");
@@ -159,15 +160,16 @@ function MapCredentialType() {
         const appConfig = await getAppConfig();
         if (cancelled) return;
 
-        const credentialTypes = appConfig?.allowedCredentialTypes;
-        const parsedCredentialTypes = Array.isArray(credentialTypes)
-          ? credentialTypes
-          : typeof credentialTypes === "string"
-            ? credentialTypes.split(",")
-            : [];
+      const credentialTypes =
+        appConfig?.allowedCredentialTypes ??
+        appConfig?.["pmp.allowed.credential.types"] ??
+        "";
 
-        const normalizedCredentialTypes = parsedCredentialTypes
-          .map((value) => String(value || "").trim())
+      const normalizedCredentialTypes =
+        (Array.isArray(credentialTypes)
+          ? credentialTypes
+          : String(credentialTypes).split(","))
+          .map(value => String(value || "").trim())
           .filter(Boolean);
 
         setAllowedCredentialTypes(normalizedCredentialTypes);
@@ -215,10 +217,7 @@ function MapCredentialType() {
 
   const hasUnsavedChanges = useMemo(() => Boolean((credentialType || "").trim()), [credentialType]);
 
-  const blocker = useBlocker(({ currentLocation, nextLocation }) => {
-    if (isSubmitClicked || requestPolicySuccess) return false;
-    return hasUnsavedChanges && currentLocation.pathname !== nextLocation.pathname;
-  });
+ const blocker = null;
 
   useEffect(() => {
     if (hasRequiredState) return;
@@ -232,7 +231,9 @@ function MapCredentialType() {
   };
 
   const clickOnCancel = () => {
-    navigate("/partnermanagement/policies/policies-list");
+    navigate(isAdminPath
+      ? "/partnermanagement/admin/policy-requests-list"
+      : "/partnermanagement/policies/policies-list");
   };
 
   const updateCredentialType = (fieldName, selectedValue) => {
@@ -265,10 +266,13 @@ function MapCredentialType() {
       const request = createRequest({
         partnerPolicyRequestId: requestIdForBioApi,
         credentialType: ct,
-      });
-
+       },
+        "mosip.pms.partners.credentialtypes.request.post"
+    );
+        const timestamp = new Date().toISOString();
+    request.requestTime = timestamp;
       const url = getPartnerManagerUrl(
-        `/partners/${state.partnerId}/policies/${policyIdForApi}/credential-types-request`,
+        `/partner-policy-requests/${requestIdForBioApi}/credential-types-request`,
         process.env.NODE_ENV
       );
 
@@ -315,11 +319,13 @@ function MapCredentialType() {
 
       setConfirmationData({
         title: "mapCredentialType.title",
-        backUrl: "/partnermanagement/policies/policies-list",
+        backUrl: isAdminPath
+          ? "/partnermanagement/admin/policy-requests-list"
+          : "/partnermanagement/policies/policies-list",
         header: "mapCredentialType.successHeader",
         description: "mapCredentialType.successMsgLine1",
         description1: "mapCredentialType.successMsgLine2",
-        subNavigation: "requestPolicy.policies",
+        subNavigation: isAdminPath ? "viewPolicyRequest.listOfPolicyRequests" : "requestPolicy.policies",
       });
       setRequestPolicySuccess(true);
     } catch (err) {
@@ -361,7 +367,6 @@ function MapCredentialType() {
       {(!dataLoaded || !bioMetaLoaded) && <LoadingIcon />}
       {dataLoaded && bioMetaLoaded && (
         <>
-          {blocker?.state === "blocked" && <BlockerPrompt blocker={blocker} />}
           {errorMsg && (
             <ErrorMessage
               id="map_credential_type_error_msg"
@@ -375,7 +380,7 @@ function MapCredentialType() {
             <Title
               title={requestPolicySuccess ? "requestPolicy.requestPolicy" : "mapCredentialType.title"}
               subTitle={requestPolicySuccess ? "requestPolicy.policies" : "requestPolicy.requestPolicy"}
-              backLink="/partnermanagement/policies/policies-list"
+              backLink={isAdminPath ? "/partnermanagement/admin/policy-requests-list" : "/partnermanagement/policies/policies-list"}
             />
 
             {!requestPolicySuccess ? (
@@ -384,7 +389,13 @@ function MapCredentialType() {
                 id="map_credential_type_mandatory_mapping_msg"
                 className="mt-3 rounded-md border border-[#F7D18D] bg-[#FFF8EA] px-3 py-2 text-sm text-[#684B00]"
               >
-                {t("requestPolicy.mandatoryMappingBanner")}
+                {t(
+                  String(state?.rawPartnerType ?? state?.partnerType ?? "")
+                    .toUpperCase()
+                    .replace(/[\s_-]+/g, "") === "ONLINEVERIFICATIONPARTNER"
+                    ? "requestPolicy.ovpMandatoryMappingBanner"
+                    : "requestPolicy.mandatoryMappingBanner"
+                )}
               </p>
 
               <div className="w-[100%] bg-snow-white mt-[1%] rounded-lg shadow-md overflow-visible">

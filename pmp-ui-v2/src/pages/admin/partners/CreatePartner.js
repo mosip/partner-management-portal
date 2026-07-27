@@ -193,6 +193,8 @@ function CreatePartner() {
             return "ABIS_Partner";
         } else if (partnerType === "Manual_Adjudication") {
             return "Manual_Adjudication";
+        } else if (partnerType === "ONLINE_VERIFICATION_PARTNER") {
+            return "ONLINE_VERIFICATION_PARTNER";
         }
     };
 
@@ -203,6 +205,8 @@ function CreatePartner() {
             return "createPartner.uploadAbisPartnerCertificate";
         } else if (partnerType === "Manual_Adjudication") {
             return "createPartner.uploadManualAdjudicationPartnerCertificate";
+        } else if (partnerType === "ONLINE_VERIFICATION_PARTNER") {
+            return "createPartner.uploadOnlineVerificationPartnerCertificate";
         }
     };
 
@@ -210,7 +214,7 @@ function CreatePartner() {
         const fetchData = async () => {
             setDataLoaded(false);
             try {
-                // Initialize partner type dropdown data with MISP Partner and ABIS Partner
+                // Initialize partner type dropdown data
                 const partnerTypeData = [
                     {
                         partnerType: "Manual_Adjudication",
@@ -223,6 +227,10 @@ function CreatePartner() {
                     {
                         partnerType: "ABIS_PARTNER",
                         description: getPartnerTypeDescription("ABIS_PARTNER", t)
+                    },
+                    {
+                        partnerType: "ONLINE_VERIFICATION_PARTNER",
+                        description: getPartnerTypeDescription("ONLINE_VERIFICATION_PARTNER", t)
                     }
                 ];
                 setPartnerTypeDropdownData(createDropdownData('partnerType', 'description', false, partnerTypeData, t));
@@ -291,12 +299,20 @@ function CreatePartner() {
                     const isMispPartner = partnerTypeValue === "MISP_PARTNER";
                     const isAbisPartner = partnerTypeValue === "ABIS_PARTNER";
                     const isManualAdjudicationPartner = partnerTypeValue === "Manual_Adjudication";
+                    const isOnlineVerificationPartner = partnerTypeValue === "ONLINE_VERIFICATION_PARTNER";
+
+                    const getSuccessHeader = () => {
+                        if (isManualAdjudicationPartner) return "createPartner.manualAdjudicationPartnerSuccessHeader";
+                        if (isMispPartner) return "createPartner.mispPartnerSuccessHeader";
+                        if (isAbisPartner) return "createPartner.abisPartnerSuccessHeader";
+                        if (isOnlineVerificationPartner) return "createPartner.onlineVerificationPartnerSuccessHeader";
+                        return "createPartner.abisPartnerSuccessHeader";
+                    };
 
                     const requiredData = {
                         title: "createPartner.createPartner",
                         backUrl: "/partnermanagement/admin/partners/partners-list",
-                        header: isManualAdjudicationPartner ? "createPartner.manualAdjudicationPartnerSuccessHeader" :
-                            (isMispPartner ? "createPartner.mispPartnerSuccessHeader" : "createPartner.abisPartnerSuccessHeader"),
+                        header: getSuccessHeader(),
                         subNavigation: "createPartner.listOfPartners",
                         customBtnName1: getUploadCertificateButtonName(partnerTypeValue),
                         customBtnName2: "commons.home",
@@ -312,7 +328,8 @@ function CreatePartner() {
                         isUploadPartnerCertificate: true,
                         isMispPartnerCertificate: isMispPartner,
                         isAbisPartnerCertificate: isAbisPartner,
-                        isManualAdjudicationPartnerCertificate: isManualAdjudicationPartner
+                        isManualAdjudicationPartnerCertificate: isManualAdjudicationPartner,
+                        isOnlineVerificationPartnerCertificate: isOnlineVerificationPartner
                     }
                     setUploadCertificateData(requiredDataForCertUpload);
 
@@ -334,9 +351,14 @@ function CreatePartner() {
         setIsSubmitClicked(false);
     };
 
+    const isPolicyGroupRequired = () => {
+        return partnerTypeValue === "ABIS_PARTNER" ||
+            partnerTypeValue === "Manual_Adjudication" ||
+            partnerTypeValue === "ONLINE_VERIFICATION_PARTNER";
+    };
+
     const isFormValid = () => {
-        const isPolicyGroupRequired = partnerTypeValue === "ABIS_PARTNER" || partnerTypeValue === "Manual_Adjudication";
-        const isPolicyGroupValid = !isPolicyGroupRequired || selectedPolicyGroup !== null;
+        const isPolicyGroupValid = !isPolicyGroupRequired() || selectedPolicyGroup !== null;
 
         return address.trim() && organizationName.trim() && phoneNumber.trim() &&
             email.trim() && username.trim() && notificationLanguage &&
@@ -398,7 +420,7 @@ function CreatePartner() {
                                                         selectedPolicyGroup={selectedPolicyGroup}
                                                         placeholderKey='createPartner.selectPolicyGroup'
                                                         isPlaceHolderPresent={true}
-                                                        containsAsterisk={partnerTypeValue === "ABIS_PARTNER" || partnerTypeValue === "Manual_Adjudication"}
+                                                        containsAsterisk={isPolicyGroupRequired()}
                                                     />
                                                 </div>
                                             </div>

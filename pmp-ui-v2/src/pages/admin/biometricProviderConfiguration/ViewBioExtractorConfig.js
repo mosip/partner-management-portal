@@ -44,8 +44,17 @@ function ViewBioExtractorConfig() {
     bioextractorProviderName: item?.bioextractorProviderName || "-",
     bioextractorProviderVersion: item?.bioextractorProviderVersion || "-",
     bioModality: item?.bioModality || "-",
+    credentialDataFormat: item?.credentialDataFormat || item?.credential_data_format || "",
+    attributeName: item?.attributeName || item?.attribute_name || "",
     createdDateTime: item?.createdDateTime || item?.createdDate || null,
   });
+
+  const getCredentialDataFormatLabel = (value) => {
+    if (!value) return "-";
+    if (String(value).toLowerCase() === "rawdata") return t("bioExtractorConfig.rawData");
+    if (String(value).toLowerCase() === "templatedata") return t("bioExtractorConfig.templateData");
+    return value;
+  };
 
   useEffect(() => {
     const selectedData = sessionStorage.getItem("selectedBioExtractorConfig");
@@ -222,6 +231,34 @@ function ViewBioExtractorConfig() {
                     </p>
                     <p id="view_bio_extractor_modality" className="font-[600] text-vulcan text-base">
                       {getModalityLabel(configDetails.bioModality)}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex flex-wrap py-1 max-450:flex-col">
+                  <div
+                    className={`w-[49%] max-[600px]:w-[100%] mb-3 ${
+                      isLoginLanguageRTL ? "ml-[1%]" : "mr-[1%]"
+                    }`}
+                  >
+                    <p className="font-[600] text-suva-gray text-sm">
+                      {t("bioExtractorConfig.credentialDataFormat")}
+                    </p>
+                    <p id="view_bio_extractor_credential_data_format" className="font-[600] text-vulcan text-base">
+                      {getCredentialDataFormatLabel(configDetails.credentialDataFormat)}
+                    </p>
+                  </div>
+
+                  <div
+                    className={`w-[49%] max-[600px]:w-[100%] mb-3 ${
+                      isLoginLanguageRTL ? "mr-[1%]" : "ml-[1%]"
+                    }`}
+                  >
+                    <p className="font-[600] text-suva-gray text-sm">
+                      {t("bioExtractorConfig.attributeName")}
+                    </p>
+                    <p id="view_bio_extractor_attribute_name" className="font-[600] text-vulcan text-base">
+                      {configDetails.attributeName || "-"}
                     </p>
                   </div>
                 </div>
