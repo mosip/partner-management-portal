@@ -256,6 +256,9 @@ public class AddDevicePage extends BasePage {
 			}
 			attempts++;
 		}
+		takeScreenshot();
+		throw new RuntimeException("Failed to select device type '" + value + "' at position " + position
+				+ " after " + attempts + " attempts");
 	}
 
 	public void selectDeviceSubTypeWithPosition(String value, int position) {

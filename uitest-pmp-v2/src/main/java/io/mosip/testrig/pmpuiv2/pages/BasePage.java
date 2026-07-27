@@ -437,7 +437,10 @@ public class BasePage {
 			} catch (Exception ignored) {
 			}
 			String tag = element.getTagName();
-			return !tag.matches("input|textarea");
+			if (!tag.matches("input|textarea")) {
+				return true;
+			}
+			return !element.isEnabled() || element.getAttribute("readonly") != null;
 
 		} catch (Exception e) {
 			LogUtil.error("isElementNotEditable failed: " + e.getClass().getSimpleName());
@@ -618,10 +621,13 @@ public class BasePage {
 		((JavascriptExecutor) driver).executeScript("arguments[0].click();", el);
 	}
 
+	protected WebElement waitAndFindElement(By locator) {
+		return new WebDriverWait(driver, Duration.ofSeconds(30))
+				.until(ExpectedConditions.visibilityOfElementLocated(locator));
+	}
+
 	protected String getTextFromLocator(By locator) {
-		WebElement element = driver.findElement(locator);
-		waitForElementVisible(element);
-		return element.getText();
+		return waitAndFindElement(locator).getText();
 	}
 
 }
