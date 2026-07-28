@@ -239,14 +239,26 @@ public class AddDevicePage extends BasePage {
 	}
 
 	public void selectAddDeviceTypeWithPosition(String value, int position) {
-		try {
-			By locator = By.id("add_device_device_type_" + position + "_dropdown_btn");
-			waitForElementClickable(locator);
-			WebElement element = driver.findElement(locator);
-			dropdownWithPosition(element, value, position);
-		} catch (IOException e) {
-			logger.info(e.getMessage());
+		By locator = By.id("add_device_device_type_" + position + "_dropdown_btn");
+		int attempts = 0;
+		while (attempts < 2) {
+			try {
+				waitForElementClickable(locator);
+				WebElement element = driver.findElement(locator);
+				dropdownWithPosition(element, value, position);
+				if (getTextFromLocator(locator).trim().equalsIgnoreCase(value)) {
+					return;
+				}
+				logger.info("Device type selection did not apply, retrying: expected '" + value
+						+ "' but got '" + getTextFromLocator(locator) + "'");
+			} catch (IOException e) {
+				logger.error(e.getMessage(), e);
+			}
+			attempts++;
 		}
+		takeScreenshot();
+		throw new RuntimeException("Failed to select device type '" + value + "' at position " + position
+				+ " after " + attempts + " attempts");
 	}
 
 	public void selectDeviceSubTypeWithPosition(String value, int position) {

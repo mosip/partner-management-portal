@@ -80,7 +80,7 @@ public class AuthPartnerCreation extends BaseClass {
 				GlobalConstants.isUploadPartnerCertificatePopUpDisplayed);
 		assertTrue(partnerCertificatePage.isPleaseTabToSelectTextDisplayed(),
 				GlobalConstants.isPleaseTabToSelectTextDisplayed);
-		assertTrue(partnerCertificatePage.isCertFormatesTextDisplayed(), GlobalConstants.isCertFormatesTextDisplayed);
+		assertTrue(partnerCertificatePage.isPartnercertFormatesTextDisplayed(), GlobalConstants.isCertFormatesTextDisplayed);
 		partnerCertificatePage.uploadCertificate();
 		partnerCertificatePage.clickOnSubmitButton();
 		assertTrue(partnerCertificatePage.isSuccessMessageDisplayed(), GlobalConstants.isSuccessMessageDisplayed);
@@ -108,7 +108,7 @@ public class AuthPartnerCreation extends BaseClass {
 
 		assertTrue(partnerCertificatePage.isUploadCertificateIconDisplayed(),
 				GlobalConstants.isUploadCertificateIconDisplayed);
-		assertTrue(partnerCertificatePage.isCertFormatesTextDisplayed(), GlobalConstants.isCertFormatesTextDisplayed);
+		assertTrue(partnerCertificatePage.isPartnercertFormatesTextDisplayed(), GlobalConstants.isCertFormatesTextDisplayed);
 
 		assertTrue(partnerCertificatePage.isLastCertificateUploadDateDisplayed(),
 				GlobalConstants.isLastCertificateUploadDateDisplayed);

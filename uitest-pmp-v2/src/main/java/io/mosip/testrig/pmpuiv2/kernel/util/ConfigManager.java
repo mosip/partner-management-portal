@@ -69,6 +69,7 @@ public class ConfigManager {
 	private static String PMS_DB_USER = "db-su-user";
 	private static String PMS_DB_PASS = "postgres-password";
 	private static String PMS_DB_SCHEMA = "pms_db_schema";
+	private static String PMS_DB_NAME = "pms-db-name";
 
 	private static String LogoUri = "logouri";
 	private static String RedirectUri = "redirecturi";
@@ -107,6 +108,7 @@ public class ConfigManager {
 	private static String pms_db_user;
 	private static String pms_db_pass;
 	private static String pms_db_schema;
+	private static String pms_db_name;
 	private static String sbivalidDate;
 	private static String bulkwait;
 	private static String sbiexpiryDate;
@@ -232,6 +234,7 @@ public class ConfigManager {
 		pms_db_user = getValueForKey(PMS_DB_USER);
 		pms_db_pass = getValueForKey(PMS_DB_PASS);
 		pms_db_schema = getValueForKey(PMS_DB_SCHEMA);
+		pms_db_name = getValueForKey(PMS_DB_NAME);
 		enableDebug = getValueForKey(ENABLEDEBUG);
 		reportIgnoredTestCases = getValueForKey(ReportIgnoredTestCases);
 		reportKnownIssueTestCases = getValueForKey(ReportKnownIssueTestCases);
@@ -547,7 +550,8 @@ public class ConfigManager {
 	}
 
 	public static String getPMSDbUrl() {
-		return "jdbc:postgresql://" + db_domain + ":" + db_port + "/mosip_pms";
+		return "jdbc:postgresql://" + db_domain + ":" + db_port + "/"
+				+ (pms_db_name == null || pms_db_name.isBlank() ? "mosip_pms" : pms_db_name);
 	}
 
 	public static String getKMDbUrl() {
