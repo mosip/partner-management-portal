@@ -414,7 +414,7 @@ function RequestPolicy() {
                         <ErrorMessage id='request_policy_error_msg' errorCode={errorCode} errorMessage={errorMsg} clickOnCancel={cancelErrorMsg} />
                     )}
                     <div className="flex-col mt-5">
-                        <Title title='requestPolicy.requestPolicy' subTitle={isAdminPath ? "viewPolicyRequest.listOfPolicyRequests" : 'requestPolicy.policies'} backLink={backUrl} />
+                                           <Title title='requestPolicy.requestPolicy' subTitle={isAdminPath ? "viewPolicyRequest.listOfPolicyRequests" : 'requestPolicy.policies'} subTitle2='requestPolicy.requestPolicy' backLink={backUrl} backLink2={backUrl} />
                         {isCredentialPartner && (
                             <p id='request_policy_mandatory_mapping_msg' className="mt-3 rounded-md border border-[#F7D18D] bg-[#FFF8EA] px-3 py-2 text-sm text-[#684B00]">
                                 {t('requestPolicy.mandatoryMappingBanner')}
@@ -523,6 +523,9 @@ function RequestPolicy() {
                                                     <textarea id="request_policy_comment_box" maxLength={500} ref={textareaRef} value={partnerComment} onChange={(e) => handleCommentChange(e)} className="w-full px-2 py-2 border border-[#707070] rounded-md text-base text-dark-blue bg-white leading-tight focus:outline-none focus:shadow-outline
                                                 overflow-x-auto whitespace-pre-wrap no-scrollbar" placeholder={t('requestPolicy.commentBoxDesc')} data-placeholder-id="request_policy_comment_box_placeholder">
                                                     </textarea>
+                                                        <div className={`mt-1 text-xs ${inputError ? 'text-crimson-red' : 'text-gray-500'} ${isLoginLanguageRTL ? 'text-left' : 'text-right'}`}>
+                                                        {partnerComment.length}/500 {t('requestPolicy.characters')}
+                                                    </div>
                                                     {inputError && <span id='request_policy_invalid_comment' className="text-sm text-crimson-red font-semibold">{inputError}</span>}
                                                 </div>
                                             </div>

@@ -355,7 +355,8 @@
         "guidenceForMispPartner": "Note: If you are a MISP Partner, the Policy Group and Policy Name fields are optional. We still recommend selecting a Policy Name to help maintain consistency and clarity in policy management.",
         "policySuccessMsgForAdmin": "Policy request has been successfully submitted. Approve the request for the partner policy linking to be activated.",
         "approvePopupTitle": "Do you want to approve Partner- Policy Request?",
-        "approvePopupDesc": "On clicking Confirm, the Partner Policy Linking will be approved."
+        "approvePopupDesc": "On clicking Confirm, the Partner Policy Linking will be approved.",
+        "characters": "characters"
     },
     "mapCredentialType": {
         "title": "Map Credential Type",
