@@ -36,7 +36,7 @@ Top-level layout (as tracked on `develop`):
 
 Build and run the UI locally:
 
-```
+```bash
 cd pmp-ui-v2
 npm install
 npm start          # dev server, http://localhost:3000
@@ -45,24 +45,24 @@ npm run build       # production build -> pmp-ui-v2/build
 
 Run UI unit tests:
 
-```
+```bash
 cd pmp-ui-v2
 npm run test:ci
 ```
 
 Build a Docker image for the UI:
 
-```
+```bash
 cd pmp-ui-v2
 docker build -f Dockerfile .
 ```
 
 Build and run the Selenium/TestNG UI automation suite (see `uitest-pmp-v2/README.md` for full detail, including config properties and IDE setup):
 
-```
+```bash
 cd uitest-pmp-v2
 mvn clean install -Dgpg.skip=true -Dmaven.gitcommitid.skip=true
-java -jar target/pmp-automation.jar -Dpath.config=src/main/resources -Denv.user=<username>
+java -Dpath.config=src/main/resources -Denv.user=<username> -jar target/pmp-automation.jar
 ```
 
 ## Configuration
