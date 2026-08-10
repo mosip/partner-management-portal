@@ -1,5 +1,16 @@
 # AGENTS.md
 
+## Guide index
+
+This file is the hub for AI-agent guidance in this repo. Each area below has its own `AGENTS.md` with Purpose / Layout / How-to-run / Agent rules for that folder.
+
+| Area | Path | Guide |
+|------|------|-------|
+| React UI app | `pmp-ui-v2/` | [`pmp-ui-v2/AGENTS.md`](pmp-ui-v2/AGENTS.md) |
+| Selenium/TestNG UI automation | `uitest-pmp-v2/` | [`uitest-pmp-v2/AGENTS.md`](uitest-pmp-v2/AGENTS.md) |
+| Kubernetes install scripts | `deploy/` | [`deploy/AGENTS.md`](deploy/AGENTS.md) |
+| Helm chart | `helm/` | [`helm/AGENTS.md`](helm/AGENTS.md) |
+
 ## Repository Overview
 
 This repository contains the reference front-end UI for MOSIP's **Partner Management (PMS)** module — the portal partners, policy managers, and admins use to onboard partners, manage OIDC clients, and create/approve/publish policies. It is the UI counterpart to the [partner-management-services](https://github.com/mosip/partner-management-services) backend, which exposes the REST APIs this portal consumes.
