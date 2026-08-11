@@ -821,8 +821,8 @@ public class FtmDeviceTest extends BaseClass {
 		ftmPage.clickOnAddFtmChipButton();
 
 		ftmPage.clickOnAddFtmPartnerId();
-		ftmPage.EnterInAddFtmMakeBox(data + "approve");
-		ftmPage.EnterInAddFtmModelBox(data + "approve");
+		ftmPage.EnterInAddFtmMakeBox(GlobalConstants.AUTOFTM  + "approve");
+		ftmPage.EnterInAddFtmModelBox(GlobalConstants.AUTOFTM  + "approve");
 		ftmPage.clickOnAddFtmSubmitButton();
 		ftmPage.clickOnConfirmationCustomButton();
 		ftmPage.uploadCertificateConfrmationForFtm();
@@ -845,8 +845,8 @@ public class FtmDeviceTest extends BaseClass {
 
 		ftmPage.clickOnFilterButton();
 		ftmPage.enterPartnerIdFilterBox(GlobalConstants.FTM_PARTNER_ID);
-		ftmPage.enterMakeFilterBox(data + "approve");
-		ftmPage.enterModelFilterBox(data + "approve");
+		ftmPage.enterMakeFilterBox(GlobalConstants.AUTOFTM + "approve");
+		ftmPage.enterModelFilterBox(GlobalConstants.AUTOFTM + "approve");
 		ftmPage.clickOnApplyFilterButton();
 
 		ftmPage.clickOnFtmListActionMenuEllipsisButton();
@@ -870,8 +870,8 @@ public class FtmDeviceTest extends BaseClass {
 		ftmPage.clickOnAddFtmChipButton();
 
 		ftmPage.clickOnAddFtmPartnerId();
-		ftmPage.EnterInAddFtmMakeBox(data + "reject01");
-		ftmPage.EnterInAddFtmModelBox(data + "reject01");
+		ftmPage.EnterInAddFtmMakeBox(GlobalConstants.AUTOFTM + "reject01");
+		ftmPage.EnterInAddFtmModelBox(GlobalConstants.AUTOFTM + "reject01");
 		ftmPage.clickOnAddFtmSubmitButton();
 		ftmPage.clickOnConfirmationCustomButton();
 		ftmPage.uploadCertificateConfrmationForFtm();
@@ -896,8 +896,8 @@ public class FtmDeviceTest extends BaseClass {
 
 		assertTrue(ftmPage.isPartneridFilterDisplayed(), GlobalConstants.isPartnerIdDropdownDisplayed);
 		ftmPage.enterPartnerIdFilterBox(GlobalConstants.FTM_PARTNER_ID);
-		ftmPage.enterMakeFilterBox(data + "reject01");
-		ftmPage.enterModelFilterBox(data + "reject01");
+		ftmPage.enterMakeFilterBox(GlobalConstants.AUTOFTM + "reject01");
+		ftmPage.enterModelFilterBox(GlobalConstants.AUTOFTM + "reject01");
 
 		ftmPage.clickOnApplyFilterButton();
 		assertTrue(ftmPage.isFtmList1Displayed(), GlobalConstants.isFtmList1Displayed);
@@ -942,8 +942,8 @@ public class FtmDeviceTest extends BaseClass {
 		partnerCertificatePage.clickOnFtmChipProviderCard();
 		ftmPage.clickOnAddFtmChipButton();
 		ftmPage.clickOnAddFtmPartnerId();
-		ftmPage.EnterInAddFtmMakeBox(data + "approveOrdeactivateStatus");
-		ftmPage.EnterInAddFtmModelBox(data + "approveOrdeactivateStatus");
+		ftmPage.EnterInAddFtmMakeBox(GlobalConstants.AUTOFTM + "approveOrdeactivateStatus");
+		ftmPage.EnterInAddFtmModelBox(GlobalConstants.AUTOFTM + "approveOrdeactivateStatus");
 		ftmPage.clickOnAddFtmSubmitButton();
 
 		ftmPage.clickOnTitleBackIcon();
@@ -959,8 +959,8 @@ public class FtmDeviceTest extends BaseClass {
 		ftmPage.clickOnFilterButton();
 
 		ftmPage.enterPartnerIdFilterBox(GlobalConstants.FTM_PARTNER_ID);
-		ftmPage.enterMakeFilterBox(data + "approveOrdeactivateStatus");
-		ftmPage.enterModelFilterBox(data + "approveOrdeactivateStatus");
+		ftmPage.enterMakeFilterBox(GlobalConstants.AUTOFTM + "approveOrdeactivateStatus");
+		ftmPage.enterModelFilterBox(GlobalConstants.AUTOFTM + "approveOrdeactivateStatus");
 
 		ftmPage.clickOnApplyFilterButton();
 
@@ -1018,8 +1018,8 @@ public class FtmDeviceTest extends BaseClass {
 		ftmPage.clickOnFilterButton();
 
 		ftmPage.enterPartnerIdFilterBox(GlobalConstants.FTM_PARTNER_ID);
-		ftmPage.enterMakeFilterBox(data + "approveOrdeactivateStatus");
-		ftmPage.enterModelFilterBox(data + "approveOrdeactivateStatus");
+		ftmPage.enterMakeFilterBox(GlobalConstants.AUTOFTM + "approveOrdeactivateStatus");
+		ftmPage.enterModelFilterBox(GlobalConstants.AUTOFTM + "approveOrdeactivateStatus");
 
 		ftmPage.clickOnApplyFilterButton();
 
@@ -1031,8 +1031,8 @@ public class FtmDeviceTest extends BaseClass {
 		ftmPage.clickOnFtmViewBackButton();
 		ftmPage.clickOnFilterButton();
 		ftmPage.enterPartnerIdFilterBox(GlobalConstants.FTM_PARTNER_ID);
-		ftmPage.enterMakeFilterBox(data + "approveOrdeactivateStatus");
-		ftmPage.enterModelFilterBox(data + "approveOrdeactivateStatus");
+		ftmPage.enterMakeFilterBox(GlobalConstants.AUTOFTM + "approveOrdeactivateStatus");
+		ftmPage.enterModelFilterBox(GlobalConstants.AUTOFTM + "approveOrdeactivateStatus");
 
 		ftmPage.clickOnApplyFilterButton();
 
@@ -1049,8 +1049,8 @@ public class FtmDeviceTest extends BaseClass {
 		ftmPage.clickOnFtmViewBackButton();
 		ftmPage.clickOnFilterButton();
 		ftmPage.enterPartnerIdFilterBox(GlobalConstants.FTM_PARTNER_ID);
-		ftmPage.enterMakeFilterBox(data + "approveOrdeactivateStatus");
-		ftmPage.enterModelFilterBox(data + "approveOrdeactivateStatus");
+		ftmPage.enterMakeFilterBox(GlobalConstants.AUTOFTM + "approveOrdeactivateStatus");
+		ftmPage.enterModelFilterBox(GlobalConstants.AUTOFTM + "approveOrdeactivateStatus");
 
 		ftmPage.clickOnApplyFilterButton();
 
@@ -1070,8 +1070,8 @@ public class FtmDeviceTest extends BaseClass {
 		partnerCertificatePage.clickOnFtmChipProviderCard();
 		ftmPage.clickOnAddFtmChipButton();
 		ftmPage.clickOnAddFtmPartnerId();
-		ftmPage.EnterInAddFtmMakeBox(data + "rejectStatus");
-		ftmPage.EnterInAddFtmModelBox(data + "rejectStatus");
+		ftmPage.EnterInAddFtmMakeBox(GlobalConstants.AUTOFTM + "rejectStatus");
+		ftmPage.EnterInAddFtmModelBox(GlobalConstants.AUTOFTM + "rejectStatus");
 		ftmPage.clickOnAddFtmSubmitButton();
 		ftmPage.clickOnConfirmationCustomButton();
 		ftmPage.uploadCertificateConfrmationForFtm();
@@ -1086,8 +1086,8 @@ public class FtmDeviceTest extends BaseClass {
 
 		ftmPage.clickOnFilterButton();
 		ftmPage.enterPartnerIdFilterBox(GlobalConstants.FTM_PARTNER_ID);
-		ftmPage.enterMakeFilterBox(data + "rejectStatus");
-		ftmPage.enterModelFilterBox(data + "rejectStatus");
+		ftmPage.enterMakeFilterBox(GlobalConstants.AUTOFTM + "rejectStatus");
+		ftmPage.enterModelFilterBox(GlobalConstants.AUTOFTM + "rejectStatus");
 		ftmPage.clickOnApplyFilterButton();
 		ftmPage.clickOnFtmListActionMenuEllipsisButton();
 		ftmPage.clickOnFtmListApproveRejectOption();
@@ -1112,8 +1112,8 @@ public class FtmDeviceTest extends BaseClass {
 		partnerCertificatePage.clickOnFtmChipProviderCard();
 		ftmPage.clickOnAddFtmChipButton();
 		ftmPage.clickOnAddFtmPartnerId();
-		ftmPage.EnterInAddFtmMakeBox(data + "deactivate01");
-		ftmPage.EnterInAddFtmModelBox(data + "deactivate01");
+		ftmPage.EnterInAddFtmMakeBox(GlobalConstants.AUTOFTM + "deactivate01");
+		ftmPage.EnterInAddFtmModelBox(GlobalConstants.AUTOFTM + "deactivate01");
 		ftmPage.clickOnAddFtmSubmitButton();
 		ftmPage.clickOnTitleBackIcon();
 
@@ -1128,8 +1128,8 @@ public class FtmDeviceTest extends BaseClass {
 		ftmPage.clickOnFilterButton();
 
 		ftmPage.enterPartnerIdFilterBox(GlobalConstants.FTM_PARTNER_ID);
-		ftmPage.enterMakeFilterBox(data + "deactivate01");
-		ftmPage.enterModelFilterBox(data + "deactivate01");
+		ftmPage.enterMakeFilterBox(GlobalConstants.AUTOFTM + "deactivate01");
+		ftmPage.enterModelFilterBox(GlobalConstants.AUTOFTM + "deactivate01");
 		ftmPage.clickOnApplyFilterButton();
 
 		ftmPage.clickOnFtmListActionMenuEllipsisButton();
@@ -1165,8 +1165,8 @@ public class FtmDeviceTest extends BaseClass {
 		ftmPage.clickOnFilterButton();
 
 		ftmPage.enterPartnerIdFilterBox(GlobalConstants.FTM_PARTNER_ID);
-		ftmPage.enterMakeFilterBox(data + "deactivate01");
-		ftmPage.enterModelFilterBox(data + "deactivate01");
+		ftmPage.enterMakeFilterBox(GlobalConstants.AUTOFTM + "deactivate01");
+		ftmPage.enterModelFilterBox(GlobalConstants.AUTOFTM + "deactivate01");
 
 		ftmPage.clickOnApplyFilterButton();
 		ftmPage.clickOnFtmListActionMenuEllipsisButton();
@@ -1206,8 +1206,8 @@ public class FtmDeviceTest extends BaseClass {
 		partnerCertificatePage.clickOnFtmChipProviderCard();
 		ftmPage.clickOnAddFtmChipButton();
 		ftmPage.clickOnAddFtmPartnerId();
-		ftmPage.EnterInAddFtmMakeBox(data + "deactivate02");
-		ftmPage.EnterInAddFtmModelBox(data + "deactivate02");
+		ftmPage.EnterInAddFtmMakeBox(GlobalConstants.AUTOFTM + "deactivate02");
+		ftmPage.EnterInAddFtmModelBox(GlobalConstants.AUTOFTM + "deactivate02");
 		ftmPage.clickOnAddFtmSubmitButton();
 		ftmPage.clickOnConfirmationCustomButton();
 		ftmPage.uploadCertificateConfrmationForFtm();
@@ -1222,8 +1222,8 @@ public class FtmDeviceTest extends BaseClass {
 
 		ftmPage.clickOnFilterButton();
 		ftmPage.enterPartnerIdFilterBox(GlobalConstants.FTM_PARTNER_ID);
-		ftmPage.enterMakeFilterBox(data + "deactivate02");
-		ftmPage.enterModelFilterBox(data + "deactivate02");
+		ftmPage.enterMakeFilterBox(GlobalConstants.AUTOFTM + "deactivate02");
+		ftmPage.enterModelFilterBox(GlobalConstants.AUTOFTM + "deactivate02");
 		ftmPage.clickOnApplyFilterButton();
 		ftmPage.clickOnFtmListActionMenuEllipsisButton();
 		ftmPage.clickOnFtmListApproveRejectOption();
@@ -1250,8 +1250,8 @@ public class FtmDeviceTest extends BaseClass {
 		partnerCertificatePage.clickOnFtmChipProviderCard();
 		ftmPage.clickOnAddFtmChipButton();
 		ftmPage.clickOnAddFtmPartnerId();
-		ftmPage.EnterInAddFtmMakeBox(data + "DownloadCert");
-		ftmPage.EnterInAddFtmModelBox(data + "DownloadCert");
+		ftmPage.EnterInAddFtmMakeBox(GlobalConstants.AUTOFTM + "DownloadCert");
+		ftmPage.EnterInAddFtmModelBox(GlobalConstants.AUTOFTM + "DownloadCert");
 		ftmPage.clickOnAddFtmSubmitButton();
 		ftmPage.clickOnTitleBackIcon();
 		assertTrue(ftmPage.isFtmList1Displayed(), GlobalConstants.isFtmList1Displayed);
@@ -1268,8 +1268,8 @@ public class FtmDeviceTest extends BaseClass {
 
 		ftmPage.clickOnFilterButton();
 		ftmPage.enterPartnerIdFilterBox(GlobalConstants.FTM_PARTNER_ID);
-		ftmPage.enterMakeFilterBox(data + "DownloadCert");
-		ftmPage.enterModelFilterBox(data + "DownloadCert");
+		ftmPage.enterMakeFilterBox(GlobalConstants.AUTOFTM + "DownloadCert");
+		ftmPage.enterModelFilterBox(GlobalConstants.AUTOFTM + "DownloadCert");
 		ftmPage.clickOnApplyFilterButton();
 
 		ftmPage.clickOnFtmListActionMenuEllipsisButton();
@@ -1312,8 +1312,8 @@ public class FtmDeviceTest extends BaseClass {
 
 		assertTrue(ftmPage.isPartneridFilterDisplayed(), GlobalConstants.isPartnerIdDropdownDisplayed);
 		ftmPage.enterPartnerIdFilterBox(GlobalConstants.FTM_PARTNER_ID);
-		ftmPage.enterMakeFilterBox(data + "DownloadCert");
-		ftmPage.enterModelFilterBox(data + "DownloadCert");
+		ftmPage.enterMakeFilterBox(GlobalConstants.AUTOFTM + "DownloadCert");
+		ftmPage.enterModelFilterBox(GlobalConstants.AUTOFTM + "DownloadCert");
 
 		ftmPage.clickOnApplyFilterButton();
 
@@ -1332,8 +1332,8 @@ public class FtmDeviceTest extends BaseClass {
 		ftmPage.clickOnFilterButton();
 
 		ftmPage.enterPartnerIdFilterBox(GlobalConstants.FTM_PARTNER_ID);
-		ftmPage.enterMakeFilterBox(data + "DownloadCert");
-		ftmPage.enterModelFilterBox(data + "DownloadCert");
+		ftmPage.enterMakeFilterBox(GlobalConstants.AUTOFTM + "DownloadCert");
+		ftmPage.enterModelFilterBox(GlobalConstants.AUTOFTM + "DownloadCert");
 
 		ftmPage.clickOnApplyFilterButton();
 		ftmPage.clickOnFtmListActionMenuEllipsisButton();
@@ -1363,8 +1363,8 @@ public class FtmDeviceTest extends BaseClass {
 		ftmPage.clickOnFilterButton();
 
 		ftmPage.enterPartnerIdFilterBox(GlobalConstants.FTM_PARTNER_ID);
-		ftmPage.enterMakeFilterBox(data + "DownloadCert");
-		ftmPage.enterModelFilterBox(data + "DownloadCert");
+		ftmPage.enterMakeFilterBox(GlobalConstants.AUTOFTM + "DownloadCert");
+		ftmPage.enterModelFilterBox(GlobalConstants.AUTOFTM + "DownloadCert");
 
 		ftmPage.clickOnApplyFilterButton();
 
@@ -1409,8 +1409,8 @@ public class FtmDeviceTest extends BaseClass {
 		partnerCertificatePage.clickOnFtmChipProviderCard();
 		ftmPage.clickOnAddFtmChipButton();
 		ftmPage.clickOnAddFtmPartnerId();
-		ftmPage.EnterInAddFtmMakeBox(data + "reuploadCert");
-		ftmPage.EnterInAddFtmModelBox(data + "reuploadCert");
+		ftmPage.EnterInAddFtmMakeBox(GlobalConstants.AUTOFTM + "reuploadCert");
+		ftmPage.EnterInAddFtmModelBox(GlobalConstants.AUTOFTM + "reuploadCert");
 		ftmPage.clickOnAddFtmSubmitButton();
 
 		ftmPage.clickOnSubTitleFtmButton();
@@ -1435,8 +1435,8 @@ public class FtmDeviceTest extends BaseClass {
 
 		assertTrue(ftmPage.isPartneridFilterDisplayed(), GlobalConstants.isPartnerIdDropdownDisplayed);
 		ftmPage.enterPartnerIdFilterBox(GlobalConstants.FTM_PARTNER_ID);
-		ftmPage.enterMakeFilterBox(data + "reuploadCert");
-		ftmPage.enterModelFilterBox(data + "reuploadCert");
+		ftmPage.enterMakeFilterBox(GlobalConstants.AUTOFTM + "reuploadCert");
+		ftmPage.enterModelFilterBox(GlobalConstants.AUTOFTM + "reuploadCert");
 		ftmPage.clickOnApplyFilterButton();
 
 		ftmPage.clickOnFtmListActionMenuEllipsisButton();
@@ -1498,8 +1498,8 @@ public class FtmDeviceTest extends BaseClass {
 		ftmPage.clickOnFilterButton();
 
 		ftmPage.enterPartnerIdFilterBox(GlobalConstants.FTM_PARTNER_ID);
-		ftmPage.enterMakeFilterBox(data + "reuploadCert");
-		ftmPage.enterModelFilterBox(data + "reuploadCert");
+		ftmPage.enterMakeFilterBox(GlobalConstants.AUTOFTM + "reuploadCert");
+		ftmPage.enterModelFilterBox(GlobalConstants.AUTOFTM + "reuploadCert");
 		ftmPage.clickOnApplyFilterButton();
 		ftmPage.clickOnFtmListActionMenuEllipsisButton();
 		ftmPage.clickOnFtmListApproveRejectOption();
@@ -1531,8 +1531,8 @@ public class FtmDeviceTest extends BaseClass {
 		ftmPage.clickOnFilterButton();
 
 		ftmPage.enterPartnerIdFilterBox(GlobalConstants.FTM_PARTNER_ID);
-		ftmPage.enterMakeFilterBox(data + "reuploadCert");
-		ftmPage.enterModelFilterBox(data + "reuploadCert");
+		ftmPage.enterMakeFilterBox(GlobalConstants.AUTOFTM + "reuploadCert");
+		ftmPage.enterModelFilterBox(GlobalConstants.AUTOFTM + "reuploadCert");
 		ftmPage.clickOnApplyFilterButton();
 		ftmPage.clickOnFtmListActionMenuEllipsisButton();
 		ftmPage.clickOnFtmListApproveRejectOption();
@@ -1564,8 +1564,8 @@ public class FtmDeviceTest extends BaseClass {
 		ftmPage.clickOnFilterButton();
 
 		ftmPage.enterPartnerIdFilterBox(GlobalConstants.FTM_PARTNER_ID);
-		ftmPage.enterMakeFilterBox(data + "reuploadCert");
-		ftmPage.enterModelFilterBox(data + "reuploadCert");
+		ftmPage.enterMakeFilterBox(GlobalConstants.AUTOFTM + "reuploadCert");
+		ftmPage.enterModelFilterBox(GlobalConstants.AUTOFTM + "reuploadCert");
 		ftmPage.clickOnApplyFilterButton();
 		ftmPage.clickOnFtmListActionMenuEllipsisButton();
 		ftmPage.clickOnFtmListApproveRejectOption();

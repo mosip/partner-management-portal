@@ -24,7 +24,7 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(xpath = "//*[text()='Submit']")
 	private WebElement submitButton;
 
-	@FindBy(xpath = "//*[text()='Partner certificate for Authentication Partner is uploaded successfully.']")
+	@FindBy(id = "upload_certificate_success_msg")
 	private WebElement successMessage;
 
 	@FindBy(xpath = "//*[text()='Partner certificate for Device Provider is uploaded successfully.']")
@@ -51,8 +51,11 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(xpath = "//h5[text()='Please tap to select the certificate']")
 	private WebElement PleaseTabToSelectText;
 
-	@FindBy(id = "upload_popup_certificate_format_msg")
+	@FindBy(id = "upload_trust_certificate_format_msg")
 	private WebElement certificateFormatText;
+
+	@FindBy(id = "upload_popup_certificate_format_msg")
+	private WebElement partnerCertificateFormatText;
 
 	@FindBy(id = "last_certificate_upload_date")
 	private WebElement lastUploadTimeAndDate;
@@ -434,13 +437,13 @@ public class PartnerCertificatePage extends BasePage {
 
 	@FindBy(id = "upload_certificate_success_msg")
 	private WebElement certificateUploadSuccessMessage;
-	
+
 	@FindBy(id = "upload_certificate_popup_partner_id_field")
 	private WebElement correspondingPartnerId;
-	
+
 	@FindBy(id = "upload_popup_partner_type_context")
 	private WebElement partnerTypeContext;
-	
+
 	@FindBy(id = "upload_popup_partner_domain_type_context")
 	private WebElement partnerDomainTypeContext;
 
@@ -645,6 +648,10 @@ public class PartnerCertificatePage extends BasePage {
 
 	public boolean isCertFormatesTextDisplayed() {
 		return isElementDisplayed(certificateFormatText);
+	}
+
+	public boolean isPartnercertFormatesTextDisplayed() {
+		return isElementDisplayed(partnerCertificateFormatText);
 	}
 
 	public boolean isLastUploadTimeAndDateTextDisplayed() {
@@ -1299,33 +1306,33 @@ public class PartnerCertificatePage extends BasePage {
 	public boolean isCertificateUploadSuccessMessageDisplayed() {
 		return isElementDisplayed(certificateUploadSuccessMessage);
 	}
-	
+
 	public void uploadExpiredCertificate() {
 		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "expiredRoot.cer"));
 	}
-	
+
 	public boolean isCertificateExpiredErrorDisplayed() {
 		return isElementDisplayed(InvalidFormatErrorPopup);
 	}
-	
+
 	public boolean isReUploadPartnerCertificateDisplayed() {
 		return isElementDisplayed(mispPartnerCertificatePopup);
 	}
-	
+
 	public boolean isCorrespondingPartnerIdDisplayed() {
 		return isElementDisplayed(correspondingPartnerId);
 	}
-	
+
 	public String getPartnerType() {
-		return getTextFromLocator(partnerTypeContext);
+		return getTextFromAttribute(partnerTypeContext, "value");
 	}
-	
+
 	public String getPartnerDomainType() {
-		return getTextFromLocator(partnerDomainTypeContext);
+		return getTextFromAttribute(partnerDomainTypeContext, "value");
 	}
-	
+
 	public boolean isCertificateFormatTextNotEditable() {
-	    return isElementNotEditable(certificateFormatText);
+		return isElementNotEditable(certificateFormatText);
 	}
 
 }

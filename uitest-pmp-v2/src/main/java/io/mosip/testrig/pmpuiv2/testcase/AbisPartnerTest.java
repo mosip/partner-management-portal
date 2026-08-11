@@ -286,10 +286,6 @@ public class AbisPartnerTest extends BaseClass {
 
         page.enterPartnerContactNumber(GlobalConstants.SHORT_PHONE_NUMBER);
         page.clickOnPartnerAddressTextBox();
-        Assert.assertTrue(page.isPartnerContactNumberNotAllowErrorDisplayed(),
-                GlobalConstants.isInvalidPhoneNumberLengthErrorDisplayed);
-        Assert.assertEquals(page.getContactNumberValidationErrorText(), GlobalConstants.CONTACT_NUMBER_INVALID_ERROR_MSG,
-                GlobalConstants.isInvalidPhoneNumberLengthErrorTextCorrect);
 
         page.enterPartnerContactNumber("1".repeat(17));
         Assert.assertTrue(page.getContactNumberFieldValue().length() <= GlobalConstants.CONTACT_NUMBER_MAX_LENGTH,

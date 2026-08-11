@@ -9,7 +9,7 @@ import io.mosip.testrig.pmpuiv2.pages.PartnerCertificatePage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
-@Test(dependsOnGroups = { "PartnerAdminCreation" }, groups = { "CertificateTrustStoreTest" })
+@Test(dependsOnGroups = { "AuthPartnerCreation" }, groups = { "CertificateTrustStoreTest" })
 public class CertificateTrustStoreTest extends BaseClass {
 
 	private DashboardPage dashboardPage;

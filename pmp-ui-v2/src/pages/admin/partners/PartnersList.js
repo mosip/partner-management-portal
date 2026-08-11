@@ -121,7 +121,7 @@ function PartnersList() {
     }
 
 
-    const url = `${getPartnerManagerUrl('/admin-partners', process.env.NODE_ENV)}?${queryParams.toString()}`;
+    const url = `${getPartnerManagerUrl('/admin-partners/v2', process.env.NODE_ENV)}?${queryParams.toString()}`;
     try {
       triggerServerMethod ? setTableDataLoaded(false) : setDataLoaded(false);
       const response = await HttpService.get(url);

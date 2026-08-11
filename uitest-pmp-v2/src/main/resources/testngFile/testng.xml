@@ -22,29 +22,30 @@
 			<class name="io.mosip.testrig.pmpuiv2.testcase.OidcClientAuthPartnerTest" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.ApiKeyAuthPartnerTest" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.AuthPartnerWithoutCertificateTest" />
-			<!--DEVICE PARTNER FLOW--> 
+			<!--DEVICE PARTNER FLOW-->
 			<class name="io.mosip.testrig.pmpuiv2.testcase.DevicePartnerCreation" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.SbiCreationTest" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.DeviceCreationTest" />
-			<class name="io.mosip.testrig.pmpuiv2.testcase.SbiDeviceProviderTest" /> 
+			<class name="io.mosip.testrig.pmpuiv2.testcase.SbiDeviceProviderTest" />
 			<!--FTM PARTNER FLOW-->
 			<class name="io.mosip.testrig.pmpuiv2.testcase.FtmPartnerCreation" />
-			<class name="io.mosip.testrig.pmpuiv2.testcase.FtmDeviceTest" /> 
+			<class name="io.mosip.testrig.pmpuiv2.testcase.FtmDeviceTest" />
 			<!--POLICY ADMINISTRATION FLOW-->
 			<class name="io.mosip.testrig.pmpuiv2.testcase.PolicyAdminAndPartnerCreation" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.PolicyGroupTest" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.DatasharePolicyTest" />
-			<class name="io.mosip.testrig.pmpuiv2.testcase.AuthPolicyTest" /> 
+			<class name="io.mosip.testrig.pmpuiv2.testcase.AuthPolicyTest" />
 			<!--MISP PARTNER FLOW-->
 			<class name="io.mosip.testrig.pmpuiv2.testcase.MispPartnerTest" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.MispPolicyTest" />
 			<!--ABIS PARTNER FLOW-->
 			<class name="io.mosip.testrig.pmpuiv2.testcase.AbisPartnerTest" />
-			<!--PARTNER VALIDATION & MANAGEMENT --> 
+			<!--PARTNER VALIDATION & MANAGEMENT -->
 			<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerDetailsTest" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.CertificateTrustStoreTest" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerPolicyMappingTest" />
-			
-			 <!--Deactivate PARTNER FLOW --> 
+
+			 <!--Deactivate PARTNER FLOW -->
 			<class name="io.mosip.testrig.pmpuiv2.testcase.DeactivatePartnerCreation" />
 		</classes>
 	</test>

@@ -31,11 +31,7 @@ function ViewMispLicenseKey() {
         }
         const mispKeyData = JSON.parse(data);
 
-        const queryParams = new URLSearchParams();
-        if (mispKeyData.policyId) queryParams.append('policyId', mispKeyData.policyId);
-        if (mispKeyData.mispLicenseKeyName) queryParams.append('mispLicenseKeyName', mispKeyData.mispLicenseKeyName);
-
-        const url = `${getPartnerManagerUrl(`/misp-licenses/${mispKeyData.partnerId}`, process.env.NODE_ENV)}?${queryParams.toString()}`;
+        const url = getPartnerManagerUrl(`/misp-licenses/${mispKeyData.mispLicenseId}`, process.env.NODE_ENV);
 
         const fetchData = async () => {
             try {
@@ -64,6 +60,9 @@ function ViewMispLicenseKey() {
     }, []);
 
     const getMaskedLicenseKey = (licenseKey) => {
+        if (!licenseKey) {
+            return "-";
+        }
         const visiblePart = licenseKey.slice(-10);
         return visiblePart
     };
@@ -110,7 +109,7 @@ function ViewMispLicenseKey() {
                             <div className="flex flex-wrap justify-between px-7 pt-3 border-b max-450:flex-col">
                                 <div className="flex flex-col flex-wrap max-w-full">
                                     <p id='view_misp_license_key_details_sub_title_id' className="text-lg text-dark-blue mb-2 break-words whitespace-normal max-w-full">
-                                        {t('mispLicenseList.mispLicenseKeyName')}: <span className="font-semibold">{mispLicenseKeyDetails.mispLicenseKeyName ? mispLicenseKeyDetails.mispLicenseKeyName : "-"}</span>
+                                        {t('mispLicenseList.mispLicenseKeyName')}: <span className="font-semibold">{mispLicenseKeyDetails.licenseKeyName ? mispLicenseKeyDetails.licenseKeyName : "-"}</span>
                                     </p>
                                     <div className="flex flex-wrap items-center justify-start mb-2 max-[400px]:flex-col max-[400px]:items-start">
                                         <div id='view_misp_license_key_details_status' className={`${bgOfStatus(mispLicenseKeyDetails.status)} flex w-fit py-1 px-5 text-sm rounded-md my-2 font-semibold`}>
@@ -129,7 +128,7 @@ function ViewMispLicenseKey() {
                                 <button id="view_misp_license_key_details_copy_id" className={`${mispLicenseKeyDetails.status === "ACTIVE" ? 'bg-[#F0F5FF] border-[#BED3FF] cursor-pointer hover:shadow-md' : 'bg-gray-200 border-gray-400 cursor-default'}  border h-[4%] w-[14%] max-450:w-[40%] max-850:w-[25%] ${isLoginLanguageRTL ? "pl-[1.5%] text-left" : "pr-[1%] text-right"} py-[0.5%] rounded-md mb-1`}>
                                     <p id='view_misp_license_key_details_id_label' className="text-sm font-semibold text-[#333333]">{t('mispLicenseList.mispLicenseKey')}</p>
                                     <p id="view_misp_license_key_details_id" className={`text-base font-bold ${mispLicenseKeyDetails.status === "ACTIVE" ? "text-tory-blue"  : "text-gray-400" }`}>
-                                        ...{getMaskedLicenseKey(mispLicenseKeyDetails.mispLicenseKey)}
+                                        ...{getMaskedLicenseKey(mispLicenseKeyDetails.maskedLicenseKey)}
                                     </p>
                                 </button>
                             </div>

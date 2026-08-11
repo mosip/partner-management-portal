@@ -13,12 +13,12 @@ import LoadingIcon from '../../common/LoadingIcon.js';
 import EmptyList from '../../common/EmptyList.js';
 import Title from '../../common/Title.js';
 import viewIcon from "../../../svg/view_icon.svg";
-import regenerateIcon from "../../../svg/regenerate_icon.svg";
-import disabledRegenerateIcon from "../../../svg/disabled_regenerate_icon.svg";
 import eyeIcon from "../../../svg/eye_icon.svg";
 import disabledEyeIcon from "../../../svg/disable_eye_icon.svg";
 import deactivateIcon from "../../../svg/deactivate_icon.svg";
 import disableDeactivateIcon from "../../../svg/disable_deactivate_icon.svg";
+import regenerateIcon from "../../../svg/regenerate_icon.svg";
+import disabledRegenerateIcon from "../../../svg/disabled_regenerate_icon.svg";
 import FilterButtons from '../../common/FilterButtons.js';
 import SortingIcon from '../../common/SortingIcon.js';
 import Pagination from '../../common/Pagination.js';
@@ -170,8 +170,12 @@ function MispLicenseList() {
         }
     };
 
+    const isLicenseActivated = (status) => status?.toUpperCase() === "ACTIVE";
+
+    const isLicenseDeactivated = (status) => status?.toUpperCase() === "INACTIVE";
+
     const openLicenseKeyPopUp = (license, index) => {
-        if (license.status === "activated") {
+        if (isLicenseActivated(license.status)) {
             setCurrentLicense(license);
             setShowActiveIndexLicenseKeyPopup(index);
         }
@@ -187,13 +191,19 @@ function MispLicenseList() {
         navigate('/partnermanagement/admin/misp-partner-services/generate-misp-license-key');
     };
 
+    const regenerateMispLicenseKey = (license) => {
+        if (isLicenseActivated(license.status)) {
+            setActionId(-1);
+            sessionStorage.setItem('selectedMispLicenseKey', JSON.stringify(license));
+            navigate('/partnermanagement/admin/misp-partner-services/regenerate-misp-license-key');
+        }
+    };
+
     const deactivateLicenseKey = (license, index) => {
-        if (license.status === "activated") {
+        if (isLicenseActivated(license.status)) {
             const request = createRequest({
-                policyId: license.policyId,
-                licenseKeyName: license.mispLicenseKeyName,
-                status: "De-Activate"
-            }, "mosip.pms.deactivate.misp.license.patch", true);
+                status: "INACTIVE"
+            }, "mosip.pms.update.misp.license.patch", true);
             setActionId(-1);
             setSelectedLicenseKey(license);
             setDeactivateLicenseRequest(request);
@@ -214,17 +224,9 @@ function MispLicenseList() {
             setShowActiveIndexDeactivatePopup(null);
             setMispLicenseList((prevList) =>
                 prevList.map(misp =>
-                    (misp.partnerId === licenseKey.partnerId && misp.policyId === licenseKey.policyId && misp.mispLicenseKeyName === licenseKey.mispLicenseKeyName) ? { ...misp, status: "deactivated" } : misp
+                    misp.mispLicenseId === licenseKey.mispLicenseId ? { ...misp, status: "INACTIVE" } : misp
                 )
             );
-        }
-    };
-
-    const renewMispLicenseKey = (license, index) => {
-        if (license.status === "activated") {
-            setActionId(-1);
-            sessionStorage.setItem('selectedMispLicenseKey', JSON.stringify(license));
-            navigate('/partnermanagement/admin/misp-partner-services/regenerate-misp-license-key');
         }
     };
 
@@ -316,24 +318,26 @@ function MispLicenseList() {
                                                             </thead>
                                                             <tbody>
                                                                 {mispLicenseList.map((license, index) => {
+                                                                    const activated = isLicenseActivated(license.status);
+                                                                    const deactivated = isLicenseDeactivated(license.status);
                                                                     return (
                                                                         <tr id={"misp_license_list_item" + (index + 1)} key={index}
-                                                                            className={`border-t border-[#E5EBFA] ${license.status === "activated" ? 'cursor-pointer' : 'cursor-default'} text-[0.8rem] text-[#191919] font-semibold break-words ${license.status === "deactivated" ? "text-[#969696]" : "text-[#191919]"}`}>
-                                                                            <td onClick={() => license.status === "activated" && viewMispLicenseDetails(license)} className="px-2">{license.partnerId}</td>
-                                                                            <td onClick={() => license.status === "activated" && viewMispLicenseDetails(license)} className="px-2">{license.orgName ? license.orgName : '-'}</td>
-                                                                            <td onClick={() => license.status === "activated" && viewMispLicenseDetails(license)} className="px-2">{license.policyGroupName ? license.policyGroupName : '-'}</td>
-                                                                            <td onClick={() => license.status === "activated" && viewMispLicenseDetails(license)} className="px-2">{license.policyName ? license.policyName : '-'}</td>
-                                                                            <td onClick={() => license.status === "activated" && viewMispLicenseDetails(license)} className="px-2">{license.mispLicenseKeyName ? license.mispLicenseKeyName : '-'}</td>
-                                                                            <td onClick={() => license.status === "activated" && viewMispLicenseDetails(license)} className="px-2">{formatDate(license.createdDateTime, "date")}</td>
-                                                                            <td onClick={() => license.status === "activated" && viewMispLicenseDetails(license)} className="px-2">{formatDate(license.expiryDateTime, "date")}</td>
-                                                                            <td onClick={() => license.status === "activated" && viewMispLicenseDetails(license)}>
+                                                                            className={`border-t border-[#E5EBFA] ${activated ? 'cursor-pointer' : 'cursor-default'} text-[0.8rem] text-[#191919] font-semibold break-words ${deactivated ? "text-[#969696]" : "text-[#191919]"}`}>
+                                                                            <td onClick={() => activated && viewMispLicenseDetails(license)} className="px-2">{license.partnerId}</td>
+                                                                            <td onClick={() => activated && viewMispLicenseDetails(license)} className="px-2">{license.orgName ? license.orgName : '-'}</td>
+                                                                            <td onClick={() => activated && viewMispLicenseDetails(license)} className="px-2">{license.policyGroupName ? license.policyGroupName : '-'}</td>
+                                                                            <td onClick={() => activated && viewMispLicenseDetails(license)} className="px-2">{license.policyName ? license.policyName : '-'}</td>
+                                                                            <td onClick={() => activated && viewMispLicenseDetails(license)} className="px-2">{license.licenseKeyName ? license.licenseKeyName : '-'}</td>
+                                                                            <td onClick={() => activated && viewMispLicenseDetails(license)} className="px-2">{formatDate(license.createdDateTime, "date")}</td>
+                                                                            <td onClick={() => activated && viewMispLicenseDetails(license)} className="px-2">{formatDate(license.expiryDateTime, "date")}</td>
+                                                                            <td onClick={() => activated && viewMispLicenseDetails(license)}>
                                                                                 <div className={`${bgOfStatus(license.status)} flex min-w-fit w-14 justify-center py-1.5 px-2 mx-2 my-3 text-xs font-semibold rounded-md`}>
                                                                                     {getStatusCode(license.status, t)}
                                                                                 </div>
                                                                             </td>
                                                                             <td className="px-2 cursor-default">
                                                                                 <div className="flex justify-center">
-                                                                                    {license.status === "activated" ? 
+                                                                                    {activated ?
                                                                                         <button className='cursor-pointer bg-transparent border-none p-0' id={'misp_license_show_copy_popup_btn' + (index + 1)} onClick={() => openLicenseKeyPopUp(license, index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => openLicenseKeyPopUp(license, index))}>
                                                                                             <img src={eyeIcon} alt="" />
                                                                                         </button>
@@ -341,7 +345,7 @@ function MispLicenseList() {
                                                                                         <img src={disabledEyeIcon} alt="" />
                                                                                     }
                                                                                     {showActiveIndexLicenseKeyPopup === index && (
-                                                                                        <CopyIdPopUp closePopUp={() => setShowActiveIndexLicenseKeyPopup(null)} subtitle={currentLicense.partnerId} title={currentLicense.mispLicenseKeyName} id={currentLicense.mispLicenseKey} header='mispLicenseList.mispLicenseKey' styleSet={styles} removeCopyBtn={true} />
+                                                                                        <CopyIdPopUp closePopUp={() => setShowActiveIndexLicenseKeyPopup(null)} subtitle={currentLicense.partnerId} title={currentLicense.licenseKeyName} id={currentLicense.maskedLicenseKey} header='mispLicenseList.mispLicenseKey' styleSet={styles} removeCopyBtn={true} />
                                                                                     )}
                                                                                 </div>
                                                                             </td>
@@ -352,19 +356,19 @@ function MispLicenseList() {
                                                                                     </button>
                                                                                     {actionId === index && (
                                                                                         <div className={`absolute w-[7%] z-50 bg-white text-xs font-semibold rounded-lg shadow-md border min-w-fit ${isLoginLanguageRTL ? "left-10 text-right" : "right-11 text-left"}`}>
-                                                                                            <div role='button' className={`flex justify-between hover:bg-gray-100 ${license.status === 'activated' ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => renewMispLicenseKey(license, index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => renewMispLicenseKey(license, index))}>
-                                                                                                <p id="misp_license_list_renew_misp_license_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${license.status === "activated" ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("mispLicenseList.regenerate")}</p>
-                                                                                                <img src={license.status === "activated" ? regenerateIcon : disabledRegenerateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-3" : "pr-3"}`} />
-                                                                                            </div>
-                                                                                            <hr className="h-px bg-gray-100 border-0 mx-1" />
                                                                                             <div role='button' className="flex justify-between hover:bg-gray-100" onClick={() => viewMispLicenseDetails(license)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => viewMispLicenseDetails(license))}>
                                                                                                 <p id="misp_license_list_view_btn" className={`py-1.5 px-4 cursor-pointer text-[#3E3E3E] ${isLoginLanguageRTL ? "pl-10" : "pr-10"}`}>{t("partnerList.view")}</p>
                                                                                                 <img src={viewIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                             </div>
                                                                                             <hr className="h-px bg-gray-100 border-0 mx-1" />
-                                                                                            <div role='button' className={`flex justify-between hover:bg-gray-100 ${license.status === 'activated' ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => deactivateLicenseKey(license, index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => deactivateLicenseKey(license, index))}>
-                                                                                                <p id="misp_license_list_deactivate_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${license.status === "activated" ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("partnerList.deActivate")}</p>
-                                                                                                <img src={license.status === "activated" ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
+                                                                                            <div role='button' className={`flex justify-between hover:bg-gray-100 ${activated ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => regenerateMispLicenseKey(license)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => regenerateMispLicenseKey(license))}>
+                                                                                                <p id="misp_license_list_regenerate_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${activated ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("mispLicenseList.regenerate")}</p>
+                                                                                                <img src={activated ? regenerateIcon : disabledRegenerateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
+                                                                                            </div>
+                                                                                            <hr className="h-px bg-gray-100 border-0 mx-1" />
+                                                                                            <div role='button' className={`flex justify-between hover:bg-gray-100 ${activated ? 'cursor-pointer' : 'cursor-default'}`} onClick={() => deactivateLicenseKey(license, index)} tabIndex="0" onKeyDown={(e) => onPressEnterKey(e, () => deactivateLicenseKey(license, index))}>
+                                                                                                <p id="misp_license_list_deactivate_btn" className={`py-1.5 px-4 ${isLoginLanguageRTL ? "pl-10" : "pr-10"} ${activated ? "text-[#3E3E3E]" : "text-[#A5A5A5]"}`}>{t("partnerList.deActivate")}</p>
+                                                                                                <img src={activated ? deactivateIcon : disableDeactivateIcon} alt="" className={`${isLoginLanguageRTL ? "pl-2" : "pr-2"}`} />
                                                                                             </div>
                                                                                         </div>
                                                                                     )}
