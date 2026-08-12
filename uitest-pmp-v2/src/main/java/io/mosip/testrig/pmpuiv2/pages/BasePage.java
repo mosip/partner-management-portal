@@ -535,22 +535,24 @@ public class BasePage {
 		element.sendKeys(Keys.DELETE);
 	}
 
-	public void focusAndPressEnter(WebElement element) {
-		LogUtil.action("Focusing element and pressing Enter: ", element);
+	private void focus(WebElement element) {
 		WaitUtil.waitForVisibility(driver, element);
 		((JavascriptExecutor) driver).executeScript("arguments[0].focus();", element);
+	}
+
+	// sendKeys(Keys.ENTER) is rejected on non-input elements, so menu options rendered as
+	// a div/p need the focus-then-Actions route to receive a key press.
+	public void focusAndPressEnter(WebElement element) {
+		LogUtil.action("Focusing element and pressing Enter: ", element);
+		focus(element);
 		new Actions(driver).sendKeys(Keys.ENTER).perform();
 	}
 
-	public void focusElement(WebElement element) {
-		LogUtil.action("Moving keyboard focus to element: ", element);
-		WaitUtil.waitForVisibility(driver, element);
-		((JavascriptExecutor) driver).executeScript("arguments[0].focus();", element);
-	}
-
-	public boolean isElementFocused(WebElement element) {
-		LogUtil.verify("Checking if element has keyboard focus: ", element);
-		WaitUtil.waitForVisibility(driver, element);
+	// Focuses, then reports whether focus landed: an element with no tabindex leaves
+	// activeElement on body, so this stays a real check rather than a tautology.
+	public boolean isElementFocusable(WebElement element) {
+		LogUtil.verify("Checking if element can take keyboard focus: ", element);
+		focus(element);
 		return element.equals(driver.switchTo().activeElement());
 	}
 

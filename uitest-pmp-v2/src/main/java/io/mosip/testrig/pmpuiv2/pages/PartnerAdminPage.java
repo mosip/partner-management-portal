@@ -638,10 +638,6 @@ public class PartnerAdminPage extends BasePage {
 				.contains(GlobalConstants.CURSOR_DEFAULT);
 	}
 
-	public boolean isDeactivateOptionFocused() {
-		return isElementFocused(deactivateOptionWrapper);
-	}
-
 	public void pressEnterOnDeactivateOption() {
 		focusAndPressEnter(deactivateOptionWrapper);
 	}
@@ -655,8 +651,7 @@ public class PartnerAdminPage extends BasePage {
 	}
 
 	public boolean isDeactivatePopupConfirmButtonFocusable() {
-		focusElement(deactivateConfirmButton);
-		return isElementFocused(deactivateConfirmButton);
+		return isElementFocusable(deactivateConfirmButton);
 	}
 
 	public String getFirstRowPartnerStatus() {
