@@ -7,8 +7,11 @@ delete FROM keymgr.partner_cert_store where cert_subject ='CN=AABBCC,OU=AABBCC,O
 
 delete FROM keymgr.ca_cert_store where cert_subject ='CN=SUBCA,OU=SUBCA,O=SUBCA,L=aa,ST=aa,C=aa' and partner_domain='AUTH';
 delete FROM keymgr.ca_cert_store where cert_subject ='CN=CA,OU=CA,O=CA,L=aa,ST=aa,C=aa' and partner_domain='AUTH';
+delete FROM keymgr.ca_cert_store where cert_subject like 'CN=SUBCA%' and partner_domain='AUTH';
+delete FROM keymgr.ca_cert_store where cert_subject like 'CN=CA,%' and partner_domain='AUTH';
 delete FROM keymgr.ca_cert_store where cert_subject ='CN=AABBCC,OU=AABBCC,O=AABBCC,L=aa,ST=aa,C=aa' and partner_domain='AUTH';
 delete FROM keymgr.partner_cert_store where cert_subject ='CN=AABBCC,OU=AABBCC,O=AABBCC,L=aa,ST=aa,C=aa' and partner_domain='AUTH';
+delete FROM keymgr.partner_cert_store where cert_subject like 'CN=AABBCC%' and partner_domain='AUTH';
 
 delete FROM keymgr.ca_cert_store where cert_subject ='CN=SUBCA,OU=SUBCA,O=SUBCA,L=aa,ST=aa,C=aa' and partner_domain='FTM';
 delete FROM keymgr.ca_cert_store where cert_subject ='CN=CA,OU=CA,O=CA,L=aa,ST=aa,C=aa' and partner_domain='FTM';
@@ -27,3 +30,13 @@ DELETE FROM keymgr.key_alias where app_id = 'PARTNER' AND ref_id = 'pmpui-polici
 DELETE FROM keymgr.key_alias where app_id = 'PARTNER' AND ref_id = 'pmpui-device';
 DELETE FROM keymgr.key_alias where app_id = 'PARTNER' AND ref_id = 'pmpui-policyadmin';
 DELETE FROM keymgr.key_alias where app_id = 'PARTNER' AND ref_id = 'pmpui-deactivate';
+
+#These are delete queries for MANUAL ADJUDICATION PARTNER ADMIN
+DELETE FROM keymgr.key_alias where app_id = 'PARTNER' AND ref_id = 'pmpui-maadmin';
+
+#These are delete queries for MANUAL ADJUDICATION PARTNER certificates (AUTH domain)
+DELETE FROM keymgr.key_alias where app_id = 'PARTNER' AND ref_id = 'pmpui-ma';
+DELETE FROM keymgr.key_alias where app_id = 'PARTNER' AND ref_id = 'pmpui-ma2';
+DELETE FROM keymgr.key_alias where app_id = 'PARTNER' AND ref_id = 'ma_autouser';
+DELETE FROM keymgr.key_alias where app_id = 'PARTNER' AND ref_id = 'pmpui-ma4';
+DELETE FROM keymgr.key_alias where app_id = 'PARTNER' AND ref_id = 'mapart01';

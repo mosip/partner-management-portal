@@ -25,6 +25,7 @@ import org.testng.annotations.Test;
 import io.mosip.testrig.pmpuiv2.driver.DriverManager;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.mosip.testrig.pmpuiv2.kernel.util.ConfigManager;
+import io.mosip.testrig.pmpuiv2.kernel.util.KeycloakUserManager;
 import io.mosip.testrig.pmpuiv2.pages.BasePage;
 import io.mosip.testrig.pmpuiv2.pages.LoginPage;
 
@@ -44,8 +45,19 @@ public class BaseClass {
 	public static final Logger logger = Logger.getLogger(BaseClass.class);
 	public static String data;
 
+	/**
+	 * Return false from a test class to skip default browser open + BaseClass login
+	 * (userid = pmpui-v2). Default true so existing suites are unchanged.
+	 */
+	protected boolean useDefaultBrowserLifecycle() {
+		return true;
+	}
+
 	@BeforeMethod
 	public void setUp(Method method) throws Exception {
+		if (!useDefaultBrowserLifecycle()) {
+			return;
+		}
 		logger.info("Start set up");
 		if (System.getProperty("os.name").equalsIgnoreCase("Linux") && ConfigManager.getdocker().equals("yes")) {
 			logger.info("Docker start");
@@ -108,12 +120,17 @@ public class BaseClass {
 		BaseClass.data = rawData.substring(0, BasePage.getSplitdigit());
 		logger.info("Test data suffix generated: " + BaseClass.data);
 
+		// Suite init may have removed Keycloak users; recreate/reset before UI login.
+		KeycloakUserManager.ensureUserExists(userid, password, "PARTNER_ADMIN");
 		LoginPage loginPage = new LoginPage(driver);
 		loginPage.login(userid, password);
 	}
 
 	@AfterMethod
 	public void tearDown(ITestResult result) {
+		if (!useDefaultBrowserLifecycle()) {
+			return;
+		}
 		try {
 			DriverManager.quitDriver();
 		} catch (Exception ignored) {

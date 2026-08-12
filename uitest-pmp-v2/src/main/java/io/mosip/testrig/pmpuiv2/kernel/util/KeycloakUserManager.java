@@ -222,13 +222,119 @@ public class KeycloakUserManager extends BaseTestCaseFunc {
 	public static void assignRole(String username, String roleName) {
 		Keycloak keycloak = getKeycloakInstance();
 		RealmResource realm = keycloak.realm(ConfigManager.getIAMRealmId());
-		List<UserRepresentation> users = realm.users().search(username);
-		if (users.isEmpty()) {
+		UserResource user = findUserResource(realm, username);
+		if (user == null) {
 			logger.info("User not found: " + username);
 			return;
 		}
-		UserResource user = realm.users().get(users.get(0).getId());
 		RoleRepresentation role = realm.roles().get(roleName).toRepresentation();
 		user.roles().realmLevel().add(List.of(role));
+	}
+
+	/**
+	 * Creates the Keycloak user if missing, otherwise resets password and ensures roles.
+	 * Returns true when user is usable for UI login.
+	 */
+	public static boolean ensureUserExists(String username, String password, String... roleNames) {
+		try {
+			Keycloak keycloak = getKeycloakInstance();
+			RealmResource realm = keycloak.realm(ConfigManager.getIAMRealmId());
+			UsersResource usersResource = realm.users();
+			UserResource userResource = findUserResource(realm, username);
+
+			if (userResource == null) {
+				UserRepresentation user = new UserRepresentation();
+				user.setEnabled(true);
+				user.setUsername(username);
+				user.setFirstName(username);
+				user.setLastName(username);
+				user.setEmail("automation-" + username + "@automationlabs.com");
+				try (Response response = usersResource.create(user)) {
+					logger.info("Create user response for {}: {} {}", username, response.getStatus(),
+							response.getStatusInfo());
+					if (response.getStatus() != 201 && response.getStatus() != 204) {
+						logger.error("Unable to create Keycloak user: " + username);
+						return false;
+					}
+					String userId = CreatedResponseUtil.getCreatedId(response);
+					userResource = usersResource.get(userId);
+					logger.info("Created Keycloak user: " + username);
+				}
+			} else {
+				logger.info("Keycloak user already exists: " + username);
+			}
+
+			CredentialRepresentation passwordCred = new CredentialRepresentation();
+			passwordCred.setTemporary(false);
+			passwordCred.setType(CredentialRepresentation.PASSWORD);
+			passwordCred.setValue(password);
+			userResource.resetPassword(passwordCred);
+
+			if (roleNames != null) {
+				for (String roleName : roleNames) {
+					try {
+						RoleRepresentation role = realm.roles().get(roleName).toRepresentation();
+						userResource.roles().realmLevel().add(List.of(role));
+					} catch (Exception roleEx) {
+						logger.warn("Unable to assign role {} to {}: {}", roleName, username, roleEx.getMessage());
+					}
+				}
+			}
+			return true;
+		} catch (Exception e) {
+			logger.error("ensureUserExists failed for {}: {}", username, e.getMessage(), e);
+			return false;
+		}
+	}
+
+	private static UserResource findUserResource(RealmResource realm, String username) {
+		UsersResource usersResource = realm.users();
+		List<UserRepresentation> users = usersResource.search(username, true);
+		if (users == null || users.isEmpty()) {
+			users = usersResource.search(username);
+		}
+		if (users == null || users.isEmpty()) {
+			return null;
+		}
+		for (UserRepresentation representation : users) {
+			if (username.equalsIgnoreCase(representation.getUsername())) {
+				return usersResource.get(representation.getId());
+			}
+		}
+		return usersResource.get(users.get(0).getId());
+	}
+
+	public static void removeUser(String username) {
+		Keycloak keycloakInstance = getKeycloakInstance();
+		RealmResource realmResource = keycloakInstance.realm(ConfigManager.getIAMRealmId());
+		UsersResource usersRessource = realmResource.users();
+		List<UserRepresentation> usersFromDB = usersRessource.search(username, true);
+		if (usersFromDB == null || usersFromDB.isEmpty()) {
+			usersFromDB = usersRessource.search(username);
+		}
+		if (usersFromDB != null && !usersFromDB.isEmpty()) {
+			for (UserRepresentation userRepresentation : usersFromDB) {
+				if (username.equalsIgnoreCase(userRepresentation.getUsername())) {
+					usersRessource.get(userRepresentation.getId()).remove();
+					logger.info("User removed with name: " + username);
+					return;
+				}
+			}
+			usersRessource.get(usersFromDB.get(0).getId()).remove();
+			logger.info("User removed with name: " + usersFromDB.get(0).getUsername());
+		} else {
+			logger.info("User not found with name: " + username);
+		}
+	}
+
+	public static void removeManualAdjudicationPartnerTestUsers() {
+		String[] users = { "pmpui-ma", "pmpui-ma2", "ma_autouser", "pmpui-ma4", "mapart01" };
+		for (String user : users) {
+			try {
+				removeUser(user);
+			} catch (Exception e) {
+				logger.warn("Unable to remove MA test user " + user + ": " + e.getMessage());
+			}
+		}
 	}
 }

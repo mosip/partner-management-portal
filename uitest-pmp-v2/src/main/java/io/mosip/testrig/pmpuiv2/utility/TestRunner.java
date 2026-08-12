@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.testng.TestListenerAdapter;
 import org.testng.TestNG;
 import org.testng.xml.XmlClass;
 import org.testng.xml.XmlSuite;
@@ -18,7 +17,6 @@ import io.mosip.testrig.pmpuiv2.fw.util.AdminTestUtil;
 import io.mosip.testrig.pmpuiv2.kernel.util.ConfigManager;
 
 public class TestRunner {
-	static TestListenerAdapter tla = new TestListenerAdapter();
 	public static List<String> knownIssues = new ArrayList<>();
 	public static String jarUrl = TestRunner.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 	public static String uin = "";
@@ -86,6 +84,8 @@ public class TestRunner {
 			XmlClass mispPartnerTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.MispPartnerTest");
 			XmlClass mispPolicyTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.MispPolicyTest");
 			XmlClass abisPartnerTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.AbisPartnerTest");
+			XmlClass manualAdjudicationPartnerTest = new XmlClass(
+					"io.mosip.testrig.pmpuiv2.testcase.ManualAdjudicationPartnerTest");
 
 			List<XmlClass> classes = new ArrayList<>();
 			String[] scenarioNames = ConfigManager.gettestcases().split(",");
@@ -178,6 +178,9 @@ public class TestRunner {
 				case "AbisPartnerTest":
 					addClassIfAbsent(classes, partnerAdminCreation, abisPartnerTest);
 					break;
+				case "ManualAdjudicationPartnerTest":
+					addClassIfAbsent(classes, manualAdjudicationPartnerTest);
+					break;
 
 				// Unknown test name
 				default:
@@ -249,7 +252,13 @@ public class TestRunner {
 		if (checkRunType().equalsIgnoreCase("JAR")) {
 			return new File(jarUrl).getParentFile().getAbsolutePath().toString() + "/resources";
 		} else if (checkRunType().equalsIgnoreCase("IDE")) {
-			String path = System.getProperty("user.dir") + System.getProperty("path.config");
+			String pathConfig = System.getProperty("path.config");
+			if (pathConfig == null || pathConfig.isBlank()) {
+				pathConfig = "/src/main/resources";
+			} else if (!pathConfig.startsWith("/") && !pathConfig.startsWith("\\")) {
+				pathConfig = "/" + pathConfig;
+			}
+			String path = System.getProperty("user.dir") + pathConfig;
 
 			if (path.contains("test-classes"))
 				path = path.replace("test-classes", "classes");
