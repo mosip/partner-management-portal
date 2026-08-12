@@ -61,3 +61,29 @@ delete FROM pms.user_details where user_id='pmpui-ftm';
 #These are delete queries for pmpui-devicenocert
 delete from pms.partner where user_id='pmpui-devicenocert';
 delete FROM pms.user_details where user_id='pmpui-devicenocert';
+
+#These are delete queries for MANUAL ADJUDICATION PARTNER ADMIN - pmpui-maadmin
+delete from pms.partner_policy where cr_by in ('pmpui-maadmin');
+delete from pms.partner_policy_request where cr_by in ('pmpui-maadmin');
+delete from pms.auth_policy where cr_by in ('pmpui-maadmin');
+delete from pms.policy_group where cr_by in ('pmpui-maadmin');
+delete from pms.partner_h where cr_by in ('pmpui-maadmin');
+delete from pms.partner where cr_by in ('pmpui-maadmin');
+delete from pms.partner where user_id='pmpui-maadmin';
+delete from pms.partner where id='pmpui-maadmin';
+delete FROM pms.user_details where user_id='pmpui-maadmin';
+delete FROM pms.user_details where cr_by in ('pmpui-maadmin');
+
+#These are delete queries for MANUAL ADJUDICATION PARTNER
+delete from pms.partner_policy where part_id in ('pmpui-ma', 'pmpui-ma2', 'ma_autouser', 'pmpui-ma4', 'mapart01');
+delete from pms.partner_policy_request where part_id in ('pmpui-ma', 'pmpui-ma2', 'ma_autouser', 'pmpui-ma4', 'mapart01');
+delete from pms.partner_h where id in ('pmpui-ma', 'pmpui-ma2', 'ma_autouser', 'pmpui-ma4', 'mapart01');
+delete from pms.partner where id in ('pmpui-ma', 'pmpui-ma2', 'ma_autouser', 'pmpui-ma4', 'mapart01');
+delete from pms.partner where user_id in ('pmpui-ma', 'pmpui-ma2', 'ma_autouser', 'pmpui-ma4', 'mapart01');
+delete FROM pms.user_details where user_id in ('pmpui-ma', 'pmpui-ma2', 'ma_autouser', 'pmpui-ma4', 'mapart01');
+
+#These are delete queries for MANUAL ADJUDICATION PARTNER policies and policy group
+delete from pms.partner_policy where policy_id in (select id from pms.auth_policy where name in ('mapolicy01', 'mapolicy02', 'mapolicy03', 'mapolicydeactivate', 'mapolicyedit', 'mapolicyclone', 'mapolicypublish'));
+delete from pms.partner_policy_request where policy_id in (select id from pms.auth_policy where name in ('mapolicy01', 'mapolicy02', 'mapolicy03', 'mapolicydeactivate', 'mapolicyedit', 'mapolicyclone', 'mapolicypublish'));
+delete from pms.auth_policy where name in ('mapolicy01', 'mapolicy02', 'mapolicy03', 'mapolicydeactivate', 'mapolicyedit', 'mapolicyclone', 'mapolicypublish');
+delete from pms.policy_group where name in ('mapolicygroup');

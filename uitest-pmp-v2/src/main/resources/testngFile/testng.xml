@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
-<!-- Suite: preserve order; tests decide their own parallelism -->
-<suite name="PMP uiv2 UI TestRig" preserve-order="true" parallel="false">
+<!-- Suite: PartnerAdminCreation first; dependents wait via dependsOnGroups -->
+<suite name="PMP uiv2 UI TestRig" preserve-order="true" parallel="none">
 
-<!-- Note: 
-- Class dependencies are implemented within the test classes. 
-- This suite is organized based on flow for easier understanding. 
-- Classes are executed in parallel using 4 threads. 
--->
-
-	<!-- Runs test classes in parallel with 4 threads -->
-	<test name="PartnerManagementService" preserve-order="false" parallel="classes" thread-count="4">
+	<!-- Sequential: avoid mass skips from PartnerAdminCreation races -->
+	<test name="PartnerManagementService" preserve-order="true" parallel="none">
 		
 		<classes> 
 		 <!-- PARTNER ADMIN SETUP -->
@@ -40,6 +34,8 @@
 			<class name="io.mosip.testrig.pmpuiv2.testcase.MispPolicyTest" />
 			<!--ABIS PARTNER FLOW-->
 			<class name="io.mosip.testrig.pmpuiv2.testcase.AbisPartnerTest" />
+			<!--MANUAL ADJUDICATION PARTNER FLOW-->
+			<class name="io.mosip.testrig.pmpuiv2.testcase.ManualAdjudicationPartnerTest" />
 			<!--PARTNER VALIDATION & MANAGEMENT -->
 			<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerDetailsTest" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.CertificateTrustStoreTest" />
