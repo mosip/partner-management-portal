@@ -1,10 +1,19 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
+import java.time.Duration;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
+import io.mosip.testrig.pmpuiv2.utility.WaitUtil;
+
 public class PartnerAdminPage extends BasePage {
+
+	private static final Duration POPUP_ABSENCE_TIMEOUT = Duration.ofSeconds(3);
+	private static final Duration LIST_LOAD_TIMEOUT = Duration.ofSeconds(20);
 
 	@FindBy(id = "undefined_title")
 	private WebElement subTitleList;
@@ -158,6 +167,15 @@ public class PartnerAdminPage extends BasePage {
 
 	@FindBy(id = "partner_deactive_btn")
 	private WebElement deactivateButtons;
+
+	@FindBy(xpath = "//p[@id='partner_deactive_btn']/parent::div")
+	private WebElement deactivateOptionWrapper;
+
+	@FindBy(xpath = "//tr[@id='partner_list_item1']/td[7]/div")
+	private WebElement firstRowStatusBadge;
+
+	@FindBy(id = "partner_list_item1")
+	private WebElement firstPartnerRow;
 
 	@FindBy(id = "status_filter_option2")
 	private WebElement deactivatedStatusInFilters;
@@ -535,12 +553,144 @@ public class PartnerAdminPage extends BasePage {
 		return isElementDisplayed(deactivatedPartnerRow);
 	}
 
+	// Applying a filter while the initial list fetch is still in flight leaves the table
+	// empty, so callers must wait for the unfiltered list before opening the filter panel.
+	public boolean isPartnerListLoaded() {
+		return isElementDisplayedQuick(By.id("partner_list_item1"), LIST_LOAD_TIMEOUT);
+	}
+
+	// Row 1 is what the Action menu and status assertions operate on;
+	// isDeactivatedPartnerRowDisplayed is pinned to row 2.
+	public boolean isFirstPartnerRowDisplayed() {
+		return isElementDisplayed(firstPartnerRow);
+	}
+
 	public boolean isViewButtonsEnabled() {
 		return isElementEnabled(viewButtons);
 	}
 
 	public boolean isDeactivateButtonDisabled() {
 		return isElementDisabled(deactivateButtons);
+	}
+
+	public boolean isDeactivateOptionEnabled() {
+		return getTextFromAttribute(deactivateButtons, GlobalConstants.CLASS)
+				.contains(GlobalConstants.ACTION_MENU_OPTION_ENABLED);
+	}
+
+	public boolean isDeactivateOptionDisabled() {
+		return getTextFromAttribute(deactivateButtons, GlobalConstants.CLASS)
+				.contains(GlobalConstants.ACTION_MENU_OPTION_DISABLED);
+	}
+
+	public boolean isViewOptionEnabled() {
+		return getTextFromAttribute(viewButtons, GlobalConstants.CLASS)
+				.contains(GlobalConstants.ACTION_MENU_OPTION_ENABLED);
+	}
+
+	public void clickOnDeactivateOptionInActionMenu() {
+		clickOnElement(deactivateButtons);
+	}
+
+	public boolean isDeactivatePopupHeaderDisplayed() {
+		return isElementDisplayed(deactivatePartnerHeader);
+	}
+
+	public boolean isDeactivatePopupHeaderDisplayedQuick() {
+		return isElementDisplayedQuick(By.id("deactivate_popup_header"), POPUP_ABSENCE_TIMEOUT);
+	}
+
+	public boolean isDeactivatePopupDescriptionDisplayed() {
+		return isElementDisplayed(deactivatePartnerDescription);
+	}
+
+	public boolean isDeactivatePopupCancelButtonDisplayed() {
+		return isElementDisplayed(deactivateCancelButton);
+	}
+
+	public boolean isDeactivatePopupConfirmButtonDisplayed() {
+		return isElementDisplayed(deactivateConfirmButton);
+	}
+
+	public void clickOnDeactivatePopupCancelButton() {
+		clickOnElement(deactivateCancelButton);
+	}
+
+	public void clickOnDeactivatePopupConfirmButton() {
+		clickOnElement(deactivateConfirmButton);
+		WaitUtil.waitForInvisibility(driver, deactivatePartnerHeader);
+	}
+
+	public boolean isDeactivateOptionKeyboardOperable() {
+		return GlobalConstants.ROLE_BUTTON
+				.equals(getTextFromAttribute(deactivateOptionWrapper, GlobalConstants.ROLE))
+				&& GlobalConstants.TABINDEX_FOCUSABLE
+						.equals(getTextFromAttribute(deactivateOptionWrapper, GlobalConstants.TABINDEX));
+	}
+
+	public boolean isDeactivateOptionCursorPointer() {
+		return getTextFromAttribute(deactivateOptionWrapper, GlobalConstants.CLASS)
+				.contains(GlobalConstants.CURSOR_POINTER);
+	}
+
+	public boolean isDeactivateOptionCursorDefault() {
+		return getTextFromAttribute(deactivateOptionWrapper, GlobalConstants.CLASS)
+				.contains(GlobalConstants.CURSOR_DEFAULT);
+	}
+
+	public boolean isDeactivateOptionFocused() {
+		return isElementFocused(deactivateOptionWrapper);
+	}
+
+	public void pressEnterOnDeactivateOption() {
+		focusAndPressEnter(deactivateOptionWrapper);
+	}
+
+	public boolean isDeactivatePopupConfirmButtonEnabled() {
+		return isElementEnabled(deactivateConfirmButton);
+	}
+
+	public boolean isDeactivatePopupConfirmButtonNativeButton() {
+		return GlobalConstants.BUTTON_TAG.equalsIgnoreCase(deactivateConfirmButton.getTagName());
+	}
+
+	public boolean isDeactivatePopupConfirmButtonFocusable() {
+		focusElement(deactivateConfirmButton);
+		return isElementFocused(deactivateConfirmButton);
+	}
+
+	public String getFirstRowPartnerStatus() {
+		return getTextFromLocator(firstRowStatusBadge).trim();
+	}
+
+	public boolean isFirstRowStatusBadgeDeactivated() {
+		return getTextFromAttribute(firstRowStatusBadge, GlobalConstants.CLASS)
+				.contains(GlobalConstants.DEACTIVATED_BACKGROUND);
+	}
+
+	public boolean isFirstPartnerRowGreyedOut() {
+		return getTextFromAttribute(firstPartnerRow, GlobalConstants.CLASS)
+				.contains(GlobalConstants.PARTNER_ROW_DEACTIVATED_TEXT);
+	}
+
+	public String getDeactivatePopupTitle() {
+		return getTextFromLocator(deactivatePartnerHeader).trim();
+	}
+
+	public String getDeactivatePopupSubTitle() {
+		return getTextFromLocator(deactivatePartnerDescription).trim();
+	}
+
+	public boolean isDeactivatePopupTitleFullyInterpolated() {
+		return !getDeactivatePopupTitle().contains(GlobalConstants.UNRESOLVED_PLACEHOLDER);
+	}
+
+	// An index of -1 for either means that value never reached the rendered title.
+	public boolean isPartnerIdOrderedBeforeOrganisation(String partnerId, String organisationName) {
+		String title = getDeactivatePopupTitle();
+		int partnerIdIndex = title.indexOf(partnerId);
+		int organisationIndex = title.lastIndexOf(organisationName);
+		return partnerIdIndex > -1 && organisationIndex > -1 && partnerIdIndex < organisationIndex;
 	}
 
 	public void clickOnPartnerTypeAscIcons() {

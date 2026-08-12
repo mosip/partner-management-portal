@@ -18,6 +18,7 @@ import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -532,6 +533,25 @@ public class BasePage {
 		element.click();
 		element.sendKeys(Keys.chord(Keys.CONTROL, "a"));
 		element.sendKeys(Keys.DELETE);
+	}
+
+	public void focusAndPressEnter(WebElement element) {
+		LogUtil.action("Focusing element and pressing Enter: ", element);
+		WaitUtil.waitForVisibility(driver, element);
+		((JavascriptExecutor) driver).executeScript("arguments[0].focus();", element);
+		new Actions(driver).sendKeys(Keys.ENTER).perform();
+	}
+
+	public void focusElement(WebElement element) {
+		LogUtil.action("Moving keyboard focus to element: ", element);
+		WaitUtil.waitForVisibility(driver, element);
+		((JavascriptExecutor) driver).executeScript("arguments[0].focus();", element);
+	}
+
+	public boolean isElementFocused(WebElement element) {
+		LogUtil.verify("Checking if element has keyboard focus: ", element);
+		WaitUtil.waitForVisibility(driver, element);
+		return element.equals(driver.switchTo().activeElement());
 	}
 
 	public void scrollToEndPage() {

@@ -42,6 +42,7 @@
 			<class name="io.mosip.testrig.pmpuiv2.testcase.AbisPartnerTest" />
 			<!--PARTNER VALIDATION & MANAGEMENT -->
 			<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerDetailsTest" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerDeactivateOptionTest" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.CertificateTrustStoreTest" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerPolicyMappingTest" />
 
