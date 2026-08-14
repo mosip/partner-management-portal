@@ -31,8 +31,6 @@ public class MispServicesTest extends BaseClass {
         mispServicesPage.clickOnGenerateMispLicenceKeyButton();
         assertTrue(mispServicesPage.isGenerateMispLicenceKeyPageDisplayed(),
                 GlobalConstants.isGenerateMispLicenceKeyPageDisplayed);
-        assertTrue(mispServicesPage.isGenerateMispLicenceKeyTitleDisplayed(),
-                GlobalConstants.isGenerateMispLicenceKeyTitleDisplayed);
         assertTrue(mispServicesPage.isAllFieldsAreMandatorySubtitleDisplayed(),
                 GlobalConstants.isAllFieldsAreMandatorySubtitleDisplayed);
         assertTrue(mispServicesPage.isMispServicesBreadcombDisplayed(),

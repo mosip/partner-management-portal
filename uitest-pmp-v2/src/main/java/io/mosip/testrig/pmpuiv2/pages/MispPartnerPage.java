@@ -588,7 +588,9 @@ public class MispPartnerPage extends BasePage {
 	}
 
 	public boolean isPolicyGroupOptionVisible(String value) {
-		return isElementDisplayedQuick(By.xpath("//span[normalize-space()='" + value + "']"), INLINE_VALIDATION_TIMEOUT);
+		return isElementDisplayedQuick(
+				By.xpath("//*[contains(@id,'policy_group_selector_option')]//span[normalize-space()='" + value + "']"),
+				INLINE_VALIDATION_TIMEOUT);
 	}
 
 	public void clickUploadCertActionForPartner(String partnerId) {

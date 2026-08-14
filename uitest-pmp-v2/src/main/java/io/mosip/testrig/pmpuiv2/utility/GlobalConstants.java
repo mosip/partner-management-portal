@@ -1499,7 +1499,6 @@ public class GlobalConstants {
 	public static final String isAlternateFlowsHandledCorrectly = "Verify that edge case alternate flows such as submitting with invalid field data are handled gracefully without data corruption.";
 	public static final String isGenerateMispLicenceKeyButtonDisplayed = "Verify if generate MISP licence key button displayed";
 	public static final String isGenerateMispLicenceKeyPageDisplayed = "Verify if generate MISP licence key page displayed";
-	public static final String isGenerateMispLicenceKeyTitleDisplayed = "Verify if generate MISP licence key title displayed";
 	public static final String isAllFieldsAreMandatorySubtitleDisplayed = "Verify if all fields are mandatory subtitle displayed";
 	public static final String isMispServicesBreadcombDisplayed = "Verify if MISP services breadcomb displayed";
 	public static final String isGenerateMispLicenceKeyHomeButtonDisplayed = "Verify if generate MISP licence key home button displayed";

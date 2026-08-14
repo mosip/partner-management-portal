@@ -624,4 +624,9 @@ public class BasePage {
 		return element.getText();
 	}
 
+	protected WebElement waitAndFindElement(By locator) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(ConfigManager.getTimeout()));
+		return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+	}
+
 }

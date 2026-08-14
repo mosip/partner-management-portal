@@ -7,8 +7,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-import io.mosip.testrig.pmpuiv2.kernel.util.ConfigManager;
-
 public class MispServicesPage extends BasePage {
 
 	@FindBy(id = "generate_misp_license_key_btn")
@@ -25,9 +23,6 @@ public class MispServicesPage extends BasePage {
 
 	@FindBy(id = "sub_title_home_btn")
 	private WebElement generateMispLicenceKeyHomeButton;
-
-	@FindBy(id = "page_title")
-	private WebElement mispServicesTabularTitle;
 
 	@FindBy(id = "generate_license_key_partner_id_label")
 	private WebElement partnerIdLabel;
@@ -131,10 +126,10 @@ public class MispServicesPage extends BasePage {
 	@FindBy(xpath = "//*[text()='Previous Month']")
 	private WebElement previousMonth;
 
-	@FindBy(xpath = "//*[contains(@class, 'react-datepicker__day react-datepicker__day--024')]")
+	@FindBy(xpath = "//*[contains(@class, 'react-datepicker__day react-datepicker__day--024') and not(contains(@class, 'react-datepicker__day--outside-month'))]")
 	private WebElement date24InCalender;
 
-	@FindBy(xpath = "//*[contains(@class, 'react-datepicker__day react-datepicker__day--004')]")
+	@FindBy(xpath = "//*[contains(@class, 'react-datepicker__day react-datepicker__day--004') and not(contains(@class, 'react-datepicker__day--outside-month'))]")
 	private WebElement date4InCalender;
 
 	@FindBy(id = "generate_license_key_expiry_date_calender")
@@ -221,6 +216,7 @@ public class MispServicesPage extends BasePage {
 	@FindBy(id = "mispLicenseList.action_header")
 	private WebElement actionHeader;
 
+	private static final Duration POPUP_CHECK_TIMEOUT = Duration.ofSeconds(3);
 
 	public MispServicesPage(WebDriver driver) {
 		super(driver);
@@ -238,10 +234,6 @@ public class MispServicesPage extends BasePage {
 		return isElementDisplayed(generateMispLicenceKeyTitle);
 	}
 
-	public boolean isGenerateMispLicenceKeyTitleDisplayed() {
-		return isElementDisplayed(generateMispLicenceKeyTitle);
-	}
-
 	public boolean isAllFieldsAreMandatorySubtitleDisplayed() {
 		return isElementDisplayed(allFieldsAreMandatorySubtitle);
 	}
@@ -256,10 +248,6 @@ public class MispServicesPage extends BasePage {
 
 	public void clickOnMispServicesBreadcomb() {
 		clickOnElement(mispServicesBreadcomb);
-	}
-
-	public boolean isMispServicesTabularTitleDisplayed() {
-		return isElementDisplayed(mispServicesTabularTitle);
 	}
 
 	public boolean isPartnerIdLabelDisplayed() {
@@ -377,7 +365,8 @@ public class MispServicesPage extends BasePage {
 	public void selectPartnerId(String partnerIdValue) {
 		clickOnElement(partnerIdDropdownButton);
 		enter(partnerIdDropdownSearchInput, partnerIdValue);
-		clickOnElement(partnerIdOption1);
+		click(By.xpath(
+				"//*[contains(@id,'generate_license_key_partner_id_option')][normalize-space()='" + partnerIdValue + "']"));
 	}
 
 	public String getPartnerType() {
@@ -403,7 +392,8 @@ public class MispServicesPage extends BasePage {
 	public void selectPolicyName(String policyName) {
 		clickOnElement(policyNameDropdown);
 		enter(policyNameSearchInput, policyName);
-		clickOnElement(mispPolicyName);
+		click(By.xpath(
+				"//*[contains(@id,'generate_license_key_policy_name_option')][normalize-space()='" + policyName + "']"));
 	}
 
 	public void enterLicenseKeyName(String licenseKeyName) {
@@ -462,7 +452,7 @@ public class MispServicesPage extends BasePage {
 	}
 
 	public void closeCopyIdPopupIfPresent() {
-		if (isElementDisplayedQuick(By.id("copy_id_close_btn"), Duration.ofSeconds(ConfigManager.getTimeout()))) {
+		if (isElementDisplayedQuick(By.id("copy_id_close_btn"), POPUP_CHECK_TIMEOUT)) {
 			clickOnElement(mispLicenseKeyPopupCloseButton);
 			clickOnElement(confirmationGoBackBtn);
 		}

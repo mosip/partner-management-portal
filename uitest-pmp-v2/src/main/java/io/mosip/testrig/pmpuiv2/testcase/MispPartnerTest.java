@@ -208,6 +208,8 @@ public class MispPartnerTest extends BaseClass {
 		createMispPartnerWithoutPolicyGroup(GlobalConstants.MISP_PARTNER_WITHOUT_POLICYGROUP, GlobalConstants.MISP_PARTNER,
 				GlobalConstants.MISP_NOTIFICATION_LANGUAGE, GlobalConstants.ALPHANUMERIC,
 				GlobalConstants.ORGANISATION_NAME, GlobalConstants.MISP_CONTACT_NUMBER2, GlobalConstants.MISP_EMAIL_ID6);
+		assertTrue(mispPartnerPage.isCreatePartnerSuccessMsgDisplayed(),
+				GlobalConstants.isCreatePartnerSuccessMsgDisplayed);
 		mispPartnerPage.clickOnUploadPartnerCertificateButton();
 		assertTrue(partnerCertificatePage.isMispPartnerCertificatePopupDisplayed(),
 				GlobalConstants.isPartnerCertificatePageDisplayed);

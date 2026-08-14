@@ -180,7 +180,7 @@ public class TestRunner {
 					addClassIfAbsent(classes, partnerAdminCreation, abisPartnerTest);
 					break;
 				case "MispServicesTest":
-					addClassIfAbsent(classes, partnerAdminCreation, mispServicesTest);
+					addClassIfAbsent(classes, partnerAdminCreation, mispPartnerTest, mispPolicyTest, mispServicesTest);
 					break;
 
 				// Unknown test name
