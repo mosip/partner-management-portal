@@ -9,6 +9,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
@@ -44,6 +45,8 @@ public class BaseClass {
 	public static final Logger logger = Logger.getLogger(BaseClass.class);
 	public static String data;
 	private static boolean chromeDriverReady;
+	private static final Set<String> SKIP_AUTO_LOGIN_METHODS = Set.of("partnerAdminCreation",
+			"uploadPartnerCertificateAfterLogin");
 
 	@BeforeMethod
 	public void setUp(Method method) throws Exception {
@@ -118,8 +121,7 @@ public class BaseClass {
 		logger.info("Test data suffix generated: " + BaseClass.data);
 
 		LoginPage loginPage = new LoginPage(driver);
-		if (!"partnerAdminCreation".equals(method.getName())
-				&& !"uploadPartnerCertificateAfterLogin".equals(method.getName())) {
+		if (!SKIP_AUTO_LOGIN_METHODS.contains(method.getName())) {
 			loginPage.login(userid, password);
 		}
 	}

@@ -10,6 +10,9 @@ import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 import io.mosip.testrig.pmpuiv2.utility.LogUtil;
 
+/**
+ * Validates Credential Partner login and dashboard elements after onboarding.
+ */
 @Test(dependsOnGroups = { "CredentialPartnerCreation" }, groups = { "CredentialPartnerLoginTest" })
 public class CredentialPartnerLoginTest extends BaseClass {
 

@@ -29,8 +29,6 @@ public class PartnerAdminCreation extends BaseClass {
 		dashboardPage = new DashboardPage(driver);
 		loginPage = new LoginPage(driver);
 
-		loginPage = new LoginPage(driver);
-
 		assertTrue(loginPage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
 		registerPage = loginPage.clickRegisterButton();
 		assertTrue(registerPage.isRegisterPageTitleDisplayed(), GlobalConstants.isRegisterPageTitleDisplayed);

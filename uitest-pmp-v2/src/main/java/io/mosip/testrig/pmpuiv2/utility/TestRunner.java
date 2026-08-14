@@ -311,6 +311,7 @@ public class TestRunner {
 		}
 	}
 
+	/** Returns the TestNG suite file name from {@code -DtestngSuiteFile}, if provided. */
 	private static String resolveTestngSuiteFile() {
 		String suiteFile = System.getProperty("testngSuiteFile");
 		return (suiteFile == null || suiteFile.isBlank()) ? null : suiteFile.trim();

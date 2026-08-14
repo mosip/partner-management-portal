@@ -86,6 +86,7 @@ public class RegisterPage extends BasePage {
 		dropdownByIndex(partnerTypeDropdown, 0);
 	}
 
+	/** Selects Credential Partner in the partner type dropdown during registration. */
 	public void selectCredentialPartnerInPartnerTypeDropdown() {
 		selectByValueInDropdown(partnerTypeDropdown, "CREDENTIAL_PARTNER");
 	}
