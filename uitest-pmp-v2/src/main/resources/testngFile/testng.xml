@@ -38,6 +38,7 @@
 			<!--MISP PARTNER FLOW-->
 			<class name="io.mosip.testrig.pmpuiv2.testcase.MispPartnerTest" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.MispPolicyTest" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.MispServicesTest" />
 			<!--ABIS PARTNER FLOW-->
 			<class name="io.mosip.testrig.pmpuiv2.testcase.AbisPartnerTest" />
 			<!--PARTNER VALIDATION & MANAGEMENT -->

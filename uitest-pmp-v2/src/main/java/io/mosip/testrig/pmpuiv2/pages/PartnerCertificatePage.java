@@ -1332,7 +1332,7 @@ public class PartnerCertificatePage extends BasePage {
 	}
 
 	public boolean isCertificateFormatTextNotEditable() {
-		return isElementNotEditable(certificateFormatText);
+		return isElementNotEditable(partnerCertificateFormatText);
 	}
 
 }

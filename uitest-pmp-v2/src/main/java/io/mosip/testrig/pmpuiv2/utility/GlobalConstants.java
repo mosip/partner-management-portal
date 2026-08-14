@@ -16,8 +16,6 @@ public class GlobalConstants {
 	public static final String NUMATTN = "num attn";
 	public static final String INITIAL_PARTNER_ID = "Select Partner ID";
 	public static final String INITIAL_PARTNER_TYPE = "Auto-populated based on Partner ID selected";
-	public static final String INITIAL_POLICYGROUP = "Auto-populated based on Partner ID selected";
-	public static final String INITIAL_COMMENTBOX = "Mention the purpose of requesting the policy";
 	public static final String DEVICE_PROVIDER = "Device Provider";
 	public static final String DEVICE_PARTNER_ID = "pmpui-device";
 	public static final String DEFAULT_POLICYGROUP = "automationui policy group";
@@ -45,8 +43,6 @@ public class GlobalConstants {
 	public static final String LIST_OF_SBI_PAGE_BREADCUMB = "Home/ List of SBIs";
 	public static final String DEVICE_DETAIL_PAGE_BREADCUMB2 = "Home/ List of Devices";
 	public static final String INITIAL_DEVICE_TYPE = "Select Device Type";
-	public static final String INITIAL_PARTNER_TYPEDROPWON = "Select Partner Type";
-	public static final String INITIAL_POLICY_NAME = "Select Policy Name";
 	public static final String INITIAL_DEVICE_SUB_TYPE = "Select Device Sub Type";
 	public static final String LIST_OF_DEVICES_TITLE_COUNT_1 = "List of Devices (1)";
 	public static final String LIST_OF_DEVICES_TITLE_COUNT_28 = "List of Devices (28)";
@@ -143,12 +139,12 @@ public class GlobalConstants {
 	public static final String MODEL = "Model";
 	public static final String STATUS = "Status";
 	public static final String SBI_VERSION = "SBI Version";
-//  Certificate
+	//  Certificate
 	public static final String ROOTCAISSUEDTO = "CN=CA,OU=CA,O=CA,L=aa,ST=aa,C=aa";
 	public static final String ROOTCAISSUEDBY = "CN=CA,OU=CA,O=CA,L=aa,ST=aa,C=aa";
 	public static final String INTERCAISSUEDTO = "CN=SUBCA,OU=SUBCA,O=SUBCA,L=aa,ST=aa,C=aa";
 	public static final String INTERCAISSUEDBY = "CN=CA,OU=CA,O=CA,L=aa,ST=aa,C=aa";
-//  Policy Group
+	//  Policy Group
 	public static final String POLICYGROUP01 = "policygroup01";
 	public static final String POLICYGROUP01_DESCRIPTION = "policygroup 01";
 	public static final String POLICYGROUP02 = "policygroup02";
@@ -235,11 +231,15 @@ public class GlobalConstants {
 	public static final String MISP_ADDRESS = "mispaddress";
 	public static final String MISP_CONTACT_NUMBER = "9898767676";
 	public static final String MISP_CONTACT_NUMBER1 = "9898676767";
+	public static final String MISP_CONTACT_NUMBER2 = "9898060667";
+	public static final String MISP_CONTACT_NUMBER3 = "9898928667";
 	public static final String MISP_EMAIL_ID = "misppmpui@gmail.com";
 	public static final String MISP_EMAIL_ID2 = "misppmpui2@gmail.com";
 	public static final String MISP_EMAIL_ID3 = "misppmpui3@gmail.com";
 	public static final String MISP_EMAIL_ID4 = "misppmpui4@gmail.com";
 	public static final String MISP_EMAIL_ID5 = "misppmpui5@gmail.com";
+	public static final String MISP_EMAIL_ID6 = "misppmpui6@gmail.com";
+	public static final String MISP_EMAIL_ID7 = "misppmpui7@gmail.com";
 	public static final String INVALID_EMAIL_ID = "mi12#sp.34@gmail@com";
 	public static final String LENGTHY_STRING = "Shsgwdyfyfujfjfuhfufhurfmifefcefffdaddress";
 	public static final String MULTILINE_STRING = "123\nMain\nStreet";
@@ -250,17 +250,21 @@ public class GlobalConstants {
 	public static final String UNDERSCORE_STRING = "misp_autouser";
 	public static final String MISP_POLICY_01 = "misppolicy01";
 	public static final String MISP_POLICY_02 = "misppolicy02";
+	public static final String MISP_POLICY_03 = "misppolicy03";
 	public static final String MISP_POLICY_01_DESCRIPTION = "misppolicy 01";
 	public static final String MISP_POLICY_02_DESCRIPTION = "misppolicy 02";
+	public static final String MISP_POLICY_03_DESCRIPTION = "misppolicy 03";
 	public static final String MISP_PART_01 = "misppart01";
+	public static final String MISP_PARTNER_WITHOUT_POLICYGROUP = "mispwithoutpolicygroup";
 	public static final String UPLOADED_STATUS = "Uploaded";
 	public static final String MISP_DOMAINTYPE = "MISP";
 	public static final String MISP_LICENSEKEY_01 = "misplicensekey01";
+	public static final String MISP_LICENSEKEY_01_CASE_INSENSITIVE = "MISPlicensekey01";
+	public static final String MISP_LICENSEKEY_DEACTIVATE = "misplicensekeydeactivate";
+	public static final String MISP_LICENSEKEY_DEACTIVATE_CASE_INSENSITIVE = "MISPlicensekeyDEACTIVATE";
 	public static final String INACTIVE_STATUS = "Inactive";
 	public static final String NOTUPLOADED_STATUS = "Not Uploaded";
 	public static final String ACTIVE_STATUS = "Active";
-	public static final String MISP_POLICY_03 = "misppolicy03";
-	public static final String MISP_POLICY_03_DESCRIPTION = "misppolicy 03";
 	public static final String MISP_POLICY_DEACTIVATE = "misppolicydeactivate";
 	public static final String MISP_POLICY_CLONE = "misppolicyclone";
 	public static final String MISP_POLICY_DEACTIVATE_DESCRIPTION = "misppolicy deactivate";
@@ -1394,7 +1398,7 @@ public class GlobalConstants {
 	public static final String EMAIL_INVALID_FORMAT_ERROR_MSG = "Enter valid email address and try again";
 	public static final int EMAIL_MAX_LENGTH = 254;
 	public static final String CONTACT_NUMBER_INVALID_ERROR_MSG = "Enter valid contact number and try again";
-	public static final String CONTACT_NUMBER_PLACEHOLDER_TEXT = "Enter Phone Number";
+	public static final String CONTACT_NUMBER_PLACEHOLDER_TEXT = "Enter phone number";
 	public static final int CONTACT_NUMBER_MAX_LENGTH = 16;
 	public static final String SHORT_PHONE_NUMBER = "12345";
 
@@ -1493,6 +1497,31 @@ public class GlobalConstants {
 	public static final String isAllValidationErrorsDisplayed = "Verify that appropriate validation error messages appear for all fields containing invalid input data.";
 	public static final String isDesignSpecCompliant = "Verify that the Create Partner page UI elements including labels, placeholders, and button states match the design specification.";
 	public static final String isAlternateFlowsHandledCorrectly = "Verify that edge case alternate flows such as submitting with invalid field data are handled gracefully without data corruption.";
+	public static final String isGenerateMispLicenceKeyButtonDisplayed = "Verify if generate MISP licence key button displayed";
+	public static final String isGenerateMispLicenceKeyPageDisplayed = "Verify if generate MISP licence key page displayed";
+	public static final String isGenerateMispLicenceKeyTitleDisplayed = "Verify if generate MISP licence key title displayed";
+	public static final String isAllFieldsAreMandatorySubtitleDisplayed = "Verify if all fields are mandatory subtitle displayed";
+	public static final String isMispServicesBreadcombDisplayed = "Verify if MISP services breadcomb displayed";
+	public static final String isGenerateMispLicenceKeyHomeButtonDisplayed = "Verify if generate MISP licence key home button displayed";
+	public static final String isMispLicenceKeyLabelDisplayed = "Verify if MISP licence key label displayed";
+	public static final String isCalenderLabelDisplayed = "Verify if calender label displayed";
+	public static final String isClearFormButtonDisplayed = "Verify if clear form button displayed";
+	public static final String isPartnerIdInfoDescriptionDisplayed = "Verify if partner id info description displayed";
+	public static final String isPartnerIdInfoDescriptionNotEditable = "Verify if partner id info description not editable";
+	public static final String isPolicyGroupInfoDescriptionDisplayed = "Verify if policy group info description displayed";
+	public static final String isPolicyNameInfoDescriptionDisplayed = "Verify if policy name info description displayed";
+	public static final String isMispLicenseKeyNamePlaceholderDisplayed = "Verify if MISP license key name placeholder displayed";
+	public static final String isMispLicenseKeyGuidenceNoteDisplayed = "Verify if MISP license key guidence note displayed";
+	public static final String isMispLicenseKeyGuidenceNoteNotEditable = "Verify if MISP license key guidence note not editable";
+	public static final String isMispLicenseKeyImportantNoteDisplayed = "Verify if MISP license key important note displayed";
+	public static final String isMispLicenseKeyImportantNoteNotEditable = "Verify if MISP license key important note not editable";
+	public static final String isPartnerIdDisplayedInDropdown = "Verify if partner id displayed in dropdown";
+	public static final String isMispPolicyNameDisplayed = "Verify if MISP policy name displayed";
+	public static final String isMispPolicyNameDescriptionDisplayed = "Verify if MISP policy name description displayed";
+	public static final String isExpiryDateCalenderInfoDescriptionDisplayed = "Verify if expiry date calender info description displayed";
+	public static final String isCalendarDisplayed = "Verify if calendar displayed";
+	public static final String isEnteredNameAlreadyExistErrorMessageDisplayed = "Verify if entered name already exist error message displayed";
+	public static final String isInvalidCharacterErrorMessageDisplayed = "Verify if invalid character error message displayed";
 	public static final String isMispPartnerCertificatePopupDisplayed = "Verify if misp partner certificate popup displayed";
 	public static final String isReUploadPartnerCertificateDisplayed = "Verify if reupload partner certificate displayed";
 	public static final String isCorrespondingPartnerIdDisplayed = "Verify if corresponding partner id displayed";
@@ -1512,6 +1541,10 @@ public class GlobalConstants {
 	public static final String isPolicyGroupPopupDescriptionDisplayed = "Verify if policy group popup description displayed";
 	public static final String isPolicyGroupPopupPartnerTypeDisplayed = "Verify if policy group popup partner type displayed";
 	public static final String isPolicyGroupPopupPolicyGroupDropdownDisplayed = "Verify if policy group popup policy group dropdown displayed";
+	public static final String isRequestPolicyHomeButtonDisplayed = "Verify if request policy home button displayed";
+	public static final String isRequestPolicyBreadcrumbDisplayed = "Verify if request policy breadcrumb displayed";
+	public static final String isRequestPolicyMandatoryMsgDisplayed = "Verify if request policy mandatory message displayed";
+	public static final String isRequestPolicyPartnerIdInfoDisplayed = "Verify if request policy partner id info displayed";
 	public static final String isConfirmationSuccessIconDisplayed = "Verify if confirmation success icon displayed";
 	public static final String isRequestPolicyConfirmationHeaderDisplayed = "Verify if request policy confirmation header displayed";
 	public static final String isRequestPolicyConfirmationDescriptionDisplayed = "Verify if request policy confirmation description displayed";
@@ -1548,11 +1581,6 @@ public class GlobalConstants {
 	public static final String isViewPartnerPolicyLinkingPageTitleDisplayed = "Verify if view partner policy linking page title displayed";
 	public static final String isRequestPoliciesFormSubmitButtonEnabled = "Verify if request policies form submit button enabled";
 	public static final String isDeactivatePartnerPopupHeaderDisplayed = "Verify if deactivate partner popup header displayed";
-	public static final String isRequestPolicyHomeButtonDisplayed = "Verify if request policy home button displayed";
-	public static final String isRequestPolicyBreadcrumbDisplayed = "Verify if request policy breadcrumb displayed";
-	public static final String isRequestPolicyMandatoryMsgDisplayed = "Verify if request policy mandatory message displayed";
-	public static final String isRequestPolicyPartnerIdInfoDisplayed = "Verify if request policy partner id info displayed";
-	public static final String isPolicyDataPlaceholderDisplayed = "Verify if policy data placeholder displayed";
 	public static final String isPolicyDataUploadHeaderDisplayed = "Verify if policy data upload header displayed";
 	public static final String isPolicyDataUploadDescriptionDisplayed = "Verify if policy data upload description displayed";
 	public static final String isStatusDisplayedForPolicyName = "Verify if status displayed for policy name";

@@ -125,12 +125,6 @@ public class MispPolicyPage extends BasePage {
 	@FindBy(id = "clone_policy_popup_title")
 	private WebElement clonePolicyTitle;
 
-	@FindBy(id = "policy_group_selector_dropdown_button")
-	private WebElement clonePolicyGroupDropdown;
-
-	@FindBy(id = "policy_group_selector_search_input")
-	private WebElement clonePolicyGroupDropdownSearchInput;
-
 	@FindBy(id = "clone_policy_popup_success_msg")
 	private WebElement clonePolicyPopupSuccessMessage;
 
@@ -324,8 +318,8 @@ public class MispPolicyPage extends BasePage {
 	}
 
 	public void clickOnActionOfMispPolicy(String policyName) {
-		By threeDotsButton = By
-				.xpath("//td[text()='" + policyName + "']/parent::tr//button[contains(@id,'policies_list_view')]");
+		By threeDotsButton = By.xpath(
+				"//td[normalize-space()='" + policyName + "']/parent::tr//button[contains(@id,'policies_list_view')]");
 		click(threeDotsButton);
 	}
 
@@ -370,11 +364,7 @@ public class MispPolicyPage extends BasePage {
 	}
 
 	public void selectValidPolicyGroupForClone(String value) {
-		clickOnElement(clonePolicyGroupDropdown);
-		clickOnElement(clonePolicyGroupDropdownSearchInput);
-		enter(clonePolicyGroupDropdownSearchInput, value);
-		By policyGroupOption = By.xpath("//span[normalize-space()='" + value + "']");
-		click(policyGroupOption);
+		selectPolicyGroupDropdown(value);
 	}
 
 	public boolean isClonePolicyPopupSuccessMessageDisplayed() {
