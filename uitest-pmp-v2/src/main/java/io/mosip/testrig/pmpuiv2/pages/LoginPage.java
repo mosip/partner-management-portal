@@ -25,7 +25,6 @@ public class LoginPage extends BasePage {
 		super(driver);
 	}
 
-	/** Navigates to the registration page by clicking the Register button. */
 	public RegisterPage clickRegisterButton() {
 		clickOnElement(registerButton);
 		return new RegisterPage(driver);
