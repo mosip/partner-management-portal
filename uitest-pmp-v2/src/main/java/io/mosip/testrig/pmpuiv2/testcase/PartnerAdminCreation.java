@@ -29,9 +29,11 @@ public class PartnerAdminCreation extends BaseClass {
 		dashboardPage = new DashboardPage(driver);
 		loginPage = new LoginPage(driver);
 
-		registerPage = loginPage.clickRegisterButton();
+		loginPage = new LoginPage(driver);
+
 		assertTrue(loginPage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
-		loginPage.clickRegisterButton();
+		registerPage = loginPage.clickRegisterButton();
+		assertTrue(registerPage.isRegisterPageTitleDisplayed(), GlobalConstants.isRegisterPageTitleDisplayed);
 
 		registerPage.enterFirstName("pmpui-v2");
 		assertTrue(registerPage.isLastNameTextBoxDisplayed(), GlobalConstants.isLastNameTextBoxDisplayed);
