@@ -464,12 +464,15 @@ public class PartnerCertificatePage extends BasePage {
 		return isElementDisplayed(titleBackButton);
 	}
 
-	// The Credential Partner certificate page renders without the back-arrow icon,
-	// so verify it via the upload/re-upload action button that is present instead.
+	/**
+	 * Verifies the Credential Partner certificate upload page using the upload
+	 * action button, since the back-arrow icon is not rendered for this partner type.
+	 */
 	public boolean isPartnerCertificateUploadPageDisplayed() {
 		return isElementDisplayed(uploadButton);
 	}
 
+	/** Verifies the Credential Partner certificate re-upload page is displayed. */
 	public boolean isPartnerCertificateReuploadPageDisplayed() {
 		return isElementDisplayed(partnerCertificateReuploadButton);
 	}
@@ -510,6 +513,7 @@ public class PartnerCertificatePage extends BasePage {
 		return isElementDisplayed(successMessage);
 	}
 
+	/** Verifies the Credential Partner certificate upload success message. */
 	public boolean isCredentialPartnerSuccessMessageDisplayed() {
 		return isElementDisplayed(credentialPartnerSuccessMessage);
 	}
