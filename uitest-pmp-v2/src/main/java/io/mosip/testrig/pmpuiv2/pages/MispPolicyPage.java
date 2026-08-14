@@ -134,10 +134,10 @@ public class MispPolicyPage extends BasePage {
 	@FindBy(id = "clone_policy_button")
 	private WebElement clonePolicyButton;
 
-	@FindBy(id = "policy_group_selector_dropdown_button")
+	@FindBy(xpath = "(//*[@id='policy_group_selector_dropdown_button'])[last()]")
 	private WebElement clonePolicyGroupDropdown;
 
-	@FindBy(id = "policy_group_selector_search_input")
+	@FindBy(xpath = "(//*[@id='policy_group_selector_search_input'])[last()]")
 	private WebElement clonePolicyGroupDropdownSearchInput;
 
 	@FindBy(id = "deactivate_policy_popup_header")
@@ -373,7 +373,7 @@ public class MispPolicyPage extends BasePage {
 		clickOnElement(clonePolicyGroupDropdown);
 		clickOnElement(clonePolicyGroupDropdownSearchInput);
 		enter(clonePolicyGroupDropdownSearchInput, value);
-		By policyGroupOption = By.xpath("//span[normalize-space()='" + value + "']");
+		By policyGroupOption = By.xpath("(//span[normalize-space()='" + value + "'])[last()]");
 		click(policyGroupOption);
 	}
 
