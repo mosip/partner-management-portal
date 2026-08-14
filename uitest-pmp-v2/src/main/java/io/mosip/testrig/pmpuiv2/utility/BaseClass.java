@@ -52,10 +52,14 @@ public class BaseClass {
 			logger.info("Docker start");
 			String configFilePath = "/usr/bin/chromedriver";
 			System.setProperty("webdriver.chrome.driver", configFilePath);
-		} else if (!chromeDriverReady) {
-			WebDriverManager.chromedriver().setup();
-			chromeDriverReady = true;
-			logger.info("window chrome driver start");
+		} else {
+			synchronized (BaseClass.class) {
+				if (!chromeDriverReady) {
+					WebDriverManager.chromedriver().setup();
+					chromeDriverReady = true;
+					logger.info("window chrome driver start");
+				}
+			}
 		}
 
 		ChromeOptions options = new ChromeOptions();
