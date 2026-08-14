@@ -118,7 +118,10 @@ public class BaseClass {
 		logger.info("Test data suffix generated: " + BaseClass.data);
 
 		LoginPage loginPage = new LoginPage(driver);
-		loginPage.login(userid, password);
+		if (!"partnerAdminCreation".equals(method.getName())
+				&& !"uploadPartnerCertificateAfterLogin".equals(method.getName())) {
+			loginPage.login(userid, password);
+		}
 	}
 
 	@AfterMethod

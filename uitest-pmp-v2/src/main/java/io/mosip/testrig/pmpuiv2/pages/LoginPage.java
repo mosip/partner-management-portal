@@ -26,6 +26,7 @@ public class LoginPage extends BasePage {
 	}
 
 	public RegisterPage clickRegisterButton() {
+		waitForElementClickable(registerButton);
 		clickOnElement(registerButton);
 		return new RegisterPage(driver);
 	}
