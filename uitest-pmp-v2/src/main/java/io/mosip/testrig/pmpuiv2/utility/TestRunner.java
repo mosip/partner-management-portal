@@ -303,9 +303,6 @@ public class TestRunner {
 
 	private static String resolveTestngSuiteFile() {
 		String suiteFile = System.getProperty("testngSuiteFile");
-		if (suiteFile == null || suiteFile.isBlank()) {
-			suiteFile = ConfigManager.getTestngSuiteFile();
-		}
 		return (suiteFile == null || suiteFile.isBlank()) ? null : suiteFile.trim();
 	}
 
