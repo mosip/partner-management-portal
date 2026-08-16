@@ -169,7 +169,7 @@ public class MispServicesPage extends BasePage {
 	private WebElement confirmationGoBackBtn;
 
 	@FindBy(id = "generate_misp_license_key_error_msg")
-	private WebElement enteredNameAlreadyExistErrorMessage;
+	private WebElement generateLicenseKeyErrorMessage;
 
 	@FindBy(xpath = "//div[contains(@class,'react-datepicker')]")
 	private WebElement calendarPopup;
@@ -415,8 +415,12 @@ public class MispServicesPage extends BasePage {
 		clickOnElement(submitButton);
 	}
 
-	public boolean isEnteredNameAlreadyExistErrorMessageDisplayed() {
-		return isElementDisplayed(enteredNameAlreadyExistErrorMessage);
+	public boolean isGenerateLicenseKeyErrorMessageDisplayed() {
+		return isElementDisplayed(generateLicenseKeyErrorMessage);
+	}
+
+	public String getGenerateLicenseKeyErrorText() {
+		return getTextFromLocator(generateLicenseKeyErrorMessage);
 	}
 
 	public boolean isCalendarDisplayed() {
@@ -451,10 +455,12 @@ public class MispServicesPage extends BasePage {
 		return isElementDisplayed(invalidCharacterErrorMessage);
 	}
 
-	public void closeCopyIdPopupIfPresent() {
-		if (isElementDisplayedQuick(By.id("copy_id_close_btn"), POPUP_CHECK_TIMEOUT)) {
-			clickOnElement(mispLicenseKeyPopupCloseButton);
-			clickOnElement(confirmationGoBackBtn);
-		}
+	public boolean isMispLicenseKeyPopupDisplayed() {
+		return isElementDisplayedQuick(By.id("copy_id_close_btn"), POPUP_CHECK_TIMEOUT);
+	}
+
+	public void closeCopyIdPopup() {
+		clickOnElement(mispLicenseKeyPopupCloseButton);
+		clickOnElement(confirmationGoBackBtn);
 	}
 }

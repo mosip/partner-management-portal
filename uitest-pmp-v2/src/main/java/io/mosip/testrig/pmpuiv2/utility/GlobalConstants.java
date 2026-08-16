@@ -1398,7 +1398,7 @@ public class GlobalConstants {
 	public static final String EMAIL_INVALID_FORMAT_ERROR_MSG = "Enter valid email address and try again";
 	public static final int EMAIL_MAX_LENGTH = 254;
 	public static final String CONTACT_NUMBER_INVALID_ERROR_MSG = "Enter valid contact number and try again";
-	public static final String CONTACT_NUMBER_PLACEHOLDER_TEXT = "Enter phone number";
+	public static final String CONTACT_NUMBER_PLACEHOLDER_TEXT = "Enter Phone Number";
 	public static final int CONTACT_NUMBER_MAX_LENGTH = 16;
 	public static final String SHORT_PHONE_NUMBER = "12345";
 
@@ -1519,7 +1519,8 @@ public class GlobalConstants {
 	public static final String isMispPolicyNameDescriptionDisplayed = "Verify if MISP policy name description displayed";
 	public static final String isExpiryDateCalenderInfoDescriptionDisplayed = "Verify if expiry date calender info description displayed";
 	public static final String isCalendarDisplayed = "Verify if calendar displayed";
-	public static final String isEnteredNameAlreadyExistErrorMessageDisplayed = "Verify if entered name already exist error message displayed";
+	public static final String isGenerateLicenseKeyErrorMessageDisplayed = "Verify if generate license key error message displayed";
+	public static final String isMispLicenseKeyPopupDisplayed = "Verify if misp license key copy-id popup displayed";
 	public static final String isInvalidCharacterErrorMessageDisplayed = "Verify if invalid character error message displayed";
 	public static final String isMispPartnerCertificatePopupDisplayed = "Verify if misp partner certificate popup displayed";
 	public static final String isReUploadPartnerCertificateDisplayed = "Verify if reupload partner certificate displayed";

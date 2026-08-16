@@ -113,29 +113,32 @@ public class MispServicesTest extends BaseClass {
 
         createMispLicenseKey(GlobalConstants.MISP_PARTNER_USER, GlobalConstants.MISP_POLICY_01,
                 GlobalConstants.MISP_LICENSEKEY_01);
-        mispServicesPage.closeCopyIdPopupIfPresent();
+        assertTrue(mispServicesPage.isMispLicenseKeyPopupDisplayed(), GlobalConstants.isMispLicenseKeyPopupDisplayed);
+        mispServicesPage.closeCopyIdPopup();
 
         mispServicesPage.clickOnGenerateMispLicenceKeyButton();
         createMispLicenseKey(GlobalConstants.MISP_PARTNER_USER, GlobalConstants.MISP_POLICY_01,
                 GlobalConstants.MISP_LICENSEKEY_01);
-        assertTrue(mispServicesPage.isEnteredNameAlreadyExistErrorMessageDisplayed(),
-                GlobalConstants.isEnteredNameAlreadyExistErrorMessageDisplayed);
+        assertTrue(mispServicesPage.isGenerateLicenseKeyErrorMessageDisplayed(),
+                GlobalConstants.isGenerateLicenseKeyErrorMessageDisplayed);
         mispServicesPage.clickOnClearFormButton();
 
         createMispLicenseKey(GlobalConstants.MISP_PARTNER_USER, GlobalConstants.MISP_POLICY_01,
                 GlobalConstants.MISP_LICENSEKEY_DEACTIVATE);
-        mispServicesPage.closeCopyIdPopupIfPresent();
+        assertTrue(mispServicesPage.isMispLicenseKeyPopupDisplayed(), GlobalConstants.isMispLicenseKeyPopupDisplayed);
+        mispServicesPage.closeCopyIdPopup();
 
         mispServicesPage.clickOnGenerateMispLicenceKeyButton();
         createMispLicenseKey(GlobalConstants.MISP_PARTNER_USER, GlobalConstants.MISP_POLICY_01,
                 GlobalConstants.MISP_LICENSEKEY_DEACTIVATE_CASE_INSENSITIVE);
-        mispServicesPage.closeCopyIdPopupIfPresent();
+        assertTrue(mispServicesPage.isMispLicenseKeyPopupDisplayed(), GlobalConstants.isMispLicenseKeyPopupDisplayed);
+        mispServicesPage.closeCopyIdPopup();
 
         mispServicesPage.clickOnGenerateMispLicenceKeyButton();
         createMispLicenseKey(GlobalConstants.MISP_PARTNER_USER, GlobalConstants.MISP_POLICY_01,
                 GlobalConstants.MISP_LICENSEKEY_DEACTIVATE);
-        assertTrue(mispServicesPage.isEnteredNameAlreadyExistErrorMessageDisplayed(),
-                GlobalConstants.isEnteredNameAlreadyExistErrorMessageDisplayed);
+        assertTrue(mispServicesPage.isGenerateLicenseKeyErrorMessageDisplayed(),
+                GlobalConstants.isGenerateLicenseKeyErrorMessageDisplayed);
         mispServicesPage.clickOnClearFormButton();
 
     }
