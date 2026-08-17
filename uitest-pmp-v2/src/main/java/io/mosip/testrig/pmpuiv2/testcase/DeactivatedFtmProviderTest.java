@@ -1,5 +1,6 @@
 package io.mosip.testrig.pmpuiv2.testcase;
 
+import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import org.testng.annotations.Test;
@@ -52,7 +53,11 @@ public class DeactivatedFtmProviderTest extends BaseClass {
 				GlobalConstants.isCertificateReuploadButtonDisabled);
 		assertTrue(partnerCertificatePage.isPartnerCertificateReuploadButtonGreyedOut(),
 				GlobalConstants.isCertificateReuploadButtonGreyedOut);
+		assertFalse(partnerCertificatePage.isPartnerCertificateReuploadButtonEnabled(),
+				GlobalConstants.isCertificateReuploadButtonDisabled);
 		assertTrue(partnerCertificatePage.isDownloadButtonDisplayed(),
+				GlobalConstants.isCertificateDownloadButtonDisabledForDeactivatedPartner);
+		assertFalse(partnerCertificatePage.isDownloadButtonEnabled(),
 				GlobalConstants.isCertificateDownloadButtonDisabledForDeactivatedPartner);
 	}
 

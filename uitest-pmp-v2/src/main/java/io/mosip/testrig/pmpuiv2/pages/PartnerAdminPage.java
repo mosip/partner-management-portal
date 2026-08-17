@@ -4,9 +4,15 @@ import java.time.Duration;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 import io.mosip.testrig.pmpuiv2.utility.LogUtil;
@@ -173,9 +179,6 @@ public class PartnerAdminPage extends BasePage {
 
 	@FindBy(xpath = "//p[@id='partner_deactive_btn']/parent::div")
 	private WebElement deactivateOptionWrapper;
-
-	@FindBy(xpath = "//tr[@id='partner_list_item1']/td[7]/div")
-	private WebElement firstRowStatusBadge;
 
 	@FindBy(id = "partner_list_item1")
 	private WebElement firstPartnerRow;
@@ -566,6 +569,19 @@ public class PartnerAdminPage extends BasePage {
 		return isElementDisplayedQuick(By.id("partner_list_item1"), LIST_LOAD_TIMEOUT);
 	}
 
+	// Rows are index-keyed in React, so the same DOM node survives a filter re-render -
+	// checking mere presence never actually waits. This waits for row 1's own text to
+	// contain the expected partner ID, so a stale pre-filter row can't be mistaken for it.
+	public boolean isPartnerListLoaded(String expectedPartnerId) {
+		try {
+			new WebDriverWait(driver, LIST_LOAD_TIMEOUT).until(ExpectedConditions
+					.textToBePresentInElementLocated(By.xpath("//tr[@id='partner_list_item1']/td[1]"), expectedPartnerId));
+			return true;
+		} catch (TimeoutException e) {
+			return false;
+		}
+	}
+
 	// Row 1 is what the Action menu operates on; isDeactivatedPartnerRowDisplayed is pinned to row 2.
 	public boolean isFirstPartnerRowDisplayed() {
 		return isElementDisplayed(firstPartnerRow);
@@ -690,6 +706,21 @@ public class PartnerAdminPage extends BasePage {
 		return isElementCoveredAtCentre(filterbtnTrigger);
 	}
 
+	// The popup relies on focus-trap-react rather than aria-modal/inert, so this checks
+	// what it actually implements: Tab cannot move focus outside the trapped boundary.
+	public void pressTabWithinDeactivatePopup(int times) {
+		for (int i = 0; i < times; i++) {
+			new Actions(driver).sendKeys(Keys.TAB).perform();
+		}
+	}
+
+	public boolean isFocusContainedWithinDeactivatePopup() {
+		return Boolean.TRUE.equals(((JavascriptExecutor) driver).executeScript(
+				"var header = document.getElementById('deactivate_popup_header');"
+						+ "var boundary = header ? header.closest('.rounded-lg') : null;"
+						+ "return boundary ? boundary.contains(document.activeElement) : false;"));
+	}
+
 	public int getPartnerRowCount() {
 		return getElementCount(By.xpath("//tr[starts-with(@id,'partner_list_item')]"));
 	}
@@ -710,7 +741,7 @@ public class PartnerAdminPage extends BasePage {
 
 	// Waits on the first badge - the rows exist before the filtered response paints their status text.
 	public boolean areAllPartnerRowStatusesDeactivated() {
-		WaitUtil.waitForVisibility(driver, firstRowStatusBadge);
+		new WebDriverWait(driver, LIST_LOAD_TIMEOUT).until(ExpectedConditions.visibilityOfElementLocated(FIRST_ROW_STATUS_BADGE));
 		List<WebElement> statusCells = driver
 				.findElements(By.xpath("//tr[starts-with(@id,'partner_list_item')]/td[7]/div"));
 		StringBuilder observed = new StringBuilder();
@@ -726,12 +757,15 @@ public class PartnerAdminPage extends BasePage {
 		return allDeactivated;
 	}
 
+	// By-based, not a long-lived @FindBy proxy: React can replace row 1's badge on a re-render.
+	private static final By FIRST_ROW_STATUS_BADGE = By.xpath("//tr[@id='partner_list_item1']/td[7]/div");
+
 	public String getFirstRowPartnerStatus() {
-		return getTextFromLocator(firstRowStatusBadge).trim();
+		return getTextFromLocator(FIRST_ROW_STATUS_BADGE).trim();
 	}
 
 	public boolean isFirstRowStatusBadgeDeactivated() {
-		return getTextFromAttribute(firstRowStatusBadge, GlobalConstants.CLASS)
+		return getTextFromAttribute(FIRST_ROW_STATUS_BADGE, GlobalConstants.CLASS)
 				.contains(GlobalConstants.DEACTIVATED_BACKGROUND);
 	}
 

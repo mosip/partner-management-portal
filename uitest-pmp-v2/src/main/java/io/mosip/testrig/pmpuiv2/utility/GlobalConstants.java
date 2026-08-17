@@ -1254,6 +1254,7 @@ public class GlobalConstants {
 	public static final String isPartnerStatusBadgeGreyAfterConfirm = "Verify partner status badge uses the deactivated colour after confirming";
 	public static final String isPartnerRowGreyedOutAfterConfirm = "Verify partner row is greyed out after confirming deactivation";
 	public static final String isPartnerListLoaded = "Verify list of partners has finished loading before filtering";
+	public static final String isFilteredPartnerListLoaded = "Verify the filtered list shows the expected partner in row 1";
 	public static final String isDeactivatePopupCancelButtonNativeButton = "Verify deactivate popup Cancel is a native button element";
 	public static final String isDeactivatePopupCancelButtonEnabled = "Verify deactivate popup Cancel button is enabled";
 	public static final String isDeactivatePopupCancelButtonFocusable = "Verify deactivate popup Cancel button can take keyboard focus";
@@ -1265,6 +1266,7 @@ public class GlobalConstants {
 	public static final String isDeactivatePopupHorizontallyCentred = "Verify deactivate popup is horizontally centred on the page";
 	public static final String isBackgroundScrollLockedWhenPopupOpen = "Verify page scrolling is locked while the deactivate popup is open";
 	public static final String isBackgroundControlCoveredWhenPopupOpen = "Verify background controls are covered by the popup overlay";
+	public static final String isKeyboardFocusContainedWithinPopup = "Verify keyboard focus cannot Tab out of the deactivate popup";
 	public static final String isBackgroundScrollRestoredAfterCancel = "Verify page scrolling is restored after the deactivate popup closes";
 	public static final String isPartnerStatusDeactivatedInViewDetails = "Verify status reads Deactivated in View Partner Details screen";
 	public static final String isDeactivatedFilterReturningOnlyDeactivated = "Verify filtering by Deactivated returns only deactivated records";

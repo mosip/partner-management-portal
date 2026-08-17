@@ -688,4 +688,11 @@ public class BasePage {
 		return element.getText();
 	}
 
+	protected String getTextFromAttribute(By locator, String attr) {
+		WebElement element = driver.findElement(locator);
+		LogUtil.action("Getting text from element for the " + attr + " attribute: ", element);
+		waitForElementVisible(element);
+		return element.getAttribute(attr);
+	}
+
 }

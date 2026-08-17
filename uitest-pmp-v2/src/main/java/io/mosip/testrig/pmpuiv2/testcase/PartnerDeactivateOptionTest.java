@@ -196,6 +196,12 @@ public class PartnerDeactivateOptionTest extends BaseClass {
 		assertTrue(partnerAdminPage.isFilterButtonCoveredByPopupOverlay(),
 				GlobalConstants.isBackgroundControlCoveredWhenPopupOpen);
 
+		// The popup traps focus via focus-trap-react rather than aria-modal/inert, so this
+		// checks what it actually implements: Tab cannot move focus outside the boundary.
+		partnerAdminPage.pressTabWithinDeactivatePopup(6);
+		assertTrue(partnerAdminPage.isFocusContainedWithinDeactivatePopup(),
+				GlobalConstants.isKeyboardFocusContainedWithinPopup);
+
 		partnerAdminPage.clickOnDeactivatePopupCancelButton();
 
 		assertFalse(partnerAdminPage.isPageScrollLocked(), GlobalConstants.isBackgroundScrollRestoredAfterCancel);
@@ -348,8 +354,10 @@ public class PartnerDeactivateOptionTest extends BaseClass {
 		}
 		partnerAdminPage.clickOnApplyFiltersBtn();
 
-		// Re-finds by locator after the filter re-renders the table - a stale row proxy would read as empty.
-		assertTrue(partnerAdminPage.isPartnerListLoaded(), GlobalConstants.isPartnerListLoaded);
+		// Row 1 is index-keyed and survives a re-render, so this waits for its content to
+		// match the filtered partner rather than just checking the row still exists.
+		assertTrue(partnerAdminPage.isPartnerListLoaded(GlobalConstants.PARTNERDETAILS_USER_ID),
+				GlobalConstants.isFilteredPartnerListLoaded);
 	}
 
 }

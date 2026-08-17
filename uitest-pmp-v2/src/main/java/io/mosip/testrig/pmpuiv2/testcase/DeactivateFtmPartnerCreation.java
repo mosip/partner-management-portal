@@ -99,7 +99,8 @@ public class DeactivateFtmPartnerCreation extends BaseClass {
 		partnerAdminPage.clickOnStatusFilter();
 		partnerAdminPage.clickActivatedButton();
 		partnerAdminPage.clickOnApplyFiltersBtn();
-		assertTrue(partnerAdminPage.isPartnerListLoaded(), GlobalConstants.isPartnerListLoaded);
+		assertTrue(partnerAdminPage.isPartnerListLoaded(GlobalConstants.DEACTIVATE_FTM_PARTNER_ID),
+				GlobalConstants.isFilteredPartnerListLoaded);
 
 		partnerAdminPage.clickOnActionsButton();
 		partnerAdminPage.clickOnDeactivateOptionInActionMenu();

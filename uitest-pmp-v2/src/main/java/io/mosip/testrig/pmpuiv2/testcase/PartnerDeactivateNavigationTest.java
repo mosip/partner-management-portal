@@ -60,7 +60,8 @@ public class PartnerDeactivateNavigationTest extends BaseClass {
 		}
 		partnerAdminPage.clickOnApplyFiltersBtn();
 
-		assertTrue(partnerAdminPage.isPartnerListLoaded(), GlobalConstants.isPartnerListLoaded);
+		assertTrue(partnerAdminPage.isPartnerListLoaded(GlobalConstants.PARTNER_DEACTIVATE2_USER_ID),
+				GlobalConstants.isFilteredPartnerListLoaded);
 	}
 
 }
