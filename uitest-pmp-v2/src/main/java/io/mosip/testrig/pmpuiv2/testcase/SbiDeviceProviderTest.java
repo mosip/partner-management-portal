@@ -393,14 +393,6 @@ public class SbiDeviceProviderTest extends BaseClass {
 
 	}
 
-	/**
-	 * TC_38189_23: a device that is Pending for Approval but linked to no SBI must
-	 * offer Reject only, so the admin cannot approve an orphaned device.
-	 *
-	 * Devices created through the portal are always linked to an SBI, so this needs
-	 * an orphaned device already present in the environment. When the list holds
-	 * none the test skips rather than reporting a pass it did not earn.
-	 */
 	@Test(priority = 9, description = "Only Reject is offered for a device that is not linked to an SBI", dependsOnMethods = "verifyViewOfDevicesPageAsAdmin")
 	public void verifyRejectOnlyOptionForOrphanDevice() {
 		dashboardpage = new DashboardPage(driver);
@@ -418,13 +410,11 @@ public class SbiDeviceProviderTest extends BaseClass {
 					+ "orphaned device to enable this check.");
 		}
 
-		// Precondition 2: the linked SBI column carries no value for this device
 		assertTrue(listOfDevicesPage.isLinkedSbiColumnEmpty(orphanRow), GlobalConstants.isLinkedSbiColumnEmpty);
 
 		listOfDevicesPage.clickOnDeviceListActionMenu(orphanRow);
 		listOfDevicesPage.clickOnApproveOrReject();
 
-		// The reject-only popup replaces the usual approve/reject popup
 		assertTrue(listOfDevicesPage.isRejectOnlyPopupDisplayed(), GlobalConstants.isRejectOnlyPopupDisplayed);
 		assertTrue(listOfDevicesPage.isRejectOnlyPopupHeaderDisplayed(), GlobalConstants.isRejectOnlyPopupDisplayed);
 		assertTrue(listOfDevicesPage.isRejectOnlyPopupDescriptionDisplayed(),
@@ -432,7 +422,6 @@ public class SbiDeviceProviderTest extends BaseClass {
 		assertTrue(listOfDevicesPage.isRejectOnlyPopupRejectButtonDisplayed(),
 				GlobalConstants.isRejectOnlyPopupRejectButtonDisplayed);
 
-		// The point of the popup: no Approve is on offer
 		assertTrue(listOfDevicesPage.isApproveButtonAbsentInRejectOnlyPopup(),
 				GlobalConstants.isApproveButtonNotDisplayedForOrphanDevice);
 

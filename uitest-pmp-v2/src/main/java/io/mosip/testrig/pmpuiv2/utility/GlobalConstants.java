@@ -1725,8 +1725,6 @@ public class GlobalConstants {
 	public static final String EMAIL_ADDRESS_FILTER_INFO_TOOLTIP = "Note: This filter performs an exact match. Please enter the full email address (e.g., user@example.com) to find results.";
 	public static final String isEmailAddressFilterInfoIconDisplayed = "Verify the info icon is displayed alongside the email address filter textbox";
 	public static final String isEmailAddressFilterInfoTooltipCorrect = "Verify the info icon tooltip displays the exact match guidance text";
-
-	// API Key Expiration Date - individual and tabular view (TC_40334)
 	public static final String isExpirationDateHeaderDisplayed = "Verify if 'Expiration Date' column header displayed in the API Key tabular view";
 	public static final String isExpirationDateHeaderAfterCreationDate = "Verify if 'Expiration Date' column appears beside 'Creation Date'";
 	public static final String isExpiryDateDescIconDisplayed = "Verify if expiration date descending sort icon displayed";
@@ -1742,7 +1740,6 @@ public class GlobalConstants {
 	public static final String isApiKeyListViewDisplayed = "Verify if the user lands on the API Key tabular view";
 	public static final String isExpirationDateStyledLikeOtherFields = "Verify if the Expiration Date field carries the same typography as the other individual view fields";
 
-	// Approve/Reject in individual view pages (TC_38408)
 	public static final String isIndividualViewApproveRejectButtonDisplayed = "Verify if Approve/Reject button displayed in the individual view page";
 	public static final String isIndividualViewApproveRejectButtonEnabled = "Verify if Approve/Reject button is enabled in the individual view page";
 	public static final String isApproveRejectButtonAbsentForNonPendingRecord = "Verify if Approve/Reject button is absent for a record that is not pending approval";
@@ -1756,7 +1753,6 @@ public class GlobalConstants {
 	public static final String isApproveRejectPopupClosedByEscape = "Verify if the Approve/Reject popup can be dismissed using the Escape key";
 	public static final String isStaleRecordErrorDisplayed = "Verify if an error is shown when acting on a record that was already actioned";
 
-	// Orphan device reject-only popup (TC_38189)
 	public static final String isRejectOnlyPopupDisplayed = "Verify if the reject-only popup is displayed for a device not linked to an SBI";
 	public static final String isRejectOnlyPopupRejectButtonDisplayed = "Verify if the reject-only popup exposes the Reject button";
 	public static final String isApproveButtonNotDisplayedForOrphanDevice = "Verify if no Approve button is offered for a device not linked to an SBI";

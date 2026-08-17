@@ -13,13 +13,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import io.mosip.testrig.pmpuiv2.kernel.util.ConfigManager;
 import io.mosip.testrig.pmpuiv2.utility.LogUtil;
 
-/**
- * Approve/Reject controls rendered on the Partner Admin individual view pages.
- *
- * The button and the confirmation popup are the same components on every
- * individual view that supports admin approval - Policies, FTM Chip,
- * Authentication Services and SBI-Device - so one page object serves them all.
- */
 public class IndividualViewPage extends BasePage {
 
 	private static final String APPROVE_REJECT_BUTTON_ID = "view_approve_reject_btn";
@@ -30,17 +23,10 @@ public class IndividualViewPage extends BasePage {
 	private static final By APPROVE_REJECT_BUTTON = By.id(APPROVE_REJECT_BUTTON_ID);
 	private static final By APPROVE_REJECT_POPUP_TITLE = By.id(APPROVE_REJECT_POPUP_TITLE_ID);
 
-	/** Upper bound on the tab walk, so a layout change cannot spin the test. */
 	private static final int MAX_TAB_PRESSES = 30;
 
-	/** Colour coding applied by bgOfStatus() in the portal's AppUtils. */
 	private static final String ACTIVATED_STATUS_CLASS = "bg-[#D1FADF]";
 	private static final String DEACTIVATED_STATUS_CLASS = "bg-[#EAECF0]";
-
-	/**
-	 * getStatusCode() renders an activated partner as 'Active', so that is the text
-	 * to expect on screen even though the story calls the state 'Activated'.
-	 */
 	private static final String ACTIVATED_STATUS_TEXT = "Active";
 	private static final String DEACTIVATED_STATUS_TEXT = "Deactivated";
 
@@ -75,18 +61,10 @@ public class IndividualViewPage extends BasePage {
 		super(driver);
 	}
 
-	// --- Approve/Reject button (TC_38408_01, _02, _10, _14) ---
-
-	/** TC_38408_01: the button is rendered for a Pending for Approval record. */
 	public boolean isApproveRejectButtonDisplayed() {
 		return isElementDisplayed(individualViewApproveRejectButton);
 	}
 
-	/**
-	 * TC_38408_02 and TC_38408_14: the button is absent for records that cannot be
-	 * actioned. Probes briefly rather than waiting out the full timeout, since the
-	 * expected outcome is that nothing is there.
-	 */
 	public boolean isApproveRejectButtonAbsent() {
 		boolean present = isElementDisplayedQuick(APPROVE_REJECT_BUTTON, Duration.ofSeconds(5));
 		if (present) {
@@ -96,7 +74,6 @@ public class IndividualViewPage extends BasePage {
 		return !present;
 	}
 
-	/** TC_38408_10: the button stays enabled for a deactivated partner. */
 	public boolean isApproveRejectButtonEnabled() {
 		return isElementEnabled(individualViewApproveRejectButton);
 	}
@@ -104,8 +81,6 @@ public class IndividualViewPage extends BasePage {
 	public void clickOnApproveRejectButton() {
 		clickOnElement(individualViewApproveRejectButton);
 	}
-
-	// --- Confirmation popup (TC_38408_03) ---
 
 	public boolean isApproveRejectPopupDisplayed() {
 		return isElementDisplayed(approveRejectPopupTitle);
@@ -139,9 +114,6 @@ public class IndividualViewPage extends BasePage {
 		clickOnElement(approveRejectPopupCloseIcon);
 	}
 
-	// --- Partner Status field (TC_38408_04, _05, _06) ---
-
-	/** TC_38408_04: the field is present regardless of the record status. */
 	public boolean isPartnerStatusLabelDisplayed() {
 		return isElementDisplayed(partnerStatusLabel);
 	}
@@ -150,12 +122,10 @@ public class IndividualViewPage extends BasePage {
 		return getTextFromLocator(partnerStatusContext).trim();
 	}
 
-	/** TC_38408_05: an activated partner renders with the green background token. */
 	public boolean isPartnerStatusActivatedColourCoded() {
 		return hasStatusClass(ACTIVATED_STATUS_CLASS, ACTIVATED_STATUS_TEXT);
 	}
 
-	/** TC_38408_06: Deactivated renders with the grey background token. */
 	public boolean isPartnerStatusDeactivatedColourCoded() {
 		return hasStatusClass(DEACTIVATED_STATUS_CLASS, DEACTIVATED_STATUS_TEXT);
 	}
@@ -173,8 +143,8 @@ public class IndividualViewPage extends BasePage {
 				return false;
 			}
 			if (actualClass == null || !actualClass.contains(expectedClass)) {
-				LogUtil.error("Partner Status '" + expectedStatus + "' missing the expected colour token "
-						+ expectedClass);
+				LogUtil.error(
+						"Partner Status '" + expectedStatus + "' missing the expected colour token " + expectedClass);
 				takeScreenshot();
 				return false;
 			}
@@ -187,15 +157,6 @@ public class IndividualViewPage extends BasePage {
 		}
 	}
 
-	// --- Keyboard accessibility (TC_38408_13) ---
-
-	/**
-	 * TC_38408_13: reaches the Approve/Reject button with Tab and triggers it with
-	 * Enter, without using the mouse.
-	 *
-	 * Tabbing starts from the document body so the walk mirrors what a keyboard
-	 * user does on landing, and it is bounded so a layout change cannot spin here.
-	 */
 	public boolean openApproveRejectPopupUsingKeyboard() {
 		WebElement button = new WebDriverWait(driver, Duration.ofSeconds(ConfigManager.getTimeout()))
 				.until(ExpectedConditions.visibilityOfElementLocated(APPROVE_REJECT_BUTTON));
@@ -216,7 +177,6 @@ public class IndividualViewPage extends BasePage {
 		return opened;
 	}
 
-	/** TC_38408_13: Approve and Reject inside the popup are keyboard reachable. */
 	public boolean areApproveRejectPopupButtonsKeyboardReachable() {
 		if (tabUntilFocused(APPROVE_BUTTON_ID, REJECT_BUTTON_ID)) {
 			return true;
@@ -226,12 +186,6 @@ public class IndividualViewPage extends BasePage {
 		return false;
 	}
 
-	/**
-	 * TC_38408_13: the popup is dismissible from the keyboard.
-	 *
-	 * Closes the popup through the close icon when Escape does not, so the caller
-	 * is left on a clean page either way, and reports the Escape result.
-	 */
 	public boolean closeApproveRejectPopupUsingEscape() {
 		driver.switchTo().activeElement().sendKeys(Keys.ESCAPE);
 
@@ -244,10 +198,6 @@ public class IndividualViewPage extends BasePage {
 		return !stillOpen;
 	}
 
-	/**
-	 * Presses Tab until one of the given element ids holds the focus. Returns false
-	 * once the budget is spent, leaving the focus wherever it landed.
-	 */
 	private boolean tabUntilFocused(String... targetIds) {
 		for (int press = 0; press < MAX_TAB_PRESSES; press++) {
 			WebElement focused = driver.switchTo().activeElement();

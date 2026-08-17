@@ -1258,29 +1258,17 @@ public class ListOfDevicesPage extends BasePage {
 	    return isDisplayed(deviceIdColumnHeader);
 	}
 
-	// ---------------------------------------------------------------
-	// Reject-only popup for devices not linked to an SBI (TC_38189_23)
-	// ---------------------------------------------------------------
-
-	/**
-	 * A device in Pending for Approval that carries no SBI gets the reject-only
-	 * RejectPopup instead of the usual ApproveRejectPopup, so the admin cannot
-	 * approve an unlinked device by accident.
-	 */
 	private static final By REJECT_ONLY_POPUP_TITLE = By.id("reject_popup_title");
 	private static final By REJECT_ONLY_POPUP_HEADER = By.id("reject_popup_header");
 	private static final By REJECT_ONLY_POPUP_DESCRIPTION = By.id("reject_popup_description");
 	private static final By REJECT_ONLY_POPUP_REJECT_BTN = By.id("reject_popup_reject_btn");
 	private static final By REJECT_ONLY_POPUP_CLOSE_ICON = By.id("reject_popup_close_icon");
-	// The popup's Reject action is deliberately not exposed here: rejecting would
-	// consume the orphaned device the rest of the suite relies on.
 	private static final By APPROVE_BTN = By.id("approve_btn");
 	private static final By DEVICE_ROWS = By.xpath("//tr[starts-with(@id,'device_list_item')]");
 
 	private static final String LINKED_SBI_HEADER_ID = "sbiList.sbiId_header";
 	private static final String STATUS_HEADER_ID = "devicesList.status_header";
 
-	/** The list renders a dash in place of a field the record does not carry. */
 	private static final String EMPTY_CELL_PLACEHOLDER = "-";
 
 	public boolean isRejectOnlyPopupDisplayed() {
@@ -1299,7 +1287,6 @@ public class ListOfDevicesPage extends BasePage {
 		return isDisplayed(REJECT_ONLY_POPUP_REJECT_BTN);
 	}
 
-	/** The whole point of the reject-only popup: no Approve on offer. */
 	public boolean isApproveButtonAbsentInRejectOnlyPopup() {
 		boolean present = isElementDisplayedQuick(APPROVE_BTN, Duration.ofSeconds(5));
 		if (present) {
@@ -1313,14 +1300,6 @@ public class ListOfDevicesPage extends BasePage {
 		click(REJECT_ONLY_POPUP_CLOSE_ICON);
 	}
 
-	/**
-	 * Finds a device that is Pending for Approval and carries no linked SBI, which
-	 * is the state that triggers the reject-only popup. Returns the 1-based row
-	 * number, or -1 when the current page holds no such device.
-	 *
-	 * Column positions are read from the header row rather than hardcoded, because
-	 * the linked-devices view drops the SBI columns and so shifts every index.
-	 */
 	public int findOrphanPendingDeviceRow() {
 		int linkedSbiColumn = getColumnIndex(LINKED_SBI_HEADER_ID);
 		int statusColumn = getColumnIndex(STATUS_HEADER_ID);
@@ -1353,12 +1332,10 @@ public class ListOfDevicesPage extends BasePage {
 		return -1;
 	}
 
-	/** Opens the action menu of the given 1-based device row. */
 	public void clickOnDeviceListActionMenu(int rowNumber) {
 		click(By.id("device_list_action_menu" + rowNumber));
 	}
 
-	/** The linked SBI cell of the given 1-based device row carries no value. */
 	public boolean isLinkedSbiColumnEmpty(int rowNumber) {
 		int linkedSbiColumn = getColumnIndex(LINKED_SBI_HEADER_ID);
 		if (linkedSbiColumn < 0) {

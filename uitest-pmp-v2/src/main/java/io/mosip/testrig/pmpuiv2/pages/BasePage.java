@@ -738,14 +738,6 @@ public class BasePage {
 		return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
 	}
 
-	/**
-	 * Zero-based position of the list column whose header carries the given id, or
-	 * -1 when no header cell holds it.
-	 *
-	 * Every list in the portal renders its column headers as
-	 * {@code <div id="{i18nKey}_header">}, which stays stable whatever the display
-	 * language, unlike the visible header text.
-	 */
 	protected int getColumnIndex(String headerId) {
 		java.util.List<WebElement> headerCells = driver.findElements(By.xpath("//thead//th"));
 		for (int i = 0; i < headerCells.size(); i++) {

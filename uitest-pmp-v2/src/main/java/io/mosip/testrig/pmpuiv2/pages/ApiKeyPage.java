@@ -427,8 +427,6 @@ public class ApiKeyPage extends BasePage {
 	@FindBy(id = "api_key_list_item1")
 	private WebElement activatedAdminApiKey;
 
-	// --- Expiration Date (TC_40334) ---
-
 	@FindBy(id = "apiKeyExpiryDateTime_desc_icon")
 	private WebElement apiKeyExpiryDateTime_desc_icon;
 
@@ -439,11 +437,6 @@ public class ApiKeyPage extends BasePage {
 		super(driver);
 	}
 
-	/**
-	 * The list renders each column header as
-	 * {@code <div id="{i18nKey}_header">}, which stays stable whatever the
-	 * display language, unlike the visible header text.
-	 */
 	private static final String CREATION_DATE_HEADER_ID = "oidcClientsList.creationDate_header";
 	private static final String EXPIRATION_DATE_HEADER_ID = "apiKeysList.expirationDate_header";
 
@@ -452,11 +445,6 @@ public class ApiKeyPage extends BasePage {
 	private static final By EXPIRATION_DATE_CONTEXT = By.id("api_key_details_expiration_date_context");
 	private static final By API_KEY_DETAILS_TITLE = By.xpath("//h1[text()='View API Key Details']");
 
-	/**
-	 * Expiration date is the column right after Creation Date, so the admin list
-	 * puts it at td[7] and the partner list, which has no Organisation column, at
-	 * td[6].
-	 */
 	private static final By ADMIN_EXPIRY_CELL = By.xpath("//tr[starts-with(@id,'api_key_list_item')][1]/td[7]");
 	private static final By PARTNER_EXPIRY_CELL = By.xpath("//tr[starts-with(@id,'api_list_item')][1]/td[6]");
 	private static final By ADMIN_CREATED_CELL = By.xpath("//tr[starts-with(@id,'api_key_list_item')][1]/td[6]");
@@ -467,11 +455,9 @@ public class ApiKeyPage extends BasePage {
 	private static final By ADMIN_FIRST_ROW = By.id("api_key_list_item1");
 	private static final By PARTNER_FIRST_ROW = By.id("api_list_item1");
 
-	/** Field labels of the individual API Key view, in render order. */
 	private static final By INDIVIDUAL_VIEW_LABELS = By
 			.xpath("//p[starts-with(@id,'api_key_details_') and contains(@id,'_label')]");
 
-	/** Placeholder the list shows when a key carries no expiry date. */
 	private static final String NO_EXPIRY_TEXT = "No Expiry";
 
 	private static final Logger logger = Logger.getLogger(ApiKeyPage.class);
@@ -1255,16 +1241,10 @@ public class ApiKeyPage extends BasePage {
 		}
 	}
 
-	// ---------------------------------------------------------------
-	// Expiration Date in tabular view and individual view (TC_40334)
-	// ---------------------------------------------------------------
-
-	/** TC_40334_02 / _07: 'Expiration Date' column is rendered in the tabular view. */
 	public boolean isExpirationDateHeaderDisplayed() {
 		return isDisplayed(EXPIRATION_DATE_HEADER);
 	}
 
-	/** TC_40334_02: 'Expiration Date' sits immediately after 'Creation Date'. */
 	public boolean isExpirationDateHeaderAfterCreationDate() {
 		int creationIndex = getColumnIndex(CREATION_DATE_HEADER_ID);
 		int expirationIndex = getColumnIndex(EXPIRATION_DATE_HEADER_ID);
@@ -1300,10 +1280,6 @@ public class ApiKeyPage extends BasePage {
 		clickOnElement(apiKeyExpiryDateTime_asc_icon);
 	}
 
-	/**
-	 * TC_40334_03: reads the Expiration Date column and asserts the requested
-	 * ordering. Rows showing 'No Expiry' are ignored — they carry no date to sort.
-	 */
 	public boolean isExpiryDateColumnSorted(boolean ascending, boolean isAdminView) {
 		List<LocalDate> dates = readExpiryColumn(isAdminView);
 		if (dates.size() < 2) {
@@ -1342,10 +1318,6 @@ public class ApiKeyPage extends BasePage {
 		return dates;
 	}
 
-	/**
-	 * TC_40334_05 / _08: the expiration date renders in the browser locale format
-	 * that {@code formatDate(..,'date')} produces, i.e. M/d/yyyy for en-US.
-	 */
 	public boolean isExpirationDateSameAsBrowserDateFormat(boolean isAdminView) {
 		By cellLocator = isAdminView ? ADMIN_EXPIRY_CELL : PARTNER_EXPIRY_CELL;
 		try {
@@ -1373,11 +1345,6 @@ public class ApiKeyPage extends BasePage {
 		}
 	}
 
-	/**
-	 * TC_40334_08: expiration date equals creation date plus the configured
-	 * duration. {@code expectedDays <= 0} means the backend property is unset, in
-	 * which case PMS applies its 100 year default.
-	 */
 	public boolean isExpirationDateOffsetFromCreationDate(int expectedDays, boolean isAdminView) {
 		By createdLocator = isAdminView ? ADMIN_CREATED_CELL : PARTNER_CREATED_CELL;
 		By expiryLocator = isAdminView ? ADMIN_EXPIRY_CELL : PARTNER_EXPIRY_CELL;
@@ -1415,13 +1382,6 @@ public class ApiKeyPage extends BasePage {
 		}
 	}
 
-	/**
-	 * TC_40334_04 / _13: Expiration Date is present in the individual view.
-	 *
-	 * The partner view gives the field its own ids. The admin view reuses the
-	 * policy-name-description ids for it, so there the field is reached through its
-	 * label text instead.
-	 */
 	public boolean isApiKeyDetailsExpirationDateLabelDisplayed() {
 		if (isElementDisplayedQuick(EXPIRATION_DATE_LABEL, Duration.ofSeconds(5))) {
 			return true;
@@ -1444,12 +1404,6 @@ public class ApiKeyPage extends BasePage {
 		return By.xpath("//p[normalize-space()='Expiration Date']/following-sibling::p[1]");
 	}
 
-	/**
-	 * TC_40334_06: the individual view renders its fields in the order Partner ID,
-	 * Partner Type, Policy Group, Policy Name, Policy Group Description, Policy Name
-	 * Description, Expiration Date. Extra fields the admin view adds (Organisation)
-	 * are tolerated; only the relative order of the expected fields is asserted.
-	 */
 	public boolean isIndividualViewFieldOrderCorrect() {
 		String[] expectedOrder = { "Partner ID", "Partner Type", "Policy Group", "Policy Name",
 				"Policy Group Description", "Policy Name Description", "Expiration Date" };
@@ -1482,21 +1436,12 @@ public class ApiKeyPage extends BasePage {
 		return true;
 	}
 
-	/**
-	 * TC_40334_14: a Deactivated row must not open the individual view. Clicks the
-	 * row and reports whether the details page stayed closed.
-	 *
-	 * Throws when the row is not on the page at all, so a filter that returned
-	 * nothing is reported as an error rather than as a passing check.
-	 */
 	public boolean isDeactivatedRowNotClickable(boolean isAdminView) {
 		By rowLocator = isAdminView ? ADMIN_FIRST_ROW : PARTNER_FIRST_ROW;
 
 		WebElement row = new WebDriverWait(driver, Duration.ofSeconds(ConfigManager.getTimeout()))
 				.until(ExpectedConditions.visibilityOfElementLocated(rowLocator));
 
-		// A plain click, not clickOnElement(): its JavaScript fallback would bypass the
-		// very guard under test and report a deactivated row as clickable.
 		scrollIntoView(row);
 		row.click();
 
@@ -1508,19 +1453,10 @@ public class ApiKeyPage extends BasePage {
 		return !detailsOpened;
 	}
 
-	/** TC_40334_09: after submitting, the API Key list view is shown again. */
 	public boolean isApiKeyListViewDisplayed() {
 		return isElementDisplayed(subTitleOfTabularView);
 	}
 
-	/**
-	 * TC_40334_10: the Expiration Date field carries the same typography as the
-	 * other fields of the individual view, so it reads as part of the same design
-	 * rather than as a bolt-on.
-	 *
-	 * Compares the computed font of the Expiration Date label against the Partner
-	 * ID label, which is the established pattern for a field label on this page.
-	 */
 	public boolean isExpirationDateStyledLikeOtherFields() {
 		By referenceLabel = By.id("api_key_details_partner_id_label");
 		By expirationLabel = isElementDisplayedQuick(EXPIRATION_DATE_LABEL, Duration.ofSeconds(5))
