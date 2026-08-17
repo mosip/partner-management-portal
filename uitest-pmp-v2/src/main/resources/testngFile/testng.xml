@@ -43,6 +43,13 @@
 			<!--PARTNER VALIDATION & MANAGEMENT -->
 			<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerDetailsTest" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerDeactivateOptionTest" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerDeactivatedPortalTest" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.DeactivatePartner2Creation" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerDeactivateNavigationTest" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.DeactivateDevicePartnerCreation" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.DeactivatedDeviceProviderTest" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.DeactivateFtmPartnerCreation" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.DeactivatedFtmProviderTest" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.CertificateTrustStoreTest" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerPolicyMappingTest" />
 

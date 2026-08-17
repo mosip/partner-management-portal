@@ -36,7 +36,6 @@ public class PartnerDeactivateOptionTest extends BaseClass {
 		assertTrue(partnerAdminPage.isViewButtonsDisplayed(), GlobalConstants.isViewButtonsDisplayed);
 		assertTrue(partnerAdminPage.isDeactivateButtonsDisplayed(), GlobalConstants.isDeactivateButtonsDisplayed);
 
-		// Accessible means operable, not merely visible: reachable by keyboard, not mouse only
 		assertTrue(partnerAdminPage.isDeactivateOptionKeyboardOperable(),
 				GlobalConstants.isDeactivateOptionKeyboardOperable);
 		assertTrue(partnerAdminPage.isDeactivateOptionCursorPointer(),
@@ -65,7 +64,6 @@ public class PartnerDeactivateOptionTest extends BaseClass {
 		assertTrue(partnerAdminPage.isDeactivatePopupConfirmButtonDisplayed(),
 				GlobalConstants.isDeactivatePopupConfirmButtonDisplayed);
 
-		// Cancel keeps the partner Active for the final method to deactivate itself
 		partnerAdminPage.clickOnDeactivatePopupCancelButton();
 	}
 
@@ -129,8 +127,6 @@ public class PartnerDeactivateOptionTest extends BaseClass {
 
 		assertTrue(partnerAdminPage.isDeactivatePopupConfirmButtonDisplayed(),
 				GlobalConstants.isDeactivatePopupConfirmButtonDisplayed);
-		// Confirm is a real <button>, so unlike the Action menu option it is natively
-		// keyboard operable and isEnabled() actually means something.
 		assertTrue(partnerAdminPage.isDeactivatePopupConfirmButtonNativeButton(),
 				GlobalConstants.isDeactivatePopupConfirmButtonNativeButton);
 		assertTrue(partnerAdminPage.isDeactivatePopupConfirmButtonEnabled(),
@@ -141,15 +137,89 @@ public class PartnerDeactivateOptionTest extends BaseClass {
 		partnerAdminPage.clickOnDeactivatePopupCancelButton();
 	}
 
-	@Test(priority = 9, description = "Verify upon clicking on confirm button the partner is deactivated and the row is greyed out", dependsOnMethods = {
+	@Test(priority = 9, description = "Verify Cancel button in popup is accessible")
+	public void deactivatePopupCancelButtonIsAccessible() {
+		openDeactivatePopupForActivePartner();
+
+		assertTrue(partnerAdminPage.isDeactivatePopupCancelButtonDisplayed(),
+				GlobalConstants.isDeactivatePopupCancelButtonDisplayed);
+		assertTrue(partnerAdminPage.isDeactivatePopupCancelButtonNativeButton(),
+				GlobalConstants.isDeactivatePopupCancelButtonNativeButton);
+		assertTrue(partnerAdminPage.isDeactivatePopupCancelButtonEnabled(),
+				GlobalConstants.isDeactivatePopupCancelButtonEnabled);
+		assertTrue(partnerAdminPage.isDeactivatePopupCancelButtonFocusable(),
+				GlobalConstants.isDeactivatePopupCancelButtonFocusable);
+
+		partnerAdminPage.clickOnDeactivatePopupCancelButton();
+	}
+
+	@Test(priority = 10, description = "Verify upon clicking on cancel button no change is made to the partner record")
+	public void cancelLeavesPartnerRecordUnchanged() {
+		openActionMenuForPartner(true);
+
+		String statusBeforeCancel = partnerAdminPage.getFirstRowPartnerStatus();
+		int rowCountBeforeCancel = partnerAdminPage.getPartnerRowCount();
+
+		partnerAdminPage.clickOnDeactivateOptionInActionMenu();
+		assertTrue(partnerAdminPage.isDeactivatePopupHeaderDisplayed(),
+				GlobalConstants.isDeactivatePopupHeaderDisplayed);
+		partnerAdminPage.clickOnDeactivatePopupCancelButton();
+
+		assertFalse(partnerAdminPage.isDeactivatePopupHeaderDisplayedQuick(),
+				GlobalConstants.isDeactivatePopupClosedAfterCancel);
+		assertEquals(partnerAdminPage.getFirstRowPartnerStatus(), GlobalConstants.PARTNER_STATUS_ACTIVE,
+				GlobalConstants.isPartnerStatusUnchangedAfterCancel);
+		assertEquals(partnerAdminPage.getFirstRowPartnerStatus(), statusBeforeCancel,
+				GlobalConstants.isPartnerStatusUnchangedAfterCancel);
+		assertFalse(partnerAdminPage.isFirstPartnerRowGreyedOut(), GlobalConstants.isPartnerRowNotGreyedAfterCancel);
+		assertEquals(partnerAdminPage.getPartnerRowCount(), rowCountBeforeCancel,
+				GlobalConstants.isPartnerRowCountUnchangedAfterCancel);
+	}
+
+	@Test(priority = 11, description = "Verify Deactivate popup is aligned properly on the page")
+	public void deactivatePopupIsAlignedOnThePage() {
+		openDeactivatePopupForActivePartner();
+
+		assertTrue(partnerAdminPage.isDeactivatePopupWithinViewport(),
+				GlobalConstants.isDeactivatePopupWithinViewport);
+		assertTrue(partnerAdminPage.isDeactivatePopupHorizontallyCentred(),
+				GlobalConstants.isDeactivatePopupHorizontallyCentred);
+
+		partnerAdminPage.clickOnDeactivatePopupCancelButton();
+	}
+
+	@Test(priority = 12, description = "Verify the background content of the popup is not accessible")
+	public void backgroundIsNotAccessibleWhileDeactivatePopupIsOpen() {
+		openDeactivatePopupForActivePartner();
+
+		assertTrue(partnerAdminPage.isPageScrollLocked(), GlobalConstants.isBackgroundScrollLockedWhenPopupOpen);
+		assertTrue(partnerAdminPage.isFilterButtonCoveredByPopupOverlay(),
+				GlobalConstants.isBackgroundControlCoveredWhenPopupOpen);
+
+		partnerAdminPage.clickOnDeactivatePopupCancelButton();
+
+		assertFalse(partnerAdminPage.isPageScrollLocked(), GlobalConstants.isBackgroundScrollRestoredAfterCancel);
+	}
+
+	@Test(priority = 13, description = "Verify the status of Partner before Deactivation")
+	public void partnerStatusIsActiveBeforeDeactivation() {
+		openViewPartnerDetails(true);
+
+		assertEquals(partnerAdminPage.getPartnerStatusInViewPartnerDetails(),
+				GlobalConstants.PARTNER_STATUS_ACTIVE, GlobalConstants.isPartnerStatusActiveBeforeDeactivation);
+	}
+
+	@Test(priority = 20, description = "Verify upon clicking on confirm button the partner is deactivated and the row is greyed out", dependsOnMethods = {
 			"deactivateOptionAvailableForActivatedPartner", "deactivateOptionAccessibleForActivatedPartner",
 			"deactivatePopupDisplayedOnClickingDeactivateOption", "deactivatePopupTitleIsCorrect",
 			"deactivatePopupSubTitleIsCorrect", "deactivatePopupPartnerIdAndOrganisationRenderCorrectly",
-			"deactivatePopupHasConfirmAndCancelButtons", "deactivatePopupConfirmButtonIsAccessible" })
+			"deactivatePopupHasConfirmAndCancelButtons", "deactivatePopupConfirmButtonIsAccessible",
+			"deactivatePopupCancelButtonIsAccessible", "cancelLeavesPartnerRecordUnchanged",
+			"deactivatePopupIsAlignedOnThePage", "backgroundIsNotAccessibleWhileDeactivatePopupIsOpen",
+			"partnerStatusIsActiveBeforeDeactivation" })
 	public void partnerIsDeactivatedAndGreyedOutOnConfirm() {
 		openDeactivatePopupForActivePartner();
 
-		// The irreversible step, which is why every other scenario cancels
 		partnerAdminPage.clickOnDeactivatePopupConfirmButton();
 
 		assertTrue(partnerAdminPage.isSubTitleListDisplayed(), GlobalConstants.isSubTitleListDisplayed);
@@ -163,7 +233,7 @@ public class PartnerDeactivateOptionTest extends BaseClass {
 		assertTrue(partnerAdminPage.isFirstPartnerRowGreyedOut(), GlobalConstants.isPartnerRowGreyedOutAfterConfirm);
 	}
 
-	@Test(priority = 10, description = "Verify the Deactivate option is neither available nor accessible once the partner is deactivated", dependsOnMethods = "partnerIsDeactivatedAndGreyedOutOnConfirm")
+	@Test(priority = 21, description = "Verify the Deactivate option is neither available nor accessible once the partner is deactivated", dependsOnMethods = "partnerIsDeactivatedAndGreyedOutOnConfirm")
 	public void deactivateOptionUnavailableForDeactivatedPartner() {
 		dashboardPage = new DashboardPage(driver);
 		partnerAdminPage = new PartnerAdminPage(driver);
@@ -179,7 +249,6 @@ public class PartnerDeactivateOptionTest extends BaseClass {
 		assertTrue(partnerAdminPage.isDeactivateOptionCursorDefault(),
 				GlobalConstants.isDeactivateOptionCursorDefault);
 
-		// Absence assertions use the short-window check: the full-timeout variant costs ~45s each
 		partnerAdminPage.clickOnDeactivateOptionInActionMenu();
 		assertFalse(partnerAdminPage.isDeactivatePopupHeaderDisplayedQuick(),
 				GlobalConstants.isDeactivatePopupHeaderDisplayed);
@@ -188,6 +257,58 @@ public class PartnerDeactivateOptionTest extends BaseClass {
 				GlobalConstants.isDeactivatePopupNotDisplayedOnEnterKey);
 
 		partnerAdminPage.clickOnFilterResetButton();
+	}
+
+	@Test(priority = 22, description = "Verify by filtering for only deactivated records", dependsOnMethods = "partnerIsDeactivatedAndGreyedOutOnConfirm")
+	public void filteringByDeactivatedReturnsOnlyDeactivatedRecords() {
+		dashboardPage = new DashboardPage(driver);
+		partnerAdminPage = new PartnerAdminPage(driver);
+
+		dashboardPage.clickOnPartners();
+		filterForPartner(false);
+
+		assertTrue(partnerAdminPage.isFirstPartnerRowDisplayed(), GlobalConstants.isDeactivatedPartnerRowDisplayed);
+		assertTrue(partnerAdminPage.areAllPartnerRowStatusesDeactivated(),
+				GlobalConstants.isDeactivatedFilterReturningOnlyDeactivated);
+
+		partnerAdminPage.clickOnFilterResetButton();
+	}
+
+	@Test(priority = 23, description = "Verify the status of Deactivated record in View partner details page", dependsOnMethods = "partnerIsDeactivatedAndGreyedOutOnConfirm")
+	public void deactivatedPartnerStatusInViewPartnerDetails() {
+		openViewPartnerDetailsForDeactivatedPartner();
+
+		assertEquals(partnerAdminPage.getPartnerStatusInViewPartnerDetails(), GlobalConstants.DEACTIVATED,
+				GlobalConstants.isPartnerStatusDeactivatedInViewDetails);
+	}
+
+	@Test(priority = 24, description = "Verify the Partner certificate section for Deactivated Partner in View Partner details screen", dependsOnMethods = "partnerIsDeactivatedAndGreyedOutOnConfirm")
+	public void certificateSectionGreyedOutInViewPartnerDetails() {
+		openViewPartnerDetailsForDeactivatedPartner();
+
+		assertTrue(partnerAdminPage.isPartnerCertificateSectionGreyedOut(),
+				GlobalConstants.isCertificateSectionGreyedOutInViewDetails);
+		assertTrue(partnerAdminPage.isDownloadCertificateButtonDisplayed(),
+				GlobalConstants.isCertificateDownloadDisabledInViewDetails);
+		assertFalse(partnerAdminPage.isDownloadCertificateButtonEnabledInViewPartnerPage(),
+				GlobalConstants.isCertificateDownloadDisabledInViewDetails);
+	}
+
+	private void openViewPartnerDetailsForDeactivatedPartner() {
+		openViewPartnerDetails(false);
+	}
+
+	private void openViewPartnerDetails(boolean activated) {
+		dashboardPage = new DashboardPage(driver);
+		partnerAdminPage = new PartnerAdminPage(driver);
+
+		dashboardPage.clickOnPartners();
+		filterForPartner(activated);
+		assertTrue(partnerAdminPage.isFirstPartnerRowDisplayed(), GlobalConstants.isDeactivatedPartnerRowDisplayed);
+
+		partnerAdminPage.clickOnActionsButton();
+		assertTrue(partnerAdminPage.isViewButtonsDisplayed(), GlobalConstants.isViewButtonsDisplayed);
+		partnerAdminPage.clickOnViewButtonInListOfPartnerDetailsScreen();
 	}
 
 	private void openActionMenuForPartner(boolean activated) {
@@ -226,6 +347,9 @@ public class PartnerDeactivateOptionTest extends BaseClass {
 			partnerAdminPage.clickOnDeActivatedStatusInFilters();
 		}
 		partnerAdminPage.clickOnApplyFiltersBtn();
+
+		// Re-finds by locator after the filter re-renders the table - a stale row proxy would read as empty.
+		assertTrue(partnerAdminPage.isPartnerListLoaded(), GlobalConstants.isPartnerListLoaded);
 	}
 
 }

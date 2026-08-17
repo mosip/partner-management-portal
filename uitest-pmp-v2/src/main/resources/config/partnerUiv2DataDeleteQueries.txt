@@ -1,5 +1,27 @@
 #####  DB queries to be executed to tear down the data used and generated during the test rig run for partner uiv2 APIs
 
+#These are delete queries for AUTH PARTNER - pmpui-deactivate2
+#Must run before the policy_group deletes below: this partner joins the default policy
+#group, and a surviving partner row keeps that group from being removed.
+delete from pms.partner_h where cr_by='pmpui-deactivate2';
+delete from pms.partner where cr_by='pmpui-deactivate2';
+delete FROM pms.user_details where user_id='pmpui-deactivate2';
+
+#These are delete queries for DEVICE PROVIDER - pmpui-deactivatedevice
+#Kept with the block above so every partner row is gone before the policy_group deletes
+delete FROM pms.secure_biometric_interface where cr_by='pmpui-deactivatedevice';
+delete FROM pms.device_detail where cr_by='pmpui-deactivatedevice';
+delete FROM pms.device_detail_sbi where cr_by='pmpui-deactivatedevice';
+delete from pms.partner_h where cr_by='pmpui-deactivatedevice';
+delete from pms.partner where user_id='pmpui-deactivatedevice';
+delete FROM pms.user_details where user_id='pmpui-deactivatedevice';
+
+#These are delete queries for FTM PROVIDER - pmpui-deactivateftm
+delete from pms.ftp_chip_detail where foundational_trust_provider_id='pmpui-deactivateftm';
+delete from pms.partner_h where cr_by='pmpui-deactivateftm';
+delete from pms.partner where cr_by='pmpui-deactivateftm';
+delete FROM pms.user_details where user_id='pmpui-deactivateftm';
+
 #These are delete queries for AUTH PARTNER - pmpui-v2 , pmpui-policyadmin
 delete from pms.partner_policy where cr_by in ('pmpui-auth', 'pmpui-policies', 'pmpui-v2', 'pmpui-policyadmin');
 delete from pms.partner_policy_request where cr_by in ('pmpui-v2', 'pmpui-policyadmin');

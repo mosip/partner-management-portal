@@ -1,6 +1,7 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
 import java.time.Duration;
+import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -8,12 +9,14 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
+import io.mosip.testrig.pmpuiv2.utility.LogUtil;
 import io.mosip.testrig.pmpuiv2.utility.WaitUtil;
 
 public class PartnerAdminPage extends BasePage {
 
 	private static final Duration POPUP_ABSENCE_TIMEOUT = Duration.ofSeconds(3);
 	private static final Duration LIST_LOAD_TIMEOUT = Duration.ofSeconds(20);
+	private static final int POPUP_CENTRING_TOLERANCE_PX = 2;
 
 	@FindBy(id = "undefined_title")
 	private WebElement subTitleList;
@@ -260,6 +263,11 @@ public class PartnerAdminPage extends BasePage {
 
 	@FindBy(id = "download_partner_cer_btn")
 	private WebElement downloadCertificateButtonDisabledStateInViewPartnerPage;
+
+	// The banner whose background encodes the partner's active state on this screen.
+	@FindBy(xpath = "//h6[@id='view_partner_details_partner_certificate_title']"
+			+ "/ancestor::div[contains(@class,'justify-between')][1]")
+	private WebElement partnerCertificateSectionInViewPartnerPage;
 
 	@FindBy(id = "view_partner_type_label")
 	private WebElement partnerTypeInViewPartnerPage;
@@ -553,14 +561,12 @@ public class PartnerAdminPage extends BasePage {
 		return isElementDisplayed(deactivatedPartnerRow);
 	}
 
-	// Applying a filter while the initial list fetch is still in flight leaves the table
-	// empty, so callers must wait for the unfiltered list before opening the filter panel.
+	// Callers must wait for the unfiltered list before opening the filter panel, or it reads empty.
 	public boolean isPartnerListLoaded() {
 		return isElementDisplayedQuick(By.id("partner_list_item1"), LIST_LOAD_TIMEOUT);
 	}
 
-	// Row 1 is what the Action menu and status assertions operate on;
-	// isDeactivatedPartnerRowDisplayed is pinned to row 2.
+	// Row 1 is what the Action menu operates on; isDeactivatedPartnerRowDisplayed is pinned to row 2.
 	public boolean isFirstPartnerRowDisplayed() {
 		return isElementDisplayed(firstPartnerRow);
 	}
@@ -652,6 +658,72 @@ public class PartnerAdminPage extends BasePage {
 
 	public boolean isDeactivatePopupConfirmButtonFocusable() {
 		return isElementFocusable(deactivateConfirmButton);
+	}
+
+	public boolean isDeactivatePopupCancelButtonNativeButton() {
+		return GlobalConstants.BUTTON_TAG.equalsIgnoreCase(deactivateCancelButton.getTagName());
+	}
+
+	public boolean isDeactivatePopupCancelButtonEnabled() {
+		return isElementEnabled(deactivateCancelButton);
+	}
+
+	public boolean isDeactivatePopupCancelButtonFocusable() {
+		return isElementFocusable(deactivateCancelButton);
+	}
+
+	public boolean isDeactivatePopupWithinViewport() {
+		return isElementWithinViewport(deactivatePartnerHeader);
+	}
+
+	public boolean isDeactivatePopupHorizontallyCentred() {
+		return isElementHorizontallyCentred(deactivatePartnerHeader, POPUP_CENTRING_TOLERANCE_PX);
+	}
+
+	// The popup sets body overflow to hidden while open and back to auto on close.
+	public boolean isPageScrollLocked() {
+		return GlobalConstants.OVERFLOW_HIDDEN.equals(getBodyComputedStyle(GlobalConstants.OVERFLOW));
+	}
+
+	// The overlay spans the viewport, so it sits over the filter button's centre point.
+	public boolean isFilterButtonCoveredByPopupOverlay() {
+		return isElementCoveredAtCentre(filterbtnTrigger);
+	}
+
+	public int getPartnerRowCount() {
+		return getElementCount(By.xpath("//tr[starts-with(@id,'partner_list_item')]"));
+	}
+
+	public String getPartnerStatusInViewPartnerDetails() {
+		return getTextFromLocator(partnerStatusInViewPartnerPage).trim();
+	}
+
+	public boolean isPartnerCertificateSectionGreyedOut() {
+		return getTextFromAttribute(partnerCertificateSectionInViewPartnerPage, GlobalConstants.CLASS)
+				.contains(GlobalConstants.CERT_SECTION_DEACTIVATED_BG);
+	}
+
+	// For an uploaded certificate, the disabled state here reflects isActive alone.
+	public boolean isDownloadCertificateButtonEnabledInViewPartnerPage() {
+		return isElementEnabled(downloadCertificateButtonInViewPartnerPage);
+	}
+
+	// Waits on the first badge - the rows exist before the filtered response paints their status text.
+	public boolean areAllPartnerRowStatusesDeactivated() {
+		WaitUtil.waitForVisibility(driver, firstRowStatusBadge);
+		List<WebElement> statusCells = driver
+				.findElements(By.xpath("//tr[starts-with(@id,'partner_list_item')]/td[7]/div"));
+		StringBuilder observed = new StringBuilder();
+		boolean allDeactivated = !statusCells.isEmpty();
+		for (WebElement cell : statusCells) {
+			String status = cell.getText().trim();
+			observed.append('[').append(status).append(']');
+			if (!GlobalConstants.DEACTIVATED.equals(status)) {
+				allDeactivated = false;
+			}
+		}
+		LogUtil.step("Row statuses after Deactivated filter: " + observed);
+		return allDeactivated;
 	}
 
 	public String getFirstRowPartnerStatus() {
