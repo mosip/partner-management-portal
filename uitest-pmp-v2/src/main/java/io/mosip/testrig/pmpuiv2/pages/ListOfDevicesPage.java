@@ -1,12 +1,15 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
 import java.io.IOException;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -14,6 +17,7 @@ import org.openqa.selenium.support.FindBy;
 
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
+import io.mosip.testrig.pmpuiv2.utility.LogUtil;
 
 public class ListOfDevicesPage extends BasePage {
 
@@ -1254,5 +1258,122 @@ public class ListOfDevicesPage extends BasePage {
 	    return isDisplayed(deviceIdColumnHeader);
 	}
 
+	// ---------------------------------------------------------------
+	// Reject-only popup for devices not linked to an SBI (TC_38189_23)
+	// ---------------------------------------------------------------
 
+	/**
+	 * A device in Pending for Approval that carries no SBI gets the reject-only
+	 * RejectPopup instead of the usual ApproveRejectPopup, so the admin cannot
+	 * approve an unlinked device by accident.
+	 */
+	private static final By REJECT_ONLY_POPUP_TITLE = By.id("reject_popup_title");
+	private static final By REJECT_ONLY_POPUP_HEADER = By.id("reject_popup_header");
+	private static final By REJECT_ONLY_POPUP_DESCRIPTION = By.id("reject_popup_description");
+	private static final By REJECT_ONLY_POPUP_REJECT_BTN = By.id("reject_popup_reject_btn");
+	private static final By REJECT_ONLY_POPUP_CLOSE_ICON = By.id("reject_popup_close_icon");
+	// The popup's Reject action is deliberately not exposed here: rejecting would
+	// consume the orphaned device the rest of the suite relies on.
+	private static final By APPROVE_BTN = By.id("approve_btn");
+	private static final By DEVICE_ROWS = By.xpath("//tr[starts-with(@id,'device_list_item')]");
+
+	private static final String LINKED_SBI_HEADER_ID = "sbiList.sbiId_header";
+	private static final String STATUS_HEADER_ID = "devicesList.status_header";
+
+	/** The list renders a dash in place of a field the record does not carry. */
+	private static final String EMPTY_CELL_PLACEHOLDER = "-";
+
+	public boolean isRejectOnlyPopupDisplayed() {
+		return isDisplayed(REJECT_ONLY_POPUP_TITLE);
+	}
+
+	public boolean isRejectOnlyPopupHeaderDisplayed() {
+		return isDisplayed(REJECT_ONLY_POPUP_HEADER);
+	}
+
+	public boolean isRejectOnlyPopupDescriptionDisplayed() {
+		return isDisplayed(REJECT_ONLY_POPUP_DESCRIPTION);
+	}
+
+	public boolean isRejectOnlyPopupRejectButtonDisplayed() {
+		return isDisplayed(REJECT_ONLY_POPUP_REJECT_BTN);
+	}
+
+	/** The whole point of the reject-only popup: no Approve on offer. */
+	public boolean isApproveButtonAbsentInRejectOnlyPopup() {
+		boolean present = isElementDisplayedQuick(APPROVE_BTN, Duration.ofSeconds(5));
+		if (present) {
+			LogUtil.error("An Approve button is offered for a device that is not linked to an SBI");
+			takeScreenshot();
+		}
+		return !present;
+	}
+
+	public void clickOnRejectOnlyPopupCloseIcon() {
+		click(REJECT_ONLY_POPUP_CLOSE_ICON);
+	}
+
+	/**
+	 * Finds a device that is Pending for Approval and carries no linked SBI, which
+	 * is the state that triggers the reject-only popup. Returns the 1-based row
+	 * number, or -1 when the current page holds no such device.
+	 *
+	 * Column positions are read from the header row rather than hardcoded, because
+	 * the linked-devices view drops the SBI columns and so shifts every index.
+	 */
+	public int findOrphanPendingDeviceRow() {
+		int linkedSbiColumn = getColumnIndex(LINKED_SBI_HEADER_ID);
+		int statusColumn = getColumnIndex(STATUS_HEADER_ID);
+
+		if (linkedSbiColumn < 0 || statusColumn < 0) {
+			LogUtil.step("Linked SBI or Status column is not on this list, so no orphan device can be identified");
+			return -1;
+		}
+
+		List<WebElement> rows = driver.findElements(DEVICE_ROWS);
+		for (int i = 0; i < rows.size(); i++) {
+			try {
+				List<WebElement> cells = rows.get(i).findElements(By.tagName("td"));
+				if (cells.size() <= Math.max(linkedSbiColumn, statusColumn)) {
+					continue;
+				}
+
+				String linkedSbi = cells.get(linkedSbiColumn).getText().trim();
+				String status = cells.get(statusColumn).getText().trim();
+
+				if (isUnlinked(linkedSbi) && status.equalsIgnoreCase(GlobalConstants.PENDING_FOR_APPROVAL)) {
+					LogUtil.step("Orphan pending device found at row " + (i + 1));
+					return i + 1;
+				}
+			} catch (StaleElementReferenceException e) {
+				LogUtil.step("Row went stale while scanning for an orphan device; skipping row " + (i + 1));
+			}
+		}
+		LogUtil.step("No Pending for Approval device without a linked SBI on this page");
+		return -1;
+	}
+
+	/** Opens the action menu of the given 1-based device row. */
+	public void clickOnDeviceListActionMenu(int rowNumber) {
+		click(By.id("device_list_action_menu" + rowNumber));
+	}
+
+	/** The linked SBI cell of the given 1-based device row carries no value. */
+	public boolean isLinkedSbiColumnEmpty(int rowNumber) {
+		int linkedSbiColumn = getColumnIndex(LINKED_SBI_HEADER_ID);
+		if (linkedSbiColumn < 0) {
+			LogUtil.error("Linked SBI column is not present on this list");
+			takeScreenshot();
+			return false;
+		}
+
+		String value = getTextFromLocator(By.xpath(
+				"//tr[@id='device_list_item" + rowNumber + "']/td[" + (linkedSbiColumn + 1) + "]")).trim();
+		LogUtil.step("Linked SBI value at row " + rowNumber + ": '" + value + "'");
+		return isUnlinked(value);
+	}
+
+	private boolean isUnlinked(String linkedSbiCellValue) {
+		return linkedSbiCellValue.isEmpty() || EMPTY_CELL_PLACEHOLDER.equals(linkedSbiCellValue);
+	}
 }

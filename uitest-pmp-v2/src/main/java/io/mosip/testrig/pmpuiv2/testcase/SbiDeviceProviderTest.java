@@ -4,6 +4,7 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
+import org.testng.SkipException;
 import org.testng.annotations.Test;
 
 import io.mosip.testrig.pmpuiv2.pages.AddDevicePage;
@@ -390,6 +391,52 @@ public class SbiDeviceProviderTest extends BaseClass {
 		verifyDeviceStatusInDeviceDetailsAsAdmin(GlobalConstants.FINGER, GlobalConstants.SLAP,
 				GlobalConstants.AUTOMATION_REJECTING, GlobalConstants.AUTOMATION_REJECTING, GlobalConstants.REJECTED);
 
+	}
+
+	/**
+	 * TC_38189_23: a device that is Pending for Approval but linked to no SBI must
+	 * offer Reject only, so the admin cannot approve an orphaned device.
+	 *
+	 * Devices created through the portal are always linked to an SBI, so this needs
+	 * an orphaned device already present in the environment. When the list holds
+	 * none the test skips rather than reporting a pass it did not earn.
+	 */
+	@Test(priority = 9, description = "Only Reject is offered for a device that is not linked to an SBI", dependsOnMethods = "verifyViewOfDevicesPageAsAdmin")
+	public void verifyRejectOnlyOptionForOrphanDevice() {
+		dashboardpage = new DashboardPage(driver);
+		listOfSbiPage = new ListOfSbiPage(driver);
+		listOfDevicesPage = new ListOfDevicesPage(driver);
+
+		dashboardpage.clickOnSbiDevices();
+		listOfSbiPage.clickOnDeviceTab();
+		assertTrue(listOfDevicesPage.isListOfDevicesTitleDisplayed(), GlobalConstants.isListOfDevicesTitleDisplayed);
+
+		int orphanRow = listOfDevicesPage.findOrphanPendingDeviceRow();
+		if (orphanRow < 0) {
+			throw new SkipException("No Pending for Approval device without a linked SBI exists in this "
+					+ "environment, so the reject-only popup of TC_38189_23 cannot be exercised. Seed an "
+					+ "orphaned device to enable this check.");
+		}
+
+		// Precondition 2: the linked SBI column carries no value for this device
+		assertTrue(listOfDevicesPage.isLinkedSbiColumnEmpty(orphanRow), GlobalConstants.isLinkedSbiColumnEmpty);
+
+		listOfDevicesPage.clickOnDeviceListActionMenu(orphanRow);
+		listOfDevicesPage.clickOnApproveOrReject();
+
+		// The reject-only popup replaces the usual approve/reject popup
+		assertTrue(listOfDevicesPage.isRejectOnlyPopupDisplayed(), GlobalConstants.isRejectOnlyPopupDisplayed);
+		assertTrue(listOfDevicesPage.isRejectOnlyPopupHeaderDisplayed(), GlobalConstants.isRejectOnlyPopupDisplayed);
+		assertTrue(listOfDevicesPage.isRejectOnlyPopupDescriptionDisplayed(),
+				GlobalConstants.isRejectOnlyPopupDescriptionDisplayed);
+		assertTrue(listOfDevicesPage.isRejectOnlyPopupRejectButtonDisplayed(),
+				GlobalConstants.isRejectOnlyPopupRejectButtonDisplayed);
+
+		// The point of the popup: no Approve is on offer
+		assertTrue(listOfDevicesPage.isApproveButtonAbsentInRejectOnlyPopup(),
+				GlobalConstants.isApproveButtonNotDisplayedForOrphanDevice);
+
+		listOfDevicesPage.clickOnRejectOnlyPopupCloseIcon();
 	}
 
 	private void loginAsDeviceProvider() {

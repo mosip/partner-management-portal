@@ -650,4 +650,21 @@ public class ConfigManager {
 	    }
 	}
 
+	/**
+	 * Mirrors the PMS backend property
+	 * {@code mosip.pmp.partner.policy.expiry.period.indays}. Returns 0 when the
+	 * environment leaves it unset, which the backend treats as the 100 year
+	 * default. Set {@code apiKeyExpiryPeriodInDays} in Kernel.properties to match
+	 * the environment under test.
+	 */
+	public static int getApiKeyExpiryPeriodInDays() {
+		try {
+			return Integer.parseInt(propsKernel.getProperty("apiKeyExpiryPeriodInDays", "0").trim());
+		} catch (NumberFormatException e) {
+			logger.error("Invalid apiKeyExpiryPeriodInDays value in Kernel.properties. Falling back to the "
+					+ "100 year default.");
+			return 0;
+		}
+	}
+
 }

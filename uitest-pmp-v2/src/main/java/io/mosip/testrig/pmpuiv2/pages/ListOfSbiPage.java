@@ -866,4 +866,23 @@ public class ListOfSbiPage extends BasePage {
 		return isElementDisplayed(partnerIdInFirstColumn);
 	}
 
+	/**
+	 * Narrows the list to SBIs whose certificate has already expired, which is the
+	 * precondition for TC_38408_14.
+	 */
+	public void selectExpiredSbiExpiryStatusInFilter() {
+		click(By.id("sbi_expiry_status_filter_dropdown_btn"));
+		click(By.id("sbi_expiry_status_filter_option1"));
+	}
+
+	/** True when the filtered list returned at least one SBI. */
+	public boolean isAnySbiListed() {
+		return isElementDisplayedQuick(By.id("sbi_list_item1"), Duration.ofSeconds(10));
+	}
+
+	/** Opens the individual view of the first SBI in the filtered list. */
+	public void clickOnFirstSbiItem() {
+		clickOnElement(sbiListItem1);
+	}
+
 }
