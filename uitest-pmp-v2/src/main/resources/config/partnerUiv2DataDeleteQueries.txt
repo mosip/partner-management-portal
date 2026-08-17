@@ -86,5 +86,8 @@ delete from pms.partner where user_id='pmpui-devicenocert';
 delete FROM pms.user_details where user_id='pmpui-devicenocert';
 
 #These are delete queries for pmpui-credential
+delete from pms.partner_policy where cr_by='pmpui-credential';
+delete from pms.partner_policy_request where cr_by='pmpui-credential';
+delete from pms.partner_h where cr_by='pmpui-credential';
 delete from pms.partner where user_id='pmpui-credential';
 delete FROM pms.user_details where user_id='pmpui-credential';
