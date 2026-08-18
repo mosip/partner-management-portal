@@ -43,6 +43,8 @@
 			<class name="io.mosip.testrig.pmpuiv2.testcase.AbisPartnerTest" />
 			<!--PARTNER VALIDATION & MANAGEMENT -->
 			<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerDetailsTest" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerFilterTest" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerEmailFilterTest" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerDeactivateOptionTest" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerDeactivatedPortalTest" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.DeactivatePartner2Creation" />

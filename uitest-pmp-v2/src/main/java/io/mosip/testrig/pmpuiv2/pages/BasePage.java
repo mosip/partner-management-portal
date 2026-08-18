@@ -547,6 +547,12 @@ public class BasePage {
 		new Actions(driver).sendKeys(Keys.ENTER).perform();
 	}
 
+	public void hoverOverElement(WebElement element) {
+		LogUtil.action("Hovering over element: ", element);
+		WaitUtil.waitForVisibility(driver, element);
+		new Actions(driver).moveToElement(element).perform();
+	}
+
 	// Focuses, then reports whether focus landed - a tabindex-less element leaves activeElement on body.
 	public boolean isElementFocusable(WebElement element) {
 		LogUtil.verify("Checking if element can take keyboard focus: ", element);
