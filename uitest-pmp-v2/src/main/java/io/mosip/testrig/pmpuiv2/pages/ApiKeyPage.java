@@ -433,6 +433,33 @@ public class ApiKeyPage extends BasePage {
 	@FindBy(xpath = "//p[starts-with(@id,'api_key_details_') and contains(@id,'_label')]")
 	private List<WebElement> individualViewFieldLabels;
 
+	@FindBy(xpath = "//tr[@id='api_key_list_item1']/td[7]")
+	private WebElement adminExpirationDateCell;
+
+	@FindBy(xpath = "//tr[@id='api_list_item1']/td[6]")
+	private WebElement partnerExpirationDateCell;
+
+	@FindBy(xpath = "//tr[@id='api_key_list_item1']/td[6]")
+	private WebElement adminCreationDateCell;
+
+	@FindBy(xpath = "//tr[@id='api_list_item1']/td[5]")
+	private WebElement partnerCreationDateCell;
+
+	@FindBy(xpath = "//tr[starts-with(@id,'api_key_list_item')]/td[7]")
+	private List<WebElement> adminExpirationDateColumn;
+
+	@FindBy(xpath = "//tr[starts-with(@id,'api_list_item')]/td[6]")
+	private List<WebElement> partnerExpirationDateColumn;
+
+	@FindBy(id = "api_key_details_expiration_date_label")
+	private WebElement apiKeyDetailsExpirationDateLabel;
+
+	@FindBy(xpath = "//p[normalize-space()='Expiration Date']")
+	private WebElement expirationDateLabelInAdminView;
+
+	@FindBy(xpath = "//p[normalize-space()='Expiration Date']/following-sibling::p[1]")
+	private WebElement expirationDateContextInAdminView;
+
 	@FindBy(id = "apiKeyExpiryDateTime_desc_icon")
 	private WebElement apiKeyExpiryDateTime_desc_icon;
 
@@ -442,16 +469,6 @@ public class ApiKeyPage extends BasePage {
 	public ApiKeyPage(WebDriver driver) {
 		super(driver);
 	}
-
-	private static final By ADMIN_EXPIRY_CELL = By.xpath("//tr[starts-with(@id,'api_key_list_item')][1]/td[7]");
-	private static final By PARTNER_EXPIRY_CELL = By.xpath("//tr[starts-with(@id,'api_list_item')][1]/td[6]");
-	private static final By ADMIN_CREATED_CELL = By.xpath("//tr[starts-with(@id,'api_key_list_item')][1]/td[6]");
-	private static final By PARTNER_CREATED_CELL = By.xpath("//tr[starts-with(@id,'api_list_item')][1]/td[5]");
-	private static final By ADMIN_EXPIRY_COLUMN = By.xpath("//tr[starts-with(@id,'api_key_list_item')]/td[7]");
-	private static final By PARTNER_EXPIRY_COLUMN = By.xpath("//tr[starts-with(@id,'api_list_item')]/td[6]");
-
-	private static final By ADMIN_FIRST_ROW = By.id("api_key_list_item1");
-	private static final By PARTNER_FIRST_ROW = By.id("api_list_item1");
 
 	private static final String NO_EXPIRY_TEXT = "No Expiry";
 
@@ -1296,9 +1313,9 @@ public class ApiKeyPage extends BasePage {
 	}
 
 	private List<LocalDate> readExpiryColumn(boolean isAdminView) {
-		By columnLocator = isAdminView ? ADMIN_EXPIRY_COLUMN : PARTNER_EXPIRY_COLUMN;
+		List<WebElement> expirationDateColumn = isAdminView ? adminExpirationDateColumn : partnerExpirationDateColumn;
 		List<LocalDate> dates = new ArrayList<>();
-		for (WebElement cell : driver.findElements(columnLocator)) {
+		for (WebElement cell : expirationDateColumn) {
 			String value = cell.getText().trim();
 			if (value.isEmpty() || value.equalsIgnoreCase(NO_EXPIRY_TEXT) || value.equals("-")) {
 				continue;
@@ -1314,11 +1331,10 @@ public class ApiKeyPage extends BasePage {
 	}
 
 	public boolean isExpirationDateSameAsBrowserDateFormat(boolean isAdminView) {
-		By cellLocator = isAdminView ? ADMIN_EXPIRY_CELL : PARTNER_EXPIRY_CELL;
+		WebElement expirationDateCell = isAdminView ? adminExpirationDateCell : partnerExpirationDateCell;
 		try {
 			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(ConfigManager.getTimeout()));
-			WebElement cell = wait.until(ExpectedConditions.visibilityOfElementLocated(cellLocator));
-			String value = cell.getText().trim();
+			String value = wait.until(ExpectedConditions.visibilityOf(expirationDateCell)).getText().trim();
 			LogUtil.step("API key expiration date from UI: " + value);
 
 			if (value.equalsIgnoreCase(NO_EXPIRY_TEXT)) {
@@ -1341,12 +1357,12 @@ public class ApiKeyPage extends BasePage {
 	}
 
 	public boolean isExpirationDateOffsetFromCreationDate(int expectedDays, boolean isAdminView) {
-		By createdLocator = isAdminView ? ADMIN_CREATED_CELL : PARTNER_CREATED_CELL;
-		By expiryLocator = isAdminView ? ADMIN_EXPIRY_CELL : PARTNER_EXPIRY_CELL;
+		WebElement creationDateCell = isAdminView ? adminCreationDateCell : partnerCreationDateCell;
+		WebElement expirationDateCell = isAdminView ? adminExpirationDateCell : partnerExpirationDateCell;
 		try {
 			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(ConfigManager.getTimeout()));
-			String created = wait.until(ExpectedConditions.visibilityOfElementLocated(createdLocator)).getText().trim();
-			String expiry = wait.until(ExpectedConditions.visibilityOfElementLocated(expiryLocator)).getText().trim();
+			String created = wait.until(ExpectedConditions.visibilityOf(creationDateCell)).getText().trim();
+			String expiry = wait.until(ExpectedConditions.visibilityOf(expirationDateCell)).getText().trim();
 			LogUtil.step("Created: " + created + ", Expiry: " + expiry + ", expected offset(days): " + expectedDays);
 
 			if (expiry.equalsIgnoreCase(NO_EXPIRY_TEXT)) {
@@ -1381,22 +1397,14 @@ public class ApiKeyPage extends BasePage {
 		if (isElementDisplayedQuick(By.id("api_key_details_expiration_date_label"), Duration.ofSeconds(5))) {
 			return true;
 		}
-		return isDisplayed(expirationDateLabelInAdminView());
+		return isElementDisplayed(expirationDateLabelInAdminView);
 	}
 
 	public boolean isApiKeyDetailsExpirationDateContextDisplayed() {
 		if (isElementDisplayedQuick(By.id("api_key_details_expiration_date_context"), Duration.ofSeconds(5))) {
 			return true;
 		}
-		return isDisplayed(expirationDateContextInAdminView());
-	}
-
-	private By expirationDateLabelInAdminView() {
-		return By.xpath("//p[normalize-space()='Expiration Date']");
-	}
-
-	private By expirationDateContextInAdminView() {
-		return By.xpath("//p[normalize-space()='Expiration Date']/following-sibling::p[1]");
+		return isElementDisplayed(expirationDateContextInAdminView);
 	}
 
 	public boolean isIndividualViewFieldOrderCorrect() {
@@ -1432,10 +1440,10 @@ public class ApiKeyPage extends BasePage {
 	}
 
 	public boolean isDeactivatedRowNotClickable(boolean isAdminView) {
-		By rowLocator = isAdminView ? ADMIN_FIRST_ROW : PARTNER_FIRST_ROW;
+		WebElement row = isAdminView ? apiKeyItem1 : apiListItem1;
 
-		WebElement row = new WebDriverWait(driver, Duration.ofSeconds(ConfigManager.getTimeout()))
-				.until(ExpectedConditions.visibilityOfElementLocated(rowLocator));
+		new WebDriverWait(driver, Duration.ofSeconds(ConfigManager.getTimeout()))
+				.until(ExpectedConditions.visibilityOf(row));
 
 		scrollIntoView(row);
 		row.click();
@@ -1453,17 +1461,12 @@ public class ApiKeyPage extends BasePage {
 	}
 
 	public boolean isExpirationDateStyledLikeOtherFields() {
-		By referenceLabel = By.id("api_key_details_partner_id_label");
-		By expirationLabel = isElementDisplayedQuick(By.id("api_key_details_expiration_date_label"), Duration.ofSeconds(5))
-				? By.id("api_key_details_expiration_date_label")
-				: expirationDateLabelInAdminView();
+		WebElement expiration = isElementDisplayedQuick(By.id("api_key_details_expiration_date_label"),
+				Duration.ofSeconds(5)) ? apiKeyDetailsExpirationDateLabel : expirationDateLabelInAdminView;
 
 		try {
-			WebElement reference = driver.findElement(referenceLabel);
-			WebElement expiration = driver.findElement(expirationLabel);
-
 			for (String property : new String[] { "font-family", "font-size", "font-weight", "color" }) {
-				String expected = reference.getCssValue(property);
+				String expected = apiKeyDetailsPartnerIdLabel.getCssValue(property);
 				String actual = expiration.getCssValue(property);
 				LogUtil.step("Label " + property + " - Partner ID: " + expected + ", Expiration Date: " + actual);
 
