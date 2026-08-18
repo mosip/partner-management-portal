@@ -21,7 +21,7 @@ delete FROM keymgr.ca_cert_store where cert_subject ='CN=AABBCC,OU=AABBCC,O=AABB
 delete FROM keymgr.partner_cert_store where cert_subject ='CN=AABBCC,OU=AABBCC,O=AABBCC,L=aa,ST=aa,C=aa' and partner_domain='MISP';
 
 #These are delete queries for CREDENTIAL PARTNER - pmpui-credential (ABCDEFroot.cer, ABCDEFinter.cer, org ABCDEF)
-delete FROM keymgr.ca_cert_store where cert_subject ='CN=ABCDEFinter,OU=ABCDEFinter,O=ABCDEFinter,L=MY,ST=KA,C=IN' and partner_domain='AUTH';
+delete FROM keymgr.ca_cert_store where cert_subject ='CN=ABCDEFinter,OU=ABCDEF,O=ABCDEF,L=MY,ST=KA,C=IN' and partner_domain='AUTH';
 delete FROM keymgr.ca_cert_store where cert_subject ='CN=ABCDEF,OU=ABCDEF,O=ABCDEF,L=MY,ST=KA,C=IN' and partner_domain='AUTH';
 delete FROM keymgr.partner_cert_store where cert_subject ='CN=ABCDEF,OU=ABCDEF,O=ABCDEF,L=MY,ST=KA,C=IN' and partner_domain='AUTH';
 
