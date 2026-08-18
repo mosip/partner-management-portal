@@ -321,7 +321,7 @@ public class MispPartnerPage extends BasePage {
 				clickOnElement(notificationLanguageOption1);
 				return;
 			}
-			click(By.xpath("//*[normalize-space()='" + value + "']"));
+			click(By.xpath("//*[contains(@id,'create_partner_lang_code_option')][normalize-space()='" + value + "']"));
 		} catch (RuntimeException e) {
 			logger.info(e.getMessage());
 			throw e;
@@ -482,9 +482,7 @@ public class MispPartnerPage extends BasePage {
 	}
 
 	public String getFirstPartnerIdText() {
-		WebElement cell = driver.findElement(By.xpath("//tr[@id='partner_list_item1']/td[1]"));
-		waitForElementVisible(cell);
-		return cell.getText().trim();
+		return waitAndFindElement(By.xpath("//tr[@id='partner_list_item1']/td[1]")).getText().trim();
 	}
 
 	public boolean isPartnerInList(String partnerId) {
@@ -492,29 +490,13 @@ public class MispPartnerPage extends BasePage {
 	}
 
 	public String getCertUploadStatusForPartner(String partnerId) {
-		WebElement row = driver.findElement(By.xpath("//tr[./td[normalize-space()='" + partnerId + "']]"));
-		waitForElementVisible(row);
+		WebElement row = waitAndFindElement(By.xpath("//tr[./td[normalize-space()='" + partnerId + "']]"));
 		return row.findElement(By.xpath("./td[6]")).getText().trim();
 	}
 
 	public String getPartnerStatusForPartner(String partnerId) {
-		WebElement row = driver.findElement(By.xpath("//tr[./td[normalize-space()='" + partnerId + "']]"));
-		waitForElementVisible(row);
+		WebElement row = waitAndFindElement(By.xpath("//tr[./td[normalize-space()='" + partnerId + "']]"));
 		return row.findElement(By.xpath("./td[7]")).getText().trim();
-	}
-
-	public boolean isCertStatusDisplayedInRed(String partnerId) {
-		return isDisplayed(
-				By.xpath("//tr[./td[normalize-space()='" + partnerId + "']]/td[6]//*[contains(@class,'red')]"));
-	}
-
-	public boolean isUploadCertActionAvailableForPartner(String partnerId) {
-		By directButton = By.xpath("//tr[./td[normalize-space()='" + partnerId + "']]//*[contains(@id,'upload_cert')]");
-		if (isDisplayed(directButton)) {
-			return true;
-		}
-		return isDisplayed(By
-				.xpath("//tr[./td[normalize-space()='" + partnerId + "']]//*[contains(text(),'Upload Certificate')]"));
 	}
 
 	public String getEmailAlreadyRegisteredErrorText() {
@@ -606,7 +588,9 @@ public class MispPartnerPage extends BasePage {
 	}
 
 	public boolean isPolicyGroupOptionVisible(String value) {
-		return isDisplayed(By.xpath("//span[normalize-space()='" + value + "']"));
+		return isElementDisplayedQuick(
+				By.xpath("//*[contains(@id,'policy_group_selector_option')]//span[normalize-space()='" + value + "']"),
+				INLINE_VALIDATION_TIMEOUT);
 	}
 
 	public void clickUploadCertActionForPartner(String partnerId) {
