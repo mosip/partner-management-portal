@@ -44,7 +44,6 @@ public class BaseClass {
 	protected String password = allpassword[0];
 	public static final Logger logger = Logger.getLogger(BaseClass.class);
 	public static String data;
-	private static boolean chromeDriverReady;
 	private static final Set<String> SKIP_AUTO_LOGIN_METHODS = Set.of("partnerAdminCreation",
 			"uploadPartnerCertificateAfterLogin");
 
@@ -56,13 +55,8 @@ public class BaseClass {
 			String configFilePath = "/usr/bin/chromedriver";
 			System.setProperty("webdriver.chrome.driver", configFilePath);
 		} else {
-			synchronized (BaseClass.class) {
-				if (!chromeDriverReady) {
-					WebDriverManager.chromedriver().setup();
-					chromeDriverReady = true;
-					logger.info("window chrome driver start");
-				}
-			}
+			WebDriverManager.chromedriver().setup();
+			logger.info("window chrome driver start");
 		}
 
 		ChromeOptions options = new ChromeOptions();
