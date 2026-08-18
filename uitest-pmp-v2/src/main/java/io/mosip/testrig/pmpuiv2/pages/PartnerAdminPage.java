@@ -827,7 +827,7 @@ public class PartnerAdminPage extends BasePage {
 	}
 
 	public void enterEmailAddressInFilter(String emailAddress) {
-		enter(emailsAddressFilter, emailAddress);
+		enterRedacted(emailsAddressFilter, emailAddress);
 	}
 
 	public boolean isEmailAddressFilterInfoIconDisplayed() {

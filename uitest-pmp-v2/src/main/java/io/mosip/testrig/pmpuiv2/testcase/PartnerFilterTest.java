@@ -125,7 +125,12 @@ public class PartnerFilterTest extends BaseClass {
 	public void sortButtonFunctionalityForPartnerIdColumn() {
 		navigateToPartnerListPage();
 
+		String firstRowBeforeSorting = partnerAdminPage.getFirstRowPartnerId();
+
 		partnerAdminPage.clickOnPartnerIdAscendingIcon();
+		assertTrue(partnerAdminPage.waitForFirstRowPartnerIdToChangeFrom(firstRowBeforeSorting),
+				GlobalConstants.isPartnerListLoaded);
+
 		List<String> ascendingOrder = partnerAdminPage.getPartnerIdColumnValues();
 		List<String> expectedAscendingOrder = new ArrayList<>(ascendingOrder);
 		expectedAscendingOrder.sort(String.CASE_INSENSITIVE_ORDER);
