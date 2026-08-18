@@ -1,5 +1,7 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
+import java.time.Duration;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -8,6 +10,9 @@ import org.openqa.selenium.support.FindBy;
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
 
 public class FtmPage extends BasePage {
+
+	// Used only to assert a submit was refused, so a short window is enough.
+	private static final Duration FTM_OUTCOME_TIMEOUT = Duration.ofSeconds(5);
 
 	@FindBy(xpath = "//*[contains(text(), 'successfully')]")
 	private WebElement successMessageForFtmCert;
@@ -640,6 +645,10 @@ public class FtmPage extends BasePage {
 
 	public void clickOnAddFtmChipButton() {
 		clickOnElement(addFtmChipButton);
+	}
+
+	public boolean isAddFtmErrorMessageDisplayed() {
+		return isElementDisplayedQuick(By.id("add_ftm_error_msg"), FTM_OUTCOME_TIMEOUT);
 	}
 
 	public void clickOnStatusAscIcon() {

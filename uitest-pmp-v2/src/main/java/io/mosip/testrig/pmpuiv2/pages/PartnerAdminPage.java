@@ -1,10 +1,28 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
+import java.time.Duration;
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
+import io.mosip.testrig.pmpuiv2.utility.LogUtil;
+import io.mosip.testrig.pmpuiv2.utility.WaitUtil;
 
 public class PartnerAdminPage extends BasePage {
+
+	private static final Duration POPUP_ABSENCE_TIMEOUT = Duration.ofSeconds(3);
+	private static final Duration LIST_LOAD_TIMEOUT = Duration.ofSeconds(20);
+	private static final int POPUP_CENTRING_TOLERANCE_PX = 2;
 
 	@FindBy(id = "undefined_title")
 	private WebElement subTitleList;
@@ -159,6 +177,12 @@ public class PartnerAdminPage extends BasePage {
 	@FindBy(id = "partner_deactive_btn")
 	private WebElement deactivateButtons;
 
+	@FindBy(xpath = "//p[@id='partner_deactive_btn']/parent::div")
+	private WebElement deactivateOptionWrapper;
+
+	@FindBy(id = "partner_list_item1")
+	private WebElement firstPartnerRow;
+
 	@FindBy(id = "status_filter_option2")
 	private WebElement deactivatedStatusInFilters;
 
@@ -242,6 +266,11 @@ public class PartnerAdminPage extends BasePage {
 
 	@FindBy(id = "download_partner_cer_btn")
 	private WebElement downloadCertificateButtonDisabledStateInViewPartnerPage;
+
+	// The banner whose background encodes the partner's active state on this screen.
+	@FindBy(xpath = "//h6[@id='view_partner_details_partner_certificate_title']"
+			+ "/ancestor::div[contains(@class,'justify-between')][1]")
+	private WebElement partnerCertificateSectionInViewPartnerPage;
 
 	@FindBy(id = "view_partner_type_label")
 	private WebElement partnerTypeInViewPartnerPage;
@@ -535,12 +564,234 @@ public class PartnerAdminPage extends BasePage {
 		return isElementDisplayed(deactivatedPartnerRow);
 	}
 
+	// Callers must wait for the unfiltered list before opening the filter panel, or it reads empty.
+	public boolean isPartnerListLoaded() {
+		return isElementDisplayedQuick(By.id("partner_list_item1"), LIST_LOAD_TIMEOUT);
+	}
+
+	// Rows are index-keyed in React, so the same DOM node survives a filter re-render -
+	// checking mere presence never actually waits. This waits for row 1's own text to
+	// contain the expected partner ID, so a stale pre-filter row can't be mistaken for it.
+	public boolean isPartnerListLoaded(String expectedPartnerId) {
+		try {
+			new WebDriverWait(driver, LIST_LOAD_TIMEOUT).until(ExpectedConditions
+					.textToBePresentInElementLocated(By.xpath("//tr[@id='partner_list_item1']/td[1]"), expectedPartnerId));
+			return true;
+		} catch (TimeoutException e) {
+			return false;
+		}
+	}
+
+	// Row 1 is what the Action menu operates on; isDeactivatedPartnerRowDisplayed is pinned to row 2.
+	public boolean isFirstPartnerRowDisplayed() {
+		return isElementDisplayed(firstPartnerRow);
+	}
+
 	public boolean isViewButtonsEnabled() {
 		return isElementEnabled(viewButtons);
 	}
 
 	public boolean isDeactivateButtonDisabled() {
 		return isElementDisabled(deactivateButtons);
+	}
+
+	public boolean isDeactivateOptionEnabled() {
+		return getTextFromAttribute(deactivateButtons, GlobalConstants.CLASS)
+				.contains(GlobalConstants.ACTION_MENU_OPTION_ENABLED);
+	}
+
+	public boolean isDeactivateOptionDisabled() {
+		return getTextFromAttribute(deactivateButtons, GlobalConstants.CLASS)
+				.contains(GlobalConstants.ACTION_MENU_OPTION_DISABLED);
+	}
+
+	public boolean isViewOptionEnabled() {
+		return getTextFromAttribute(viewButtons, GlobalConstants.CLASS)
+				.contains(GlobalConstants.ACTION_MENU_OPTION_ENABLED);
+	}
+
+	public void clickOnDeactivateOptionInActionMenu() {
+		clickOnElement(deactivateButtons);
+	}
+
+	public boolean isDeactivatePopupHeaderDisplayed() {
+		return isElementDisplayed(deactivatePartnerHeader);
+	}
+
+	public boolean isDeactivatePopupHeaderDisplayedQuick() {
+		return isElementDisplayedQuick(By.id("deactivate_popup_header"), POPUP_ABSENCE_TIMEOUT);
+	}
+
+	public boolean isDeactivatePopupDescriptionDisplayed() {
+		return isElementDisplayed(deactivatePartnerDescription);
+	}
+
+	public boolean isDeactivatePopupCancelButtonDisplayed() {
+		return isElementDisplayed(deactivateCancelButton);
+	}
+
+	public boolean isDeactivatePopupConfirmButtonDisplayed() {
+		return isElementDisplayed(deactivateConfirmButton);
+	}
+
+	public void clickOnDeactivatePopupCancelButton() {
+		clickOnElement(deactivateCancelButton);
+	}
+
+	public void clickOnDeactivatePopupConfirmButton() {
+		clickOnElement(deactivateConfirmButton);
+		WaitUtil.waitForInvisibility(driver, deactivatePartnerHeader);
+	}
+
+	public boolean isDeactivateOptionKeyboardOperable() {
+		return GlobalConstants.ROLE_BUTTON
+				.equals(getTextFromAttribute(deactivateOptionWrapper, GlobalConstants.ROLE))
+				&& GlobalConstants.TABINDEX_FOCUSABLE
+						.equals(getTextFromAttribute(deactivateOptionWrapper, GlobalConstants.TABINDEX));
+	}
+
+	public boolean isDeactivateOptionCursorPointer() {
+		return getTextFromAttribute(deactivateOptionWrapper, GlobalConstants.CLASS)
+				.contains(GlobalConstants.CURSOR_POINTER);
+	}
+
+	public boolean isDeactivateOptionCursorDefault() {
+		return getTextFromAttribute(deactivateOptionWrapper, GlobalConstants.CLASS)
+				.contains(GlobalConstants.CURSOR_DEFAULT);
+	}
+
+	public void pressEnterOnDeactivateOption() {
+		focusAndPressEnter(deactivateOptionWrapper);
+	}
+
+	public boolean isDeactivatePopupConfirmButtonEnabled() {
+		return isElementEnabled(deactivateConfirmButton);
+	}
+
+	public boolean isDeactivatePopupConfirmButtonNativeButton() {
+		return GlobalConstants.BUTTON_TAG.equalsIgnoreCase(deactivateConfirmButton.getTagName());
+	}
+
+	public boolean isDeactivatePopupConfirmButtonFocusable() {
+		return isElementFocusable(deactivateConfirmButton);
+	}
+
+	public boolean isDeactivatePopupCancelButtonNativeButton() {
+		return GlobalConstants.BUTTON_TAG.equalsIgnoreCase(deactivateCancelButton.getTagName());
+	}
+
+	public boolean isDeactivatePopupCancelButtonEnabled() {
+		return isElementEnabled(deactivateCancelButton);
+	}
+
+	public boolean isDeactivatePopupCancelButtonFocusable() {
+		return isElementFocusable(deactivateCancelButton);
+	}
+
+	public boolean isDeactivatePopupWithinViewport() {
+		return isElementWithinViewport(deactivatePartnerHeader);
+	}
+
+	public boolean isDeactivatePopupHorizontallyCentred() {
+		return isElementHorizontallyCentred(deactivatePartnerHeader, POPUP_CENTRING_TOLERANCE_PX);
+	}
+
+	// The popup sets body overflow to hidden while open and back to auto on close.
+	public boolean isPageScrollLocked() {
+		return GlobalConstants.OVERFLOW_HIDDEN.equals(getBodyComputedStyle(GlobalConstants.OVERFLOW));
+	}
+
+	// The overlay spans the viewport, so it sits over the filter button's centre point.
+	public boolean isFilterButtonCoveredByPopupOverlay() {
+		return isElementCoveredAtCentre(filterbtnTrigger);
+	}
+
+	// The popup relies on focus-trap-react rather than aria-modal/inert, so this checks
+	// what it actually implements: Tab cannot move focus outside the trapped boundary.
+	public void pressTabWithinDeactivatePopup(int times) {
+		for (int i = 0; i < times; i++) {
+			new Actions(driver).sendKeys(Keys.TAB).perform();
+		}
+	}
+
+	public boolean isFocusContainedWithinDeactivatePopup() {
+		return Boolean.TRUE.equals(((JavascriptExecutor) driver).executeScript(
+				"var header = document.getElementById('deactivate_popup_header');"
+						+ "var boundary = header ? header.closest('.rounded-lg') : null;"
+						+ "return boundary ? boundary.contains(document.activeElement) : false;"));
+	}
+
+	public int getPartnerRowCount() {
+		return getElementCount(By.xpath("//tr[starts-with(@id,'partner_list_item')]"));
+	}
+
+	public String getPartnerStatusInViewPartnerDetails() {
+		return getTextFromLocator(partnerStatusInViewPartnerPage).trim();
+	}
+
+	public boolean isPartnerCertificateSectionGreyedOut() {
+		return getTextFromAttribute(partnerCertificateSectionInViewPartnerPage, GlobalConstants.CLASS)
+				.contains(GlobalConstants.CERT_SECTION_DEACTIVATED_BG);
+	}
+
+	// For an uploaded certificate, the disabled state here reflects isActive alone.
+	public boolean isDownloadCertificateButtonEnabledInViewPartnerPage() {
+		return isElementEnabled(downloadCertificateButtonInViewPartnerPage);
+	}
+
+	// Waits on the first badge - the rows exist before the filtered response paints their status text.
+	public boolean areAllPartnerRowStatusesDeactivated() {
+		new WebDriverWait(driver, LIST_LOAD_TIMEOUT).until(ExpectedConditions.visibilityOfElementLocated(FIRST_ROW_STATUS_BADGE));
+		List<WebElement> statusCells = driver
+				.findElements(By.xpath("//tr[starts-with(@id,'partner_list_item')]/td[7]/div"));
+		StringBuilder observed = new StringBuilder();
+		boolean allDeactivated = !statusCells.isEmpty();
+		for (WebElement cell : statusCells) {
+			String status = cell.getText().trim();
+			observed.append('[').append(status).append(']');
+			if (!GlobalConstants.DEACTIVATED.equals(status)) {
+				allDeactivated = false;
+			}
+		}
+		LogUtil.step("Row statuses after Deactivated filter: " + observed);
+		return allDeactivated;
+	}
+
+	// By-based, not a long-lived @FindBy proxy: React can replace row 1's badge on a re-render.
+	private static final By FIRST_ROW_STATUS_BADGE = By.xpath("//tr[@id='partner_list_item1']/td[7]/div");
+
+	public String getFirstRowPartnerStatus() {
+		return getTextFromLocator(FIRST_ROW_STATUS_BADGE).trim();
+	}
+
+	public boolean isFirstRowStatusBadgeDeactivated() {
+		return getTextFromAttribute(FIRST_ROW_STATUS_BADGE, GlobalConstants.CLASS)
+				.contains(GlobalConstants.DEACTIVATED_BACKGROUND);
+	}
+
+	public boolean isFirstPartnerRowGreyedOut() {
+		return getTextFromAttribute(firstPartnerRow, GlobalConstants.CLASS)
+				.contains(GlobalConstants.PARTNER_ROW_DEACTIVATED_TEXT);
+	}
+
+	public String getDeactivatePopupTitle() {
+		return getTextFromLocator(deactivatePartnerHeader).trim();
+	}
+
+	public String getDeactivatePopupSubTitle() {
+		return getTextFromLocator(deactivatePartnerDescription).trim();
+	}
+
+	public boolean isDeactivatePopupTitleFullyInterpolated() {
+		return !getDeactivatePopupTitle().contains(GlobalConstants.UNRESOLVED_PLACEHOLDER);
+	}
+
+	// An index of -1 for either means that value never reached the rendered title.
+	public boolean isPartnerIdOrderedBeforeOrganisation(String partnerId, String organisationName) {
+		String title = getDeactivatePopupTitle();
+		int partnerIdIndex = title.indexOf(partnerId);
+		int organisationIndex = title.lastIndexOf(organisationName);
+		return partnerIdIndex > -1 && organisationIndex > -1 && partnerIdIndex < organisationIndex;
 	}
 
 	public void clickOnPartnerTypeAscIcons() {

@@ -1,5 +1,6 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -14,6 +15,9 @@ import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
 public class DeviceProviderPage extends BasePage {
+
+	// Used only to assert a submit was refused, so a short window is enough.
+	private static final Duration SBI_OUTCOME_TIMEOUT = Duration.ofSeconds(5);
 
 	@FindBy(id = "sub_title_home_btn")
 	private WebElement homeButton;
@@ -266,6 +270,10 @@ public class DeviceProviderPage extends BasePage {
 
 	public boolean isListOfSbiTitleDisplayed() {
 		return isElementDisplayed(sbiList);
+	}
+
+	public boolean isAddSbiErrorMessageDisplayed() {
+		return isElementDisplayedQuick(By.id("add_sbi_error_msg"), SBI_OUTCOME_TIMEOUT);
 	}
 
 	public boolean isCreatedSbiDisplayed(String sbiVersion) {
