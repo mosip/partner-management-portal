@@ -407,7 +407,7 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(xpath = "//h5[contains(text(), 'Please tap to select the Root CA / Intermediate CA Certificate')]")
 	private WebElement uploadCertInstructionText;
 
-	@FindBy(xpath = "//*[@id='confirmation_success_icon']")
+	@FindBy(xpath = "//img[@id='confirmation_success_icon']")
 	private WebElement successIcon;
 
 	@FindBy(xpath = "//h5[normalize-space()='expiredRoot.cer']")
