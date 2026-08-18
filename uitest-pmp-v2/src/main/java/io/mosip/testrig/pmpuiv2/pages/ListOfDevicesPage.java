@@ -45,6 +45,24 @@ public class ListOfDevicesPage extends BasePage {
 	@FindBy(id = "device_list_approve_reject_option")
 	private WebElement approveRejectButton;
 
+	@FindBy(id = "reject_popup_title")
+	private WebElement rejectOnlyPopupTitle;
+
+	@FindBy(id = "reject_popup_header")
+	private WebElement rejectOnlyPopupHeader;
+
+	@FindBy(id = "reject_popup_description")
+	private WebElement rejectOnlyPopupDescription;
+
+	@FindBy(id = "reject_popup_reject_btn")
+	private WebElement rejectOnlyPopupRejectButton;
+
+	@FindBy(id = "reject_popup_close_icon")
+	private WebElement rejectOnlyPopupCloseIcon;
+
+	@FindBy(xpath = "//tr[starts-with(@id,'device_list_item')]")
+	private List<WebElement> deviceRows;
+
 	@FindBy(id = "approve_btn")
 	private WebElement approveButton;
 
@@ -1258,37 +1276,24 @@ public class ListOfDevicesPage extends BasePage {
 	    return isDisplayed(deviceIdColumnHeader);
 	}
 
-	private static final By REJECT_ONLY_POPUP_TITLE = By.id("reject_popup_title");
-	private static final By REJECT_ONLY_POPUP_HEADER = By.id("reject_popup_header");
-	private static final By REJECT_ONLY_POPUP_DESCRIPTION = By.id("reject_popup_description");
-	private static final By REJECT_ONLY_POPUP_REJECT_BTN = By.id("reject_popup_reject_btn");
-	private static final By REJECT_ONLY_POPUP_CLOSE_ICON = By.id("reject_popup_close_icon");
-	private static final By APPROVE_BTN = By.id("approve_btn");
-	private static final By DEVICE_ROWS = By.xpath("//tr[starts-with(@id,'device_list_item')]");
-
-	private static final String LINKED_SBI_HEADER_ID = "sbiList.sbiId_header";
-	private static final String STATUS_HEADER_ID = "devicesList.status_header";
-
-	private static final String EMPTY_CELL_PLACEHOLDER = "-";
-
 	public boolean isRejectOnlyPopupDisplayed() {
-		return isDisplayed(REJECT_ONLY_POPUP_TITLE);
+		return isElementDisplayed(rejectOnlyPopupTitle);
 	}
 
 	public boolean isRejectOnlyPopupHeaderDisplayed() {
-		return isDisplayed(REJECT_ONLY_POPUP_HEADER);
+		return isElementDisplayed(rejectOnlyPopupHeader);
 	}
 
 	public boolean isRejectOnlyPopupDescriptionDisplayed() {
-		return isDisplayed(REJECT_ONLY_POPUP_DESCRIPTION);
+		return isElementDisplayed(rejectOnlyPopupDescription);
 	}
 
 	public boolean isRejectOnlyPopupRejectButtonDisplayed() {
-		return isDisplayed(REJECT_ONLY_POPUP_REJECT_BTN);
+		return isElementDisplayed(rejectOnlyPopupRejectButton);
 	}
 
 	public boolean isApproveButtonAbsentInRejectOnlyPopup() {
-		boolean present = isElementDisplayedQuick(APPROVE_BTN, Duration.ofSeconds(5));
+		boolean present = isElementDisplayedQuick(By.id("approve_btn"), Duration.ofSeconds(5));
 		if (present) {
 			LogUtil.error("An Approve button is offered for a device that is not linked to an SBI");
 			takeScreenshot();
@@ -1297,22 +1302,21 @@ public class ListOfDevicesPage extends BasePage {
 	}
 
 	public void clickOnRejectOnlyPopupCloseIcon() {
-		click(REJECT_ONLY_POPUP_CLOSE_ICON);
+		clickOnElement(rejectOnlyPopupCloseIcon);
 	}
 
 	public int findOrphanPendingDeviceRow() {
-		int linkedSbiColumn = getColumnIndex(LINKED_SBI_HEADER_ID);
-		int statusColumn = getColumnIndex(STATUS_HEADER_ID);
+		int linkedSbiColumn = getColumnIndex("sbiList.sbiId_header");
+		int statusColumn = getColumnIndex("devicesList.status_header");
 
 		if (linkedSbiColumn < 0 || statusColumn < 0) {
 			LogUtil.step("Linked SBI or Status column is not on this list, so no orphan device can be identified");
 			return -1;
 		}
 
-		List<WebElement> rows = driver.findElements(DEVICE_ROWS);
-		for (int i = 0; i < rows.size(); i++) {
+		for (int i = 0; i < deviceRows.size(); i++) {
 			try {
-				List<WebElement> cells = rows.get(i).findElements(By.tagName("td"));
+				List<WebElement> cells = deviceRows.get(i).findElements(By.tagName("td"));
 				if (cells.size() <= Math.max(linkedSbiColumn, statusColumn)) {
 					continue;
 				}
@@ -1337,7 +1341,7 @@ public class ListOfDevicesPage extends BasePage {
 	}
 
 	public boolean isLinkedSbiColumnEmpty(int rowNumber) {
-		int linkedSbiColumn = getColumnIndex(LINKED_SBI_HEADER_ID);
+		int linkedSbiColumn = getColumnIndex("sbiList.sbiId_header");
 		if (linkedSbiColumn < 0) {
 			LogUtil.error("Linked SBI column is not present on this list");
 			takeScreenshot();
@@ -1351,6 +1355,6 @@ public class ListOfDevicesPage extends BasePage {
 	}
 
 	private boolean isUnlinked(String linkedSbiCellValue) {
-		return linkedSbiCellValue.isEmpty() || EMPTY_CELL_PLACEHOLDER.equals(linkedSbiCellValue);
+		return linkedSbiCellValue.isEmpty() || "-".equals(linkedSbiCellValue);
 	}
 }

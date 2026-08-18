@@ -427,6 +427,12 @@ public class ApiKeyPage extends BasePage {
 	@FindBy(id = "api_key_list_item1")
 	private WebElement activatedAdminApiKey;
 
+	@FindBy(id = "apiKeysList.expirationDate_header")
+	private WebElement expirationDateColumnHeader;
+
+	@FindBy(xpath = "//p[starts-with(@id,'api_key_details_') and contains(@id,'_label')]")
+	private List<WebElement> individualViewFieldLabels;
+
 	@FindBy(id = "apiKeyExpiryDateTime_desc_icon")
 	private WebElement apiKeyExpiryDateTime_desc_icon;
 
@@ -437,14 +443,6 @@ public class ApiKeyPage extends BasePage {
 		super(driver);
 	}
 
-	private static final String CREATION_DATE_HEADER_ID = "oidcClientsList.creationDate_header";
-	private static final String EXPIRATION_DATE_HEADER_ID = "apiKeysList.expirationDate_header";
-
-	private static final By EXPIRATION_DATE_HEADER = By.xpath("//*[@id='" + EXPIRATION_DATE_HEADER_ID + "']");
-	private static final By EXPIRATION_DATE_LABEL = By.id("api_key_details_expiration_date_label");
-	private static final By EXPIRATION_DATE_CONTEXT = By.id("api_key_details_expiration_date_context");
-	private static final By API_KEY_DETAILS_TITLE = By.xpath("//h1[text()='View API Key Details']");
-
 	private static final By ADMIN_EXPIRY_CELL = By.xpath("//tr[starts-with(@id,'api_key_list_item')][1]/td[7]");
 	private static final By PARTNER_EXPIRY_CELL = By.xpath("//tr[starts-with(@id,'api_list_item')][1]/td[6]");
 	private static final By ADMIN_CREATED_CELL = By.xpath("//tr[starts-with(@id,'api_key_list_item')][1]/td[6]");
@@ -454,9 +452,6 @@ public class ApiKeyPage extends BasePage {
 
 	private static final By ADMIN_FIRST_ROW = By.id("api_key_list_item1");
 	private static final By PARTNER_FIRST_ROW = By.id("api_list_item1");
-
-	private static final By INDIVIDUAL_VIEW_LABELS = By
-			.xpath("//p[starts-with(@id,'api_key_details_') and contains(@id,'_label')]");
 
 	private static final String NO_EXPIRY_TEXT = "No Expiry";
 
@@ -1242,12 +1237,12 @@ public class ApiKeyPage extends BasePage {
 	}
 
 	public boolean isExpirationDateHeaderDisplayed() {
-		return isDisplayed(EXPIRATION_DATE_HEADER);
+		return isElementDisplayed(expirationDateColumnHeader);
 	}
 
 	public boolean isExpirationDateHeaderAfterCreationDate() {
-		int creationIndex = getColumnIndex(CREATION_DATE_HEADER_ID);
-		int expirationIndex = getColumnIndex(EXPIRATION_DATE_HEADER_ID);
+		int creationIndex = getColumnIndex("oidcClientsList.creationDate_header");
+		int expirationIndex = getColumnIndex("apiKeysList.expirationDate_header");
 		LogUtil.step("Creation Date column index: " + creationIndex + ", Expiration Date column index: "
 				+ expirationIndex);
 
@@ -1383,14 +1378,14 @@ public class ApiKeyPage extends BasePage {
 	}
 
 	public boolean isApiKeyDetailsExpirationDateLabelDisplayed() {
-		if (isElementDisplayedQuick(EXPIRATION_DATE_LABEL, Duration.ofSeconds(5))) {
+		if (isElementDisplayedQuick(By.id("api_key_details_expiration_date_label"), Duration.ofSeconds(5))) {
 			return true;
 		}
 		return isDisplayed(expirationDateLabelInAdminView());
 	}
 
 	public boolean isApiKeyDetailsExpirationDateContextDisplayed() {
-		if (isElementDisplayedQuick(EXPIRATION_DATE_CONTEXT, Duration.ofSeconds(5))) {
+		if (isElementDisplayedQuick(By.id("api_key_details_expiration_date_context"), Duration.ofSeconds(5))) {
 			return true;
 		}
 		return isDisplayed(expirationDateContextInAdminView());
@@ -1409,7 +1404,7 @@ public class ApiKeyPage extends BasePage {
 				"Policy Group Description", "Policy Name Description", "Expiration Date" };
 
 		List<String> renderedLabels = new ArrayList<>();
-		for (WebElement label : driver.findElements(INDIVIDUAL_VIEW_LABELS)) {
+		for (WebElement label : individualViewFieldLabels) {
 			String text = label.getText().trim();
 			if (!text.isEmpty()) {
 				renderedLabels.add(text);
@@ -1445,7 +1440,7 @@ public class ApiKeyPage extends BasePage {
 		scrollIntoView(row);
 		row.click();
 
-		boolean detailsOpened = isElementDisplayedQuick(API_KEY_DETAILS_TITLE, Duration.ofSeconds(5));
+		boolean detailsOpened = isElementDisplayedQuick(By.xpath("//h1[text()='View API Key Details']"), Duration.ofSeconds(5));
 		if (detailsOpened) {
 			LogUtil.error("Deactivated API Key row opened the individual view");
 			takeScreenshot();
@@ -1459,8 +1454,8 @@ public class ApiKeyPage extends BasePage {
 
 	public boolean isExpirationDateStyledLikeOtherFields() {
 		By referenceLabel = By.id("api_key_details_partner_id_label");
-		By expirationLabel = isElementDisplayedQuick(EXPIRATION_DATE_LABEL, Duration.ofSeconds(5))
-				? EXPIRATION_DATE_LABEL
+		By expirationLabel = isElementDisplayedQuick(By.id("api_key_details_expiration_date_label"), Duration.ofSeconds(5))
+				? By.id("api_key_details_expiration_date_label")
 				: expirationDateLabelInAdminView();
 
 		try {

@@ -15,14 +15,6 @@ import io.mosip.testrig.pmpuiv2.utility.LogUtil;
 
 public class IndividualViewPage extends BasePage {
 
-	private static final String APPROVE_REJECT_BUTTON_ID = "view_approve_reject_btn";
-	private static final String APPROVE_BUTTON_ID = "approve_btn";
-	private static final String REJECT_BUTTON_ID = "reject_btn";
-	private static final String APPROVE_REJECT_POPUP_TITLE_ID = "approve-reject_popup_title";
-
-	private static final By APPROVE_REJECT_BUTTON = By.id(APPROVE_REJECT_BUTTON_ID);
-	private static final By APPROVE_REJECT_POPUP_TITLE = By.id(APPROVE_REJECT_POPUP_TITLE_ID);
-
 	private static final int MAX_TAB_PRESSES = 30;
 
 	private static final String ACTIVATED_STATUS_CLASS = "bg-[#D1FADF]";
@@ -30,10 +22,10 @@ public class IndividualViewPage extends BasePage {
 	private static final String ACTIVATED_STATUS_TEXT = "Active";
 	private static final String DEACTIVATED_STATUS_TEXT = "Deactivated";
 
-	@FindBy(id = APPROVE_REJECT_BUTTON_ID)
+	@FindBy(id = "view_approve_reject_btn")
 	private WebElement individualViewApproveRejectButton;
 
-	@FindBy(id = APPROVE_REJECT_POPUP_TITLE_ID)
+	@FindBy(id = "approve-reject_popup_title")
 	private WebElement approveRejectPopupTitle;
 
 	@FindBy(id = "approve-reject_popup_header")
@@ -42,10 +34,10 @@ public class IndividualViewPage extends BasePage {
 	@FindBy(id = "approve-reject_popup_description")
 	private WebElement approveRejectPopupDescription;
 
-	@FindBy(id = APPROVE_BUTTON_ID)
+	@FindBy(id = "approve_btn")
 	private WebElement approveButton;
 
-	@FindBy(id = REJECT_BUTTON_ID)
+	@FindBy(id = "reject_btn")
 	private WebElement rejectButton;
 
 	@FindBy(id = "approve_reject_popup_close_icon")
@@ -66,7 +58,7 @@ public class IndividualViewPage extends BasePage {
 	}
 
 	public boolean isApproveRejectButtonAbsent() {
-		boolean present = isElementDisplayedQuick(APPROVE_REJECT_BUTTON, Duration.ofSeconds(5));
+		boolean present = isElementDisplayedQuick(By.id("view_approve_reject_btn"), Duration.ofSeconds(5));
 		if (present) {
 			LogUtil.error("Approve/Reject button is rendered for a record that should not be actionable");
 			takeScreenshot();
@@ -158,18 +150,18 @@ public class IndividualViewPage extends BasePage {
 	}
 
 	public boolean openApproveRejectPopupUsingKeyboard() {
-		WebElement button = new WebDriverWait(driver, Duration.ofSeconds(ConfigManager.getTimeout()))
-				.until(ExpectedConditions.visibilityOfElementLocated(APPROVE_REJECT_BUTTON));
-		scrollIntoView(button);
+		new WebDriverWait(driver, Duration.ofSeconds(ConfigManager.getTimeout()))
+				.until(ExpectedConditions.visibilityOf(individualViewApproveRejectButton));
+		scrollIntoView(individualViewApproveRejectButton);
 
-		if (!tabUntilFocused(APPROVE_REJECT_BUTTON_ID)) {
+		if (!tabUntilFocused(individualViewApproveRejectButton)) {
 			LogUtil.error("Approve/Reject button was not reachable within " + MAX_TAB_PRESSES + " tab presses");
 			takeScreenshot();
 			return false;
 		}
 
 		driver.switchTo().activeElement().sendKeys(Keys.ENTER);
-		boolean opened = isElementDisplayedQuick(APPROVE_REJECT_POPUP_TITLE, Duration.ofSeconds(10));
+		boolean opened = isElementDisplayedQuick(By.id("approve-reject_popup_title"), Duration.ofSeconds(10));
 		if (!opened) {
 			LogUtil.error("Enter on the focused Approve/Reject button did not open the confirmation popup");
 			takeScreenshot();
@@ -178,7 +170,7 @@ public class IndividualViewPage extends BasePage {
 	}
 
 	public boolean areApproveRejectPopupButtonsKeyboardReachable() {
-		if (tabUntilFocused(APPROVE_BUTTON_ID, REJECT_BUTTON_ID)) {
+		if (tabUntilFocused(approveButton, rejectButton)) {
 			return true;
 		}
 		LogUtil.error("Neither Approve nor Reject was reachable within " + MAX_TAB_PRESSES + " tab presses");
@@ -189,7 +181,7 @@ public class IndividualViewPage extends BasePage {
 	public boolean closeApproveRejectPopupUsingEscape() {
 		driver.switchTo().activeElement().sendKeys(Keys.ESCAPE);
 
-		boolean stillOpen = isElementDisplayedQuick(APPROVE_REJECT_POPUP_TITLE, Duration.ofSeconds(5));
+		boolean stillOpen = isElementDisplayedQuick(By.id("approve-reject_popup_title"), Duration.ofSeconds(5));
 		if (stillOpen) {
 			LogUtil.error("Escape did not dismiss the Approve/Reject popup");
 			takeScreenshot();
@@ -198,13 +190,18 @@ public class IndividualViewPage extends BasePage {
 		return !stillOpen;
 	}
 
-	private boolean tabUntilFocused(String... targetIds) {
+	private boolean tabUntilFocused(WebElement... targets) {
+		String[] targetIds = new String[targets.length];
+		for (int i = 0; i < targets.length; i++) {
+			targetIds[i] = targets[i].getAttribute("id");
+		}
+
 		for (int press = 0; press < MAX_TAB_PRESSES; press++) {
 			WebElement focused = driver.switchTo().activeElement();
 			String focusedId = focused.getAttribute("id");
 
 			for (String targetId : targetIds) {
-				if (targetId.equals(focusedId)) {
+				if (targetId != null && targetId.equals(focusedId)) {
 					LogUtil.step("'" + targetId + "' holds the focus after " + press + " tab presses");
 					return true;
 				}

@@ -741,7 +741,7 @@ public class BasePage {
 	protected int getColumnIndex(String headerId) {
 		java.util.List<WebElement> headerCells = driver.findElements(By.xpath("//thead//th"));
 		for (int i = 0; i < headerCells.size(); i++) {
-			if (!headerCells.get(i).findElements(By.xpath(".//*[@id='" + headerId + "']")).isEmpty()) {
+			if (!headerCells.get(i).findElements(By.id(headerId)).isEmpty()) {
 				return i;
 			}
 		}
