@@ -786,10 +786,13 @@ public class PartnerAdminPage extends BasePage {
 		return getColumnValuesWithStaleRetry(By.xpath("//tr[starts-with(@id,'partner_list_item')]/td[5]"));
 	}
 
+	// Waits for the cell rather than reading straight away: after a filter is applied or reset
+	// the rows are briefly absent, and consecutive scenarios in one session read across that gap.
 	private String getCellTextWithStaleRetry(By locator) {
 		for (int attempt = 1; attempt <= STALE_READ_RETRY; attempt++) {
 			try {
-				return driver.findElement(locator).getText().trim();
+				return new WebDriverWait(driver, LIST_LOAD_TIMEOUT)
+						.until(ExpectedConditions.visibilityOfElementLocated(locator)).getText().trim();
 			} catch (StaleElementReferenceException stale) {
 				LogUtil.step("Cell read went stale. Retry " + attempt + "/" + STALE_READ_RETRY);
 			}

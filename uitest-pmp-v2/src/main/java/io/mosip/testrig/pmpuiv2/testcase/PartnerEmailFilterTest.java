@@ -19,55 +19,38 @@ public class PartnerEmailFilterTest extends BaseClass {
 	private DashboardPage dashboardPage;
 	private PartnerAdminPage partnerAdminPage;
 
-	@Test(priority = 1, description = "Verify Email Address column is visible in List of Partners")
-	public void emailAddressColumnHeaderIsVisible() {
+	// The presentation checks all read the same screen, so they share one session rather than
+	// re-launching the browser and logging in again for each individual assertion.
+	@Test(priority = 1, description = "Verify the Email Address column and filter presentation: column visibility, "
+			+ "absence of sorting, filter placeholder, info icon and its tooltip")
+	public void emailAddressColumnAndFilterPresentation() {
 		navigateToPartnerListPage();
 
+		LogUtil.step("Scenario: Email Address column is visible in List of Partners");
 		assertTrue(partnerAdminPage.isEmailAddressHeaderTagDisplayed(),
 				GlobalConstants.isEmailAddressColumnHeaderVisible);
-	}
 
-	@Test(priority = 2, description = "Verify the Email Address column is not sortable")
-	public void emailAddressColumnIsNotSortable() {
-		navigateToPartnerListPage();
-
+		LogUtil.step("Scenario: Email Address column is not sortable");
+		// Confirms the lookup finds icons where they do exist, so an empty email result is meaningful.
 		assertTrue(partnerAdminPage.getSortIconCountForColumn(GlobalConstants.PARTNER_ID_COLUMN) > 0,
 				GlobalConstants.isSortIconLocatorValidForSortableColumn);
-
 		assertEquals(partnerAdminPage.getSortIconCountForColumn(GlobalConstants.EMAIL_ADDRESS_COLUMN), 0,
 				GlobalConstants.isEmailAddressColumnNotSortable);
-	}
-
-	@Test(priority = 3, description = "Verify the placeholder text for the email textbox")
-	public void emailAddressFilterPlaceholderIsCorrect() {
-		navigateToPartnerListPage();
 
 		partnerAdminPage.clickOnFilterButton();
+
+		LogUtil.step("Scenario: the email textbox placeholder text");
 		assertEquals(partnerAdminPage.getEmailAddressFilterPlaceholder(),
 				GlobalConstants.EMAIL_ADDRESS_FILTER_PLACEHOLDER,
 				GlobalConstants.isEmailAddressFilterPlaceholderCorrect);
 
-		partnerAdminPage.clickOnFilterResetButton();
-	}
-
-	@Test(priority = 4, description = "Verify the info icon beside email address text")
-	public void emailAddressFilterInfoIconIsDisplayed() {
-		navigateToPartnerListPage();
-
-		partnerAdminPage.clickOnFilterButton();
+		LogUtil.step("Scenario: the info icon beside the email address field");
 		assertTrue(partnerAdminPage.isEmailAddressFilterInfoIconDisplayed(),
 				GlobalConstants.isEmailAddressFilterInfoIconDisplayed);
 
-		partnerAdminPage.clickOnFilterResetButton();
-	}
-
-	@Test(priority = 5, description = "Verify info icon tooltip text")
-	public void emailAddressFilterInfoTooltipTextIsCorrect() {
-		navigateToPartnerListPage();
-
-		partnerAdminPage.clickOnFilterButton();
+		LogUtil.step("Scenario: the info icon tooltip text");
+		// The icon carries role="button"/tabindex="0", so the tooltip is toggled by activation, not hover.
 		partnerAdminPage.clickOnEmailAddressFilterInfoIcon();
-
 		assertEquals(partnerAdminPage.getEmailAddressFilterInfoTooltipText(),
 				GlobalConstants.EMAIL_ADDRESS_FILTER_INFO_TOOLTIP,
 				GlobalConstants.isEmailAddressFilterInfoTooltipCorrect);
@@ -75,16 +58,28 @@ public class PartnerEmailFilterTest extends BaseClass {
 		partnerAdminPage.clickOnFilterResetButton();
 	}
 
-	@Test(priority = 6, description = "Verify exact match filtering using full email")
-	public void exactEmailMatchReturnsOnlyThatRecord() {
+	@Test(priority = 2, description = "Verify the Email Address filter behaviour: exact match, partial and non-existing "
+			+ "addresses, a conflicting Partner Type, casing and disallowed special characters")
+	public void emailAddressFilterBehaviour() {
 		navigateToPartnerListPage();
 
+		verifyExactEmailMatchReturnsOnlyThatRecord();
+		verifyPartialEmailReturnsNoResults();
+		verifyNonExistingEmailReturnsNoResults();
+		verifyCombinedEmailAndMismatchedPartnerTypeReturnsNoResults();
+		verifyEmailFilterIsNotCaseSensitive();
+		verifyDisallowedSpecialCharactersShowValidationError();
+	}
+
+	private void verifyExactEmailMatchReturnsOnlyThatRecord() {
+		LogUtil.step("Scenario: exact match filtering using a full email address");
 		String existingEmail = partnerAdminPage.getFirstRowEmailAddress();
 
 		partnerAdminPage.clickOnFilterButton();
 		partnerAdminPage.enterEmailAddressInFilter(existingEmail);
 		partnerAdminPage.clickOnApplyFiltersBtn();
 
+		// Reading the column straight after Apply races the re-render and goes stale.
 		assertTrue(partnerAdminPage.isPartnerListLoadedByEmail(existingEmail), GlobalConstants.isPartnerListLoaded);
 
 		List<String> emailsAfterFilter = partnerAdminPage.getEmailAddressColumnValues();
@@ -94,10 +89,8 @@ public class PartnerEmailFilterTest extends BaseClass {
 		partnerAdminPage.clickOnFilterResetButton();
 	}
 
-	@Test(priority = 7, description = "Verify that searching with a partial email address shows no results")
-	public void partialEmailReturnsNoResults() {
-		navigateToPartnerListPage();
-
+	private void verifyPartialEmailReturnsNoResults() {
+		LogUtil.step("Scenario: a partial email address shows no results");
 		String partialEmail = partnerAdminPage.getFirstRowEmailAddress().split("@")[0] + "@";
 
 		partnerAdminPage.clickOnFilterButton();
@@ -109,10 +102,8 @@ public class PartnerEmailFilterTest extends BaseClass {
 		partnerAdminPage.clickOnFilterResetButton();
 	}
 
-	@Test(priority = 8, description = "Verify email filter with non-existing full email")
-	public void nonExistingEmailReturnsNoResults() {
-		navigateToPartnerListPage();
-
+	private void verifyNonExistingEmailReturnsNoResults() {
+		LogUtil.step("Scenario: a non-existing full email address shows no results");
 		partnerAdminPage.clickOnFilterButton();
 		partnerAdminPage.enterEmailAddressInFilter(GlobalConstants.NON_EXISTING_EMAIL);
 		partnerAdminPage.clickOnApplyFiltersBtn();
@@ -122,10 +113,10 @@ public class PartnerEmailFilterTest extends BaseClass {
 		partnerAdminPage.clickOnFilterResetButton();
 	}
 
-	@Test(priority = 9, description = "Verify the combined filtering with Email Address and other filters like Partner Type")
-	public void combinedEmailAndMismatchedPartnerTypeReturnsNoResults() {
-		navigateToPartnerListPage();
-
+	private void verifyCombinedEmailAndMismatchedPartnerTypeReturnsNoResults() {
+		LogUtil.step("Scenario: an email combined with a conflicting Partner Type shows no results");
+		// The email must belong to a non-Authentication partner, otherwise the two
+		// filters agree and the record legitimately comes back.
 		String conflictingEmail = partnerAdminPage
 				.getEmailOfFirstRowWithPartnerTypeOtherThan(GlobalConstants.AUTHENTICATION_PARTNER);
 
@@ -141,10 +132,8 @@ public class PartnerEmailFilterTest extends BaseClass {
 		partnerAdminPage.clickOnFilterResetButton();
 	}
 
-	@Test(priority = 10, description = "Verify case sensitivity of email filter")
-	public void emailFilterIsNotCaseSensitive() {
-		navigateToPartnerListPage();
-
+	private void verifyEmailFilterIsNotCaseSensitive() {
+		LogUtil.step("Scenario: the email filter is not case sensitive");
 		String existingEmail = partnerAdminPage.getFirstRowEmailAddress();
 
 		partnerAdminPage.clickOnFilterButton();
@@ -157,10 +146,8 @@ public class PartnerEmailFilterTest extends BaseClass {
 		partnerAdminPage.clickOnFilterResetButton();
 	}
 
-	@Test(priority = 11, description = "Verify the email inputs with unsupported domains or special characters")
-	public void emailWithDisallowedSpecialCharactersShowsValidationError() {
-		navigateToPartnerListPage();
-
+	private void verifyDisallowedSpecialCharactersShowValidationError() {
+		LogUtil.step("Scenario: an email with disallowed special characters is rejected");
 		partnerAdminPage.clickOnFilterButton();
 		partnerAdminPage.enterEmailAddressInFilter(GlobalConstants.EMAIL_WITH_DISALLOWED_SPECIAL_CHARACTERS);
 
