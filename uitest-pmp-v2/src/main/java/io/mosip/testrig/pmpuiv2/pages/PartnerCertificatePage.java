@@ -29,9 +29,6 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(id = "upload_certificate_success_msg")
 	private WebElement successMessage;
 
-	@FindBy(xpath = "//*[contains(text(),'Partner certificate for Credential Partner is uploaded successfully')]")
-	private WebElement credentialPartnerSuccessMessage;
-
 	@FindBy(xpath = "//*[text()='Partner certificate for Device Provider is uploaded successfully.']")
 	private WebElement deviceProviderSuccessMessage;
 
@@ -515,7 +512,7 @@ public class PartnerCertificatePage extends BasePage {
 
 	/** Verifies the Credential Partner certificate upload success message. */
 	public boolean isCredentialPartnerSuccessMessageDisplayed() {
-		return isElementDisplayed(credentialPartnerSuccessMessage);
+		return isElementDisplayed(successMessage);
 	}
 
 	public void clickOnCloseButton() {
