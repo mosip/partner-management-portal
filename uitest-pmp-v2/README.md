@@ -124,7 +124,9 @@ Click **Run** to execute, or **Debug** to run in debug mode with breakpoints.
 
 ## 🔧 Configuration Details
 
-### 🗂️ config.properties
+### 🗂️ Kernel.properties
+
+All properties below are read from `src/main/resources/config/Kernel.properties` (not a separate `config.properties` file).
 
 | Property | Description |
 |-----------|-------------|

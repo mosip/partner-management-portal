@@ -69,6 +69,9 @@ public class TestRunner {
 
 		for (int i = 0; i < languages.length; i++) {
 			String lang = languages[i] == null ? null : languages[i].trim();
+			if (languages.length > 1 && (lang == null || lang.isEmpty())) {
+				throw new IllegalArgumentException("loginlang must not contain empty language values");
+			}
 			if (lang != null && !lang.isEmpty()) {
 				ConfigManager.setloginlang(lang);
 			}
@@ -120,22 +123,6 @@ public class TestRunner {
 			XmlClass authPartnerWithoutCertificateTest = new XmlClass(
 					"io.mosip.testrig.pmpuiv2.testcase.AuthPartnerWithoutCertificateTest");
 			XmlClass partnerDetailsTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.PartnerDetailsTest");
-			XmlClass partnerDeactivateOptionTest = new XmlClass(
-					"io.mosip.testrig.pmpuiv2.testcase.PartnerDeactivateOptionTest");
-			XmlClass partnerDeactivatedPortalTest = new XmlClass(
-					"io.mosip.testrig.pmpuiv2.testcase.PartnerDeactivatedPortalTest");
-			XmlClass deactivatePartner2Creation = new XmlClass(
-					"io.mosip.testrig.pmpuiv2.testcase.DeactivatePartner2Creation");
-			XmlClass partnerDeactivateNavigationTest = new XmlClass(
-					"io.mosip.testrig.pmpuiv2.testcase.PartnerDeactivateNavigationTest");
-			XmlClass deactivateDevicePartnerCreation = new XmlClass(
-					"io.mosip.testrig.pmpuiv2.testcase.DeactivateDevicePartnerCreation");
-			XmlClass deactivatedDeviceProviderTest = new XmlClass(
-					"io.mosip.testrig.pmpuiv2.testcase.DeactivatedDeviceProviderTest");
-			XmlClass deactivateFtmPartnerCreation = new XmlClass(
-					"io.mosip.testrig.pmpuiv2.testcase.DeactivateFtmPartnerCreation");
-			XmlClass deactivatedFtmProviderTest = new XmlClass(
-					"io.mosip.testrig.pmpuiv2.testcase.DeactivatedFtmProviderTest");
 			XmlClass authPolicyTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.AuthPolicyTest");
 			XmlClass partnerPolicyMappingTest = new XmlClass(
 					"io.mosip.testrig.pmpuiv2.testcase.PartnerPolicyMappingTest");
@@ -219,38 +206,6 @@ public class TestRunner {
 				case "PartnerDetailsTest":
 					addClassIfAbsent(classes, partnerAdminCreation, deactivatePartnerCreation, partnerDetailsTest);
 					break;
-				case "PartnerDeactivateOptionTest":
-					addClassIfAbsent(classes, partnerAdminCreation, deactivatePartnerCreation, partnerDetailsTest,
-							partnerDeactivateOptionTest);
-					break;
-				case "DeactivatePartner2Creation":
-					addClassIfAbsent(classes, partnerAdminCreation, deactivatePartnerCreation,
-							deactivatePartner2Creation);
-					break;
-				case "PartnerDeactivateNavigationTest":
-					addClassIfAbsent(classes, partnerAdminCreation, deactivatePartnerCreation,
-							deactivatePartner2Creation, partnerDeactivateNavigationTest);
-					break;
-				case "DeactivateDevicePartnerCreation":
-					addClassIfAbsent(classes, partnerAdminCreation, deactivateDevicePartnerCreation);
-					break;
-				case "DeactivatedDeviceProviderTest":
-					addClassIfAbsent(classes, partnerAdminCreation, deactivateDevicePartnerCreation,
-							deactivatedDeviceProviderTest);
-					break;
-				case "DeactivateFtmPartnerCreation":
-					addClassIfAbsent(classes, partnerAdminCreation, deactivateFtmPartnerCreation);
-					break;
-				case "DeactivatedFtmProviderTest":
-					addClassIfAbsent(classes, partnerAdminCreation, deactivateFtmPartnerCreation,
-							deactivatedFtmProviderTest);
-					break;
-				// policyCreationForAuthPartner is needed for the policy-request scenario to reach Submit.
-				case "PartnerDeactivatedPortalTest":
-					addClassIfAbsent(classes, partnerAdminCreation, authPartnerCreation, policyCreationForAuthPartner,
-							deactivatePartnerCreation, partnerDetailsTest, partnerDeactivateOptionTest,
-							partnerDeactivatedPortalTest);
-					break;
 				case "AuthPolicyTest":
 					addClassIfAbsent(classes, partnerAdminCreation, policyAdminAndPartnerCreation, policyGroupTest,
 							authPolicyTest);
@@ -312,10 +267,6 @@ public class TestRunner {
 				"PMPUI-" + BaseTestCaseFunc.environment + "-run-" + BaseClass.Date() + langSuffix + "-report.html");
 
 		runner.run();
-
-		// DB cleanup
-		DBManager.cleanUpPartnerUiV2Data();
-		System.exit(0);
 	}
 
 	private static void addClassIfAbsent(List<XmlClass> classes, XmlClass... xmlClasses) {

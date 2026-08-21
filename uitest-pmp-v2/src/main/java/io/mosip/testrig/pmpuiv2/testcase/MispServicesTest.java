@@ -132,7 +132,6 @@ public class MispServicesTest extends BaseClass {
                 GlobalConstants.isGenerateLicenseKeyErrorMessageDisplayed);
         mispServicesPage.clickOnClearFormButton();
 
-        mispServicesPage.clickOnExpiryDate();
         String expiryDateValue = mispServicesPage.selectFutureDateAndGetValue();
         assertTrue(expiryDateValue.matches("\\d{2}/\\d{2}/\\d{4}"), GlobalConstants.isExpiryDateFormatValid);
 
@@ -184,6 +183,8 @@ public class MispServicesTest extends BaseClass {
 
         mispServicesPage.clickOnViewLicenseKeyButton(1);
         String maskedMispLicenseKeyValue = mispServicesPage.getMispLicenseKeyIdText();
+        assertTrue(fullMispLicenseKeyValue != null && fullMispLicenseKeyValue.length() > 4,
+                "Verify the generated MISP license key was captured before masking is checked");
         assertTrue(!maskedMispLicenseKeyValue.equals(fullMispLicenseKeyValue)
                 && maskedMispLicenseKeyValue.endsWith(fullMispLicenseKeyValue.substring(fullMispLicenseKeyValue.length() - 4)),
                 GlobalConstants.isMispLicenseKeyMaskedOnView);

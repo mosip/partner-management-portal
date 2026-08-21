@@ -562,6 +562,25 @@ public class BasePage {
 				.executeScript("return getComputedStyle(arguments[0])[arguments[1]];", element, property);
 	}
 
+	public void setNetworkOffline(boolean offline) {
+		if (!(driver instanceof HasNetworkConditions)) {
+			throw new UnsupportedOperationException(
+					"Network condition emulation requires a Chromium-based WebDriver (e.g. ChromeDriver); got: "
+							+ driver.getClass().getName());
+		}
+		HasNetworkConditions networkDriver = (HasNetworkConditions) driver;
+		if (offline) {
+			ChromiumNetworkConditions conditions = new ChromiumNetworkConditions();
+			conditions.setOffline(true);
+			conditions.setLatency(Duration.ofMillis(0));
+			conditions.setDownloadThroughput(-1);
+			conditions.setUploadThroughput(-1);
+			networkDriver.setNetworkConditions(conditions);
+		} else {
+			networkDriver.deleteNetworkConditions();
+		}
+	}
+
 	protected String getBodyComputedStyle(String property) {
 		return getComputedStyle(driver.findElement(By.tagName("body")), property);
 	}
@@ -710,5 +729,4 @@ public class BasePage {
 		conditions.setUploadThroughput(-1);
 		((HasNetworkConditions) driver).setNetworkConditions(conditions);
 	}
-
 }

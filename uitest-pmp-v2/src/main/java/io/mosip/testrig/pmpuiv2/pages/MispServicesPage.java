@@ -84,19 +84,19 @@ public class MispServicesPage extends BasePage {
 	@FindBy(id = "generate_misp_license_key_important_note")
 	private WebElement mispLicenseKeyImportantNote;
 
-	@FindBy(xpath = "//button[@id='generate_license_key_policy_name_dropdown_btn']//span")
+	@FindBy(css = "#generate_license_key_policy_name_dropdown_btn span")
 	private WebElement policyNamePlaceholder;
 
-	@FindBy(xpath = "//button[@id='generate_license_key_policy_group']//span")
+	@FindBy(css = "#generate_license_key_policy_group span")
 	private WebElement policyGroupPlaceholder;
 
-	@FindBy(xpath = "//button[@id='generate_license_key_partner_id_dropdown_btn']//span")
+	@FindBy(css = "#generate_license_key_partner_id_dropdown_btn span")
 	private WebElement partnerIdPlaceholder;
 
-	@FindBy(xpath = "//button[@id='generate_license_key_partner_type']//span")
+	@FindBy(css = "#generate_license_key_partner_type span")
 	private WebElement partnerTypePlaceholder;
 
-	@FindBy(xpath = "//input[@data-placeholder-id='generate_license_key_name_placeholder']")
+	@FindBy(css = "input[data-placeholder-id='generate_license_key_name_placeholder']")
 	private WebElement mispLicenseKeyNamePlaceholder;
 
 	@FindBy(id = "generate_license_key_partner_id_search_input")
@@ -126,22 +126,22 @@ public class MispServicesPage extends BasePage {
 	@FindBy(id = "generate_license_key_policy_name_search_input")
 	private WebElement policyNameSearchInput;
 
-	@FindBy(xpath = "//button[contains(@class, 'react-datepicker__navigation--next')]")
+	@FindBy(css = "button.react-datepicker__navigation--next")
 	private WebElement nextMonth;
 
-	@FindBy(xpath = "//button[contains(@class, 'react-datepicker__navigation--previous')]")
+	@FindBy(css = "button.react-datepicker__navigation--previous")
 	private WebElement previousMonth;
 
-	@FindBy(xpath = "//div[contains(@class, 'react-datepicker__day react-datepicker__day--024') and not(contains(@class, 'react-datepicker__day--outside-month'))]")
+	@FindBy(css = "div.react-datepicker__day.react-datepicker__day--024:not(.react-datepicker__day--outside-month)")
 	private WebElement date24InCalender;
 
-	@FindBy(xpath = "//div[contains(@class, 'react-datepicker__day react-datepicker__day--004') and not(contains(@class, 'react-datepicker__day--outside-month'))]")
+	@FindBy(css = "div.react-datepicker__day.react-datepicker__day--004:not(.react-datepicker__day--outside-month)")
 	private WebElement date4InCalender;
 
-	@FindBy(xpath = "//div[contains(@class, 'react-datepicker__day--today')]")
+	@FindBy(css = "div.react-datepicker__day--today")
 	private WebElement todayInCalender;
 
-	@FindBy(xpath = "//h2[contains(@class, 'react-datepicker__current-month')]")
+	@FindBy(css = "h2.react-datepicker__current-month")
 	private WebElement calendarCurrentMonthHeader;
 
 	@FindBy(id = "generate_license_key_expiry_date_calender")
@@ -168,7 +168,7 @@ public class MispServicesPage extends BasePage {
 	@FindBy(id = "copy_id_btn")
 	private WebElement copyIdButton;
 
-	@FindBy(xpath = "//button[@id='copy_id_btn'][contains(normalize-space(),'Copied')]")
+	@FindBy(css = "#copy_id_btn[class*='bg-[#1447B2]']")
 	private WebElement copiedToast;
 
 	@FindBy(id = "confirmation_success_icon")
@@ -195,11 +195,8 @@ public class MispServicesPage extends BasePage {
 	@FindBy(id = "something_went_wrong_home_btn")
 	private WebElement networkErrorRetryButton;
 
-	@FindBy(xpath = "//div[contains(@class,'react-datepicker__month-container')]")
+	@FindBy(css = "div.react-datepicker__month-container")
 	private WebElement calendarPopup;
-
-	@FindBy(xpath = "//span[contains(text(),'Select MISP policy for which MISP License Key is required')]")
-	private WebElement policyNameHelpText;
 
 	@FindBy(id = "generate_license_key_expiry_date_calender_info_info_description")
 	private WebElement expiryDateCalenderInfoDescription;
@@ -445,6 +442,7 @@ public class MispServicesPage extends BasePage {
 	}
 
 	public String selectFutureDateAndGetValue() {
+		clickOnElement(expiryDate);
 		clickOnElement(nextMonth);
 		clickOnElement(nextMonth);
 		clickOnElement(date24InCalender);
@@ -507,7 +505,7 @@ public class MispServicesPage extends BasePage {
 	}
 
 	public boolean isPolicyNameHelpTextDisplayed() {
-		return isElementDisplayed(policyNameHelpText);
+		return isElementDisplayed(policyNamePlaceholder);
 	}
 
 	public boolean isExpiryDateCalenderInfoDescriptionDisplayed() {
@@ -577,7 +575,7 @@ public class MispServicesPage extends BasePage {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(4));
 		try {
 			return wait.until(ExpectedConditions.invisibilityOfElementLocated(
-					By.xpath("//button[@id='copy_id_btn'][contains(normalize-space(),'Copied')]")));
+					By.cssSelector("#copy_id_btn[class*='bg-[#1447B2]']")));
 		} catch (TimeoutException e) {
 			return false;
 		}

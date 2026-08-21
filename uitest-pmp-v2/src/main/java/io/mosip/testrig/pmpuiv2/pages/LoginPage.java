@@ -69,9 +69,9 @@ public class LoginPage extends BasePage {
 			driver.get(targetUrl);
 			isLoginPageDisplayed();
 		} catch (NoSuchElementException e) {
-			logger.warn("Language selector for '" + kcLocale
-					+ "' not found on login page. Continuing in default language.");
+			logger.error("Language selector for '" + kcLocale + "' not found on login page.", e);
 			takeScreenshot();
+			throw new IllegalStateException("Configured login language is unavailable: " + kcLocale, e);
 		}
 	}
 
