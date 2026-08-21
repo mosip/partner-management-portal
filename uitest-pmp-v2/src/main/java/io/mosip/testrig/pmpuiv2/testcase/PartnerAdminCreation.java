@@ -31,7 +31,6 @@ public class PartnerAdminCreation extends BaseClass {
 
 		registerPage = loginPage.clickRegisterButton();
 		assertTrue(loginPage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
-		loginPage.clickRegisterButton();
 
 		registerPage.enterFirstName("pmpui-v2");
 		assertTrue(registerPage.isLastNameTextBoxDisplayed(), GlobalConstants.isLastNameTextBoxDisplayed);

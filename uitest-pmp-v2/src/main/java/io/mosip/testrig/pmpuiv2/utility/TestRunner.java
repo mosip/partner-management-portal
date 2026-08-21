@@ -46,7 +46,47 @@ public class TestRunner {
 
 	}
 
+	/**
+	 * loginlang in Kernel.properties may hold one language ("ara") or a
+	 * comma-separated list ("eng,ara,fra"). For a list, the whole suite is run
+	 * once per language, sequentially, with a DB cleanup between runs so each
+	 * language starts from the same clean state instead of inheriting data
+	 * created by the previous language's run.
+	 *
+	 * True parallel execution (all languages at once) is NOT implemented here:
+	 * ConfigManager's language holder is a single shared static value, and the
+	 * suite's test data (partner IDs, policy names, license key names) is a
+	 * fixed set of constants shared across languages. Running languages
+	 * concurrently against the same QA database with that setup would race on
+	 * identical record names. Parallel support needs per-thread language state
+	 * plus language-suffixed test data before it can be safely enabled.
+	 */
 	public static void startTestRunner() throws Exception {
+		String loginLangConfig = ConfigManager.getloginlang();
+		String[] languages = (loginLangConfig == null || loginLangConfig.trim().isEmpty())
+				? new String[] { loginLangConfig }
+				: loginLangConfig.split(",");
+
+		for (int i = 0; i < languages.length; i++) {
+			String lang = languages[i] == null ? null : languages[i].trim();
+			if (lang != null && !lang.isEmpty()) {
+				ConfigManager.setloginlang(lang);
+			}
+			if (languages.length > 1) {
+				logger.info(
+						"===== Running suite for language: " + lang + " (" + (i + 1) + "/" + languages.length + ") =====");
+			}
+
+			runSuiteOnce();
+
+			// Reset test data so the next language (if any) starts from a clean state
+			DBManager.cleanUpPartnerUiV2Data();
+		}
+
+		System.exit(0);
+	}
+
+	private static void runSuiteOnce() throws Exception {
 		File homeDir = null;
 		TestNG runner = new TestNG();
 		if (!ConfigManager.gettestcases().equals("")) {
@@ -266,8 +306,10 @@ public class TestRunner {
 
 		System.getProperties().setProperty("testng.output.dir", "testng-report");
 		runner.setOutputDirectory("testng-report");
+		String currentLang = ConfigManager.getloginlang();
+		String langSuffix = (currentLang == null || currentLang.isEmpty()) ? "" : "-" + currentLang;
 		System.getProperties().setProperty("emailable.report2.name",
-				"PMPUI-" + BaseTestCaseFunc.environment + "-run-" + BaseClass.Date() + "-report.html");
+				"PMPUI-" + BaseTestCaseFunc.environment + "-run-" + BaseClass.Date() + langSuffix + "-report.html");
 
 		runner.run();
 

@@ -19,6 +19,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.chromium.ChromiumNetworkConditions;
+import org.openqa.selenium.chromium.HasNetworkConditions;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -698,6 +700,15 @@ public class BasePage {
 	protected WebElement waitAndFindElement(By locator) {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(ConfigManager.getTimeout()));
 		return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+	}
+
+	public void setNetworkOffline(boolean offline) {
+		ChromiumNetworkConditions conditions = new ChromiumNetworkConditions();
+		conditions.setOffline(offline);
+		conditions.setLatency(Duration.ofMillis(0));
+		conditions.setDownloadThroughput(-1);
+		conditions.setUploadThroughput(-1);
+		((HasNetworkConditions) driver).setNetworkConditions(conditions);
 	}
 
 }

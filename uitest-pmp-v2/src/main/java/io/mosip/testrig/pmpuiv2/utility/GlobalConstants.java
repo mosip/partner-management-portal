@@ -20,6 +20,7 @@ public class GlobalConstants {
 	public static final String DEVICE_PARTNER_ID = "pmpui-device";
 	public static final String DEFAULT_POLICYGROUP = "automationui policy group";
 	public static final String DEFAULT_POLICYGROUP_DESC = "desc automationui policy group";
+	public static final String NO_POLICY_GROUP_SELECTED = "No Policy Group selected";
 	public static final String ORGANISATION_NAME = "AABBCC";
 	public static final String PARTNER_ADMIN = "pmpui-v2";
 	public static final String PARTNER_PASSWORD = "mosip123";
@@ -282,6 +283,7 @@ public class GlobalConstants {
 	public static final String MISP_LICENSEKEY_01_CASE_INSENSITIVE = "MISPlicensekey01";
 	public static final String MISP_LICENSEKEY_DEACTIVATE = "misplicensekeydeactivate";
 	public static final String MISP_LICENSEKEY_DEACTIVATE_CASE_INSENSITIVE = "MISPlicensekeyDEACTIVATE";
+	public static final String MISP_LICENSEKEY_NUMERIC = "9876543210";
 	public static final String INACTIVE_STATUS = "Inactive";
 	public static final String NOTUPLOADED_STATUS = "Not Uploaded";
 	public static final String ACTIVE_STATUS = "Active";
@@ -1596,10 +1598,39 @@ public class GlobalConstants {
 	public static final String isMispPolicyNameDisplayed = "Verify if MISP policy name displayed";
 	public static final String isMispPolicyNameDescriptionDisplayed = "Verify if MISP policy name description displayed";
 	public static final String isExpiryDateCalenderInfoDescriptionDisplayed = "Verify if expiry date calender info description displayed";
+	public static final String EXPIRY_DATE_CALENDER_INFO_TEXT = "Date Format: mm/dd/yyyy. Ensure that you provide a valid future date, as the license key will be automatically deactivated once this date is reached.";
+	// TODO: replace with the actual Arabic translation from pmp-ui-v2's i18n source before running in ara.
+	public static final String EXPIRY_DATE_CALENDER_INFO_TEXT_ARA = "TODO_ARABIC_TRANSLATION_NEEDED";
+	// TODO: replace with the actual French translation from pmp-ui-v2's i18n source before running in fra.
+	public static final String EXPIRY_DATE_CALENDER_INFO_TEXT_FRA = "TODO_FRENCH_TRANSLATION_NEEDED";
 	public static final String isCalendarDisplayed = "Verify if calendar displayed";
+	public static final String isExpiryDateFormatValid = "Verify expiry date field format is mm/dd/yyyy";
+	public static final String isCalendarDisplayedInEnglish = "Verify date picker/calendar is displayed only in English regardless of the selected UI language";
+	public static final String isExpiryDateSelectionChangeable = "Verify expiry date selection can be changed multiple times before submission";
+	public static final int MISP_LICENSE_KEY_NAME_MAX_LENGTH = 128;
+	public static final String isMispLicenseKeyNameMaxLengthEnforced = "Verify that the MISP License Key Name field does not accept more than 128 characters.";
+	public static final String isCopyIdPopupTitleShowsLicenseKeyName = "Verify the submit success popup title displays the corresponding MISP license key name";
+	public static final String isCopyIdPopupSubtitleShowsPartnerId = "Verify the submit success popup subtitle displays the corresponding Partner ID";
+	public static final String COPY_ID_POPUP_ALERT_MSG = "MISP License Key contains sensitive information. Ensure to copy the license key before closing this window as it will be masked after closure, with only the last 4 characters remaining visible.";
+	public static final String isCopiedTextDisplayedAfterCopyClick = "Verify clicking the copy button changes it to a 'Copied' state";
+	public static final String isCopyButtonRevertedAfterFewSeconds = "Verify the copy button reverts to its original 'Copy' state after a few seconds";
+	public static final String isLicenseKeyConfirmationHeaderDisplayed = "Verify the MISP License Key submission success message header is displayed after closing the popup";
+	public static final String LICENSE_KEY_CONFIRMATION_HEADER_TEXT = "MISP License Key is generated successfully!";
+	public static final String isMispConfirmationSuccessIconDisplayed = "Verify the success tick icon is displayed on the MISP License Key confirmation screen";
+	public static final String isLicenseKeyConfirmationHeaderNotEditable = "Verify the MISP License Key confirmation title cannot be edited";
+	public static final String isMispLicenseKeyNameHeaderDisplayed = "Verify the MISP License Key Name column header is displayed in the MISP License Key tabular view";
+	public static final String isExpirationDateHeaderDisplayed = "Verify the Expiration Date column header is displayed in the MISP License Key tabular view";
+	public static final String isMispLicenseKeyHeaderDisplayed = "Verify the MISP License Key column header is displayed in the MISP License Key tabular view";
+	public static final String ACTIVE_STATUS_LABEL = "Active";
+	public static final String isMispLicenseKeyMaskedOnView = "Verify the MISP License Key is masked (only last 4 characters visible) when viewed from the tabular list";
+	public static final String DUPLICATE_LICENSE_KEY_NAME_ERROR_MSG = "Entered name already exists. Provide a unique name and submit.";
+	public static final String areInfoIconsColorAndFontSizeConsistent = "Verify the info ('i') icons share the same color and font size across the Generate MISP License Key screen";
 	public static final String isGenerateLicenseKeyErrorMessageDisplayed = "Verify if generate license key error message displayed";
+	public static final String isNetworkErrorPageDisplayed = "Verify network error page is displayed when submitting while offline";
+	public static final String isPartnerIdNoDataAvailableDisplayed = "Verify no matching data message is displayed for an invalid partner ID search";
 	public static final String isMispLicenseKeyPopupDisplayed = "Verify if misp license key copy-id popup displayed";
 	public static final String isInvalidCharacterErrorMessageDisplayed = "Verify if invalid character error message displayed";
+	public static final String isNumericLicenseKeyNameAccepted = "Verify that a MISP License Key Name containing only numbers is accepted without a validation error.";
 	public static final String isMispPartnerCertificatePopupDisplayed = "Verify if misp partner certificate popup displayed";
 	public static final String isReUploadPartnerCertificateDisplayed = "Verify if reupload partner certificate displayed";
 	public static final String isCorrespondingPartnerIdDisplayed = "Verify if corresponding partner id displayed";
