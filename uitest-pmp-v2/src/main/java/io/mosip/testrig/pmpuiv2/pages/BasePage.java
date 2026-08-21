@@ -37,6 +37,7 @@ public class BasePage {
 
 	protected WebDriver driver;
 	protected static final int STALE_RETRY = 2;
+	private static final String REDACTED_VALUE = "***";
 	protected static final Logger logger = Logger.getLogger(BasePage.class);
 
 	public BasePage(WebDriver driver) {
@@ -146,7 +147,17 @@ public class BasePage {
 	}
 
 	public void enter(WebElement element, String value) {
-		LogUtil.action("Entering value '" + value + "' into element: ", element);
+		enterValue(element, value, value);
+	}
+
+	// Types the value but keeps it out of the logs and reports - for personal data such as
+	// the partner email addresses the filter tests read back from the live list.
+	public void enterRedacted(WebElement element, String value) {
+		enterValue(element, value, REDACTED_VALUE);
+	}
+
+	private void enterValue(WebElement element, String value, String loggedValue) {
+		LogUtil.action("Entering value '" + loggedValue + "' into element: ", element);
 		int attempts = 0;
 
 		while (attempts < STALE_RETRY) {
@@ -545,6 +556,12 @@ public class BasePage {
 		LogUtil.action("Focusing element and pressing Enter: ", element);
 		focus(element);
 		new Actions(driver).sendKeys(Keys.ENTER).perform();
+	}
+
+	public void hoverOverElement(WebElement element) {
+		LogUtil.action("Hovering over element: ", element);
+		WaitUtil.waitForVisibility(driver, element);
+		new Actions(driver).moveToElement(element).perform();
 	}
 
 	// Focuses, then reports whether focus landed - a tabindex-less element leaves activeElement on body.

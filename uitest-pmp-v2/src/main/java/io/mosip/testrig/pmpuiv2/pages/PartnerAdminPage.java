@@ -1,11 +1,15 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -20,9 +24,10 @@ import io.mosip.testrig.pmpuiv2.utility.WaitUtil;
 
 public class PartnerAdminPage extends BasePage {
 
-	private static final Duration POPUP_ABSENCE_TIMEOUT = Duration.ofSeconds(3);
+	private static final Duration SHORT_ABSENCE_TIMEOUT = Duration.ofSeconds(3);
 	private static final Duration LIST_LOAD_TIMEOUT = Duration.ofSeconds(20);
 	private static final int POPUP_CENTRING_TOLERANCE_PX = 2;
+	private static final int STALE_READ_RETRY = 3;
 
 	@FindBy(id = "undefined_title")
 	private WebElement subTitleList;
@@ -96,7 +101,7 @@ public class PartnerAdminPage extends BasePage {
 	@FindBy(id = "partner_type_filter_label")
 	private WebElement partnersTypeFilter;
 
-	@FindBy(xpath = "//*[@id='partner_type_filter_dropdown_btn']/span")
+	@FindBy(xpath = "//button[@id='partner_type_filter_dropdown_btn']/span")
 	private WebElement partnerTypeDropdown;
 
 	@FindBy(id = "partner_organisation_filter")
@@ -104,6 +109,12 @@ public class PartnerAdminPage extends BasePage {
 
 	@FindBy(id = "email_address_filter")
 	private WebElement emailsAddressFilter;
+
+	@FindBy(id = "email_address_filter_info")
+	private WebElement emailAddressFilterInfoIcon;
+
+	@FindBy(id = "email_address_filter_info_info_description")
+	private WebElement emailAddressFilterInfoDescription;
 
 	@FindBy(xpath = "//span[normalize-space()='Select Cert. Upload Status']")
 	private WebElement certUploadsStatusFilter;
@@ -384,6 +395,14 @@ public class PartnerAdminPage extends BasePage {
 		return isElementDisplayed(partnerIdAscendingIcon);
 	}
 
+	public void clickOnPartnerIdAscendingIcon() {
+		clickOnElement(partnerIdAscendingIcon);
+	}
+
+	public void clickOnPartnerIdDescendingIcon() {
+		clickOnElement(partnerIdDescendingIcon);
+	}
+
 	public boolean isPolicyGroupNamesDescIconDisplayed() {
 		return isElementDisplayed(policyGroupNameDescendingIcon);
 	}
@@ -582,6 +601,36 @@ public class PartnerAdminPage extends BasePage {
 		}
 	}
 
+	public boolean isPartnerListLoadedByEmail(String expectedEmail) {
+		try {
+			new WebDriverWait(driver, LIST_LOAD_TIMEOUT).until(ExpectedConditions
+					.textToBePresentInElementLocated(By.xpath("//tr[@id='partner_list_item1']/td[5]"), expectedEmail));
+			return true;
+		} catch (TimeoutException e) {
+			return false;
+		}
+	}
+
+	public String getFirstRowPartnerType() {
+		return getCellTextWithStaleRetry(By.xpath("//tr[@id='partner_list_item1']/td[2]"));
+	}
+
+	public String getEmailOfFirstRowWithPartnerTypeOtherThan(String partnerType) {
+		List<String> partnerTypes = getColumnValuesWithStaleRetry(
+				By.xpath("//tr[starts-with(@id,'partner_list_item')]/td[2]"));
+		List<String> emails = getEmailAddressColumnValues();
+		for (int row = 0; row < partnerTypes.size() && row < emails.size(); row++) {
+			if (!partnerType.equalsIgnoreCase(partnerTypes.get(row))) {
+				return emails.get(row);
+			}
+		}
+		throw new RuntimeException("No partner row found with a type other than: " + partnerType);
+	}
+
+	public void clickOnEmailAddressFilterInfoIcon() {
+		clickOnElement(emailAddressFilterInfoIcon);
+	}
+
 	// Row 1 is what the Action menu operates on; isDeactivatedPartnerRowDisplayed is pinned to row 2.
 	public boolean isFirstPartnerRowDisplayed() {
 		return isElementDisplayed(firstPartnerRow);
@@ -619,7 +668,7 @@ public class PartnerAdminPage extends BasePage {
 	}
 
 	public boolean isDeactivatePopupHeaderDisplayedQuick() {
-		return isElementDisplayedQuick(By.id("deactivate_popup_header"), POPUP_ABSENCE_TIMEOUT);
+		return isElementDisplayedQuick(By.id("deactivate_popup_header"), SHORT_ABSENCE_TIMEOUT);
 	}
 
 	public boolean isDeactivatePopupDescriptionDisplayed() {
@@ -723,6 +772,125 @@ public class PartnerAdminPage extends BasePage {
 
 	public int getPartnerRowCount() {
 		return getElementCount(By.xpath("//tr[starts-with(@id,'partner_list_item')]"));
+	}
+
+	public String getFirstRowPartnerId() {
+		return getCellTextWithStaleRetry(By.xpath("//tr[@id='partner_list_item1']/td[1]"));
+	}
+
+	public String getFirstRowEmailAddress() {
+		return getCellTextWithStaleRetry(By.xpath("//tr[@id='partner_list_item1']/td[5]"));
+	}
+
+	public List<String> getEmailAddressColumnValues() {
+		return getColumnValuesWithStaleRetry(By.xpath("//tr[starts-with(@id,'partner_list_item')]/td[5]"));
+	}
+
+	// Waits for the cell rather than reading straight away: after a filter is applied or reset
+	// the rows are briefly absent, and consecutive scenarios in one session read across that gap.
+	private String getCellTextWithStaleRetry(By locator) {
+		for (int attempt = 1; attempt <= STALE_READ_RETRY; attempt++) {
+			try {
+				return new WebDriverWait(driver, LIST_LOAD_TIMEOUT)
+						.until(ExpectedConditions.visibilityOfElementLocated(locator)).getText().trim();
+			} catch (StaleElementReferenceException stale) {
+				LogUtil.step("Cell read went stale. Retry " + attempt + "/" + STALE_READ_RETRY);
+			}
+		}
+		throw new RuntimeException("Cell still stale after " + STALE_READ_RETRY + " retries: " + locator);
+	}
+
+	private List<String> getColumnValuesWithStaleRetry(By locator) {
+		for (int attempt = 1; attempt <= STALE_READ_RETRY; attempt++) {
+			try {
+				List<WebElement> cells = new WebDriverWait(driver, LIST_LOAD_TIMEOUT)
+						.until(ExpectedConditions.numberOfElementsToBeMoreThan(locator, 0));
+				List<String> values = new ArrayList<>();
+				for (WebElement cell : cells) {
+					values.add(cell.getText().trim());
+				}
+				return values;
+			} catch (StaleElementReferenceException stale) {
+				LogUtil.step("Column read went stale. Retry " + attempt + "/" + STALE_READ_RETRY);
+			} catch (TimeoutException noRows) {
+				LogUtil.step("No rows rendered for column: " + locator);
+				return new ArrayList<>();
+			}
+		}
+		throw new RuntimeException("Column still stale after " + STALE_READ_RETRY + " retries: " + locator);
+	}
+
+	public int getSortIconCountForColumn(String columnName) {
+		return getElementCount(By.xpath("//div[text()='" + columnName + "']/ancestor::th[1]"
+				+ "//svg[contains(@id,'_asc_icon') or contains(@id,'_desc_icon')]"));
+	}
+
+	public String getEmailAddressFilterPlaceholder() {
+		return getTextFromAttribute(emailsAddressFilter, "placeholder");
+	}
+
+	public void enterEmailAddressInFilter(String emailAddress) {
+		enterRedacted(emailsAddressFilter, emailAddress);
+	}
+
+	public boolean isEmailAddressFilterInfoIconDisplayed() {
+		return isElementDisplayed(emailAddressFilterInfoIcon);
+	}
+
+	public void hoverOverEmailAddressFilterInfoIcon() {
+		hoverOverElement(emailAddressFilterInfoIcon);
+	}
+
+	public String getEmailAddressFilterInfoTooltipText() {
+		return getTextFromLocator(emailAddressFilterInfoDescription).trim();
+	}
+
+	private static final By INVALID_CHARACTER_ERROR = By
+			.xpath("//span[starts-with(normalize-space(text()),'Invalid character.')]");
+
+	public boolean isInvalidCharacterErrorDisplayed() {
+		return isElementDisplayedQuick(INVALID_CHARACTER_ERROR, SHORT_ABSENCE_TIMEOUT);
+	}
+
+	public String getInvalidCharacterErrorText() {
+		return getTextFromLocator(INVALID_CHARACTER_ERROR).trim();
+	}
+
+	public List<String> getPartnerIdColumnValues() {
+		return getColumnValuesWithStaleRetry(By.xpath("//tr[starts-with(@id,'partner_list_item')]/td[1]"));
+	}
+
+	public boolean waitForFilteredCountToChangeFrom(int previousCount) {
+		try {
+			new WebDriverWait(driver, LIST_LOAD_TIMEOUT)
+					.until(driver -> getFilteredPartnersCountFromSubtitle() != previousCount);
+			return true;
+		} catch (TimeoutException e) {
+			return false;
+		}
+	}
+
+	public boolean waitForFirstRowPartnerIdToChangeFrom(String previousPartnerId) {
+		try {
+			new WebDriverWait(driver, LIST_LOAD_TIMEOUT)
+					.until(driver -> !previousPartnerId.equals(getFirstRowPartnerId()));
+			return true;
+		} catch (TimeoutException e) {
+			return false;
+		}
+	}
+
+	public int getFilteredPartnersCountFromSubtitle() {
+		String subtitle = getTextFromLocator(tabularViewsSubtitle).trim();
+		Matcher matcher = Pattern.compile("\\((\\d+)\\)").matcher(subtitle);
+		if (matcher.find()) {
+			return Integer.parseInt(matcher.group(1));
+		}
+		throw new RuntimeException("Filtered partner count not found in subtitle: " + subtitle);
+	}
+
+	public boolean isNoResultsFoundQuick() {
+		return isElementDisplayedQuick(By.xpath("//p[text()='No Results Found']"), SHORT_ABSENCE_TIMEOUT);
 	}
 
 	public String getPartnerStatusInViewPartnerDetails() {

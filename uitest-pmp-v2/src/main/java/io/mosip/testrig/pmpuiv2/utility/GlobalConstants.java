@@ -1663,4 +1663,36 @@ public class GlobalConstants {
 	public static final String isPolicyDataUploadDescriptionDisplayed = "Verify if policy data upload description displayed";
 	public static final String isStatusDisplayedForPolicyName = "Verify if status displayed for policy name";
 
+	// Partner Admin filter section
+	public static final String isPartnerListUnchangedBeforeApplyingDropdownFilter = "Verify partner list results remain unchanged until Apply Now is clicked for a dropdown filter selection";
+	public static final String isPartialPartnerIdSearchReturnsRelatedResults = "Verify a partial Partner ID search returns related results after clicking Apply Now";
+	public static final String isPartnerIdSearchCaseInsensitive = "Verify Partner ID search results are not case sensitive";
+	public static final String isNoResultsMessageAbsentBeforeApplyingInvalidFilter = "Verify the no results message is not displayed before Apply Now is clicked";
+	public static final String isFilteredResultsDisplayedInTabularViewAfterApply = "Verify filtered results are displayed in the tabular view after clicking Apply Now";
+	public static final String isFilteredPartnersCountMatchesDisplayedRows = "Verify the filtered count beside the List of Partners title matches the number of rows displayed";
+	public static final String isPartnerIdColumnSortedAscending = "Verify the partner list is sorted in ascending order of Partner ID";
+	public static final String isPartnerIdColumnSortedDescending = "Verify the partner list is sorted in descending order of Partner ID";
+
+	// List of Partners - email address sorting and filter updates
+	public static final String AUTHENTICATION_PARTNER = "Authentication Partner";
+	public static final String EMAIL_ADDRESS_COLUMN = "Email Address";
+	public static final String PARTNER_ID_COLUMN = "Partner ID";
+	public static final String EMAIL_ADDRESS_FILTER_PLACEHOLDER = "Search Full Email Address";
+	// Underscore is an allowed character, so a rejected value needs genuinely disallowed ones such as $ and %.
+	public static final String EMAIL_WITH_DISALLOWED_SPECIAL_CHARACTERS = "#@$$$%%";
+	public static final String NON_EXISTING_EMAIL = "nonexsit@gmail.com";
+	public static final String isEmailAddressColumnHeaderVisible = "Verify the Email Address column is visible in the List of Partners table header";
+	public static final String isSortIconLocatorValidForSortableColumn = "Verify a known sortable column exposes sort icons, confirming the sort icon lookup is valid";
+	public static final String isEmailAddressColumnNotSortable = "Verify no sorting icon is available in the Email Address column header";
+	public static final String isEmailAddressFilterPlaceholderCorrect = "Verify the email address filter textbox displays the expected placeholder text";
+	public static final String isExactEmailMatchReturningOnlyThatRecord = "Verify filtering by a full email address returns only the record with that exact email";
+	public static final String isPartialEmailReturningNoResults = "Verify filtering by a partial email address returns no results";
+	public static final String isNonExistingEmailReturningNoResults = "Verify filtering by a non-existing full email address returns no results";
+	public static final String isCombinedEmailAndPartnerTypeMismatchReturningNoResults = "Verify combining an email address with a non-matching Partner Type returns no results";
+	public static final String isEmailFilterCaseInsensitive = "Verify the email address filter is not case sensitive and still returns the matching record";
+	public static final String isInvalidCharacterErrorDisplayed = "Verify the invalid character message is displayed for an email containing disallowed special characters";
+	public static final String EMAIL_ADDRESS_FILTER_INFO_TOOLTIP = "Note: This filter performs an exact match. Please enter the full email address (e.g., user@example.com) to find results.";
+	public static final String isEmailAddressFilterInfoIconDisplayed = "Verify the info icon is displayed alongside the email address filter textbox";
+	public static final String isEmailAddressFilterInfoTooltipCorrect = "Verify the info icon tooltip displays the exact match guidance text";
+
 }

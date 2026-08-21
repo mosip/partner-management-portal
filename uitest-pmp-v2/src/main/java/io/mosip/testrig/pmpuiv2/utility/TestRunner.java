@@ -80,6 +80,8 @@ public class TestRunner {
 			XmlClass authPartnerWithoutCertificateTest = new XmlClass(
 					"io.mosip.testrig.pmpuiv2.testcase.AuthPartnerWithoutCertificateTest");
 			XmlClass partnerDetailsTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.PartnerDetailsTest");
+			XmlClass partnerFilterTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.PartnerFilterTest");
+			XmlClass partnerEmailFilterTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.PartnerEmailFilterTest");
 			XmlClass partnerDeactivateOptionTest = new XmlClass(
 					"io.mosip.testrig.pmpuiv2.testcase.PartnerDeactivateOptionTest");
 			XmlClass partnerDeactivatedPortalTest = new XmlClass(
@@ -178,6 +180,14 @@ public class TestRunner {
 					break;
 				case "PartnerDetailsTest":
 					addClassIfAbsent(classes, partnerAdminCreation, deactivatePartnerCreation, partnerDetailsTest);
+					break;
+				case "PartnerFilterTest":
+					addClassIfAbsent(classes, partnerAdminCreation, deactivatePartnerCreation, partnerDetailsTest,
+							partnerFilterTest);
+					break;
+				case "PartnerEmailFilterTest":
+					addClassIfAbsent(classes, partnerAdminCreation, deactivatePartnerCreation, partnerDetailsTest,
+							partnerEmailFilterTest);
 					break;
 				case "PartnerDeactivateOptionTest":
 					addClassIfAbsent(classes, partnerAdminCreation, deactivatePartnerCreation, partnerDetailsTest,
