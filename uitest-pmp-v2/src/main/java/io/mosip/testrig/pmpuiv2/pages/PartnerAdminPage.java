@@ -822,7 +822,7 @@ public class PartnerAdminPage extends BasePage {
 
 	public int getSortIconCountForColumn(String columnName) {
 		return getElementCount(By.xpath("//div[text()='" + columnName + "']/ancestor::th[1]"
-				+ "//*[contains(@id,'_asc_icon') or contains(@id,'_desc_icon')]"));
+				+ "//svg[contains(@id,'_asc_icon') or contains(@id,'_desc_icon')]"));
 	}
 
 	public String getEmailAddressFilterPlaceholder() {
@@ -846,7 +846,7 @@ public class PartnerAdminPage extends BasePage {
 	}
 
 	private static final By INVALID_CHARACTER_ERROR = By
-			.xpath("//*[starts-with(normalize-space(text()),'Invalid character.')]");
+			.xpath("//span[starts-with(normalize-space(text()),'Invalid character.')]");
 
 	public boolean isInvalidCharacterErrorDisplayed() {
 		return isElementDisplayedQuick(INVALID_CHARACTER_ERROR, SHORT_ABSENCE_TIMEOUT);
