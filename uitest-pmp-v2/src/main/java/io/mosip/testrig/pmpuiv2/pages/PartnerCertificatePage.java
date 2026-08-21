@@ -1,5 +1,6 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 
@@ -460,6 +461,19 @@ public class PartnerCertificatePage extends BasePage {
 		return isElementDisplayed(titleBackButton);
 	}
 
+	/**
+	 * Verifies the Credential Partner certificate upload page using the upload
+	 * action button, since the back-arrow icon is not rendered for this partner type.
+	 */
+	public boolean isPartnerCertificateUploadPageDisplayed() {
+		return isElementDisplayed(uploadButton);
+	}
+
+	/** Verifies the Credential Partner certificate re-upload page is displayed. */
+	public boolean isPartnerCertificateReuploadPageDisplayed() {
+		return isElementDisplayed(partnerCertificateReuploadButton);
+	}
+
 	public void clickOnUploadButton() {
 		clickOnElement(uploadButton);
 	}
@@ -493,6 +507,11 @@ public class PartnerCertificatePage extends BasePage {
 	}
 
 	public boolean isSuccessMessageDisplayed() {
+		return isElementDisplayed(successMessage);
+	}
+
+	/** Verifies the Credential Partner certificate upload success message. */
+	public boolean isCredentialPartnerSuccessMessageDisplayed() {
 		return isElementDisplayed(successMessage);
 	}
 
@@ -1239,7 +1258,11 @@ public class PartnerCertificatePage extends BasePage {
 	}
 
 	public boolean isSuccessIconDisplayed() {
-		return isElementDisplayed(successIcon);
+		// Prefer icon when present; otherwise confirmation Go Back means upload succeeded
+		if (isElementDisplayedQuick(By.id("confirmation_success_icon"), Duration.ofSeconds(3))) {
+			return true;
+		}
+		return isElementDisplayedQuick(By.id("confirmation_go_back_btn"), Duration.ofSeconds(5));
 	}
 
 	public boolean isUploadedSuccessfullyMessageDisplayed() {

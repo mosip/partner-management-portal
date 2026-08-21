@@ -20,6 +20,11 @@ delete FROM keymgr.ca_cert_store where cert_subject ='CN=CA,OU=CA,O=CA,L=aa,ST=a
 delete FROM keymgr.ca_cert_store where cert_subject ='CN=AABBCC,OU=AABBCC,O=AABBCC,L=aa,ST=aa,C=aa' and partner_domain='MISP';
 delete FROM keymgr.partner_cert_store where cert_subject ='CN=AABBCC,OU=AABBCC,O=AABBCC,L=aa,ST=aa,C=aa' and partner_domain='MISP';
 
+#These are delete queries for CREDENTIAL PARTNER - pmpui-credential (ABCDEFroot.cer, ABCDEFinter.cer, org ABCDEF)
+delete FROM keymgr.ca_cert_store where cert_subject ='CN=ABCDEFinter,OU=ABCDEF,O=ABCDEF,L=MY,ST=KA,C=IN' and partner_domain='AUTH';
+delete FROM keymgr.ca_cert_store where cert_subject ='CN=ABCDEF,OU=ABCDEF,O=ABCDEF,L=MY,ST=KA,C=IN' and partner_domain='AUTH';
+delete FROM keymgr.partner_cert_store where cert_subject ='CN=ABCDEF,OU=ABCDEF,O=ABCDEF,L=MY,ST=KA,C=IN' and partner_domain='AUTH';
+
 DELETE FROM keymgr.key_alias where app_id = 'PARTNER' AND ref_id = 'pmpui-v2';
 DELETE FROM keymgr.key_alias where app_id = 'PARTNER' AND ref_id = 'pmpui-auth';
 DELETE FROM keymgr.key_alias where app_id = 'PARTNER' AND ref_id = 'pmpui-ftm';
@@ -30,3 +35,4 @@ DELETE FROM keymgr.key_alias where app_id = 'PARTNER' AND ref_id = 'pmpui-deacti
 DELETE FROM keymgr.key_alias where app_id = 'PARTNER' AND ref_id = 'pmpui-deactivate2';
 DELETE FROM keymgr.key_alias where app_id = 'PARTNER' AND ref_id = 'pmpui-deactivatedevice';
 DELETE FROM keymgr.key_alias where app_id = 'PARTNER' AND ref_id = 'pmpui-deactivateftm';
+DELETE FROM keymgr.key_alias where app_id = 'PARTNER' AND ref_id = 'pmpui-credential';

@@ -322,9 +322,8 @@ public class ConfigManager {
 		dataSharepolicyData = System.getenv(DataSharepolicyData) == null ? propsKernel.getProperty(DataSharepolicyData)
 				: System.getenv(DataSharepolicyData);
 
-		testcases = System.getenv(Testcases) == null ? propsKernel.getProperty(Testcases) : System.getenv(Testcases);
-		
-		 
+		testcases = System.getProperty(Testcases) != null ? System.getProperty(Testcases)
+				: (System.getenv(Testcases) == null ? propsKernel.getProperty(Testcases) : System.getenv(Testcases));
 
 	}
 
