@@ -101,7 +101,7 @@ public class PartnerAdminPage extends BasePage {
 	@FindBy(id = "partner_type_filter_label")
 	private WebElement partnersTypeFilter;
 
-	@FindBy(xpath = "//*[@id='partner_type_filter_dropdown_btn']/span")
+	@FindBy(xpath = "//button[@id='partner_type_filter_dropdown_btn']/span")
 	private WebElement partnerTypeDropdown;
 
 	@FindBy(id = "partner_organisation_filter")
