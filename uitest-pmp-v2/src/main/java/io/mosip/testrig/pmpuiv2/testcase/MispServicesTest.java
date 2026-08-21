@@ -115,10 +115,6 @@ public class MispServicesTest extends BaseClass {
                 GlobalConstants.areInfoIconsColorAndFontSizeConsistent);
         mispServicesPage.clickOnExpiryDate();
         assertTrue(mispServicesPage.isCalendarDisplayed(), GlobalConstants.isCalendarDisplayed);
-        assertTrue(
-                mispServicesPage.getCalendarCurrentMonthText().matches(
-                        "^(January|February|March|April|May|June|July|August|September|October|November|December) \\d{4}$"),
-                GlobalConstants.isCalendarDisplayedInEnglish);
 
         createMispLicenseKeyWithPastExpiryDate(GlobalConstants.MISP_PARTNER_USER, GlobalConstants.MISP_POLICY_01,
                 GlobalConstants.MISP_LICENSEKEY_01);

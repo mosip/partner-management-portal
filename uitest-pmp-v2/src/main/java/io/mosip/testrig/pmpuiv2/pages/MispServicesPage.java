@@ -141,9 +141,6 @@ public class MispServicesPage extends BasePage {
 	@FindBy(css = "div.react-datepicker__day--today")
 	private WebElement todayInCalender;
 
-	@FindBy(css = "h2.react-datepicker__current-month")
-	private WebElement calendarCurrentMonthHeader;
-
 	@FindBy(id = "generate_license_key_expiry_date_calender")
 	private WebElement expiryDate;
 
@@ -422,8 +419,7 @@ public class MispServicesPage extends BasePage {
 	public void selectPolicyName(String policyName) {
 		clickOnElement(policyNameDropdown);
 		enter(policyNameSearchInput, policyName);
-		click(By.xpath("//*[contains(@id,'generate_license_key_policy_name_option')]//span[normalize-space()='"
-				+ policyName + "']"));
+		clickOnElement(mispPolicyName);
 	}
 
 	public void enterLicenseKeyName(String licenseKeyName) {
@@ -494,10 +490,6 @@ public class MispServicesPage extends BasePage {
 
 	public boolean isCalendarDisplayed() {
 		return isElementDisplayed(calendarPopup);
-	}
-
-	public String getCalendarCurrentMonthText() {
-		return getTextFromLocator(calendarCurrentMonthHeader);
 	}
 
 	public void clickOnExpiryDate() {

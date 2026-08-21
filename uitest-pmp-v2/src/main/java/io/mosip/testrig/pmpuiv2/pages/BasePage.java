@@ -721,12 +721,4 @@ public class BasePage {
 		return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
 	}
 
-	public void setNetworkOffline(boolean offline) {
-		ChromiumNetworkConditions conditions = new ChromiumNetworkConditions();
-		conditions.setOffline(offline);
-		conditions.setLatency(Duration.ofMillis(0));
-		conditions.setDownloadThroughput(-1);
-		conditions.setUploadThroughput(-1);
-		((HasNetworkConditions) driver).setNetworkConditions(conditions);
-	}
 }
