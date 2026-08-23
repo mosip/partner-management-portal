@@ -66,6 +66,15 @@ public class ProfilePage extends BasePage {
 	@FindBy(xpath = "//P[text()='pmpui-nocert']")
 	private WebElement userNameContext;
 
+	@FindBy(xpath = "//p[normalize-space()='First Name']/following-sibling::p[1]")
+	private WebElement firstNameValue;
+
+	@FindBy(xpath = "//p[normalize-space()='Last Name']/following-sibling::p[1]")
+	private WebElement lastNameValue;
+
+	@FindBy(xpath = "//p[normalize-space()='Partner Type']/following-sibling::p[1]")
+	private WebElement partnerTypeValue;
+
 	@FindBy(id = "title_back_icon")
 	private WebElement titleBackIcon;
 
@@ -159,6 +168,18 @@ public class ProfilePage extends BasePage {
 
 	public void clickOnTitleBackIcon() {
 		clickOnElement(titleBackIcon);
+	}
+
+	public String getFirstNameValue() {
+		return getTextFromLocator(firstNameValue).trim();
+	}
+
+	public String getLastNameValue() {
+		return getTextFromLocator(lastNameValue).trim();
+	}
+
+	public String getPartnerTypeValue() {
+		return getTextFromLocator(partnerTypeValue).trim();
 	}
 
 }

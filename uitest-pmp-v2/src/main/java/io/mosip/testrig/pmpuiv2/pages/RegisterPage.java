@@ -6,6 +6,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.Select;
 
 public class RegisterPage extends BasePage {
 
@@ -89,6 +90,17 @@ public class RegisterPage extends BasePage {
 	/** Selects Credential Partner in the partner type dropdown during registration. */
 	public void selectCredentialPartnerInPartnerTypeDropdown() {
 		selectByValueInDropdown(partnerTypeDropdown, "CREDENTIAL_PARTNER");
+	}
+
+	/** Returns the currently selected partner type value, or empty string if none. */
+	public String getSelectedPartnerTypeValue() {
+		String value = new Select(partnerTypeDropdown).getFirstSelectedOption().getAttribute("value");
+		return value == null ? "" : value.trim();
+	}
+
+	/** True when no partner type has been explicitly selected (empty/default placeholder). */
+	public boolean isPartnerTypeUnselected() {
+		return getSelectedPartnerTypeValue().isEmpty();
 	}
 
 	public boolean isAddressTextBoxDisplayed() {

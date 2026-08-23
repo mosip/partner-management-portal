@@ -25,6 +25,8 @@ public class GlobalConstants {
 	public static final String PARTNER_PASSWORD = "mosip123";
 	public static final String AUTH_PARTNER_ID = "pmpui-auth";
 	public static final String CREDENTIAL_PARTNER_ID = "pmpui-credential";
+	public static final String CREDENTIAL_PARTNER_TYPE = "Credential Partner";
+	public static final String CREDENTIAL_PARTNER_NO_TYPE_USER_ID = "pmpui-cred-notype";
 	public static final String FTM_PARTNER_ID = "pmpui-ftm";
 	public static final String MISP_PARTNER = "MISP Partner";
 	public static final String MISP_PARTNER_USER = "pmpui-misp";
@@ -330,6 +332,8 @@ public class GlobalConstants {
 	public static final String isLastNameTextBoxDisplayed = "Verify if last name textbox is displayed in register page.";
 	public static final String isOrganizationNameDisplayed = "Verify if organization name textbox is displayed in register page.";
 	public static final String isPartnerTypeDropdownDisplayed = "Verify if partner type dropdown is displayed in register page.";
+	public static final String isPartnerTypeFieldUnselected = "Verify Partner Type field is left unselected on the registration form.";
+	public static final String isDevicePartnerRegistrationSuccessfulWithoutPartnerType = "Verify registration succeeds with default Device Partner when Partner Type is not selected.";
 	public static final String isAddressTextBoxDisplayed = "Verify if address textbox is displayed in register page.";
 	public static final String isEmailTextBoxDisplayed = "Verify if email id textbox is displayed in register page.";
 	public static final String isPhoneNumberTextboxDisplayed = "Verify if phone number textbox is displayed in register page.";
@@ -343,6 +347,8 @@ public class GlobalConstants {
 	public static final String isTermsAndConditionsPopUpDisplayed = "Verify if term and condition pop up displayed";
 	public static final String isProceedButtonDisplayed = "Verify if proceed button is displayed.";
 	public static final String isPartnerCertificateTitleDisplayed = "Verify if partner certificate title is displayed";
+	public static final String PARTNER_CERTIFICATE_CARD_TITLE = "Partner Certificate";
+	public static final String isPartnerCertificateCardTitleCorrect = "Verify Partner Certificate card displays the title as Partner Certificate";
 	public static final String isPartnerCertificatePageDisplayed = "Verify if partner certificate page is displayed";
 	public static final String isUploadPartnerCertificatePopUpDisplayed = "Verify if upload partner certificate pop up is displayed";
 	public static final String isSuccessMessageDisplayed = "Verify if Partner certificate for Authentication Partner is uploaded successfully.";
@@ -359,6 +365,11 @@ public class GlobalConstants {
 	public static final String isPolicyEmptyTableIsDisplayed = "Verify if policies empty table displayed";
 	public static final String isAuthenticationServicesDisplayed = "Verify if authentication services title is displayed";
 	public static final String isWelcomeMessageDisplayed = "Verify if welcome message is displayed";
+	public static final String isWelcomeMessageDisplaysCorrectUserName = "Verify Welcome message displays the correct user name matching profile details";
+	public static final int CREDENTIAL_PARTNER_SERVICE_CARD_COUNT = 2;
+	public static final String isCredentialPartnerServiceCardCountCorrect = "Verify Dashboard displays exactly two service cards for Credential Partner";
+	public static final String isCredentialPartnerRoleMapped = "Verify user is mapped to Credential Partner role in profile";
+	public static final String isCredentialPartnerRoleBasedServiceCardsVisible = "Verify two service cards are visible only for Credential Partner role";
 	public static final String isAddSbiDetailsSubTitleDisplayed = "Verify if add sbi details sub title is displayed";
 	public static final String isAddSbiDetailsTitleDisplayed = "Verify if add sbi details title is displayed";
 	public static final String isHomeButtonDisplayed = "Verify if home button is displayed";

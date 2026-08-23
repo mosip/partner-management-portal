@@ -15,6 +15,7 @@ import io.mosip.testrig.pmpuiv2.utility.LogUtil;
 /**
  * End-to-end Credential Partner onboarding flow: trust certificate setup,
  * registration, and partner certificate upload.
+ * MOSIP-44515 TC_44515_03: registration without partner type defaults to Device Partner.
  */
 @Test(dependsOnGroups = { "PartnerAdminCreation" }, groups = { "CredentialPartnerCreation" })
 public class CredentialPartnerCreation extends BaseClass {
@@ -53,10 +54,10 @@ public class CredentialPartnerCreation extends BaseClass {
 		partnerCertificatePage.clickOnGoBackButton();
 	}
 
-	@Test(priority = 2, description = "Register Credential Partner, select policy group, accept terms, verify dashboard, and logout", dependsOnMethods = "uploadCredentialRootCaSubCaTrustCertificates")
+	@Test(priority = 2, description = "MOSIP-44515 TC_44515_01 - Register Credential Partner (steps 1-4)", dependsOnMethods = "uploadCredentialRootCaSubCaTrustCertificates")
 	public void registerCredentialPartnerUser() {
 
-		LogUtil.step("Logout admin and open registration page for Credential Partner");
+		LogUtil.step("Step 1: Navigate to New Registration page");
 		dashboardPage = new DashboardPage(driver);
 		loginPage = new LoginPage(driver);
 
@@ -64,7 +65,7 @@ public class CredentialPartnerCreation extends BaseClass {
 		loginPage = dashboardPage.clickOnLogoutButton();
 		registerPage = loginPage.clickRegisterButton();
 
-		LogUtil.step("Fill registration form and submit as Credential Partner");
+		LogUtil.step("Step 2: Enter valid registration details for Credential Partner");
 		registerPage.enterFirstName(GlobalConstants.CREDENTIAL_PARTNER_ID);
 		registerPage.enterLastName(GlobalConstants.CREDENTIAL_PARTNER_ID);
 		registerPage.enterOrganizationName(GlobalConstants.ORGANISATION_NAME);
@@ -76,6 +77,8 @@ public class CredentialPartnerCreation extends BaseClass {
 		registerPage.enterUsername(GlobalConstants.CREDENTIAL_PARTNER_ID);
 		registerPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
 		registerPage.enterPasswordConfirm(GlobalConstants.PARTNER_PASSWORD);
+
+		LogUtil.step("Step 3: Submit the registration form");
 		dashboardPage = registerPage.clickSubmitButton();
 
 		LogUtil.step("Select policy group and accept terms and conditions");
@@ -84,12 +87,12 @@ public class CredentialPartnerCreation extends BaseClass {
 
 		handleTermsAndCondition();
 
-		LogUtil.step("Verify dashboard service cards are displayed after registration");
+		LogUtil.step("Step 4: Verify user account is successfully created and dashboard is displayed");
 		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
 				GlobalConstants.isPartnerCertificateTitleDisplayed);
 		assertTrue(dashboardPage.isPoliciesTitleDisplayed(), GlobalConstants.isPoliciesTitleDisplayed);
 
-		LogUtil.step("Logout from Credential Partner profile menu");
+		LogUtil.step("Logout from Credential Partner to prepare for TC_44515_01 login steps");
 		logoutFromPartner();
 		assertTrue(loginPage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
 	}
@@ -127,6 +130,52 @@ public class CredentialPartnerCreation extends BaseClass {
 		assertTrue(partnerCertificatePage.isCredentialPartnerSuccessMessageDisplayed(),
 				GlobalConstants.isCredentialPartnerSuccessMessageDisplayed);
 		partnerCertificatePage.clickOncertificateUploadCloseButton();
+	}
+
+	@Test(priority = 4, description = "MOSIP-44515 TC_44515_03 - Verify default Device Partner when partner type is not selected during registration", dependsOnMethods = "uploadCredentialRootCaSubCaTrustCertificates")
+	public void registerWithoutPartnerTypeDefaultsToDevicePartner() {
+
+		LogUtil.step("Step 1: Navigate to New Registration page");
+		dashboardPage = new DashboardPage(driver);
+		loginPage = new LoginPage(driver);
+		registerPage = new RegisterPage(driver);
+
+		dashboardPage.clickOnProfileDropdown();
+		loginPage = dashboardPage.clickOnLogoutButton();
+		registerPage = loginPage.clickRegisterButton();
+		assertTrue(registerPage.isRegisterPageTitleDisplayed(), GlobalConstants.isRegisterPageTitleDisplayed);
+
+		LogUtil.step("Step 2: Enter valid registration data");
+		registerPage.enterFirstName(GlobalConstants.CREDENTIAL_PARTNER_NO_TYPE_USER_ID);
+		registerPage.enterLastName(GlobalConstants.CREDENTIAL_PARTNER_NO_TYPE_USER_ID);
+		registerPage.enterOrganizationName(GlobalConstants.ORGANISATION_NAME);
+
+		LogUtil.step("Step 3: Fill all other mandatory fields");
+		registerPage.enterAddress("0" + data + "crednotype");
+		registerPage.enterEmail("0" + data + "crednotype" + "@gmail.com");
+		registerPage.enterPhone("9876543212");
+		registerPage.selectNotificationLanguageDropdown();
+		registerPage.enterUsername(GlobalConstants.CREDENTIAL_PARTNER_NO_TYPE_USER_ID);
+		registerPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
+		registerPage.enterPasswordConfirm(GlobalConstants.PARTNER_PASSWORD);
+
+		LogUtil.step("Step 4: Leave Partner Type field unselected");
+		// Partner type dropdown is intentionally not selected; system assigns default Device Partner on submit.
+
+		LogUtil.step("Step 5: Click on Register/Submit button");
+		dashboardPage = registerPage.clickSubmitButton();
+		handleTermsAndCondition();
+
+		LogUtil.step("Verify registration succeeds with default Device Partner dashboard");
+		assertTrue(dashboardPage.isWelcomeMessageDisplayed(), GlobalConstants.isWelcomeMessageDisplayed);
+		assertTrue(dashboardPage.isDeviceProviderServicesTitleDisplayed(),
+				GlobalConstants.isDeviceProviderServicesTitleDisplayed);
+		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
+				GlobalConstants.isDevicePartnerRegistrationSuccessfulWithoutPartnerType);
+
+		LogUtil.step("Logout from Device Partner created via default partner type assignment");
+		logoutFromPartner();
+		assertTrue(loginPage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
 	}
 
 	private void handleTermsAndCondition() {
