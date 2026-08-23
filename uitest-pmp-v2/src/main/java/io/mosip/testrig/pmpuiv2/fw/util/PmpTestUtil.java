@@ -171,7 +171,23 @@ public class PmpTestUtil extends BaseTestCaseFunc {
 			return null;
 		}
 	}
-	
+
+	// A structurally valid public key in PEM format, used to prove the Public Key field rejects
+	// well-formed keys that simply aren't JWK, not just malformed text.
+	public static String generatePemPublicKey() {
+		try {
+			KeyPairGenerator keyGenerator = KeyPairGenerator.getInstance("RSA");
+			SecureRandom secureRandom = new SecureRandom();
+			keyGenerator.initialize(2048, secureRandom);
+			final KeyPair keypair = keyGenerator.generateKeyPair();
+			String base64Key = java.util.Base64.getEncoder().encodeToString(keypair.getPublic().getEncoded());
+			return "-----BEGIN PUBLIC KEY-----\n" + base64Key + "\n-----END PUBLIC KEY-----";
+		} catch (NoSuchAlgorithmException e) {
+			logger.error(e.getMessage());
+			return null;
+		}
+	}
+
 	public static String getResourceFilePath(String folderName, String fileName) {
 		return Paths.get(TestRunner.getResourcePath(), folderName, fileName).toString();
 	}

@@ -70,6 +70,8 @@ public class TestRunner {
 					"io.mosip.testrig.pmpuiv2.testcase.PolicyCreationForAuthPartner");
 			XmlClass oidcClientAuthPartnerTest = new XmlClass(
 					"io.mosip.testrig.pmpuiv2.testcase.OidcClientAuthPartnerTest");
+			XmlClass oidcClientMultilingualFieldsTest = new XmlClass(
+					"io.mosip.testrig.pmpuiv2.testcase.OidcClientMultilingualFieldsTest");
 			XmlClass deviceCreationTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.DeviceCreationTest");
 			XmlClass policyGroupTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.PolicyGroupTest");
 			XmlClass certificateTrustStoreTest = new XmlClass(
@@ -82,6 +84,9 @@ public class TestRunner {
 			XmlClass partnerDetailsTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.PartnerDetailsTest");
 			XmlClass partnerFilterTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.PartnerFilterTest");
 			XmlClass partnerEmailFilterTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.PartnerEmailFilterTest");
+			XmlClass statusLabelActiveTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.StatusLabelActiveTest");
+			XmlClass draftConfirmationScreenTest = new XmlClass(
+					"io.mosip.testrig.pmpuiv2.testcase.DraftConfirmationScreenTest");
 			XmlClass partnerDeactivateOptionTest = new XmlClass(
 					"io.mosip.testrig.pmpuiv2.testcase.PartnerDeactivateOptionTest");
 			XmlClass partnerDeactivatedPortalTest = new XmlClass(
@@ -148,9 +153,17 @@ public class TestRunner {
 					addClassIfAbsent(classes, partnerAdminCreation, authPartnerCreation, policyCreationForAuthPartner,
 							oidcClientAuthPartnerTest);
 					break;
+				case "OidcClientMultilingualFieldsTest":
+					addClassIfAbsent(classes, partnerAdminCreation, authPartnerCreation, policyCreationForAuthPartner,
+							oidcClientMultilingualFieldsTest);
+					break;
 				case "DeviceCreationTest":
 					addClassIfAbsent(classes, partnerAdminCreation, devicePartnerCreation, sbiCreationTest,
 							deviceCreationTest);
+					break;
+				case "DraftConfirmationScreenTest":
+					addClassIfAbsent(classes, partnerAdminCreation, policyAdminAndPartnerCreation, policyGroupTest,
+							draftConfirmationScreenTest);
 					break;
 				case "PolicyGroupTest":
 					addClassIfAbsent(classes, partnerAdminCreation, policyAdminAndPartnerCreation, policyGroupTest);
@@ -188,6 +201,10 @@ public class TestRunner {
 				case "PartnerEmailFilterTest":
 					addClassIfAbsent(classes, partnerAdminCreation, deactivatePartnerCreation, partnerDetailsTest,
 							partnerEmailFilterTest);
+					break;
+				case "StatusLabelActiveTest":
+					addClassIfAbsent(classes, partnerAdminCreation, authPartnerCreation, deactivatePartnerCreation,
+							partnerDetailsTest, statusLabelActiveTest);
 					break;
 				case "PartnerDeactivateOptionTest":
 					addClassIfAbsent(classes, partnerAdminCreation, deactivatePartnerCreation, partnerDetailsTest,

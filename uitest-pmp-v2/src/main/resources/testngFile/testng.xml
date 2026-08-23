@@ -20,6 +20,7 @@
 			<class name="io.mosip.testrig.pmpuiv2.testcase.AuthPartnerCreation" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.PolicyCreationForAuthPartner" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.OidcClientAuthPartnerTest" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.OidcClientMultilingualFieldsTest" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.ApiKeyAuthPartnerTest" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.AuthPartnerWithoutCertificateTest" />
 			<!--DEVICE PARTNER FLOW-->
@@ -35,6 +36,7 @@
 			<class name="io.mosip.testrig.pmpuiv2.testcase.PolicyGroupTest" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.DatasharePolicyTest" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.AuthPolicyTest" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.DraftConfirmationScreenTest" />
 			<!--MISP PARTNER FLOW-->
 			<class name="io.mosip.testrig.pmpuiv2.testcase.MispPartnerTest" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.MispPolicyTest" />
@@ -45,6 +47,7 @@
 			<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerDetailsTest" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerFilterTest" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerEmailFilterTest" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.StatusLabelActiveTest" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerDeactivateOptionTest" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerDeactivatedPortalTest" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.DeactivatePartner2Creation" />

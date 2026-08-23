@@ -404,6 +404,23 @@ public class BasePage {
 		}
 	}
 
+	protected boolean isElementSelected(WebElement element) {
+		LogUtil.verify("Checking if element is selected: ", element);
+		try {
+			WaitUtil.waitForVisibility(driver, element);
+			return element.isSelected();
+		} catch (StaleElementReferenceException e) {
+			LogUtil.step("Element became stale while checking selected state");
+			LogUtil.step("Page URL: " + driver.getCurrentUrl());
+			LogUtil.step("Page Title: " + driver.getTitle());
+			return false;
+		} catch (Exception e) {
+			LogUtil.error("isElementSelected failed: " + e.getClass().getSimpleName());
+			takeScreenshot();
+			return false;
+		}
+	}
+
 	protected boolean isElementEnabled(By locator) {
 		LogUtil.verify("Checking if element is enabled: ", locator);
 
@@ -600,6 +617,24 @@ public class BasePage {
 				element, tolerancePx));
 	}
 
+	// Left edge in viewport coordinates, for asserting the relative placement of two controls.
+	protected int getElementLeftEdge(WebElement element) {
+		WaitUtil.waitForVisibility(driver, element);
+		Number left = (Number) ((JavascriptExecutor) driver)
+				.executeScript("return arguments[0].getBoundingClientRect().left;", element);
+		return left.intValue();
+	}
+
+	// Compares the two bounding boxes directly, so a note that visually runs into a
+	// neighbouring field or button is caught even when neither covers the other's centre.
+	protected boolean doElementsOverlap(WebElement first, WebElement second) {
+		LogUtil.verify("Checking whether two elements overlap: ", first);
+		return Boolean.TRUE.equals(((JavascriptExecutor) driver).executeScript(
+				"var a=arguments[0].getBoundingClientRect();" + "var b=arguments[1].getBoundingClientRect();"
+						+ "return !(a.right<=b.left || a.left>=b.right || a.bottom<=b.top || a.top>=b.bottom);",
+				first, second));
+	}
+
 	// True when something else sits on top of the element's centre point, e.g. an overlay.
 	protected boolean isElementCoveredAtCentre(WebElement element) {
 		LogUtil.verify("Checking if element is covered by an overlay: ", element);
@@ -613,6 +648,16 @@ public class BasePage {
 	protected int getElementCount(By locator) {
 		LogUtil.verify("Counting elements for: ", locator);
 		return driver.findElements(locator).size();
+	}
+
+	// Exact text equality, so a search for 'Activated' can never match 'Deactivated'.
+	// Used by the status label checks, where that distinction is the whole point.
+	public int countElementsWithExactText(String text) {
+		return getElementCount(By.xpath("//*[normalize-space(text())='" + text + "']"));
+	}
+
+	public boolean isTextPresentOnPage(String text) {
+		return countElementsWithExactText(text) > 0;
 	}
 
 	public void scrollToEndPage() {

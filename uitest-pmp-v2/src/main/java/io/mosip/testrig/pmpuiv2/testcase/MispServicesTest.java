@@ -9,6 +9,7 @@ import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 @Test(dependsOnGroups = { "MispPolicyTest" }, groups = { "MispServicesTest" })
@@ -141,6 +142,63 @@ public class MispServicesTest extends BaseClass {
                 GlobalConstants.isGenerateLicenseKeyErrorMessageDisplayed);
         mispServicesPage.clickOnClearFormButton();
 
+    }
+
+    @Test(priority = 2, description = "Verify Note Display on License Key Generation Screen")
+    public void importantNoteDisplayedWithExpectedTextOnGenerateScreen() {
+        openGenerateMispLicenseKeyScreen();
+
+        assertTrue(mispServicesPage.isMispLicenseKeyImportantNoteDisplayed(),
+                GlobalConstants.isMispLicenseKeyImportantNoteDisplayed);
+        assertEquals(mispServicesPage.getMispLicenseKeyImportantNoteText(),
+                GlobalConstants.MISP_LICENSE_KEY_IMPORTANT_NOTE, GlobalConstants.isImportantNoteTextCorrect);
+    }
+
+    @Test(priority = 3, description = "Verify Important Note is Read-Only")
+    public void importantNoteIsReadOnlyOnGenerateScreen() {
+        openGenerateMispLicenseKeyScreen();
+
+        assertTrue(mispServicesPage.isMispLicenseKeyImportantNoteNotEditable(),
+                GlobalConstants.isMispLicenseKeyImportantNoteNotEditable);
+        assertFalse(mispServicesPage.isMispLicenseKeyImportantNoteFocusable(),
+                GlobalConstants.isImportantNoteNotFocusable);
+        assertTrue(
+                mispServicesPage
+                        .isMispLicenseKeyImportantNoteUnchangedAfterTyping(GlobalConstants.IMPORTANT_NOTE_EDIT_ATTEMPT),
+                GlobalConstants.isImportantNoteReadOnly);
+    }
+
+    @Test(priority = 4, description = "Verify Note Does Not Interfere with Form Fields or Buttons")
+    public void importantNoteDoesNotInterfereWithFormFieldsOnGenerateScreen() {
+        openGenerateMispLicenseKeyScreen();
+
+        assertTrue(mispServicesPage.isMispLicenseKeyImportantNoteWithinViewport(),
+                GlobalConstants.isImportantNoteFullyVisible);
+        assertFalse(mispServicesPage.isMispLicenseKeyImportantNoteCovered(), GlobalConstants.isImportantNoteNotCovered);
+
+        assertFalse(mispServicesPage.isImportantNoteOverlappingSubmitButton(),
+                GlobalConstants.isImportantNoteNotOverlappingFormFields);
+        assertFalse(mispServicesPage.isImportantNoteOverlappingLicenseKeyNameField(),
+                GlobalConstants.isImportantNoteNotOverlappingFormFields);
+        assertFalse(mispServicesPage.isImportantNoteOverlappingGuidenceNote(),
+                GlobalConstants.isImportantNoteNotOverlappingFormFields);
+
+        // The form must still work with the note on screen.
+        assertTrue(mispServicesPage.isSubmitButtonDisplayed(), GlobalConstants.isSubmitButtonDisplayed);
+        assertTrue(mispServicesPage.isCancelButtonDisplayed(), GlobalConstants.isCancelButtonDisplayed);
+        assertTrue(mispServicesPage.isClearFormButtonDisplayed(), GlobalConstants.isClearFormButtonDisplayed);
+    }
+
+    private void openGenerateMispLicenseKeyScreen() {
+        dashboardPage = new DashboardPage(driver);
+        mispServicesPage = new MispServicesPage(driver);
+
+        dashboardPage.clickOnMispServices();
+        assertTrue(mispServicesPage.isGenerateMispLicenceKeyButtonDisplayed(),
+                GlobalConstants.isGenerateMispLicenceKeyButtonDisplayed);
+        mispServicesPage.clickOnGenerateMispLicenceKeyButton();
+        assertTrue(mispServicesPage.isGenerateMispLicenceKeyPageDisplayed(),
+                GlobalConstants.isGenerateMispLicenceKeyPageDisplayed);
     }
 
     private void createMispLicenseKey(String partnerIdValue, String policyName, String licenseKeyName) {

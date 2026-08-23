@@ -631,6 +631,23 @@ public class PartnerAdminPage extends BasePage {
 		clickOnElement(emailAddressFilterInfoIcon);
 	}
 
+	// Option ids are positional, so the type is matched on its label instead.
+	public void selectPartnerTypeFilterOption(String partnerType) {
+		click(By.xpath("//button[starts-with(@id,'partner_type_filter_option') and normalize-space(text())='" + partnerType
+				+ "']"));
+	}
+
+	// The options only exist once the dropdown is open, so this waits rather than reading straight away.
+	public String getStatusFilterOptionText(int optionNumber) {
+		By option = By.id("status_filter_option" + optionNumber);
+		new WebDriverWait(driver, LIST_LOAD_TIMEOUT).until(ExpectedConditions.visibilityOfElementLocated(option));
+		return getCellTextWithStaleRetry(option);
+	}
+
+	public List<String> getStatusColumnValues() {
+		return getColumnValuesWithStaleRetry(By.xpath("//tr[starts-with(@id,'partner_list_item')]/td[7]/div"));
+	}
+
 	// Row 1 is what the Action menu operates on; isDeactivatedPartnerRowDisplayed is pinned to row 2.
 	public boolean isFirstPartnerRowDisplayed() {
 		return isElementDisplayed(firstPartnerRow);

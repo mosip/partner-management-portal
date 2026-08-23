@@ -1,15 +1,21 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
+import java.time.Duration;
+
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
 
 public class AuthPolicyPage extends BasePage {
+
+	private static final Duration SAVE_AS_DRAFT_ENABLE_TIMEOUT = Duration.ofSeconds(20);
 
 	@FindBy(id = "create_auth_policy_btn")
 	private WebElement createAuthPolicyButton;
@@ -37,6 +43,9 @@ public class AuthPolicyPage extends BasePage {
 
 	@FindBy(id = "confirmation_go_back_btn")
 	private WebElement goBackButton;
+
+	@FindBy(id = "confirmation_custom_btn")
+	private WebElement draftConfirmationPublishButton;
 
 	@FindBy(id = "filter_btn")
 	private WebElement filterButton;
@@ -349,6 +358,12 @@ public class AuthPolicyPage extends BasePage {
 
 	@FindBy(xpath = "//p[contains(text(), 'This Authentication Policy is currently in draft mode')]")
 	private WebElement policyDraftInfoMessage;
+
+	@FindBy(id = "create_policy_confirmation_header")
+	private WebElement draftConfirmationHeader;
+
+	@FindBy(id = "create_policy_confirmation_description")
+	private WebElement draftConfirmationDescription;
 
 	@FindBy(id = "block_messsage_proceed")
 	private WebElement proceedButton;
@@ -1084,6 +1099,17 @@ public class AuthPolicyPage extends BasePage {
 		return isElementEnabled(saveAsDraftButton);
 	}
 
+	// The button stays disabled until the uploaded policy data has been parsed, so the
+	// clickable check has to wait for that rather than sample it the instant upload returns.
+	public boolean waitForSaveAsDraftButtonEnabled() {
+		try {
+			new WebDriverWait(driver, SAVE_AS_DRAFT_ENABLE_TIMEOUT).until(driver -> saveAsDraftButton.isEnabled());
+			return true;
+		} catch (TimeoutException e) {
+			return false;
+		}
+	}
+
 	public boolean isSaveAsDraftButtonDisabled() {
 		return isElementDisabled(saveAsDraftButton);
 	}
@@ -1098,6 +1124,51 @@ public class AuthPolicyPage extends BasePage {
 
 	public boolean isPolicyDraftInfoMessageDisplayed() {
 		return isElementDisplayed(policyDraftInfoMessage);
+	}
+
+	// Whitespace collapsed so the assertion survives the message re-wrapping at a different width.
+	public String getDraftConfirmationDescriptionText() {
+		return getTextFromLocator(draftConfirmationDescription).replaceAll("\\s+", " ").trim();
+	}
+
+	public String getDraftConfirmationHeaderText() {
+		return getTextFromLocator(draftConfirmationHeader).trim();
+	}
+
+	public boolean isDraftConfirmationPublishButtonDisplayed() {
+		return isElementDisplayed(draftConfirmationPublishButton);
+	}
+
+	public boolean isDraftConfirmationGoBackButtonDisplayed() {
+		return isElementDisplayed(goBackButton);
+	}
+
+	public String getDraftConfirmationPublishButtonText() {
+		return getTextFromLocator(draftConfirmationPublishButton).trim();
+	}
+
+	public String getDraftConfirmationGoBackButtonText() {
+		return getTextFromLocator(goBackButton).trim();
+	}
+
+	// Publish sits to the left of Go Back, so its left edge must be the smaller of the two.
+	public boolean isPublishButtonLeftOfGoBackButton() {
+		return getElementLeftEdge(draftConfirmationPublishButton) < getElementLeftEdge(goBackButton);
+	}
+
+	public void clickOnDraftConfirmationPublishButton() {
+		clickOnElement(draftConfirmationPublishButton);
+	}
+
+	// Reports each button on the draft confirmation screen with its id, label and left edge,
+	// which is what the two-button / left-right placement expectation is checked against.
+	public String describeDraftConfirmationButtons() {
+		return (String) ((JavascriptExecutor) driver).executeScript(
+				"var out=[];" + "document.querySelectorAll('button').forEach(function(b){"
+						+ "  var r=b.getBoundingClientRect();"
+						+ "  if(r.width>0 && r.height>0){"
+						+ "    out.push('[id='+(b.id||'-')+\" text='\"+b.innerText.trim()+\"' left=\"+Math.round(r.left)+' disabled='+b.disabled+']');"
+						+ "  }});" + "return out.join(' | ');");
 	}
 
 	public void clickOnProceedButton() {

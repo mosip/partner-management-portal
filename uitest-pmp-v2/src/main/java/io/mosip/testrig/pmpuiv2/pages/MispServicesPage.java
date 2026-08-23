@@ -5,7 +5,10 @@ import java.time.Duration;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
+
+import io.mosip.testrig.pmpuiv2.utility.LogUtil;
 
 public class MispServicesPage extends BasePage {
 
@@ -336,6 +339,49 @@ public class MispServicesPage extends BasePage {
 
 	public boolean isMispLicenseKeyImportantNoteNotEditable() {
 		return isElementNotEditable(mispLicenseKeyImportantNote);
+	}
+
+	// Whitespace is collapsed so the assertion survives the note re-wrapping at a different width.
+	public String getMispLicenseKeyImportantNoteText() {
+		return getTextFromLocator(mispLicenseKeyImportantNote).replaceAll("\\s+", " ").trim();
+	}
+
+	// isElementNotEditable only rules out input/textarea tags, which a <p> note passes by
+	// construction. This actually clicks the note and types at it, then reports whether the
+	// text survived unchanged - the behaviour the test case describes.
+	public boolean isMispLicenseKeyImportantNoteUnchangedAfterTyping(String textToType) {
+		String before = getMispLicenseKeyImportantNoteText();
+		try {
+			clickOnElement(mispLicenseKeyImportantNote);
+			new Actions(driver).sendKeys(textToType).perform();
+		} catch (Exception notInteractable) {
+			LogUtil.step("Note rejected the interaction outright: " + notInteractable.getClass().getSimpleName());
+		}
+		return before.equals(getMispLicenseKeyImportantNoteText());
+	}
+
+	public boolean isMispLicenseKeyImportantNoteFocusable() {
+		return isElementFocusable(mispLicenseKeyImportantNote);
+	}
+
+	public boolean isMispLicenseKeyImportantNoteWithinViewport() {
+		return isElementWithinViewport(mispLicenseKeyImportantNote);
+	}
+
+	public boolean isMispLicenseKeyImportantNoteCovered() {
+		return isElementCoveredAtCentre(mispLicenseKeyImportantNote);
+	}
+
+	public boolean isImportantNoteOverlappingSubmitButton() {
+		return doElementsOverlap(mispLicenseKeyImportantNote, submitButton);
+	}
+
+	public boolean isImportantNoteOverlappingLicenseKeyNameField() {
+		return doElementsOverlap(mispLicenseKeyImportantNote, licenseKeyNameTextbox);
+	}
+
+	public boolean isImportantNoteOverlappingGuidenceNote() {
+		return doElementsOverlap(mispLicenseKeyImportantNote, mispLicenseKeyGuidence);
 	}
 
 	public boolean isPartnerTypePlaceholderDisplayed() {

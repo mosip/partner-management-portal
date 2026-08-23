@@ -569,6 +569,41 @@ public class GlobalConstants {
 	public static final String isPolicyAlreadyApprovedMessageDisplayed = "Verify if policy already approved message displayed";
 	public static final String isPolicyPendingForApprovalMessageDisplayed = "Verify if policy pending for approval message displayed";
 	public static final String isOidcClientTabDisplayed = "Verify if oidc client tab displayed";
+	public static final String isPrimaryInformationSectionDisplayed = "Verify if Primary Information section displayed";
+	public static final String isAdditionalInformationSectionDisplayed = "Verify if Additional Information section displayed";
+	public static final String isPrimaryInformationSectionCollapsible = "Verify Primary Information section collapses and expands on click";
+	public static final String isAdditionalInformationSectionCollapsible = "Verify Additional Information section collapses and expands on click";
+	public static final String isSubmitButtonEnabledAfterFillingForm = "Verify submit button is enabled after filling required and optional details";
+	public static final String isRedirectedToOidcClientListAfterSubmit = "Verify partner is redirected to the OIDC Client tab with the list of existing OIDC clients after success";
+	public static final String isNewOidcClientNameAtTopOfList = "Verify newly created OIDC client appears at the top of the list";
+	public static final String isNewOidcClientStatusActive = "Verify newly created OIDC client has status Active";
+	public static final String isPartnerIdFieldLabelDisplayed = "Verify if Partner ID field label displayed";
+	public static final String isPartnerTypeFieldDisplayed = "Verify if Partner Type field displayed";
+	public static final String isPolicyGroupFieldDisplayed = "Verify if Policy Group field displayed";
+	public static final String isPolicyNameFieldLabelDisplayed = "Verify if Policy Name field label displayed";
+	public static final String isOidcClientNameFieldLabelDisplayed = "Verify if OIDC Client Name field label displayed";
+	public static final String isPublicKeyFieldLabelDisplayed = "Verify if Public Key field label displayed";
+	public static final String isLogoUriFieldLabelDisplayed = "Verify if Logo URI field label displayed";
+	public static final String isRedirectUriFieldLabelDisplayed = "Verify if Redirect URI field label displayed";
+	public static final String isGrantTypeFieldLabelDisplayed = "Verify if Grant Type field label displayed";
+	public static final String isSubmitDisabledWhenPartnerIdEmpty = "Verify Submit button is disabled when Partner ID is empty";
+	public static final String isSubmitDisabledWhenPolicyNameEmpty = "Verify Submit button is disabled when Policy Name is empty";
+	public static final String isSubmitDisabledWhenPublicKeyEmpty = "Verify Submit button is disabled when Public Key is empty";
+	public static final String isSubmitDisabledWhenLogoUriEmpty = "Verify Submit button is disabled when Logo URI is empty";
+	public static final String isPublicKeyRejectedForNonJwkFormat = "Verify Public Key field rejects a well-formed key that is not in JWK format";
+	public static final String isSubmitDisabledWhenRedirectUriEmpty = "Verify Submit button is disabled when Redirect URI is empty";
+	public static final String isGrantTypePreSelectedAsAuthorizationCode = "Verify Grant Type is mandatory and pre-selected as Authorization Code";
+	public static final String isGrantTypeNonEditable = "Verify Grant Type remains Authorization Code after attempting to change it";
+	public static final String isMultipleLanguageRowsSupported = "Verify OIDC Client Name supports adding multiple language rows";
+	public static final String isConfiguredLanguageCodesInDropdown = "Verify Language dropdown displays all configured language codes";
+	public static final String isLanguageDropdownDefaultsToEnglish = "Verify Language dropdown defaults to English when a new language row is added";
+	public static final String isAddNewLanguageButtonVisibleAndClickable = "Verify Add New button is visible and clickable in OIDC Client Name (Multilingual Support)";
+	public static final String isRow2ExcludesAlreadySelectedLanguage = "Verify newly added row excludes already selected languages from the dropdown";
+	public static final String isSubmitDisabledWhenLanguageRowTextBlank = "Verify Submit button is disabled when a selected language row's text box is left blank";
+	public static final String isForgotPasswordBannerToggleOnByDefault = "Verify Forgot Password Banner Required toggle is ON by default";
+	public static final String isSignUpBannerToggleOnByDefault = "Verify SignUp Banner Required toggle is ON by default";
+	public static final String isForgotPasswordBannerInfoTooltipCorrect = "Verify info icon tooltip text for Forgot Password Banner Required toggle";
+	public static final String isClientNameLanguageRow1PlaceholderCorrect = "Verify placeholder text for the first OIDC Client Name (Multilingual) row's textbox";
 	public static final String isPublicKeyFormatErrorDisplayed = "Verify if Public key format error displayed";
 	public static final String isInvalidLogoUriErrorDisplayed = "Verify if Logo Uri format error displayed";
 	public static final String isInvalidRedirectUriErrorDisplayed = "Verify if Redirect Uri format error displayed";
@@ -1588,6 +1623,32 @@ public class GlobalConstants {
 	public static final String isPolicyGroupInfoDescriptionDisplayed = "Verify if policy group info description displayed";
 	public static final String isPolicyNameInfoDescriptionDisplayed = "Verify if policy name info description displayed";
 	public static final String isMispLicenseKeyNamePlaceholderDisplayed = "Verify if MISP license key name placeholder displayed";
+	// Save & Publish policy - the draft confirmation screen shown after Save as Draft
+	public static final String DRAFT_CONFIRMATION_POLICY = "draftconfirmpolicy";
+	public static final String DRAFT_CONFIRMATION_POLICY_DESCRIPTION = "policy used to verify the draft confirmation screen";
+	public static final String DRAFT_CONFIRMATION_HEADER = "Policy saved as Draft";
+	// The rendered message names the policy type rather than using the generic wording.
+	public static final String AUTH_POLICY_DRAFT_CONFIRMATION_MESSAGE = "This Authentication Policy is currently in draft mode. You can publish it to make it active, or continue editing if additional modifications are needed by navigating to 'List of Authentication Policies' page";
+	public static final String PUBLISH_BUTTON_LABEL = "Publish";
+	public static final String GO_BACK_BUTTON_LABEL = "Go Back";
+	public static final String isDraftConfirmationHeaderDisplayed = "Verify the draft confirmation screen header is displayed";
+	public static final String isDraftConfirmationMessageCorrect = "Verify the draft confirmation message wording";
+	public static final String isDraftConfirmationPublishButtonDisplayed = "Verify the Publish button is present on the draft confirmation screen";
+	public static final String isDraftConfirmationGoBackButtonDisplayed = "Verify the Go Back button is present on the draft confirmation screen";
+	public static final String isPublishButtonOnLeftOfGoBack = "Verify Publish is placed to the left of Go Back";
+	public static final String isRedirectedToPolicyListAfterGoBack = "Verify Go Back returns to the list of policies";
+	public static final String isPublishInitiatedFromDraftConfirmation = "Verify Publish from the draft confirmation screen starts the publish flow";
+
+	// Multiple MISP license keys - the Important Note shown on the Generate MISP License Key screen
+	public static final String MISP_LICENSE_KEY_IMPORTANT_NOTE = "Important Note: If multiple MISP license keys are generated for the same Partner ID, only the latest MISP license key will remain active in the ID Authentication (IDA) module. Older license keys will be overwritten. Please exercise caution when creating multiple license keys for the same Partner.";
+	public static final String IMPORTANT_NOTE_EDIT_ATTEMPT = "automation edit attempt";
+	public static final String isImportantNoteTextCorrect = "Verify the Important Note displays the multiple license keys wording";
+	public static final String isImportantNoteReadOnly = "Verify the Important Note text cannot be edited";
+	public static final String isImportantNoteNotFocusable = "Verify the Important Note does not take keyboard focus";
+	public static final String isImportantNoteFullyVisible = "Verify the Important Note is fully visible within the viewport";
+	public static final String isImportantNoteNotCovered = "Verify the Important Note is not covered by any other element";
+	public static final String isImportantNoteNotOverlappingFormFields = "Verify the Important Note does not overlap the form fields or buttons";
+
 	public static final String isMispLicenseKeyGuidenceNoteDisplayed = "Verify if MISP license key guidence note displayed";
 	public static final String isMispLicenseKeyGuidenceNoteNotEditable = "Verify if MISP license key guidence note not editable";
 	public static final String isMispLicenseKeyImportantNoteDisplayed = "Verify if MISP license key important note displayed";
@@ -1694,5 +1755,13 @@ public class GlobalConstants {
 	public static final String EMAIL_ADDRESS_FILTER_INFO_TOOLTIP = "Note: This filter performs an exact match. Please enter the full email address (e.g., user@example.com) to find results.";
 	public static final String isEmailAddressFilterInfoIconDisplayed = "Verify the info icon is displayed alongside the email address filter textbox";
 	public static final String isEmailAddressFilterInfoTooltipCorrect = "Verify the info icon tooltip displays the exact match guidance text";
+
+	// Status label rename - the old 'Activated' wording is replaced by 'Active' across the PMS UI.
+	// Unrelated to 'Inactive' (certificate not uploaded) and 'Deactivated' (partner deactivated),
+	// which are separate statuses and keep their wording.
+	public static final String ACTIVATED_STATUS_LABEL = "Activated";
+	public static final String isActiveStatusLabelDisplayed = "Verify the status label reads Active";
+	public static final String isActivatedStatusLabelAbsent = "Verify the old Activated status label does not appear anywhere on the page";
+	public static final String isActiveOptionInStatusDropdown = "Verify the status search dropdown offers Active instead of Activated";
 
 }
