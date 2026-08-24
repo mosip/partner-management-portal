@@ -413,11 +413,11 @@ public class BasePage {
 			LogUtil.step("Element became stale while checking selected state");
 			LogUtil.step("Page URL: " + driver.getCurrentUrl());
 			LogUtil.step("Page Title: " + driver.getTitle());
-			return false;
+			throw e;
 		} catch (Exception e) {
 			LogUtil.error("isElementSelected failed: " + e.getClass().getSimpleName());
 			takeScreenshot();
-			return false;
+			throw new AssertionError("Unable to determine selected state", e);
 		}
 	}
 
@@ -618,11 +618,11 @@ public class BasePage {
 	}
 
 	// Left edge in viewport coordinates, for asserting the relative placement of two controls.
-	protected int getElementLeftEdge(WebElement element) {
+	protected double getElementLeftEdge(WebElement element) {
 		WaitUtil.waitForVisibility(driver, element);
 		Number left = (Number) ((JavascriptExecutor) driver)
 				.executeScript("return arguments[0].getBoundingClientRect().left;", element);
-		return left.intValue();
+		return left.doubleValue();
 	}
 
 	// Compares the two bounding boxes directly, so a note that visually runs into a
@@ -653,7 +653,19 @@ public class BasePage {
 	// Exact text equality, so a search for 'Activated' can never match 'Deactivated'.
 	// Used by the status label checks, where that distinction is the whole point.
 	public int countElementsWithExactText(String text) {
-		return getElementCount(By.xpath("//*[normalize-space(text())='" + text + "']"));
+		return getElementCount(By.xpath("//*[normalize-space(text())=" + toXpathLiteral(text) + "]"));
+	}
+
+	// XPath 1.0 has no escape character, so a value containing both quote types must be
+	// rebuilt with concat() - the only way to embed both without a literal delimiter clash.
+	private static String toXpathLiteral(String value) {
+		if (!value.contains("'")) {
+			return "'" + value + "'";
+		}
+		if (!value.contains("\"")) {
+			return "\"" + value + "\"";
+		}
+		return "concat('" + value.replace("'", "',\"'\",'") + "')";
 	}
 
 	public boolean isTextPresentOnPage(String text) {

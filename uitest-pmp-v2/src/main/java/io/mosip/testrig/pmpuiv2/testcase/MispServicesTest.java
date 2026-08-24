@@ -176,6 +176,11 @@ public class MispServicesTest extends BaseClass {
                 GlobalConstants.isImportantNoteFullyVisible);
         assertFalse(mispServicesPage.isMispLicenseKeyImportantNoteCovered(), GlobalConstants.isImportantNoteNotCovered);
 
+        assertTrue(mispServicesPage.isLicenseKeyNameFieldDisplayed(),
+                GlobalConstants.isMispLicenseKeyNamePlaceholderDisplayed);
+        assertTrue(mispServicesPage.isMispLicenseKeyGuidenceNoteDisplayed(),
+                GlobalConstants.isMispLicenseKeyGuidenceNoteDisplayed);
+
         assertFalse(mispServicesPage.isImportantNoteOverlappingSubmitButton(),
                 GlobalConstants.isImportantNoteNotOverlappingFormFields);
         assertFalse(mispServicesPage.isImportantNoteOverlappingLicenseKeyNameField(),

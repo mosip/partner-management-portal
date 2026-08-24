@@ -163,7 +163,7 @@ public class PmpTestUtil extends BaseTestCaseFunc {
 			keyGenerator.initialize(2048, secureRandom);
 			final KeyPair keypair = keyGenerator.generateKeyPair();
 			RSAKey jwk = new RSAKey.Builder((RSAPublicKey) keypair.getPublic()).keyID("RSAKeyID")
-					.keyUse(KeyUse.SIGNATURE).privateKey(keypair.getPrivate()).build();
+					.keyUse(KeyUse.SIGNATURE).build();
 
 			return jwk.toJSONString();
 		} catch (NoSuchAlgorithmException e) {
@@ -180,7 +180,8 @@ public class PmpTestUtil extends BaseTestCaseFunc {
 			SecureRandom secureRandom = new SecureRandom();
 			keyGenerator.initialize(2048, secureRandom);
 			final KeyPair keypair = keyGenerator.generateKeyPair();
-			String base64Key = java.util.Base64.getEncoder().encodeToString(keypair.getPublic().getEncoded());
+			String base64Key = java.util.Base64.getMimeEncoder(64, new byte[] { '\n' })
+					.encodeToString(keypair.getPublic().getEncoded());
 			return "-----BEGIN PUBLIC KEY-----\n" + base64Key + "\n-----END PUBLIC KEY-----";
 		} catch (NoSuchAlgorithmException e) {
 			logger.error(e.getMessage());

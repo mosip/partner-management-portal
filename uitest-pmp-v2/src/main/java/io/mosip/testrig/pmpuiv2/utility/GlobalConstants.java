@@ -1763,5 +1763,7 @@ public class GlobalConstants {
 	public static final String isActiveStatusLabelDisplayed = "Verify the status label reads Active";
 	public static final String isActivatedStatusLabelAbsent = "Verify the old Activated status label does not appear anywhere on the page";
 	public static final String isActiveOptionInStatusDropdown = "Verify the status search dropdown offers Active instead of Activated";
+	public static final String isMispPartnerFilterApplied = "Verify the MISP Partner type filter has been applied before reading statuses";
+	public static final String isFilteredRowPartnerTypeMisp = "Verify every filtered row's Partner Type is MISP Partner";
 
 }

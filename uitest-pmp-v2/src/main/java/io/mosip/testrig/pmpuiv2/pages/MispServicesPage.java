@@ -347,16 +347,12 @@ public class MispServicesPage extends BasePage {
 	}
 
 	// isElementNotEditable only rules out input/textarea tags, which a <p> note passes by
-	// construction. This actually clicks the note and types at it, then reports whether the
-	// text survived unchanged - the behaviour the test case describes.
+	// construction. This actually types at the note directly (not whatever has focus) and
+	// reports whether the text survived unchanged - the behaviour the test case describes.
+	// Interaction failures are allowed to propagate rather than being read as "read-only".
 	public boolean isMispLicenseKeyImportantNoteUnchangedAfterTyping(String textToType) {
 		String before = getMispLicenseKeyImportantNoteText();
-		try {
-			clickOnElement(mispLicenseKeyImportantNote);
-			new Actions(driver).sendKeys(textToType).perform();
-		} catch (Exception notInteractable) {
-			LogUtil.step("Note rejected the interaction outright: " + notInteractable.getClass().getSimpleName());
-		}
+		new Actions(driver).sendKeys(mispLicenseKeyImportantNote, textToType).perform();
 		return before.equals(getMispLicenseKeyImportantNoteText());
 	}
 
@@ -374,6 +370,10 @@ public class MispServicesPage extends BasePage {
 
 	public boolean isImportantNoteOverlappingSubmitButton() {
 		return doElementsOverlap(mispLicenseKeyImportantNote, submitButton);
+	}
+
+	public boolean isLicenseKeyNameFieldDisplayed() {
+		return isElementDisplayed(licenseKeyNameTextbox);
 	}
 
 	public boolean isImportantNoteOverlappingLicenseKeyNameField() {

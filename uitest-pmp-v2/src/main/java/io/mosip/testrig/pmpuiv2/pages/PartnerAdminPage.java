@@ -877,6 +877,10 @@ public class PartnerAdminPage extends BasePage {
 		return getColumnValuesWithStaleRetry(By.xpath("//tr[starts-with(@id,'partner_list_item')]/td[1]"));
 	}
 
+	public List<String> getPartnerTypeColumnValues() {
+		return getColumnValuesWithStaleRetry(By.xpath("//tr[starts-with(@id,'partner_list_item')]/td[2]"));
+	}
+
 	public boolean waitForFilteredCountToChangeFrom(int previousCount) {
 		try {
 			new WebDriverWait(driver, LIST_LOAD_TIMEOUT)

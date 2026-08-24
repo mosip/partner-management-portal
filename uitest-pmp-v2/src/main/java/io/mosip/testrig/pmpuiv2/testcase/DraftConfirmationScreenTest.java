@@ -23,7 +23,7 @@ public class DraftConfirmationScreenTest extends BaseClass {
 	private BasePage basePage;
 
 	@Test(priority = 1, description = "Verify Save as Draft button is clickable")
-	public void saveAsDraftButtonIsClickable() {
+	public void saveAsDraftButtonBecomesEnabled() {
 		fillNewAuthPolicyForm(uniquePolicyName("clickable"));
 
 		// The button starts disabled and only enables once the uploaded policy data is valid,

@@ -59,10 +59,19 @@ public class StatusLabelActiveTest extends BaseClass {
 	public void mispPartnerStatusLabelReadsActive() {
 		navigateToPartnerListPage();
 
+		int countBeforeFilter = partnerAdminPage.getFilteredPartnersCountFromSubtitle();
 		partnerAdminPage.clickOnFilterButton();
 		partnerAdminPage.clickOnPartnerTypeDropdown();
 		partnerAdminPage.selectPartnerTypeFilterOption(GlobalConstants.MISP_PARTNER);
 		partnerAdminPage.clickOnApplyFiltersBtn();
+		assertTrue(partnerAdminPage.waitForFilteredCountToChangeFrom(countBeforeFilter),
+				GlobalConstants.isMispPartnerFilterApplied);
+
+		List<String> partnerTypes = partnerAdminPage.getPartnerTypeColumnValues();
+		LogUtil.step("Filtered partner types: " + partnerTypes);
+		for (String partnerType : partnerTypes) {
+			assertEquals(partnerType, GlobalConstants.MISP_PARTNER, GlobalConstants.isFilteredRowPartnerTypeMisp);
+		}
 
 		List<String> statuses = partnerAdminPage.getStatusColumnValues();
 		LogUtil.step("MISP partner statuses: " + statuses);
@@ -75,6 +84,8 @@ public class StatusLabelActiveTest extends BaseClass {
 	public void policyManagerStatusLabelReadsActive() {
 		dashboardPage = new DashboardPage(driver);
 		partnerAdminPage = new PartnerAdminPage(driver);
+
+		loginAs(GlobalConstants.POLICIES_ADMIN);
 
 		policiesPage = dashboardPage.clickOnPoliciesTitle();
 		assertNoActivatedLabel();
