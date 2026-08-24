@@ -582,8 +582,6 @@ public class OidcClientPage extends BasePage {
 	@FindBy(id = "create_oidc_grant_type_dropdown_btn")
 	private WebElement grantTypeDropdown;
 
-	// Clicking this same button adds the next language row - it relabels itself from
-	// "Add Client Name Language" to "+Add New" once the first row exists.
 	@FindBy(id = "add_client_name_lang_map_entry")
 	private WebElement addClientNameLanguageButton;
 

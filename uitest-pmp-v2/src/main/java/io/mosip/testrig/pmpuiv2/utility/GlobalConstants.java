@@ -1623,11 +1623,9 @@ public class GlobalConstants {
 	public static final String isPolicyGroupInfoDescriptionDisplayed = "Verify if policy group info description displayed";
 	public static final String isPolicyNameInfoDescriptionDisplayed = "Verify if policy name info description displayed";
 	public static final String isMispLicenseKeyNamePlaceholderDisplayed = "Verify if MISP license key name placeholder displayed";
-	// Save & Publish policy - the draft confirmation screen shown after Save as Draft
 	public static final String DRAFT_CONFIRMATION_POLICY = "draftconfirmpolicy";
 	public static final String DRAFT_CONFIRMATION_POLICY_DESCRIPTION = "policy used to verify the draft confirmation screen";
 	public static final String DRAFT_CONFIRMATION_HEADER = "Policy saved as Draft";
-	// The rendered message names the policy type rather than using the generic wording.
 	public static final String AUTH_POLICY_DRAFT_CONFIRMATION_MESSAGE = "This Authentication Policy is currently in draft mode. You can publish it to make it active, or continue editing if additional modifications are needed by navigating to 'List of Authentication Policies' page";
 	public static final String PUBLISH_BUTTON_LABEL = "Publish";
 	public static final String GO_BACK_BUTTON_LABEL = "Go Back";
@@ -1639,7 +1637,6 @@ public class GlobalConstants {
 	public static final String isRedirectedToPolicyListAfterGoBack = "Verify Go Back returns to the list of policies";
 	public static final String isPublishInitiatedFromDraftConfirmation = "Verify Publish from the draft confirmation screen starts the publish flow";
 
-	// Multiple MISP license keys - the Important Note shown on the Generate MISP License Key screen
 	public static final String MISP_LICENSE_KEY_IMPORTANT_NOTE = "Important Note: If multiple MISP license keys are generated for the same Partner ID, only the latest MISP license key will remain active in the ID Authentication (IDA) module. Older license keys will be overwritten. Please exercise caution when creating multiple license keys for the same Partner.";
 	public static final String IMPORTANT_NOTE_EDIT_ATTEMPT = "automation edit attempt";
 	public static final String isImportantNoteTextCorrect = "Verify the Important Note displays the multiple license keys wording";
@@ -1756,9 +1753,6 @@ public class GlobalConstants {
 	public static final String isEmailAddressFilterInfoIconDisplayed = "Verify the info icon is displayed alongside the email address filter textbox";
 	public static final String isEmailAddressFilterInfoTooltipCorrect = "Verify the info icon tooltip displays the exact match guidance text";
 
-	// Status label rename - the old 'Activated' wording is replaced by 'Active' across the PMS UI.
-	// Unrelated to 'Inactive' (certificate not uploaded) and 'Deactivated' (partner deactivated),
-	// which are separate statuses and keep their wording.
 	public static final String ACTIVATED_STATUS_LABEL = "Activated";
 	public static final String isActiveStatusLabelDisplayed = "Verify the status label reads Active";
 	public static final String isActivatedStatusLabelAbsent = "Verify the old Activated status label does not appear anywhere on the page";

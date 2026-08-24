@@ -1099,8 +1099,6 @@ public class AuthPolicyPage extends BasePage {
 		return isElementEnabled(saveAsDraftButton);
 	}
 
-	// The button stays disabled until the uploaded policy data has been parsed, so the
-	// clickable check has to wait for that rather than sample it the instant upload returns.
 	public boolean waitForSaveAsDraftButtonEnabled() {
 		try {
 			new WebDriverWait(driver, SAVE_AS_DRAFT_ENABLE_TIMEOUT).until(driver -> saveAsDraftButton.isEnabled());
@@ -1126,7 +1124,6 @@ public class AuthPolicyPage extends BasePage {
 		return isElementDisplayed(policyDraftInfoMessage);
 	}
 
-	// Whitespace collapsed so the assertion survives the message re-wrapping at a different width.
 	public String getDraftConfirmationDescriptionText() {
 		return getTextFromLocator(draftConfirmationDescription).replaceAll("\\s+", " ").trim();
 	}
@@ -1151,7 +1148,6 @@ public class AuthPolicyPage extends BasePage {
 		return getTextFromLocator(goBackButton).trim();
 	}
 
-	// Publish sits to the left of Go Back, so its left edge must be the smaller of the two.
 	public boolean isPublishButtonLeftOfGoBackButton() {
 		return getElementLeftEdge(draftConfirmationPublishButton) < getElementLeftEdge(goBackButton);
 	}
@@ -1160,8 +1156,6 @@ public class AuthPolicyPage extends BasePage {
 		clickOnElement(draftConfirmationPublishButton);
 	}
 
-	// Reports each button on the draft confirmation screen with its id, label and left edge,
-	// which is what the two-button / left-right placement expectation is checked against.
 	public String describeDraftConfirmationButtons() {
 		return (String) ((JavascriptExecutor) driver).executeScript(
 				"var out=[];" + "document.querySelectorAll('button').forEach(function(b){"

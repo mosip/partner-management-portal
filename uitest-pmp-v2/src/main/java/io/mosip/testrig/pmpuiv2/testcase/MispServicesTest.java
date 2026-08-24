@@ -188,7 +188,6 @@ public class MispServicesTest extends BaseClass {
         assertFalse(mispServicesPage.isImportantNoteOverlappingGuidenceNote(),
                 GlobalConstants.isImportantNoteNotOverlappingFormFields);
 
-        // The form must still work with the note on screen.
         assertTrue(mispServicesPage.isSubmitButtonDisplayed(), GlobalConstants.isSubmitButtonDisplayed);
         assertTrue(mispServicesPage.isCancelButtonDisplayed(), GlobalConstants.isCancelButtonDisplayed);
         assertTrue(mispServicesPage.isClearFormButtonDisplayed(), GlobalConstants.isClearFormButtonDisplayed);

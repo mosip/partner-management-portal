@@ -33,7 +33,6 @@ public class StatusLabelActiveTest extends BaseClass {
 				GlobalConstants.isActiveStatusLabelDisplayed);
 		assertNoActivatedLabel();
 
-		// The status also appears on the details screen, so it is checked there too.
 		partnerAdminPage.clickOnActivatedPartner();
 		assertTrue(partnerAdminPage.isViewPartnersDetailsPageDisplayed(),
 				GlobalConstants.isViewPartnersDetailsPageDisplayed);
@@ -107,14 +106,11 @@ public class StatusLabelActiveTest extends BaseClass {
 		assertNoActivatedLabel();
 	}
 
-	// Exact-text matching, so a legitimate 'Deactivated' badge is never counted here.
 	private void assertNoActivatedLabel() {
 		assertEquals(partnerAdminPage.countElementsWithExactText(GlobalConstants.ACTIVATED_STATUS_LABEL), 0,
 				GlobalConstants.isActivatedStatusLabelAbsent);
 	}
 
-	// The dashboard cards are only reachable from the dashboard itself, so each card
-	// visit starts from a fresh load rather than from whatever page the last one opened.
 	private void returnToDashboard() {
 		driver.get(envPathPmpUiv2);
 	}

@@ -617,7 +617,6 @@ public class BasePage {
 				element, tolerancePx));
 	}
 
-	// Left edge in viewport coordinates, for asserting the relative placement of two controls.
 	protected double getElementLeftEdge(WebElement element) {
 		WaitUtil.waitForVisibility(driver, element);
 		Number left = (Number) ((JavascriptExecutor) driver)
@@ -625,8 +624,6 @@ public class BasePage {
 		return left.doubleValue();
 	}
 
-	// Compares the two bounding boxes directly, so a note that visually runs into a
-	// neighbouring field or button is caught even when neither covers the other's centre.
 	protected boolean doElementsOverlap(WebElement first, WebElement second) {
 		LogUtil.verify("Checking whether two elements overlap: ", first);
 		return Boolean.TRUE.equals(((JavascriptExecutor) driver).executeScript(
@@ -650,14 +647,10 @@ public class BasePage {
 		return driver.findElements(locator).size();
 	}
 
-	// Exact text equality, so a search for 'Activated' can never match 'Deactivated'.
-	// Used by the status label checks, where that distinction is the whole point.
 	public int countElementsWithExactText(String text) {
 		return getElementCount(By.xpath("//*[normalize-space(text())=" + toXpathLiteral(text) + "]"));
 	}
 
-	// XPath 1.0 has no escape character, so a value containing both quote types must be
-	// rebuilt with concat() - the only way to embed both without a literal delimiter clash.
 	private static String toXpathLiteral(String value) {
 		if (!value.contains("'")) {
 			return "'" + value + "'";

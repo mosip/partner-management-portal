@@ -13,10 +13,6 @@ import io.mosip.testrig.pmpuiv2.pages.OidcClientPage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
-// Test methods here are grouped by which part of the Create OIDC Client form they exercise, so
-// each method opens the form once and runs every related scenario against that single session
-// rather than relaunching the browser per scenario. See individual method comments for which
-// manual test case each assertion maps to.
 @Test(dependsOnGroups = { "PolicyCreationForAuthPartner" }, groups = { "OidcClientMultilingualFieldsTest" })
 public class OidcClientMultilingualFieldsTest extends BaseClass {
 
@@ -32,9 +28,7 @@ public class OidcClientMultilingualFieldsTest extends BaseClass {
 				GlobalConstants.isAuthenticationServicesDisplayed);
 	}
 
-	// The manual test case refers to the first section as "Mandatory Information"; the live UI labels it
-	// "Primary Information".
-	@Test(priority = 2, description = "Verify Create OIDC Client form layout - sections, field labels, and Grant Type")
+	@Test(priority = 2, description = "Verify Create OIDC Client form layout - sections, field labels, and Grant Type", dependsOnMethods = "loginAndDashboardChecks")
 	public void createFormLayoutChecks() {
 		OidcClientPage oidcClientPage = openCreateOidcClientForm();
 
@@ -74,11 +68,7 @@ public class OidcClientMultilingualFieldsTest extends BaseClass {
 		assertTrue(oidcClientPage.isAuthorizationCodeTextDisplayed(), GlobalConstants.isGrantTypeNonEditable);
 	}
 
-	// The manual test case says the language dropdown should contain "Default"; the live UI has no such
-	// option (only English/Français/العربية), but does pre-select English as the default value for a new
-	// row - that reinterpretation is what's verified here. The placeholder-text scenario likewise expects
-	// different wording than what the live UI actually shows; the real text is asserted instead.
-	@Test(priority = 3, description = "Verify OIDC Client Name multilingual section - Add New, language options, defaults")
+	@Test(priority = 3, description = "Verify OIDC Client Name multilingual section - Add New, language options, defaults", dependsOnMethods = "createFormLayoutChecks")
 	public void multilingualSectionChecks() {
 		OidcClientPage oidcClientPage = openCreateOidcClientForm();
 
@@ -97,6 +87,7 @@ public class OidcClientMultilingualFieldsTest extends BaseClass {
 		assertTrue(oidcClientPage.isEnglishLanguageOptionDisplayed(), GlobalConstants.isConfiguredLanguageCodesInDropdown);
 		assertTrue(oidcClientPage.isFrenchLanguageOptionDisplayed(), GlobalConstants.isConfiguredLanguageCodesInDropdown);
 		assertTrue(oidcClientPage.isArabicLanguageOptionDisplayed(), GlobalConstants.isConfiguredLanguageCodesInDropdown);
+		oidcClientPage.clickOnClientNameLanguageDropdownRow1();
 
 		oidcClientPage.clickOnAddClientNameLanguageButton();
 		oidcClientPage.clickOnClientNameLanguageDropdownRow2();
@@ -106,7 +97,7 @@ public class OidcClientMultilingualFieldsTest extends BaseClass {
 				GlobalConstants.isRow2ExcludesAlreadySelectedLanguage);
 	}
 
-	@Test(priority = 4, description = "Verify Forgot Password / SignUp Banner toggle defaults and info tooltip text")
+	@Test(priority = 4, description = "Verify Forgot Password / SignUp Banner toggle defaults and info tooltip text", dependsOnMethods = "multilingualSectionChecks")
 	public void additionalInfoChecks() {
 		OidcClientPage oidcClientPage = openCreateOidcClientForm();
 
@@ -122,10 +113,7 @@ public class OidcClientMultilingualFieldsTest extends BaseClass {
 				GlobalConstants.isForgotPasswordBannerInfoTooltipCorrect);
 	}
 
-	// Fields are filled in one at a time so each still-incomplete state can confirm Submit stays disabled;
-	// this covers Partner ID / Policy Name / Public Key / Logo URI / Redirect URI mandatory checks in one
-	// pass, plus the Public Key JWK-format rejection along the way.
-	@Test(priority = 5, description = "Verify Submit button stays disabled until every mandatory field is filled")
+	@Test(priority = 5, description = "Verify Submit button stays disabled until every mandatory field is filled", dependsOnMethods = "additionalInfoChecks")
 	public void submitValidationChecks() {
 		OidcClientPage oidcClientPage = openCreateOidcClientForm();
 
@@ -151,10 +139,7 @@ public class OidcClientMultilingualFieldsTest extends BaseClass {
 		assertTrue(oidcClientPage.isSubmitButtonEnabled(), GlobalConstants.isSubmitButtonEnabledAfterFillingForm);
 	}
 
-	// Fills every mandatory and optional field (including a second multilingual name row, first left blank
-	// to confirm Submit disables, then completed), submits, and verifies the resulting confirmation and
-	// list state.
-	@Test(priority = 6, description = "Verify partner can create an OIDC Client with required and optional details")
+	@Test(priority = 6, description = "Verify partner can create an OIDC Client with required and optional details", dependsOnMethods = "submitValidationChecks")
 	public void fillAndSubmitFlow() {
 		OidcClientPage oidcClientPage = openCreateOidcClientForm();
 

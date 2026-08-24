@@ -26,8 +26,6 @@ public class DraftConfirmationScreenTest extends BaseClass {
 	public void saveAsDraftButtonBecomesEnabled() {
 		fillNewAuthPolicyForm(uniquePolicyName("clickable"));
 
-		// The button starts disabled and only enables once the uploaded policy data is valid,
-		// so this waits for that transition rather than sampling it immediately.
 		assertTrue(authPolicyPage.waitForSaveAsDraftButtonEnabled(), GlobalConstants.isSaveAsDraftButtonEnabled);
 	}
 
@@ -79,7 +77,6 @@ public class DraftConfirmationScreenTest extends BaseClass {
 				GlobalConstants.isPublishInitiatedFromDraftConfirmation);
 	}
 
-	// Policy names must be unique per run, and each test creates its own policy.
 	private String uniquePolicyName(String suffix) {
 		return GlobalConstants.DRAFT_CONFIRMATION_POLICY + suffix + data;
 	}
@@ -101,7 +98,6 @@ public class DraftConfirmationScreenTest extends BaseClass {
 		policiesPage.clickOnAuthPolicyTab();
 		authPolicyPage.clickOnCreateAuthPolicyButton();
 
-		// selectPolicyGroupDropdown opens the dropdown itself, so it must not be opened beforehand.
 		authPolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULT_POLICYGROUP);
 		authPolicyPage.enterPolicyName(policyName);
 		authPolicyPage.enterpolicyDescription(GlobalConstants.DRAFT_CONFIRMATION_POLICY_DESCRIPTION);

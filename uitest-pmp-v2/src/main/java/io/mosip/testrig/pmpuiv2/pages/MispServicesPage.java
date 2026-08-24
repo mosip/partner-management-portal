@@ -341,15 +341,10 @@ public class MispServicesPage extends BasePage {
 		return isElementNotEditable(mispLicenseKeyImportantNote);
 	}
 
-	// Whitespace is collapsed so the assertion survives the note re-wrapping at a different width.
 	public String getMispLicenseKeyImportantNoteText() {
 		return getTextFromLocator(mispLicenseKeyImportantNote).replaceAll("\\s+", " ").trim();
 	}
 
-	// isElementNotEditable only rules out input/textarea tags, which a <p> note passes by
-	// construction. This actually types at the note directly (not whatever has focus) and
-	// reports whether the text survived unchanged - the behaviour the test case describes.
-	// Interaction failures are allowed to propagate rather than being read as "read-only".
 	public boolean isMispLicenseKeyImportantNoteUnchangedAfterTyping(String textToType) {
 		String before = getMispLicenseKeyImportantNoteText();
 		new Actions(driver).sendKeys(mispLicenseKeyImportantNote, textToType).perform();

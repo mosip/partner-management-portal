@@ -172,8 +172,6 @@ public class PmpTestUtil extends BaseTestCaseFunc {
 		}
 	}
 
-	// A structurally valid public key in PEM format, used to prove the Public Key field rejects
-	// well-formed keys that simply aren't JWK, not just malformed text.
 	public static String generatePemPublicKey() {
 		try {
 			KeyPairGenerator keyGenerator = KeyPairGenerator.getInstance("RSA");
