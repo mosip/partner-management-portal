@@ -9,6 +9,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
@@ -43,6 +44,8 @@ public class BaseClass {
 	protected String password = allpassword[0];
 	public static final Logger logger = Logger.getLogger(BaseClass.class);
 	public static String data;
+	private static final Set<String> SKIP_AUTO_LOGIN_METHODS = Set.of("partnerAdminCreation",
+			"uploadPartnerCertificateAfterLogin");
 
 	@BeforeMethod
 	public void setUp(Method method) throws Exception {
@@ -59,6 +62,8 @@ public class BaseClass {
 		ChromeOptions options = new ChromeOptions();
 	    boolean isHeadless = ConfigManager.getheadless().equalsIgnoreCase("yes");
 
+	    options.addArguments("--disable-extensions", "--disable-notifications", "--disable-popup-blocking");
+
 	    if (isHeadless) {
 	        logger.info("Running in HEADLESS mode");
 
@@ -69,7 +74,8 @@ public class BaseClass {
 	            "--disable-dev-shm-usage",
 	            "--window-size=1920,1080",
 	            "--force-device-scale-factor=1",
-	            "--high-dpi-support=1"
+	            "--high-dpi-support=1",
+	            "--blink-settings=imagesEnabled=false"
 	        );
 	    } else {
 	        logger.info("Running in HEADED mode");
@@ -109,7 +115,9 @@ public class BaseClass {
 		logger.info("Test data suffix generated: " + BaseClass.data);
 
 		LoginPage loginPage = new LoginPage(driver);
-		loginPage.login(userid, password);
+		if (!SKIP_AUTO_LOGIN_METHODS.contains(method.getName())) {
+			loginPage.login(userid, password);
+		}
 	}
 
 	@AfterMethod

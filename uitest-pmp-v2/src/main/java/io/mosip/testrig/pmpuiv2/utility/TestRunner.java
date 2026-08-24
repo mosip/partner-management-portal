@@ -49,7 +49,15 @@ public class TestRunner {
 	public static void startTestRunner() throws Exception {
 		File homeDir = null;
 		TestNG runner = new TestNG();
-		if (!ConfigManager.gettestcases().equals("")) {
+		String testngSuiteFile = resolveTestngSuiteFile();
+		if (testngSuiteFile != null && !testngSuiteFile.isBlank()) {
+			File suiteFile = new File(getResourcePath() + "/testngFile/" + testngSuiteFile);
+			if (!suiteFile.isFile()) {
+				throw new IllegalArgumentException("TestNG suite file not found: " + suiteFile.getAbsolutePath());
+			}
+			logger.info("Running TestNG suite file: " + suiteFile.getAbsolutePath());
+			runner.setTestSuites(List.of(suiteFile.getAbsolutePath()));
+		} else if (!ConfigManager.gettestcases().equals("")) {
 
 			XmlSuite suite = new XmlSuite();
 			suite.setName("MySuite");
@@ -105,6 +113,8 @@ public class TestRunner {
 			XmlClass mispPolicyTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.MispPolicyTest");
 			XmlClass abisPartnerTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.AbisPartnerTest");
 			XmlClass mispServicesTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.MispServicesTest");
+			XmlClass credentialPartnerCreation = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.CredentialPartnerCreation");
+			XmlClass credentialPartnerLoginTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.CredentialPartnerLoginTest");
 
 			List<XmlClass> classes = new ArrayList<>();
 			String[] scenarioNames = ConfigManager.gettestcases().split(",");
@@ -237,6 +247,13 @@ public class TestRunner {
 				case "AbisPartnerTest":
 					addClassIfAbsent(classes, partnerAdminCreation, abisPartnerTest);
 					break;
+				case "CredentialPartnerCreation":
+					addClassIfAbsent(classes, partnerAdminCreation, credentialPartnerCreation);
+					break;
+				case "CredentialPartnerLoginTest":
+					addClassIfAbsent(classes, partnerAdminCreation, credentialPartnerCreation,
+							credentialPartnerLoginTest);
+					break;
 				case "MispServicesTest":
 					addClassIfAbsent(classes, partnerAdminCreation, mispPartnerTest, mispPolicyTest, mispServicesTest);
 					break;
@@ -292,6 +309,12 @@ public class TestRunner {
 				classes.add(xmlClass);
 			}
 		}
+	}
+
+	/** Returns the TestNG suite file name from {@code -DtestngSuiteFile}, if provided. */
+	private static String resolveTestngSuiteFile() {
+		String suiteFile = System.getProperty("testngSuiteFile");
+		return (suiteFile == null || suiteFile.isBlank()) ? null : suiteFile.trim();
 	}
 
 	public static String getGlobalResourcePath() {

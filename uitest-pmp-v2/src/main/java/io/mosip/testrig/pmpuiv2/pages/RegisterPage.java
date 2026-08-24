@@ -6,6 +6,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.Select;
 
 public class RegisterPage extends BasePage {
 
@@ -84,6 +85,22 @@ public class RegisterPage extends BasePage {
 
 	public void selectDeviceProviderInPartnerTypeDropdown() {
 		dropdownByIndex(partnerTypeDropdown, 0);
+	}
+
+	/** Selects Credential Partner in the partner type dropdown during registration. */
+	public void selectCredentialPartnerInPartnerTypeDropdown() {
+		selectByValueInDropdown(partnerTypeDropdown, "CREDENTIAL_PARTNER");
+	}
+
+	/** Returns the currently selected partner type value, or empty string if none. */
+	public String getSelectedPartnerTypeValue() {
+		String value = new Select(partnerTypeDropdown).getFirstSelectedOption().getAttribute("value");
+		return value == null ? "" : value.trim();
+	}
+
+	/** True when no partner type has been explicitly selected (empty/default placeholder). */
+	public boolean isPartnerTypeUnselected() {
+		return getSelectedPartnerTypeValue().isEmpty();
 	}
 
 	public boolean isAddressTextBoxDisplayed() {
@@ -169,7 +186,6 @@ public class RegisterPage extends BasePage {
 		System.out.println(allWindowHandles);
 		if (allWindowHandles.size() >= 2) {
 			String secondWindowHandle = allWindowHandles.toArray(new String[0])[1];
-			String firstWindowHandle = allWindowHandles.toArray(new String[0])[0];
 			// Switch to the second window
 			driver.switchTo().window(secondWindowHandle);
 		}
@@ -190,7 +206,6 @@ public class RegisterPage extends BasePage {
 		System.out.println(allWindowHandles);
 		if (allWindowHandles.size() >= 2) {
 			String secondWindowHandle = allWindowHandles.toArray(new String[0])[1];
-			String firstWindowHandle = allWindowHandles.toArray(new String[0])[0];
 			// Switch to the second window
 			driver.switchTo().window(secondWindowHandle);
 		}

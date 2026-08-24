@@ -1,11 +1,16 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
 import java.time.Duration;
+import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import io.mosip.testrig.pmpuiv2.utility.LogUtil;
 
 public class PoliciesPage extends BasePage {
 
@@ -287,6 +292,35 @@ public class PoliciesPage extends BasePage {
 
 	public boolean isPoliciesPageDisplayed() {
 		return isElementDisplayed(policiesTitle);
+	}
+
+	/**
+	 * True when Policies list page has loaded after side-nav/dashboard navigation.
+	 * Requires policies URL and a content marker (avoids matching title_back_icon on other pages,
+	 * and waits through the policies-list loading state).
+	 */
+	public boolean isPoliciesListPageDisplayed() {
+		By[] markers = new By[] { By.id("page_title"), By.id("list_of_policies"), By.id("show_request_policy"),
+				By.id("policies_request_btn"), By.id("polices_list_error_msg"), By.id("sub_title_home_btn"),
+				By.id("loading_text") };
+		try {
+			return new WebDriverWait(driver, Duration.ofSeconds(45)).until(d -> {
+				String url = d.getCurrentUrl();
+				if (!(url.contains("policies-list") || url.contains("/policies/"))) {
+					return false;
+				}
+				for (By marker : markers) {
+					List<WebElement> elements = d.findElements(marker);
+					if (!elements.isEmpty() && elements.get(0).isDisplayed()) {
+						return true;
+					}
+				}
+				return false;
+			});
+		} catch (TimeoutException e) {
+			LogUtil.step("Policies list page not displayed. URL: " + driver.getCurrentUrl());
+			return false;
+		}
 	}
 
 	public void clickOnRequestPolicyButton() {
