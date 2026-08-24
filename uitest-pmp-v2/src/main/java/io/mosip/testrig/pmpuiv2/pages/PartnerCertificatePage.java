@@ -3,14 +3,18 @@ package io.mosip.testrig.pmpuiv2.pages;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
+import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
+import io.mosip.testrig.pmpuiv2.utility.LogUtil;
 
 public class PartnerCertificatePage extends BasePage {
 
@@ -472,6 +476,34 @@ public class PartnerCertificatePage extends BasePage {
 	/** Verifies the Credential Partner certificate re-upload page is displayed. */
 	public boolean isPartnerCertificateReuploadPageDisplayed() {
 		return isElementDisplayed(partnerCertificateReuploadButton);
+	}
+
+	/**
+	 * True when Partner Certificates list page has loaded after side-nav/dashboard navigation.
+	 * Accepts upload, re-upload, download, or partner-type label markers (avoids long OR waits).
+	 */
+	public boolean isPartnerCertificatesListPageDisplayed() {
+		By[] markers = new By[] { By.id("partner_certificate_re_upload_btn1"),
+				By.id("partner_certificate_upload_btn1"), By.id("download_btn1"), By.id("partner_type_label"),
+				By.id("certificate_issued_to_label1"), By.id("upload_partner_certificate_label1"),
+				By.id("no_partner_types_are_mapped"), By.id("page_title") };
+		try {
+			return new WebDriverWait(driver, Duration.ofSeconds(30)).until(d -> {
+				if (!d.getCurrentUrl().contains("partner-certificate")) {
+					return false;
+				}
+				for (By marker : markers) {
+					List<WebElement> elements = d.findElements(marker);
+					if (!elements.isEmpty() && elements.get(0).isDisplayed()) {
+						return true;
+					}
+				}
+				return false;
+			});
+		} catch (TimeoutException e) {
+			LogUtil.step("Partner certificates list page not displayed. URL: " + driver.getCurrentUrl());
+			return false;
+		}
 	}
 
 	public void clickOnUploadButton() {
