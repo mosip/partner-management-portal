@@ -286,6 +286,11 @@ public class PoliciesPage extends BasePage {
 	@FindBy(id = "policies_misp_policy_tab")
 	private WebElement mispPolicyTab;
 
+	@FindBy(xpath = "//*[@id='page_title' or @id='list_of_policies' or @id='show_request_policy'"
+			+ " or @id='policies_request_btn' or @id='polices_list_error_msg'"
+			+ " or @id='sub_title_home_btn' or @id='loading_text']")
+	private List<WebElement> policiesListPageMarkers;
+
 	public PoliciesPage(WebDriver driver) {
 		super(driver);
 	}
@@ -300,19 +305,19 @@ public class PoliciesPage extends BasePage {
 	 * and waits through the policies-list loading state).
 	 */
 	public boolean isPoliciesListPageDisplayed() {
-		By[] markers = new By[] { By.id("page_title"), By.id("list_of_policies"), By.id("show_request_policy"),
-				By.id("policies_request_btn"), By.id("polices_list_error_msg"), By.id("sub_title_home_btn"),
-				By.id("loading_text") };
 		try {
 			return new WebDriverWait(driver, Duration.ofSeconds(45)).until(d -> {
 				String url = d.getCurrentUrl();
 				if (!(url.contains("policies-list") || url.contains("/policies/"))) {
 					return false;
 				}
-				for (By marker : markers) {
-					List<WebElement> elements = d.findElements(marker);
-					if (!elements.isEmpty() && elements.get(0).isDisplayed()) {
-						return true;
+				for (WebElement marker : policiesListPageMarkers) {
+					try {
+						if (marker.isDisplayed()) {
+							return true;
+						}
+					} catch (Exception ignored) {
+						// Stale or not yet present marker — keep waiting.
 					}
 				}
 				return false;

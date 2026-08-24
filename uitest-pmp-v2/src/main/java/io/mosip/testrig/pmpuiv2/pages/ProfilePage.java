@@ -13,7 +13,7 @@ public class ProfilePage extends BasePage {
 	@FindBy(id = "header_user_profile_logout_btn")
 	private WebElement logoutButton;
 
-	@FindBy(xpath = "//h1[text()='My Profile'] | //h1[@id='page_title']")
+	@FindBy(xpath = "//*[text()='My Profile'] | //*[@id='page_title']")
 	private WebElement titleOfCardView;
 
 	@FindBy(xpath = "//P[text()='Profile Information']")
@@ -67,28 +67,28 @@ public class ProfilePage extends BasePage {
 	@FindBy(xpath = "//P[text()='pmpui-nocert']")
 	private WebElement userNameContext;
 
-	@FindBy(xpath = "//p[normalize-space()='First Name' or normalize-space()='Prénom' or normalize-space()='الاسم الأول']/following-sibling::p[1]")
+	@FindBy(xpath = "//*[normalize-space()='First Name' or normalize-space()='Prénom' or normalize-space()='الاسم الأول']/following-sibling::*[1]")
 	private WebElement firstNameValue;
 
-	@FindBy(xpath = "//p[normalize-space()='Last Name' or normalize-space()='Nom de famille' or normalize-space()='اسم العائلة']/following-sibling::p[1]")
+	@FindBy(xpath = "//*[normalize-space()='Last Name' or normalize-space()='Nom de famille' or normalize-space()='اسم العائلة']/following-sibling::*[1]")
 	private WebElement lastNameValue;
 
-	@FindBy(xpath = "//p[normalize-space()='Partner Type' or normalize-space()='Type de partenaire' or normalize-space()='نوع الشريك']/following-sibling::p[1]")
+	@FindBy(xpath = "//*[normalize-space()='Partner Type' or normalize-space()='Type de partenaire' or normalize-space()='نوع الشريك']/following-sibling::*[1]")
 	private WebElement partnerTypeValue;
 
-	@FindBy(xpath = "//p[normalize-space()='Organisation Name' or normalize-space()='Organization Name' or normalize-space()=\"Nom de l'organisme\" or normalize-space()='اسم المنظمة']/following-sibling::p[1]")
+	@FindBy(xpath = "//*[normalize-space()='Organisation Name' or normalize-space()='Organization Name' or normalize-space()=\"Nom de l'organisme\" or normalize-space()='اسم المنظمة']/following-sibling::*[1]")
 	private WebElement organisationNameValue;
 
-	@FindBy(xpath = "//p[normalize-space()='User Name' or normalize-space()=\"Nom d'utilisateur\" or normalize-space()='اسم المستخدم']/following-sibling::p[1]")
+	@FindBy(xpath = "//*[normalize-space()='User Name' or normalize-space()=\"Nom d'utilisateur\" or normalize-space()='اسم المستخدم']/following-sibling::*[1]")
 	private WebElement userNameValue;
 
-	@FindBy(xpath = "//p[normalize-space()='Address' or normalize-space()='Adresse' or normalize-space()='عنوان']/following-sibling::p[1]")
+	@FindBy(xpath = "//*[normalize-space()='Address' or normalize-space()='Adresse' or normalize-space()='عنوان']/following-sibling::*[1]")
 	private WebElement addressValue;
 
-	@FindBy(xpath = "//p[normalize-space()='Phone Number' or normalize-space()='Numéro de téléphone' or normalize-space()='رقم التليفون']/following-sibling::p[1]")
+	@FindBy(xpath = "//*[normalize-space()='Phone Number' or normalize-space()='Numéro de téléphone' or normalize-space()='رقم التليفون']/following-sibling::*[1]")
 	private WebElement phoneNumberValue;
 
-	@FindBy(xpath = "//p[normalize-space()='Email Address' or normalize-space()='Adresse e-mail' or normalize-space()='عنوان البريد الإلكتروني']/following-sibling::p[1]")
+	@FindBy(xpath = "//*[normalize-space()='Email Address' or normalize-space()='Adresse e-mail' or normalize-space()='عنوان البريد الإلكتروني']/following-sibling::*[1]")
 	private WebElement emailAddressValue;
 
 	@FindBy(id = "page_title")
@@ -114,7 +114,7 @@ public class ProfilePage extends BasePage {
 	}
 
 	public boolean isProfileLabelDisplayed(String labelText) {
-		return getElementCount(By.xpath("//p[normalize-space()=\"" + labelText + "\"]")) > 0;
+		return getElementCount(By.xpath("//*[normalize-space()=\"" + labelText + "\"]")) > 0;
 	}
 
 	public boolean isTitleOfInformationDisplayed() {

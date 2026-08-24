@@ -15,15 +15,6 @@ import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 import io.mosip.testrig.pmpuiv2.utility.LogUtil;
 
-/**
- * MOSIP-44515 Credential Partner – Login &amp; Dashboard Display with Service Cards.
- * TC_44515_01: Verify successful login redirects to Dashboard.
- * TC_44515_02: Verify Welcome message is displayed on Dashboard.
- * TC_44515_04: Verify Welcome message displays correct user name.
- * TC_44515_05: Verify the service cards are displayed on Dashboard.
- * TC_44515_06: Verify service cards are visible only for Credential Partner role.
- * Registration is covered in {@link CredentialPartnerCreation#registerCredentialPartnerUser}.
- */
 @Test(dependsOnGroups = { "CredentialPartnerCreation" }, groups = { "CredentialPartnerLoginTest" })
 public class CredentialPartnerLoginTest extends BaseClass {
 

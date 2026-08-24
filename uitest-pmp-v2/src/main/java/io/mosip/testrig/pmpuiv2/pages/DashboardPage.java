@@ -14,12 +14,12 @@ public class DashboardPage extends BasePage {
 
 	private static final Duration TERMS_AND_CONDITIONS_TIMEOUT = Duration.ofSeconds(3);
 
-	private static final By PARTNER_DASHBOARD_SERVICE_CARDS = By.xpath(
-			"//div[@role='button' and (@id='dashboard_partner_certificate_list_card'"
-					+ " or @id='dashboard_policies_card'"
-					+ " or @id='dashboard_authentication_clients_list_card'"
-					+ " or @id='dashboard_device_provider_service_card'"
-					+ " or @id='dashboard_ftm_chip_provider_card')]");
+	@FindBy(xpath = "//div[@role='button' and (@id='dashboard_partner_certificate_list_card'"
+			+ " or @id='dashboard_policies_card'"
+			+ " or @id='dashboard_authentication_clients_list_card'"
+			+ " or @id='dashboard_device_provider_service_card'"
+			+ " or @id='dashboard_ftm_chip_provider_card')]")
+	private List<WebElement> partnerDashboardServiceCards;
 
 	@FindBy(id = "header_user_profile_title")
 	private WebElement profileDropdown;
@@ -290,8 +290,7 @@ public class DashboardPage extends BasePage {
 	/** Counts visible partner dashboard service cards (Partner Certificate, Policies, etc.). */
 	public int getVisiblePartnerServiceCardCount() {
 		int count = 0;
-		List<WebElement> serviceCards = driver.findElements(PARTNER_DASHBOARD_SERVICE_CARDS);
-		for (WebElement card : serviceCards) {
+		for (WebElement card : partnerDashboardServiceCards) {
 			if (card.isDisplayed()) {
 				count++;
 			}

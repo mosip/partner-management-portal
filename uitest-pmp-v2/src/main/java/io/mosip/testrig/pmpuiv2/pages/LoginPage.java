@@ -38,6 +38,12 @@ public class LoginPage extends BasePage {
 	@FindBy(id = "kc-locale-dropdown")
 	private WebElement localeDropdown;
 
+	@FindBy(xpath = "//*[@id='kc-locale']//*[contains(normalize-space(.),'Français') or contains(normalize-space(.),'Francais') or normalize-space(.)='French' or contains(@href,'kc_locale=fr')]")
+	private WebElement frenchLanguageOption;
+
+	@FindBy(xpath = "//*[@id='kc-locale']//*[contains(normalize-space(.),'العربية') or contains(normalize-space(.),'Arabic') or contains(normalize-space(.),'عربي') or contains(@href,'kc_locale=ar')]")
+	private WebElement arabicLanguageOption;
+
 	public LoginPage(WebDriver driver) {
 		super(driver);
 	}
@@ -78,15 +84,11 @@ public class LoginPage extends BasePage {
 	}
 
 	public void selectFrenchLanguage() {
-		selectLanguage("French",
-				"//div[@id='kc-locale']//a[contains(normalize-space(.),'Français') or contains(normalize-space(.),'Francais') or normalize-space(.)='French' or contains(@href,'kc_locale=fr')]",
-				this::isFrenchLocaleText);
+		selectLanguage("French", frenchLanguageOption, this::isFrenchLocaleText);
 	}
 
 	public void selectArabicLanguage() {
-		selectLanguage("Arabic",
-				"//div[@id='kc-locale']//a[contains(normalize-space(.),'العربية') or contains(normalize-space(.),'Arabic') or contains(normalize-space(.),'عربي') or contains(@href,'kc_locale=ar')]",
-				this::isArabicLocaleText);
+		selectLanguage("Arabic", arabicLanguageOption, this::isArabicLocaleText);
 	}
 
 	public boolean isFrenchLanguageSelected() {
@@ -97,7 +99,7 @@ public class LoginPage extends BasePage {
 		return isLocaleSelected(this::isArabicLocaleText);
 	}
 
-	private void selectLanguage(String languageName, String optionXpath, Predicate<String> localeMatcher) {
+	private void selectLanguage(String languageName, WebElement languageOption, Predicate<String> localeMatcher) {
 		LogUtil.step("Select " + languageName + " language from sign-in page language dropdown");
 		if (!isLanguageDropdownDisplayed()) {
 			throw new RuntimeException("Language dropdown is not displayed on the sign-in page");
@@ -110,7 +112,6 @@ public class LoginPage extends BasePage {
 		}
 
 		clickOnElement(currentLocaleLink);
-		By languageOption = By.xpath(optionXpath);
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
 		WebElement languageLink = wait.until(ExpectedConditions.elementToBeClickable(languageOption));
 		String href = languageLink.getAttribute("href");
