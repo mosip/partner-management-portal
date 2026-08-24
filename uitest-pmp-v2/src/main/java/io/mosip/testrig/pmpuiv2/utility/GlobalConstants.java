@@ -25,6 +25,8 @@ public class GlobalConstants {
 	public static final String PARTNER_ADMIN = "pmpui-v2";
 	public static final String PARTNER_PASSWORD = "mosip123";
 	public static final String AUTH_PARTNER_ID = "pmpui-auth";
+	public static final String CREDENTIAL_PARTNER_ID = "pmpui-credential";
+	public static final String CREDENTIAL_PARTNER_PHONE = "9876543211";
 	public static final String FTM_PARTNER_ID = "pmpui-ftm";
 	public static final String MISP_PARTNER = "MISP Partner";
 	public static final String MISP_PARTNER_USER = "pmpui-misp";
@@ -344,6 +346,7 @@ public class GlobalConstants {
 	public static final String isTermsAndConditionsPopUpDisplayed = "Verify if term and condition pop up displayed";
 	public static final String isProceedButtonDisplayed = "Verify if proceed button is displayed.";
 	public static final String isPartnerCertificateTitleDisplayed = "Verify if partner certificate title is displayed";
+	public static final String isPartnerCertificateCardVisibleForCredentialPartner = "Verify Partner Certificate card is visible for Credential Partner on Dashboard";
 	public static final String isPartnerCertificatePageDisplayed = "Verify if partner certificate page is displayed";
 	public static final String isUploadPartnerCertificatePopUpDisplayed = "Verify if upload partner certificate pop up is displayed";
 	public static final String isSuccessMessageDisplayed = "Verify if Partner certificate for Authentication Partner is uploaded successfully.";
