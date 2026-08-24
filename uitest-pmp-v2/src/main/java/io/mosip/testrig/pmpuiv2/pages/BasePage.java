@@ -19,6 +19,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.chromium.ChromiumNetworkConditions;
+import org.openqa.selenium.chromium.HasNetworkConditions;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -575,6 +577,25 @@ public class BasePage {
 		LogUtil.verify("Reading computed style '" + property + "' from element: ", element);
 		return (String) ((JavascriptExecutor) driver)
 				.executeScript("return getComputedStyle(arguments[0])[arguments[1]];", element, property);
+	}
+
+	public void setNetworkOffline(boolean offline) {
+		if (!(driver instanceof HasNetworkConditions)) {
+			throw new UnsupportedOperationException(
+					"Network condition emulation requires a Chromium-based WebDriver (e.g. ChromeDriver); got: "
+							+ driver.getClass().getName());
+		}
+		HasNetworkConditions networkDriver = (HasNetworkConditions) driver;
+		if (offline) {
+			ChromiumNetworkConditions conditions = new ChromiumNetworkConditions();
+			conditions.setOffline(true);
+			conditions.setLatency(Duration.ofMillis(0));
+			conditions.setDownloadThroughput(-1);
+			conditions.setUploadThroughput(-1);
+			networkDriver.setNetworkConditions(conditions);
+		} else {
+			networkDriver.deleteNetworkConditions();
+		}
 	}
 
 	protected String getBodyComputedStyle(String property) {

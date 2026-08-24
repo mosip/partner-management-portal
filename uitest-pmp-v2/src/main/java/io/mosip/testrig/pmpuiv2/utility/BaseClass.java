@@ -109,6 +109,7 @@ public class BaseClass {
 		logger.info("Test data suffix generated: " + BaseClass.data);
 
 		LoginPage loginPage = new LoginPage(driver);
+		loginPage.selectLanguage(ConfigManager.getloginlang());
 		loginPage.login(userid, password);
 	}
 

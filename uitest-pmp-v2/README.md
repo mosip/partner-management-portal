@@ -124,11 +124,13 @@ Click **Run** to execute, or **Debug** to run in debug mode with breakpoints.
 
 ## 🔧 Configuration Details
 
-### 🗂️ config.properties
+### 🗂️ Kernel.properties
+
+All properties below are read from `src/main/resources/config/Kernel.properties` (not a separate `config.properties` file).
 
 | Property | Description |
 |-----------|-------------|
-| `langcode=eng` | Admin login page language (ENG, HIN, FRA, etc.) |
+| `loginlang=ara` | Language the suite runs in — see "🌐 Multi-language Support" below |
 | `headless=yes/no` | Run in headless or normal browser mode |
 | `pmpscenariosToExecute` | Comma-separated list of scenarios to skip; empty to run all |
 | `mosip_idrepo_client_secret`, `mosip_testrig_client_secret`, `mosip_admin_client_secret`, etc. | Client secrets required for API authentication |
@@ -158,6 +160,33 @@ Contains environment-specific and sensitive data like:
 - Role configurations  
 
 ⚠️ **Important:** Never commit this file with real credentials to version control.
+
+---
+
+## 🌐 Multi-language Support
+
+The suite can run against the login page in a specific language, or run the entire suite once per language in sequence.
+
+### How it works
+
+`loginlang` in `kernel-properties` (or the equivalent OS environment variable, which takes priority over the file) controls this:
+
+```properties
+# Single language — the whole run uses this language
+loginlang=ara
+
+# Multiple languages — the whole suite runs once per language, in order
+loginlang=eng,ara,fra
+```
+
+At the start of each test, `BaseClass` reads the current language and — if it isn't English — selects the matching option (`ara`/`fra`) on the Keycloak login page before signing in. English is the default and requires no selection.
+
+When `loginlang` holds a comma-separated list, `TestRunner` loops the full suite once per language:
+- **Sequential, not parallel.** Each language's run completes fully before the next one starts.
+- **Clean state between runs.** The test database is reset after each language's run so the next language doesn't inherit data from the previous one.
+- **Separate reports.** Each run's TestNG report file name includes the language it ran in, e.g. `PMPUI-...-ara-report.html`, so results from different languages don't overwrite each other.
+
+A single value behaves exactly as before — no behavior change for existing single-language runs.
 
 ---
 
@@ -200,7 +229,7 @@ Example `testng.xml`:
 |-------|---------------|
 | Browser not launching | Ensure ChromeDriver path is correct and compatible with Chrome version |
 | Tests not picking config | Verify `-Dpath.config` or `-Dconfig.path` is correctly set |
-| Login failure | Check `langcode` and credentials in `kernel-properties` |
+| Login failure | Check `loginlang` and credentials in `kernel-properties` |
 | No report generated | Ensure `testng.xml` and ExtentReport listener are properly configured |
 
 ---

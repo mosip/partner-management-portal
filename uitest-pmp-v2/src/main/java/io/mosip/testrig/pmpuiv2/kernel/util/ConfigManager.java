@@ -344,6 +344,10 @@ public class ConfigManager {
 		return loginlang;
 	}
 
+	public static void setloginlang(String value) {
+		loginlang = value;
+	}
+
 	public static String getlangcode() {
 		return langcode;
 	}

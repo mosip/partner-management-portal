@@ -47,6 +47,34 @@ public class TestRunner {
 	}
 
 	public static void startTestRunner() throws Exception {
+		String loginLangConfig = ConfigManager.getloginlang();
+		String[] languages = (loginLangConfig == null || loginLangConfig.trim().isEmpty())
+				? new String[] { loginLangConfig }
+				: loginLangConfig.split(",");
+
+		for (int i = 0; i < languages.length; i++) {
+			String lang = languages[i] == null ? null : languages[i].trim();
+			if (languages.length > 1 && (lang == null || lang.isEmpty())) {
+				throw new IllegalArgumentException("loginlang must not contain empty language values");
+			}
+			if (lang != null && !lang.isEmpty()) {
+				ConfigManager.setloginlang(lang);
+			}
+			if (languages.length > 1) {
+				logger.info(
+						"===== Running suite for language: " + lang + " (" + (i + 1) + "/" + languages.length + ") =====");
+			}
+
+			runSuiteOnce();
+
+			// Reset test data so the next language (if any) starts from a clean state
+			DBManager.cleanUpPartnerUiV2Data();
+		}
+
+		System.exit(0);
+	}
+
+	private static void runSuiteOnce() throws Exception {
 		File homeDir = null;
 		TestNG runner = new TestNG();
 		if (!ConfigManager.gettestcases().equals("")) {
@@ -276,8 +304,10 @@ public class TestRunner {
 
 		System.getProperties().setProperty("testng.output.dir", "testng-report");
 		runner.setOutputDirectory("testng-report");
+		String currentLang = ConfigManager.getloginlang();
+		String langSuffix = (currentLang == null || currentLang.isEmpty()) ? "" : "-" + currentLang;
 		System.getProperties().setProperty("emailable.report2.name",
-				"PMPUI-" + BaseTestCaseFunc.environment + "-run-" + BaseClass.Date() + "-report.html");
+				"PMPUI-" + BaseTestCaseFunc.environment + "-run-" + BaseClass.Date() + langSuffix + "-report.html");
 
 		runner.run();
 

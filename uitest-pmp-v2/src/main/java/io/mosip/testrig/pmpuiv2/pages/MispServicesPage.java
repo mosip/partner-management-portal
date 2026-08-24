@@ -3,9 +3,12 @@ package io.mosip.testrig.pmpuiv2.pages;
 import java.time.Duration;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class MispServicesPage extends BasePage {
 
@@ -81,23 +84,26 @@ public class MispServicesPage extends BasePage {
 	@FindBy(id = "generate_misp_license_key_important_note")
 	private WebElement mispLicenseKeyImportantNote;
 
-	@FindBy(xpath = "//button[@id='generate_license_key_policy_name_dropdown_btn']//span")
+	@FindBy(css = "#generate_license_key_policy_name_dropdown_btn span")
 	private WebElement policyNamePlaceholder;
 
-	@FindBy(xpath = "//button[@id='generate_license_key_policy_group']//span")
+	@FindBy(css = "#generate_license_key_policy_group span")
 	private WebElement policyGroupPlaceholder;
 
-	@FindBy(xpath = "//button[@id='generate_license_key_partner_id_dropdown_btn']//span")
+	@FindBy(css = "#generate_license_key_partner_id_dropdown_btn span")
 	private WebElement partnerIdPlaceholder;
 
-	@FindBy(xpath = "//button[@id='generate_license_key_partner_type']//span")
+	@FindBy(css = "#generate_license_key_partner_type span")
 	private WebElement partnerTypePlaceholder;
 
-	@FindBy(xpath = "//input[@data-placeholder-id='generate_license_key_name_placeholder']")
+	@FindBy(css = "input[data-placeholder-id='generate_license_key_name_placeholder']")
 	private WebElement mispLicenseKeyNamePlaceholder;
 
 	@FindBy(id = "generate_license_key_partner_id_search_input")
 	private WebElement partnerIdDropdownSearchInput;
+
+	@FindBy(id = "generate_license_key_partner_id_no_data_available")
+	private WebElement partnerIdNoDataAvailableMessage;
 
 	@FindBy(id = "generate_license_key_partner_type")
 	private WebElement partnerType;
@@ -120,17 +126,20 @@ public class MispServicesPage extends BasePage {
 	@FindBy(id = "generate_license_key_policy_name_search_input")
 	private WebElement policyNameSearchInput;
 
-	@FindBy(xpath = "//*[text()='Next Month']")
+	@FindBy(css = "button.react-datepicker__navigation--next")
 	private WebElement nextMonth;
 
-	@FindBy(xpath = "//*[text()='Previous Month']")
+	@FindBy(css = "button.react-datepicker__navigation--previous")
 	private WebElement previousMonth;
 
-	@FindBy(xpath = "//*[contains(@class, 'react-datepicker__day react-datepicker__day--024') and not(contains(@class, 'react-datepicker__day--outside-month'))]")
+	@FindBy(css = "div.react-datepicker__day.react-datepicker__day--024:not(.react-datepicker__day--outside-month)")
 	private WebElement date24InCalender;
 
-	@FindBy(xpath = "//*[contains(@class, 'react-datepicker__day react-datepicker__day--004') and not(contains(@class, 'react-datepicker__day--outside-month'))]")
+	@FindBy(css = "div.react-datepicker__day.react-datepicker__day--004:not(.react-datepicker__day--outside-month)")
 	private WebElement date4InCalender;
+
+	@FindBy(css = "div.react-datepicker__day--today")
+	private WebElement todayInCalender;
 
 	@FindBy(id = "generate_license_key_expiry_date_calender")
 	private WebElement expiryDate;
@@ -140,6 +149,9 @@ public class MispServicesPage extends BasePage {
 
 	@FindBy(id = "copy_id_popup_sub_title")
 	private WebElement copyIdPopupSubtitle;
+
+	@FindBy(id = "copy_id_popup_alert_msg")
+	private WebElement copyIdPopupAlertMessage;
 
 	@FindBy(id = "copy_id_close_btn")
 	private WebElement mispLicenseKeyPopupCloseButton;
@@ -153,8 +165,11 @@ public class MispServicesPage extends BasePage {
 	@FindBy(id = "copy_id_btn")
 	private WebElement copyIdButton;
 
-	@FindBy(id = "Copied!")
+	@FindBy(css = "#copy_id_btn[class*='bg-[#1447B2]']")
 	private WebElement copiedToast;
+
+	@FindBy(id = "confirmation_success_icon")
+	private WebElement confirmationSuccessIcon;
 
 	@FindBy(id = "generate_license_key_confirmation_header")
 	private WebElement licenseKeyConfirmationHeader;
@@ -171,11 +186,14 @@ public class MispServicesPage extends BasePage {
 	@FindBy(id = "generate_misp_license_key_error_msg")
 	private WebElement generateLicenseKeyErrorMessage;
 
-	@FindBy(xpath = "//div[contains(@class,'react-datepicker')]")
-	private WebElement calendarPopup;
+	@FindBy(id = "run_time_error_title")
+	private WebElement networkErrorTitle;
 
-	@FindBy(xpath = "//span[contains(text(),'Select MISP policy for which MISP License Key is required')]")
-	private WebElement policyNameHelpText;
+	@FindBy(id = "something_went_wrong_home_btn")
+	private WebElement networkErrorRetryButton;
+
+	@FindBy(css = "div.react-datepicker__month-container")
+	private WebElement calendarPopup;
 
 	@FindBy(id = "generate_license_key_expiry_date_calender_info_info_description")
 	private WebElement expiryDateCalenderInfoDescription;
@@ -369,6 +387,15 @@ public class MispServicesPage extends BasePage {
 				"//*[contains(@id,'generate_license_key_partner_id_option')][normalize-space()='" + partnerIdValue + "']"));
 	}
 
+	public void enterInvalidPartnerId(String partnerIdValue) {
+		clickOnElement(partnerIdDropdownButton);
+		enter(partnerIdDropdownSearchInput, partnerIdValue);
+	}
+
+	public boolean isPartnerIdNoDataAvailableDisplayed() {
+		return isElementDisplayed(partnerIdNoDataAvailableMessage);
+	}
+
 	public String getPartnerType() {
 		return getTextFromLocator(partnerType);
 	}
@@ -392,12 +419,15 @@ public class MispServicesPage extends BasePage {
 	public void selectPolicyName(String policyName) {
 		clickOnElement(policyNameDropdown);
 		enter(policyNameSearchInput, policyName);
-		click(By.xpath(
-				"//*[contains(@id,'generate_license_key_policy_name_option')][normalize-space()='" + policyName + "']"));
+		clickOnElement(mispPolicyName);
 	}
 
 	public void enterLicenseKeyName(String licenseKeyName) {
 		enter(licenseKeyNameTextbox, licenseKeyName);
+	}
+
+	public String getLicenseKeyNameFieldValue() {
+		return getTextFromAttribute(licenseKeyNameTextbox, "value");
 	}
 
 	public void enterExpiryDate() {
@@ -405,6 +435,33 @@ public class MispServicesPage extends BasePage {
 		clickOnElement(nextMonth);
 		clickOnElement(nextMonth);
 		clickOnElement(date24InCalender);
+	}
+
+	public String selectFutureDateAndGetValue() {
+		clickOnElement(expiryDate);
+		clickOnElement(nextMonth);
+		clickOnElement(nextMonth);
+		clickOnElement(date24InCalender);
+		return getTextFromAttribute(expiryDate, "value");
+	}
+
+	public String reopenCalendarAndSelectAlternateDate() {
+		clickOnElement(expiryDate);
+		clickOnElement(nextMonth);
+		clickOnElement(nextMonth);
+		clickOnElement(date4InCalender);
+		return getTextFromAttribute(expiryDate, "value");
+	}
+
+	public void enterPastExpiryDate() {
+		clickOnElement(expiryDate);
+		clickOnElement(previousMonth);
+		clickOnElement(date24InCalender);
+	}
+
+	public void enterTodayExpiryDate() {
+		clickOnElement(expiryDate);
+		clickOnElement(todayInCalender);
 	}
 
 	public boolean isCreateLicenseKeySubmitButtonEnabled() {
@@ -417,6 +474,14 @@ public class MispServicesPage extends BasePage {
 
 	public boolean isGenerateLicenseKeyErrorMessageDisplayed() {
 		return isElementDisplayed(generateLicenseKeyErrorMessage);
+	}
+
+	public boolean isNetworkErrorPageDisplayed() {
+		return isElementDisplayed(networkErrorTitle);
+	}
+
+	public void clickOnNetworkErrorRetryButton() {
+		clickOnElement(networkErrorRetryButton);
 	}
 
 	public String getGenerateLicenseKeyErrorText() {
@@ -432,15 +497,34 @@ public class MispServicesPage extends BasePage {
 	}
 
 	public boolean isPolicyNameHelpTextDisplayed() {
-		return isElementDisplayed(policyNameHelpText);
+		return isElementDisplayed(policyNamePlaceholder);
 	}
 
 	public boolean isExpiryDateCalenderInfoDescriptionDisplayed() {
 		return isElementDisplayed(expiryDateCalenderInfoDescription);
 	}
 
+	public String getExpiryDateCalenderInfoDescriptionText() {
+		return getTextFromLocator(expiryDateCalenderInfoDescription);
+	}
+
 	public void clickOnExpiryDateCalenderInfoIcon() {
 		clickOnElement(expiryDateCalenderInfoIcon);
+	}
+
+	public boolean areInfoIconsColorAndFontSizeConsistent() {
+		String[] colors = { partnerIdInfoButton.getCssValue("color"), policyGroupInfoButton.getCssValue("color"),
+				policyNameInfoButton.getCssValue("color"), expiryDateCalenderInfoIcon.getCssValue("color") };
+		String[] fontSizes = { partnerIdInfoButton.getCssValue("font-size"),
+				policyGroupInfoButton.getCssValue("font-size"), policyNameInfoButton.getCssValue("font-size"),
+				expiryDateCalenderInfoIcon.getCssValue("font-size") };
+
+		for (int i = 1; i < colors.length; i++) {
+			if (!colors[i].equals(colors[0]) || !fontSizes[i].equals(fontSizes[0])) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	public void clickOnCancelButton() {
@@ -459,8 +543,123 @@ public class MispServicesPage extends BasePage {
 		return isElementDisplayedQuick(By.id("copy_id_close_btn"), POPUP_CHECK_TIMEOUT);
 	}
 
+	public String getCopyIdPopupTitleText() {
+		return getTextFromLocator(copyIdPopupTitle);
+	}
+
+	public String getCopyIdPopupSubtitleText() {
+		return getTextFromLocator(copyIdPopupSubtitle);
+	}
+
+	public String getCopyIdPopupAlertMessageText() {
+		return getTextFromLocator(copyIdPopupAlertMessage);
+	}
+
+	public void clickOnCopyIdButton() {
+		clickOnElement(copyIdButton);
+	}
+
+	public boolean isCopiedTextDisplayed() {
+		return isElementDisplayed(copiedToast);
+	}
+
+	public boolean isCopyButtonRevertedWithinFewSeconds() {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(4));
+		try {
+			return wait.until(ExpectedConditions.invisibilityOfElementLocated(
+					By.cssSelector("#copy_id_btn[class*='bg-[#1447B2]']")));
+		} catch (TimeoutException e) {
+			return false;
+		}
+	}
+
 	public void closeCopyIdPopup() {
 		clickOnElement(mispLicenseKeyPopupCloseButton);
 		clickOnElement(confirmationGoBackBtn);
+	}
+
+	public void clickOnPopupCloseButton() {
+		clickOnElement(mispLicenseKeyPopupCloseButton);
+	}
+
+	public boolean isLicenseKeyConfirmationHeaderDisplayed() {
+		return isElementDisplayed(licenseKeyConfirmationHeader);
+	}
+
+	public String getLicenseKeyConfirmationHeaderText() {
+		return getTextFromLocator(licenseKeyConfirmationHeader);
+	}
+
+	public boolean isLicenseKeyConfirmationHeaderNotEditable() {
+		return isElementNotEditable(licenseKeyConfirmationHeader);
+	}
+
+	public boolean isConfirmationSuccessIconDisplayed() {
+		return isElementDisplayed(confirmationSuccessIcon);
+	}
+
+	public void clickOnConfirmationGoBackButton() {
+		clickOnElement(confirmationGoBackBtn);
+	}
+
+	public boolean isPartnerIdHeaderDisplayed() {
+		return isElementDisplayed(partnerIdHeader);
+	}
+
+	public boolean isOrgNameHeaderDisplayed() {
+		return isElementDisplayed(orgNameHeader);
+	}
+
+	public boolean isPolicyGroupHeaderDisplayed() {
+		return isElementDisplayed(policyGroupHeader);
+	}
+
+	public boolean isPolicyNameHeaderDisplayed() {
+		return isElementDisplayed(policyNameHeader);
+	}
+
+	public boolean isMispLicenseKeyNameHeaderDisplayed() {
+		return isElementDisplayed(mispLicenseKeyNameHeader);
+	}
+
+	public boolean isCreationDateHeaderDisplayed() {
+		return isElementDisplayed(creationDateHeader);
+	}
+
+	public boolean isExpirationDateHeaderDisplayed() {
+		return isElementDisplayed(expirationDateHeader);
+	}
+
+	public boolean isStatusHeaderDisplayed() {
+		return isElementDisplayed(statusHeader);
+	}
+
+	public boolean isMispLicenseKeyHeaderDisplayed() {
+		return isElementDisplayed(mispLicenseKeyHeader);
+	}
+
+	public boolean isActionHeaderDisplayed() {
+		return isElementDisplayed(actionHeader);
+	}
+
+	public String getLicenseListRowCellText(int rowIndex, int cellIndex) {
+		return getTextFromLocator(
+				By.xpath("//tr[@id='misp_license_list_item" + rowIndex + "']/td[" + cellIndex + "]"));
+	}
+
+	public String getLatestLicenseRowPartnerId() {
+		return getLicenseListRowCellText(1, 1);
+	}
+
+	public String getLatestLicenseRowStatus() {
+		return getLicenseListRowCellText(1, 8);
+	}
+
+	public void clickOnViewLicenseKeyButton(int rowIndex) {
+		click(By.id("misp_license_show_copy_popup_btn" + rowIndex));
+	}
+
+	public String getMispLicenseKeyIdText() {
+		return getTextFromLocator(mispLicenseKeyId);
 	}
 }
