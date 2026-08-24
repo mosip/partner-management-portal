@@ -4,9 +4,11 @@ import java.time.Duration;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class DashboardPage extends BasePage {
 
@@ -21,6 +23,9 @@ public class DashboardPage extends BasePage {
 
 	@FindBy(id = "header_user_profile_title")
 	private WebElement profileDropdown;
+
+	@FindBy(xpath = "//div[contains(@class,'bg-blue-50')]/following-sibling::h2[1]")
+	private WebElement headerOrganisationName;
 
 	@FindBy(id = "dashboard_authentication_clients_list_card_header")
 	private WebElement authenticationHeader;
@@ -171,6 +176,14 @@ public class DashboardPage extends BasePage {
 		clickOnElement(profileDropdown);
 	}
 
+	public String getHeaderOrganisationName() {
+		return getTextFromLocator(headerOrganisationName).trim();
+	}
+
+	public String getHeaderUserName() {
+		return getTextFromLocator(profileDropdown).trim();
+	}
+
 	public LoginPage clickOnLogoutButton() {
 		clickOnElement(logoutButton);
 		return new LoginPage(driver);
@@ -234,10 +247,6 @@ public class DashboardPage extends BasePage {
 		return isElementDisplayed(dashboardPartnerCertificateListHeader);
 	}
 
-	public String getPartnerCertificateCardTitleText() {
-		return getTextFromLocator(dashboardPartnerCertificateListHeader).trim();
-	}
-
 	public boolean isPoliciesTitleDisplayed() {
 		return isElementDisplayed(policiesTitle);
 	}
@@ -256,6 +265,26 @@ public class DashboardPage extends BasePage {
 
 	public String getWelcomeMessageText() {
 		return getTextFromLocator(welcomeMessage).trim();
+	}
+
+	public String getPartnerCertificateHeaderText() {
+		return getTextFromLocator(dashboardPartnerCertificateListHeader).trim();
+	}
+
+	public String getPoliciesHeaderText() {
+		return getTextFromLocator(By.id("dashboard_policies_card_header")).trim();
+	}
+
+	public String getPartnerCertificateDescriptionText() {
+		return getTextFromLocator(By.id("dashboard_partner_certificate_list_description")).trim();
+	}
+
+	public String getPoliciesDescriptionText() {
+		return getTextFromLocator(By.id("dashboard_policies_card_description")).trim();
+	}
+
+	public String getPageTitleText() {
+		return getTextFromLocator(By.id("page_title")).trim();
 	}
 
 	/** Counts visible partner dashboard service cards (Partner Certificate, Policies, etc.). */
@@ -351,6 +380,26 @@ public class DashboardPage extends BasePage {
 		clickOnElement(hamburgerClose);
 	}
 
+	/** True when side menu is expanded (close hamburger control is visible). */
+	public boolean isHamburgerMenuExpanded() {
+		try {
+			return new WebDriverWait(driver, Duration.ofSeconds(10))
+					.until(d -> !d.findElements(By.id("header_hamburger_close_sidenav")).isEmpty());
+		} catch (TimeoutException e) {
+			return false;
+		}
+	}
+
+	/** True when side menu is collapsed (open hamburger control is visible). */
+	public boolean isHamburgerMenuCollapsed() {
+		try {
+			return new WebDriverWait(driver, Duration.ofSeconds(10))
+					.until(d -> !d.findElements(By.id("header_hamburger_open_sidenav")).isEmpty());
+		} catch (TimeoutException e) {
+			return false;
+		}
+	}
+
 	public DeviceProviderPage clickOnSideNavDeviceProvider() {
 		clickOnElement(sideNavDeviceProvider);
 		return new DeviceProviderPage(driver);
@@ -386,6 +435,27 @@ public class DashboardPage extends BasePage {
 
 	public void clickOnPartnerCertificateOfHamburger() {
 		clickOnElement(partnerCertificateOfHamburger);
+	}
+
+	public boolean isSideNavPartnerCertificateDisplayed() {
+		return isElementDisplayed(partnerCertificateOfHamburger);
+	}
+
+	public boolean isSideNavPoliciesDisplayed() {
+		return isElementDisplayed(policiesOfHamburger);
+	}
+
+	/** Immediate visibility check (no wait) for role-based side-nav absence assertions. */
+	public boolean isSideNavAuthenticationServiceVisible() {
+		return getElementCount(By.id("side_nav_authentication_service_icon")) > 0;
+	}
+
+	public boolean isSideNavDeviceProviderVisible() {
+		return getElementCount(By.id("side_nav_device_provider_service_icon")) > 0;
+	}
+
+	public boolean isSideNavFtmChipProviderVisible() {
+		return getElementCount(By.id("side_nav_ftmchip_provider_service_icon")) > 0;
 	}
 
 	public PartnerAdminPage clickOnPartnerOfHamburger() {
