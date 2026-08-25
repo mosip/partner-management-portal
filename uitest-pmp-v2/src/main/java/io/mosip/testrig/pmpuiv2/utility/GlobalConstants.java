@@ -1725,14 +1725,15 @@ public class GlobalConstants {
 	public static final String EMAIL_ADDRESS_FILTER_INFO_TOOLTIP = "Note: This filter performs an exact match. Please enter the full email address (e.g., user@example.com) to find results.";
 	public static final String isEmailAddressFilterInfoIconDisplayed = "Verify the info icon is displayed alongside the email address filter textbox";
 	public static final String isEmailAddressFilterInfoTooltipCorrect = "Verify the info icon tooltip displays the exact match guidance text";
-	public static final String isExpirationDateHeaderDisplayed = "Verify if 'Expiration Date' column header displayed in the API Key tabular view";
+	public static final String isApiKeyExpirationDateHeaderDisplayed = "Verify if 'Expiration Date' column header displayed in the API Key tabular view";
 	public static final String isExpirationDateHeaderAfterCreationDate = "Verify if 'Expiration Date' column appears beside 'Creation Date'";
 	public static final String isExpiryDateDescIconDisplayed = "Verify if expiration date descending sort icon displayed";
 	public static final String isExpiryDateAscIconDisplayed = "Verify if expiration date ascending sort icon displayed";
 	public static final String isExpiryDateSortedAscending = "Verify if API Keys are sorted by expiration date in ascending order";
 	public static final String isExpiryDateSortedDescending = "Verify if API Keys are sorted by expiration date in descending order";
 	public static final String isExpirationDateSameAsBrowserDateFormat = "Verify if expiration date is displayed in the browser locale date format";
-	public static final String isExpirationDateOffsetFromCreationDate = "Verify if expiration date equals creation date plus the configured expiry duration";
+	public static final String isExpirationDateNotBeforeCreationDate = "Verify if the API Key expiration date is not earlier than its creation date";
+	public static final String isExpirationDateConsistentAcrossViews = "Verify if the API Key expiration date shown in the tabular view matches the individual view";
 	public static final String isApiKeyDetailsExpirationDateLabelDisplayed = "Verify if 'Expiration Date' label displayed in the individual API Key view";
 	public static final String isApiKeyDetailsExpirationDateContextDisplayed = "Verify if expiration date value displayed in the individual API Key view";
 	public static final String isIndividualViewFieldOrderCorrect = "Verify if individual API Key view renders its fields in the expected order ending with Expiration Date";

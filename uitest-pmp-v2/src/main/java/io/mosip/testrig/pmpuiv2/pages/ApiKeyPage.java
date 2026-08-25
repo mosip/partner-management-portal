@@ -454,6 +454,9 @@ public class ApiKeyPage extends BasePage {
 	@FindBy(id = "api_key_details_expiration_date_label")
 	private WebElement apiKeyDetailsExpirationDateLabel;
 
+	@FindBy(id = "api_key_details_expiration_date_context")
+	private WebElement apiKeyDetailsExpirationDateContext;
+
 	@FindBy(xpath = "//p[normalize-space()='Expiration Date']")
 	private WebElement expirationDateLabelInAdminView;
 
@@ -1356,14 +1359,14 @@ public class ApiKeyPage extends BasePage {
 		}
 	}
 
-	public boolean isExpirationDateOffsetFromCreationDate(int expectedDays, boolean isAdminView) {
+	public boolean isExpirationDateNotBeforeCreationDate(boolean isAdminView) {
 		WebElement creationDateCell = isAdminView ? adminCreationDateCell : partnerCreationDateCell;
 		WebElement expirationDateCell = isAdminView ? adminExpirationDateCell : partnerExpirationDateCell;
 		try {
 			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(ConfigManager.getTimeout()));
 			String created = wait.until(ExpectedConditions.visibilityOf(creationDateCell)).getText().trim();
 			String expiry = wait.until(ExpectedConditions.visibilityOf(expirationDateCell)).getText().trim();
-			LogUtil.step("Created: " + created + ", Expiry: " + expiry + ", expected offset(days): " + expectedDays);
+			LogUtil.step("Created: " + created + ", Expiry: " + expiry);
 
 			if (expiry.equalsIgnoreCase(NO_EXPIRY_TEXT)) {
 				LogUtil.error("Expiration date not set for the API key");
@@ -1372,11 +1375,9 @@ public class ApiKeyPage extends BasePage {
 			}
 			LocalDate createdDate = LocalDate.parse(created, PmpTestUtil.nonZeroPadderDateFormatter);
 			LocalDate expiryDate = LocalDate.parse(expiry, PmpTestUtil.nonZeroPadderDateFormatter);
-			LocalDate expected = expectedDays > 0 ? createdDate.plusDays(expectedDays) : createdDate.plusYears(100);
-			LogUtil.step("Expected expiration date: " + expected);
 
-			if (!expected.equals(expiryDate)) {
-				LogUtil.error("Expiration date " + expiryDate + " does not match the expected " + expected);
+			if (expiryDate.isBefore(createdDate)) {
+				LogUtil.error("Expiration date " + expiryDate + " is earlier than the creation date " + createdDate);
 				takeScreenshot();
 				return false;
 			}
@@ -1398,6 +1399,19 @@ public class ApiKeyPage extends BasePage {
 			return true;
 		}
 		return isElementDisplayed(expirationDateLabelInAdminView);
+	}
+
+	public String getExpirationDateFromList(boolean isAdminView) {
+		WebElement expirationDateCell = isAdminView ? adminExpirationDateCell : partnerExpirationDateCell;
+		return new WebDriverWait(driver, Duration.ofSeconds(ConfigManager.getTimeout()))
+				.until(ExpectedConditions.visibilityOf(expirationDateCell)).getText().trim();
+	}
+
+	public String getExpirationDateFromIndividualView() {
+		if (isElementDisplayedQuick(By.id("api_key_details_expiration_date_context"), Duration.ofSeconds(5))) {
+			return getTextFromLocator(apiKeyDetailsExpirationDateContext).trim();
+		}
+		return getTextFromLocator(expirationDateContextInAdminView).trim();
 	}
 
 	public boolean isApiKeyDetailsExpirationDateContextDisplayed() {

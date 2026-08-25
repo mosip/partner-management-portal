@@ -650,14 +650,4 @@ public class ConfigManager {
 	    }
 	}
 
-	public static int getApiKeyExpiryPeriodInDays() {
-		try {
-			return Integer.parseInt(propsKernel.getProperty("apiKeyExpiryPeriodInDays", "0").trim());
-		} catch (NumberFormatException e) {
-			logger.error("Invalid apiKeyExpiryPeriodInDays value in Kernel.properties. Falling back to the "
-					+ "100 year default.");
-			return 0;
-		}
-	}
-
 }

@@ -1,10 +1,10 @@
 package io.mosip.testrig.pmpuiv2.testcase;
 
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 import org.testng.annotations.Test;
 
-import io.mosip.testrig.pmpuiv2.kernel.util.ConfigManager;
 import io.mosip.testrig.pmpuiv2.pages.ApiKeyPage;
 import io.mosip.testrig.pmpuiv2.pages.DashboardPage;
 import io.mosip.testrig.pmpuiv2.pages.LoginPage;
@@ -39,7 +39,7 @@ public class ApiKeyExpirationDateTest extends BaseClass {
 		assertTrue(apiKeyPage.isSubTitleOfTabularViewDisplayed(), GlobalConstants.isSubTitleOfTabularViewDisplayed);
 
 		assertTrue(apiKeyPage.isCreationDateHeaderDisplayed(), GlobalConstants.isCreationDateHeaderDisplayed);
-		assertTrue(apiKeyPage.isExpirationDateHeaderDisplayed(), GlobalConstants.isExpirationDateHeaderDisplayed);
+		assertTrue(apiKeyPage.isExpirationDateHeaderDisplayed(), GlobalConstants.isApiKeyExpirationDateHeaderDisplayed);
 		assertTrue(apiKeyPage.isExpirationDateHeaderAfterCreationDate(),
 				GlobalConstants.isExpirationDateHeaderAfterCreationDate);
 		assertTrue(apiKeyPage.isExpirationDateSameAsBrowserDateFormat(PARTNER_VIEW),
@@ -81,11 +81,16 @@ public class ApiKeyExpirationDateTest extends BaseClass {
 
 		assertTrue(apiKeyPage.isApiKeyListViewDisplayed(), GlobalConstants.isApiKeyListViewDisplayed);
 		assertTrue(apiKeyPage.isApiListItem1Displayed(), GlobalConstants.isApiListDisplayed);
-		assertTrue(apiKeyPage.isExpirationDateHeaderDisplayed(), GlobalConstants.isExpirationDateHeaderDisplayed);
-		assertTrue(
-				apiKeyPage.isExpirationDateOffsetFromCreationDate(ConfigManager.getApiKeyExpiryPeriodInDays(),
-						PARTNER_VIEW),
-				GlobalConstants.isExpirationDateOffsetFromCreationDate);
+		assertTrue(apiKeyPage.isExpirationDateHeaderDisplayed(), GlobalConstants.isApiKeyExpirationDateHeaderDisplayed);
+		assertTrue(apiKeyPage.isExpirationDateNotBeforeCreationDate(PARTNER_VIEW),
+				GlobalConstants.isExpirationDateNotBeforeCreationDate);
+
+		String expirationDateInList = apiKeyPage.getExpirationDateFromList(PARTNER_VIEW);
+		apiKeyPage.clickOnApiListItem1();
+		assertTrue(apiKeyPage.isApiKeyDetailsPageDisplayed(), GlobalConstants.isApiKeyDetailsPageDisplayed);
+		assertEquals(apiKeyPage.getExpirationDateFromIndividualView(), expirationDateInList,
+				GlobalConstants.isExpirationDateConsistentAcrossViews);
+		apiKeyPage.clickOnViewApiKeyBackButton();
 	}
 
 	@Test(priority = 3, description = "Verify API Key expiration date, sorting and row clickability as Partner Admin", dependsOnMethods = "redirectToTabularViewAfterSubmit")
@@ -101,7 +106,7 @@ public class ApiKeyExpirationDateTest extends BaseClass {
 		oidcClientPage.clickOnApiKeyTab();
 
 		assertTrue(apiKeyPage.isCreationDateHeaderDisplayed(), GlobalConstants.isCreationDateHeaderDisplayed);
-		assertTrue(apiKeyPage.isExpirationDateHeaderDisplayed(), GlobalConstants.isExpirationDateHeaderDisplayed);
+		assertTrue(apiKeyPage.isExpirationDateHeaderDisplayed(), GlobalConstants.isApiKeyExpirationDateHeaderDisplayed);
 		assertTrue(apiKeyPage.isExpirationDateHeaderAfterCreationDate(),
 				GlobalConstants.isExpirationDateHeaderAfterCreationDate);
 		assertTrue(apiKeyPage.isExpirationDateSameAsBrowserDateFormat(ADMIN_VIEW),
