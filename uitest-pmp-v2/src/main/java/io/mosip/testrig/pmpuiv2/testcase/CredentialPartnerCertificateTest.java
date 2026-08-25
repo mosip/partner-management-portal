@@ -1,5 +1,6 @@
 package io.mosip.testrig.pmpuiv2.testcase;
 
+import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import org.testng.annotations.Test;
@@ -165,6 +166,37 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 				GlobalConstants.isPleaseTabToSelectTextDisplayed);
 		assertTrue(partnerCertificatePage.isPartnercertFormatesTextDisplayed(),
 				GlobalConstants.isCertFormatesTextDisplayed);
+	}
+
+	@Test(priority = 5, description = "Verify only Upload button is available when no partner certificate exists", dependsOnMethods = "registerCredentialPartnerForCertificateFlow")
+	public void verifyOnlyUploadButtonAvailableWhenNoCertificateExists() {
+
+		dashboardPage = new DashboardPage(driver);
+		loginPage = new LoginPage(driver);
+		partnerCertificatePage = new PartnerCertificatePage(driver);
+
+		LogUtil.step("Login with valid Credential Partner credentials");
+		dashboardPage.clickOnProfileDropdown();
+		loginPage = dashboardPage.clickOnLogoutButton();
+		assertTrue(loginPage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
+		loginPage.enterUserName(GlobalConstants.CREDENTIAL_PARTNER_ID);
+		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
+		loginPage.clickOnLoginButton();
+
+		LogUtil.step("Navigate to Partner Certificate page from dashboard");
+		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
+				GlobalConstants.isPartnerCertificateTitleDisplayed);
+		dashboardPage.clickOnPartnerCertificateTitle();
+		assertTrue(partnerCertificatePage.isPartnerCertificatePageDisplayed(),
+				GlobalConstants.isPartnerCertificatePageDisplayed);
+
+		LogUtil.step("Verify only Upload button is available when no certificate exists");
+		assertTrue(partnerCertificatePage.isUploadButtonDisplayed(),
+				GlobalConstants.isUploadButtonDisplayedForFirstTimeCertificate);
+		assertFalse(partnerCertificatePage.isPartnerCertificateReuploadButtonPresent(),
+				GlobalConstants.isOnlyUploadButtonAvailableWhenNoCertificateExists);
+		assertFalse(partnerCertificatePage.isDownloadButtonPresent(),
+				GlobalConstants.isOnlyUploadButtonAvailableWhenNoCertificateExists);
 	}
 
 	private void handleTermsAndCondition() {
