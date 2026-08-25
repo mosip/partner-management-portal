@@ -280,6 +280,53 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 				GlobalConstants.isInvalidCertificateFormatErrorMessageDisplayed);
 	}
 
+	@Test(priority = 8, description = "Verify re-uploading a valid certificate revokes the existing one and replaces it", dependsOnMethods = "verifyValidPartnerCertificateUploadIsSuccessful")
+	public void verifyValidCertificateReUploadReplacesExistingCertificate() {
+
+		dashboardPage = new DashboardPage(driver);
+		loginPage = new LoginPage(driver);
+		partnerCertificatePage = new PartnerCertificatePage(driver);
+
+		LogUtil.step("Login with valid Credential Partner credentials");
+		dashboardPage.clickOnProfileDropdown();
+		loginPage = dashboardPage.clickOnLogoutButton();
+		assertTrue(loginPage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
+		loginPage.enterUserName(GlobalConstants.CREDENTIAL_PARTNER_ID);
+		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
+		loginPage.clickOnLoginButton();
+
+		LogUtil.step("Navigate to Partner Certificate page with an existing certificate");
+		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
+				GlobalConstants.isPartnerCertificateTitleDisplayed);
+		dashboardPage.clickOnPartnerCertificateTitle();
+		assertTrue(partnerCertificatePage.isPartnerCertificatePageDisplayed(),
+				GlobalConstants.isPartnerCertificatePageDisplayed);
+		assertTrue(partnerCertificatePage.isPartnerCertificateReuploadButtonDisplayed(),
+				GlobalConstants.isReUploadButtonLabelDisplayedAfterCertificateExists);
+		assertTrue(partnerCertificatePage.isDownloadButtonDisplayed(),
+				GlobalConstants.isValidCertificateReUploadedAndReplacesExisting);
+
+		LogUtil.step("Open Re-Upload and select a new valid certificate");
+		partnerCertificatePage.clickOnPartnerCertificateReuploadButton();
+		assertTrue(partnerCertificatePage.isReUploadPartnerCertificateTextDisplayed(),
+				GlobalConstants.iReUploadPartnerCertificateTextDisplayed);
+		assertTrue(partnerCertificatePage.isLastCertificateUploadDateDisplayed(),
+				GlobalConstants.isLastCertificateUploadDateDisplayed);
+		partnerCertificatePage.uploadCertificate();
+		assertTrue(partnerCertificatePage.isUploadedCertificateNameDisplayed(),
+				GlobalConstants.isUploadedCertificateNameDisplayed);
+		partnerCertificatePage.clickOnSubmitButton();
+
+		LogUtil.step("Verify re-upload succeeds and replaces the existing certificate");
+		assertTrue(partnerCertificatePage.isSuccessMessageDisplayed(),
+				GlobalConstants.isValidCertificateReUploadedAndReplacesExisting);
+		partnerCertificatePage.clickOncertificateUploadCloseButton();
+		assertTrue(partnerCertificatePage.isPartnerCertificateReuploadButtonDisplayed(),
+				GlobalConstants.isValidCertificateReUploadedAndReplacesExisting);
+		assertTrue(partnerCertificatePage.isDownloadButtonDisplayed(),
+				GlobalConstants.isValidCertificateReUploadedAndReplacesExisting);
+	}
+
 	private void handleTermsAndCondition() {
 		if (dashboardPage.isTermsAndConditionsPopupDisplayedQuick()) {
 			dashboardPage.clickOnCheckbox();

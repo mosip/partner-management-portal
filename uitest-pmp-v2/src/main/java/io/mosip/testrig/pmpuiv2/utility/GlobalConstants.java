@@ -355,6 +355,7 @@ public class GlobalConstants {
 	public static final String INVALID_CERTIFICATE_FORMAT_ERROR_MESSAGE = "The certificate uploaded is not in the correct format. Only certificates having format .cer or .pem is allowed for upload";
 	public static final String isReUploadButtonLabelDisplayedAfterCertificateExists = "Verify Upload button label is Re-Upload after partner certificate exists";
 	public static final String isInvalidCertificateFormatErrorMessageDisplayed = "Verify invalid certificate format error message is displayed on Re-Upload";
+	public static final String isValidCertificateReUploadedAndReplacesExisting = "Verify re-uploading a valid certificate revokes the existing one and replaces it successfully";
 	public static final String isPartnerCertificatePageDisplayed = "Verify if partner certificate page is displayed";
 	public static final String isUploadPartnerCertificatePopUpDisplayed = "Verify if upload partner certificate pop up is displayed";
 	public static final String isSuccessMessageDisplayed = "Verify if Partner certificate for Authentication Partner is uploaded successfully.";
