@@ -464,6 +464,10 @@ public class PartnerCertificatePage extends BasePage {
 		return isElementDisplayed(uploadButton);
 	}
 
+	public boolean isUploadButtonEnabled() {
+		return isElementEnabled(uploadButton);
+	}
+
 	public void clickOnUploadButton() {
 		clickOnElement(uploadButton);
 	}

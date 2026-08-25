@@ -129,6 +129,44 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 				GlobalConstants.isUploadButtonDisplayedForFirstTimeCertificate);
 	}
 
+	@Test(priority = 4, description = "Verify Upload button is clickable and opens the certificate upload popup", dependsOnMethods = "registerCredentialPartnerForCertificateFlow")
+	public void verifyUploadButtonClickableAndOpensCertificateUploadPopup() {
+
+		dashboardPage = new DashboardPage(driver);
+		loginPage = new LoginPage(driver);
+		partnerCertificatePage = new PartnerCertificatePage(driver);
+
+		LogUtil.step("Login with valid Credential Partner credentials");
+		dashboardPage.clickOnProfileDropdown();
+		loginPage = dashboardPage.clickOnLogoutButton();
+		assertTrue(loginPage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
+		loginPage.enterUserName(GlobalConstants.CREDENTIAL_PARTNER_ID);
+		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
+		loginPage.clickOnLoginButton();
+
+		LogUtil.step("Navigate to Partner Certificate page from dashboard");
+		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
+				GlobalConstants.isPartnerCertificateTitleDisplayed);
+		dashboardPage.clickOnPartnerCertificateTitle();
+		assertTrue(partnerCertificatePage.isPartnerCertificatePageDisplayed(),
+				GlobalConstants.isPartnerCertificatePageDisplayed);
+
+		LogUtil.step("Verify Upload button is clickable");
+		assertTrue(partnerCertificatePage.isUploadButtonDisplayed(),
+				GlobalConstants.isUploadButtonDisplayedForFirstTimeCertificate);
+		assertTrue(partnerCertificatePage.isUploadButtonEnabled(),
+				GlobalConstants.isUploadButtonClickableForFirstTimeCertificate);
+
+		LogUtil.step("Click Upload button and verify certificate upload popup is displayed");
+		partnerCertificatePage.clickOnUploadButton();
+		assertTrue(partnerCertificatePage.isUploadPartnerCertificatePopUpDisplayed(),
+				GlobalConstants.isUploadPartnerCertificatePopUpDisplayed);
+		assertTrue(partnerCertificatePage.isPleaseTabToSelectTextDisplayed(),
+				GlobalConstants.isPleaseTabToSelectTextDisplayed);
+		assertTrue(partnerCertificatePage.isPartnercertFormatesTextDisplayed(),
+				GlobalConstants.isCertFormatesTextDisplayed);
+	}
+
 	private void handleTermsAndCondition() {
 		if (dashboardPage.isTermsAndConditionsPopupDisplayedQuick()) {
 			dashboardPage.clickOnCheckbox();
