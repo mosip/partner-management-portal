@@ -199,6 +199,45 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 				GlobalConstants.isOnlyUploadButtonAvailableWhenNoCertificateExists);
 	}
 
+	@Test(priority = 6, description = "Verify uploading a valid partner certificate is successful", dependsOnMethods = "registerCredentialPartnerForCertificateFlow")
+	public void verifyValidPartnerCertificateUploadIsSuccessful() {
+
+		dashboardPage = new DashboardPage(driver);
+		loginPage = new LoginPage(driver);
+		partnerCertificatePage = new PartnerCertificatePage(driver);
+
+		LogUtil.step("Login with valid Credential Partner credentials");
+		dashboardPage.clickOnProfileDropdown();
+		loginPage = dashboardPage.clickOnLogoutButton();
+		assertTrue(loginPage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
+		loginPage.enterUserName(GlobalConstants.CREDENTIAL_PARTNER_ID);
+		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
+		loginPage.clickOnLoginButton();
+
+		LogUtil.step("Navigate to Partner Certificate page and open Upload popup");
+		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
+				GlobalConstants.isPartnerCertificateTitleDisplayed);
+		dashboardPage.clickOnPartnerCertificateTitle();
+		assertTrue(partnerCertificatePage.isPartnerCertificatePageDisplayed(),
+				GlobalConstants.isPartnerCertificatePageDisplayed);
+		assertTrue(partnerCertificatePage.isUploadButtonDisplayed(),
+				GlobalConstants.isUploadButtonDisplayedForFirstTimeCertificate);
+		partnerCertificatePage.clickOnUploadButton();
+		assertTrue(partnerCertificatePage.isUploadPartnerCertificatePopUpDisplayed(),
+				GlobalConstants.isUploadPartnerCertificatePopUpDisplayed);
+
+		LogUtil.step("Select a valid certificate and submit upload");
+		partnerCertificatePage.uploadCertificate();
+		assertTrue(partnerCertificatePage.isUploadedCertificateNameDisplayed(),
+				GlobalConstants.isUploadedCertificateNameDisplayed);
+		partnerCertificatePage.clickOnSubmitButton();
+
+		LogUtil.step("Verify certificate upload is successful");
+		assertTrue(partnerCertificatePage.isSuccessMessageDisplayed(),
+				GlobalConstants.isCredentialPartnerCertificateUploadedSuccessfully);
+		partnerCertificatePage.clickOncertificateUploadCloseButton();
+	}
+
 	private void handleTermsAndCondition() {
 		if (dashboardPage.isTermsAndConditionsPopupDisplayedQuick()) {
 			dashboardPage.clickOnCheckbox();
