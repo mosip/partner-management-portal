@@ -1,5 +1,6 @@
 package io.mosip.testrig.pmpuiv2.testcase;
 
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
@@ -236,6 +237,47 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 		assertTrue(partnerCertificatePage.isSuccessMessageDisplayed(),
 				GlobalConstants.isCredentialPartnerCertificateUploadedSuccessfully);
 		partnerCertificatePage.clickOncertificateUploadCloseButton();
+	}
+
+	@Test(priority = 7, description = "Verify Re-Upload with invalid certificate format shows the correct error message", dependsOnMethods = "verifyValidPartnerCertificateUploadIsSuccessful")
+	public void verifyReUploadInvalidCertificateShowsFormatError() {
+
+		dashboardPage = new DashboardPage(driver);
+		loginPage = new LoginPage(driver);
+		partnerCertificatePage = new PartnerCertificatePage(driver);
+
+		LogUtil.step("Login with valid Credential Partner credentials");
+		dashboardPage.clickOnProfileDropdown();
+		loginPage = dashboardPage.clickOnLogoutButton();
+		assertTrue(loginPage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
+		loginPage.enterUserName(GlobalConstants.CREDENTIAL_PARTNER_ID);
+		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
+		loginPage.clickOnLoginButton();
+
+		LogUtil.step("Navigate to Partner Certificate page and verify Re-Upload button label");
+		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
+				GlobalConstants.isPartnerCertificateTitleDisplayed);
+		dashboardPage.clickOnPartnerCertificateTitle();
+		assertTrue(partnerCertificatePage.isPartnerCertificatePageDisplayed(),
+				GlobalConstants.isPartnerCertificatePageDisplayed);
+		assertTrue(partnerCertificatePage.isPartnerCertificateReuploadButtonDisplayed(),
+				GlobalConstants.isReUploadButtonLabelDisplayedAfterCertificateExists);
+		assertTrue(partnerCertificatePage.getPartnerCertificateReuploadButtonText()
+				.contains(GlobalConstants.RE_UPLOAD_BUTTON_LABEL),
+				GlobalConstants.isReUploadButtonLabelDisplayedAfterCertificateExists);
+
+		LogUtil.step("Click Re-Upload and select an invalid certificate");
+		partnerCertificatePage.clickOnPartnerCertificateReuploadButton();
+		assertTrue(partnerCertificatePage.isReUploadPartnerCertificateTextDisplayed(),
+				GlobalConstants.iReUploadPartnerCertificateTextDisplayed);
+		partnerCertificatePage.uploadCertificateInvalidCert();
+
+		LogUtil.step("Verify upload fails with invalid certificate format error message");
+		assertTrue(partnerCertificatePage.isInvalidFormatErrorPopupDisplayed(),
+				GlobalConstants.isInvalidCertFormatePopupDisplayed);
+		assertEquals(partnerCertificatePage.getInvalidFormatErrorMessage(),
+				GlobalConstants.INVALID_CERTIFICATE_FORMAT_ERROR_MESSAGE,
+				GlobalConstants.isInvalidCertificateFormatErrorMessageDisplayed);
 	}
 
 	private void handleTermsAndCondition() {

@@ -540,6 +540,14 @@ public class PartnerCertificatePage extends BasePage {
 		return isElementEnabled(partnerCertificateReuploadButton);
 	}
 
+	public String getPartnerCertificateReuploadButtonText() {
+		return getTextFromLocator(partnerCertificateReuploadButton).trim();
+	}
+
+	public String getInvalidFormatErrorMessage() {
+		return getTextFromLocator(InvalidFormatErrorPopup).trim();
+	}
+
 	public String getCertificateUploadedDateInPartnerPortal() {
 		return getTextFromLocator(By.id("certificate_uploaded_date_context")).trim();
 	}
