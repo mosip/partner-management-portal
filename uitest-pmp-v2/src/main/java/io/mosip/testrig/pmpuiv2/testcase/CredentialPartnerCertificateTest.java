@@ -74,8 +74,11 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 		dashboardPage.clickOnSubmitButton();
 		handleTermsAndCondition();
 
+		// Wait for dashboard after consent before asserting cards (avoids post-proceed race).
+		assertTrue(dashboardPage.isWelcomeMessageDisplayed(), GlobalConstants.isWelcomeMessageDisplayed);
 		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
 				GlobalConstants.isPartnerCertificateTitleDisplayed);
+		assertTrue(dashboardPage.isPoliciesTitleDisplayed(), GlobalConstants.isPoliciesTitleDisplayed);
 
 		LogUtil.step("Logout from Credential Partner to prepare for certificate card verification");
 		logoutFromPartner();
@@ -169,7 +172,215 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 				GlobalConstants.isCertFormatesTextDisplayed);
 	}
 
-	@Test(priority = 5, description = "Verify only Upload button is available when no partner certificate exists", dependsOnMethods = "registerCredentialPartnerForCertificateFlow")
+	@Test(priority = 5, description = "Verify popup title on Upload action is Upload Partner Certificate", dependsOnMethods = "registerCredentialPartnerForCertificateFlow")
+	public void verifyUploadPartnerCertificatePopupTitle() {
+
+		dashboardPage = new DashboardPage(driver);
+		loginPage = new LoginPage(driver);
+		partnerCertificatePage = new PartnerCertificatePage(driver);
+
+		LogUtil.step("Login with valid Credential Partner credentials");
+		dashboardPage.clickOnProfileDropdown();
+		loginPage = dashboardPage.clickOnLogoutButton();
+		assertTrue(loginPage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
+		loginPage.enterUserName(GlobalConstants.CREDENTIAL_PARTNER_ID);
+		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
+		loginPage.clickOnLoginButton();
+
+		LogUtil.step("Navigate to Partner Certificate page and click Upload");
+		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
+				GlobalConstants.isPartnerCertificateTitleDisplayed);
+		dashboardPage.clickOnPartnerCertificateTitle();
+		assertTrue(partnerCertificatePage.isPartnerCertificatePageDisplayed(),
+				GlobalConstants.isPartnerCertificatePageDisplayed);
+		assertTrue(partnerCertificatePage.isUploadButtonDisplayed(),
+				GlobalConstants.isUploadButtonDisplayedForFirstTimeCertificate);
+		partnerCertificatePage.clickOnUploadButton();
+
+		LogUtil.step("Verify popup title on Upload action");
+		assertTrue(partnerCertificatePage.isUploadPartnerCertificatePopUpDisplayed(),
+				GlobalConstants.isUploadPartnerCertificatePopUpDisplayed);
+		assertEquals(partnerCertificatePage.getUploadCertificatePopupTitle(),
+				GlobalConstants.UPLOAD_PARTNER_CERTIFICATE_POPUP_TITLE,
+				GlobalConstants.isUploadPartnerCertificatePopupTitleDisplayed);
+	}
+
+	@Test(priority = 6, description = "Verify popup subtitle on Upload action", dependsOnMethods = "registerCredentialPartnerForCertificateFlow")
+	public void verifyUploadPartnerCertificatePopupSubtitle() {
+
+		dashboardPage = new DashboardPage(driver);
+		loginPage = new LoginPage(driver);
+		partnerCertificatePage = new PartnerCertificatePage(driver);
+
+		LogUtil.step("Login with valid Credential Partner credentials");
+		dashboardPage.clickOnProfileDropdown();
+		loginPage = dashboardPage.clickOnLogoutButton();
+		assertTrue(loginPage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
+		loginPage.enterUserName(GlobalConstants.CREDENTIAL_PARTNER_ID);
+		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
+		loginPage.clickOnLoginButton();
+
+		LogUtil.step("Navigate to Partner Certificate page and click Upload");
+		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
+				GlobalConstants.isPartnerCertificateTitleDisplayed);
+		dashboardPage.clickOnPartnerCertificateTitle();
+		assertTrue(partnerCertificatePage.isPartnerCertificatePageDisplayed(),
+				GlobalConstants.isPartnerCertificatePageDisplayed);
+		assertTrue(partnerCertificatePage.isUploadButtonDisplayed(),
+				GlobalConstants.isUploadButtonDisplayedForFirstTimeCertificate);
+		partnerCertificatePage.clickOnUploadButton();
+
+		LogUtil.step("Verify popup subtitle on Upload action");
+		assertTrue(partnerCertificatePage.isUploadCertificatePopupSubtitleDisplayed(),
+				GlobalConstants.isUploadPartnerCertificatePopupSubtitleDisplayed);
+		assertEquals(partnerCertificatePage.getUploadCertificatePopupSubtitle(),
+				GlobalConstants.UPLOAD_PARTNER_CERTIFICATE_POPUP_SUBTITLE,
+				GlobalConstants.isUploadPartnerCertificatePopupSubtitleDisplayed);
+	}
+
+	@Test(priority = 7, description = "Verify Partner Type Name is displayed as Credential Partner", dependsOnMethods = "registerCredentialPartnerForCertificateFlow")
+	public void verifyPartnerTypeNameDisplayedAsCredentialPartner() {
+
+		dashboardPage = new DashboardPage(driver);
+		loginPage = new LoginPage(driver);
+		partnerCertificatePage = new PartnerCertificatePage(driver);
+
+		LogUtil.step("Login with valid Credential Partner credentials");
+		dashboardPage.clickOnProfileDropdown();
+		loginPage = dashboardPage.clickOnLogoutButton();
+		assertTrue(loginPage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
+		loginPage.enterUserName(GlobalConstants.CREDENTIAL_PARTNER_ID);
+		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
+		loginPage.clickOnLoginButton();
+
+		LogUtil.step("Navigate to Partner Certificate page and open Upload popup");
+		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
+				GlobalConstants.isPartnerCertificateTitleDisplayed);
+		dashboardPage.clickOnPartnerCertificateTitle();
+		assertTrue(partnerCertificatePage.isPartnerCertificatePageDisplayed(),
+				GlobalConstants.isPartnerCertificatePageDisplayed);
+		assertTrue(partnerCertificatePage.isUploadButtonDisplayed(),
+				GlobalConstants.isUploadButtonDisplayedForFirstTimeCertificate);
+		partnerCertificatePage.clickOnUploadButton();
+
+		LogUtil.step("Verify Partner Type Name is displayed as Credential Partner");
+		assertTrue(partnerCertificatePage.isPartnerTypeContextDisplayed(),
+				GlobalConstants.isCredentialPartnerTypeNameDisplayed);
+		assertEquals(partnerCertificatePage.getPartnerType(), GlobalConstants.CREDENTIAL_PARTNER_TYPE_NAME,
+				GlobalConstants.isCredentialPartnerTypeNameDisplayed);
+	}
+
+	@Test(priority = 8, description = "Verify Partner Type Name field is non-editable", dependsOnMethods = "registerCredentialPartnerForCertificateFlow")
+	public void verifyPartnerTypeNameFieldIsNonEditable() {
+
+		dashboardPage = new DashboardPage(driver);
+		loginPage = new LoginPage(driver);
+		partnerCertificatePage = new PartnerCertificatePage(driver);
+
+		LogUtil.step("Login with valid Credential Partner credentials");
+		dashboardPage.clickOnProfileDropdown();
+		loginPage = dashboardPage.clickOnLogoutButton();
+		assertTrue(loginPage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
+		loginPage.enterUserName(GlobalConstants.CREDENTIAL_PARTNER_ID);
+		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
+		loginPage.clickOnLoginButton();
+
+		LogUtil.step("Navigate to Partner Certificate page and open Upload popup");
+		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
+				GlobalConstants.isPartnerCertificateTitleDisplayed);
+		dashboardPage.clickOnPartnerCertificateTitle();
+		assertTrue(partnerCertificatePage.isPartnerCertificatePageDisplayed(),
+				GlobalConstants.isPartnerCertificatePageDisplayed);
+		assertTrue(partnerCertificatePage.isUploadButtonDisplayed(),
+				GlobalConstants.isUploadButtonDisplayedForFirstTimeCertificate);
+		partnerCertificatePage.clickOnUploadButton();
+
+		LogUtil.step("Verify Partner Type Name field is non-editable and value cannot be changed");
+		assertTrue(partnerCertificatePage.isPartnerTypeContextDisplayed(),
+				GlobalConstants.isPartnerTypeNameFieldNonEditable);
+		assertTrue(partnerCertificatePage.isPartnerTypeFieldNonEditable(),
+				GlobalConstants.isPartnerTypeNameFieldNonEditable);
+	}
+
+	@Test(priority = 9, description = "Verify all fields and UI components in Upload Partner Certificate popup", dependsOnMethods = "registerCredentialPartnerForCertificateFlow")
+	public void verifyUploadPartnerCertificatePopupLayoutAndFields() {
+
+		dashboardPage = new DashboardPage(driver);
+		loginPage = new LoginPage(driver);
+		partnerCertificatePage = new PartnerCertificatePage(driver);
+
+		LogUtil.step("Login with valid Credential Partner credentials");
+		dashboardPage.clickOnProfileDropdown();
+		loginPage = dashboardPage.clickOnLogoutButton();
+		assertTrue(loginPage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
+		loginPage.enterUserName(GlobalConstants.CREDENTIAL_PARTNER_ID);
+		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
+		loginPage.clickOnLoginButton();
+
+		LogUtil.step("Navigate to Partner Certificate page and open Upload popup");
+		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
+				GlobalConstants.isPartnerCertificateTitleDisplayed);
+		dashboardPage.clickOnPartnerCertificateTitle();
+		assertTrue(partnerCertificatePage.isPartnerCertificatePageDisplayed(),
+				GlobalConstants.isPartnerCertificatePageDisplayed);
+		assertTrue(partnerCertificatePage.isUploadButtonDisplayed(),
+				GlobalConstants.isUploadButtonDisplayedForFirstTimeCertificate);
+		partnerCertificatePage.clickOnUploadButton();
+
+		LogUtil.step("Verify Title");
+		assertEquals(partnerCertificatePage.getUploadCertificatePopupTitle(),
+				GlobalConstants.UPLOAD_PARTNER_CERTIFICATE_POPUP_TITLE,
+				GlobalConstants.isUploadPartnerCertificatePopupLayoutDisplayed);
+
+		LogUtil.step("Verify Subtitle");
+		assertEquals(partnerCertificatePage.getUploadCertificatePopupSubtitle(),
+				GlobalConstants.UPLOAD_PARTNER_CERTIFICATE_POPUP_SUBTITLE,
+				GlobalConstants.isUploadPartnerCertificatePopupLayoutDisplayed);
+
+		LogUtil.step("Verify Partner Type Name");
+		assertTrue(partnerCertificatePage.isUploadPopupPartnerTypeLabelDisplayed(),
+				GlobalConstants.isUploadPartnerCertificatePopupLayoutDisplayed);
+		assertEquals(partnerCertificatePage.getUploadPopupPartnerTypeLabelText(),
+				GlobalConstants.UPLOAD_POPUP_PARTNER_TYPE_LABEL,
+				GlobalConstants.isUploadPartnerCertificatePopupLayoutDisplayed);
+		assertTrue(partnerCertificatePage.isPartnerTypeContextDisplayed(),
+				GlobalConstants.isUploadPartnerCertificatePopupLayoutDisplayed);
+		assertTrue(partnerCertificatePage.isPartnerTypeContextDisabled(),
+				GlobalConstants.isUploadPartnerCertificatePopupLayoutDisplayed);
+		assertEquals(partnerCertificatePage.getPartnerType(), GlobalConstants.CREDENTIAL_PARTNER_TYPE_NAME,
+				GlobalConstants.isUploadPartnerCertificatePopupLayoutDisplayed);
+
+		LogUtil.step("Verify Partner Domain Type");
+		assertTrue(partnerCertificatePage.isUploadPopupPartnerDomainTypeLabelDisplayed(),
+				GlobalConstants.isUploadPartnerCertificatePopupLayoutDisplayed);
+		assertEquals(partnerCertificatePage.getUploadPopupPartnerDomainTypeLabelText(),
+				GlobalConstants.UPLOAD_POPUP_PARTNER_DOMAIN_TYPE_LABEL,
+				GlobalConstants.isUploadPartnerCertificatePopupLayoutDisplayed);
+		assertTrue(partnerCertificatePage.isPartnerDomainTypeContextDisplayed(),
+				GlobalConstants.isUploadPartnerCertificatePopupLayoutDisplayed);
+		assertTrue(partnerCertificatePage.isPartnerDomainTypeContextDisabled(),
+				GlobalConstants.isUploadPartnerCertificatePopupLayoutDisplayed);
+		assertEquals(partnerCertificatePage.getPartnerDomainType(), GlobalConstants.PARTNER_DOMAIN_TYPE_AUTH,
+				GlobalConstants.isUploadPartnerCertificatePopupLayoutDisplayed);
+
+		LogUtil.step("Verify Certificate Upload section");
+		assertTrue(partnerCertificatePage.isUploadCertificateCardDisplayed(),
+				GlobalConstants.isUploadPartnerCertificatePopupLayoutDisplayed);
+		assertTrue(partnerCertificatePage.isPleaseTabToSelectTextDisplayed(),
+				GlobalConstants.isUploadPartnerCertificatePopupLayoutDisplayed);
+		assertTrue(partnerCertificatePage.isPartnercertFormatesTextDisplayed(),
+				GlobalConstants.isUploadPartnerCertificatePopupLayoutDisplayed);
+
+		LogUtil.step("Verify Cancel button");
+		assertTrue(partnerCertificatePage.isCertificateUploadCancelButtonDisplayed(),
+				GlobalConstants.isUploadPartnerCertificatePopupLayoutDisplayed);
+
+		LogUtil.step("Verify Submit button");
+		assertTrue(partnerCertificatePage.isUploadPopupSubmitButtonDisplayed(),
+				GlobalConstants.isUploadPartnerCertificatePopupLayoutDisplayed);
+	}
+
+	@Test(priority = 10, description = "Verify only Upload button is available when no partner certificate exists", dependsOnMethods = "registerCredentialPartnerForCertificateFlow")
 	public void verifyOnlyUploadButtonAvailableWhenNoCertificateExists() {
 
 		dashboardPage = new DashboardPage(driver);
@@ -200,7 +411,7 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 				GlobalConstants.isOnlyUploadButtonAvailableWhenNoCertificateExists);
 	}
 
-	@Test(priority = 6, description = "Verify uploading a valid partner certificate is successful", dependsOnMethods = "registerCredentialPartnerForCertificateFlow")
+	@Test(priority = 11, description = "Verify uploading a valid partner certificate is successful", dependsOnMethods = "registerCredentialPartnerForCertificateFlow")
 	public void verifyValidPartnerCertificateUploadIsSuccessful() {
 
 		dashboardPage = new DashboardPage(driver);
@@ -239,7 +450,7 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 		partnerCertificatePage.clickOncertificateUploadCloseButton();
 	}
 
-	@Test(priority = 7, description = "Verify Re-Upload with invalid certificate format shows the correct error message", dependsOnMethods = "verifyValidPartnerCertificateUploadIsSuccessful")
+	@Test(priority = 12, description = "Verify Re-Upload with invalid certificate format shows the correct error message", dependsOnMethods = "verifyValidPartnerCertificateUploadIsSuccessful")
 	public void verifyReUploadInvalidCertificateShowsFormatError() {
 
 		dashboardPage = new DashboardPage(driver);
@@ -280,7 +491,7 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 				GlobalConstants.isInvalidCertificateFormatErrorMessageDisplayed);
 	}
 
-	@Test(priority = 8, description = "Verify re-uploading a valid certificate revokes the existing one and replaces it", dependsOnMethods = "verifyValidPartnerCertificateUploadIsSuccessful")
+	@Test(priority = 13, description = "Verify re-uploading a valid certificate revokes the existing one and replaces it", dependsOnMethods = "verifyValidPartnerCertificateUploadIsSuccessful")
 	public void verifyValidCertificateReUploadReplacesExistingCertificate() {
 
 		dashboardPage = new DashboardPage(driver);
@@ -306,12 +517,19 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 		assertTrue(partnerCertificatePage.isDownloadButtonDisplayed(),
 				GlobalConstants.isValidCertificateReUploadedAndReplacesExisting);
 
-		LogUtil.step("Open Re-Upload and select a new valid certificate");
+		LogUtil.step("Open Re-Upload and verify revoke warning for existing certificate");
 		partnerCertificatePage.clickOnPartnerCertificateReuploadButton();
 		assertTrue(partnerCertificatePage.isReUploadPartnerCertificateTextDisplayed(),
 				GlobalConstants.iReUploadPartnerCertificateTextDisplayed);
+		assertTrue(partnerCertificatePage.isReUploadCertificateWarningMessageDisplayed(),
+				GlobalConstants.isReUploadCertificateWarningMessageDisplayed);
+		assertEquals(partnerCertificatePage.getReUploadCertificateWarningMessage(),
+				GlobalConstants.REUPLOAD_CERTIFICATE_WARNING_MESSAGE,
+				GlobalConstants.isReUploadCertificateWarningMessageDisplayed);
 		assertTrue(partnerCertificatePage.isLastCertificateUploadDateDisplayed(),
 				GlobalConstants.isLastCertificateUploadDateDisplayed);
+
+		LogUtil.step("Select a new valid certificate and submit re-upload");
 		partnerCertificatePage.uploadCertificate();
 		assertTrue(partnerCertificatePage.isUploadedCertificateNameDisplayed(),
 				GlobalConstants.isUploadedCertificateNameDisplayed);
