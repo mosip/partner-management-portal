@@ -347,6 +347,7 @@ public class GlobalConstants {
 	public static final String isProceedButtonDisplayed = "Verify if proceed button is displayed.";
 	public static final String isPartnerCertificateTitleDisplayed = "Verify if partner certificate title is displayed";
 	public static final String isPartnerCertificateCardVisibleForCredentialPartner = "Verify Partner Certificate card is visible for Credential Partner on Dashboard";
+	public static final String isUploadButtonDisplayedForFirstTimeCertificate = "Verify Upload button is displayed for first-time partner certificate";
 	public static final String isPartnerCertificatePageDisplayed = "Verify if partner certificate page is displayed";
 	public static final String isUploadPartnerCertificatePopUpDisplayed = "Verify if upload partner certificate pop up is displayed";
 	public static final String isSuccessMessageDisplayed = "Verify if Partner certificate for Authentication Partner is uploaded successfully.";

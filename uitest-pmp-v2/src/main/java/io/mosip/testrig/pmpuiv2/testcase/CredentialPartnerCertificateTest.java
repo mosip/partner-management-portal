@@ -102,6 +102,33 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 				GlobalConstants.isPartnerCertificateCardVisibleForCredentialPartner);
 	}
 
+	@Test(priority = 3, description = "Verify Upload button is displayed for first-time partner certificate", dependsOnMethods = "registerCredentialPartnerForCertificateFlow")
+	public void verifyUploadButtonDisplayedForFirstTimeCertificate() {
+
+		dashboardPage = new DashboardPage(driver);
+		loginPage = new LoginPage(driver);
+		partnerCertificatePage = new PartnerCertificatePage(driver);
+
+		LogUtil.step("Login with valid Credential Partner credentials");
+		dashboardPage.clickOnProfileDropdown();
+		loginPage = dashboardPage.clickOnLogoutButton();
+		assertTrue(loginPage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
+		loginPage.enterUserName(GlobalConstants.CREDENTIAL_PARTNER_ID);
+		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
+		loginPage.clickOnLoginButton();
+
+		LogUtil.step("Navigate to Partner Certificate page from dashboard");
+		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
+				GlobalConstants.isPartnerCertificateTitleDisplayed);
+		dashboardPage.clickOnPartnerCertificateTitle();
+		assertTrue(partnerCertificatePage.isPartnerCertificatePageDisplayed(),
+				GlobalConstants.isPartnerCertificatePageDisplayed);
+
+		LogUtil.step("Verify Upload button is displayed for first-time certificate upload");
+		assertTrue(partnerCertificatePage.isUploadButtonDisplayed(),
+				GlobalConstants.isUploadButtonDisplayedForFirstTimeCertificate);
+	}
+
 	private void handleTermsAndCondition() {
 		if (dashboardPage.isTermsAndConditionsPopupDisplayedQuick()) {
 			dashboardPage.clickOnCheckbox();
