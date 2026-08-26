@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<!-- Focused suite: Verify Partner Domain Type is a mandatory field -->
+<suite name="Partner Domain Type Mandatory" preserve-order="true" parallel="false">
+
+	<test name="VerifyPartnerDomainTypeIsMandatory" preserve-order="true">
+		<classes>
+			<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerAdminCreation" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.CredentialPartnerCertificateTest">
+				<methods>
+					<include name="registerCredentialPartnerForCertificateFlow" />
+					<include name="verifyPartnerDomainTypeIsMandatory" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+
+	<listeners>
+		<listener class-name="io.mosip.testrig.pmpuiv2.utility.EmailableReport" />
+		<listener class-name="io.mosip.testrig.pmpuiv2.utility.KnownIssues" />
+	</listeners>
+
+</suite>
