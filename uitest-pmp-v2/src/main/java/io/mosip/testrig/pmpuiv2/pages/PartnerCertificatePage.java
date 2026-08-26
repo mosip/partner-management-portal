@@ -52,6 +52,9 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(xpath = "//h5[text()='Please tap to select the certificate']")
 	private WebElement PleaseTabToSelectText;
 
+	@FindBy(id = "upload_popup_selecting_certificate_msg")
+	private WebElement uploadPopupSelectCertificateMsg;
+
 	@FindBy(id = "upload_trust_certificate_format_msg")
 	private WebElement certificateFormatText;
 
@@ -787,6 +790,19 @@ public class PartnerCertificatePage extends BasePage {
 
 	public boolean isPleaseTabToSelectTextDisplayed() {
 		return isElementDisplayed(PleaseTabToSelectText);
+	}
+
+	public String getUploadPopupSelectCertificateText() {
+		return getTextFromLocator(uploadPopupSelectCertificateMsg).trim();
+	}
+
+	public String getUploadPopupCertificateFormatText() {
+		return getTextFromLocator(partnerCertificateFormatText).trim();
+	}
+
+	/** Combined display text shown in the certificate upload section. */
+	public String getCertificateUploadSectionDisplayText() {
+		return getUploadPopupSelectCertificateText() + ". " + getUploadPopupCertificateFormatText();
 	}
 
 	public boolean isCertFormatesTextDisplayed() {
