@@ -368,6 +368,8 @@ public class GlobalConstants {
 	public static final String PARTNER_DOMAIN_TYPE_AUTH = "AUTH";
 	public static final String isPartnerDomainTypePlaceholderTextAuth = "Verify Partner Domain Type field displays placeholder text as AUTH";
 	public static final String isPartnerDomainTypeMandatory = "Verify Partner Domain Type is a mandatory field";
+	public static final String isPartnerDomainTypeAutoPopulated = "Verify Partner Domain Type field is auto-populated";
+	public static final String isPartnerDomainTypePopulatedAsPerConfiguredDomainTypes = "Verify Partner Domain Type is populated as per configured domain types";
 	public static final String isUploadPartnerCertificatePopupLayoutDisplayed = "Verify all fields and UI components are displayed with correct layout in Upload Partner Certificate popup";
 	public static final String INVALID_CERTIFICATE_FORMAT_ERROR_MESSAGE = "The certificate uploaded is not in the correct format. Only certificates having format .cer or .pem is allowed for upload";
 	public static final String isReUploadButtonLabelDisplayedAfterCertificateExists = "Verify Upload button label is Re-Upload after partner certificate exists";
