@@ -680,6 +680,50 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 				GlobalConstants.isNoCertificateChangesPersistedOnCancel);
 	}
 
+	@Test(priority = 24, description = "Verify Cancel button is clickable and responsive", dependsOnMethods = "registerCredentialPartnerForCertificateFlow")
+	public void verifyCancelButtonIsClickableAndResponsive() {
+
+		dashboardPage = new DashboardPage(driver);
+		loginPage = new LoginPage(driver);
+		partnerCertificatePage = new PartnerCertificatePage(driver);
+
+		LogUtil.step("Login to the PMS Portal as Credential Partner");
+		dashboardPage.clickOnProfileDropdown();
+		loginPage = dashboardPage.clickOnLogoutButton();
+		assertTrue(loginPage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
+		loginPage.enterUserName(GlobalConstants.CREDENTIAL_PARTNER_ID);
+		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
+		loginPage.clickOnLoginButton();
+		assertTrue(dashboardPage.isWelcomeMessageDisplayed(), GlobalConstants.isWelcomeMessageDisplayed);
+
+		LogUtil.step("Navigate to Partner Certificate list view and open Upload popup");
+		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
+				GlobalConstants.isPartnerCertificateTitleDisplayed);
+		dashboardPage.clickOnPartnerCertificateTitle();
+		assertTrue(partnerCertificatePage.isCertificateListViewDisplayed(),
+				GlobalConstants.isPartnerCertificatePageDisplayed);
+		partnerCertificatePage.openPartnerCertificateUploadOrReUploadPopup();
+
+		LogUtil.step("Verify Cancel button is displayed, enabled, and clickable");
+		assertTrue(partnerCertificatePage.isCertificateUploadCancelButtonDisplayed(),
+				GlobalConstants.isCertificateUploadCancelButtonClickable);
+		assertTrue(partnerCertificatePage.isCertificateUploadCancelButtonNativeButton(),
+				GlobalConstants.isCertificateUploadCancelButtonClickable);
+		assertTrue(partnerCertificatePage.isCertificateUploadCancelButtonEnabled(),
+				GlobalConstants.isCertificateUploadCancelButtonClickable);
+		assertTrue(partnerCertificatePage.isCertificateUploadCancelButtonFocusable(),
+				GlobalConstants.isCertificateUploadCancelButtonClickable);
+		assertTrue(partnerCertificatePage.isCertificateUploadCancelButtonClickable(),
+				GlobalConstants.isCertificateUploadCancelButtonClickable);
+
+		LogUtil.step("Click Cancel and verify button is responsive");
+		partnerCertificatePage.clickOnCertificateUploadCancelButton();
+		assertFalse(partnerCertificatePage.isUploadPartnerCertificatePopUpDisplayedQuick(),
+				GlobalConstants.isCertificateUploadCancelButtonResponsive);
+		assertTrue(partnerCertificatePage.isCertificateListViewDisplayed(),
+				GlobalConstants.isCertificateUploadCancelButtonResponsive);
+	}
+
 	@Test(priority = 9, description = "Verify all fields and UI components in Upload Partner Certificate popup", dependsOnMethods = "registerCredentialPartnerForCertificateFlow")
 	public void verifyUploadPartnerCertificatePopupLayoutAndFields() {
 

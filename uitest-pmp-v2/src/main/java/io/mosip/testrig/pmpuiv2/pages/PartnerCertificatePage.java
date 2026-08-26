@@ -11,6 +11,7 @@ import org.openqa.selenium.support.FindBy;
 
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
+import io.mosip.testrig.pmpuiv2.utility.LogUtil;
 import io.mosip.testrig.pmpuiv2.utility.WaitUtil;
 
 public class PartnerCertificatePage extends BasePage {
@@ -603,6 +604,30 @@ public class PartnerCertificatePage extends BasePage {
 
 	public boolean isCertificateUploadCancelButtonDisplayed() {
 		return isElementDisplayed(certificateUploadCancelButton);
+	}
+
+	public boolean isCertificateUploadCancelButtonEnabled() {
+		return isElementEnabled(certificateUploadCancelButton);
+	}
+
+	public boolean isCertificateUploadCancelButtonNativeButton() {
+		return GlobalConstants.BUTTON_TAG.equalsIgnoreCase(certificateUploadCancelButton.getTagName());
+	}
+
+	public boolean isCertificateUploadCancelButtonFocusable() {
+		return isElementFocusable(certificateUploadCancelButton);
+	}
+
+	/** True when Cancel is displayed, enabled, and Selenium considers it clickable. */
+	public boolean isCertificateUploadCancelButtonClickable() {
+		try {
+			WaitUtil.waitForClickability(driver, certificateUploadCancelButton);
+			return isCertificateUploadCancelButtonDisplayed() && isCertificateUploadCancelButtonEnabled()
+					&& certificateUploadCancelButton.getAttribute("disabled") == null;
+		} catch (Exception e) {
+			LogUtil.error("Cancel button clickability check failed: " + e.getClass().getSimpleName());
+			return false;
+		}
 	}
 
 	public boolean isUploadPopupSubmitButtonDisplayed() {
