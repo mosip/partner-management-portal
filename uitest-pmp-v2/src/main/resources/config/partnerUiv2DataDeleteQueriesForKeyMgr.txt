@@ -29,4 +29,5 @@ DELETE FROM keymgr.key_alias where app_id = 'PARTNER' AND ref_id = 'pmpui-policy
 DELETE FROM keymgr.key_alias where app_id = 'PARTNER' AND ref_id = 'pmpui-deactivate';
 DELETE FROM keymgr.key_alias where app_id = 'PARTNER' AND ref_id = 'pmpui-deactivate2';
 DELETE FROM keymgr.key_alias where app_id = 'PARTNER' AND ref_id = 'pmpui-deactivatedevice';
-DELETE FROM keymgr.key_alias where app_id = 'PARTNER' AND ref_id = 'pmpui-deactivateftm';DELETE FROM keymgr.key_alias where app_id = 'PARTNER' AND ref_id = 'pmpui-credential';
+DELETE FROM keymgr.key_alias where app_id = 'PARTNER' AND ref_id = 'pmpui-deactivateftm';
+DELETE FROM keymgr.key_alias where app_id = 'PARTNER' AND ref_id = 'pmpui-credential';
