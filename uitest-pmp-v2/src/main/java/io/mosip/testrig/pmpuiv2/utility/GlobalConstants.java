@@ -367,6 +367,11 @@ public class GlobalConstants {
 	public static final String isReUploadButtonLabelDisplayedAfterCertificateExists = "Verify Upload button label is Re-Upload after partner certificate exists";
 	public static final String isInvalidCertificateFormatErrorMessageDisplayed = "Verify invalid certificate format error message is displayed on Re-Upload";
 	public static final String isValidCertificateReUploadedAndReplacesExisting = "Verify re-uploading a valid certificate revokes the existing one and replaces it successfully";
+	public static final String SAME_CERTIFICATE_FILE_NAME = "Client.cer";
+	public static final String isSameCertificateFileSelectedForReUpload = "Verify the same certificate file (Client.cer) is selected for Re-Upload";
+	public static final String isReUploadWithSameCertificateFileSuccessful = "TC_44516_14: Verify Re-Upload with same certificate file allows replacement";
+	public static final String isCertificateDetailsDisplayedBeforeReUpload = "TC_44516_14: Verify certificate details are displayed before Re-Upload";
+	public static final String isCertificateDetailsRefreshedAfterSameFileReUpload = "TC_44516_14: Verify certificate details are refreshed after Re-Upload with same certificate file";
 	public static final String REUPLOAD_CERTIFICATE_WARNING_MESSAGE = "Your existing certificate will be revoked soon after you upload new certificate. Continue if you wish to proceed.";
 	public static final String isReUploadCertificateWarningMessageDisplayed = "Verify re-upload warning that existing certificate will be revoked is displayed";
 	public static final String isPartnerCertificatePageDisplayed = "Verify if partner certificate page is displayed";

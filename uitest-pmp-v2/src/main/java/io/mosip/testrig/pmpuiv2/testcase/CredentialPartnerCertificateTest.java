@@ -491,14 +491,18 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 				GlobalConstants.isInvalidCertificateFormatErrorMessageDisplayed);
 	}
 
-	@Test(priority = 13, description = "Verify re-uploading a valid certificate revokes the existing one and replaces it", dependsOnMethods = "verifyValidPartnerCertificateUploadIsSuccessful")
-	public void verifyValidCertificateReUploadReplacesExistingCertificate() {
+	/**
+	 * MOSIP-44516 TC_44516_14: Verify Re-Upload with same certificate file.
+	 * Expected: Allow replacement and refresh certificate details.
+	 */
+	@Test(priority = 14, description = "TC_44516_14: Verify Re-Upload with same certificate file", dependsOnMethods = "verifyValidPartnerCertificateUploadIsSuccessful")
+	public void verifyReUploadWithSameCertificateFile() {
 
 		dashboardPage = new DashboardPage(driver);
 		loginPage = new LoginPage(driver);
 		partnerCertificatePage = new PartnerCertificatePage(driver);
 
-		LogUtil.step("Login with valid Credential Partner credentials");
+		LogUtil.step("Step 1: Login to the PMS Portal as Credential Partner");
 		dashboardPage.clickOnProfileDropdown();
 		loginPage = dashboardPage.clickOnLogoutButton();
 		assertTrue(loginPage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
@@ -506,7 +510,7 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
 		loginPage.clickOnLoginButton();
 
-		LogUtil.step("Navigate to Partner Certificate page with an existing certificate");
+		LogUtil.step("Step 2: Navigate to the Partner Certificate card");
 		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
 				GlobalConstants.isPartnerCertificateTitleDisplayed);
 		dashboardPage.clickOnPartnerCertificateTitle();
@@ -515,9 +519,13 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 		assertTrue(partnerCertificatePage.isPartnerCertificateReuploadButtonDisplayed(),
 				GlobalConstants.isReUploadButtonLabelDisplayedAfterCertificateExists);
 		assertTrue(partnerCertificatePage.isDownloadButtonDisplayed(),
-				GlobalConstants.isValidCertificateReUploadedAndReplacesExisting);
+				GlobalConstants.isReUploadWithSameCertificateFileSuccessful);
 
-		LogUtil.step("Open Re-Upload and verify revoke warning for existing certificate");
+		String uploadedDateBeforeReUpload = partnerCertificatePage.getCertificateUploadedDateInPartnerPortal();
+		assertFalse(uploadedDateBeforeReUpload.isEmpty(),
+				GlobalConstants.isCertificateDetailsDisplayedBeforeReUpload);
+
+		LogUtil.step("Step 3: Click Re-Upload");
 		partnerCertificatePage.clickOnPartnerCertificateReuploadButton();
 		assertTrue(partnerCertificatePage.isReUploadPartnerCertificateTextDisplayed(),
 				GlobalConstants.iReUploadPartnerCertificateTextDisplayed);
@@ -526,23 +534,29 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 		assertEquals(partnerCertificatePage.getReUploadCertificateWarningMessage(),
 				GlobalConstants.REUPLOAD_CERTIFICATE_WARNING_MESSAGE,
 				GlobalConstants.isReUploadCertificateWarningMessageDisplayed);
-		assertTrue(partnerCertificatePage.isLastCertificateUploadDateDisplayed(),
-				GlobalConstants.isLastCertificateUploadDateDisplayed);
 
-		LogUtil.step("Select a new valid certificate and submit re-upload");
+		LogUtil.step("Step 4: Upload the same certificate file and submit");
 		partnerCertificatePage.uploadCertificate();
 		assertTrue(partnerCertificatePage.isUploadedCertificateNameDisplayed(),
 				GlobalConstants.isUploadedCertificateNameDisplayed);
+		assertEquals(partnerCertificatePage.getUploadedCertificateFileName(),
+				GlobalConstants.SAME_CERTIFICATE_FILE_NAME,
+				GlobalConstants.isSameCertificateFileSelectedForReUpload);
 		partnerCertificatePage.clickOnSubmitButton();
 
-		LogUtil.step("Verify re-upload succeeds and replaces the existing certificate");
+		LogUtil.step("Verify replacement is allowed and certificate details are refreshed");
 		assertTrue(partnerCertificatePage.isSuccessMessageDisplayed(),
-				GlobalConstants.isValidCertificateReUploadedAndReplacesExisting);
+				GlobalConstants.isReUploadWithSameCertificateFileSuccessful);
 		partnerCertificatePage.clickOncertificateUploadCloseButton();
 		assertTrue(partnerCertificatePage.isPartnerCertificateReuploadButtonDisplayed(),
-				GlobalConstants.isValidCertificateReUploadedAndReplacesExisting);
+				GlobalConstants.isReUploadWithSameCertificateFileSuccessful);
 		assertTrue(partnerCertificatePage.isDownloadButtonDisplayed(),
-				GlobalConstants.isValidCertificateReUploadedAndReplacesExisting);
+				GlobalConstants.isCertificateDetailsRefreshedAfterSameFileReUpload);
+		String uploadedDateAfterReUpload = partnerCertificatePage.getCertificateUploadedDateInPartnerPortal();
+		assertFalse(uploadedDateAfterReUpload.isEmpty(),
+				GlobalConstants.isCertificateDetailsRefreshedAfterSameFileReUpload);
+		assertFalse(partnerCertificatePage.getCertificateExpiryDateInPartnerPortal().isEmpty(),
+				GlobalConstants.isCertificateDetailsRefreshedAfterSameFileReUpload);
 	}
 
 	private void handleTermsAndCondition() {

@@ -208,6 +208,9 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(xpath = "//h5[text()='Client.cer']")
 	private WebElement uploadedCertificateFileName;
 
+	@FindBy(id = "upload_popup_file_name")
+	private WebElement uploadedCertificateFileNameLabel;
+
 	@FindBy(xpath = "//label[text()='Partner Type']")
 	private WebElement partnerTypeLabel;
 
@@ -936,6 +939,11 @@ public class PartnerCertificatePage extends BasePage {
 
 	public boolean isUploadedCertificateNameDisplayed() {
 		return isElementDisplayed(uploadedCertificateFileName);
+	}
+
+	/** Returns the selected certificate file name shown in the upload/re-upload popup. */
+	public String getUploadedCertificateFileName() {
+		return getTextFromLocator(uploadedCertificateFileNameLabel).trim();
 	}
 
 	public boolean isCertificateRemoveButtonDisplayed() {
