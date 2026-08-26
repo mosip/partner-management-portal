@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<!-- Focused suite: Verify popup title on Upload action -->
+<suite name="Upload Partner Certificate Popup Title" preserve-order="true" parallel="false">
+
+	<test name="VerifyPopupTitleOnUploadAction" preserve-order="true">
+		<classes>
+			<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerAdminCreation" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.CredentialPartnerCertificateTest">
+				<methods>
+					<include name="registerCredentialPartnerForCertificateFlow" />
+					<include name="verifyUploadPartnerCertificatePopupTitle" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+
+	<listeners>
+		<listener class-name="io.mosip.testrig.pmpuiv2.utility.EmailableReport" />
+		<listener class-name="io.mosip.testrig.pmpuiv2.utility.KnownIssues" />
+	</listeners>
+
+</suite>

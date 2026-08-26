@@ -172,14 +172,14 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 				GlobalConstants.isCertFormatesTextDisplayed);
 	}
 
-	@Test(priority = 5, description = "Verify popup title on Upload action is Upload Partner Certificate", dependsOnMethods = "registerCredentialPartnerForCertificateFlow")
+	@Test(priority = 5, description = "Verify popup title on Upload action", dependsOnMethods = "registerCredentialPartnerForCertificateFlow")
 	public void verifyUploadPartnerCertificatePopupTitle() {
 
 		dashboardPage = new DashboardPage(driver);
 		loginPage = new LoginPage(driver);
 		partnerCertificatePage = new PartnerCertificatePage(driver);
 
-		LogUtil.step("Login with valid Credential Partner credentials");
+		LogUtil.step("Login to the PMS Portal as Credential Partner");
 		dashboardPage.clickOnProfileDropdown();
 		loginPage = dashboardPage.clickOnLogoutButton();
 		assertTrue(loginPage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
@@ -187,7 +187,7 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
 		loginPage.clickOnLoginButton();
 
-		LogUtil.step("Navigate to Partner Certificate page and click Upload");
+		LogUtil.step("Navigate to Partner Certificate card and click Upload");
 		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
 				GlobalConstants.isPartnerCertificateTitleDisplayed);
 		dashboardPage.clickOnPartnerCertificateTitle();
@@ -197,12 +197,12 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 				GlobalConstants.isUploadButtonDisplayedForFirstTimeCertificate);
 		partnerCertificatePage.clickOnUploadButton();
 
-		LogUtil.step("Verify popup title on Upload action");
+		LogUtil.step("Verify popup title is clearly shown as Upload Partner Certificate");
 		assertTrue(partnerCertificatePage.isUploadPartnerCertificatePopUpDisplayed(),
 				GlobalConstants.isUploadPartnerCertificatePopUpDisplayed);
 		assertEquals(partnerCertificatePage.getUploadCertificatePopupTitle(),
 				GlobalConstants.UPLOAD_PARTNER_CERTIFICATE_POPUP_TITLE,
-				GlobalConstants.isUploadPartnerCertificatePopupTitleDisplayed);
+				GlobalConstants.isUploadPartnerCertificatePopupTitleClearlyShown);
 	}
 
 	@Test(priority = 6, description = "Verify popup subtitle on Upload action", dependsOnMethods = "registerCredentialPartnerForCertificateFlow")
@@ -492,10 +492,10 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 	}
 
 	/**
-	 * MOSIP-44516 TC_44516_14: Verify Re-Upload with same certificate file.
+	 * MOSIP-44516: Verify Re-Upload with same certificate file.
 	 * Expected: Allow replacement and refresh certificate details.
 	 */
-	@Test(priority = 14, description = "TC_44516_14: Verify Re-Upload with same certificate file", dependsOnMethods = "verifyValidPartnerCertificateUploadIsSuccessful")
+	@Test(priority = 14, description = "Verify Re-Upload with same certificate file", dependsOnMethods = "verifyValidPartnerCertificateUploadIsSuccessful")
 	public void verifyReUploadWithSameCertificateFile() {
 
 		dashboardPage = new DashboardPage(driver);
