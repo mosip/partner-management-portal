@@ -454,6 +454,9 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(id = "upload_popup_partner_type_context")
 	private WebElement partnerTypeContext;
 
+	@FindBy(id = "partner_type_context")
+	private WebElement listViewPartnerTypeContext;
+
 	@FindBy(id = "upload_popup_partner_domain_type_context")
 	private WebElement partnerDomainTypeContext;
 
@@ -1475,6 +1478,15 @@ public class PartnerCertificatePage extends BasePage {
 
 	public String getPartnerType() {
 		return getTextFromAttribute(partnerTypeContext, "value");
+	}
+
+	/** Partner type shown on the Partner Certificates list view card. */
+	public String getPartnerTypeFromListView() {
+		return getTextFromLocator(listViewPartnerTypeContext).trim();
+	}
+
+	public boolean isPartnerTypeFromListViewDisplayed() {
+		return isElementDisplayed(listViewPartnerTypeContext);
 	}
 
 	public String getPartnerDomainType() {

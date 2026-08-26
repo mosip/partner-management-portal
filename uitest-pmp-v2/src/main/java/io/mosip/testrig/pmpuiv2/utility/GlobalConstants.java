@@ -364,6 +364,7 @@ public class GlobalConstants {
 	public static final String CREDENTIAL_PARTNER_TYPE_NAME = "Credential Partner";
 	public static final String isCredentialPartnerTypeNameDisplayed = "Verify Partner Type Name is displayed as Credential Partner";
 	public static final String isPartnerTypeNameFieldNonEditable = "Verify Partner Type Name field is non-editable and value cannot be changed";
+	public static final String isPartnerTypeNameMatchesListView = "Verify Partner Type Name in popup exactly matches the partner type shown in list view";
 	public static final String PARTNER_DOMAIN_TYPE_AUTH = "AUTH";
 	public static final String isUploadPartnerCertificatePopupLayoutDisplayed = "Verify all fields and UI components are displayed with correct layout in Upload Partner Certificate popup";
 	public static final String INVALID_CERTIFICATE_FORMAT_ERROR_MESSAGE = "The certificate uploaded is not in the correct format. Only certificates having format .cer or .pem is allowed for upload";

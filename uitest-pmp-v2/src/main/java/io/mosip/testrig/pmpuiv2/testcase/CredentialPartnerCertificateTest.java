@@ -311,6 +311,43 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 				GlobalConstants.isPartnerTypeNameFieldNonEditable);
 	}
 
+	@Test(priority = 15, description = "Verify Partner Type Name matches list view", dependsOnMethods = "registerCredentialPartnerForCertificateFlow")
+	public void verifyPartnerTypeNameMatchesListView() {
+
+		dashboardPage = new DashboardPage(driver);
+		loginPage = new LoginPage(driver);
+		partnerCertificatePage = new PartnerCertificatePage(driver);
+
+		LogUtil.step("Login to the PMS Portal as Credential Partner");
+		dashboardPage.clickOnProfileDropdown();
+		loginPage = dashboardPage.clickOnLogoutButton();
+		assertTrue(loginPage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
+		loginPage.enterUserName(GlobalConstants.CREDENTIAL_PARTNER_ID);
+		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
+		loginPage.clickOnLoginButton();
+
+		LogUtil.step("Navigate to Partner Certificate list view and capture Partner Type Name");
+		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
+				GlobalConstants.isPartnerCertificateTitleDisplayed);
+		dashboardPage.clickOnPartnerCertificateTitle();
+		assertTrue(partnerCertificatePage.isPartnerCertificatePageDisplayed(),
+				GlobalConstants.isPartnerCertificatePageDisplayed);
+		assertTrue(partnerCertificatePage.isPartnerTypeFromListViewDisplayed(),
+				GlobalConstants.isPartnerTypeNameMatchesListView);
+		String partnerTypeFromListView = partnerCertificatePage.getPartnerTypeFromListView();
+
+		LogUtil.step("Open Upload popup and verify Partner Type Name matches list view");
+		assertTrue(partnerCertificatePage.isUploadButtonDisplayed(),
+				GlobalConstants.isUploadButtonDisplayedForFirstTimeCertificate);
+		partnerCertificatePage.clickOnUploadButton();
+		assertTrue(partnerCertificatePage.isUploadPartnerCertificatePopUpDisplayed(),
+				GlobalConstants.isUploadPartnerCertificatePopUpDisplayed);
+		assertTrue(partnerCertificatePage.isPartnerTypeContextDisplayed(),
+				GlobalConstants.isPartnerTypeNameMatchesListView);
+		assertEquals(partnerCertificatePage.getPartnerType(), partnerTypeFromListView,
+				GlobalConstants.isPartnerTypeNameMatchesListView);
+	}
+
 	@Test(priority = 9, description = "Verify all fields and UI components in Upload Partner Certificate popup", dependsOnMethods = "registerCredentialPartnerForCertificateFlow")
 	public void verifyUploadPartnerCertificatePopupLayoutAndFields() {
 
