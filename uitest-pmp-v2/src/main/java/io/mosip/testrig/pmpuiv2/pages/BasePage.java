@@ -738,4 +738,15 @@ public class BasePage {
 		return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
 	}
 
+	protected int getColumnIndex(String headerId) {
+		java.util.List<WebElement> headerCells = driver.findElements(By.xpath("//thead//th"));
+		for (int i = 0; i < headerCells.size(); i++) {
+			if (!headerCells.get(i).findElements(By.id(headerId)).isEmpty()) {
+				return i;
+			}
+		}
+		LogUtil.step("No column header found with id: " + headerId);
+		return -1;
+	}
+
 }

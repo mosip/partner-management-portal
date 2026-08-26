@@ -245,6 +245,7 @@ public class GlobalConstants {
 	public static final String DEACTIVATE_OIDCPOLICY2 = "deactivateoidcpolicy";
 	public static final String DEACTIVATE_APIKEY = "deactivateapikey";
 	public static final String ACTIVATE_ADMINAPIKEY = "activateadminapikey";
+	public static final String EXPIRY_APIKEY = "expiryapikey";
 	public static final String VIEW_DEVICE_TITLE = "View Device Details";
 
 	// MISP Partner
@@ -1724,5 +1725,39 @@ public class GlobalConstants {
 	public static final String EMAIL_ADDRESS_FILTER_INFO_TOOLTIP = "Note: This filter performs an exact match. Please enter the full email address (e.g., user@example.com) to find results.";
 	public static final String isEmailAddressFilterInfoIconDisplayed = "Verify the info icon is displayed alongside the email address filter textbox";
 	public static final String isEmailAddressFilterInfoTooltipCorrect = "Verify the info icon tooltip displays the exact match guidance text";
+	public static final String isApiKeyExpirationDateHeaderDisplayed = "Verify if 'Expiration Date' column header displayed in the API Key tabular view";
+	public static final String isExpirationDateHeaderAfterCreationDate = "Verify if 'Expiration Date' column appears beside 'Creation Date'";
+	public static final String isExpiryDateDescIconDisplayed = "Verify if expiration date descending sort icon displayed";
+	public static final String isExpiryDateAscIconDisplayed = "Verify if expiration date ascending sort icon displayed";
+	public static final String isExpiryDateSortedAscending = "Verify if API Keys are sorted by expiration date in ascending order";
+	public static final String isExpiryDateSortedDescending = "Verify if API Keys are sorted by expiration date in descending order";
+	public static final String isExpirationDateSameAsBrowserDateFormat = "Verify if expiration date is displayed in the browser locale date format";
+	public static final String isExpirationDateNotBeforeCreationDate = "Verify if the API Key expiration date is not earlier than its creation date";
+	public static final String isExpirationDateConsistentAcrossViews = "Verify if the API Key expiration date shown in the tabular view matches the individual view";
+	public static final String isApiKeyDetailsExpirationDateLabelDisplayed = "Verify if 'Expiration Date' label displayed in the individual API Key view";
+	public static final String isApiKeyDetailsExpirationDateContextDisplayed = "Verify if expiration date value displayed in the individual API Key view";
+	public static final String isIndividualViewFieldOrderCorrect = "Verify if individual API Key view renders its fields in the expected order ending with Expiration Date";
+	public static final String isDeactivatedApiKeyRowNotClickable = "Verify if a Deactivated API Key row does not open the individual view";
+	public static final String isApiKeyListViewDisplayed = "Verify if the user lands on the API Key tabular view";
+	public static final String isExpirationDateStyledLikeOtherFields = "Verify if the Expiration Date field carries the same typography as the other individual view fields";
+
+	public static final String isIndividualViewApproveRejectButtonDisplayed = "Verify if Approve/Reject button displayed in the individual view page";
+	public static final String isIndividualViewApproveRejectButtonEnabled = "Verify if Approve/Reject button is enabled in the individual view page";
+	public static final String isApproveRejectButtonAbsentForNonPendingRecord = "Verify if Approve/Reject button is absent for a record that is not pending approval";
+	public static final String isApproveRejectButtonAbsentForExpiredSbi = "Verify if Approve/Reject button is absent for an expired SBI";
+	public static final String isApproveRejectPopupButtonsKeyboardReachable = "Verify if the Approve and Reject buttons inside the popup can be reached using the keyboard";
+	public static final String isIndividualViewApproveRejectPopupDisplayed = "Verify if the Approve/Reject confirmation popup is displayed from the individual view";
+	public static final String isPartnerStatusFieldDisplayed ="Verify if 'Partner Status' field displayed in the View Partner Policy Request page";
+	public static final String isPartnerStatusActivatedGreen = "Verify if Partner Status 'Activated' is rendered with the green colour coding";
+	public static final String isPartnerStatusDeactivatedGrey = "Verify if Partner Status 'Deactivated' is rendered with the grey colour coding";
+	public static final String isApproveRejectReachableByKeyboard = "Verify if the Approve/Reject button can be reached and triggered using the keyboard";
+	public static final String isApproveRejectPopupClosedByEscape = "Verify if the Approve/Reject popup can be dismissed using the Escape key";
+	public static final String isStaleRecordErrorDisplayed = "Verify if an error is shown when acting on a record that was already actioned";
+
+	public static final String isRejectOnlyPopupDisplayed = "Verify if the reject-only popup is displayed for a device not linked to an SBI";
+	public static final String isRejectOnlyPopupRejectButtonDisplayed = "Verify if the reject-only popup exposes the Reject button";
+	public static final String isApproveButtonNotDisplayedForOrphanDevice = "Verify if no Approve button is offered for a device not linked to an SBI";
+	public static final String isLinkedSbiColumnEmpty = "Verify if the linked SBI column is empty for an orphaned device";
+	public static final String isRejectOnlyPopupDescriptionDisplayed = "Verify if the reject-only popup shows the orphaned device description";
 
 }

@@ -866,4 +866,17 @@ public class ListOfSbiPage extends BasePage {
 		return isElementDisplayed(partnerIdInFirstColumn);
 	}
 
+	public void selectExpiredSbiExpiryStatusInFilter() {
+		click(By.id("sbi_expiry_status_filter_dropdown_btn"));
+		click(By.id("sbi_expiry_status_filter_option1"));
+	}
+
+	public boolean isAnySbiListed() {
+		return isElementDisplayedQuick(By.id("sbi_list_item1"), Duration.ofSeconds(10));
+	}
+
+	public void clickOnFirstSbiItem() {
+		clickOnElement(sbiListItem1);
+	}
+
 }

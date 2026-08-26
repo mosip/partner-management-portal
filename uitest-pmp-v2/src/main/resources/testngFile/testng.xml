@@ -21,6 +21,7 @@
 			<class name="io.mosip.testrig.pmpuiv2.testcase.PolicyCreationForAuthPartner" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.OidcClientAuthPartnerTest" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.ApiKeyAuthPartnerTest" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.ApiKeyExpirationDateTest" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.AuthPartnerWithoutCertificateTest" />
 			<!--DEVICE PARTNER FLOW-->
 			<class name="io.mosip.testrig.pmpuiv2.testcase.DevicePartnerCreation" />
@@ -55,6 +56,7 @@
 			<class name="io.mosip.testrig.pmpuiv2.testcase.DeactivatedFtmProviderTest" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.CertificateTrustStoreTest" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerPolicyMappingTest" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.IndividualViewApproveRejectTest" />
 
 			 <!--Deactivate PARTNER FLOW -->
 			<class name="io.mosip.testrig.pmpuiv2.testcase.DeactivatePartnerCreation" />
