@@ -537,6 +537,49 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 				GlobalConstants.isUploadIconEnabledAndClickable);
 	}
 
+	@Test(priority = 21, description = "Verify clicking upload opens file browser", dependsOnMethods = "registerCredentialPartnerForCertificateFlow")
+	public void verifyClickingUploadOpensFileBrowserAndAllowsFileSelection() {
+
+		dashboardPage = new DashboardPage(driver);
+		loginPage = new LoginPage(driver);
+		partnerCertificatePage = new PartnerCertificatePage(driver);
+
+		LogUtil.step("Login to the PMS Portal as Credential Partner");
+		dashboardPage.clickOnProfileDropdown();
+		loginPage = dashboardPage.clickOnLogoutButton();
+		assertTrue(loginPage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
+		loginPage.enterUserName(GlobalConstants.CREDENTIAL_PARTNER_ID);
+		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
+		loginPage.clickOnLoginButton();
+
+		LogUtil.step("Navigate to Partner Certificate card and open Upload popup");
+		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
+				GlobalConstants.isPartnerCertificateTitleDisplayed);
+		dashboardPage.clickOnPartnerCertificateTitle();
+		assertTrue(partnerCertificatePage.isPartnerCertificatePageDisplayed(),
+				GlobalConstants.isPartnerCertificatePageDisplayed);
+		assertTrue(partnerCertificatePage.isUploadButtonDisplayed(),
+				GlobalConstants.isUploadButtonDisplayedForFirstTimeCertificate);
+		partnerCertificatePage.clickOnUploadButton();
+		assertTrue(partnerCertificatePage.isUploadPartnerCertificatePopUpDisplayed(),
+				GlobalConstants.isUploadPartnerCertificatePopUpDisplayed);
+
+		LogUtil.step("Verify system is configured to open local file browser on upload click");
+		assertTrue(partnerCertificatePage.isUploadCertificateCardDisplayed(),
+				GlobalConstants.isCertificateFileInputConfiguredForLocalFileBrowser);
+		assertTrue(partnerCertificatePage.isCertificateFileInputConfiguredForLocalFileBrowser(),
+				GlobalConstants.isCertificateFileInputConfiguredForLocalFileBrowser);
+		partnerCertificatePage.clickOnUploadCertificateCard();
+
+		LogUtil.step("Verify user can navigate and select a certificate file");
+		partnerCertificatePage.uploadCertificate();
+		assertTrue(partnerCertificatePage.isUploadedCertificateFileNameLabelDisplayed(),
+				GlobalConstants.isUserAbleToSelectCertificateFile);
+		assertEquals(partnerCertificatePage.getUploadedCertificateFileName(),
+				GlobalConstants.SAME_CERTIFICATE_FILE_NAME,
+				GlobalConstants.isUserAbleToSelectCertificateFile);
+	}
+
 	@Test(priority = 9, description = "Verify all fields and UI components in Upload Partner Certificate popup", dependsOnMethods = "registerCredentialPartnerForCertificateFlow")
 	public void verifyUploadPartnerCertificatePopupLayoutAndFields() {
 

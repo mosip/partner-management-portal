@@ -971,6 +971,26 @@ public class PartnerCertificatePage extends BasePage {
 		return iconDisplayed && cardDisplayed && cardClickable && fileInputEnabled;
 	}
 
+	/**
+	 * True when the hidden file input is wired for the local OS file browser
+	 * (type=file with .cer/.pem accept filter).
+	 */
+	public boolean isCertificateFileInputConfiguredForLocalFileBrowser() {
+		String type = uploadFile.getAttribute("type");
+		String accept = uploadFile.getAttribute("accept");
+		boolean enabled = uploadFile.isEnabled() && uploadFile.getAttribute("disabled") == null;
+		return "file".equalsIgnoreCase(type) && accept != null && accept.contains(".cer")
+				&& accept.contains(".pem") && enabled;
+	}
+
+	public void clickOnUploadCertificateCard() {
+		clickOnElement(uploadCertificateCard);
+	}
+
+	public boolean isUploadedCertificateFileNameLabelDisplayed() {
+		return isElementDisplayed(uploadedCertificateFileNameLabel);
+	}
+
 	public boolean isLastCertificateUploadDateDisplayed() {
 		return isElementDisplayed(lastUploadTimeAndDate);
 	}
