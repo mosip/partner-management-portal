@@ -506,6 +506,11 @@ public class PartnerCertificatePage extends BasePage {
 		return isElementDisplayed(uploadCertificatePopupSubtitle);
 	}
 
+	/** True when the upload popup subtitle is rendered below the popup title. */
+	public boolean isUploadPopupSubtitleDisplayedBelowTitle() {
+		return uploadCertificatePopupSubtitle.getLocation().getY() > mispPartnerCertificatePopup.getLocation().getY();
+	}
+
 	public boolean isUploadPopupPartnerTypeLabelDisplayed() {
 		return isElementDisplayed(uploadPopupPartnerTypeLabel);
 	}

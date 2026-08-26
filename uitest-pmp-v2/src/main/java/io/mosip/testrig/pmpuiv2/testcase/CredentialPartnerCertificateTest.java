@@ -212,7 +212,7 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 		loginPage = new LoginPage(driver);
 		partnerCertificatePage = new PartnerCertificatePage(driver);
 
-		LogUtil.step("Login with valid Credential Partner credentials");
+		LogUtil.step("Login to the PMS Portal as Credential Partner");
 		dashboardPage.clickOnProfileDropdown();
 		loginPage = dashboardPage.clickOnLogoutButton();
 		assertTrue(loginPage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
@@ -220,7 +220,7 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
 		loginPage.clickOnLoginButton();
 
-		LogUtil.step("Navigate to Partner Certificate page and click Upload");
+		LogUtil.step("Navigate to Partner Certificate card and click Upload");
 		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
 				GlobalConstants.isPartnerCertificateTitleDisplayed);
 		dashboardPage.clickOnPartnerCertificateTitle();
@@ -230,12 +230,21 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 				GlobalConstants.isUploadButtonDisplayedForFirstTimeCertificate);
 		partnerCertificatePage.clickOnUploadButton();
 
-		LogUtil.step("Verify popup subtitle on Upload action");
+		LogUtil.step("Verify popup title is displayed");
+		assertTrue(partnerCertificatePage.isUploadPartnerCertificatePopUpDisplayed(),
+				GlobalConstants.isUploadPartnerCertificatePopUpDisplayed);
+		assertEquals(partnerCertificatePage.getUploadCertificatePopupTitle(),
+				GlobalConstants.UPLOAD_PARTNER_CERTIFICATE_POPUP_TITLE,
+				GlobalConstants.isUploadPartnerCertificatePopupTitleClearlyShown);
+
+		LogUtil.step("Verify subtitle reads Please select all fields and upload the certificate clearly below the title");
 		assertTrue(partnerCertificatePage.isUploadCertificatePopupSubtitleDisplayed(),
 				GlobalConstants.isUploadPartnerCertificatePopupSubtitleDisplayed);
 		assertEquals(partnerCertificatePage.getUploadCertificatePopupSubtitle(),
 				GlobalConstants.UPLOAD_PARTNER_CERTIFICATE_POPUP_SUBTITLE,
-				GlobalConstants.isUploadPartnerCertificatePopupSubtitleDisplayed);
+				GlobalConstants.isUploadPartnerCertificatePopupSubtitleClearlyShown);
+		assertTrue(partnerCertificatePage.isUploadPopupSubtitleDisplayedBelowTitle(),
+				GlobalConstants.isUploadPartnerCertificatePopupSubtitleBelowTitle);
 	}
 
 	@Test(priority = 7, description = "Verify Partner Type Name is displayed as Credential Partner", dependsOnMethods = "registerCredentialPartnerForCertificateFlow")

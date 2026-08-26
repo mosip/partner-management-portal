@@ -356,7 +356,9 @@ public class GlobalConstants {
 	public static final String isUploadPartnerCertificatePopupTitleDisplayed = "Verify popup title on Upload action";
 	public static final String isUploadPartnerCertificatePopupTitleClearlyShown = "Verify popup title is clearly shown as Upload Partner Certificate";
 	public static final String UPLOAD_PARTNER_CERTIFICATE_POPUP_SUBTITLE = "Please select all fields and upload the certificate";
-	public static final String isUploadPartnerCertificatePopupSubtitleDisplayed = "Verify Upload Partner Certificate popup subtitle is displayed on Upload action";
+	public static final String isUploadPartnerCertificatePopupSubtitleDisplayed = "Verify popup subtitle on Upload action is displayed";
+	public static final String isUploadPartnerCertificatePopupSubtitleClearlyShown = "Verify subtitle reads Please select all fields and upload the certificate";
+	public static final String isUploadPartnerCertificatePopupSubtitleBelowTitle = "Verify subtitle is clearly shown below the Upload Partner Certificate title";
 	public static final String UPLOAD_POPUP_PARTNER_TYPE_LABEL = "Partner Type";
 	public static final String UPLOAD_POPUP_PARTNER_DOMAIN_TYPE_LABEL = "Partner Domain Type";
 	public static final String CREDENTIAL_PARTNER_TYPE_NAME = "Credential Partner";
