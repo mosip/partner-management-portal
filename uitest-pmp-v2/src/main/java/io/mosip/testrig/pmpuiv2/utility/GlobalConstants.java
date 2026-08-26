@@ -378,6 +378,9 @@ public class GlobalConstants {
 	public static final String isUploadIconEnabledAndClickable = "Verify upload icon is enabled and clickable";
 	public static final String isCertificateFileInputConfiguredForLocalFileBrowser = "Verify system is configured to open local file browser for certificate upload";
 	public static final String isUserAbleToSelectCertificateFile = "Verify user is able to navigate and select a certificate file";
+	public static final String isCancelButtonClosesUploadPopup = "Verify Cancel button closes the Upload Partner Certificate popup";
+	public static final String isRedirectedToCertificateListViewAfterCancel = "Verify user is redirected back to certificate list view after Cancel";
+	public static final String PARTNER_CERTIFICATE_LIST_PAGE_TITLE = "Partner Certificate";
 	public static final String isUploadPartnerCertificatePopupLayoutDisplayed = "Verify all fields and UI components are displayed with correct layout in Upload Partner Certificate popup";
 	public static final String INVALID_CERTIFICATE_FORMAT_ERROR_MESSAGE = "The certificate uploaded is not in the correct format. Only certificates having format .cer or .pem is allowed for upload";
 	public static final String isReUploadButtonLabelDisplayedAfterCertificateExists = "Verify Upload button label is Re-Upload after partner certificate exists";

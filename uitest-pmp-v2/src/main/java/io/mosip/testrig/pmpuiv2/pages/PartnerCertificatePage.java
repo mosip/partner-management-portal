@@ -1,5 +1,6 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 
@@ -10,11 +11,15 @@ import org.openqa.selenium.support.FindBy;
 
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
+import io.mosip.testrig.pmpuiv2.utility.WaitUtil;
 
 public class PartnerCertificatePage extends BasePage {
 
 	@FindBy(id = "title_back_icon")
 	private WebElement titleBackButton;
+
+	@FindBy(id = "page_title")
+	private WebElement pageTitle;
 
 	@FindBy(id = "partner_certificate_upload_btn1")
 	private WebElement uploadButton;
@@ -487,6 +492,17 @@ public class PartnerCertificatePage extends BasePage {
 		return isElementDisplayed(titleBackButton);
 	}
 
+	/** True when the Partner Certificate list view page title is shown. */
+	public boolean isCertificateListViewDisplayed() {
+		return isElementDisplayed(pageTitle)
+				&& getTextFromLocator(pageTitle).trim().equals(GlobalConstants.PARTNER_CERTIFICATE_LIST_PAGE_TITLE);
+	}
+
+	/** Fast check when Upload may be replaced by Re-Upload after a prior cert exists. */
+	public boolean isUploadButtonPresent() {
+		return getElementCount(By.id("partner_certificate_upload_btn1")) > 0;
+	}
+
 	public boolean isUploadButtonDisplayed() {
 		return isElementDisplayed(uploadButton);
 	}
@@ -501,6 +517,27 @@ public class PartnerCertificatePage extends BasePage {
 
 	public boolean isUploadPartnerCertificatePopUpDisplayed() {
 		return isElementDisplayed(uploadPartnerCertificatePopUp);
+	}
+
+	/** Waits until the Upload Partner Certificate popup is no longer visible. */
+	public boolean isUploadPartnerCertificatePopUpClosed() {
+		return WaitUtil.waitForInvisibility(driver, uploadPartnerCertificatePopUp);
+	}
+
+	public boolean isUploadPartnerCertificatePopUpDisplayedQuick() {
+		return isElementDisplayedQuick(By.xpath("//*[text()='Upload Partner Certificate']"), Duration.ofSeconds(5))
+				|| isElementDisplayedQuick(By.xpath("//h3[text()='Re-Upload Partner Certificate']"), Duration.ofSeconds(2));
+	}
+
+	/**
+	 * Opens the certificate upload popup via Upload or Re-Upload, whichever is present.
+	 */
+	public void openPartnerCertificateUploadOrReUploadPopup() {
+		if (isUploadButtonPresent()) {
+			clickOnUploadButton();
+		} else {
+			clickOnPartnerCertificateReuploadButton();
+		}
 	}
 
 	public String getUploadCertificatePopupTitle() {
