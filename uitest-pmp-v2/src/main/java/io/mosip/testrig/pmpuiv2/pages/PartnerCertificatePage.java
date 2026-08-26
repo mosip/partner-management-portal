@@ -1028,6 +1028,10 @@ public class PartnerCertificatePage extends BasePage {
 		return isElementDisplayed(uploadedCertificateFileNameLabel);
 	}
 
+	public boolean isUploadedCertificateFileNameLabelDisplayedQuick() {
+		return isElementDisplayedQuick(By.id("upload_popup_file_name"), Duration.ofSeconds(3));
+	}
+
 	public boolean isLastCertificateUploadDateDisplayed() {
 		return isElementDisplayed(lastUploadTimeAndDate);
 	}

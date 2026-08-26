@@ -619,6 +619,67 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 				GlobalConstants.isRedirectedToCertificateListViewAfterCancel);
 	}
 
+	@Test(priority = 23, description = "Verify no changes are saved on Cancel", dependsOnMethods = "registerCredentialPartnerForCertificateFlow")
+	public void verifyNoChangesAreSavedOnCancel() {
+
+		dashboardPage = new DashboardPage(driver);
+		loginPage = new LoginPage(driver);
+		partnerCertificatePage = new PartnerCertificatePage(driver);
+
+		LogUtil.step("Login to the PMS Portal as Credential Partner");
+		dashboardPage.clickOnProfileDropdown();
+		loginPage = dashboardPage.clickOnLogoutButton();
+		assertTrue(loginPage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
+		loginPage.enterUserName(GlobalConstants.CREDENTIAL_PARTNER_ID);
+		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
+		loginPage.clickOnLoginButton();
+		assertTrue(dashboardPage.isWelcomeMessageDisplayed(), GlobalConstants.isWelcomeMessageDisplayed);
+
+		LogUtil.step("Navigate to Partner Certificate list view and capture state before Cancel");
+		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
+				GlobalConstants.isPartnerCertificateTitleDisplayed);
+		dashboardPage.clickOnPartnerCertificateTitle();
+		assertTrue(partnerCertificatePage.isCertificateListViewDisplayed(),
+				GlobalConstants.isPartnerCertificatePageDisplayed);
+		assertTrue(partnerCertificatePage.isUploadButtonPresent(),
+				GlobalConstants.isUploadButtonDisplayedForFirstTimeCertificate);
+		assertFalse(partnerCertificatePage.isPartnerCertificateReuploadButtonPresent(),
+				GlobalConstants.isNoCertificateChangesPersistedOnCancel);
+		assertFalse(partnerCertificatePage.isDownloadButtonPresent(),
+				GlobalConstants.isNoCertificateChangesPersistedOnCancel);
+
+		LogUtil.step("Select a certificate file in Upload popup, then click Cancel");
+		partnerCertificatePage.clickOnUploadButton();
+		assertTrue(partnerCertificatePage.isCertificateUploadCancelButtonDisplayed(),
+				GlobalConstants.isCancelButtonClosesUploadPopup);
+		partnerCertificatePage.uploadCertificate();
+		assertTrue(partnerCertificatePage.isUploadedCertificateFileNameLabelDisplayed(),
+				GlobalConstants.isUserAbleToSelectCertificateFile);
+		assertEquals(partnerCertificatePage.getUploadedCertificateFileName(),
+				GlobalConstants.SAME_CERTIFICATE_FILE_NAME,
+				GlobalConstants.isUserAbleToSelectCertificateFile);
+		partnerCertificatePage.clickOnCertificateUploadCancelButton();
+		assertFalse(partnerCertificatePage.isUploadPartnerCertificatePopUpDisplayedQuick(),
+				GlobalConstants.isCancelButtonClosesUploadPopup);
+
+		LogUtil.step("Verify no certificate changes are persisted in the system");
+		assertTrue(partnerCertificatePage.isCertificateListViewDisplayed(),
+				GlobalConstants.isRedirectedToCertificateListViewAfterCancel);
+		assertTrue(partnerCertificatePage.isUploadButtonPresent(),
+				GlobalConstants.isNoCertificateChangesPersistedOnCancel);
+		assertFalse(partnerCertificatePage.isPartnerCertificateReuploadButtonPresent(),
+				GlobalConstants.isNoCertificateChangesPersistedOnCancel);
+		assertFalse(partnerCertificatePage.isDownloadButtonPresent(),
+				GlobalConstants.isNoCertificateChangesPersistedOnCancel);
+
+		LogUtil.step("Re-open Upload popup and verify selected file was not retained");
+		partnerCertificatePage.clickOnUploadButton();
+		assertTrue(partnerCertificatePage.isUploadCertificateCardDisplayed(),
+				GlobalConstants.isNoCertificateChangesPersistedOnCancel);
+		assertFalse(partnerCertificatePage.isUploadedCertificateFileNameLabelDisplayedQuick(),
+				GlobalConstants.isNoCertificateChangesPersistedOnCancel);
+	}
+
 	@Test(priority = 9, description = "Verify all fields and UI components in Upload Partner Certificate popup", dependsOnMethods = "registerCredentialPartnerForCertificateFlow")
 	public void verifyUploadPartnerCertificatePopupLayoutAndFields() {
 
