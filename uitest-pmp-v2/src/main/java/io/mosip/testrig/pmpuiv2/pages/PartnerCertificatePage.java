@@ -208,6 +208,9 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(xpath = "//img[@class='mb-2 w-10 h-10']")
 	private WebElement uploadCertificateIcon;
 
+	@FindBy(css = "#upload_certificate_card img")
+	private WebElement uploadPopupCertificateIcon;
+
 	@FindBy(xpath = "//h5[text()='Client.cer']")
 	private WebElement uploadedCertificateFileName;
 
@@ -947,6 +950,25 @@ public class PartnerCertificatePage extends BasePage {
 
 	public boolean isUploadCertificateIconDisplayed() {
 		return isElementDisplayed(uploadCertificateIcon);
+	}
+
+	/** Upload icon inside the Upload Partner Certificate popup card. */
+	public boolean isUploadPopupCertificateIconDisplayed() {
+		return isElementDisplayed(uploadPopupCertificateIcon);
+	}
+
+	/**
+	 * True when the upload icon area is enabled and clickable (card present with
+	 * cursor-pointer and hidden file input not disabled).
+	 */
+	public boolean isUploadPopupCertificateIconEnabledAndClickable() {
+		boolean iconDisplayed = isElementDisplayed(uploadPopupCertificateIcon);
+		boolean cardDisplayed = isElementDisplayed(uploadCertificateCard);
+		boolean cardClickable = getTextFromAttribute(uploadCertificateCard, GlobalConstants.CLASS)
+				.contains("cursor-pointer");
+		// fileInput uses class="hidden" — do not wait for visibility
+		boolean fileInputEnabled = uploadFile.isEnabled() && uploadFile.getAttribute("disabled") == null;
+		return iconDisplayed && cardDisplayed && cardClickable && fileInputEnabled;
 	}
 
 	public boolean isLastCertificateUploadDateDisplayed() {
