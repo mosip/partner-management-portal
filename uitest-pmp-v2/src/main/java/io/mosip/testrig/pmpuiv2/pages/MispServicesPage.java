@@ -6,9 +6,12 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import io.mosip.testrig.pmpuiv2.utility.LogUtil;
 
 public class MispServicesPage extends BasePage {
 
@@ -354,6 +357,44 @@ public class MispServicesPage extends BasePage {
 
 	public boolean isMispLicenseKeyImportantNoteNotEditable() {
 		return isElementNotEditable(mispLicenseKeyImportantNote);
+	}
+
+	public String getMispLicenseKeyImportantNoteText() {
+		return getTextFromLocator(mispLicenseKeyImportantNote).replaceAll("\\s+", " ").trim();
+	}
+
+	public boolean isMispLicenseKeyImportantNoteUnchangedAfterTyping(String textToType) {
+		String before = getMispLicenseKeyImportantNoteText();
+		new Actions(driver).sendKeys(mispLicenseKeyImportantNote, textToType).perform();
+		return before.equals(getMispLicenseKeyImportantNoteText());
+	}
+
+	public boolean isMispLicenseKeyImportantNoteFocusable() {
+		return isElementFocusable(mispLicenseKeyImportantNote);
+	}
+
+	public boolean isMispLicenseKeyImportantNoteWithinViewport() {
+		return isElementWithinViewport(mispLicenseKeyImportantNote);
+	}
+
+	public boolean isMispLicenseKeyImportantNoteCovered() {
+		return isElementCoveredAtCentre(mispLicenseKeyImportantNote);
+	}
+
+	public boolean isImportantNoteOverlappingSubmitButton() {
+		return doElementsOverlap(mispLicenseKeyImportantNote, submitButton);
+	}
+
+	public boolean isLicenseKeyNameFieldDisplayed() {
+		return isElementDisplayed(licenseKeyNameTextbox);
+	}
+
+	public boolean isImportantNoteOverlappingLicenseKeyNameField() {
+		return doElementsOverlap(mispLicenseKeyImportantNote, licenseKeyNameTextbox);
+	}
+
+	public boolean isImportantNoteOverlappingGuidenceNote() {
+		return doElementsOverlap(mispLicenseKeyImportantNote, mispLicenseKeyGuidence);
 	}
 
 	public boolean isPartnerTypePlaceholderDisplayed() {

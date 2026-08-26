@@ -631,6 +631,21 @@ public class PartnerAdminPage extends BasePage {
 		clickOnElement(emailAddressFilterInfoIcon);
 	}
 
+	public void selectPartnerTypeFilterOption(String partnerType) {
+		click(By.xpath("//button[starts-with(@id,'partner_type_filter_option') and normalize-space(text())='" + partnerType
+				+ "']"));
+	}
+
+	public String getStatusFilterOptionText(int optionNumber) {
+		By option = By.id("status_filter_option" + optionNumber);
+		new WebDriverWait(driver, LIST_LOAD_TIMEOUT).until(ExpectedConditions.visibilityOfElementLocated(option));
+		return getCellTextWithStaleRetry(option);
+	}
+
+	public List<String> getStatusColumnValues() {
+		return getColumnValuesWithStaleRetry(By.xpath("//tr[starts-with(@id,'partner_list_item')]/td[7]/div"));
+	}
+
 	// Row 1 is what the Action menu operates on; isDeactivatedPartnerRowDisplayed is pinned to row 2.
 	public boolean isFirstPartnerRowDisplayed() {
 		return isElementDisplayed(firstPartnerRow);
@@ -858,6 +873,10 @@ public class PartnerAdminPage extends BasePage {
 
 	public List<String> getPartnerIdColumnValues() {
 		return getColumnValuesWithStaleRetry(By.xpath("//tr[starts-with(@id,'partner_list_item')]/td[1]"));
+	}
+
+	public List<String> getPartnerTypeColumnValues() {
+		return getColumnValuesWithStaleRetry(By.xpath("//tr[starts-with(@id,'partner_list_item')]/td[2]"));
 	}
 
 	public boolean waitForFilteredCountToChangeFrom(int previousCount) {
