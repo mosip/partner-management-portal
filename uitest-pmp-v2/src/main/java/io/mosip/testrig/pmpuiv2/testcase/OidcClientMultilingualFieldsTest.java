@@ -111,9 +111,146 @@ public class OidcClientMultilingualFieldsTest extends BaseClass {
 				oidcClientPage.getForgotPasswordBannerInfoTooltipText().equals(
 						"Enable this option to display 'Forgot Password' link on the eSignet authentication screen."),
 				GlobalConstants.isForgotPasswordBannerInfoTooltipCorrect);
+
+		assertTrue(oidcClientPage.getConsentExpiryValue().equals("10"), GlobalConstants.isConsentExpiryDefaultValueTen);
+
+		oidcClientPage.enterConsentExpiryDuration("15");
+		assertTrue(oidcClientPage.getConsentExpiryValue().equals("15"), GlobalConstants.isConsentExpiryAcceptsPositiveInteger);
+
+		oidcClientPage.clickOnConsentExpiryInfoIcon();
+		assertTrue(
+				oidcClientPage.getConsentExpiryInfoTooltipText()
+						.equals("Duration (in minutes) for which user consent remains valid before re-prompt."),
+				GlobalConstants.isConsentExpiryInfoTooltipCorrect);
+
+		assertTrue(oidcClientPage.isUserInfoResponseTypeDropdownDisplayed(),
+				GlobalConstants.isUserInfoResponseTypeDropdownDisplayed);
+		assertTrue(oidcClientPage.getUserInfoResponseTypeDropdownPlaceholder().equals("Select user info response type"),
+				GlobalConstants.isUserInfoResponseTypePlaceholderDisplayed);
+
+		oidcClientPage.clickOnUserInfoResponseTypeDropdown();
+		assertTrue(oidcClientPage.isJweOptionDisplayed(), GlobalConstants.isUserInfoResponseTypeOptionsCorrect);
+		assertTrue(oidcClientPage.isJwsOptionDisplayed(), GlobalConstants.isUserInfoResponseTypeOptionsCorrect);
+		oidcClientPage.clickOnUserInfoResponseTypeDropdown();
+
+		oidcClientPage.clickOnUserInfoResponseTypeInfoIcon();
+		assertTrue(
+				oidcClientPage.getUserInfoResponseTypeInfoTooltipText()
+						.equals("Defines the format in which user info will be returned."),
+				GlobalConstants.isUserInfoResponseTypeInfoTooltipCorrect);
+
+		assertTrue(oidcClientPage.isPurposeTypeDropdownDisplayed(), GlobalConstants.isPurposeTypeDropdownDisplayed);
+		assertTrue(oidcClientPage.getPurposeTypeDropdownPlaceholder().equals("Select Purpose Type"),
+				GlobalConstants.isPurposeTypePlaceholderDisplayed);
+
+		oidcClientPage.clickOnPurposeTypeDropdown();
+		assertTrue(oidcClientPage.isLoginPurposeOptionDisplayed(), GlobalConstants.isPurposeTypeOptionsCorrect);
+		assertTrue(oidcClientPage.isLinkPurposeOptionDisplayed(), GlobalConstants.isPurposeTypeOptionsCorrect);
+		assertTrue(oidcClientPage.isVerifyPurposeOptionDisplayed(), GlobalConstants.isPurposeTypeOptionsCorrect);
+		oidcClientPage.clickOnPurposeTypeDropdown();
 	}
 
-	@Test(priority = 5, description = "Verify Submit button stays disabled until every mandatory field is filled", dependsOnMethods = "additionalInfoChecks")
+	@Test(priority = 5, description = "Verify Purpose Title/Subtitle fields only appear after selecting Purpose Type, and their multilingual row/language dropdown behavior", dependsOnMethods = "additionalInfoChecks")
+	public void purposeTitleSubtitleChecks() {
+		OidcClientPage oidcClientPage = openCreateOidcClientForm();
+		oidcClientPage.clickOnAdditionalInformationSectionHeader();
+
+		assertFalse(oidcClientPage.isPurposeTitleLabelDisplayed(),
+				GlobalConstants.isPurposeTitleSubtitleHiddenWhenNoPurposeTypeSelected);
+		assertFalse(oidcClientPage.isPurposeSubtitleLabelDisplayed(),
+				GlobalConstants.isPurposeTitleSubtitleHiddenWhenNoPurposeTypeSelected);
+
+		oidcClientPage.clickOnPurposeTypeDropdown();
+		oidcClientPage.clickOnLoginPurposeOption();
+
+		assertTrue(oidcClientPage.isPurposeTitleLabelDisplayed(),
+				GlobalConstants.isPurposeTitleSubtitleDisplayedWhenPurposeTypeSelected);
+		assertTrue(oidcClientPage.isPurposeSubtitleLabelDisplayed(),
+				GlobalConstants.isPurposeTitleSubtitleDisplayedWhenPurposeTypeSelected);
+
+		assertFalse(oidcClientPage.isPurposeTitleLanguageDropdownDisplayed(),
+				GlobalConstants.isNoPurposeTitleSubtitleRowsVisibleByDefault);
+		assertFalse(oidcClientPage.isPurposeSubtitleLanguageDropdownDisplayed(),
+				GlobalConstants.isNoPurposeTitleSubtitleRowsVisibleByDefault);
+
+		oidcClientPage.clickOnAddPurposeTitleLanguageButton();
+		assertTrue(oidcClientPage.isPurposeTitleLanguageDropdownDisplayed(),
+				GlobalConstants.isNoPurposeTitleSubtitleRowsVisibleByDefault);
+
+		oidcClientPage.clickOnAddPurposeSubtitleLanguageButton();
+		assertTrue(oidcClientPage.isPurposeSubtitleLanguageDropdownDisplayed(),
+				GlobalConstants.isNoPurposeTitleSubtitleRowsVisibleByDefault);
+
+		oidcClientPage.clickOnPurposeTitleLanguageDropdown();
+		assertTrue(oidcClientPage.isPurposeTitleLanguageDefaultOptionDisplayed(),
+				GlobalConstants.isPurposeTitleLanguageDropdownContainsDefaultAndAllLanguages);
+		assertTrue(oidcClientPage.isPurposeTitleLanguageEnglishOptionDisplayed(),
+				GlobalConstants.isPurposeTitleLanguageDropdownContainsDefaultAndAllLanguages);
+		assertTrue(oidcClientPage.isPurposeTitleLanguageFrenchOptionDisplayed(),
+				GlobalConstants.isPurposeTitleLanguageDropdownContainsDefaultAndAllLanguages);
+		assertTrue(oidcClientPage.isPurposeTitleLanguageArabicOptionDisplayed(),
+				GlobalConstants.isPurposeTitleLanguageDropdownContainsDefaultAndAllLanguages);
+		oidcClientPage.clickOnPurposeTitleLanguageDropdown();
+
+		assertTrue(oidcClientPage.isPurposeTitleTextBoxDisplayed(), GlobalConstants.isPurposeTitleSubtitleTextBoxDisplayed);
+		assertTrue(
+				oidcClientPage.getPurposeTitleTextBoxPlaceholder()
+						.equals("Enter the Purpose Title in your primary language."),
+				GlobalConstants.isPurposeTitlePlaceholderCorrect);
+
+		assertTrue(oidcClientPage.isPurposeSubtitleTextBoxDisplayed(), GlobalConstants.isPurposeTitleSubtitleTextBoxDisplayed);
+		assertTrue(
+				oidcClientPage.getPurposeSubtitleTextBoxPlaceholder()
+						.equals("Enter the Purpose Subtitle in your primary language."),
+				GlobalConstants.isPurposeSubtitlePlaceholderCorrect);
+
+		oidcClientPage.clickOnAddPurposeTitleLanguageLink();
+		oidcClientPage.clickOnPurposeTitleRow2LanguageDropdown();
+		assertFalse(oidcClientPage.isPurposeTitleLanguageDefaultOptionDisplayed(),
+				GlobalConstants.isAdditionalRowsExcludeAlreadyUsedLanguages);
+		assertTrue(oidcClientPage.isPurposeTitleLanguageEnglishOptionDisplayed(),
+				GlobalConstants.isAdditionalRowsExcludeAlreadyUsedLanguages);
+		assertTrue(oidcClientPage.isPurposeTitleLanguageFrenchOptionDisplayed(),
+				GlobalConstants.isAdditionalRowsExcludeAlreadyUsedLanguages);
+		assertTrue(oidcClientPage.isPurposeTitleLanguageArabicOptionDisplayed(),
+				GlobalConstants.isAdditionalRowsExcludeAlreadyUsedLanguages);
+		oidcClientPage.clickOnPurposeTitleRow2LanguageDropdown();
+	}
+
+	@Test(priority = 6, description = "Verify Purpose Title and Purpose Subtitle are independently optional, and a blank multilingual row text blocks submit", dependsOnMethods = "purposeTitleSubtitleChecks")
+	public void purposeTitleSubtitleOptionalityChecks() {
+		OidcClientPage titleOnlyForm = openCreateOidcClientForm();
+		fillMandatoryFieldsAndSelectLoginPurposeType(titleOnlyForm);
+		titleOnlyForm.clickOnAddPurposeTitleLanguageButton();
+		titleOnlyForm.enterPurposeTitleText(GlobalConstants.DEFAULT_POLICY + BaseClass.data);
+		assertTrue(titleOnlyForm.isSubmitButtonEnabled(), GlobalConstants.isSubmitAllowedWithOnlyPurposeTitleFilled);
+
+		OidcClientPage subtitleOnlyForm = openCreateOidcClientForm();
+		fillMandatoryFieldsAndSelectLoginPurposeType(subtitleOnlyForm);
+		subtitleOnlyForm.clickOnAddPurposeSubtitleLanguageButton();
+		subtitleOnlyForm.enterPurposeSubtitleText(GlobalConstants.DEFAULT_POLICY + BaseClass.data);
+		assertTrue(subtitleOnlyForm.isSubmitButtonEnabled(),
+				GlobalConstants.isSubmitAllowedWithOnlyPurposeSubtitleFilled);
+
+		OidcClientPage blankTextForm = openCreateOidcClientForm();
+		fillMandatoryFieldsAndSelectLoginPurposeType(blankTextForm);
+		blankTextForm.clickOnAddPurposeTitleLanguageButton();
+		assertFalse(blankTextForm.isSubmitButtonEnabled(), GlobalConstants.isSubmitBlockedWhenLanguageRowTextEmpty);
+	}
+
+	private void fillMandatoryFieldsAndSelectLoginPurposeType(OidcClientPage oidcClientPage) {
+		oidcClientPage.selectPartnerIdDropdown();
+		oidcClientPage.selectPolicyNameDropdown(GlobalConstants.DEFAULT_POLICY);
+		oidcClientPage.enterNameOidcTextBox(GlobalConstants.DEFAULT_POLICY + BaseClass.data);
+		oidcClientPage.enterPublicKeyTextBox(PmpTestUtil.generateJWKPublicKey());
+		oidcClientPage.enterLogoUrTextBox(ConfigManager.getLogouri());
+		oidcClientPage.enterRedirectUriTextBox(ConfigManager.getRedirectUri());
+		oidcClientPage.clickOnAdditionalInformationSectionHeader();
+		oidcClientPage.clickOnPurposeTypeDropdown();
+		oidcClientPage.clickOnLoginPurposeOption();
+	}
+
+	@Test(priority = 7, description = "Verify Submit button stays disabled until every mandatory field is filled", dependsOnMethods = "purposeTitleSubtitleOptionalityChecks")
 	public void submitValidationChecks() {
 		OidcClientPage oidcClientPage = openCreateOidcClientForm();
 
@@ -121,6 +258,14 @@ public class OidcClientMultilingualFieldsTest extends BaseClass {
 
 		oidcClientPage.selectPartnerIdDropdown();
 		assertFalse(oidcClientPage.isSubmitButtonEnabled(), GlobalConstants.isSubmitDisabledWhenPolicyNameEmpty);
+
+		assertFalse(oidcClientPage.getPartnerTypeContextText().isEmpty(),
+				GlobalConstants.isPartnerTypeAutoPopulatedAndReadOnly);
+		assertTrue(oidcClientPage.isPartnerTypeContextDisabled(), GlobalConstants.isPartnerTypeAutoPopulatedAndReadOnly);
+
+		assertFalse(oidcClientPage.getPolicyGroupContextText().isEmpty(),
+				GlobalConstants.isPolicyGroupAutoPopulatedAndReadOnly);
+		assertTrue(oidcClientPage.isPolicyGroupContextDisabled(), GlobalConstants.isPolicyGroupAutoPopulatedAndReadOnly);
 
 		oidcClientPage.selectPolicyNameDropdown(GlobalConstants.DEFAULT_POLICY);
 		oidcClientPage.enterNameOidcTextBox(GlobalConstants.DEFAULT_POLICY + BaseClass.data);
@@ -137,9 +282,14 @@ public class OidcClientMultilingualFieldsTest extends BaseClass {
 
 		oidcClientPage.enterRedirectUriTextBox(ConfigManager.getRedirectUri());
 		assertTrue(oidcClientPage.isSubmitButtonEnabled(), GlobalConstants.isSubmitButtonEnabledAfterFillingForm);
+
+		oidcClientPage.clickOnAdditionalInformationSectionHeader();
+		assertTrue(oidcClientPage.getPurposeTypeDropdownPlaceholder().equals("Select Purpose Type"),
+				GlobalConstants.isSubmitAllowedWithoutPurposeTypeSelected);
+		assertTrue(oidcClientPage.isSubmitButtonEnabled(), GlobalConstants.isSubmitAllowedWithoutPurposeTypeSelected);
 	}
 
-	@Test(priority = 6, description = "Verify partner can create an OIDC Client with required and optional details", dependsOnMethods = "submitValidationChecks")
+	@Test(priority = 8, description = "Verify partner can create an OIDC Client with required and optional details", dependsOnMethods = "submitValidationChecks")
 	public void fillAndSubmitFlow() {
 		OidcClientPage oidcClientPage = openCreateOidcClientForm();
 
@@ -172,6 +322,10 @@ public class OidcClientMultilingualFieldsTest extends BaseClass {
 
 		assertTrue(oidcClientPage.isOidcSubmittedSuccessfullyDisplayed(),
 				GlobalConstants.isOidcSubmittedSuccessfullyDisplayed);
+		assertTrue(
+				oidcClientPage.getConfirmationDescriptionText()
+						.equals("OIDC Client details has been successfully submitted."),
+				GlobalConstants.isConfirmationDescriptionMessageCorrect);
 		oidcClientPage.clickConfirmationGoBackButton();
 
 		assertTrue(oidcClientPage.isOidcClientTabDisplayed(), GlobalConstants.isRedirectedToOidcClientListAfterSubmit);
@@ -179,6 +333,88 @@ public class OidcClientMultilingualFieldsTest extends BaseClass {
 				GlobalConstants.isNewOidcClientNameAtTopOfList);
 		assertTrue(oidcClientPage.getFirstOidcClientRowStatus().equalsIgnoreCase(GlobalConstants.PARTNER_STATUS_ACTIVE),
 				GlobalConstants.isNewOidcClientStatusActive);
+	}
+
+	@Test(priority = 9, description = "Verify Partner creates an OIDC Client with multilingual Client Name, Purpose Title, and Purpose Subtitle", dependsOnMethods = "fillAndSubmitFlow")
+	public void multilingualWithPurposeFieldsSubmitFlow() {
+		OidcClientPage oidcClientPage = openCreateOidcClientForm();
+
+		String oidcClientName = GlobalConstants.DEFAULT_POLICY + BaseClass.data;
+		oidcClientPage.selectPartnerIdDropdown();
+		oidcClientPage.selectPolicyNameDropdown(GlobalConstants.DEFAULT_POLICY);
+		oidcClientPage.enterNameOidcTextBox(oidcClientName);
+		oidcClientPage.enterPublicKeyTextBox(PmpTestUtil.generateJWKPublicKey());
+		oidcClientPage.enterLogoUrTextBox(ConfigManager.getLogouri());
+		oidcClientPage.enterRedirectUriTextBox(ConfigManager.getRedirectUri());
+
+		oidcClientPage.clickOnAddClientNameLanguageButton();
+		oidcClientPage.enterClientNameForLanguageRow1(oidcClientName);
+		oidcClientPage.clickOnAddClientNameLanguageButton();
+		oidcClientPage.clickOnClientNameLanguageDropdownRow2();
+		oidcClientPage.selectFrenchForClientNameLanguageRow2();
+		oidcClientPage.enterClientNameForLanguageRow2(oidcClientName);
+
+		oidcClientPage.clickOnAdditionalInformationSectionHeader();
+		oidcClientPage.clickOnPurposeTypeDropdown();
+		oidcClientPage.clickOnLoginPurposeOption();
+
+		oidcClientPage.clickOnAddPurposeTitleLanguageButton();
+		oidcClientPage.enterPurposeTitleText("Purpose Title " + BaseClass.data);
+
+		oidcClientPage.clickOnAddPurposeSubtitleLanguageButton();
+		oidcClientPage.enterPurposeSubtitleText("Purpose Subtitle " + BaseClass.data);
+
+		assertTrue(oidcClientPage.isSubmitButtonEnabled(), GlobalConstants.isSubmitButtonEnabledAfterFillingForm);
+		oidcClientPage.clickOnSubmitButton();
+
+		assertTrue(oidcClientPage.isOidcSubmittedSuccessfullyDisplayed(),
+				GlobalConstants.isMultilingualWithPurposeFieldsSubmitSuccessful);
+		oidcClientPage.clickConfirmationGoBackButton();
+
+		assertTrue(oidcClientPage.getFirstOidcClientRowName().contains(oidcClientName),
+				GlobalConstants.isMultilingualWithPurposeFieldsSubmitSuccessful);
+	}
+
+	@Test(priority = 10, description = "Verify existing backend integrations and validations remain unchanged when only standard mandatory fields are used", dependsOnMethods = "multilingualWithPurposeFieldsSubmitFlow")
+	public void legacyOnlySubmitFlow() {
+		OidcClientPage oidcClientPage = openCreateOidcClientForm();
+
+		String oidcClientName = GlobalConstants.DEFAULT_POLICY + BaseClass.data;
+		oidcClientPage.selectPartnerIdDropdown();
+		oidcClientPage.selectPolicyNameDropdown(GlobalConstants.DEFAULT_POLICY);
+		oidcClientPage.enterNameOidcTextBox(oidcClientName);
+		oidcClientPage.enterPublicKeyTextBox(PmpTestUtil.generateJWKPublicKey());
+		oidcClientPage.enterLogoUrTextBox(ConfigManager.getLogouri());
+		oidcClientPage.enterRedirectUriTextBox(ConfigManager.getRedirectUri());
+
+		assertTrue(oidcClientPage.isSubmitButtonEnabled(), GlobalConstants.isLegacyOnlySubmitSuccessfulWithoutRegression);
+		oidcClientPage.clickOnSubmitButton();
+
+		assertTrue(oidcClientPage.isOidcSubmittedSuccessfullyDisplayed(),
+				GlobalConstants.isLegacyOnlySubmitSuccessfulWithoutRegression);
+		oidcClientPage.clickConfirmationGoBackButton();
+
+		assertTrue(oidcClientPage.getFirstOidcClientRowName().contains(oidcClientName),
+				GlobalConstants.isLegacyOnlySubmitSuccessfulWithoutRegression);
+	}
+
+	@Test(priority = 11, description = "Verify no language validation for multilingual text fields - non-matching language text is accepted", dependsOnMethods = "legacyOnlySubmitFlow")
+	public void noLanguageValidationChecks() {
+		OidcClientPage oidcClientPage = openCreateOidcClientForm();
+
+		oidcClientPage.selectPartnerIdDropdown();
+		oidcClientPage.selectPolicyNameDropdown(GlobalConstants.DEFAULT_POLICY);
+		oidcClientPage.enterNameOidcTextBox(GlobalConstants.DEFAULT_POLICY + BaseClass.data);
+		oidcClientPage.enterPublicKeyTextBox(PmpTestUtil.generateJWKPublicKey());
+		oidcClientPage.enterLogoUrTextBox(ConfigManager.getLogouri());
+		oidcClientPage.enterRedirectUriTextBox(ConfigManager.getRedirectUri());
+
+		oidcClientPage.clickOnAddClientNameLanguageButton();
+		assertTrue(oidcClientPage.getClientNameLanguageRow1SelectedText().equalsIgnoreCase("English"),
+				GlobalConstants.isNoLanguageValidationForMultilingualText);
+		oidcClientPage.enterClientNameForLanguageRow1("Hola Mundo " + BaseClass.data);
+
+		assertTrue(oidcClientPage.isSubmitButtonEnabled(), GlobalConstants.isNoLanguageValidationForMultilingualText);
 	}
 
 	private OidcClientPage openCreateOidcClientForm() {
