@@ -608,6 +608,7 @@ public class GlobalConstants {
 	public static final String isForgotPasswordBannerInfoTooltipCorrect = "Verify info icon tooltip text for Forgot Password Banner Required toggle";
 	public static final String isConsentExpiryDefaultValueTen = "Verify Consent Expiry in Minutes field is displayed with default value 10";
 	public static final String isConsentExpiryAcceptsPositiveInteger = "Verify only positive integers are accepted for Consent Expiry in Minutes";
+	public static final String isConsentExpiryStripsNonDigitCharacters = "Verify Consent Expiry field strips non-digit characters (-, ., letters) so only digits are retained";
 	public static final String isConsentExpiryInfoTooltipCorrect = "Verify info icon text for Consent Expiry in Minutes";
 	public static final String isUserInfoResponseTypeDropdownDisplayed = "Verify User Info Response Type dropdown is present";
 	public static final String isUserInfoResponseTypePlaceholderDisplayed = "Verify placeholder is displayed when no value is selected in User Info Response Type dropdown";

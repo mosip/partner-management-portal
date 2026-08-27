@@ -117,6 +117,15 @@ public class OidcClientMultilingualFieldsTest extends BaseClass {
 		oidcClientPage.enterConsentExpiryDuration("15");
 		assertTrue(oidcClientPage.getConsentExpiryValue().equals("15"), GlobalConstants.isConsentExpiryAcceptsPositiveInteger);
 
+		oidcClientPage.enterConsentExpiryDuration("-5");
+		assertTrue(oidcClientPage.getConsentExpiryValue().equals("5"), GlobalConstants.isConsentExpiryStripsNonDigitCharacters);
+
+		oidcClientPage.enterConsentExpiryDuration("1.5");
+		assertTrue(oidcClientPage.getConsentExpiryValue().equals("15"), GlobalConstants.isConsentExpiryStripsNonDigitCharacters);
+
+		oidcClientPage.enterConsentExpiryDuration("abc");
+		assertTrue(oidcClientPage.getConsentExpiryValue().isEmpty(), GlobalConstants.isConsentExpiryStripsNonDigitCharacters);
+
 		oidcClientPage.clickOnConsentExpiryInfoIcon();
 		assertTrue(
 				oidcClientPage.getConsentExpiryInfoTooltipText()

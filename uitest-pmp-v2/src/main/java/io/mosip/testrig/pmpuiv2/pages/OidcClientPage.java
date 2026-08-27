@@ -2,13 +2,18 @@ package io.mosip.testrig.pmpuiv2.pages;
 
 import org.openqa.selenium.NoSuchElementException;
 
+import java.time.Duration;
+
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
+import io.mosip.testrig.pmpuiv2.kernel.util.ConfigManager;
 
 public class OidcClientPage extends BasePage {
 
@@ -1782,7 +1787,9 @@ public class OidcClientPage extends BasePage {
 	}
 
 	public void clickOnPurposeTitleRow2LanguageDropdown() {
-		driver.findElements(PURPOSE_TITLE_ROW_DROPDOWN_BTN_BY).get(1).click();
+		new WebDriverWait(driver, Duration.ofSeconds(ConfigManager.getTimeout()))
+				.until(ExpectedConditions.numberOfElementsToBeMoreThan(PURPOSE_TITLE_ROW_DROPDOWN_BTN_BY, 1));
+		clickOnElement(driver.findElements(PURPOSE_TITLE_ROW_DROPDOWN_BTN_BY).get(1));
 	}
 
 	public boolean isPurposeTitleTextBoxDisplayed() {
