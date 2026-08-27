@@ -231,6 +231,12 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(id = "upload_popup_file_name")
 	private WebElement uploadedCertificateFileNameLabel;
 
+	@FindBy(id = "fetch_certificate_success_msg")
+	private WebElement fetchCertificateSuccessMessage;
+
+	@FindBy(id = "remove_certificate_card")
+	private WebElement removeCertificateCard;
+
 	@FindBy(xpath = "//label[text()='Partner Type']")
 	private WebElement partnerTypeLabel;
 
@@ -1097,6 +1103,18 @@ public class PartnerCertificatePage extends BasePage {
 
 	public boolean isUploadedCertificateFileNameLabelDisplayedQuick() {
 		return isElementDisplayedQuick(By.id("upload_popup_file_name"), Duration.ofSeconds(3));
+	}
+
+	public boolean isFetchCertificateSuccessMessageDisplayed() {
+		return isElementDisplayed(fetchCertificateSuccessMessage);
+	}
+
+	public String getFetchCertificateSuccessMessage() {
+		return getTextFromLocator(fetchCertificateSuccessMessage).trim();
+	}
+
+	public boolean isRemoveCertificateCardDisplayed() {
+		return isElementDisplayed(removeCertificateCard);
 	}
 
 	public boolean isLastCertificateUploadDateDisplayed() {

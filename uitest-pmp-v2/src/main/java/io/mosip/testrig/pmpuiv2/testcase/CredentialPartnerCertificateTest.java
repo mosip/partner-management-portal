@@ -754,6 +754,48 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 				GlobalConstants.isSubmitDisabledWhileFetchingCertificate);
 	}
 
+	@Test(priority = 26, description = "Verify certificate name is displayed after successful fetch", dependsOnMethods = "registerCredentialPartnerForCertificateFlow")
+	public void verifyCertificateNameDisplayedAfterSuccessfulFetch() {
+
+		dashboardPage = new DashboardPage(driver);
+		loginPage = new LoginPage(driver);
+		partnerCertificatePage = new PartnerCertificatePage(driver);
+
+		LogUtil.step("Login to the PMS Portal as Credential Partner");
+		dashboardPage.clickOnProfileDropdown();
+		loginPage = dashboardPage.clickOnLogoutButton();
+		assertTrue(loginPage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
+		loginPage.enterUserName(GlobalConstants.CREDENTIAL_PARTNER_ID);
+		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
+		loginPage.clickOnLoginButton();
+		assertTrue(dashboardPage.isWelcomeMessageDisplayed(), GlobalConstants.isWelcomeMessageDisplayed);
+
+		LogUtil.step("Navigate to Partner Certificate list view and open Upload popup");
+		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
+				GlobalConstants.isPartnerCertificateTitleDisplayed);
+		dashboardPage.clickOnPartnerCertificateTitle();
+		assertTrue(partnerCertificatePage.isCertificateListViewDisplayed(),
+				GlobalConstants.isPartnerCertificatePageDisplayed);
+		partnerCertificatePage.openPartnerCertificateUploadOrReUploadPopup();
+
+		LogUtil.step("Select certificate and wait for successful fetch");
+		partnerCertificatePage.uploadCertificate();
+		assertTrue(partnerCertificatePage.isFetchCertificateSuccessMessageDisplayed(),
+				GlobalConstants.isCertificateNameDisplayedAfterSuccessfulFetch);
+		assertEquals(partnerCertificatePage.getFetchCertificateSuccessMessage(),
+				GlobalConstants.FETCH_CERTIFICATE_SUCCESS_MESSAGE,
+				GlobalConstants.isCertificateNameDisplayedAfterSuccessfulFetch);
+
+		LogUtil.step("Verify certificate name is displayed after successful fetch");
+		assertTrue(partnerCertificatePage.isRemoveCertificateCardDisplayed(),
+				GlobalConstants.isCertificateNameDisplayedAfterSuccessfulFetch);
+		assertTrue(partnerCertificatePage.isUploadedCertificateFileNameLabelDisplayed(),
+				GlobalConstants.isCertificateNameDisplayedAfterSuccessfulFetch);
+		assertEquals(partnerCertificatePage.getUploadedCertificateFileName(),
+				GlobalConstants.SAME_CERTIFICATE_FILE_NAME,
+				GlobalConstants.isCertificateNameDisplayedAfterSuccessfulFetch);
+	}
+
 	@Test(priority = 9, description = "Verify all fields and UI components in Upload Partner Certificate popup", dependsOnMethods = "registerCredentialPartnerForCertificateFlow")
 	public void verifyUploadPartnerCertificatePopupLayoutAndFields() {
 
