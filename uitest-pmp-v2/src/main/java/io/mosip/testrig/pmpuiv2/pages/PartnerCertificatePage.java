@@ -27,11 +27,8 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(id = "partner_certificate_upload_btn1")
 	private WebElement uploadButton;
 
-	@FindBy(xpath = "//*[text()='Upload Partner Certificate']")
+	@FindBy(id = "upload_certificate_popup_title")
 	private WebElement uploadPartnerCertificatePopUp;
-
-	@FindBy(xpath = "//*[text()='Submit']")
-	private WebElement submitButton;
 
 	@FindBy(id = "certificate_upload_submit_btn")
 	private WebElement certificateUploadSubmitButton;
@@ -540,8 +537,9 @@ public class PartnerCertificatePage extends BasePage {
 	}
 
 	public boolean isUploadPartnerCertificatePopUpDisplayedQuick() {
-		return isElementDisplayedQuick(By.xpath("//*[text()='Upload Partner Certificate']"), Duration.ofSeconds(5))
-				|| isElementDisplayedQuick(By.xpath("//h3[text()='Re-Upload Partner Certificate']"), Duration.ofSeconds(2));
+		return isElementDisplayedQuick(By.id("upload_certificate_popup_title"), Duration.ofSeconds(5))
+				|| isElementDisplayedQuick(By.xpath("//h3[text()='Re-Upload Partner Certificate']"),
+						Duration.ofSeconds(2));
 	}
 
 	/**
@@ -645,7 +643,7 @@ public class PartnerCertificatePage extends BasePage {
 	}
 
 	public boolean isUploadPopupSubmitButtonDisplayed() {
-		return isElementDisplayed(submitButton);
+		return isElementDisplayed(certificateUploadSubmitButton);
 	}
 
 	/**
@@ -703,7 +701,7 @@ public class PartnerCertificatePage extends BasePage {
 	}
 
 	public void clickOnSubmitButton() {
-		clickOnElement(submitButton);
+		clickOnElement(certificateUploadSubmitButton);
 	}
 
 	public boolean isSuccessMessageDisplayed() {
