@@ -5,9 +5,11 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
@@ -30,6 +32,12 @@ public class PartnerCertificatePage extends BasePage {
 
 	@FindBy(xpath = "//*[text()='Submit']")
 	private WebElement submitButton;
+
+	@FindBy(id = "certificate_upload_submit_btn")
+	private WebElement certificateUploadSubmitButton;
+
+	@FindBy(id = "upload_popup_selecting_file")
+	private WebElement selectingFileFetchingMsg;
 
 	@FindBy(id = "upload_certificate_success_msg")
 	private WebElement successMessage;
@@ -632,6 +640,40 @@ public class PartnerCertificatePage extends BasePage {
 
 	public boolean isUploadPopupSubmitButtonDisplayed() {
 		return isElementDisplayed(submitButton);
+	}
+
+	/**
+	 * True when Submit is disabled while the certificate file is being fetched
+	 * (selecting-file spinner shown and enabled submit id not present).
+	 */
+	public boolean isSubmitDisabledWhileFetchingCertificate() {
+		By fetchingMsg = By.id("upload_popup_selecting_file");
+		By disabledSubmit = By.xpath("//button[@disabled and normalize-space()='Submit']");
+		By enabledSubmit = By.id("certificate_upload_submit_btn");
+		try {
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(4));
+			wait.pollingEvery(Duration.ofMillis(100));
+			return Boolean.TRUE.equals(wait.until(d -> {
+				boolean fetching = !d.findElements(fetchingMsg).isEmpty()
+						&& d.findElement(fetchingMsg).isDisplayed();
+				boolean submitDisabled = !d.findElements(disabledSubmit).isEmpty();
+				boolean enabledSubmitAbsent = d.findElements(enabledSubmit).isEmpty();
+				return fetching && submitDisabled && enabledSubmitAbsent;
+			}));
+		} catch (TimeoutException e) {
+			LogUtil.error("Submit was not disabled during certificate fetch within timeout");
+			takeScreenshot();
+			return false;
+		}
+	}
+
+	public boolean isCertificateFileFetchingMessageDisplayedQuick() {
+		return isElementDisplayedQuick(By.id("upload_popup_selecting_file"), Duration.ofSeconds(3));
+	}
+
+	public boolean isUploadPopupSubmitButtonEnabled() {
+		return isElementDisplayed(certificateUploadSubmitButton)
+				&& isElementEnabled(certificateUploadSubmitButton);
 	}
 
 	public void uploadCertificateRootCa() {

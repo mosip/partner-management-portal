@@ -383,6 +383,7 @@ public class GlobalConstants {
 	public static final String isNoCertificateChangesPersistedOnCancel = "Verify no certificate changes are persisted in the system after Cancel";
 	public static final String isCertificateUploadCancelButtonClickable = "Verify Cancel button is clickable";
 	public static final String isCertificateUploadCancelButtonResponsive = "Verify Cancel button is responsive and closes the popup on click";
+	public static final String isSubmitDisabledWhileFetchingCertificate = "Verify Submit button remains disabled during fetching the certificate file";
 	public static final String PARTNER_CERTIFICATE_LIST_PAGE_TITLE = "Partner Certificate";
 	public static final String isUploadPartnerCertificatePopupLayoutDisplayed = "Verify all fields and UI components are displayed with correct layout in Upload Partner Certificate popup";
 	public static final String INVALID_CERTIFICATE_FORMAT_ERROR_MESSAGE = "The certificate uploaded is not in the correct format. Only certificates having format .cer or .pem is allowed for upload";
