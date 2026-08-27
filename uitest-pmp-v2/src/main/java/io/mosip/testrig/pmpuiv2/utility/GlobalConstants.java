@@ -385,6 +385,7 @@ public class GlobalConstants {
 	public static final String isCertificateUploadCancelButtonResponsive = "Verify Cancel button is responsive and closes the popup on click";
 	public static final String isSubmitDisabledWhileFetchingCertificate = "Verify Submit button remains disabled during fetching the certificate file";
 	public static final String isCertificateNameDisplayedAfterSuccessfulFetch = "Verify certificate name is displayed after successful fetch";
+	public static final String isSuccessMessageDisplayedAfterCertificateFetch = "Verify success message after certificate fetch";
 	public static final String FETCH_CERTIFICATE_SUCCESS_MESSAGE = "We have successfully fetched the certificate from local system.";
 	public static final String PARTNER_CERTIFICATE_LIST_PAGE_TITLE = "Partner Certificate";
 	public static final String isUploadPartnerCertificatePopupLayoutDisplayed = "Verify all fields and UI components are displayed with correct layout in Upload Partner Certificate popup";
