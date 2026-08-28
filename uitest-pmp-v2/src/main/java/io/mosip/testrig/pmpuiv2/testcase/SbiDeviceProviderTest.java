@@ -4,6 +4,7 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
+import org.testng.SkipException;
 import org.testng.annotations.Test;
 
 import io.mosip.testrig.pmpuiv2.pages.AddDevicePage;
@@ -390,6 +391,41 @@ public class SbiDeviceProviderTest extends BaseClass {
 		verifyDeviceStatusInDeviceDetailsAsAdmin(GlobalConstants.FINGER, GlobalConstants.SLAP,
 				GlobalConstants.AUTOMATION_REJECTING, GlobalConstants.AUTOMATION_REJECTING, GlobalConstants.REJECTED);
 
+	}
+
+	@Test(priority = 9, description = "Only Reject is offered for a device that is not linked to an SBI", dependsOnMethods = "verifyViewOfDevicesPageAsAdmin")
+	public void verifyRejectOnlyOptionForOrphanDevice() {
+		dashboardpage = new DashboardPage(driver);
+		listOfSbiPage = new ListOfSbiPage(driver);
+		listOfDevicesPage = new ListOfDevicesPage(driver);
+
+		dashboardpage.clickOnSbiDevices();
+		listOfSbiPage.clickOnDeviceTab();
+		assertTrue(listOfDevicesPage.isListOfDevicesTitleDisplayed(), GlobalConstants.isListOfDevicesTitleDisplayed);
+
+		int orphanRow = listOfDevicesPage.findOrphanPendingDeviceRow();
+		if (orphanRow < 0) {
+			throw new SkipException("No Pending for Approval device without a linked SBI exists in this "
+					+ "environment, so the reject-only popup of TC_38189_23 cannot be exercised. Seed an "
+					+ "orphaned device to enable this check.");
+		}
+
+		assertTrue(listOfDevicesPage.isLinkedSbiColumnEmpty(orphanRow), GlobalConstants.isLinkedSbiColumnEmpty);
+
+		listOfDevicesPage.clickOnDeviceListActionMenu(orphanRow);
+		listOfDevicesPage.clickOnApproveOrReject();
+
+		assertTrue(listOfDevicesPage.isRejectOnlyPopupDisplayed(), GlobalConstants.isRejectOnlyPopupDisplayed);
+		assertTrue(listOfDevicesPage.isRejectOnlyPopupHeaderDisplayed(), GlobalConstants.isRejectOnlyPopupDisplayed);
+		assertTrue(listOfDevicesPage.isRejectOnlyPopupDescriptionDisplayed(),
+				GlobalConstants.isRejectOnlyPopupDescriptionDisplayed);
+		assertTrue(listOfDevicesPage.isRejectOnlyPopupRejectButtonDisplayed(),
+				GlobalConstants.isRejectOnlyPopupRejectButtonDisplayed);
+
+		assertTrue(listOfDevicesPage.isApproveButtonAbsentInRejectOnlyPopup(),
+				GlobalConstants.isApproveButtonNotDisplayedForOrphanDevice);
+
+		listOfDevicesPage.clickOnRejectOnlyPopupCloseIcon();
 	}
 
 	private void loginAsDeviceProvider() {

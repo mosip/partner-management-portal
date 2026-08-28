@@ -1,11 +1,15 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
+import java.time.Duration;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class PoliciesPage extends BasePage {
+
+	private static final Duration REQUEST_POLICY_OUTCOME_TIMEOUT = Duration.ofSeconds(5);
 
 	@FindBy(id = "title_back_icon")
 	private WebElement policiesTitle;
@@ -339,6 +343,19 @@ public class PoliciesPage extends BasePage {
 
 	public boolean isPolicySubmittedSuccessfullyDisplayed() {
 		return isElementDisplayed(policySubmittedSuccessfully);
+	}
+
+	// Short window: used to assert the request did NOT succeed.
+	public boolean isPolicySubmittedSuccessfullyDisplayedQuick() {
+		return isElementDisplayedQuick(By.id("request_policy_confirmation_header"), REQUEST_POLICY_OUTCOME_TIMEOUT);
+	}
+
+	public boolean isRequestPolicyErrorMessageDisplayed() {
+		return isElementDisplayedQuick(By.id("request_policy_error_msg"), REQUEST_POLICY_OUTCOME_TIMEOUT);
+	}
+
+	public String getRequestPolicyErrorMessage() {
+		return getTextFromLocator(By.id("request_policy_error_msg")).trim();
 	}
 
 	public boolean isNoDataAvailableTextDisplayed() {

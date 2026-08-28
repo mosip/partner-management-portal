@@ -4,6 +4,9 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.util.List;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
@@ -424,9 +427,53 @@ public class ApiKeyPage extends BasePage {
 	@FindBy(id = "api_key_list_item1")
 	private WebElement activatedAdminApiKey;
 
+	@FindBy(id = "apiKeysList.expirationDate_header")
+	private WebElement expirationDateColumnHeader;
+
+	@FindBy(xpath = "//p[starts-with(@id,'api_key_details_') and contains(@id,'_label')]")
+	private List<WebElement> individualViewFieldLabels;
+
+	@FindBy(xpath = "//tr[@id='api_key_list_item1']/td[7]")
+	private WebElement adminExpirationDateCell;
+
+	@FindBy(xpath = "//tr[@id='api_list_item1']/td[6]")
+	private WebElement partnerExpirationDateCell;
+
+	@FindBy(xpath = "//tr[@id='api_key_list_item1']/td[6]")
+	private WebElement adminCreationDateCell;
+
+	@FindBy(xpath = "//tr[@id='api_list_item1']/td[5]")
+	private WebElement partnerCreationDateCell;
+
+	@FindBy(xpath = "//tr[starts-with(@id,'api_key_list_item')]/td[7]")
+	private List<WebElement> adminExpirationDateColumn;
+
+	@FindBy(xpath = "//tr[starts-with(@id,'api_list_item')]/td[6]")
+	private List<WebElement> partnerExpirationDateColumn;
+
+	@FindBy(id = "api_key_details_expiration_date_label")
+	private WebElement apiKeyDetailsExpirationDateLabel;
+
+	@FindBy(id = "api_key_details_expiration_date_context")
+	private WebElement apiKeyDetailsExpirationDateContext;
+
+	@FindBy(xpath = "//p[normalize-space()='Expiration Date']")
+	private WebElement expirationDateLabelInAdminView;
+
+	@FindBy(xpath = "//p[normalize-space()='Expiration Date']/following-sibling::p[1]")
+	private WebElement expirationDateContextInAdminView;
+
+	@FindBy(id = "apiKeyExpiryDateTime_desc_icon")
+	private WebElement apiKeyExpiryDateTime_desc_icon;
+
+	@FindBy(id = "apiKeyExpiryDateTime_asc_icon")
+	private WebElement apiKeyExpiryDateTime_asc_icon;
+
 	public ApiKeyPage(WebDriver driver) {
 		super(driver);
 	}
+
+	private static final String NO_EXPIRY_TEXT = "No Expiry";
 
 	private static final Logger logger = Logger.getLogger(ApiKeyPage.class);
 
@@ -1204,6 +1251,250 @@ public class ApiKeyPage extends BasePage {
 
 		} catch (DateTimeParseException e) {
 			LogUtil.error("Date format mismatch: " + e.getMessage());
+			takeScreenshot();
+			return false;
+		}
+	}
+
+	public boolean isExpirationDateHeaderDisplayed() {
+		return isElementDisplayed(expirationDateColumnHeader);
+	}
+
+	public boolean isExpirationDateHeaderAfterCreationDate() {
+		int creationIndex = getColumnIndex("oidcClientsList.creationDate_header");
+		int expirationIndex = getColumnIndex("apiKeysList.expirationDate_header");
+		LogUtil.step("Creation Date column index: " + creationIndex + ", Expiration Date column index: "
+				+ expirationIndex);
+
+		if (creationIndex < 0 || expirationIndex < 0) {
+			LogUtil.error("Creation Date or Expiration Date column header is missing from the table");
+			takeScreenshot();
+			return false;
+		}
+		if (expirationIndex != creationIndex + 1) {
+			LogUtil.error("Expiration Date is not the column immediately after Creation Date");
+			takeScreenshot();
+			return false;
+		}
+		return true;
+	}
+
+	public boolean isExpiryDateDescIconDisplayed() {
+		return isElementDisplayed(apiKeyExpiryDateTime_desc_icon);
+	}
+
+	public boolean isExpiryDateAscIconDisplayed() {
+		return isElementDisplayed(apiKeyExpiryDateTime_asc_icon);
+	}
+
+	public void clickOnExpiryDateDescIcon() {
+		clickOnElement(apiKeyExpiryDateTime_desc_icon);
+	}
+
+	public void clickOnExpiryDateAscIcon() {
+		clickOnElement(apiKeyExpiryDateTime_asc_icon);
+	}
+
+	public boolean isExpiryDateColumnSorted(boolean ascending, boolean isAdminView) {
+		List<LocalDate> dates = readExpiryColumn(isAdminView);
+		if (dates.size() < 2) {
+			LogUtil.error("Only " + dates.size() + " dated row(s) on the page, which cannot demonstrate sorting");
+			takeScreenshot();
+			return false;
+		}
+		for (int i = 1; i < dates.size(); i++) {
+			boolean inOrder = ascending ? !dates.get(i).isBefore(dates.get(i - 1))
+					: !dates.get(i).isAfter(dates.get(i - 1));
+			if (!inOrder) {
+				LogUtil.error("Expiration Date not sorted " + (ascending ? "ascending" : "descending") + " at row "
+						+ (i + 1) + ": " + dates.get(i - 1) + " then " + dates.get(i));
+				takeScreenshot();
+				return false;
+			}
+		}
+		return true;
+	}
+
+	private List<LocalDate> readExpiryColumn(boolean isAdminView) {
+		List<WebElement> expirationDateColumn = isAdminView ? adminExpirationDateColumn : partnerExpirationDateColumn;
+		List<LocalDate> dates = new ArrayList<>();
+		for (WebElement cell : expirationDateColumn) {
+			String value = cell.getText().trim();
+			if (value.isEmpty() || value.equalsIgnoreCase(NO_EXPIRY_TEXT) || value.equals("-")) {
+				continue;
+			}
+			try {
+				dates.add(LocalDate.parse(value, PmpTestUtil.nonZeroPadderDateFormatter));
+			} catch (DateTimeParseException e) {
+				LogUtil.step("Skipping unparsable expiry value: " + value);
+			}
+		}
+		LogUtil.step("Expiration dates read from column: " + dates);
+		return dates;
+	}
+
+	public boolean isExpirationDateSameAsBrowserDateFormat(boolean isAdminView) {
+		WebElement expirationDateCell = isAdminView ? adminExpirationDateCell : partnerExpirationDateCell;
+		try {
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(ConfigManager.getTimeout()));
+			String value = wait.until(ExpectedConditions.visibilityOf(expirationDateCell)).getText().trim();
+			LogUtil.step("API key expiration date from UI: " + value);
+
+			if (value.equalsIgnoreCase(NO_EXPIRY_TEXT)) {
+				LogUtil.error("First row carries no expiry date, so the locale format cannot be verified");
+				takeScreenshot();
+				return false;
+			}
+			LocalDate.parse(value, PmpTestUtil.nonZeroPadderDateFormatter);
+			return true;
+
+		} catch (TimeoutException e) {
+			LogUtil.error("API key expiration cell not visible in time");
+			takeScreenshot();
+			return false;
+		} catch (DateTimeParseException e) {
+			LogUtil.error("Expiration date format mismatch: " + e.getMessage());
+			takeScreenshot();
+			return false;
+		}
+	}
+
+	public boolean isExpirationDateNotBeforeCreationDate(boolean isAdminView) {
+		WebElement creationDateCell = isAdminView ? adminCreationDateCell : partnerCreationDateCell;
+		WebElement expirationDateCell = isAdminView ? adminExpirationDateCell : partnerExpirationDateCell;
+		try {
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(ConfigManager.getTimeout()));
+			String created = wait.until(ExpectedConditions.visibilityOf(creationDateCell)).getText().trim();
+			String expiry = wait.until(ExpectedConditions.visibilityOf(expirationDateCell)).getText().trim();
+			LogUtil.step("Created: " + created + ", Expiry: " + expiry);
+
+			if (expiry.equalsIgnoreCase(NO_EXPIRY_TEXT)) {
+				LogUtil.error("Expiration date not set for the API key");
+				takeScreenshot();
+				return false;
+			}
+			LocalDate createdDate = LocalDate.parse(created, PmpTestUtil.nonZeroPadderDateFormatter);
+			LocalDate expiryDate = LocalDate.parse(expiry, PmpTestUtil.nonZeroPadderDateFormatter);
+
+			if (expiryDate.isBefore(createdDate)) {
+				LogUtil.error("Expiration date " + expiryDate + " is earlier than the creation date " + createdDate);
+				takeScreenshot();
+				return false;
+			}
+			return true;
+
+		} catch (TimeoutException e) {
+			LogUtil.error("Creation or expiration cell not visible in time");
+			takeScreenshot();
+			return false;
+		} catch (DateTimeParseException e) {
+			LogUtil.error("Could not parse the creation or expiration date: " + e.getMessage());
+			takeScreenshot();
+			return false;
+		}
+	}
+
+	public boolean isApiKeyDetailsExpirationDateLabelDisplayed() {
+		if (isElementDisplayedQuick(By.id("api_key_details_expiration_date_label"), Duration.ofSeconds(5))) {
+			return true;
+		}
+		return isElementDisplayed(expirationDateLabelInAdminView);
+	}
+
+	public String getExpirationDateFromList(boolean isAdminView) {
+		WebElement expirationDateCell = isAdminView ? adminExpirationDateCell : partnerExpirationDateCell;
+		return new WebDriverWait(driver, Duration.ofSeconds(ConfigManager.getTimeout()))
+				.until(ExpectedConditions.visibilityOf(expirationDateCell)).getText().trim();
+	}
+
+	public String getExpirationDateFromIndividualView() {
+		if (isElementDisplayedQuick(By.id("api_key_details_expiration_date_context"), Duration.ofSeconds(5))) {
+			return getTextFromLocator(apiKeyDetailsExpirationDateContext).trim();
+		}
+		return getTextFromLocator(expirationDateContextInAdminView).trim();
+	}
+
+	public boolean isApiKeyDetailsExpirationDateContextDisplayed() {
+		if (isElementDisplayedQuick(By.id("api_key_details_expiration_date_context"), Duration.ofSeconds(5))) {
+			return true;
+		}
+		return isElementDisplayed(expirationDateContextInAdminView);
+	}
+
+	public boolean isIndividualViewFieldOrderCorrect() {
+		String[] expectedOrder = { "Partner ID", "Partner Type", "Policy Group", "Policy Name",
+				"Policy Group Description", "Policy Name Description", "Expiration Date" };
+
+		List<String> renderedLabels = new ArrayList<>();
+		for (WebElement label : individualViewFieldLabels) {
+			String text = label.getText().trim();
+			if (!text.isEmpty()) {
+				renderedLabels.add(text);
+			}
+		}
+		LogUtil.step("Individual view labels in render order: " + renderedLabels);
+
+		int cursor = -1;
+		for (String expected : expectedOrder) {
+			int found = renderedLabels.indexOf(expected);
+			if (found < 0) {
+				LogUtil.error("Field missing from individual view: " + expected);
+				takeScreenshot();
+				return false;
+			}
+			if (found <= cursor) {
+				LogUtil.error("Field out of sequence: " + expected + " at index " + found + ", expected after "
+						+ cursor);
+				takeScreenshot();
+				return false;
+			}
+			cursor = found;
+		}
+		return true;
+	}
+
+	public boolean isDeactivatedRowNotClickable(boolean isAdminView) {
+		WebElement row = isAdminView ? apiKeyItem1 : apiListItem1;
+
+		new WebDriverWait(driver, Duration.ofSeconds(ConfigManager.getTimeout()))
+				.until(ExpectedConditions.visibilityOf(row));
+
+		scrollIntoView(row);
+		row.click();
+
+		boolean detailsOpened = isElementDisplayedQuick(By.xpath("//h1[text()='View API Key Details']"), Duration.ofSeconds(5));
+		if (detailsOpened) {
+			LogUtil.error("Deactivated API Key row opened the individual view");
+			takeScreenshot();
+		}
+		return !detailsOpened;
+	}
+
+	public boolean isApiKeyListViewDisplayed() {
+		return isElementDisplayed(subTitleOfTabularView);
+	}
+
+	public boolean isExpirationDateStyledLikeOtherFields() {
+		WebElement expiration = isElementDisplayedQuick(By.id("api_key_details_expiration_date_label"),
+				Duration.ofSeconds(5)) ? apiKeyDetailsExpirationDateLabel : expirationDateLabelInAdminView;
+
+		try {
+			for (String property : new String[] { "font-family", "font-size", "font-weight", "color" }) {
+				String expected = apiKeyDetailsPartnerIdLabel.getCssValue(property);
+				String actual = expiration.getCssValue(property);
+				LogUtil.step("Label " + property + " - Partner ID: " + expected + ", Expiration Date: " + actual);
+
+				if (!expected.equals(actual)) {
+					LogUtil.error("Expiration Date label " + property + " is " + actual + " but the other field "
+							+ "labels use " + expected);
+					takeScreenshot();
+					return false;
+				}
+			}
+			return true;
+
+		} catch (NoSuchElementException e) {
+			LogUtil.error("Could not find the Expiration Date label or the reference label to compare against");
 			takeScreenshot();
 			return false;
 		}

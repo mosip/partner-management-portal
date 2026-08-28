@@ -9,6 +9,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
+import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
 public class PartnerCertificatePage extends BasePage {
 
@@ -506,6 +507,32 @@ public class PartnerCertificatePage extends BasePage {
 
 	public boolean isDownloadButtonDisplayed() {
 		return isElementDisplayed(downloadButton);
+	}
+
+	// Both buttons are disabled, not hidden, for a deactivated partner.
+	public boolean isDownloadButtonEnabled() {
+		return isElementEnabled(downloadButton);
+	}
+
+	public boolean isPartnerCertificateReuploadButtonDisplayed() {
+		return isElementDisplayed(partnerCertificateReuploadButton);
+	}
+
+	public boolean isPartnerCertificateReuploadButtonEnabled() {
+		return isElementEnabled(partnerCertificateReuploadButton);
+	}
+
+	public String getCertificateUploadedDateInPartnerPortal() {
+		return getTextFromLocator(By.id("certificate_uploaded_date_context")).trim();
+	}
+
+	public String getCertificateExpiryDateInPartnerPortal() {
+		return getTextFromLocator(By.id("certificate_expiry_date_context")).trim();
+	}
+
+	public boolean isPartnerCertificateReuploadButtonGreyedOut() {
+		return getTextFromAttribute(partnerCertificateReuploadButton, GlobalConstants.CLASS)
+				.contains(GlobalConstants.PARTNER_CERT_BUTTON_DISABLED_TEXT);
 	}
 
 	public void clickOnPartnerCertificateReuploadButton() {
@@ -1332,7 +1359,7 @@ public class PartnerCertificatePage extends BasePage {
 	}
 
 	public boolean isCertificateFormatTextNotEditable() {
-		return isElementNotEditable(certificateFormatText);
+		return isElementNotEditable(partnerCertificateFormatText);
 	}
 
 }
