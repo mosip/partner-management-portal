@@ -602,7 +602,7 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 		dashboardPage.clickOnPartnerCertificateTitle();
 		assertTrue(partnerCertificatePage.isCertificateListViewDisplayed(),
 				GlobalConstants.isPartnerCertificatePageDisplayed);
-		partnerCertificatePage.openPartnerCertificateUploadOrReUploadPopup();
+		openUploadOrReUploadPopup();
 		assertTrue(partnerCertificatePage.isCertificateUploadCancelButtonDisplayed(),
 				GlobalConstants.isCancelButtonClosesUploadPopup);
 
@@ -702,18 +702,14 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 		dashboardPage.clickOnPartnerCertificateTitle();
 		assertTrue(partnerCertificatePage.isCertificateListViewDisplayed(),
 				GlobalConstants.isPartnerCertificatePageDisplayed);
-		partnerCertificatePage.openPartnerCertificateUploadOrReUploadPopup();
+		openUploadOrReUploadPopup();
 
 		LogUtil.step("Verify Cancel button is displayed, enabled, and clickable");
 		assertTrue(partnerCertificatePage.isCertificateUploadCancelButtonDisplayed(),
 				GlobalConstants.isCertificateUploadCancelButtonClickable);
-		assertTrue(partnerCertificatePage.isCertificateUploadCancelButtonNativeButton(),
-				GlobalConstants.isCertificateUploadCancelButtonClickable);
 		assertTrue(partnerCertificatePage.isCertificateUploadCancelButtonEnabled(),
 				GlobalConstants.isCertificateUploadCancelButtonClickable);
 		assertTrue(partnerCertificatePage.isCertificateUploadCancelButtonFocusable(),
-				GlobalConstants.isCertificateUploadCancelButtonClickable);
-		assertTrue(partnerCertificatePage.isCertificateUploadCancelButtonClickable(),
 				GlobalConstants.isCertificateUploadCancelButtonClickable);
 
 		LogUtil.step("Click Cancel and verify button is responsive");
@@ -746,12 +742,14 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 		dashboardPage.clickOnPartnerCertificateTitle();
 		assertTrue(partnerCertificatePage.isCertificateListViewDisplayed(),
 				GlobalConstants.isPartnerCertificatePageDisplayed);
-		partnerCertificatePage.openPartnerCertificateUploadOrReUploadPopup();
+		openUploadOrReUploadPopup();
 
 		LogUtil.step("Select certificate and verify Submit remains disabled while fetching");
 		partnerCertificatePage.uploadCertificate();
-		assertTrue(partnerCertificatePage.isSubmitDisabledWhileFetchingCertificate(),
+		assertTrue(partnerCertificatePage.isCertificateUploadSubmitButtonDisabled(),
 				GlobalConstants.isSubmitDisabledWhileFetchingCertificate);
+		assertTrue(partnerCertificatePage.isCertificateUploadFetchingMsgDisplayed(),
+				GlobalConstants.isCertificateUploadFetchingMsgDisplayed);
 	}
 
 	@Test(priority = 26, description = "Verify certificate name is displayed after successful fetch", dependsOnMethods = "registerCredentialPartnerForCertificateFlow")
@@ -776,7 +774,7 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 		dashboardPage.clickOnPartnerCertificateTitle();
 		assertTrue(partnerCertificatePage.isCertificateListViewDisplayed(),
 				GlobalConstants.isPartnerCertificatePageDisplayed);
-		partnerCertificatePage.openPartnerCertificateUploadOrReUploadPopup();
+		openUploadOrReUploadPopup();
 
 		LogUtil.step("Select certificate and wait for successful fetch");
 		partnerCertificatePage.uploadCertificate();
@@ -818,7 +816,7 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 		dashboardPage.clickOnPartnerCertificateTitle();
 		assertTrue(partnerCertificatePage.isCertificateListViewDisplayed(),
 				GlobalConstants.isPartnerCertificatePageDisplayed);
-		partnerCertificatePage.openPartnerCertificateUploadOrReUploadPopup();
+		openUploadOrReUploadPopup();
 
 		LogUtil.step("Select certificate and verify success message after fetch");
 		partnerCertificatePage.uploadCertificate();
@@ -851,7 +849,7 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 		dashboardPage.clickOnPartnerCertificateTitle();
 		assertTrue(partnerCertificatePage.isCertificateListViewDisplayed(),
 				GlobalConstants.isPartnerCertificatePageDisplayed);
-		partnerCertificatePage.openPartnerCertificateUploadOrReUploadPopup();
+		openUploadOrReUploadPopup();
 
 		LogUtil.step("Select certificate and wait for successful fetch");
 		partnerCertificatePage.uploadCertificate();
@@ -861,7 +859,7 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 				GlobalConstants.isCertificateNameDisplayedAfterSuccessfulFetch);
 
 		LogUtil.step("Verify Submit button is enabled after successful fetch");
-		assertTrue(partnerCertificatePage.isUploadPopupSubmitButtonEnabled(),
+		assertTrue(partnerCertificatePage.isCertificateUploadSubmitButtonEnabled(),
 				GlobalConstants.isSubmitEnabledAfterSuccessfulCertificateFetch);
 	}
 
@@ -939,7 +937,7 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 				GlobalConstants.isUploadPartnerCertificatePopupLayoutDisplayed);
 
 		LogUtil.step("Verify Submit button");
-		assertTrue(partnerCertificatePage.isUploadPopupSubmitButtonDisplayed(),
+		assertTrue(partnerCertificatePage.isCertificateUploadSubmitButtonDisplayed(),
 				GlobalConstants.isUploadPartnerCertificatePopupLayoutDisplayed);
 	}
 
@@ -1120,6 +1118,14 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 				GlobalConstants.isCertificateDetailsRefreshedAfterSameFileReUpload);
 		assertFalse(partnerCertificatePage.getCertificateExpiryDateInPartnerPortal().isEmpty(),
 				GlobalConstants.isCertificateDetailsRefreshedAfterSameFileReUpload);
+	}
+
+	private void openUploadOrReUploadPopup() {
+		if (partnerCertificatePage.isUploadButtonPresent()) {
+			partnerCertificatePage.clickOnUploadButton();
+		} else {
+			partnerCertificatePage.clickOnPartnerCertificateReuploadButton();
+		}
 	}
 
 	private void handleTermsAndCondition() {

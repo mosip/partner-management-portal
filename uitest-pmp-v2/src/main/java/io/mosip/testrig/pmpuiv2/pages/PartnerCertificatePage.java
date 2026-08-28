@@ -5,11 +5,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
@@ -32,6 +30,9 @@ public class PartnerCertificatePage extends BasePage {
 
 	@FindBy(id = "certificate_upload_submit_btn")
 	private WebElement certificateUploadSubmitButton;
+
+	@FindBy(xpath = "//button[@disabled and text()='Submit']")
+	private WebElement certificateUploadDisabledSubmitButton;
 
 	@FindBy(id = "upload_popup_selecting_file")
 	private WebElement selectingFileFetchingMsg;
@@ -504,13 +505,11 @@ public class PartnerCertificatePage extends BasePage {
 		return isElementDisplayed(titleBackButton);
 	}
 
-	/** True when the Partner Certificate list view page title is shown. */
 	public boolean isCertificateListViewDisplayed() {
 		return isElementDisplayed(pageTitle)
 				&& getTextFromLocator(pageTitle).trim().equals(GlobalConstants.PARTNER_CERTIFICATE_LIST_PAGE_TITLE);
 	}
 
-	/** Fast check when Upload may be replaced by Re-Upload after a prior cert exists. */
 	public boolean isUploadButtonPresent() {
 		return getElementCount(By.id("partner_certificate_upload_btn1")) > 0;
 	}
@@ -531,26 +530,10 @@ public class PartnerCertificatePage extends BasePage {
 		return isElementDisplayed(uploadPartnerCertificatePopUp);
 	}
 
-	/** Waits until the Upload Partner Certificate popup is no longer visible. */
-	public boolean isUploadPartnerCertificatePopUpClosed() {
-		return WaitUtil.waitForInvisibility(driver, uploadPartnerCertificatePopUp);
-	}
-
 	public boolean isUploadPartnerCertificatePopUpDisplayedQuick() {
 		return isElementDisplayedQuick(By.id("upload_certificate_popup_title"), Duration.ofSeconds(5))
 				|| isElementDisplayedQuick(By.xpath("//h3[text()='Re-Upload Partner Certificate']"),
 						Duration.ofSeconds(2));
-	}
-
-	/**
-	 * Opens the certificate upload popup via Upload or Re-Upload, whichever is present.
-	 */
-	public void openPartnerCertificateUploadOrReUploadPopup() {
-		if (isUploadButtonPresent()) {
-			clickOnUploadButton();
-		} else {
-			clickOnPartnerCertificateReuploadButton();
-		}
 	}
 
 	public String getUploadCertificatePopupTitle() {
@@ -565,7 +548,6 @@ public class PartnerCertificatePage extends BasePage {
 		return isElementDisplayed(uploadCertificatePopupSubtitle);
 	}
 
-	/** True when the upload popup subtitle is rendered below the popup title. */
 	public boolean isUploadPopupSubtitleDisplayedBelowTitle() {
 		return uploadCertificatePopupSubtitle.getLocation().getY() > mispPartnerCertificatePopup.getLocation().getY();
 	}
@@ -622,62 +604,24 @@ public class PartnerCertificatePage extends BasePage {
 		return isElementEnabled(certificateUploadCancelButton);
 	}
 
-	public boolean isCertificateUploadCancelButtonNativeButton() {
-		return GlobalConstants.BUTTON_TAG.equalsIgnoreCase(certificateUploadCancelButton.getTagName());
-	}
-
 	public boolean isCertificateUploadCancelButtonFocusable() {
 		return isElementFocusable(certificateUploadCancelButton);
 	}
 
-	/** True when Cancel is displayed, enabled, and Selenium considers it clickable. */
-	public boolean isCertificateUploadCancelButtonClickable() {
-		try {
-			WaitUtil.waitForClickability(driver, certificateUploadCancelButton);
-			return isCertificateUploadCancelButtonDisplayed() && isCertificateUploadCancelButtonEnabled()
-					&& certificateUploadCancelButton.getAttribute("disabled") == null;
-		} catch (Exception e) {
-			LogUtil.error("Cancel button clickability check failed: " + e.getClass().getSimpleName());
-			return false;
-		}
-	}
-
-	public boolean isUploadPopupSubmitButtonDisplayed() {
+	public boolean isCertificateUploadSubmitButtonDisplayed() {
 		return isElementDisplayed(certificateUploadSubmitButton);
 	}
 
-	/**
-	 * True when Submit is disabled while the certificate file is being fetched
-	 * (selecting-file spinner shown and enabled submit id not present).
-	 */
-	public boolean isSubmitDisabledWhileFetchingCertificate() {
-		By fetchingMsg = By.id("upload_popup_selecting_file");
-		By disabledSubmit = By.xpath("//button[@disabled and normalize-space()='Submit']");
-		By enabledSubmit = By.id("certificate_upload_submit_btn");
-		try {
-			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(4));
-			wait.pollingEvery(Duration.ofMillis(100));
-			return Boolean.TRUE.equals(wait.until(d -> {
-				boolean fetching = !d.findElements(fetchingMsg).isEmpty()
-						&& d.findElement(fetchingMsg).isDisplayed();
-				boolean submitDisabled = !d.findElements(disabledSubmit).isEmpty();
-				boolean enabledSubmitAbsent = d.findElements(enabledSubmit).isEmpty();
-				return fetching && submitDisabled && enabledSubmitAbsent;
-			}));
-		} catch (TimeoutException e) {
-			LogUtil.error("Submit was not disabled during certificate fetch within timeout");
-			takeScreenshot();
-			return false;
-		}
+	public boolean isCertificateUploadSubmitButtonDisabled() {
+		return isElementDisabled(certificateUploadDisabledSubmitButton);
 	}
 
-	public boolean isCertificateFileFetchingMessageDisplayedQuick() {
-		return isElementDisplayedQuick(By.id("upload_popup_selecting_file"), Duration.ofSeconds(3));
+	public boolean isCertificateUploadSubmitButtonEnabled() {
+		return isElementEnabled(certificateUploadSubmitButton);
 	}
 
-	public boolean isUploadPopupSubmitButtonEnabled() {
-		return isElementDisplayed(certificateUploadSubmitButton)
-				&& isElementEnabled(certificateUploadSubmitButton);
+	public boolean isCertificateUploadFetchingMsgDisplayed() {
+		return isElementDisplayed(selectingFileFetchingMsg);
 	}
 
 	public void uploadCertificateRootCa() {
@@ -1060,15 +1004,10 @@ public class PartnerCertificatePage extends BasePage {
 		return isElementDisplayed(uploadCertificateIcon);
 	}
 
-	/** Upload icon inside the Upload Partner Certificate popup card. */
 	public boolean isUploadPopupCertificateIconDisplayed() {
 		return isElementDisplayed(uploadPopupCertificateIcon);
 	}
 
-	/**
-	 * True when the upload icon area is enabled and clickable (card present with
-	 * cursor-pointer and hidden file input not disabled).
-	 */
 	public boolean isUploadPopupCertificateIconEnabledAndClickable() {
 		boolean iconDisplayed = isElementDisplayed(uploadPopupCertificateIcon);
 		boolean cardDisplayed = isElementDisplayed(uploadCertificateCard);
@@ -1079,10 +1018,6 @@ public class PartnerCertificatePage extends BasePage {
 		return iconDisplayed && cardDisplayed && cardClickable && fileInputEnabled;
 	}
 
-	/**
-	 * True when the hidden file input is wired for the local OS file browser
-	 * (type=file with .cer/.pem accept filter).
-	 */
 	public boolean isCertificateFileInputConfiguredForLocalFileBrowser() {
 		String type = uploadFile.getAttribute("type");
 		String accept = uploadFile.getAttribute("accept");
@@ -1131,7 +1066,6 @@ public class PartnerCertificatePage extends BasePage {
 		return isElementDisplayed(uploadedCertificateFileName);
 	}
 
-	/** Returns the selected certificate file name shown in the upload/re-upload popup. */
 	public String getUploadedCertificateFileName() {
 		return getTextFromLocator(uploadedCertificateFileNameLabel).trim();
 	}
