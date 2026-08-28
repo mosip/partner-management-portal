@@ -105,7 +105,7 @@ public class OidcClientPage extends BasePage {
 	@FindBy(xpath = "//h1[text()='Details Submitted Successfully!']")
 	private WebElement detailsSubmittedSuccessfully;
 
-	@FindBy(xpath = "//div[text()='Activated']")
+	@FindBy(xpath = "//div[text()='Active']")
 	private WebElement activatedText;
 
 	@FindBy(id = "confirmation_go_back_btn")
@@ -551,6 +551,105 @@ public class OidcClientPage extends BasePage {
 
 	@FindBy(xpath = "//p[contains(text(), 'Copied!')]")
 	private WebElement copied;
+
+	@FindBy(xpath = "//h3[text()='Primary Information']")
+	private WebElement primaryInformationSectionHeader;
+
+	@FindBy(xpath = "//h3[text()='Additional Information']")
+	private WebElement additionalInformationSectionHeader;
+
+	@FindBy(id = "forgot_password_banner_toggle")
+	private WebElement forgotPasswordBannerToggle;
+
+	@FindBy(id = "signup_banner_toggle")
+	private WebElement signUpBannerToggle;
+
+	@FindBy(id = "forgot_password_banner_info")
+	private WebElement forgotPasswordBannerInfoIcon;
+
+	@FindBy(id = "forgot_password_banner_info_info_description")
+	private WebElement forgotPasswordBannerInfoTooltip;
+
+	@FindBy(id = "consent_expiry_input")
+	private WebElement consentExpiryInput;
+
+	@FindBy(id = "user_info_response_type_dropdown_btn")
+	private WebElement userInfoResponseTypeDropdown;
+
+	@FindBy(id = "purpose_type_dropdown_btn")
+	private WebElement purposeTypeDropdown;
+
+	@FindBy(id = "create_oidc_grant_type_dropdown_btn")
+	private WebElement grantTypeDropdown;
+
+	@FindBy(id = "add_client_name_lang_map_entry")
+	private WebElement addClientNameLanguageButton;
+
+	@FindBy(id = "client_name_lang_map_lang_1_dropdown_btn")
+	private WebElement clientNameLanguageDropdownRow1;
+
+	@FindBy(id = "client_name_lang_map_lang_2_dropdown_btn")
+	private WebElement clientNameLanguageDropdownRow2;
+
+	@FindBy(id = "client_name_lang_map_text_1")
+	private WebElement clientNameLanguageInputRow1;
+
+	@FindBy(id = "client_name_lang_map_text_2")
+	private WebElement clientNameLanguageInputRow2;
+
+	@FindBy(xpath = "//button[starts-with(@id,'client_name_lang_map_lang_1_option') and text()='English']")
+	private WebElement englishLanguageOption;
+
+	@FindBy(xpath = "//button[starts-with(@id,'client_name_lang_map_lang_1_option') and text()='Français']")
+	private WebElement frenchLanguageOption;
+
+	@FindBy(xpath = "//button[starts-with(@id,'client_name_lang_map_lang_1_option') and text()='العربية']")
+	private WebElement arabicLanguageOption;
+
+	@FindBy(xpath = "//button[starts-with(@id,'client_name_lang_map_lang_2_option') and text()='English']")
+	private WebElement englishLanguageOptionRow2;
+
+	@FindBy(xpath = "//button[starts-with(@id,'client_name_lang_map_lang_2_option') and text()='Français']")
+	private WebElement frenchLanguageOptionRow2;
+
+	@FindBy(id = "create_oidc_partner_id_label")
+	private WebElement partnerIdFieldLabel;
+
+	@FindBy(id = "create_oidc_client_partner_type_label")
+	private WebElement partnerTypeFieldLabel;
+
+	@FindBy(id = "create_oidc_client_partner_type_context")
+	private WebElement partnerTypeContext;
+
+	@FindBy(id = "create_oidc_client_policy_group_label")
+	private WebElement policyGroupFieldLabel;
+
+	@FindBy(id = "create_oidc_client_policy_group_context")
+	private WebElement policyGroupContext;
+
+	@FindBy(id = "create_oidc_policy_name_label")
+	private WebElement policyNameFieldLabel;
+
+	@FindBy(id = "create_oidc_client_name_label")
+	private WebElement oidcClientNameFieldLabel;
+
+	@FindBy(id = "create_oidc_client_public_key_label")
+	private WebElement publicKeyFieldLabel;
+
+	@FindBy(id = "create_oidc_logo_url_label")
+	private WebElement logoUriFieldLabel;
+
+	@FindBy(id = "create_oidc_redirect_url_label")
+	private WebElement redirectUriFieldLabel;
+
+	@FindBy(id = "create_oidc_grant_type_label")
+	private WebElement grantTypeFieldLabel;
+
+	@FindBy(xpath = "//tr[@id='oidc_client_list_item1']/td[4]")
+	private WebElement firstOidcClientRowName;
+
+	@FindBy(xpath = "//tr[@id='oidc_client_list_item1']/td[6]")
+	private WebElement firstOidcClientRowStatus;
 
 	public OidcClientPage(WebDriver driver) {
 		super(driver);
@@ -1460,6 +1559,170 @@ public class OidcClientPage extends BasePage {
 	public void selectDeactivateStatusInFilter() {
 		clickOnElement(statusFilter);
 		clickOnElement(deactivatedStatusInFilter);
+	}
+
+	public boolean isPrimaryInformationSectionDisplayed() {
+		return isElementDisplayed(primaryInformationSectionHeader);
+	}
+
+	public void clickOnPrimaryInformationSectionHeader() {
+		clickOnElement(primaryInformationSectionHeader);
+	}
+
+	public boolean isAdditionalInformationSectionDisplayed() {
+		return isElementDisplayed(additionalInformationSectionHeader);
+	}
+
+	public void clickOnAdditionalInformationSectionHeader() {
+		clickOnElement(additionalInformationSectionHeader);
+	}
+
+	public void clickOnForgotPasswordBannerToggle() {
+		clickOnElement(forgotPasswordBannerToggle);
+	}
+
+	public void clickOnSignUpBannerToggle() {
+		clickOnElement(signUpBannerToggle);
+	}
+
+	public void enterConsentExpiryDuration(String value) {
+		enter(consentExpiryInput, value);
+	}
+
+	public boolean isUserInfoResponseTypeDropdownDisplayed() {
+		return isElementDisplayed(userInfoResponseTypeDropdown);
+	}
+
+	public boolean isPurposeTypeDropdownDisplayed() {
+		return isElementDisplayed(purposeTypeDropdown);
+	}
+
+	public boolean isSubmitButtonEnabled() {
+		return isElementEnabled(submitButton);
+	}
+
+	public boolean isPartnerIdFieldLabelDisplayed() {
+		return isElementDisplayed(partnerIdFieldLabel);
+	}
+
+	public boolean isPartnerTypeFieldDisplayed() {
+		return isElementDisplayed(partnerTypeFieldLabel) && isElementDisplayed(partnerTypeContext);
+	}
+
+	public boolean isPolicyGroupFieldDisplayed() {
+		return isElementDisplayed(policyGroupFieldLabel) && isElementDisplayed(policyGroupContext);
+	}
+
+	public boolean isPolicyNameFieldLabelDisplayed() {
+		return isElementDisplayed(policyNameFieldLabel);
+	}
+
+	public boolean isOidcClientNameFieldLabelDisplayed() {
+		return isElementDisplayed(oidcClientNameFieldLabel);
+	}
+
+	public boolean isPublicKeyFieldLabelDisplayed() {
+		return isElementDisplayed(publicKeyFieldLabel);
+	}
+
+	public boolean isLogoUriFieldLabelDisplayed() {
+		return isElementDisplayed(logoUriFieldLabel);
+	}
+
+	public boolean isRedirectUriFieldLabelDisplayed() {
+		return isElementDisplayed(redirectUriFieldLabel);
+	}
+
+	public boolean isGrantTypeFieldLabelDisplayed() {
+		return isElementDisplayed(grantTypeFieldLabel);
+	}
+
+	public String getFirstOidcClientRowName() {
+		return getTextFromLocator(firstOidcClientRowName).trim();
+	}
+
+	public String getFirstOidcClientRowStatus() {
+		return getTextFromLocator(firstOidcClientRowStatus).trim();
+	}
+
+	public void clickOnGrantTypeDropdown() {
+		clickOnElement(grantTypeDropdown);
+	}
+
+	public void clickOnAddClientNameLanguageButton() {
+		clickOnElement(addClientNameLanguageButton);
+	}
+
+	public void clickOnClientNameLanguageDropdownRow1() {
+		clickOnElement(clientNameLanguageDropdownRow1);
+	}
+
+	public void clickOnClientNameLanguageDropdownRow2() {
+		clickOnElement(clientNameLanguageDropdownRow2);
+	}
+
+	public boolean isEnglishLanguageOptionDisplayed() {
+		return isElementDisplayed(englishLanguageOption);
+	}
+
+	public boolean isFrenchLanguageOptionDisplayed() {
+		return isElementDisplayed(frenchLanguageOption);
+	}
+
+	public boolean isArabicLanguageOptionDisplayed() {
+		return isElementDisplayed(arabicLanguageOption);
+	}
+
+	public void selectFrenchForClientNameLanguageRow2() {
+		clickOnElement(frenchLanguageOptionRow2);
+	}
+
+	public void enterClientNameForLanguageRow1(String value) {
+		enter(clientNameLanguageInputRow1, value);
+	}
+
+	public void enterClientNameForLanguageRow2(String value) {
+		enter(clientNameLanguageInputRow2, value);
+	}
+
+	public boolean isClientNameLanguageRow2Displayed() {
+		return isElementDisplayed(clientNameLanguageInputRow2);
+	}
+
+	public String getClientNameLanguageRow1SelectedText() {
+		return getTextFromLocator(clientNameLanguageDropdownRow1).trim();
+	}
+
+	public boolean isAddClientNameLanguageButtonDisplayed() {
+		return isElementDisplayed(addClientNameLanguageButton);
+	}
+
+	public String getClientNameLanguageRow1Placeholder() {
+		return getTextFromAttribute(clientNameLanguageInputRow1, "placeholder");
+	}
+
+	public boolean isEnglishLanguageOptionRow2Displayed() {
+		return isElementDisplayed(englishLanguageOptionRow2);
+	}
+
+	public boolean isFrenchLanguageOptionRow2Displayed() {
+		return isElementDisplayed(frenchLanguageOptionRow2);
+	}
+
+	public boolean isForgotPasswordBannerToggleOn() {
+		return isElementSelected(forgotPasswordBannerToggle);
+	}
+
+	public boolean isSignUpBannerToggleOn() {
+		return isElementSelected(signUpBannerToggle);
+	}
+
+	public void clickOnForgotPasswordBannerInfoIcon() {
+		clickOnElement(forgotPasswordBannerInfoIcon);
+	}
+
+	public String getForgotPasswordBannerInfoTooltipText() {
+		return getTextFromLocator(forgotPasswordBannerInfoTooltip).trim();
 	}
 
 }

@@ -1,12 +1,15 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
 import java.io.IOException;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -14,6 +17,7 @@ import org.openqa.selenium.support.FindBy;
 
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
+import io.mosip.testrig.pmpuiv2.utility.LogUtil;
 
 public class ListOfDevicesPage extends BasePage {
 
@@ -40,6 +44,24 @@ public class ListOfDevicesPage extends BasePage {
 
 	@FindBy(id = "device_list_approve_reject_option")
 	private WebElement approveRejectButton;
+
+	@FindBy(id = "reject_popup_title")
+	private WebElement rejectOnlyPopupTitle;
+
+	@FindBy(id = "reject_popup_header")
+	private WebElement rejectOnlyPopupHeader;
+
+	@FindBy(id = "reject_popup_description")
+	private WebElement rejectOnlyPopupDescription;
+
+	@FindBy(id = "reject_popup_reject_btn")
+	private WebElement rejectOnlyPopupRejectButton;
+
+	@FindBy(id = "reject_popup_close_icon")
+	private WebElement rejectOnlyPopupCloseIcon;
+
+	@FindBy(xpath = "//tr[starts-with(@id,'device_list_item')]")
+	private List<WebElement> deviceRows;
 
 	@FindBy(id = "approve_btn")
 	private WebElement approveButton;
@@ -1254,5 +1276,85 @@ public class ListOfDevicesPage extends BasePage {
 	    return isDisplayed(deviceIdColumnHeader);
 	}
 
+	public boolean isRejectOnlyPopupDisplayed() {
+		return isElementDisplayed(rejectOnlyPopupTitle);
+	}
 
+	public boolean isRejectOnlyPopupHeaderDisplayed() {
+		return isElementDisplayed(rejectOnlyPopupHeader);
+	}
+
+	public boolean isRejectOnlyPopupDescriptionDisplayed() {
+		return isElementDisplayed(rejectOnlyPopupDescription);
+	}
+
+	public boolean isRejectOnlyPopupRejectButtonDisplayed() {
+		return isElementDisplayed(rejectOnlyPopupRejectButton);
+	}
+
+	public boolean isApproveButtonAbsentInRejectOnlyPopup() {
+		boolean present = isElementDisplayedQuick(By.id("approve_btn"), Duration.ofSeconds(5));
+		if (present) {
+			LogUtil.error("An Approve button is offered for a device that is not linked to an SBI");
+			takeScreenshot();
+		}
+		return !present;
+	}
+
+	public void clickOnRejectOnlyPopupCloseIcon() {
+		clickOnElement(rejectOnlyPopupCloseIcon);
+	}
+
+	public int findOrphanPendingDeviceRow() {
+		int linkedSbiColumn = getColumnIndex("sbiList.sbiId_header");
+		int statusColumn = getColumnIndex("devicesList.status_header");
+
+		if (linkedSbiColumn < 0 || statusColumn < 0) {
+			LogUtil.step("Linked SBI or Status column is not on this list, so no orphan device can be identified");
+			return -1;
+		}
+
+		for (int i = 0; i < deviceRows.size(); i++) {
+			try {
+				List<WebElement> cells = deviceRows.get(i).findElements(By.tagName("td"));
+				if (cells.size() <= Math.max(linkedSbiColumn, statusColumn)) {
+					continue;
+				}
+
+				String linkedSbi = cells.get(linkedSbiColumn).getText().trim();
+				String status = cells.get(statusColumn).getText().trim();
+
+				if (isUnlinked(linkedSbi) && status.equalsIgnoreCase(GlobalConstants.PENDING_FOR_APPROVAL)) {
+					LogUtil.step("Orphan pending device found at row " + (i + 1));
+					return i + 1;
+				}
+			} catch (StaleElementReferenceException e) {
+				LogUtil.step("Row went stale while scanning for an orphan device; skipping row " + (i + 1));
+			}
+		}
+		LogUtil.step("No Pending for Approval device without a linked SBI on this page");
+		return -1;
+	}
+
+	public void clickOnDeviceListActionMenu(int rowNumber) {
+		click(By.id("device_list_action_menu" + rowNumber));
+	}
+
+	public boolean isLinkedSbiColumnEmpty(int rowNumber) {
+		int linkedSbiColumn = getColumnIndex("sbiList.sbiId_header");
+		if (linkedSbiColumn < 0) {
+			LogUtil.error("Linked SBI column is not present on this list");
+			takeScreenshot();
+			return false;
+		}
+
+		String value = getTextFromLocator(By.xpath(
+				"//tr[@id='device_list_item" + rowNumber + "']/td[" + (linkedSbiColumn + 1) + "]")).trim();
+		LogUtil.step("Linked SBI value at row " + rowNumber + ": '" + value + "'");
+		return isUnlinked(value);
+	}
+
+	private boolean isUnlinked(String linkedSbiCellValue) {
+		return linkedSbiCellValue.isEmpty() || "-".equals(linkedSbiCellValue);
+	}
 }

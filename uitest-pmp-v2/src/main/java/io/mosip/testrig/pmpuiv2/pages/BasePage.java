@@ -406,6 +406,23 @@ public class BasePage {
 		}
 	}
 
+	protected boolean isElementSelected(WebElement element) {
+		LogUtil.verify("Checking if element is selected: ", element);
+		try {
+			WaitUtil.waitForVisibility(driver, element);
+			return element.isSelected();
+		} catch (StaleElementReferenceException e) {
+			LogUtil.step("Element became stale while checking selected state");
+			LogUtil.step("Page URL: " + driver.getCurrentUrl());
+			LogUtil.step("Page Title: " + driver.getTitle());
+			throw e;
+		} catch (Exception e) {
+			LogUtil.error("isElementSelected failed: " + e.getClass().getSimpleName());
+			takeScreenshot();
+			throw new AssertionError("Unable to determine selected state", e);
+		}
+	}
+
 	protected boolean isElementEnabled(By locator) {
 		LogUtil.verify("Checking if element is enabled: ", locator);
 
@@ -621,6 +638,21 @@ public class BasePage {
 				element, tolerancePx));
 	}
 
+	protected double getElementLeftEdge(WebElement element) {
+		WaitUtil.waitForVisibility(driver, element);
+		Number left = (Number) ((JavascriptExecutor) driver)
+				.executeScript("return arguments[0].getBoundingClientRect().left;", element);
+		return left.doubleValue();
+	}
+
+	protected boolean doElementsOverlap(WebElement first, WebElement second) {
+		LogUtil.verify("Checking whether two elements overlap: ", first);
+		return Boolean.TRUE.equals(((JavascriptExecutor) driver).executeScript(
+				"var a=arguments[0].getBoundingClientRect();" + "var b=arguments[1].getBoundingClientRect();"
+						+ "return !(a.right<=b.left || a.left>=b.right || a.bottom<=b.top || a.top>=b.bottom);",
+				first, second));
+	}
+
 	// True when something else sits on top of the element's centre point, e.g. an overlay.
 	protected boolean isElementCoveredAtCentre(WebElement element) {
 		LogUtil.verify("Checking if element is covered by an overlay: ", element);
@@ -634,6 +666,24 @@ public class BasePage {
 	protected int getElementCount(By locator) {
 		LogUtil.verify("Counting elements for: ", locator);
 		return driver.findElements(locator).size();
+	}
+
+	public int countElementsWithExactText(String text) {
+		return getElementCount(By.xpath("//*[normalize-space(text())=" + toXpathLiteral(text) + "]"));
+	}
+
+	private static String toXpathLiteral(String value) {
+		if (!value.contains("'")) {
+			return "'" + value + "'";
+		}
+		if (!value.contains("\"")) {
+			return "\"" + value + "\"";
+		}
+		return "concat('" + value.replace("'", "',\"'\",'") + "')";
+	}
+
+	public boolean isTextPresentOnPage(String text) {
+		return countElementsWithExactText(text) > 0;
 	}
 
 	public void scrollToEndPage() {
@@ -736,6 +786,17 @@ public class BasePage {
 	protected WebElement waitAndFindElement(By locator) {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(ConfigManager.getTimeout()));
 		return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+	}
+
+	protected int getColumnIndex(String headerId) {
+		java.util.List<WebElement> headerCells = driver.findElements(By.xpath("//thead//th"));
+		for (int i = 0; i < headerCells.size(); i++) {
+			if (!headerCells.get(i).findElements(By.id(headerId)).isEmpty()) {
+				return i;
+			}
+		}
+		LogUtil.step("No column header found with id: " + headerId);
+		return -1;
 	}
 
 }
