@@ -14,9 +14,6 @@ import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 import io.mosip.testrig.pmpuiv2.utility.LogUtil;
 
-/**
- * Credential Partner – Upload / Re-Upload Partner Certificate.
- */
 @Test(dependsOnGroups = { "PartnerAdminCreation" }, groups = { "CredentialPartnerCertificateTest" })
 public class CredentialPartnerCertificateTest extends BaseClass {
 
@@ -1052,10 +1049,6 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 				GlobalConstants.isInvalidCertificateFormatErrorMessageDisplayed);
 	}
 
-	/**
-	 * MOSIP-44516: Verify Re-Upload with same certificate file.
-	 * Expected: Allow replacement and refresh certificate details.
-	 */
 	@Test(priority = 14, description = "Verify Re-Upload with same certificate file", dependsOnMethods = "verifyValidPartnerCertificateUploadIsSuccessful")
 	public void verifyReUploadWithSameCertificateFile() {
 

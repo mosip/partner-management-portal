@@ -40,7 +40,7 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(id = "upload_certificate_success_msg")
 	private WebElement successMessage;
 
-	@FindBy(xpath = "//*[text()='Partner certificate for Device Provider is uploaded successfully.']")
+	@FindBy(xpath = "//p[text()='Partner certificate for Device Provider is uploaded successfully.']")
 	private WebElement deviceProviderSuccessMessage;
 
 	@FindBy(xpath = "//p[contains(text(), 'Partner certificate for FTM Chip Provider is uploaded successfully.')]")
@@ -82,10 +82,10 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(xpath = "//p[contains(text(), 'Please select all fields and upload')]")
 	private WebElement ReUploadPartnerCertificateSubText;
 
-	@FindBy(xpath = "//*[text()='Originally uploaded CA signed certificate downloaded successfully.']")
+	@FindBy(xpath = "//p[text()='Originally uploaded CA signed certificate downloaded successfully.']")
 	private WebElement originalSignedCertDownloadedPopup;
 
-	@FindBy(xpath = "//*[text()='MOSIP signed certificate downloaded successfully.']")
+	@FindBy(xpath = "//p[text()='MOSIP signed certificate downloaded successfully.']")
 	private WebElement mosipSignedCertPopup;
 
 	@FindBy(xpath = "//label[text()='Partner Domain Type']")
@@ -665,7 +665,6 @@ public class PartnerCertificatePage extends BasePage {
 		return isElementDisplayed(downloadButton);
 	}
 
-	/** Fast check for absence assertions when no partner certificate exists yet. */
 	public boolean isDownloadButtonPresent() {
 		return getElementCount(By.id("download_btn1")) > 0;
 	}
@@ -679,7 +678,6 @@ public class PartnerCertificatePage extends BasePage {
 		return isElementDisplayed(partnerCertificateReuploadButton);
 	}
 
-	/** Fast check for absence assertions when no partner certificate exists yet. */
 	public boolean isPartnerCertificateReuploadButtonPresent() {
 		return getElementCount(By.id("partner_certificate_re_upload_btn1")) > 0;
 	}
@@ -821,13 +819,14 @@ public class PartnerCertificatePage extends BasePage {
 	}
 
 	public boolean VerifyTheStatusWithAsendingOrder() {
-		WebElement first = driver.findElement(By.xpath("//*[@id='ftm_list_item1']//*[contains(text(), 'Approved')]"));
+		WebElement first = driver
+				.findElement(By.xpath("//tr[@id='ftm_list_item1']//td[contains(text(), 'Approved')]"));
 		return isElementDisplayed(first);
 	}
 
 	public boolean VerifyTheStatusWithDesendingOrder() {
-		WebElement first = driver
-				.findElement(By.xpath("//*[@id='ftm_list_item1']//*[contains(text(), 'Pending For Approval')]"));
+		WebElement first = driver.findElement(
+				By.xpath("//tr[@id='ftm_list_item1']//td[contains(text(), 'Pending For Approval')]"));
 		return isElementDisplayed(first);
 	}
 
@@ -855,7 +854,6 @@ public class PartnerCertificatePage extends BasePage {
 		return getTextFromLocator(partnerCertificateFormatText).trim();
 	}
 
-	/** Combined display text shown in the certificate upload section. */
 	public String getCertificateUploadSectionDisplayText() {
 		return getUploadPopupSelectCertificateText() + ". " + getUploadPopupCertificateFormatText();
 	}
@@ -1596,7 +1594,6 @@ public class PartnerCertificatePage extends BasePage {
 		return getTextFromAttribute(partnerTypeContext, "value");
 	}
 
-	/** Partner type shown on the Partner Certificates list view card. */
 	public String getPartnerTypeFromListView() {
 		return getTextFromLocator(listViewPartnerTypeContext).trim();
 	}
