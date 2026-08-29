@@ -11,8 +11,6 @@ import org.openqa.selenium.support.FindBy;
 
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
-import io.mosip.testrig.pmpuiv2.utility.LogUtil;
-import io.mosip.testrig.pmpuiv2.utility.WaitUtil;
 
 public class PartnerCertificatePage extends BasePage {
 
