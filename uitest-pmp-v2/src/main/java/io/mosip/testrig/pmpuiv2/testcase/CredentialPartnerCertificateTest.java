@@ -37,8 +37,9 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 		partnerCertificatePage.clickOnpartnerDomainSelectorDropdown();
 		partnerCertificatePage.clickOnPartnerDomainSelectorDropdownOptionAuth();
 		partnerCertificatePage.uploadCertificateRootCa();
+		partnerCertificatePage.waitForAdminTrustCertificateReadyToSubmit();
 		partnerCertificatePage.clickonSubmitButtonForAdmin();
-		partnerCertificatePage.clickOnGoBackButton();
+		partnerCertificatePage.clickOnGoBackAfterAdminTrustCertificateSubmit();
 
 		partnerCertificatePage.clickOnIntermediateCACertTab();
 		assertTrue(partnerCertificatePage.isIntermediateUploadTrustCertificateButtonDisplayed(),
@@ -47,8 +48,9 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 		partnerCertificatePage.clickOnpartnerDomainSelectorDropdown();
 		partnerCertificatePage.clickOnPartnerDomainSelectorDropdownOptionAuth();
 		partnerCertificatePage.uploadCertificateSubCa();
+		partnerCertificatePage.waitForAdminTrustCertificateReadyToSubmit();
 		partnerCertificatePage.clickonSubmitButtonForAdmin();
-		partnerCertificatePage.clickOnGoBackButton();
+		partnerCertificatePage.clickOnGoBackAfterAdminTrustCertificateSubmit();
 
 		LogUtil.step("Register Credential Partner user");
 		logoutFromPartner();
@@ -1230,7 +1232,7 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 		loginAsCredentialPartnerAndOpenCertificatePopup();
 
 		LogUtil.step("Upload certificate signed by a CA not present for AUTH domain and submit");
-		partnerCertificatePage.uploadCertificateForAnotherOrg();
+		partnerCertificatePage.uploadPartnerCertificateWithMissingCa();
 		assertTrue(partnerCertificatePage.isFetchCertificateSuccessMessageDisplayed(),
 				GlobalConstants.isRootCaIntermediateCaNotFoundErrorDisplayed);
 		partnerCertificatePage.clickOnSubmitButton();
