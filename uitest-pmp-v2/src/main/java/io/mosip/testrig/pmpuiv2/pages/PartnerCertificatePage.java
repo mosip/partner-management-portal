@@ -35,6 +35,9 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(id = "upload_popup_selecting_file")
 	private WebElement selectingFileFetchingMsg;
 
+	@FindBy(id = "upload_popup_cancel_file")
+	private WebElement uploadPopupCancelFileButton;
+
 	@FindBy(id = "upload_certificate_success_msg")
 	private WebElement successMessage;
 
@@ -620,6 +623,36 @@ public class PartnerCertificatePage extends BasePage {
 
 	public boolean isCertificateUploadFetchingMsgDisplayed() {
 		return isElementDisplayed(selectingFileFetchingMsg);
+	}
+
+	public String getCertificateUploadFetchingMessage() {
+		return getTextFromLocator(selectingFileFetchingMsg).trim();
+	}
+
+	public boolean isCertificateFetchProgressIndicatorDisplayed() {
+		return isElementDisplayedQuick(By.cssSelector("svg.animate-spin"), Duration.ofSeconds(4));
+	}
+
+	public boolean isUploadPopupCancelFileButtonDisplayed() {
+		return isElementDisplayed(uploadPopupCancelFileButton);
+	}
+
+	public boolean isUploadPopupCancelFileButtonEnabled() {
+		return isElementEnabled(uploadPopupCancelFileButton);
+	}
+
+	public void clickOnUploadPopupCancelFileButton() {
+		clickOnElement(uploadPopupCancelFileButton);
+	}
+
+	public String getCertificateFileInputAcceptAttribute() {
+		return uploadFile.getAttribute("accept");
+	}
+
+	public boolean isOnlyCerAndPemAcceptedByFileInput() {
+		String accept = getCertificateFileInputAcceptAttribute();
+		return accept != null && accept.contains(".cer") && accept.contains(".pem")
+				&& !accept.toLowerCase().contains(".pdf") && !accept.toLowerCase().contains(".jpg");
 	}
 
 	public void uploadCertificateRootCa() {

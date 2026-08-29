@@ -1113,6 +1113,198 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 				GlobalConstants.isSubmitEnabledAfterSuccessfulCertificateFetch);
 	}
 
+	@Test(priority = 28, description = "Verify only .cer and .pem files are visible by default", dependsOnMethods = "registerCredentialPartnerForCertificateFlow")
+	public void verifyOnlyCerAndPemFilesAreVisibleByDefault() {
+
+		loginAsCredentialPartnerAndOpenCertificatePopup();
+
+		LogUtil.step("Verify file input accepts only .cer and .pem by default");
+		assertTrue(partnerCertificatePage.isCertificateFileInputConfiguredForLocalFileBrowser(),
+				GlobalConstants.isOnlyCerAndPemFilesAcceptedByDefault);
+		assertTrue(partnerCertificatePage.isOnlyCerAndPemAcceptedByFileInput(),
+				GlobalConstants.isOnlyCerAndPemFilesAcceptedByDefault);
+		String accept = partnerCertificatePage.getCertificateFileInputAcceptAttribute();
+		assertEquals(accept, ".cer,.pem", GlobalConstants.isOnlyCerAndPemFilesAcceptedByDefault);
+	}
+
+	@Test(priority = 29, description = "Verify upload of unsupported file format", dependsOnMethods = "registerCredentialPartnerForCertificateFlow")
+	public void verifyUploadOfUnsupportedFileFormatShowsError() {
+
+		loginAsCredentialPartnerAndOpenCertificatePopup();
+
+		LogUtil.step("Select unsupported file format and verify error message");
+		partnerCertificatePage.uploadCertificateInvalidCert();
+		assertTrue(partnerCertificatePage.isInvalidFormatErrorPopupDisplayed(),
+				GlobalConstants.isUnsupportedCertificateFormatErrorOnUpload);
+		assertEquals(partnerCertificatePage.getInvalidFormatErrorMessage(),
+				GlobalConstants.INVALID_CERTIFICATE_FORMAT_ERROR_MESSAGE,
+				GlobalConstants.isUnsupportedCertificateFormatErrorOnUpload);
+	}
+
+	@Test(priority = 30, description = "Verify Submit button is disabled by default", dependsOnMethods = "registerCredentialPartnerForCertificateFlow")
+	public void verifySubmitButtonIsDisabledByDefault() {
+
+		loginAsCredentialPartnerAndOpenCertificatePopup();
+
+		LogUtil.step("Observe Submit button without selecting a certificate");
+		assertTrue(partnerCertificatePage.isCertificateUploadSubmitButtonDisabled(),
+				GlobalConstants.isSubmitButtonDisabledByDefault);
+	}
+
+	@Test(priority = 31, description = "Verify Submit button is enabled only after all required conditions are met", dependsOnMethods = "registerCredentialPartnerForCertificateFlow")
+	public void verifySubmitButtonEnabledOnlyAfterRequiredConditionsMet() {
+
+		loginAsCredentialPartnerAndOpenCertificatePopup();
+
+		LogUtil.step("Verify Submit is disabled before certificate fetch");
+		assertTrue(partnerCertificatePage.isCertificateUploadSubmitButtonDisabled(),
+				GlobalConstants.isSubmitEnabledOnlyAfterRequiredConditionsMet);
+		assertFalse(partnerCertificatePage.getPartnerDomainType().isEmpty(),
+				GlobalConstants.isSubmitEnabledOnlyAfterRequiredConditionsMet);
+
+		LogUtil.step("Upload valid certificate and verify Submit is enabled after fetch");
+		partnerCertificatePage.uploadCertificate();
+		assertTrue(partnerCertificatePage.isFetchCertificateSuccessMessageDisplayed(),
+				GlobalConstants.isSubmitEnabledOnlyAfterRequiredConditionsMet);
+		assertTrue(partnerCertificatePage.isCertificateUploadSubmitButtonEnabled(),
+				GlobalConstants.isSubmitEnabledOnlyAfterRequiredConditionsMet);
+	}
+
+	@Test(priority = 32, description = "Verify progress indicator is shown during certificate fetch", dependsOnMethods = "registerCredentialPartnerForCertificateFlow")
+	public void verifyProgressIndicatorShownDuringCertificateFetch() {
+
+		loginAsCredentialPartnerAndOpenCertificatePopup();
+
+		LogUtil.step("Select certificate and verify circular progress indicator during fetch");
+		partnerCertificatePage.uploadCertificate();
+		assertTrue(partnerCertificatePage.isCertificateFetchProgressIndicatorDisplayed()
+				|| partnerCertificatePage.isCertificateUploadFetchingMsgDisplayed(),
+				GlobalConstants.isProgressIndicatorShownDuringCertificateFetch);
+	}
+
+	@Test(priority = 33, description = "Verify fetching message is displayed", dependsOnMethods = "registerCredentialPartnerForCertificateFlow")
+	public void verifyFetchingMessageDisplayedDuringCertificateFetch() {
+
+		loginAsCredentialPartnerAndOpenCertificatePopup();
+
+		LogUtil.step("Select certificate and verify fetching message text");
+		partnerCertificatePage.uploadCertificate();
+		assertTrue(partnerCertificatePage.isCertificateUploadFetchingMsgDisplayed(),
+				GlobalConstants.isFetchingMessageDisplayedDuringCertificateFetch);
+		assertEquals(partnerCertificatePage.getCertificateUploadFetchingMessage(),
+				GlobalConstants.FETCHING_CERTIFICATE_MESSAGE,
+				GlobalConstants.isFetchingMessageDisplayedDuringCertificateFetch);
+	}
+
+	@Test(priority = 34, description = "Verify Cancel option is available during fetch", dependsOnMethods = "registerCredentialPartnerForCertificateFlow")
+	public void verifyCancelOptionAvailableDuringCertificateFetch() {
+
+		loginAsCredentialPartnerAndOpenCertificatePopup();
+
+		LogUtil.step("Select certificate and verify Cancel is available during fetch");
+		partnerCertificatePage.uploadCertificate();
+		assertTrue(partnerCertificatePage.isUploadPopupCancelFileButtonDisplayed(),
+				GlobalConstants.isCancelOptionAvailableDuringCertificateFetch);
+		assertTrue(partnerCertificatePage.isUploadPopupCancelFileButtonEnabled(),
+				GlobalConstants.isCancelOptionAvailableDuringCertificateFetch);
+	}
+
+	@Test(priority = 35, description = "Verify Remove option is displayed after fetch", dependsOnMethods = "registerCredentialPartnerForCertificateFlow")
+	public void verifyRemoveOptionDisplayedAfterCertificateFetch() {
+
+		loginAsCredentialPartnerAndOpenCertificatePopup();
+
+		LogUtil.step("Upload certificate and verify Remove option after successful fetch");
+		partnerCertificatePage.uploadCertificate();
+		assertTrue(partnerCertificatePage.isFetchCertificateSuccessMessageDisplayed(),
+				GlobalConstants.isRemoveOptionDisplayedAfterCertificateFetch);
+		assertTrue(partnerCertificatePage.isCertificateRemoveButtonDisplayed(),
+				GlobalConstants.isRemoveOptionDisplayedAfterCertificateFetch);
+		assertTrue(partnerCertificatePage.isRemoveCertificateCardDisplayed(),
+				GlobalConstants.isRemoveOptionDisplayedAfterCertificateFetch);
+	}
+
+	@Test(priority = 36, description = "Verify error when CA certificate is not present in system", dependsOnMethods = "registerCredentialPartnerForCertificateFlow")
+	public void verifyErrorWhenCaCertificateNotPresentInSystem() {
+
+		loginAsCredentialPartnerAndOpenCertificatePopup();
+
+		LogUtil.step("Upload certificate signed by a CA not present for AUTH domain and submit");
+		partnerCertificatePage.uploadCertificateForAnotherOrg();
+		assertTrue(partnerCertificatePage.isFetchCertificateSuccessMessageDisplayed(),
+				GlobalConstants.isRootCaIntermediateCaNotFoundErrorDisplayed);
+		partnerCertificatePage.clickOnSubmitButton();
+		assertTrue(partnerCertificatePage.isNoRootCertDisplayed(),
+				GlobalConstants.isRootCaIntermediateCaNotFoundErrorDisplayed);
+	}
+
+	@Test(priority = 37, description = "Verify existing certificate is replaced during re-upload", dependsOnMethods = "verifyValidPartnerCertificateUploadIsSuccessful")
+	public void verifyExistingCertificateIsReplacedDuringReUpload() {
+
+		dashboardPage = new DashboardPage(driver);
+		loginPage = new LoginPage(driver);
+		partnerCertificatePage = new PartnerCertificatePage(driver);
+
+		LogUtil.step("Login to the PMS Portal as Credential Partner");
+		dashboardPage.clickOnProfileDropdown();
+		loginPage = dashboardPage.clickOnLogoutButton();
+		assertTrue(loginPage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
+		loginPage.enterUserName(GlobalConstants.CREDENTIAL_PARTNER_ID);
+		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
+		loginPage.clickOnLoginButton();
+		assertTrue(dashboardPage.isWelcomeMessageDisplayed(), GlobalConstants.isWelcomeMessageDisplayed);
+
+		LogUtil.step("Navigate to Partner Certificate and click Re-Upload");
+		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
+				GlobalConstants.isPartnerCertificateTitleDisplayed);
+		dashboardPage.clickOnPartnerCertificateTitle();
+		assertTrue(partnerCertificatePage.isPartnerCertificatePageDisplayed(),
+				GlobalConstants.isPartnerCertificatePageDisplayed);
+		assertTrue(partnerCertificatePage.isPartnerCertificateReuploadButtonDisplayed(),
+				GlobalConstants.isPartnerCertificateReplacedOnReUpload);
+		partnerCertificatePage.clickOnPartnerCertificateReuploadButton();
+		assertTrue(partnerCertificatePage.isReUploadPartnerCertificateTextDisplayed(),
+				GlobalConstants.isPartnerCertificateReplacedOnReUpload);
+
+		LogUtil.step("Upload a new valid certificate and submit");
+		partnerCertificatePage.uploadCertificate();
+		assertTrue(partnerCertificatePage.isUploadedCertificateNameDisplayed(),
+				GlobalConstants.isUploadedCertificateNameDisplayed);
+		partnerCertificatePage.clickOnSubmitButton();
+		assertTrue(partnerCertificatePage.isSuccessMessageDisplayed(),
+				GlobalConstants.isPartnerCertificateReplacedOnReUpload);
+		partnerCertificatePage.clickOncertificateUploadCloseButton();
+
+		LogUtil.step("Verify only latest certificate remains active in list view");
+		assertTrue(partnerCertificatePage.isPartnerCertificateReuploadButtonDisplayed(),
+				GlobalConstants.isPartnerCertificateReplacedOnReUpload);
+		assertTrue(partnerCertificatePage.isDownloadButtonDisplayed(),
+				GlobalConstants.isPartnerCertificateReplacedOnReUpload);
+	}
+
+	private void loginAsCredentialPartnerAndOpenCertificatePopup() {
+		dashboardPage = new DashboardPage(driver);
+		loginPage = new LoginPage(driver);
+		partnerCertificatePage = new PartnerCertificatePage(driver);
+
+		LogUtil.step("Login to the PMS Portal as Credential Partner");
+		dashboardPage.clickOnProfileDropdown();
+		loginPage = dashboardPage.clickOnLogoutButton();
+		assertTrue(loginPage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
+		loginPage.enterUserName(GlobalConstants.CREDENTIAL_PARTNER_ID);
+		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
+		loginPage.clickOnLoginButton();
+		assertTrue(dashboardPage.isWelcomeMessageDisplayed(), GlobalConstants.isWelcomeMessageDisplayed);
+
+		LogUtil.step("Navigate to Partner Certificate list view and open Upload/Re-Upload popup");
+		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
+				GlobalConstants.isPartnerCertificateTitleDisplayed);
+		dashboardPage.clickOnPartnerCertificateTitle();
+		assertTrue(partnerCertificatePage.isCertificateListViewDisplayed(),
+				GlobalConstants.isPartnerCertificatePageDisplayed);
+		openUploadOrReUploadPopup();
+	}
+
 	private void openUploadOrReUploadPopup() {
 		if (partnerCertificatePage.isUploadButtonPresent()) {
 			partnerCertificatePage.clickOnUploadButton();
