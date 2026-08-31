@@ -87,6 +87,7 @@ public class PartnerAdminCreation extends BaseClass {
 		partnerCertificatePage.clickOnDeviceInPartnerDomainSelectorDropdown();
 
 		partnerCertificatePage.uploadCertificateRootCa();
+		partnerCertificatePage.waitForAdminTrustCertificateReadyToSubmit();
 		partnerCertificatePage.clickonSubmitButtonForAdmin();
 		assertTrue(partnerCertificatePage.isUploadedSuccessfullyMessageDisplayed(),
 				GlobalConstants.isUploadedSuccessfullyMessageDisplayed);
@@ -100,8 +101,10 @@ public class PartnerAdminCreation extends BaseClass {
 		partnerCertificatePage.clickOnpartnerDomainSelectorDropdown();
 		partnerCertificatePage.clickOnDeviceInPartnerDomainSelectorDropdown();
 		partnerCertificatePage.uploadCertificateSubCa();
+		partnerCertificatePage.waitForAdminTrustCertificateReadyToSubmit();
 		partnerCertificatePage.clickonSubmitButtonForAdmin();
-		partnerCertificatePage.clickOnGoBackButton();
+		// Intermediate CA may already exist in shared QA env; leave form and continue either way.
+		partnerCertificatePage.clickOnGoBackAfterAdminTrustCertificateSubmit();
 		dashboardPage.clickOnProfileDropdown();
 		assertTrue(dashboardPage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
 		dashboardPage.clickOnLogoutButton();

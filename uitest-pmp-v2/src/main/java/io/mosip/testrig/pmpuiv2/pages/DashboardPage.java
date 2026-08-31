@@ -239,6 +239,18 @@ public class DashboardPage extends BasePage {
 	}
 
 	public boolean isWelcomeMessageDisplayed() {
+		// Post-consent / post-login dashboard can show LoadingIcon briefly; poll through it.
+		long deadline = System.currentTimeMillis() + Duration.ofSeconds(45).toMillis();
+		while (System.currentTimeMillis() < deadline) {
+			try {
+				if (isElementDisplayedQuick(By.id("welcome_msg"), Duration.ofSeconds(2))) {
+					return true;
+				}
+			} catch (Exception e) {
+				io.mosip.testrig.pmpuiv2.utility.LogUtil
+						.step("Transient error while waiting for welcome message: " + e.getClass().getSimpleName());
+			}
+		}
 		return isElementDisplayed(welcomeMessage);
 	}
 
