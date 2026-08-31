@@ -35,17 +35,6 @@ import org.bouncycastle.util.io.pem.PemWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * Generates fresh Root CA / Intermediate CA / partner-leaf certificate chains at
- * runtime for every PMP UI certificate-upload scenario (Auth, Device, FTM, MISP,
- * deactivated-user, policy-admin, policy-user), mirroring how the API automation
- * suite (apitest-commons) generates certificates on every run instead of relying
- * on pre-committed, periodically-stale .cer files.
- *
- * The Subject DN of every generated certificate matches what PartnerCertificatePage
- * already asserts against (e.g. "CN=CA,OU=CA,O=CA,L=aa,ST=aa,C=aa"), so only the
- * file contents refresh - no test-case or page-object changes are required.
- */
 public class CertificateGenerationUtil {
 
 	private static final Logger logger = LoggerFactory.getLogger(CertificateGenerationUtil.class);
@@ -68,11 +57,6 @@ public class CertificateGenerationUtil {
 		}
 	}
 
-	/**
-	 * Regenerates every certificate file consumed by PartnerCertificatePage. Called
-	 * once per test run from TestRunner so each run starts with fresh, valid (or,
-	 * for the negative-test files, deliberately expired) certificates on disk.
-	 */
 	public static void generateAllCertificates() {
 		Instant now = Instant.now();
 
@@ -88,13 +72,6 @@ public class CertificateGenerationUtil {
 		generateChain(rootName("CA"), intermediateName("SUBCA"), leafName("AABBCC"), "deactivateUserRootCA.cer",
 				"deactivateUserIntermediateCA.cer", "deactivateUserClient.cer", now);
 
-		// Deactivated-FTM-partner scenario needs its own FTM-domain Root/Intermediate CA:
-		// FtmPartnerCreation and DeactivateFtmPartnerCreation both only depend on
-		// PartnerAdminCreation, so they run concurrently under the parallel="classes"
-		// suite. Reusing the shared RootCA.cer/IntermediateCA.cer for FTM here made the
-		// two classes race to upload identical CA bytes to the same domain - whichever
-		// lost got "The certificate already exists" and timed out on the confirmation
-		// screen. Giving this flow its own chain removes the collision.
 		generateRootAndIntermediateOnly(rootName("CA"), intermediateName("SUBCA"), "deactivateFtmRootCA.cer",
 				"deactivateFtmIntermediateCA.cer", now);
 
