@@ -10,6 +10,8 @@ import org.openqa.selenium.support.FindBy;
 public class PoliciesPage extends BasePage {
 
 	private static final Duration REQUEST_POLICY_OUTCOME_TIMEOUT = Duration.ofSeconds(5);
+	private static final By MAP_BIOMETRIC_EXTRACTOR_OPTION = By.id("policy_list_map_biometric_extractor");
+	private static final By MAP_CREDENTIAL_TYPE_OPTION = By.id("policy_list_map_credential_type");
 
 	@FindBy(id = "title_back_icon")
 	private WebElement policiesTitle;
@@ -751,4 +753,37 @@ public class PoliciesPage extends BasePage {
 		clickOnElement(mispPolicyTab);
 	}
 
+	// ------------------------------------------------------------------
+	// Credential Partner action menu (MOSIP-44660)
+	// ------------------------------------------------------------------
+
+	/** Opens the three dot action menu of the policy request in the given row. */
+	public void clickOnActionMenuByRow(int rowNumber) {
+		click(By.id("policy_list_view" + rowNumber));
+	}
+
+	public boolean isMapCredentialTypeOptionDisplayed() {
+		return isDisplayed(MAP_CREDENTIAL_TYPE_OPTION);
+	}
+
+	/**
+	 * The action menu greys out an option it will not act on by adding
+	 * pointer-events-none, so the class is what tells enabled from disabled here.
+	 */
+	public boolean isMapCredentialTypeOptionDisabled() {
+		return getTextFromAttribute(MAP_CREDENTIAL_TYPE_OPTION, "class").contains("pointer-events-none");
+	}
+
+	public void clickOnMapBiometricExtractorOption() {
+		click(MAP_BIOMETRIC_EXTRACTOR_OPTION);
+	}
+
+	public void clickOnMapCredentialTypeOption() {
+		click(MAP_CREDENTIAL_TYPE_OPTION);
+	}
+
+	public boolean isPolicyRowStatusDisplayed(String policyName, String status) {
+		return isDisplayed(By.xpath("//td[normalize-space()='" + policyName + "']/parent::tr"
+				+ "[.//*[normalize-space()='" + status + "']]"));
+	}
 }

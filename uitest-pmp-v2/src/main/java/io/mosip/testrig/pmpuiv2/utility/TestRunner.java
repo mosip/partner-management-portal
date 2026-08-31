@@ -138,6 +138,15 @@ public class TestRunner {
 			XmlClass mispPolicyTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.MispPolicyTest");
 			XmlClass abisPartnerTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.AbisPartnerTest");
 			XmlClass mispServicesTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.MispServicesTest");
+			XmlClass credentialPartnerCreation = new XmlClass(
+					"io.mosip.testrig.pmpuiv2.testcase.CredentialPartnerCreation");
+			XmlClass credentialPartnerMapCredentialTypeTest = new XmlClass(
+					"io.mosip.testrig.pmpuiv2.testcase.CredentialPartnerMapCredentialTypeTest");
+			XmlClass credentialPartnerPolicyApprovalTest = new XmlClass(
+					"io.mosip.testrig.pmpuiv2.testcase.CredentialPartnerPolicyApprovalTest");
+			XmlClass manualAdjudicationApiKeyRemovalTest = new XmlClass(
+					"io.mosip.testrig.pmpuiv2.testcase.ManualAdjudicationApiKeyRemovalTest");
+			XmlClass sidePanelCoverageTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.SidePanelCoverageTest");
 
 			List<XmlClass> classes = new ArrayList<>();
 			String[] scenarioNames = ConfigManager.gettestcases().split(",");
@@ -284,6 +293,31 @@ public class TestRunner {
 					break;
 				case "MispServicesTest":
 					addClassIfAbsent(classes, partnerAdminCreation, mispPartnerTest, mispPolicyTest, mispServicesTest);
+					break;
+
+				// CREDENTIAL PARTNER FLOW
+				case "CredentialPartnerCreation":
+					addClassIfAbsent(classes, partnerAdminCreation, policyAdminAndPartnerCreation,
+							credentialPartnerCreation);
+					break;
+				case "CredentialPartnerMapCredentialTypeTest":
+					addClassIfAbsent(classes, partnerAdminCreation, authPartnerCreation, policyCreationForAuthPartner,
+							partnerPolicyMappingTest, policyAdminAndPartnerCreation, credentialPartnerCreation,
+							credentialPartnerMapCredentialTypeTest);
+					break;
+				case "CredentialPartnerPolicyApprovalTest":
+					addClassIfAbsent(classes, partnerAdminCreation, authPartnerCreation, policyCreationForAuthPartner,
+							partnerPolicyMappingTest, policyAdminAndPartnerCreation, credentialPartnerCreation,
+							credentialPartnerMapCredentialTypeTest, credentialPartnerPolicyApprovalTest);
+					break;
+
+				// MANUAL ADJUDICATION / UI LAYOUT
+				case "ManualAdjudicationApiKeyRemovalTest":
+					addClassIfAbsent(classes, partnerAdminCreation, policyAdminAndPartnerCreation,
+							manualAdjudicationApiKeyRemovalTest);
+					break;
+				case "SidePanelCoverageTest":
+					addClassIfAbsent(classes, partnerAdminCreation, sidePanelCoverageTest);
 					break;
 
 				// Unknown test name
