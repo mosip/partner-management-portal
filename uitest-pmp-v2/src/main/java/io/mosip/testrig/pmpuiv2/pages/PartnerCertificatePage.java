@@ -61,6 +61,9 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(id = "last_certificate_upload_date")
 	private WebElement lastUploadTimeAndDate;
 
+	@FindBy(id = "upload_certificate_warning_message")
+	private WebElement reUploadCertificateWarningMessage;
+
 	@FindBy(xpath = "//p[contains(text(), 'Please select all fields and upload')]")
 	private WebElement ReUploadPartnerCertificateSubText;
 
@@ -433,6 +436,9 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(id = "upload_certificate_popup_title")
 	private WebElement mispPartnerCertificatePopup;
 
+	@FindBy(id = "upload_certificate_popup_msg")
+	private WebElement uploadCertificatePopupSubtitle;
+
 	@FindBy(id = "dashboard_ftm_chip_provider_card")
 	private WebElement dashboardFtmChipProviderCardDashboard;
 
@@ -448,6 +454,15 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(id = "upload_popup_partner_domain_type_context")
 	private WebElement partnerDomainTypeContext;
 
+	@FindBy(id = "upload_popup_partner_type_label")
+	private WebElement uploadPopupPartnerTypeLabel;
+
+	@FindBy(id = "upload_popup_partner_domain_type_label")
+	private WebElement uploadPopupPartnerDomainTypeLabel;
+
+	@FindBy(id = "upload_certificate_card")
+	private WebElement uploadCertificateCard;
+
 	public PartnerCertificatePage(WebDriver driver) {
 		super(driver);
 	}
@@ -460,12 +475,84 @@ public class PartnerCertificatePage extends BasePage {
 		return isElementDisplayed(titleBackButton);
 	}
 
+	public boolean isUploadButtonDisplayed() {
+		return isElementDisplayed(uploadButton);
+	}
+
+	public boolean isUploadButtonEnabled() {
+		return isElementEnabled(uploadButton);
+	}
+
 	public void clickOnUploadButton() {
 		clickOnElement(uploadButton);
 	}
 
 	public boolean isUploadPartnerCertificatePopUpDisplayed() {
 		return isElementDisplayed(uploadPartnerCertificatePopUp);
+	}
+
+	public String getUploadCertificatePopupTitle() {
+		return getTextFromLocator(mispPartnerCertificatePopup).trim();
+	}
+
+	public String getUploadCertificatePopupSubtitle() {
+		return getTextFromLocator(uploadCertificatePopupSubtitle).trim();
+	}
+
+	public boolean isUploadCertificatePopupSubtitleDisplayed() {
+		return isElementDisplayed(uploadCertificatePopupSubtitle);
+	}
+
+	public boolean isUploadPopupPartnerTypeLabelDisplayed() {
+		return isElementDisplayed(uploadPopupPartnerTypeLabel);
+	}
+
+	public String getUploadPopupPartnerTypeLabelText() {
+		return getTextFromLocator(uploadPopupPartnerTypeLabel).trim();
+	}
+
+	public boolean isUploadPopupPartnerDomainTypeLabelDisplayed() {
+		return isElementDisplayed(uploadPopupPartnerDomainTypeLabel);
+	}
+
+	public String getUploadPopupPartnerDomainTypeLabelText() {
+		return getTextFromLocator(uploadPopupPartnerDomainTypeLabel).trim();
+	}
+
+	public boolean isPartnerTypeContextDisplayed() {
+		return isElementDisplayed(partnerTypeContext);
+	}
+
+	public boolean isPartnerDomainTypeContextDisplayed() {
+		return isElementDisplayed(partnerDomainTypeContext);
+	}
+
+	public boolean isPartnerTypeContextDisabled() {
+		return isElementDisabled(partnerTypeContext);
+	}
+
+	public boolean isPartnerTypeFieldNonEditable() {
+		boolean disabledBySelenium = isElementDisabled(partnerTypeContext);
+		boolean disabledAttributePresent = partnerTypeContext.getAttribute("disabled") != null;
+		boolean valueIsCredentialPartner = GlobalConstants.CREDENTIAL_PARTNER_TYPE_NAME
+				.equals(getPartnerType());
+		return disabledBySelenium && disabledAttributePresent && valueIsCredentialPartner;
+	}
+
+	public boolean isPartnerDomainTypeContextDisabled() {
+		return isElementDisabled(partnerDomainTypeContext);
+	}
+
+	public boolean isUploadCertificateCardDisplayed() {
+		return isElementDisplayed(uploadCertificateCard);
+	}
+
+	public boolean isCertificateUploadCancelButtonDisplayed() {
+		return isElementDisplayed(certificateUploadCancelButton);
+	}
+
+	public boolean isUploadPopupSubmitButtonDisplayed() {
+		return isElementDisplayed(submitButton);
 	}
 
 	public void uploadCertificateRootCa() {
@@ -509,6 +596,11 @@ public class PartnerCertificatePage extends BasePage {
 		return isElementDisplayed(downloadButton);
 	}
 
+	/** Fast check for absence assertions when no partner certificate exists yet. */
+	public boolean isDownloadButtonPresent() {
+		return getElementCount(By.id("download_btn1")) > 0;
+	}
+
 	// Both buttons are disabled, not hidden, for a deactivated partner.
 	public boolean isDownloadButtonEnabled() {
 		return isElementEnabled(downloadButton);
@@ -518,8 +610,21 @@ public class PartnerCertificatePage extends BasePage {
 		return isElementDisplayed(partnerCertificateReuploadButton);
 	}
 
+	/** Fast check for absence assertions when no partner certificate exists yet. */
+	public boolean isPartnerCertificateReuploadButtonPresent() {
+		return getElementCount(By.id("partner_certificate_re_upload_btn1")) > 0;
+	}
+
 	public boolean isPartnerCertificateReuploadButtonEnabled() {
 		return isElementEnabled(partnerCertificateReuploadButton);
+	}
+
+	public String getPartnerCertificateReuploadButtonText() {
+		return getTextFromLocator(partnerCertificateReuploadButton).trim();
+	}
+
+	public String getInvalidFormatErrorMessage() {
+		return getTextFromLocator(InvalidFormatErrorPopup).trim();
 	}
 
 	public String getCertificateUploadedDateInPartnerPortal() {
@@ -818,10 +923,15 @@ public class PartnerCertificatePage extends BasePage {
 	}
 
 	public boolean isLastCertificateUploadDateDisplayed() {
-		String expectedDate = PmpTestUtil.todayDateWithoutZeroPadder;
-		String xpath = "//p[contains(., 'Last certificate was uploaded on') and contains(., '" + expectedDate + "')]";
-		WebElement uploadDate = driver.findElement(By.xpath(xpath));
-		return isElementDisplayed(uploadDate);
+		return isElementDisplayed(lastUploadTimeAndDate);
+	}
+
+	public boolean isReUploadCertificateWarningMessageDisplayed() {
+		return isElementDisplayed(reUploadCertificateWarningMessage);
+	}
+
+	public String getReUploadCertificateWarningMessage() {
+		return getTextFromLocator(reUploadCertificateWarningMessage);
 	}
 
 	public boolean isUploadedCertificateNameDisplayed() {
