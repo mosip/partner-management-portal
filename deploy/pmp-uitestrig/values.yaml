@@ -3,8 +3,8 @@ modules:
     enabled: true
     image:
       registry: docker.io
-      repository: mosipqa/uitest-pmp
-      tag: 1.2.2.x
+      repository: mosipid/uitest-pmp
+      tag: 1.2.2.4
 
   - name: admin-ui
     enabled: false
