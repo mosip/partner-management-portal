@@ -2,7 +2,7 @@ apiVersion: v2
 name: pmp-ui
 description: A Helm chart for MOSIP pmp UI module
 type: application
-version: 12.2.4-develop
+version: 12.2.2
 appVersion: ""
 dependencies:
   - name: common
