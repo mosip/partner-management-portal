@@ -34,7 +34,7 @@ public class DeactivateFtmPartnerCreation extends BaseClass {
 		partnerCertificatePage.clickOnRootUploadTrustCertificateButtonInAdmin();
 		partnerCertificatePage.clickOnpartnerDomainSelectorDropdown();
 		partnerCertificatePage.clickOnPartnerDomainSelectorDropdownOptionFtm();
-		partnerCertificatePage.uploadCertificateRootCa();
+		partnerCertificatePage.uploadDeactivateFtmRootCaCert();
 		partnerCertificatePage.clickonSubmitButtonForAdmin();
 		assertTrue(partnerCertificatePage.isUploadedSuccessfullyMessageDisplayed(),
 				GlobalConstants.isUploadedSuccessfullyMessageDisplayed);
@@ -46,7 +46,7 @@ public class DeactivateFtmPartnerCreation extends BaseClass {
 		partnerCertificatePage.clickOnIntermediateUploadTrustCertificateButtonInAdmin();
 		partnerCertificatePage.clickOnpartnerDomainSelectorDropdown();
 		partnerCertificatePage.clickOnPartnerDomainSelectorDropdownOptionFtm();
-		partnerCertificatePage.uploadCertificateSubCa();
+		partnerCertificatePage.uploadDeactivateFtmIntermediateCaCert();
 		partnerCertificatePage.clickonSubmitButtonForAdmin();
 		partnerCertificatePage.clickOnGoBackButton();
 

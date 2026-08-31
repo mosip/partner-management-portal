@@ -1294,6 +1294,14 @@ public class PartnerCertificatePage extends BasePage {
 		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "deactivateUserIntermediateCA.cer"));
 	}
 
+	public void uploadDeactivateFtmRootCaCert() {
+		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "deactivateFtmRootCA.cer"));
+	}
+
+	public void uploadDeactivateFtmIntermediateCaCert() {
+		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "deactivateFtmIntermediateCA.cer"));
+	}
+
 	public void uploadDeactivateUserClientCertificate() {
 		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "deactivateUserClient.cer"));
 	}

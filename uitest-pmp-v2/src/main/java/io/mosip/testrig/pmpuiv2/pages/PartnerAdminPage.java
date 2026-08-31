@@ -835,7 +835,16 @@ public class PartnerAdminPage extends BasePage {
 		throw new RuntimeException("Column still stale after " + STALE_READ_RETRY + " retries: " + locator);
 	}
 
+	private static final By ANY_COLUMN_SORT_ICON = By
+			.xpath("//th//svg[contains(@id,'_asc_icon') or contains(@id,'_desc_icon')]");
+
+	// The row list finishes loading (isPartnerListLoaded) before the header's sort-icon
+	// controls finish painting, so counting immediately after can race and read 0.
+	// This waits for the header controls generally (any column's icon), then counts the
+	// requested column - a column genuinely without icons (e.g. Email Address) still
+	// resolves quickly since other columns' icons satisfy the wait.
 	public int getSortIconCountForColumn(String columnName) {
+		isElementDisplayedQuick(ANY_COLUMN_SORT_ICON, LIST_LOAD_TIMEOUT);
 		return getElementCount(By.xpath("//div[text()='" + columnName + "']/ancestor::th[1]"
 				+ "//svg[contains(@id,'_asc_icon') or contains(@id,'_desc_icon')]"));
 	}
