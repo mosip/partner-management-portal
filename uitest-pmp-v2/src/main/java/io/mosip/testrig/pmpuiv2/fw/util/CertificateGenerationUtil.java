@@ -42,6 +42,10 @@ public class CertificateGenerationUtil {
 	private static final String SIGNATURE_ALGORITHM = "SHA256withRSA";
 	private static final String CERT_FOLDER = "pmp_uiv2_cert";
 
+	// MOSIP PMS rejects future-dated certificates. Backdating notBefore protects against
+	// the validator's clock running slightly behind the testrig host's clock.
+	private static final long CLOCK_SKEW_ALLOWANCE_MINUTES = 5;
+
 	private CertificateGenerationUtil() {
 	}
 
@@ -87,8 +91,8 @@ public class CertificateGenerationUtil {
 		X500Name foreignDn = new X500NameBuilder(BCStyle.INSTANCE).addRDN(BCStyle.C, "IN").addRDN(BCStyle.ST, "Karantaka")
 				.addRDN(BCStyle.L, "Bangalore").addRDN(BCStyle.O, "MOSIPTEST").addRDN(BCStyle.CN, "mosiptest.org")
 				.build();
-		generateStandaloneSelfSigned(foreignDn, Date.from(now), Date.from(now.plus(365L * 100, ChronoUnit.DAYS)),
-				"FTM_ca.cer");
+		generateStandaloneSelfSigned(foreignDn, Date.from(now.minus(CLOCK_SKEW_ALLOWANCE_MINUTES, ChronoUnit.MINUTES)),
+				Date.from(now.plus(365L * 100, ChronoUnit.DAYS)), "FTM_ca.cer");
 
 		// Deliberately expired Root CA for negative validity tests
 		X500Name expiredDn = rootName("expired");
@@ -114,9 +118,9 @@ public class CertificateGenerationUtil {
 
 	private static void generateChain(X500Name rootDn, X500Name interDn, X500Name leafDn, String rootFile,
 			String interFile, String leafFile, Instant now) {
-		Date rootNotBefore = Date.from(now);
+		Date rootNotBefore = Date.from(now.minus(CLOCK_SKEW_ALLOWANCE_MINUTES, ChronoUnit.MINUTES));
 		Date rootNotAfter = Date.from(now.plus(365L * 5, ChronoUnit.DAYS));
-		Date childNotBefore = Date.from(now);
+		Date childNotBefore = Date.from(now.minus(CLOCK_SKEW_ALLOWANCE_MINUTES, ChronoUnit.MINUTES));
 		Date childNotAfter = Date.from(now.plus(365L * 3, ChronoUnit.DAYS));
 
 		GeneratedCert root = generateSelfSignedCa(rootDn, rootNotBefore, rootNotAfter);
@@ -131,9 +135,9 @@ public class CertificateGenerationUtil {
 
 	private static void generateRootAndIntermediateOnly(X500Name rootDn, X500Name interDn, String rootFile,
 			String interFile, Instant now) {
-		Date rootNotBefore = Date.from(now);
+		Date rootNotBefore = Date.from(now.minus(CLOCK_SKEW_ALLOWANCE_MINUTES, ChronoUnit.MINUTES));
 		Date rootNotAfter = Date.from(now.plus(365L * 5, ChronoUnit.DAYS));
-		Date childNotBefore = Date.from(now);
+		Date childNotBefore = Date.from(now.minus(CLOCK_SKEW_ALLOWANCE_MINUTES, ChronoUnit.MINUTES));
 		Date childNotAfter = Date.from(now.plus(365L * 3, ChronoUnit.DAYS));
 
 		GeneratedCert root = generateSelfSignedCa(rootDn, rootNotBefore, rootNotAfter);
