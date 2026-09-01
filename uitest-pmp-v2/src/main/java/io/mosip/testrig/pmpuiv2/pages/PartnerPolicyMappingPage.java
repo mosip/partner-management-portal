@@ -1174,4 +1174,9 @@ public class PartnerPolicyMappingPage extends BasePage {
 		return isElementDisplayed(approveRejectPopupSubTitle);
 	}
 
+	/** True when the policy linkage row for the given policy name shows the given status. */
+	public boolean isPolicyRowStatusDisplayed(String policyName, String status) {
+		return isDisplayed(By.xpath("//td[normalize-space()='" + policyName + "']/parent::tr"
+				+ "[.//*[normalize-space()='" + status + "']]"));
+	}
 }

@@ -1855,4 +1855,89 @@ public class GlobalConstants {
 	public static final String isMispPartnerFilterApplied = "Verify the MISP Partner type filter has been applied before reading statuses";
 	public static final String isFilteredRowPartnerTypeMisp = "Verify every filtered row's Partner Type is MISP Partner";
 
+	// ------------------------------------------------------------------
+	// Credential Partner - Map Credential Type (MOSIP-44660)
+	// ------------------------------------------------------------------
+	public static final String CREDENTIAL_PARTNER_USER = "pmpui-credential";
+	public static final String CREDENTIAL_PARTNER = "Credential_Partner";
+	public static final String CREDENTIAL_PARTNER_TYPE_VALUE = "CREDENTIAL_PARTNER";
+	public static final String CREDENTIAL_PARTNER_ADDRESS = "credentialaddress";
+	public static final String CREDENTIAL_PARTNER_CONTACT_NUMBER = "9797979797";
+	public static final String MAP_CREDENTIAL_TYPE_TITLE = "Map Credential Type";
+	public static final String MAP_CREDENTIAL_TYPE_SUCCESS_HEADER = "Policy Requested Successfully";
+	public static final String MAP_CREDENTIAL_TYPE_SUCCESS_DESCRIPTION = "Your policy request has been successfully submitted and is pending approval from the admin.";
+	public static final String MAP_CREDENTIAL_TYPE_MANDATORY_BANNER = "For Credential Partners, mapping the policy to a Biometric Extractor Configuration and Credential Type is mandatory. If this mapping is not completed, the policy request cannot be approved. Please follow the steps on this page to complete the required mapping";
+	public static final String MAP_CREDENTIAL_TYPE_DUPLICATE_MSG = "Mapping already exists between this partner and credential type(s)";
+
+	public static final String isMapCredentialTypeOptionDisabledBeforePrerequisites = "Verify that the Map Credential Type action stays disabled until Request Policy and Map Biometric Extractor Configuration are completed.";
+	public static final String isMapCredentialTypeOptionEnabledAfterPrerequisites = "Verify that the Map Credential Type action becomes enabled once Request Policy and Map Biometric Extractor Configuration are completed.";
+	public static final String isMapBiometricExtractorPageDisplayedAfterRequest = "Verify that submitting a Credential Partner policy request lands on the Map Biometric Extractor Provider screen";
+	public static final String isMapCredentialTypePageTitleDisplayed = "Verify that the Map Credential Type page title is displayed.";
+	public static final String isMapCredentialTypeMandatoryBannerDisplayed = "Verify that the mandatory mapping banner is displayed on the Map Credential Type page.";
+	public static final String isPartnerIdFieldDisplayedInMapCredentialType = "Verify that the Partner ID field is displayed in the Map Credential Type form.";
+	public static final String isPartnerTypeFieldDisplayedInMapCredentialType = "Verify that the Partner Type field is displayed in the Map Credential Type form.";
+	public static final String isPolicyGroupFieldDisplayedInMapCredentialType = "Verify that the Policy Group field is displayed in the Map Credential Type form.";
+	public static final String isPolicyNameFieldDisplayedInMapCredentialType = "Verify that the Policy Name field is displayed in the Map Credential Type form.";
+	public static final String isBiometricModalityFieldDisplayedInMapCredentialType = "Verify that the Biometric Modality field is displayed in the Map Credential Type form.";
+	public static final String isBiometricProviderConfigFieldDisplayedInMapCredentialType = "Verify that the Biometric Provider Configuration field is displayed in the Map Credential Type form.";
+	public static final String isCredentialTypeDropdownDisplayed = "Verify that the Credential Type field is displayed as a dropdown.";
+	public static final String isClearFormButtonDisplayedInMapCredentialType = "Verify that the Clear Form button is displayed in the Map Credential Type form.";
+	public static final String isCancelButtonDisplayedInMapCredentialType = "Verify that the Cancel button is displayed in the Map Credential Type form.";
+	public static final String isSubmitButtonDisplayedInMapCredentialType = "Verify that the Submit button is displayed in the Map Credential Type form.";
+	public static final String isPartnerIdAutoPopulated = "Verify that the Partner ID field is auto-populated from the selected policy request.";
+	public static final String isPartnerTypeAutoPopulated = "Verify that the Partner Type field is auto-populated as Credential Partner.";
+	public static final String isPolicyGroupAutoPopulated = "Verify that the Policy Group field is auto-populated from the selected policy request.";
+	public static final String isPolicyNameAutoPopulated = "Verify that the Policy Name field is auto-populated from the selected policy request.";
+	public static final String isPartnerIdNotEditable = "Verify that the auto-populated Partner ID field is read only and cannot be edited.";
+	public static final String isPartnerTypeNotEditable = "Verify that the auto-populated Partner Type field is read only and cannot be edited.";
+	public static final String isPolicyGroupNotEditable = "Verify that the auto-populated Policy Group field is read only and cannot be edited.";
+	public static final String isPolicyNameNotEditable = "Verify that the auto-populated Policy Name field is read only and cannot be edited.";
+	public static final String isCredentialTypeOptionsDisplayed = "Verify that the Credential Type dropdown lists the configured credential type values.";
+	public static final String isCredentialTypeSelectable = "Verify that a value can be selected from the Credential Type dropdown.";
+	public static final String isOnlyOneCredentialTypeSelected = "Verify that selecting another value replaces the previous one so only one credential type is held per policy request.";
+	public static final String isCredentialTypeClearedAfterClearForm = "Verify that the selected Credential Type is cleared when Clear Form is clicked.";
+	public static final String isSubmitDisabledWithoutCredentialType = "Verify that the Submit button stays disabled until a Credential Type is selected.";
+	public static final String isSubmitEnabledWithCredentialType = "Verify that the Submit button becomes enabled once a Credential Type is selected.";
+	public static final String isMapCredentialTypeAcknowledgementDisplayed = "Verify that the acknowledgement screen is displayed after a successful submission.";
+	public static final String isMapCredentialTypeAcknowledgementHeaderCorrect = "Verify that the acknowledgement screen header reads Policy Requested Successfully.";
+	public static final String isMapCredentialTypeAcknowledgementDescriptionCorrect = "Verify that the acknowledgement screen description reads that the request is pending approval from the admin.";
+	public static final String isAcknowledgementGoBackButtonDisplayed = "Verify that the Go Back button is displayed on the acknowledgement screen.";
+	public static final String isAcknowledgementHomeButtonDisplayed = "Verify that the Home button is displayed on the acknowledgement screen.";
+	public static final String isRedirectedToPolicyListing = "Verify that Go Back redirects the user to the policy listing screen.";
+	public static final String isRedirectedToDashboard = "Verify that Home redirects the user to the dashboard.";
+	public static final String isDuplicateCredentialTypeRejected = "Verify that the same credential type cannot be mapped again for the same partner across policies.";
+	public static final String isPolicyStatusPendingAfterCancel = "Verify that the policy request stays in Pending For Approval after Cancel is clicked.";
+	public static final String isMapCredentialTypeOptionAvailableAfterCancel = "Verify that the Map Credential Type option is still available in the action menu after Cancel.";
+
+	// ------------------------------------------------------------------
+	// Approve / Reject policy request for Credential Partner (MOSIP-44662)
+	// ------------------------------------------------------------------
+	public static final String APPROVE_BLOCKED_BOTH_MAPPINGS_MISSING = "This policy cannot be approved as the required Biometric Extractor Provider Configuration and Credential Type mappings are incomplete.";
+	public static final String NO_BIO_EXTRACTORS_MAPPED = "No Biometric Extractor Provider Configuration has been mapped to this policy.";
+	public static final String BIO_EXTRACTOR_PROVIDER_MAPPING_SECTION = "Biometric Extractor Provider Mapping";
+	public static final String CREDENTIAL_TYPE_SECTION = "Credential Type";
+
+	public static final String isPendingPolicyRequestVisibleToAdmin = "Verify that Pending For Approval policy requests are visible to the Partner Admin.";
+	public static final String isBiometricMappingSectionDisplayedInPopup = "Verify that the Biometric Extractor Provider Mapping section is displayed in the approval popup.";
+	public static final String isCredentialTypeSectionDisplayedInPopup = "Verify that the Credential Type mapping section is displayed in the approval popup.";
+	public static final String isPolicyApprovedSuccessfully = "Verify that a fully mapped Credential Partner policy request is approved successfully.";
+	public static final String isPolicyStatusApprovedInList = "Verify that the policy request status changes to Approved in the listing page.";
+	public static final String isApprovalBlockedErrorDisplayed = "Verify that approval is blocked with an error message when the required mappings are incomplete.";
+	public static final String isPolicyStatusStillPendingAfterBlockedApproval = "Verify that the policy request stays in Pending For Approval when approval is blocked.";
+	public static final String isEmptyMappingSectionDisplayed = "Verify that the empty mapping section is displayed for an incomplete policy request.";
+
+	// ------------------------------------------------------------------
+	// Manual Adjudication - API key features removed (MOSIP-44793)
+	// ------------------------------------------------------------------
+	public static final String MANUAL_ADJUDICATION_SERVICES_CARD_TEXT = "Manual Adjudication Services";
+	public static final String isManualAdjudicationServicesCardRemoved = "Verify that the Manual Adjudication Services card is not displayed on the dashboard.";
+	public static final String isApiKeyDetailsUnavailableForManualAdjudication = "Verify that API key details cannot be viewed for a Manual Adjudication partner.";
+	public static final String isApiKeyDeactivationUnavailableForManualAdjudication = "Verify that API key deactivation is not available for a Manual Adjudication partner.";
+
+	// ------------------------------------------------------------------
+	// Side panel full screen height coverage (MOSIP-38412)
+	// ------------------------------------------------------------------
+	public static final String isSidePanelDisplayed = "Verify that the side panel is displayed on the screen.";
+	public static final String isSidePanelCoveringFullHeight = "Verify that the side panel covers the entire screen height below the header.";
+	public static final String isSidePanelCoveringFullHeightAfterScroll = "Verify that the side panel still covers the entire screen height after the page is scrolled.";
 }

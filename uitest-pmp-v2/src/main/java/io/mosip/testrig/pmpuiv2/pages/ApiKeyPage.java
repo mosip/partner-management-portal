@@ -1499,4 +1499,22 @@ public class ApiKeyPage extends BasePage {
 			return false;
 		}
 	}
+
+	// ------------------------------------------------------------------
+	// Manual Adjudication - API key features withdrawn (MOSIP-44793)
+	// ------------------------------------------------------------------
+
+	/** True when the API key list holds a row for the given partner. */
+	public boolean isApiKeyRowPresentForPartner(String partnerId) {
+		return getElementCount(By.xpath("//td[contains(normalize-space(),'" + partnerId + "')]/parent::tr")) > 0;
+	}
+
+	/** True when a row for the partner exposes a deactivate action in its menu. */
+	public boolean isApiKeyDeactivateOptionPresentForPartner(String partnerId) {
+		if (!isApiKeyRowPresentForPartner(partnerId)) {
+			return false;
+		}
+		return getElementCount(By.xpath("//td[contains(normalize-space(),'" + partnerId
+				+ "')]/parent::tr//*[contains(@id,'deactivate')]")) > 0;
+	}
 }
