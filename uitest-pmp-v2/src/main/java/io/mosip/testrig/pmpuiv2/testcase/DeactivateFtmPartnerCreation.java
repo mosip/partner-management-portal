@@ -79,7 +79,7 @@ public class DeactivateFtmPartnerCreation extends BaseClass {
 		partnerCertificatePage.clickOnUploadButton();
 		assertTrue(partnerCertificatePage.isUploadPartnerCertificatePopUpDisplayed(),
 				GlobalConstants.isUploadPartnerCertificatePopUpDisplayed);
-		partnerCertificatePage.uploadCertificate();
+		partnerCertificatePage.uploadDeactivateFtmClientCertificate();
 		partnerCertificatePage.clickOnSubmitButton();
 		assertTrue(partnerCertificatePage.isSuccessMessageForFtmCertDisplayed(),
 				GlobalConstants.isSuccessMessageDisplayed);

@@ -3,6 +3,9 @@ package io.mosip.testrig.pmpuiv2.fw.util;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigInteger;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
@@ -35,6 +38,8 @@ import org.bouncycastle.util.io.pem.PemWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import io.mosip.testrig.pmpuiv2.kernel.util.ConfigManager;
+
 public class CertificateGenerationUtil {
 
 	private static final Logger logger = LoggerFactory.getLogger(CertificateGenerationUtil.class);
@@ -42,11 +47,45 @@ public class CertificateGenerationUtil {
 	private static final String SIGNATURE_ALGORITHM = "SHA256withRSA";
 	private static final String CERT_FOLDER = "pmp_uiv2_cert";
 
+	// Suffixing with this run's PID keeps two concurrent runs on the same machine
+	// (e.g. a cron run overlapping a manual run) from writing into the same shared
+	// temp folder and overwriting each other's certificates mid-chain-generation.
+	private static final String RUN_ID = String.valueOf(ProcessHandle.current().pid());
+
 	// MOSIP PMS rejects future-dated certificates. Backdating notBefore protects against
 	// the validator's clock running slightly behind the testrig host's clock.
 	private static final long CLOCK_SKEW_ALLOWANCE_MINUTES = 5;
 
 	private CertificateGenerationUtil() {
+	}
+
+	/**
+	 * Resolves the writable directory certificates are generated into. Mirrors the
+	 * pattern apitest-commons (KeyMgrUtility.getKeysDirPath) uses: the OS temp
+	 * directory on Windows/Mac, or a configurable mounted path (authCertsPath) on
+	 * Linux, since a packaged/cron run has no guarantee that the project's own
+	 * src/main/resources tree is writable (or even present alongside the jar).
+	 */
+	private static Path resolveCertDirectory() {
+		String os = System.getProperty("os.name", "").toLowerCase();
+		String baseDir;
+		if (os.contains("win") || os.contains("mac")) {
+			baseDir = System.getProperty("java.io.tmpdir");
+		} else {
+			String authCertsPath = ConfigManager.getauthCertsPath();
+			baseDir = (authCertsPath != null && !authCertsPath.isEmpty()) ? authCertsPath
+					: System.getProperty("java.io.tmpdir");
+		}
+		return Paths.get(baseDir, CERT_FOLDER + "-" + RUN_ID);
+	}
+
+	/**
+	 * Absolute path a generated certificate file lives at. Used both to write
+	 * certificates here and, from PartnerCertificatePage, to point Selenium's file
+	 * upload at the same file.
+	 */
+	public static String getCertFilePath(String fileName) {
+		return resolveCertDirectory().resolve(fileName).toString();
 	}
 
 	private static final class GeneratedCert {
@@ -76,8 +115,13 @@ public class CertificateGenerationUtil {
 		generateChain(rootName("CA"), intermediateName("SUBCA"), leafName("AABBCC"), "deactivateUserRootCA.cer",
 				"deactivateUserIntermediateCA.cer", "deactivateUserClient.cer", now);
 
-		generateRootAndIntermediateOnly(rootName("CA"), intermediateName("SUBCA"), "deactivateFtmRootCA.cer",
-				"deactivateFtmIntermediateCA.cer", now);
+		// DeactivateFtmPartnerCreation also uploads its own partner-leaf certificate
+		// (against the dedicated intermediate above, not the shared Client.cer/
+		// IntermediateCA.cer pair) - otherwise its leaf-cert upload only succeeds by
+		// accident, depending on whether FtmPartnerCreation's parallel thread has
+		// already uploaded the shared intermediate to the FTM domain first.
+		generateChain(rootName("CA"), intermediateName("SUBCA"), leafName("AABBCC"), "deactivateFtmRootCA.cer",
+				"deactivateFtmIntermediateCA.cer", "deactivateFtmClient.cer", now);
 
 		// Policy user scenario
 		generateChain(rootName("CA"), intermediateName("SUBCA"), leafName("AABBCC"), "policyUserRootCA.cer",
@@ -203,7 +247,13 @@ public class CertificateGenerationUtil {
 	}
 
 	private static void writePem(X509Certificate certificate, String fileName) {
-		String path = PmpTestUtil.getResourceFilePath(CERT_FOLDER, fileName);
+		Path dir = resolveCertDirectory();
+		String path = dir.resolve(fileName).toString();
+		try {
+			Files.createDirectories(dir);
+		} catch (IOException e) {
+			throw new IllegalStateException("Failed to create certificate directory: " + dir, e);
+		}
 		try (PemWriter pemWriter = new PemWriter(new FileWriter(path))) {
 			pemWriter.writeObject(new PemObject("CERTIFICATE", certificate.getEncoded()));
 		} catch (IOException | CertificateEncodingException e) {

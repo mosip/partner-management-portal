@@ -7,6 +7,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import io.mosip.testrig.pmpuiv2.fw.util.CertificateGenerationUtil;
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
 
 public class FtmPage extends BasePage {
@@ -716,7 +717,7 @@ public class FtmPage extends BasePage {
 	}
 
 	public void uploadCertificateConfrmationForFtm() {
-		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "Client.cer"));
+		uploadImage(uploadFile, CertificateGenerationUtil.getCertFilePath("Client.cer"));
 	}
 
 	public boolean isCertificateReuploadButtonDisplayed() {
