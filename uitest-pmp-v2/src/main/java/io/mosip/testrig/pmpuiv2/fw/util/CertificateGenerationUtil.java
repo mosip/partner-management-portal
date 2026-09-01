@@ -47,9 +47,6 @@ public class CertificateGenerationUtil {
 	private static final String SIGNATURE_ALGORITHM = "SHA256withRSA";
 	private static final String CERT_FOLDER = "pmp_uiv2_cert";
 
-	// Suffixing with this run's PID keeps two concurrent runs on the same machine
-	// (e.g. a cron run overlapping a manual run) from writing into the same shared
-	// temp folder and overwriting each other's certificates mid-chain-generation.
 	private static final String RUN_ID = String.valueOf(ProcessHandle.current().pid());
 
 	// MOSIP PMS rejects future-dated certificates. Backdating notBefore protects against
@@ -59,13 +56,6 @@ public class CertificateGenerationUtil {
 	private CertificateGenerationUtil() {
 	}
 
-	/**
-	 * Resolves the writable directory certificates are generated into. Mirrors the
-	 * pattern apitest-commons (KeyMgrUtility.getKeysDirPath) uses: the OS temp
-	 * directory on Windows/Mac, or a configurable mounted path (authCertsPath) on
-	 * Linux, since a packaged/cron run has no guarantee that the project's own
-	 * src/main/resources tree is writable (or even present alongside the jar).
-	 */
 	private static Path resolveCertDirectory() {
 		String os = System.getProperty("os.name", "").toLowerCase();
 		String baseDir;
@@ -79,11 +69,6 @@ public class CertificateGenerationUtil {
 		return Paths.get(baseDir, CERT_FOLDER + "-" + RUN_ID);
 	}
 
-	/**
-	 * Absolute path a generated certificate file lives at. Used both to write
-	 * certificates here and, from PartnerCertificatePage, to point Selenium's file
-	 * upload at the same file.
-	 */
 	public static String getCertFilePath(String fileName) {
 		return resolveCertDirectory().resolve(fileName).toString();
 	}
@@ -115,11 +100,6 @@ public class CertificateGenerationUtil {
 		generateChain(rootName("CA"), intermediateName("SUBCA"), leafName("AABBCC"), "deactivateUserRootCA.cer",
 				"deactivateUserIntermediateCA.cer", "deactivateUserClient.cer", now);
 
-		// DeactivateFtmPartnerCreation also uploads its own partner-leaf certificate
-		// (against the dedicated intermediate above, not the shared Client.cer/
-		// IntermediateCA.cer pair) - otherwise its leaf-cert upload only succeeds by
-		// accident, depending on whether FtmPartnerCreation's parallel thread has
-		// already uploaded the shared intermediate to the FTM domain first.
 		generateChain(rootName("CA"), intermediateName("SUBCA"), leafName("AABBCC"), "deactivateFtmRootCA.cer",
 				"deactivateFtmIntermediateCA.cer", "deactivateFtmClient.cer", now);
 
