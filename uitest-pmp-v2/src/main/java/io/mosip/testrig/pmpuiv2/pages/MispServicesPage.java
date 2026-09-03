@@ -1,8 +1,12 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
 import java.time.Duration;
+import java.util.List;
+import java.util.Optional;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -11,7 +15,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import io.mosip.testrig.pmpuiv2.utility.LogUtil;
+import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
 public class MispServicesPage extends BasePage {
 
@@ -23,6 +27,47 @@ public class MispServicesPage extends BasePage {
 
 	@FindBy(id = "sub_title_btn")
 	private WebElement mispServicesBreadcomb;
+
+	@FindBy(id = "title_back_icon")
+	private WebElement mispServicesTitleBackIcon;
+
+	@FindBy(id = "filter_btn")
+	private WebElement filterButton;
+
+	@FindBy(id = "apply_filter__btn")
+	private WebElement mispLicenseFilterApplyButton;
+
+	@FindBy(id = "filter_reset_btn")
+	private WebElement mispLicenseFilterResetButton;
+
+	@FindBy(id = "misp_partner_id_filter")
+	private WebElement mispFilterPartnerIdInput;
+
+	@FindBy(id = "misp_org_name_filter")
+	private WebElement mispFilterOrgNameInput;
+
+	@FindBy(id = "misp_policy_group_filter")
+	private WebElement mispFilterPolicyGroupInput;
+
+	@FindBy(id = "misp_policy_name_filter")
+	private WebElement mispFilterPolicyNameInput;
+
+	@FindBy(id = "misp_license_key_name_filter")
+	private WebElement mispFilterLicenseKeyNameInput;
+
+	@FindBy(id = "misp_status_filter_dropdown_btn")
+	private WebElement mispFilterStatusDropdownBtn;
+
+	@FindBy(id = "misp_status_filter_option1")
+	private WebElement mispFilterStatusActiveOption;
+
+	@FindBy(id = "no_results_found")
+	private WebElement noResultsFoundMessage;
+
+	@FindBy(id = "misp_partner_id_filter_input_error")
+	private WebElement mispFilterPartnerIdInputError;
+
+	private static final int RIGHT_EDGE_ALIGNMENT_TOLERANCE_PX = 5;
 
 	@FindBy(id = "generate_license_key_mandantory_msg")
 	private WebElement allFieldsAreMandatorySubtitle;
@@ -198,6 +243,9 @@ public class MispServicesPage extends BasePage {
 	@FindBy(css = "div.react-datepicker__month-container")
 	private WebElement calendarPopup;
 
+	@FindBy(css = "div.react-datepicker__current-month")
+	private WebElement calendarMonthHeader;
+
 	@FindBy(id = "generate_license_key_expiry_date_calender_info_info_description")
 	private WebElement expiryDateCalenderInfoDescription;
 
@@ -237,6 +285,114 @@ public class MispServicesPage extends BasePage {
 	@FindBy(id = "mispLicenseList.action_header")
 	private WebElement actionHeader;
 
+	@FindBy(id = "misp_license_list_action_view1")
+	private WebElement mispLicenseListActionButton;
+
+	@FindBy(id = "misp_license_list_view_btn")
+	private WebElement mispLicenseListViewButton;
+
+	@FindBy(id = "misp_license_list_regenerate_btn")
+	private WebElement mispLicenseListRegenerateButton;
+
+	@FindBy(id = "misp_license_list_deactivate_btn")
+	private WebElement mispLicenseListDeactivateButton;
+
+	@FindBy(id = "regenerate_license_key_mandantory_msg")
+	private WebElement regenerateMandatoryFieldsSubtitle;
+
+	@FindBy(id = "regenerate_license_key_partner_id_label")
+	private WebElement regeneratePartnerIdLabel;
+
+	@FindBy(id = "regenerate_license_key_partner_id")
+	private WebElement regeneratePartnerId;
+
+	@FindBy(id = "regenerate_license_key_partner_type_label")
+	private WebElement regeneratePartnerTypeLabel;
+
+	@FindBy(id = "regenerate_license_key_partner_type")
+	private WebElement regeneratePartnerType;
+
+	@FindBy(id = "regenerate_license_key_policy_group_label")
+	private WebElement regeneratePolicyGroupLabel;
+
+	@FindBy(id = "regenerate_license_key_policy_group")
+	private WebElement regeneratePolicyGroup;
+
+	@FindBy(id = "regenerate_license_key_policy_name_label")
+	private WebElement regeneratePolicyNameLabel;
+
+	@FindBy(id = "regenerate_license_key_policy_name")
+	private WebElement regeneratePolicyName;
+
+	@FindBy(id = "regenerate_license_key_name_label")
+	private WebElement regenerateLicenseKeyNameLabel;
+
+	@FindBy(id = "regenerate_license_key_name")
+	private WebElement regenerateLicenseKeyNameTextbox;
+
+	@FindBy(id = "regenerate_license_key_expiry_date_calender")
+	private WebElement regenerateExpiryDate;
+
+	@FindBy(id = "regenerate_license_key_clear_form")
+	private WebElement regenerateClearFormButton;
+
+	@FindBy(id = "regenerate_license_key_cancel_btn")
+	private WebElement regenerateCancelButton;
+
+	@FindBy(id = "regenerate_license_key_submit_btn")
+	private WebElement regenerateSubmitButton;
+
+	@FindBy(id = "regenerate_misp_license_key_important_note")
+	private WebElement regenerateImportantNote;
+
+	@FindBy(id = "regenerate_license_key_invalid_license_key_name")
+	private WebElement regenerateInvalidCharacterErrorMessage;
+
+	@FindBy(id = "regenerate_misp_license_key_error_msg")
+	private WebElement regenerateErrorMessage;
+
+	@FindBy(id = "regenerate_license_key_confirmation_header")
+	private WebElement regenerateConfirmationHeader;
+
+	@FindBy(id = "regenerate_license_key_confirmation_description")
+	private WebElement regenerateConfirmationDescription;
+
+	@FindBy(id = "regenerate_license_key_expiry_date_calender_info")
+	private WebElement regenerateExpiryDateCalenderInfoIcon;
+
+	@FindBy(id = "regenerate_license_key_expiry_date_calender_info_info_description")
+	private WebElement regenerateExpiryDateCalenderInfoDescription;
+
+	@FindBy(id = "misp_license_key_details_expiry_date_context")
+	private WebElement viewMispLicenseKeyExpiryDateContext;
+
+	@FindBy(id = "view_misp_license_key_details_status")
+	private WebElement viewMispLicenseKeyDetailsStatus;
+
+	@FindBy(id = "view_misp_license_key_back_btn")
+	private WebElement viewMispLicenseKeyBackButton;
+
+	@FindBy(id = "blocker_prompt_description")
+	private WebElement cancelConfirmationPopup;
+
+	@FindBy(id = "block_messsage_proceed")
+	private WebElement cancelConfirmationPopupProceedButton;
+
+	@FindBy(id = "undefined_title")
+	private WebElement mispLicenseListSubTitleWithCount;
+
+	@FindBy(id = "deactivate_popup_header")
+	private WebElement deactivatePopupHeader;
+
+	@FindBy(id = "deactivate_popup_description")
+	private WebElement deactivatePopupDescription;
+
+	@FindBy(id = "deactivate_cancel_btn")
+	private WebElement deactivateCancelButton;
+
+	@FindBy(id = "deactivate_submit_btn")
+	private WebElement deactivateSubmitButton;
+
 	private static final Duration POPUP_CHECK_TIMEOUT = Duration.ofSeconds(3);
 
 	public MispServicesPage(WebDriver driver) {
@@ -255,6 +411,104 @@ public class MispServicesPage extends BasePage {
 		return isElementDisplayed(generateMispLicenceKeyTitle);
 	}
 
+	public void clickOnMispServicesTitleBackIcon() {
+		clickOnElement(mispServicesTitleBackIcon);
+	}
+
+	public boolean isGenerateMispLicenceKeyButtonPositionedTopRight() {
+		return isElementWithinViewport(generateMispLicenceKeyButton)
+				&& isElementInRightHalfOfViewport(generateMispLicenceKeyButton);
+	}
+
+	public boolean isFilterButtonDisplayed() {
+		return isElementDisplayed(filterButton);
+	}
+
+	public boolean isFilterButtonPositionedTopRight() {
+		return isElementWithinViewport(filterButton) && isElementInRightHalfOfViewport(filterButton);
+	}
+
+	public boolean isFilterButtonEnabled() {
+		return isElementEnabled(filterButton);
+	}
+
+	public void clickOnFilterButton() {
+		clickOnElement(filterButton);
+	}
+
+	public boolean isMispLicenseFilterPanelDisplayed() {
+		return isElementDisplayed(mispLicenseFilterApplyButton);
+	}
+
+	public void clickOnMispLicenseFilterResetButton() {
+		clickOnElement(mispLicenseFilterResetButton);
+	}
+
+	public boolean isMispLicenseFilterResetButtonDisplayed() {
+		return isElementDisplayedQuick(By.id("filter_reset_btn"), POPUP_CHECK_TIMEOUT);
+	}
+
+	public boolean areMispFilterTextFieldsGenuineInputs() {
+		return "input".equalsIgnoreCase(mispFilterPartnerIdInput.getTagName())
+				&& "input".equalsIgnoreCase(mispFilterOrgNameInput.getTagName())
+				&& "input".equalsIgnoreCase(mispFilterPolicyGroupInput.getTagName())
+				&& "input".equalsIgnoreCase(mispFilterPolicyNameInput.getTagName())
+				&& "input".equalsIgnoreCase(mispFilterLicenseKeyNameInput.getTagName());
+	}
+
+	public boolean isMispFilterStatusFieldADropdown() {
+		return isElementDisplayed(mispFilterStatusDropdownBtn) && "button".equalsIgnoreCase(mispFilterStatusDropdownBtn.getTagName());
+	}
+
+	public String getMispFilterLicenseKeyNameSearchPlaceholder() {
+		return getTextFromAttribute(mispFilterLicenseKeyNameInput, "placeholder");
+	}
+
+	public void enterMispFilterPolicyGroup(String policyGroupValue) {
+		enter(mispFilterPolicyGroupInput, policyGroupValue);
+	}
+
+	public void selectMispFilterStatusActive() {
+		clickOnElement(mispFilterStatusDropdownBtn);
+		clickOnElement(mispFilterStatusActiveOption);
+	}
+
+	public void clickOnApplyFilterButton() {
+		clickOnElement(mispLicenseFilterApplyButton);
+	}
+
+	public String getLicenseRowPolicyGroup(int rowIndex) {
+		return getLicenseListRowCellText(rowIndex, 3);
+	}
+
+	public void enterMispFilterPartnerId(String value) {
+		enter(mispFilterPartnerIdInput, value);
+	}
+
+	public boolean isNoResultsFoundMessageDisplayed() {
+		return isElementDisplayed(noResultsFoundMessage);
+	}
+
+	public String getNoResultsFoundMessageText() {
+		return getTextFromLocator(noResultsFoundMessage);
+	}
+
+	public boolean isMispFilterPartnerIdInputErrorDisplayed() {
+		return isElementDisplayed(mispFilterPartnerIdInputError);
+	}
+
+	public boolean isApplyFilterButtonEnabled() {
+		return isElementEnabled(mispLicenseFilterApplyButton);
+	}
+
+	public boolean areGenerateAndFilterButtonsRightEdgeAligned() {
+		return areElementsRightEdgeAligned(generateMispLicenceKeyButton, filterButton, RIGHT_EDGE_ALIGNMENT_TOLERANCE_PX);
+	}
+
+	public boolean isGenerateButtonAboveFilterButton() {
+		return isElementAboveOther(generateMispLicenceKeyButton, filterButton);
+	}
+
 	public boolean isAllFieldsAreMandatorySubtitleDisplayed() {
 		return isElementDisplayed(allFieldsAreMandatorySubtitle);
 	}
@@ -265,6 +519,10 @@ public class MispServicesPage extends BasePage {
 
 	public boolean isMispServicesBreadcombDisplayed() {
 		return isElementDisplayed(mispServicesBreadcomb);
+	}
+
+	public String getBreadcrumbText() {
+		return getTextFromLocator(generateMispLicenceKeyHomeButton) + getTextFromLocator(mispServicesBreadcomb);
 	}
 
 	public void clickOnMispServicesBreadcomb() {
@@ -643,6 +901,10 @@ public class MispServicesPage extends BasePage {
 		clickOnElement(confirmationGoBackBtn);
 	}
 
+	public void clickOnConfirmationHomeButton() {
+		clickOnElement(confirmationHomeBtn);
+	}
+
 	public boolean isPartnerIdHeaderDisplayed() {
 		return isElementDisplayed(partnerIdHeader);
 	}
@@ -683,6 +945,67 @@ public class MispServicesPage extends BasePage {
 		return isElementDisplayed(actionHeader);
 	}
 
+	public String getPartnerIdHeaderText() {
+		return getTextFromLocator(partnerIdHeader);
+	}
+
+	public String getOrgNameHeaderText() {
+		return getTextFromLocator(orgNameHeader);
+	}
+
+	public String getPolicyGroupHeaderText() {
+		return getTextFromLocator(policyGroupHeader);
+	}
+
+	public String getPolicyNameHeaderText() {
+		return getTextFromLocator(policyNameHeader);
+	}
+
+	public String getMispLicenseKeyNameHeaderText() {
+		return getTextFromLocator(mispLicenseKeyNameHeader);
+	}
+
+	public String getCreationDateHeaderText() {
+		return getTextFromLocator(creationDateHeader);
+	}
+
+	public String getExpirationDateHeaderText() {
+		return getTextFromLocator(expirationDateHeader);
+	}
+
+	public String getStatusHeaderText() {
+		return getTextFromLocator(statusHeader);
+	}
+
+	public String getMispLicenseKeyHeaderText() {
+		return getTextFromLocator(mispLicenseKeyHeader);
+	}
+
+	public String getActionHeaderText() {
+		return getTextFromLocator(actionHeader);
+	}
+
+	public int getMispLicenseListRowCount() {
+		return getElementCount(By.xpath("//tr[contains(@id,'misp_license_list_item')]"));
+	}
+
+	public boolean isEmptyMispLicenseListHeadersDisplayed() {
+		return isDisplayed(By.xpath("//h6[@id='partnerId']")) && isDisplayed(By.xpath("//h6[@id='orgName']"))
+				&& isDisplayed(By.xpath("//h6[@id='policyGroupName']")) && isDisplayed(By.xpath("//h6[@id='policyName']"))
+				&& isDisplayed(By.xpath("//h6[@id='mispLicenseKeyName']"))
+				&& isDisplayed(By.xpath("//h6[@id='createdDateTime']"))
+				&& isDisplayed(By.xpath("//h6[@id='expiryDateTime']")) && isDisplayed(By.xpath("//h6[@id='status']"))
+				&& isDisplayed(By.xpath("//h6[@id='mispLicenseKey']")) && isDisplayed(By.xpath("//h6[@id='action']"));
+	}
+
+	public boolean isMispLicenseListSubTitleDisplayed() {
+		return isElementDisplayed(mispLicenseListSubTitleWithCount);
+	}
+
+	public String getMispLicenseListSubTitleText() {
+		return getTextFromLocator(mispLicenseListSubTitleWithCount);
+	}
+
 	public String getLicenseListRowCellText(int rowIndex, int cellIndex) {
 		return getTextFromLocator(
 				By.xpath("//tr[@id='misp_license_list_item" + rowIndex + "']/td[" + cellIndex + "]"));
@@ -696,6 +1019,43 @@ public class MispServicesPage extends BasePage {
 		return getLicenseListRowCellText(1, 8);
 	}
 
+	// Deactivating (or regenerating) a license updates the row's status via an async call, so
+	// reading it immediately after clicking submit can still catch the pre-update value. Polls
+	// until it actually matches, the same way waitUntilMispLicenseListRowCountSatisfies covers
+	// the row's mere existence after a fresh navigation.
+	public boolean waitUntilLatestLicenseRowStatusEquals(String expectedStatus) {
+		try {
+			return new WebDriverWait(driver, Duration.ofSeconds(30))
+					.until(d -> expectedStatus.equals(getLatestLicenseRowStatus()));
+		} catch (TimeoutException e) {
+			return false;
+		}
+	}
+
+	public String getLicenseRowCreationDate(int rowIndex) {
+		return getLicenseListRowCellText(rowIndex, 6);
+	}
+
+	public String getLicenseRowExpirationDate(int rowIndex) {
+		return getLicenseListRowCellText(rowIndex, 7);
+	}
+
+	public String getBrowserTodayLocaleDateString() {
+		return executeScriptForString("return new Date().toLocaleDateString();");
+	}
+
+	public boolean isDateCellFormatConsistentWithBrowserLocale(String cellText, String browserSampleDateText) {
+		return cellText.replaceAll("\\d+", "#").equals(browserSampleDateText.replaceAll("\\d+", "#"));
+	}
+
+	public String getLicenseRowStatus(int rowIndex) {
+		return getLicenseListRowCellText(rowIndex, 8);
+	}
+
+	public String getLicenseRowLicenseKeyName(int rowIndex) {
+		return getLicenseListRowCellText(rowIndex, 5);
+	}
+
 	public void clickOnViewLicenseKeyButton(int rowIndex) {
 		click(By.id("misp_license_show_copy_popup_btn" + rowIndex));
 	}
@@ -703,4 +1063,510 @@ public class MispServicesPage extends BasePage {
 	public String getMispLicenseKeyIdText() {
 		return getTextFromLocator(mispLicenseKeyId);
 	}
+
+	public boolean isMispLicenseKeyPopupHeaderDisplayed() {
+		return isElementDisplayed(mispLicenseKeyPopup);
+	}
+
+	public String getMispLicenseKeyPopupHeaderText() {
+		return getTextFromLocator(mispLicenseKeyPopup);
+	}
+
+	public boolean isMispLicenseKeyIdBold() {
+		String fontWeight = getComputedStyle(mispLicenseKeyId, "font-weight");
+		return "700".equals(fontWeight) || "bold".equalsIgnoreCase(fontWeight);
+	}
+
+	public String getPageTitleText() {
+		return getTextFromLocator(generateMispLicenceKeyTitle);
+	}
+
+	public void clickOnMispLicenseListActionButton() {
+		clickOnElement(mispLicenseListActionButton);
+	}
+
+	public boolean isMispLicenseListActionMenuDisplayed() {
+		return isElementDisplayed(mispLicenseListViewButton);
+	}
+
+	public boolean isMispLicenseListRegenerateButtonDisplayed() {
+		return isElementDisplayed(mispLicenseListRegenerateButton);
+	}
+
+	public boolean isMispLicenseListRegenerateButtonEnabled() {
+		String classAttr = mispLicenseListRegenerateButton.getAttribute("class");
+		return classAttr != null && classAttr.contains("text-[#3E3E3E]");
+	}
+
+	public boolean isMispLicenseListDeactivateButtonDisplayed() {
+		return isElementDisplayed(mispLicenseListDeactivateButton);
+	}
+
+	public boolean isMispLicenseListDeactivateButtonEnabled() {
+		String classAttr = mispLicenseListDeactivateButton.getAttribute("class");
+		return classAttr != null && classAttr.contains("text-[#3E3E3E]");
+	}
+
+	public boolean isMispLicenseListEyeIconPresentForRow(int rowIndex) {
+		return isElementDisplayedQuick(By.id("misp_license_show_copy_popup_btn" + rowIndex), POPUP_CHECK_TIMEOUT);
+	}
+
+	private static final String LICENSE_ROW_ACTIVE_TEXT_COLOR = "rgb(25,25,25)";
+	private static final String LICENSE_ROW_DEACTIVATED_TEXT_COLOR = "rgb(150,150,150)";
+	private static final String STATUS_PILL_ACTIVE_BG_COLOR = "rgb(209,250,223)";
+
+	private static String normalizeRgb(String rgb) {
+		return rgb == null ? null : rgb.replaceAll("\\s", "");
+	}
+
+	public boolean isLicenseRowGreyedOut(int rowIndex) {
+		WebElement row = driver.findElement(By.id("misp_license_list_item" + rowIndex));
+		return LICENSE_ROW_DEACTIVATED_TEXT_COLOR.equals(normalizeRgb(getComputedStyle(row, "color")));
+	}
+
+	public boolean isLicenseRowNormalColor(int rowIndex) {
+		WebElement row = driver.findElement(By.id("misp_license_list_item" + rowIndex));
+		return LICENSE_ROW_ACTIVE_TEXT_COLOR.equals(normalizeRgb(getComputedStyle(row, "color")));
+	}
+
+	public boolean isLicenseRowStatusPillGreen(int rowIndex) {
+		WebElement statusPill = driver
+				.findElement(By.xpath("//tr[@id='misp_license_list_item" + rowIndex + "']/td[8]/div"));
+		return STATUS_PILL_ACTIVE_BG_COLOR.equals(normalizeRgb(getComputedStyle(statusPill, "background-color")));
+	}
+
+	public boolean isMispLicenseListActionButtonNormalColor() {
+		return LICENSE_ROW_ACTIVE_TEXT_COLOR
+				.equals(normalizeRgb(getComputedStyle(mispLicenseListActionButton, "color")));
+	}
+
+	public String getSelectedRecordsPerPageText() {
+		return getTextFromLocator(By.id("selected_records_count"));
+	}
+
+	public void clickOnPaginationRecordsPerPageDropdown() {
+		click(By.id("pagination_select_record_per_page"));
+	}
+
+	public void selectPaginationRecordsPerPageOption(int optionIndex) {
+		click(By.id("pagination_each_num_option" + optionIndex));
+	}
+
+	public boolean isTableSortedDescendingByCreationDate() {
+		return executeScriptForBoolean(
+				"var rows = document.querySelectorAll(\"tr[id^='misp_license_list_item']\");"
+						+ "for (var i = 0; i < rows.length - 1; i++) {"
+						+ "  var d1 = new Date(rows[i].children[5].innerText);"
+						+ "  var d2 = new Date(rows[i+1].children[5].innerText);"
+						+ "  if (d1.getTime() < d2.getTime()) return false;" + "}" + "return true;");
+	}
+
+	private static final String[] SORTABLE_MISP_LIST_COLUMN_IDS = { "partnerId", "orgName", "policyGroupName",
+			"policyName", "mispLicenseKeyName", "createdDateTime", "expiryDateTime", "status" };
+
+	public boolean areAllSortIconsPresentExceptActionAndLicenseKey() {
+		for (String columnId : SORTABLE_MISP_LIST_COLUMN_IDS) {
+			if (!isDisplayed(By.id(columnId + "_asc_icon")) || !isDisplayed(By.id(columnId + "_desc_icon"))) {
+				return false;
+			}
+		}
+		return !isElementDisplayedQuick(By.id("action_asc_icon"), POPUP_CHECK_TIMEOUT)
+				&& !isElementDisplayedQuick(By.id("mispLicenseKey_asc_icon"), POPUP_CHECK_TIMEOUT);
+	}
+
+	public void clickOnSortAscIcon(String columnId) {
+		click(By.id(columnId + "_asc_icon"));
+	}
+
+	public void clickOnSortDescIcon(String columnId) {
+		click(By.id(columnId + "_desc_icon"));
+	}
+
+	private static final String SORT_ICON_ACTIVE_FILL = "#1447b2";
+
+	public boolean isSortAscIconActive(String columnId) {
+		return SORT_ICON_ACTIVE_FILL.equalsIgnoreCase(
+				getTextFromAttribute(By.xpath("//*[@id='" + columnId + "_asc_icon']/*[1]"), "fill"));
+	}
+
+	public boolean isSortDescIconActive(String columnId) {
+		return SORT_ICON_ACTIVE_FILL.equalsIgnoreCase(
+				getTextFromAttribute(By.xpath("//*[@id='" + columnId + "_desc_icon']/*[1]"), "fill"));
+	}
+
+	public boolean isTableSortedAscendingByColumn(int columnIndex) {
+		return executeScriptForBoolean("var rows = document.querySelectorAll(\"tr[id^='misp_license_list_item']\");"
+				+ "for (var i = 0; i < rows.length - 1; i++) {"
+				+ "  var a = rows[i].children[" + (columnIndex - 1) + "].innerText.trim().toLowerCase();"
+				+ "  var b = rows[i+1].children[" + (columnIndex - 1) + "].innerText.trim().toLowerCase();"
+				+ "  if (a > b) return false;" + "}" + "return true;");
+	}
+
+	public boolean isTableSortedDescendingByColumn(int columnIndex) {
+		return executeScriptForBoolean("var rows = document.querySelectorAll(\"tr[id^='misp_license_list_item']\");"
+				+ "for (var i = 0; i < rows.length - 1; i++) {"
+				+ "  var a = rows[i].children[" + (columnIndex - 1) + "].innerText.trim().toLowerCase();"
+				+ "  var b = rows[i+1].children[" + (columnIndex - 1) + "].innerText.trim().toLowerCase();"
+				+ "  if (a < b) return false;" + "}" + "return true;");
+	}
+
+	// Sorting re-fetches the list asynchronously from the server, so poll briefly rather than checking once immediately.
+	public boolean waitUntilTableSortedAscendingByColumn(int columnIndex) {
+		try {
+			return new WebDriverWait(driver, Duration.ofSeconds(10))
+					.until(d -> isTableSortedAscendingByColumn(columnIndex));
+		} catch (TimeoutException e) {
+			return false;
+		}
+	}
+
+	public boolean waitUntilTableSortedDescendingByColumn(int columnIndex) {
+		try {
+			return new WebDriverWait(driver, Duration.ofSeconds(10))
+					.until(d -> isTableSortedDescendingByColumn(columnIndex));
+		} catch (TimeoutException e) {
+			return false;
+		}
+	}
+
+	// Applying or resetting a filter re-fetches the list asynchronously from the server, so poll briefly rather than checking once immediately.
+	public boolean waitUntilMispLicenseListRowCountSatisfies(java.util.function.IntPredicate condition) {
+		try {
+			return new WebDriverWait(driver, Duration.ofSeconds(10))
+					.until(d -> condition.test(getMispLicenseListRowCount()));
+		} catch (TimeoutException e) {
+			return false;
+		}
+	}
+
+	public boolean isViewMispLicenseKeyDetailsPageDisplayed() {
+		return isElementDisplayed(viewMispLicenseKeyExpiryDateContext);
+	}
+
+	public boolean isViewMispLicenseKeyDetailsPageDisplayedQuick() {
+		return isElementDisplayedQuick(By.id("misp_license_key_details_expiry_date_context"), POPUP_CHECK_TIMEOUT);
+	}
+
+	public String getViewMispLicenseKeyDetailsStatusText() {
+		return getTextFromLocator(viewMispLicenseKeyDetailsStatus).trim();
+	}
+
+	public void clickOnLicenseRowPartnerIdCell(int rowIndex) {
+		click(By.xpath("//tr[@id='misp_license_list_item" + rowIndex + "']/td[1]"));
+	}
+
+	public void clickOnMispLicenseListRegenerateButton() {
+		clickOnElement(mispLicenseListRegenerateButton);
+	}
+
+	public boolean isRegenerateMandatoryFieldsSubtitleDisplayed() {
+		return isElementDisplayed(regenerateMandatoryFieldsSubtitle);
+	}
+
+	public String getRegenerateMandatoryFieldsSubtitleText() {
+		return getTextFromLocator(regenerateMandatoryFieldsSubtitle);
+	}
+
+	public boolean isRegeneratePartnerIdLabelDisplayed() {
+		return isElementDisplayed(regeneratePartnerIdLabel);
+	}
+
+	public boolean isRegeneratePartnerTypeLabelDisplayed() {
+		return isElementDisplayed(regeneratePartnerTypeLabel);
+	}
+
+	public boolean isRegeneratePolicyGroupLabelDisplayed() {
+		return isElementDisplayed(regeneratePolicyGroupLabel);
+	}
+
+	public boolean isRegeneratePolicyNameLabelDisplayed() {
+		return isElementDisplayed(regeneratePolicyNameLabel);
+	}
+
+	public boolean isRegenerateLicenseKeyNameLabelDisplayed() {
+		return isElementDisplayed(regenerateLicenseKeyNameLabel);
+	}
+
+	public String getRegeneratePartnerId() {
+		return getTextFromLocator(regeneratePartnerId);
+	}
+
+	public String getRegeneratePartnerType() {
+		return getTextFromLocator(regeneratePartnerType);
+	}
+
+	public String getRegeneratePolicyGroup() {
+		return getTextFromLocator(regeneratePolicyGroup);
+	}
+
+	public String getRegeneratePolicyName() {
+		return getTextFromLocator(regeneratePolicyName);
+	}
+
+	public boolean isRegeneratePartnerIdFieldDisabled() {
+		return isElementDisabled(regeneratePartnerId);
+	}
+
+	public boolean isRegeneratePartnerTypeFieldDisabled() {
+		return isElementDisabled(regeneratePartnerType);
+	}
+
+	public boolean isRegeneratePolicyGroupFieldDisabled() {
+		return isElementDisabled(regeneratePolicyGroup);
+	}
+
+	public boolean isRegeneratePolicyGroupPlaceholderWithinViewport() {
+		return isElementWithinViewport(regeneratePolicyGroup);
+	}
+
+	public boolean isRegeneratePolicyNamePlaceholderWithinViewport() {
+		return isElementWithinViewport(regeneratePolicyName);
+	}
+
+	public boolean isRegeneratePolicyNameFieldDisabled() {
+		return isElementDisabled(regeneratePolicyName);
+	}
+
+	public boolean isRegenerateLicenseKeyNameFieldDisplayed() {
+		return isElementDisplayed(regenerateLicenseKeyNameTextbox);
+	}
+
+	public boolean isRegenerateLicenseKeyNameFieldEnabled() {
+		return isElementEnabled(regenerateLicenseKeyNameTextbox);
+	}
+
+	public String getRegenerateLicenseKeyNameFieldValue() {
+		return getTextFromAttribute(regenerateLicenseKeyNameTextbox, "value");
+	}
+
+	public void enterRegenerateLicenseKeyName(String licenseKeyName) {
+		enter(regenerateLicenseKeyNameTextbox, licenseKeyName);
+	}
+
+	public String getRegenerateLicenseKeyNameHelpText() {
+		return getTextFromAttribute(regenerateLicenseKeyNameTextbox, "placeholder");
+	}
+
+	public boolean isRegenerateLicenseKeyNameHelpTextDisabledForEdit() {
+		String helpTextBefore = getRegenerateLicenseKeyNameHelpText();
+		enterRegenerateLicenseKeyName(GlobalConstants.MISP_LICENSEKEY_REGENERATE_TEMP);
+		boolean unchangedWhileTyped = helpTextBefore.equals(getRegenerateLicenseKeyNameHelpText());
+		clickOnRegenerateClearFormButton();
+		boolean unchangedAfterClear = helpTextBefore.equals(getRegenerateLicenseKeyNameHelpText());
+		return unchangedWhileTyped && unchangedAfterClear;
+	}
+
+	public boolean isRegenerateExpiryDateFieldDisplayed() {
+		return isElementDisplayed(regenerateExpiryDate);
+	}
+
+	public boolean isRegenerateClearFormButtonDisplayed() {
+		return isElementDisplayed(regenerateClearFormButton);
+	}
+
+	public boolean isRegenerateCancelButtonDisplayed() {
+		return isElementDisplayed(regenerateCancelButton);
+	}
+
+	public boolean isRegenerateSubmitButtonDisplayed() {
+		return isElementDisplayed(regenerateSubmitButton);
+	}
+
+	public boolean isRegenerateSubmitButtonEnabled() {
+		return isElementEnabled(regenerateSubmitButton);
+	}
+
+	public void clickOnRegenerateCancelButton() {
+		clickOnElement(regenerateCancelButton);
+	}
+
+	public boolean isRegenerateImportantNoteDisplayed() {
+		return isElementDisplayed(regenerateImportantNote);
+	}
+
+	public boolean isRegenerateInvalidCharacterErrorMessageDisplayed() {
+		return isElementDisplayed(regenerateInvalidCharacterErrorMessage);
+	}
+
+	public boolean isRegenerateErrorMessageDisplayed() {
+		return isElementDisplayed(regenerateErrorMessage);
+	}
+
+	public String getRegenerateErrorMessageText() {
+		return getTextFromLocator(regenerateErrorMessage);
+	}
+
+	public boolean isRegenerateConfirmationHeaderDisplayed() {
+		return isElementDisplayed(regenerateConfirmationHeader);
+	}
+
+	public String getRegenerateConfirmationHeaderText() {
+		return getTextFromLocator(regenerateConfirmationHeader);
+	}
+
+	public boolean isRegenerateConfirmationHeaderNotEditable() {
+		return isElementNotEditable(regenerateConfirmationHeader);
+	}
+
+	public void clickOnRegenerateClearFormButton() {
+		clickOnElement(regenerateClearFormButton);
+	}
+
+	public void clickOnRegenerateSubmitButton() {
+		clickOnElement(regenerateSubmitButton);
+	}
+
+	public void enterRegenerateExpiryDate() {
+		clickOnElement(regenerateExpiryDate);
+		clickOnElement(nextMonth);
+		clickOnElement(nextMonth);
+		clickOnElement(date24InCalender);
+	}
+
+	public void clickOnRegenerateExpiryDateField() {
+		clickOnElement(regenerateExpiryDate);
+	}
+
+	private static final By CURRENT_MONTH_HEADER = By.cssSelector(".react-datepicker__current-month");
+
+	public String getCalendarMonthHeaderText() {
+		WebElement element = new WebDriverWait(driver, Duration.ofSeconds(30)).until(webDriver -> {
+			List<WebElement> matches = webDriver.findElements(CURRENT_MONTH_HEADER);
+			Optional<WebElement> visible = matches.stream().filter(el -> {
+				try {
+					return el.isDisplayed();
+				} catch (StaleElementReferenceException stale) {
+					return false;
+				}
+			}).findFirst();
+			return visible.orElse(null);
+		});
+		return element.getText();
+	}
+
+	public void enterFreeTextIntoRegenerateExpiryDateField(String text) {
+		waitForElementVisible(regenerateExpiryDate);
+		regenerateExpiryDate.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+		regenerateExpiryDate.sendKeys(Keys.DELETE);
+		regenerateExpiryDate.sendKeys(text);
+	}
+
+	public String getRegenerateExpiryDateFieldValue() {
+		return getTextFromAttribute(regenerateExpiryDate, "value");
+	}
+
+	public String reopenRegenerateCalendarAndSelectAlternateDate() {
+		clickOnElement(regenerateExpiryDate);
+		clickOnElement(nextMonth);
+		clickOnElement(nextMonth);
+		clickOnElement(date4InCalender);
+		return getTextFromAttribute(regenerateExpiryDate, "value");
+	}
+
+	public void clickOnMispLicenseListViewButton() {
+		clickOnElement(mispLicenseListViewButton);
+	}
+
+	public boolean isViewMispLicenseKeyExpiryDateNotEditable() {
+		return isElementNotEditable(viewMispLicenseKeyExpiryDateContext);
+	}
+
+	public void clickOnViewMispLicenseKeyBackButton() {
+		clickOnElement(viewMispLicenseKeyBackButton);
+	}
+
+	public boolean isCancelConfirmationPopupDisplayed() {
+		return isElementDisplayed(cancelConfirmationPopup);
+	}
+
+	public void clickOnCancelConfirmationPopupProceedButton() {
+		clickOnElement(cancelConfirmationPopupProceedButton);
+	}
+
+	public String selectFutureDateInOpenCalendarAndGetRegenerateValue() {
+		clickOnElement(nextMonth);
+		clickOnElement(nextMonth);
+		clickOnElement(date24InCalender);
+		return getTextFromAttribute(regenerateExpiryDate, "value");
+	}
+
+	public void clickOnRegenerateExpiryDateCalenderInfoIcon() {
+		clickOnElement(regenerateExpiryDateCalenderInfoIcon);
+	}
+
+	public boolean isRegenerateExpiryDateCalenderInfoDescriptionDisplayed() {
+		return isElementDisplayed(regenerateExpiryDateCalenderInfoDescription);
+	}
+
+	public String getRegenerateExpiryDateCalenderInfoDescriptionText() {
+		return getTextFromLocator(regenerateExpiryDateCalenderInfoDescription);
+	}
+
+	public boolean isRegenerateExpiryDateCalenderInfoDescriptionNotEditable() {
+		return isElementNotEditable(regenerateExpiryDateCalenderInfoDescription);
+	}
+
+	public String getRegenerateExpiryDateCalenderInfoIconCursor() {
+		return getComputedStyle(regenerateExpiryDateCalenderInfoIcon, "cursor");
+	}
+
+	public void enterRegeneratePastExpiryDate() {
+		clickOnElement(regenerateExpiryDate);
+		clickOnElement(previousMonth);
+		clickOnElement(date24InCalender);
+	}
+
+	public void enterRegenerateTodayExpiryDate() {
+		clickOnElement(regenerateExpiryDate);
+		clickOnElement(todayInCalender);
+	}
+
+	public void clickOnMispLicenseListDeactivateButton() {
+		clickOnElement(mispLicenseListDeactivateButton);
+	}
+
+	public boolean isDeactivatePopupHeaderDisplayed() {
+		return isElementDisplayed(deactivatePopupHeader);
+	}
+
+	public String getDeactivatePopupTitleText() {
+		return getTextFromLocator(deactivatePopupHeader).trim();
+	}
+
+	public boolean isDeactivatePopupDescriptionDisplayed() {
+		return isElementDisplayed(deactivatePopupDescription);
+	}
+
+	public String getDeactivatePopupDescriptionText() {
+		return getTextFromLocator(deactivatePopupDescription).trim();
+	}
+
+	public boolean isDeactivateSubmitButtonDisplayed() {
+		return isElementDisplayed(deactivateSubmitButton);
+	}
+
+	public boolean isDeactivateSubmitButtonEnabled() {
+		return isElementEnabled(deactivateSubmitButton);
+	}
+
+	public void clickOnDeactivateSubmitButton() {
+		clickOnElement(deactivateSubmitButton);
+	}
+
+	public boolean isDeactivateCancelButtonDisplayed() {
+		return isElementDisplayed(deactivateCancelButton);
+	}
+
+	public boolean isDeactivateCancelButtonEnabled() {
+		return isElementEnabled(deactivateCancelButton);
+	}
+
+	public void clickOnDeactivateCancelButton() {
+		clickOnElement(deactivateCancelButton);
+	}
+
+	public boolean isDeactivatePopupHeaderDisplayedQuick() {
+		return isElementDisplayedQuick(By.id("deactivate_popup_header"), POPUP_CHECK_TIMEOUT);
+	}
 }
+
