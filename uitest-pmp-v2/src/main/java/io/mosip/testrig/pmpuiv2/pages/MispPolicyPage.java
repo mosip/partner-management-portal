@@ -1,10 +1,14 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
+import java.time.Duration;
+
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class MispPolicyPage extends BasePage {
 
@@ -395,6 +399,14 @@ public class MispPolicyPage extends BasePage {
 
 	public void clickOnDeactivateConfirmButton() {
 		clickOnElement(deactivateConfirmButton);
+	}
+
+	// The confirm click only fires an async request; the popup closes and the action menu
+	// resets only once the response lands, so callers must wait here before reopening the
+	// row's action menu - otherwise the reopened menu gets stomped by that same state reset.
+	public void waitUntilDeactivatePolicyPopupClosed() {
+		new WebDriverWait(driver, Duration.ofSeconds(30))
+				.until(ExpectedConditions.invisibilityOfElementLocated(By.id("deactivate_policy_popup_header")));
 	}
 
 	public boolean isViewButtonDisplayed() {

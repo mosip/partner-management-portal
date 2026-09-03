@@ -1,7 +1,12 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
 import java.time.Duration;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 import org.openqa.selenium.By;
@@ -16,6 +21,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
+import io.mosip.testrig.pmpuiv2.utility.LogUtil;
 
 public class MispServicesPage extends BasePage {
 
@@ -986,16 +992,14 @@ public class MispServicesPage extends BasePage {
 	}
 
 	public int getMispLicenseListRowCount() {
-		return getElementCount(By.xpath("//tr[contains(@id,'misp_license_list_item')]"));
+		return getElementCount(By.cssSelector("tr[id*='misp_license_list_item']"));
 	}
 
 	public boolean isEmptyMispLicenseListHeadersDisplayed() {
-		return isDisplayed(By.xpath("//h6[@id='partnerId']")) && isDisplayed(By.xpath("//h6[@id='orgName']"))
-				&& isDisplayed(By.xpath("//h6[@id='policyGroupName']")) && isDisplayed(By.xpath("//h6[@id='policyName']"))
-				&& isDisplayed(By.xpath("//h6[@id='mispLicenseKeyName']"))
-				&& isDisplayed(By.xpath("//h6[@id='createdDateTime']"))
-				&& isDisplayed(By.xpath("//h6[@id='expiryDateTime']")) && isDisplayed(By.xpath("//h6[@id='status']"))
-				&& isDisplayed(By.xpath("//h6[@id='mispLicenseKey']")) && isDisplayed(By.xpath("//h6[@id='action']"));
+		return isDisplayed(By.id("partnerId")) && isDisplayed(By.id("orgName")) && isDisplayed(By.id("policyGroupName"))
+				&& isDisplayed(By.id("policyName")) && isDisplayed(By.id("mispLicenseKeyName"))
+				&& isDisplayed(By.id("createdDateTime")) && isDisplayed(By.id("expiryDateTime"))
+				&& isDisplayed(By.id("status")) && isDisplayed(By.id("mispLicenseKey")) && isDisplayed(By.id("action"));
 	}
 
 	public boolean isMispLicenseListSubTitleDisplayed() {
@@ -1008,7 +1012,7 @@ public class MispServicesPage extends BasePage {
 
 	public String getLicenseListRowCellText(int rowIndex, int cellIndex) {
 		return getTextFromLocator(
-				By.xpath("//tr[@id='misp_license_list_item" + rowIndex + "']/td[" + cellIndex + "]"));
+				By.cssSelector("#misp_license_list_item" + rowIndex + " > td:nth-child(" + cellIndex + ")"));
 	}
 
 	public String getLatestLicenseRowPartnerId() {
@@ -1018,11 +1022,7 @@ public class MispServicesPage extends BasePage {
 	public String getLatestLicenseRowStatus() {
 		return getLicenseListRowCellText(1, 8);
 	}
-
-	// Deactivating (or regenerating) a license updates the row's status via an async call, so
-	// reading it immediately after clicking submit can still catch the pre-update value. Polls
-	// until it actually matches, the same way waitUntilMispLicenseListRowCountSatisfies covers
-	// the row's mere existence after a fresh navigation.
+	
 	public boolean waitUntilLatestLicenseRowStatusEquals(String expectedStatus) {
 		try {
 			return new WebDriverWait(driver, Duration.ofSeconds(30))
@@ -1119,19 +1119,21 @@ public class MispServicesPage extends BasePage {
 		return rgb == null ? null : rgb.replaceAll("\\s", "");
 	}
 
+	// waitAndFindElement rather than a raw driver.findElement: the row can still be rendering
+	// (e.g. right after a navigation or a status update), and a bare findElement has no wait at all.
 	public boolean isLicenseRowGreyedOut(int rowIndex) {
-		WebElement row = driver.findElement(By.id("misp_license_list_item" + rowIndex));
+		WebElement row = waitAndFindElement(By.id("misp_license_list_item" + rowIndex));
 		return LICENSE_ROW_DEACTIVATED_TEXT_COLOR.equals(normalizeRgb(getComputedStyle(row, "color")));
 	}
 
 	public boolean isLicenseRowNormalColor(int rowIndex) {
-		WebElement row = driver.findElement(By.id("misp_license_list_item" + rowIndex));
+		WebElement row = waitAndFindElement(By.id("misp_license_list_item" + rowIndex));
 		return LICENSE_ROW_ACTIVE_TEXT_COLOR.equals(normalizeRgb(getComputedStyle(row, "color")));
 	}
 
 	public boolean isLicenseRowStatusPillGreen(int rowIndex) {
-		WebElement statusPill = driver
-				.findElement(By.xpath("//tr[@id='misp_license_list_item" + rowIndex + "']/td[8]/div"));
+		WebElement statusPill = waitAndFindElement(
+				By.cssSelector("#misp_license_list_item" + rowIndex + " > td:nth-child(8) > div"));
 		return STATUS_PILL_ACTIVE_BG_COLOR.equals(normalizeRgb(getComputedStyle(statusPill, "background-color")));
 	}
 
@@ -1152,13 +1154,24 @@ public class MispServicesPage extends BasePage {
 		click(By.id("pagination_each_num_option" + optionIndex));
 	}
 
+	// The Creation Date column is rendered via the frontend's formatDate(value, "date"), which calls
+	// JS's Date.toLocaleDateString() with no explicit locale - so its displayed shape follows the
+	// *browser's* locale, not the MOSIP app's own selected UI language. Every observed run in this
+	// environment renders it as US-style M/d/yyyy (e.g. "8/31/2026"), so that's what's parsed here;
+	// if this suite is ever run against a browser/OS configured with a different locale, the display
+	// format - and therefore this parse - would need to change too.
+	private static final DateTimeFormatter MISP_LIST_CREATION_DATE_FORMAT = DateTimeFormatter.ofPattern("M/d/yyyy",
+			Locale.US);
+
 	public boolean isTableSortedDescendingByCreationDate() {
-		return executeScriptForBoolean(
-				"var rows = document.querySelectorAll(\"tr[id^='misp_license_list_item']\");"
-						+ "for (var i = 0; i < rows.length - 1; i++) {"
-						+ "  var d1 = new Date(rows[i].children[5].innerText);"
-						+ "  var d2 = new Date(rows[i+1].children[5].innerText);"
-						+ "  if (d1.getTime() < d2.getTime()) return false;" + "}" + "return true;");
+		List<String> actualText = getMispLicenseListColumnValues(6);
+		List<LocalDate> actual = new ArrayList<>();
+		for (String text : actualText) {
+			actual.add(LocalDate.parse(text, MISP_LIST_CREATION_DATE_FORMAT));
+		}
+		List<LocalDate> expected = new ArrayList<>(actual);
+		expected.sort(Comparator.reverseOrder());
+		return actual.equals(expected);
 	}
 
 	private static final String[] SORTABLE_MISP_LIST_COLUMN_IDS = { "partnerId", "orgName", "policyGroupName",
@@ -1186,28 +1199,53 @@ public class MispServicesPage extends BasePage {
 
 	public boolean isSortAscIconActive(String columnId) {
 		return SORT_ICON_ACTIVE_FILL.equalsIgnoreCase(
-				getTextFromAttribute(By.xpath("//*[@id='" + columnId + "_asc_icon']/*[1]"), "fill"));
+				getTextFromAttribute(By.cssSelector("#" + columnId + "_asc_icon > :first-child"), "fill"));
 	}
 
 	public boolean isSortDescIconActive(String columnId) {
 		return SORT_ICON_ACTIVE_FILL.equalsIgnoreCase(
-				getTextFromAttribute(By.xpath("//*[@id='" + columnId + "_desc_icon']/*[1]"), "fill"));
+				getTextFromAttribute(By.cssSelector("#" + columnId + "_desc_icon > :first-child"), "fill"));
+	}
+
+	// Reads the column into Java and compares it against a locally-sorted copy, the same way
+	// PartnerAdminPage/PartnerFilterTest verify sorting on the List of Partners page, rather than
+	// re-implementing the comparison as an embedded JS string. Easier to read and debug, and
+	// consistent with the rest of the framework - a raw JS string doing manual adjacent-pair
+	// comparisons was a one-off here.
+	private List<String> getMispLicenseListColumnValues(int columnIndex) {
+		By locator = By
+				.cssSelector("tr[id^='misp_license_list_item'] > td:nth-child(" + columnIndex + ")");
+		for (int attempt = 1; attempt <= STALE_RETRY; attempt++) {
+			try {
+				List<WebElement> cells = new WebDriverWait(driver, Duration.ofSeconds(30))
+						.until(ExpectedConditions.numberOfElementsToBeMoreThan(locator, 0));
+				List<String> values = new ArrayList<>();
+				for (WebElement cell : cells) {
+					values.add(cell.getText().trim());
+				}
+				return values;
+			} catch (StaleElementReferenceException stale) {
+				LogUtil.step("Column read went stale. Retry " + attempt + "/" + STALE_RETRY);
+			} catch (TimeoutException noRows) {
+				LogUtil.step("No rows rendered for column: " + locator);
+				return new ArrayList<>();
+			}
+		}
+		throw new RuntimeException("Column still stale after " + STALE_RETRY + " retries: " + locator);
 	}
 
 	public boolean isTableSortedAscendingByColumn(int columnIndex) {
-		return executeScriptForBoolean("var rows = document.querySelectorAll(\"tr[id^='misp_license_list_item']\");"
-				+ "for (var i = 0; i < rows.length - 1; i++) {"
-				+ "  var a = rows[i].children[" + (columnIndex - 1) + "].innerText.trim().toLowerCase();"
-				+ "  var b = rows[i+1].children[" + (columnIndex - 1) + "].innerText.trim().toLowerCase();"
-				+ "  if (a > b) return false;" + "}" + "return true;");
+		List<String> actual = getMispLicenseListColumnValues(columnIndex);
+		List<String> expected = new ArrayList<>(actual);
+		expected.sort(String.CASE_INSENSITIVE_ORDER);
+		return actual.equals(expected);
 	}
 
 	public boolean isTableSortedDescendingByColumn(int columnIndex) {
-		return executeScriptForBoolean("var rows = document.querySelectorAll(\"tr[id^='misp_license_list_item']\");"
-				+ "for (var i = 0; i < rows.length - 1; i++) {"
-				+ "  var a = rows[i].children[" + (columnIndex - 1) + "].innerText.trim().toLowerCase();"
-				+ "  var b = rows[i+1].children[" + (columnIndex - 1) + "].innerText.trim().toLowerCase();"
-				+ "  if (a < b) return false;" + "}" + "return true;");
+		List<String> actual = getMispLicenseListColumnValues(columnIndex);
+		List<String> expected = new ArrayList<>(actual);
+		expected.sort(String.CASE_INSENSITIVE_ORDER.reversed());
+		return actual.equals(expected);
 	}
 
 	// Sorting re-fetches the list asynchronously from the server, so poll briefly rather than checking once immediately.
@@ -1252,7 +1290,7 @@ public class MispServicesPage extends BasePage {
 	}
 
 	public void clickOnLicenseRowPartnerIdCell(int rowIndex) {
-		click(By.xpath("//tr[@id='misp_license_list_item" + rowIndex + "']/td[1]"));
+		click(By.cssSelector("#misp_license_list_item" + rowIndex + " > td:nth-child(1)"));
 	}
 
 	public void clickOnMispLicenseListRegenerateButton() {
