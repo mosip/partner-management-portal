@@ -1855,4 +1855,230 @@ public class GlobalConstants {
 	public static final String isMispPartnerFilterApplied = "Verify the MISP Partner type filter has been applied before reading statuses";
 	public static final String isFilteredRowPartnerTypeMisp = "Verify every filtered row's Partner Type is MISP Partner";
 
+	// MISP License List - tabular view, filters, deactivate/regenerate flows
+	// Source: pmp-ui-v2/public/i18n/eng.json, mispLicenseList.*
+	public static final String MISP_LIST_HEADER_PARTNER_ID = "Partner ID";
+	public static final String MISP_LIST_HEADER_PARTNER_ID_ARA = "معرف الشريك";
+	public static final String MISP_LIST_HEADER_PARTNER_ID_FRA = "ID partenaire";
+	public static final String MISP_LIST_HEADER_ORG_NAME = "Organisation";
+	public static final String MISP_LIST_HEADER_ORG_NAME_ARA = "منظمة";
+	public static final String MISP_LIST_HEADER_ORG_NAME_FRA = "Organisation";
+	public static final String MISP_LIST_HEADER_POLICY_GROUP = "Policy Group";
+	public static final String MISP_LIST_HEADER_POLICY_GROUP_ARA = "مجموعة السياسة";
+	public static final String MISP_LIST_HEADER_POLICY_GROUP_FRA = "Groupe de politiques";
+	public static final String MISP_LIST_HEADER_POLICY_NAME = "Policy Name";
+	public static final String MISP_LIST_HEADER_POLICY_NAME_ARA = "اسم السياسة";
+	public static final String MISP_LIST_HEADER_POLICY_NAME_FRA = "Nom de la politique";
+	public static final String MISP_LIST_HEADER_LICENSE_KEY_NAME = "MISP License Key Name";
+	public static final String MISP_LIST_HEADER_LICENSE_KEY_NAME_ARA = "اسم مفتاح ترخيص MISP";
+	public static final String MISP_LIST_HEADER_LICENSE_KEY_NAME_FRA = "Nom de la clé de licence MISP";
+	public static final String MISP_LIST_HEADER_CREATION_DATE = "Creation Date";
+	public static final String MISP_LIST_HEADER_CREATION_DATE_ARA = "تاريخ الإنشاء";
+	public static final String MISP_LIST_HEADER_CREATION_DATE_FRA = "Date de création";
+	public static final String MISP_LIST_HEADER_EXPIRATION_DATE = "Expiration Date";
+	public static final String MISP_LIST_HEADER_EXPIRATION_DATE_ARA = "تاريخ انتهاء الصلاحية";
+	public static final String MISP_LIST_HEADER_EXPIRATION_DATE_FRA = "Date d'expiration";
+	public static final String MISP_LIST_HEADER_STATUS = "Status";
+	public static final String MISP_LIST_HEADER_STATUS_ARA = "الحالة";
+	public static final String MISP_LIST_HEADER_STATUS_FRA = "Statut";
+	public static final String MISP_LIST_HEADER_LICENSE_KEY = "MISP License Key";
+	public static final String MISP_LIST_HEADER_LICENSE_KEY_ARA = "مفتاح ترخيص MISP";
+	public static final String MISP_LIST_HEADER_LICENSE_KEY_FRA = "Clé de licence MISP";
+	public static final String MISP_LIST_HEADER_ACTION = "Action";
+	public static final String MISP_LIST_HEADER_ACTION_ARA = "إجراء";
+	public static final String MISP_LIST_HEADER_ACTION_FRA = "Action";
+	public static final String isMispLicenseListTableHeaderTextCorrect = "Verify the MISP License List tabular view column header text matches the active login language";
+
+	// Source: pmp-ui-v2/public/i18n/eng.json, mispLicenseList.listOfMispLicenseKeys (rendered as "<text> (<count>)" by FilterButtons)
+	public static final String LIST_OF_MISP_LICENSE_KEYS_SUBTITLE_TEXT = "List of MISP License Keys";
+	public static final String LIST_OF_MISP_LICENSE_KEYS_SUBTITLE_TEXT_ARA = "قائمة مفاتيح ترخيص MISP";
+	public static final String LIST_OF_MISP_LICENSE_KEYS_SUBTITLE_TEXT_FRA = "Liste des clés de licence MISP";
+	public static final String isMispLicenseListSubTitleDisplayed = "Verify the List of MISP License Keys subtitle is displayed";
+	public static final String isMispLicenseListSubTitleCountFormatCorrect = "Verify the List of MISP License Keys subtitle follows the '<text> (<count>)' format";
+	public static final String isMispLicenseListSubTitleCountMatchesRowCount = "Verify the count in the List of MISP License Keys subtitle matches the number of rows in the tabular view";
+	public static final String isEmptyMispLicenseListHeadersDisplayed = "Verify all MISP license list column headers are displayed even when the list is empty";
+
+	public static final String isGenerateMispLicenceKeyButtonPositionedTopRight = "Verify the Generate MISP License Key button is positioned in the top right of the screen";
+	public static final String isFilterButtonPositionedTopRight = "Verify the Filter button is positioned in the top right of the screen";
+	public static final String areGenerateAndFilterButtonsRightEdgeAligned = "Verify the Generate MISP License Key and Filter buttons share the same right edge";
+	public static final String isGenerateButtonAboveFilterButton = "Verify the Generate MISP License Key button is positioned above the Filter button";
+	public static final String isMispLicenseListTablePopulatedWithRows = "Verify the MISP License list tabular view has at least one row before filtering";
+	public static final String isFilterButtonAccessible = "Verify the Filter panel opens when the Filter button is clicked";
+	public static final String isFilterButtonDisabledOnceExpanded = "Verify the Filter button is disabled once the filter panel is expanded";
+	public static final String isMispLicenseFilterResetLinkDisplayedWhenExpanded = "Verify the Reset Filter link is displayed once the filter panel is expanded";
+	public static final String isMispLicenseFilterResetLinkHiddenWhenCollapsed = "Verify the Reset Filter link is hidden once the filter panel is collapsed";
+	public static final String areMispFilterTextFieldsGenuineInputs = "Verify the MISP License filter text fields are genuine input elements";
+	public static final String isMispFilterStatusFieldADropdown = "Verify the MISP License filter Status field is a dropdown button";
+	// Source: pmp-ui-v2/public/i18n/eng.json, mispLicenseList.searchMispLicenseKeyName
+	public static final String MISP_LICENSE_KEY_NAME_SEARCH_PLACEHOLDER = "Search MISP License Key Name";
+	public static final String MISP_LICENSE_KEY_NAME_SEARCH_PLACEHOLDER_ARA = "ابحث عن اسم مفتاح ترخيص MISP";
+	public static final String MISP_LICENSE_KEY_NAME_SEARCH_PLACEHOLDER_FRA = "Rechercher le nom de la clé de licence MISP";
+	public static final String isMispFilterLicenseKeyNameSearchBarVisible = "Verify the MISP License Key Name filter search bar shows the expected placeholder text";
+	public static final String isMultiFilterResultsUpdatedDynamically = "Verify the MISP License list updates to match the applied Policy Group and Status filters";
+	public static final String isMultiFilterSubTitleCountMatchesFilteredRowCount = "Verify the List of MISP License Keys subtitle count matches the filtered row count";
+	public static final String isMispLicenseFilterResetClearsAllFiltersAndShowsFullList = "Verify Reset Filter clears all applied filters and restores the full unfiltered MISP license list";
+	public static final String isMispLicenseListEmptyForNoMatchingFilter = "Verify the MISP License list is empty when no license matches the applied filter";
+	// Source: pmp-ui-v2/public/i18n/eng.json, partnerList.noResultsFound
+	public static final String NO_RESULTS_FOUND_TEXT = "No Results Found";
+	public static final String NO_RESULTS_FOUND_TEXT_ARA = "لم يتم العثور على نتائج";
+	public static final String NO_RESULTS_FOUND_TEXT_FRA = "Aucun résultat trouvé";
+	public static final String isInvalidFilterInputBlocksSubmission = "Verify an invalid MISP License filter input shows an error and disables Apply Filter";
+
+	public static final String isCreatedDateDisplayedInBrowserSettingTime = "Verify the Creation Date column reflects the browser's locale date format";
+	public static final String isExpirationDateDisplayedInBrowserSettingTime = "Verify the Expiration Date column reflects the browser's locale date format";
+	public static final String isEyeIconPopupTitleShowsLicenseKeyName = "Verify the eye-icon copy-id popup title displays the corresponding MISP license key name";
+	public static final String isEyeIconPopupSubtitleShowsPartnerId = "Verify the eye-icon copy-id popup subtitle displays the corresponding Partner ID";
+
+	// Deactivate MISP License Key
+	// Source: pmp-ui-v2/public/i18n/eng.json, deactivateMispLicense.title/description (rendered by DeactivatePopup.js as "<title> - '<name>'?")
+	public static final String DEACTIVATE_MISP_LICENSE_POPUP_TITLE = "Do you want to Deactivate MISP License Key - '%s'?";
+	public static final String DEACTIVATE_MISP_LICENSE_POPUP_DESCRIPTION = "On clicking Confirm, you will not be able to use the MISP License Key for authenticating requests anymore.";
+	public static final String MISP_LICENSE_INACTIVE_STATUS_LABEL = "Deactivated";
+	public static final String isMispLicenseListActionMenuDisplayed = "Verify the MISP license row action menu is displayed";
+	public static final String isMispLicenseListRegenerateButtonDisplayed = "Verify the Regenerate option is displayed in the MISP license row action menu";
+	public static final String isMispLicenseListRegenerateButtonEnabled = "Verify the Regenerate option is enabled for an Active MISP license key";
+	public static final String isMispLicenseListDeactivateButtonDisplayed = "Verify the Deactivate option is displayed in the MISP license row action menu";
+	public static final String isMispLicenseListDeactivateButtonEnabled = "Verify the Deactivate option is enabled for an Active MISP license key";
+	public static final String isDeactivatePopupHeaderDisplayedForMispLicense = "Verify the Deactivate confirmation popup header is displayed for the MISP license key";
+	public static final String isDeactivatePopupDescriptionDisplayedForMispLicense = "Verify the Deactivate confirmation popup description is displayed for the MISP license key";
+	public static final String isDeactivateSubmitButtonDisplayedForMispLicense = "Verify the Deactivate confirmation popup Confirm button is displayed";
+	public static final String isDeactivateCancelButtonAvailableForMispLicense = "Verify the Deactivate confirmation popup Cancel button is displayed";
+	public static final String isDeactivatePopupTitleCorrectForMispLicense = "Verify the Deactivate confirmation popup title names the correct MISP license key";
+	public static final String isDeactivatePopupSubtitleCorrectForMispLicense = "Verify the Deactivate confirmation popup description text is correct";
+	public static final String isDeactivateSubmitButtonEnabledForMispLicense = "Verify the Deactivate confirmation popup Confirm button is enabled";
+	public static final String isDeactivateCancelButtonEnabledForMispLicense = "Verify the Deactivate confirmation popup Cancel button is enabled";
+	public static final String isDeactivatePopupClosedAfterCancelForMispLicense = "Verify the Deactivate confirmation popup closes after Cancel is clicked";
+	public static final String isMispLicenseKeyRemainsActiveAfterCancel = "Verify the MISP license key remains Active after cancelling deactivation";
+	public static final String isMispServicesTabularViewUnchangedAfterCancel = "Verify the MISP License list tabular view is unchanged after cancelling deactivation";
+	public static final String isMispLicenseStatusInactiveAfterDeactivation = "Verify the MISP license key status becomes Deactivated after confirming deactivation";
+	public static final String isMispLicenseListEyeIconPresentOnlyForActive = "Verify the eye icon is present only for an Active MISP license key row";
+	public static final String isDeactivatedLicenseRowGreyedOut = "Verify a deactivated MISP license key row is greyed out";
+	public static final String isActiveLicenseStatusGreen = "Verify an Active MISP license key status pill is green";
+	public static final String isMispLicenseListDeactivatedRowClickDoesNotNavigate = "Verify clicking a deactivated MISP license key row does not navigate to its details view";
+	public static final String isMispLicenseListRegenerateButtonDisabledForInactiveLicense = "Verify the Regenerate option is disabled for a deactivated MISP license key";
+	public static final String isMispLicenseListActionMenuAlwaysShowsAllThreeItems = "Verify the MISP license row action menu always shows View, Regenerate and Deactivate";
+	public static final String isMispLicenseListDeactivateButtonEnabledOnlyForActive = "Verify the Deactivate option is enabled only for an Active MISP license key";
+	public static final String isRegenerateNavigationBlockedForInactiveLicense = "Verify navigating to Regenerate is blocked for a deactivated MISP license key";
+	public static final String isMispLicenseListActionMenuIconNotGreyedOutForDeactivatedRow = "Verify the action menu (...) icon is not greyed out for a deactivated MISP license row";
+	public static final String isMispLicenseKeyStatusDeactivatedInViewDetails = "Verify the MISP license key status shows Deactivated in the Individual View page";
+	public static final String isMispServicesTabularViewDisplayedAfterDeactivation = "Verify the MISP License list tabular view is displayed after confirming deactivation";
+
+	public static final String isMispLicenseListActiveRowClickNavigatesToDetails = "Verify clicking an Active MISP license key row navigates to its details view";
+	public static final String isMispLicenseKeyStatusActiveInViewDetailsForFutureExpiry = "Verify a MISP license key with a future expiry date remains Active in the Individual View";
+	public static final String isMispLicenseListSortIconsPresentExceptActionAndLicenseKey = "Verify sort icons are present for every sortable MISP license list column except Action and MISP License Key";
+	public static final String isMispLicenseListColumnSortingFunctional = "Verify sorting the MISP license list by a column updates the row order and highlights the active sort icon";
+	public static final String isMispLicenseListSortedDescendingByCreatedDate = "Verify the MISP license list defaults to descending order by Creation Date";
+	public static final String isMispLicenseListDefaultPageSizeEight = "Verify the MISP license list defaults to 8 records per page";
+	public static final String isMispLicenseListPageSizeConfigurable = "Verify the MISP license list records-per-page selection is configurable";
+	public static final String isMispServicesBackButtonNavigatesToHome = "Verify the MISP Services back icon navigates to the dashboard home";
+
+	// Regenerate MISP License Key
+	// Source: pmp-ui-v2/src/pages/admin/mispPartnerServices/RegenerateMispLicenseKey.js, regenerateMispLicenseKey.*
+	public static final String REGENERATE_MISP_LICENSE_KEY_PAGE_TITLE = "Regenerate MISP License Key";
+	public static final String REGENERATE_MISP_LICENSE_KEY_PAGE_TITLE_ARA = "تجديد مفتاح ترخيص MISP";
+	public static final String REGENERATE_MISP_LICENSE_KEY_PAGE_TITLE_FRA = "Régénérer la clé de licence MISP";
+	// Rendered by common/Title.js as "<commons.home>" + "/ <mispLicenseList.mispPartnerServices>"
+	public static final String REGENERATE_BREADCRUMB_TEXT = "Home/ MISP Services";
+	public static final String REGENERATE_BREADCRUMB_TEXT_ARA = "الرئيسية/ خدمات MISP";
+	public static final String REGENERATE_BREADCRUMB_TEXT_FRA = "Maison/ Services MISP";
+	public static final String isRegenerateBreadcrumbTextCorrect = "Verify the Regenerate MISP License Key breadcrumb text is correct";
+	// Rendered as requestPolicy.mandatoryFieldsMsg1 + " * " + requestPolicy.mandatoryFieldsMsg2
+	public static final String REGENERATE_MANDATORY_FIELDS_SUBTITLE_TEXT = "All fields marked with * are mandatory.";
+	public static final String REGENERATE_MANDATORY_FIELDS_SUBTITLE_TEXT_ARA = "جميع الحقول تحمل علامة * إلزامية.";
+	public static final String REGENERATE_MANDATORY_FIELDS_SUBTITLE_TEXT_FRA = "Tous les champs marqués d'un * sont obligatoires.";
+	public static final String isRegenerateMandatoryFieldsSubtitleCorrect = "Verify the Regenerate screen mandatory-fields subtitle text is correct";
+	public static final String isRegeneratePartnerIdLabelDisplayed = "Verify the Partner ID label is displayed on the Regenerate screen";
+	public static final String isRegeneratePartnerTypeLabelDisplayed = "Verify the Partner Type label is displayed on the Regenerate screen";
+	public static final String isRegeneratePolicyGroupLabelDisplayed = "Verify the Policy Group label is displayed on the Regenerate screen";
+	public static final String isRegeneratePolicyNameLabelDisplayed = "Verify the Policy Name label is displayed on the Regenerate screen";
+	public static final String isRegenerateLicenseKeyNameLabelDisplayed = "Verify the MISP License Key Name label is displayed on the Regenerate screen";
+	public static final String isRegeneratePartnerIdCarriedOver = "Verify the Partner ID field is carried over and read-only on the Regenerate screen";
+	public static final String isRegeneratePartnerTypeCarriedOver = "Verify the Partner Type field is carried over and read-only on the Regenerate screen";
+	public static final String isRegeneratePolicyGroupCarriedOver = "Verify the Policy Group field is carried over and read-only on the Regenerate screen";
+	public static final String isRegeneratePolicyGroupPlaceholderAligned = "Verify the Policy Group placeholder is fully visible within the viewport on the Regenerate screen";
+	// Source: pmp-ui-v2/public/i18n/eng.json, regenerateMispLicenseKey.noPolicySelected
+	public static final String NO_POLICY_NAME_SELECTED = "No Policy Name selected";
+	public static final String NO_POLICY_NAME_SELECTED_ARA = "لم يتم تحديد اسم السياسة";
+	public static final String NO_POLICY_NAME_SELECTED_FRA = "Aucun nom de politique sélectionné";
+	public static final String isRegeneratePolicyNameCarriedOver = "Verify the Policy Name field is carried over and read-only on the Regenerate screen";
+	public static final String isRegeneratePolicyNamePlaceholderAligned = "Verify the Policy Name placeholder is fully visible within the viewport on the Regenerate screen";
+	public static final String isRegenerateLicenseKeyNameFieldEditable = "Verify the MISP License Key Name field is displayed and editable on the Regenerate screen";
+	public static final String isRegenerateLicenseKeyNameFieldIsTextbox = "Verify the MISP License Key Name field on the Regenerate screen behaves as a text input";
+	// Source: pmp-ui-v2/public/i18n/eng.json, generateLicenseKey.enterLicenseKeyName
+	public static final String REGENERATE_LICENSE_KEY_NAME_HELP_TEXT = "Enter a name for MISP License key";
+	public static final String REGENERATE_LICENSE_KEY_NAME_HELP_TEXT_ARA = "أدخل اسمًا لمفتاح ترخيص MISP";
+	public static final String REGENERATE_LICENSE_KEY_NAME_HELP_TEXT_FRA = "Entrez un nom pour la clé de licence MISP";
+	public static final String isRegenerateLicenseKeyNameHelpTextCorrect = "Verify the MISP License Key Name field placeholder text is correct on the Regenerate screen";
+	public static final String isRegenerateLicenseKeyNameHelpTextDisabledForEdit = "Verify the MISP License Key Name placeholder text does not change while typing or after Clear Form";
+	public static final String isRegenerateClearFormButtonClearsLicenseKeyNameField = "Verify Clear Form empties the MISP License Key Name field on the Regenerate screen";
+	public static final String isRegenerateExpiryDateFieldDisplayed = "Verify the Expiry Date field is displayed on the Regenerate screen";
+	public static final String isRegenerateCalendarDisplayed = "Verify the calendar is displayed when the Expiry Date field is clicked on the Regenerate screen";
+	public static final String isRegenerateCalendarDisplayedInEnglishOnly = "Verify the Regenerate screen calendar month header is always displayed in English";
+	public static final String isRegenerateExpiryDateFormatValid = "Verify the Regenerate screen expiry date field format is mm/dd/yyyy";
+	public static final String isRegenerateExpiryDateSelectionChangeable = "Verify the Regenerate screen expiry date selection can be changed multiple times before submission";
+	public static final String isRegenerateExpiryDateFieldFreelyEditable = "Verify the Regenerate screen expiry date field accepts free text entry";
+	public static final String isRegenerateExpiryDateCalenderInfoDescriptionDisplayed = "Verify the Regenerate screen expiry date info description is displayed";
+	public static final String isRegenerateExpiryDateCalenderInfoTextCorrect = "Verify the Regenerate screen expiry date info description text matches the Generate screen wording";
+	public static final String isRegenerateExpiryDateCalenderInfoDescriptionNotEditable = "Verify the Regenerate screen expiry date info description cannot be edited";
+	public static final String isRegenerateInfoIconHoverCursorPointer = "Verify the Regenerate screen expiry date info icon shows a pointer cursor on hover";
+	public static final String isRegenerateClearFormButtonDisplayed = "Verify the Clear Form button is displayed on the Regenerate screen";
+	public static final String isRegenerateCancelButtonDisplayed = "Verify the Cancel button is displayed on the Regenerate screen";
+	public static final String isRegenerateSubmitButtonDisplayed = "Verify the Submit button is displayed on the Regenerate screen";
+	public static final String isRegenerateSubmitButtonDisabledByDefault = "Verify the Regenerate screen Submit button is disabled by default";
+	public static final String isRegenerateCancelReturnsToMispServicesList = "Verify confirming Cancel on the Regenerate screen returns to the MISP License list";
+	public static final String isRegenerateCancelDoesNotPersistUnsavedData = "Verify re-entering the Regenerate screen after cancelling does not retain the previously typed license key name";
+	public static final String isRegenerateImportantNoteDisplayed = "Verify the Important Note is displayed on the Regenerate screen";
+	public static final String isRegenerateInvalidCharacterErrorMessageDisplayed = "Verify the invalid-character error message is displayed for the MISP License Key Name field on the Regenerate screen";
+	public static final String isRegenerateSubmitButtonEnabledWithOnlyLicenseKeyName = "Verify the Regenerate screen Submit button is enabled once only the MISP License Key Name is provided";
+	public static final String isRegenerateErrorMessageDisplayedForPastExpiryDate = "Verify the Regenerate screen shows an error when submitted with a past expiry date";
+	public static final String isRegenerateErrorMessageDisplayedForTodayExpiryDate = "Verify the Regenerate screen shows an error when submitted with today's expiry date";
+	public static final String isRegenerateDuplicateLicenseKeyNameErrorDisplayed = "Verify the Regenerate screen shows a duplicate-name error when the MISP License Key Name already exists";
+	public static final String isRegenerateMispLicenseKeyPopupDisplayed = "Verify the copy-id popup is displayed after successfully regenerating a MISP license key";
+	public static final String isRegenerateCopyIdPopupTitleShowsNewLicenseKeyName = "Verify the regenerate copy-id popup title shows the newly regenerated MISP license key name";
+	public static final String isRegenerateCopyIdPopupSubtitleShowsSamePartnerId = "Verify the regenerate copy-id popup subtitle shows the same Partner ID as before regeneration";
+	public static final String isRegenerateCopyIdPopupHeaderDisplayed = "Verify the regenerate copy-id popup header is displayed";
+	// Source: pmp-ui-v2/public/i18n/eng.json, mispLicenseList.mispLicenseKey
+	public static final String MISP_LICENSE_KEY_POPUP_HEADER_TEXT = "MISP License Key";
+	public static final String MISP_LICENSE_KEY_POPUP_HEADER_TEXT_ARA = "مفتاح ترخيص MISP";
+	public static final String MISP_LICENSE_KEY_POPUP_HEADER_TEXT_FRA = "Clé de licence MISP";
+	public static final String isRegenerateCopyIdPopupHeaderTextCorrect = "Verify the regenerate copy-id popup header text is correct";
+	public static final String isRegenerateCopyIdPopupLicenseKeyValueDisplayed = "Verify the regenerate copy-id popup displays the regenerated MISP license key value";
+	public static final String isRegenerateCopyIdPopupLicenseKeyValueBold = "Verify the regenerate copy-id popup MISP license key value is displayed in bold";
+	public static final String isRegenerateCopyIdPopupNoteDisplayed = "Verify the regenerate copy-id popup alert note is displayed";
+	public static final String isRegenerateCopyOperationRepeatable = "Verify the regenerate copy-id popup Copy action can be repeated";
+	public static final String isRegenerateConfirmationHeaderDisplayed = "Verify the Regenerate confirmation header is displayed";
+	// Source: pmp-ui-v2/public/i18n/eng.json, regenerateMispLicenseKey.regenerateLicenseKeySuccessHeader
+	public static final String REGENERATE_LICENSE_KEY_CONFIRMATION_HEADER_TEXT = "MISP License Key is regenerated successfully!";
+	public static final String REGENERATE_LICENSE_KEY_CONFIRMATION_HEADER_TEXT_ARA = "تم تجديد مفتاح ترخيص MISP بنجاح!";
+	public static final String REGENERATE_LICENSE_KEY_CONFIRMATION_HEADER_TEXT_FRA = "La clé de licence MISP a été régénérée avec succès !";
+	public static final String isRegenerateConfirmationHeaderNotEditable = "Verify the Regenerate confirmation header cannot be edited";
+	public static final String isPreviousLicenseAutoDeactivatedOnRegenerate = "Verify the previous MISP license key is automatically deactivated after regeneration";
+	public static final String isRegenerateExpiryDateNotEditableAfterSubmission = "Verify the MISP license key expiry date is read-only in the Individual View after regeneration";
+	public static final String isRegenerateDuplicateLicenseKeyNameErrorDisplayedForExactCaseMatch = "Verify the Regenerate screen rejects a MISP License Key Name that exactly matches an existing name, including case";
+	public static final String isRegenerateLicenseKeyNameUniqueAcrossCaseVariant = "Verify the Regenerate screen accepts a MISP License Key Name that differs from an existing name only by case";
+	public static final String isRegenerateHomeButtonNavigatesToDashboard = "Verify the Home button on the Regenerate confirmation screen navigates to the dashboard";
+
+	// MISP Services page title, reused across regenerate/deactivate navigation checks
+	// Source: pmp-ui-v2/public/i18n/eng.json, mispLicenseList.mispPartnerServices
+	public static final String MISP_SERVICES_PAGE_TITLE = "MISP Services";
+	public static final String MISP_SERVICES_PAGE_TITLE_ARA = "خدمات MISP";
+	public static final String MISP_SERVICES_PAGE_TITLE_FRA = "Services MISP";
+
+	// Test data values for regenerate/deactivate/case-sensitivity MISP license key scenarios
+	public static final String MISP_LICENSEKEY_REGENERATE_TEMP = "misplicensekeyregeneratetemp";
+	public static final String MISP_LICENSEKEY_01_REGENERATED = "misplicensekey01regenerated";
+	public static final String MISP_LICENSEKEY_CASE_SENSITIVITY_BASE = "mispcasesensitivitybase";
+	public static final String MISP_LICENSEKEY_CASE_SENSITIVITY_VARIANT = "MISPCASESENSITIVITYBASE";
+	public static final String MISP_LICENSEKEY_HOME_BUTTON_TEST = "misplicensekeyhomebuttontest";
+	public static final String MISP_LICENSEKEY_DEACTIVATE_CONFIRM_TEST = "misplicensekeydeactivateconfirmtest";
+	public static final String MISP_LICENSEKEY_ROW_GREYED_OUT_TEST = "misplicensekeyrowgreyedouttest";
+
+	// MISP Partner Onboarding via Keycloak self-registration
+	public static final String isRegisterEmailFieldInvalidForMalformedEmail = "Verify the Email field is flagged invalid for a malformed email address during self-registration";
+	public static final String isRegisterSubmitButtonDisabledWithoutUsernameAndEmail = "Verify the Submit button remains disabled when Username and Email are not entered during self-registration";
+	public static final String MISP_MINIMAL_EMAIL = "hm@gmail.co.on";
+	public static final String isMinimalEmailRegistrationSuccessful = "Verify self-registration succeeds with a minimal-length email ID";
+	public static final String MISP_MINIMAL_USERNAME = "HM";
+	public static final String isMinimalUsernameRegistrationSuccessful = "Verify self-registration succeeds with a minimal-length username";
+
 }

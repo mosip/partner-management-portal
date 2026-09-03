@@ -502,12 +502,28 @@ public class BasePage {
 
 	protected String getTextFromLocator(WebElement element) {
 		LogUtil.action("Getting text from element: ", element);
+		for (int attempt = 0; attempt < STALE_RETRY; attempt++) {
+			try {
+				waitForElementVisible(element);
+				return element.getText();
+			} catch (StaleElementReferenceException stale) {
+				LogUtil.step("Retrying getTextFromLocator due to stale element");
+			}
+		}
 		waitForElementVisible(element);
 		return element.getText();
 	}
 
 	protected String getTextFromAttribute(WebElement element, String atrr) {
 		LogUtil.action("Getting text from element for the " + atrr + " attribute: ", element);
+		for (int attempt = 0; attempt < STALE_RETRY; attempt++) {
+			try {
+				waitForElementVisible(element);
+				return element.getAttribute(atrr);
+			} catch (StaleElementReferenceException stale) {
+				LogUtil.step("Retrying getTextFromAttribute due to stale element");
+			}
+		}
 		waitForElementVisible(element);
 		return element.getAttribute(atrr);
 	}
@@ -663,6 +679,38 @@ public class BasePage {
 				element));
 	}
 
+	protected boolean isElementInRightHalfOfViewport(WebElement element) {
+		LogUtil.verify("Checking if element is in the right half of the viewport: ", element);
+		WaitUtil.waitForVisibility(driver, element);
+		return Boolean.TRUE.equals(((JavascriptExecutor) driver).executeScript(
+				"var b=arguments[0].getBoundingClientRect();" + "return (b.left+b.right)/2 >= window.innerWidth/2;",
+				element));
+	}
+
+	protected boolean areElementsRightEdgeAligned(WebElement first, WebElement second, int tolerancePx) {
+		LogUtil.verify("Checking whether two elements share the same right edge: ", first);
+		return Boolean.TRUE.equals(((JavascriptExecutor) driver).executeScript(
+				"var a=arguments[0].getBoundingClientRect();" + "var b=arguments[1].getBoundingClientRect();"
+						+ "return Math.abs(a.right - b.right) <= arguments[2];",
+				first, second, tolerancePx));
+	}
+
+	protected boolean isElementAboveOther(WebElement upper, WebElement lower) {
+		LogUtil.verify("Checking if element is positioned above another element: ", upper);
+		return Boolean.TRUE.equals(((JavascriptExecutor) driver).executeScript(
+				"var a=arguments[0].getBoundingClientRect();" + "var b=arguments[1].getBoundingClientRect();"
+						+ "return a.bottom <= b.top;",
+				upper, lower));
+	}
+
+	protected String executeScriptForString(String script) {
+		return (String) ((JavascriptExecutor) driver).executeScript(script);
+	}
+
+	protected boolean executeScriptForBoolean(String script) {
+		return Boolean.TRUE.equals(((JavascriptExecutor) driver).executeScript(script));
+	}
+
 	protected int getElementCount(By locator) {
 		LogUtil.verify("Counting elements for: ", locator);
 		return driver.findElements(locator).size();
@@ -771,16 +819,29 @@ public class BasePage {
 	}
 
 	protected String getTextFromLocator(By locator) {
-		WebElement element = driver.findElement(locator);
-		waitForElementVisible(element);
-		return element.getText();
+		LogUtil.action("Getting text from element: " + locator);
+		for (int attempt = 0; attempt < STALE_RETRY; attempt++) {
+			try {
+				WebElement element = waitAndFindElement(locator);
+				return element.getText();
+			} catch (StaleElementReferenceException stale) {
+				LogUtil.step("Retrying getTextFromLocator due to stale element");
+			}
+		}
+		return waitAndFindElement(locator).getText();
 	}
 
 	protected String getTextFromAttribute(By locator, String attr) {
-		WebElement element = driver.findElement(locator);
-		LogUtil.action("Getting text from element for the " + attr + " attribute: ", element);
-		waitForElementVisible(element);
-		return element.getAttribute(attr);
+		LogUtil.action("Getting text from element for the " + attr + " attribute: " + locator);
+		for (int attempt = 0; attempt < STALE_RETRY; attempt++) {
+			try {
+				WebElement element = waitAndFindElement(locator);
+				return element.getAttribute(attr);
+			} catch (StaleElementReferenceException stale) {
+				LogUtil.step("Retrying getTextFromAttribute due to stale element");
+			}
+		}
+		return waitAndFindElement(locator).getAttribute(attr);
 	}
 
 	protected WebElement waitAndFindElement(By locator) {
