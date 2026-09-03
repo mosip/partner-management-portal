@@ -3,6 +3,7 @@ package io.mosip.testrig.pmpuiv2.pages;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -1094,7 +1095,7 @@ public class MispServicesPage extends BasePage {
 	}
 
 	public boolean isMispLicenseListRegenerateButtonEnabled() {
-		String classAttr = mispLicenseListRegenerateButton.getAttribute("class");
+		String classAttr = getTextFromAttribute(mispLicenseListRegenerateButton, "class");
 		return classAttr != null && classAttr.contains("text-[#3E3E3E]");
 	}
 
@@ -1103,7 +1104,7 @@ public class MispServicesPage extends BasePage {
 	}
 
 	public boolean isMispLicenseListDeactivateButtonEnabled() {
-		String classAttr = mispLicenseListDeactivateButton.getAttribute("class");
+		String classAttr = getTextFromAttribute(mispLicenseListDeactivateButton, "class");
 		return classAttr != null && classAttr.contains("text-[#3E3E3E]");
 	}
 
@@ -1154,12 +1155,6 @@ public class MispServicesPage extends BasePage {
 		click(By.id("pagination_each_num_option" + optionIndex));
 	}
 
-	// The Creation Date column is rendered via the frontend's formatDate(value, "date"), which calls
-	// JS's Date.toLocaleDateString() with no explicit locale - so its displayed shape follows the
-	// *browser's* locale, not the MOSIP app's own selected UI language. Every observed run in this
-	// environment renders it as US-style M/d/yyyy (e.g. "8/31/2026"), so that's what's parsed here;
-	// if this suite is ever run against a browser/OS configured with a different locale, the display
-	// format - and therefore this parse - would need to change too.
 	private static final DateTimeFormatter MISP_LIST_CREATION_DATE_FORMAT = DateTimeFormatter.ofPattern("M/d/yyyy",
 			Locale.US);
 
@@ -1167,11 +1162,26 @@ public class MispServicesPage extends BasePage {
 		List<String> actualText = getMispLicenseListColumnValues(6);
 		List<LocalDate> actual = new ArrayList<>();
 		for (String text : actualText) {
-			actual.add(LocalDate.parse(text, MISP_LIST_CREATION_DATE_FORMAT));
+			try {
+				actual.add(LocalDate.parse(text, MISP_LIST_CREATION_DATE_FORMAT));
+			} catch (DateTimeParseException e) {
+				LogUtil.step("Creation date \"" + text + "\" did not match the expected M/d/yyyy format; cannot verify sort order.");
+				return false;
+			}
 		}
 		List<LocalDate> expected = new ArrayList<>(actual);
 		expected.sort(Comparator.reverseOrder());
 		return actual.equals(expected);
+	}
+
+	// Sorting re-fetches the list asynchronously from the server, so poll briefly rather than checking once immediately.
+	public boolean waitUntilTableSortedDescendingByCreationDate() {
+		try {
+			return new WebDriverWait(driver, Duration.ofSeconds(10))
+					.until(d -> isTableSortedDescendingByCreationDate());
+		} catch (TimeoutException e) {
+			return false;
+		}
 	}
 
 	private static final String[] SORTABLE_MISP_LIST_COLUMN_IDS = { "partnerId", "orgName", "policyGroupName",
@@ -1207,11 +1217,6 @@ public class MispServicesPage extends BasePage {
 				getTextFromAttribute(By.cssSelector("#" + columnId + "_desc_icon > :first-child"), "fill"));
 	}
 
-	// Reads the column into Java and compares it against a locally-sorted copy, the same way
-	// PartnerAdminPage/PartnerFilterTest verify sorting on the List of Partners page, rather than
-	// re-implementing the comparison as an embedded JS string. Easier to read and debug, and
-	// consistent with the rest of the framework - a raw JS string doing manual adjacent-pair
-	// comparisons was a one-off here.
 	private List<String> getMispLicenseListColumnValues(int columnIndex) {
 		By locator = By
 				.cssSelector("tr[id^='misp_license_list_item'] > td:nth-child(" + columnIndex + ")");
@@ -1236,6 +1241,10 @@ public class MispServicesPage extends BasePage {
 
 	public boolean isTableSortedAscendingByColumn(int columnIndex) {
 		List<String> actual = getMispLicenseListColumnValues(columnIndex);
+		if (actual.isEmpty()) {
+			LogUtil.step("No values read for column " + columnIndex + "; cannot verify sort order.");
+			return false;
+		}
 		List<String> expected = new ArrayList<>(actual);
 		expected.sort(String.CASE_INSENSITIVE_ORDER);
 		return actual.equals(expected);
@@ -1243,6 +1252,10 @@ public class MispServicesPage extends BasePage {
 
 	public boolean isTableSortedDescendingByColumn(int columnIndex) {
 		List<String> actual = getMispLicenseListColumnValues(columnIndex);
+		if (actual.isEmpty()) {
+			LogUtil.step("No values read for column " + columnIndex + "; cannot verify sort order.");
+			return false;
+		}
 		List<String> expected = new ArrayList<>(actual);
 		expected.sort(String.CASE_INSENSITIVE_ORDER.reversed());
 		return actual.equals(expected);

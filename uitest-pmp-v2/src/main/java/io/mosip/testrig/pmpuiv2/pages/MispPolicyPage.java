@@ -401,9 +401,6 @@ public class MispPolicyPage extends BasePage {
 		clickOnElement(deactivateConfirmButton);
 	}
 
-	// The confirm click only fires an async request; the popup closes and the action menu
-	// resets only once the response lands, so callers must wait here before reopening the
-	// row's action menu - otherwise the reopened menu gets stomped by that same state reset.
 	public void waitUntilDeactivatePolicyPopupClosed() {
 		new WebDriverWait(driver, Duration.ofSeconds(30))
 				.until(ExpectedConditions.invisibilityOfElementLocated(By.id("deactivate_policy_popup_header")));

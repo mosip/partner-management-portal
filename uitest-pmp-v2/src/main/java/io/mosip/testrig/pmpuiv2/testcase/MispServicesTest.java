@@ -394,8 +394,6 @@ public class MispServicesTest extends BaseClass {
         partnerCertificatePage = new PartnerCertificatePage(driver);
         mispServicesPage = new MispServicesPage(driver);
 
-        // Each @Test method starts on a fresh browser session (BaseClass re-logs in per method),
-        // so the MISP license list has to be navigated to and its async data load waited for explicitly.
         dashboardPage.clickOnMispServices();
         mispServicesPage.waitUntilMispLicenseListRowCountSatisfies(count -> count > 0);
 
@@ -450,8 +448,6 @@ public class MispServicesTest extends BaseClass {
         partnerCertificatePage = new PartnerCertificatePage(driver);
         mispServicesPage = new MispServicesPage(driver);
 
-        // Each @Test method starts on a fresh browser session (BaseClass re-logs in per method),
-        // so the MISP license list has to be navigated to and its async data load waited for explicitly.
         dashboardPage.clickOnMispServices();
         mispServicesPage.waitUntilMispLicenseListRowCountSatisfies(count -> count > 0);
 
@@ -589,8 +585,6 @@ public class MispServicesTest extends BaseClass {
         partnerCertificatePage = new PartnerCertificatePage(driver);
         mispServicesPage = new MispServicesPage(driver);
 
-        // Each @Test method starts on a fresh browser session (BaseClass re-logs in per method),
-        // so the MISP license list has to be navigated to and its async data load waited for explicitly.
         dashboardPage.clickOnMispServices();
         mispServicesPage.waitUntilMispLicenseListRowCountSatisfies(count -> count > 0);
 
@@ -649,6 +643,8 @@ public class MispServicesTest extends BaseClass {
         String regeneratedLicenseKeyIdText = mispServicesPage.getMispLicenseKeyIdText();
         assertTrue(regeneratedLicenseKeyIdText != null && !regeneratedLicenseKeyIdText.isEmpty(),
                 GlobalConstants.isRegenerateCopyIdPopupLicenseKeyValueDisplayed);
+        assertTrue(regeneratedLicenseKeyIdText.length() > 4,
+                "Verify the regenerated MISP license key was captured before masking is checked");
         assertTrue(mispServicesPage.isMispLicenseKeyIdBold(), GlobalConstants.isRegenerateCopyIdPopupLicenseKeyValueBold);
         assertEquals(mispServicesPage.getCopyIdPopupAlertMessageText(), GlobalConstants.COPY_ID_POPUP_ALERT_MSG,
                 GlobalConstants.isRegenerateCopyIdPopupNoteDisplayed);
@@ -702,8 +698,6 @@ public class MispServicesTest extends BaseClass {
         partnerCertificatePage = new PartnerCertificatePage(driver);
         mispServicesPage = new MispServicesPage(driver);
 
-        // Each @Test method starts on a fresh browser session (BaseClass re-logs in per method),
-        // so the MISP license list has to be navigated to and its async data load waited for explicitly.
         dashboardPage.clickOnMispServices();
         mispServicesPage.waitUntilMispLicenseListRowCountSatisfies(count -> count > 0);
 
@@ -776,8 +770,6 @@ public class MispServicesTest extends BaseClass {
         partnerCertificatePage = new PartnerCertificatePage(driver);
         mispServicesPage = new MispServicesPage(driver);
 
-        // Each @Test method starts on a fresh browser session (BaseClass re-logs in per method),
-        // so the MISP license list has to be navigated to and its async data load waited for explicitly.
         dashboardPage.clickOnMispServices();
         mispServicesPage.waitUntilMispLicenseListRowCountSatisfies(count -> count > 0);
 
@@ -799,7 +791,7 @@ public class MispServicesTest extends BaseClass {
         assertTrue(mispServicesPage.isSortDescIconActive("partnerId"), GlobalConstants.isMispLicenseListColumnSortingFunctional);
 
         mispServicesPage.clickOnSortDescIcon("createdDateTime");
-        assertTrue(mispServicesPage.waitUntilTableSortedDescendingByColumn(6),
+        assertTrue(mispServicesPage.waitUntilTableSortedDescendingByCreationDate(),
                 GlobalConstants.isMispLicenseListColumnSortingFunctional);
 
         mispServicesPage.clickOnLicenseRowPartnerIdCell(1);
@@ -878,8 +870,6 @@ public class MispServicesTest extends BaseClass {
         assertTrue(mispServicesPage.isMispLicenseKeyPopupDisplayed(), GlobalConstants.isMispLicenseKeyPopupDisplayed);
         mispServicesPage.closeCopyIdPopup();
 
-        // The list still needs to refresh to reflect the license just created above - reading the
-        // count immediately can catch it before that refresh, giving a "before" baseline of 0.
         mispServicesPage.waitUntilMispLicenseListRowCountSatisfies(count -> count > 0);
         int rowCountBeforeDeactivation = mispServicesPage.getMispLicenseListRowCount();
 
