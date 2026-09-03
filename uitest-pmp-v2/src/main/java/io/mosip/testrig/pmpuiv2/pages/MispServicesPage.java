@@ -1120,8 +1120,6 @@ public class MispServicesPage extends BasePage {
 		return rgb == null ? null : rgb.replaceAll("\\s", "");
 	}
 
-	// waitAndFindElement rather than a raw driver.findElement: the row can still be rendering
-	// (e.g. right after a navigation or a status update), and a bare findElement has no wait at all.
 	public boolean isLicenseRowGreyedOut(int rowIndex) {
 		WebElement row = waitAndFindElement(By.id("misp_license_list_item" + rowIndex));
 		return LICENSE_ROW_DEACTIVATED_TEXT_COLOR.equals(normalizeRgb(getComputedStyle(row, "color")));
@@ -1174,7 +1172,6 @@ public class MispServicesPage extends BasePage {
 		return actual.equals(expected);
 	}
 
-	// Sorting re-fetches the list asynchronously from the server, so poll briefly rather than checking once immediately.
 	public boolean waitUntilTableSortedDescendingByCreationDate() {
 		try {
 			return new WebDriverWait(driver, Duration.ofSeconds(10))
@@ -1261,7 +1258,6 @@ public class MispServicesPage extends BasePage {
 		return actual.equals(expected);
 	}
 
-	// Sorting re-fetches the list asynchronously from the server, so poll briefly rather than checking once immediately.
 	public boolean waitUntilTableSortedAscendingByColumn(int columnIndex) {
 		try {
 			return new WebDriverWait(driver, Duration.ofSeconds(10))
@@ -1280,7 +1276,6 @@ public class MispServicesPage extends BasePage {
 		}
 	}
 
-	// Applying or resetting a filter re-fetches the list asynchronously from the server, so poll briefly rather than checking once immediately.
 	public boolean waitUntilMispLicenseListRowCountSatisfies(java.util.function.IntPredicate condition) {
 		try {
 			return new WebDriverWait(driver, Duration.ofSeconds(10))

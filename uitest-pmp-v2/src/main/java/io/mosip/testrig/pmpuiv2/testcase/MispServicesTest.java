@@ -913,8 +913,6 @@ public class MispServicesTest extends BaseClass {
         assertTrue(!mispServicesPage.isMispLicenseListDeactivateButtonEnabled(),
                 GlobalConstants.isMispLicenseListDeactivateButtonEnabledOnlyForActive);
 
-        // dashboardPage.clickOnMispServices() clicks the dashboard's own MISP Services card, so a
-        // fresh round-trip through the dashboard is needed first - we're still on the list page here.
         mispServicesPage.clickOnMispServicesTitleBackIcon();
         dashboardPage.clickOnMispServices();
         mispServicesPage.waitUntilMispLicenseListRowCountSatisfies(count -> count > 0);
