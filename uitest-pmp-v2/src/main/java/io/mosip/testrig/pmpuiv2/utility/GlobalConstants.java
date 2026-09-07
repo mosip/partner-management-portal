@@ -70,9 +70,7 @@ public class GlobalConstants {
 	public static final String BUTTON_TAG = "button";
 	public static final String OVERFLOW = "overflow";
 	public static final String OVERFLOW_HIDDEN = "hidden";
-	// Applied to the partner certificate buttons when the partner is not active
 	public static final String PARTNER_CERT_BUTTON_DISABLED_TEXT = "text-[#6f7070]";
-	// View Partner Details swaps the certificate banner from green to grey when inactive
 	public static final String CERT_SECTION_DEACTIVATED_BG = "bg-gray-100";
 	public static final String ORGANISATION = "Organisation";
 	public static final String SBI_ID = "SBI ID";
@@ -1516,8 +1514,6 @@ public class GlobalConstants {
 	public static final String isUsernameAlreadyExistErrorDisplayed = "Verify if username already exist error displayed";
 	public static final String isDefaultMispPartnerDisplayed = "Verify if misp partner displayed";
 	public static final String isCertificateUploadSuccessMessageDisplayed = "Verify if certificate upload success message displayed";
-
-	// ABIS Partner
 	public static final String CREATE_PARTNER_PAGE_TITLE = "Create Partner";
 	public static final String MANDATORY_FIELD_INFO_TEXT = "All fields marked with * are mandatory.";
 	public static final String isCreatePartnerPageTitleCorrect = "Verify that the page title is displayed correctly on the Create Partner page.";
@@ -1551,8 +1547,6 @@ public class GlobalConstants {
 	public static final String isMispPartnerOptionDisplayed = "Verify that MISP Partner option is displayed in the Partner Type dropdown.";
 	public static final String isPartnerTypeDropdownOptionCountCorrect = "Verify that the Partner Type dropdown displays the expected partner options, even if the total count changes dynamically.";
 	public static final String isManualAdjudicationPartnerOptionDisplayed = "Verify that Manual Adjudication Partner option is displayed in the Partner Type dropdown.";
-
-	// ABIS Partner — form lifecycle and list verification
 	public static final String CANCEL_CONFIRMATION_POPUP_TEXT = "Your changes will be lost, are you sure you want to proceed?";
 	public static final String CERT_UPLOAD_STATUS_UPLOADED = "Uploaded";
 	public static final String CERT_UPLOAD_STATUS_NOT_UPLOADED = "Not Uploaded";
@@ -1605,7 +1599,6 @@ public class GlobalConstants {
 	public static final String isPhoneNumberPlaceholderDisappearsOnTyping = "Verify that the Contact Number field placeholder text is replaced by the entered value once the user starts typing.";
 	public static final String isPhoneNumberMaxLengthEnforced = "Verify that the Contact Number field does not accept more than 16 digits.";
 
-	// ABIS Partner — org name and address field validation (scenarios 30-39)
 	public static final int ORG_NAME_MAX_LENGTH = 128;
 	public static final int ADDRESS_MAX_LENGTH = 2000;
 	public static final String ORG_NAME_PLACEHOLDER_TEXT = "Enter Partner Organization Name";
@@ -1638,16 +1631,12 @@ public class GlobalConstants {
 	public static final String isPolicyGroupSearchBarVisible = "Verify that the Policy Group dropdown contains a visible search bar to filter policy groups.";
 	public static final String isPolicyGroupSearchFiltersResults = "Verify that entering text in the Policy Group search bar filters and shows matching policy group results.";
 	public static final String isLongPolicyGroupNameVisible = "Verify that a policy group with a long name is fully visible and properly aligned in the dropdown.";
-
-	// ABIS Partner — phone, username, notification language, navigation (scenarios
-	// 50-84)
 	public static final String NUMERIC_PREFIXED_USERNAME = "1mispuser";
 	public static final String USERNAME_WITH_SPACE = "user name";
 	public static final String USERNAME_ALREADY_EXISTS_ERROR_MSG = "Username already exists. Enter a different username";
 	public static final String USERNAME_PLACEHOLDER_TEXT = "Enter Username";
 	public static final int USERNAME_MAX_LENGTH = 36;
 	public static final String MAX_VALID_PHONE_NUMBER = "1234567890123456";
-
 	public static final String isReusedPhoneNumberAccepted = "Verify that the same phone number can be used by different partners without triggering a validation error.";
 	public static final String isCountryCodePrefixDisplayed = "Verify that the Contact Number field displays the configured country code prefix.";
 	public static final String isCountryCodeNotConfigurableByUser = "Verify that the country code prefix in the Contact Number field is non-editable and cannot be changed by the user.";
@@ -1656,7 +1645,6 @@ public class GlobalConstants {
 	public static final String isPhoneWithLettersRejected = "Verify that entering letters or vanity characters in the Contact Number field is either rejected with a validation error or has the non-numeric characters silently stripped.";
 	public static final String isLeadingZerosAcceptedInPhone = "Verify that a phone number beginning with one or more leading zeros is accepted without triggering a validation error.";
 	public static final String isValidLengthPhoneAccepted = "Verify that a phone number containing the maximum allowed number of digits (16) is accepted in the Contact Number field without a validation error.";
-
 	public static final String isValidUsernameAccepted = "Verify that a valid username containing alphanumeric characters and underscore is accepted without any validation error.";
 	public static final String isUsernameAlreadyExistsErrorTextCorrect = "Verify that the already-registered username error message text exactly matches the expected message.";
 	public static final String isUsernamePlaceholderTextCorrect = "Verify that the Username field displays the correct placeholder text before any input is entered.";
@@ -1828,13 +1816,10 @@ public class GlobalConstants {
 	public static final String isFilteredPartnersCountMatchesDisplayedRows = "Verify the filtered count beside the List of Partners title matches the number of rows displayed";
 	public static final String isPartnerIdColumnSortedAscending = "Verify the partner list is sorted in ascending order of Partner ID";
 	public static final String isPartnerIdColumnSortedDescending = "Verify the partner list is sorted in descending order of Partner ID";
-
-	// List of Partners - email address sorting and filter updates
 	public static final String AUTHENTICATION_PARTNER = "Authentication Partner";
 	public static final String EMAIL_ADDRESS_COLUMN = "Email Address";
 	public static final String PARTNER_ID_COLUMN = "Partner ID";
 	public static final String EMAIL_ADDRESS_FILTER_PLACEHOLDER = "Search Full Email Address";
-	// Underscore is an allowed character, so a rejected value needs genuinely disallowed ones such as $ and %.
 	public static final String EMAIL_WITH_DISALLOWED_SPECIAL_CHARACTERS = "#@$$$%%";
 	public static final String NON_EXISTING_EMAIL = "nonexsit@gmail.com";
 	public static final String isEmailAddressColumnHeaderVisible = "Verify the Email Address column is visible in the List of Partners table header";
@@ -1861,6 +1846,10 @@ public class GlobalConstants {
 	public static final String isRtlLayoutAppliedForArabic = "Verify the page renders right-to-left (body dir=rtl) when logged in with Arabic";
 	public static final String isEditApiKeyPageTextDisplayedInArabic = "Verify the Edit API Key page's labels, buttons and messages are displayed in Arabic";
 	public static final String isApiKeyActionMenuTextDisplayedInArabic = "Verify the API Key action menu options are displayed in Arabic";
+	public static final String isEditApiKeyPageTextDisplayedInFrench = "Verify the Edit API Key page's labels, buttons and messages are displayed in French";
+	public static final String isApiKeyActionMenuTextDisplayedInFrench = "Verify the API Key action menu options are displayed in French";
+	public static final String isEditExpiryDateBlockedForExpiredKey = "Verify clicking Edit Expiry Date on an already-expired (Deactivated) key does not navigate to the Edit API Key page";
+	public static final String isUpdatedExpiryDateNotToday = "Verify the updated API Key no longer shows an Expiration Date of today in the list";
 	public static final String isExpirationDateConsistentAcrossViews = "Verify if the API Key expiration date shown in the tabular view matches the individual view";
 	public static final String isApiKeyDetailsExpirationDateLabelDisplayed = "Verify if 'Expiration Date' label displayed in the individual API Key view";
 	public static final String isApiKeyDetailsExpirationDateContextDisplayed = "Verify if expiration date value displayed in the individual API Key view";
@@ -1924,9 +1913,6 @@ public class GlobalConstants {
 	public static final String isExpirationDateDisplayedInBrowserSettingTime = "Verify the Expiration Date column reflects the browser's locale date format";
 	public static final String isEyeIconPopupTitleShowsLicenseKeyName = "Verify the eye-icon copy-id popup title displays the corresponding MISP license key name";
 	public static final String isEyeIconPopupSubtitleShowsPartnerId = "Verify the eye-icon copy-id popup subtitle displays the corresponding Partner ID";
-
-	// Deactivate MISP License Key
-	// Source: pmp-ui-v2/public/i18n/eng.json, deactivateMispLicense.title/description (rendered by DeactivatePopup.js as "<title> - '<name>'?")
 	public static final String DEACTIVATE_MISP_LICENSE_POPUP_TITLE = "Do you want to Deactivate MISP License Key - '%s'?";
 	public static final String DEACTIVATE_MISP_LICENSE_POPUP_DESCRIPTION = "On clicking Confirm, you will not be able to use the MISP License Key for authenticating requests anymore.";
 	public static final String MISP_LICENSE_INACTIVE_STATUS_LABEL = "Deactivated";
@@ -2033,8 +2019,6 @@ public class GlobalConstants {
 	public static final String MISP_LICENSEKEY_HOME_BUTTON_TEST = "misplicensekeyhomebuttontest";
 	public static final String MISP_LICENSEKEY_DEACTIVATE_CONFIRM_TEST = "misplicensekeydeactivateconfirmtest";
 	public static final String MISP_LICENSEKEY_ROW_GREYED_OUT_TEST = "misplicensekeyrowgreyedouttest";
-
-	// MISP Partner Onboarding via Keycloak self-registration
 	public static final String isRegisterEmailFieldInvalidForMalformedEmail = "Verify the Email field is flagged invalid for a malformed email address during self-registration";
 	public static final String isRegisterSubmitButtonDisabledWithoutUsernameAndEmail = "Verify the Submit button remains disabled when Username and Email are not entered during self-registration";
 	public static final String MISP_MINIMAL_EMAIL = "hm@gmail.co.on";

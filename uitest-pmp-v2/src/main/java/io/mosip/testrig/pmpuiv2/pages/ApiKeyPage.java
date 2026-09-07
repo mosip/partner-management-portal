@@ -23,10 +23,6 @@ import io.mosip.testrig.pmpuiv2.utility.LogUtil;
 
 public class ApiKeyPage extends BasePage {
 
-	// Active-language API Key Edit Expiry text. init() is called once per language run (TestRunner,
-	// right after ConfigManager.setloginlang()), copying the matching LocaleTextEng/Fra/Ara values in -
-	// so call sites just read these fields directly instead of branching on the login language. See
-	// MispServicesPage.init() for the original version of this pattern.
 	public static String API_KEY_EDIT_EXPIRY_PAGE_TITLE;
 	public static String API_KEY_PARTNER_ID_LABEL;
 	public static String API_KEY_PARTNER_TYPE_LABEL;
@@ -47,7 +43,6 @@ public class ApiKeyPage extends BasePage {
 	public static String API_KEY_ACTION_EDIT_EXPIRY_OPTION_TEXT;
 	public static String API_KEY_ACTION_DEACTIVATE_OPTION_TEXT;
 
-	// See BasePage.copyLocaleFields() - shared by every page's init().
 	public static void init(String loginLanguage) {
 		copyLocaleFields(ApiKeyPage.class, loginLanguage);
 	}
@@ -1413,10 +1408,6 @@ public class ApiKeyPage extends BasePage {
 		clickOnElement(editApiKeyExpiryDateCalendarDay15);
 	}
 
-	// Typing a full date (not clicking prev/next) is what actually drives react-datepicker to
-	// navigate its calendar view to that month - confirmed against the live QA build, where the
-	// widget otherwise opens on the stored expiry's month/year (e.g. year 4764 for a no-expiry key),
-	// nowhere near the current month.
 	public void enterEditApiKeyExpiryDate(String date) {
 		enter(editApiKeyExpiryDateInput, date);
 	}
@@ -1425,9 +1416,6 @@ public class ApiKeyPage extends BasePage {
 		editApiKeyExpiryDateInput.clear();
 	}
 
-	// A rejected (past) date typed into the field only reverts to its prior value once the field
-	// loses focus - confirmed against the live QA build, where the just-typed text stays visible
-	// until blur.
 	public void blurEditApiKeyExpiryDateField() {
 		editApiKeyExpiryDateInput.sendKeys(Keys.TAB);
 	}

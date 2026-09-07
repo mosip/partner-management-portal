@@ -26,9 +26,6 @@ import io.mosip.testrig.pmpuiv2.utility.LogUtil;
 
 public class MispServicesPage extends BasePage {
 
-	// Active-language MISP Services text. init() is called once per language run (TestRunner, right
-	// after ConfigManager.setloginlang()), copying the matching LocaleTextEng/Fra/Ara values in -
-	// so call sites just read these fields directly instead of branching on the login language.
 	public static String EXPIRY_DATE_CALENDER_INFO_TEXT;
 	public static String MISP_LIST_HEADER_PARTNER_ID;
 	public static String MISP_LIST_HEADER_ORG_NAME;
@@ -52,7 +49,6 @@ public class MispServicesPage extends BasePage {
 	public static String REGENERATE_LICENSE_KEY_CONFIRMATION_HEADER_TEXT;
 	public static String MISP_SERVICES_PAGE_TITLE;
 
-	// See BasePage.copyLocaleFields() - shared by every page's init().
 	public static void init(String loginLanguage) {
 		copyLocaleFields(MispServicesPage.class, loginLanguage);
 	}

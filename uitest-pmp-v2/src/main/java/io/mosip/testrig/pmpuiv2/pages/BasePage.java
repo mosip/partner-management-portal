@@ -46,11 +46,6 @@ public class BasePage {
 	private static final String REDACTED_VALUE = "***";
 	protected static final Logger logger = Logger.getLogger(BasePage.class);
 
-	// Called from every page class's own init(loginLanguage): copies every public static field
-	// targetPageClass declares from whichever LocaleTextEng/Fra/Ara class matches loginLanguage,
-	// by field name. Fields the matched class doesn't declare (e.g. unverified translations) are
-	// left at their previous value; fields targetPageClass doesn't declare (another page's section
-	// of the same LocaleText class) are skipped rather than failing the whole copy.
 	protected static void copyLocaleFields(Class<?> targetPageClass, String loginLanguage) {
 		Class<?> source = "fra".equalsIgnoreCase(loginLanguage) ? LocaleTextFra.class
 				: "ara".equalsIgnoreCase(loginLanguage) ? LocaleTextAra.class
@@ -59,7 +54,6 @@ public class BasePage {
 			try {
 				targetPageClass.getField(sourceField.getName()).set(null, sourceField.get(null));
 			} catch (NoSuchFieldException e) {
-				// Field belongs to another page's section of this LocaleText class; not ours to copy.
 			} catch (IllegalAccessException e) {
 				throw new RuntimeException("Failed to copy locale field: " + sourceField.getName(), e);
 			}
@@ -630,9 +624,6 @@ public class BasePage {
 		return element.equals(driver.switchTo().activeElement());
 	}
 
-	// Confirmed against the live app: switching the login language to Arabic sets dir="rtl" on
-	// <body> (not <html>, and lang stays "en") - this is the one reliable, page-agnostic signal for
-	// "did the layout actually mirror to RTL", usable from any page class.
 	public boolean isPageDirectionRtl() {
 		String dir = driver.findElement(By.tagName("body")).getAttribute("dir");
 		return "rtl".equalsIgnoreCase(dir);

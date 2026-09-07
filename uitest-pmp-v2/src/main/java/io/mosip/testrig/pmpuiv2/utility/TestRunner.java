@@ -80,10 +80,6 @@ public class TestRunner {
 		System.exit(0);
 	}
 
-	// Finds every page class under io.mosip.testrig.pmpuiv2.pages that has adopted the localized-text
-	// pattern (a public static init(String) - see BasePage.copyLocaleFields()) and calls it for the
-	// active language. A new localized page needs no change here: it's picked up automatically as
-	// soon as it declares its own init(String) method.
 	private static void initAllLocalizedPages(String lang) throws Exception {
 		Reflections reflections = new Reflections("io.mosip.testrig.pmpuiv2.pages");
 		Set<Class<? extends BasePage>> pageClasses = reflections.getSubTypesOf(BasePage.class);
@@ -91,7 +87,6 @@ public class TestRunner {
 			try {
 				pageClass.getMethod("init", String.class).invoke(null, lang);
 			} catch (NoSuchMethodException e) {
-				// This page doesn't support multilanguage yet - nothing to call.
 			}
 		}
 	}
