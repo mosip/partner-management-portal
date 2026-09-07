@@ -131,7 +131,7 @@ public class IndividualViewApproveRejectTest extends BaseClass {
 
 		dashboardPage.clickOnFTMChipTab();
 		ftmPage.clickOnFilterButton();
-		ftmPage.clickOnFtmStatusFilter();
+		ftmPage.clickOnStatusFilter();
 		ftmPage.clickOnFtmStatusFilterPendingForApproval();
 		ftmPage.clickOnApplyFilterButton();
 		ftmPage.clickOnFtmListItem1();

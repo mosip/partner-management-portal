@@ -1615,6 +1615,18 @@ public class PartnerCertificatePage extends BasePage {
 		uploadImage(uploadFile, CertificateGenerationUtil.getCertFilePath("deactivateUserIntermediateCA.cer"));
 	}
 
+	public void uploadDeactivateFtmRootCaCert() {
+		uploadImage(uploadFile, CertificateGenerationUtil.getCertFilePath("deactivateFtmRootCA.cer"));
+	}
+
+	public void uploadDeactivateFtmIntermediateCaCert() {
+		uploadImage(uploadFile, CertificateGenerationUtil.getCertFilePath("deactivateFtmIntermediateCA.cer"));
+	}
+
+	public void uploadDeactivateFtmClientCertificate() {
+		uploadImage(uploadFile, CertificateGenerationUtil.getCertFilePath("deactivateFtmClient.cer"));
+	}
+
 	public void uploadDeactivateUserClientCertificate() {
 		uploadImage(uploadFile, CertificateGenerationUtil.getCertFilePath("deactivateUserClient.cer"));
 	}
