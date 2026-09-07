@@ -246,6 +246,7 @@ public class GlobalConstants {
 	public static final String DEACTIVATE_APIKEY = "deactivateapikey";
 	public static final String ACTIVATE_ADMINAPIKEY = "activateadminapikey";
 	public static final String EXPIRY_APIKEY = "expiryapikey";
+	public static final String DEACTIVATE_THROWAWAY_APIKEY = "deactivatethrowawayapikey";
 	public static final String VIEW_DEVICE_TITLE = "View Device Details";
 
 	// MISP Partner
@@ -543,6 +544,47 @@ public class GlobalConstants {
 	public static final String isApiKeyDeactivateConfirmationTextDisplayed = "Verify if api key deactivate confirmation text displayed";
 	public static final String isDeactivatedApiKeyGreyColored = "Verify if deactivated api key grey colored";
 	public static final String isDeactivatedApiKeyDisabled = "Verify if deactivated api key is disabled";
+	public static final String isActionButtonDisplayed = "Verify if the api key row three-dot action menu is displayed";
+	public static final String isActionButtonEnabled = "Verify if the api key row three-dot action menu is enabled/clickable";
+	public static final String isApiKeyItem1Displayed = "Verify if the first api key row is displayed";
+	public static final String isEditExpiryDateButtonDisplayed = "Verify if the Edit Expiry Date option in the action menu is displayed";
+	public static final String isEditExpiryDateButtonEnabled = "Verify if the Edit Expiry Date option in the action menu is enabled/clickable";
+	public static final String isEditApiKeyExpiryPageDisplayed = "Verify if clicking Edit Expiry Date redirects to the Edit API key expiry page";
+	public static final String isEditApiKeyPartnerIdLabelDisplayed = "Verify if the Partner ID field is displayed on the Edit API Key page";
+	public static final String isEditApiKeyPartnerIdFieldReadOnly = "Verify the Partner ID field is displayed as read-only on the Edit API Key page";
+	public static final String isEditApiKeyPartnerTypeFieldReadOnly = "Verify the Partner Type field is displayed as read-only on the Edit API Key page";
+	public static final String isEditApiKeyPolicyGroupFieldReadOnly = "Verify the Policy Group field is displayed as read-only on the Edit API Key page";
+	public static final String isEditApiKeyPolicyNameFieldReadOnly = "Verify the Policy Name field is displayed as read-only on the Edit API Key page";
+	public static final String isEditApiKeyPolicyGroupDescriptionFieldReadOnly = "Verify the Policy Group Description field is displayed as read-only on the Edit API Key page";
+	public static final String isEditApiKeyPolicyNameDescriptionFieldReadOnly = "Verify the Policy Name Description field is displayed as read-only on the Edit API Key page";
+	public static final String isEditApiKeyExpiryDateFieldEnabled = "Verify the Expiry Date field on the Edit API Key page is editable";
+	public static final String isEditApiKeyExpiryDateCalendarDisplayed = "Verify the Expiry Date calendar picker opens on the Edit API Key page";
+	public static final String isEditApiKeyExpiryDateSelectable = "Verify a new date can be selected via the Expiry Date calendar picker";
+	public static final String isEditApiKeyCancelConfirmationPopupDisplayed = "Verify the unsaved-changes confirmation popup is displayed when cancelling the Edit API Key page";
+	public static final String isTodayDisabledInEditApiKeyExpiryDateCalendar = "Verify today's date is disabled in the Expiry Date calendar, so only future dates are selectable";
+	public static final String isFutureDateSelectableInEditApiKeyExpiryDateCalendar = "Verify a future date can be selected in the Expiry Date calendar";
+	public static final String isPastDateRejectedOnEditApiKeyExpiryDate = "Verify a past date typed into the Expiry Date field is not accepted (Submit stays disabled and the value reverts)";
+	public static final String isPastDatesDisabledInEditApiKeyExpiryDateCalendar = "Verify past dates are disabled and not selectable in the Expiry Date calendar";
+	public static final String isEditApiKeyExpiryDateDisplayedInCorrectFormat = "Verify the newly selected date is displayed in the Expiry Date field in MM/dd/yyyy format";
+	public static final String isEditApiKeyCancelButtonDisplayed = "Verify the Cancel button is displayed on the Edit API Key page";
+	public static final String isEditApiKeySubmitButtonDisplayed = "Verify the Submit button is displayed on the Edit API Key page";
+	public static final String isEditApiKeyCancelButtonEnabled = "Verify the Cancel button on the Edit API Key page is clickable";
+	public static final String isEditApiKeyCancelDiscardsChanges = "Verify clicking Cancel discards the unsaved Expiry Date change instead of saving it";
+	public static final String isEditApiKeyConfirmationHeaderDisplayed = "Verify the success confirmation is displayed after submitting a new Expiry Date";
+	public static final String isEditApiKeySubmitButtonEnabled = "Verify the Submit button on the Edit API Key page is clickable once a valid Expiry Date is selected";
+	public static final String isEditApiKeyExpiryDateUpdatedSuccessfully = "Verify the new Expiry Date actually persists after Submit, not just a success message";
+	public static final String isEditApiKeySubmitButtonDisabledWhenEmpty = "Verify the Submit button stays disabled when the Expiry Date field is cleared";
+	public static final String isEditApiKeyConfirmationMessageTextCorrect = "Verify the confirmation popup message reads 'Expiry date for API key <name> has been updated successfully.'";
+	public static final String isEditApiKeyUndoChangesButtonEnabled = "Verify the Undo Changes button on the Edit API Key page is clickable";
+	public static final String isEditApiKeyUndoChangesResetsExpiryDate = "Verify Undo Changes resets the Expiry Date field back to its original value";
+	public static final String isEditApiKeySubmitButtonDisabledAfterUndo = "Verify the Submit button is disabled again after Undo Changes reverts the Expiry Date";
+	public static final String isUpdatedExpiryDateReflectedInList = "Verify the API Key tabular view shows the newly submitted Expiry Date after Go Back";
+	public static final String isEditApiKeyPartnerTypeLabelDisplayed = "Verify if the Partner Type field is displayed on the Edit API Key page";
+	public static final String isEditApiKeyPolicyGroupLabelDisplayed = "Verify if the Policy Group field is displayed on the Edit API Key page";
+	public static final String isEditApiKeyPolicyNameLabelDisplayed = "Verify if the Policy Name field is displayed on the Edit API Key page";
+	public static final String isEditApiKeyPolicyGroupDescriptionLabelDisplayed = "Verify if the Policy Group Description field is displayed on the Edit API Key page";
+	public static final String isEditApiKeyPolicyNameDescriptionLabelDisplayed = "Verify if the Policy Name Description field is displayed on the Edit API Key page";
+	public static final String isEditApiKeyExpiryDateLabelDisplayed = "Verify if the Expiry Date field is displayed on the Edit API Key page";
 	public static final String isApiKeyStatusDeactivated = "Verify if api key status deactivated displayed";
 	public static final String isBreadcombDisplayed = "Verify if breadcomb displayed";
 	public static final String isPartnerIDHeaderTextDisplayed = "Verify if partner id header text displayed";
@@ -1687,11 +1729,6 @@ public class GlobalConstants {
 	public static final String isMispPolicyNameDisplayed = "Verify if MISP policy name displayed";
 	public static final String isMispPolicyNameDescriptionDisplayed = "Verify if MISP policy name description displayed";
 	public static final String isExpiryDateCalenderInfoDescriptionDisplayed = "Verify if expiry date calender info description displayed";
-	public static final String EXPIRY_DATE_CALENDER_INFO_TEXT = "Date Format: mm/dd/yyyy. Ensure that you provide a valid future date, as the license key will be automatically deactivated once this date is reached.";
-	// Source: pmp-ui-v2/public/i18n/ara.json, generateLicenseKey.dateFormatInfoKey
-	public static final String EXPIRY_DATE_CALENDER_INFO_TEXT_ARA = "تنسيق التاريخ: شهر/يوم/سنة. تأكد من إدخال تاريخ مستقبلي صحيح، حيث سيتم إلغاء تفعيل مفتاح الترخيص تلقائيًا عند بلوغ هذا التاريخ.";
-	// Source: pmp-ui-v2/public/i18n/fra.json, generateLicenseKey.dateFormatInfoKey
-	public static final String EXPIRY_DATE_CALENDER_INFO_TEXT_FRA = "Format de date : jj/mm/aaaa. Assurez-vous de fournir une date future valide, car la clé de licence sera automatiquement désactivée une fois cette date atteinte.";
 	public static final String isCalendarDisplayed = "Verify if calendar displayed";
 	public static final String isExpiryDateFormatValid = "Verify expiry date field format is mm/dd/yyyy";
 	public static final String isExpiryDateSelectionChangeable = "Verify expiry date selection can be changed multiple times before submission";
@@ -1821,6 +1858,9 @@ public class GlobalConstants {
 	public static final String isExpiryDateSortedDescending = "Verify if API Keys are sorted by expiration date in descending order";
 	public static final String isExpirationDateSameAsBrowserDateFormat = "Verify if expiration date is displayed in the browser locale date format";
 	public static final String isExpirationDateNotBeforeCreationDate = "Verify if the API Key expiration date is not earlier than its creation date";
+	public static final String isRtlLayoutAppliedForArabic = "Verify the page renders right-to-left (body dir=rtl) when logged in with Arabic";
+	public static final String isEditApiKeyPageTextDisplayedInArabic = "Verify the Edit API Key page's labels, buttons and messages are displayed in Arabic";
+	public static final String isApiKeyActionMenuTextDisplayedInArabic = "Verify the API Key action menu options are displayed in Arabic";
 	public static final String isExpirationDateConsistentAcrossViews = "Verify if the API Key expiration date shown in the tabular view matches the individual view";
 	public static final String isApiKeyDetailsExpirationDateLabelDisplayed = "Verify if 'Expiration Date' label displayed in the individual API Key view";
 	public static final String isApiKeyDetailsExpirationDateContextDisplayed = "Verify if expiration date value displayed in the individual API Key view";
@@ -1855,44 +1895,8 @@ public class GlobalConstants {
 	public static final String isMispPartnerFilterApplied = "Verify the MISP Partner type filter has been applied before reading statuses";
 	public static final String isFilteredRowPartnerTypeMisp = "Verify every filtered row's Partner Type is MISP Partner";
 
-	// MISP License List - tabular view, filters, deactivate/regenerate flows
-	// Source: pmp-ui-v2/public/i18n/eng.json, mispLicenseList.*
-	public static final String MISP_LIST_HEADER_PARTNER_ID = "Partner ID";
-	public static final String MISP_LIST_HEADER_PARTNER_ID_ARA = "معرف الشريك";
-	public static final String MISP_LIST_HEADER_PARTNER_ID_FRA = "ID partenaire";
-	public static final String MISP_LIST_HEADER_ORG_NAME = "Organisation";
-	public static final String MISP_LIST_HEADER_ORG_NAME_ARA = "منظمة";
-	public static final String MISP_LIST_HEADER_ORG_NAME_FRA = "Organisation";
-	public static final String MISP_LIST_HEADER_POLICY_GROUP = "Policy Group";
-	public static final String MISP_LIST_HEADER_POLICY_GROUP_ARA = "مجموعة السياسة";
-	public static final String MISP_LIST_HEADER_POLICY_GROUP_FRA = "Groupe de politiques";
-	public static final String MISP_LIST_HEADER_POLICY_NAME = "Policy Name";
-	public static final String MISP_LIST_HEADER_POLICY_NAME_ARA = "اسم السياسة";
-	public static final String MISP_LIST_HEADER_POLICY_NAME_FRA = "Nom de la politique";
-	public static final String MISP_LIST_HEADER_LICENSE_KEY_NAME = "MISP License Key Name";
-	public static final String MISP_LIST_HEADER_LICENSE_KEY_NAME_ARA = "اسم مفتاح ترخيص MISP";
-	public static final String MISP_LIST_HEADER_LICENSE_KEY_NAME_FRA = "Nom de la clé de licence MISP";
-	public static final String MISP_LIST_HEADER_CREATION_DATE = "Creation Date";
-	public static final String MISP_LIST_HEADER_CREATION_DATE_ARA = "تاريخ الإنشاء";
-	public static final String MISP_LIST_HEADER_CREATION_DATE_FRA = "Date de création";
-	public static final String MISP_LIST_HEADER_EXPIRATION_DATE = "Expiration Date";
-	public static final String MISP_LIST_HEADER_EXPIRATION_DATE_ARA = "تاريخ انتهاء الصلاحية";
-	public static final String MISP_LIST_HEADER_EXPIRATION_DATE_FRA = "Date d'expiration";
-	public static final String MISP_LIST_HEADER_STATUS = "Status";
-	public static final String MISP_LIST_HEADER_STATUS_ARA = "الحالة";
-	public static final String MISP_LIST_HEADER_STATUS_FRA = "Statut";
-	public static final String MISP_LIST_HEADER_LICENSE_KEY = "MISP License Key";
-	public static final String MISP_LIST_HEADER_LICENSE_KEY_ARA = "مفتاح ترخيص MISP";
-	public static final String MISP_LIST_HEADER_LICENSE_KEY_FRA = "Clé de licence MISP";
-	public static final String MISP_LIST_HEADER_ACTION = "Action";
-	public static final String MISP_LIST_HEADER_ACTION_ARA = "إجراء";
-	public static final String MISP_LIST_HEADER_ACTION_FRA = "Action";
 	public static final String isMispLicenseListTableHeaderTextCorrect = "Verify the MISP License List tabular view column header text matches the active login language";
 
-	// Source: pmp-ui-v2/public/i18n/eng.json, mispLicenseList.listOfMispLicenseKeys (rendered as "<text> (<count>)" by FilterButtons)
-	public static final String LIST_OF_MISP_LICENSE_KEYS_SUBTITLE_TEXT = "List of MISP License Keys";
-	public static final String LIST_OF_MISP_LICENSE_KEYS_SUBTITLE_TEXT_ARA = "قائمة مفاتيح ترخيص MISP";
-	public static final String LIST_OF_MISP_LICENSE_KEYS_SUBTITLE_TEXT_FRA = "Liste des clés de licence MISP";
 	public static final String isMispLicenseListSubTitleDisplayed = "Verify the List of MISP License Keys subtitle is displayed";
 	public static final String isMispLicenseListSubTitleCountFormatCorrect = "Verify the List of MISP License Keys subtitle follows the '<text> (<count>)' format";
 	public static final String isMispLicenseListSubTitleCountMatchesRowCount = "Verify the count in the List of MISP License Keys subtitle matches the number of rows in the tabular view";
@@ -1909,19 +1913,11 @@ public class GlobalConstants {
 	public static final String isMispLicenseFilterResetLinkHiddenWhenCollapsed = "Verify the Reset Filter link is hidden once the filter panel is collapsed";
 	public static final String areMispFilterTextFieldsGenuineInputs = "Verify the MISP License filter text fields are genuine input elements";
 	public static final String isMispFilterStatusFieldADropdown = "Verify the MISP License filter Status field is a dropdown button";
-	// Source: pmp-ui-v2/public/i18n/eng.json, mispLicenseList.searchMispLicenseKeyName
-	public static final String MISP_LICENSE_KEY_NAME_SEARCH_PLACEHOLDER = "Search MISP License Key Name";
-	public static final String MISP_LICENSE_KEY_NAME_SEARCH_PLACEHOLDER_ARA = "ابحث عن اسم مفتاح ترخيص MISP";
-	public static final String MISP_LICENSE_KEY_NAME_SEARCH_PLACEHOLDER_FRA = "Rechercher le nom de la clé de licence MISP";
 	public static final String isMispFilterLicenseKeyNameSearchBarVisible = "Verify the MISP License Key Name filter search bar shows the expected placeholder text";
 	public static final String isMultiFilterResultsUpdatedDynamically = "Verify the MISP License list updates to match the applied Policy Group and Status filters";
 	public static final String isMultiFilterSubTitleCountMatchesFilteredRowCount = "Verify the List of MISP License Keys subtitle count matches the filtered row count";
 	public static final String isMispLicenseFilterResetClearsAllFiltersAndShowsFullList = "Verify Reset Filter clears all applied filters and restores the full unfiltered MISP license list";
 	public static final String isMispLicenseListEmptyForNoMatchingFilter = "Verify the MISP License list is empty when no license matches the applied filter";
-	// Source: pmp-ui-v2/public/i18n/eng.json, partnerList.noResultsFound
-	public static final String NO_RESULTS_FOUND_TEXT = "No Results Found";
-	public static final String NO_RESULTS_FOUND_TEXT_ARA = "لم يتم العثور على نتائج";
-	public static final String NO_RESULTS_FOUND_TEXT_FRA = "Aucun résultat trouvé";
 	public static final String isInvalidFilterInputBlocksSubmission = "Verify an invalid MISP License filter input shows an error and disables Apply Filter";
 
 	public static final String isCreatedDateDisplayedInBrowserSettingTime = "Verify the Creation Date column reflects the browser's locale date format";
@@ -1972,20 +1968,7 @@ public class GlobalConstants {
 	public static final String isMispLicenseListPageSizeConfigurable = "Verify the MISP license list records-per-page selection is configurable";
 	public static final String isMispServicesBackButtonNavigatesToHome = "Verify the MISP Services back icon navigates to the dashboard home";
 
-	// Regenerate MISP License Key
-	// Source: pmp-ui-v2/src/pages/admin/mispPartnerServices/RegenerateMispLicenseKey.js, regenerateMispLicenseKey.*
-	public static final String REGENERATE_MISP_LICENSE_KEY_PAGE_TITLE = "Regenerate MISP License Key";
-	public static final String REGENERATE_MISP_LICENSE_KEY_PAGE_TITLE_ARA = "تجديد مفتاح ترخيص MISP";
-	public static final String REGENERATE_MISP_LICENSE_KEY_PAGE_TITLE_FRA = "Régénérer la clé de licence MISP";
-	// Rendered by common/Title.js as "<commons.home>" + "/ <mispLicenseList.mispPartnerServices>"
-	public static final String REGENERATE_BREADCRUMB_TEXT = "Home/ MISP Services";
-	public static final String REGENERATE_BREADCRUMB_TEXT_ARA = "الرئيسية/ خدمات MISP";
-	public static final String REGENERATE_BREADCRUMB_TEXT_FRA = "Maison/ Services MISP";
 	public static final String isRegenerateBreadcrumbTextCorrect = "Verify the Regenerate MISP License Key breadcrumb text is correct";
-	// Rendered as requestPolicy.mandatoryFieldsMsg1 + " * " + requestPolicy.mandatoryFieldsMsg2
-	public static final String REGENERATE_MANDATORY_FIELDS_SUBTITLE_TEXT = "All fields marked with * are mandatory.";
-	public static final String REGENERATE_MANDATORY_FIELDS_SUBTITLE_TEXT_ARA = "جميع الحقول تحمل علامة * إلزامية.";
-	public static final String REGENERATE_MANDATORY_FIELDS_SUBTITLE_TEXT_FRA = "Tous les champs marqués d'un * sont obligatoires.";
 	public static final String isRegenerateMandatoryFieldsSubtitleCorrect = "Verify the Regenerate screen mandatory-fields subtitle text is correct";
 	public static final String isRegeneratePartnerIdLabelDisplayed = "Verify the Partner ID label is displayed on the Regenerate screen";
 	public static final String isRegeneratePartnerTypeLabelDisplayed = "Verify the Partner Type label is displayed on the Regenerate screen";
@@ -1996,18 +1979,10 @@ public class GlobalConstants {
 	public static final String isRegeneratePartnerTypeCarriedOver = "Verify the Partner Type field is carried over and read-only on the Regenerate screen";
 	public static final String isRegeneratePolicyGroupCarriedOver = "Verify the Policy Group field is carried over and read-only on the Regenerate screen";
 	public static final String isRegeneratePolicyGroupPlaceholderAligned = "Verify the Policy Group placeholder is fully visible within the viewport on the Regenerate screen";
-	// Source: pmp-ui-v2/public/i18n/eng.json, regenerateMispLicenseKey.noPolicySelected
-	public static final String NO_POLICY_NAME_SELECTED = "No Policy Name selected";
-	public static final String NO_POLICY_NAME_SELECTED_ARA = "لم يتم تحديد اسم السياسة";
-	public static final String NO_POLICY_NAME_SELECTED_FRA = "Aucun nom de politique sélectionné";
 	public static final String isRegeneratePolicyNameCarriedOver = "Verify the Policy Name field is carried over and read-only on the Regenerate screen";
 	public static final String isRegeneratePolicyNamePlaceholderAligned = "Verify the Policy Name placeholder is fully visible within the viewport on the Regenerate screen";
 	public static final String isRegenerateLicenseKeyNameFieldEditable = "Verify the MISP License Key Name field is displayed and editable on the Regenerate screen";
 	public static final String isRegenerateLicenseKeyNameFieldIsTextbox = "Verify the MISP License Key Name field on the Regenerate screen behaves as a text input";
-	// Source: pmp-ui-v2/public/i18n/eng.json, generateLicenseKey.enterLicenseKeyName
-	public static final String REGENERATE_LICENSE_KEY_NAME_HELP_TEXT = "Enter a name for MISP License key";
-	public static final String REGENERATE_LICENSE_KEY_NAME_HELP_TEXT_ARA = "أدخل اسمًا لمفتاح ترخيص MISP";
-	public static final String REGENERATE_LICENSE_KEY_NAME_HELP_TEXT_FRA = "Entrez un nom pour la clé de licence MISP";
 	public static final String isRegenerateLicenseKeyNameHelpTextCorrect = "Verify the MISP License Key Name field placeholder text is correct on the Regenerate screen";
 	public static final String isRegenerateLicenseKeyNameHelpTextDisabledForEdit = "Verify the MISP License Key Name placeholder text does not change while typing or after Clear Form";
 	public static final String isRegenerateClearFormButtonClearsLicenseKeyNameField = "Verify Clear Form empties the MISP License Key Name field on the Regenerate screen";
@@ -2037,32 +2012,18 @@ public class GlobalConstants {
 	public static final String isRegenerateCopyIdPopupTitleShowsNewLicenseKeyName = "Verify the regenerate copy-id popup title shows the newly regenerated MISP license key name";
 	public static final String isRegenerateCopyIdPopupSubtitleShowsSamePartnerId = "Verify the regenerate copy-id popup subtitle shows the same Partner ID as before regeneration";
 	public static final String isRegenerateCopyIdPopupHeaderDisplayed = "Verify the regenerate copy-id popup header is displayed";
-	// Source: pmp-ui-v2/public/i18n/eng.json, mispLicenseList.mispLicenseKey
-	public static final String MISP_LICENSE_KEY_POPUP_HEADER_TEXT = "MISP License Key";
-	public static final String MISP_LICENSE_KEY_POPUP_HEADER_TEXT_ARA = "مفتاح ترخيص MISP";
-	public static final String MISP_LICENSE_KEY_POPUP_HEADER_TEXT_FRA = "Clé de licence MISP";
 	public static final String isRegenerateCopyIdPopupHeaderTextCorrect = "Verify the regenerate copy-id popup header text is correct";
 	public static final String isRegenerateCopyIdPopupLicenseKeyValueDisplayed = "Verify the regenerate copy-id popup displays the regenerated MISP license key value";
 	public static final String isRegenerateCopyIdPopupLicenseKeyValueBold = "Verify the regenerate copy-id popup MISP license key value is displayed in bold";
 	public static final String isRegenerateCopyIdPopupNoteDisplayed = "Verify the regenerate copy-id popup alert note is displayed";
 	public static final String isRegenerateCopyOperationRepeatable = "Verify the regenerate copy-id popup Copy action can be repeated";
 	public static final String isRegenerateConfirmationHeaderDisplayed = "Verify the Regenerate confirmation header is displayed";
-	// Source: pmp-ui-v2/public/i18n/eng.json, regenerateMispLicenseKey.regenerateLicenseKeySuccessHeader
-	public static final String REGENERATE_LICENSE_KEY_CONFIRMATION_HEADER_TEXT = "MISP License Key is regenerated successfully!";
-	public static final String REGENERATE_LICENSE_KEY_CONFIRMATION_HEADER_TEXT_ARA = "تم تجديد مفتاح ترخيص MISP بنجاح!";
-	public static final String REGENERATE_LICENSE_KEY_CONFIRMATION_HEADER_TEXT_FRA = "La clé de licence MISP a été régénérée avec succès !";
 	public static final String isRegenerateConfirmationHeaderNotEditable = "Verify the Regenerate confirmation header cannot be edited";
 	public static final String isPreviousLicenseAutoDeactivatedOnRegenerate = "Verify the previous MISP license key is automatically deactivated after regeneration";
 	public static final String isRegenerateExpiryDateNotEditableAfterSubmission = "Verify the MISP license key expiry date is read-only in the Individual View after regeneration";
 	public static final String isRegenerateDuplicateLicenseKeyNameErrorDisplayedForExactCaseMatch = "Verify the Regenerate screen rejects a MISP License Key Name that exactly matches an existing name, including case";
 	public static final String isRegenerateLicenseKeyNameUniqueAcrossCaseVariant = "Verify the Regenerate screen accepts a MISP License Key Name that differs from an existing name only by case";
 	public static final String isRegenerateHomeButtonNavigatesToDashboard = "Verify the Home button on the Regenerate confirmation screen navigates to the dashboard";
-
-	// MISP Services page title, reused across regenerate/deactivate navigation checks
-	// Source: pmp-ui-v2/public/i18n/eng.json, mispLicenseList.mispPartnerServices
-	public static final String MISP_SERVICES_PAGE_TITLE = "MISP Services";
-	public static final String MISP_SERVICES_PAGE_TITLE_ARA = "خدمات MISP";
-	public static final String MISP_SERVICES_PAGE_TITLE_FRA = "Services MISP";
 
 	// Test data values for regenerate/deactivate/case-sensitivity MISP license key scenarios
 	public static final String MISP_LICENSEKEY_REGENERATE_TEMP = "misplicensekeyregeneratetemp";

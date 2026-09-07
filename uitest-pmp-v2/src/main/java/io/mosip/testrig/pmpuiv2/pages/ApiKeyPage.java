@@ -10,6 +10,7 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -21,6 +22,35 @@ import io.mosip.testrig.pmpuiv2.kernel.util.ConfigManager;
 import io.mosip.testrig.pmpuiv2.utility.LogUtil;
 
 public class ApiKeyPage extends BasePage {
+
+	// Active-language API Key Edit Expiry text. init() is called once per language run (TestRunner,
+	// right after ConfigManager.setloginlang()), copying the matching LocaleTextEng/Fra/Ara values in -
+	// so call sites just read these fields directly instead of branching on the login language. See
+	// MispServicesPage.init() for the original version of this pattern.
+	public static String API_KEY_EDIT_EXPIRY_PAGE_TITLE;
+	public static String API_KEY_PARTNER_ID_LABEL;
+	public static String API_KEY_PARTNER_TYPE_LABEL;
+	public static String API_KEY_ORGANISATION_LABEL;
+	public static String API_KEY_POLICY_GROUP_LABEL;
+	public static String API_KEY_POLICY_NAME_LABEL;
+	public static String API_KEY_POLICY_GROUP_DESCRIPTION_LABEL;
+	public static String API_KEY_POLICY_NAME_DESCRIPTION_LABEL;
+	public static String API_KEY_UPDATE_EXPIRY_TITLE;
+	public static String API_KEY_EXPIRY_DATE_LABEL;
+	public static String API_KEY_UNDO_CHANGES_BTN_TEXT;
+	public static String API_KEY_CANCEL_BTN_TEXT;
+	public static String API_KEY_SUBMIT_BTN_TEXT;
+	public static String API_KEY_CONFIRMATION_GO_BACK_BTN_TEXT;
+	public static String API_KEY_CONFIRMATION_HOME_BTN_TEXT;
+	public static String API_KEY_CONFIRMATION_MESSAGE_TEMPLATE;
+	public static String API_KEY_ACTION_VIEW_OPTION_TEXT;
+	public static String API_KEY_ACTION_EDIT_EXPIRY_OPTION_TEXT;
+	public static String API_KEY_ACTION_DEACTIVATE_OPTION_TEXT;
+
+	// See BasePage.copyLocaleFields() - shared by every page's init().
+	public static void init(String loginLanguage) {
+		copyLocaleFields(ApiKeyPage.class, loginLanguage);
+	}
 
 	@FindBy(id = "generate_api_key_name")
 	private WebElement enterNameOfApiKeyTextBox;
@@ -387,6 +417,90 @@ public class ApiKeyPage extends BasePage {
 
 	@FindBy(id = "api_key_list_deactivate_btn")
 	private WebElement deactivateButton;
+
+	@FindBy(id = "api_key_list_edit_expiry_btn")
+	private WebElement editExpiryDateButton;
+
+	@FindBy(id = "page_title")
+	private WebElement editApiKeyExpiryPageTitle;
+
+	@FindBy(id = "edit_admin_api_key_sub_title_id")
+	private WebElement editApiKeySubTitle;
+
+	@FindBy(id = "edit_admin_api_key_partner_id_label")
+	private WebElement editApiKeyPartnerIdLabel;
+
+	@FindBy(id = "edit_admin_api_key_partner_id_context")
+	private WebElement editApiKeyPartnerIdContext;
+
+	@FindBy(id = "edit_admin_api_key_partner_type_label")
+	private WebElement editApiKeyPartnerTypeLabel;
+
+	@FindBy(id = "edit_admin_api_key_partner_type_context")
+	private WebElement editApiKeyPartnerTypeContext;
+
+	@FindBy(id = "edit_admin_api_key_policy_group_label")
+	private WebElement editApiKeyPolicyGroupLabel;
+
+	@FindBy(id = "edit_admin_api_key_policy_group_name_context")
+	private WebElement editApiKeyPolicyGroupContext;
+
+	@FindBy(id = "edit_admin_api_key_policy_name_label")
+	private WebElement editApiKeyPolicyNameLabel;
+
+	@FindBy(id = "edit_admin_api_key_policy_name_context")
+	private WebElement editApiKeyPolicyNameContext;
+
+	@FindBy(id = "edit_admin_api_key_policy_group_description_label")
+	private WebElement editApiKeyPolicyGroupDescriptionLabel;
+
+	@FindBy(id = "edit_admin_api_key_policy_group_description_context")
+	private WebElement editApiKeyPolicyGroupDescriptionContext;
+
+	@FindBy(id = "edit_admin_api_key_policy_description_label")
+	private WebElement editApiKeyPolicyNameDescriptionLabel;
+
+	@FindBy(id = "edit_admin_api_key_policy_description_context")
+	private WebElement editApiKeyPolicyNameDescriptionContext;
+
+	@FindBy(id = "edit_admin_api_key_expiry_date_picker_label")
+	private WebElement editApiKeyExpiryDateLabel;
+
+	@FindBy(id = "edit_admin_api_key_expiry_date_picker")
+	private WebElement editApiKeyExpiryDateInput;
+
+	@FindBy(css = "div.react-datepicker")
+	private WebElement editApiKeyExpiryDateCalendarPopup;
+
+	@FindBy(css = "div.react-datepicker__day.react-datepicker__day--015:not(.react-datepicker__day--outside-month)")
+	private WebElement editApiKeyExpiryDateCalendarDay15;
+
+	@FindBy(css = "div.react-datepicker__day.react-datepicker__day--001:not(.react-datepicker__day--outside-month)")
+	private WebElement editApiKeyExpiryDateCalendarDay1;
+
+	@FindBy(id = "edit_admin_api_key_submit_btn")
+	private WebElement editApiKeySubmitButton;
+
+	@FindBy(id = "edit_admin_api_key_undo_changes_btn")
+	private WebElement editApiKeyUndoChangesButton;
+
+	@FindBy(id = "edit_admin_api_key_cancel_btn")
+	private WebElement editApiKeyCancelButton;
+
+	@FindBy(id = "blocker_prompt_description")
+	private WebElement editApiKeyCancelConfirmationPopup;
+
+	@FindBy(id = "edit_admin_api_key_confirmation_header")
+	private WebElement editApiKeyConfirmationHeader;
+
+	@FindBy(id = "confirmation_go_back_btn")
+	private WebElement editApiKeyConfirmationGoBackButton;
+
+	@FindBy(id = "confirmation_home_btn")
+	private WebElement editApiKeyConfirmationHomeButton;
+
+	@FindBy(id = "block_messsage_proceed")
+	private WebElement editApiKeyCancelConfirmationProceedButton;
 
 	@FindBy(id = "api_key_list_item1")
 	private WebElement apiKeyItem1;
@@ -1130,12 +1244,281 @@ public class ApiKeyPage extends BasePage {
 		clickOnElement(actionButton);
 	}
 
+	public boolean isActionButtonDisplayed() {
+		return isElementDisplayed(actionButton);
+	}
+
+	public boolean isActionButtonEnabled() {
+		return isElementEnabled(actionButton);
+	}
+
+	public boolean isApiKeyItem1Displayed() {
+		return isElementDisplayed(apiKeyItem1);
+	}
+
+	public boolean isViewButtonDisplayed() {
+		return isElementDisplayed(viewButton);
+	}
+
 	public boolean isViewButtonEnabled() {
 		return isElementEnabled(viewButton);
 	}
 
+	public String getViewButtonText() {
+		return getTextFromLocator(viewButton);
+	}
+
+	public boolean isDeactivateButtonDisplayed() {
+		return isElementDisplayed(deactivateButton);
+	}
+
 	public boolean isDeactivateButtonEnabled() {
 		return isElementEnabled(deactivateButton);
+	}
+
+	public String getDeactivateButtonText() {
+		return getTextFromLocator(deactivateButton);
+	}
+
+	public boolean isEditExpiryDateButtonDisplayed() {
+		return isElementDisplayed(editExpiryDateButton);
+	}
+
+	public String getEditExpiryDateButtonText() {
+		return getTextFromLocator(editExpiryDateButton);
+	}
+
+	public boolean isEditExpiryDateButtonEnabled() {
+		return isElementEnabled(editExpiryDateButton);
+	}
+
+	public void clickOnEditExpiryDateButton() {
+		clickOnElement(editExpiryDateButton);
+	}
+
+	public boolean isEditApiKeyExpiryPageDisplayed() {
+		return isElementDisplayed(editApiKeyExpiryPageTitle);
+	}
+
+	public String getEditApiKeyExpiryPageTitle() {
+		return getTextFromLocator(editApiKeyExpiryPageTitle);
+	}
+
+	// Subtitle reads "<localized label>: <name>" - only present before submission, the confirmation
+	// screen that follows a successful submit no longer renders it. Splitting on the colon rather than
+	// stripping a hardcoded English label keeps this correct under any login language (verified against
+	// the Arabic UI, where the label itself is translated but the ": <name>" structure is unchanged).
+	public String getEditApiKeyName() {
+		String subTitle = getTextFromLocator(editApiKeySubTitle);
+		return subTitle.substring(subTitle.lastIndexOf(':') + 1).trim();
+	}
+
+	public boolean isEditApiKeyPartnerIdLabelDisplayed() {
+		return isElementDisplayed(editApiKeyPartnerIdLabel);
+	}
+
+	public String getEditApiKeyPartnerIdLabelText() {
+		return getTextFromLocator(editApiKeyPartnerIdLabel);
+	}
+
+	public boolean isEditApiKeyPartnerIdFieldReadOnly() {
+		return isElementNotEditable(editApiKeyPartnerIdContext);
+	}
+
+	public boolean isEditApiKeyPartnerTypeLabelDisplayed() {
+		return isElementDisplayed(editApiKeyPartnerTypeLabel);
+	}
+
+	public String getEditApiKeyPartnerTypeLabelText() {
+		return getTextFromLocator(editApiKeyPartnerTypeLabel);
+	}
+
+	public boolean isEditApiKeyPartnerTypeFieldReadOnly() {
+		return isElementNotEditable(editApiKeyPartnerTypeContext);
+	}
+
+	public boolean isEditApiKeyPolicyGroupLabelDisplayed() {
+		return isElementDisplayed(editApiKeyPolicyGroupLabel);
+	}
+
+	public String getEditApiKeyPolicyGroupLabelText() {
+		return getTextFromLocator(editApiKeyPolicyGroupLabel);
+	}
+
+	public boolean isEditApiKeyPolicyGroupFieldReadOnly() {
+		return isElementNotEditable(editApiKeyPolicyGroupContext);
+	}
+
+	public boolean isEditApiKeyPolicyNameLabelDisplayed() {
+		return isElementDisplayed(editApiKeyPolicyNameLabel);
+	}
+
+	public String getEditApiKeyPolicyNameLabelText() {
+		return getTextFromLocator(editApiKeyPolicyNameLabel);
+	}
+
+	public boolean isEditApiKeyPolicyNameFieldReadOnly() {
+		return isElementNotEditable(editApiKeyPolicyNameContext);
+	}
+
+	public boolean isEditApiKeyPolicyGroupDescriptionLabelDisplayed() {
+		return isElementDisplayed(editApiKeyPolicyGroupDescriptionLabel);
+	}
+
+	public String getEditApiKeyPolicyGroupDescriptionLabelText() {
+		return getTextFromLocator(editApiKeyPolicyGroupDescriptionLabel);
+	}
+
+	public boolean isEditApiKeyPolicyGroupDescriptionFieldReadOnly() {
+		return isElementNotEditable(editApiKeyPolicyGroupDescriptionContext);
+	}
+
+	public boolean isEditApiKeyPolicyNameDescriptionLabelDisplayed() {
+		return isElementDisplayed(editApiKeyPolicyNameDescriptionLabel);
+	}
+
+	public String getEditApiKeyPolicyNameDescriptionLabelText() {
+		return getTextFromLocator(editApiKeyPolicyNameDescriptionLabel);
+	}
+
+	public boolean isEditApiKeyPolicyNameDescriptionFieldReadOnly() {
+		return isElementNotEditable(editApiKeyPolicyNameDescriptionContext);
+	}
+
+	public boolean isEditApiKeyExpiryDateLabelDisplayed() {
+		return isElementDisplayed(editApiKeyExpiryDateLabel);
+	}
+
+	public String getEditApiKeyExpiryDateLabelText() {
+		return getTextFromLocator(editApiKeyExpiryDateLabel);
+	}
+
+	public boolean isEditApiKeyExpiryDateFieldEnabled() {
+		return isElementEnabled(editApiKeyExpiryDateInput);
+	}
+
+	public String getEditApiKeyExpiryDateValue() {
+		return getTextFromAttribute(editApiKeyExpiryDateInput, "value");
+	}
+
+	public void clickOnEditApiKeyExpiryDateField() {
+		clickOnElement(editApiKeyExpiryDateInput);
+	}
+
+	public boolean isEditApiKeyExpiryDateCalendarDisplayed() {
+		return isElementDisplayed(editApiKeyExpiryDateCalendarPopup);
+	}
+
+	public void selectDay15InEditApiKeyExpiryDateCalendar() {
+		clickOnElement(editApiKeyExpiryDateCalendarDay15);
+	}
+
+	// Typing a full date (not clicking prev/next) is what actually drives react-datepicker to
+	// navigate its calendar view to that month - confirmed against the live QA build, where the
+	// widget otherwise opens on the stored expiry's month/year (e.g. year 4764 for a no-expiry key),
+	// nowhere near the current month.
+	public void enterEditApiKeyExpiryDate(String date) {
+		enter(editApiKeyExpiryDateInput, date);
+	}
+
+	public void clearEditApiKeyExpiryDateField() {
+		editApiKeyExpiryDateInput.clear();
+	}
+
+	// A rejected (past) date typed into the field only reverts to its prior value once the field
+	// loses focus - confirmed against the live QA build, where the just-typed text stays visible
+	// until blur.
+	public void blurEditApiKeyExpiryDateField() {
+		editApiKeyExpiryDateInput.sendKeys(Keys.TAB);
+	}
+
+	public boolean isTodayDisabledInEditApiKeyExpiryDateCalendar() {
+		By todayDisabledLocator = By.cssSelector("div.react-datepicker__day--today.react-datepicker__day--disabled");
+		return isElementDisplayedQuick(todayDisabledLocator, Duration.ofSeconds(5));
+	}
+
+	public int getDisabledDayCountInEditApiKeyExpiryDateCalendar() {
+		return driver.findElements(By.cssSelector("div.react-datepicker__day--disabled")).size();
+	}
+
+	public void clickOnDay1InEditApiKeyExpiryDateCalendar() {
+		clickOnElement(editApiKeyExpiryDateCalendarDay1);
+	}
+
+	public boolean isEditApiKeySubmitButtonEnabled() {
+		return isElementEnabled(editApiKeySubmitButton);
+	}
+
+	public void clickOnEditApiKeyCancelButton() {
+		clickOnElement(editApiKeyCancelButton);
+	}
+
+	public boolean isEditApiKeyCancelButtonDisplayed() {
+		return isElementDisplayed(editApiKeyCancelButton);
+	}
+
+	public String getEditApiKeyCancelButtonText() {
+		return getTextFromLocator(editApiKeyCancelButton);
+	}
+
+	public boolean isEditApiKeySubmitButtonDisplayed() {
+		return isElementDisplayed(editApiKeySubmitButton);
+	}
+
+	public String getEditApiKeySubmitButtonText() {
+		return getTextFromLocator(editApiKeySubmitButton);
+	}
+
+	public boolean isEditApiKeyCancelButtonEnabled() {
+		return isElementEnabled(editApiKeyCancelButton);
+	}
+
+	public boolean isEditApiKeyUndoChangesButtonEnabled() {
+		return isElementEnabled(editApiKeyUndoChangesButton);
+	}
+
+	public String getEditApiKeyUndoChangesButtonText() {
+		return getTextFromLocator(editApiKeyUndoChangesButton);
+	}
+
+	public void clickOnEditApiKeyUndoChangesButton() {
+		clickOnElement(editApiKeyUndoChangesButton);
+	}
+
+	public void clickOnEditApiKeySubmitButton() {
+		clickOnElement(editApiKeySubmitButton);
+	}
+
+	public boolean isEditApiKeyConfirmationHeaderDisplayed() {
+		return isElementDisplayed(editApiKeyConfirmationHeader);
+	}
+
+	public String getEditApiKeyConfirmationHeaderText() {
+		return getTextFromLocator(editApiKeyConfirmationHeader);
+	}
+
+	public void clickOnEditApiKeyConfirmationGoBackButton() {
+		clickOnElement(editApiKeyConfirmationGoBackButton);
+	}
+
+	public String getEditApiKeyConfirmationGoBackButtonText() {
+		return getTextFromLocator(editApiKeyConfirmationGoBackButton);
+	}
+
+	public void clickOnEditApiKeyConfirmationHomeButton() {
+		clickOnElement(editApiKeyConfirmationHomeButton);
+	}
+
+	public String getEditApiKeyConfirmationHomeButtonText() {
+		return getTextFromLocator(editApiKeyConfirmationHomeButton);
+	}
+
+	public boolean isEditApiKeyCancelConfirmationPopupDisplayed() {
+		return isElementDisplayed(editApiKeyCancelConfirmationPopup);
+	}
+
+	public void clickOnEditApiKeyCancelConfirmationProceedButton() {
+		clickOnElement(editApiKeyCancelConfirmationProceedButton);
 	}
 
 	public void clickOnDeactivatedApiKeyRow() {

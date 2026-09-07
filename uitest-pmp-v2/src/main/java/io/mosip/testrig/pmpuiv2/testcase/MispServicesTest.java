@@ -4,7 +4,6 @@ import io.mosip.testrig.pmpuiv2.pages.DashboardPage;
 import io.mosip.testrig.pmpuiv2.pages.MispPartnerPage;
 import io.mosip.testrig.pmpuiv2.pages.MispServicesPage;
 import io.mosip.testrig.pmpuiv2.pages.PartnerCertificatePage;
-import io.mosip.testrig.pmpuiv2.kernel.util.ConfigManager;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 import org.testng.annotations.Test;
@@ -111,7 +110,7 @@ public class MispServicesTest extends BaseClass {
         assertTrue(mispServicesPage.isExpiryDateCalenderInfoDescriptionDisplayed(),
                 GlobalConstants.isExpiryDateCalenderInfoDescriptionDisplayed);
         assertEquals(mispServicesPage.getExpiryDateCalenderInfoDescriptionText(),
-                getExpectedExpiryDateInfoText());
+                MispServicesPage.EXPIRY_DATE_CALENDER_INFO_TEXT);
         assertTrue(mispServicesPage.areInfoIconsColorAndFontSizeConsistent(),
                 GlobalConstants.areInfoIconsColorAndFontSizeConsistent);
         mispServicesPage.clickOnExpiryDate();
@@ -166,8 +165,7 @@ public class MispServicesTest extends BaseClass {
 
         assertTrue(mispServicesPage.isMispLicenseListSubTitleDisplayed(), GlobalConstants.isMispLicenseListSubTitleDisplayed);
         String mispListSubTitleText = mispServicesPage.getMispLicenseListSubTitleText();
-        String expectedSubTitlePrefix = getExpectedMispListHeaderText(GlobalConstants.LIST_OF_MISP_LICENSE_KEYS_SUBTITLE_TEXT,
-                GlobalConstants.LIST_OF_MISP_LICENSE_KEYS_SUBTITLE_TEXT_FRA, GlobalConstants.LIST_OF_MISP_LICENSE_KEYS_SUBTITLE_TEXT_ARA);
+        String expectedSubTitlePrefix = MispServicesPage.LIST_OF_MISP_LICENSE_KEYS_SUBTITLE_TEXT;
         assertTrue(mispListSubTitleText.matches("^" + java.util.regex.Pattern.quote(expectedSubTitlePrefix) + " \\(\\d+\\)$"),
                 GlobalConstants.isMispLicenseListSubTitleCountFormatCorrect);
         int countInSubTitle = Integer.parseInt(mispListSubTitleText.replaceAll("[^0-9]", ""));
@@ -194,9 +192,8 @@ public class MispServicesTest extends BaseClass {
 
         assertTrue(mispServicesPage.areMispFilterTextFieldsGenuineInputs(), GlobalConstants.areMispFilterTextFieldsGenuineInputs);
         assertTrue(mispServicesPage.isMispFilterStatusFieldADropdown(), GlobalConstants.isMispFilterStatusFieldADropdown);
-        assertEquals(mispServicesPage.getMispFilterLicenseKeyNameSearchPlaceholder(), getExpectedMispListHeaderText(
-                GlobalConstants.MISP_LICENSE_KEY_NAME_SEARCH_PLACEHOLDER, GlobalConstants.MISP_LICENSE_KEY_NAME_SEARCH_PLACEHOLDER_FRA,
-                GlobalConstants.MISP_LICENSE_KEY_NAME_SEARCH_PLACEHOLDER_ARA), GlobalConstants.isMispFilterLicenseKeyNameSearchBarVisible);
+        assertEquals(mispServicesPage.getMispFilterLicenseKeyNameSearchPlaceholder(),
+                MispServicesPage.MISP_LICENSE_KEY_NAME_SEARCH_PLACEHOLDER, GlobalConstants.isMispFilterLicenseKeyNameSearchBarVisible);
 
         mispServicesPage.enterMispFilterPolicyGroup(GlobalConstants.DEFAULT_POLICYGROUP);
         mispServicesPage.selectMispFilterStatusActive();
@@ -231,9 +228,8 @@ public class MispServicesTest extends BaseClass {
                 GlobalConstants.isMispLicenseListEmptyForNoMatchingFilter);
         assertTrue(mispServicesPage.isNoResultsFoundMessageDisplayed(),
                 GlobalConstants.isMispLicenseListEmptyForNoMatchingFilter);
-        assertEquals(mispServicesPage.getNoResultsFoundMessageText(), getExpectedMispListHeaderText(
-                GlobalConstants.NO_RESULTS_FOUND_TEXT, GlobalConstants.NO_RESULTS_FOUND_TEXT_FRA,
-                GlobalConstants.NO_RESULTS_FOUND_TEXT_ARA), GlobalConstants.isMispLicenseListEmptyForNoMatchingFilter);
+        assertEquals(mispServicesPage.getNoResultsFoundMessageText(),
+                MispServicesPage.NO_RESULTS_FOUND_TEXT, GlobalConstants.isMispLicenseListEmptyForNoMatchingFilter);
         mispServicesPage.clickOnMispLicenseFilterResetButton();
 
         mispServicesPage.clickOnFilterButton();
@@ -262,36 +258,26 @@ public class MispServicesTest extends BaseClass {
         assertTrue(mispServicesPage.isMispLicenseKeyHeaderDisplayed(), GlobalConstants.isMispLicenseKeyHeaderDisplayed);
         assertTrue(mispServicesPage.isActionHeaderDisplayed(), GlobalConstants.isActionHeaderDisplayed);
 
-        assertEquals(mispServicesPage.getPartnerIdHeaderText(), getExpectedMispListHeaderText(
-                GlobalConstants.MISP_LIST_HEADER_PARTNER_ID, GlobalConstants.MISP_LIST_HEADER_PARTNER_ID_FRA,
-                GlobalConstants.MISP_LIST_HEADER_PARTNER_ID_ARA), GlobalConstants.isMispLicenseListTableHeaderTextCorrect);
-        assertEquals(mispServicesPage.getOrgNameHeaderText(), getExpectedMispListHeaderText(
-                GlobalConstants.MISP_LIST_HEADER_ORG_NAME, GlobalConstants.MISP_LIST_HEADER_ORG_NAME_FRA,
-                GlobalConstants.MISP_LIST_HEADER_ORG_NAME_ARA), GlobalConstants.isMispLicenseListTableHeaderTextCorrect);
-        assertEquals(mispServicesPage.getPolicyGroupHeaderText(), getExpectedMispListHeaderText(
-                GlobalConstants.MISP_LIST_HEADER_POLICY_GROUP, GlobalConstants.MISP_LIST_HEADER_POLICY_GROUP_FRA,
-                GlobalConstants.MISP_LIST_HEADER_POLICY_GROUP_ARA), GlobalConstants.isMispLicenseListTableHeaderTextCorrect);
-        assertEquals(mispServicesPage.getPolicyNameHeaderText(), getExpectedMispListHeaderText(
-                GlobalConstants.MISP_LIST_HEADER_POLICY_NAME, GlobalConstants.MISP_LIST_HEADER_POLICY_NAME_FRA,
-                GlobalConstants.MISP_LIST_HEADER_POLICY_NAME_ARA), GlobalConstants.isMispLicenseListTableHeaderTextCorrect);
-        assertEquals(mispServicesPage.getMispLicenseKeyNameHeaderText(), getExpectedMispListHeaderText(
-                GlobalConstants.MISP_LIST_HEADER_LICENSE_KEY_NAME, GlobalConstants.MISP_LIST_HEADER_LICENSE_KEY_NAME_FRA,
-                GlobalConstants.MISP_LIST_HEADER_LICENSE_KEY_NAME_ARA), GlobalConstants.isMispLicenseListTableHeaderTextCorrect);
-        assertEquals(mispServicesPage.getCreationDateHeaderText(), getExpectedMispListHeaderText(
-                GlobalConstants.MISP_LIST_HEADER_CREATION_DATE, GlobalConstants.MISP_LIST_HEADER_CREATION_DATE_FRA,
-                GlobalConstants.MISP_LIST_HEADER_CREATION_DATE_ARA), GlobalConstants.isMispLicenseListTableHeaderTextCorrect);
-        assertEquals(mispServicesPage.getExpirationDateHeaderText(), getExpectedMispListHeaderText(
-                GlobalConstants.MISP_LIST_HEADER_EXPIRATION_DATE, GlobalConstants.MISP_LIST_HEADER_EXPIRATION_DATE_FRA,
-                GlobalConstants.MISP_LIST_HEADER_EXPIRATION_DATE_ARA), GlobalConstants.isMispLicenseListTableHeaderTextCorrect);
-        assertEquals(mispServicesPage.getStatusHeaderText(), getExpectedMispListHeaderText(
-                GlobalConstants.MISP_LIST_HEADER_STATUS, GlobalConstants.MISP_LIST_HEADER_STATUS_FRA,
-                GlobalConstants.MISP_LIST_HEADER_STATUS_ARA), GlobalConstants.isMispLicenseListTableHeaderTextCorrect);
-        assertEquals(mispServicesPage.getMispLicenseKeyHeaderText(), getExpectedMispListHeaderText(
-                GlobalConstants.MISP_LIST_HEADER_LICENSE_KEY, GlobalConstants.MISP_LIST_HEADER_LICENSE_KEY_FRA,
-                GlobalConstants.MISP_LIST_HEADER_LICENSE_KEY_ARA), GlobalConstants.isMispLicenseListTableHeaderTextCorrect);
-        assertEquals(mispServicesPage.getActionHeaderText(), getExpectedMispListHeaderText(
-                GlobalConstants.MISP_LIST_HEADER_ACTION, GlobalConstants.MISP_LIST_HEADER_ACTION_FRA,
-                GlobalConstants.MISP_LIST_HEADER_ACTION_ARA), GlobalConstants.isMispLicenseListTableHeaderTextCorrect);
+        assertEquals(mispServicesPage.getPartnerIdHeaderText(),
+                MispServicesPage.MISP_LIST_HEADER_PARTNER_ID, GlobalConstants.isMispLicenseListTableHeaderTextCorrect);
+        assertEquals(mispServicesPage.getOrgNameHeaderText(),
+                MispServicesPage.MISP_LIST_HEADER_ORG_NAME, GlobalConstants.isMispLicenseListTableHeaderTextCorrect);
+        assertEquals(mispServicesPage.getPolicyGroupHeaderText(),
+                MispServicesPage.MISP_LIST_HEADER_POLICY_GROUP, GlobalConstants.isMispLicenseListTableHeaderTextCorrect);
+        assertEquals(mispServicesPage.getPolicyNameHeaderText(),
+                MispServicesPage.MISP_LIST_HEADER_POLICY_NAME, GlobalConstants.isMispLicenseListTableHeaderTextCorrect);
+        assertEquals(mispServicesPage.getMispLicenseKeyNameHeaderText(),
+                MispServicesPage.MISP_LIST_HEADER_LICENSE_KEY_NAME, GlobalConstants.isMispLicenseListTableHeaderTextCorrect);
+        assertEquals(mispServicesPage.getCreationDateHeaderText(),
+                MispServicesPage.MISP_LIST_HEADER_CREATION_DATE, GlobalConstants.isMispLicenseListTableHeaderTextCorrect);
+        assertEquals(mispServicesPage.getExpirationDateHeaderText(),
+                MispServicesPage.MISP_LIST_HEADER_EXPIRATION_DATE, GlobalConstants.isMispLicenseListTableHeaderTextCorrect);
+        assertEquals(mispServicesPage.getStatusHeaderText(),
+                MispServicesPage.MISP_LIST_HEADER_STATUS, GlobalConstants.isMispLicenseListTableHeaderTextCorrect);
+        assertEquals(mispServicesPage.getMispLicenseKeyHeaderText(),
+                MispServicesPage.MISP_LIST_HEADER_LICENSE_KEY, GlobalConstants.isMispLicenseListTableHeaderTextCorrect);
+        assertEquals(mispServicesPage.getActionHeaderText(),
+                MispServicesPage.MISP_LIST_HEADER_ACTION, GlobalConstants.isMispLicenseListTableHeaderTextCorrect);
 
         assertEquals(mispServicesPage.getLatestLicenseRowPartnerId(), GlobalConstants.MISP_PARTNER_USER);
         assertEquals(mispServicesPage.getLatestLicenseRowStatus(), GlobalConstants.ACTIVE_STATUS_LABEL);
@@ -464,17 +450,17 @@ public class MispServicesTest extends BaseClass {
 
         mispServicesPage.clickOnMispLicenseListRegenerateButton();
 
-        assertEquals(mispServicesPage.getPageTitleText(), getExpectedRegenerateMispLicenseKeyPageTitle());
+        assertEquals(mispServicesPage.getPageTitleText(), MispServicesPage.REGENERATE_MISP_LICENSE_KEY_PAGE_TITLE);
         assertTrue(mispServicesPage.isMispServicesBreadcombDisplayed(),
                 GlobalConstants.isMispServicesBreadcombDisplayed);
         assertTrue(mispServicesPage.isGenerateMispLicenceKeyHomeButtonDisplayed(),
                 GlobalConstants.isGenerateMispLicenceKeyHomeButtonDisplayed);
-        assertEquals(mispServicesPage.getBreadcrumbText(), getExpectedRegenerateBreadcrumbText(),
+        assertEquals(mispServicesPage.getBreadcrumbText(), MispServicesPage.REGENERATE_BREADCRUMB_TEXT,
                 GlobalConstants.isRegenerateBreadcrumbTextCorrect);
 
         assertTrue(mispServicesPage.isRegenerateMandatoryFieldsSubtitleDisplayed(),
                 GlobalConstants.isAllFieldsAreMandatorySubtitleDisplayed);
-        assertEquals(mispServicesPage.getRegenerateMandatoryFieldsSubtitleText(), getExpectedRegenerateMandatoryFieldsSubtitleText(),
+        assertEquals(mispServicesPage.getRegenerateMandatoryFieldsSubtitleText(), MispServicesPage.REGENERATE_MANDATORY_FIELDS_SUBTITLE_TEXT,
                 GlobalConstants.isRegenerateMandatoryFieldsSubtitleCorrect);
 
         assertTrue(mispServicesPage.isRegeneratePartnerIdLabelDisplayed(),
@@ -499,7 +485,7 @@ public class MispServicesTest extends BaseClass {
                 GlobalConstants.isRegeneratePolicyGroupCarriedOver);
         assertTrue(mispServicesPage.isRegeneratePolicyGroupPlaceholderWithinViewport(),
                 GlobalConstants.isRegeneratePolicyGroupPlaceholderAligned);
-        assertEquals(mispServicesPage.getRegeneratePolicyName(), getExpectedNoPolicyNameSelectedText());
+        assertEquals(mispServicesPage.getRegeneratePolicyName(), MispServicesPage.NO_POLICY_NAME_SELECTED);
         assertTrue(mispServicesPage.isRegeneratePolicyNameFieldDisabled(),
                 GlobalConstants.isRegeneratePolicyNameCarriedOver);
         assertTrue(mispServicesPage.isRegeneratePolicyNamePlaceholderWithinViewport(),
@@ -511,7 +497,7 @@ public class MispServicesTest extends BaseClass {
         assertTrue(mispServicesPage.isRegenerateLicenseKeyNameFieldEnabled(),
                 GlobalConstants.isRegenerateLicenseKeyNameFieldIsTextbox);
 
-        assertEquals(mispServicesPage.getRegenerateLicenseKeyNameHelpText(), getExpectedRegenerateLicenseKeyNameHelpText(),
+        assertEquals(mispServicesPage.getRegenerateLicenseKeyNameHelpText(), MispServicesPage.REGENERATE_LICENSE_KEY_NAME_HELP_TEXT,
                 GlobalConstants.isRegenerateLicenseKeyNameHelpTextCorrect);
         assertTrue(mispServicesPage.isRegenerateLicenseKeyNameHelpTextDisabledForEdit(),
                 GlobalConstants.isRegenerateLicenseKeyNameHelpTextDisabledForEdit);
@@ -544,7 +530,7 @@ public class MispServicesTest extends BaseClass {
         mispServicesPage.clickOnRegenerateExpiryDateCalenderInfoIcon();
         assertTrue(mispServicesPage.isRegenerateExpiryDateCalenderInfoDescriptionDisplayed(),
                 GlobalConstants.isRegenerateExpiryDateCalenderInfoDescriptionDisplayed);
-        assertEquals(mispServicesPage.getRegenerateExpiryDateCalenderInfoDescriptionText(), getExpectedExpiryDateInfoText(),
+        assertEquals(mispServicesPage.getRegenerateExpiryDateCalenderInfoDescriptionText(), MispServicesPage.EXPIRY_DATE_CALENDER_INFO_TEXT,
                 GlobalConstants.isRegenerateExpiryDateCalenderInfoTextCorrect);
         assertTrue(mispServicesPage.isRegenerateExpiryDateCalenderInfoDescriptionNotEditable(),
                 GlobalConstants.isRegenerateExpiryDateCalenderInfoDescriptionNotEditable);
@@ -565,7 +551,7 @@ public class MispServicesTest extends BaseClass {
         mispServicesPage.clickOnRegenerateCancelButton();
         assertTrue(mispServicesPage.isCancelConfirmationPopupDisplayed(), GlobalConstants.isCancelConfirmationPopupDisplayed);
         mispServicesPage.clickOnCancelConfirmationPopupProceedButton();
-        assertEquals(mispServicesPage.getPageTitleText(), getExpectedMispServicesPageTitle(),
+        assertEquals(mispServicesPage.getPageTitleText(), MispServicesPage.MISP_SERVICES_PAGE_TITLE,
                 GlobalConstants.isRegenerateCancelReturnsToMispServicesList);
 
         mispServicesPage.clickOnMispLicenseListActionButton();
@@ -574,7 +560,7 @@ public class MispServicesTest extends BaseClass {
                 GlobalConstants.isRegenerateCancelDoesNotPersistUnsavedData);
 
         mispServicesPage.clickOnRegenerateCancelButton();
-        assertEquals(mispServicesPage.getPageTitleText(), getExpectedMispServicesPageTitle(),
+        assertEquals(mispServicesPage.getPageTitleText(), MispServicesPage.MISP_SERVICES_PAGE_TITLE,
                 GlobalConstants.isRegenerateCancelReturnsToMispServicesList);
     }
 
@@ -592,7 +578,7 @@ public class MispServicesTest extends BaseClass {
 
         mispServicesPage.clickOnMispLicenseListActionButton();
         mispServicesPage.clickOnMispLicenseListRegenerateButton();
-        assertEquals(mispServicesPage.getPageTitleText(), getExpectedRegenerateMispLicenseKeyPageTitle());
+        assertEquals(mispServicesPage.getPageTitleText(), MispServicesPage.REGENERATE_MISP_LICENSE_KEY_PAGE_TITLE);
 
         assertTrue(mispServicesPage.isRegenerateImportantNoteDisplayed(),
                 GlobalConstants.isRegenerateImportantNoteDisplayed);
@@ -638,7 +624,7 @@ public class MispServicesTest extends BaseClass {
                 GlobalConstants.isRegenerateCopyIdPopupSubtitleShowsSamePartnerId);
         assertTrue(mispServicesPage.isMispLicenseKeyPopupHeaderDisplayed(),
                 GlobalConstants.isRegenerateCopyIdPopupHeaderDisplayed);
-        assertEquals(mispServicesPage.getMispLicenseKeyPopupHeaderText(), getExpectedMispLicenseKeyPopupHeaderText(),
+        assertEquals(mispServicesPage.getMispLicenseKeyPopupHeaderText(), MispServicesPage.MISP_LICENSE_KEY_POPUP_HEADER_TEXT,
                 GlobalConstants.isRegenerateCopyIdPopupHeaderTextCorrect);
         String regeneratedLicenseKeyIdText = mispServicesPage.getMispLicenseKeyIdText();
         assertTrue(regeneratedLicenseKeyIdText != null && !regeneratedLicenseKeyIdText.isEmpty(),
@@ -660,14 +646,14 @@ public class MispServicesTest extends BaseClass {
 
         assertTrue(mispServicesPage.isRegenerateConfirmationHeaderDisplayed(),
                 GlobalConstants.isRegenerateConfirmationHeaderDisplayed);
-        assertEquals(mispServicesPage.getRegenerateConfirmationHeaderText(), getExpectedRegenerateConfirmationHeaderText());
+        assertEquals(mispServicesPage.getRegenerateConfirmationHeaderText(), MispServicesPage.REGENERATE_LICENSE_KEY_CONFIRMATION_HEADER_TEXT);
         assertTrue(mispServicesPage.isRegenerateConfirmationHeaderNotEditable(),
                 GlobalConstants.isRegenerateConfirmationHeaderNotEditable);
         assertTrue(mispServicesPage.isConfirmationSuccessIconDisplayed(),
                 GlobalConstants.isMispConfirmationSuccessIconDisplayed);
 
         mispServicesPage.clickOnConfirmationGoBackButton();
-        assertEquals(mispServicesPage.getPageTitleText(), getExpectedMispServicesPageTitle());
+        assertEquals(mispServicesPage.getPageTitleText(), MispServicesPage.MISP_SERVICES_PAGE_TITLE);
         mispServicesPage.waitUntilMispLicenseListRowCountSatisfies(count -> count > 0);
         assertEquals(mispServicesPage.getLatestLicenseRowStatus(), GlobalConstants.ACTIVE_STATUS_LABEL);
 
@@ -822,7 +808,7 @@ public class MispServicesTest extends BaseClass {
         mispServicesPage.clickOnLicenseRowPartnerIdCell(1);
         assertTrue(!mispServicesPage.isViewMispLicenseKeyDetailsPageDisplayedQuick(),
                 GlobalConstants.isMispLicenseListDeactivatedRowClickDoesNotNavigate);
-        assertEquals(mispServicesPage.getPageTitleText(), getExpectedMispServicesPageTitle(),
+        assertEquals(mispServicesPage.getPageTitleText(), MispServicesPage.MISP_SERVICES_PAGE_TITLE,
                 GlobalConstants.isMispLicenseListDeactivatedRowClickDoesNotNavigate);
 
         mispServicesPage.clickOnMispLicenseListActionButton();
@@ -836,7 +822,7 @@ public class MispServicesTest extends BaseClass {
                 GlobalConstants.isMispLicenseListActionMenuAlwaysShowsAllThreeItems);
 
         mispServicesPage.clickOnMispLicenseListRegenerateButton();
-        assertEquals(mispServicesPage.getPageTitleText(), getExpectedMispServicesPageTitle(),
+        assertEquals(mispServicesPage.getPageTitleText(), MispServicesPage.MISP_SERVICES_PAGE_TITLE,
                 GlobalConstants.isRegenerateNavigationBlockedForInactiveLicense);
 
         assertTrue(mispServicesPage.isTableSortedDescendingByCreationDate(),
@@ -877,7 +863,7 @@ public class MispServicesTest extends BaseClass {
         mispServicesPage.clickOnMispLicenseListDeactivateButton();
         mispServicesPage.clickOnDeactivateSubmitButton();
 
-        assertEquals(mispServicesPage.getPageTitleText(), getExpectedMispServicesPageTitle(),
+        assertEquals(mispServicesPage.getPageTitleText(), MispServicesPage.MISP_SERVICES_PAGE_TITLE,
                 GlobalConstants.isMispServicesTabularViewDisplayedAfterDeactivation);
         assertEquals(mispServicesPage.getMispLicenseListRowCount(), rowCountBeforeDeactivation,
                 GlobalConstants.isMispServicesTabularViewDisplayedAfterDeactivation);
@@ -1012,16 +998,6 @@ public class MispServicesTest extends BaseClass {
         mispServicesPage.clickOnSubmitButton();
     }
 
-    private String getExpectedExpiryDateInfoText() {
-        String lang = ConfigManager.getloginlang();
-        if ("ara".equalsIgnoreCase(lang)) {
-            return GlobalConstants.EXPIRY_DATE_CALENDER_INFO_TEXT_ARA;
-        } else if ("fra".equalsIgnoreCase(lang)) {
-            return GlobalConstants.EXPIRY_DATE_CALENDER_INFO_TEXT_FRA;
-        }
-        return GlobalConstants.EXPIRY_DATE_CALENDER_INFO_TEXT;
-    }
-
     private void createMispLicenseKeyWithPastExpiryDate(String partnerIdValue, String policyName,
             String licenseKeyName) {
         mispServicesPage.selectPartnerId(partnerIdValue);
@@ -1058,96 +1034,6 @@ public class MispServicesTest extends BaseClass {
         mispServicesPage.clickOnNetworkErrorRetryButton();
         dashboardPage.clickOnMispServices();
         mispServicesPage.clickOnGenerateMispLicenceKeyButton();
-    }
-
-    private String getExpectedRegenerateMispLicenseKeyPageTitle() {
-        String lang = ConfigManager.getloginlang();
-        if ("ara".equalsIgnoreCase(lang)) {
-            return GlobalConstants.REGENERATE_MISP_LICENSE_KEY_PAGE_TITLE_ARA;
-        } else if ("fra".equalsIgnoreCase(lang)) {
-            return GlobalConstants.REGENERATE_MISP_LICENSE_KEY_PAGE_TITLE_FRA;
-        }
-        return GlobalConstants.REGENERATE_MISP_LICENSE_KEY_PAGE_TITLE;
-    }
-
-    private String getExpectedRegenerateBreadcrumbText() {
-        String lang = ConfigManager.getloginlang();
-        if ("ara".equalsIgnoreCase(lang)) {
-            return GlobalConstants.REGENERATE_BREADCRUMB_TEXT_ARA;
-        } else if ("fra".equalsIgnoreCase(lang)) {
-            return GlobalConstants.REGENERATE_BREADCRUMB_TEXT_FRA;
-        }
-        return GlobalConstants.REGENERATE_BREADCRUMB_TEXT;
-    }
-
-    private String getExpectedRegenerateMandatoryFieldsSubtitleText() {
-        String lang = ConfigManager.getloginlang();
-        if ("ara".equalsIgnoreCase(lang)) {
-            return GlobalConstants.REGENERATE_MANDATORY_FIELDS_SUBTITLE_TEXT_ARA;
-        } else if ("fra".equalsIgnoreCase(lang)) {
-            return GlobalConstants.REGENERATE_MANDATORY_FIELDS_SUBTITLE_TEXT_FRA;
-        }
-        return GlobalConstants.REGENERATE_MANDATORY_FIELDS_SUBTITLE_TEXT;
-    }
-
-    private String getExpectedMispListHeaderText(String eng, String fra, String ara) {
-        String lang = ConfigManager.getloginlang();
-        if ("ara".equalsIgnoreCase(lang)) {
-            return ara;
-        } else if ("fra".equalsIgnoreCase(lang)) {
-            return fra;
-        }
-        return eng;
-    }
-
-    private String getExpectedMispLicenseKeyPopupHeaderText() {
-        String lang = ConfigManager.getloginlang();
-        if ("ara".equalsIgnoreCase(lang)) {
-            return GlobalConstants.MISP_LICENSE_KEY_POPUP_HEADER_TEXT_ARA;
-        } else if ("fra".equalsIgnoreCase(lang)) {
-            return GlobalConstants.MISP_LICENSE_KEY_POPUP_HEADER_TEXT_FRA;
-        }
-        return GlobalConstants.MISP_LICENSE_KEY_POPUP_HEADER_TEXT;
-    }
-
-    private String getExpectedRegenerateLicenseKeyNameHelpText() {
-        String lang = ConfigManager.getloginlang();
-        if ("ara".equalsIgnoreCase(lang)) {
-            return GlobalConstants.REGENERATE_LICENSE_KEY_NAME_HELP_TEXT_ARA;
-        } else if ("fra".equalsIgnoreCase(lang)) {
-            return GlobalConstants.REGENERATE_LICENSE_KEY_NAME_HELP_TEXT_FRA;
-        }
-        return GlobalConstants.REGENERATE_LICENSE_KEY_NAME_HELP_TEXT;
-    }
-
-    private String getExpectedNoPolicyNameSelectedText() {
-        String lang = ConfigManager.getloginlang();
-        if ("ara".equalsIgnoreCase(lang)) {
-            return GlobalConstants.NO_POLICY_NAME_SELECTED_ARA;
-        } else if ("fra".equalsIgnoreCase(lang)) {
-            return GlobalConstants.NO_POLICY_NAME_SELECTED_FRA;
-        }
-        return GlobalConstants.NO_POLICY_NAME_SELECTED;
-    }
-
-    private String getExpectedRegenerateConfirmationHeaderText() {
-        String lang = ConfigManager.getloginlang();
-        if ("ara".equalsIgnoreCase(lang)) {
-            return GlobalConstants.REGENERATE_LICENSE_KEY_CONFIRMATION_HEADER_TEXT_ARA;
-        } else if ("fra".equalsIgnoreCase(lang)) {
-            return GlobalConstants.REGENERATE_LICENSE_KEY_CONFIRMATION_HEADER_TEXT_FRA;
-        }
-        return GlobalConstants.REGENERATE_LICENSE_KEY_CONFIRMATION_HEADER_TEXT;
-    }
-
-    private String getExpectedMispServicesPageTitle() {
-        String lang = ConfigManager.getloginlang();
-        if ("ara".equalsIgnoreCase(lang)) {
-            return GlobalConstants.MISP_SERVICES_PAGE_TITLE_ARA;
-        } else if ("fra".equalsIgnoreCase(lang)) {
-            return GlobalConstants.MISP_SERVICES_PAGE_TITLE_FRA;
-        }
-        return GlobalConstants.MISP_SERVICES_PAGE_TITLE;
     }
 
 }

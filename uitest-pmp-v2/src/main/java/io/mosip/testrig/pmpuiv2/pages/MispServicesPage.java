@@ -26,6 +26,37 @@ import io.mosip.testrig.pmpuiv2.utility.LogUtil;
 
 public class MispServicesPage extends BasePage {
 
+	// Active-language MISP Services text. init() is called once per language run (TestRunner, right
+	// after ConfigManager.setloginlang()), copying the matching LocaleTextEng/Fra/Ara values in -
+	// so call sites just read these fields directly instead of branching on the login language.
+	public static String EXPIRY_DATE_CALENDER_INFO_TEXT;
+	public static String MISP_LIST_HEADER_PARTNER_ID;
+	public static String MISP_LIST_HEADER_ORG_NAME;
+	public static String MISP_LIST_HEADER_POLICY_GROUP;
+	public static String MISP_LIST_HEADER_POLICY_NAME;
+	public static String MISP_LIST_HEADER_LICENSE_KEY_NAME;
+	public static String MISP_LIST_HEADER_CREATION_DATE;
+	public static String MISP_LIST_HEADER_EXPIRATION_DATE;
+	public static String MISP_LIST_HEADER_STATUS;
+	public static String MISP_LIST_HEADER_LICENSE_KEY;
+	public static String MISP_LIST_HEADER_ACTION;
+	public static String LIST_OF_MISP_LICENSE_KEYS_SUBTITLE_TEXT;
+	public static String MISP_LICENSE_KEY_NAME_SEARCH_PLACEHOLDER;
+	public static String NO_RESULTS_FOUND_TEXT;
+	public static String REGENERATE_MISP_LICENSE_KEY_PAGE_TITLE;
+	public static String REGENERATE_BREADCRUMB_TEXT;
+	public static String REGENERATE_MANDATORY_FIELDS_SUBTITLE_TEXT;
+	public static String NO_POLICY_NAME_SELECTED;
+	public static String REGENERATE_LICENSE_KEY_NAME_HELP_TEXT;
+	public static String MISP_LICENSE_KEY_POPUP_HEADER_TEXT;
+	public static String REGENERATE_LICENSE_KEY_CONFIRMATION_HEADER_TEXT;
+	public static String MISP_SERVICES_PAGE_TITLE;
+
+	// See BasePage.copyLocaleFields() - shared by every page's init().
+	public static void init(String loginLanguage) {
+		copyLocaleFields(MispServicesPage.class, loginLanguage);
+	}
+
 	@FindBy(id = "generate_misp_license_key_btn")
 	private WebElement generateMispLicenceKeyButton;
 
