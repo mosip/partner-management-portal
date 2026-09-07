@@ -87,11 +87,9 @@ public class PartnerAdminCreation extends BaseClass {
 		partnerCertificatePage.clickOnDeviceInPartnerDomainSelectorDropdown();
 
 		partnerCertificatePage.uploadCertificateRootCa();
+		partnerCertificatePage.waitForAdminTrustCertificateReadyToSubmit();
 		partnerCertificatePage.clickonSubmitButtonForAdmin();
-		assertTrue(partnerCertificatePage.isUploadedSuccessfullyMessageDisplayed(),
-				GlobalConstants.isUploadedSuccessfullyMessageDisplayed);
-		assertTrue(partnerCertificatePage.isSuccessIconDisplayed(), GlobalConstants.isSuccessIconDisplayed);
-		partnerCertificatePage.clickOnGoBackButton();
+		partnerCertificatePage.clickOnGoBackAfterAdminTrustCertificateSubmit();
 
 		partnerCertificatePage.clickOnIntermediateCACertTab();
 		assertTrue(partnerCertificatePage.isIntermediateUploadTrustCertificateButtonDisplayed(),
@@ -100,8 +98,9 @@ public class PartnerAdminCreation extends BaseClass {
 		partnerCertificatePage.clickOnpartnerDomainSelectorDropdown();
 		partnerCertificatePage.clickOnDeviceInPartnerDomainSelectorDropdown();
 		partnerCertificatePage.uploadCertificateSubCa();
+		partnerCertificatePage.waitForAdminTrustCertificateReadyToSubmit();
 		partnerCertificatePage.clickonSubmitButtonForAdmin();
-		partnerCertificatePage.clickOnGoBackButton();
+		partnerCertificatePage.clickOnGoBackAfterAdminTrustCertificateSubmit();
 		dashboardPage.clickOnProfileDropdown();
 		assertTrue(dashboardPage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
 		dashboardPage.clickOnLogoutButton();

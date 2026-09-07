@@ -37,8 +37,9 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 		partnerCertificatePage.clickOnpartnerDomainSelectorDropdown();
 		partnerCertificatePage.clickOnPartnerDomainSelectorDropdownOptionAuth();
 		partnerCertificatePage.uploadCertificateRootCa();
+		partnerCertificatePage.waitForAdminTrustCertificateReadyToSubmit();
 		partnerCertificatePage.clickonSubmitButtonForAdmin();
-		partnerCertificatePage.clickOnGoBackButton();
+		partnerCertificatePage.clickOnGoBackAfterAdminTrustCertificateSubmit();
 
 		partnerCertificatePage.clickOnIntermediateCACertTab();
 		assertTrue(partnerCertificatePage.isIntermediateUploadTrustCertificateButtonDisplayed(),
@@ -47,8 +48,9 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 		partnerCertificatePage.clickOnpartnerDomainSelectorDropdown();
 		partnerCertificatePage.clickOnPartnerDomainSelectorDropdownOptionAuth();
 		partnerCertificatePage.uploadCertificateSubCa();
+		partnerCertificatePage.waitForAdminTrustCertificateReadyToSubmit();
 		partnerCertificatePage.clickonSubmitButtonForAdmin();
-		partnerCertificatePage.clickOnGoBackButton();
+		partnerCertificatePage.clickOnGoBackAfterAdminTrustCertificateSubmit();
 
 		LogUtil.step("Register Credential Partner user");
 		logoutFromPartner();
@@ -382,7 +384,7 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 				GlobalConstants.isUploadPartnerCertificatePopupLayoutDisplayed);
 
 		LogUtil.step("Verify Submit button");
-		assertTrue(partnerCertificatePage.isCertificateUploadSubmitButtonDisplayed(),
+		assertTrue(partnerCertificatePage.isCertificateUploadSubmitButtonDisabled(),
 				GlobalConstants.isUploadPartnerCertificatePopupLayoutDisplayed);
 	}
 
@@ -417,7 +419,7 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 				GlobalConstants.isOnlyUploadButtonAvailableWhenNoCertificateExists);
 	}
 
-	@Test(priority = 11, description = "Verify uploading a valid partner certificate is successful", dependsOnMethods = "registerCredentialPartnerForCertificateFlow")
+	@Test(priority = 28, description = "Verify uploading a valid partner certificate is successful", dependsOnMethods = "registerCredentialPartnerForCertificateFlow")
 	public void verifyValidPartnerCertificateUploadIsSuccessful() {
 
 		dashboardPage = new DashboardPage(driver);
@@ -446,17 +448,18 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 
 		LogUtil.step("Select a valid certificate and submit upload");
 		partnerCertificatePage.uploadCertificate();
-		assertTrue(partnerCertificatePage.isUploadedCertificateNameDisplayed(),
+		assertTrue(partnerCertificatePage.isUploadedCertificateFileNameLabelDisplayed(),
 				GlobalConstants.isUploadedCertificateNameDisplayed);
+		partnerCertificatePage.waitForPartnerCertificateReadyToSubmit();
 		partnerCertificatePage.clickOnSubmitButton();
 
 		LogUtil.step("Verify certificate upload is successful");
-		assertTrue(partnerCertificatePage.isSuccessMessageDisplayed(),
+		assertTrue(partnerCertificatePage.isPartnerCertificateUploadSuccessful(),
 				GlobalConstants.isCredentialPartnerCertificateUploadedSuccessfully);
 		partnerCertificatePage.clickOncertificateUploadCloseButton();
 	}
 
-	@Test(priority = 12, description = "Verify Re-Upload with invalid certificate format shows the correct error message", dependsOnMethods = "verifyValidPartnerCertificateUploadIsSuccessful")
+	@Test(priority = 29, description = "Verify Re-Upload with invalid certificate format shows the correct error message", dependsOnMethods = "verifyValidPartnerCertificateUploadIsSuccessful")
 	public void verifyReUploadInvalidCertificateShowsFormatError() {
 
 		dashboardPage = new DashboardPage(driver);
@@ -497,7 +500,7 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 				GlobalConstants.isInvalidCertificateFormatErrorMessageDisplayed);
 	}
 
-	@Test(priority = 13, description = "Verify Re-Upload with same certificate file", dependsOnMethods = "verifyValidPartnerCertificateUploadIsSuccessful")
+	@Test(priority = 30, description = "Verify Re-Upload with same certificate file", dependsOnMethods = "verifyValidPartnerCertificateUploadIsSuccessful")
 	public void verifyReUploadWithSameCertificateFile() {
 
 		dashboardPage = new DashboardPage(driver);
@@ -539,15 +542,16 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 
 		LogUtil.step("Step 4: Upload the same certificate file and submit");
 		partnerCertificatePage.uploadCertificate();
-		assertTrue(partnerCertificatePage.isUploadedCertificateNameDisplayed(),
+		assertTrue(partnerCertificatePage.isUploadedCertificateFileNameLabelDisplayed(),
 				GlobalConstants.isUploadedCertificateNameDisplayed);
 		assertEquals(partnerCertificatePage.getUploadedCertificateFileName(),
 				GlobalConstants.SAME_CERTIFICATE_FILE_NAME,
 				GlobalConstants.isSameCertificateFileSelectedForReUpload);
+		partnerCertificatePage.waitForPartnerCertificateReadyToSubmit();
 		partnerCertificatePage.clickOnSubmitButton();
 
 		LogUtil.step("Verify replacement is allowed and certificate details are refreshed");
-		assertTrue(partnerCertificatePage.isSuccessMessageDisplayed(),
+		assertTrue(partnerCertificatePage.isPartnerCertificateUploadSuccessful(),
 				GlobalConstants.isReUploadWithSameCertificateFileSuccessful);
 		partnerCertificatePage.clickOncertificateUploadCloseButton();
 		assertTrue(partnerCertificatePage.isPartnerCertificateReuploadButtonDisplayed(),

@@ -15,6 +15,7 @@ import org.testng.xml.XmlTest;
 
 import io.mosip.testrig.pmpuiv2.dbaccess.DBManager;
 import io.mosip.testrig.pmpuiv2.fw.util.AdminTestUtil;
+import io.mosip.testrig.pmpuiv2.fw.util.CertificateGenerationUtil;
 import io.mosip.testrig.pmpuiv2.kernel.util.ConfigManager;
 
 public class TestRunner {
@@ -31,6 +32,7 @@ public class TestRunner {
 
 	public static void main(String[] args) throws Exception {
 		AdminTestUtil.initialize();
+		CertificateGenerationUtil.generateAllCertificates();
 		try (BufferedReader br = new BufferedReader(new FileReader(getResourcePath() + "/config/knownIssues.txt"))) {
 			String line;
 			while ((line = br.readLine()) != null) {

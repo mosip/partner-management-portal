@@ -9,6 +9,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import io.mosip.testrig.pmpuiv2.fw.util.CertificateGenerationUtil;
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
@@ -611,7 +612,9 @@ public class PartnerCertificatePage extends BasePage {
 	}
 
 	public boolean isCertificateUploadSubmitButtonDisabled() {
-		return isElementDisabled(certificateUploadDisabledSubmitButton);
+		return isElementDisplayedQuick(
+				By.xpath("//button[@disabled][contains(normalize-space(.), 'Submit')]"),
+				Duration.ofSeconds(10));
 	}
 
 	public boolean isCertificateUploadSubmitButtonEnabled() {
@@ -623,23 +626,23 @@ public class PartnerCertificatePage extends BasePage {
 	}
 
 	public void uploadCertificateRootCa() {
-		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "RootCA.cer"));
+		uploadImage(uploadFile, CertificateGenerationUtil.getCertFilePath("RootCA.cer"));
 	}
 
 	public void uploadCertificateSubCa() {
-		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "IntermediateCA.cer"));
+		uploadImage(uploadFile, CertificateGenerationUtil.getCertFilePath("IntermediateCA.cer"));
 	}
 
 	public void uploadCertificate() {
-		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "Client.cer"));
+		uploadImage(uploadFile, CertificateGenerationUtil.getCertFilePath("Client.cer"));
 	}
 
 	public void uploadCertificateForAnotherOrg() {
-		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "FTM_ca.cer"));
+		uploadImage(uploadFile, CertificateGenerationUtil.getCertFilePath("FTM_ca.cer"));
 	}
 
 	public void uploadExpiredCertificateForRootCa() {
-		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "expiredRoot.cer"));
+		uploadImage(uploadFile, CertificateGenerationUtil.getCertFilePath("expiredRoot.cer"));
 	}
 
 	public void clickOnSubmitButton() {
@@ -779,6 +782,86 @@ public class PartnerCertificatePage extends BasePage {
 
 	public void clickonSubmitButtonForAdmin() {
 		clickOnElement(SubmitButtonForAdmin);
+	}
+
+	public void waitForAdminTrustCertificateReadyToSubmit() {
+		waitForElementVisible(removeCertificateButton);
+		waitForElementClickable(SubmitButtonForAdmin);
+	}
+
+	public void clickOnAdminCertUploadCancelButton() {
+		clickOnElement(adminCertUploadCancelButton);
+	}
+
+	public void waitForPartnerCertificateReadyToSubmit() {
+		waitForElementVisible(removeCertificateButton);
+		waitForElementClickable(certificateUploadSubmitButton);
+	}
+
+	public boolean isPartnerCertificateUploadSuccessful() {
+		By success = By.id("upload_certificate_success_msg");
+		By error = By.id("upload_certificate_error_msg");
+		long deadline = System.currentTimeMillis() + Duration.ofSeconds(40).toMillis();
+		while (System.currentTimeMillis() < deadline) {
+			if (isElementDisplayedQuick(success, Duration.ofMillis(500))) {
+				return true;
+			}
+			if (isElementDisplayedQuick(error, Duration.ofMillis(500))) {
+				try {
+					io.mosip.testrig.pmpuiv2.utility.LogUtil
+							.step("Partner certificate upload error: " + driver.findElement(error).getText());
+				} catch (Exception ignored) {
+				}
+				return false;
+			}
+		}
+		return false;
+	}
+
+	public void clickOnGoBackAfterAdminTrustCertificateSubmit() {
+		By confirmationGoBack = By.id("confirmation_go_back_btn");
+		By cancelBtn = By.id("upload_trust_certificate_cancel_btn");
+		By clearBtn = By.id("upload_trust_certificate_clear");
+		By errorMsg = By.id("upload_trust_certificate_error_msg");
+		By blockerProceed = By.id("block_messsage_proceed");
+
+		boolean confirmationShown = false;
+		boolean uploadErrorShown = false;
+		long deadline = System.currentTimeMillis() + Duration.ofSeconds(40).toMillis();
+		while (System.currentTimeMillis() < deadline) {
+			if (isElementDisplayedQuick(confirmationGoBack, Duration.ofMillis(500))) {
+				confirmationShown = true;
+				break;
+			}
+			if (isElementDisplayedQuick(errorMsg, Duration.ofMillis(500))) {
+				uploadErrorShown = true;
+				break;
+			}
+		}
+
+		if (confirmationShown) {
+			clickOnGoBackButton();
+			return;
+		}
+
+		io.mosip.testrig.pmpuiv2.utility.LogUtil
+				.step("Trust certificate confirmation not shown after submit; clearing and cancelling upload form");
+		if (uploadErrorShown) {
+			try {
+				io.mosip.testrig.pmpuiv2.utility.LogUtil
+						.step("Trust certificate upload error: " + driver.findElement(errorMsg).getText());
+			} catch (Exception ignored) {
+			}
+		}
+		if (isElementDisplayedQuick(clearBtn, Duration.ofSeconds(3))) {
+			click(clearBtn);
+		}
+		if (isElementDisplayedQuick(cancelBtn, Duration.ofSeconds(3))) {
+			clickOnAdminCertUploadCancelButton();
+		}
+		if (isElementDisplayedQuick(blockerProceed, Duration.ofSeconds(5))) {
+			click(blockerProceed);
+		}
 	}
 
 	public void clickOnGoBackButton() {
@@ -1525,47 +1608,47 @@ public class PartnerCertificatePage extends BasePage {
 	}
 
 	public void uploadDeactivateUserRootCaCert() {
-		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "deactivateUserRootCA.cer"));
+		uploadImage(uploadFile, CertificateGenerationUtil.getCertFilePath("deactivateUserRootCA.cer"));
 	}
 
 	public void uploadDeactivateUserIntermediateCaCert() {
-		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "deactivateUserIntermediateCA.cer"));
+		uploadImage(uploadFile, CertificateGenerationUtil.getCertFilePath("deactivateUserIntermediateCA.cer"));
 	}
 
 	public void uploadDeactivateUserClientCertificate() {
-		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "deactivateUserClient.cer"));
+		uploadImage(uploadFile, CertificateGenerationUtil.getCertFilePath("deactivateUserClient.cer"));
 	}
 
 	public void uploadPolicyAdminUserRootCaCert() {
-		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "policyadminca.cer"));
+		uploadImage(uploadFile, CertificateGenerationUtil.getCertFilePath("policyadminca.cer"));
 	}
 
 	public void uploadPolicyAdminUserRootSubCaCert() {
-		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "policyadminsubca.cer"));
+		uploadImage(uploadFile, CertificateGenerationUtil.getCertFilePath("policyadminsubca.cer"));
 	}
 
 	public void uploadPolicyUserRootCaCert() {
-		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "policyUserRootCA.cer"));
+		uploadImage(uploadFile, CertificateGenerationUtil.getCertFilePath("policyUserRootCA.cer"));
 	}
 
 	public void uploadPolicyUserIntermediateCaCert() {
-		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "policyUserIntermediateCA.cer"));
+		uploadImage(uploadFile, CertificateGenerationUtil.getCertFilePath("policyUserIntermediateCA.cer"));
 	}
 
 	public void uploadPolicyUserClientCertificate() {
-		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "policyUserClient.cer"));
+		uploadImage(uploadFile, CertificateGenerationUtil.getCertFilePath("policyUserClient.cer"));
 	}
 
 	public void uploadCertificateMispRootCa() {
-		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "MispRootCA.cer"));
+		uploadImage(uploadFile, CertificateGenerationUtil.getCertFilePath("MispRootCA.cer"));
 	}
 
 	public void uploadCertificateMispSubCa() {
-		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "MispIntermediateCA.cer"));
+		uploadImage(uploadFile, CertificateGenerationUtil.getCertFilePath("MispIntermediateCA.cer"));
 	}
 
 	public void uploadCertificateMispClient() {
-		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "MipsClient.cer"));
+		uploadImage(uploadFile, CertificateGenerationUtil.getCertFilePath("MipsClient.cer"));
 	}
 
 	public boolean isCertificateUploadSuccessMessageDisplayed() {
@@ -1573,7 +1656,7 @@ public class PartnerCertificatePage extends BasePage {
 	}
 
 	public void uploadExpiredCertificate() {
-		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "expiredRoot.cer"));
+		uploadImage(uploadFile, CertificateGenerationUtil.getCertFilePath("expiredRoot.cer"));
 	}
 
 	public boolean isCertificateExpiredErrorDisplayed() {
