@@ -70,9 +70,7 @@ public class GlobalConstants {
 	public static final String BUTTON_TAG = "button";
 	public static final String OVERFLOW = "overflow";
 	public static final String OVERFLOW_HIDDEN = "hidden";
-	// Applied to the partner certificate buttons when the partner is not active
 	public static final String PARTNER_CERT_BUTTON_DISABLED_TEXT = "text-[#6f7070]";
-	// View Partner Details swaps the certificate banner from green to grey when inactive
 	public static final String CERT_SECTION_DEACTIVATED_BG = "bg-gray-100";
 	public static final String ORGANISATION = "Organisation";
 	public static final String SBI_ID = "SBI ID";
@@ -246,6 +244,7 @@ public class GlobalConstants {
 	public static final String DEACTIVATE_APIKEY = "deactivateapikey";
 	public static final String ACTIVATE_ADMINAPIKEY = "activateadminapikey";
 	public static final String EXPIRY_APIKEY = "expiryapikey";
+	public static final String DEACTIVATE_THROWAWAY_APIKEY = "deactivatethrowawayapikey";
 	public static final String VIEW_DEVICE_TITLE = "View Device Details";
 
 	// MISP Partner
@@ -543,6 +542,47 @@ public class GlobalConstants {
 	public static final String isApiKeyDeactivateConfirmationTextDisplayed = "Verify if api key deactivate confirmation text displayed";
 	public static final String isDeactivatedApiKeyGreyColored = "Verify if deactivated api key grey colored";
 	public static final String isDeactivatedApiKeyDisabled = "Verify if deactivated api key is disabled";
+	public static final String isActionButtonDisplayed = "Verify if the api key row three-dot action menu is displayed";
+	public static final String isActionButtonEnabled = "Verify if the api key row three-dot action menu is enabled/clickable";
+	public static final String isApiKeyItem1Displayed = "Verify if the first api key row is displayed";
+	public static final String isEditExpiryDateButtonDisplayed = "Verify if the Edit Expiry Date option in the action menu is displayed";
+	public static final String isEditExpiryDateButtonEnabled = "Verify if the Edit Expiry Date option in the action menu is enabled/clickable";
+	public static final String isEditApiKeyExpiryPageDisplayed = "Verify if clicking Edit Expiry Date redirects to the Edit API key expiry page";
+	public static final String isEditApiKeyPartnerIdLabelDisplayed = "Verify if the Partner ID field is displayed on the Edit API Key page";
+	public static final String isEditApiKeyPartnerIdFieldReadOnly = "Verify the Partner ID field is displayed as read-only on the Edit API Key page";
+	public static final String isEditApiKeyPartnerTypeFieldReadOnly = "Verify the Partner Type field is displayed as read-only on the Edit API Key page";
+	public static final String isEditApiKeyPolicyGroupFieldReadOnly = "Verify the Policy Group field is displayed as read-only on the Edit API Key page";
+	public static final String isEditApiKeyPolicyNameFieldReadOnly = "Verify the Policy Name field is displayed as read-only on the Edit API Key page";
+	public static final String isEditApiKeyPolicyGroupDescriptionFieldReadOnly = "Verify the Policy Group Description field is displayed as read-only on the Edit API Key page";
+	public static final String isEditApiKeyPolicyNameDescriptionFieldReadOnly = "Verify the Policy Name Description field is displayed as read-only on the Edit API Key page";
+	public static final String isEditApiKeyExpiryDateFieldEnabled = "Verify the Expiry Date field on the Edit API Key page is editable";
+	public static final String isEditApiKeyExpiryDateCalendarDisplayed = "Verify the Expiry Date calendar picker opens on the Edit API Key page";
+	public static final String isEditApiKeyExpiryDateSelectable = "Verify a new date can be selected via the Expiry Date calendar picker";
+	public static final String isEditApiKeyCancelConfirmationPopupDisplayed = "Verify the unsaved-changes confirmation popup is displayed when cancelling the Edit API Key page";
+	public static final String isTodayDisabledInEditApiKeyExpiryDateCalendar = "Verify today's date is disabled in the Expiry Date calendar, so only future dates are selectable";
+	public static final String isFutureDateSelectableInEditApiKeyExpiryDateCalendar = "Verify a future date can be selected in the Expiry Date calendar";
+	public static final String isPastDateRejectedOnEditApiKeyExpiryDate = "Verify a past date typed into the Expiry Date field is not accepted (Submit stays disabled and the value reverts)";
+	public static final String isPastDatesDisabledInEditApiKeyExpiryDateCalendar = "Verify past dates are disabled and not selectable in the Expiry Date calendar";
+	public static final String isEditApiKeyExpiryDateDisplayedInCorrectFormat = "Verify the newly selected date is displayed in the Expiry Date field in MM/dd/yyyy format";
+	public static final String isEditApiKeyCancelButtonDisplayed = "Verify the Cancel button is displayed on the Edit API Key page";
+	public static final String isEditApiKeySubmitButtonDisplayed = "Verify the Submit button is displayed on the Edit API Key page";
+	public static final String isEditApiKeyCancelButtonEnabled = "Verify the Cancel button on the Edit API Key page is clickable";
+	public static final String isEditApiKeyCancelDiscardsChanges = "Verify clicking Cancel discards the unsaved Expiry Date change instead of saving it";
+	public static final String isEditApiKeyConfirmationHeaderDisplayed = "Verify the success confirmation is displayed after submitting a new Expiry Date";
+	public static final String isEditApiKeySubmitButtonEnabled = "Verify the Submit button on the Edit API Key page is clickable once a valid Expiry Date is selected";
+	public static final String isEditApiKeyExpiryDateUpdatedSuccessfully = "Verify the new Expiry Date actually persists after Submit, not just a success message";
+	public static final String isEditApiKeySubmitButtonDisabledWhenEmpty = "Verify the Submit button stays disabled when the Expiry Date field is cleared";
+	public static final String isEditApiKeyConfirmationMessageTextCorrect = "Verify the confirmation popup message reads 'Expiry date for API key <name> has been updated successfully.'";
+	public static final String isEditApiKeyUndoChangesButtonEnabled = "Verify the Undo Changes button on the Edit API Key page is clickable";
+	public static final String isEditApiKeyUndoChangesResetsExpiryDate = "Verify Undo Changes resets the Expiry Date field back to its original value";
+	public static final String isEditApiKeySubmitButtonDisabledAfterUndo = "Verify the Submit button is disabled again after Undo Changes reverts the Expiry Date";
+	public static final String isUpdatedExpiryDateReflectedInList = "Verify the API Key tabular view shows the newly submitted Expiry Date after Go Back";
+	public static final String isEditApiKeyPartnerTypeLabelDisplayed = "Verify if the Partner Type field is displayed on the Edit API Key page";
+	public static final String isEditApiKeyPolicyGroupLabelDisplayed = "Verify if the Policy Group field is displayed on the Edit API Key page";
+	public static final String isEditApiKeyPolicyNameLabelDisplayed = "Verify if the Policy Name field is displayed on the Edit API Key page";
+	public static final String isEditApiKeyPolicyGroupDescriptionLabelDisplayed = "Verify if the Policy Group Description field is displayed on the Edit API Key page";
+	public static final String isEditApiKeyPolicyNameDescriptionLabelDisplayed = "Verify if the Policy Name Description field is displayed on the Edit API Key page";
+	public static final String isEditApiKeyExpiryDateLabelDisplayed = "Verify if the Expiry Date field is displayed on the Edit API Key page";
 	public static final String isApiKeyStatusDeactivated = "Verify if api key status deactivated displayed";
 	public static final String isBreadcombDisplayed = "Verify if breadcomb displayed";
 	public static final String isPartnerIDHeaderTextDisplayed = "Verify if partner id header text displayed";
@@ -1474,8 +1514,6 @@ public class GlobalConstants {
 	public static final String isUsernameAlreadyExistErrorDisplayed = "Verify if username already exist error displayed";
 	public static final String isDefaultMispPartnerDisplayed = "Verify if misp partner displayed";
 	public static final String isCertificateUploadSuccessMessageDisplayed = "Verify if certificate upload success message displayed";
-
-	// ABIS Partner
 	public static final String CREATE_PARTNER_PAGE_TITLE = "Create Partner";
 	public static final String MANDATORY_FIELD_INFO_TEXT = "All fields marked with * are mandatory.";
 	public static final String isCreatePartnerPageTitleCorrect = "Verify that the page title is displayed correctly on the Create Partner page.";
@@ -1509,8 +1547,6 @@ public class GlobalConstants {
 	public static final String isMispPartnerOptionDisplayed = "Verify that MISP Partner option is displayed in the Partner Type dropdown.";
 	public static final String isPartnerTypeDropdownOptionCountCorrect = "Verify that the Partner Type dropdown displays the expected partner options, even if the total count changes dynamically.";
 	public static final String isManualAdjudicationPartnerOptionDisplayed = "Verify that Manual Adjudication Partner option is displayed in the Partner Type dropdown.";
-
-	// ABIS Partner — form lifecycle and list verification
 	public static final String CANCEL_CONFIRMATION_POPUP_TEXT = "Your changes will be lost, are you sure you want to proceed?";
 	public static final String CERT_UPLOAD_STATUS_UPLOADED = "Uploaded";
 	public static final String CERT_UPLOAD_STATUS_NOT_UPLOADED = "Not Uploaded";
@@ -1563,7 +1599,6 @@ public class GlobalConstants {
 	public static final String isPhoneNumberPlaceholderDisappearsOnTyping = "Verify that the Contact Number field placeholder text is replaced by the entered value once the user starts typing.";
 	public static final String isPhoneNumberMaxLengthEnforced = "Verify that the Contact Number field does not accept more than 16 digits.";
 
-	// ABIS Partner — org name and address field validation (scenarios 30-39)
 	public static final int ORG_NAME_MAX_LENGTH = 128;
 	public static final int ADDRESS_MAX_LENGTH = 2000;
 	public static final String ORG_NAME_PLACEHOLDER_TEXT = "Enter Partner Organization Name";
@@ -1596,16 +1631,12 @@ public class GlobalConstants {
 	public static final String isPolicyGroupSearchBarVisible = "Verify that the Policy Group dropdown contains a visible search bar to filter policy groups.";
 	public static final String isPolicyGroupSearchFiltersResults = "Verify that entering text in the Policy Group search bar filters and shows matching policy group results.";
 	public static final String isLongPolicyGroupNameVisible = "Verify that a policy group with a long name is fully visible and properly aligned in the dropdown.";
-
-	// ABIS Partner — phone, username, notification language, navigation (scenarios
-	// 50-84)
 	public static final String NUMERIC_PREFIXED_USERNAME = "1mispuser";
 	public static final String USERNAME_WITH_SPACE = "user name";
 	public static final String USERNAME_ALREADY_EXISTS_ERROR_MSG = "Username already exists. Enter a different username";
 	public static final String USERNAME_PLACEHOLDER_TEXT = "Enter Username";
 	public static final int USERNAME_MAX_LENGTH = 36;
 	public static final String MAX_VALID_PHONE_NUMBER = "1234567890123456";
-
 	public static final String isReusedPhoneNumberAccepted = "Verify that the same phone number can be used by different partners without triggering a validation error.";
 	public static final String isCountryCodePrefixDisplayed = "Verify that the Contact Number field displays the configured country code prefix.";
 	public static final String isCountryCodeNotConfigurableByUser = "Verify that the country code prefix in the Contact Number field is non-editable and cannot be changed by the user.";
@@ -1614,7 +1645,6 @@ public class GlobalConstants {
 	public static final String isPhoneWithLettersRejected = "Verify that entering letters or vanity characters in the Contact Number field is either rejected with a validation error or has the non-numeric characters silently stripped.";
 	public static final String isLeadingZerosAcceptedInPhone = "Verify that a phone number beginning with one or more leading zeros is accepted without triggering a validation error.";
 	public static final String isValidLengthPhoneAccepted = "Verify that a phone number containing the maximum allowed number of digits (16) is accepted in the Contact Number field without a validation error.";
-
 	public static final String isValidUsernameAccepted = "Verify that a valid username containing alphanumeric characters and underscore is accepted without any validation error.";
 	public static final String isUsernameAlreadyExistsErrorTextCorrect = "Verify that the already-registered username error message text exactly matches the expected message.";
 	public static final String isUsernamePlaceholderTextCorrect = "Verify that the Username field displays the correct placeholder text before any input is entered.";
@@ -1687,11 +1717,6 @@ public class GlobalConstants {
 	public static final String isMispPolicyNameDisplayed = "Verify if MISP policy name displayed";
 	public static final String isMispPolicyNameDescriptionDisplayed = "Verify if MISP policy name description displayed";
 	public static final String isExpiryDateCalenderInfoDescriptionDisplayed = "Verify if expiry date calender info description displayed";
-	public static final String EXPIRY_DATE_CALENDER_INFO_TEXT = "Date Format: mm/dd/yyyy. Ensure that you provide a valid future date, as the license key will be automatically deactivated once this date is reached.";
-	// Source: pmp-ui-v2/public/i18n/ara.json, generateLicenseKey.dateFormatInfoKey
-	public static final String EXPIRY_DATE_CALENDER_INFO_TEXT_ARA = "تنسيق التاريخ: شهر/يوم/سنة. تأكد من إدخال تاريخ مستقبلي صحيح، حيث سيتم إلغاء تفعيل مفتاح الترخيص تلقائيًا عند بلوغ هذا التاريخ.";
-	// Source: pmp-ui-v2/public/i18n/fra.json, generateLicenseKey.dateFormatInfoKey
-	public static final String EXPIRY_DATE_CALENDER_INFO_TEXT_FRA = "Format de date : jj/mm/aaaa. Assurez-vous de fournir une date future valide, car la clé de licence sera automatiquement désactivée une fois cette date atteinte.";
 	public static final String isCalendarDisplayed = "Verify if calendar displayed";
 	public static final String isExpiryDateFormatValid = "Verify expiry date field format is mm/dd/yyyy";
 	public static final String isExpiryDateSelectionChangeable = "Verify expiry date selection can be changed multiple times before submission";
@@ -1791,13 +1816,10 @@ public class GlobalConstants {
 	public static final String isFilteredPartnersCountMatchesDisplayedRows = "Verify the filtered count beside the List of Partners title matches the number of rows displayed";
 	public static final String isPartnerIdColumnSortedAscending = "Verify the partner list is sorted in ascending order of Partner ID";
 	public static final String isPartnerIdColumnSortedDescending = "Verify the partner list is sorted in descending order of Partner ID";
-
-	// List of Partners - email address sorting and filter updates
 	public static final String AUTHENTICATION_PARTNER = "Authentication Partner";
 	public static final String EMAIL_ADDRESS_COLUMN = "Email Address";
 	public static final String PARTNER_ID_COLUMN = "Partner ID";
 	public static final String EMAIL_ADDRESS_FILTER_PLACEHOLDER = "Search Full Email Address";
-	// Underscore is an allowed character, so a rejected value needs genuinely disallowed ones such as $ and %.
 	public static final String EMAIL_WITH_DISALLOWED_SPECIAL_CHARACTERS = "#@$$$%%";
 	public static final String NON_EXISTING_EMAIL = "nonexsit@gmail.com";
 	public static final String isEmailAddressColumnHeaderVisible = "Verify the Email Address column is visible in the List of Partners table header";
@@ -1821,6 +1843,13 @@ public class GlobalConstants {
 	public static final String isExpiryDateSortedDescending = "Verify if API Keys are sorted by expiration date in descending order";
 	public static final String isExpirationDateSameAsBrowserDateFormat = "Verify if expiration date is displayed in the browser locale date format";
 	public static final String isExpirationDateNotBeforeCreationDate = "Verify if the API Key expiration date is not earlier than its creation date";
+	public static final String isRtlLayoutAppliedForArabic = "Verify the page renders right-to-left (body dir=rtl) when logged in with Arabic";
+	public static final String isEditApiKeyPageTextDisplayedInArabic = "Verify the Edit API Key page's labels, buttons and messages are displayed in Arabic";
+	public static final String isApiKeyActionMenuTextDisplayedInArabic = "Verify the API Key action menu options are displayed in Arabic";
+	public static final String isEditApiKeyPageTextDisplayedInFrench = "Verify the Edit API Key page's labels, buttons and messages are displayed in French";
+	public static final String isApiKeyActionMenuTextDisplayedInFrench = "Verify the API Key action menu options are displayed in French";
+	public static final String isEditExpiryDateBlockedForExpiredKey = "Verify clicking Edit Expiry Date on an already-expired (Deactivated) key does not navigate to the Edit API Key page";
+	public static final String isUpdatedExpiryDateNotToday = "Verify the updated API Key no longer shows an Expiration Date of today in the list";
 	public static final String isExpirationDateConsistentAcrossViews = "Verify if the API Key expiration date shown in the tabular view matches the individual view";
 	public static final String isApiKeyDetailsExpirationDateLabelDisplayed = "Verify if 'Expiration Date' label displayed in the individual API Key view";
 	public static final String isApiKeyDetailsExpirationDateContextDisplayed = "Verify if expiration date value displayed in the individual API Key view";
@@ -1854,5 +1883,147 @@ public class GlobalConstants {
 	public static final String isActiveOptionInStatusDropdown = "Verify the status search dropdown offers Active instead of Activated";
 	public static final String isMispPartnerFilterApplied = "Verify the MISP Partner type filter has been applied before reading statuses";
 	public static final String isFilteredRowPartnerTypeMisp = "Verify every filtered row's Partner Type is MISP Partner";
+
+	public static final String isMispLicenseListTableHeaderTextCorrect = "Verify the MISP License List tabular view column header text matches the active login language";
+
+	public static final String isMispLicenseListSubTitleDisplayed = "Verify the List of MISP License Keys subtitle is displayed";
+	public static final String isMispLicenseListSubTitleCountFormatCorrect = "Verify the List of MISP License Keys subtitle follows the '<text> (<count>)' format";
+	public static final String isMispLicenseListSubTitleCountMatchesRowCount = "Verify the count in the List of MISP License Keys subtitle matches the number of rows in the tabular view";
+	public static final String isEmptyMispLicenseListHeadersDisplayed = "Verify all MISP license list column headers are displayed even when the list is empty";
+
+	public static final String isGenerateMispLicenceKeyButtonPositionedTopRight = "Verify the Generate MISP License Key button is positioned in the top right of the screen";
+	public static final String isFilterButtonPositionedTopRight = "Verify the Filter button is positioned in the top right of the screen";
+	public static final String areGenerateAndFilterButtonsRightEdgeAligned = "Verify the Generate MISP License Key and Filter buttons share the same right edge";
+	public static final String isGenerateButtonAboveFilterButton = "Verify the Generate MISP License Key button is positioned above the Filter button";
+	public static final String isMispLicenseListTablePopulatedWithRows = "Verify the MISP License list tabular view has at least one row before filtering";
+	public static final String isFilterButtonAccessible = "Verify the Filter panel opens when the Filter button is clicked";
+	public static final String isFilterButtonDisabledOnceExpanded = "Verify the Filter button is disabled once the filter panel is expanded";
+	public static final String isMispLicenseFilterResetLinkDisplayedWhenExpanded = "Verify the Reset Filter link is displayed once the filter panel is expanded";
+	public static final String isMispLicenseFilterResetLinkHiddenWhenCollapsed = "Verify the Reset Filter link is hidden once the filter panel is collapsed";
+	public static final String areMispFilterTextFieldsGenuineInputs = "Verify the MISP License filter text fields are genuine input elements";
+	public static final String isMispFilterStatusFieldADropdown = "Verify the MISP License filter Status field is a dropdown button";
+	public static final String isMispFilterLicenseKeyNameSearchBarVisible = "Verify the MISP License Key Name filter search bar shows the expected placeholder text";
+	public static final String isMultiFilterResultsUpdatedDynamically = "Verify the MISP License list updates to match the applied Policy Group and Status filters";
+	public static final String isMultiFilterSubTitleCountMatchesFilteredRowCount = "Verify the List of MISP License Keys subtitle count matches the filtered row count";
+	public static final String isMispLicenseFilterResetClearsAllFiltersAndShowsFullList = "Verify Reset Filter clears all applied filters and restores the full unfiltered MISP license list";
+	public static final String isMispLicenseListEmptyForNoMatchingFilter = "Verify the MISP License list is empty when no license matches the applied filter";
+	public static final String isInvalidFilterInputBlocksSubmission = "Verify an invalid MISP License filter input shows an error and disables Apply Filter";
+
+	public static final String isCreatedDateDisplayedInBrowserSettingTime = "Verify the Creation Date column reflects the browser's locale date format";
+	public static final String isExpirationDateDisplayedInBrowserSettingTime = "Verify the Expiration Date column reflects the browser's locale date format";
+	public static final String isEyeIconPopupTitleShowsLicenseKeyName = "Verify the eye-icon copy-id popup title displays the corresponding MISP license key name";
+	public static final String isEyeIconPopupSubtitleShowsPartnerId = "Verify the eye-icon copy-id popup subtitle displays the corresponding Partner ID";
+	public static final String DEACTIVATE_MISP_LICENSE_POPUP_TITLE = "Do you want to Deactivate MISP License Key - '%s'?";
+	public static final String DEACTIVATE_MISP_LICENSE_POPUP_DESCRIPTION = "On clicking Confirm, you will not be able to use the MISP License Key for authenticating requests anymore.";
+	public static final String MISP_LICENSE_INACTIVE_STATUS_LABEL = "Deactivated";
+	public static final String isMispLicenseListActionMenuDisplayed = "Verify the MISP license row action menu is displayed";
+	public static final String isMispLicenseListRegenerateButtonDisplayed = "Verify the Regenerate option is displayed in the MISP license row action menu";
+	public static final String isMispLicenseListRegenerateButtonEnabled = "Verify the Regenerate option is enabled for an Active MISP license key";
+	public static final String isMispLicenseListDeactivateButtonDisplayed = "Verify the Deactivate option is displayed in the MISP license row action menu";
+	public static final String isMispLicenseListDeactivateButtonEnabled = "Verify the Deactivate option is enabled for an Active MISP license key";
+	public static final String isDeactivatePopupHeaderDisplayedForMispLicense = "Verify the Deactivate confirmation popup header is displayed for the MISP license key";
+	public static final String isDeactivatePopupDescriptionDisplayedForMispLicense = "Verify the Deactivate confirmation popup description is displayed for the MISP license key";
+	public static final String isDeactivateSubmitButtonDisplayedForMispLicense = "Verify the Deactivate confirmation popup Confirm button is displayed";
+	public static final String isDeactivateCancelButtonAvailableForMispLicense = "Verify the Deactivate confirmation popup Cancel button is displayed";
+	public static final String isDeactivatePopupTitleCorrectForMispLicense = "Verify the Deactivate confirmation popup title names the correct MISP license key";
+	public static final String isDeactivatePopupSubtitleCorrectForMispLicense = "Verify the Deactivate confirmation popup description text is correct";
+	public static final String isDeactivateSubmitButtonEnabledForMispLicense = "Verify the Deactivate confirmation popup Confirm button is enabled";
+	public static final String isDeactivateCancelButtonEnabledForMispLicense = "Verify the Deactivate confirmation popup Cancel button is enabled";
+	public static final String isDeactivatePopupClosedAfterCancelForMispLicense = "Verify the Deactivate confirmation popup closes after Cancel is clicked";
+	public static final String isMispLicenseKeyRemainsActiveAfterCancel = "Verify the MISP license key remains Active after cancelling deactivation";
+	public static final String isMispServicesTabularViewUnchangedAfterCancel = "Verify the MISP License list tabular view is unchanged after cancelling deactivation";
+	public static final String isMispLicenseStatusInactiveAfterDeactivation = "Verify the MISP license key status becomes Deactivated after confirming deactivation";
+	public static final String isMispLicenseListEyeIconPresentOnlyForActive = "Verify the eye icon is present only for an Active MISP license key row";
+	public static final String isDeactivatedLicenseRowGreyedOut = "Verify a deactivated MISP license key row is greyed out";
+	public static final String isActiveLicenseStatusGreen = "Verify an Active MISP license key status pill is green";
+	public static final String isMispLicenseListDeactivatedRowClickDoesNotNavigate = "Verify clicking a deactivated MISP license key row does not navigate to its details view";
+	public static final String isMispLicenseListRegenerateButtonDisabledForInactiveLicense = "Verify the Regenerate option is disabled for a deactivated MISP license key";
+	public static final String isMispLicenseListActionMenuAlwaysShowsAllThreeItems = "Verify the MISP license row action menu always shows View, Regenerate and Deactivate";
+	public static final String isMispLicenseListDeactivateButtonEnabledOnlyForActive = "Verify the Deactivate option is enabled only for an Active MISP license key";
+	public static final String isRegenerateNavigationBlockedForInactiveLicense = "Verify navigating to Regenerate is blocked for a deactivated MISP license key";
+	public static final String isMispLicenseListActionMenuIconNotGreyedOutForDeactivatedRow = "Verify the action menu (...) icon is not greyed out for a deactivated MISP license row";
+	public static final String isMispLicenseKeyStatusDeactivatedInViewDetails = "Verify the MISP license key status shows Deactivated in the Individual View page";
+	public static final String isMispServicesTabularViewDisplayedAfterDeactivation = "Verify the MISP License list tabular view is displayed after confirming deactivation";
+
+	public static final String isMispLicenseListActiveRowClickNavigatesToDetails = "Verify clicking an Active MISP license key row navigates to its details view";
+	public static final String isMispLicenseKeyStatusActiveInViewDetailsForFutureExpiry = "Verify a MISP license key with a future expiry date remains Active in the Individual View";
+	public static final String isMispLicenseListSortIconsPresentExceptActionAndLicenseKey = "Verify sort icons are present for every sortable MISP license list column except Action and MISP License Key";
+	public static final String isMispLicenseListColumnSortingFunctional = "Verify sorting the MISP license list by a column updates the row order and highlights the active sort icon";
+	public static final String isMispLicenseListSortedDescendingByCreatedDate = "Verify the MISP license list defaults to descending order by Creation Date";
+	public static final String isMispLicenseListDefaultPageSizeEight = "Verify the MISP license list defaults to 8 records per page";
+	public static final String isMispLicenseListPageSizeConfigurable = "Verify the MISP license list records-per-page selection is configurable";
+	public static final String isMispServicesBackButtonNavigatesToHome = "Verify the MISP Services back icon navigates to the dashboard home";
+
+	public static final String isRegenerateBreadcrumbTextCorrect = "Verify the Regenerate MISP License Key breadcrumb text is correct";
+	public static final String isRegenerateMandatoryFieldsSubtitleCorrect = "Verify the Regenerate screen mandatory-fields subtitle text is correct";
+	public static final String isRegeneratePartnerIdLabelDisplayed = "Verify the Partner ID label is displayed on the Regenerate screen";
+	public static final String isRegeneratePartnerTypeLabelDisplayed = "Verify the Partner Type label is displayed on the Regenerate screen";
+	public static final String isRegeneratePolicyGroupLabelDisplayed = "Verify the Policy Group label is displayed on the Regenerate screen";
+	public static final String isRegeneratePolicyNameLabelDisplayed = "Verify the Policy Name label is displayed on the Regenerate screen";
+	public static final String isRegenerateLicenseKeyNameLabelDisplayed = "Verify the MISP License Key Name label is displayed on the Regenerate screen";
+	public static final String isRegeneratePartnerIdCarriedOver = "Verify the Partner ID field is carried over and read-only on the Regenerate screen";
+	public static final String isRegeneratePartnerTypeCarriedOver = "Verify the Partner Type field is carried over and read-only on the Regenerate screen";
+	public static final String isRegeneratePolicyGroupCarriedOver = "Verify the Policy Group field is carried over and read-only on the Regenerate screen";
+	public static final String isRegeneratePolicyGroupPlaceholderAligned = "Verify the Policy Group placeholder is fully visible within the viewport on the Regenerate screen";
+	public static final String isRegeneratePolicyNameCarriedOver = "Verify the Policy Name field is carried over and read-only on the Regenerate screen";
+	public static final String isRegeneratePolicyNamePlaceholderAligned = "Verify the Policy Name placeholder is fully visible within the viewport on the Regenerate screen";
+	public static final String isRegenerateLicenseKeyNameFieldEditable = "Verify the MISP License Key Name field is displayed and editable on the Regenerate screen";
+	public static final String isRegenerateLicenseKeyNameFieldIsTextbox = "Verify the MISP License Key Name field on the Regenerate screen behaves as a text input";
+	public static final String isRegenerateLicenseKeyNameHelpTextCorrect = "Verify the MISP License Key Name field placeholder text is correct on the Regenerate screen";
+	public static final String isRegenerateLicenseKeyNameHelpTextDisabledForEdit = "Verify the MISP License Key Name placeholder text does not change while typing or after Clear Form";
+	public static final String isRegenerateClearFormButtonClearsLicenseKeyNameField = "Verify Clear Form empties the MISP License Key Name field on the Regenerate screen";
+	public static final String isRegenerateExpiryDateFieldDisplayed = "Verify the Expiry Date field is displayed on the Regenerate screen";
+	public static final String isRegenerateCalendarDisplayed = "Verify the calendar is displayed when the Expiry Date field is clicked on the Regenerate screen";
+	public static final String isRegenerateCalendarDisplayedInEnglishOnly = "Verify the Regenerate screen calendar month header is always displayed in English";
+	public static final String isRegenerateExpiryDateFormatValid = "Verify the Regenerate screen expiry date field format is mm/dd/yyyy";
+	public static final String isRegenerateExpiryDateSelectionChangeable = "Verify the Regenerate screen expiry date selection can be changed multiple times before submission";
+	public static final String isRegenerateExpiryDateFieldFreelyEditable = "Verify the Regenerate screen expiry date field accepts free text entry";
+	public static final String isRegenerateExpiryDateCalenderInfoDescriptionDisplayed = "Verify the Regenerate screen expiry date info description is displayed";
+	public static final String isRegenerateExpiryDateCalenderInfoTextCorrect = "Verify the Regenerate screen expiry date info description text matches the Generate screen wording";
+	public static final String isRegenerateExpiryDateCalenderInfoDescriptionNotEditable = "Verify the Regenerate screen expiry date info description cannot be edited";
+	public static final String isRegenerateInfoIconHoverCursorPointer = "Verify the Regenerate screen expiry date info icon shows a pointer cursor on hover";
+	public static final String isRegenerateClearFormButtonDisplayed = "Verify the Clear Form button is displayed on the Regenerate screen";
+	public static final String isRegenerateCancelButtonDisplayed = "Verify the Cancel button is displayed on the Regenerate screen";
+	public static final String isRegenerateSubmitButtonDisplayed = "Verify the Submit button is displayed on the Regenerate screen";
+	public static final String isRegenerateSubmitButtonDisabledByDefault = "Verify the Regenerate screen Submit button is disabled by default";
+	public static final String isRegenerateCancelReturnsToMispServicesList = "Verify confirming Cancel on the Regenerate screen returns to the MISP License list";
+	public static final String isRegenerateCancelDoesNotPersistUnsavedData = "Verify re-entering the Regenerate screen after cancelling does not retain the previously typed license key name";
+	public static final String isRegenerateImportantNoteDisplayed = "Verify the Important Note is displayed on the Regenerate screen";
+	public static final String isRegenerateInvalidCharacterErrorMessageDisplayed = "Verify the invalid-character error message is displayed for the MISP License Key Name field on the Regenerate screen";
+	public static final String isRegenerateSubmitButtonEnabledWithOnlyLicenseKeyName = "Verify the Regenerate screen Submit button is enabled once only the MISP License Key Name is provided";
+	public static final String isRegenerateErrorMessageDisplayedForPastExpiryDate = "Verify the Regenerate screen shows an error when submitted with a past expiry date";
+	public static final String isRegenerateErrorMessageDisplayedForTodayExpiryDate = "Verify the Regenerate screen shows an error when submitted with today's expiry date";
+	public static final String isRegenerateDuplicateLicenseKeyNameErrorDisplayed = "Verify the Regenerate screen shows a duplicate-name error when the MISP License Key Name already exists";
+	public static final String isRegenerateMispLicenseKeyPopupDisplayed = "Verify the copy-id popup is displayed after successfully regenerating a MISP license key";
+	public static final String isRegenerateCopyIdPopupTitleShowsNewLicenseKeyName = "Verify the regenerate copy-id popup title shows the newly regenerated MISP license key name";
+	public static final String isRegenerateCopyIdPopupSubtitleShowsSamePartnerId = "Verify the regenerate copy-id popup subtitle shows the same Partner ID as before regeneration";
+	public static final String isRegenerateCopyIdPopupHeaderDisplayed = "Verify the regenerate copy-id popup header is displayed";
+	public static final String isRegenerateCopyIdPopupHeaderTextCorrect = "Verify the regenerate copy-id popup header text is correct";
+	public static final String isRegenerateCopyIdPopupLicenseKeyValueDisplayed = "Verify the regenerate copy-id popup displays the regenerated MISP license key value";
+	public static final String isRegenerateCopyIdPopupLicenseKeyValueBold = "Verify the regenerate copy-id popup MISP license key value is displayed in bold";
+	public static final String isRegenerateCopyIdPopupNoteDisplayed = "Verify the regenerate copy-id popup alert note is displayed";
+	public static final String isRegenerateCopyOperationRepeatable = "Verify the regenerate copy-id popup Copy action can be repeated";
+	public static final String isRegenerateConfirmationHeaderDisplayed = "Verify the Regenerate confirmation header is displayed";
+	public static final String isRegenerateConfirmationHeaderNotEditable = "Verify the Regenerate confirmation header cannot be edited";
+	public static final String isPreviousLicenseAutoDeactivatedOnRegenerate = "Verify the previous MISP license key is automatically deactivated after regeneration";
+	public static final String isRegenerateExpiryDateNotEditableAfterSubmission = "Verify the MISP license key expiry date is read-only in the Individual View after regeneration";
+	public static final String isRegenerateDuplicateLicenseKeyNameErrorDisplayedForExactCaseMatch = "Verify the Regenerate screen rejects a MISP License Key Name that exactly matches an existing name, including case";
+	public static final String isRegenerateLicenseKeyNameUniqueAcrossCaseVariant = "Verify the Regenerate screen accepts a MISP License Key Name that differs from an existing name only by case";
+	public static final String isRegenerateHomeButtonNavigatesToDashboard = "Verify the Home button on the Regenerate confirmation screen navigates to the dashboard";
+
+	// Test data values for regenerate/deactivate/case-sensitivity MISP license key scenarios
+	public static final String MISP_LICENSEKEY_REGENERATE_TEMP = "misplicensekeyregeneratetemp";
+	public static final String MISP_LICENSEKEY_01_REGENERATED = "misplicensekey01regenerated";
+	public static final String MISP_LICENSEKEY_CASE_SENSITIVITY_BASE = "mispcasesensitivitybase";
+	public static final String MISP_LICENSEKEY_CASE_SENSITIVITY_VARIANT = "MISPCASESENSITIVITYBASE";
+	public static final String MISP_LICENSEKEY_HOME_BUTTON_TEST = "misplicensekeyhomebuttontest";
+	public static final String MISP_LICENSEKEY_DEACTIVATE_CONFIRM_TEST = "misplicensekeydeactivateconfirmtest";
+	public static final String MISP_LICENSEKEY_ROW_GREYED_OUT_TEST = "misplicensekeyrowgreyedouttest";
+	public static final String isRegisterEmailFieldInvalidForMalformedEmail = "Verify the Email field is flagged invalid for a malformed email address during self-registration";
+	public static final String isRegisterSubmitButtonDisabledWithoutUsernameAndEmail = "Verify the Submit button remains disabled when Username and Email are not entered during self-registration";
+	public static final String MISP_MINIMAL_EMAIL = "hm@gmail.co.on";
+	public static final String isMinimalEmailRegistrationSuccessful = "Verify self-registration succeeds with a minimal-length email ID";
+	public static final String MISP_MINIMAL_USERNAME = "HM";
+	public static final String isMinimalUsernameRegistrationSuccessful = "Verify self-registration succeeds with a minimal-length username";
 
 }
