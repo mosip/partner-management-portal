@@ -178,32 +178,7 @@ public class KeycloakUserManager extends BaseTestCaseFunc {
 		List<String> needsToBeRemovedUsers = List.of(ConfigManager.getIAMUsersToCreate().split(","));
 		Keycloak keycloakInstance = getKeycloakInstance();
 		for (String needsToBeRemovedUser : needsToBeRemovedUsers) {
-			String moduleSpecificUserToBeRemoved;
-			if (needsToBeRemovedUser.equals("globaladmin")) {
-				moduleSpecificUserToBeRemoved = needsToBeRemovedUser;
-			} else if (needsToBeRemovedUser.equals("masterdata-220005")) {
-				moduleSpecificUserToBeRemoved = needsToBeRemovedUser;
-			} else if (needsToBeRemovedUser.equals("auth")) {
-				moduleSpecificUserToBeRemoved = needsToBeRemovedUser;
-			} else if (needsToBeRemovedUser.equals("nocert")) {
-				moduleSpecificUserToBeRemoved = needsToBeRemovedUser;
-			} else if (needsToBeRemovedUser.equals("device")) {
-				moduleSpecificUserToBeRemoved = needsToBeRemovedUser;
-			} else if (needsToBeRemovedUser.equals("ftm")) {
-				moduleSpecificUserToBeRemoved = needsToBeRemovedUser;
-			} else if (needsToBeRemovedUser.equals("ftmnocert")) {
-				moduleSpecificUserToBeRemoved = needsToBeRemovedUser;
-			} else if (needsToBeRemovedUser.equals("policyadmin")) {
-				moduleSpecificUserToBeRemoved = needsToBeRemovedUser;
-			} else if (needsToBeRemovedUser.equals("policies")) {
-				moduleSpecificUserToBeRemoved = needsToBeRemovedUser;
-			} else if (needsToBeRemovedUser.equals("deactivate")) {
-				moduleSpecificUserToBeRemoved = needsToBeRemovedUser;
-			} else if (needsToBeRemovedUser.equals("credential")) {
-				moduleSpecificUserToBeRemoved = needsToBeRemovedUser;
-			} else {
-				moduleSpecificUserToBeRemoved = BaseTestCaseFunc.currentModule + "-" + needsToBeRemovedUser;
-			}
+			String moduleSpecificUserToBeRemoved = BaseTestCaseFunc.currentModule + "-" + needsToBeRemovedUser;
 			RealmResource realmResource = keycloakInstance.realm(ConfigManager.getIAMRealmId());
 			UsersResource usersRessource = realmResource.users();
 			List<UserRepresentation> usersFromDB = usersRessource.search(moduleSpecificUserToBeRemoved);
@@ -213,14 +188,6 @@ public class KeycloakUserManager extends BaseTestCaseFunc {
 				logger.info("User removed with name: %s%n" + moduleSpecificUserToBeRemoved);
 			} else {
 				logger.info("User not found with name: %s%n" + moduleSpecificUserToBeRemoved);
-			}
-			String prefixedUser = BaseTestCaseFunc.currentModule + "-" + needsToBeRemovedUser;
-			if (!prefixedUser.equals(moduleSpecificUserToBeRemoved)) {
-				List<UserRepresentation> prefixedUsers = usersRessource.search(prefixedUser);
-				if (!prefixedUsers.isEmpty()) {
-					usersRessource.get(prefixedUsers.get(0).getId()).remove();
-					logger.info("User removed with name: %s%n" + prefixedUser);
-				}
 			}
 		}
 	}
