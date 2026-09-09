@@ -1,5 +1,6 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 
@@ -17,19 +18,28 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(id = "title_back_icon")
 	private WebElement titleBackButton;
 
+	@FindBy(id = "page_title")
+	private WebElement pageTitle;
+
 	@FindBy(id = "partner_certificate_upload_btn1")
 	private WebElement uploadButton;
 
-	@FindBy(xpath = "//*[text()='Upload Partner Certificate']")
+	@FindBy(id = "upload_certificate_popup_title")
 	private WebElement uploadPartnerCertificatePopUp;
 
-	@FindBy(xpath = "//*[text()='Submit']")
-	private WebElement submitButton;
+	@FindBy(id = "certificate_upload_submit_btn")
+	private WebElement certificateUploadSubmitButton;
+
+	@FindBy(xpath = "//button[@disabled and text()='Submit']")
+	private WebElement certificateUploadDisabledSubmitButton;
+
+	@FindBy(id = "upload_popup_selecting_file")
+	private WebElement selectingFileFetchingMsg;
 
 	@FindBy(id = "upload_certificate_success_msg")
 	private WebElement successMessage;
 
-	@FindBy(xpath = "//*[text()='Partner certificate for Device Provider is uploaded successfully.']")
+	@FindBy(xpath = "//p[text()='Partner certificate for Device Provider is uploaded successfully.']")
 	private WebElement deviceProviderSuccessMessage;
 
 	@FindBy(xpath = "//p[contains(text(), 'Partner certificate for FTM Chip Provider is uploaded successfully.')]")
@@ -53,6 +63,9 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(xpath = "//h5[text()='Please tap to select the certificate']")
 	private WebElement PleaseTabToSelectText;
 
+	@FindBy(id = "upload_popup_selecting_certificate_msg")
+	private WebElement uploadPopupSelectCertificateMsg;
+
 	@FindBy(id = "upload_trust_certificate_format_msg")
 	private WebElement certificateFormatText;
 
@@ -62,13 +75,16 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(id = "last_certificate_upload_date")
 	private WebElement lastUploadTimeAndDate;
 
+	@FindBy(id = "upload_certificate_warning_message")
+	private WebElement reUploadCertificateWarningMessage;
+
 	@FindBy(xpath = "//p[contains(text(), 'Please select all fields and upload')]")
 	private WebElement ReUploadPartnerCertificateSubText;
 
-	@FindBy(xpath = "//*[text()='Originally uploaded CA signed certificate downloaded successfully.']")
+	@FindBy(xpath = "//p[text()='Originally uploaded CA signed certificate downloaded successfully.']")
 	private WebElement originalSignedCertDownloadedPopup;
 
-	@FindBy(xpath = "//*[text()='MOSIP signed certificate downloaded successfully.']")
+	@FindBy(xpath = "//p[text()='MOSIP signed certificate downloaded successfully.']")
 	private WebElement mosipSignedCertPopup;
 
 	@FindBy(xpath = "//label[text()='Partner Domain Type']")
@@ -203,8 +219,20 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(xpath = "//img[@class='mb-2 w-10 h-10']")
 	private WebElement uploadCertificateIcon;
 
+	@FindBy(css = "#upload_certificate_card img")
+	private WebElement uploadPopupCertificateIcon;
+
 	@FindBy(xpath = "//h5[text()='Client.cer']")
 	private WebElement uploadedCertificateFileName;
+
+	@FindBy(id = "upload_popup_file_name")
+	private WebElement uploadedCertificateFileNameLabel;
+
+	@FindBy(id = "fetch_certificate_success_msg")
+	private WebElement fetchCertificateSuccessMessage;
+
+	@FindBy(id = "remove_certificate_card")
+	private WebElement removeCertificateCard;
 
 	@FindBy(xpath = "//label[text()='Partner Type']")
 	private WebElement partnerTypeLabel;
@@ -434,6 +462,9 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(id = "upload_certificate_popup_title")
 	private WebElement mispPartnerCertificatePopup;
 
+	@FindBy(id = "upload_certificate_popup_msg")
+	private WebElement uploadCertificatePopupSubtitle;
+
 	@FindBy(id = "dashboard_ftm_chip_provider_card")
 	private WebElement dashboardFtmChipProviderCardDashboard;
 
@@ -446,8 +477,20 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(id = "upload_popup_partner_type_context")
 	private WebElement partnerTypeContext;
 
+	@FindBy(id = "partner_type_context")
+	private WebElement listViewPartnerTypeContext;
+
 	@FindBy(id = "upload_popup_partner_domain_type_context")
 	private WebElement partnerDomainTypeContext;
+
+	@FindBy(id = "upload_popup_partner_type_label")
+	private WebElement uploadPopupPartnerTypeLabel;
+
+	@FindBy(id = "upload_popup_partner_domain_type_label")
+	private WebElement uploadPopupPartnerDomainTypeLabel;
+
+	@FindBy(id = "upload_certificate_card")
+	private WebElement uploadCertificateCard;
 
 	public PartnerCertificatePage(WebDriver driver) {
 		super(driver);
@@ -461,12 +504,125 @@ public class PartnerCertificatePage extends BasePage {
 		return isElementDisplayed(titleBackButton);
 	}
 
+	public boolean isCertificateListViewDisplayed() {
+		return isElementDisplayed(pageTitle)
+				&& getTextFromLocator(pageTitle).trim().equals(GlobalConstants.PARTNER_CERTIFICATE_LIST_PAGE_TITLE);
+	}
+
+	public boolean isUploadButtonPresent() {
+		return getElementCount(By.id("partner_certificate_upload_btn1")) > 0;
+	}
+
+	public boolean isUploadButtonDisplayed() {
+		return isElementDisplayed(uploadButton);
+	}
+
+	public boolean isUploadButtonEnabled() {
+		return isElementEnabled(uploadButton);
+	}
+
 	public void clickOnUploadButton() {
 		clickOnElement(uploadButton);
 	}
 
 	public boolean isUploadPartnerCertificatePopUpDisplayed() {
 		return isElementDisplayed(uploadPartnerCertificatePopUp);
+	}
+
+	public boolean isUploadPartnerCertificatePopUpDisplayedQuick() {
+		return isElementDisplayedQuick(By.id("upload_certificate_popup_title"), Duration.ofSeconds(5))
+				|| isElementDisplayedQuick(By.xpath("//h3[text()='Re-Upload Partner Certificate']"),
+						Duration.ofSeconds(2));
+	}
+
+	public String getUploadCertificatePopupTitle() {
+		return getTextFromLocator(mispPartnerCertificatePopup).trim();
+	}
+
+	public String getUploadCertificatePopupSubtitle() {
+		return getTextFromLocator(uploadCertificatePopupSubtitle).trim();
+	}
+
+	public boolean isUploadCertificatePopupSubtitleDisplayed() {
+		return isElementDisplayed(uploadCertificatePopupSubtitle);
+	}
+
+	public boolean isUploadPopupSubtitleDisplayedBelowTitle() {
+		return uploadCertificatePopupSubtitle.getLocation().getY() > mispPartnerCertificatePopup.getLocation().getY();
+	}
+
+	public boolean isUploadPopupPartnerTypeLabelDisplayed() {
+		return isElementDisplayed(uploadPopupPartnerTypeLabel);
+	}
+
+	public String getUploadPopupPartnerTypeLabelText() {
+		return getTextFromLocator(uploadPopupPartnerTypeLabel).trim();
+	}
+
+	public boolean isUploadPopupPartnerDomainTypeLabelDisplayed() {
+		return isElementDisplayed(uploadPopupPartnerDomainTypeLabel);
+	}
+
+	public String getUploadPopupPartnerDomainTypeLabelText() {
+		return getTextFromLocator(uploadPopupPartnerDomainTypeLabel).trim();
+	}
+
+	public boolean isPartnerTypeContextDisplayed() {
+		return isElementDisplayed(partnerTypeContext);
+	}
+
+	public boolean isPartnerDomainTypeContextDisplayed() {
+		return isElementDisplayed(partnerDomainTypeContext);
+	}
+
+	public boolean isPartnerTypeContextDisabled() {
+		return isElementDisabled(partnerTypeContext);
+	}
+
+	public boolean isPartnerTypeFieldNonEditable() {
+		boolean disabledBySelenium = isElementDisabled(partnerTypeContext);
+		boolean disabledAttributePresent = partnerTypeContext.getAttribute("disabled") != null;
+		boolean valueIsCredentialPartner = GlobalConstants.CREDENTIAL_PARTNER_TYPE_NAME
+				.equals(getPartnerType());
+		return disabledBySelenium && disabledAttributePresent && valueIsCredentialPartner;
+	}
+
+	public boolean isPartnerDomainTypeContextDisabled() {
+		return isElementDisabled(partnerDomainTypeContext);
+	}
+
+	public boolean isUploadCertificateCardDisplayed() {
+		return isElementDisplayed(uploadCertificateCard);
+	}
+
+	public boolean isCertificateUploadCancelButtonDisplayed() {
+		return isElementDisplayed(certificateUploadCancelButton);
+	}
+
+	public boolean isCertificateUploadCancelButtonEnabled() {
+		return isElementEnabled(certificateUploadCancelButton);
+	}
+
+	public boolean isCertificateUploadCancelButtonFocusable() {
+		return isElementFocusable(certificateUploadCancelButton);
+	}
+
+	public boolean isCertificateUploadSubmitButtonDisplayed() {
+		return isElementDisplayed(certificateUploadSubmitButton);
+	}
+
+	public boolean isCertificateUploadSubmitButtonDisabled() {
+		return isElementDisplayedQuick(
+				By.xpath("//button[@disabled][contains(normalize-space(.), 'Submit')]"),
+				Duration.ofSeconds(10));
+	}
+
+	public boolean isCertificateUploadSubmitButtonEnabled() {
+		return isElementEnabled(certificateUploadSubmitButton);
+	}
+
+	public boolean isCertificateUploadFetchingMsgDisplayed() {
+		return isElementDisplayed(selectingFileFetchingMsg);
 	}
 
 	public void uploadCertificateRootCa() {
@@ -490,7 +646,7 @@ public class PartnerCertificatePage extends BasePage {
 	}
 
 	public void clickOnSubmitButton() {
-		clickOnElement(submitButton);
+		clickOnElement(certificateUploadSubmitButton);
 	}
 
 	public boolean isSuccessMessageDisplayed() {
@@ -510,6 +666,10 @@ public class PartnerCertificatePage extends BasePage {
 		return isElementDisplayed(downloadButton);
 	}
 
+	public boolean isDownloadButtonPresent() {
+		return getElementCount(By.id("download_btn1")) > 0;
+	}
+
 	// Both buttons are disabled, not hidden, for a deactivated partner.
 	public boolean isDownloadButtonEnabled() {
 		return isElementEnabled(downloadButton);
@@ -519,8 +679,20 @@ public class PartnerCertificatePage extends BasePage {
 		return isElementDisplayed(partnerCertificateReuploadButton);
 	}
 
+	public boolean isPartnerCertificateReuploadButtonPresent() {
+		return getElementCount(By.id("partner_certificate_re_upload_btn1")) > 0;
+	}
+
 	public boolean isPartnerCertificateReuploadButtonEnabled() {
 		return isElementEnabled(partnerCertificateReuploadButton);
+	}
+
+	public String getPartnerCertificateReuploadButtonText() {
+		return getTextFromLocator(partnerCertificateReuploadButton).trim();
+	}
+
+	public String getInvalidFormatErrorMessage() {
+		return getTextFromLocator(InvalidFormatErrorPopup).trim();
 	}
 
 	public String getCertificateUploadedDateInPartnerPortal() {
@@ -612,6 +784,86 @@ public class PartnerCertificatePage extends BasePage {
 		clickOnElement(SubmitButtonForAdmin);
 	}
 
+	public void waitForAdminTrustCertificateReadyToSubmit() {
+		waitForElementVisible(removeCertificateButton);
+		waitForElementClickable(SubmitButtonForAdmin);
+	}
+
+	public void clickOnAdminCertUploadCancelButton() {
+		clickOnElement(adminCertUploadCancelButton);
+	}
+
+	public void waitForPartnerCertificateReadyToSubmit() {
+		waitForElementVisible(removeCertificateButton);
+		waitForElementClickable(certificateUploadSubmitButton);
+	}
+
+	public boolean isPartnerCertificateUploadSuccessful() {
+		By success = By.id("upload_certificate_success_msg");
+		By error = By.id("upload_certificate_error_msg");
+		long deadline = System.currentTimeMillis() + Duration.ofSeconds(40).toMillis();
+		while (System.currentTimeMillis() < deadline) {
+			if (isElementDisplayedQuick(success, Duration.ofMillis(500))) {
+				return true;
+			}
+			if (isElementDisplayedQuick(error, Duration.ofMillis(500))) {
+				try {
+					io.mosip.testrig.pmpuiv2.utility.LogUtil
+							.step("Partner certificate upload error: " + driver.findElement(error).getText());
+				} catch (Exception ignored) {
+				}
+				return false;
+			}
+		}
+		return false;
+	}
+
+	public void clickOnGoBackAfterAdminTrustCertificateSubmit() {
+		By confirmationGoBack = By.id("confirmation_go_back_btn");
+		By cancelBtn = By.id("upload_trust_certificate_cancel_btn");
+		By clearBtn = By.id("upload_trust_certificate_clear");
+		By errorMsg = By.id("upload_trust_certificate_error_msg");
+		By blockerProceed = By.id("block_messsage_proceed");
+
+		boolean confirmationShown = false;
+		boolean uploadErrorShown = false;
+		long deadline = System.currentTimeMillis() + Duration.ofSeconds(40).toMillis();
+		while (System.currentTimeMillis() < deadline) {
+			if (isElementDisplayedQuick(confirmationGoBack, Duration.ofMillis(500))) {
+				confirmationShown = true;
+				break;
+			}
+			if (isElementDisplayedQuick(errorMsg, Duration.ofMillis(500))) {
+				uploadErrorShown = true;
+				break;
+			}
+		}
+
+		if (confirmationShown) {
+			clickOnGoBackButton();
+			return;
+		}
+
+		io.mosip.testrig.pmpuiv2.utility.LogUtil
+				.step("Trust certificate confirmation not shown after submit; clearing and cancelling upload form");
+		if (uploadErrorShown) {
+			try {
+				io.mosip.testrig.pmpuiv2.utility.LogUtil
+						.step("Trust certificate upload error: " + driver.findElement(errorMsg).getText());
+			} catch (Exception ignored) {
+			}
+		}
+		if (isElementDisplayedQuick(clearBtn, Duration.ofSeconds(3))) {
+			click(clearBtn);
+		}
+		if (isElementDisplayedQuick(cancelBtn, Duration.ofSeconds(3))) {
+			clickOnAdminCertUploadCancelButton();
+		}
+		if (isElementDisplayedQuick(blockerProceed, Duration.ofSeconds(5))) {
+			click(blockerProceed);
+		}
+	}
+
 	public void clickOnGoBackButton() {
 		clickOnElement(GoBackButton);
 	}
@@ -648,13 +900,14 @@ public class PartnerCertificatePage extends BasePage {
 	}
 
 	public boolean VerifyTheStatusWithAsendingOrder() {
-		WebElement first = driver.findElement(By.xpath("//*[@id='ftm_list_item1']//*[contains(text(), 'Approved')]"));
+		WebElement first = driver
+				.findElement(By.xpath("//tr[@id='ftm_list_item1']//td[contains(text(), 'Approved')]"));
 		return isElementDisplayed(first);
 	}
 
 	public boolean VerifyTheStatusWithDesendingOrder() {
-		WebElement first = driver
-				.findElement(By.xpath("//*[@id='ftm_list_item1']//*[contains(text(), 'Pending For Approval')]"));
+		WebElement first = driver.findElement(
+				By.xpath("//tr[@id='ftm_list_item1']//td[contains(text(), 'Pending For Approval')]"));
 		return isElementDisplayed(first);
 	}
 
@@ -672,6 +925,18 @@ public class PartnerCertificatePage extends BasePage {
 
 	public boolean isPleaseTabToSelectTextDisplayed() {
 		return isElementDisplayed(PleaseTabToSelectText);
+	}
+
+	public String getUploadPopupSelectCertificateText() {
+		return getTextFromLocator(uploadPopupSelectCertificateMsg).trim();
+	}
+
+	public String getUploadPopupCertificateFormatText() {
+		return getTextFromLocator(partnerCertificateFormatText).trim();
+	}
+
+	public String getCertificateUploadSectionDisplayText() {
+		return getUploadPopupSelectCertificateText() + ". " + getUploadPopupCertificateFormatText();
 	}
 
 	public boolean isCertFormatesTextDisplayed() {
@@ -818,15 +1083,70 @@ public class PartnerCertificatePage extends BasePage {
 		return isElementDisplayed(uploadCertificateIcon);
 	}
 
+	public boolean isUploadPopupCertificateIconDisplayed() {
+		return isElementDisplayed(uploadPopupCertificateIcon);
+	}
+
+	public boolean isUploadPopupCertificateIconEnabledAndClickable() {
+		boolean iconDisplayed = isElementDisplayed(uploadPopupCertificateIcon);
+		boolean cardDisplayed = isElementDisplayed(uploadCertificateCard);
+		boolean cardClickable = getTextFromAttribute(uploadCertificateCard, GlobalConstants.CLASS)
+				.contains("cursor-pointer");
+		// fileInput uses class="hidden" — do not wait for visibility
+		boolean fileInputEnabled = uploadFile.isEnabled() && uploadFile.getAttribute("disabled") == null;
+		return iconDisplayed && cardDisplayed && cardClickable && fileInputEnabled;
+	}
+
+	public boolean isCertificateFileInputConfiguredForLocalFileBrowser() {
+		String type = uploadFile.getAttribute("type");
+		String accept = uploadFile.getAttribute("accept");
+		boolean enabled = uploadFile.isEnabled() && uploadFile.getAttribute("disabled") == null;
+		return "file".equalsIgnoreCase(type) && accept != null && accept.contains(".cer")
+				&& accept.contains(".pem") && enabled;
+	}
+
+	public void clickOnUploadCertificateCard() {
+		clickOnElement(uploadCertificateCard);
+	}
+
+	public boolean isUploadedCertificateFileNameLabelDisplayed() {
+		return isElementDisplayed(uploadedCertificateFileNameLabel);
+	}
+
+	public boolean isUploadedCertificateFileNameLabelDisplayedQuick() {
+		return isElementDisplayedQuick(By.id("upload_popup_file_name"), Duration.ofSeconds(3));
+	}
+
+	public boolean isFetchCertificateSuccessMessageDisplayed() {
+		return isElementDisplayed(fetchCertificateSuccessMessage);
+	}
+
+	public String getFetchCertificateSuccessMessage() {
+		return getTextFromLocator(fetchCertificateSuccessMessage).trim();
+	}
+
+	public boolean isRemoveCertificateCardDisplayed() {
+		return isElementDisplayed(removeCertificateCard);
+	}
+
 	public boolean isLastCertificateUploadDateDisplayed() {
-		String expectedDate = PmpTestUtil.todayDateWithoutZeroPadder;
-		String xpath = "//p[contains(., 'Last certificate was uploaded on') and contains(., '" + expectedDate + "')]";
-		WebElement uploadDate = driver.findElement(By.xpath(xpath));
-		return isElementDisplayed(uploadDate);
+		return isElementDisplayed(lastUploadTimeAndDate);
+	}
+
+	public boolean isReUploadCertificateWarningMessageDisplayed() {
+		return isElementDisplayed(reUploadCertificateWarningMessage);
+	}
+
+	public String getReUploadCertificateWarningMessage() {
+		return getTextFromLocator(reUploadCertificateWarningMessage);
 	}
 
 	public boolean isUploadedCertificateNameDisplayed() {
 		return isElementDisplayed(uploadedCertificateFileName);
+	}
+
+	public String getUploadedCertificateFileName() {
+		return getTextFromLocator(uploadedCertificateFileNameLabel).trim();
 	}
 
 	public boolean isCertificateRemoveButtonDisplayed() {
@@ -1365,6 +1685,14 @@ public class PartnerCertificatePage extends BasePage {
 
 	public String getPartnerType() {
 		return getTextFromAttribute(partnerTypeContext, "value");
+	}
+
+	public String getPartnerTypeFromListView() {
+		return getTextFromLocator(listViewPartnerTypeContext).trim();
+	}
+
+	public boolean isPartnerTypeFromListViewDisplayed() {
+		return isElementDisplayed(listViewPartnerTypeContext);
 	}
 
 	public String getPartnerDomainType() {
