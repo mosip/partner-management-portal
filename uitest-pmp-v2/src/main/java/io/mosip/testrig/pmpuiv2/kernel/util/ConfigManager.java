@@ -168,7 +168,13 @@ public class ConfigManager {
 	}
 
 	public static String getValueForKey(String key) {
-		String value = System.getenv(key) == null ? propsKernel.getProperty(key) : System.getenv(key);
+		String value = System.getProperty(key);
+		if (value == null || value.isBlank()) {
+			value = System.getenv(key);
+		}
+		if (value == null || value.isBlank()) {
+			value = propsKernel.getProperty(key);
+		}
 		setProperty(key, value);
 
 		return value;
@@ -327,7 +333,10 @@ public class ConfigManager {
 		dataSharepolicyData = System.getenv(DataSharepolicyData) == null ? propsKernel.getProperty(DataSharepolicyData)
 				: System.getenv(DataSharepolicyData);
 
-		testcases = System.getenv(Testcases) == null ? propsKernel.getProperty(Testcases) : System.getenv(Testcases);
+		testcases = getValueForKey(Testcases);
+		if (testcases == null) {
+			testcases = "";
+		}
 		
 		 
 

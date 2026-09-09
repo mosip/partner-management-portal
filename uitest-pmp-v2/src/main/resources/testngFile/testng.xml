@@ -44,6 +44,8 @@
 			<class name="io.mosip.testrig.pmpuiv2.testcase.MispServicesTest" />
 			<!--ABIS PARTNER FLOW-->
 			<class name="io.mosip.testrig.pmpuiv2.testcase.AbisPartnerTest" />
+			<!--CREDENTIAL PARTNER CERTIFICATE FLOW-->
+			<class name="io.mosip.testrig.pmpuiv2.testcase.CredentialPartnerCertificateTest" />
 			<!--PARTNER VALIDATION & MANAGEMENT -->
 			<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerDetailsTest" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerFilterTest" />

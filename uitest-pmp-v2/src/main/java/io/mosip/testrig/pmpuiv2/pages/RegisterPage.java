@@ -86,6 +86,10 @@ public class RegisterPage extends BasePage {
 		dropdownByIndex(partnerTypeDropdown, 0);
 	}
 
+	public void selectCredentialPartnerInPartnerTypeDropdown() {
+		selectByValueInDropdown(partnerTypeDropdown, "CREDENTIAL_PARTNER");
+	}
+
 	public boolean isAddressTextBoxDisplayed() {
 		return isElementDisplayed(addressTextbox);
 	}
