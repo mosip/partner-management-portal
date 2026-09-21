@@ -1547,6 +1547,38 @@ public class GlobalConstants {
 	public static final String isMispPartnerOptionDisplayed = "Verify that MISP Partner option is displayed in the Partner Type dropdown.";
 	public static final String isPartnerTypeDropdownOptionCountCorrect = "Verify that the Partner Type dropdown displays the expected partner options, even if the total count changes dynamically.";
 	public static final String isManualAdjudicationPartnerOptionDisplayed = "Verify that Manual Adjudication Partner option is displayed in the Partner Type dropdown.";
+
+	// qajava21 Partner Admin credentials
+	public static final String QAJAVA21_ADMIN_USER = "21admin";
+	public static final String QAJAVA21_ADMIN_PASSWORD = "admin123";
+
+	// Biometric Extractor Provider Configuration (MOSIP-44595 / MOSIP-44596 / MOSIP-44597)
+	public static final String BIOMETRIC_CONFIGURATION_PROVIDER_NAME = "MosipBioExtractor";
+	public static final String BIOMETRIC_CONFIGURATION_PROVIDER_VERSION = "1.0.0";
+	public static final String BIOMETRIC_CONFIGURATION_MODALITY_FACE = "face";
+	public static final String isBiometricConfigurationDashboardCardDisplayed = "Verify that Biometric Provider Configuration card is displayed on the dashboard.";
+	public static final String isBiometricConfigurationListPageDisplayed = "Verify that Biometric Extractor Provider Configuration listing page is displayed.";
+	public static final String isCreateBiometricConfigurationFormDisplayed = "Verify that Create Biometric Extractor Provider Configuration form is displayed.";
+	public static final String isBiometricConfigurationCreatedSuccessfully = "Verify that Biometric Extractor Provider Configuration is added successfully.";
+	public static final String isBiometricConfigurationListingTableDisplayed = "Verify that Biometric Extractor Provider Configuration listing table is displayed.";
+	public static final String isBiometricConfigurationListingColumnsDisplayed = "Verify that listing table shows Configuration Name, Provider Name, Version, Modality, Creation Date and Action columns.";
+	public static final String isBiometricConfigurationFilterButtonDisplayed = "Verify that Filter button is displayed on the listing page.";
+	public static final String isBiometricConfigurationFilterPanelDisplayed = "Verify that filter panel shows Configuration Name, Provider Name, Version and Modality filters.";
+	public static final String isBiometricConfigurationEmptyFilterResultDisplayed = "Verify that empty state is shown when filter returns no matching configurations.";
+	public static final String isBiometricConfigurationViewActionDisplayed = "Verify that View action is displayed in the listing action menu.";
+	public static final String isBiometricConfigurationDeleteActionDisplayed = "Verify that Delete action is displayed in the listing action menu.";
+	public static final String isBiometricConfigurationViewPageDisplayed = "Verify that View Biometric Extractor Provider Configuration details page is displayed.";
+	public static final String isBiometricConfigurationViewPageTitleDisplayed = "Verify that View page title is displayed.";
+	public static final String isBiometricConfigurationViewCreatedOnDisplayed = "Verify that Created On metadata is displayed on the View page.";
+	public static final String isBiometricConfigurationViewStatusDisplayed = "Verify that Status metadata is displayed on the View page when available.";
+	public static final String isBiometricConfigurationViewDetailsDisplayed = "Verify that configuration name, provider name, version, modality, credential data format and attribute name are displayed.";
+	public static final String isBiometricConfigurationViewReadOnly = "Verify that View page configuration attributes are read-only.";
+	public static final String isBiometricConfigurationViewBackButtonDisplayed = "Verify that Back button is displayed on the View page.";
+	public static final String isBiometricConfigurationViewBackNavigatesToList = "Verify that Back button returns to the Biometric Extractor Provider Configuration listing page.";
+	public static final String isBiometricConfigurationViewLayoutStructured = "Verify that View page layout shows title, metadata, attributes and Back button in a structured format.";
+	public static final String isBiometricConfigurationViewResponsive = "Verify that View page remains usable at desktop and tablet viewport sizes.";
+	public static final String isBiometricConfigurationDeletePopupDisplayed = "Verify that delete confirmation popup is displayed.";
+
 	public static final String CANCEL_CONFIRMATION_POPUP_TEXT = "Your changes will be lost, are you sure you want to proceed?";
 	public static final String CERT_UPLOAD_STATUS_UPLOADED = "Uploaded";
 	public static final String CERT_UPLOAD_STATUS_NOT_UPLOADED = "Not Uploaded";

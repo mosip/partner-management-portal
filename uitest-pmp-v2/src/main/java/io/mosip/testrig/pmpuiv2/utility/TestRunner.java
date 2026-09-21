@@ -155,6 +155,12 @@ public class TestRunner {
 			XmlClass mispPolicyTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.MispPolicyTest");
 			XmlClass abisPartnerTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.AbisPartnerTest");
 			XmlClass mispServicesTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.MispServicesTest");
+			XmlClass biometricConfigurationTest = new XmlClass(
+					"io.mosip.testrig.pmpuiv2.testcase.BiometricConfigurationTest");
+			XmlClass biometricConfigurationListingTest = new XmlClass(
+					"io.mosip.testrig.pmpuiv2.testcase.BiometricConfigurationListingTest");
+			XmlClass biometricConfigurationViewTest = new XmlClass(
+					"io.mosip.testrig.pmpuiv2.testcase.BiometricConfigurationViewTest");
 
 			List<XmlClass> classes = new ArrayList<>();
 			String[] scenarioNames = ConfigManager.gettestcases().split(",");
@@ -301,6 +307,15 @@ public class TestRunner {
 					break;
 				case "MispServicesTest":
 					addClassIfAbsent(classes, partnerAdminCreation, mispPartnerTest, mispPolicyTest, mispServicesTest);
+					break;
+				case "BiometricConfigurationTest":
+					addClassIfAbsent(classes, biometricConfigurationTest);
+					break;
+				case "BiometricConfigurationListingTest":
+					addClassIfAbsent(classes, biometricConfigurationListingTest);
+					break;
+				case "BiometricConfigurationViewTest":
+					addClassIfAbsent(classes, biometricConfigurationViewTest);
 					break;
 
 				// Unknown test name
