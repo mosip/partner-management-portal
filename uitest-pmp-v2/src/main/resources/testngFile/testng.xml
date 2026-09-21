@@ -44,6 +44,10 @@
 			<class name="io.mosip.testrig.pmpuiv2.testcase.MispServicesTest" />
 			<!--ABIS PARTNER FLOW-->
 			<class name="io.mosip.testrig.pmpuiv2.testcase.AbisPartnerTest" />
+			<!--BIOMETRIC EXTRACTOR PROVIDER CONFIGURATION (MOSIP-44595 / MOSIP-44596 / MOSIP-44597)-->
+			<class name="io.mosip.testrig.pmpuiv2.testcase.BiometricConfigurationTest" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.BiometricConfigurationListingTest" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.BiometricConfigurationViewTest" />
 			<!--PARTNER VALIDATION & MANAGEMENT -->
 			<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerDetailsTest" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerFilterTest" />
