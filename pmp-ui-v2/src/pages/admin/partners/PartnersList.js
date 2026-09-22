@@ -389,7 +389,7 @@ function PartnersList() {
       setSelectedPartnerForPolicyGroup({});
 
       // Show success message with partner ID
-      setSuccessMsg(t('partnerList.policyGroupLinkedSuccessMsg', { partnerId: selectedPartnerData.partnerId }));
+      setSuccessMsg(t('partnerList.policyGroupLinkedSuccessMsg', { partnerId: selectedPartnerData.partnerId, interpolation: { escapeValue: true } }));
 
       // Update the specific row in the state with the new policy group name
       setPartnersData((prevList) =>
