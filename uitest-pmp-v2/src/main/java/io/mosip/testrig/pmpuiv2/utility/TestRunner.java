@@ -5,8 +5,10 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
+import org.reflections.Reflections;
 import org.testng.TestListenerAdapter;
 import org.testng.TestNG;
 import org.testng.xml.XmlClass;
@@ -15,7 +17,9 @@ import org.testng.xml.XmlTest;
 
 import io.mosip.testrig.pmpuiv2.dbaccess.DBManager;
 import io.mosip.testrig.pmpuiv2.fw.util.AdminTestUtil;
+import io.mosip.testrig.pmpuiv2.fw.util.CertificateGenerationUtil;
 import io.mosip.testrig.pmpuiv2.kernel.util.ConfigManager;
+import io.mosip.testrig.pmpuiv2.pages.BasePage;
 
 public class TestRunner {
 	static TestListenerAdapter tla = new TestListenerAdapter();
@@ -31,6 +35,7 @@ public class TestRunner {
 
 	public static void main(String[] args) throws Exception {
 		AdminTestUtil.initialize();
+		CertificateGenerationUtil.generateAllCertificates();
 		try (BufferedReader br = new BufferedReader(new FileReader(getResourcePath() + "/config/knownIssues.txt"))) {
 			String line;
 			while ((line = br.readLine()) != null) {
@@ -60,6 +65,7 @@ public class TestRunner {
 			if (lang != null && !lang.isEmpty()) {
 				ConfigManager.setloginlang(lang);
 			}
+			initAllLocalizedPages(lang);
 			if (languages.length > 1) {
 				logger.info(
 						"===== Running suite for language: " + lang + " (" + (i + 1) + "/" + languages.length + ") =====");
@@ -72,6 +78,17 @@ public class TestRunner {
 		}
 
 		System.exit(0);
+	}
+
+	private static void initAllLocalizedPages(String lang) throws Exception {
+		Reflections reflections = new Reflections("io.mosip.testrig.pmpuiv2.pages");
+		Set<Class<? extends BasePage>> pageClasses = reflections.getSubTypesOf(BasePage.class);
+		for (Class<? extends BasePage> pageClass : pageClasses) {
+			try {
+				pageClass.getMethod("init", String.class).invoke(null, lang);
+			} catch (NoSuchMethodException e) {
+			}
+		}
 	}
 
 	private static void runSuiteOnce() throws Exception {

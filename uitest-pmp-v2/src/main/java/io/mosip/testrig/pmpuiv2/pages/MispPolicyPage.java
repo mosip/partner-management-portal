@@ -1,10 +1,14 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
+import java.time.Duration;
+
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class MispPolicyPage extends BasePage {
 
@@ -395,6 +399,11 @@ public class MispPolicyPage extends BasePage {
 
 	public void clickOnDeactivateConfirmButton() {
 		clickOnElement(deactivateConfirmButton);
+	}
+
+	public void waitUntilDeactivatePolicyPopupClosed() {
+		new WebDriverWait(driver, Duration.ofSeconds(30))
+				.until(ExpectedConditions.invisibilityOfElementLocated(By.id("deactivate_policy_popup_header")));
 	}
 
 	public boolean isViewButtonDisplayed() {

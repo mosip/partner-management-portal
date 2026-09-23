@@ -835,7 +835,11 @@ public class PartnerAdminPage extends BasePage {
 		throw new RuntimeException("Column still stale after " + STALE_READ_RETRY + " retries: " + locator);
 	}
 
+	private static final By ANY_COLUMN_SORT_ICON = By
+			.xpath("//th//svg[contains(@id,'_asc_icon') or contains(@id,'_desc_icon')]");
+
 	public int getSortIconCountForColumn(String columnName) {
+		isElementDisplayedQuick(ANY_COLUMN_SORT_ICON, LIST_LOAD_TIMEOUT);
 		return getElementCount(By.xpath("//div[text()='" + columnName + "']/ancestor::th[1]"
 				+ "//svg[contains(@id,'_asc_icon') or contains(@id,'_desc_icon')]"));
 	}
