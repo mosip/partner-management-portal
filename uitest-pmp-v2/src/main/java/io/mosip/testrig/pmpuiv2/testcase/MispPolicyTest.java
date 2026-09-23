@@ -100,6 +100,7 @@ public class MispPolicyTest extends BaseClass {
 		assertTrue(mispPolicyPage.isDeactivatePolicyPopupHeaderDisplayed(),
 				GlobalConstants.isDeactivatePolicyPopupHeaderDisplayed);
 		mispPolicyPage.clickOnDeactivateConfirmButton();
+		mispPolicyPage.waitUntilDeactivatePolicyPopupClosed();
 
 		clickOnPartnerPolicyLinkingViewButton(GlobalConstants.MISP_POLICY_DEACTIVATE);
 		assertEquals(mispPolicyPage.getPageTitle(), GlobalConstants.VIEW_MISP_POLICY_PAGE);

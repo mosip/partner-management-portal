@@ -76,6 +76,7 @@ public class ConfigManager {
 	private static String SignPublicKey = "signPublicKey";
 	private static String Headless = "headless";
 	private static String Docker = "docker";
+	private static String AuthCertsPath = "authCertsPath";
 	private static String Langcode = "langcode";
 	private static String SbiexpiryDate = "sbiexpiryDate";// loginlang
 	private static String Loginlang = "loginlang";
@@ -89,6 +90,7 @@ public class ConfigManager {
 	private static String loginlang;
 	private static String langcode;
 	private static String docker;
+	private static String authCertsPath;
 	private static String headless;
 	private static String signPublicKey;
 	private static String publicKey;
@@ -312,6 +314,9 @@ public class ConfigManager {
 
 		docker = System.getenv(Docker) == null ? propsKernel.getProperty(Docker) : System.getenv(Docker);
 
+		authCertsPath = System.getenv(AuthCertsPath) == null ? propsKernel.getProperty(AuthCertsPath)
+				: System.getenv(AuthCertsPath);
+
 		langcode = System.getenv(Langcode) == null ? propsKernel.getProperty(Langcode) : System.getenv(Langcode);
 
 		loginlang = System.getenv(Loginlang) == null ? propsKernel.getProperty(Loginlang) : System.getenv(Loginlang);
@@ -354,6 +359,10 @@ public class ConfigManager {
 
 	public static String getdocker() {
 		return docker;
+	}
+
+	public static String getauthCertsPath() {
+		return authCertsPath;
 	}
 
 	public static String getheadless() {
