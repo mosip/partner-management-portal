@@ -8,6 +8,20 @@ import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
 
 public class PartnerPolicyMappingPage extends BasePage {
 
+	/**
+	 * Approve / Reject popup wording for a Credential Partner policy request.
+	 * Filled in from the locale bundle of the login language by
+	 * {@link #init(String)}, which TestRunner calls once per language.
+	 */
+	public static String BIO_EXTRACTOR_PROVIDER_MAPPING_SECTION;
+	public static String CREDENTIAL_TYPE_SECTION;
+	public static String NO_BIO_EXTRACTORS_MAPPED;
+	public static String APPROVE_BLOCKED_BOTH_MAPPINGS_MISSING;
+
+	public static void init(String loginLanguage) {
+		copyLocaleFields(PartnerPolicyMappingPage.class, loginLanguage);
+	}
+
 	@FindBy(id = "page_title")
 	private WebElement partnerPolicyLinkingTitle;
 
@@ -907,6 +921,22 @@ public class PartnerPolicyMappingPage extends BasePage {
 		click(actionButton);
 	}
 
+	/** Dismisses the Approve / Reject popup without acting on the request. */
+	public void clickOnApproveRejectPopupCloseIcon() {
+		click(By.id("approve_reject_popup_close_icon"));
+	}
+
+	/**
+	 * Opens the action menu of the row belonging to the given partner. A Credential
+	 * Partner and an Auth Partner can hold a request against the same policy, so the
+	 * policy name on its own does not identify a row.
+	 */
+	public void clickOnPartnerPolicyLinkingActionButtonByPartnerId(String partnerId) {
+		By actionButton = By.xpath(
+				"//td[normalize-space()='" + partnerId + "']/parent::tr//button[contains(@id,'partner_list_view')]");
+		click(actionButton);
+	}
+
 	public String getPageTitle() {
 		return getTextFromLocator(pageTitle);
 	}
@@ -1174,9 +1204,14 @@ public class PartnerPolicyMappingPage extends BasePage {
 		return isElementDisplayed(approveRejectPopupSubTitle);
 	}
 
-	/** True when the policy linkage row for the given policy name shows the given status. */
-	public boolean isPolicyRowStatusDisplayed(String policyName, String status) {
-		return isDisplayed(By.xpath("//td[normalize-space()='" + policyName + "']/parent::tr"
+	/**
+	 * True when the policy linkage row for the given partner and policy shows the given
+	 * status. The partner id is part of the match because the same policy is requested by
+	 * more than one partner in this suite.
+	 */
+	public boolean isPolicyRowStatusDisplayed(String partnerId, String policyName, String status) {
+		return isDisplayed(By.xpath("//td[normalize-space()='" + partnerId + "']/parent::tr"
+				+ "[.//td[normalize-space()='" + policyName + "']]"
 				+ "[.//*[normalize-space()='" + status + "']]"));
 	}
 }

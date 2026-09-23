@@ -44,4 +44,22 @@ public class LocaleTextEng {
 	public static final String API_KEY_ACTION_EDIT_EXPIRY_OPTION_TEXT = "Edit Expiry Date";
 	public static final String API_KEY_ACTION_DEACTIVATE_OPTION_TEXT = "Deactivate";
 
+
+	// ------------------------------------------------------------------
+	// Credential Partner policy flow (MOSIP-44660, MOSIP-44662)
+	// ------------------------------------------------------------------
+	public static final String MAP_CREDENTIAL_TYPE_TITLE = "Map Credential Type";
+	public static final String MAP_CREDENTIAL_TYPE_MANDATORY_BANNER = "Note: For Credential Partners, mapping the policy to a Biometric Extractor Configuration and Credential Type is mandatory. If this mapping is not completed, the policy request cannot be approved. Please follow the steps on this page to complete the required mapping";
+	public static final String MAP_CREDENTIAL_TYPE_SUCCESS_HEADER = "Policy Requested Successfully";
+	public static final String MAP_CREDENTIAL_TYPE_SUCCESS_DESCRIPTION = "Your policy request has been successfully submitted and is pending approval from the admin.";
+	public static final String PARTNER_ID_FIELD = "Partner ID";
+	public static final String PARTNER_TYPE_FIELD = "Partner Type";
+	public static final String POLICY_GROUP_FIELD = "Policy Group";
+	public static final String POLICY_NAME_FIELD = "Policy Name";
+	public static final String BIOMETRIC_MODALITY_FIELD = "Biometric Modality";
+	public static final String BIOMETRIC_PROVIDER_CONFIG_FIELD = "Biometric Provider Configuration";
+	public static final String APPROVE_BLOCKED_BOTH_MAPPINGS_MISSING = "This policy cannot be approved as the required Biometric Extractor Provider Configuration and Credential Type mappings are incomplete.";
+	public static final String NO_BIO_EXTRACTORS_MAPPED = "No Biometric Extractor Provider Configuration has been mapped to this policy.";
+	public static final String BIO_EXTRACTOR_PROVIDER_MAPPING_SECTION = "Biometric Extractor Provider Mapping";
+	public static final String CREDENTIAL_TYPE_SECTION = "Credential Type";
 }

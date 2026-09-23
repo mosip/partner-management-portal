@@ -44,4 +44,22 @@ public class LocaleTextFra {
 	public static final String API_KEY_ACTION_EDIT_EXPIRY_OPTION_TEXT = "Modifier la date d'expiration";
 	public static final String API_KEY_ACTION_DEACTIVATE_OPTION_TEXT = "Désactiver";
 
+
+	// ------------------------------------------------------------------
+	// Credential Partner policy flow (MOSIP-44660, MOSIP-44662)
+	// ------------------------------------------------------------------
+	public static final String MAP_CREDENTIAL_TYPE_TITLE = "Mapper le type d’identifiant";
+	public static final String MAP_CREDENTIAL_TYPE_MANDATORY_BANNER = "Remarque: Pour les partenaires d'identification, l'association de la politique à une configuration d'extracteur biométrique et à un type d'identifiant est obligatoire. Si cette association n'est pas effectuée, la demande de politique ne peut pas être approuvée. Veuillez suivre les étapes de cette page pour compléter l'association requise";
+	public static final String MAP_CREDENTIAL_TYPE_SUCCESS_HEADER = "Demande de politique soumise avec succès";
+	public static final String MAP_CREDENTIAL_TYPE_SUCCESS_DESCRIPTION = "Votre demande de politique a été soumise avec succès et est en attente d’approbation de l’administrateur.";
+	public static final String PARTNER_ID_FIELD = "ID partenaire";
+	public static final String PARTNER_TYPE_FIELD = "Type de partenaire";
+	public static final String POLICY_GROUP_FIELD = "Groupe de politiques";
+	public static final String POLICY_NAME_FIELD = "Nom de la politique";
+	public static final String BIOMETRIC_MODALITY_FIELD = "Modalité biométrique";
+	public static final String BIOMETRIC_PROVIDER_CONFIG_FIELD = "Configuration du fournisseur biométrique";
+	public static final String APPROVE_BLOCKED_BOTH_MAPPINGS_MISSING = "Cette politique ne peut pas être approuvée car les mappages requis de Configuration du fournisseur d’extracteur biométrique et de Type d’identifiant sont incomplets.";
+	public static final String NO_BIO_EXTRACTORS_MAPPED = "Aucune Configuration du fournisseur d’extracteur biométrique n’a été mappée à cette politique.";
+	public static final String BIO_EXTRACTOR_PROVIDER_MAPPING_SECTION = "Cartographie du fournisseur d’extracteur biométrique";
+	public static final String CREDENTIAL_TYPE_SECTION = "Type d’identifiant";
 }

@@ -43,11 +43,21 @@ public class CredentialPartnerPolicyApprovalTest extends BaseClass {
 		mapBiometricExtractorPage = new MapBiometricExtractorPage(driver);
 	}
 
-	/** Filters the policy linkage list down to a single policy request row. */
+	/** Opens the policy linkage list from the dashboard and filters it to one policy. */
 	private void openPolicyRequestByPolicyName(String policyName) {
 		dashboardPage.clickOnPartnerPolicyMappingTab();
 		assertTrue(partnerPolicyMappingPage.isPartnerPolicyLinkingTitleDisplayed(),
 				GlobalConstants.isPartnerPolicyLinkingTitleDisplayed);
+		filterPolicyRequestByPolicyName(policyName);
+	}
+
+	/**
+	 * Re-filters the linkage list that is already on screen. Acting on a request leaves
+	 * the admin on this list, not back at the dashboard, so the filter is reset and
+	 * re-applied rather than navigating in again.
+	 */
+	private void filterPolicyRequestByPolicyName(String policyName) {
+		partnerPolicyMappingPage.clickOnFilterResetButton();
 		partnerPolicyMappingPage.clickOnFilterButton();
 		partnerPolicyMappingPage.enterPendingPolicyNameInFilter(policyName);
 		partnerPolicyMappingPage.clickOnApplyFilterButton();
@@ -64,35 +74,38 @@ public class CredentialPartnerPolicyApprovalTest extends BaseClass {
 
 		// The pending request is listed (TC_01)
 		assertTrue(
-				partnerPolicyMappingPage.isPolicyRowStatusDisplayed(GlobalConstants.DATAPOLICY_PARTLINK,
-						GlobalConstants.PENDING_FOR_APPROVAL),
+				partnerPolicyMappingPage.isPolicyRowStatusDisplayed(GlobalConstants.CREDENTIAL_PARTNER_USER,
+						GlobalConstants.DATAPOLICY_PARTLINK, GlobalConstants.PENDING_FOR_APPROVAL),
 				GlobalConstants.isPendingPolicyRequestVisibleToAdmin);
 
-		// The action menu offers Approve / Reject (TC_02)
-		partnerPolicyMappingPage.clickOnPartnerListViewElipsisButton();
-		assertTrue(partnerPolicyMappingPage.isApproveRejectButtonDisplayed(),
+		// The action menu offers Approve / Reject (TC_02). The Auth Partner holds a request
+		// against the same policy, so the menu is opened on the Credential Partner's row.
+		partnerPolicyMappingPage
+				.clickOnPartnerPolicyLinkingActionButtonByPartnerId(GlobalConstants.CREDENTIAL_PARTNER_USER);
+		assertTrue(partnerPolicyMappingPage.isApproveRejectButtonEnabled(),
 				GlobalConstants.isApproveRejectOptionDisplayed);
 		partnerPolicyMappingPage.clickOnApproveOrRejectButton();
 
 		// The popup shows the policy details plus both mapping sections (TC_03)
 		assertTrue(partnerPolicyMappingPage.isApproveOrRejectConfirmationPopupDisplayed(),
 				GlobalConstants.isApproveOrRejectConfirmationPopupDisplayed);
-		assertTrue(basePage.isTextPresentOnPage(GlobalConstants.BIO_EXTRACTOR_PROVIDER_MAPPING_SECTION),
+		assertTrue(basePage.isTextPresentOnPage(PartnerPolicyMappingPage.BIO_EXTRACTOR_PROVIDER_MAPPING_SECTION),
 				GlobalConstants.isBiometricMappingSectionDisplayedInPopup);
-		assertTrue(basePage.isTextPresentOnPage(GlobalConstants.CREDENTIAL_TYPE_SECTION),
+		assertTrue(basePage.isTextPresentOnPage(PartnerPolicyMappingPage.CREDENTIAL_TYPE_SECTION),
 				GlobalConstants.isCredentialTypeSectionDisplayedInPopup);
 
-		// A fully mapped request approves cleanly (TC_04)
+		// A fully mapped request approves cleanly (TC_04). Approving from the linkage list
+		// closes the popup and drops straight back onto the listing - there is no
+		// acknowledgement screen on this path.
 		partnerPolicyMappingPage.clickOnApproveSubmitButton();
-		assertTrue(partnerPolicyMappingPage.isConfirmationCustomButtonDisplayed(),
+		assertTrue(partnerPolicyMappingPage.isPartnerPolicyLinkingTitleDisplayed(),
 				GlobalConstants.isPolicyApprovedSuccessfully);
-		partnerPolicyMappingPage.clickOnConfirmationCustomButton();
 
 		// and the listing reflects the new status (TC_05)
-		openPolicyRequestByPolicyName(GlobalConstants.DATAPOLICY_PARTLINK);
+		filterPolicyRequestByPolicyName(GlobalConstants.DATAPOLICY_PARTLINK);
 		assertTrue(
-				partnerPolicyMappingPage.isPolicyRowStatusDisplayed(GlobalConstants.DATAPOLICY_PARTLINK,
-						GlobalConstants.APPROVED),
+				partnerPolicyMappingPage.isPolicyRowStatusDisplayed(GlobalConstants.CREDENTIAL_PARTNER_USER,
+						GlobalConstants.DATAPOLICY_PARTLINK, GlobalConstants.APPROVED),
 				GlobalConstants.isPolicyStatusApprovedInList);
 	}
 
@@ -130,25 +143,27 @@ public class CredentialPartnerPolicyApprovalTest extends BaseClass {
 		loginPage.clickOnLoginButton();
 
 		openPolicyRequestByPolicyName(GlobalConstants.AUTHPOLICY_PARTLINK2);
-		partnerPolicyMappingPage.clickOnPartnerListViewElipsisButton();
+		partnerPolicyMappingPage
+				.clickOnPartnerPolicyLinkingActionButtonByPartnerId(GlobalConstants.CREDENTIAL_PARTNER_USER);
 		partnerPolicyMappingPage.clickOnApproveOrRejectButton();
 		assertTrue(partnerPolicyMappingPage.isApproveOrRejectConfirmationPopupDisplayed(),
 				GlobalConstants.isApproveOrRejectConfirmationPopupDisplayed);
 
 		// The empty mapping section is rendered for the unmapped request (TC_10)
-		assertTrue(basePage.isTextPresentOnPage(GlobalConstants.NO_BIO_EXTRACTORS_MAPPED),
+		assertTrue(basePage.isTextPresentOnPage(PartnerPolicyMappingPage.NO_BIO_EXTRACTORS_MAPPED),
 				GlobalConstants.isEmptyMappingSectionDisplayed);
 
 		// Approving is refused and the reason is shown (TC_07, TC_08, TC_09)
 		partnerPolicyMappingPage.clickOnApproveSubmitButton();
-		assertTrue(basePage.isTextPresentOnPage(GlobalConstants.APPROVE_BLOCKED_BOTH_MAPPINGS_MISSING),
+		assertTrue(basePage.isTextPresentOnPage(PartnerPolicyMappingPage.APPROVE_BLOCKED_BOTH_MAPPINGS_MISSING),
 				GlobalConstants.isApprovalBlockedErrorDisplayed);
 
 		// and the request is left exactly as it was (TC_08, TC_09)
-		openPolicyRequestByPolicyName(GlobalConstants.AUTHPOLICY_PARTLINK2);
+		partnerPolicyMappingPage.clickOnApproveRejectPopupCloseIcon();
+		filterPolicyRequestByPolicyName(GlobalConstants.AUTHPOLICY_PARTLINK2);
 		assertTrue(
-				partnerPolicyMappingPage.isPolicyRowStatusDisplayed(GlobalConstants.AUTHPOLICY_PARTLINK2,
-						GlobalConstants.PENDING_FOR_APPROVAL),
+				partnerPolicyMappingPage.isPolicyRowStatusDisplayed(GlobalConstants.CREDENTIAL_PARTNER_USER,
+						GlobalConstants.AUTHPOLICY_PARTLINK2, GlobalConstants.PENDING_FOR_APPROVAL),
 				GlobalConstants.isPolicyStatusStillPendingAfterBlockedApproval);
 	}
 }

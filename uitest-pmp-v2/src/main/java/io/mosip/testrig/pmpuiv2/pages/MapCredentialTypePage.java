@@ -8,6 +8,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import io.mosip.testrig.pmpuiv2.utility.LogUtil;
+
 /**
  * Step 3 of the Credential Partner policy request flow - Map Credential Type.
  *
@@ -19,13 +21,29 @@ import org.openqa.selenium.support.FindBy;
 public class MapCredentialTypePage extends BasePage {
 
 	private static final String READ_ONLY_FIELD_XPATH = "//label[starts-with(normalize-space(.), '%s')]/following-sibling::button";
+	private static final By CREDENTIAL_TYPE_OPTION = By
+			.xpath("//*[starts-with(@id,'map_credential_type_1_option')]");
 
-	public static final String PARTNER_ID_FIELD = "Partner ID";
-	public static final String PARTNER_TYPE_FIELD = "Partner Type";
-	public static final String POLICY_GROUP_FIELD = "Policy Group";
-	public static final String POLICY_NAME_FIELD = "Policy Name";
-	public static final String BIOMETRIC_MODALITY_FIELD = "Biometric Modality";
-	public static final String BIOMETRIC_PROVIDER_CONFIG_FIELD = "Biometric Provider Configuration";
+	/**
+	 * Every visible string below is filled in from the locale bundle of the login
+	 * language by {@link #init(String)}, which TestRunner calls once per language
+	 * before the suite starts.
+	 */
+	public static String PARTNER_ID_FIELD;
+	public static String PARTNER_TYPE_FIELD;
+	public static String POLICY_GROUP_FIELD;
+	public static String POLICY_NAME_FIELD;
+	public static String BIOMETRIC_MODALITY_FIELD;
+	public static String BIOMETRIC_PROVIDER_CONFIG_FIELD;
+
+	public static String MAP_CREDENTIAL_TYPE_TITLE;
+	public static String MAP_CREDENTIAL_TYPE_MANDATORY_BANNER;
+	public static String MAP_CREDENTIAL_TYPE_SUCCESS_HEADER;
+	public static String MAP_CREDENTIAL_TYPE_SUCCESS_DESCRIPTION;
+
+	public static void init(String loginLanguage) {
+		copyLocaleFields(MapCredentialTypePage.class, loginLanguage);
+	}
 
 	@FindBy(id = "map_credential_type_mandatory_mapping_msg")
 	private WebElement mandatoryMappingBanner;
@@ -106,13 +124,19 @@ public class MapCredentialTypePage extends BasePage {
 		return getTextFromLocator(credentialTypeDropdown);
 	}
 
-	/** Reads every option rendered under the credential type dropdown. */
+	/**
+	 * Reads every option rendered under the credential type dropdown and closes it
+	 * again. The dropdown button toggles, so leaving it open would make the next
+	 * {@link #selectCredentialType(String)} close the list instead of picking from it.
+	 */
 	public List<String> getCredentialTypeOptions() {
 		clickOnCredentialTypeDropdown();
+		waitAndFindElement(CREDENTIAL_TYPE_OPTION);
 		List<String> options = new ArrayList<>();
-		for (WebElement option : driver.findElements(By.xpath("//*[starts-with(@id,'map_credential_type_1_option')]"))) {
+		for (WebElement option : driver.findElements(CREDENTIAL_TYPE_OPTION)) {
 			options.add(option.getText().trim());
 		}
+		clickOnCredentialTypeDropdown();
 		return options;
 	}
 
@@ -166,8 +190,11 @@ public class MapCredentialTypePage extends BasePage {
 		return isElementDisplayed(errorMessage);
 	}
 
+	/** PMS supplies this wording, so log it - the UI bundle has no copy to compare against. */
 	public String getErrorMessage() {
-		return getTextFromLocator(errorMessage);
+		String message = getTextFromLocator(errorMessage);
+		LogUtil.step("Map Credential Type error message: " + message);
+		return message;
 	}
 
 	public boolean isAcknowledgementScreenDisplayed() {

@@ -113,13 +113,13 @@ public class CredentialPartnerMapCredentialTypeTest extends BaseClass {
 		completeBiometricExtractorStep();
 
 		// Page title and mandatory banner (TC_03, TC_30)
-		assertTrue(mapCredentialTypePage.isMapCredentialTypePageTitleDisplayed(GlobalConstants.MAP_CREDENTIAL_TYPE_TITLE),
+		assertTrue(mapCredentialTypePage.isMapCredentialTypePageTitleDisplayed(MapCredentialTypePage.MAP_CREDENTIAL_TYPE_TITLE),
 				GlobalConstants.isMapCredentialTypePageTitleDisplayed);
 		assertTrue(mapCredentialTypePage.isMandatoryMappingBannerDisplayed(),
 				GlobalConstants.isMapCredentialTypeMandatoryBannerDisplayed);
 		assertTrue(
 				mapCredentialTypePage.getMandatoryMappingBannerText()
-						.contains(GlobalConstants.MAP_CREDENTIAL_TYPE_MANDATORY_BANNER),
+						.contains(MapCredentialTypePage.MAP_CREDENTIAL_TYPE_MANDATORY_BANNER),
 				GlobalConstants.isMapCredentialTypeMandatoryBannerDisplayed);
 
 		// All fields and action buttons are present (TC_02, TC_07)
@@ -257,11 +257,11 @@ public class CredentialPartnerMapCredentialTypeTest extends BaseClass {
 		assertTrue(mapCredentialTypePage.isAcknowledgementScreenDisplayed(),
 				GlobalConstants.isMapCredentialTypeAcknowledgementDisplayed);
 		assertEquals(mapCredentialTypePage.getAcknowledgementHeader(),
-				GlobalConstants.MAP_CREDENTIAL_TYPE_SUCCESS_HEADER,
+				MapCredentialTypePage.MAP_CREDENTIAL_TYPE_SUCCESS_HEADER,
 				GlobalConstants.isMapCredentialTypeAcknowledgementHeaderCorrect);
 		assertTrue(
 				mapCredentialTypePage.getAcknowledgementDescription()
-						.contains(GlobalConstants.MAP_CREDENTIAL_TYPE_SUCCESS_DESCRIPTION),
+						.contains(MapCredentialTypePage.MAP_CREDENTIAL_TYPE_SUCCESS_DESCRIPTION),
 				GlobalConstants.isMapCredentialTypeAcknowledgementDescriptionCorrect);
 
 		// Both navigation buttons are offered (TC_26, TC_28)
@@ -284,19 +284,26 @@ public class CredentialPartnerMapCredentialTypeTest extends BaseClass {
 		initPages();
 		loginAsCredentialPartner();
 
-		// A second policy request, taken through Step 2 onto Step 3
-		raisePolicyRequest(GlobalConstants.DATAPOLICY_PARTLINK2);
+		// A second policy request, taken through Step 2 onto Step 3. The policy is one
+		// PartnerPolicyMappingTest already creates and publishes - this suite never creates
+		// policies of its own, it only requests the ones the policy flow has set up.
+		raisePolicyRequest(GlobalConstants.AUTHPOLICY_PARTLINK);
 		openActionMenuOfLatestRequest();
 		completeBiometricExtractorStep();
 
 		List<String> options = mapCredentialTypePage.getCredentialTypeOptions();
 		String alreadyMapped = options.get(0);
 
-		// Re-using the credential type mapped in the previous scenario is rejected (TC_11)
+		// Re-using the credential type mapped in the previous scenario is rejected (TC_11).
+		// PMS supplies the rejection wording and the UI bundle carries no copy of it, so the
+		// outcome is what gets asserted: an error banner is raised and the form stays up
+		// instead of the acknowledgement screen.
 		mapCredentialTypePage.selectCredentialType(alreadyMapped);
 		mapCredentialTypePage.clickOnSubmitButton();
 		assertTrue(mapCredentialTypePage.isErrorMessageDisplayed(), GlobalConstants.isDuplicateCredentialTypeRejected);
-		assertTrue(mapCredentialTypePage.getErrorMessage().contains(GlobalConstants.MAP_CREDENTIAL_TYPE_DUPLICATE_MSG),
+		assertFalse(mapCredentialTypePage.getErrorMessage().isEmpty(),
+				GlobalConstants.isDuplicateCredentialTypeRejected);
+		assertTrue(mapCredentialTypePage.isSubmitButtonDisplayed(),
 				GlobalConstants.isDuplicateCredentialTypeRejected);
 
 		// A different credential type goes through, then Go Back lands on the listing (TC_27)

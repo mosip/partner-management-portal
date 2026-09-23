@@ -44,4 +44,22 @@ public class LocaleTextAra {
 	public static final String API_KEY_ACTION_EDIT_EXPIRY_OPTION_TEXT = "تعديل تاريخ انتهاء الصلاحية";
 	public static final String API_KEY_ACTION_DEACTIVATE_OPTION_TEXT = "إلغاء التنشيط";
 
+
+	// ------------------------------------------------------------------
+	// Credential Partner policy flow (MOSIP-44660, MOSIP-44662)
+	// ------------------------------------------------------------------
+	public static final String MAP_CREDENTIAL_TYPE_TITLE = "ربط نوع بيانات الاعتماد";
+	public static final String MAP_CREDENTIAL_TYPE_MANDATORY_BANNER = "ملاحظة: بالنسبة لشركاء بيانات الاعتماد، يُعد ربط السياسة بتكوين مستخرج القياسات الحيوية ونوع بيانات الاعتماد أمرًا إلزاميًا. إذا لم يكتمل هذا الربط، فلا يمكن الموافقة على طلب السياسة. يُرجى اتباع الخطوات الواردة في هذه الصفحة لإكمال الربط المطلوب.";
+	public static final String MAP_CREDENTIAL_TYPE_SUCCESS_HEADER = "تم إرسال طلب السياسة بنجاح";
+	public static final String MAP_CREDENTIAL_TYPE_SUCCESS_DESCRIPTION = "تم إرسال طلب السياسة الخاص بك بنجاح وهو الآن بانتظار موافقة المسؤول.";
+	public static final String PARTNER_ID_FIELD = "معرف الشريك";
+	public static final String PARTNER_TYPE_FIELD = "نوع الشريك";
+	public static final String POLICY_GROUP_FIELD = "مجموعة السياسات";
+	public static final String POLICY_NAME_FIELD = "اسم السياسة";
+	public static final String BIOMETRIC_MODALITY_FIELD = "نوع القياسات الحيوية";
+	public static final String BIOMETRIC_PROVIDER_CONFIG_FIELD = "إعداد مزود القياسات الحيوية";
+	public static final String APPROVE_BLOCKED_BOTH_MAPPINGS_MISSING = "لا يمكن اعتماد هذه السياسة لأن تعيينات تكوين موفّر مستخرج القياسات الحيوية ونوع بيانات الاعتماد المطلوبة غير مكتملة.";
+	public static final String NO_BIO_EXTRACTORS_MAPPED = "لم يتم تعيين أي تكوين لموفّر مستخرج القياسات الحيوية لهذه السياسة.";
+	public static final String BIO_EXTRACTOR_PROVIDER_MAPPING_SECTION = "ربط مزود مستخرج القياسات الحيوية";
+	public static final String CREDENTIAL_TYPE_SECTION = "نوع بيانات الاعتماد";
 }
