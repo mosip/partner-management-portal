@@ -145,15 +145,17 @@ public class CertificateGenerationUtil {
 		Date rootNotBefore = Date.from(now.minus(CLOCK_SKEW_ALLOWANCE_MINUTES, ChronoUnit.MINUTES));
 		Date rootNotAfter = Date.from(now.plus(365L * 5, ChronoUnit.DAYS));
 		Date childNotBefore = Date.from(now.minus(CLOCK_SKEW_ALLOWANCE_MINUTES, ChronoUnit.MINUTES));
-		Date childNotAfter = Date.from(now.plus(365L * 3, ChronoUnit.DAYS));
+		// PMS requires Root validity > Intermediate validity > partner certificate validity.
+		Date interNotAfter = Date.from(now.plus(365L * 3, ChronoUnit.DAYS));
+		Date leafNotAfter = Date.from(now.plus(365L * 2, ChronoUnit.DAYS));
 
 		GeneratedCert root = generateSelfSignedCa(rootDn, rootNotBefore, rootNotAfter);
 		writePem(root.certificate, rootFile);
 
-		GeneratedCert intermediate = generateSignedCert(interDn, root, childNotBefore, childNotAfter, true);
+		GeneratedCert intermediate = generateSignedCert(interDn, root, childNotBefore, interNotAfter, true);
 		writePem(intermediate.certificate, interFile);
 
-		GeneratedCert leaf = generateSignedCert(leafDn, intermediate, childNotBefore, childNotAfter, false);
+		GeneratedCert leaf = generateSignedCert(leafDn, intermediate, childNotBefore, leafNotAfter, false);
 		writePem(leaf.certificate, leafFile);
 	}
 

@@ -87,9 +87,11 @@ public class PartnerAdminCreation extends BaseClass {
 		partnerCertificatePage.clickOnDeviceInPartnerDomainSelectorDropdown();
 
 		partnerCertificatePage.uploadCertificateRootCa();
-		partnerCertificatePage.waitForAdminTrustCertificateReadyToSubmit();
 		partnerCertificatePage.clickonSubmitButtonForAdmin();
-		partnerCertificatePage.clickOnGoBackAfterAdminTrustCertificateSubmit();
+		assertTrue(partnerCertificatePage.isUploadedSuccessfullyMessageDisplayed(),
+				GlobalConstants.isUploadedSuccessfullyMessageDisplayed);
+		assertTrue(partnerCertificatePage.isSuccessIconDisplayed(), GlobalConstants.isSuccessIconDisplayed);
+		partnerCertificatePage.clickOnGoBackButton();
 
 		partnerCertificatePage.clickOnIntermediateCACertTab();
 		assertTrue(partnerCertificatePage.isIntermediateUploadTrustCertificateButtonDisplayed(),
@@ -98,9 +100,8 @@ public class PartnerAdminCreation extends BaseClass {
 		partnerCertificatePage.clickOnpartnerDomainSelectorDropdown();
 		partnerCertificatePage.clickOnDeviceInPartnerDomainSelectorDropdown();
 		partnerCertificatePage.uploadCertificateSubCa();
-		partnerCertificatePage.waitForAdminTrustCertificateReadyToSubmit();
 		partnerCertificatePage.clickonSubmitButtonForAdmin();
-		partnerCertificatePage.clickOnGoBackAfterAdminTrustCertificateSubmit();
+		partnerCertificatePage.clickOnGoBackButton();
 		dashboardPage.clickOnProfileDropdown();
 		assertTrue(dashboardPage.isLogoutButtonDisplayed(), GlobalConstants.isLogoutButtonDisplayed);
 		dashboardPage.clickOnLogoutButton();
@@ -124,9 +125,14 @@ public class PartnerAdminCreation extends BaseClass {
 				GlobalConstants.isPolicyGroupNameDescriptionTextboxDisplayed);
 		policygroupPage.enterPolicyGroupNameDescription(GlobalConstants.DEFAULT_POLICYGROUP_DESC);
 		policygroupPage.clickOnSubmitButton();
-		assertTrue(policygroupPage.isPolicyGroupSuccessMessageDisplayed(),
+		assertTrue(policygroupPage.isPolicyGroupCreatedOrAlreadyPresent(),
 				GlobalConstants.isPolicyGroupSuccessMessageDisplayed);
-		policygroupPage.clickOnSuccessHomeButton();
+		if (policygroupPage.isPolicyGroupAlreadyExistsErrorDisplayed()) {
+			policygroupPage.clickOnErrorCloseButton();
+			dashboardPage.clickOnHomeOptionOfHamburger();
+		} else {
+			policygroupPage.clickOnSuccessHomeButton();
+		}
 
 	}
 

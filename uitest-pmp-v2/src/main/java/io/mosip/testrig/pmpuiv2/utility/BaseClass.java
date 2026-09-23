@@ -111,6 +111,11 @@ public class BaseClass {
 		LoginPage loginPage = new LoginPage(driver);
 		loginPage.selectLanguage(ConfigManager.getloginlang());
 		loginPage.login(userid, password);
+		// Only the credential-partner certificate tests retry a rejected admin sign-in.
+		// partnerAdminCreation must remain on the login page when that user does not exist yet.
+		if ("CredentialPartnerCertificateTest".equals(method.getDeclaringClass().getSimpleName())) {
+			loginPage.retryLoginIfRejected();
+		}
 	}
 
 	@AfterMethod

@@ -24,14 +24,14 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(id = "partner_certificate_upload_btn1")
 	private WebElement uploadButton;
 
-	@FindBy(id = "upload_certificate_popup_title")
+	@FindBy(xpath = "//*[text()='Upload Partner Certificate']")
 	private WebElement uploadPartnerCertificatePopUp;
+
+	@FindBy(xpath = "//*[text()='Submit']")
+	private WebElement submitButton;
 
 	@FindBy(id = "certificate_upload_submit_btn")
 	private WebElement certificateUploadSubmitButton;
-
-	@FindBy(xpath = "//button[@disabled and text()='Submit']")
-	private WebElement certificateUploadDisabledSubmitButton;
 
 	@FindBy(id = "upload_popup_selecting_file")
 	private WebElement selectingFileFetchingMsg;
@@ -39,7 +39,7 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(id = "upload_certificate_success_msg")
 	private WebElement successMessage;
 
-	@FindBy(xpath = "//p[text()='Partner certificate for Device Provider is uploaded successfully.']")
+	@FindBy(xpath = "//*[text()='Partner certificate for Device Provider is uploaded successfully.']")
 	private WebElement deviceProviderSuccessMessage;
 
 	@FindBy(xpath = "//p[contains(text(), 'Partner certificate for FTM Chip Provider is uploaded successfully.')]")
@@ -81,10 +81,10 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(xpath = "//p[contains(text(), 'Please select all fields and upload')]")
 	private WebElement ReUploadPartnerCertificateSubText;
 
-	@FindBy(xpath = "//p[text()='Originally uploaded CA signed certificate downloaded successfully.']")
+	@FindBy(xpath = "//*[text()='Originally uploaded CA signed certificate downloaded successfully.']")
 	private WebElement originalSignedCertDownloadedPopup;
 
-	@FindBy(xpath = "//p[text()='MOSIP signed certificate downloaded successfully.']")
+	@FindBy(xpath = "//*[text()='MOSIP signed certificate downloaded successfully.']")
 	private WebElement mosipSignedCertPopup;
 
 	@FindBy(xpath = "//label[text()='Partner Domain Type']")
@@ -646,6 +646,10 @@ public class PartnerCertificatePage extends BasePage {
 	}
 
 	public void clickOnSubmitButton() {
+		clickOnElement(submitButton);
+	}
+
+	public void clickOnPartnerCertificateUploadSubmitButton() {
 		clickOnElement(certificateUploadSubmitButton);
 	}
 
@@ -900,14 +904,13 @@ public class PartnerCertificatePage extends BasePage {
 	}
 
 	public boolean VerifyTheStatusWithAsendingOrder() {
-		WebElement first = driver
-				.findElement(By.xpath("//tr[@id='ftm_list_item1']//td[contains(text(), 'Approved')]"));
+		WebElement first = driver.findElement(By.xpath("//*[@id='ftm_list_item1']//*[contains(text(), 'Approved')]"));
 		return isElementDisplayed(first);
 	}
 
 	public boolean VerifyTheStatusWithDesendingOrder() {
-		WebElement first = driver.findElement(
-				By.xpath("//tr[@id='ftm_list_item1']//td[contains(text(), 'Pending For Approval')]"));
+		WebElement first = driver
+				.findElement(By.xpath("//*[@id='ftm_list_item1']//*[contains(text(), 'Pending For Approval')]"));
 		return isElementDisplayed(first);
 	}
 
@@ -1130,7 +1133,10 @@ public class PartnerCertificatePage extends BasePage {
 	}
 
 	public boolean isLastCertificateUploadDateDisplayed() {
-		return isElementDisplayed(lastUploadTimeAndDate);
+		String expectedDate = PmpTestUtil.todayDateWithoutZeroPadder;
+		String xpath = "//p[contains(., 'Last certificate was uploaded on') and contains(., '" + expectedDate + "')]";
+		WebElement uploadDate = driver.findElement(By.xpath(xpath));
+		return isElementDisplayed(uploadDate);
 	}
 
 	public boolean isReUploadCertificateWarningMessageDisplayed() {

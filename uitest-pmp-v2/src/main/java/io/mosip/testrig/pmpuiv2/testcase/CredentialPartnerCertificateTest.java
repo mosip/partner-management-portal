@@ -96,7 +96,7 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 		assertTrue(loginPage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
 		loginPage.enterUserName(GlobalConstants.CREDENTIAL_PARTNER_ID);
 		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
-		loginPage.clickOnLoginButton();
+		loginPage.clickOnLoginButtonRetryingRejection();
 
 		LogUtil.step("Step 2: Navigate to the dashboard");
 		assertTrue(dashboardPage.isWelcomeMessageDisplayed(), GlobalConstants.isWelcomeMessageDisplayed);
@@ -119,7 +119,7 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 		assertTrue(loginPage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
 		loginPage.enterUserName(GlobalConstants.CREDENTIAL_PARTNER_ID);
 		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
-		loginPage.clickOnLoginButton();
+		loginPage.clickOnLoginButtonRetryingRejection();
 
 		LogUtil.step("Navigate to Partner Certificate page from dashboard");
 		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
@@ -146,7 +146,7 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 		assertTrue(loginPage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
 		loginPage.enterUserName(GlobalConstants.CREDENTIAL_PARTNER_ID);
 		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
-		loginPage.clickOnLoginButton();
+		loginPage.clickOnLoginButtonRetryingRejection();
 
 		LogUtil.step("Navigate to Partner Certificate page from dashboard");
 		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
@@ -184,7 +184,7 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 		assertTrue(loginPage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
 		loginPage.enterUserName(GlobalConstants.CREDENTIAL_PARTNER_ID);
 		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
-		loginPage.clickOnLoginButton();
+		loginPage.clickOnLoginButtonRetryingRejection();
 
 		LogUtil.step("Navigate to Partner Certificate card and click Upload");
 		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
@@ -217,7 +217,7 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 		assertTrue(loginPage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
 		loginPage.enterUserName(GlobalConstants.CREDENTIAL_PARTNER_ID);
 		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
-		loginPage.clickOnLoginButton();
+		loginPage.clickOnLoginButtonRetryingRejection();
 
 		LogUtil.step("Navigate to Partner Certificate card and click Upload");
 		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
@@ -259,7 +259,7 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 		assertTrue(loginPage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
 		loginPage.enterUserName(GlobalConstants.CREDENTIAL_PARTNER_ID);
 		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
-		loginPage.clickOnLoginButton();
+		loginPage.clickOnLoginButtonRetryingRejection();
 
 		LogUtil.step("Navigate to Partner Certificate page and open Upload popup");
 		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
@@ -291,7 +291,7 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 		assertTrue(loginPage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
 		loginPage.enterUserName(GlobalConstants.CREDENTIAL_PARTNER_ID);
 		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
-		loginPage.clickOnLoginButton();
+		loginPage.clickOnLoginButtonRetryingRejection();
 
 		LogUtil.step("Navigate to Partner Certificate page and open Upload popup");
 		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
@@ -323,7 +323,7 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 		assertTrue(loginPage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
 		loginPage.enterUserName(GlobalConstants.CREDENTIAL_PARTNER_ID);
 		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
-		loginPage.clickOnLoginButton();
+		loginPage.clickOnLoginButtonRetryingRejection();
 
 		LogUtil.step("Navigate to Partner Certificate page and open Upload popup");
 		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
@@ -401,7 +401,7 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 		assertTrue(loginPage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
 		loginPage.enterUserName(GlobalConstants.CREDENTIAL_PARTNER_ID);
 		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
-		loginPage.clickOnLoginButton();
+		loginPage.clickOnLoginButtonRetryingRejection();
 
 		LogUtil.step("Navigate to Partner Certificate page from dashboard");
 		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
@@ -432,7 +432,7 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 		assertTrue(loginPage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
 		loginPage.enterUserName(GlobalConstants.CREDENTIAL_PARTNER_ID);
 		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
-		loginPage.clickOnLoginButton();
+		loginPage.clickOnLoginButtonRetryingRejection();
 
 		LogUtil.step("Navigate to Partner Certificate page and open Upload popup");
 		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
@@ -440,9 +440,7 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 		dashboardPage.clickOnPartnerCertificateTitle();
 		assertTrue(partnerCertificatePage.isPartnerCertificatePageDisplayed(),
 				GlobalConstants.isPartnerCertificatePageDisplayed);
-		assertTrue(partnerCertificatePage.isUploadButtonDisplayed(),
-				GlobalConstants.isUploadButtonDisplayedForFirstTimeCertificate);
-		partnerCertificatePage.clickOnUploadButton();
+		openUploadOrReUploadPopup();
 		assertTrue(partnerCertificatePage.isUploadPartnerCertificatePopUpDisplayed(),
 				GlobalConstants.isUploadPartnerCertificatePopUpDisplayed);
 
@@ -451,7 +449,7 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 		assertTrue(partnerCertificatePage.isUploadedCertificateFileNameLabelDisplayed(),
 				GlobalConstants.isUploadedCertificateNameDisplayed);
 		partnerCertificatePage.waitForPartnerCertificateReadyToSubmit();
-		partnerCertificatePage.clickOnSubmitButton();
+		partnerCertificatePage.clickOnPartnerCertificateUploadSubmitButton();
 
 		LogUtil.step("Verify certificate upload is successful");
 		assertTrue(partnerCertificatePage.isPartnerCertificateUploadSuccessful(),
@@ -472,7 +470,7 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 		assertTrue(loginPage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
 		loginPage.enterUserName(GlobalConstants.CREDENTIAL_PARTNER_ID);
 		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
-		loginPage.clickOnLoginButton();
+		loginPage.clickOnLoginButtonRetryingRejection();
 
 		LogUtil.step("Navigate to Partner Certificate page and verify Re-Upload button label");
 		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
@@ -513,7 +511,7 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 		assertTrue(loginPage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
 		loginPage.enterUserName(GlobalConstants.CREDENTIAL_PARTNER_ID);
 		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
-		loginPage.clickOnLoginButton();
+		loginPage.clickOnLoginButtonRetryingRejection();
 
 		LogUtil.step("Step 2: Navigate to the Partner Certificate card");
 		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
@@ -548,7 +546,7 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 				GlobalConstants.SAME_CERTIFICATE_FILE_NAME,
 				GlobalConstants.isSameCertificateFileSelectedForReUpload);
 		partnerCertificatePage.waitForPartnerCertificateReadyToSubmit();
-		partnerCertificatePage.clickOnSubmitButton();
+		partnerCertificatePage.clickOnPartnerCertificateUploadSubmitButton();
 
 		LogUtil.step("Verify replacement is allowed and certificate details are refreshed");
 		assertTrue(partnerCertificatePage.isPartnerCertificateUploadSuccessful(),
@@ -578,7 +576,7 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 		assertTrue(loginPage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
 		loginPage.enterUserName(GlobalConstants.CREDENTIAL_PARTNER_ID);
 		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
-		loginPage.clickOnLoginButton();
+		loginPage.clickOnLoginButtonRetryingRejection();
 
 		LogUtil.step("Navigate to Partner Certificate list view and capture Partner Type Name");
 		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
@@ -615,7 +613,7 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 		assertTrue(loginPage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
 		loginPage.enterUserName(GlobalConstants.CREDENTIAL_PARTNER_ID);
 		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
-		loginPage.clickOnLoginButton();
+		loginPage.clickOnLoginButtonRetryingRejection();
 
 		LogUtil.step("Navigate to Partner Certificate card and open Upload popup");
 		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
@@ -649,7 +647,7 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 		assertTrue(loginPage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
 		loginPage.enterUserName(GlobalConstants.CREDENTIAL_PARTNER_ID);
 		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
-		loginPage.clickOnLoginButton();
+		loginPage.clickOnLoginButtonRetryingRejection();
 
 		LogUtil.step("Navigate to Partner Certificate card and open Upload popup");
 		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
@@ -687,7 +685,7 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 		assertTrue(loginPage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
 		loginPage.enterUserName(GlobalConstants.CREDENTIAL_PARTNER_ID);
 		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
-		loginPage.clickOnLoginButton();
+		loginPage.clickOnLoginButtonRetryingRejection();
 
 		LogUtil.step("Navigate to Partner Certificate card and open Upload popup");
 		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
@@ -725,7 +723,7 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 		assertTrue(loginPage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
 		loginPage.enterUserName(GlobalConstants.CREDENTIAL_PARTNER_ID);
 		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
-		loginPage.clickOnLoginButton();
+		loginPage.clickOnLoginButtonRetryingRejection();
 
 		LogUtil.step("Navigate to Partner Certificate card and open Upload popup");
 		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
@@ -768,7 +766,7 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 		assertTrue(loginPage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
 		loginPage.enterUserName(GlobalConstants.CREDENTIAL_PARTNER_ID);
 		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
-		loginPage.clickOnLoginButton();
+		loginPage.clickOnLoginButtonRetryingRejection();
 
 		LogUtil.step("Navigate to Partner Certificate card and open Upload popup");
 		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
@@ -804,7 +802,7 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 		assertTrue(loginPage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
 		loginPage.enterUserName(GlobalConstants.CREDENTIAL_PARTNER_ID);
 		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
-		loginPage.clickOnLoginButton();
+		loginPage.clickOnLoginButtonRetryingRejection();
 
 		LogUtil.step("Navigate to Partner Certificate card and open Upload popup");
 		assertTrue(dashboardPage.isPartnerCertificateTitleDisplayed(),
@@ -847,7 +845,7 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 		assertTrue(loginPage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
 		loginPage.enterUserName(GlobalConstants.CREDENTIAL_PARTNER_ID);
 		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
-		loginPage.clickOnLoginButton();
+		loginPage.clickOnLoginButtonRetryingRejection();
 		assertTrue(dashboardPage.isWelcomeMessageDisplayed(), GlobalConstants.isWelcomeMessageDisplayed);
 
 		LogUtil.step("Navigate to Partner Certificate list view and open Upload popup");
@@ -886,7 +884,7 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 		assertTrue(loginPage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
 		loginPage.enterUserName(GlobalConstants.CREDENTIAL_PARTNER_ID);
 		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
-		loginPage.clickOnLoginButton();
+		loginPage.clickOnLoginButtonRetryingRejection();
 		assertTrue(dashboardPage.isWelcomeMessageDisplayed(), GlobalConstants.isWelcomeMessageDisplayed);
 
 		LogUtil.step("Navigate to Partner Certificate list view and capture state before Cancel");
@@ -947,7 +945,7 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 		assertTrue(loginPage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
 		loginPage.enterUserName(GlobalConstants.CREDENTIAL_PARTNER_ID);
 		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
-		loginPage.clickOnLoginButton();
+		loginPage.clickOnLoginButtonRetryingRejection();
 		assertTrue(dashboardPage.isWelcomeMessageDisplayed(), GlobalConstants.isWelcomeMessageDisplayed);
 
 		LogUtil.step("Navigate to Partner Certificate list view and open Upload popup");
@@ -987,7 +985,7 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 		assertTrue(loginPage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
 		loginPage.enterUserName(GlobalConstants.CREDENTIAL_PARTNER_ID);
 		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
-		loginPage.clickOnLoginButton();
+		loginPage.clickOnLoginButtonRetryingRejection();
 		assertTrue(dashboardPage.isWelcomeMessageDisplayed(), GlobalConstants.isWelcomeMessageDisplayed);
 
 		LogUtil.step("Navigate to Partner Certificate list view and open Upload popup");
@@ -1019,7 +1017,7 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 		assertTrue(loginPage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
 		loginPage.enterUserName(GlobalConstants.CREDENTIAL_PARTNER_ID);
 		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
-		loginPage.clickOnLoginButton();
+		loginPage.clickOnLoginButtonRetryingRejection();
 		assertTrue(dashboardPage.isWelcomeMessageDisplayed(), GlobalConstants.isWelcomeMessageDisplayed);
 
 		LogUtil.step("Navigate to Partner Certificate list view and open Upload popup");
@@ -1061,7 +1059,7 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 		assertTrue(loginPage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
 		loginPage.enterUserName(GlobalConstants.CREDENTIAL_PARTNER_ID);
 		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
-		loginPage.clickOnLoginButton();
+		loginPage.clickOnLoginButtonRetryingRejection();
 		assertTrue(dashboardPage.isWelcomeMessageDisplayed(), GlobalConstants.isWelcomeMessageDisplayed);
 
 		LogUtil.step("Navigate to Partner Certificate list view and open Upload popup");
@@ -1094,7 +1092,7 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 		assertTrue(loginPage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
 		loginPage.enterUserName(GlobalConstants.CREDENTIAL_PARTNER_ID);
 		loginPage.enterPassword(GlobalConstants.PARTNER_PASSWORD);
-		loginPage.clickOnLoginButton();
+		loginPage.clickOnLoginButtonRetryingRejection();
 		assertTrue(dashboardPage.isWelcomeMessageDisplayed(), GlobalConstants.isWelcomeMessageDisplayed);
 
 		LogUtil.step("Navigate to Partner Certificate list view and open Upload popup");
