@@ -24,7 +24,7 @@ public class PartnerAdminCreation extends BaseClass {
 	private RegisterPage registerPage;
 	private PoliciesPage policiesPage;
 
-	@Test(priority = 1, description = "Creating Partner Admin")
+	@Test(priority = 1, description = "Creates the Partner Admin.")
 	public void partnerAdminCreation() {
 		dashboardPage = new DashboardPage(driver);
 		loginPage = new LoginPage(driver);
@@ -73,7 +73,7 @@ public class PartnerAdminCreation extends BaseClass {
 
 	}
 
-	@Test(priority = 2, description = "Uploading Trust Certificate", dependsOnMethods = "partnerAdminCreation")
+	@Test(priority = 2, description = "Uploads the trust certificate.", dependsOnMethods = "partnerAdminCreation")
 	public void uploadTrustCertificate() {
 
 		dashboardPage = new DashboardPage(driver);
@@ -107,7 +107,7 @@ public class PartnerAdminCreation extends BaseClass {
 		dashboardPage.clickOnLogoutButton();
 	}
 
-	@Test(priority = 3, description = "Create Default Policy Group", dependsOnMethods = "uploadTrustCertificate")
+	@Test(priority = 3, description = "Creates the default policy group.", dependsOnMethods = "uploadTrustCertificate")
 	public void createDefaultPolicyGroup() {
 
 		dashboardPage = new DashboardPage(driver);
@@ -125,14 +125,9 @@ public class PartnerAdminCreation extends BaseClass {
 				GlobalConstants.isPolicyGroupNameDescriptionTextboxDisplayed);
 		policygroupPage.enterPolicyGroupNameDescription(GlobalConstants.DEFAULT_POLICYGROUP_DESC);
 		policygroupPage.clickOnSubmitButton();
-		assertTrue(policygroupPage.isPolicyGroupCreatedOrAlreadyPresent(),
+		assertTrue(policygroupPage.isPolicyGroupSuccessMessageDisplayed(),
 				GlobalConstants.isPolicyGroupSuccessMessageDisplayed);
-		if (policygroupPage.isPolicyGroupAlreadyExistsErrorDisplayed()) {
-			policygroupPage.clickOnErrorCloseButton();
-			dashboardPage.clickOnHomeOptionOfHamburger();
-		} else {
-			policygroupPage.clickOnSuccessHomeButton();
-		}
+		policygroupPage.clickOnSuccessHomeButton();
 
 	}
 

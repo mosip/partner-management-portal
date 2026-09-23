@@ -1,14 +1,8 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
-import java.time.Duration;
-
-import org.openqa.selenium.By;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class PolicyGroupPage extends BasePage {
 
@@ -306,24 +300,6 @@ public class PolicyGroupPage extends BasePage {
 
 	public boolean isPolicyGroupSuccessMessageDisplayed() {
 		return isElementDisplayed(titleOfSuccessMessage);
-	}
-
-	public boolean isPolicyGroupCreatedOrAlreadyPresent() {
-		By successHeader = By.id("create_policy_group_confirmation_header");
-		By alreadyExists = By.id("create_policy_group_error_msg");
-		try {
-			new WebDriverWait(driver, Duration.ofSeconds(30)).until(ExpectedConditions.or(
-					ExpectedConditions.visibilityOfElementLocated(successHeader),
-					ExpectedConditions.visibilityOfElementLocated(alreadyExists)));
-			return true;
-		} catch (TimeoutException e) {
-			takeScreenshot();
-			return false;
-		}
-	}
-
-	public boolean isPolicyGroupAlreadyExistsErrorDisplayed() {
-		return isElementDisplayedQuick(By.id("create_policy_group_error_msg"), Duration.ofSeconds(2));
 	}
 
 	public boolean isTitleOfSuccessMessageDisplayed() {
