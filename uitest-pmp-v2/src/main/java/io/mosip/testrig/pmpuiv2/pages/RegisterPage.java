@@ -82,6 +82,11 @@ public class RegisterPage extends BasePage {
 		dropdownByIndex(partnerTypeDropdown, val);
 	}
 
+	/** Selects a partner type by its Keycloak option value, e.g. CREDENTIAL_PARTNER. */
+	public void selectPartnerTypeByValue(String value) {
+		selectByValueInDropdown(partnerTypeDropdown, value);
+	}
+
 	public void selectDeviceProviderInPartnerTypeDropdown() {
 		dropdownByIndex(partnerTypeDropdown, 0);
 	}

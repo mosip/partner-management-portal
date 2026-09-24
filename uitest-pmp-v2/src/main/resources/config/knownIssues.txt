@@ -4,3 +4,7 @@
 #Method Name=bug id
 #createMultipleMispPartner=MOSIP-1234
 
+#MOSIP-44793 TC_01 (Manual Adjudication partner cannot create an API key) is not automatable:
+#the admin Authentication Services > API Key tab is read only (no Generate button), and a
+#partner user only ever sees its own partner IDs in the create form. Covered indirectly by
+#TC_02-04 in ManualAdjudicationApiKeyRemovalTest, which assert the partner never appears.
