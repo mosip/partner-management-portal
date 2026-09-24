@@ -32,7 +32,7 @@ public class LoginPage extends BasePage {
 	private WebElement LoginButton;
 
 	private static final By LOGIN_REJECTED = By
-			.xpath("//*[contains(text(),'Invalid username or password')]");
+			.xpath("//span[contains(text(),'Invalid username or password')]");
 
 	private String lastUsername;
 	private String lastPassword;
