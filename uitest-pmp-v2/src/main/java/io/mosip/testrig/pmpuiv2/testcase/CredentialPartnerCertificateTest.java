@@ -39,7 +39,7 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 		partnerCertificatePage.uploadCertificateRootCa();
 		partnerCertificatePage.waitForAdminTrustCertificateReadyToSubmit();
 		partnerCertificatePage.clickonSubmitButtonForAdmin();
-		partnerCertificatePage.clickOnGoBackAfterAdminTrustCertificateSubmit();
+		partnerCertificatePage.clickOnGoBackButton();
 
 		partnerCertificatePage.clickOnIntermediateCACertTab();
 		assertTrue(partnerCertificatePage.isIntermediateUploadTrustCertificateButtonDisplayed(),
@@ -50,7 +50,7 @@ public class CredentialPartnerCertificateTest extends BaseClass {
 		partnerCertificatePage.uploadCertificateSubCa();
 		partnerCertificatePage.waitForAdminTrustCertificateReadyToSubmit();
 		partnerCertificatePage.clickonSubmitButtonForAdmin();
-		partnerCertificatePage.clickOnGoBackAfterAdminTrustCertificateSubmit();
+		partnerCertificatePage.clickOnGoBackButton();
 
 		LogUtil.step("Register Credential Partner user");
 		logoutFromPartner();

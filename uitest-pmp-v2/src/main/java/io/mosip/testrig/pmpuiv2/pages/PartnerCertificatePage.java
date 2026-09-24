@@ -793,10 +793,6 @@ public class PartnerCertificatePage extends BasePage {
 		waitForElementClickable(SubmitButtonForAdmin);
 	}
 
-	public void clickOnAdminCertUploadCancelButton() {
-		clickOnElement(adminCertUploadCancelButton);
-	}
-
 	public void waitForPartnerCertificateReadyToSubmit() {
 		waitForElementVisible(removeCertificateButton);
 		waitForElementClickable(certificateUploadSubmitButton);
@@ -820,52 +816,6 @@ public class PartnerCertificatePage extends BasePage {
 			}
 		}
 		return false;
-	}
-
-	public void clickOnGoBackAfterAdminTrustCertificateSubmit() {
-		By confirmationGoBack = By.id("confirmation_go_back_btn");
-		By cancelBtn = By.id("upload_trust_certificate_cancel_btn");
-		By clearBtn = By.id("upload_trust_certificate_clear");
-		By errorMsg = By.id("upload_trust_certificate_error_msg");
-		By blockerProceed = By.id("block_messsage_proceed");
-
-		boolean confirmationShown = false;
-		boolean uploadErrorShown = false;
-		long deadline = System.currentTimeMillis() + Duration.ofSeconds(40).toMillis();
-		while (System.currentTimeMillis() < deadline) {
-			if (isElementDisplayedQuick(confirmationGoBack, Duration.ofMillis(500))) {
-				confirmationShown = true;
-				break;
-			}
-			if (isElementDisplayedQuick(errorMsg, Duration.ofMillis(500))) {
-				uploadErrorShown = true;
-				break;
-			}
-		}
-
-		if (confirmationShown) {
-			clickOnGoBackButton();
-			return;
-		}
-
-		io.mosip.testrig.pmpuiv2.utility.LogUtil
-				.step("Trust certificate confirmation not shown after submit; clearing and cancelling upload form");
-		if (uploadErrorShown) {
-			try {
-				io.mosip.testrig.pmpuiv2.utility.LogUtil
-						.step("Trust certificate upload error: " + driver.findElement(errorMsg).getText());
-			} catch (Exception ignored) {
-			}
-		}
-		if (isElementDisplayedQuick(clearBtn, Duration.ofSeconds(3))) {
-			click(clearBtn);
-		}
-		if (isElementDisplayedQuick(cancelBtn, Duration.ofSeconds(3))) {
-			clickOnAdminCertUploadCancelButton();
-		}
-		if (isElementDisplayedQuick(blockerProceed, Duration.ofSeconds(5))) {
-			click(blockerProceed);
-		}
 	}
 
 	public void clickOnGoBackButton() {
