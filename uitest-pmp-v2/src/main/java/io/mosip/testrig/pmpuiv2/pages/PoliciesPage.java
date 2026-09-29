@@ -3,13 +3,20 @@ package io.mosip.testrig.pmpuiv2.pages;
 import java.time.Duration;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class PoliciesPage extends BasePage {
 
 	private static final Duration REQUEST_POLICY_OUTCOME_TIMEOUT = Duration.ofSeconds(5);
+	private static final By MAP_BIOMETRIC_EXTRACTOR_OPTION = By.id("policy_list_map_biometric_extractor");
+	private static final By MAP_CREDENTIAL_TYPE_OPTION = By.id("policy_list_map_credential_type");
+	/** The menu fetches the row's mapping eligibility over HTTP when it opens. */
+	private static final Duration ACTION_ELIGIBILITY_TIMEOUT = Duration.ofSeconds(15);
+	private static final String DISABLED_OPTION_CLASS = "pointer-events-none";
 
 	@FindBy(id = "title_back_icon")
 	private WebElement policiesTitle;
@@ -751,4 +758,52 @@ public class PoliciesPage extends BasePage {
 		clickOnElement(mispPolicyTab);
 	}
 
+	// ------------------------------------------------------------------
+	// Credential Partner action menu (MOSIP-44660)
+	// ------------------------------------------------------------------
+
+	/** Opens the three dot action menu of the policy request in the given row. */
+	public void clickOnActionMenuByRow(int rowNumber) {
+		click(By.id("policy_list_view" + rowNumber));
+	}
+
+	public boolean isMapCredentialTypeOptionDisplayed() {
+		return isDisplayed(MAP_CREDENTIAL_TYPE_OPTION);
+	}
+
+	/**
+	 * The action menu greys out an option it will not act on by adding
+	 * pointer-events-none, so the class is what tells enabled from disabled here.
+	 * Opening the menu kicks off the mapping eligibility lookup and both mapping
+	 * options stay greyed out until it returns, so give the option the chance to
+	 * turn enabled before reporting it as disabled.
+	 */
+	public boolean isMapCredentialTypeOptionDisabled() {
+		return !waitUntilOptionEnabled(MAP_CREDENTIAL_TYPE_OPTION);
+	}
+
+	private boolean waitUntilOptionEnabled(By option) {
+		try {
+			new WebDriverWait(driver, ACTION_ELIGIBILITY_TIMEOUT).until(
+					d -> !d.findElement(option).getAttribute("class").contains(DISABLED_OPTION_CLASS));
+			return true;
+		} catch (TimeoutException e) {
+			return false;
+		}
+	}
+
+	public void clickOnMapBiometricExtractorOption() {
+		waitUntilOptionEnabled(MAP_BIOMETRIC_EXTRACTOR_OPTION);
+		click(MAP_BIOMETRIC_EXTRACTOR_OPTION);
+	}
+
+	public void clickOnMapCredentialTypeOption() {
+		waitUntilOptionEnabled(MAP_CREDENTIAL_TYPE_OPTION);
+		click(MAP_CREDENTIAL_TYPE_OPTION);
+	}
+
+	public boolean isPolicyRowStatusDisplayed(String policyName, String status) {
+		return isDisplayed(By.xpath("//td[normalize-space()='" + policyName + "']/parent::tr"
+				+ "[.//*[normalize-space()='" + status + "']]"));
+	}
 }
