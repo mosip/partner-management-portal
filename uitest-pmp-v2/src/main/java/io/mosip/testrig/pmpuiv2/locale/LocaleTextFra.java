@@ -62,4 +62,12 @@ public class LocaleTextFra {
 	public static final String NO_BIO_EXTRACTORS_MAPPED = "Aucune Configuration du fournisseur d’extracteur biométrique n’a été mappée à cette politique.";
 	public static final String BIO_EXTRACTOR_PROVIDER_MAPPING_SECTION = "Cartographie du fournisseur d’extracteur biométrique";
 	public static final String CREDENTIAL_TYPE_SECTION = "Type d’identifiant";
+
+	// ------------------------------------------------------------------
+	// Online Verification Partner policy flow
+	// ------------------------------------------------------------------
+	public static final String OVP_MANDATORY_MAPPING_BANNER = "Remarque: Pour les partenaires de vérification en ligne, l'association de la politique à une configuration d'extracteur biométrique et à un type d'identifiant est obligatoire. Si cette association n'est pas effectuée, la demande de politique ne peut pas être approuvée. Veuillez suivre les étapes de cette page pour compléter l'association requise";
+	public static final String ONLINE_VERIFICATION_PARTNER_TYPE = "Partenaire de vérification en ligne";
+	public static final String VIEW_POLICY_REQUEST_TITLE = "Voir les liens vers la politique des partenaires";
+	public static final String NO_ACCESS_TITLE = "Vous n'avez pas le privilège d'accéder à cette page";
 }

@@ -41,6 +41,10 @@ public class MapCredentialTypePage extends BasePage {
 	public static String MAP_CREDENTIAL_TYPE_SUCCESS_HEADER;
 	public static String MAP_CREDENTIAL_TYPE_SUCCESS_DESCRIPTION;
 
+	/** Online Verification Partners get their own banner wording and partner type label. */
+	public static String OVP_MANDATORY_MAPPING_BANNER;
+	public static String ONLINE_VERIFICATION_PARTNER_TYPE;
+
 	public static void init(String loginLanguage) {
 		copyLocaleFields(MapCredentialTypePage.class, loginLanguage);
 	}

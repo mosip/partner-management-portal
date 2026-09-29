@@ -161,6 +161,12 @@ public class TestRunner {
 					"io.mosip.testrig.pmpuiv2.testcase.CredentialPartnerMapCredentialTypeTest");
 			XmlClass credentialPartnerPolicyApprovalTest = new XmlClass(
 					"io.mosip.testrig.pmpuiv2.testcase.CredentialPartnerPolicyApprovalTest");
+			XmlClass onlineVerificationPartnerCreation = new XmlClass(
+					"io.mosip.testrig.pmpuiv2.testcase.OnlineVerificationPartnerCreation");
+			XmlClass onlineVerificationPartnerMapCredentialTypeTest = new XmlClass(
+					"io.mosip.testrig.pmpuiv2.testcase.OnlineVerificationPartnerMapCredentialTypeTest");
+			XmlClass onlineVerificationPartnerViewPolicyRequestTest = new XmlClass(
+					"io.mosip.testrig.pmpuiv2.testcase.OnlineVerificationPartnerViewPolicyRequestTest");
 			XmlClass manualAdjudicationApiKeyRemovalTest = new XmlClass(
 					"io.mosip.testrig.pmpuiv2.testcase.ManualAdjudicationApiKeyRemovalTest");
 			XmlClass sidePanelCoverageTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.SidePanelCoverageTest");
@@ -326,6 +332,22 @@ public class TestRunner {
 					addClassIfAbsent(classes, partnerAdminCreation, authPartnerCreation, policyCreationForAuthPartner,
 							partnerPolicyMappingTest, policyAdminAndPartnerCreation, credentialPartnerCreation,
 							credentialPartnerMapCredentialTypeTest, credentialPartnerPolicyApprovalTest);
+					break;
+
+				// ONLINE VERIFICATION PARTNER FLOW
+				case "OnlineVerificationPartnerCreation":
+					addClassIfAbsent(classes, partnerAdminCreation, policyAdminAndPartnerCreation,
+							onlineVerificationPartnerCreation);
+					break;
+				case "OnlineVerificationPartnerMapCredentialTypeTest":
+					addClassIfAbsent(classes, partnerAdminCreation, authPartnerCreation, policyCreationForAuthPartner,
+							partnerPolicyMappingTest, policyAdminAndPartnerCreation, onlineVerificationPartnerCreation,
+							onlineVerificationPartnerMapCredentialTypeTest);
+					break;
+				case "OnlineVerificationPartnerViewPolicyRequestTest":
+					addClassIfAbsent(classes, partnerAdminCreation, authPartnerCreation, policyCreationForAuthPartner,
+							partnerPolicyMappingTest, policyAdminAndPartnerCreation, onlineVerificationPartnerCreation,
+							onlineVerificationPartnerMapCredentialTypeTest, onlineVerificationPartnerViewPolicyRequestTest);
 					break;
 
 				// MANUAL ADJUDICATION / UI LAYOUT

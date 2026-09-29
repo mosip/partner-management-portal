@@ -62,4 +62,12 @@ public class LocaleTextAra {
 	public static final String NO_BIO_EXTRACTORS_MAPPED = "لم يتم تعيين أي تكوين لموفّر مستخرج القياسات الحيوية لهذه السياسة.";
 	public static final String BIO_EXTRACTOR_PROVIDER_MAPPING_SECTION = "ربط مزود مستخرج القياسات الحيوية";
 	public static final String CREDENTIAL_TYPE_SECTION = "نوع بيانات الاعتماد";
+
+	// ------------------------------------------------------------------
+	// Online Verification Partner policy flow
+	// ------------------------------------------------------------------
+	public static final String OVP_MANDATORY_MAPPING_BANNER = "ملاحظة: بالنسبة لشركاء التحقق عبر الإنترنت، يُعد ربط السياسة بتكوين مستخرج القياسات الحيوية ونوع بيانات الاعتماد أمرًا إلزاميًا. إذا لم يكتمل هذا الربط، فلا يمكن الموافقة على طلب السياسة. يُرجى اتباع الخطوات الواردة في هذه الصفحة لإكمال الربط المطلوب.";
+	public static final String ONLINE_VERIFICATION_PARTNER_TYPE = "شريك التحقق عبر الإنترنت";
+	public static final String VIEW_POLICY_REQUEST_TITLE = "عرض ربط سياسة الشريك";
+	public static final String NO_ACCESS_TITLE = "ليس لديك امتياز الوصول إلى هذه الصفحة";
 }

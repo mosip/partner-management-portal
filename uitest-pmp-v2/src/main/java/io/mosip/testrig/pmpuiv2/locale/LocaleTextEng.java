@@ -62,4 +62,12 @@ public class LocaleTextEng {
 	public static final String NO_BIO_EXTRACTORS_MAPPED = "No Biometric Extractor Provider Configuration has been mapped to this policy.";
 	public static final String BIO_EXTRACTOR_PROVIDER_MAPPING_SECTION = "Biometric Extractor Provider Mapping";
 	public static final String CREDENTIAL_TYPE_SECTION = "Credential Type";
+
+	// ------------------------------------------------------------------
+	// Online Verification Partner policy flow
+	// ------------------------------------------------------------------
+	public static final String OVP_MANDATORY_MAPPING_BANNER = "Note: For Online Verification Partners, mapping the policy to a Biometric Extractor Configuration and Credential Type is mandatory. If this mapping is not completed, the policy request cannot be approved. Please follow the steps on this page to complete the required mapping";
+	public static final String ONLINE_VERIFICATION_PARTNER_TYPE = "Online Verification Partner";
+	public static final String VIEW_POLICY_REQUEST_TITLE = "View Partner-Policy Linking";
+	public static final String NO_ACCESS_TITLE = "You do not have privilege to access this page";
 }

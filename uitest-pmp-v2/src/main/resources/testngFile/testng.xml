@@ -64,6 +64,10 @@
 			<class name="io.mosip.testrig.pmpuiv2.testcase.CredentialPartnerCreation" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.CredentialPartnerMapCredentialTypeTest" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.CredentialPartnerPolicyApprovalTest" />
+			<!--ONLINE VERIFICATION PARTNER FLOW-->
+			<class name="io.mosip.testrig.pmpuiv2.testcase.OnlineVerificationPartnerCreation" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.OnlineVerificationPartnerMapCredentialTypeTest" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.OnlineVerificationPartnerViewPolicyRequestTest" />
 			<!--MANUAL ADJUDICATION PARTNER FLOW-->
 			<class name="io.mosip.testrig.pmpuiv2.testcase.ManualAdjudicationApiKeyRemovalTest" />
 			<!--SIDE NAVIGATION PANEL-->

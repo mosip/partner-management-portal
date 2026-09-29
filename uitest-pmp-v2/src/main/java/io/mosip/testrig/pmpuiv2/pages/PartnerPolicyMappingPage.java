@@ -1,8 +1,12 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
+
+import java.time.Duration;
+
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
 
@@ -1213,5 +1217,94 @@ public class PartnerPolicyMappingPage extends BasePage {
 		return isDisplayed(By.xpath("//td[normalize-space()='" + partnerId + "']/parent::tr"
 				+ "[.//td[normalize-space()='" + policyName + "']]"
 				+ "[.//*[normalize-space()='" + status + "']]"));
+	}
+
+	// ------------------------------------------------------------------
+	// Online Verification Partner row actions
+	// ------------------------------------------------------------------
+
+	/**
+	 * The admin action menu of an OVP row fetches the row's mapping eligibility over
+	 * HTTP when it opens, and greys both mapping options out until it returns.
+	 */
+	private static final Duration OVP_ACTION_ELIGIBILITY_TIMEOUT = Duration.ofSeconds(15);
+	private static final String DISABLED_OPTION_CLASS = "pointer-events-none";
+
+	private String policyRequestRow(String partnerId, String policyName) {
+		return "//td[normalize-space()='" + partnerId + "']/parent::tr[.//td[normalize-space()='" + policyName
+				+ "']]";
+	}
+
+	private By ovpMapBiometricExtractorOption(String partnerId, String policyName) {
+		return By.xpath(policyRequestRow(partnerId, policyName)
+				+ "//*[starts-with(@id,'policy_requests_ovp_map_biometric_extractor_')]");
+	}
+
+	private By ovpMapCredentialTypeOption(String partnerId, String policyName) {
+		return By.xpath(policyRequestRow(partnerId, policyName)
+				+ "//*[starts-with(@id,'policy_requests_ovp_map_credential_type_')]");
+	}
+
+	/**
+	 * Every page carries a page_title, so this keys off the listing's own Request
+	 * Policy button instead - it is what proves a redirect actually landed on the
+	 * listing. The button is rendered whenever the list holds any request.
+	 */
+	public boolean isPolicyLinkingListDisplayed() {
+		return isDisplayed(By.id("request_policy_btn"));
+	}
+
+	/** Opens the three dot menu of the row matching both partner and policy. */
+	public void clickOnActionButtonByPartnerAndPolicy(String partnerId, String policyName) {
+		click(By.xpath(policyRequestRow(partnerId, policyName) + "//button[contains(@id,'partner_list_view')]"));
+	}
+
+	/** Clicks the row itself (its Partner ID cell), which opens the view page. */
+	public void clickOnPolicyRequestRow(String partnerId, String policyName) {
+		click(By.xpath(policyRequestRow(partnerId, policyName) + "/td[1]"));
+	}
+
+	/** View option of the row's action menu; the caller must have opened the menu. */
+	public void clickOnViewOptionByPartnerAndPolicy(String partnerId, String policyName) {
+		click(By.xpath(policyRequestRow(partnerId, policyName) + "//p[@id='partner_details_view_btn']"));
+	}
+
+	public boolean isOvpMapBiometricExtractorOptionDisplayed(String partnerId, String policyName) {
+		return isDisplayed(ovpMapBiometricExtractorOption(partnerId, policyName));
+	}
+
+	public boolean isOvpMapCredentialTypeOptionDisplayed(String partnerId, String policyName) {
+		return isDisplayed(ovpMapCredentialTypeOption(partnerId, policyName));
+	}
+
+	/** Disabled means it never turned clickable once the eligibility lookup settled. */
+	public boolean isOvpMapBiometricExtractorOptionDisabled(String partnerId, String policyName) {
+		return !waitUntilOvpOptionEnabled(ovpMapBiometricExtractorOption(partnerId, policyName));
+	}
+
+	public boolean isOvpMapCredentialTypeOptionDisabled(String partnerId, String policyName) {
+		return !waitUntilOvpOptionEnabled(ovpMapCredentialTypeOption(partnerId, policyName));
+	}
+
+	public void clickOnOvpMapBiometricExtractorOption(String partnerId, String policyName) {
+		By option = ovpMapBiometricExtractorOption(partnerId, policyName);
+		waitUntilOvpOptionEnabled(option);
+		click(option);
+	}
+
+	public void clickOnOvpMapCredentialTypeOption(String partnerId, String policyName) {
+		By option = ovpMapCredentialTypeOption(partnerId, policyName);
+		waitUntilOvpOptionEnabled(option);
+		click(option);
+	}
+
+	private boolean waitUntilOvpOptionEnabled(By option) {
+		try {
+			new WebDriverWait(driver, OVP_ACTION_ELIGIBILITY_TIMEOUT)
+					.until(d -> !d.findElement(option).getAttribute("class").contains(DISABLED_OPTION_CLASS));
+			return true;
+		} catch (TimeoutException e) {
+			return false;
+		}
 	}
 }
