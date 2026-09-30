@@ -1828,16 +1828,24 @@ public class ApiKeyPage extends BasePage {
 	public boolean isDeactivatedRowNotClickable(boolean isAdminView) {
 		WebElement row = isAdminView ? apiKeyItem1 : apiListItem1;
 
+		boolean clicked = false;
 		for (int attempt = 0; attempt < STALE_RETRY; attempt++) {
 			try {
 				new WebDriverWait(driver, Duration.ofSeconds(ConfigManager.getTimeout()))
 						.until(ExpectedConditions.visibilityOf(row));
 				scrollIntoView(row);
 				row.click();
+				clicked = true;
 				break;
 			} catch (StaleElementReferenceException stale) {
 				LogUtil.step("API key row went stale before the click - retrying");
 			}
+		}
+
+		// Without this the check would pass on a click that never happened.
+		if (!clicked) {
+			takeScreenshot();
+			throw new RuntimeException("API key row never became clickable after " + STALE_RETRY + " attempts");
 		}
 
 		boolean detailsOpened = isElementDisplayedQuick(By.xpath("//h1[text()='View API Key Details']"), Duration.ofSeconds(5));

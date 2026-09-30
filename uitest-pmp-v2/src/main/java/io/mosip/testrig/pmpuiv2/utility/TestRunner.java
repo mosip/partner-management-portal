@@ -300,8 +300,10 @@ public class TestRunner {
 							partnerPolicyMappingTest);
 					break;
 				case "IndividualViewApproveRejectTest":
+					// The FTM and SBI individual views are checked too, so their fixtures are needed.
 					addClassIfAbsent(classes, partnerAdminCreation, authPartnerCreation, policyCreationForAuthPartner,
-							partnerPolicyMappingTest, individualViewApproveRejectTest);
+							partnerPolicyMappingTest, devicePartnerCreation, sbiCreationTest, ftmPartnerCreation,
+							ftmDeviceTest, individualViewApproveRejectTest);
 					break;
 				case "MispPartnerTest":
 					addClassIfAbsent(classes, partnerAdminCreation, mispPartnerTest);
