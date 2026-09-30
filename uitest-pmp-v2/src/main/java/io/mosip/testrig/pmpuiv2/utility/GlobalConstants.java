@@ -1509,6 +1509,35 @@ public class GlobalConstants {
 	public static final String isMispPartnerOptionDisplayed = "Verify that MISP Partner option is displayed in the Partner Type dropdown.";
 	public static final String isPartnerTypeDropdownOptionCountCorrect = "Verify that the Partner Type dropdown displays the expected partner options, even if the total count changes dynamically.";
 	public static final String isManualAdjudicationPartnerOptionDisplayed = "Verify that Manual Adjudication Partner option is displayed in the Partner Type dropdown.";
+	public static final String ONLINE_VERIFICATION_PARTNER = "Online Verification Partner";
+	public static final String isOnlineVerificationPartnerOptionDisplayed = "Verify that Online Verification Partner option is displayed in the Partner Type dropdown.";
+	public static final String isOnlineVerificationPartnerSelectedSuccessfully = "Verify that Online Verification Partner is successfully selected from the Partner Type dropdown.";
+	public static final String isPolicyGroupMandatoryForOnlineVerificationPartner = "Verify that Policy Group is mandatory for an Online Verification Partner and Submit stays disabled when it is not selected.";
+	public static final String isAddressMandatoryForOnlineVerificationPartner = "Verify that Address is mandatory for an Online Verification Partner and Submit stays disabled when it is empty.";
+	public static final String isOrganisationNameMandatoryForOnlineVerificationPartner = "Verify that Organisation Name is mandatory for an Online Verification Partner and Submit stays disabled when it is empty.";
+	public static final String isPhoneNumberMandatoryForOnlineVerificationPartner = "Verify that Phone Number is mandatory for an Online Verification Partner and Submit stays disabled when it is empty.";
+	public static final String isCreatePartnerNavigableFromHamburger = "Verify that the Create Partner screen is opened from the hamburger menu Partners option.";
+	public static final String isEmailMandatoryForOnlineVerificationPartner = "Verify that Email is mandatory for an Online Verification Partner and Submit stays disabled when it is empty.";
+	public static final String isUsernameMandatoryForOnlineVerificationPartner = "Verify that Username is mandatory for an Online Verification Partner and Submit stays disabled when it is empty.";
+	public static final String USERNAME_MUST_START_WITH_LETTER = "Username must start with a letter";
+	public static final String USERNAME_ALLOWED_CHARACTERS_ERROR = "Username must start with a letter and can include only letters, numbers, . _ -.";
+	public static final String isUsernameMustStartWithLetterForOnlineVerificationPartner = "Verify that a username that does not start with a letter shows: Username must start with a letter.";
+	public static final String isUsernameInvalidCharacterForOnlineVerificationPartner = "Verify that a username with disallowed characters shows the invalid character message.";
+	public static final String isNotificationLanguageMandatoryForOnlineVerificationPartner = "Verify that Notification Language is mandatory for an Online Verification Partner and Submit stays disabled when it is not selected.";
+	public static final String isClearFormButtonClickable = "Verify that the Clear Form button is clickable on the Create Partner screen.";
+	public static final String isCancelWithoutDataReturnsToPartnerList = "Verify that Cancel with no entered details returns to the List of Partners screen.";
+	public static final String isListOfPartnersButtonReturnsToPartnerList = "Verify that the List of Partners breadcrumb returns to the List of Partners screen.";
+	public static final String ORG_INVALID_CHARACTER_ERROR = "Invalid character. Allowed special characters are: @ # & ( ) \\ - ' ? ! \" : ; = _";
+	public static final String isCancelAfterDataShowsConfirmation = "Verify that Cancel after entering details shows the confirmation popup.";
+	public static final String isCancelPopupProceedReturnsToPartnerList = "Verify that Proceed on the cancel confirmation popup returns to the List of Partners screen.";
+	public static final String isCancelPopupCancelKeepsCreatePartnerPage = "Verify that Cancel on the confirmation popup stays on the Create Partner screen and keeps the entered value.";
+	public static final String isCreatePartnerHomeReturnsToDashboard = "Verify that the Home breadcrumb on the Create Partner screen returns to the dashboard.";
+	public static final String isOrganizationInfoMessageCorrect = "Verify that the Organization Name info message matches the certificate organization guidance.";
+	public static final String isOrgNameMaxLengthEnforcedForOnlineVerificationPartner = "Verify that the Organization Name field does not accept more than 128 characters.";
+	public static final String isOrgInvalidCharactersRejectedForOnlineVerificationPartner = "Verify that disallowed characters in Organization Name show the invalid character message.";
+	public static final String isAddressMaxLengthEnforcedForOnlineVerificationPartner = "Verify that the Address field does not accept more than 2000 characters.";
+	public static final String isEmailMaxLengthEnforcedForOnlineVerificationPartner = "Verify that the Email field does not accept more than 254 characters.";
+	public static final String isUsernameMaxLengthEnforcedForOnlineVerificationPartner = "Verify that the Username field does not accept more than 36 characters.";
 
 	// ABIS Partner — form lifecycle and list verification
 	public static final String CANCEL_CONFIRMATION_POPUP_TEXT = "Your changes will be lost, are you sure you want to proceed?";
