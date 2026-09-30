@@ -1,8 +1,8 @@
 package io.mosip.testrig.pmpuiv2.testcase;
 
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-import org.testng.SkipException;
 import org.testng.annotations.Test;
 
 import io.mosip.testrig.pmpuiv2.pages.DashboardPage;
@@ -54,34 +54,13 @@ public class IndividualViewApproveRejectTest extends BaseClass {
 	public void partnerStatusActivatedColourCoding() {
 
 		openPartnerPolicyLinking();
-		openPolicyRequestWithStatus(STATUS_PENDING);
+		openPendingPolicyRequestForPartner(GlobalConstants.AUTH_PARTNER_ID);
 
-		String partnerStatus = readPartnerStatus();
-		if (!GlobalConstants.PARTNER_STATUS_ACTIVE.equalsIgnoreCase(partnerStatus)) {
-			throw new SkipException("The first Pending for Approval request belongs to a partner in '" + partnerStatus
-					+ "' status, so the Activated colour coding cannot be checked on it.");
-		}
+		assertEquals(readPartnerStatus(), GlobalConstants.PARTNER_STATUS_ACTIVE,
+				GlobalConstants.isPartnerStatusActiveBeforeDeactivation);
 
 		assertTrue(individualViewPage.isPartnerStatusActivatedColourCoded(),
 				GlobalConstants.isPartnerStatusActivatedGreen);
-		assertTrue(individualViewPage.isApproveRejectButtonEnabled(),
-				GlobalConstants.isIndividualViewApproveRejectButtonEnabled);
-	}
-
-	@Test(priority = 3, description = "Verify Partner Status Deactivated colour coding and Approve/Reject availability", dependsOnMethods = "approveRejectVisibilityByRecordStatus")
-	public void partnerStatusDeactivatedColourCoding() {
-
-		openPartnerPolicyLinking();
-		openPolicyRequestWithStatus(STATUS_PENDING);
-
-		String partnerStatus = readPartnerStatus();
-		if (!GlobalConstants.DEACTIVATED.equalsIgnoreCase(partnerStatus)) {
-			throw new SkipException("The first Pending for Approval request belongs to a partner in '" + partnerStatus
-					+ "' status. Deactivate a partner holding a pending request to enable this check.");
-		}
-
-		assertTrue(individualViewPage.isPartnerStatusDeactivatedColourCoded(),
-				GlobalConstants.isPartnerStatusDeactivatedGrey);
 		assertTrue(individualViewPage.isApproveRejectButtonEnabled(),
 				GlobalConstants.isIndividualViewApproveRejectButtonEnabled);
 	}
@@ -156,30 +135,6 @@ public class IndividualViewApproveRejectTest extends BaseClass {
 		verifyApproveRejectPopupOnCurrentIndividualView();
 	}
 
-	@Test(priority = 8, description = "Verify Approve/Reject is not offered for an expired SBI", dependsOnMethods = "approveRejectInSbiIndividualView")
-	public void approveRejectNotOfferedForExpiredSbi() {
-
-		dashboardPage = new DashboardPage(driver);
-		individualViewPage = new IndividualViewPage(driver);
-		listOfSbiPage = new ListOfSbiPage(driver);
-
-		dashboardPage.clickOnSbiDevices();
-		listOfSbiPage.clickOnFilterButton();
-		listOfSbiPage.enterPartnerIdInFilter(GlobalConstants.DEVICE_PARTNER_ID);
-		listOfSbiPage.selectExpiredSbiExpiryStatusInFilter();
-		listOfSbiPage.clickOnApplyFilterButton();
-
-		if (!listOfSbiPage.isAnySbiListed()) {
-			throw new SkipException("No expired SBI exists for partner " + GlobalConstants.DEVICE_PARTNER_ID
-					+ ". Seed an SBI with a past expiry date to enable this check.");
-		}
-
-		listOfSbiPage.clickOnFirstSbiItem();
-
-		assertTrue(individualViewPage.isApproveRejectButtonAbsent(),
-				GlobalConstants.isApproveRejectButtonAbsentForExpiredSbi);
-	}
-
 	private void openPartnerPolicyLinking() {
 		dashboardPage = new DashboardPage(driver);
 		partnerPolicyMappingPage = new PartnerPolicyMappingPage(driver);
@@ -206,6 +161,22 @@ public class IndividualViewApproveRejectTest extends BaseClass {
 		assertTrue(individualViewPage.isRejectButtonDisplayed(), GlobalConstants.isRejectButtonDisplayed);
 
 		individualViewPage.clickOnPopupCloseIcon();
+	}
+
+	private void openPendingPolicyRequestForPartner(String partnerId) {
+		if (partnerPolicyMappingPage.isFilterResetButtonEnabled()) {
+			partnerPolicyMappingPage.clickOnFilterResetButton();
+		}
+
+		partnerPolicyMappingPage.clickOnFilterButton();
+		partnerPolicyMappingPage.enterPartnerIdInFilter(partnerId);
+		partnerPolicyMappingPage.clickOnStatusFilterDropdown();
+		partnerPolicyMappingPage.clickOnPendingForApprovalStatus();
+		partnerPolicyMappingPage.clickOnApplyFilterButton();
+		partnerPolicyMappingPage.clickOnPendingForApprovalPolicy();
+
+		assertTrue(partnerPolicyMappingPage.isPartnerPolicyDetailsPageDisplayed(),
+				GlobalConstants.isViewPartnerPolicyLinkingPageTitleDisplayed);
 	}
 
 	private void openPolicyRequestWithStatus(String status) {

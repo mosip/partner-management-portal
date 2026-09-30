@@ -349,6 +349,10 @@ public class AddDevicePage extends BasePage {
 		return getTextFromLocator(addDeviceTypeSelectDropdown);
 	}
 
+	public boolean isDeviceTypeResetTo(String expectedText) {
+		return waitForElementText(addDeviceTypeSelectDropdown, expectedText);
+	}
+
 	public boolean isDeviceTypeDisabled() {
 		return isElementDisabled(addDeviceTypeSelectDropdown);
 	}

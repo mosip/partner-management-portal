@@ -461,7 +461,7 @@ public class AbisPartnerTest extends BaseClass {
         page.enterEmailId(GlobalConstants.ABIS_EMAIL_ID);
         page.enterUserName(GlobalConstants.ABIS_PARTNER_USER);
         page.clickOnCreatePartnerClearButton();
-        Assert.assertEquals(page.getPartnerOrganisationFieldValue(), "", GlobalConstants.isClearFormClearsAllFields);
+        Assert.assertTrue(page.isPartnerOrganisationFieldCleared(), GlobalConstants.isClearFormClearsAllFields);
         Assert.assertTrue(page.isCreatePartnerSubmitButtonDisabled(), GlobalConstants.isClearFormClearsAllFields);
 
         page.clickOnPartnerTypeDropdown();

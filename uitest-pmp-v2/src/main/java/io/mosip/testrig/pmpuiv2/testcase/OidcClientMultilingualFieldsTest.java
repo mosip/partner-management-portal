@@ -419,7 +419,7 @@ public class OidcClientMultilingualFieldsTest extends BaseClass {
 		oidcClientPage.enterRedirectUriTextBox(ConfigManager.getRedirectUri());
 
 		oidcClientPage.clickOnAddClientNameLanguageButton();
-		assertTrue(oidcClientPage.getClientNameLanguageRow1SelectedText().equalsIgnoreCase("English"),
+		assertTrue(oidcClientPage.isClientNameLanguageRow1SelectedTextEqualTo("English"),
 				GlobalConstants.isNoLanguageValidationForMultilingualText);
 		oidcClientPage.enterClientNameForLanguageRow1("Hola Mundo " + BaseClass.data);
 

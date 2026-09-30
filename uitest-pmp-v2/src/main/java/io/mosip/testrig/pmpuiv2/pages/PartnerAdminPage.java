@@ -836,12 +836,12 @@ public class PartnerAdminPage extends BasePage {
 	}
 
 	private static final By ANY_COLUMN_SORT_ICON = By
-			.xpath("//th//svg[contains(@id,'_asc_icon') or contains(@id,'_desc_icon')]");
+			.xpath("//svg[contains(@id,'_asc_icon') or contains(@id,'_desc_icon')]");
 
-	public int getSortIconCountForColumn(String columnName) {
+	public int getSortIconCountForColumn(String columnId) {
 		isElementDisplayedQuick(ANY_COLUMN_SORT_ICON, LIST_LOAD_TIMEOUT);
-		return getElementCount(By.xpath("//div[text()='" + columnName + "']/ancestor::th[1]"
-				+ "//svg[contains(@id,'_asc_icon') or contains(@id,'_desc_icon')]"));
+		return getElementCount(
+				By.xpath("//*[@id='" + columnId + "_asc_icon' or @id='" + columnId + "_desc_icon']"));
 	}
 
 	public String getEmailAddressFilterPlaceholder() {
