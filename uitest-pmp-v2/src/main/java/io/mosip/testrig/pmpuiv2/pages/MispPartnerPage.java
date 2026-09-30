@@ -246,6 +246,12 @@ public class MispPartnerPage extends BasePage {
 		clickOnElement(mispPartner);
 	}
 
+	public void clickOnPartnerTypeOption(String partnerTypeLabel) {
+		By option = By.xpath("//*[contains(@id, 'create_partner_partner_type_option') and normalize-space()='"
+				+ partnerTypeLabel + "']");
+		waitScrollAndClick(option);
+	}
+
 	public String getSelectedPartnerTypeText() {
 		return getTextFromLocator(partnerTypeDropdown);
 	}
@@ -276,6 +282,17 @@ public class MispPartnerPage extends BasePage {
 
 	public boolean isOrganizationNameInfoDisplayed() {
 		return isElementDisplayed(organizationNameInfo);
+	}
+
+	public void selectFirstActivePolicyGroup() {
+		ensurePolicyGroupDropdownOpen();
+		By firstActiveGroup = By.id("policy_group_selector_option_button_2");
+		try {
+			waitScrollAndClick(firstActiveGroup);
+		} catch (TimeoutException e) {
+			logger.warn("No active policy group option found");
+			throw new NoSuchElementException("No active policy group is available in the Policy Group dropdown", e);
+		}
 	}
 
 	public void selectPolicyGroupDropdown(String value) {
@@ -405,6 +422,10 @@ public class MispPartnerPage extends BasePage {
 		clickOnElement(createPartnerClearButton);
 	}
 
+	public boolean isCreatePartnerClearButtonEnabled() {
+		return isElementEnabled(createPartnerClearButton);
+	}
+
 	public void clickOnCreatePartnerCancelButton() {
 		clickOnElement(createPartnerCancelButton);
 	}
@@ -427,6 +448,18 @@ public class MispPartnerPage extends BasePage {
 
 	public void clickOnCancelConfirmationPopupProceedButton() {
 		clickOnElement(cancelConfirmationPopupProceedButton);
+	}
+
+	public void clickOnCancelConfirmationPopupCancelButton() {
+		clickOnElement(cancelConfirmationPopupCancelButton);
+	}
+
+	public void clickOnCreatePartnerHomeButton() {
+		clickOnElement(homeButton);
+	}
+
+	public String getOrganizationNameValidationErrorText() {
+		return getTextFromLocator(partnerOrgNameSpecialChNotAllowError);
 	}
 
 	public void clickOnCreatePartnerSubmitButton() {
