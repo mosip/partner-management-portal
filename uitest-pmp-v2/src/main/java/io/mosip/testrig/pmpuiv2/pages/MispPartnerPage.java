@@ -247,7 +247,7 @@ public class MispPartnerPage extends BasePage {
 	}
 
 	public void clickOnPartnerTypeOption(String partnerTypeLabel) {
-		By option = By.xpath("//*[contains(@id, 'create_partner_partner_type_option') and normalize-space()='"
+		By option = By.xpath("//button[contains(@id, 'create_partner_partner_type_option') and normalize-space()='"
 				+ partnerTypeLabel + "']");
 		waitScrollAndClick(option);
 	}
