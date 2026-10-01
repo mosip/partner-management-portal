@@ -1,6 +1,7 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -30,6 +31,9 @@ import org.testng.Reporter;
 import org.apache.log4j.Logger;
 
 import io.mosip.testrig.pmpuiv2.kernel.util.ConfigManager;
+import io.mosip.testrig.pmpuiv2.locale.LocaleTextAra;
+import io.mosip.testrig.pmpuiv2.locale.LocaleTextEng;
+import io.mosip.testrig.pmpuiv2.locale.LocaleTextFra;
 import io.mosip.testrig.pmpuiv2.utility.JsonUtil;
 import io.mosip.testrig.pmpuiv2.utility.LogUtil;
 import io.mosip.testrig.pmpuiv2.utility.Screenshot;
@@ -41,6 +45,20 @@ public class BasePage {
 	protected static final int STALE_RETRY = 2;
 	private static final String REDACTED_VALUE = "***";
 	protected static final Logger logger = Logger.getLogger(BasePage.class);
+
+	protected static void copyLocaleFields(Class<?> targetPageClass, String loginLanguage) {
+		Class<?> source = "fra".equalsIgnoreCase(loginLanguage) ? LocaleTextFra.class
+				: "ara".equalsIgnoreCase(loginLanguage) ? LocaleTextAra.class
+				: LocaleTextEng.class;
+		for (Field sourceField : source.getFields()) {
+			try {
+				targetPageClass.getField(sourceField.getName()).set(null, sourceField.get(null));
+			} catch (NoSuchFieldException e) {
+			} catch (IllegalAccessException e) {
+				throw new RuntimeException("Failed to copy locale field: " + sourceField.getName(), e);
+			}
+		}
+	}
 
 	public BasePage(WebDriver driver) {
 		this.driver = driver;
@@ -502,12 +520,28 @@ public class BasePage {
 
 	protected String getTextFromLocator(WebElement element) {
 		LogUtil.action("Getting text from element: ", element);
+		for (int attempt = 0; attempt < STALE_RETRY; attempt++) {
+			try {
+				waitForElementVisible(element);
+				return element.getText();
+			} catch (StaleElementReferenceException stale) {
+				LogUtil.step("Retrying getTextFromLocator due to stale element");
+			}
+		}
 		waitForElementVisible(element);
 		return element.getText();
 	}
 
 	protected String getTextFromAttribute(WebElement element, String atrr) {
 		LogUtil.action("Getting text from element for the " + atrr + " attribute: ", element);
+		for (int attempt = 0; attempt < STALE_RETRY; attempt++) {
+			try {
+				waitForElementVisible(element);
+				return element.getAttribute(atrr);
+			} catch (StaleElementReferenceException stale) {
+				LogUtil.step("Retrying getTextFromAttribute due to stale element");
+			}
+		}
 		waitForElementVisible(element);
 		return element.getAttribute(atrr);
 	}
@@ -590,6 +624,11 @@ public class BasePage {
 		return element.equals(driver.switchTo().activeElement());
 	}
 
+	public boolean isPageDirectionRtl() {
+		String dir = driver.findElement(By.tagName("body")).getAttribute("dir");
+		return "rtl".equalsIgnoreCase(dir);
+	}
+
 	protected String getComputedStyle(WebElement element, String property) {
 		LogUtil.verify("Reading computed style '" + property + "' from element: ", element);
 		return (String) ((JavascriptExecutor) driver)
@@ -661,6 +700,38 @@ public class BasePage {
 						+ "var t=document.elementFromPoint(b.left+b.width/2,b.top+b.height/2);"
 						+ "return t!==null && t!==e && !e.contains(t);",
 				element));
+	}
+
+	protected boolean isElementInRightHalfOfViewport(WebElement element) {
+		LogUtil.verify("Checking if element is in the right half of the viewport: ", element);
+		WaitUtil.waitForVisibility(driver, element);
+		return Boolean.TRUE.equals(((JavascriptExecutor) driver).executeScript(
+				"var b=arguments[0].getBoundingClientRect();" + "return (b.left+b.right)/2 >= window.innerWidth/2;",
+				element));
+	}
+
+	protected boolean areElementsRightEdgeAligned(WebElement first, WebElement second, int tolerancePx) {
+		LogUtil.verify("Checking whether two elements share the same right edge: ", first);
+		return Boolean.TRUE.equals(((JavascriptExecutor) driver).executeScript(
+				"var a=arguments[0].getBoundingClientRect();" + "var b=arguments[1].getBoundingClientRect();"
+						+ "return Math.abs(a.right - b.right) <= arguments[2];",
+				first, second, tolerancePx));
+	}
+
+	protected boolean isElementAboveOther(WebElement upper, WebElement lower) {
+		LogUtil.verify("Checking if element is positioned above another element: ", upper);
+		return Boolean.TRUE.equals(((JavascriptExecutor) driver).executeScript(
+				"var a=arguments[0].getBoundingClientRect();" + "var b=arguments[1].getBoundingClientRect();"
+						+ "return a.bottom <= b.top;",
+				upper, lower));
+	}
+
+	protected String executeScriptForString(String script) {
+		return (String) ((JavascriptExecutor) driver).executeScript(script);
+	}
+
+	protected boolean executeScriptForBoolean(String script) {
+		return Boolean.TRUE.equals(((JavascriptExecutor) driver).executeScript(script));
 	}
 
 	protected int getElementCount(By locator) {
@@ -771,16 +842,29 @@ public class BasePage {
 	}
 
 	protected String getTextFromLocator(By locator) {
-		WebElement element = driver.findElement(locator);
-		waitForElementVisible(element);
-		return element.getText();
+		LogUtil.action("Getting text from element: " + locator);
+		for (int attempt = 0; attempt < STALE_RETRY; attempt++) {
+			try {
+				WebElement element = waitAndFindElement(locator);
+				return element.getText();
+			} catch (StaleElementReferenceException stale) {
+				LogUtil.step("Retrying getTextFromLocator due to stale element");
+			}
+		}
+		return waitAndFindElement(locator).getText();
 	}
 
 	protected String getTextFromAttribute(By locator, String attr) {
-		WebElement element = driver.findElement(locator);
-		LogUtil.action("Getting text from element for the " + attr + " attribute: ", element);
-		waitForElementVisible(element);
-		return element.getAttribute(attr);
+		LogUtil.action("Getting text from element for the " + attr + " attribute: " + locator);
+		for (int attempt = 0; attempt < STALE_RETRY; attempt++) {
+			try {
+				WebElement element = waitAndFindElement(locator);
+				return element.getAttribute(attr);
+			} catch (StaleElementReferenceException stale) {
+				LogUtil.step("Retrying getTextFromAttribute due to stale element");
+			}
+		}
+		return waitAndFindElement(locator).getAttribute(attr);
 	}
 
 	protected WebElement waitAndFindElement(By locator) {
