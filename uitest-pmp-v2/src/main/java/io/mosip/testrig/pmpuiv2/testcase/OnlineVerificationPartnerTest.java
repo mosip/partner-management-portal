@@ -2,6 +2,7 @@ package io.mosip.testrig.pmpuiv2.testcase;
 
 import java.util.List;
 
+import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -127,6 +128,7 @@ public class OnlineVerificationPartnerTest extends BaseClass {
         Assert.assertTrue(mispPartnerPage.isCreatePartnerSubmitButtonDisabled(),
                 GlobalConstants.isNotificationLanguageMandatoryForOnlineVerificationPartner);
 
+        mispPartnerPage.clickOnCreatePartnerClearButton();
         mispPartnerPage.clickOnCreatePartnerCancelButton();
         Assert.assertTrue(mispPartnerPage.isListOfPartnersDisplayed(),
                 GlobalConstants.isCancelWithoutDataReturnsToPartnerList);
@@ -207,6 +209,18 @@ public class OnlineVerificationPartnerTest extends BaseClass {
     private MispPartnerPage navigateToCreatePartnerPage() {
         DashboardPage dashboardPage = new DashboardPage(driver);
         MispPartnerPage mispPartnerPage = new MispPartnerPage(driver);
+        if (!driver.findElements(By.id("create_partner_btn")).isEmpty()) {
+            mispPartnerPage.clickOnCreatePartnerButton();
+            return mispPartnerPage;
+        }
+        if (!driver.findElements(By.id("sub_title_btn")).isEmpty()) {
+            if (mispPartnerPage.isCreatePartnerClearButtonEnabled()) {
+                mispPartnerPage.clickOnCreatePartnerClearButton();
+            }
+            mispPartnerPage.clickOnListOfPartnerButton();
+            mispPartnerPage.clickOnCreatePartnerButton();
+            return mispPartnerPage;
+        }
         dashboardPage.clickOnPartners();
         mispPartnerPage.clickOnCreatePartnerButton();
         return mispPartnerPage;
