@@ -42,7 +42,7 @@ public class OnlineVerificationPartnerTest extends BaseClass {
                 GlobalConstants.isManualAdjudicationPartnerOptionDisplayed);
         Assert.assertTrue(options.contains(GlobalConstants.ONLINE_VERIFICATION_PARTNER),
                 GlobalConstants.isOnlineVerificationPartnerOptionDisplayed);
-        selectOnlineVerificationPartner(mispPartnerPage);
+        mispPartnerPage.clickOnPartnerTypeOption(GlobalConstants.ONLINE_VERIFICATION_PARTNER);
         Assert.assertEquals(mispPartnerPage.getSelectedPartnerTypeText(), GlobalConstants.ONLINE_VERIFICATION_PARTNER,
                 GlobalConstants.isOnlineVerificationPartnerSelectedSuccessfully);
     }
