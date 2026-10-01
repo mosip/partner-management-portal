@@ -289,6 +289,9 @@ public class PartnerAdminPage extends BasePage {
 	@FindBy(id = "view_partner_type_context")
 	private WebElement deviceProviderInViewPartnerPage;
 
+	@FindBy(id = "view_partner_details_partner_type_context")
+	private WebElement viewPartnerDetailsPartnerType;
+
 	@FindBy(id = "original_certificate_download_partner_cer_btn")
 	private WebElement originalCertificateDropdown;
 
@@ -1178,6 +1181,151 @@ public class PartnerAdminPage extends BasePage {
 
 	public void clickOnCertificateUploadascIcon() {
 		clickOnElement(certificateUploadStatusAscIcon);
+	}
+
+	public boolean isPartnerListLoadedByPartnerType(String partnerType) {
+		try {
+			new WebDriverWait(driver, LIST_LOAD_TIMEOUT).until(ExpectedConditions
+					.textToBePresentInElementLocated(By.xpath("//tr[@id='partner_list_item1']/td[2]"), partnerType));
+			return true;
+		} catch (TimeoutException e) {
+			return false;
+		}
+	}
+
+	public boolean isFirstRowStatus(String status) {
+		try {
+			new WebDriverWait(driver, LIST_LOAD_TIMEOUT)
+					.until(ExpectedConditions.textToBePresentInElementLocated(FIRST_ROW_STATUS_BADGE, status));
+			return true;
+		} catch (TimeoutException e) {
+			return false;
+		}
+	}
+
+	public boolean areAllVisiblePartnerTypes(String partnerType) {
+		List<String> partnerTypes = getPartnerTypeColumnValues();
+		if (partnerTypes.isEmpty()) {
+			return false;
+		}
+		for (String visibleType : partnerTypes) {
+			if (!partnerType.equals(visibleType)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public boolean areAllVisiblePartnerStatuses(String status) {
+		List<String> statuses = getStatusColumnValues();
+		if (statuses.isEmpty()) {
+			return false;
+		}
+		for (String visibleStatus : statuses) {
+			if (!status.equals(visibleStatus)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public void selectStatusFilterOption(String statusLabel) {
+		click(By.xpath("//button[starts-with(@id,'status_filter_option') and normalize-space(text())='" + statusLabel
+				+ "']"));
+	}
+
+	public String getPartnerTypeFilterButtonText() {
+		return getTextFromLocator(partnerTypeDropdown).trim();
+	}
+
+	public boolean isPartnerTypeFilterOptionDisplayed() {
+		return isElementDisplayedQuick(By.xpath("//button[starts-with(@id,'partner_type_filter_option')]"),
+				LIST_LOAD_TIMEOUT);
+	}
+
+	public boolean isPartnerTypeDropdownSearchInputDisplayed() {
+		return isElementDisplayedQuick(
+				By.xpath("//button[@id='partner_type_filter_dropdown_btn']/parent::div//input"),
+				SHORT_ABSENCE_TIMEOUT);
+	}
+
+	public String getPageTitleText() {
+		return getTextFromLocator(By.id("page_title")).trim();
+	}
+
+	public String getViewPartnerDetailsPartnerType() {
+		return getTextFromLocator(viewPartnerDetailsPartnerType).trim();
+	}
+
+	public boolean isViewPartnerEditControlDisplayed() {
+		return isElementDisplayedQuick(By.cssSelector("input, textarea, select"), SHORT_ABSENCE_TIMEOUT)
+				|| isElementDisplayedQuick(By.xpath(
+						"//button[normalize-space()='Save' or normalize-space()='Edit' or normalize-space()='Update' or normalize-space()='Delete']"),
+						SHORT_ABSENCE_TIMEOUT);
+	}
+
+	public boolean areViewPartnerValueFieldsReadOnly() {
+		By[] valueFields = { By.id("view_partner_details_partner_type_context"),
+				By.id("view_partner_details_org_name_context"), By.id("view_partner_details_first_name_context"),
+				By.id("view_partner_details_last_name_context"), By.id("view_partner_details_phone_number_context"),
+				By.id("view_partner_details_email_context"), By.id("view_partner_details_policy_group_context") };
+		try {
+			for (By valueField : valueFields) {
+				WebElement field = new WebDriverWait(driver, LIST_LOAD_TIMEOUT)
+						.until(ExpectedConditions.visibilityOfElementLocated(valueField));
+				String tag = field.getTagName();
+				if ("input".equalsIgnoreCase(tag) || "textarea".equalsIgnoreCase(tag) || "select".equalsIgnoreCase(tag)) {
+					return false;
+				}
+			}
+			return true;
+		} catch (TimeoutException e) {
+			return false;
+		}
+	}
+
+	public String getViewPartnerIdText() {
+		return getTextFromLocator(By.id("view_partner_details_partner_id")).trim();
+	}
+
+	public String getViewOrganisationName() {
+		return getTextFromLocator(By.id("view_partner_details_org_name_context")).trim();
+	}
+
+	public String getViewPolicyGroup() {
+		return getTextFromLocator(By.id("view_partner_details_policy_group_context")).trim();
+	}
+
+	public String getViewEmail() {
+		return getTextFromLocator(By.id("view_partner_details_email_context")).trim();
+	}
+
+	public String getViewFirstName() {
+		return getTextFromLocator(By.id("view_partner_details_first_name_context")).trim();
+	}
+
+	public String getViewLastName() {
+		return getTextFromLocator(By.id("view_partner_details_last_name_context")).trim();
+	}
+
+	public String getViewCertificateExpiry() {
+		return getTextFromLocator(By.id("view_expiry_date_context")).trim();
+	}
+
+	public String getViewCertificateUploadTime() {
+		return getTextFromLocator(By.id("view_certificate_upload_date_context")).trim();
+	}
+
+	public String getViewPartnerSuccessMessage() {
+		return getTextFromLocator(By.id("view_partner_details_success_msg")).trim();
+	}
+
+	public String getFirstRowOrganisationName() {
+		return getCellTextWithStaleRetry(By.xpath("//tr[@id='partner_list_item1']/td[3]"));
+	}
+
+	public String getFirstRowPolicyGroup() {
+		return getCellTextWithStaleRetry(By.xpath("//tr[@id='partner_list_item1']/td[4]"));
 	}
 
 }
