@@ -14,7 +14,7 @@ import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 public class OnlineVerificationPartnerTest extends BaseClass {
 
     @Test(priority = 1,
-          description = "Verify Create Partner title, breadcrumb, subtitle, hamburger navigation, and Online Verification Partner in the partner type dropdown.")
+          description = "Create Partner screen, breadcrumb, and Online Verification Partner type.")
     public void createPartnerScreenAndPartnerType() {
         MispPartnerPage mispPartnerPage = navigateToCreatePartnerPage();
         selectOnlineVerificationPartner(mispPartnerPage);
@@ -55,7 +55,7 @@ public class OnlineVerificationPartnerTest extends BaseClass {
     }
 
     @Test(priority = 2,
-          description = "Verify Submit stays disabled when policy group, address, organisation, phone, email, username, or notification language is missing.")
+          description = "Submit stays disabled when a mandatory field is missing.")
     public void mandatoryFieldsKeepSubmitDisabled() {
         MispPartnerPage mispPartnerPage = navigateToCreatePartnerPage();
         fillMandatoryFieldsExcept(mispPartnerPage, "policyGroup");
@@ -94,7 +94,7 @@ public class OnlineVerificationPartnerTest extends BaseClass {
     }
 
     @Test(priority = 3,
-          description = "Verify username, organisation, address, and email validation, including maximum length and the organisation info message.")
+          description = "Username, organisation, address, and email validation.")
     public void fieldValidationAndMaxLength() {
         MispPartnerPage mispPartnerPage = navigateToCreatePartnerPage();
         selectOnlineVerificationPartner(mispPartnerPage);
@@ -143,7 +143,7 @@ public class OnlineVerificationPartnerTest extends BaseClass {
     }
 
     @Test(priority = 4,
-          description = "Verify Clear Form, Cancel, the confirmation popup, Home, and List of Partners on the Create Partner screen.")
+          description = "Clear, Cancel, Home, and List of Partners.")
     public void clearCancelAndNavigation() {
         MispPartnerPage mispPartnerPage = navigateToCreatePartnerPage();
         selectOnlineVerificationPartner(mispPartnerPage);
@@ -191,7 +191,7 @@ public class OnlineVerificationPartnerTest extends BaseClass {
                 GlobalConstants.isCreatePartnerHomeReturnsToDashboard);
     }
 
-    @Test(priority = 5, description = "Verify adding existing email ID")
+    @Test(priority = 5, description = "Existing email is rejected.")
     public void existingEmailIsRejected() {
         MispPartnerPage mispPartnerPage = navigateToCreatePartnerPage();
         String sharedEmail = "ovpmail" + BaseClass.data + "@test.com";
