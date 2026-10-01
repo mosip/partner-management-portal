@@ -453,7 +453,6 @@ public class ListOfDevicesPage extends BasePage {
 		if (columnIndex < 0) {
 			return false;
 		}
-		// The partner list ids its rows device_list_device_itemN and the admin list device_list_itemN.
 		List<WebElement> cells = driver.findElements(
 				By.xpath("//tr[starts-with(@id,'device_list_device_item') or starts-with(@id,'device_list_item')]/td["
 						+ (columnIndex + 1) + "]"));
@@ -660,7 +659,6 @@ public class ListOfDevicesPage extends BasePage {
 		return !driver.findElements(By.id("no_results_found")).isEmpty();
 	}
 
-	// Scoped to this dropdown's own options: the Device Type column carries the same words.
 	public void selectDeviceTypeFilter(String deviceType) {
 		clickOnElement(deviceTypeFilter);
 		click(By.xpath("//button[starts-with(@id,'device_list_filter_device_type_option') and normalize-space()='"
@@ -668,8 +666,6 @@ public class ListOfDevicesPage extends BasePage {
 		waitForListedDevicesToMatch(GlobalConstants.DEVICE_TYPE_COLUMN_HEADER_ID, deviceType);
 	}
 
-	// Scoped to this dropdown's own options: the shared dropdown helper would click the first
-	// element carrying the text, which on this screen is a Device Type cell in the list behind it.
 	public void selectDeviceTypeFilterInAdmin(String deviceType) {
 		clickOnElement(deviceTypeFilterInAdmin);
 		click(By.xpath("//button[starts-with(@id,'device_type_filter_option') and normalize-space()='" + deviceType

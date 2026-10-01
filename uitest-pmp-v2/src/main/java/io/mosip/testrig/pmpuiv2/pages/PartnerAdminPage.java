@@ -841,7 +841,7 @@ public class PartnerAdminPage extends BasePage {
 	public int getSortIconCountForColumn(String columnId) {
 		isElementDisplayedQuick(ANY_COLUMN_SORT_ICON, LIST_LOAD_TIMEOUT);
 		return getElementCount(
-				By.xpath("//*[@id='" + columnId + "_asc_icon' or @id='" + columnId + "_desc_icon']"));
+				By.xpath("//svg[@id='" + columnId + "_asc_icon' or @id='" + columnId + "_desc_icon']"));
 	}
 
 	public String getEmailAddressFilterPlaceholder() {
