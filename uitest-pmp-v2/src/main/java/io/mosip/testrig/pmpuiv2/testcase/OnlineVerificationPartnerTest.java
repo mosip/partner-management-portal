@@ -1,4 +1,4 @@
-﻿package io.mosip.testrig.pmpuiv2.testcase;
+package io.mosip.testrig.pmpuiv2.testcase;
 
 import java.util.List;
 
@@ -72,22 +72,18 @@ public class OnlineVerificationPartnerTest extends BaseClass {
                 GlobalConstants.isCreatePartnerHomeReturnsToDashboard);
     }
 
-    @Test(priority = 4, description = "Verify Submit stays disabled without policy group, address, or organisation")
-    public void policyAddressAndOrganisationAreMandatory() {
+    @Test(priority = 4, description = "Verify Submit stays disabled when a mandatory field is empty")
+    public void mandatoryFieldsKeepSubmitDisabled() {
         assertSubmitDisabledWhenSkipped("policyGroup", GlobalConstants.isPolicyGroupMandatoryForOnlineVerificationPartner);
         assertSubmitDisabledWhenSkipped("address", GlobalConstants.isAddressMandatoryForOnlineVerificationPartner);
         assertSubmitDisabledWhenSkipped("organisation", GlobalConstants.isOrganisationNameMandatoryForOnlineVerificationPartner);
-    }
-
-    @Test(priority = 5, description = "Verify Submit stays disabled without phone, email, username, or notification language")
-    public void phoneEmailUsernameAndLanguageAreMandatory() {
         assertSubmitDisabledWhenSkipped("phone", GlobalConstants.isPhoneNumberMandatoryForOnlineVerificationPartner);
         assertSubmitDisabledWhenSkipped("email", GlobalConstants.isEmailMandatoryForOnlineVerificationPartner);
         assertSubmitDisabledWhenSkipped("username", GlobalConstants.isUsernameMandatoryForOnlineVerificationPartner);
         assertSubmitDisabledWhenSkipped("notificationLanguage", GlobalConstants.isNotificationLanguageMandatoryForOnlineVerificationPartner);
     }
 
-    @Test(priority = 6, description = "Verify username characters and maximum length")
+    @Test(priority = 5, description = "Verify username characters and maximum length")
     public void usernameValidation() {
         MispPartnerPage mispPartnerPage = navigateToCreatePartnerPage();
         selectOnlineVerificationPartner(mispPartnerPage);
@@ -118,7 +114,7 @@ public class OnlineVerificationPartnerTest extends BaseClass {
                 GlobalConstants.isUsernameMaxLengthEnforcedForOnlineVerificationPartner);
     }
 
-    @Test(priority = 7, description = "Verify organisation info, maximum length, and special characters")
+    @Test(priority = 6, description = "Verify organisation info, maximum length, and special characters")
     public void organisationValidation() {
         MispPartnerPage mispPartnerPage = navigateToCreatePartnerPage();
         mispPartnerPage.clickOnPartnerOragnizationInfoButton();
@@ -141,7 +137,7 @@ public class OnlineVerificationPartnerTest extends BaseClass {
                 GlobalConstants.isOrgInvalidCharactersRejectedForOnlineVerificationPartner);
     }
 
-    @Test(priority = 8, description = "Verify address and email maximum length")
+    @Test(priority = 7, description = "Verify address and email maximum length")
     public void addressAndEmailMaxLength() {
         MispPartnerPage mispPartnerPage = navigateToCreatePartnerPage();
         selectOnlineVerificationPartner(mispPartnerPage);
@@ -156,7 +152,7 @@ public class OnlineVerificationPartnerTest extends BaseClass {
                 GlobalConstants.isEmailMaxLengthEnforcedForOnlineVerificationPartner);
     }
 
-    @Test(priority = 9, description = "Verify Clear Form and Cancel")
+    @Test(priority = 8, description = "Verify Clear Form and Cancel")
     public void clearFormAndCancel() {
         MispPartnerPage mispPartnerPage = navigateToCreatePartnerPage();
         selectOnlineVerificationPartner(mispPartnerPage);
@@ -195,7 +191,7 @@ public class OnlineVerificationPartnerTest extends BaseClass {
                 GlobalConstants.isCancelPopupProceedReturnsToPartnerList);
     }
 
-    @Test(priority = 10, description = "Verify adding existing email ID")
+    @Test(priority = 9, description = "Verify adding existing email ID")
     public void existingEmailIsRejected() {
         MispPartnerPage mispPartnerPage = navigateToCreatePartnerPage();
         String sharedEmail = "ovpmail" + BaseClass.data + "@test.com";
