@@ -208,4 +208,17 @@ public class RegisterPage extends BasePage {
 		return isElementDisplayed(enterPhoneNumberWarningMessage);
 	}
 
+	public boolean isEmailFieldValid() {
+		return Boolean.TRUE.equals(
+				((JavascriptExecutor) driver).executeScript("return arguments[0].checkValidity();", emailTextbox));
+	}
+
+	public boolean isSubmitButtonEnabled() {
+		return isElementEnabled(submitButton);
+	}
+
+	public String getUsernameFieldValue() {
+		return getTextFromAttribute(usernameTextbox, "value");
+	}
+
 }

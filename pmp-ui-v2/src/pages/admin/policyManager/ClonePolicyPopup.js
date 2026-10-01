@@ -79,7 +79,7 @@ function ClonePolicyPopup ({policyDetails, closePopUp}) {
                     const responseData = response.data;
                     if (responseData && responseData.response) {
                         setCloneSccesss(true);
-                        setSuccessMsg(t('clonePolicyPopup.successMsg', { policyName: policyData.policyName, policyGroupName: selectedPolicyGroup?.name }));
+                        setSuccessMsg(t('clonePolicyPopup.successMsg', { policyName: policyData.policyName, policyGroupName: selectedPolicyGroup?.name, interpolation: { escapeValue: true } }));
                     } else {
                         if (responseData && responseData.errors && responseData.errors.length > 0) {
                             const errorCode = responseData.errors[0].errorCode;
