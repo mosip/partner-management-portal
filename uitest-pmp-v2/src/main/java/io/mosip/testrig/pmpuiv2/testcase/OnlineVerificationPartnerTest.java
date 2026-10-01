@@ -13,9 +13,8 @@ import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 @Test(dependsOnGroups = { "PartnerAdminCreation" }, groups = { "OnlineVerificationPartnerTest" })
 public class OnlineVerificationPartnerTest extends BaseClass {
 
-    @Test(priority = 1,
-          description = "Create Partner screen, breadcrumb, and Online Verification Partner type.")
-    public void createPartnerScreenAndPartnerType() {
+    @Test(priority = 1, description = "Create Online Verification Partner")
+    public void createOnlineVerificationPartner() {
         MispPartnerPage mispPartnerPage = navigateToCreatePartnerPage();
         selectOnlineVerificationPartner(mispPartnerPage);
         Assert.assertTrue(mispPartnerPage.isCreatePrtnerPageTitleDisplayed(), GlobalConstants.isCreatePartnerPageTitleCorrect);
@@ -41,63 +40,6 @@ public class OnlineVerificationPartnerTest extends BaseClass {
         Assert.assertTrue(options.contains(GlobalConstants.ONLINE_VERIFICATION_PARTNER),
                 GlobalConstants.isOnlineVerificationPartnerOptionDisplayed);
 
-        DashboardPage dashboardPage = new DashboardPage(driver);
-        dashboardPage.clickOnHamburgerOpen();
-        dashboardPage.clickOnPartnerOfHamburger();
-        mispPartnerPage.clickOnCreatePartnerButton();
-        selectOnlineVerificationPartner(mispPartnerPage);
-        Assert.assertTrue(mispPartnerPage.isCreatePrtnerPageTitleDisplayed(),
-                GlobalConstants.isCreatePartnerNavigableFromHamburger);
-        Assert.assertEquals(mispPartnerPage.getCreatePartnerPageTitleText(), GlobalConstants.CREATE_PARTNER_PAGE_TITLE,
-                GlobalConstants.isCreatePartnerNavigableFromHamburger);
-        Assert.assertEquals(mispPartnerPage.getSelectedPartnerTypeText(), GlobalConstants.ONLINE_VERIFICATION_PARTNER,
-                GlobalConstants.isOnlineVerificationPartnerSelectedSuccessfully);
-    }
-
-    @Test(priority = 2,
-          description = "Submit stays disabled when a mandatory field is missing.")
-    public void mandatoryFieldsKeepSubmitDisabled() {
-        MispPartnerPage mispPartnerPage = navigateToCreatePartnerPage();
-        fillMandatoryFieldsExcept(mispPartnerPage, "policyGroup");
-        Assert.assertTrue(mispPartnerPage.isCreatePartnerSubmitButtonDisabled(),
-                GlobalConstants.isPolicyGroupMandatoryForOnlineVerificationPartner);
-
-        mispPartnerPage = navigateToCreatePartnerPage();
-        fillMandatoryFieldsExcept(mispPartnerPage, "address");
-        Assert.assertTrue(mispPartnerPage.isCreatePartnerSubmitButtonDisabled(),
-                GlobalConstants.isAddressMandatoryForOnlineVerificationPartner);
-
-        mispPartnerPage = navigateToCreatePartnerPage();
-        fillMandatoryFieldsExcept(mispPartnerPage, "organisation");
-        Assert.assertTrue(mispPartnerPage.isCreatePartnerSubmitButtonDisabled(),
-                GlobalConstants.isOrganisationNameMandatoryForOnlineVerificationPartner);
-
-        mispPartnerPage = navigateToCreatePartnerPage();
-        fillMandatoryFieldsExcept(mispPartnerPage, "phone");
-        Assert.assertTrue(mispPartnerPage.isCreatePartnerSubmitButtonDisabled(),
-                GlobalConstants.isPhoneNumberMandatoryForOnlineVerificationPartner);
-
-        mispPartnerPage = navigateToCreatePartnerPage();
-        fillMandatoryFieldsExcept(mispPartnerPage, "email");
-        Assert.assertTrue(mispPartnerPage.isCreatePartnerSubmitButtonDisabled(),
-                GlobalConstants.isEmailMandatoryForOnlineVerificationPartner);
-
-        mispPartnerPage = navigateToCreatePartnerPage();
-        fillMandatoryFieldsExcept(mispPartnerPage, "username");
-        Assert.assertTrue(mispPartnerPage.isCreatePartnerSubmitButtonDisabled(),
-                GlobalConstants.isUsernameMandatoryForOnlineVerificationPartner);
-
-        mispPartnerPage = navigateToCreatePartnerPage();
-        fillMandatoryFieldsExcept(mispPartnerPage, "notificationLanguage");
-        Assert.assertTrue(mispPartnerPage.isCreatePartnerSubmitButtonDisabled(),
-                GlobalConstants.isNotificationLanguageMandatoryForOnlineVerificationPartner);
-    }
-
-    @Test(priority = 3,
-          description = "Username, organisation, address, and email validation.")
-    public void fieldValidationAndMaxLength() {
-        MispPartnerPage mispPartnerPage = navigateToCreatePartnerPage();
-        selectOnlineVerificationPartner(mispPartnerPage);
         mispPartnerPage.clickOnPartnerOragnizationInfoButton();
         Assert.assertTrue(mispPartnerPage.isOrganizationNameInfoDisplayed(), GlobalConstants.isOrganizationInfoMessageCorrect);
         Assert.assertEquals(mispPartnerPage.getOrganizationNameInfoText(), GlobalConstants.ORG_NAME_INFO_TEXT,
@@ -140,13 +82,7 @@ public class OnlineVerificationPartnerTest extends BaseClass {
         mispPartnerPage.enterEmailId("a".repeat(255));
         Assert.assertTrue(mispPartnerPage.getEmailFieldValue().length() <= GlobalConstants.EMAIL_MAX_LENGTH,
                 GlobalConstants.isEmailMaxLengthEnforcedForOnlineVerificationPartner);
-    }
 
-    @Test(priority = 4,
-          description = "Clear, Cancel, Home, and List of Partners.")
-    public void clearCancelAndNavigation() {
-        MispPartnerPage mispPartnerPage = navigateToCreatePartnerPage();
-        selectOnlineVerificationPartner(mispPartnerPage);
         Assert.assertTrue(mispPartnerPage.isCreatePartnerClearButtonEnabled(), GlobalConstants.isClearFormButtonClickable);
         mispPartnerPage.enterPartnerOrganisation(GlobalConstants.ORGANISATION_NAME);
         mispPartnerPage.enterPartnerAddress(GlobalConstants.ABIS_ADDRESS);
@@ -155,6 +91,41 @@ public class OnlineVerificationPartnerTest extends BaseClass {
         Assert.assertEquals(mispPartnerPage.getPartnerOrganisationFieldValue(), "", GlobalConstants.isClearFormClearsAllFields);
         Assert.assertEquals(mispPartnerPage.getPartnerAddressFieldValue(), "", GlobalConstants.isClearFormClearsAllFields);
         Assert.assertEquals(mispPartnerPage.getUserNameFieldValue(), "", GlobalConstants.isClearFormClearsAllFields);
+
+        mispPartnerPage = navigateToCreatePartnerPage();
+        fillMandatoryFieldsExcept(mispPartnerPage, "policyGroup");
+        Assert.assertTrue(mispPartnerPage.isCreatePartnerSubmitButtonDisabled(),
+                GlobalConstants.isPolicyGroupMandatoryForOnlineVerificationPartner);
+
+        mispPartnerPage = navigateToCreatePartnerPage();
+        fillMandatoryFieldsExcept(mispPartnerPage, "address");
+        Assert.assertTrue(mispPartnerPage.isCreatePartnerSubmitButtonDisabled(),
+                GlobalConstants.isAddressMandatoryForOnlineVerificationPartner);
+
+        mispPartnerPage = navigateToCreatePartnerPage();
+        fillMandatoryFieldsExcept(mispPartnerPage, "organisation");
+        Assert.assertTrue(mispPartnerPage.isCreatePartnerSubmitButtonDisabled(),
+                GlobalConstants.isOrganisationNameMandatoryForOnlineVerificationPartner);
+
+        mispPartnerPage = navigateToCreatePartnerPage();
+        fillMandatoryFieldsExcept(mispPartnerPage, "phone");
+        Assert.assertTrue(mispPartnerPage.isCreatePartnerSubmitButtonDisabled(),
+                GlobalConstants.isPhoneNumberMandatoryForOnlineVerificationPartner);
+
+        mispPartnerPage = navigateToCreatePartnerPage();
+        fillMandatoryFieldsExcept(mispPartnerPage, "email");
+        Assert.assertTrue(mispPartnerPage.isCreatePartnerSubmitButtonDisabled(),
+                GlobalConstants.isEmailMandatoryForOnlineVerificationPartner);
+
+        mispPartnerPage = navigateToCreatePartnerPage();
+        fillMandatoryFieldsExcept(mispPartnerPage, "username");
+        Assert.assertTrue(mispPartnerPage.isCreatePartnerSubmitButtonDisabled(),
+                GlobalConstants.isUsernameMandatoryForOnlineVerificationPartner);
+
+        mispPartnerPage = navigateToCreatePartnerPage();
+        fillMandatoryFieldsExcept(mispPartnerPage, "notificationLanguage");
+        Assert.assertTrue(mispPartnerPage.isCreatePartnerSubmitButtonDisabled(),
+                GlobalConstants.isNotificationLanguageMandatoryForOnlineVerificationPartner);
 
         mispPartnerPage.clickOnCreatePartnerCancelButton();
         Assert.assertTrue(mispPartnerPage.isListOfPartnersDisplayed(),
@@ -185,15 +156,22 @@ public class OnlineVerificationPartnerTest extends BaseClass {
                 GlobalConstants.isCancelPopupProceedReturnsToPartnerList);
 
         DashboardPage dashboardPage = new DashboardPage(driver);
-        mispPartnerPage = navigateToCreatePartnerPage();
+        dashboardPage.clickOnHamburgerOpen();
+        dashboardPage.clickOnPartnerOfHamburger();
+        mispPartnerPage.clickOnCreatePartnerButton();
+        selectOnlineVerificationPartner(mispPartnerPage);
+        Assert.assertTrue(mispPartnerPage.isCreatePrtnerPageTitleDisplayed(),
+                GlobalConstants.isCreatePartnerNavigableFromHamburger);
+        Assert.assertEquals(mispPartnerPage.getCreatePartnerPageTitleText(), GlobalConstants.CREATE_PARTNER_PAGE_TITLE,
+                GlobalConstants.isCreatePartnerNavigableFromHamburger);
+        Assert.assertEquals(mispPartnerPage.getSelectedPartnerTypeText(), GlobalConstants.ONLINE_VERIFICATION_PARTNER,
+                GlobalConstants.isOnlineVerificationPartnerSelectedSuccessfully);
+
         mispPartnerPage.clickOnCreatePartnerHomeButton();
         Assert.assertTrue(dashboardPage.isPartnersDisplayed(),
                 GlobalConstants.isCreatePartnerHomeReturnsToDashboard);
-    }
 
-    @Test(priority = 5, description = "Existing email is rejected.")
-    public void existingEmailIsRejected() {
-        MispPartnerPage mispPartnerPage = navigateToCreatePartnerPage();
+        mispPartnerPage = navigateToCreatePartnerPage();
         String sharedEmail = "ovpmail" + BaseClass.data + "@test.com";
         selectOnlineVerificationPartner(mispPartnerPage);
         mispPartnerPage.selectFirstActivePolicyGroup();
@@ -208,7 +186,6 @@ public class OnlineVerificationPartnerTest extends BaseClass {
                 GlobalConstants.isCreatePartnerSuccessMsgDisplayed);
         mispPartnerPage.clickOnSuccessMsgHomeButton();
 
-        DashboardPage dashboardPage = new DashboardPage(driver);
         dashboardPage.clickOnPartners();
         mispPartnerPage.clickOnCreatePartnerButton();
         selectOnlineVerificationPartner(mispPartnerPage);
