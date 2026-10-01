@@ -13,44 +13,6 @@ import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 @Test(dependsOnGroups = { "PartnerAdminCreation" }, groups = { "OnlineVerificationPartnerTest" })
 public class OnlineVerificationPartnerTest extends BaseClass {
 
-    private MispPartnerPage navigateToCreatePartnerPage() {
-        DashboardPage dashboardPage = new DashboardPage(driver);
-        MispPartnerPage mispPartnerPage = new MispPartnerPage(driver);
-        dashboardPage.clickOnPartners();
-        mispPartnerPage.clickOnCreatePartnerButton();
-        return mispPartnerPage;
-    }
-
-    private void selectOnlineVerificationPartner(MispPartnerPage mispPartnerPage) {
-        mispPartnerPage.clickOnPartnerTypeDropdown();
-        mispPartnerPage.clickOnPartnerTypeOption(GlobalConstants.ONLINE_VERIFICATION_PARTNER);
-    }
-
-    private void fillMandatoryFieldsExcept(MispPartnerPage mispPartnerPage, String skippedField) {
-        selectOnlineVerificationPartner(mispPartnerPage);
-        if (!"policyGroup".equals(skippedField)) {
-            mispPartnerPage.selectFirstActivePolicyGroup();
-        }
-        if (!"notificationLanguage".equals(skippedField)) {
-            mispPartnerPage.selectNotificationLanguage(GlobalConstants.ABIS_NOTIFICATION_LANGUAGE);
-        }
-        if (!"organisation".equals(skippedField)) {
-            mispPartnerPage.enterPartnerOrganisation(GlobalConstants.ORGANISATION_NAME);
-        }
-        if (!"address".equals(skippedField)) {
-            mispPartnerPage.enterPartnerAddress(GlobalConstants.ABIS_ADDRESS);
-        }
-        if (!"phone".equals(skippedField)) {
-            mispPartnerPage.enterPartnerContactNumber(GlobalConstants.ABIS_CONTACT_NUMBER);
-        }
-        if (!"email".equals(skippedField)) {
-            mispPartnerPage.enterEmailId(GlobalConstants.ABIS_EMAIL_ID);
-        }
-        if (!"username".equals(skippedField)) {
-            mispPartnerPage.enterUserName(GlobalConstants.ABIS_PARTNER_USER);
-        }
-    }
-
     @Test(priority = 6, description = "Verify User can create a partner without policy group")
     public void policyGroupIsMandatory() {
         MispPartnerPage mispPartnerPage = navigateToCreatePartnerPage();
@@ -377,5 +339,43 @@ public class OnlineVerificationPartnerTest extends BaseClass {
         Assert.assertEquals(mispPartnerPage.getEmailAlreadyRegisteredErrorText(),
                 GlobalConstants.EMAIL_ALREADY_REGISTERED_ERROR_MSG,
                 GlobalConstants.isEmailAlreadyRegisteredErrorTextCorrect);
+    }
+
+    private MispPartnerPage navigateToCreatePartnerPage() {
+        DashboardPage dashboardPage = new DashboardPage(driver);
+        MispPartnerPage mispPartnerPage = new MispPartnerPage(driver);
+        dashboardPage.clickOnPartners();
+        mispPartnerPage.clickOnCreatePartnerButton();
+        return mispPartnerPage;
+    }
+
+    private void selectOnlineVerificationPartner(MispPartnerPage mispPartnerPage) {
+        mispPartnerPage.clickOnPartnerTypeDropdown();
+        mispPartnerPage.clickOnPartnerTypeOption(GlobalConstants.ONLINE_VERIFICATION_PARTNER);
+    }
+
+    private void fillMandatoryFieldsExcept(MispPartnerPage mispPartnerPage, String skippedField) {
+        selectOnlineVerificationPartner(mispPartnerPage);
+        if (!"policyGroup".equals(skippedField)) {
+            mispPartnerPage.selectFirstActivePolicyGroup();
+        }
+        if (!"notificationLanguage".equals(skippedField)) {
+            mispPartnerPage.selectNotificationLanguage(GlobalConstants.ABIS_NOTIFICATION_LANGUAGE);
+        }
+        if (!"organisation".equals(skippedField)) {
+            mispPartnerPage.enterPartnerOrganisation(GlobalConstants.ORGANISATION_NAME);
+        }
+        if (!"address".equals(skippedField)) {
+            mispPartnerPage.enterPartnerAddress(GlobalConstants.ABIS_ADDRESS);
+        }
+        if (!"phone".equals(skippedField)) {
+            mispPartnerPage.enterPartnerContactNumber(GlobalConstants.ABIS_CONTACT_NUMBER);
+        }
+        if (!"email".equals(skippedField)) {
+            mispPartnerPage.enterEmailId(GlobalConstants.ABIS_EMAIL_ID);
+        }
+        if (!"username".equals(skippedField)) {
+            mispPartnerPage.enterUserName(GlobalConstants.ABIS_PARTNER_USER);
+        }
     }
 }
