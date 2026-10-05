@@ -101,6 +101,9 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(id = "remove_certificate_btn")
 	private WebElement removeCertificateButton;
 
+	@FindBy(xpath = "//button[@disabled and normalize-space()='Submit']")
+	private WebElement disabledPartnerCertificateSubmitButton;
+
 	@FindBy(id = "certificate_upload_cancel_btn")
 	private WebElement certificateUploadCancelButton;
 
@@ -448,6 +451,18 @@ public class PartnerCertificatePage extends BasePage {
 
 	@FindBy(id = "upload_popup_partner_domain_type_context")
 	private WebElement partnerDomainTypeContext;
+
+	@FindBy(id = "upload_trust_certificate_error_msg")
+	private WebElement trustCertificateErrorMessage;
+
+	@FindBy(id = "upload_trust_certificate_header")
+	private WebElement uploadRootOfTrustHeading;
+
+	@FindBy(id = "upload_trust_section_description")
+	private WebElement uploadTrustSectionDescription;
+
+	@FindBy(id = "upload_certificate_warning_message")
+	private WebElement reuploadWarningMessage;
 
 	public PartnerCertificatePage(WebDriver driver) {
 		super(driver);
@@ -1373,6 +1388,95 @@ public class PartnerCertificatePage extends BasePage {
 
 	public boolean isCertificateFormatTextNotEditable() {
 		return isElementNotEditable(partnerCertificateFormatText);
+	}
+
+	public void uploadGeneratedCertificate(String fileName) {
+		uploadImage(uploadFile, CertificateGenerationUtil.getCertFilePath(fileName));
+	}
+
+	public void uploadResourceCertificate(String fileName) {
+		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", fileName));
+	}
+
+	public String getUploadCertificatePopupTitle() {
+		return getTextFromLocator(mispPartnerCertificatePopup).trim();
+	}
+
+	public String getUploadCertificatePopupMessage() {
+		return getTextFromLocator(By.id("upload_certificate_popup_msg")).trim();
+	}
+
+	public String getUploadCertificateErrorText() {
+		return getTextFromLocator(InvalidFormatErrorPopup).trim();
+	}
+
+	public String getTrustCertificateErrorText() {
+		return getTextFromLocator(trustCertificateErrorMessage).trim();
+	}
+
+	public String getUploadRootOfTrustHeadingText() {
+		return getTextFromLocator(uploadRootOfTrustHeading).trim();
+	}
+
+	public String getUploadTrustSectionDescriptionText() {
+		return getTextFromLocator(uploadTrustSectionDescription).trim();
+	}
+
+	public String getTrustCertificateFormatText() {
+		return getTextFromLocator(certificateFormatText).trim();
+	}
+
+	public String getPartnerDomainOptionText(int optionNumber) {
+		return getTextFromLocator(By.id("partnerDomain_selector_dropdown_option" + optionNumber)).trim();
+	}
+
+	public boolean isUploadPopupPartnerTypeDisabled() {
+		return isElementDisabled(partnerTypeContext);
+	}
+
+	public boolean isUploadPopupPartnerDomainDisabled() {
+		return isElementDisabled(partnerDomainTypeContext);
+	}
+
+	public String getCertificateUploadSuccessText() {
+		return getTextFromLocator(certificateUploadSuccessMessage).trim();
+	}
+
+	public String getCorrespondingPartnerIdText() {
+		return getTextFromLocator(correspondingPartnerId).trim();
+	}
+
+	public String getReuploadWarningText() {
+		return getTextFromLocator(reuploadWarningMessage).trim();
+	}
+
+	public String getUploadedSuccessfullyMessageText() {
+		return getTextFromLocator(uploadedSuccessfullyMessage).trim();
+	}
+
+	public String getPartnerCertificateFormatText() {
+		return getTextFromLocator(partnerCertificateFormatText).trim();
+	}
+
+	public String getFetchCertificateSuccessText() {
+		return getTextFromLocator(By.id("fetch_certificate_success_msg")).trim();
+	}
+
+	public boolean isFetchCertificateSuccessGreen() {
+		WebElement message = driver.findElement(By.id("fetch_certificate_success_msg"));
+		return message.findElement(By.xpath("./ancestor::div[contains(@class,'fruit-salad')]")).isDisplayed();
+	}
+
+	public String getUploadedPopupFileName() {
+		return getTextFromLocator(By.id("upload_popup_file_name")).trim();
+	}
+
+	public String getLastCertificateUploadDateText() {
+		return getTextFromLocator(lastUploadTimeAndDate).trim();
+	}
+
+	public boolean isPartnerCertificateSubmitDisabled() {
+		return isElementDisplayed(disabledPartnerCertificateSubmitButton);
 	}
 
 }

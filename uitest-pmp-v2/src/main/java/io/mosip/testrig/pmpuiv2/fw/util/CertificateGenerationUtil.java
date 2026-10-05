@@ -28,6 +28,7 @@ import org.bouncycastle.asn1.x509.KeyUsage;
 import org.bouncycastle.cert.CertIOException;
 import org.bouncycastle.cert.X509CertificateHolder;
 import org.bouncycastle.cert.jcajce.JcaX509CertificateConverter;
+import org.bouncycastle.cert.jcajce.JcaX509v1CertificateBuilder;
 import org.bouncycastle.cert.jcajce.JcaX509v3CertificateBuilder;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.operator.ContentSigner;
@@ -123,6 +124,40 @@ public class CertificateGenerationUtil {
 		generateStandaloneSelfSigned(expiredDn, Date.from(now.minus(730, ChronoUnit.DAYS)),
 				Date.from(now.minus(365, ChronoUnit.DAYS)), "expiredRoot.cer");
 
+		// Online Verification Partner uses the AUTH domain. Organization must match AABBCC.
+		Date childNotBefore = Date.from(now.minus(CLOCK_SKEW_ALLOWANCE_MINUTES, ChronoUnit.MINUTES));
+		Date childNotAfter = Date.from(now.plus(365L * 3, ChronoUnit.DAYS));
+		GeneratedCert ovpIntermediate = generateChain(rootName("OVPCA"), intermediateName("OVPSUB"),
+				leafWithOrg("AABBCC", "OVPCLIENT"), "OvpRootCA.cer", "OvpIntermediateCA.cer", "OvpClient.cer", now);
+		writePem(generateSignedCert(leafWithOrg("AABBCC", "OVPCLIENT02"), ovpIntermediate, childNotBefore, childNotAfter,
+				false).certificate, "OvpClient02.cer");
+		writePem(generateSignedCert(leafWithOrg("AABBCC", "OVPCLIENT03"), ovpIntermediate, childNotBefore, childNotAfter,
+				false).certificate, "OvpClient03.cer");
+		writePem(generateSignedCert(leafWithOrg("AABBCC", "OVPCLIENT06"), ovpIntermediate, childNotBefore, childNotAfter,
+				false).certificate, "OvpClient06.cer");
+		writePem(generateSignedCert(leafWithOrg("AABBCC", "OVPREPLACE"), ovpIntermediate, childNotBefore, childNotAfter,
+				false).certificate, "OvpClientReplacement.cer");
+		writePem(generateSignedCert(leafWithOrg("AABBCC", "OVPVIEW"), ovpIntermediate, childNotBefore, childNotAfter,
+				false).certificate, "OvpClientView.cer");
+		writePem(generateSignedCert(leafWithOrg("AABBCC", "OVPREUP"), ovpIntermediate, childNotBefore, childNotAfter,
+				false).certificate, "OvpClientReupload.cer");
+		writePem(generateSignedCert(leafWithOrg("AABBCC", "OVPREUP2"), ovpIntermediate, childNotBefore, childNotAfter,
+				false).certificate, "OvpClientReuploadNext.cer");
+		writePem(generateSignedCert(leafWithOrg("AABBCC", "OVPFUTURE"), ovpIntermediate,
+				Date.from(now.plus(2, ChronoUnit.DAYS)), Date.from(now.plus(365L * 2, ChronoUnit.DAYS)), false).certificate,
+				"OvpFuture.cer");
+		writeV1Signed(leafWithOrg("AABBCC", "OVPV1"), ovpIntermediate, childNotBefore, childNotAfter, "OvpV1.cer");
+		generateStandaloneSelfSigned(leafWithOrg("AABBCC", "OVPSELF"), childNotBefore, childNotAfter, "OvpSelfSigned.cer");
+		generateStandaloneSelfSigned(rootName("LONG"), childNotBefore, Date.from(now.plus(365L * 3, ChronoUnit.DAYS)),
+				"longValidityRoot.cer");
+
+		generateChain(rootName("OVPCA2"), intermediateName("OVPSUB2"), leafWithOrg("AABBCC", "OVPTC08"),
+				"OvpTc08RootCA.cer", "OvpTc08IntermediateCA.cer", "OvpTc08Client.cer", now);
+
+		// Valid now, but expires in less than one year.
+		generateStandaloneSelfSigned(rootName("SHORT"), childNotBefore, Date.from(now.plus(180, ChronoUnit.DAYS)),
+				"shortValidityRoot.cer");
+
 		logger.info("Generated fresh certificate chains for all PMP UI partner scenarios");
 	}
 
@@ -140,7 +175,13 @@ public class CertificateGenerationUtil {
 		return rootName(label);
 	}
 
-	private static void generateChain(X500Name rootDn, X500Name interDn, X500Name leafDn, String rootFile,
+	private static X500Name leafWithOrg(String organization, String commonName) {
+		return new X500NameBuilder(BCStyle.INSTANCE).addRDN(BCStyle.C, "aa").addRDN(BCStyle.ST, "aa")
+				.addRDN(BCStyle.L, "aa").addRDN(BCStyle.O, organization).addRDN(BCStyle.OU, organization)
+				.addRDN(BCStyle.CN, commonName).build();
+	}
+
+	private static GeneratedCert generateChain(X500Name rootDn, X500Name interDn, X500Name leafDn, String rootFile,
 			String interFile, String leafFile, Instant now) {
 		Date rootNotBefore = Date.from(now.minus(CLOCK_SKEW_ALLOWANCE_MINUTES, ChronoUnit.MINUTES));
 		Date rootNotAfter = Date.from(now.plus(365L * 5, ChronoUnit.DAYS));
@@ -155,6 +196,7 @@ public class CertificateGenerationUtil {
 
 		GeneratedCert leaf = generateSignedCert(leafDn, intermediate, childNotBefore, childNotAfter, false);
 		writePem(leaf.certificate, leafFile);
+		return intermediate;
 	}
 
 	private static void generateRootAndIntermediateOnly(X500Name rootDn, X500Name interDn, String rootFile,
@@ -223,6 +265,23 @@ public class CertificateGenerationUtil {
 			return new JcaX509CertificateConverter().setProvider(BC_PROVIDER).getCertificate(holder);
 		} catch (OperatorCreationException | CertificateException | CertIOException e) {
 			throw new IllegalStateException("Failed to generate certificate for subject " + subject, e);
+		}
+	}
+
+	private static void writeV1Signed(X500Name subjectDn, GeneratedCert issuer, Date notBefore, Date notAfter,
+			String fileName) {
+		KeyPair keyPair = generateRsaKeyPair();
+		try {
+			BigInteger serial = new BigInteger(64, new SecureRandom());
+			JcaX509v1CertificateBuilder builder = new JcaX509v1CertificateBuilder(issuer.subjectName, serial, notBefore,
+					notAfter, subjectDn, keyPair.getPublic());
+			ContentSigner signer = new JcaContentSignerBuilder(SIGNATURE_ALGORITHM).setProvider(BC_PROVIDER)
+					.build(issuer.keyPair.getPrivate());
+			X509Certificate certificate = new JcaX509CertificateConverter().setProvider(BC_PROVIDER)
+					.getCertificate(builder.build(signer));
+			writePem(certificate, fileName);
+		} catch (OperatorCreationException | CertificateException e) {
+			throw new IllegalStateException("Failed to generate version 1 certificate for subject " + subjectDn, e);
 		}
 	}
 

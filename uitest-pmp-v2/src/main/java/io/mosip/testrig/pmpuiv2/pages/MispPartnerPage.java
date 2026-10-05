@@ -377,6 +377,10 @@ public class MispPartnerPage extends BasePage {
 		return isElementDisplayed(uploadPartnerCertificateButton);
 	}
 
+	public String getUploadPartnerCertificateButtonText() {
+		return getTextFromLocator(uploadPartnerCertificateButton).trim();
+	}
+
 	public void clickOnUploadPartnerCertificateButton() {
 		clickOnElement(uploadPartnerCertificateButton);
 	}
