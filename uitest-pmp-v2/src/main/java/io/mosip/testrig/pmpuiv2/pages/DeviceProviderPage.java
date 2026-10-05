@@ -173,6 +173,14 @@ public class DeviceProviderPage extends BasePage {
 		return getTextFromLocator(partnerType);
 	}
 
+	public boolean isPartnerIdResetTo(String expectedText) {
+		return waitForElementText(addSbiPartnerId, expectedText);
+	}
+
+	public boolean isPartnerTypeResetTo(String expectedText) {
+		return waitForElementText(partnerType, expectedText);
+	}
+
 	public String getSbiVersion() {
 		return getTextFromAttribute(sbiVersion, GlobalConstants.PLACEHOLDER);
 	}
@@ -392,13 +400,13 @@ public class DeviceProviderPage extends BasePage {
 	}
 
 	public void enterDateManuallyInCreatedDate(String yearDateValue) {
-		createdDate.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+		selectAllText(createdDate);
 		createdDate.sendKeys(Keys.BACK_SPACE);
 		enter(createdDate, yearDateValue);
 	}
 
 	public void enterDateManuallyInExpiryDate(String yearDateValue) {
-		expiryDate.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+		selectAllText(expiryDate);
 		expiryDate.sendKeys(Keys.BACK_SPACE);
 		enter(expiryDate, yearDateValue);
 	}

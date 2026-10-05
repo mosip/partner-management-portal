@@ -592,11 +592,39 @@ public class BasePage {
 		return alertText;
 	}
 
+	// Select-all is Command+A on macOS and Control+A elsewhere.
+	protected static final Keys SELECT_ALL_MODIFIER = System.getProperty("os.name").toLowerCase().contains("mac")
+			? Keys.COMMAND
+			: Keys.CONTROL;
+
+	protected void selectAllText(WebElement element) {
+		element.sendKeys(Keys.chord(SELECT_ALL_MODIFIER, "a"));
+	}
+
 	protected void clearTextBox(WebElement element) {
 		WaitUtil.waitForVisibility(driver, element);
 		element.click();
-		element.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+		selectAllText(element);
 		element.sendKeys(Keys.DELETE);
+	}
+
+	protected boolean waitForElementText(WebElement element, String expectedText) {
+		try {
+			return new WebDriverWait(driver, Duration.ofSeconds(ConfigManager.getTimeout()))
+					.until(driver -> expectedText.equalsIgnoreCase(element.getText().trim()));
+		} catch (TimeoutException e) {
+			LogUtil.step("Element text did not settle to: " + expectedText);
+			return false;
+		}
+	}
+
+	protected boolean waitForFieldValue(WebElement element, String expectedValue) {
+		try {
+			return new WebDriverWait(driver, Duration.ofSeconds(ConfigManager.getTimeout()))
+					.until(ExpectedConditions.attributeToBe(element, "value", expectedValue));
+		} catch (TimeoutException e) {
+			return false;
+		}
 	}
 
 	private void focus(WebElement element) {

@@ -14,6 +14,7 @@ import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
@@ -447,6 +448,29 @@ public class ListOfDevicesPage extends BasePage {
 		return getTextFromLocator(listOfDevicesText);
 	}
 
+	public boolean areAllListedDevicesMatching(String columnHeaderId, String expectedValue) {
+		int columnIndex = getColumnIndex(columnHeaderId);
+		if (columnIndex < 0) {
+			return false;
+		}
+		List<WebElement> cells = driver.findElements(
+				By.xpath("//tr[starts-with(@id,'device_list_device_item') or starts-with(@id,'device_list_item')]/td["
+						+ (columnIndex + 1) + "]"));
+		if (cells.isEmpty()) {
+			LogUtil.step("No device rows listed for column " + columnHeaderId + " = " + expectedValue);
+			return false;
+		}
+		for (WebElement cell : cells) {
+			String actualValue = cell.getText().trim();
+			if (!expectedValue.equalsIgnoreCase(actualValue)) {
+				LogUtil.step("Device row shows " + columnHeaderId + " = '" + actualValue + "', expected '"
+						+ expectedValue + "'");
+				return false;
+			}
+		}
+		return true;
+	}
+
 	public boolean isDeviceDisplayed(String deviceType, String deviceSubType, String make, String model) {
 		try {
 			By addedDevice = By.xpath("//td[text()='" + deviceType + "']/..//td[text()='" + deviceSubType
@@ -619,22 +643,33 @@ public class ListOfDevicesPage extends BasePage {
 		WebElement statusOption = driver.findElement(
 				By.xpath("//button[contains(@id, 'device_list_filter_status_option') and text()='" + status + "']"));
 		clickOnElement(statusOption);
+		waitForListedDevicesToMatch(GlobalConstants.STATUS_COLUMN_HEADER_ID, status);
+	}
+
+	public void waitForListedDevicesToMatch(String columnHeaderId, String expectedValue) {
+		try {
+			new WebDriverWait(driver, Duration.ofSeconds(15)).until(driver -> areAllListedDevicesMatching(
+					columnHeaderId, expectedValue) || isNoResultsFoundDisplayedQuick());
+		} catch (TimeoutException e) {
+			LogUtil.step("Device list did not settle on " + columnHeaderId + " = " + expectedValue);
+		}
+	}
+
+	private boolean isNoResultsFoundDisplayedQuick() {
+		return !driver.findElements(By.id("no_results_found")).isEmpty();
 	}
 
 	public void selectDeviceTypeFilter(String deviceType) {
-		try {
-			dropdown(deviceTypeFilter, deviceType);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		clickOnElement(deviceTypeFilter);
+		click(By.xpath("//button[starts-with(@id,'device_list_filter_device_type_option') and normalize-space()='"
+				+ deviceType + "']"));
+		waitForListedDevicesToMatch(GlobalConstants.DEVICE_TYPE_COLUMN_HEADER_ID, deviceType);
 	}
 
 	public void selectDeviceTypeFilterInAdmin(String deviceType) {
-		try {
-			dropdown(deviceTypeFilterInAdmin, deviceType);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		clickOnElement(deviceTypeFilterInAdmin);
+		click(By.xpath("//button[starts-with(@id,'device_type_filter_option') and normalize-space()='" + deviceType
+				+ "']"));
 	}
 
 	public void clickOnDeactivateSubmit() {

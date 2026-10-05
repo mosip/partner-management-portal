@@ -1817,8 +1817,8 @@ public class GlobalConstants {
 	public static final String isPartnerIdColumnSortedAscending = "Verify the partner list is sorted in ascending order of Partner ID";
 	public static final String isPartnerIdColumnSortedDescending = "Verify the partner list is sorted in descending order of Partner ID";
 	public static final String AUTHENTICATION_PARTNER = "Authentication Partner";
-	public static final String EMAIL_ADDRESS_COLUMN = "Email Address";
-	public static final String PARTNER_ID_COLUMN = "Partner ID";
+	public static final String EMAIL_ADDRESS_COLUMN = "emailAddress";
+	public static final String PARTNER_ID_COLUMN = "partnerId";
 	public static final String EMAIL_ADDRESS_FILTER_PLACEHOLDER = "Search Full Email Address";
 	public static final String EMAIL_WITH_DISALLOWED_SPECIAL_CHARACTERS = "#@$$$%%";
 	public static final String NON_EXISTING_EMAIL = "nonexsit@gmail.com";
@@ -2025,5 +2025,10 @@ public class GlobalConstants {
 	public static final String isMinimalEmailRegistrationSuccessful = "Verify self-registration succeeds with a minimal-length email ID";
 	public static final String MISP_MINIMAL_USERNAME = "HM";
 	public static final String isMinimalUsernameRegistrationSuccessful = "Verify self-registration succeeds with a minimal-length username";
+
+	public static final String DEVICE_TYPE_COLUMN_HEADER_ID = "devicesList.deviceType_header";
+	public static final String STATUS_COLUMN_HEADER_ID = "devicesList.status_header";
+	public static final String isDeviceTypeFilterReturningOnlyMatchingDevices = "Verify the Device Type filter lists only devices of the selected type";
+	public static final String isStatusFilterReturningOnlyMatchingDevices = "Verify the Status filter lists only devices in the selected status";
 
 }

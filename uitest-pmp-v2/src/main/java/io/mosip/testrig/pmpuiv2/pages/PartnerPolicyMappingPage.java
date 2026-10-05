@@ -508,6 +508,10 @@ public class PartnerPolicyMappingPage extends BasePage {
 		clickOnElement(confirmationCustomButton);
 	}
 
+	public void enterPartnerIdInFilter(String value) {
+		enter(partnerIdFilter, value);
+	}
+
 	public void enterPendingPolicyNameInFilter(String value) {
 		enter(policyNameFilter, value);
 	}

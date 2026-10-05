@@ -481,6 +481,10 @@ public class MispPartnerPage extends BasePage {
 		return getTextFromAttribute(partnerOrganisationNameTextBox, "value");
 	}
 
+	public boolean isPartnerOrganisationFieldCleared() {
+		return waitForFieldValue(partnerOrganisationNameTextBox, "");
+	}
+
 	public String getFirstPartnerIdText() {
 		return waitAndFindElement(By.xpath("//tr[@id='partner_list_item1']/td[1]")).getText().trim();
 	}

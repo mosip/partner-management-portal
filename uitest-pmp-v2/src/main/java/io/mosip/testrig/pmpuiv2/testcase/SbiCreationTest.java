@@ -112,8 +112,10 @@ public class SbiCreationTest extends BaseClass {
 				GlobalConstants.isFutureDateErrorMessageDisplayed);
 		deviceProviderPage.clickOnClearForm();
 
-		assertEquals(deviceProviderPage.getPartnerId(), GlobalConstants.INITIAL_PARTNER_ID);
-		assertEquals(deviceProviderPage.getPartnerType(), GlobalConstants.INITIAL_PARTNER_TYPE);
+		assertTrue(deviceProviderPage.isPartnerIdResetTo(GlobalConstants.INITIAL_PARTNER_ID),
+				GlobalConstants.INITIAL_PARTNER_ID);
+		assertTrue(deviceProviderPage.isPartnerTypeResetTo(GlobalConstants.INITIAL_PARTNER_TYPE),
+				GlobalConstants.INITIAL_PARTNER_TYPE);
 
 		deviceProviderPage.clickOnCancel();
 

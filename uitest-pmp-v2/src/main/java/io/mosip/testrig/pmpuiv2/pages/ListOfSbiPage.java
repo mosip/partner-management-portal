@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -14,6 +15,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
 import io.mosip.testrig.pmpuiv2.kernel.util.ConfigManager;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
+import io.mosip.testrig.pmpuiv2.utility.LogUtil;
 
 public class ListOfSbiPage extends BasePage {
 
@@ -871,12 +873,6 @@ public class ListOfSbiPage extends BasePage {
 		click(By.id("sbi_expiry_status_filter_option1"));
 	}
 
-	public boolean isAnySbiListed() {
-		return isElementDisplayedQuick(By.id("sbi_list_item1"), Duration.ofSeconds(10));
-	}
 
-	public void clickOnFirstSbiItem() {
-		clickOnElement(sbiListItem1);
-	}
 
 }

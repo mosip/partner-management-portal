@@ -122,6 +122,8 @@ public class TestRunner {
 			XmlClass certificateTrustStoreTest = new XmlClass(
 					"io.mosip.testrig.pmpuiv2.testcase.CertificateTrustStoreTest");
 			XmlClass apiKeyAuthPartnerTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.ApiKeyAuthPartnerTest");
+			XmlClass apiKeyExpirationDateTest = new XmlClass(
+					"io.mosip.testrig.pmpuiv2.testcase.ApiKeyExpirationDateTest");
 			XmlClass datasharePolicyTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.DatasharePolicyTest");
 			XmlClass sbiDeviceProviderTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.SbiDeviceProviderTest");
 			XmlClass authPartnerWithoutCertificateTest = new XmlClass(
@@ -149,6 +151,8 @@ public class TestRunner {
 			XmlClass deactivatedFtmProviderTest = new XmlClass(
 					"io.mosip.testrig.pmpuiv2.testcase.DeactivatedFtmProviderTest");
 			XmlClass authPolicyTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.AuthPolicyTest");
+			XmlClass individualViewApproveRejectTest = new XmlClass(
+					"io.mosip.testrig.pmpuiv2.testcase.IndividualViewApproveRejectTest");
 			XmlClass partnerPolicyMappingTest = new XmlClass(
 					"io.mosip.testrig.pmpuiv2.testcase.PartnerPolicyMappingTest");
 			XmlClass mispPartnerTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.MispPartnerTest");
@@ -222,6 +226,10 @@ public class TestRunner {
 					addClassIfAbsent(classes, partnerAdminCreation, authPartnerCreation, policyCreationForAuthPartner,
 							apiKeyAuthPartnerTest);
 					break;
+				case "ApiKeyExpirationDateTest":
+					addClassIfAbsent(classes, partnerAdminCreation, authPartnerCreation, policyCreationForAuthPartner,
+							apiKeyAuthPartnerTest, apiKeyExpirationDateTest);
+					break;
 				case "DatasharePolicyTest":
 					addClassIfAbsent(classes, partnerAdminCreation, policyAdminAndPartnerCreation, policyGroupTest,
 							datasharePolicyTest);
@@ -288,7 +296,14 @@ public class TestRunner {
 							authPolicyTest);
 					break;
 				case "PartnerPolicyMappingTest":
-					addClassIfAbsent(classes, partnerAdminCreation, authPartnerCreation, partnerPolicyMappingTest);
+					addClassIfAbsent(classes, partnerAdminCreation, authPartnerCreation, policyCreationForAuthPartner,
+							partnerPolicyMappingTest);
+					break;
+				case "IndividualViewApproveRejectTest":
+					// The FTM and SBI individual views are checked too, so their fixtures are needed.
+					addClassIfAbsent(classes, partnerAdminCreation, authPartnerCreation, policyCreationForAuthPartner,
+							partnerPolicyMappingTest, devicePartnerCreation, sbiCreationTest, ftmPartnerCreation,
+							ftmDeviceTest, individualViewApproveRejectTest);
 					break;
 				case "MispPartnerTest":
 					addClassIfAbsent(classes, partnerAdminCreation, mispPartnerTest);
