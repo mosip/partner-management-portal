@@ -24,6 +24,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import io.mosip.testrig.pmpuiv2.driver.DriverManager;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import io.mosip.testrig.pmpuiv2.fw.util.CertificateGenerationUtil;
 import io.mosip.testrig.pmpuiv2.kernel.util.ConfigManager;
 import io.mosip.testrig.pmpuiv2.pages.BasePage;
 import io.mosip.testrig.pmpuiv2.pages.LoginPage;
@@ -43,6 +44,11 @@ public class BaseClass {
 	protected String password = allpassword[0];
 	public static final Logger logger = Logger.getLogger(BaseClass.class);
 	public static String data;
+
+	static {
+		ConfigManager.init();
+		CertificateGenerationUtil.generateAllCertificates();
+	}
 
 	@BeforeMethod
 	public void setUp(Method method) throws Exception {
