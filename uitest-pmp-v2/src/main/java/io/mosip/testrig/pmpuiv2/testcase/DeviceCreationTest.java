@@ -76,7 +76,8 @@ public class DeviceCreationTest extends BaseClass {
 		verifyInitialDevicePage();
 
 		addDevicePage.clickOnClear();
-		assertEquals(addDevicePage.getDeviceTypeValue(), GlobalConstants.INITIAL_DEVICE_TYPE);
+		assertTrue(addDevicePage.isDeviceTypeResetTo(GlobalConstants.INITIAL_DEVICE_TYPE),
+				GlobalConstants.INITIAL_DEVICE_TYPE);
 
 		addDevicePage.clickOnDeviceType();
 		assertTrue(addDevicePage.isDeviceTypeOptionDisplayed(), GlobalConstants.isDeviceTypeOptionsDisplayed);
@@ -98,7 +99,8 @@ public class DeviceCreationTest extends BaseClass {
 		fillDeviceDetail(GlobalConstants.FACE, GlobalConstants.FULL_FACE, GlobalConstants.AUTOMATION,
 				GlobalConstants.AUTOMATION);
 		addDevicePage.clickOnClear();
-		assertEquals(addDevicePage.getDeviceTypeValue(), GlobalConstants.INITIAL_DEVICE_TYPE);
+		assertTrue(addDevicePage.isDeviceTypeResetTo(GlobalConstants.INITIAL_DEVICE_TYPE),
+				GlobalConstants.INITIAL_DEVICE_TYPE);
 		addDevicePage.enterMakeName(GlobalConstants.SPECIAL_CHARACTERS);
 		assertTrue(deviceProviderPage.isSpecialCharacterErrorMessageDisplayed(),
 				GlobalConstants.isSpecialCharacterErrorMessageDisplayed);
@@ -113,7 +115,8 @@ public class DeviceCreationTest extends BaseClass {
 		addDevicePage.reload();
 //		assertEquals(deviceProviderPage.getAlertText(), GlobalConstants.RELOAD_MESSAGE);
 //		addDevicePage.cancelAlert();
-		assertEquals(addDevicePage.getDeviceTypeValue(), GlobalConstants.INITIAL_DEVICE_TYPE);
+		assertTrue(addDevicePage.isDeviceTypeResetTo(GlobalConstants.INITIAL_DEVICE_TYPE),
+				GlobalConstants.INITIAL_DEVICE_TYPE);
 
 		addMultipleDevices(GlobalConstants.IRIS, GlobalConstants.SINGLE, GlobalConstants.AUTOMATION,
 				GlobalConstants.AUTOMATION, 1);
@@ -475,7 +478,10 @@ public class DeviceCreationTest extends BaseClass {
 
 		listOfDevicesPage.clickOnFilterButton();
 		listOfDevicesPage.selectDeviceTypeFilter(GlobalConstants.FACE);
-		assertEquals(listOfDevicesPage.getListOfDevicesTitle(), GlobalConstants.LIST_OF_DEVICES_TITLE_COUNT_28);
+		assertTrue(
+				listOfDevicesPage.areAllListedDevicesMatching(GlobalConstants.DEVICE_TYPE_COLUMN_HEADER_ID,
+						GlobalConstants.FACE),
+				GlobalConstants.isDeviceTypeFilterReturningOnlyMatchingDevices);
 		listOfDevicesPage.selectStatusFilter(GlobalConstants.APPROVED);
 		assertEquals(listOfDevicesPage.getListOfDevicesTitle(), GlobalConstants.LIST_OF_DEVICES_TITLE_COUNT_1);
 		listOfDevicesPage.clickOnResetFilter();
@@ -484,8 +490,10 @@ public class DeviceCreationTest extends BaseClass {
 		deviceFilterWithStatus(GlobalConstants.APPROVED, true, false, false, false);
 		assertEquals(listOfDevicesPage.getListOfDevicesTitle(), GlobalConstants.LIST_OF_DEVICES_TITLE_COUNT_1);
 		deviceFilterWithStatus(GlobalConstants.PENDING_FOR_APPROVAL, false, true, false, false);
-		assertEquals(listOfDevicesPage.getListOfDevicesTitle(),
-				GlobalConstants.LIST_OF_DEVICES_TITLE_PENDING_FOR_APPROVAL);
+		assertTrue(
+				listOfDevicesPage.areAllListedDevicesMatching(GlobalConstants.STATUS_COLUMN_HEADER_ID,
+						GlobalConstants.PENDING_FOR_APPROVAL),
+				GlobalConstants.isStatusFilterReturningOnlyMatchingDevices);
 		deviceFilterWithStatus(GlobalConstants.DEACTIVATED, false, false, true, false);
 		assertEquals(listOfDevicesPage.getListOfDevicesTitle(), GlobalConstants.LIST_OF_DEVICES_TITLE_COUNT_1);
 		deviceFilterWithStatus(GlobalConstants.REJECTED, false, false, false, true);
@@ -563,7 +571,8 @@ public class DeviceCreationTest extends BaseClass {
 		assertEquals(addDevicePage.isSubmitDisabled(), true);
 		assertEquals(addDevicePage.isAddDeviceDisabled(), true);
 		assertEquals(addDevicePage.isDeleteButtonDisabled(), true);
-		assertEquals(addDevicePage.getDeviceTypeValue(), GlobalConstants.INITIAL_DEVICE_TYPE);
+		assertTrue(addDevicePage.isDeviceTypeResetTo(GlobalConstants.INITIAL_DEVICE_TYPE),
+				GlobalConstants.INITIAL_DEVICE_TYPE);
 		assertEquals(addDevicePage.getDeviceSubTypeValue(), GlobalConstants.INITIAL_DEVICE_SUB_TYPE);
 		assertEquals(addDevicePage.getMakePlaceholder(), GlobalConstants.INITIAL_MAKE);
 		assertEquals(addDevicePage.getModelPlaceholder(), GlobalConstants.INITIAL_MODEL);

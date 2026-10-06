@@ -1928,6 +1928,10 @@ public class OidcClientPage extends BasePage {
 		return getTextFromLocator(clientNameLanguageDropdownRow1).trim();
 	}
 
+	public boolean isClientNameLanguageRow1SelectedTextEqualTo(String expectedText) {
+		return waitForElementText(clientNameLanguageDropdownRow1, expectedText);
+	}
+
 	public boolean isAddClientNameLanguageButtonDisplayed() {
 		return isElementDisplayed(addClientNameLanguageButton);
 	}

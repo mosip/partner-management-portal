@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -1827,11 +1828,25 @@ public class ApiKeyPage extends BasePage {
 	public boolean isDeactivatedRowNotClickable(boolean isAdminView) {
 		WebElement row = isAdminView ? apiKeyItem1 : apiListItem1;
 
-		new WebDriverWait(driver, Duration.ofSeconds(ConfigManager.getTimeout()))
-				.until(ExpectedConditions.visibilityOf(row));
+		boolean clicked = false;
+		for (int attempt = 0; attempt < STALE_RETRY; attempt++) {
+			try {
+				new WebDriverWait(driver, Duration.ofSeconds(ConfigManager.getTimeout()))
+						.until(ExpectedConditions.visibilityOf(row));
+				scrollIntoView(row);
+				row.click();
+				clicked = true;
+				break;
+			} catch (StaleElementReferenceException stale) {
+				LogUtil.step("API key row went stale before the click - retrying");
+			}
+		}
 
-		scrollIntoView(row);
-		row.click();
+		// Without this the check would pass on a click that never happened.
+		if (!clicked) {
+			takeScreenshot();
+			throw new RuntimeException("API key row never became clickable after " + STALE_RETRY + " attempts");
+		}
 
 		boolean detailsOpened = isElementDisplayedQuick(By.xpath("//h1[text()='View API Key Details']"), Duration.ofSeconds(5));
 		if (detailsOpened) {
