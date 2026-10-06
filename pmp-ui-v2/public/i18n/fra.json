@@ -1143,7 +1143,7 @@
         "description2": ", y compris ses détails spécifiés. Vous pouvez également modifier les détails de la stratégie clonée avant de la publier.",
         "errorInClonePolicy": "Lors du clonage de la politique, nous avons rencontré une erreur.",
         "errorInPolicyDetails": "Lors de la récupération des détails de la politique, nous avons rencontré une erreur.",
-        "successMsg": "&quot;{{policyName}}&quot; a été cloné et associé à &quot;{{policyGroupName}}&quot; avec succès !",
+        "successMsg": "\"{{policyName}}\" a été cloné et associé à \"{{policyGroupName}}\" avec succès !",
         "policyExistError": "Cette politique existe déjà dans le groupe de politiques sélectionné. Veuillez choisir un autre groupe de politiques pour continuer."
     },
     "publishPolicyPopup": {
