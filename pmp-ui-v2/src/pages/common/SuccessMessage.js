@@ -12,7 +12,7 @@ function SuccessMessage({ id, successMsg, clickOnCancel, customStyle, successPar
             <div className={` bg-fruit-salad ${customStyle ? customStyle.innerDiv : 'flex justify-between items-center rounded-xl max-w-[35rem] min-h-14 min-w-72 p-4'}`}>
                 <div className={`${isLoginLanguageRTL ? 'ml-6' : 'mr-6'} w-[90%]`}>
                     {!successParam 
-                    ? <p id={id} className="text-sm/4 text-white break-words font-inter" dangerouslySetInnerHTML={{ __html: successMsg }} /> 
+                    ? <p id={id} className="text-sm/4 text-white break-words font-inter">{successMsg}</p> 
                     : <p id={id + '_with_param'} className="text-sm/4 text-white break-words font-normal">
                         <span className='font-bold'>{successParam}</span>{successMsg}
                     </p>
