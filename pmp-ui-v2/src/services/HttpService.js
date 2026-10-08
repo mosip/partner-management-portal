@@ -4,10 +4,40 @@ import { jwtDecode } from 'jwt-decode';
 import { setUserProfile, getUserProfile } from './UserProfileService.js';
 import { getAppConfig } from './ConfigService.js';
 
+// Latest masked CSRF token from the API's X-XSRF-TOKEN response header.
+let maskedXsrfToken = null;
+
 export const HttpService = axios.create({
   withCredentials: true,
   baseURL: process.env.NODE_ENV !== 'production' ? '' : window._env_.REACT_APP_PARTNER_MANAGER_API_BASE_URL,
+  // raw cookie value is sent until a masked token is received
+  withXSRFToken: () => !maskedXsrfToken,
 })
+
+HttpService.interceptors.request.use((config) => {
+  if (maskedXsrfToken) {
+    config.headers.set('X-XSRF-TOKEN', maskedXsrfToken);
+  }
+  return config;
+});
+
+const saveMaskedXsrfToken = (response) => {
+  const token = response?.headers?.get?.('X-XSRF-TOKEN');
+  if (token) {
+    maskedXsrfToken = token;
+  }
+};
+
+HttpService.interceptors.response.use(
+  (response) => {
+    saveMaskedXsrfToken(response);
+    return response;
+  },
+  (error) => {
+    saveMaskedXsrfToken(error.response);
+    return Promise.reject(error);
+  }
+);
 
 export const setupResponseInterceptor = (navigate) => {
 
