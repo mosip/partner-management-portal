@@ -4,37 +4,37 @@ import { jwtDecode } from 'jwt-decode';
 import { setUserProfile, getUserProfile } from './UserProfileService.js';
 import { getAppConfig } from './ConfigService.js';
 
-// Latest masked CSRF token from the API's X-XSRF-TOKEN response header.
-let maskedXsrfToken = null;
+// Latest XOR CSRF token from the API's X-XSRF-TOKEN response header.
+let xorXsrfToken = null;
 
 export const HttpService = axios.create({
   withCredentials: true,
   baseURL: process.env.NODE_ENV !== 'production' ? '' : window._env_.REACT_APP_PARTNER_MANAGER_API_BASE_URL,
-  // raw cookie value is sent until a masked token is received
-  withXSRFToken: () => !maskedXsrfToken,
+  // raw cookie value is sent until an XOR token is received
+  withXSRFToken: () => !xorXsrfToken,
 })
 
 HttpService.interceptors.request.use((config) => {
-  if (maskedXsrfToken) {
-    config.headers.set('X-XSRF-TOKEN', maskedXsrfToken);
+  if (xorXsrfToken) {
+    config.headers.set('X-XSRF-TOKEN', xorXsrfToken);
   }
   return config;
 });
 
-const saveMaskedXsrfToken = (response) => {
+const saveXorXsrfToken = (response) => {
   const token = response?.headers?.get?.('X-XSRF-TOKEN');
   if (token) {
-    maskedXsrfToken = token;
+    xorXsrfToken = token;
   }
 };
 
 HttpService.interceptors.response.use(
   (response) => {
-    saveMaskedXsrfToken(response);
+    saveXorXsrfToken(response);
     return response;
   },
   (error) => {
-    saveMaskedXsrfToken(error.response);
+    saveXorXsrfToken(error.response);
     return Promise.reject(error);
   }
 );
