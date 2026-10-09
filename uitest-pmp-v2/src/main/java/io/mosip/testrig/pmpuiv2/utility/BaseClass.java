@@ -111,6 +111,9 @@ public class BaseClass {
 		LoginPage loginPage = new LoginPage(driver);
 		loginPage.selectLanguage(ConfigManager.getloginlang());
 		loginPage.login(userid, password);
+		if ("CredentialPartnerCertificateTest".equals(method.getDeclaringClass().getSimpleName())) {
+			loginPage.retryLoginIfRejected();
+		}
 	}
 
 	@AfterMethod
