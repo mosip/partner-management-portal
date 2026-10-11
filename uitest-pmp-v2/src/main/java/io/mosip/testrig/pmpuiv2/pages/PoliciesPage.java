@@ -289,16 +289,12 @@ public class PoliciesPage extends BasePage {
 		return isElementDisplayed(policiesTitle);
 	}
 
+	// The populated list shows policies_request_btn, the empty list shows show_request_policy; one selector waits
+	// for whichever is rendered instead of spending a full timeout on the absent one.
+	private static final By REQUEST_POLICY_BUTTON = By.cssSelector("#policies_request_btn, #show_request_policy");
+
 	public void clickOnRequestPolicyButton() {
-		if (isTabularRequestPolicyButtonDisplayed()) {
-			clickOnElement(tabularPoliciesRequestButton);
-
-		} else if (isMiddleRequestPolicyButtonDisplayed()) {
-			clickOnElement(middleRequestPolicyButton);
-
-		} else {
-			throw new RuntimeException("Request Policy button not found in middle or tabular view");
-		}
+		click(REQUEST_POLICY_BUTTON);
 	}
 
 	public void clickOnRequestPolicyButtonOfTabularPage() {
@@ -371,15 +367,7 @@ public class PoliciesPage extends BasePage {
 	}
 
 	public boolean isPoliciesEmptyTableEnabled() {
-		if (isMiddleRequestPolicyButtonDisplayed()) {
-			return isElementEnabled(middleRequestPolicyButton);
-
-		} else if (isTabularRequestPolicyButtonDisplayed()) {
-			return isElementEnabled(tabularPoliciesRequestButton);
-
-		} else {
-			return false;
-		}
+		return isElementEnabled(REQUEST_POLICY_BUTTON);
 	}
 
 	public void clickOnHomeButton() {

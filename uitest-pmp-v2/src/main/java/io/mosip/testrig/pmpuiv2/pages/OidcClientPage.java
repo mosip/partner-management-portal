@@ -2,6 +2,7 @@ package io.mosip.testrig.pmpuiv2.pages;
 
 import org.openqa.selenium.NoSuchElementException;
 
+import java.io.IOException;
 import java.time.Duration;
 
 import org.apache.log4j.Logger;
@@ -739,13 +740,9 @@ public class OidcClientPage extends BasePage {
 	}
 
 	public void clickOnCreateOidcClientButton() {
-		if (isElementDisplayed(createOidcClient)) {
-			clickOnElement(createOidcClient);
-		} else if (isElementDisplayed(createOidcClientButton)) {
-			clickOnElement(createOidcClientButton);
-		} else {
-			throw new RuntimeException("Create OIDC Client button not visible");
-		}
+		// The empty list shows create_oid_client, a populated list shows create_oidc_btn; one selector waits for
+		// whichever is rendered instead of spending a full timeout on the absent one.
+		click(By.cssSelector("#create_oid_client, #create_oidc_btn"));
 	}
 
 	public void selectPartnerIdDropdown() {
@@ -755,6 +752,10 @@ public class OidcClientPage extends BasePage {
 
 	public boolean isPartnerIdDropdownDisplayed() {
 		return isElementDisplayed(selectPartneridForOidc);
+	}
+
+	public boolean isPartnerIdDropdownDisplayedQuick() {
+		return isElementDisplayedQuick(By.id("create_oidc_partner_id_dropdown_btn"), ABSENCE_CHECK_TIMEOUT);
 	}
 
 	public boolean isPolicyNameDropdownDisplayed() {
@@ -973,6 +974,10 @@ public class OidcClientPage extends BasePage {
 		return isElementEnabled(filterButton);
 	}
 
+	public boolean isFilterButtonEnabledQuick() {
+		return isElementDisplayedQuick(By.id("filter_btn"), ABSENCE_CHECK_TIMEOUT) && filterButton.isEnabled();
+	}
+
 	public void clickOnFilterButton() {
 		clickOnElement(filterButton);
 	}
@@ -1008,6 +1013,11 @@ public class OidcClientPage extends BasePage {
 
 	public boolean isfilterResetButtonEnabled() {
 		return isElementEnabled(filterResetButton);
+	}
+
+	public boolean isfilterResetButtonEnabledQuick() {
+		return isElementDisplayedQuick(By.id("filter_reset_btn"),
+				ABSENCE_CHECK_TIMEOUT) && filterResetButton.isEnabled();
 	}
 
 	public void clickOnFilterResetButton() {
@@ -1055,7 +1065,7 @@ public class OidcClientPage extends BasePage {
 	}
 
 	public boolean isCreateOidcRedirectUrl5Displayed() {
-		return isElementDisplayed(createOidcRedirectUrl5);
+		return isElementDisplayedQuick(By.id("create_oidc_redirect_url5"), ABSENCE_CHECK_TIMEOUT);
 	}
 
 	public boolean isCreateOidcCancelButtonDisplayed() {
@@ -1116,6 +1126,10 @@ public class OidcClientPage extends BasePage {
 
 	public boolean isRedirectUri2TextBoxDisplayed() {
 		return isElementDisplayed(RedirectUri2);
+	}
+
+	public boolean isRedirectUri2TextBoxDisplayedQuick() {
+		return isElementDisplayedQuick(By.id("create_oidc_redirect_url2"), ABSENCE_CHECK_TIMEOUT);
 	}
 
 	public void clickOnClearFormButton() {
@@ -1198,6 +1212,10 @@ public class OidcClientPage extends BasePage {
 		return isElementDisplayed(copyIdButton);
 	}
 
+	public boolean iscopyIdButtonDisplayedQuick() {
+		return isElementDisplayedQuick(By.id("copy_id_btn"), ABSENCE_CHECK_TIMEOUT);
+	}
+
 	public void clickOnDeactivatedOidcActionButton() {
 		clickOnElement(deactivatedOidcActionButton);
 	}
@@ -1208,6 +1226,10 @@ public class OidcClientPage extends BasePage {
 
 	public boolean isOidcClientDetailsPageDisplayed() {
 		return isElementDisplayed(oidcClientTitle);
+	}
+
+	public boolean isOidcClientDetailsPageDisplayedQuick() {
+		return isElementDisplayedQuick(By.xpath("//h1[text()='View OIDC Client Details']"), ABSENCE_CHECK_TIMEOUT);
 	}
 
 	public void clickOnOidcDetailsViewButton() {
@@ -1444,6 +1466,11 @@ public class OidcClientPage extends BasePage {
 		return isElementEnabled(applyFilterButton);
 	}
 
+	public boolean isApplyFilterButtonEnabledQuick() {
+		return isElementDisplayedQuick(By.id("apply_filter__btn"),
+				ABSENCE_CHECK_TIMEOUT) && applyFilterButton.isEnabled();
+	}
+
 	public void clickOnApplyFilterButton() {
 		clickOnElement(applyFilterButton);
 	}
@@ -1600,6 +1627,11 @@ public class OidcClientPage extends BasePage {
 		return isElementDisplayed(deactivateOidcClientPopup);
 	}
 
+	public boolean isDeactivateOidcClientPopupDisplayedQuick() {
+		return isElementDisplayedQuick(By.xpath("//p[contains(text(),'Are you sure you want to Deactivate OIDC Client')]"),
+				ABSENCE_CHECK_TIMEOUT);
+	}
+
 	public boolean isDeactivateOidcClientTitleDisplayed() {
 		return isElementDisplayed(deactivateOidcClientTitle);
 	}
@@ -1635,6 +1667,10 @@ public class OidcClientPage extends BasePage {
 
 	public boolean isCopiedTextDisplayed() {
 		return isElementDisplayed(copied);
+	}
+
+	public boolean isCopiedTextDisplayedQuick() {
+		return isElementDisplayedQuick(By.xpath("//p[contains(text(), 'Copied!')]"), ABSENCE_CHECK_TIMEOUT);
 	}
 
 	public void selectDeactivateStatusInFilter() {
@@ -1684,6 +1720,10 @@ public class OidcClientPage extends BasePage {
 
 	public boolean isUserInfoResponseTypeDropdownDisplayed() {
 		return isElementDisplayed(userInfoResponseTypeDropdown);
+	}
+
+	public boolean isUserInfoResponseTypeDropdownDisplayedQuick() {
+		return isElementDisplayedQuick(By.id("user_info_response_type_dropdown_btn"), ABSENCE_CHECK_TIMEOUT);
 	}
 
 	public String getUserInfoResponseTypeDropdownPlaceholder() {
@@ -1742,8 +1782,16 @@ public class OidcClientPage extends BasePage {
 		return isElementDisplayed(purposeTitleLabel);
 	}
 
+	public boolean isPurposeTitleLabelDisplayedQuick() {
+		return isElementDisplayedQuick(By.id("purpose_title_label"), ABSENCE_CHECK_TIMEOUT);
+	}
+
 	public boolean isPurposeSubtitleLabelDisplayed() {
 		return isElementDisplayed(purposeSubtitleLabel);
+	}
+
+	public boolean isPurposeSubtitleLabelDisplayedQuick() {
+		return isElementDisplayedQuick(By.id("purpose_subtitle_label"), ABSENCE_CHECK_TIMEOUT);
 	}
 
 	public void clickOnAddPurposeTitleLanguageButton() {
@@ -1758,8 +1806,18 @@ public class OidcClientPage extends BasePage {
 		return isElementDisplayed(purposeTitleLanguageDropdown);
 	}
 
+	public boolean isPurposeTitleLanguageDropdownDisplayedQuick() {
+		return isElementDisplayedQuick(By.xpath("//button[starts-with(@id,'purpose_title_lang_purpose_title_') and contains(@id,'_dropdown_btn')]"),
+				ABSENCE_CHECK_TIMEOUT);
+	}
+
 	public boolean isPurposeSubtitleLanguageDropdownDisplayed() {
 		return isElementDisplayed(purposeSubtitleLanguageDropdown);
+	}
+
+	public boolean isPurposeSubtitleLanguageDropdownDisplayedQuick() {
+		return isElementDisplayedQuick(By.xpath("//button[starts-with(@id,'purpose_subtitle_lang_purpose_subtitle_') and contains(@id,'_dropdown_btn')]"),
+				ABSENCE_CHECK_TIMEOUT);
 	}
 
 	public void clickOnPurposeTitleLanguageDropdown() {
@@ -1768,6 +1826,11 @@ public class OidcClientPage extends BasePage {
 
 	public boolean isPurposeTitleLanguageDefaultOptionDisplayed() {
 		return isElementDisplayed(purposeTitleLanguageDefaultOption);
+	}
+
+	public boolean isPurposeTitleLanguageDefaultOptionDisplayedQuick() {
+		return isElementDisplayedQuick(By.xpath("//button[starts-with(@id,'purpose_title_lang_purpose_title_') and text()='Default']"),
+				ABSENCE_CHECK_TIMEOUT);
 	}
 
 	public boolean isPurposeTitleLanguageEnglishOptionDisplayed() {
@@ -1818,6 +1881,11 @@ public class OidcClientPage extends BasePage {
 
 	public boolean isSubmitButtonEnabled() {
 		return isElementEnabled(submitButton);
+	}
+
+	public boolean isSubmitButtonEnabledQuick() {
+		return isElementDisplayedQuick(By.id("create_oidc_submit_btn"),
+				ABSENCE_CHECK_TIMEOUT) && submitButton.isEnabled();
 	}
 
 	public boolean isPartnerIdFieldLabelDisplayed() {
@@ -1874,6 +1942,19 @@ public class OidcClientPage extends BasePage {
 
 	public String getFirstOidcClientRowName() {
 		return getTextFromLocator(firstOidcClientRowName).trim();
+	}
+
+	public boolean waitForFirstOidcClientRowName(String expectedName) {
+		return waitForElementText(firstOidcClientRowName, expectedName);
+	}
+
+	// Partner view: the OIDC client name filter is a dropdown (the admin view has a text box instead).
+	public void selectOidcClientNameInFilter(String clientName) {
+		try {
+			dropdown(oidcSelectClientNameFilter, clientName);
+		} catch (IOException e) {
+			logger.info(e.getMessage());
+		}
 	}
 
 	public String getFirstOidcClientRowStatus() {
@@ -1941,7 +2022,8 @@ public class OidcClientPage extends BasePage {
 	}
 
 	public boolean isEnglishLanguageOptionRow2Displayed() {
-		return isElementDisplayed(englishLanguageOptionRow2);
+		return isElementDisplayedQuick(By.xpath("//button[starts-with(@id,'client_name_lang_map_lang_2_option') and text()='English']"),
+				ABSENCE_CHECK_TIMEOUT);
 	}
 
 	public boolean isFrenchLanguageOptionRow2Displayed() {

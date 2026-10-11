@@ -638,6 +638,11 @@ public class DatasharePolicyPage extends BasePage {
 		return isElementEnabled(policySaveAsDraftButton);
 	}
 
+	public boolean isSaveAsDraftButtonEnabledQuick() {
+		return isElementDisplayedQuick(By.id("create_policy_form_submit_btn"),
+				ABSENCE_CHECK_TIMEOUT) && policySaveAsDraftButton.isEnabled();
+	}
+
 	public void clickOnSaveAsDraftButton() {
 		clickOnElement(policySaveAsDraftButton);
 	}
@@ -771,12 +776,21 @@ public class DatasharePolicyPage extends BasePage {
 		return isElementDisplayed(deactivateStatus);
 	}
 
+	public boolean isPolicyStatusDeactivateDisplayedQuick() {
+		return isElementDisplayedQuick(By.xpath("//div[text()='Deactivated']"), ABSENCE_CHECK_TIMEOUT);
+	}
+
 	public void clickOnDeactivatedPolicy() {
 		clickOnElement(datasharePolicy1);
 	}
 
 	public boolean isApplyFilterButtonEnabled() {
 		return isElementEnabled(applyFilterButton);
+	}
+
+	public boolean isApplyFilterButtonEnabledQuick() {
+		return isElementDisplayedQuick(By.id("apply_filter__btn"),
+				ABSENCE_CHECK_TIMEOUT) && applyFilterButton.isEnabled();
 	}
 
 	public boolean isNoResultsFoundMessageDisplayed() {
@@ -952,6 +966,10 @@ public class DatasharePolicyPage extends BasePage {
 		return isElementEnabled(filterButton);
 	}
 
+	public boolean isFilterButtonDisplayedOrEnabledQuick() {
+		return isElementDisplayedQuick(By.id("filter_btn"), ABSENCE_CHECK_TIMEOUT) && filterButton.isEnabled();
+	}
+
 	public void clickOnDatasharePolicyList1() {
 		clickOnElement(datasharePolicy1);
 	}
@@ -966,6 +984,10 @@ public class DatasharePolicyPage extends BasePage {
 
 	public boolean isViewDatasharePolicyPageTitleDisplayed() {
 		return isElementDisplayed(viewPolicyPageTitle);
+	}
+
+	public boolean isViewDatasharePolicyPageTitleDisplayedQuick() {
+		return isElementDisplayedQuick(By.xpath("//h1[text()='View Datashare Policy']"), ABSENCE_CHECK_TIMEOUT);
 	}
 
 	public void clickOnViewBackButton() {
@@ -1006,6 +1028,10 @@ public class DatasharePolicyPage extends BasePage {
 
 	public boolean isPublishConfirmationPopupDisplayed() {
 		return isElementDisplayed(publishConfirmationPopup);
+	}
+
+	public boolean isPublishConfirmationPopupDisplayedQuick() {
+		return isElementDisplayedQuick(By.xpath("//h3[text()='Publish Policy']"), ABSENCE_CHECK_TIMEOUT);
 	}
 
 	public boolean isPublishPolicyInfoMessageisplayed() {
@@ -1149,6 +1175,10 @@ public class DatasharePolicyPage extends BasePage {
 		return isElementEnabled(policyDataBox);
 	}
 
+	public boolean isPolicyDataBoxEnabledQuick() {
+		return isElementDisplayedQuick(By.id("policy_data_box"), ABSENCE_CHECK_TIMEOUT) && policyDataBox.isEnabled();
+	}
+
 	public boolean isPolicyDataContentDisplayed() {
 		return isElementDisplayed(policyDataBoxWithAttributes);
 	}
@@ -1199,6 +1229,10 @@ public class DatasharePolicyPage extends BasePage {
 
 	public boolean isClonePolicyPopupTitleDisplayed() {
 		return isElementDisplayed(clonePolicyTitle);
+	}
+
+	public boolean isClonePolicyPopupTitleDisplayedQuick() {
+		return isElementDisplayedQuick(By.xpath("//h3[text()='Clone Policy']"), ABSENCE_CHECK_TIMEOUT);
 	}
 
 	public boolean isClonePolicyInfoMessageDisplayed() {
@@ -1258,6 +1292,11 @@ public class DatasharePolicyPage extends BasePage {
 		return isElementEnabled(clonePolicyButton);
 	}
 
+	public boolean isClonePolicyButtonEnabledQuick() {
+		return isElementDisplayedQuick(By.id("clone_policy_button"),
+				ABSENCE_CHECK_TIMEOUT) && clonePolicyButton.isEnabled();
+	}
+
 	public void clickOnClonePolicyButton() {
 		clickOnElement(clonePolicyButton);
 	}
@@ -1267,7 +1306,8 @@ public class DatasharePolicyPage extends BasePage {
 	}
 
 	public boolean isClonePolicyCancelButtonEnabled() {
-		return isElementEnabled(clonePolicyCancelButton);
+		return isElementDisplayedQuick(By.id("clone_policy_cancel"),
+				ABSENCE_CHECK_TIMEOUT) && clonePolicyCancelButton.isEnabled();
 	}
 
 	public boolean isClonePolicyCloseButtonEnabled() {
@@ -1304,6 +1344,11 @@ public class DatasharePolicyPage extends BasePage {
 
 	public boolean isDeactivatePolicyPopupDisplayed() {
 		return isElementDisplayed(deactivatePolicyPopup);
+	}
+
+	public boolean isDeactivatePolicyPopupDisplayedQuick() {
+		return isElementDisplayedQuick(By.xpath("//p[contains(text(), 'Do you want to deactivate Policy')]"),
+				ABSENCE_CHECK_TIMEOUT);
 	}
 
 	public boolean isDeactivatePolicyPopupTitleDisplayed() {

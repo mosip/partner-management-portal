@@ -121,6 +121,10 @@ public class ViewDeviceDetailsPage extends BasePage {
 		return isElementDisplayed(viewDeviceDetailsTitle);
 	}
 
+	public boolean isDeviceDetailsPageTitleDisplayedQuick() {
+		return isElementDisplayedQuick(By.id("page_title"), ABSENCE_CHECK_TIMEOUT);
+	}
+
 	public String getBreadcrumbText() {
 		return getTextFromLocator(homeButton) + getTextFromLocator(listOfSbiButton)
 				+ getTextFromLocator(listOfDevicesButton);

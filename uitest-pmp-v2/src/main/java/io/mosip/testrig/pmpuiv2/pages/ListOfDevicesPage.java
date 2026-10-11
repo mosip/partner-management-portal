@@ -473,12 +473,20 @@ public class ListOfDevicesPage extends BasePage {
 
 	public boolean isDeviceDisplayed(String deviceType, String deviceSubType, String make, String model) {
 		try {
-			By addedDevice = By.xpath("//td[text()='" + deviceType + "']/..//td[text()='" + deviceSubType
-					+ "']/..//td[text()='" + make + "']/..//td[text()='" + model + "']");
-			return isDisplayed(addedDevice);
+			return isDisplayed(deviceRow(deviceType, deviceSubType, make, model));
 		} catch (NoSuchElementException | TimeoutException e) {
 			return false;
 		}
+	}
+
+	// For a device expected to be filtered OUT of an already-settled list: a short wait instead of the full one.
+	public boolean isDeviceDisplayedQuick(String deviceType, String deviceSubType, String make, String model) {
+		return isElementDisplayedQuick(deviceRow(deviceType, deviceSubType, make, model), ABSENCE_CHECK_TIMEOUT);
+	}
+
+	private By deviceRow(String deviceType, String deviceSubType, String make, String model) {
+		return By.xpath("//td[text()='" + deviceType + "']/..//td[text()='" + deviceSubType + "']/..//td[text()='"
+				+ make + "']/..//td[text()='" + model + "']");
 	}
 
 	public void clickOnDeviceThreeDots(String deviceType, String deviceSubType, String make, String model) {
@@ -542,20 +550,14 @@ public class ListOfDevicesPage extends BasePage {
 		clickOnElement(rejectButton);
 	}
 
+	// Enabled/greyed-out state is read from the option's class: the option is rendered in both states, so this
+	// returns as soon as it appears instead of waiting out the full timeout on the state that is absent.
 	public boolean isDeactivateDeviceEnabled() {
-		if (isElementDisplayed(deactivateDeviceWithoutGreyedOut)) {
-			return true;
-		} else {
-			return false;
-		}
+		return !getTextFromAttribute(deactivateDevice, "class").contains("text-[#A5A5A5]");
 	}
 
 	public boolean isDeactivateDeviceDisabled() {
-		if (isElementDisplayed(deactivateDeviceWithGreyedOut)) {
-			return true;
-		} else {
-			return false;
-		}
+		return getTextFromAttribute(deactivateDevice, "class").contains("text-[#A5A5A5]");
 	}
 
 	public void clickOnDeactivateDevice() {
@@ -843,11 +845,7 @@ public class ListOfDevicesPage extends BasePage {
 	}
 
 	public boolean isApproceRejectDeviceDisabled() {
-		if (isElementDisplayed(approveRejectWithGreyedOut)) {
-			return true;
-		} else {
-			return false;
-		}
+		return getTextFromAttribute(approveRejectButton, "class").contains("text-[#A5A5A5]");
 	}
 
 	public void clickOnDeactivateButton() {
@@ -1043,19 +1041,11 @@ public class ListOfDevicesPage extends BasePage {
 	}
 
 	public boolean isDeactivateDeviceEnabledInAdmin() {
-		if (isElementDisplayed(deactivateDeviceEnabledButtonInAdmin)) {
-			return true;
-		} else {
-			return false;
-		}
+		return !getTextFromAttribute(deviceListDeactivateOption, "class").contains("text-[#A5A5A5]");
 	}
 
 	public boolean isDeactivateDeviceDisabledInAdmin() {
-		if (isElementDisplayed(deactivateDeviceWithGreyedOutInAdmin)) {
-			return true;
-		} else {
-			return false;
-		}
+		return getTextFromAttribute(deviceListDeactivateOption, "class").contains("text-[#A5A5A5]");
 	}
 
 	public boolean isListOfDeviceInAdminDisplayed() {

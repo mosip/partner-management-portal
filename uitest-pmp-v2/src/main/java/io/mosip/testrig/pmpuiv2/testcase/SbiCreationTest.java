@@ -323,7 +323,7 @@ public class SbiCreationTest extends BaseClass {
 		listOfSbiPage.clickOnApplyFilterButton();
 		listOfSbiPage.clickOnThreeDotsOfSbiListAsAdmin(GlobalConstants.AUTOMATION_REJECTING);
 		listOfSbiPage.clickOnApproveOrReject();
-		assertFalse(listOfSbiPage.isApproveOrRejectSbiPopupDisplayed(),
+		assertFalse(listOfSbiPage.isApproveOrRejectSbiPopupDisplayedQuick(),
 				GlobalConstants.isApproveOrRejectSbiPopupDisplayed);
 	}
 

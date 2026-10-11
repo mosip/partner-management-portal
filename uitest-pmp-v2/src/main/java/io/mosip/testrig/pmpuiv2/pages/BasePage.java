@@ -43,6 +43,9 @@ public class BasePage {
 
 	protected WebDriver driver;
 	protected static final int STALE_RETRY = 2;
+	// Short wait for checks that expect an element to be ABSENT (assertFalse), so a missing element does not
+	// hold the thread for the full explicit wait; still long enough to catch a popup the previous action opens.
+	protected static final Duration ABSENCE_CHECK_TIMEOUT = Duration.ofSeconds(3);
 	private static final String REDACTED_VALUE = "***";
 	protected static final Logger logger = Logger.getLogger(BasePage.class);
 
@@ -111,6 +114,14 @@ public class BasePage {
 				takeScreenshot();
 				throw timeout;
 			} catch (Exception e) {
+				// Chrome reports an element from a page that has just re-rendered (e.g. the dashboard right after
+				// the Terms and Conditions consent) as a plain WebDriverException; it is stale, so retry like
+				// click(By) does.
+				if (e.getMessage() != null && e.getMessage().contains("does not belong to the document")) {
+					attempts++;
+					LogUtil.step("DOM refreshed. Retrying " + attempts + "/" + STALE_RETRY);
+					continue;
+				}
 				LogUtil.error("Unexpected click failure: " + e.getClass().getSimpleName());
 				takeScreenshot();
 				throw new RuntimeException("Click failed for element: " + element, e);
@@ -864,9 +875,22 @@ public class BasePage {
 
 	public void waitScrollAndClick(By option) {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-		WebElement el = wait.until(ExpectedConditions.visibilityOfElementLocated(option));
-		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", el);
-		((JavascriptExecutor) driver).executeScript("arguments[0].click();", el);
+		// Dropdown options are re-rendered while a typed search filters the list, so the located option can go
+		// stale before the scroll/click; locate it again, like click(By) and enter() do.
+		for (int attempt = 1; ; attempt++) {
+			try {
+				WebElement el = wait.until(ExpectedConditions.visibilityOfElementLocated(option));
+				((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", el);
+				((JavascriptExecutor) driver).executeScript("arguments[0].click();", el);
+				return;
+			} catch (StaleElementReferenceException stale) {
+				if (attempt > STALE_RETRY) {
+					takeScreenshot();
+					throw stale;
+				}
+				LogUtil.step("Option went stale while selecting. Retry " + attempt + "/" + STALE_RETRY);
+			}
+		}
 	}
 
 	protected String getTextFromLocator(By locator) {

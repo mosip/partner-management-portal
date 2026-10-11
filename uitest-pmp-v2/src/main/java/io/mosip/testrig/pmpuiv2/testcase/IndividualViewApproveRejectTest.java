@@ -164,7 +164,7 @@ public class IndividualViewApproveRejectTest extends BaseClass {
 	}
 
 	private void openPendingPolicyRequestForPartner(String partnerId) {
-		if (partnerPolicyMappingPage.isFilterResetButtonEnabled()) {
+		if (partnerPolicyMappingPage.isFilterResetButtonEnabledQuick()) {
 			partnerPolicyMappingPage.clickOnFilterResetButton();
 		}
 
@@ -180,7 +180,7 @@ public class IndividualViewApproveRejectTest extends BaseClass {
 	}
 
 	private void openPolicyRequestWithStatus(String status) {
-		if (partnerPolicyMappingPage.isFilterResetButtonEnabled()) {
+		if (partnerPolicyMappingPage.isFilterResetButtonEnabledQuick()) {
 			partnerPolicyMappingPage.clickOnFilterResetButton();
 		}
 

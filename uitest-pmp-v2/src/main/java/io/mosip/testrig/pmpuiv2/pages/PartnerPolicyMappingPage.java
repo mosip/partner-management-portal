@@ -440,6 +440,10 @@ public class PartnerPolicyMappingPage extends BasePage {
 		return isElementEnabled(filterButton);
 	}
 
+	public boolean isFilterButtonEnabledQuick() {
+		return isElementDisplayedQuick(By.id("filter_btn"), ABSENCE_CHECK_TIMEOUT) && filterButton.isEnabled();
+	}
+
 	public boolean isFilterButtonDisabled() {
 		return isElementDisabled(filterButton);
 	}
@@ -470,6 +474,11 @@ public class PartnerPolicyMappingPage extends BasePage {
 
 	public boolean isApproveOrRejectConfirmationPopupDisplayed() {
 		return isElementEnabled(confirmationPopup);
+	}
+
+	public boolean isApproveOrRejectConfirmationPopupDisplayedQuick() {
+		return isElementDisplayedQuick(By.xpath("//p[contains(text(), 'Do you want to Approve/Reject the Policy')]"),
+				ABSENCE_CHECK_TIMEOUT) && confirmationPopup.isEnabled();
 	}
 
 	public boolean isPolicyPopupSubtitleDisplayed() {
@@ -644,8 +653,17 @@ public class PartnerPolicyMappingPage extends BasePage {
 		return isElementDisplayed(filterResetButton);
 	}
 
+	public boolean isFilterResetButtonDisplayedQuick() {
+		return isElementDisplayedQuick(By.id("filter_reset_btn"), ABSENCE_CHECK_TIMEOUT);
+	}
+
 	public boolean isFilterResetButtonEnabled() {
 		return isElementEnabled(filterResetButton);
+	}
+
+	public boolean isFilterResetButtonEnabledQuick() {
+		return isElementDisplayedQuick(By.id("filter_reset_btn"),
+				ABSENCE_CHECK_TIMEOUT) && filterResetButton.isEnabled();
 	}
 
 	public boolean isViewButtoEnabled() {
