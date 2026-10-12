@@ -251,8 +251,6 @@ public class PartnerPolicyMappingTest extends BaseClass {
 		partnerPolicyMappingPage.clickOnStatusDescIcon();
 		partnerPolicyMappingPage.clickOnStatusAscIcon();
 
-		// Scope to this suite's partner: other rigs leave pending requests from deactivated partners on the
-		// shared env, and the first unscoped row may belong to one of them.
 		partnerPolicyMappingPage.enterPartnerIdInFilter(GlobalConstants.AUTH_PARTNER_ID);
 		partnerPolicyMappingPage.clickOnStatusFilterDropdown();
 		partnerPolicyMappingPage.clickOnPendingForApprovalStatus();

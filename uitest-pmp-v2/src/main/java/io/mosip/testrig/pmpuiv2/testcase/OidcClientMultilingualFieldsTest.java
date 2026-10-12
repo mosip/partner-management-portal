@@ -91,7 +91,7 @@ public class OidcClientMultilingualFieldsTest extends BaseClass {
 
 		oidcClientPage.clickOnAddClientNameLanguageButton();
 		oidcClientPage.clickOnClientNameLanguageDropdownRow2();
-		assertFalse(oidcClientPage.isEnglishLanguageOptionRow2Displayed(),
+		assertFalse(oidcClientPage.isEnglishLanguageOptionRow2DisplayedQuick(),
 				GlobalConstants.isRow2ExcludesAlreadySelectedLanguage);
 		assertTrue(oidcClientPage.isFrenchLanguageOptionRow2Displayed(),
 				GlobalConstants.isRow2ExcludesAlreadySelectedLanguage);
@@ -440,14 +440,10 @@ public class OidcClientMultilingualFieldsTest extends BaseClass {
 		return oidcClientPage;
 	}
 
-	// OidcClientAuthPartnerTest creates clients for the same partner in parallel, so the newest row may be
-	// another test's client; narrow the list to this client before reading the first row.
 	private void filterListByClientName(OidcClientPage oidcClientPage, String oidcClientName) {
-		// Reading the first row waits for the list to render before the filter is opened.
 		oidcClientPage.getFirstOidcClientRowName();
 		oidcClientPage.clickOnFilterButton();
 		oidcClientPage.selectOidcClientNameInFilter(oidcClientName);
-		// The previous rows stay on screen until the filtered result renders.
 		oidcClientPage.waitForFirstOidcClientRowName(oidcClientName);
 	}
 

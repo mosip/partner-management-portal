@@ -512,6 +512,10 @@ public class PartnerCertificatePage extends BasePage {
 
 	// Both buttons are disabled, not hidden, for a deactivated partner.
 	public boolean isDownloadButtonEnabled() {
+		return isElementEnabled(downloadButton);
+	}
+
+	public boolean isDownloadButtonEnabledQuick() {
 		return isElementDisplayedQuick(By.id("download_btn1"), ABSENCE_CHECK_TIMEOUT) && downloadButton.isEnabled();
 	}
 
@@ -520,6 +524,10 @@ public class PartnerCertificatePage extends BasePage {
 	}
 
 	public boolean isPartnerCertificateReuploadButtonEnabled() {
+		return isElementEnabled(partnerCertificateReuploadButton);
+	}
+
+	public boolean isPartnerCertificateReuploadButtonEnabledQuick() {
 		return isElementDisplayedQuick(By.id("partner_certificate_re_upload_btn1"),
 				ABSENCE_CHECK_TIMEOUT) && partnerCertificateReuploadButton.isEnabled();
 	}

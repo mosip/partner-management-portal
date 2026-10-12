@@ -926,6 +926,10 @@ public class PartnerAdminPage extends BasePage {
 
 	// For an uploaded certificate, the disabled state here reflects isActive alone.
 	public boolean isDownloadCertificateButtonEnabledInViewPartnerPage() {
+		return isElementEnabled(downloadCertificateButtonInViewPartnerPage);
+	}
+
+	public boolean isDownloadCertificateButtonEnabledInViewPartnerPageQuick() {
 		return isElementDisplayedQuick(By.id("download_partner_cer_btn"),
 				SHORT_ABSENCE_TIMEOUT) && downloadCertificateButtonInViewPartnerPage.isEnabled();
 	}

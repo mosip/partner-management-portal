@@ -896,6 +896,10 @@ public class AuthPolicyPage extends BasePage {
 	}
 
 	public boolean isFilterResetButtonAvailableOrEnabled() {
+		return isElementEnabled(filterResetButton);
+	}
+
+	public boolean isFilterResetButtonAvailableOrEnabledQuick() {
 		return isElementDisplayedQuick(By.id("filter_reset_btn"),
 				ABSENCE_CHECK_TIMEOUT) && filterResetButton.isEnabled();
 	}
@@ -1277,6 +1281,10 @@ public class AuthPolicyPage extends BasePage {
 	}
 
 	public boolean isClonePolicyCancelButtonEnabled() {
+		return isElementEnabled(clonePolicyCancelButton);
+	}
+
+	public boolean isClonePolicyCancelButtonEnabledQuick() {
 		return isElementDisplayedQuick(By.id("clone_policy_cancel"),
 				ABSENCE_CHECK_TIMEOUT) && clonePolicyCancelButton.isEnabled();
 	}

@@ -1306,6 +1306,10 @@ public class DatasharePolicyPage extends BasePage {
 	}
 
 	public boolean isClonePolicyCancelButtonEnabled() {
+		return isElementEnabled(clonePolicyCancelButton);
+	}
+
+	public boolean isClonePolicyCancelButtonEnabledQuick() {
 		return isElementDisplayedQuick(By.id("clone_policy_cancel"),
 				ABSENCE_CHECK_TIMEOUT) && clonePolicyCancelButton.isEnabled();
 	}

@@ -643,8 +643,6 @@ public class ApiKeyPage extends BasePage {
 	}
 
 	public void clickOnCreateApiKey() {
-		// The list page shows generate_api_key_btn, the empty page shows generate_api_key; one selector waits for
-		// whichever is rendered instead of spending a full timeout on the absent one.
 		click(By.cssSelector("#generate_api_key_btn, #generate_api_key"));
 	}
 
@@ -1708,7 +1706,6 @@ public class ApiKeyPage extends BasePage {
 
 	private List<LocalDate> readExpiryColumn(boolean isAdminView) {
 		List<WebElement> expirationDateColumn = isAdminView ? adminExpirationDateColumn : partnerExpirationDateColumn;
-		// The table re-renders after a sort click, so a cell can go stale mid-read; re-read the whole column.
 		for (int attempt = 0; attempt < STALE_RETRY; attempt++) {
 			try {
 				List<LocalDate> dates = new ArrayList<>();

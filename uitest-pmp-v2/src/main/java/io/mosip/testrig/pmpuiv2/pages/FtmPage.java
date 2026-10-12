@@ -1068,8 +1068,6 @@ public class FtmPage extends BasePage {
 		return isElementEnabled(ftmListViewOption);
 	}
 
-	// A disabled option opens no popup, so these expect the popup to be absent: use the short absence wait
-	// rather than the full explicit wait.
 	public boolean isFtmListApproveRejectOptionIsDisabled() {
 		clickOnFtmListApproveRejectOption();
 		return !isElementDisplayedQuick(By.id("approve-reject_popup_title"), ABSENCE_CHECK_TIMEOUT);

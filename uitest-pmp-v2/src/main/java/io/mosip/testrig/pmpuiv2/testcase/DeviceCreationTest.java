@@ -634,8 +634,6 @@ public class DeviceCreationTest extends BaseClass {
 				GlobalConstants.AUTOMATION_REJECTING, rejected);
 	}
 
-	// selectStatusFilter has already waited for the list to settle, so a device that should be filtered out only
-	// needs the short absence check; three of the four devices are absent on every status.
 	private void assertDeviceListed(String deviceType, String deviceSubType, String make, String model,
 			boolean expected) {
 		boolean listed = expected ? listOfDevicesPage.isDeviceDisplayed(deviceType, deviceSubType, make, model)

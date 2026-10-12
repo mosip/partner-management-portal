@@ -693,7 +693,7 @@ public class DatasharePolicyTest extends BaseClass {
 		datasharePolicyPage.clickOnClonePolicyButton();
 		assertTrue(datasharePolicyPage.isClonedSuccessMessageDisplayed(),
 				GlobalConstants.isClonedSuccessPopupDisplayed);
-		assertFalse(datasharePolicyPage.isClonePolicyCancelButtonEnabled(),
+		assertFalse(datasharePolicyPage.isClonePolicyCancelButtonEnabledQuick(),
 				GlobalConstants.isClonePolicyCancelButtonEnabled);
 		assertTrue(datasharePolicyPage.isClonePolicyCloseButtonEnabled(),
 				GlobalConstants.isClonePolicyCloseButtonEnabled);

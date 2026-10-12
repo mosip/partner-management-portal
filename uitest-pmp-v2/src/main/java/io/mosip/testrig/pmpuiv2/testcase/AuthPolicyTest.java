@@ -257,7 +257,7 @@ public class AuthPolicyTest extends BaseClass {
 		assertTrue(authPolicyPage.isCreatedDateHeaderTextDisplayed(), GlobalConstants.isCreatedDateHeaderTextDisplayed);
 		assertTrue(authPolicyPage.isStatusHeaderTextDisplayed(), GlobalConstants.isStatusHeaderTextDisplayed);
 
-		assertFalse(authPolicyPage.isFilterResetButtonAvailableOrEnabled(),
+		assertFalse(authPolicyPage.isFilterResetButtonAvailableOrEnabledQuick(),
 				GlobalConstants.isFilterResetButtonAvailableOrEnabled);
 		authPolicyPage.clickOnFilterButton();
 		assertFalse(authPolicyPage.isFilterButtonDisplayedOrEnabledQuick(),
@@ -693,7 +693,7 @@ public class AuthPolicyTest extends BaseClass {
 		assertTrue(authPolicyPage.isClonePolicyButtonEnabled(), GlobalConstants.isClonePolicyButtonEnabled);
 		authPolicyPage.clickOnClonePolicyButton();
 		assertTrue(authPolicyPage.isClonedSuccessMessageDisplayed(), GlobalConstants.isClonedSuccessPopupDisplayed);
-		assertFalse(authPolicyPage.isClonePolicyCancelButtonEnabled(),
+		assertFalse(authPolicyPage.isClonePolicyCancelButtonEnabledQuick(),
 				GlobalConstants.isClonePolicyCancelButtonEnabled);
 		assertTrue(authPolicyPage.isClonePolicyCloseButtonEnabled(), GlobalConstants.isClonePolicyCloseButtonEnabled);
 		authPolicyPage.clickOnClonePolicyCloseButton();

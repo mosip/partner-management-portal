@@ -358,8 +358,6 @@ public class SbiLinkedDevicePage extends BasePage {
 		return isElementDisplayed(deviceListDeactivateOption);
 	}
 
-	// Enabled/greyed-out state is read from the option's class: the option is rendered in both states, so this
-	// returns as soon as it appears instead of waiting out the full timeout on the state that is absent.
 	public boolean isApproceRejectDeviceDisabled() {
 		return getTextFromAttribute(approveRejectOption, "class").contains("text-[#A5A5A5]");
 	}

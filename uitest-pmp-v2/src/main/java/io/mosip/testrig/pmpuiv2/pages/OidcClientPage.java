@@ -740,8 +740,6 @@ public class OidcClientPage extends BasePage {
 	}
 
 	public void clickOnCreateOidcClientButton() {
-		// The empty list shows create_oid_client, a populated list shows create_oidc_btn; one selector waits for
-		// whichever is rendered instead of spending a full timeout on the absent one.
 		click(By.cssSelector("#create_oid_client, #create_oidc_btn"));
 	}
 
@@ -1065,6 +1063,10 @@ public class OidcClientPage extends BasePage {
 	}
 
 	public boolean isCreateOidcRedirectUrl5Displayed() {
+		return isElementDisplayed(createOidcRedirectUrl5);
+	}
+
+	public boolean isCreateOidcRedirectUrl5DisplayedQuick() {
 		return isElementDisplayedQuick(By.id("create_oidc_redirect_url5"), ABSENCE_CHECK_TIMEOUT);
 	}
 
@@ -2022,6 +2024,10 @@ public class OidcClientPage extends BasePage {
 	}
 
 	public boolean isEnglishLanguageOptionRow2Displayed() {
+		return isElementDisplayed(englishLanguageOptionRow2);
+	}
+
+	public boolean isEnglishLanguageOptionRow2DisplayedQuick() {
 		return isElementDisplayedQuick(By.xpath("//button[starts-with(@id,'client_name_lang_map_lang_2_option') and text()='English']"),
 				ABSENCE_CHECK_TIMEOUT);
 	}
