@@ -1,6 +1,7 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -326,6 +327,11 @@ public class PolicyGroupPage extends BasePage {
 		return isElementEnabled(submitButton);
 	}
 
+	public boolean isSubmitButtonEnabledQuick() {
+		return isElementDisplayedQuick(By.id("createPolicy_submit_btn"),
+				ABSENCE_CHECK_TIMEOUT) && submitButton.isEnabled();
+	}
+
 	public boolean isSameNamePolicyGroupAlreadyExistMessageDisplayed() {
 		return isElementDisplayed(sameNamePolicyGroupAlreadyExistErrorMessage);
 	}
@@ -447,6 +453,10 @@ public class PolicyGroupPage extends BasePage {
 		return isElementDisplayed(viewPolicyGroupPageTitle);
 	}
 
+	public boolean isViewPolicyGroupPageTitleDisplayedQuick() {
+		return isElementDisplayedQuick(By.xpath("//h1[text()='View Policy Group']"), ABSENCE_CHECK_TIMEOUT);
+	}
+
 	public void clickOnApplyFilterButton() {
 		clickOnElement(applyFilterButton);
 	}
@@ -557,6 +567,11 @@ public class PolicyGroupPage extends BasePage {
 
 	public boolean isDeactivatePolicyGroupPopupDisplayed() {
 		return isElementDisplayed(deactivatePolicyGroupPopup);
+	}
+
+	public boolean isDeactivatePolicyGroupPopupDisplayedQuick() {
+		return isElementDisplayedQuick(By.xpath("//p[contains(text(), 'Do you want to deactivate the Policy Group')]"),
+				ABSENCE_CHECK_TIMEOUT);
 	}
 
 	public boolean isDeactivatePopupTitleDisplayed() {

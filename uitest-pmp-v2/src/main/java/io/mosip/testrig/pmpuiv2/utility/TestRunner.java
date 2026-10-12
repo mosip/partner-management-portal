@@ -5,8 +5,10 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
+import org.reflections.Reflections;
 import org.testng.TestListenerAdapter;
 import org.testng.TestNG;
 import org.testng.xml.XmlClass;
@@ -15,7 +17,9 @@ import org.testng.xml.XmlTest;
 
 import io.mosip.testrig.pmpuiv2.dbaccess.DBManager;
 import io.mosip.testrig.pmpuiv2.fw.util.AdminTestUtil;
+import io.mosip.testrig.pmpuiv2.fw.util.CertificateGenerationUtil;
 import io.mosip.testrig.pmpuiv2.kernel.util.ConfigManager;
+import io.mosip.testrig.pmpuiv2.pages.BasePage;
 
 public class TestRunner {
 	static TestListenerAdapter tla = new TestListenerAdapter();
@@ -31,6 +35,7 @@ public class TestRunner {
 
 	public static void main(String[] args) throws Exception {
 		AdminTestUtil.initialize();
+		CertificateGenerationUtil.generateAllCertificates();
 		try (BufferedReader br = new BufferedReader(new FileReader(getResourcePath() + "/config/knownIssues.txt"))) {
 			String line;
 			while ((line = br.readLine()) != null) {
@@ -47,6 +52,46 @@ public class TestRunner {
 	}
 
 	public static void startTestRunner() throws Exception {
+		String loginLangConfig = ConfigManager.getloginlang();
+		String[] languages = (loginLangConfig == null || loginLangConfig.trim().isEmpty())
+				? new String[] { loginLangConfig }
+				: loginLangConfig.split(",");
+
+		for (int i = 0; i < languages.length; i++) {
+			String lang = languages[i] == null ? null : languages[i].trim();
+			if (languages.length > 1 && (lang == null || lang.isEmpty())) {
+				throw new IllegalArgumentException("loginlang must not contain empty language values");
+			}
+			if (lang != null && !lang.isEmpty()) {
+				ConfigManager.setloginlang(lang);
+			}
+			initAllLocalizedPages(lang);
+			if (languages.length > 1) {
+				logger.info(
+						"===== Running suite for language: " + lang + " (" + (i + 1) + "/" + languages.length + ") =====");
+			}
+
+			runSuiteOnce();
+
+			// Reset test data so the next language (if any) starts from a clean state
+			DBManager.cleanUpPartnerUiV2Data();
+		}
+
+		System.exit(0);
+	}
+
+	private static void initAllLocalizedPages(String lang) throws Exception {
+		Reflections reflections = new Reflections("io.mosip.testrig.pmpuiv2.pages");
+		Set<Class<? extends BasePage>> pageClasses = reflections.getSubTypesOf(BasePage.class);
+		for (Class<? extends BasePage> pageClass : pageClasses) {
+			try {
+				pageClass.getMethod("init", String.class).invoke(null, lang);
+			} catch (NoSuchMethodException e) {
+			}
+		}
+	}
+
+	private static void runSuiteOnce() throws Exception {
 		File homeDir = null;
 		TestNG runner = new TestNG();
 		if (!ConfigManager.gettestcases().equals("")) {
@@ -70,22 +115,50 @@ public class TestRunner {
 					"io.mosip.testrig.pmpuiv2.testcase.PolicyCreationForAuthPartner");
 			XmlClass oidcClientAuthPartnerTest = new XmlClass(
 					"io.mosip.testrig.pmpuiv2.testcase.OidcClientAuthPartnerTest");
+			XmlClass oidcClientMultilingualFieldsTest = new XmlClass(
+					"io.mosip.testrig.pmpuiv2.testcase.OidcClientMultilingualFieldsTest");
 			XmlClass deviceCreationTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.DeviceCreationTest");
 			XmlClass policyGroupTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.PolicyGroupTest");
 			XmlClass certificateTrustStoreTest = new XmlClass(
 					"io.mosip.testrig.pmpuiv2.testcase.CertificateTrustStoreTest");
 			XmlClass apiKeyAuthPartnerTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.ApiKeyAuthPartnerTest");
+			XmlClass apiKeyExpirationDateTest = new XmlClass(
+					"io.mosip.testrig.pmpuiv2.testcase.ApiKeyExpirationDateTest");
 			XmlClass datasharePolicyTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.DatasharePolicyTest");
 			XmlClass sbiDeviceProviderTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.SbiDeviceProviderTest");
 			XmlClass authPartnerWithoutCertificateTest = new XmlClass(
 					"io.mosip.testrig.pmpuiv2.testcase.AuthPartnerWithoutCertificateTest");
 			XmlClass partnerDetailsTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.PartnerDetailsTest");
+			XmlClass partnerFilterTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.PartnerFilterTest");
+			XmlClass partnerEmailFilterTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.PartnerEmailFilterTest");
+			XmlClass statusLabelActiveTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.StatusLabelActiveTest");
+			XmlClass draftConfirmationScreenTest = new XmlClass(
+					"io.mosip.testrig.pmpuiv2.testcase.DraftConfirmationScreenTest");
+			XmlClass partnerDeactivateOptionTest = new XmlClass(
+					"io.mosip.testrig.pmpuiv2.testcase.PartnerDeactivateOptionTest");
+			XmlClass partnerDeactivatedPortalTest = new XmlClass(
+					"io.mosip.testrig.pmpuiv2.testcase.PartnerDeactivatedPortalTest");
+			XmlClass deactivatePartner2Creation = new XmlClass(
+					"io.mosip.testrig.pmpuiv2.testcase.DeactivatePartner2Creation");
+			XmlClass partnerDeactivateNavigationTest = new XmlClass(
+					"io.mosip.testrig.pmpuiv2.testcase.PartnerDeactivateNavigationTest");
+			XmlClass deactivateDevicePartnerCreation = new XmlClass(
+					"io.mosip.testrig.pmpuiv2.testcase.DeactivateDevicePartnerCreation");
+			XmlClass deactivatedDeviceProviderTest = new XmlClass(
+					"io.mosip.testrig.pmpuiv2.testcase.DeactivatedDeviceProviderTest");
+			XmlClass deactivateFtmPartnerCreation = new XmlClass(
+					"io.mosip.testrig.pmpuiv2.testcase.DeactivateFtmPartnerCreation");
+			XmlClass deactivatedFtmProviderTest = new XmlClass(
+					"io.mosip.testrig.pmpuiv2.testcase.DeactivatedFtmProviderTest");
 			XmlClass authPolicyTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.AuthPolicyTest");
+			XmlClass individualViewApproveRejectTest = new XmlClass(
+					"io.mosip.testrig.pmpuiv2.testcase.IndividualViewApproveRejectTest");
 			XmlClass partnerPolicyMappingTest = new XmlClass(
 					"io.mosip.testrig.pmpuiv2.testcase.PartnerPolicyMappingTest");
 			XmlClass mispPartnerTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.MispPartnerTest");
 			XmlClass mispPolicyTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.MispPolicyTest");
 			XmlClass abisPartnerTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.AbisPartnerTest");
+			XmlClass mispServicesTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.MispServicesTest");
 
 			List<XmlClass> classes = new ArrayList<>();
 			String[] scenarioNames = ConfigManager.gettestcases().split(",");
@@ -129,9 +202,17 @@ public class TestRunner {
 					addClassIfAbsent(classes, partnerAdminCreation, authPartnerCreation, policyCreationForAuthPartner,
 							oidcClientAuthPartnerTest);
 					break;
+				case "OidcClientMultilingualFieldsTest":
+					addClassIfAbsent(classes, partnerAdminCreation, authPartnerCreation, policyCreationForAuthPartner,
+							oidcClientMultilingualFieldsTest);
+					break;
 				case "DeviceCreationTest":
 					addClassIfAbsent(classes, partnerAdminCreation, devicePartnerCreation, sbiCreationTest,
 							deviceCreationTest);
+					break;
+				case "DraftConfirmationScreenTest":
+					addClassIfAbsent(classes, partnerAdminCreation, policyAdminAndPartnerCreation, policyGroupTest,
+							draftConfirmationScreenTest);
 					break;
 				case "PolicyGroupTest":
 					addClassIfAbsent(classes, partnerAdminCreation, policyAdminAndPartnerCreation, policyGroupTest);
@@ -144,6 +225,10 @@ public class TestRunner {
 				case "ApiKeyAuthPartnerTest":
 					addClassIfAbsent(classes, partnerAdminCreation, authPartnerCreation, policyCreationForAuthPartner,
 							apiKeyAuthPartnerTest);
+					break;
+				case "ApiKeyExpirationDateTest":
+					addClassIfAbsent(classes, partnerAdminCreation, authPartnerCreation, policyCreationForAuthPartner,
+							apiKeyAuthPartnerTest, apiKeyExpirationDateTest);
 					break;
 				case "DatasharePolicyTest":
 					addClassIfAbsent(classes, partnerAdminCreation, policyAdminAndPartnerCreation, policyGroupTest,
@@ -162,12 +247,63 @@ public class TestRunner {
 				case "PartnerDetailsTest":
 					addClassIfAbsent(classes, partnerAdminCreation, deactivatePartnerCreation, partnerDetailsTest);
 					break;
+				case "PartnerFilterTest":
+					addClassIfAbsent(classes, partnerAdminCreation, deactivatePartnerCreation, partnerDetailsTest,
+							partnerFilterTest);
+					break;
+				case "PartnerEmailFilterTest":
+					addClassIfAbsent(classes, partnerAdminCreation, deactivatePartnerCreation, partnerDetailsTest,
+							partnerEmailFilterTest);
+					break;
+				case "StatusLabelActiveTest":
+					addClassIfAbsent(classes, partnerAdminCreation, authPartnerCreation, deactivatePartnerCreation,
+							partnerDetailsTest, statusLabelActiveTest);
+					break;
+				case "PartnerDeactivateOptionTest":
+					addClassIfAbsent(classes, partnerAdminCreation, deactivatePartnerCreation, partnerDetailsTest,
+							partnerDeactivateOptionTest);
+					break;
+				case "DeactivatePartner2Creation":
+					addClassIfAbsent(classes, partnerAdminCreation, deactivatePartnerCreation,
+							deactivatePartner2Creation);
+					break;
+				case "PartnerDeactivateNavigationTest":
+					addClassIfAbsent(classes, partnerAdminCreation, deactivatePartnerCreation,
+							deactivatePartner2Creation, partnerDeactivateNavigationTest);
+					break;
+				case "DeactivateDevicePartnerCreation":
+					addClassIfAbsent(classes, partnerAdminCreation, deactivateDevicePartnerCreation);
+					break;
+				case "DeactivatedDeviceProviderTest":
+					addClassIfAbsent(classes, partnerAdminCreation, deactivateDevicePartnerCreation,
+							deactivatedDeviceProviderTest);
+					break;
+				case "DeactivateFtmPartnerCreation":
+					addClassIfAbsent(classes, partnerAdminCreation, deactivateFtmPartnerCreation);
+					break;
+				case "DeactivatedFtmProviderTest":
+					addClassIfAbsent(classes, partnerAdminCreation, deactivateFtmPartnerCreation,
+							deactivatedFtmProviderTest);
+					break;
+				// policyCreationForAuthPartner is needed for the policy-request scenario to reach Submit.
+				case "PartnerDeactivatedPortalTest":
+					addClassIfAbsent(classes, partnerAdminCreation, authPartnerCreation, policyCreationForAuthPartner,
+							deactivatePartnerCreation, partnerDetailsTest, partnerDeactivateOptionTest,
+							partnerDeactivatedPortalTest);
+					break;
 				case "AuthPolicyTest":
 					addClassIfAbsent(classes, partnerAdminCreation, policyAdminAndPartnerCreation, policyGroupTest,
 							authPolicyTest);
 					break;
 				case "PartnerPolicyMappingTest":
-					addClassIfAbsent(classes, partnerAdminCreation, authPartnerCreation, partnerPolicyMappingTest);
+					addClassIfAbsent(classes, partnerAdminCreation, authPartnerCreation, policyCreationForAuthPartner,
+							partnerPolicyMappingTest);
+					break;
+				case "IndividualViewApproveRejectTest":
+					// The FTM and SBI individual views are checked too, so their fixtures are needed.
+					addClassIfAbsent(classes, partnerAdminCreation, authPartnerCreation, policyCreationForAuthPartner,
+							partnerPolicyMappingTest, devicePartnerCreation, sbiCreationTest, ftmPartnerCreation,
+							ftmDeviceTest, individualViewApproveRejectTest);
 					break;
 				case "MispPartnerTest":
 					addClassIfAbsent(classes, partnerAdminCreation, mispPartnerTest);
@@ -177,6 +313,9 @@ public class TestRunner {
 					break;
 				case "AbisPartnerTest":
 					addClassIfAbsent(classes, partnerAdminCreation, abisPartnerTest);
+					break;
+				case "MispServicesTest":
+					addClassIfAbsent(classes, partnerAdminCreation, mispPartnerTest, mispPolicyTest, mispServicesTest);
 					break;
 
 				// Unknown test name
@@ -214,8 +353,10 @@ public class TestRunner {
 
 		System.getProperties().setProperty("testng.output.dir", "testng-report");
 		runner.setOutputDirectory("testng-report");
+		String currentLang = ConfigManager.getloginlang();
+		String langSuffix = (currentLang == null || currentLang.isEmpty()) ? "" : "-" + currentLang;
 		System.getProperties().setProperty("emailable.report2.name",
-				"PMPUI-" + BaseTestCaseFunc.environment + "-run-" + BaseClass.Date() + "-report.html");
+				"PMPUI-" + BaseTestCaseFunc.environment + "-run-" + BaseClass.Date() + langSuffix + "-report.html");
 
 		runner.run();
 

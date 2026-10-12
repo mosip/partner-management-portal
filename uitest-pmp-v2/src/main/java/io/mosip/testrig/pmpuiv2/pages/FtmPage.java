@@ -1,13 +1,19 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
+import java.time.Duration;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import io.mosip.testrig.pmpuiv2.fw.util.CertificateGenerationUtil;
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
 
 public class FtmPage extends BasePage {
+
+	// Used only to assert a submit was refused, so a short window is enough.
+	private static final Duration FTM_OUTCOME_TIMEOUT = Duration.ofSeconds(5);
 
 	@FindBy(xpath = "//*[contains(text(), 'successfully')]")
 	private WebElement successMessageForFtmCert;
@@ -642,6 +648,10 @@ public class FtmPage extends BasePage {
 		clickOnElement(addFtmChipButton);
 	}
 
+	public boolean isAddFtmErrorMessageDisplayed() {
+		return isElementDisplayedQuick(By.id("add_ftm_error_msg"), FTM_OUTCOME_TIMEOUT);
+	}
+
 	public void clickOnStatusAscIcon() {
 		clickOnElement(statusAscIcon);
 	}
@@ -707,11 +717,15 @@ public class FtmPage extends BasePage {
 	}
 
 	public void uploadCertificateConfrmationForFtm() {
-		uploadImage(uploadFile, PmpTestUtil.getResourceFilePath("pmp_uiv2_cert", "Client.cer"));
+		uploadImage(uploadFile, CertificateGenerationUtil.getCertFilePath("Client.cer"));
 	}
 
 	public boolean isCertificateReuploadButtonDisplayed() {
 		return isElementDisplayed(certificateReuploadButton);
+	}
+
+	public boolean isCertificateReuploadButtonDisplayedQuick() {
+		return isElementDisplayedQuick(By.id("certificate_reupload_btn"), ABSENCE_CHECK_TIMEOUT);
 	}
 
 	public boolean isFtmChipDetailsCertificateContextDisplayed() {
@@ -756,6 +770,10 @@ public class FtmPage extends BasePage {
 
 	public boolean isApproveRejectPopupHeaderDisplayed() {
 		return isElementDisplayed(approveRejectPopupHeader);
+	}
+
+	public boolean isApproveRejectPopupHeaderDisplayedQuick() {
+		return isElementDisplayedQuick(By.id("approve-reject_popup_header"), ABSENCE_CHECK_TIMEOUT);
 	}
 
 	public boolean isApproveRejectPopupSubHeaderDisplayed() {
@@ -1052,12 +1070,12 @@ public class FtmPage extends BasePage {
 
 	public boolean isFtmListApproveRejectOptionIsDisabled() {
 		clickOnFtmListApproveRejectOption();
-		return !isApproveRejectPopupDisplayed();
+		return !isElementDisplayedQuick(By.id("approve-reject_popup_title"), ABSENCE_CHECK_TIMEOUT);
 	}
 
 	public boolean isFtmListDeactivateOptionIsDisabled() {
 		clickOnFtmListDeactivateOption();
-		return !isDeactivatePopupDisplayed();
+		return !isElementDisplayedQuick(By.id("deactivate_popup_header"), ABSENCE_CHECK_TIMEOUT);
 	}
 
 	public void clickOnCertificateUploadButton() {

@@ -149,7 +149,7 @@ public class PartnerPolicyMappingTest extends BaseClass {
 		assertTrue(partnerPolicyMappingPage.isActionHeaderDisplayed(), GlobalConstants.isActionHeaderDisplayed);
 		assertTrue(partnerPolicyMappingPage.isHomeButtonDisplayed(), GlobalConstants.isHomeButtonDisplayed);
 
-		assertFalse(partnerPolicyMappingPage.isFilterResetButtonDisplayed(),
+		assertFalse(partnerPolicyMappingPage.isFilterResetButtonDisplayedQuick(),
 				GlobalConstants.isFilterResetButtonDisplayed);
 		assertTrue(partnerPolicyMappingPage.isFilterButtonDisplayed(), GlobalConstants.isFilterButtonDisplayed);
 		partnerPolicyMappingPage.clickOnFilterButton();
@@ -159,7 +159,7 @@ public class PartnerPolicyMappingTest extends BaseClass {
 
 		partnerPolicyMappingPage.clickOnFilterResetButton();
 		partnerPolicyMappingPage.clickOnFilterButton();
-		assertFalse(partnerPolicyMappingPage.isFilterButtonEnabled(), GlobalConstants.isFilterButtonEnabled);
+		assertFalse(partnerPolicyMappingPage.isFilterButtonEnabledQuick(), GlobalConstants.isFilterButtonEnabled);
 
 		assertTrue(partnerPolicyMappingPage.isPartnerIdFilterDisplayed(), GlobalConstants.isPartnerIdFilterDisplayed);
 		assertTrue(partnerPolicyMappingPage.isPartnerTypeFilterDisplayed(),
@@ -251,6 +251,7 @@ public class PartnerPolicyMappingTest extends BaseClass {
 		partnerPolicyMappingPage.clickOnStatusDescIcon();
 		partnerPolicyMappingPage.clickOnStatusAscIcon();
 
+		partnerPolicyMappingPage.enterPartnerIdInFilter(GlobalConstants.AUTH_PARTNER_ID);
 		partnerPolicyMappingPage.clickOnStatusFilterDropdown();
 		partnerPolicyMappingPage.clickOnPendingForApprovalStatus();
 		partnerPolicyMappingPage.clickOnApplyFilterButton();
@@ -273,7 +274,7 @@ public class PartnerPolicyMappingTest extends BaseClass {
 		partnerPolicyMappingPage.clickOnApplyFilterButton();
 		partnerPolicyMappingPage.clickOnPartnerListViewElipsisButton();
 		partnerPolicyMappingPage.clickOnApproveOrRejectButton();
-		assertFalse(partnerPolicyMappingPage.isApproveOrRejectConfirmationPopupDisplayed(),
+		assertFalse(partnerPolicyMappingPage.isApproveOrRejectConfirmationPopupDisplayedQuick(),
 				GlobalConstants.isApproveOrRejectConfirmationPopupDisplayed);
 		assertTrue(partnerPolicyMappingPage.isViewButtoEnabled(), GlobalConstants.isViewButtoEnabled);
 		partnerPolicyMappingPage.clickOnApprovedPolicy();
@@ -290,7 +291,7 @@ public class PartnerPolicyMappingTest extends BaseClass {
 		partnerPolicyMappingPage.clickOnApplyFilterButton();
 		partnerPolicyMappingPage.clickOnPartnerListViewElipsisButton();
 		partnerPolicyMappingPage.clickOnApproveOrRejectButton();
-		assertFalse(partnerPolicyMappingPage.isApproveOrRejectConfirmationPopupDisplayed(),
+		assertFalse(partnerPolicyMappingPage.isApproveOrRejectConfirmationPopupDisplayedQuick(),
 				GlobalConstants.isApproveOrRejectConfirmationPopupDisplayed);
 		assertTrue(partnerPolicyMappingPage.isViewButtoEnabled(), GlobalConstants.isViewButtoEnabled);
 		partnerPolicyMappingPage.clickOnRejectedPolicy();
@@ -361,7 +362,7 @@ public class PartnerPolicyMappingTest extends BaseClass {
 		assertTrue(partnerPolicyMappingPage.isStatusApprovedDisplayed(), GlobalConstants.isStatusApprovedDisplayed);
 		partnerPolicyMappingPage.clickOnPartnerListViewElipsisButton();
 		partnerPolicyMappingPage.clickOnApproveOrRejectButton();
-		assertFalse(partnerPolicyMappingPage.isApproveOrRejectConfirmationPopupDisplayed(),
+		assertFalse(partnerPolicyMappingPage.isApproveOrRejectConfirmationPopupDisplayedQuick(),
 				GlobalConstants.isApproveOrRejectConfirmationPopupDisplayed);
 
 		partnerPolicyMappingPage.enterpolicyGroupFilter(GlobalConstants.DEFAULT_POLICYGROUP);
@@ -373,7 +374,7 @@ public class PartnerPolicyMappingTest extends BaseClass {
 		assertTrue(partnerPolicyMappingPage.isStatusRejectedDisplayed(), GlobalConstants.isStatusRejectedDisplayed);
 		partnerPolicyMappingPage.clickOnPartnerListViewElipsisButton();
 		partnerPolicyMappingPage.clickOnApproveOrRejectButton();
-		assertFalse(partnerPolicyMappingPage.isApproveOrRejectConfirmationPopupDisplayed(),
+		assertFalse(partnerPolicyMappingPage.isApproveOrRejectConfirmationPopupDisplayedQuick(),
 				GlobalConstants.isApproveOrRejectConfirmationPopupDisplayed);
 
 		loginAsAuthPartner();

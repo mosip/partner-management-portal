@@ -1,15 +1,21 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
+import java.time.Duration;
+
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
 
 public class AuthPolicyPage extends BasePage {
+
+	private static final Duration SAVE_AS_DRAFT_ENABLE_TIMEOUT = Duration.ofSeconds(20);
 
 	@FindBy(id = "create_auth_policy_btn")
 	private WebElement createAuthPolicyButton;
@@ -37,6 +43,9 @@ public class AuthPolicyPage extends BasePage {
 
 	@FindBy(id = "confirmation_go_back_btn")
 	private WebElement goBackButton;
+
+	@FindBy(id = "confirmation_custom_btn")
+	private WebElement draftConfirmationPublishButton;
 
 	@FindBy(id = "filter_btn")
 	private WebElement filterButton;
@@ -350,6 +359,12 @@ public class AuthPolicyPage extends BasePage {
 	@FindBy(xpath = "//p[contains(text(), 'This Authentication Policy is currently in draft mode')]")
 	private WebElement policyDraftInfoMessage;
 
+	@FindBy(id = "create_policy_confirmation_header")
+	private WebElement draftConfirmationHeader;
+
+	@FindBy(id = "create_policy_confirmation_description")
+	private WebElement draftConfirmationDescription;
+
 	@FindBy(id = "block_messsage_proceed")
 	private WebElement proceedButton;
 
@@ -571,6 +586,10 @@ public class AuthPolicyPage extends BasePage {
 		return isElementEnabled(filterButton);
 	}
 
+	public boolean isFilterButtonDisplayedOrEnabledQuick() {
+		return isElementDisplayedQuick(By.id("filter_btn"), ABSENCE_CHECK_TIMEOUT) && filterButton.isEnabled();
+	}
+
 	public void enterPolicyNameInFilter(String policyNameFilterValue) {
 		enter(policyNameFilter, policyNameFilterValue);
 	}
@@ -698,6 +717,10 @@ public class AuthPolicyPage extends BasePage {
 		return isElementEnabled(policyDataBox);
 	}
 
+	public boolean isPolicyDataBoxEnabledQuick() {
+		return isElementDisplayedQuick(By.id("policy_data_box"), ABSENCE_CHECK_TIMEOUT) && policyDataBox.isEnabled();
+	}
+
 	public boolean isPolicyDataContentDisplayed() {
 		return isElementDisplayed(uploadedPolicyData);
 	}
@@ -821,6 +844,10 @@ public class AuthPolicyPage extends BasePage {
 		return isElementDisplayed(policyViewPageTitle);
 	}
 
+	public boolean isPolicyViewPageTitleDisplayedQuick() {
+		return isElementDisplayedQuick(By.xpath("//h1[text()='View Authentication Policy']"), ABSENCE_CHECK_TIMEOUT);
+	}
+
 	public void clickOnViewBackButton() {
 		clickOnElement(viewBackButton);
 	}
@@ -863,8 +890,18 @@ public class AuthPolicyPage extends BasePage {
 		return isElementEnabled(applyFilterButton);
 	}
 
+	public boolean isApplyFilterButtonEnabledQuick() {
+		return isElementDisplayedQuick(By.id("apply_filter__btn"),
+				ABSENCE_CHECK_TIMEOUT) && applyFilterButton.isEnabled();
+	}
+
 	public boolean isFilterResetButtonAvailableOrEnabled() {
 		return isElementEnabled(filterResetButton);
+	}
+
+	public boolean isFilterResetButtonAvailableOrEnabledQuick() {
+		return isElementDisplayedQuick(By.id("filter_reset_btn"),
+				ABSENCE_CHECK_TIMEOUT) && filterResetButton.isEnabled();
 	}
 
 	public void clickOnFilterResetButton() {
@@ -1084,6 +1121,20 @@ public class AuthPolicyPage extends BasePage {
 		return isElementEnabled(saveAsDraftButton);
 	}
 
+	public boolean isSaveAsDraftButtonEnabledQuick() {
+		return isElementDisplayedQuick(By.id("create_policy_form_submit_btn"),
+				ABSENCE_CHECK_TIMEOUT) && saveAsDraftButton.isEnabled();
+	}
+
+	public boolean waitForSaveAsDraftButtonEnabled() {
+		try {
+			new WebDriverWait(driver, SAVE_AS_DRAFT_ENABLE_TIMEOUT).until(driver -> saveAsDraftButton.isEnabled());
+			return true;
+		} catch (TimeoutException e) {
+			return false;
+		}
+	}
+
 	public boolean isSaveAsDraftButtonDisabled() {
 		return isElementDisabled(saveAsDraftButton);
 	}
@@ -1100,6 +1151,47 @@ public class AuthPolicyPage extends BasePage {
 		return isElementDisplayed(policyDraftInfoMessage);
 	}
 
+	public String getDraftConfirmationDescriptionText() {
+		return getTextFromLocator(draftConfirmationDescription).replaceAll("\\s+", " ").trim();
+	}
+
+	public String getDraftConfirmationHeaderText() {
+		return getTextFromLocator(draftConfirmationHeader).trim();
+	}
+
+	public boolean isDraftConfirmationPublishButtonDisplayed() {
+		return isElementDisplayed(draftConfirmationPublishButton);
+	}
+
+	public boolean isDraftConfirmationGoBackButtonDisplayed() {
+		return isElementDisplayed(goBackButton);
+	}
+
+	public String getDraftConfirmationPublishButtonText() {
+		return getTextFromLocator(draftConfirmationPublishButton).trim();
+	}
+
+	public String getDraftConfirmationGoBackButtonText() {
+		return getTextFromLocator(goBackButton).trim();
+	}
+
+	public boolean isPublishButtonLeftOfGoBackButton() {
+		return getElementLeftEdge(draftConfirmationPublishButton) < getElementLeftEdge(goBackButton);
+	}
+
+	public void clickOnDraftConfirmationPublishButton() {
+		clickOnElement(draftConfirmationPublishButton);
+	}
+
+	public String describeDraftConfirmationButtons() {
+		return (String) ((JavascriptExecutor) driver).executeScript(
+				"var out=[];" + "document.querySelectorAll('button').forEach(function(b){"
+						+ "  var r=b.getBoundingClientRect();"
+						+ "  if(r.width>0 && r.height>0){"
+						+ "    out.push('[id='+(b.id||'-')+\" text='\"+b.innerText.trim()+\"' left=\"+Math.round(r.left)+' disabled='+b.disabled+']');"
+						+ "  }});" + "return out.join(' | ');");
+	}
+
 	public void clickOnProceedButton() {
 		clickOnElement(proceedButton);
 	}
@@ -1107,6 +1199,10 @@ public class AuthPolicyPage extends BasePage {
 	public boolean isClonePolicyPopupTitleDisplayed() {
 	    By clonePolicyTitle = By.id("clone_policy_popup_title");
 	    return isDisplayed(clonePolicyTitle);
+	}
+
+	public boolean isClonePolicyPopupTitleDisplayedQuick() {
+		return isElementDisplayedQuick(By.id("clone_policy_popup_title"), ABSENCE_CHECK_TIMEOUT);
 	}
 
 	public boolean isClonePolicyInfoMessageDisplayed() {
@@ -1171,6 +1267,11 @@ public class AuthPolicyPage extends BasePage {
 		return isElementEnabled(clonePolicyButton);
 	}
 
+	public boolean isClonePolicyButtonEnabledQuick() {
+		return isElementDisplayedQuick(By.id("clone_policy_button"),
+				ABSENCE_CHECK_TIMEOUT) && clonePolicyButton.isEnabled();
+	}
+
 	public void clickOnClonePolicyButton() {
 		clickOnElement(clonePolicyButton);
 	}
@@ -1181,6 +1282,11 @@ public class AuthPolicyPage extends BasePage {
 
 	public boolean isClonePolicyCancelButtonEnabled() {
 		return isElementEnabled(clonePolicyCancelButton);
+	}
+
+	public boolean isClonePolicyCancelButtonEnabledQuick() {
+		return isElementDisplayedQuick(By.id("clone_policy_cancel"),
+				ABSENCE_CHECK_TIMEOUT) && clonePolicyCancelButton.isEnabled();
 	}
 
 	public boolean isClonePolicyCloseButtonEnabled() {
@@ -1221,6 +1327,11 @@ public class AuthPolicyPage extends BasePage {
 
 	public boolean isDeactivatePolicyPopupDisplayed() {
 		return isElementDisplayed(deactivatePolicyPopup);
+	}
+
+	public boolean isDeactivatePolicyPopupDisplayedQuick() {
+		return isElementDisplayedQuick(By.xpath("//p[contains(text(), 'Do you want to deactivate Policy')]"),
+				ABSENCE_CHECK_TIMEOUT);
 	}
 
 	public boolean isDeactivatePolicyPopupTitleDisplayed() {

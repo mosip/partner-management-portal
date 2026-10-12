@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -14,6 +15,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
 import io.mosip.testrig.pmpuiv2.kernel.util.ConfigManager;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
+import io.mosip.testrig.pmpuiv2.utility.LogUtil;
 
 public class ListOfSbiPage extends BasePage {
 
@@ -353,10 +355,7 @@ public class ListOfSbiPage extends BasePage {
 	}
 
 	public boolean isDeactivateOptionEnabled() {
-		if (isElementDisplayed(deactivateSbiButtonWithGreyedOut)) {
-			return false;
-		}
-		return isElementDisplayed(deactivateSbiButton);
+		return !getTextFromAttribute(deactivateSbiButton, "class").contains("cursor-auto");
 	}
 
 	public void clickOnDeactivateSbi() {
@@ -497,6 +496,11 @@ public class ListOfSbiPage extends BasePage {
 
 	public boolean isApproveOrRejectSbiPopupDisplayed() {
 		return isElementDisplayed(approveOrRejectSbiPopup);
+	}
+
+	public boolean isApproveOrRejectSbiPopupDisplayedQuick() {
+		return isElementDisplayedQuick(By.xpath("//p[text()='Do you want to Approve or Reject the SBI?']"),
+				ABSENCE_CHECK_TIMEOUT);
 	}
 
 	public boolean isApproveOrRejectSbiPopupSubtitleDisplayed() {
@@ -701,10 +705,7 @@ public class ListOfSbiPage extends BasePage {
 	}
 
 	public boolean isApproveRejectOptionEnabled() {
-		if (isElementDisplayed(approveRejectOptionGreyedOut)) {
-			return false;
-		}
-		return isElementDisplayed(approveRejectButton);
+		return !getTextFromAttribute(approveRejectButton, "class").contains("text-[#A5A5A5]");
 	}
 
 	public boolean isPartnerIdAscIconDisplayed() {
@@ -796,6 +797,11 @@ public class ListOfSbiPage extends BasePage {
 		return isElementDisplayed(subTitleOfLinkedDevices);
 	}
 
+	public boolean isLinkedDevicesListDisplayedQuick() {
+		return isElementDisplayedQuick(By.xpath("//p[contains(text(), 'List of Linked Devices')]"),
+				ABSENCE_CHECK_TIMEOUT);
+	}
+
 	public void clickOnBackIconOfLinkedDevices() {
 		clickOnElement(backIconOfLinkedDevices);
 	}
@@ -817,10 +823,7 @@ public class ListOfSbiPage extends BasePage {
 	}
 
 	public boolean isDeactivateOptionEnabledInAdmin() {
-		if (isElementDisplayed(deactivateSbiButtonWithGreyedOutInAdmin)) {
-			return false;
-		}
-		return isElementDisplayed(deactivateSbiButtonInAdmin);
+		return !getTextFromAttribute(deactivateSbiButtonInAdmin, "class").contains("text-[#A5A5A5]");
 	}
 
 	public boolean isDeactivatePopupInAdminDisplayed() {
@@ -865,5 +868,12 @@ public class ListOfSbiPage extends BasePage {
 	public boolean isPartnerIdInFirstColumnDisplayed() {
 		return isElementDisplayed(partnerIdInFirstColumn);
 	}
+
+	public void selectExpiredSbiExpiryStatusInFilter() {
+		click(By.id("sbi_expiry_status_filter_dropdown_btn"));
+		click(By.id("sbi_expiry_status_filter_option1"));
+	}
+
+
 
 }

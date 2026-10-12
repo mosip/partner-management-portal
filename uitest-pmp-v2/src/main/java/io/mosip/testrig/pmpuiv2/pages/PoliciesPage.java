@@ -1,11 +1,15 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
+import java.time.Duration;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class PoliciesPage extends BasePage {
+
+	private static final Duration REQUEST_POLICY_OUTCOME_TIMEOUT = Duration.ofSeconds(5);
 
 	@FindBy(id = "title_back_icon")
 	private WebElement policiesTitle;
@@ -285,16 +289,10 @@ public class PoliciesPage extends BasePage {
 		return isElementDisplayed(policiesTitle);
 	}
 
+	private static final By REQUEST_POLICY_BUTTON = By.cssSelector("#policies_request_btn, #show_request_policy");
+
 	public void clickOnRequestPolicyButton() {
-		if (isTabularRequestPolicyButtonDisplayed()) {
-			clickOnElement(tabularPoliciesRequestButton);
-
-		} else if (isMiddleRequestPolicyButtonDisplayed()) {
-			clickOnElement(middleRequestPolicyButton);
-
-		} else {
-			throw new RuntimeException("Request Policy button not found in middle or tabular view");
-		}
+		click(REQUEST_POLICY_BUTTON);
 	}
 
 	public void clickOnRequestPolicyButtonOfTabularPage() {
@@ -341,6 +339,19 @@ public class PoliciesPage extends BasePage {
 		return isElementDisplayed(policySubmittedSuccessfully);
 	}
 
+	// Short window: used to assert the request did NOT succeed.
+	public boolean isPolicySubmittedSuccessfullyDisplayedQuick() {
+		return isElementDisplayedQuick(By.id("request_policy_confirmation_header"), REQUEST_POLICY_OUTCOME_TIMEOUT);
+	}
+
+	public boolean isRequestPolicyErrorMessageDisplayed() {
+		return isElementDisplayedQuick(By.id("request_policy_error_msg"), REQUEST_POLICY_OUTCOME_TIMEOUT);
+	}
+
+	public String getRequestPolicyErrorMessage() {
+		return getTextFromLocator(By.id("request_policy_error_msg")).trim();
+	}
+
 	public boolean isNoDataAvailableTextDisplayed() {
 		return isElementDisplayed(noDataAvailableText);
 	}
@@ -354,15 +365,7 @@ public class PoliciesPage extends BasePage {
 	}
 
 	public boolean isPoliciesEmptyTableEnabled() {
-		if (isMiddleRequestPolicyButtonDisplayed()) {
-			return isElementEnabled(middleRequestPolicyButton);
-
-		} else if (isTabularRequestPolicyButtonDisplayed()) {
-			return isElementEnabled(tabularPoliciesRequestButton);
-
-		} else {
-			return false;
-		}
+		return isElementEnabled(REQUEST_POLICY_BUTTON);
 	}
 
 	public void clickOnHomeButton() {

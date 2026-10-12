@@ -200,6 +200,25 @@ public class MispPartnerTest extends BaseClass {
 		partnerCertificatePage.clickOnSubmitButton();
 		assertTrue(partnerCertificatePage.isCertificateExpiredErrorDisplayed(),
 				GlobalConstants.isCertificateExpiredErrorDisplayed);
+		partnerCertificatePage.clickOnCertificateUploadCancelButton();
+		mispPartnerPage.clickOnSuccessMsgHomeButton();
+
+		dashboardPage.clickOnPartners();
+		mispPartnerPage.clickOnCreatePartnerButton();
+		createMispPartnerWithoutPolicyGroup(GlobalConstants.MISP_PARTNER_WITHOUT_POLICYGROUP, GlobalConstants.MISP_PARTNER,
+				GlobalConstants.MISP_NOTIFICATION_LANGUAGE, GlobalConstants.ALPHANUMERIC,
+				GlobalConstants.ORGANISATION_NAME, GlobalConstants.MISP_CONTACT_NUMBER2, GlobalConstants.MISP_EMAIL_ID6);
+		assertTrue(mispPartnerPage.isCreatePartnerSuccessMsgDisplayed(),
+				GlobalConstants.isCreatePartnerSuccessMsgDisplayed);
+		mispPartnerPage.clickOnUploadPartnerCertificateButton();
+		assertTrue(partnerCertificatePage.isMispPartnerCertificatePopupDisplayed(),
+				GlobalConstants.isPartnerCertificatePageDisplayed);
+		partnerCertificatePage.uploadCertificateMispClient();
+		partnerCertificatePage.clickOnSubmitButton();
+
+		assertTrue(partnerCertificatePage.isCertificateUploadSuccessMessageDisplayed(),
+				GlobalConstants.isCertificateUploadSuccessMessageDisplayed);
+		partnerCertificatePage.clickOnCloseButton();
 
 	}
 
@@ -260,6 +279,7 @@ public class MispPartnerTest extends BaseClass {
 
 		assertEquals(mispPartnerPage.getPolicyGroupText(GlobalConstants.MISP_PART_01),
 				GlobalConstants.DEFAULT_POLICYGROUP, "Verify Policy Group is displayed correctly");
+
 
 	}
 
