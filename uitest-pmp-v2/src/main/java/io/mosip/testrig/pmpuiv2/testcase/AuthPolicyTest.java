@@ -452,7 +452,7 @@ public class AuthPolicyTest extends BaseClass {
 				GlobalConstants.isEditPolicyCancelButtonDisplayed);
 
 		authPolicyPage.enterPolicyName(GlobalConstants.SPACE);
-		assertFalse(authPolicyPage.isSaveAsDraftButtonEnabledQuick(), GlobalConstants.isSaveAsDraftButtonEnabled);
+		assertFalse(authPolicyPage.isEditPolicySubmitButtonEnabled(), GlobalConstants.isSaveAsDraftButtonEnabled);
 
 		authPolicyPage.enterPolicyName(GlobalConstants.SINGLE_CHARACTERS);
 		authPolicyPage.enterpolicyDescription(GlobalConstants.SINGLE_CHARACTERS);

@@ -527,7 +527,7 @@ public class DatasharePolicyTest extends BaseClass {
 				GlobalConstants.isEditPolicyCancelButtonDisplayed);
 
 		datasharePolicyPage.enterPolicyName(GlobalConstants.SPACE);
-		assertFalse(datasharePolicyPage.isSaveAsDraftButtonEnabledQuick(), GlobalConstants.isSaveAsDraftButtonEnabled);
+		assertFalse(datasharePolicyPage.isEditPolicySubmitButtonEnabled(), GlobalConstants.isSaveAsDraftButtonEnabled);
 
 		datasharePolicyPage.enterPolicyName(GlobalConstants.SINGLE_CHARACTERS);
 		datasharePolicyPage.enterpolicyDescription(GlobalConstants.SINGLE_CHARACTERS);

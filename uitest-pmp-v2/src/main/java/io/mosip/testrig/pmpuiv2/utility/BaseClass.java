@@ -60,9 +60,10 @@ public class BaseClass {
 		boolean isHeadless = ConfigManager.getheadless().equalsIgnoreCase("yes");
 
 		driver = DriverManager.getDriver();
-		if (driver != null && isBrowserAlive()) {
-			resetBrowserState();
+		if (driver instanceof ChromiumDriver && isBrowserAlive() && resetBrowserState()) {
+			logger.info("Reusing browser: fresh tab, cookies and site storage cleared");
 		} else {
+			// A browser that could not be fully reset may still hold the previous user's session, so never reuse it.
 			quitBrowser();
 			launchBrowser(isHeadless);
 		}
@@ -122,27 +123,33 @@ public class BaseClass {
 		}
 	}
 
-	// Brings a reused browser back to the state a freshly launched one would have.
-	private void resetBrowserState() {
-		driver.switchTo().newWindow(WindowType.TAB);
-		String freshTab = driver.getWindowHandle();
-		for (String handle : driver.getWindowHandles()) {
-			if (!handle.equals(freshTab)) {
-				driver.switchTo().window(handle);
-				driver.close();
+	// Brings a reused browser back to the state a freshly launched one would have. Returns false if any step
+	// fails, so the caller relaunches instead of reusing a browser that may still hold the previous session.
+	private boolean resetBrowserState() {
+		try {
+			driver.switchTo().newWindow(WindowType.TAB);
+			String freshTab = driver.getWindowHandle();
+			for (String handle : driver.getWindowHandles()) {
+				if (!handle.equals(freshTab)) {
+					driver.switchTo().window(handle);
+					driver.close();
+				}
 			}
-		}
-		driver.switchTo().window(freshTab);
+			driver.switchTo().window(freshTab);
 
-		ChromiumDriver chrome = (ChromiumDriver) driver;
-		chrome.executeCdpCommand("Network.clearBrowserCookies", new HashMap<>());
-		for (String url : new String[] { envPathPmpUiv2, ConfigManager.getIAMUrl() }) {
-			Map<String, Object> params = new HashMap<>();
-			params.put("origin", originOf(url));
-			params.put("storageTypes", "all");
-			chrome.executeCdpCommand("Storage.clearDataForOrigin", params);
+			ChromiumDriver chrome = (ChromiumDriver) driver;
+			chrome.executeCdpCommand("Network.clearBrowserCookies", new HashMap<>());
+			for (String url : new String[] { envPathPmpUiv2, ConfigManager.getIAMUrl() }) {
+				Map<String, Object> params = new HashMap<>();
+				params.put("origin", originOf(url));
+				params.put("storageTypes", "all");
+				chrome.executeCdpCommand("Storage.clearDataForOrigin", params);
+			}
+			return true;
+		} catch (WebDriverException e) {
+			logger.info("Browser reset failed, launching a new one: " + e.getClass().getSimpleName());
+			return false;
 		}
-		logger.info("Reusing browser: fresh tab, cookies and site storage cleared");
 	}
 
 	private static String originOf(String url) {

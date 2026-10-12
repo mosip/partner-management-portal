@@ -303,7 +303,7 @@ public class OidcClientMultilingualFieldsTest extends BaseClass {
 	public void fillAndSubmitFlow() {
 		OidcClientPage oidcClientPage = openCreateOidcClientForm();
 
-		String oidcClientName = GlobalConstants.DEFAULT_POLICY + BaseClass.data;
+		String oidcClientName = GlobalConstants.DEFAULT_POLICY + "fill" + BaseClass.data;
 		oidcClientPage.selectPartnerIdDropdown();
 		oidcClientPage.selectPolicyNameDropdown(GlobalConstants.DEFAULT_POLICY);
 		oidcClientPage.enterNameOidcTextBox(oidcClientName);
@@ -351,7 +351,7 @@ public class OidcClientMultilingualFieldsTest extends BaseClass {
 	public void multilingualWithPurposeFieldsSubmitFlow() {
 		OidcClientPage oidcClientPage = openCreateOidcClientForm();
 
-		String oidcClientName = GlobalConstants.DEFAULT_POLICY + BaseClass.data;
+		String oidcClientName = GlobalConstants.DEFAULT_POLICY + "purpose" + BaseClass.data;
 		oidcClientPage.selectPartnerIdDropdown();
 		oidcClientPage.selectPolicyNameDropdown(GlobalConstants.DEFAULT_POLICY);
 		oidcClientPage.enterNameOidcTextBox(oidcClientName);
@@ -392,7 +392,7 @@ public class OidcClientMultilingualFieldsTest extends BaseClass {
 	public void legacyOnlySubmitFlow() {
 		OidcClientPage oidcClientPage = openCreateOidcClientForm();
 
-		String oidcClientName = GlobalConstants.DEFAULT_POLICY + BaseClass.data;
+		String oidcClientName = GlobalConstants.DEFAULT_POLICY + "legacy" + BaseClass.data;
 		oidcClientPage.selectPartnerIdDropdown();
 		oidcClientPage.selectPolicyNameDropdown(GlobalConstants.DEFAULT_POLICY);
 		oidcClientPage.enterNameOidcTextBox(oidcClientName);
@@ -444,7 +444,8 @@ public class OidcClientMultilingualFieldsTest extends BaseClass {
 		oidcClientPage.getFirstOidcClientRowName();
 		oidcClientPage.clickOnFilterButton();
 		oidcClientPage.selectOidcClientNameInFilter(oidcClientName);
-		oidcClientPage.waitForFirstOidcClientRowName(oidcClientName);
+		assertTrue(oidcClientPage.waitForFirstOidcClientRowName(oidcClientName),
+				GlobalConstants.isOidcClientListFilteredByClientName);
 	}
 
 	private void loginAsAuthPartner() {

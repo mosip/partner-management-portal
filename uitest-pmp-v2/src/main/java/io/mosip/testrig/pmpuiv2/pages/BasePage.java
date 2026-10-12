@@ -87,7 +87,7 @@ public class BasePage {
 	public void clickOnElement(WebElement element) {
 		LogUtil.action("Clicking on element", element);
 		int attempts = 0;
-		while (attempts < 2) {
+		while (attempts < STALE_RETRY) {
 			try {
 				WaitUtil.waitForVisibility(driver, element);
 				WaitUtil.waitForClickability(driver, element);
@@ -111,7 +111,7 @@ public class BasePage {
 				LogUtil.error("Element not clickable within timeout");
 				takeScreenshot();
 				throw timeout;
-			} catch (Exception e) {
+			} catch (WebDriverException e) {
 				if (e.getMessage() != null && e.getMessage().contains("does not belong to the document")) {
 					attempts++;
 					LogUtil.step("DOM refreshed. Retrying " + attempts + "/" + STALE_RETRY);

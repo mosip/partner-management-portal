@@ -1955,7 +1955,7 @@ public class OidcClientPage extends BasePage {
 		try {
 			dropdown(oidcSelectClientNameFilter, clientName);
 		} catch (IOException e) {
-			logger.info(e.getMessage());
+			throw new RuntimeException("Could not select OIDC client name in filter: " + clientName, e);
 		}
 	}
 
