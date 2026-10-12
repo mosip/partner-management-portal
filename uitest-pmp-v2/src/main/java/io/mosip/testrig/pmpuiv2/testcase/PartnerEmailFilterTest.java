@@ -19,8 +19,6 @@ public class PartnerEmailFilterTest extends BaseClass {
 	private DashboardPage dashboardPage;
 	private PartnerAdminPage partnerAdminPage;
 
-	// The presentation checks all read the same screen, so they share one session rather than
-	// re-launching the browser and logging in again for each individual assertion.
 	@Test(priority = 1, description = "Verify the Email Address column and filter presentation: column visibility, "
 			+ "absence of sorting, filter placeholder, info icon and its tooltip")
 	public void emailAddressColumnAndFilterPresentation() {
@@ -115,8 +113,6 @@ public class PartnerEmailFilterTest extends BaseClass {
 
 	private void verifyCombinedEmailAndMismatchedPartnerTypeReturnsNoResults() {
 		LogUtil.step("Scenario: an email combined with a conflicting Partner Type shows no results");
-		// The email must belong to a non-Authentication partner, otherwise the two
-		// filters agree and the record legitimately comes back.
 		String conflictingEmail = partnerAdminPage
 				.getEmailOfFirstRowWithPartnerTypeOtherThan(GlobalConstants.AUTHENTICATION_PARTNER);
 

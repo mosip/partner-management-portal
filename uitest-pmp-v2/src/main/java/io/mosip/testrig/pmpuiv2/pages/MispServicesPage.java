@@ -24,7 +24,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 import io.mosip.testrig.pmpuiv2.utility.LogUtil;
 
-public class MispServicesPage extends BasePage {
+public class MispServicesPage extends BasePage{
 
 	public static String EXPIRY_DATE_CALENDER_INFO_TEXT;
 	public static String MISP_LIST_HEADER_PARTNER_ID;
@@ -55,10 +55,10 @@ public class MispServicesPage extends BasePage {
 
 	@FindBy(id = "generate_misp_license_key_btn")
 	private WebElement generateMispLicenceKeyButton;
-
+	
 	@FindBy(id = "page_title")
 	private WebElement generateMispLicenceKeyTitle;
-
+	
 	@FindBy(id = "sub_title_btn")
 	private WebElement mispServicesBreadcomb;
 
@@ -436,11 +436,11 @@ public class MispServicesPage extends BasePage {
 	public boolean isGenerateMispLicenceKeyButtonDisplayed() {
 		return isElementDisplayed(generateMispLicenceKeyButton);
 	}
-
+	
 	public void clickOnGenerateMispLicenceKeyButton() {
 		clickOnElement(generateMispLicenceKeyButton);
 	}
-
+	
 	public boolean isGenerateMispLicenceKeyPageDisplayed() {
 		return isElementDisplayed(generateMispLicenceKeyTitle);
 	}
@@ -1050,7 +1050,7 @@ public class MispServicesPage extends BasePage {
 	public String getLatestLicenseRowStatus() {
 		return getLicenseListRowCellText(1, 8);
 	}
-	
+
 	public boolean waitUntilLatestLicenseRowStatusEquals(String expectedStatus) {
 		try {
 			return new WebDriverWait(driver, Duration.ofSeconds(30))

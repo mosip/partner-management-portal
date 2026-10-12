@@ -4,19 +4,19 @@
 <!-- Suite: preserve order; tests decide their own parallelism -->
 <suite name="PMP uiv2 UI TestRig" preserve-order="true" parallel="false">
 
-<!-- Note: 
-- Class dependencies are implemented within the test classes. 
-- This suite is organized based on flow for easier understanding. 
-- Classes are executed in parallel using 6 threads. 
--->
+	<!-- Note:
+    - Class dependencies are implemented within the test classes.
+    - This suite is organized based on flow for easier understanding.
+    - Classes are executed in parallel using 6 threads.
+    -->
 
 	<!-- Runs test classes in parallel with 6 threads -->
 	<test name="PartnerManagementService" preserve-order="false" parallel="classes" thread-count="6">
-		
-		<classes> 
-		 <!-- PARTNER ADMIN SETUP -->
-			<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerAdminCreation" /> 
-			 <!--AUTH PARTNER FLOW-->
+
+		<classes>
+			<!-- PARTNER ADMIN SETUP -->
+			<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerAdminCreation" />
+			<!--AUTH PARTNER FLOW-->
 			<class name="io.mosip.testrig.pmpuiv2.testcase.AuthPartnerCreation" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.PolicyCreationForAuthPartner" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.OidcClientAuthPartnerTest" />
@@ -61,7 +61,7 @@
 			<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerPolicyMappingTest" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.IndividualViewApproveRejectTest" />
 
-			 <!--Deactivate PARTNER FLOW -->
+			<!--Deactivate PARTNER FLOW -->
 			<class name="io.mosip.testrig.pmpuiv2.testcase.DeactivatePartnerCreation" />
 		</classes>
 	</test>

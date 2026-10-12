@@ -588,9 +588,6 @@ public class PartnerAdminPage extends BasePage {
 		return isElementDisplayedQuick(By.id("partner_list_item1"), LIST_LOAD_TIMEOUT);
 	}
 
-	// Rows are index-keyed in React, so the same DOM node survives a filter re-render -
-	// checking mere presence never actually waits. This waits for row 1's own text to
-	// contain the expected partner ID, so a stale pre-filter row can't be mistaken for it.
 	public boolean isPartnerListLoaded(String expectedPartnerId) {
 		try {
 			new WebDriverWait(driver, LIST_LOAD_TIMEOUT).until(ExpectedConditions

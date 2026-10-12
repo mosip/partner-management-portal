@@ -1313,10 +1313,6 @@ public class ApiKeyPage extends BasePage {
 		return getTextFromLocator(editApiKeyExpiryPageTitle);
 	}
 
-	// Subtitle reads "<localized label>: <name>" - only present before submission, the confirmation
-	// screen that follows a successful submit no longer renders it. Splitting on the colon rather than
-	// stripping a hardcoded English label keeps this correct under any login language (verified against
-	// the Arabic UI, where the label itself is translated but the ": <name>" structure is unchanged).
 	public String getEditApiKeyName() {
 		String subTitle = getTextFromLocator(editApiKeySubTitle);
 		return subTitle.substring(subTitle.lastIndexOf(':') + 1).trim();

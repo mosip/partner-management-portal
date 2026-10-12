@@ -23,8 +23,6 @@ public class PartnerFilterTest extends BaseClass {
 	private DashboardPage dashboardPage;
 	private PartnerAdminPage partnerAdminPage;
 
-	// Each test method spawns its own browser and login, so the filter scenarios share a
-	// single session and reset the panel between them rather than repeating that setup six times.
 	@Test(priority = 1, description = "Verify the filter section in List of Partners: dropdown search without Apply Now, "
 			+ "partial and case-insensitive text search, invalid values, applied results and the filtered count")
 	public void partnerListFilterBehaviour() {
@@ -43,9 +41,6 @@ public class PartnerFilterTest extends BaseClass {
 		navigateToPartnerListPage();
 
 		String firstRowBeforeSorting = partnerAdminPage.getFirstRowPartnerId();
-
-		// The list is paginated, so descending page 1 holds different records than ascending
-		// page 1 - each page is checked for being sorted in its own right, not against the other.
 		partnerAdminPage.clickOnPartnerIdAscendingIcon();
 		assertTrue(partnerAdminPage.waitForFirstRowPartnerIdToChangeFrom(firstRowBeforeSorting),
 				GlobalConstants.isPartnerListLoaded);
@@ -137,8 +132,6 @@ public class PartnerFilterTest extends BaseClass {
 
 	private void verifyFilteredResultsCountDisplayedProperly() {
 		LogUtil.step("Scenario: the total number of filtered results is displayed properly");
-		// Filtering to a single partner keeps the total on one page, so the subtitle
-		// count and the rendered row count are directly comparable despite pagination.
 		String existingPartnerId = partnerAdminPage.getFirstRowPartnerId();
 		int unfilteredCount = partnerAdminPage.getFilteredPartnersCountFromSubtitle();
 

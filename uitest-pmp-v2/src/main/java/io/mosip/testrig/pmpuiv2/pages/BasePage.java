@@ -176,8 +176,6 @@ public class BasePage {
 		enterValue(element, value, value);
 	}
 
-	// Types the value but keeps it out of the logs and reports - for personal data such as
-	// the partner email addresses the filter tests read back from the live list.
 	public void enterRedacted(WebElement element, String value) {
 		enterValue(element, value, REDACTED_VALUE);
 	}
