@@ -369,12 +369,20 @@ public class AddDevicePage extends BasePage {
 		return isElementDisplayed(addDeviceTypeOption);
 	}
 
+	public boolean isDeviceTypeOptionDisplayedQuick() {
+		return isElementDisplayedQuick(By.id("add_device_device_type_1_option1"), ABSENCE_CHECK_TIMEOUT);
+	}
+
 	public void clickOnDeviceSubType() {
 		clickOnElement(addDeviceSubTypeSelectDropdown);
 	}
 
 	public boolean isDeviceSubTypeOptionDisplayed() {
 		return isElementDisplayed(addDeviceSubTypeOption);
+	}
+
+	public boolean isDeviceSubTypeOptionDisplayedQuick() {
+		return isElementDisplayedQuick(By.id("add_device_device_sub_type_1_option1"), ABSENCE_CHECK_TIMEOUT);
 	}
 
 	public boolean isAddedDeviceTypeEnabled(String deviceType) {

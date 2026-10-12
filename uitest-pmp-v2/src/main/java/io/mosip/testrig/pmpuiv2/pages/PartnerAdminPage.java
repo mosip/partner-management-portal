@@ -836,12 +836,11 @@ public class PartnerAdminPage extends BasePage {
 	}
 
 	private static final By ANY_COLUMN_SORT_ICON = By
-			.xpath("//svg[contains(@id,'_asc_icon') or contains(@id,'_desc_icon')]");
+			.cssSelector("svg[id$='_asc_icon'], svg[id$='_desc_icon']");
 
 	public int getSortIconCountForColumn(String columnId) {
 		isElementDisplayedQuick(ANY_COLUMN_SORT_ICON, LIST_LOAD_TIMEOUT);
-		return getElementCount(
-				By.xpath("//svg[@id='" + columnId + "_asc_icon' or @id='" + columnId + "_desc_icon']"));
+		return getElementCount(By.id(columnId + "_asc_icon")) + getElementCount(By.id(columnId + "_desc_icon"));
 	}
 
 	public String getEmailAddressFilterPlaceholder() {
@@ -928,6 +927,11 @@ public class PartnerAdminPage extends BasePage {
 	// For an uploaded certificate, the disabled state here reflects isActive alone.
 	public boolean isDownloadCertificateButtonEnabledInViewPartnerPage() {
 		return isElementEnabled(downloadCertificateButtonInViewPartnerPage);
+	}
+
+	public boolean isDownloadCertificateButtonEnabledInViewPartnerPageQuick() {
+		return isElementDisplayedQuick(By.id("download_partner_cer_btn"),
+				SHORT_ABSENCE_TIMEOUT) && downloadCertificateButtonInViewPartnerPage.isEnabled();
 	}
 
 	// Waits on the first badge - the rows exist before the filtered response paints their status text.

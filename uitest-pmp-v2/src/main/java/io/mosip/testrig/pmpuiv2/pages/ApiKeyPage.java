@@ -643,13 +643,7 @@ public class ApiKeyPage extends BasePage {
 	}
 
 	public void clickOnCreateApiKey() {
-		if (isElementDisplayed(apiKeyListPageGenerateApiKeyBtn)) {
-			clickOnElement(apiKeyListPageGenerateApiKeyBtn);
-		} else if (isElementDisplayed(generateApiKey)) {
-			clickOnElement(generateApiKey);
-		} else {
-			throw new RuntimeException("Create API Key button is not visible on the page");
-		}
+		click(By.cssSelector("#generate_api_key_btn, #generate_api_key"));
 	}
 
 	public void clickOnSubmitButton() {
@@ -770,6 +764,10 @@ public class ApiKeyPage extends BasePage {
 
 	public boolean isFilterButtonEnabled() {
 		return isElementEnabled(filterButton);
+	}
+
+	public boolean isFilterButtonEnabledQuick() {
+		return isElementDisplayedQuick(By.id("filter_btn"), ABSENCE_CHECK_TIMEOUT) && filterButton.isEnabled();
 	}
 
 	public void clickOnFilterButton() {
@@ -927,6 +925,11 @@ public class ApiKeyPage extends BasePage {
 
 	public boolean isApiKeyDeactivatePopupDisplayed() {
 		return isElementDisplayed(apiKeyDeactivateTitle);
+	}
+
+	public boolean isApiKeyDeactivatePopupDisplayedQuick() {
+		return isElementDisplayedQuick(By.xpath("//p[contains(text(), 'Do you want to Deactivate API Key')]"),
+				ABSENCE_CHECK_TIMEOUT);
 	}
 
 	public boolean isApiKeyDeactivateTitleDisplayed() {
@@ -1092,6 +1095,11 @@ public class ApiKeyPage extends BasePage {
 		return isElementEnabled(filterResetButton);
 	}
 
+	public boolean isfilterResetButtonEnabledQuick() {
+		return isElementDisplayedQuick(By.id("filter_reset_btn"),
+				ABSENCE_CHECK_TIMEOUT) && filterResetButton.isEnabled();
+	}
+
 	public boolean isPartnerIdFilterHeaderDisplayed() {
 		return isElementDisplayed(partnerIdFilterHeader);
 	}
@@ -1142,6 +1150,11 @@ public class ApiKeyPage extends BasePage {
 
 	public boolean isApplyFilterButtonEnabled() {
 		return isElementEnabled(applyFilterButton);
+	}
+
+	public boolean isApplyFilterButtonEnabledQuick() {
+		return isElementDisplayedQuick(By.id("apply_filter_btn"),
+				ABSENCE_CHECK_TIMEOUT) && applyFilterButton.isEnabled();
 	}
 
 	public void clickOnApplyFilterButton() {
@@ -1518,6 +1531,10 @@ public class ApiKeyPage extends BasePage {
 		return isElementDisplayed(apiKeyTitle);
 	}
 
+	public boolean isApiKeyDetailsPageDisplayedQuick() {
+		return isElementDisplayedQuick(By.xpath("//h1[text()='View API Key Details']"), ABSENCE_CHECK_TIMEOUT);
+	}
+
 	public boolean isStatusDeavtivatedDisplayed() {
 		return isElementDisplayed(deactivatedStatus);
 	}
@@ -1689,20 +1706,28 @@ public class ApiKeyPage extends BasePage {
 
 	private List<LocalDate> readExpiryColumn(boolean isAdminView) {
 		List<WebElement> expirationDateColumn = isAdminView ? adminExpirationDateColumn : partnerExpirationDateColumn;
-		List<LocalDate> dates = new ArrayList<>();
-		for (WebElement cell : expirationDateColumn) {
-			String value = cell.getText().trim();
-			if (value.isEmpty() || value.equalsIgnoreCase(NO_EXPIRY_TEXT) || value.equals("-")) {
-				continue;
-			}
+		for (int attempt = 0; attempt < STALE_RETRY; attempt++) {
 			try {
-				dates.add(LocalDate.parse(value, PmpTestUtil.nonZeroPadderDateFormatter));
-			} catch (DateTimeParseException e) {
-				LogUtil.step("Skipping unparsable expiry value: " + value);
+				List<LocalDate> dates = new ArrayList<>();
+				for (WebElement cell : expirationDateColumn) {
+					String value = cell.getText().trim();
+					if (value.isEmpty() || value.equalsIgnoreCase(NO_EXPIRY_TEXT) || value.equals("-")) {
+						continue;
+					}
+					try {
+						dates.add(LocalDate.parse(value, PmpTestUtil.nonZeroPadderDateFormatter));
+					} catch (DateTimeParseException e) {
+						LogUtil.step("Skipping unparsable expiry value: " + value);
+					}
+				}
+				LogUtil.step("Expiration dates read from column: " + dates);
+				return dates;
+			} catch (StaleElementReferenceException stale) {
+				LogUtil.step("Expiration date column went stale while reading - retrying");
 			}
 		}
-		LogUtil.step("Expiration dates read from column: " + dates);
-		return dates;
+		takeScreenshot();
+		throw new RuntimeException("Expiration date column still stale after " + STALE_RETRY + " attempts");
 	}
 
 	public boolean isExpirationDateSameAsBrowserDateFormat(boolean isAdminView) {

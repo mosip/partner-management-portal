@@ -355,10 +355,7 @@ public class ListOfSbiPage extends BasePage {
 	}
 
 	public boolean isDeactivateOptionEnabled() {
-		if (isElementDisplayed(deactivateSbiButtonWithGreyedOut)) {
-			return false;
-		}
-		return isElementDisplayed(deactivateSbiButton);
+		return !getTextFromAttribute(deactivateSbiButton, "class").contains("cursor-auto");
 	}
 
 	public void clickOnDeactivateSbi() {
@@ -499,6 +496,11 @@ public class ListOfSbiPage extends BasePage {
 
 	public boolean isApproveOrRejectSbiPopupDisplayed() {
 		return isElementDisplayed(approveOrRejectSbiPopup);
+	}
+
+	public boolean isApproveOrRejectSbiPopupDisplayedQuick() {
+		return isElementDisplayedQuick(By.xpath("//p[text()='Do you want to Approve or Reject the SBI?']"),
+				ABSENCE_CHECK_TIMEOUT);
 	}
 
 	public boolean isApproveOrRejectSbiPopupSubtitleDisplayed() {
@@ -703,10 +705,7 @@ public class ListOfSbiPage extends BasePage {
 	}
 
 	public boolean isApproveRejectOptionEnabled() {
-		if (isElementDisplayed(approveRejectOptionGreyedOut)) {
-			return false;
-		}
-		return isElementDisplayed(approveRejectButton);
+		return !getTextFromAttribute(approveRejectButton, "class").contains("text-[#A5A5A5]");
 	}
 
 	public boolean isPartnerIdAscIconDisplayed() {
@@ -798,6 +797,11 @@ public class ListOfSbiPage extends BasePage {
 		return isElementDisplayed(subTitleOfLinkedDevices);
 	}
 
+	public boolean isLinkedDevicesListDisplayedQuick() {
+		return isElementDisplayedQuick(By.xpath("//p[contains(text(), 'List of Linked Devices')]"),
+				ABSENCE_CHECK_TIMEOUT);
+	}
+
 	public void clickOnBackIconOfLinkedDevices() {
 		clickOnElement(backIconOfLinkedDevices);
 	}
@@ -819,10 +823,7 @@ public class ListOfSbiPage extends BasePage {
 	}
 
 	public boolean isDeactivateOptionEnabledInAdmin() {
-		if (isElementDisplayed(deactivateSbiButtonWithGreyedOutInAdmin)) {
-			return false;
-		}
-		return isElementDisplayed(deactivateSbiButtonInAdmin);
+		return !getTextFromAttribute(deactivateSbiButtonInAdmin, "class").contains("text-[#A5A5A5]");
 	}
 
 	public boolean isDeactivatePopupInAdminDisplayed() {

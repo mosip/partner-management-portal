@@ -1,6 +1,7 @@
 package io.mosip.testrig.pmpuiv2.testcase;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import org.testng.Assert;
@@ -82,7 +83,7 @@ public class DeviceCreationTest extends BaseClass {
 		addDevicePage.clickOnDeviceType();
 		assertTrue(addDevicePage.isDeviceTypeOptionDisplayed(), GlobalConstants.isDeviceTypeOptionsDisplayed);
 		addDevicePage.clickOnDeviceType();
-		assertEquals(addDevicePage.isDeviceTypeOptionDisplayed(), false);
+		assertFalse(addDevicePage.isDeviceTypeOptionDisplayedQuick(), GlobalConstants.isDeviceTypeOptionsDisplayed);
 
 		addDevicePage.selectAddDeviceType();
 		assertEquals(addDevicePage.getDeviceTypeValue(), GlobalConstants.FACE);
@@ -91,7 +92,8 @@ public class DeviceCreationTest extends BaseClass {
 		addDevicePage.clickOnDeviceSubType();
 		assertTrue(addDevicePage.isDeviceSubTypeOptionDisplayed(), GlobalConstants.isDeviceSubTypeOptionsDisplayed);
 		addDevicePage.clickOnDeviceSubType();
-		assertEquals(addDevicePage.isDeviceSubTypeOptionDisplayed(), false);
+		assertFalse(addDevicePage.isDeviceSubTypeOptionDisplayedQuick(),
+				GlobalConstants.isDeviceSubTypeOptionsDisplayed);
 		addDevicePage.selectDeviceSubType(GlobalConstants.FULL_FACE);
 		assertTrue(addDevicePage.isSubmitDisabled(), GlobalConstants.isSubmitButtonDisabled);
 		addDevicePage.clickOnClear();
@@ -128,8 +130,8 @@ public class DeviceCreationTest extends BaseClass {
 				GlobalConstants.AUTOMATION_2, 2);
 		addDevicePage.clickOnDeleteButton();
 		addDevicePage.clickOnBackToDevices();
-		assertEquals(listOfDevicesPage.isDeviceDisplayed(GlobalConstants.IRIS, GlobalConstants.SINGLE,
-				GlobalConstants.AUTOMATION_2, GlobalConstants.AUTOMATION_2), false);
+		assertFalse(listOfDevicesPage.isDeviceDisplayedQuick(GlobalConstants.IRIS, GlobalConstants.SINGLE,
+				GlobalConstants.AUTOMATION_2, GlobalConstants.AUTOMATION_2));
 
 		listOfDevicesPage.clickOnAddDeviceButtonFromDeviceList();
 		addMultipleDevices(GlobalConstants.FACE, GlobalConstants.FULL_FACE, GlobalConstants.AUTOMATION,
@@ -417,7 +419,7 @@ public class DeviceCreationTest extends BaseClass {
 		listOfDevicesPage.clickOnDevice(GlobalConstants.IRIS, GlobalConstants.SINGLE,
 				GlobalConstants.AUTOMATION_LOWERCASE, GlobalConstants.AUTOMATION_LOWERCASE,
 				GlobalConstants.DEACTIVATED);
-//		assertFalse(viewDeviceDetailsPage.isDeviceDetailsPageTitleDisplayed(),
+//		assertFalse(viewDeviceDetailsPage.isDeviceDetailsPageTitleDisplayedQuick(),
 //				GlobalConstants.isDeviceDetailsTitleDisplayed);
 
 		assertTrue(authPolicyPage.isPaginationDisplayed(), GlobalConstants.isPaginationDisplayed);
@@ -622,14 +624,21 @@ public class DeviceCreationTest extends BaseClass {
 	private void deviceFilterWithStatus(String status, boolean approved, boolean pendingForApproval,
 			boolean deactiavted, boolean rejected) {
 		listOfDevicesPage.selectStatusFilter(status);
-		assertEquals(listOfDevicesPage.isDeviceDisplayed(GlobalConstants.FACE, GlobalConstants.FULL_FACE,
-				GlobalConstants.AUTOMATION, GlobalConstants.AUTOMATION), approved);
-		assertEquals(listOfDevicesPage.isDeviceDisplayed(GlobalConstants.FINGER, GlobalConstants.TOUCHLESS,
-				GlobalConstants.ALPHANUMERIC, GlobalConstants.AUTOMATION), pendingForApproval);
-		assertEquals(listOfDevicesPage.isDeviceDisplayed(GlobalConstants.IRIS, GlobalConstants.SINGLE,
-				GlobalConstants.AUTOMATION_LOWERCASE, GlobalConstants.AUTOMATION_LOWERCASE), deactiavted);
-		assertEquals(listOfDevicesPage.isDeviceDisplayed(GlobalConstants.FINGER, GlobalConstants.SLAP,
-				GlobalConstants.AUTOMATION_REJECTING, GlobalConstants.AUTOMATION_REJECTING), rejected);
+		assertDeviceListed(GlobalConstants.FACE, GlobalConstants.FULL_FACE, GlobalConstants.AUTOMATION,
+				GlobalConstants.AUTOMATION, approved);
+		assertDeviceListed(GlobalConstants.FINGER, GlobalConstants.TOUCHLESS, GlobalConstants.ALPHANUMERIC,
+				GlobalConstants.AUTOMATION, pendingForApproval);
+		assertDeviceListed(GlobalConstants.IRIS, GlobalConstants.SINGLE, GlobalConstants.AUTOMATION_LOWERCASE,
+				GlobalConstants.AUTOMATION_LOWERCASE, deactiavted);
+		assertDeviceListed(GlobalConstants.FINGER, GlobalConstants.SLAP, GlobalConstants.AUTOMATION_REJECTING,
+				GlobalConstants.AUTOMATION_REJECTING, rejected);
+	}
+
+	private void assertDeviceListed(String deviceType, String deviceSubType, String make, String model,
+			boolean expected) {
+		boolean listed = expected ? listOfDevicesPage.isDeviceDisplayed(deviceType, deviceSubType, make, model)
+				: listOfDevicesPage.isDeviceDisplayedQuick(deviceType, deviceSubType, make, model);
+		assertEquals(listed, expected);
 	}
 
 	private void verifyDeviceDetailsWithViewDeviceFromMenuDots(String deviceType, String deviceSubType, String make,

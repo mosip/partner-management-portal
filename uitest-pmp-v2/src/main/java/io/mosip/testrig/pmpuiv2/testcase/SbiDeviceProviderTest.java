@@ -584,13 +584,13 @@ public class SbiDeviceProviderTest extends BaseClass {
 		assertTrue(listOfSbiPage.isLinkedDevicePresentForStatus("Pending For Approval", "0"),
 				GlobalConstants.Linked_Device0);
 		listOfSbiPage.clickOnLinkedDevicesInSbiList("Pending For Approval", "0");
-		assertFalse(listOfSbiPage.isLinkedDevicesListDisplayed(), GlobalConstants.isLinkedDevicesListDisplayed);
+		assertFalse(listOfSbiPage.isLinkedDevicesListDisplayedQuick(), GlobalConstants.isLinkedDevicesListDisplayed);
 	}
 
 	private void verifyLinkedDevicesOfRejectedSbiInList(String sbiVersion, String status) {
 		assertTrue(listOfSbiPage.isLinkedDevicePresentForStatus("Rejected", "0"), GlobalConstants.Linked_Device0);
 		listOfSbiPage.clickOnLinkedDevicesInSbiList("Rejected", "0");
-		assertFalse(listOfSbiPage.isLinkedDevicesListDisplayed(), GlobalConstants.isLinkedDevicesListDisplayed);
+		assertFalse(listOfSbiPage.isLinkedDevicesListDisplayedQuick(), GlobalConstants.isLinkedDevicesListDisplayed);
 	}
 
 	private void verifyDeviceDetailsAsAdmin(String deviceType, String deviceSubType, String make, String model,

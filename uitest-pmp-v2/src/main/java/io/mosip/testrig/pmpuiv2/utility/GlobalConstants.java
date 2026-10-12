@@ -619,6 +619,7 @@ public class GlobalConstants {
 	public static final String isSubmitButtonEnabledAfterFillingForm = "Verify submit button is enabled after filling required and optional details";
 	public static final String isRedirectedToOidcClientListAfterSubmit = "Verify partner is redirected to the OIDC Client tab with the list of existing OIDC clients after success";
 	public static final String isNewOidcClientNameAtTopOfList = "Verify newly created OIDC client appears at the top of the list";
+	public static final String isOidcClientListFilteredByClientName = "Verify the OIDC client list filtered by client name shows the newly created client";
 	public static final String isNewOidcClientStatusActive = "Verify newly created OIDC client has status Active";
 	public static final String isPartnerIdFieldLabelDisplayed = "Verify if Partner ID field label displayed";
 	public static final String isPartnerTypeFieldDisplayed = "Verify if Partner Type field displayed";
