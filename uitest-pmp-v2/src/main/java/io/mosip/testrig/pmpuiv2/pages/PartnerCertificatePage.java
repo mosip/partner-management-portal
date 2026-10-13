@@ -530,12 +530,21 @@ public class PartnerCertificatePage extends BasePage {
 		return isElementEnabled(downloadButton);
 	}
 
+	public boolean isDownloadButtonEnabledQuick() {
+		return isElementDisplayedQuick(By.id("download_btn1"), ABSENCE_CHECK_TIMEOUT) && downloadButton.isEnabled();
+	}
+
 	public boolean isPartnerCertificateReuploadButtonDisplayed() {
 		return isElementDisplayed(partnerCertificateReuploadButton);
 	}
 
 	public boolean isPartnerCertificateReuploadButtonEnabled() {
 		return isElementEnabled(partnerCertificateReuploadButton);
+	}
+
+	public boolean isPartnerCertificateReuploadButtonEnabledQuick() {
+		return isElementDisplayedQuick(By.id("partner_certificate_re_upload_btn1"),
+				ABSENCE_CHECK_TIMEOUT) && partnerCertificateReuploadButton.isEnabled();
 	}
 
 	public String getCertificateUploadedDateInPartnerPortal() {

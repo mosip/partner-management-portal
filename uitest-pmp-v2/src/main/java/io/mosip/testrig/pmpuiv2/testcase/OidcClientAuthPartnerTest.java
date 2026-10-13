@@ -207,7 +207,8 @@ public class OidcClientAuthPartnerTest extends BaseClass {
 		oidcClientPage.clickOnRedirectUriAddNew();
 		assertTrue(oidcClientPage.isRedirectUri2TextBoxDisplayed(), GlobalConstants.isRedirectUri2TextBoxDisplayed);
 		oidcClientPage.clickOnRedirectUri2Delete();
-		assertFalse(oidcClientPage.isRedirectUri2TextBoxDisplayed(), GlobalConstants.isRedirectUri2TextBoxDisplayed);
+		assertFalse(oidcClientPage.isRedirectUri2TextBoxDisplayedQuick(),
+				GlobalConstants.isRedirectUri2TextBoxDisplayed);
 	}
 
 	@Test(priority = 3, description = "Adding second redirect uri", dependsOnMethods = "deletingSecondRedirectUri")
@@ -320,9 +321,9 @@ public class OidcClientAuthPartnerTest extends BaseClass {
 		assertTrue(oidcClientPage.isStatusDeavtivatedDisplayed(), GlobalConstants.isStatusDeavtivatedDisplayed);
 		assertTrue(oidcClientPage.isDeactivatedEyeIconDisplayed(), GlobalConstants.isDeactivatedEyeIconDisplayed);
 		oidcClientPage.clickOnDeactivatedEyeIcon();
-		assertFalse(oidcClientPage.iscopyIdButtonDisplayed(), GlobalConstants.iscopyIdButtonDisplayed);
+		assertFalse(oidcClientPage.iscopyIdButtonDisplayedQuick(), GlobalConstants.iscopyIdButtonDisplayed);
 		oidcClientPage.clickOnDeactivatedOidcRow();
-		assertFalse(oidcClientPage.isOidcClientDetailsPageDisplayed(),
+		assertFalse(oidcClientPage.isOidcClientDetailsPageDisplayedQuick(),
 				GlobalConstants.isOidcClientDetailsPageDisplayed);
 		oidcClientPage.clickOnDeactivatedOidcActionButton();
 		assertTrue(oidcClientPage.isOidcDetailsViewButtonDisplayed(), GlobalConstants.isOidcDetailsViewButtonDisplayed);
@@ -382,7 +383,7 @@ public class OidcClientAuthPartnerTest extends BaseClass {
 		oidcClientPage.clickOnApplyFilterButton();
 
 		oidcClientPage.clickOnDeactivatedOidcRow();
-		assertFalse(oidcClientPage.isOidcClientDetailsPageDisplayed(),
+		assertFalse(oidcClientPage.isOidcClientDetailsPageDisplayedQuick(),
 				GlobalConstants.isOidcClientDetailsPageDisplayed);
 		assertTrue(oidcClientPage.isStatusDeavtivatedDisplayed(), GlobalConstants.isStatusDeavtivatedDisplayed);
 
@@ -473,7 +474,7 @@ public class OidcClientAuthPartnerTest extends BaseClass {
 
 		oidcClientPage.clickOnFilterButton();
 		assertTrue(oidcClientPage.isfilterResetButtonEnabled(), GlobalConstants.isfilterResetButtonEnabled);
-		assertFalse(oidcClientPage.isFilterButtonEnabled(), GlobalConstants.isFilterButtonEnabled);
+		assertFalse(oidcClientPage.isFilterButtonEnabledQuick(), GlobalConstants.isFilterButtonEnabled);
 
 		assertTrue(oidcClientPage.isPartnerIdFilterHeaderDisplayed(), GlobalConstants.isPartnerIdFilterHeaderDisplayed);
 		assertTrue(oidcClientPage.isOrganisationFilterHeaderDisplayed(),
@@ -496,7 +497,7 @@ public class OidcClientAuthPartnerTest extends BaseClass {
 				GlobalConstants.isOidcClientNamePlaceHolderDisplayed);
 		assertTrue(oidcClientPage.isStatusPlaceHolderDisplayed(), GlobalConstants.isStatusPlaceHolderDisplayed);
 
-		assertFalse(oidcClientPage.isApplyFilterButtonEnabled(), GlobalConstants.isApplyFilterButtonEnabled);
+		assertFalse(oidcClientPage.isApplyFilterButtonEnabledQuick(), GlobalConstants.isApplyFilterButtonEnabled);
 		oidcClientPage.enterInvalidOidcClientNameInFilter(GlobalConstants.RANDOM_DATA);
 		assertTrue(oidcClientPage.isApplyFilterButtonEnabled(), GlobalConstants.isApplyFilterButtonEnabled);
 		oidcClientPage.clickOnApplyFilterButton();
@@ -509,7 +510,7 @@ public class OidcClientAuthPartnerTest extends BaseClass {
 				GlobalConstants.isDeactivatedStatusInFilterDisplayed);
 		oidcClientPage.clickOnStatusFilter();
 		oidcClientPage.clickOnFilterResetButton();
-		assertFalse(oidcClientPage.isfilterResetButtonEnabled(), GlobalConstants.isfilterResetButtonEnabled);
+		assertFalse(oidcClientPage.isfilterResetButtonEnabledQuick(), GlobalConstants.isfilterResetButtonEnabled);
 
 		oidcClientPage.clickOnFilterButton();
 		oidcClientPage.enterPartnerIdInFilter(GlobalConstants.AUTH_PARTNER_ID);
@@ -567,11 +568,11 @@ public class OidcClientAuthPartnerTest extends BaseClass {
 		oidcClientPage.clickOnActionButton();
 		assertTrue(oidcClientPage.isViewButtonEnabled(), GlobalConstants.isViewButtonEnabled);
 		oidcClientPage.clickOnDeactivateButton();
-		assertFalse(oidcClientPage.isDeactivateOidcClientPopupDisplayed(),
+		assertFalse(oidcClientPage.isDeactivateOidcClientPopupDisplayedQuick(),
 				GlobalConstants.isDeactivateOidcClientPopupDisplayed);
 
 		oidcClientPage.clickOnDeactivatedOidcRow();
-		assertFalse(oidcClientPage.isOidcClientDetailsPageDisplayed(),
+		assertFalse(oidcClientPage.isOidcClientDetailsPageDisplayedQuick(),
 				GlobalConstants.isOidcClientDetailsPageDisplayed);
 		assertTrue(oidcClientPage.isStatusDeavtivatedDisplayed(), GlobalConstants.isStatusDeavtivatedDisplayed);
 
@@ -702,7 +703,7 @@ public class OidcClientAuthPartnerTest extends BaseClass {
 		assertTrue(oidcClientPage.isOidcClientDetailsCopyIdDisplayed(),
 				GlobalConstants.isOidcClientDetailsCopyIdDisplayed);
 		oidcClientPage.clickOnOidcClientDetailsCopyId();
-		assertFalse(oidcClientPage.isCopiedTextDisplayed(), GlobalConstants.isCopiedTextNotDisplayed);
+		assertFalse(oidcClientPage.isCopiedTextDisplayedQuick(), GlobalConstants.isCopiedTextNotDisplayed);
 		oidcClientPage.clickOnTitleBackButton();
 		assertTrue(oidcClientPage.isOidcClientTabDisplayed(), GlobalConstants.isOidcClientTabDisplayed);
 

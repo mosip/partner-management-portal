@@ -7,11 +7,11 @@
 <!-- Note: 
 - Class dependencies are implemented within the test classes. 
 - This suite is organized based on flow for easier understanding. 
-- Classes are executed in parallel using 4 threads. 
+- Classes are executed in parallel using 6 threads. 
 -->
 
-	<!-- Runs test classes in parallel with 4 threads -->
-	<test name="PartnerManagementService" preserve-order="false" parallel="classes" thread-count="4">
+	<!-- Runs test classes in parallel with 6 threads -->
+	<test name="PartnerManagementService" preserve-order="false" parallel="classes" thread-count="6">
 		
 		<classes> 
 		 <!-- PARTNER ADMIN SETUP -->

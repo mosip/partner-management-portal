@@ -53,11 +53,11 @@ public class DeactivatedFtmProviderTest extends BaseClass {
 				GlobalConstants.isCertificateReuploadButtonDisabled);
 		assertTrue(partnerCertificatePage.isPartnerCertificateReuploadButtonGreyedOut(),
 				GlobalConstants.isCertificateReuploadButtonGreyedOut);
-		assertFalse(partnerCertificatePage.isPartnerCertificateReuploadButtonEnabled(),
+		assertFalse(partnerCertificatePage.isPartnerCertificateReuploadButtonEnabledQuick(),
 				GlobalConstants.isCertificateReuploadButtonDisabled);
 		assertTrue(partnerCertificatePage.isDownloadButtonDisplayed(),
 				GlobalConstants.isCertificateDownloadButtonDisabledForDeactivatedPartner);
-		assertFalse(partnerCertificatePage.isDownloadButtonEnabled(),
+		assertFalse(partnerCertificatePage.isDownloadButtonEnabledQuick(),
 				GlobalConstants.isCertificateDownloadButtonDisabledForDeactivatedPartner);
 	}
 

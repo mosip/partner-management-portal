@@ -38,8 +38,8 @@
 		<reflections.version>0.10.2</reflections.version>
 		<commons.collections4.version>4.4</commons.collections4.version>
 		<commons.lang.version>2.6</commons.lang.version>
-		<httpclient5.version>5.2.1</httpclient5.version>
-		<httpcore5.version>5.2.1</httpcore5.version>
+		<httpclient5.version>5.6.3</httpclient5.version>
+		<httpcore5.version>5.4.3</httpcore5.version>
 		<testng.version>7.10.1</testng.version>
 		<javax.ws.rs-api.version>2.1.1</javax.ws.rs-api.version>
 		<commons.beanutils.version>1.9.2</commons.beanutils.version>
@@ -68,6 +68,11 @@
 				<version>1.2.1-SNAPSHOT</version>
 				<type>pom</type>
 				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.httpcomponents.core5</groupId>
+				<artifactId>httpcore5-h2</artifactId>
+				<version>${httpcore5.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

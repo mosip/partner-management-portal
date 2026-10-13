@@ -43,6 +43,7 @@ public class BasePage {
 
 	protected WebDriver driver;
 	protected static final int STALE_RETRY = 2;
+	protected static final Duration ABSENCE_CHECK_TIMEOUT = Duration.ofSeconds(3);
 	private static final String REDACTED_VALUE = "***";
 	protected static final Logger logger = Logger.getLogger(BasePage.class);
 
@@ -86,7 +87,7 @@ public class BasePage {
 	public void clickOnElement(WebElement element) {
 		LogUtil.action("Clicking on element", element);
 		int attempts = 0;
-		while (attempts < 2) {
+		while (attempts < STALE_RETRY) {
 			try {
 				WaitUtil.waitForVisibility(driver, element);
 				WaitUtil.waitForClickability(driver, element);
@@ -110,7 +111,12 @@ public class BasePage {
 				LogUtil.error("Element not clickable within timeout");
 				takeScreenshot();
 				throw timeout;
-			} catch (Exception e) {
+			} catch (WebDriverException e) {
+				if (e.getMessage() != null && e.getMessage().contains("does not belong to the document")) {
+					attempts++;
+					LogUtil.step("DOM refreshed. Retrying " + attempts + "/" + STALE_RETRY);
+					continue;
+				}
 				LogUtil.error("Unexpected click failure: " + e.getClass().getSimpleName());
 				takeScreenshot();
 				throw new RuntimeException("Click failed for element: " + element, e);
@@ -592,11 +598,39 @@ public class BasePage {
 		return alertText;
 	}
 
+	// Select-all is Command+A on macOS and Control+A elsewhere.
+	protected static final Keys SELECT_ALL_MODIFIER = System.getProperty("os.name").toLowerCase().contains("mac")
+			? Keys.COMMAND
+			: Keys.CONTROL;
+
+	protected void selectAllText(WebElement element) {
+		element.sendKeys(Keys.chord(SELECT_ALL_MODIFIER, "a"));
+	}
+
 	protected void clearTextBox(WebElement element) {
 		WaitUtil.waitForVisibility(driver, element);
 		element.click();
-		element.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+		selectAllText(element);
 		element.sendKeys(Keys.DELETE);
+	}
+
+	protected boolean waitForElementText(WebElement element, String expectedText) {
+		try {
+			return new WebDriverWait(driver, Duration.ofSeconds(ConfigManager.getTimeout()))
+					.until(driver -> expectedText.equalsIgnoreCase(element.getText().trim()));
+		} catch (TimeoutException e) {
+			LogUtil.step("Element text did not settle to: " + expectedText);
+			return false;
+		}
+	}
+
+	protected boolean waitForFieldValue(WebElement element, String expectedValue) {
+		try {
+			return new WebDriverWait(driver, Duration.ofSeconds(ConfigManager.getTimeout()))
+					.until(ExpectedConditions.attributeToBe(element, "value", expectedValue));
+		} catch (TimeoutException e) {
+			return false;
+		}
 	}
 
 	private void focus(WebElement element) {
@@ -836,9 +870,20 @@ public class BasePage {
 
 	public void waitScrollAndClick(By option) {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-		WebElement el = wait.until(ExpectedConditions.visibilityOfElementLocated(option));
-		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", el);
-		((JavascriptExecutor) driver).executeScript("arguments[0].click();", el);
+		for (int attempt = 1; ; attempt++) {
+			try {
+				WebElement el = wait.until(ExpectedConditions.visibilityOfElementLocated(option));
+				((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", el);
+				((JavascriptExecutor) driver).executeScript("arguments[0].click();", el);
+				return;
+			} catch (StaleElementReferenceException stale) {
+				if (attempt > STALE_RETRY) {
+					takeScreenshot();
+					throw stale;
+				}
+				LogUtil.step("Option went stale while selecting. Retry " + attempt + "/" + STALE_RETRY);
+			}
+		}
 	}
 
 	protected String getTextFromLocator(By locator) {

@@ -73,7 +73,8 @@ public class AuthPartnerWithoutCertificateTest extends BaseClass {
 		oidcClientPage.clickOnAddNewRedirectUrlButton();
 		oidcClientPage.entercreateOidcRedirectUrl5(ConfigManager.getRedirectUri() + "d");
 		oidcClientPage.clickOnCreateOidcClearForm();
-		assertFalse(oidcClientPage.isCreateOidcRedirectUrl5Displayed(), GlobalConstants.isNoDataAvailableTextDisplayed);
+		assertFalse(oidcClientPage.isCreateOidcRedirectUrl5DisplayedQuick(),
+				GlobalConstants.isNoDataAvailableTextDisplayed);
 
 	}
 

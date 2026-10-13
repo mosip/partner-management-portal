@@ -199,8 +199,7 @@ public class MispServicesTest extends BaseClass {
         mispServicesPage.selectMispFilterStatusActive();
         mispServicesPage.clickOnApplyFilterButton();
 
-        mispServicesPage.waitUntilMispLicenseListRowCountSatisfies(count -> count > 0);
-        int filteredRowCount = mispServicesPage.getMispLicenseListRowCount();
+        int filteredRowCount = mispServicesPage.waitForStableMispLicenseListRowCount();
         assertTrue(filteredRowCount > 0, GlobalConstants.isMultiFilterResultsUpdatedDynamically);
         for (int row = 1; row <= filteredRowCount; row++) {
             assertEquals(mispServicesPage.getLicenseRowStatus(row), GlobalConstants.ACTIVE_STATUS_LABEL,
@@ -506,7 +505,7 @@ public class MispServicesTest extends BaseClass {
         assertEquals(mispServicesPage.getRegenerateLicenseKeyNameFieldValue(), GlobalConstants.MISP_LICENSEKEY_REGENERATE_TEMP,
                 GlobalConstants.isRegenerateLicenseKeyNameFieldIsTextbox);
         mispServicesPage.clickOnRegenerateClearFormButton();
-        assertEquals(mispServicesPage.getRegenerateLicenseKeyNameFieldValue(), "",
+        assertTrue(mispServicesPage.isRegenerateLicenseKeyNameFieldCleared(),
                 GlobalConstants.isRegenerateClearFormButtonClearsLicenseKeyNameField);
         assertTrue(mispServicesPage.isRegenerateExpiryDateFieldDisplayed(),
                 GlobalConstants.isRegenerateExpiryDateFieldDisplayed);
