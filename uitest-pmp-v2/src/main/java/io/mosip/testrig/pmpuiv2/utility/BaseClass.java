@@ -2,6 +2,7 @@ package io.mosip.testrig.pmpuiv2.utility;
 
 import java.io.File;
 import java.lang.reflect.Method;
+import java.net.URI;
 import java.text.NumberFormat;
 import java.time.Duration;
 import java.time.LocalDate;
@@ -9,15 +10,21 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
+import org.openqa.selenium.WindowType;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.chromium.ChromiumDriver;
 import org.testng.ITestResult;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
@@ -50,48 +57,23 @@ public class BaseClass {
 		CertificateGenerationUtil.generateAllCertificates();
 	}
 
+	// Every Chrome launched by the suite, so the ones still open can be closed when the suite ends.
+	private static final Set<WebDriver> OPEN_BROWSERS = ConcurrentHashMap.newKeySet();
+
 	@BeforeMethod
 	public void setUp(Method method) throws Exception {
 		logger.info("Start set up");
-		if (System.getProperty("os.name").equalsIgnoreCase("Linux") && ConfigManager.getdocker().equals("yes")) {
-			logger.info("Docker start");
-			String configFilePath = "/usr/bin/chromedriver";
-			System.setProperty("webdriver.chrome.driver", configFilePath);
+		boolean isHeadless = ConfigManager.getheadless().equalsIgnoreCase("yes");
+
+		driver = DriverManager.getDriver();
+		if (driver instanceof ChromiumDriver && isBrowserAlive() && resetBrowserState()) {
+			logger.info("Reusing browser: fresh tab, cookies and site storage cleared");
 		} else {
-			WebDriverManager.chromedriver().setup();
-			logger.info("window chrome driver start");
+			// A browser that could not be fully reset may still hold the previous user's session, so never reuse it.
+			quitBrowser();
+			launchBrowser(isHeadless);
 		}
-
-		ChromeOptions options = new ChromeOptions();
-	    boolean isHeadless = ConfigManager.getheadless().equalsIgnoreCase("yes");
-
-	    if (isHeadless) {
-	        logger.info("Running in HEADLESS mode");
-
-	        options.addArguments(
-	            "--headless=new",
-	            "--disable-gpu",
-	            "--no-sandbox",
-	            "--disable-dev-shm-usage",
-	            "--window-size=1920,1080",
-	            "--force-device-scale-factor=1",
-	            "--high-dpi-support=1"
-	        );
-	    } else {
-	        logger.info("Running in HEADED mode");
-	    }
-
-	    WebDriver driver = new ChromeDriver(options);
-	    DriverManager.setDriver(driver);
-	    this.driver = driver;
-
-	    driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
-
-	    if (!isHeadless) {
-	        driver.manage().window().maximize();
-	    } else {
-	        driver.manage().window().setSize(new Dimension(1920, 1080));
-	    }
+		DriverManager.setDriver(driver);
 
 	    driver.get(envPathPmpUiv2);
 	    logger.info("Launched URL: {"+envPathPmpUiv2+"}");
@@ -119,13 +101,121 @@ public class BaseClass {
 		loginPage.login(userid, password);
 	}
 
-	@AfterMethod
+	@AfterMethod(alwaysRun = true)
 	public void tearDown(ITestResult result) {
+		if (result.getStatus() != ITestResult.SUCCESS) {
+			quitBrowser();
+		}
+	}
+
+	@AfterSuite(alwaysRun = true)
+	public void closeAllBrowsers() {
+		for (WebDriver browser : OPEN_BROWSERS) {
+			try {
+				browser.quit();
+			} catch (Exception ignored) {
+			}
+		}
+		OPEN_BROWSERS.clear();
+	}
+
+	private boolean isBrowserAlive() {
+		try {
+			driver.getWindowHandles();
+			return true;
+		} catch (WebDriverException e) {
+			logger.info("Reused browser is not responding, launching a new one");
+			return false;
+		}
+	}
+
+	// Brings a reused browser back to the state a freshly launched one would have. Returns false if any step
+	// fails, so the caller relaunches instead of reusing a browser that may still hold the previous session.
+	private boolean resetBrowserState() {
+		try {
+			driver.switchTo().newWindow(WindowType.TAB);
+			String freshTab = driver.getWindowHandle();
+			for (String handle : driver.getWindowHandles()) {
+				if (!handle.equals(freshTab)) {
+					driver.switchTo().window(handle);
+					driver.close();
+				}
+			}
+			driver.switchTo().window(freshTab);
+
+			ChromiumDriver chrome = (ChromiumDriver) driver;
+			chrome.executeCdpCommand("Network.clearBrowserCookies", new HashMap<>());
+			for (String url : new String[] { envPathPmpUiv2, ConfigManager.getIAMUrl() }) {
+				Map<String, Object> params = new HashMap<>();
+				params.put("origin", originOf(url));
+				params.put("storageTypes", "all");
+				chrome.executeCdpCommand("Storage.clearDataForOrigin", params);
+			}
+			return true;
+		} catch (WebDriverException e) {
+			logger.info("Browser reset failed, launching a new one: " + e.getClass().getSimpleName());
+			return false;
+		}
+	}
+
+	private static String originOf(String url) {
+		URI uri = URI.create(url);
+		return uri.getScheme() + "://" + uri.getAuthority();
+	}
+
+	private void quitBrowser() {
+		if (driver == null) {
+			return;
+		}
+		OPEN_BROWSERS.remove(driver);
 		try {
 			DriverManager.quitDriver();
 		} catch (Exception ignored) {
+			DriverManager.setDriver(null);
 		}
-		this.driver = null;
+		driver = null;
+	}
+
+	private void launchBrowser(boolean isHeadless) {
+		if (System.getProperty("os.name").equalsIgnoreCase("Linux") && ConfigManager.getdocker().equals("yes")) {
+			logger.info("Docker start");
+			String configFilePath = "/usr/bin/chromedriver";
+			System.setProperty("webdriver.chrome.driver", configFilePath);
+		} else {
+			WebDriverManager.chromedriver().setup();
+			logger.info("window chrome driver start");
+		}
+
+		ChromeOptions options = new ChromeOptions();
+
+	    if (isHeadless) {
+	        logger.info("Running in HEADLESS mode");
+
+	        options.addArguments(
+	            "--headless=new",
+	            "--disable-gpu",
+	            "--no-sandbox",
+	            "--disable-dev-shm-usage",
+	            "--window-size=1920,1080",
+	            "--force-device-scale-factor=1",
+	            "--high-dpi-support=1"
+	        );
+	    } else {
+	        logger.info("Running in HEADED mode");
+	    }
+
+	    WebDriver driver = new ChromeDriver(options);
+	    OPEN_BROWSERS.add(driver);
+	    DriverManager.setDriver(driver);
+	    this.driver = driver;
+
+	    driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
+
+	    if (!isHeadless) {
+	        driver.manage().window().maximize();
+	    } else {
+	        driver.manage().window().setSize(new Dimension(1920, 1080));
+	    }
 	}
 
 	@DataProvider(name = "data-provider-ca")

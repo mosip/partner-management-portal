@@ -296,7 +296,7 @@ public class PartnerDeactivateOptionTest extends BaseClass {
 				GlobalConstants.isCertificateSectionGreyedOutInViewDetails);
 		assertTrue(partnerAdminPage.isDownloadCertificateButtonDisplayed(),
 				GlobalConstants.isCertificateDownloadDisabledInViewDetails);
-		assertFalse(partnerAdminPage.isDownloadCertificateButtonEnabledInViewPartnerPage(),
+		assertFalse(partnerAdminPage.isDownloadCertificateButtonEnabledInViewPartnerPageQuick(),
 				GlobalConstants.isCertificateDownloadDisabledInViewDetails);
 	}
 

@@ -724,6 +724,10 @@ public class FtmPage extends BasePage {
 		return isElementDisplayed(certificateReuploadButton);
 	}
 
+	public boolean isCertificateReuploadButtonDisplayedQuick() {
+		return isElementDisplayedQuick(By.id("certificate_reupload_btn"), ABSENCE_CHECK_TIMEOUT);
+	}
+
 	public boolean isFtmChipDetailsCertificateContextDisplayed() {
 		return isElementDisplayed(ftmChipDetailsCertificateContext);
 	}
@@ -766,6 +770,10 @@ public class FtmPage extends BasePage {
 
 	public boolean isApproveRejectPopupHeaderDisplayed() {
 		return isElementDisplayed(approveRejectPopupHeader);
+	}
+
+	public boolean isApproveRejectPopupHeaderDisplayedQuick() {
+		return isElementDisplayedQuick(By.id("approve-reject_popup_header"), ABSENCE_CHECK_TIMEOUT);
 	}
 
 	public boolean isApproveRejectPopupSubHeaderDisplayed() {
@@ -1062,12 +1070,12 @@ public class FtmPage extends BasePage {
 
 	public boolean isFtmListApproveRejectOptionIsDisabled() {
 		clickOnFtmListApproveRejectOption();
-		return !isApproveRejectPopupDisplayed();
+		return !isElementDisplayedQuick(By.id("approve-reject_popup_title"), ABSENCE_CHECK_TIMEOUT);
 	}
 
 	public boolean isFtmListDeactivateOptionIsDisabled() {
 		clickOnFtmListDeactivateOption();
-		return !isDeactivatePopupDisplayed();
+		return !isElementDisplayedQuick(By.id("deactivate_popup_header"), ABSENCE_CHECK_TIMEOUT);
 	}
 
 	public void clickOnCertificateUploadButton() {

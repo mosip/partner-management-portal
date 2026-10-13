@@ -143,7 +143,7 @@ public class ApiKeyAuthPartnerTest extends BaseClass {
 		assertTrue(apiKeyPage.isDeactivatedApiKeyGreyColored(), GlobalConstants.isDeactivatedApiKeyGreyColored);
 		apiKeyPage.clickOnapiListElipsisButton();
 		apiKeyPage.clickOnDeactivateButton();
-		assertFalse(apiKeyPage.isApiKeyDeactivatePopupDisplayed(),
+		assertFalse(apiKeyPage.isApiKeyDeactivatePopupDisplayedQuick(),
 				GlobalConstants.isApiKeyDeactivateConfirmationTextDisplayed);
 		apiKeyPage.clickOnApiKeyViewButton();
 		assertTrue(apiKeyPage.isApiKeyStatusDeactivatedDisplayed(), GlobalConstants.isApiKeyStatusDeactivated);
@@ -334,7 +334,7 @@ public class ApiKeyAuthPartnerTest extends BaseClass {
 
 		apiKeyPage.clickOnFilterButton();
 		assertTrue(apiKeyPage.isfilterResetButtonEnabled(), GlobalConstants.isfilterResetButtonEnabled);
-		assertFalse(apiKeyPage.isFilterButtonEnabled(), GlobalConstants.isFilterButtonEnabled);
+		assertFalse(apiKeyPage.isFilterButtonEnabledQuick(), GlobalConstants.isFilterButtonEnabled);
 
 		assertTrue(apiKeyPage.isPartnerIdFilterHeaderDisplayed(), GlobalConstants.isPartnerIdFilterHeaderDisplayed);
 		assertTrue(apiKeyPage.isOrganisationFilterHeaderDisplayed(),
@@ -352,7 +352,7 @@ public class ApiKeyAuthPartnerTest extends BaseClass {
 		assertTrue(apiKeyPage.isApiKeyNamePlaceHolderDisplayed(), GlobalConstants.isApiKeyNamePlaceHolderDisplayed);
 		assertTrue(apiKeyPage.isStatusPlaceHolderDisplayed(), GlobalConstants.isStatusPlaceHolderDisplayed);
 
-		assertFalse(apiKeyPage.isApplyFilterButtonEnabled(), GlobalConstants.isApplyFilterButtonEnabled);
+		assertFalse(apiKeyPage.isApplyFilterButtonEnabledQuick(), GlobalConstants.isApplyFilterButtonEnabled);
 		apiKeyPage.enterInvalidDataInAdminApiKeyNameFilter(GlobalConstants.RANDOM_DATA);
 		assertTrue(apiKeyPage.isApplyFilterButtonEnabled(), GlobalConstants.isApplyFilterButtonEnabled);
 		apiKeyPage.clickOnApplyFilterButton();
@@ -366,7 +366,7 @@ public class ApiKeyAuthPartnerTest extends BaseClass {
 				GlobalConstants.isDeactivatedStatusInFilterDisplayed);
 		apiKeyPage.clickOnStatusFilter();
 		apiKeyPage.clickOnFilterResetButton();
-		assertFalse(apiKeyPage.isfilterResetButtonEnabled(), GlobalConstants.isfilterResetButtonEnabled);
+		assertFalse(apiKeyPage.isfilterResetButtonEnabledQuick(), GlobalConstants.isfilterResetButtonEnabled);
 
 		apiKeyPage.clickOnFilterButton();
 		apiKeyPage.enterPartnerIdInFilter(GlobalConstants.AUTH_PARTNER_ID);
@@ -399,10 +399,11 @@ public class ApiKeyAuthPartnerTest extends BaseClass {
 		apiKeyPage.clickOnActionButton();
 		assertTrue(apiKeyPage.isViewButtonEnabled(), GlobalConstants.isViewButtonEnabled);
 		apiKeyPage.clickOnApiKeyDeactivateButton();
-		assertFalse(apiKeyPage.isApiKeyDeactivatePopupDisplayed(), GlobalConstants.isApiKeyDeactivatePopupDisplayed);
+		assertFalse(apiKeyPage.isApiKeyDeactivatePopupDisplayedQuick(),
+				GlobalConstants.isApiKeyDeactivatePopupDisplayed);
 
 		apiKeyPage.clickOnDeactivatedApiKeyRow();
-		assertFalse(apiKeyPage.isApiKeyDetailsPageDisplayed(), GlobalConstants.isApiKeyDetailsPageDisplayed);
+		assertFalse(apiKeyPage.isApiKeyDetailsPageDisplayedQuick(), GlobalConstants.isApiKeyDetailsPageDisplayed);
 		assertTrue(apiKeyPage.isStatusDeavtivatedDisplayed(), GlobalConstants.isStatusDeavtivatedDisplayed);
 
 		apiKeyPage.clickOnFilterResetButton();
@@ -504,7 +505,7 @@ public class ApiKeyAuthPartnerTest extends BaseClass {
 		apiKeyPage.clickOnApplyFilterButton();
 
 		apiKeyPage.clickOnDeactivatedApiKeyRow();
-		assertFalse(apiKeyPage.isApiKeyDetailsPageDisplayed(), GlobalConstants.isApiKeyDetailsPageDisplayed);
+		assertFalse(apiKeyPage.isApiKeyDetailsPageDisplayedQuick(), GlobalConstants.isApiKeyDetailsPageDisplayed);
 
 		apiKeyPage.clickOnActionButton();
 		apiKeyPage.clickOnViewButton();

@@ -1142,7 +1142,7 @@
         "description2": "بما في ذلك تفاصيله المحددة. يمكنك أيضًا تعديل تفاصيل السياسة المستنسخة قبل نشرها.",
         "errorInClonePolicy": "أثناء استنساخ السياسة، واجهنا خطأً.",
         "errorInPolicyDetails": "أثناء جلب تفاصيل السياسة، واجهنا خطأً.",
-        "successMsg": "تم استنساخ &quot;{{policyName}}&quot; وربطه بـ &quot;{{policyGroupName}}&quot; بنجاح!",
+        "successMsg": "تم استنساخ \"{{policyName}}\" وربطه بـ \"{{policyGroupName}}\" بنجاح!",
         "policyExistError": "هذه السياسة موجودة بالفعل ضمن مجموعة السياسات المحددة. يرجى اختيار مجموعة سياسات أخرى للمتابعة."
     },
     "publishPolicyPopup": {

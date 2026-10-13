@@ -35,7 +35,7 @@ public class PolicyGroupTest extends BaseClass {
 		assertTrue(policygroupPage.isPolicyGroupNameDescriptionTextboxDisplayed(),
 				GlobalConstants.isPolicyGroupNameDescriptionTextboxDisplayed);
 		assertTrue(policygroupPage.isSubmitButtonAvailable(), GlobalConstants.isSubmitButtonAvailable);
-		assertFalse(policygroupPage.isSubmitButtonEnabled(), GlobalConstants.isSubmitButtonEnabled);
+		assertFalse(policygroupPage.isSubmitButtonEnabledQuick(), GlobalConstants.isSubmitButtonEnabled);
 		policygroupPage.clickOnClearFormButton();
 		policygroupPage.clickOnCancelButton();
 
@@ -177,7 +177,7 @@ public class PolicyGroupTest extends BaseClass {
 		policygroupPage.clickOnPolicyGroupNameFilter(GlobalConstants.DEACTIVATE_POLICYGROUP);
 		policygroupPage.clickOnApplyFilterButton();
 		policygroupPage.clickOnPolicyGroupList1();
-		assertFalse(policygroupPage.isViewPolicyGroupPageTitleDisplayed(),
+		assertFalse(policygroupPage.isViewPolicyGroupPageTitleDisplayedQuick(),
 				GlobalConstants.isViewPolicyGroupPageTitleDisplayed);
 
 		policygroupPage.clickOnFilterResetButton();

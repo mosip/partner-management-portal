@@ -139,6 +139,9 @@ public class SbiLinkedDevicePage extends BasePage {
 	@FindBy(xpath = "//p[@id='device_list_approve_reject_option' and contains(@class, 'text-[#A5A5A5]')]")
 	private WebElement approveRejectWithGreyedOut;
 
+	@FindBy(id = "device_list_approve_reject_option")
+	private WebElement approveRejectOption;
+
 	@FindBy(xpath = "//p[@id='device_list_deactivate_option' and contains(@class, 'text-[#3E3E3E]')]")
 	private WebElement deactivateDeviceEnabledButtonInAdmin;
 
@@ -356,19 +359,11 @@ public class SbiLinkedDevicePage extends BasePage {
 	}
 
 	public boolean isApproceRejectDeviceDisabled() {
-		if (isElementDisplayed(approveRejectWithGreyedOut)) {
-			return true;
-		} else {
-			return false;
-		}
+		return getTextFromAttribute(approveRejectOption, "class").contains("text-[#A5A5A5]");
 	}
 
 	public boolean isDeactivateDeviceEnabledInAdmin() {
-		if (isElementDisplayed(deactivateDeviceEnabledButtonInAdmin)) {
-			return true;
-		} else {
-			return false;
-		}
+		return !getTextFromAttribute(deviceListDeactivateOption, "class").contains("text-[#A5A5A5]");
 	}
 
 	public boolean isLinkedDeviceDetailsPageTitleDisplayed() {

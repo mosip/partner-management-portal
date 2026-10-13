@@ -38,7 +38,7 @@ public class OidcClientMultilingualFieldsTest extends BaseClass {
 				GlobalConstants.isAdditionalInformationSectionDisplayed);
 
 		oidcClientPage.clickOnPrimaryInformationSectionHeader();
-		assertFalse(oidcClientPage.isPartnerIdDropdownDisplayed(),
+		assertFalse(oidcClientPage.isPartnerIdDropdownDisplayedQuick(),
 				GlobalConstants.isPrimaryInformationSectionCollapsible);
 		oidcClientPage.clickOnPrimaryInformationSectionHeader();
 		assertTrue(oidcClientPage.isPartnerIdDropdownDisplayed(),
@@ -48,7 +48,7 @@ public class OidcClientMultilingualFieldsTest extends BaseClass {
 		assertTrue(oidcClientPage.isUserInfoResponseTypeDropdownDisplayed(),
 				GlobalConstants.isAdditionalInformationSectionCollapsible);
 		oidcClientPage.clickOnAdditionalInformationSectionHeader();
-		assertFalse(oidcClientPage.isUserInfoResponseTypeDropdownDisplayed(),
+		assertFalse(oidcClientPage.isUserInfoResponseTypeDropdownDisplayedQuick(),
 				GlobalConstants.isAdditionalInformationSectionCollapsible);
 
 		assertTrue(oidcClientPage.isPartnerIdFieldLabelDisplayed(), GlobalConstants.isPartnerIdFieldLabelDisplayed);
@@ -91,7 +91,7 @@ public class OidcClientMultilingualFieldsTest extends BaseClass {
 
 		oidcClientPage.clickOnAddClientNameLanguageButton();
 		oidcClientPage.clickOnClientNameLanguageDropdownRow2();
-		assertFalse(oidcClientPage.isEnglishLanguageOptionRow2Displayed(),
+		assertFalse(oidcClientPage.isEnglishLanguageOptionRow2DisplayedQuick(),
 				GlobalConstants.isRow2ExcludesAlreadySelectedLanguage);
 		assertTrue(oidcClientPage.isFrenchLanguageOptionRow2Displayed(),
 				GlobalConstants.isRow2ExcludesAlreadySelectedLanguage);
@@ -164,9 +164,9 @@ public class OidcClientMultilingualFieldsTest extends BaseClass {
 		OidcClientPage oidcClientPage = openCreateOidcClientForm();
 		oidcClientPage.clickOnAdditionalInformationSectionHeader();
 
-		assertFalse(oidcClientPage.isPurposeTitleLabelDisplayed(),
+		assertFalse(oidcClientPage.isPurposeTitleLabelDisplayedQuick(),
 				GlobalConstants.isPurposeTitleSubtitleHiddenWhenNoPurposeTypeSelected);
-		assertFalse(oidcClientPage.isPurposeSubtitleLabelDisplayed(),
+		assertFalse(oidcClientPage.isPurposeSubtitleLabelDisplayedQuick(),
 				GlobalConstants.isPurposeTitleSubtitleHiddenWhenNoPurposeTypeSelected);
 
 		oidcClientPage.clickOnPurposeTypeDropdown();
@@ -177,9 +177,9 @@ public class OidcClientMultilingualFieldsTest extends BaseClass {
 		assertTrue(oidcClientPage.isPurposeSubtitleLabelDisplayed(),
 				GlobalConstants.isPurposeTitleSubtitleDisplayedWhenPurposeTypeSelected);
 
-		assertFalse(oidcClientPage.isPurposeTitleLanguageDropdownDisplayed(),
+		assertFalse(oidcClientPage.isPurposeTitleLanguageDropdownDisplayedQuick(),
 				GlobalConstants.isNoPurposeTitleSubtitleRowsVisibleByDefault);
-		assertFalse(oidcClientPage.isPurposeSubtitleLanguageDropdownDisplayed(),
+		assertFalse(oidcClientPage.isPurposeSubtitleLanguageDropdownDisplayedQuick(),
 				GlobalConstants.isNoPurposeTitleSubtitleRowsVisibleByDefault);
 
 		oidcClientPage.clickOnAddPurposeTitleLanguageButton();
@@ -215,7 +215,7 @@ public class OidcClientMultilingualFieldsTest extends BaseClass {
 
 		oidcClientPage.clickOnAddPurposeTitleLanguageLink();
 		oidcClientPage.clickOnPurposeTitleRow2LanguageDropdown();
-		assertFalse(oidcClientPage.isPurposeTitleLanguageDefaultOptionDisplayed(),
+		assertFalse(oidcClientPage.isPurposeTitleLanguageDefaultOptionDisplayedQuick(),
 				GlobalConstants.isAdditionalRowsExcludeAlreadyUsedLanguages);
 		assertTrue(oidcClientPage.isPurposeTitleLanguageEnglishOptionDisplayed(),
 				GlobalConstants.isAdditionalRowsExcludeAlreadyUsedLanguages);
@@ -244,7 +244,8 @@ public class OidcClientMultilingualFieldsTest extends BaseClass {
 		OidcClientPage blankTextForm = openCreateOidcClientForm();
 		fillMandatoryFieldsAndSelectLoginPurposeType(blankTextForm);
 		blankTextForm.clickOnAddPurposeTitleLanguageButton();
-		assertFalse(blankTextForm.isSubmitButtonEnabled(), GlobalConstants.isSubmitBlockedWhenLanguageRowTextEmpty);
+		assertFalse(blankTextForm.isSubmitButtonEnabledQuick(),
+				GlobalConstants.isSubmitBlockedWhenLanguageRowTextEmpty);
 	}
 
 	private void fillMandatoryFieldsAndSelectLoginPurposeType(OidcClientPage oidcClientPage) {
@@ -263,10 +264,10 @@ public class OidcClientMultilingualFieldsTest extends BaseClass {
 	public void submitValidationChecks() {
 		OidcClientPage oidcClientPage = openCreateOidcClientForm();
 
-		assertFalse(oidcClientPage.isSubmitButtonEnabled(), GlobalConstants.isSubmitDisabledWhenPartnerIdEmpty);
+		assertFalse(oidcClientPage.isSubmitButtonEnabledQuick(), GlobalConstants.isSubmitDisabledWhenPartnerIdEmpty);
 
 		oidcClientPage.selectPartnerIdDropdown();
-		assertFalse(oidcClientPage.isSubmitButtonEnabled(), GlobalConstants.isSubmitDisabledWhenPolicyNameEmpty);
+		assertFalse(oidcClientPage.isSubmitButtonEnabledQuick(), GlobalConstants.isSubmitDisabledWhenPolicyNameEmpty);
 
 		assertFalse(oidcClientPage.getPartnerTypeContextText().isEmpty(),
 				GlobalConstants.isPartnerTypeAutoPopulatedAndReadOnly);
@@ -278,16 +279,16 @@ public class OidcClientMultilingualFieldsTest extends BaseClass {
 
 		oidcClientPage.selectPolicyNameDropdown(GlobalConstants.DEFAULT_POLICY);
 		oidcClientPage.enterNameOidcTextBox(GlobalConstants.DEFAULT_POLICY + BaseClass.data);
-		assertFalse(oidcClientPage.isSubmitButtonEnabled(), GlobalConstants.isSubmitDisabledWhenPublicKeyEmpty);
+		assertFalse(oidcClientPage.isSubmitButtonEnabledQuick(), GlobalConstants.isSubmitDisabledWhenPublicKeyEmpty);
 
 		oidcClientPage.enterPublicKeyTextBox(PmpTestUtil.generatePemPublicKey());
 		assertTrue(oidcClientPage.isPublicKeyFormatErrorDisplayed(), GlobalConstants.isPublicKeyRejectedForNonJwkFormat);
 
 		oidcClientPage.enterPublicKeyTextBox(PmpTestUtil.generateJWKPublicKey());
-		assertFalse(oidcClientPage.isSubmitButtonEnabled(), GlobalConstants.isSubmitDisabledWhenLogoUriEmpty);
+		assertFalse(oidcClientPage.isSubmitButtonEnabledQuick(), GlobalConstants.isSubmitDisabledWhenLogoUriEmpty);
 
 		oidcClientPage.enterLogoUrTextBox(ConfigManager.getLogouri());
-		assertFalse(oidcClientPage.isSubmitButtonEnabled(), GlobalConstants.isSubmitDisabledWhenRedirectUriEmpty);
+		assertFalse(oidcClientPage.isSubmitButtonEnabledQuick(), GlobalConstants.isSubmitDisabledWhenRedirectUriEmpty);
 
 		oidcClientPage.enterRedirectUriTextBox(ConfigManager.getRedirectUri());
 		assertTrue(oidcClientPage.isSubmitButtonEnabled(), GlobalConstants.isSubmitButtonEnabledAfterFillingForm);
@@ -302,7 +303,7 @@ public class OidcClientMultilingualFieldsTest extends BaseClass {
 	public void fillAndSubmitFlow() {
 		OidcClientPage oidcClientPage = openCreateOidcClientForm();
 
-		String oidcClientName = GlobalConstants.DEFAULT_POLICY + BaseClass.data;
+		String oidcClientName = GlobalConstants.DEFAULT_POLICY + "fill" + BaseClass.data;
 		oidcClientPage.selectPartnerIdDropdown();
 		oidcClientPage.selectPolicyNameDropdown(GlobalConstants.DEFAULT_POLICY);
 		oidcClientPage.enterNameOidcTextBox(oidcClientName);
@@ -316,7 +317,8 @@ public class OidcClientMultilingualFieldsTest extends BaseClass {
 		oidcClientPage.clickOnAddClientNameLanguageButton();
 		oidcClientPage.clickOnClientNameLanguageDropdownRow2();
 		oidcClientPage.selectFrenchForClientNameLanguageRow2();
-		assertFalse(oidcClientPage.isSubmitButtonEnabled(), GlobalConstants.isSubmitDisabledWhenLanguageRowTextBlank);
+		assertFalse(oidcClientPage.isSubmitButtonEnabledQuick(),
+				GlobalConstants.isSubmitDisabledWhenLanguageRowTextBlank);
 
 		oidcClientPage.enterClientNameForLanguageRow2(oidcClientName);
 		assertTrue(oidcClientPage.isClientNameLanguageRow2Displayed(), GlobalConstants.isMultipleLanguageRowsSupported);
@@ -338,6 +340,7 @@ public class OidcClientMultilingualFieldsTest extends BaseClass {
 		oidcClientPage.clickConfirmationGoBackButton();
 
 		assertTrue(oidcClientPage.isOidcClientTabDisplayed(), GlobalConstants.isRedirectedToOidcClientListAfterSubmit);
+		filterListByClientName(oidcClientPage, oidcClientName);
 		assertTrue(oidcClientPage.getFirstOidcClientRowName().contains(oidcClientName),
 				GlobalConstants.isNewOidcClientNameAtTopOfList);
 		assertTrue(oidcClientPage.getFirstOidcClientRowStatus().equalsIgnoreCase(GlobalConstants.PARTNER_STATUS_ACTIVE),
@@ -348,7 +351,7 @@ public class OidcClientMultilingualFieldsTest extends BaseClass {
 	public void multilingualWithPurposeFieldsSubmitFlow() {
 		OidcClientPage oidcClientPage = openCreateOidcClientForm();
 
-		String oidcClientName = GlobalConstants.DEFAULT_POLICY + BaseClass.data;
+		String oidcClientName = GlobalConstants.DEFAULT_POLICY + "purpose" + BaseClass.data;
 		oidcClientPage.selectPartnerIdDropdown();
 		oidcClientPage.selectPolicyNameDropdown(GlobalConstants.DEFAULT_POLICY);
 		oidcClientPage.enterNameOidcTextBox(oidcClientName);
@@ -379,6 +382,7 @@ public class OidcClientMultilingualFieldsTest extends BaseClass {
 		assertTrue(oidcClientPage.isOidcSubmittedSuccessfullyDisplayed(),
 				GlobalConstants.isMultilingualWithPurposeFieldsSubmitSuccessful);
 		oidcClientPage.clickConfirmationGoBackButton();
+		filterListByClientName(oidcClientPage, oidcClientName);
 
 		assertTrue(oidcClientPage.getFirstOidcClientRowName().contains(oidcClientName),
 				GlobalConstants.isMultilingualWithPurposeFieldsSubmitSuccessful);
@@ -388,7 +392,7 @@ public class OidcClientMultilingualFieldsTest extends BaseClass {
 	public void legacyOnlySubmitFlow() {
 		OidcClientPage oidcClientPage = openCreateOidcClientForm();
 
-		String oidcClientName = GlobalConstants.DEFAULT_POLICY + BaseClass.data;
+		String oidcClientName = GlobalConstants.DEFAULT_POLICY + "legacy" + BaseClass.data;
 		oidcClientPage.selectPartnerIdDropdown();
 		oidcClientPage.selectPolicyNameDropdown(GlobalConstants.DEFAULT_POLICY);
 		oidcClientPage.enterNameOidcTextBox(oidcClientName);
@@ -402,6 +406,7 @@ public class OidcClientMultilingualFieldsTest extends BaseClass {
 		assertTrue(oidcClientPage.isOidcSubmittedSuccessfullyDisplayed(),
 				GlobalConstants.isLegacyOnlySubmitSuccessfulWithoutRegression);
 		oidcClientPage.clickConfirmationGoBackButton();
+		filterListByClientName(oidcClientPage, oidcClientName);
 
 		assertTrue(oidcClientPage.getFirstOidcClientRowName().contains(oidcClientName),
 				GlobalConstants.isLegacyOnlySubmitSuccessfulWithoutRegression);
@@ -419,7 +424,7 @@ public class OidcClientMultilingualFieldsTest extends BaseClass {
 		oidcClientPage.enterRedirectUriTextBox(ConfigManager.getRedirectUri());
 
 		oidcClientPage.clickOnAddClientNameLanguageButton();
-		assertTrue(oidcClientPage.getClientNameLanguageRow1SelectedText().equalsIgnoreCase("English"),
+		assertTrue(oidcClientPage.isClientNameLanguageRow1SelectedTextEqualTo("English"),
 				GlobalConstants.isNoLanguageValidationForMultilingualText);
 		oidcClientPage.enterClientNameForLanguageRow1("Hola Mundo " + BaseClass.data);
 
@@ -433,6 +438,14 @@ public class OidcClientMultilingualFieldsTest extends BaseClass {
 		assertTrue(oidcClientPage.isOidcClientTabDisplayed(), GlobalConstants.isOidcClientTabDisplayed);
 		oidcClientPage.clickOnCreateOidcClientButton();
 		return oidcClientPage;
+	}
+
+	private void filterListByClientName(OidcClientPage oidcClientPage, String oidcClientName) {
+		oidcClientPage.getFirstOidcClientRowName();
+		oidcClientPage.clickOnFilterButton();
+		oidcClientPage.selectOidcClientNameInFilter(oidcClientName);
+		assertTrue(oidcClientPage.waitForFirstOidcClientRowName(oidcClientName),
+				GlobalConstants.isOidcClientListFilteredByClientName);
 	}
 
 	private void loginAsAuthPartner() {

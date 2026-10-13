@@ -34,7 +34,7 @@ public class PartnerDeactivatedPortalTest extends BaseClass {
 				GlobalConstants.isCertificateReuploadButtonGreyedOut);
 		assertTrue(partnerCertificatePage.isDownloadButtonDisplayed(),
 				GlobalConstants.isCertificateDownloadButtonDisabledForDeactivatedPartner);
-		assertFalse(partnerCertificatePage.isDownloadButtonEnabled(),
+		assertFalse(partnerCertificatePage.isDownloadButtonEnabledQuick(),
 				GlobalConstants.isCertificateDownloadButtonDisabledForDeactivatedPartner);
 	}
 
@@ -44,12 +44,12 @@ public class PartnerDeactivatedPortalTest extends BaseClass {
 
 		assertTrue(partnerCertificatePage.isPartnerCertificateReuploadButtonDisplayed(),
 				GlobalConstants.isCertificateReuploadButtonDisabled);
-		assertFalse(partnerCertificatePage.isPartnerCertificateReuploadButtonEnabled(),
+		assertFalse(partnerCertificatePage.isPartnerCertificateReuploadButtonEnabledQuick(),
 				GlobalConstants.isCertificateReuploadButtonDisabled);
 
 		assertTrue(partnerCertificatePage.isDownloadButtonDisplayed(),
 				GlobalConstants.isCertificateDownloadButtonDisabledForDeactivatedPartner);
-		assertFalse(partnerCertificatePage.isDownloadButtonEnabled(),
+		assertFalse(partnerCertificatePage.isDownloadButtonEnabledQuick(),
 				GlobalConstants.isCertificateDownloadButtonDisabledForDeactivatedPartner);
 	}
 

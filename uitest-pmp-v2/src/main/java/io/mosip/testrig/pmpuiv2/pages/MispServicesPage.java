@@ -1303,6 +1303,21 @@ public class MispServicesPage extends BasePage {
 		}
 	}
 
+	public int waitForStableMispLicenseListRowCount() {
+		int[] previousCount = { -1 };
+		try {
+			new WebDriverWait(driver, Duration.ofSeconds(15)).until(driver -> {
+				int currentCount = getMispLicenseListRowCount();
+				boolean stable = currentCount > 0 && currentCount == previousCount[0];
+				previousCount[0] = currentCount;
+				return stable;
+			});
+		} catch (TimeoutException e) {
+			LogUtil.step("MISP license list row count did not settle within the timeout");
+		}
+		return getMispLicenseListRowCount();
+	}
+
 	public boolean waitUntilMispLicenseListRowCountSatisfies(java.util.function.IntPredicate condition) {
 		try {
 			return new WebDriverWait(driver, Duration.ofSeconds(10))
@@ -1412,6 +1427,10 @@ public class MispServicesPage extends BasePage {
 		return getTextFromAttribute(regenerateLicenseKeyNameTextbox, "value");
 	}
 
+	public boolean isRegenerateLicenseKeyNameFieldCleared() {
+		return waitForFieldValue(regenerateLicenseKeyNameTextbox, "");
+	}
+
 	public void enterRegenerateLicenseKeyName(String licenseKeyName) {
 		enter(regenerateLicenseKeyNameTextbox, licenseKeyName);
 	}
@@ -1519,7 +1538,7 @@ public class MispServicesPage extends BasePage {
 
 	public void enterFreeTextIntoRegenerateExpiryDateField(String text) {
 		waitForElementVisible(regenerateExpiryDate);
-		regenerateExpiryDate.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+		selectAllText(regenerateExpiryDate);
 		regenerateExpiryDate.sendKeys(Keys.DELETE);
 		regenerateExpiryDate.sendKeys(text);
 	}

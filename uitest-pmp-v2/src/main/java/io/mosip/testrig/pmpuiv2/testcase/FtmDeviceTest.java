@@ -665,7 +665,7 @@ public class FtmDeviceTest extends BaseClass {
 		ftmPage.clickOnFtmStatusFilterOption2();
 		ftmPage.clickOnFtmListAction1Button();
 		ftmPage.clickOnFtmListManageCertificate();
-		assertFalse(ftmPage.isCertificateReuploadButtonDisplayed(),
+		assertFalse(ftmPage.isCertificateReuploadButtonDisplayedQuick(),
 				GlobalConstants.iReUploadPartnerCertificateTextDisplayed);
 
 		ftmPage.clickOnTitleBackIcon();
@@ -692,7 +692,8 @@ public class FtmDeviceTest extends BaseClass {
 				GlobalConstants.isPendingForUploadCertTextDisplayed);
 		ftmPage.clickOnFtmListActionMenuEllipsisButton();
 		ftmPage.clickOnFtmListApproveRejectOption();
-		assertFalse(ftmPage.isApproveRejectPopupHeaderDisplayed(), GlobalConstants.isApproveRejectPopupHeaderDisplayed);
+		assertFalse(ftmPage.isApproveRejectPopupHeaderDisplayedQuick(),
+				GlobalConstants.isApproveRejectPopupHeaderDisplayed);
 
 		dashboardpage.clickOnProfileDropdown();
 		dashboardpage.clickOnLogoutButton();
