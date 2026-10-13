@@ -1,11 +1,15 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
+import java.time.Duration;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class DashboardPage extends BasePage {
+
+	private static final Duration TERMS_AND_CONDITIONS_TIMEOUT = Duration.ofSeconds(3);
 
 	@FindBy(id = "header_user_profile_title")
 	private WebElement profileDropdown;
@@ -198,6 +202,12 @@ public class DashboardPage extends BasePage {
 
 	public boolean isTermsAndConditionsPopupDisplayed() {
 		return isElementDisplayed(termsAndConditionsPopup);
+	}
+
+	// The full-timeout variant costs the whole element timeout on a login that already accepted terms.
+	public boolean isTermsAndConditionsPopupDisplayedQuick() {
+		return isElementDisplayedQuick(By.xpath("//*[text()='Terms and Conditions']"),
+				TERMS_AND_CONDITIONS_TIMEOUT);
 	}
 
 	public void clickOnCheckbox() {

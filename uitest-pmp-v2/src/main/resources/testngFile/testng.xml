@@ -7,11 +7,11 @@
 	<!-- Note:
     - Class dependencies are implemented within the test classes.
     - This suite is organized based on flow for easier understanding.
-    - Classes are executed in parallel using 4 threads.
+    - Classes are executed in parallel using 6 threads.
     -->
 
-	<!-- Runs test classes in parallel with 4 threads -->
-	<test name="PartnerManagementService" preserve-order="false" parallel="classes" thread-count="4">
+	<!-- Runs test classes in parallel with 6 threads -->
+	<test name="PartnerManagementService" preserve-order="false" parallel="classes" thread-count="6">
 
 		<classes>
 			<!-- PARTNER ADMIN SETUP -->
@@ -20,7 +20,9 @@
 			<class name="io.mosip.testrig.pmpuiv2.testcase.AuthPartnerCreation" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.PolicyCreationForAuthPartner" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.OidcClientAuthPartnerTest" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.OidcClientMultilingualFieldsTest" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.ApiKeyAuthPartnerTest" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.ApiKeyExpirationDateTest" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.AuthPartnerWithoutCertificateTest" />
 			<!--DEVICE PARTNER FLOW-->
 			<class name="io.mosip.testrig.pmpuiv2.testcase.DevicePartnerCreation" />
@@ -35,15 +37,29 @@
 			<class name="io.mosip.testrig.pmpuiv2.testcase.PolicyGroupTest" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.DatasharePolicyTest" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.AuthPolicyTest" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.DraftConfirmationScreenTest" />
 			<!--MISP PARTNER FLOW-->
 			<class name="io.mosip.testrig.pmpuiv2.testcase.MispPartnerTest" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.MispPolicyTest" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.MispServicesTest" />
 			<!--ABIS PARTNER FLOW-->
 			<class name="io.mosip.testrig.pmpuiv2.testcase.AbisPartnerTest" />
 			<!--PARTNER VALIDATION & MANAGEMENT -->
 			<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerDetailsTest" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerFilterTest" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerEmailFilterTest" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.StatusLabelActiveTest" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerDeactivateOptionTest" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerDeactivatedPortalTest" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.DeactivatePartner2Creation" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerDeactivateNavigationTest" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.DeactivateDevicePartnerCreation" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.DeactivatedDeviceProviderTest" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.DeactivateFtmPartnerCreation" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.DeactivatedFtmProviderTest" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.CertificateTrustStoreTest" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerPolicyMappingTest" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.IndividualViewApproveRejectTest" />
 
 			<!--Deactivate PARTNER FLOW -->
 			<class name="io.mosip.testrig.pmpuiv2.testcase.DeactivatePartnerCreation" />

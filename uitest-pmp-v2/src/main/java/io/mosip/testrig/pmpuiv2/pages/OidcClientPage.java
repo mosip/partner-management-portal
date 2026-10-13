@@ -2,13 +2,19 @@ package io.mosip.testrig.pmpuiv2.pages;
 
 import org.openqa.selenium.NoSuchElementException;
 
+import java.io.IOException;
+import java.time.Duration;
+
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
+import io.mosip.testrig.pmpuiv2.kernel.util.ConfigManager;
 
 public class OidcClientPage extends BasePage {
 
@@ -105,7 +111,10 @@ public class OidcClientPage extends BasePage {
 	@FindBy(xpath = "//h1[text()='Details Submitted Successfully!']")
 	private WebElement detailsSubmittedSuccessfully;
 
-	@FindBy(xpath = "//div[text()='Activated']")
+	@FindBy(id = "create_oidc_client_confirmation_description")
+	private WebElement createOidcConfirmationDescription;
+
+	@FindBy(xpath = "//div[text()='Active']")
 	private WebElement activatedText;
 
 	@FindBy(id = "confirmation_go_back_btn")
@@ -552,6 +561,174 @@ public class OidcClientPage extends BasePage {
 	@FindBy(xpath = "//p[contains(text(), 'Copied!')]")
 	private WebElement copied;
 
+	@FindBy(xpath = "//h3[text()='Primary Information']")
+	private WebElement primaryInformationSectionHeader;
+
+	@FindBy(xpath = "//h3[text()='Additional Information']")
+	private WebElement additionalInformationSectionHeader;
+
+	@FindBy(id = "forgot_password_banner_toggle")
+	private WebElement forgotPasswordBannerToggle;
+
+	@FindBy(id = "signup_banner_toggle")
+	private WebElement signUpBannerToggle;
+
+	@FindBy(id = "forgot_password_banner_info")
+	private WebElement forgotPasswordBannerInfoIcon;
+
+	@FindBy(id = "forgot_password_banner_info_info_description")
+	private WebElement forgotPasswordBannerInfoTooltip;
+
+	@FindBy(id = "consent_expiry_input")
+	private WebElement consentExpiryInput;
+
+	@FindBy(id = "user_info_response_type_dropdown_btn")
+	private WebElement userInfoResponseTypeDropdown;
+
+	@FindBy(id = "purpose_type_dropdown_btn")
+	private WebElement purposeTypeDropdown;
+
+	@FindBy(id = "consent_expiry_info")
+	private WebElement consentExpiryInfoIcon;
+
+	@FindBy(id = "consent_expiry_info_info_description")
+	private WebElement consentExpiryInfoTooltip;
+
+	@FindBy(id = "user_info_response_type_info")
+	private WebElement userInfoResponseTypeInfoIcon;
+
+	@FindBy(id = "user_info_response_type_info_info_description")
+	private WebElement userInfoResponseTypeInfoTooltip;
+
+	@FindBy(id = "user_info_response_type_option1")
+	private WebElement userInfoResponseTypeOptionJwe;
+
+	@FindBy(id = "user_info_response_type_option2")
+	private WebElement userInfoResponseTypeOptionJws;
+
+	@FindBy(id = "purpose_type_option1")
+	private WebElement purposeTypeOptionLink;
+
+	@FindBy(id = "purpose_type_option2")
+	private WebElement purposeTypeOptionLogin;
+
+	@FindBy(id = "purpose_type_option3")
+	private WebElement purposeTypeOptionVerify;
+
+	@FindBy(id = "purpose_title_label")
+	private WebElement purposeTitleLabel;
+
+	@FindBy(id = "purpose_subtitle_label")
+	private WebElement purposeSubtitleLabel;
+
+	@FindBy(id = "add_purpose_title_language_btn")
+	private WebElement addPurposeTitleLanguageButton;
+
+	@FindBy(id = "add_purpose_subtitle_language_btn")
+	private WebElement addPurposeSubtitleLanguageButton;
+
+	@FindBy(xpath = "//button[starts-with(@id,'purpose_title_lang_purpose_title_') and contains(@id,'_dropdown_btn')]")
+	private WebElement purposeTitleLanguageDropdown;
+
+	@FindBy(xpath = "//button[starts-with(@id,'purpose_subtitle_lang_purpose_subtitle_') and contains(@id,'_dropdown_btn')]")
+	private WebElement purposeSubtitleLanguageDropdown;
+
+	@FindBy(xpath = "//button[starts-with(@id,'purpose_title_lang_purpose_title_') and text()='Default']")
+	private WebElement purposeTitleLanguageDefaultOption;
+
+	@FindBy(xpath = "//button[starts-with(@id,'purpose_title_lang_purpose_title_') and text()='English']")
+	private WebElement purposeTitleLanguageEnglishOption;
+
+	@FindBy(xpath = "//button[starts-with(@id,'purpose_title_lang_purpose_title_') and text()='Français']")
+	private WebElement purposeTitleLanguageFrenchOption;
+
+	@FindBy(xpath = "//button[starts-with(@id,'purpose_title_lang_purpose_title_') and text()='العربية']")
+	private WebElement purposeTitleLanguageArabicOption;
+
+	@FindBy(id = "add_purpose_title_language_link")
+	private WebElement addPurposeTitleLanguageLink;
+
+	@FindBy(css = "input[data-placeholder-id='oidc_client_purpose_title_default_placeholder']")
+	private WebElement purposeTitleTextBox;
+
+	@FindBy(css = "input[data-placeholder-id='oidc_client_purpose_subtitle_default_placeholder']")
+	private WebElement purposeSubtitleTextBox;
+
+	private static final By PURPOSE_TITLE_ROW_DROPDOWN_BTN_BY = By.xpath(
+			"//button[starts-with(@id,'purpose_title_lang_purpose_title_') and contains(@id,'_dropdown_btn')]");
+
+	@FindBy(id = "create_oidc_grant_type_dropdown_btn")
+	private WebElement grantTypeDropdown;
+
+	@FindBy(id = "add_client_name_lang_map_entry")
+	private WebElement addClientNameLanguageButton;
+
+	@FindBy(id = "client_name_lang_map_lang_1_dropdown_btn")
+	private WebElement clientNameLanguageDropdownRow1;
+
+	@FindBy(id = "client_name_lang_map_lang_2_dropdown_btn")
+	private WebElement clientNameLanguageDropdownRow2;
+
+	@FindBy(id = "client_name_lang_map_text_1")
+	private WebElement clientNameLanguageInputRow1;
+
+	@FindBy(id = "client_name_lang_map_text_2")
+	private WebElement clientNameLanguageInputRow2;
+
+	@FindBy(xpath = "//button[starts-with(@id,'client_name_lang_map_lang_1_option') and text()='English']")
+	private WebElement englishLanguageOption;
+
+	@FindBy(xpath = "//button[starts-with(@id,'client_name_lang_map_lang_1_option') and text()='Français']")
+	private WebElement frenchLanguageOption;
+
+	@FindBy(xpath = "//button[starts-with(@id,'client_name_lang_map_lang_1_option') and text()='العربية']")
+	private WebElement arabicLanguageOption;
+
+	@FindBy(xpath = "//button[starts-with(@id,'client_name_lang_map_lang_2_option') and text()='English']")
+	private WebElement englishLanguageOptionRow2;
+
+	@FindBy(xpath = "//button[starts-with(@id,'client_name_lang_map_lang_2_option') and text()='Français']")
+	private WebElement frenchLanguageOptionRow2;
+
+	@FindBy(id = "create_oidc_partner_id_label")
+	private WebElement partnerIdFieldLabel;
+
+	@FindBy(id = "create_oidc_client_partner_type_label")
+	private WebElement partnerTypeFieldLabel;
+
+	@FindBy(id = "create_oidc_client_partner_type_context")
+	private WebElement partnerTypeContext;
+
+	@FindBy(id = "create_oidc_client_policy_group_label")
+	private WebElement policyGroupFieldLabel;
+
+	@FindBy(id = "create_oidc_client_policy_group_context")
+	private WebElement policyGroupContext;
+
+	@FindBy(id = "create_oidc_policy_name_label")
+	private WebElement policyNameFieldLabel;
+
+	@FindBy(id = "create_oidc_client_name_label")
+	private WebElement oidcClientNameFieldLabel;
+
+	@FindBy(id = "create_oidc_client_public_key_label")
+	private WebElement publicKeyFieldLabel;
+
+	@FindBy(id = "create_oidc_logo_url_label")
+	private WebElement logoUriFieldLabel;
+
+	@FindBy(id = "create_oidc_redirect_url_label")
+	private WebElement redirectUriFieldLabel;
+
+	@FindBy(id = "create_oidc_grant_type_label")
+	private WebElement grantTypeFieldLabel;
+
+	@FindBy(xpath = "//tr[@id='oidc_client_list_item1']/td[4]")
+	private WebElement firstOidcClientRowName;
+
+	@FindBy(xpath = "//tr[@id='oidc_client_list_item1']/td[6]")
+	private WebElement firstOidcClientRowStatus;
+
 	public OidcClientPage(WebDriver driver) {
 		super(driver);
 	}
@@ -563,13 +740,7 @@ public class OidcClientPage extends BasePage {
 	}
 
 	public void clickOnCreateOidcClientButton() {
-		if (isElementDisplayed(createOidcClient)) {
-			clickOnElement(createOidcClient);
-		} else if (isElementDisplayed(createOidcClientButton)) {
-			clickOnElement(createOidcClientButton);
-		} else {
-			throw new RuntimeException("Create OIDC Client button not visible");
-		}
+		click(By.cssSelector("#create_oid_client, #create_oidc_btn"));
 	}
 
 	public void selectPartnerIdDropdown() {
@@ -579,6 +750,10 @@ public class OidcClientPage extends BasePage {
 
 	public boolean isPartnerIdDropdownDisplayed() {
 		return isElementDisplayed(selectPartneridForOidc);
+	}
+
+	public boolean isPartnerIdDropdownDisplayedQuick() {
+		return isElementDisplayedQuick(By.id("create_oidc_partner_id_dropdown_btn"), ABSENCE_CHECK_TIMEOUT);
 	}
 
 	public boolean isPolicyNameDropdownDisplayed() {
@@ -689,6 +864,10 @@ public class OidcClientPage extends BasePage {
 		return isElementDisplayed(detailsSubmittedSuccessfully);
 	}
 
+	public String getConfirmationDescriptionText() {
+		return getTextFromLocator(createOidcConfirmationDescription).trim();
+	}
+
 	public boolean isActivatedTextDisplayed() {
 		return isElementDisplayed(activatedText);
 	}
@@ -793,6 +972,10 @@ public class OidcClientPage extends BasePage {
 		return isElementEnabled(filterButton);
 	}
 
+	public boolean isFilterButtonEnabledQuick() {
+		return isElementDisplayedQuick(By.id("filter_btn"), ABSENCE_CHECK_TIMEOUT) && filterButton.isEnabled();
+	}
+
 	public void clickOnFilterButton() {
 		clickOnElement(filterButton);
 	}
@@ -828,6 +1011,11 @@ public class OidcClientPage extends BasePage {
 
 	public boolean isfilterResetButtonEnabled() {
 		return isElementEnabled(filterResetButton);
+	}
+
+	public boolean isfilterResetButtonEnabledQuick() {
+		return isElementDisplayedQuick(By.id("filter_reset_btn"),
+				ABSENCE_CHECK_TIMEOUT) && filterResetButton.isEnabled();
 	}
 
 	public void clickOnFilterResetButton() {
@@ -876,6 +1064,10 @@ public class OidcClientPage extends BasePage {
 
 	public boolean isCreateOidcRedirectUrl5Displayed() {
 		return isElementDisplayed(createOidcRedirectUrl5);
+	}
+
+	public boolean isCreateOidcRedirectUrl5DisplayedQuick() {
+		return isElementDisplayedQuick(By.id("create_oidc_redirect_url5"), ABSENCE_CHECK_TIMEOUT);
 	}
 
 	public boolean isCreateOidcCancelButtonDisplayed() {
@@ -936,6 +1128,10 @@ public class OidcClientPage extends BasePage {
 
 	public boolean isRedirectUri2TextBoxDisplayed() {
 		return isElementDisplayed(RedirectUri2);
+	}
+
+	public boolean isRedirectUri2TextBoxDisplayedQuick() {
+		return isElementDisplayedQuick(By.id("create_oidc_redirect_url2"), ABSENCE_CHECK_TIMEOUT);
 	}
 
 	public void clickOnClearFormButton() {
@@ -1018,6 +1214,10 @@ public class OidcClientPage extends BasePage {
 		return isElementDisplayed(copyIdButton);
 	}
 
+	public boolean iscopyIdButtonDisplayedQuick() {
+		return isElementDisplayedQuick(By.id("copy_id_btn"), ABSENCE_CHECK_TIMEOUT);
+	}
+
 	public void clickOnDeactivatedOidcActionButton() {
 		clickOnElement(deactivatedOidcActionButton);
 	}
@@ -1028,6 +1228,10 @@ public class OidcClientPage extends BasePage {
 
 	public boolean isOidcClientDetailsPageDisplayed() {
 		return isElementDisplayed(oidcClientTitle);
+	}
+
+	public boolean isOidcClientDetailsPageDisplayedQuick() {
+		return isElementDisplayedQuick(By.xpath("//h1[text()='View OIDC Client Details']"), ABSENCE_CHECK_TIMEOUT);
 	}
 
 	public void clickOnOidcDetailsViewButton() {
@@ -1264,6 +1468,11 @@ public class OidcClientPage extends BasePage {
 		return isElementEnabled(applyFilterButton);
 	}
 
+	public boolean isApplyFilterButtonEnabledQuick() {
+		return isElementDisplayedQuick(By.id("apply_filter__btn"),
+				ABSENCE_CHECK_TIMEOUT) && applyFilterButton.isEnabled();
+	}
+
 	public void clickOnApplyFilterButton() {
 		clickOnElement(applyFilterButton);
 	}
@@ -1420,6 +1629,11 @@ public class OidcClientPage extends BasePage {
 		return isElementDisplayed(deactivateOidcClientPopup);
 	}
 
+	public boolean isDeactivateOidcClientPopupDisplayedQuick() {
+		return isElementDisplayedQuick(By.xpath("//p[contains(text(),'Are you sure you want to Deactivate OIDC Client')]"),
+				ABSENCE_CHECK_TIMEOUT);
+	}
+
 	public boolean isDeactivateOidcClientTitleDisplayed() {
 		return isElementDisplayed(deactivateOidcClientTitle);
 	}
@@ -1457,9 +1671,385 @@ public class OidcClientPage extends BasePage {
 		return isElementDisplayed(copied);
 	}
 
+	public boolean isCopiedTextDisplayedQuick() {
+		return isElementDisplayedQuick(By.xpath("//p[contains(text(), 'Copied!')]"), ABSENCE_CHECK_TIMEOUT);
+	}
+
 	public void selectDeactivateStatusInFilter() {
 		clickOnElement(statusFilter);
 		clickOnElement(deactivatedStatusInFilter);
+	}
+
+	public boolean isPrimaryInformationSectionDisplayed() {
+		return isElementDisplayed(primaryInformationSectionHeader);
+	}
+
+	public void clickOnPrimaryInformationSectionHeader() {
+		clickOnElement(primaryInformationSectionHeader);
+	}
+
+	public boolean isAdditionalInformationSectionDisplayed() {
+		return isElementDisplayed(additionalInformationSectionHeader);
+	}
+
+	public void clickOnAdditionalInformationSectionHeader() {
+		clickOnElement(additionalInformationSectionHeader);
+	}
+
+	public void clickOnForgotPasswordBannerToggle() {
+		clickOnElement(forgotPasswordBannerToggle);
+	}
+
+	public void clickOnSignUpBannerToggle() {
+		clickOnElement(signUpBannerToggle);
+	}
+
+	public void enterConsentExpiryDuration(String value) {
+		enter(consentExpiryInput, value);
+	}
+
+	public String getConsentExpiryValue() {
+		return getTextFromAttribute(consentExpiryInput, "value");
+	}
+
+	public void clickOnConsentExpiryInfoIcon() {
+		clickOnElement(consentExpiryInfoIcon);
+	}
+
+	public String getConsentExpiryInfoTooltipText() {
+		return getTextFromLocator(consentExpiryInfoTooltip).trim();
+	}
+
+	public boolean isUserInfoResponseTypeDropdownDisplayed() {
+		return isElementDisplayed(userInfoResponseTypeDropdown);
+	}
+
+	public boolean isUserInfoResponseTypeDropdownDisplayedQuick() {
+		return isElementDisplayedQuick(By.id("user_info_response_type_dropdown_btn"), ABSENCE_CHECK_TIMEOUT);
+	}
+
+	public String getUserInfoResponseTypeDropdownPlaceholder() {
+		return getTextFromLocator(userInfoResponseTypeDropdown).trim();
+	}
+
+	public void clickOnUserInfoResponseTypeDropdown() {
+		clickOnElement(userInfoResponseTypeDropdown);
+	}
+
+	public boolean isJweOptionDisplayed() {
+		return isElementDisplayed(userInfoResponseTypeOptionJwe);
+	}
+
+	public boolean isJwsOptionDisplayed() {
+		return isElementDisplayed(userInfoResponseTypeOptionJws);
+	}
+
+	public void clickOnUserInfoResponseTypeInfoIcon() {
+		clickOnElement(userInfoResponseTypeInfoIcon);
+	}
+
+	public String getUserInfoResponseTypeInfoTooltipText() {
+		return getTextFromLocator(userInfoResponseTypeInfoTooltip).trim();
+	}
+
+	public boolean isPurposeTypeDropdownDisplayed() {
+		return isElementDisplayed(purposeTypeDropdown);
+	}
+
+	public String getPurposeTypeDropdownPlaceholder() {
+		return getTextFromLocator(purposeTypeDropdown).trim();
+	}
+
+	public void clickOnPurposeTypeDropdown() {
+		clickOnElement(purposeTypeDropdown);
+	}
+
+	public boolean isLoginPurposeOptionDisplayed() {
+		return isElementDisplayed(purposeTypeOptionLogin);
+	}
+
+	public boolean isLinkPurposeOptionDisplayed() {
+		return isElementDisplayed(purposeTypeOptionLink);
+	}
+
+	public boolean isVerifyPurposeOptionDisplayed() {
+		return isElementDisplayed(purposeTypeOptionVerify);
+	}
+
+	public void clickOnLoginPurposeOption() {
+		clickOnElement(purposeTypeOptionLogin);
+	}
+
+	public boolean isPurposeTitleLabelDisplayed() {
+		return isElementDisplayed(purposeTitleLabel);
+	}
+
+	public boolean isPurposeTitleLabelDisplayedQuick() {
+		return isElementDisplayedQuick(By.id("purpose_title_label"), ABSENCE_CHECK_TIMEOUT);
+	}
+
+	public boolean isPurposeSubtitleLabelDisplayed() {
+		return isElementDisplayed(purposeSubtitleLabel);
+	}
+
+	public boolean isPurposeSubtitleLabelDisplayedQuick() {
+		return isElementDisplayedQuick(By.id("purpose_subtitle_label"), ABSENCE_CHECK_TIMEOUT);
+	}
+
+	public void clickOnAddPurposeTitleLanguageButton() {
+		clickOnElement(addPurposeTitleLanguageButton);
+	}
+
+	public void clickOnAddPurposeSubtitleLanguageButton() {
+		clickOnElement(addPurposeSubtitleLanguageButton);
+	}
+
+	public boolean isPurposeTitleLanguageDropdownDisplayed() {
+		return isElementDisplayed(purposeTitleLanguageDropdown);
+	}
+
+	public boolean isPurposeTitleLanguageDropdownDisplayedQuick() {
+		return isElementDisplayedQuick(By.xpath("//button[starts-with(@id,'purpose_title_lang_purpose_title_') and contains(@id,'_dropdown_btn')]"),
+				ABSENCE_CHECK_TIMEOUT);
+	}
+
+	public boolean isPurposeSubtitleLanguageDropdownDisplayed() {
+		return isElementDisplayed(purposeSubtitleLanguageDropdown);
+	}
+
+	public boolean isPurposeSubtitleLanguageDropdownDisplayedQuick() {
+		return isElementDisplayedQuick(By.xpath("//button[starts-with(@id,'purpose_subtitle_lang_purpose_subtitle_') and contains(@id,'_dropdown_btn')]"),
+				ABSENCE_CHECK_TIMEOUT);
+	}
+
+	public void clickOnPurposeTitleLanguageDropdown() {
+		clickOnElement(purposeTitleLanguageDropdown);
+	}
+
+	public boolean isPurposeTitleLanguageDefaultOptionDisplayed() {
+		return isElementDisplayed(purposeTitleLanguageDefaultOption);
+	}
+
+	public boolean isPurposeTitleLanguageDefaultOptionDisplayedQuick() {
+		return isElementDisplayedQuick(By.xpath("//button[starts-with(@id,'purpose_title_lang_purpose_title_') and text()='Default']"),
+				ABSENCE_CHECK_TIMEOUT);
+	}
+
+	public boolean isPurposeTitleLanguageEnglishOptionDisplayed() {
+		return isElementDisplayed(purposeTitleLanguageEnglishOption);
+	}
+
+	public boolean isPurposeTitleLanguageFrenchOptionDisplayed() {
+		return isElementDisplayed(purposeTitleLanguageFrenchOption);
+	}
+
+	public boolean isPurposeTitleLanguageArabicOptionDisplayed() {
+		return isElementDisplayed(purposeTitleLanguageArabicOption);
+	}
+
+	public void clickOnAddPurposeTitleLanguageLink() {
+		clickOnElement(addPurposeTitleLanguageLink);
+	}
+
+	public void clickOnPurposeTitleRow2LanguageDropdown() {
+		new WebDriverWait(driver, Duration.ofSeconds(ConfigManager.getTimeout()))
+				.until(ExpectedConditions.numberOfElementsToBeMoreThan(PURPOSE_TITLE_ROW_DROPDOWN_BTN_BY, 1));
+		clickOnElement(driver.findElements(PURPOSE_TITLE_ROW_DROPDOWN_BTN_BY).get(1));
+	}
+
+	public boolean isPurposeTitleTextBoxDisplayed() {
+		return isElementDisplayed(purposeTitleTextBox);
+	}
+
+	public boolean isPurposeSubtitleTextBoxDisplayed() {
+		return isElementDisplayed(purposeSubtitleTextBox);
+	}
+
+	public String getPurposeTitleTextBoxPlaceholder() {
+		return getTextFromAttribute(purposeTitleTextBox, "placeholder");
+	}
+
+	public String getPurposeSubtitleTextBoxPlaceholder() {
+		return getTextFromAttribute(purposeSubtitleTextBox, "placeholder");
+	}
+
+	public void enterPurposeTitleText(String value) {
+		enter(purposeTitleTextBox, value);
+	}
+
+	public void enterPurposeSubtitleText(String value) {
+		enter(purposeSubtitleTextBox, value);
+	}
+
+	public boolean isSubmitButtonEnabled() {
+		return isElementEnabled(submitButton);
+	}
+
+	public boolean isSubmitButtonEnabledQuick() {
+		return isElementDisplayedQuick(By.id("create_oidc_submit_btn"),
+				ABSENCE_CHECK_TIMEOUT) && submitButton.isEnabled();
+	}
+
+	public boolean isPartnerIdFieldLabelDisplayed() {
+		return isElementDisplayed(partnerIdFieldLabel);
+	}
+
+	public boolean isPartnerTypeFieldDisplayed() {
+		return isElementDisplayed(partnerTypeFieldLabel) && isElementDisplayed(partnerTypeContext);
+	}
+
+	public String getPartnerTypeContextText() {
+		return getTextFromLocator(partnerTypeContext).trim();
+	}
+
+	public boolean isPartnerTypeContextDisabled() {
+		return isElementDisabled(partnerTypeContext);
+	}
+
+	public boolean isPolicyGroupFieldDisplayed() {
+		return isElementDisplayed(policyGroupFieldLabel) && isElementDisplayed(policyGroupContext);
+	}
+
+	public String getPolicyGroupContextText() {
+		return getTextFromLocator(policyGroupContext).trim();
+	}
+
+	public boolean isPolicyGroupContextDisabled() {
+		return isElementDisabled(policyGroupContext);
+	}
+
+	public boolean isPolicyNameFieldLabelDisplayed() {
+		return isElementDisplayed(policyNameFieldLabel);
+	}
+
+	public boolean isOidcClientNameFieldLabelDisplayed() {
+		return isElementDisplayed(oidcClientNameFieldLabel);
+	}
+
+	public boolean isPublicKeyFieldLabelDisplayed() {
+		return isElementDisplayed(publicKeyFieldLabel);
+	}
+
+	public boolean isLogoUriFieldLabelDisplayed() {
+		return isElementDisplayed(logoUriFieldLabel);
+	}
+
+	public boolean isRedirectUriFieldLabelDisplayed() {
+		return isElementDisplayed(redirectUriFieldLabel);
+	}
+
+	public boolean isGrantTypeFieldLabelDisplayed() {
+		return isElementDisplayed(grantTypeFieldLabel);
+	}
+
+	public String getFirstOidcClientRowName() {
+		return getTextFromLocator(firstOidcClientRowName).trim();
+	}
+
+	public boolean waitForFirstOidcClientRowName(String expectedName) {
+		return waitForElementText(firstOidcClientRowName, expectedName);
+	}
+
+	// Partner view: the OIDC client name filter is a dropdown (the admin view has a text box instead).
+	public void selectOidcClientNameInFilter(String clientName) {
+		try {
+			dropdown(oidcSelectClientNameFilter, clientName);
+		} catch (IOException e) {
+			throw new RuntimeException("Could not select OIDC client name in filter: " + clientName, e);
+		}
+	}
+
+	public String getFirstOidcClientRowStatus() {
+		return getTextFromLocator(firstOidcClientRowStatus).trim();
+	}
+
+	public void clickOnGrantTypeDropdown() {
+		clickOnElement(grantTypeDropdown);
+	}
+
+	public void clickOnAddClientNameLanguageButton() {
+		clickOnElement(addClientNameLanguageButton);
+	}
+
+	public void clickOnClientNameLanguageDropdownRow1() {
+		clickOnElement(clientNameLanguageDropdownRow1);
+	}
+
+	public void clickOnClientNameLanguageDropdownRow2() {
+		clickOnElement(clientNameLanguageDropdownRow2);
+	}
+
+	public boolean isEnglishLanguageOptionDisplayed() {
+		return isElementDisplayed(englishLanguageOption);
+	}
+
+	public boolean isFrenchLanguageOptionDisplayed() {
+		return isElementDisplayed(frenchLanguageOption);
+	}
+
+	public boolean isArabicLanguageOptionDisplayed() {
+		return isElementDisplayed(arabicLanguageOption);
+	}
+
+	public void selectFrenchForClientNameLanguageRow2() {
+		clickOnElement(frenchLanguageOptionRow2);
+	}
+
+	public void enterClientNameForLanguageRow1(String value) {
+		enter(clientNameLanguageInputRow1, value);
+	}
+
+	public void enterClientNameForLanguageRow2(String value) {
+		enter(clientNameLanguageInputRow2, value);
+	}
+
+	public boolean isClientNameLanguageRow2Displayed() {
+		return isElementDisplayed(clientNameLanguageInputRow2);
+	}
+
+	public String getClientNameLanguageRow1SelectedText() {
+		return getTextFromLocator(clientNameLanguageDropdownRow1).trim();
+	}
+
+	public boolean isClientNameLanguageRow1SelectedTextEqualTo(String expectedText) {
+		return waitForElementText(clientNameLanguageDropdownRow1, expectedText);
+	}
+
+	public boolean isAddClientNameLanguageButtonDisplayed() {
+		return isElementDisplayed(addClientNameLanguageButton);
+	}
+
+	public String getClientNameLanguageRow1Placeholder() {
+		return getTextFromAttribute(clientNameLanguageInputRow1, "placeholder");
+	}
+
+	public boolean isEnglishLanguageOptionRow2Displayed() {
+		return isElementDisplayed(englishLanguageOptionRow2);
+	}
+
+	public boolean isEnglishLanguageOptionRow2DisplayedQuick() {
+		return isElementDisplayedQuick(By.xpath("//button[starts-with(@id,'client_name_lang_map_lang_2_option') and text()='English']"),
+				ABSENCE_CHECK_TIMEOUT);
+	}
+
+	public boolean isFrenchLanguageOptionRow2Displayed() {
+		return isElementDisplayed(frenchLanguageOptionRow2);
+	}
+
+	public boolean isForgotPasswordBannerToggleOn() {
+		return isElementSelected(forgotPasswordBannerToggle);
+	}
+
+	public boolean isSignUpBannerToggleOn() {
+		return isElementSelected(signUpBannerToggle);
+	}
+
+	public void clickOnForgotPasswordBannerInfoIcon() {
+		clickOnElement(forgotPasswordBannerInfoIcon);
+	}
+
+	public String getForgotPasswordBannerInfoTooltipText() {
+		return getTextFromLocator(forgotPasswordBannerInfoTooltip).trim();
 	}
 
 }

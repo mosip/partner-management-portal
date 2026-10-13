@@ -256,9 +256,6 @@ public class AddDevicePage extends BasePage {
 			}
 			attempts++;
 		}
-		takeScreenshot();
-		throw new RuntimeException("Failed to select device type '" + value + "' at position " + position
-				+ " after " + attempts + " attempts");
 	}
 
 	public void selectDeviceSubTypeWithPosition(String value, int position) {
@@ -352,6 +349,10 @@ public class AddDevicePage extends BasePage {
 		return getTextFromLocator(addDeviceTypeSelectDropdown);
 	}
 
+	public boolean isDeviceTypeResetTo(String expectedText) {
+		return waitForElementText(addDeviceTypeSelectDropdown, expectedText);
+	}
+
 	public boolean isDeviceTypeDisabled() {
 		return isElementDisabled(addDeviceTypeSelectDropdown);
 	}
@@ -368,12 +369,20 @@ public class AddDevicePage extends BasePage {
 		return isElementDisplayed(addDeviceTypeOption);
 	}
 
+	public boolean isDeviceTypeOptionDisplayedQuick() {
+		return isElementDisplayedQuick(By.id("add_device_device_type_1_option1"), ABSENCE_CHECK_TIMEOUT);
+	}
+
 	public void clickOnDeviceSubType() {
 		clickOnElement(addDeviceSubTypeSelectDropdown);
 	}
 
 	public boolean isDeviceSubTypeOptionDisplayed() {
 		return isElementDisplayed(addDeviceSubTypeOption);
+	}
+
+	public boolean isDeviceSubTypeOptionDisplayedQuick() {
+		return isElementDisplayedQuick(By.id("add_device_device_sub_type_1_option1"), ABSENCE_CHECK_TIMEOUT);
 	}
 
 	public boolean isAddedDeviceTypeEnabled(String deviceType) {

@@ -4,10 +4,15 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.util.List;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -18,6 +23,30 @@ import io.mosip.testrig.pmpuiv2.kernel.util.ConfigManager;
 import io.mosip.testrig.pmpuiv2.utility.LogUtil;
 
 public class ApiKeyPage extends BasePage {
+
+	public static String API_KEY_EDIT_EXPIRY_PAGE_TITLE;
+	public static String API_KEY_PARTNER_ID_LABEL;
+	public static String API_KEY_PARTNER_TYPE_LABEL;
+	public static String API_KEY_ORGANISATION_LABEL;
+	public static String API_KEY_POLICY_GROUP_LABEL;
+	public static String API_KEY_POLICY_NAME_LABEL;
+	public static String API_KEY_POLICY_GROUP_DESCRIPTION_LABEL;
+	public static String API_KEY_POLICY_NAME_DESCRIPTION_LABEL;
+	public static String API_KEY_UPDATE_EXPIRY_TITLE;
+	public static String API_KEY_EXPIRY_DATE_LABEL;
+	public static String API_KEY_UNDO_CHANGES_BTN_TEXT;
+	public static String API_KEY_CANCEL_BTN_TEXT;
+	public static String API_KEY_SUBMIT_BTN_TEXT;
+	public static String API_KEY_CONFIRMATION_GO_BACK_BTN_TEXT;
+	public static String API_KEY_CONFIRMATION_HOME_BTN_TEXT;
+	public static String API_KEY_CONFIRMATION_MESSAGE_TEMPLATE;
+	public static String API_KEY_ACTION_VIEW_OPTION_TEXT;
+	public static String API_KEY_ACTION_EDIT_EXPIRY_OPTION_TEXT;
+	public static String API_KEY_ACTION_DEACTIVATE_OPTION_TEXT;
+
+	public static void init(String loginLanguage) {
+		copyLocaleFields(ApiKeyPage.class, loginLanguage);
+	}
 
 	@FindBy(id = "generate_api_key_name")
 	private WebElement enterNameOfApiKeyTextBox;
@@ -385,6 +414,90 @@ public class ApiKeyPage extends BasePage {
 	@FindBy(id = "api_key_list_deactivate_btn")
 	private WebElement deactivateButton;
 
+	@FindBy(id = "api_key_list_edit_expiry_btn")
+	private WebElement editExpiryDateButton;
+
+	@FindBy(id = "page_title")
+	private WebElement editApiKeyExpiryPageTitle;
+
+	@FindBy(id = "edit_admin_api_key_sub_title_id")
+	private WebElement editApiKeySubTitle;
+
+	@FindBy(id = "edit_admin_api_key_partner_id_label")
+	private WebElement editApiKeyPartnerIdLabel;
+
+	@FindBy(id = "edit_admin_api_key_partner_id_context")
+	private WebElement editApiKeyPartnerIdContext;
+
+	@FindBy(id = "edit_admin_api_key_partner_type_label")
+	private WebElement editApiKeyPartnerTypeLabel;
+
+	@FindBy(id = "edit_admin_api_key_partner_type_context")
+	private WebElement editApiKeyPartnerTypeContext;
+
+	@FindBy(id = "edit_admin_api_key_policy_group_label")
+	private WebElement editApiKeyPolicyGroupLabel;
+
+	@FindBy(id = "edit_admin_api_key_policy_group_name_context")
+	private WebElement editApiKeyPolicyGroupContext;
+
+	@FindBy(id = "edit_admin_api_key_policy_name_label")
+	private WebElement editApiKeyPolicyNameLabel;
+
+	@FindBy(id = "edit_admin_api_key_policy_name_context")
+	private WebElement editApiKeyPolicyNameContext;
+
+	@FindBy(id = "edit_admin_api_key_policy_group_description_label")
+	private WebElement editApiKeyPolicyGroupDescriptionLabel;
+
+	@FindBy(id = "edit_admin_api_key_policy_group_description_context")
+	private WebElement editApiKeyPolicyGroupDescriptionContext;
+
+	@FindBy(id = "edit_admin_api_key_policy_description_label")
+	private WebElement editApiKeyPolicyNameDescriptionLabel;
+
+	@FindBy(id = "edit_admin_api_key_policy_description_context")
+	private WebElement editApiKeyPolicyNameDescriptionContext;
+
+	@FindBy(id = "edit_admin_api_key_expiry_date_picker_label")
+	private WebElement editApiKeyExpiryDateLabel;
+
+	@FindBy(id = "edit_admin_api_key_expiry_date_picker")
+	private WebElement editApiKeyExpiryDateInput;
+
+	@FindBy(css = "div.react-datepicker")
+	private WebElement editApiKeyExpiryDateCalendarPopup;
+
+	@FindBy(css = "div.react-datepicker__day.react-datepicker__day--015:not(.react-datepicker__day--outside-month)")
+	private WebElement editApiKeyExpiryDateCalendarDay15;
+
+	@FindBy(css = "div.react-datepicker__day.react-datepicker__day--001:not(.react-datepicker__day--outside-month)")
+	private WebElement editApiKeyExpiryDateCalendarDay1;
+
+	@FindBy(id = "edit_admin_api_key_submit_btn")
+	private WebElement editApiKeySubmitButton;
+
+	@FindBy(id = "edit_admin_api_key_undo_changes_btn")
+	private WebElement editApiKeyUndoChangesButton;
+
+	@FindBy(id = "edit_admin_api_key_cancel_btn")
+	private WebElement editApiKeyCancelButton;
+
+	@FindBy(id = "blocker_prompt_description")
+	private WebElement editApiKeyCancelConfirmationPopup;
+
+	@FindBy(id = "edit_admin_api_key_confirmation_header")
+	private WebElement editApiKeyConfirmationHeader;
+
+	@FindBy(id = "confirmation_go_back_btn")
+	private WebElement editApiKeyConfirmationGoBackButton;
+
+	@FindBy(id = "confirmation_home_btn")
+	private WebElement editApiKeyConfirmationHomeButton;
+
+	@FindBy(id = "block_messsage_proceed")
+	private WebElement editApiKeyCancelConfirmationProceedButton;
+
 	@FindBy(id = "api_key_list_item1")
 	private WebElement apiKeyItem1;
 
@@ -424,9 +537,53 @@ public class ApiKeyPage extends BasePage {
 	@FindBy(id = "api_key_list_item1")
 	private WebElement activatedAdminApiKey;
 
+	@FindBy(id = "apiKeysList.expirationDate_header")
+	private WebElement expirationDateColumnHeader;
+
+	@FindBy(xpath = "//p[starts-with(@id,'api_key_details_') and contains(@id,'_label')]")
+	private List<WebElement> individualViewFieldLabels;
+
+	@FindBy(xpath = "//tr[@id='api_key_list_item1']/td[7]")
+	private WebElement adminExpirationDateCell;
+
+	@FindBy(xpath = "//tr[@id='api_list_item1']/td[6]")
+	private WebElement partnerExpirationDateCell;
+
+	@FindBy(xpath = "//tr[@id='api_key_list_item1']/td[6]")
+	private WebElement adminCreationDateCell;
+
+	@FindBy(xpath = "//tr[@id='api_list_item1']/td[5]")
+	private WebElement partnerCreationDateCell;
+
+	@FindBy(xpath = "//tr[starts-with(@id,'api_key_list_item')]/td[7]")
+	private List<WebElement> adminExpirationDateColumn;
+
+	@FindBy(xpath = "//tr[starts-with(@id,'api_list_item')]/td[6]")
+	private List<WebElement> partnerExpirationDateColumn;
+
+	@FindBy(id = "api_key_details_expiration_date_label")
+	private WebElement apiKeyDetailsExpirationDateLabel;
+
+	@FindBy(id = "api_key_details_expiration_date_context")
+	private WebElement apiKeyDetailsExpirationDateContext;
+
+	@FindBy(xpath = "//p[normalize-space()='Expiration Date']")
+	private WebElement expirationDateLabelInAdminView;
+
+	@FindBy(xpath = "//p[normalize-space()='Expiration Date']/following-sibling::p[1]")
+	private WebElement expirationDateContextInAdminView;
+
+	@FindBy(id = "apiKeyExpiryDateTime_desc_icon")
+	private WebElement apiKeyExpiryDateTime_desc_icon;
+
+	@FindBy(id = "apiKeyExpiryDateTime_asc_icon")
+	private WebElement apiKeyExpiryDateTime_asc_icon;
+
 	public ApiKeyPage(WebDriver driver) {
 		super(driver);
 	}
+
+	private static final String NO_EXPIRY_TEXT = "No Expiry";
 
 	private static final Logger logger = Logger.getLogger(ApiKeyPage.class);
 
@@ -486,13 +643,7 @@ public class ApiKeyPage extends BasePage {
 	}
 
 	public void clickOnCreateApiKey() {
-		if (isElementDisplayed(apiKeyListPageGenerateApiKeyBtn)) {
-			clickOnElement(apiKeyListPageGenerateApiKeyBtn);
-		} else if (isElementDisplayed(generateApiKey)) {
-			clickOnElement(generateApiKey);
-		} else {
-			throw new RuntimeException("Create API Key button is not visible on the page");
-		}
+		click(By.cssSelector("#generate_api_key_btn, #generate_api_key"));
 	}
 
 	public void clickOnSubmitButton() {
@@ -613,6 +764,10 @@ public class ApiKeyPage extends BasePage {
 
 	public boolean isFilterButtonEnabled() {
 		return isElementEnabled(filterButton);
+	}
+
+	public boolean isFilterButtonEnabledQuick() {
+		return isElementDisplayedQuick(By.id("filter_btn"), ABSENCE_CHECK_TIMEOUT) && filterButton.isEnabled();
 	}
 
 	public void clickOnFilterButton() {
@@ -770,6 +925,11 @@ public class ApiKeyPage extends BasePage {
 
 	public boolean isApiKeyDeactivatePopupDisplayed() {
 		return isElementDisplayed(apiKeyDeactivateTitle);
+	}
+
+	public boolean isApiKeyDeactivatePopupDisplayedQuick() {
+		return isElementDisplayedQuick(By.xpath("//p[contains(text(), 'Do you want to Deactivate API Key')]"),
+				ABSENCE_CHECK_TIMEOUT);
 	}
 
 	public boolean isApiKeyDeactivateTitleDisplayed() {
@@ -935,6 +1095,11 @@ public class ApiKeyPage extends BasePage {
 		return isElementEnabled(filterResetButton);
 	}
 
+	public boolean isfilterResetButtonEnabledQuick() {
+		return isElementDisplayedQuick(By.id("filter_reset_btn"),
+				ABSENCE_CHECK_TIMEOUT) && filterResetButton.isEnabled();
+	}
+
 	public boolean isPartnerIdFilterHeaderDisplayed() {
 		return isElementDisplayed(partnerIdFilterHeader);
 	}
@@ -985,6 +1150,11 @@ public class ApiKeyPage extends BasePage {
 
 	public boolean isApplyFilterButtonEnabled() {
 		return isElementEnabled(applyFilterButton);
+	}
+
+	public boolean isApplyFilterButtonEnabledQuick() {
+		return isElementDisplayedQuick(By.id("apply_filter_btn"),
+				ABSENCE_CHECK_TIMEOUT) && applyFilterButton.isEnabled();
 	}
 
 	public void clickOnApplyFilterButton() {
@@ -1083,12 +1253,270 @@ public class ApiKeyPage extends BasePage {
 		clickOnElement(actionButton);
 	}
 
+	public boolean isActionButtonDisplayed() {
+		return isElementDisplayed(actionButton);
+	}
+
+	public boolean isActionButtonEnabled() {
+		return isElementEnabled(actionButton);
+	}
+
+	public boolean isApiKeyItem1Displayed() {
+		return isElementDisplayed(apiKeyItem1);
+	}
+
+	public boolean isViewButtonDisplayed() {
+		return isElementDisplayed(viewButton);
+	}
+
 	public boolean isViewButtonEnabled() {
 		return isElementEnabled(viewButton);
 	}
 
+	public String getViewButtonText() {
+		return getTextFromLocator(viewButton);
+	}
+
+	public boolean isDeactivateButtonDisplayed() {
+		return isElementDisplayed(deactivateButton);
+	}
+
 	public boolean isDeactivateButtonEnabled() {
 		return isElementEnabled(deactivateButton);
+	}
+
+	public String getDeactivateButtonText() {
+		return getTextFromLocator(deactivateButton);
+	}
+
+	public boolean isEditExpiryDateButtonDisplayed() {
+		return isElementDisplayed(editExpiryDateButton);
+	}
+
+	public String getEditExpiryDateButtonText() {
+		return getTextFromLocator(editExpiryDateButton);
+	}
+
+	public boolean isEditExpiryDateButtonEnabled() {
+		return isElementEnabled(editExpiryDateButton);
+	}
+
+	public void clickOnEditExpiryDateButton() {
+		clickOnElement(editExpiryDateButton);
+	}
+
+	public boolean isEditApiKeyExpiryPageDisplayed() {
+		return isElementDisplayed(editApiKeyExpiryPageTitle);
+	}
+
+	public String getEditApiKeyExpiryPageTitle() {
+		return getTextFromLocator(editApiKeyExpiryPageTitle);
+	}
+
+	public String getEditApiKeyName() {
+		String subTitle = getTextFromLocator(editApiKeySubTitle);
+		return subTitle.substring(subTitle.lastIndexOf(':') + 1).trim();
+	}
+
+	public boolean isEditApiKeyPartnerIdLabelDisplayed() {
+		return isElementDisplayed(editApiKeyPartnerIdLabel);
+	}
+
+	public String getEditApiKeyPartnerIdLabelText() {
+		return getTextFromLocator(editApiKeyPartnerIdLabel);
+	}
+
+	public boolean isEditApiKeyPartnerIdFieldReadOnly() {
+		return isElementNotEditable(editApiKeyPartnerIdContext);
+	}
+
+	public boolean isEditApiKeyPartnerTypeLabelDisplayed() {
+		return isElementDisplayed(editApiKeyPartnerTypeLabel);
+	}
+
+	public String getEditApiKeyPartnerTypeLabelText() {
+		return getTextFromLocator(editApiKeyPartnerTypeLabel);
+	}
+
+	public boolean isEditApiKeyPartnerTypeFieldReadOnly() {
+		return isElementNotEditable(editApiKeyPartnerTypeContext);
+	}
+
+	public boolean isEditApiKeyPolicyGroupLabelDisplayed() {
+		return isElementDisplayed(editApiKeyPolicyGroupLabel);
+	}
+
+	public String getEditApiKeyPolicyGroupLabelText() {
+		return getTextFromLocator(editApiKeyPolicyGroupLabel);
+	}
+
+	public boolean isEditApiKeyPolicyGroupFieldReadOnly() {
+		return isElementNotEditable(editApiKeyPolicyGroupContext);
+	}
+
+	public boolean isEditApiKeyPolicyNameLabelDisplayed() {
+		return isElementDisplayed(editApiKeyPolicyNameLabel);
+	}
+
+	public String getEditApiKeyPolicyNameLabelText() {
+		return getTextFromLocator(editApiKeyPolicyNameLabel);
+	}
+
+	public boolean isEditApiKeyPolicyNameFieldReadOnly() {
+		return isElementNotEditable(editApiKeyPolicyNameContext);
+	}
+
+	public boolean isEditApiKeyPolicyGroupDescriptionLabelDisplayed() {
+		return isElementDisplayed(editApiKeyPolicyGroupDescriptionLabel);
+	}
+
+	public String getEditApiKeyPolicyGroupDescriptionLabelText() {
+		return getTextFromLocator(editApiKeyPolicyGroupDescriptionLabel);
+	}
+
+	public boolean isEditApiKeyPolicyGroupDescriptionFieldReadOnly() {
+		return isElementNotEditable(editApiKeyPolicyGroupDescriptionContext);
+	}
+
+	public boolean isEditApiKeyPolicyNameDescriptionLabelDisplayed() {
+		return isElementDisplayed(editApiKeyPolicyNameDescriptionLabel);
+	}
+
+	public String getEditApiKeyPolicyNameDescriptionLabelText() {
+		return getTextFromLocator(editApiKeyPolicyNameDescriptionLabel);
+	}
+
+	public boolean isEditApiKeyPolicyNameDescriptionFieldReadOnly() {
+		return isElementNotEditable(editApiKeyPolicyNameDescriptionContext);
+	}
+
+	public boolean isEditApiKeyExpiryDateLabelDisplayed() {
+		return isElementDisplayed(editApiKeyExpiryDateLabel);
+	}
+
+	public String getEditApiKeyExpiryDateLabelText() {
+		return getTextFromLocator(editApiKeyExpiryDateLabel);
+	}
+
+	public boolean isEditApiKeyExpiryDateFieldEnabled() {
+		return isElementEnabled(editApiKeyExpiryDateInput);
+	}
+
+	public String getEditApiKeyExpiryDateValue() {
+		return getTextFromAttribute(editApiKeyExpiryDateInput, "value");
+	}
+
+	public void clickOnEditApiKeyExpiryDateField() {
+		clickOnElement(editApiKeyExpiryDateInput);
+	}
+
+	public boolean isEditApiKeyExpiryDateCalendarDisplayed() {
+		return isElementDisplayed(editApiKeyExpiryDateCalendarPopup);
+	}
+
+	public void selectDay15InEditApiKeyExpiryDateCalendar() {
+		clickOnElement(editApiKeyExpiryDateCalendarDay15);
+	}
+
+	public void enterEditApiKeyExpiryDate(String date) {
+		enter(editApiKeyExpiryDateInput, date);
+	}
+
+	public void clearEditApiKeyExpiryDateField() {
+		editApiKeyExpiryDateInput.clear();
+	}
+
+	public void blurEditApiKeyExpiryDateField() {
+		editApiKeyExpiryDateInput.sendKeys(Keys.TAB);
+	}
+
+	public boolean isTodayDisabledInEditApiKeyExpiryDateCalendar() {
+		By todayDisabledLocator = By.cssSelector("div.react-datepicker__day--today.react-datepicker__day--disabled");
+		return isElementDisplayedQuick(todayDisabledLocator, Duration.ofSeconds(5));
+	}
+
+	public int getDisabledDayCountInEditApiKeyExpiryDateCalendar() {
+		return driver.findElements(By.cssSelector("div.react-datepicker__day--disabled")).size();
+	}
+
+	public void clickOnDay1InEditApiKeyExpiryDateCalendar() {
+		clickOnElement(editApiKeyExpiryDateCalendarDay1);
+	}
+
+	public boolean isEditApiKeySubmitButtonEnabled() {
+		return isElementEnabled(editApiKeySubmitButton);
+	}
+
+	public void clickOnEditApiKeyCancelButton() {
+		clickOnElement(editApiKeyCancelButton);
+	}
+
+	public boolean isEditApiKeyCancelButtonDisplayed() {
+		return isElementDisplayed(editApiKeyCancelButton);
+	}
+
+	public String getEditApiKeyCancelButtonText() {
+		return getTextFromLocator(editApiKeyCancelButton);
+	}
+
+	public boolean isEditApiKeySubmitButtonDisplayed() {
+		return isElementDisplayed(editApiKeySubmitButton);
+	}
+
+	public String getEditApiKeySubmitButtonText() {
+		return getTextFromLocator(editApiKeySubmitButton);
+	}
+
+	public boolean isEditApiKeyCancelButtonEnabled() {
+		return isElementEnabled(editApiKeyCancelButton);
+	}
+
+	public boolean isEditApiKeyUndoChangesButtonEnabled() {
+		return isElementEnabled(editApiKeyUndoChangesButton);
+	}
+
+	public String getEditApiKeyUndoChangesButtonText() {
+		return getTextFromLocator(editApiKeyUndoChangesButton);
+	}
+
+	public void clickOnEditApiKeyUndoChangesButton() {
+		clickOnElement(editApiKeyUndoChangesButton);
+	}
+
+	public void clickOnEditApiKeySubmitButton() {
+		clickOnElement(editApiKeySubmitButton);
+	}
+
+	public boolean isEditApiKeyConfirmationHeaderDisplayed() {
+		return isElementDisplayed(editApiKeyConfirmationHeader);
+	}
+
+	public String getEditApiKeyConfirmationHeaderText() {
+		return getTextFromLocator(editApiKeyConfirmationHeader);
+	}
+
+	public void clickOnEditApiKeyConfirmationGoBackButton() {
+		clickOnElement(editApiKeyConfirmationGoBackButton);
+	}
+
+	public String getEditApiKeyConfirmationGoBackButtonText() {
+		return getTextFromLocator(editApiKeyConfirmationGoBackButton);
+	}
+
+	public void clickOnEditApiKeyConfirmationHomeButton() {
+		clickOnElement(editApiKeyConfirmationHomeButton);
+	}
+
+	public String getEditApiKeyConfirmationHomeButtonText() {
+		return getTextFromLocator(editApiKeyConfirmationHomeButton);
+	}
+
+	public boolean isEditApiKeyCancelConfirmationPopupDisplayed() {
+		return isElementDisplayed(editApiKeyCancelConfirmationPopup);
+	}
+
+	public void clickOnEditApiKeyCancelConfirmationProceedButton() {
+		clickOnElement(editApiKeyCancelConfirmationProceedButton);
 	}
 
 	public void clickOnDeactivatedApiKeyRow() {
@@ -1097,6 +1525,10 @@ public class ApiKeyPage extends BasePage {
 
 	public boolean isApiKeyDetailsPageDisplayed() {
 		return isElementDisplayed(apiKeyTitle);
+	}
+
+	public boolean isApiKeyDetailsPageDisplayedQuick() {
+		return isElementDisplayedQuick(By.xpath("//h1[text()='View API Key Details']"), ABSENCE_CHECK_TIMEOUT);
 	}
 
 	public boolean isStatusDeavtivatedDisplayed() {
@@ -1204,6 +1636,272 @@ public class ApiKeyPage extends BasePage {
 
 		} catch (DateTimeParseException e) {
 			LogUtil.error("Date format mismatch: " + e.getMessage());
+			takeScreenshot();
+			return false;
+		}
+	}
+
+	public boolean isExpirationDateHeaderDisplayed() {
+		return isElementDisplayed(expirationDateColumnHeader);
+	}
+
+	public boolean isExpirationDateHeaderAfterCreationDate() {
+		int creationIndex = getColumnIndex("oidcClientsList.creationDate_header");
+		int expirationIndex = getColumnIndex("apiKeysList.expirationDate_header");
+		LogUtil.step("Creation Date column index: " + creationIndex + ", Expiration Date column index: "
+				+ expirationIndex);
+
+		if (creationIndex < 0 || expirationIndex < 0) {
+			LogUtil.error("Creation Date or Expiration Date column header is missing from the table");
+			takeScreenshot();
+			return false;
+		}
+		if (expirationIndex != creationIndex + 1) {
+			LogUtil.error("Expiration Date is not the column immediately after Creation Date");
+			takeScreenshot();
+			return false;
+		}
+		return true;
+	}
+
+	public boolean isExpiryDateDescIconDisplayed() {
+		return isElementDisplayed(apiKeyExpiryDateTime_desc_icon);
+	}
+
+	public boolean isExpiryDateAscIconDisplayed() {
+		return isElementDisplayed(apiKeyExpiryDateTime_asc_icon);
+	}
+
+	public void clickOnExpiryDateDescIcon() {
+		clickOnElement(apiKeyExpiryDateTime_desc_icon);
+	}
+
+	public void clickOnExpiryDateAscIcon() {
+		clickOnElement(apiKeyExpiryDateTime_asc_icon);
+	}
+
+	public boolean isExpiryDateColumnSorted(boolean ascending, boolean isAdminView) {
+		List<LocalDate> dates = readExpiryColumn(isAdminView);
+		if (dates.size() < 2) {
+			LogUtil.error("Only " + dates.size() + " dated row(s) on the page, which cannot demonstrate sorting");
+			takeScreenshot();
+			return false;
+		}
+		for (int i = 1; i < dates.size(); i++) {
+			boolean inOrder = ascending ? !dates.get(i).isBefore(dates.get(i - 1))
+					: !dates.get(i).isAfter(dates.get(i - 1));
+			if (!inOrder) {
+				LogUtil.error("Expiration Date not sorted " + (ascending ? "ascending" : "descending") + " at row "
+						+ (i + 1) + ": " + dates.get(i - 1) + " then " + dates.get(i));
+				takeScreenshot();
+				return false;
+			}
+		}
+		return true;
+	}
+
+	private List<LocalDate> readExpiryColumn(boolean isAdminView) {
+		List<WebElement> expirationDateColumn = isAdminView ? adminExpirationDateColumn : partnerExpirationDateColumn;
+		for (int attempt = 0; attempt < STALE_RETRY; attempt++) {
+			try {
+				List<LocalDate> dates = new ArrayList<>();
+				for (WebElement cell : expirationDateColumn) {
+					String value = cell.getText().trim();
+					if (value.isEmpty() || value.equalsIgnoreCase(NO_EXPIRY_TEXT) || value.equals("-")) {
+						continue;
+					}
+					try {
+						dates.add(LocalDate.parse(value, PmpTestUtil.nonZeroPadderDateFormatter));
+					} catch (DateTimeParseException e) {
+						LogUtil.step("Skipping unparsable expiry value: " + value);
+					}
+				}
+				LogUtil.step("Expiration dates read from column: " + dates);
+				return dates;
+			} catch (StaleElementReferenceException stale) {
+				LogUtil.step("Expiration date column went stale while reading - retrying");
+			}
+		}
+		takeScreenshot();
+		throw new RuntimeException("Expiration date column still stale after " + STALE_RETRY + " attempts");
+	}
+
+	public boolean isExpirationDateSameAsBrowserDateFormat(boolean isAdminView) {
+		WebElement expirationDateCell = isAdminView ? adminExpirationDateCell : partnerExpirationDateCell;
+		try {
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(ConfigManager.getTimeout()));
+			String value = wait.until(ExpectedConditions.visibilityOf(expirationDateCell)).getText().trim();
+			LogUtil.step("API key expiration date from UI: " + value);
+
+			if (value.equalsIgnoreCase(NO_EXPIRY_TEXT)) {
+				LogUtil.error("First row carries no expiry date, so the locale format cannot be verified");
+				takeScreenshot();
+				return false;
+			}
+			LocalDate.parse(value, PmpTestUtil.nonZeroPadderDateFormatter);
+			return true;
+
+		} catch (TimeoutException e) {
+			LogUtil.error("API key expiration cell not visible in time");
+			takeScreenshot();
+			return false;
+		} catch (DateTimeParseException e) {
+			LogUtil.error("Expiration date format mismatch: " + e.getMessage());
+			takeScreenshot();
+			return false;
+		}
+	}
+
+	public boolean isExpirationDateNotBeforeCreationDate(boolean isAdminView) {
+		WebElement creationDateCell = isAdminView ? adminCreationDateCell : partnerCreationDateCell;
+		WebElement expirationDateCell = isAdminView ? adminExpirationDateCell : partnerExpirationDateCell;
+		try {
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(ConfigManager.getTimeout()));
+			String created = wait.until(ExpectedConditions.visibilityOf(creationDateCell)).getText().trim();
+			String expiry = wait.until(ExpectedConditions.visibilityOf(expirationDateCell)).getText().trim();
+			LogUtil.step("Created: " + created + ", Expiry: " + expiry);
+
+			if (expiry.equalsIgnoreCase(NO_EXPIRY_TEXT)) {
+				LogUtil.error("Expiration date not set for the API key");
+				takeScreenshot();
+				return false;
+			}
+			LocalDate createdDate = LocalDate.parse(created, PmpTestUtil.nonZeroPadderDateFormatter);
+			LocalDate expiryDate = LocalDate.parse(expiry, PmpTestUtil.nonZeroPadderDateFormatter);
+
+			if (expiryDate.isBefore(createdDate)) {
+				LogUtil.error("Expiration date " + expiryDate + " is earlier than the creation date " + createdDate);
+				takeScreenshot();
+				return false;
+			}
+			return true;
+
+		} catch (TimeoutException e) {
+			LogUtil.error("Creation or expiration cell not visible in time");
+			takeScreenshot();
+			return false;
+		} catch (DateTimeParseException e) {
+			LogUtil.error("Could not parse the creation or expiration date: " + e.getMessage());
+			takeScreenshot();
+			return false;
+		}
+	}
+
+	public boolean isApiKeyDetailsExpirationDateLabelDisplayed() {
+		if (isElementDisplayedQuick(By.id("api_key_details_expiration_date_label"), Duration.ofSeconds(5))) {
+			return true;
+		}
+		return isElementDisplayed(expirationDateLabelInAdminView);
+	}
+
+	public String getExpirationDateFromList(boolean isAdminView) {
+		WebElement expirationDateCell = isAdminView ? adminExpirationDateCell : partnerExpirationDateCell;
+		return new WebDriverWait(driver, Duration.ofSeconds(ConfigManager.getTimeout()))
+				.until(ExpectedConditions.visibilityOf(expirationDateCell)).getText().trim();
+	}
+
+	public String getExpirationDateFromIndividualView() {
+		if (isElementDisplayedQuick(By.id("api_key_details_expiration_date_context"), Duration.ofSeconds(5))) {
+			return getTextFromLocator(apiKeyDetailsExpirationDateContext).trim();
+		}
+		return getTextFromLocator(expirationDateContextInAdminView).trim();
+	}
+
+	public boolean isApiKeyDetailsExpirationDateContextDisplayed() {
+		if (isElementDisplayedQuick(By.id("api_key_details_expiration_date_context"), Duration.ofSeconds(5))) {
+			return true;
+		}
+		return isElementDisplayed(expirationDateContextInAdminView);
+	}
+
+	public boolean isIndividualViewFieldOrderCorrect() {
+		String[] expectedOrder = { "Partner ID", "Partner Type", "Policy Group", "Policy Name",
+				"Policy Group Description", "Policy Name Description", "Expiration Date" };
+
+		List<String> renderedLabels = new ArrayList<>();
+		for (WebElement label : individualViewFieldLabels) {
+			String text = label.getText().trim();
+			if (!text.isEmpty()) {
+				renderedLabels.add(text);
+			}
+		}
+		LogUtil.step("Individual view labels in render order: " + renderedLabels);
+
+		int cursor = -1;
+		for (String expected : expectedOrder) {
+			int found = renderedLabels.indexOf(expected);
+			if (found < 0) {
+				LogUtil.error("Field missing from individual view: " + expected);
+				takeScreenshot();
+				return false;
+			}
+			if (found <= cursor) {
+				LogUtil.error("Field out of sequence: " + expected + " at index " + found + ", expected after "
+						+ cursor);
+				takeScreenshot();
+				return false;
+			}
+			cursor = found;
+		}
+		return true;
+	}
+
+	public boolean isDeactivatedRowNotClickable(boolean isAdminView) {
+		WebElement row = isAdminView ? apiKeyItem1 : apiListItem1;
+
+		boolean clicked = false;
+		for (int attempt = 0; attempt < STALE_RETRY; attempt++) {
+			try {
+				new WebDriverWait(driver, Duration.ofSeconds(ConfigManager.getTimeout()))
+						.until(ExpectedConditions.visibilityOf(row));
+				scrollIntoView(row);
+				row.click();
+				clicked = true;
+				break;
+			} catch (StaleElementReferenceException stale) {
+				LogUtil.step("API key row went stale before the click - retrying");
+			}
+		}
+
+		// Without this the check would pass on a click that never happened.
+		if (!clicked) {
+			takeScreenshot();
+			throw new RuntimeException("API key row never became clickable after " + STALE_RETRY + " attempts");
+		}
+
+		boolean detailsOpened = isElementDisplayedQuick(By.xpath("//h1[text()='View API Key Details']"), Duration.ofSeconds(5));
+		if (detailsOpened) {
+			LogUtil.error("Deactivated API Key row opened the individual view");
+			takeScreenshot();
+		}
+		return !detailsOpened;
+	}
+
+	public boolean isApiKeyListViewDisplayed() {
+		return isElementDisplayed(subTitleOfTabularView);
+	}
+
+	public boolean isExpirationDateStyledLikeOtherFields() {
+		WebElement expiration = isElementDisplayedQuick(By.id("api_key_details_expiration_date_label"),
+				Duration.ofSeconds(5)) ? apiKeyDetailsExpirationDateLabel : expirationDateLabelInAdminView;
+
+		try {
+			for (String property : new String[] { "font-family", "font-size", "font-weight", "color" }) {
+				String expected = apiKeyDetailsPartnerIdLabel.getCssValue(property);
+				String actual = expiration.getCssValue(property);
+				LogUtil.step("Label " + property + " - Partner ID: " + expected + ", Expiration Date: " + actual);
+
+				if (!expected.equals(actual)) {
+					LogUtil.error("Expiration Date label " + property + " is " + actual + " but the other field "
+							+ "labels use " + expected);
+					takeScreenshot();
+					return false;
+				}
+			}
+			return true;
+
+		} catch (NoSuchElementException e) {
+			LogUtil.error("Could not find the Expiration Date label or the reference label to compare against");
 			takeScreenshot();
 			return false;
 		}

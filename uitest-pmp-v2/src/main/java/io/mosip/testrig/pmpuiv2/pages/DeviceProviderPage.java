@@ -1,5 +1,6 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -14,6 +15,9 @@ import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
 public class DeviceProviderPage extends BasePage {
+
+	// Used only to assert a submit was refused, so a short window is enough.
+	private static final Duration SBI_OUTCOME_TIMEOUT = Duration.ofSeconds(5);
 
 	@FindBy(id = "sub_title_home_btn")
 	private WebElement homeButton;
@@ -169,6 +173,14 @@ public class DeviceProviderPage extends BasePage {
 		return getTextFromLocator(partnerType);
 	}
 
+	public boolean isPartnerIdResetTo(String expectedText) {
+		return waitForElementText(addSbiPartnerId, expectedText);
+	}
+
+	public boolean isPartnerTypeResetTo(String expectedText) {
+		return waitForElementText(partnerType, expectedText);
+	}
+
 	public String getSbiVersion() {
 		return getTextFromAttribute(sbiVersion, GlobalConstants.PLACEHOLDER);
 	}
@@ -266,6 +278,10 @@ public class DeviceProviderPage extends BasePage {
 
 	public boolean isListOfSbiTitleDisplayed() {
 		return isElementDisplayed(sbiList);
+	}
+
+	public boolean isAddSbiErrorMessageDisplayed() {
+		return isElementDisplayedQuick(By.id("add_sbi_error_msg"), SBI_OUTCOME_TIMEOUT);
 	}
 
 	public boolean isCreatedSbiDisplayed(String sbiVersion) {
@@ -384,13 +400,13 @@ public class DeviceProviderPage extends BasePage {
 	}
 
 	public void enterDateManuallyInCreatedDate(String yearDateValue) {
-		createdDate.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+		selectAllText(createdDate);
 		createdDate.sendKeys(Keys.BACK_SPACE);
 		enter(createdDate, yearDateValue);
 	}
 
 	public void enterDateManuallyInExpiryDate(String yearDateValue) {
-		expiryDate.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+		selectAllText(expiryDate);
 		expiryDate.sendKeys(Keys.BACK_SPACE);
 		enter(expiryDate, yearDateValue);
 	}

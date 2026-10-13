@@ -1,19 +1,24 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
 import java.io.IOException;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
+import io.mosip.testrig.pmpuiv2.utility.LogUtil;
 
 public class ListOfDevicesPage extends BasePage {
 
@@ -40,6 +45,24 @@ public class ListOfDevicesPage extends BasePage {
 
 	@FindBy(id = "device_list_approve_reject_option")
 	private WebElement approveRejectButton;
+
+	@FindBy(id = "reject_popup_title")
+	private WebElement rejectOnlyPopupTitle;
+
+	@FindBy(id = "reject_popup_header")
+	private WebElement rejectOnlyPopupHeader;
+
+	@FindBy(id = "reject_popup_description")
+	private WebElement rejectOnlyPopupDescription;
+
+	@FindBy(id = "reject_popup_reject_btn")
+	private WebElement rejectOnlyPopupRejectButton;
+
+	@FindBy(id = "reject_popup_close_icon")
+	private WebElement rejectOnlyPopupCloseIcon;
+
+	@FindBy(xpath = "//tr[starts-with(@id,'device_list_item')]")
+	private List<WebElement> deviceRows;
 
 	@FindBy(id = "approve_btn")
 	private WebElement approveButton;
@@ -425,14 +448,45 @@ public class ListOfDevicesPage extends BasePage {
 		return getTextFromLocator(listOfDevicesText);
 	}
 
+	public boolean areAllListedDevicesMatching(String columnHeaderId, String expectedValue) {
+		int columnIndex = getColumnIndex(columnHeaderId);
+		if (columnIndex < 0) {
+			return false;
+		}
+		List<WebElement> cells = driver.findElements(
+				By.xpath("//tr[starts-with(@id,'device_list_device_item') or starts-with(@id,'device_list_item')]/td["
+						+ (columnIndex + 1) + "]"));
+		if (cells.isEmpty()) {
+			LogUtil.step("No device rows listed for column " + columnHeaderId + " = " + expectedValue);
+			return false;
+		}
+		for (WebElement cell : cells) {
+			String actualValue = cell.getText().trim();
+			if (!expectedValue.equalsIgnoreCase(actualValue)) {
+				LogUtil.step("Device row shows " + columnHeaderId + " = '" + actualValue + "', expected '"
+						+ expectedValue + "'");
+				return false;
+			}
+		}
+		return true;
+	}
+
 	public boolean isDeviceDisplayed(String deviceType, String deviceSubType, String make, String model) {
 		try {
-			By addedDevice = By.xpath("//td[text()='" + deviceType + "']/..//td[text()='" + deviceSubType
-					+ "']/..//td[text()='" + make + "']/..//td[text()='" + model + "']");
-			return isDisplayed(addedDevice);
+			return isDisplayed(deviceRow(deviceType, deviceSubType, make, model));
 		} catch (NoSuchElementException | TimeoutException e) {
 			return false;
 		}
+	}
+
+	// For a device expected to be filtered OUT of an already-settled list: a short wait instead of the full one.
+	public boolean isDeviceDisplayedQuick(String deviceType, String deviceSubType, String make, String model) {
+		return isElementDisplayedQuick(deviceRow(deviceType, deviceSubType, make, model), ABSENCE_CHECK_TIMEOUT);
+	}
+
+	private By deviceRow(String deviceType, String deviceSubType, String make, String model) {
+		return By.xpath("//td[text()='" + deviceType + "']/..//td[text()='" + deviceSubType + "']/..//td[text()='"
+				+ make + "']/..//td[text()='" + model + "']");
 	}
 
 	public void clickOnDeviceThreeDots(String deviceType, String deviceSubType, String make, String model) {
@@ -497,19 +551,11 @@ public class ListOfDevicesPage extends BasePage {
 	}
 
 	public boolean isDeactivateDeviceEnabled() {
-		if (isElementDisplayed(deactivateDeviceWithoutGreyedOut)) {
-			return true;
-		} else {
-			return false;
-		}
+		return !getTextFromAttribute(deactivateDevice, "class").contains("text-[#A5A5A5]");
 	}
 
 	public boolean isDeactivateDeviceDisabled() {
-		if (isElementDisplayed(deactivateDeviceWithGreyedOut)) {
-			return true;
-		} else {
-			return false;
-		}
+		return getTextFromAttribute(deactivateDevice, "class").contains("text-[#A5A5A5]");
 	}
 
 	public void clickOnDeactivateDevice() {
@@ -597,22 +643,33 @@ public class ListOfDevicesPage extends BasePage {
 		WebElement statusOption = driver.findElement(
 				By.xpath("//button[contains(@id, 'device_list_filter_status_option') and text()='" + status + "']"));
 		clickOnElement(statusOption);
+		waitForListedDevicesToMatch(GlobalConstants.STATUS_COLUMN_HEADER_ID, status);
+	}
+
+	public void waitForListedDevicesToMatch(String columnHeaderId, String expectedValue) {
+		try {
+			new WebDriverWait(driver, Duration.ofSeconds(15)).until(driver -> areAllListedDevicesMatching(
+					columnHeaderId, expectedValue) || isNoResultsFoundDisplayedQuick());
+		} catch (TimeoutException e) {
+			LogUtil.step("Device list did not settle on " + columnHeaderId + " = " + expectedValue);
+		}
+	}
+
+	private boolean isNoResultsFoundDisplayedQuick() {
+		return !driver.findElements(By.id("no_results_found")).isEmpty();
 	}
 
 	public void selectDeviceTypeFilter(String deviceType) {
-		try {
-			dropdown(deviceTypeFilter, deviceType);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		clickOnElement(deviceTypeFilter);
+		click(By.xpath("//button[starts-with(@id,'device_list_filter_device_type_option') and normalize-space()='"
+				+ deviceType + "']"));
+		waitForListedDevicesToMatch(GlobalConstants.DEVICE_TYPE_COLUMN_HEADER_ID, deviceType);
 	}
 
 	public void selectDeviceTypeFilterInAdmin(String deviceType) {
-		try {
-			dropdown(deviceTypeFilterInAdmin, deviceType);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		clickOnElement(deviceTypeFilterInAdmin);
+		click(By.xpath("//button[starts-with(@id,'device_type_filter_option') and normalize-space()='" + deviceType
+				+ "']"));
 	}
 
 	public void clickOnDeactivateSubmit() {
@@ -786,11 +843,7 @@ public class ListOfDevicesPage extends BasePage {
 	}
 
 	public boolean isApproceRejectDeviceDisabled() {
-		if (isElementDisplayed(approveRejectWithGreyedOut)) {
-			return true;
-		} else {
-			return false;
-		}
+		return getTextFromAttribute(approveRejectButton, "class").contains("text-[#A5A5A5]");
 	}
 
 	public void clickOnDeactivateButton() {
@@ -986,19 +1039,11 @@ public class ListOfDevicesPage extends BasePage {
 	}
 
 	public boolean isDeactivateDeviceEnabledInAdmin() {
-		if (isElementDisplayed(deactivateDeviceEnabledButtonInAdmin)) {
-			return true;
-		} else {
-			return false;
-		}
+		return !getTextFromAttribute(deviceListDeactivateOption, "class").contains("text-[#A5A5A5]");
 	}
 
 	public boolean isDeactivateDeviceDisabledInAdmin() {
-		if (isElementDisplayed(deactivateDeviceWithGreyedOutInAdmin)) {
-			return true;
-		} else {
-			return false;
-		}
+		return getTextFromAttribute(deviceListDeactivateOption, "class").contains("text-[#A5A5A5]");
 	}
 
 	public boolean isListOfDeviceInAdminDisplayed() {
@@ -1254,5 +1299,85 @@ public class ListOfDevicesPage extends BasePage {
 	    return isDisplayed(deviceIdColumnHeader);
 	}
 
+	public boolean isRejectOnlyPopupDisplayed() {
+		return isElementDisplayed(rejectOnlyPopupTitle);
+	}
 
+	public boolean isRejectOnlyPopupHeaderDisplayed() {
+		return isElementDisplayed(rejectOnlyPopupHeader);
+	}
+
+	public boolean isRejectOnlyPopupDescriptionDisplayed() {
+		return isElementDisplayed(rejectOnlyPopupDescription);
+	}
+
+	public boolean isRejectOnlyPopupRejectButtonDisplayed() {
+		return isElementDisplayed(rejectOnlyPopupRejectButton);
+	}
+
+	public boolean isApproveButtonAbsentInRejectOnlyPopup() {
+		boolean present = isElementDisplayedQuick(By.id("approve_btn"), Duration.ofSeconds(5));
+		if (present) {
+			LogUtil.error("An Approve button is offered for a device that is not linked to an SBI");
+			takeScreenshot();
+		}
+		return !present;
+	}
+
+	public void clickOnRejectOnlyPopupCloseIcon() {
+		clickOnElement(rejectOnlyPopupCloseIcon);
+	}
+
+	public int findOrphanPendingDeviceRow() {
+		int linkedSbiColumn = getColumnIndex("sbiList.sbiId_header");
+		int statusColumn = getColumnIndex("devicesList.status_header");
+
+		if (linkedSbiColumn < 0 || statusColumn < 0) {
+			LogUtil.step("Linked SBI or Status column is not on this list, so no orphan device can be identified");
+			return -1;
+		}
+
+		for (int i = 0; i < deviceRows.size(); i++) {
+			try {
+				List<WebElement> cells = deviceRows.get(i).findElements(By.tagName("td"));
+				if (cells.size() <= Math.max(linkedSbiColumn, statusColumn)) {
+					continue;
+				}
+
+				String linkedSbi = cells.get(linkedSbiColumn).getText().trim();
+				String status = cells.get(statusColumn).getText().trim();
+
+				if (isUnlinked(linkedSbi) && status.equalsIgnoreCase(GlobalConstants.PENDING_FOR_APPROVAL)) {
+					LogUtil.step("Orphan pending device found at row " + (i + 1));
+					return i + 1;
+				}
+			} catch (StaleElementReferenceException e) {
+				LogUtil.step("Row went stale while scanning for an orphan device; skipping row " + (i + 1));
+			}
+		}
+		LogUtil.step("No Pending for Approval device without a linked SBI on this page");
+		return -1;
+	}
+
+	public void clickOnDeviceListActionMenu(int rowNumber) {
+		click(By.id("device_list_action_menu" + rowNumber));
+	}
+
+	public boolean isLinkedSbiColumnEmpty(int rowNumber) {
+		int linkedSbiColumn = getColumnIndex("sbiList.sbiId_header");
+		if (linkedSbiColumn < 0) {
+			LogUtil.error("Linked SBI column is not present on this list");
+			takeScreenshot();
+			return false;
+		}
+
+		String value = getTextFromLocator(By.xpath(
+				"//tr[@id='device_list_item" + rowNumber + "']/td[" + (linkedSbiColumn + 1) + "]")).trim();
+		LogUtil.step("Linked SBI value at row " + rowNumber + ": '" + value + "'");
+		return isUnlinked(value);
+	}
+
+	private boolean isUnlinked(String linkedSbiCellValue) {
+		return linkedSbiCellValue.isEmpty() || "-".equals(linkedSbiCellValue);
+	}
 }

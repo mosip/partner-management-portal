@@ -139,10 +139,6 @@ public class BaseTestCaseFunc {
 		logger.info("Application URI  key clock======" + ApplnURIForKeyCloak);
 		testLevel = System.getProperty("env.testLevel");
 		logger.info("Test Level ======" + testLevel);
-		// languageList =Arrays.asList(System.getProperty("env.langcode").split(","));
-
-		// langcode = System.getProperty("env.langcode");
-		logger.info("Test Level ======" + languageList);
 
 		logger.info("Configs from properties file are set.");
 

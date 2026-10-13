@@ -1,15 +1,20 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
+import org.apache.log4j.Logger;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class LoginPage extends BasePage {
 
+	private static final Logger logger = Logger.getLogger(LoginPage.class);
+
 	@FindBy(id = "kc-page-title")
 	private WebElement loginPageTitle;
 
-	@FindBy(xpath = "//*[contains(text(), 'Register')]")
+	@FindBy(css = "#kc-registration a")
 	private WebElement registerButton;
 
 	@FindBy(id = "username")
@@ -50,6 +55,24 @@ public class LoginPage extends BasePage {
 		enterUserName(userName);
 		enterPassword(password);
 		clickOnLoginButton();
+	}
+
+	public void selectLanguage(String kcLocale) {
+		if (kcLocale == null || kcLocale.isBlank() || kcLocale.equalsIgnoreCase("eng")) {
+			return;
+		}
+		isLoginPageDisplayed();
+		try {
+			WebElement languageOption = driver
+					.findElement(By.cssSelector("a[href*='kc_locale=" + kcLocale + "']"));
+			String targetUrl = languageOption.getAttribute("href");
+			driver.get(targetUrl);
+			isLoginPageDisplayed();
+		} catch (NoSuchElementException e) {
+			logger.error("Language selector for '" + kcLocale + "' not found on login page.", e);
+			takeScreenshot();
+			throw new IllegalStateException("Configured login language is unavailable: " + kcLocale, e);
+		}
 	}
 
 }

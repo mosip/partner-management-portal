@@ -1,6 +1,7 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -18,6 +19,9 @@ import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.chromium.ChromiumNetworkConditions;
+import org.openqa.selenium.chromium.HasNetworkConditions;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -27,6 +31,9 @@ import org.testng.Reporter;
 import org.apache.log4j.Logger;
 
 import io.mosip.testrig.pmpuiv2.kernel.util.ConfigManager;
+import io.mosip.testrig.pmpuiv2.locale.LocaleTextAra;
+import io.mosip.testrig.pmpuiv2.locale.LocaleTextEng;
+import io.mosip.testrig.pmpuiv2.locale.LocaleTextFra;
 import io.mosip.testrig.pmpuiv2.utility.JsonUtil;
 import io.mosip.testrig.pmpuiv2.utility.LogUtil;
 import io.mosip.testrig.pmpuiv2.utility.Screenshot;
@@ -36,7 +43,23 @@ public class BasePage {
 
 	protected WebDriver driver;
 	protected static final int STALE_RETRY = 2;
+	protected static final Duration ABSENCE_CHECK_TIMEOUT = Duration.ofSeconds(3);
+	private static final String REDACTED_VALUE = "***";
 	protected static final Logger logger = Logger.getLogger(BasePage.class);
+
+	protected static void copyLocaleFields(Class<?> targetPageClass, String loginLanguage) {
+		Class<?> source = "fra".equalsIgnoreCase(loginLanguage) ? LocaleTextFra.class
+				: "ara".equalsIgnoreCase(loginLanguage) ? LocaleTextAra.class
+				: LocaleTextEng.class;
+		for (Field sourceField : source.getFields()) {
+			try {
+				targetPageClass.getField(sourceField.getName()).set(null, sourceField.get(null));
+			} catch (NoSuchFieldException e) {
+			} catch (IllegalAccessException e) {
+				throw new RuntimeException("Failed to copy locale field: " + sourceField.getName(), e);
+			}
+		}
+	}
 
 	public BasePage(WebDriver driver) {
 		this.driver = driver;
@@ -64,7 +87,7 @@ public class BasePage {
 	public void clickOnElement(WebElement element) {
 		LogUtil.action("Clicking on element", element);
 		int attempts = 0;
-		while (attempts < 2) {
+		while (attempts < STALE_RETRY) {
 			try {
 				WaitUtil.waitForVisibility(driver, element);
 				WaitUtil.waitForClickability(driver, element);
@@ -88,7 +111,12 @@ public class BasePage {
 				LogUtil.error("Element not clickable within timeout");
 				takeScreenshot();
 				throw timeout;
-			} catch (Exception e) {
+			} catch (WebDriverException e) {
+				if (e.getMessage() != null && e.getMessage().contains("does not belong to the document")) {
+					attempts++;
+					LogUtil.step("DOM refreshed. Retrying " + attempts + "/" + STALE_RETRY);
+					continue;
+				}
 				LogUtil.error("Unexpected click failure: " + e.getClass().getSimpleName());
 				takeScreenshot();
 				throw new RuntimeException("Click failed for element: " + element, e);
@@ -145,7 +173,15 @@ public class BasePage {
 	}
 
 	public void enter(WebElement element, String value) {
-		LogUtil.action("Entering value '" + value + "' into element: ", element);
+		enterValue(element, value, value);
+	}
+
+	public void enterRedacted(WebElement element, String value) {
+		enterValue(element, value, REDACTED_VALUE);
+	}
+
+	private void enterValue(WebElement element, String value, String loggedValue) {
+		LogUtil.action("Entering value '" + loggedValue + "' into element: ", element);
 		int attempts = 0;
 
 		while (attempts < STALE_RETRY) {
@@ -392,6 +428,23 @@ public class BasePage {
 		}
 	}
 
+	protected boolean isElementSelected(WebElement element) {
+		LogUtil.verify("Checking if element is selected: ", element);
+		try {
+			WaitUtil.waitForVisibility(driver, element);
+			return element.isSelected();
+		} catch (StaleElementReferenceException e) {
+			LogUtil.step("Element became stale while checking selected state");
+			LogUtil.step("Page URL: " + driver.getCurrentUrl());
+			LogUtil.step("Page Title: " + driver.getTitle());
+			throw e;
+		} catch (Exception e) {
+			LogUtil.error("isElementSelected failed: " + e.getClass().getSimpleName());
+			takeScreenshot();
+			throw new AssertionError("Unable to determine selected state", e);
+		}
+	}
+
 	protected boolean isElementEnabled(By locator) {
 		LogUtil.verify("Checking if element is enabled: ", locator);
 
@@ -437,10 +490,7 @@ public class BasePage {
 			} catch (Exception ignored) {
 			}
 			String tag = element.getTagName();
-			if (!tag.matches("input|textarea")) {
-				return true;
-			}
-			return !element.isEnabled() || element.getAttribute("readonly") != null;
+			return !tag.matches("input|textarea");
 
 		} catch (Exception e) {
 			LogUtil.error("isElementNotEditable failed: " + e.getClass().getSimpleName());
@@ -474,12 +524,28 @@ public class BasePage {
 
 	protected String getTextFromLocator(WebElement element) {
 		LogUtil.action("Getting text from element: ", element);
+		for (int attempt = 0; attempt < STALE_RETRY; attempt++) {
+			try {
+				waitForElementVisible(element);
+				return element.getText();
+			} catch (StaleElementReferenceException stale) {
+				LogUtil.step("Retrying getTextFromLocator due to stale element");
+			}
+		}
 		waitForElementVisible(element);
 		return element.getText();
 	}
 
 	protected String getTextFromAttribute(WebElement element, String atrr) {
 		LogUtil.action("Getting text from element for the " + atrr + " attribute: ", element);
+		for (int attempt = 0; attempt < STALE_RETRY; attempt++) {
+			try {
+				waitForElementVisible(element);
+				return element.getAttribute(atrr);
+			} catch (StaleElementReferenceException stale) {
+				LogUtil.step("Retrying getTextFromAttribute due to stale element");
+			}
+		}
 		waitForElementVisible(element);
 		return element.getAttribute(atrr);
 	}
@@ -530,11 +596,197 @@ public class BasePage {
 		return alertText;
 	}
 
+	// Select-all is Command+A on macOS and Control+A elsewhere.
+	protected static final Keys SELECT_ALL_MODIFIER = System.getProperty("os.name").toLowerCase().contains("mac")
+			? Keys.COMMAND
+			: Keys.CONTROL;
+
+	protected void selectAllText(WebElement element) {
+		element.sendKeys(Keys.chord(SELECT_ALL_MODIFIER, "a"));
+	}
+
 	protected void clearTextBox(WebElement element) {
 		WaitUtil.waitForVisibility(driver, element);
 		element.click();
-		element.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+		selectAllText(element);
 		element.sendKeys(Keys.DELETE);
+	}
+
+	protected boolean waitForElementText(WebElement element, String expectedText) {
+		try {
+			return new WebDriverWait(driver, Duration.ofSeconds(ConfigManager.getTimeout()))
+					.until(driver -> expectedText.equalsIgnoreCase(element.getText().trim()));
+		} catch (TimeoutException e) {
+			LogUtil.step("Element text did not settle to: " + expectedText);
+			return false;
+		}
+	}
+
+	protected boolean waitForFieldValue(WebElement element, String expectedValue) {
+		try {
+			return new WebDriverWait(driver, Duration.ofSeconds(ConfigManager.getTimeout()))
+					.until(ExpectedConditions.attributeToBe(element, "value", expectedValue));
+		} catch (TimeoutException e) {
+			return false;
+		}
+	}
+
+	private void focus(WebElement element) {
+		WaitUtil.waitForVisibility(driver, element);
+		((JavascriptExecutor) driver).executeScript("arguments[0].focus();", element);
+	}
+
+	// sendKeys(Keys.ENTER) is rejected on non-input elements like a div/p menu option.
+	public void focusAndPressEnter(WebElement element) {
+		LogUtil.action("Focusing element and pressing Enter: ", element);
+		focus(element);
+		new Actions(driver).sendKeys(Keys.ENTER).perform();
+	}
+
+	public void hoverOverElement(WebElement element) {
+		LogUtil.action("Hovering over element: ", element);
+		WaitUtil.waitForVisibility(driver, element);
+		new Actions(driver).moveToElement(element).perform();
+	}
+
+	// Focuses, then reports whether focus landed - a tabindex-less element leaves activeElement on body.
+	public boolean isElementFocusable(WebElement element) {
+		LogUtil.verify("Checking if element can take keyboard focus: ", element);
+		focus(element);
+		return element.equals(driver.switchTo().activeElement());
+	}
+
+	public boolean isPageDirectionRtl() {
+		String dir = driver.findElement(By.tagName("body")).getAttribute("dir");
+		return "rtl".equalsIgnoreCase(dir);
+	}
+
+	protected String getComputedStyle(WebElement element, String property) {
+		LogUtil.verify("Reading computed style '" + property + "' from element: ", element);
+		return (String) ((JavascriptExecutor) driver)
+				.executeScript("return getComputedStyle(arguments[0])[arguments[1]];", element, property);
+	}
+
+	public void setNetworkOffline(boolean offline) {
+		if (!(driver instanceof HasNetworkConditions)) {
+			throw new UnsupportedOperationException(
+					"Network condition emulation requires a Chromium-based WebDriver (e.g. ChromeDriver); got: "
+							+ driver.getClass().getName());
+		}
+		HasNetworkConditions networkDriver = (HasNetworkConditions) driver;
+		if (offline) {
+			ChromiumNetworkConditions conditions = new ChromiumNetworkConditions();
+			conditions.setOffline(true);
+			conditions.setLatency(Duration.ofMillis(0));
+			conditions.setDownloadThroughput(-1);
+			conditions.setUploadThroughput(-1);
+			networkDriver.setNetworkConditions(conditions);
+		} else {
+			networkDriver.deleteNetworkConditions();
+		}
+	}
+
+	protected String getBodyComputedStyle(String property) {
+		return getComputedStyle(driver.findElement(By.tagName("body")), property);
+	}
+
+	protected boolean isElementWithinViewport(WebElement element) {
+		LogUtil.verify("Checking if element is fully inside the viewport: ", element);
+		WaitUtil.waitForVisibility(driver, element);
+		return Boolean.TRUE.equals(((JavascriptExecutor) driver).executeScript(
+				"var b=arguments[0].getBoundingClientRect();"
+						+ "return b.top>=0 && b.left>=0 && b.bottom<=window.innerHeight && b.right<=window.innerWidth;",
+				element));
+	}
+
+	// Tolerance covers the sub-pixel offset flex centring can leave on fractional viewport widths.
+	protected boolean isElementHorizontallyCentred(WebElement element, int tolerancePx) {
+		LogUtil.verify("Checking if element is horizontally centred: ", element);
+		WaitUtil.waitForVisibility(driver, element);
+		return Boolean.TRUE.equals(((JavascriptExecutor) driver).executeScript(
+				"var b=arguments[0].getBoundingClientRect();"
+						+ "return Math.abs((b.left+b.right)/2 - window.innerWidth/2) <= arguments[1];",
+				element, tolerancePx));
+	}
+
+	protected double getElementLeftEdge(WebElement element) {
+		WaitUtil.waitForVisibility(driver, element);
+		Number left = (Number) ((JavascriptExecutor) driver)
+				.executeScript("return arguments[0].getBoundingClientRect().left;", element);
+		return left.doubleValue();
+	}
+
+	protected boolean doElementsOverlap(WebElement first, WebElement second) {
+		LogUtil.verify("Checking whether two elements overlap: ", first);
+		return Boolean.TRUE.equals(((JavascriptExecutor) driver).executeScript(
+				"var a=arguments[0].getBoundingClientRect();" + "var b=arguments[1].getBoundingClientRect();"
+						+ "return !(a.right<=b.left || a.left>=b.right || a.bottom<=b.top || a.top>=b.bottom);",
+				first, second));
+	}
+
+	// True when something else sits on top of the element's centre point, e.g. an overlay.
+	protected boolean isElementCoveredAtCentre(WebElement element) {
+		LogUtil.verify("Checking if element is covered by an overlay: ", element);
+		return Boolean.TRUE.equals(((JavascriptExecutor) driver).executeScript(
+				"var e=arguments[0];" + "var b=e.getBoundingClientRect();"
+						+ "var t=document.elementFromPoint(b.left+b.width/2,b.top+b.height/2);"
+						+ "return t!==null && t!==e && !e.contains(t);",
+				element));
+	}
+
+	protected boolean isElementInRightHalfOfViewport(WebElement element) {
+		LogUtil.verify("Checking if element is in the right half of the viewport: ", element);
+		WaitUtil.waitForVisibility(driver, element);
+		return Boolean.TRUE.equals(((JavascriptExecutor) driver).executeScript(
+				"var b=arguments[0].getBoundingClientRect();" + "return (b.left+b.right)/2 >= window.innerWidth/2;",
+				element));
+	}
+
+	protected boolean areElementsRightEdgeAligned(WebElement first, WebElement second, int tolerancePx) {
+		LogUtil.verify("Checking whether two elements share the same right edge: ", first);
+		return Boolean.TRUE.equals(((JavascriptExecutor) driver).executeScript(
+				"var a=arguments[0].getBoundingClientRect();" + "var b=arguments[1].getBoundingClientRect();"
+						+ "return Math.abs(a.right - b.right) <= arguments[2];",
+				first, second, tolerancePx));
+	}
+
+	protected boolean isElementAboveOther(WebElement upper, WebElement lower) {
+		LogUtil.verify("Checking if element is positioned above another element: ", upper);
+		return Boolean.TRUE.equals(((JavascriptExecutor) driver).executeScript(
+				"var a=arguments[0].getBoundingClientRect();" + "var b=arguments[1].getBoundingClientRect();"
+						+ "return a.bottom <= b.top;",
+				upper, lower));
+	}
+
+	protected String executeScriptForString(String script) {
+		return (String) ((JavascriptExecutor) driver).executeScript(script);
+	}
+
+	protected boolean executeScriptForBoolean(String script) {
+		return Boolean.TRUE.equals(((JavascriptExecutor) driver).executeScript(script));
+	}
+
+	protected int getElementCount(By locator) {
+		LogUtil.verify("Counting elements for: ", locator);
+		return driver.findElements(locator).size();
+	}
+
+	public int countElementsWithExactText(String text) {
+		return getElementCount(By.xpath("//*[normalize-space(text())=" + toXpathLiteral(text) + "]"));
+	}
+
+	private static String toXpathLiteral(String value) {
+		if (!value.contains("'")) {
+			return "'" + value + "'";
+		}
+		if (!value.contains("\"")) {
+			return "\"" + value + "\"";
+		}
+		return "concat('" + value.replace("'", "',\"'\",'") + "')";
+	}
+
+	public boolean isTextPresentOnPage(String text) {
+		return countElementsWithExactText(text) > 0;
 	}
 
 	public void scrollToEndPage() {
@@ -616,18 +868,62 @@ public class BasePage {
 
 	public void waitScrollAndClick(By option) {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-		WebElement el = wait.until(ExpectedConditions.visibilityOfElementLocated(option));
-		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", el);
-		((JavascriptExecutor) driver).executeScript("arguments[0].click();", el);
-	}
-
-	protected WebElement waitAndFindElement(By locator) {
-		return new WebDriverWait(driver, Duration.ofSeconds(30))
-				.until(ExpectedConditions.visibilityOfElementLocated(locator));
+		for (int attempt = 1; ; attempt++) {
+			try {
+				WebElement el = wait.until(ExpectedConditions.visibilityOfElementLocated(option));
+				((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", el);
+				((JavascriptExecutor) driver).executeScript("arguments[0].click();", el);
+				return;
+			} catch (StaleElementReferenceException stale) {
+				if (attempt > STALE_RETRY) {
+					takeScreenshot();
+					throw stale;
+				}
+				LogUtil.step("Option went stale while selecting. Retry " + attempt + "/" + STALE_RETRY);
+			}
+		}
 	}
 
 	protected String getTextFromLocator(By locator) {
+		LogUtil.action("Getting text from element: " + locator);
+		for (int attempt = 0; attempt < STALE_RETRY; attempt++) {
+			try {
+				WebElement element = waitAndFindElement(locator);
+				return element.getText();
+			} catch (StaleElementReferenceException stale) {
+				LogUtil.step("Retrying getTextFromLocator due to stale element");
+			}
+		}
 		return waitAndFindElement(locator).getText();
+	}
+
+	protected String getTextFromAttribute(By locator, String attr) {
+		LogUtil.action("Getting text from element for the " + attr + " attribute: " + locator);
+		for (int attempt = 0; attempt < STALE_RETRY; attempt++) {
+			try {
+				WebElement element = waitAndFindElement(locator);
+				return element.getAttribute(attr);
+			} catch (StaleElementReferenceException stale) {
+				LogUtil.step("Retrying getTextFromAttribute due to stale element");
+			}
+		}
+		return waitAndFindElement(locator).getAttribute(attr);
+	}
+
+	protected WebElement waitAndFindElement(By locator) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(ConfigManager.getTimeout()));
+		return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+	}
+
+	protected int getColumnIndex(String headerId) {
+		java.util.List<WebElement> headerCells = driver.findElements(By.xpath("//thead//th"));
+		for (int i = 0; i < headerCells.size(); i++) {
+			if (!headerCells.get(i).findElements(By.id(headerId)).isEmpty()) {
+				return i;
+			}
+		}
+		LogUtil.step("No column header found with id: " + headerId);
+		return -1;
 	}
 
 }
