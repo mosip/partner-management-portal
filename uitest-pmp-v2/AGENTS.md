@@ -57,7 +57,7 @@ Run the built jar — **`-D` system properties must precede `-jar`**, otherwise 
 
 ```bash
 cd uitest-pmp-v2/target
-java -Dpath.config=src/main/resources -Denv.user=<username> -jar pmpuiv2-*-jar-with-dependencies.jar
+java -Dpath.config=src/main/resources -Denv.user=<username> -jar pmpuiv2-1.2.1-SNAPSHOT-jar-with-dependencies.jar
 ```
 
 Place the jar and `src/main/resources` folder in the same directory, and a `chromedriver` binary in a `chromedriver/` folder alongside them before running.
@@ -65,7 +65,7 @@ Place the jar and `src/main/resources` folder in the same directory, and a `chro
 Container entrypoint (`entrypoint.sh`) runs the same jar without `-D` overrides (config is baked into the image):
 
 ```bash
-java -jar pmpuiv2-*-jar-with-dependencies.jar
+java -jar pmpuiv2-1.2.1-SNAPSHOT-jar-with-dependencies.jar
 ```
 
 Run/debug from Eclipse: import as an existing Maven project, set main class `io.mosip.testrig.pmpuiv2.utility.TestRunner`, VM arguments `-Dpath.config=src/main/resources -Denv.user=<username>`.
@@ -87,7 +87,7 @@ Run/debug from Eclipse: import as an existing Maven project, set main class `io.
 1. Keep the JVM `-D` property flags (`-Dpath.config`, `-Denv.user`, etc.) **before** `-jar` in every run command — reversing the order silently drops them and `TestRunner` falls back to defaults.
 2. Add new page interactions to a `pages/*Page.java` object rather than inlining Selenium locators in a test class.
 3. When `pmp-ui-v2` changes a page's DOM/flow, update the matching `pages/` class and any `testcase/` that exercises it.
-4. Keep `pmpuiv2-*-jar-with-dependencies.jar` naming (`pom.xml` `<fileName>` property) in sync with `entrypoint.sh` and `Dockerfile` if the artifact name ever changes.
+4. Keep `pmpuiv2-1.2.1-SNAPSHOT-jar-with-dependencies.jar` naming (`pom.xml` `<fileName>` property) in sync with `entrypoint.sh` and `Dockerfile` if the artifact name ever changes.
 5. Use `README.md` in this folder for framework/config detail beyond this file (config properties, TestNG structure, troubleshooting).
 
 ### Do not

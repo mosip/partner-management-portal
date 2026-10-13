@@ -84,3 +84,15 @@ delete FROM pms.user_details where user_id='pmpui-ftm';
 #These are delete queries for pmpui-devicenocert
 delete from pms.partner where user_id='pmpui-devicenocert';
 delete FROM pms.user_details where user_id='pmpui-devicenocert';
+
+#These are delete queries for ONLINE VERIFICATION PARTNER - pmpui-ovp
+#Only one Online Verification Partner is allowed. Remove the partner created by the UI test
+#after the run so the DSL report can create one.
+delete from pms.partner_h where cr_by='pmpui-ovp';
+delete from pms.partner_h where cr_by='pmpui-ovp2';
+delete from pms.partner where user_id='pmpui-ovp';
+delete from pms.partner where cr_by='pmpui-ovp';
+delete from pms.partner where user_id='pmpui-ovp2';
+delete from pms.partner where cr_by='pmpui-ovp2';
+delete FROM pms.user_details where user_id='pmpui-ovp';
+delete FROM pms.user_details where user_id='pmpui-ovp2';
