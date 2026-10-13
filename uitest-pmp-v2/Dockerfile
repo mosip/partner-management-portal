@@ -44,7 +44,7 @@ USER ${container_user_uid}:${container_user_gid}
 # Copy your application files into the container
 COPY --chown=${container_user_uid}:${container_user} --chmod=771 ./entrypoint.sh ${work_dir}/entrypoint.sh
 COPY --chown=${container_user}:${container_user} ./src/main/resources/ ${work_dir}/resources/
-COPY --chown=${container_user_uid}:${container_user} ./target/pmpuiv2-1.2.1-SNAPSHOT-jar-with-dependencies.jar ${work_dir}
+COPY --chown=${container_user_uid}:${container_user} ./target/*.jar ${work_dir}
 
 # Set the working directory
 WORKDIR /home/${container_user}/

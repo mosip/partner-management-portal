@@ -346,7 +346,7 @@
 							<target>
 								<!-- Create a shell script to run the JAR file
 								with executable permission -->
-								<chmod file="${project.build.directory}/${fileName}.jar"
+								<chmod file="${project.build.directory}/*.jar"
 									perm="ugo+rx" />
 							</target>
 						</configuration>
