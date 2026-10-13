@@ -194,7 +194,7 @@ public class OnlineVerificationPartnerTest extends BaseClass {
     @Test(priority = 9, description = "Verify adding existing email ID")
     public void existingEmailIsRejected() {
         MispPartnerPage mispPartnerPage = navigateToCreatePartnerPage();
-        String sharedEmail = "ovpmail" + BaseClass.data + "@test.com";
+        String sharedEmail = GlobalConstants.OVP_PARTNER_EMAIL;
         selectOnlineVerificationPartner(mispPartnerPage);
         mispPartnerPage.selectFirstActivePolicyGroup();
         mispPartnerPage.selectNotificationLanguage(GlobalConstants.ABIS_NOTIFICATION_LANGUAGE);
@@ -202,7 +202,7 @@ public class OnlineVerificationPartnerTest extends BaseClass {
         mispPartnerPage.enterPartnerAddress(GlobalConstants.ABIS_ADDRESS);
         mispPartnerPage.enterPartnerContactNumber(GlobalConstants.ABIS_CONTACT_NUMBER);
         mispPartnerPage.enterEmailId(sharedEmail);
-        mispPartnerPage.enterUserName("ovpuser1" + BaseClass.data);
+        mispPartnerPage.enterUserName(GlobalConstants.OVP_PARTNER_USER);
         mispPartnerPage.clickOnCreatePartnerSubmitButton();
         Assert.assertTrue(mispPartnerPage.isCreatePartnerSuccessMsgDisplayed(),
                 GlobalConstants.isCreatePartnerSuccessMsgDisplayed);
@@ -218,7 +218,7 @@ public class OnlineVerificationPartnerTest extends BaseClass {
         mispPartnerPage.enterPartnerAddress(GlobalConstants.ABIS_ADDRESS);
         mispPartnerPage.enterPartnerContactNumber(GlobalConstants.ABIS_CONTACT_NUMBER);
         mispPartnerPage.enterEmailId(sharedEmail);
-        mispPartnerPage.enterUserName("ovpuser2" + BaseClass.data);
+        mispPartnerPage.enterUserName(GlobalConstants.OVP_PARTNER_USER_2);
         mispPartnerPage.clickOnCreatePartnerSubmitButton();
         Assert.assertTrue(mispPartnerPage.isEmailAddressIsAlreadyRegisteredErrorDisplayed(),
                 GlobalConstants.isEmailAlreadyRegisteredErrorDisplayed);
