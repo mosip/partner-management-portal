@@ -5,12 +5,17 @@ import { setUserProfile, getUserProfile } from './UserProfileService.js';
 import { getAppConfig } from './ConfigService.js';
 
 // Latest XOR CSRF token from the API's X-XSRF-TOKEN response header.
+// One shared token is used for all calls, so the partner and policy APIs must be on the same host (as in
+// standard deployments, api-internal). They then share one XSRF-TOKEN cookie. If the hosts are split, the
+// token stops working for one of them.
 let xorXsrfToken = null;
 
 export const HttpService = axios.create({
   withCredentials: true,
   baseURL: process.env.NODE_ENV !== 'production' ? '' : window._env_.REACT_APP_PARTNER_MANAGER_API_BASE_URL,
-  // raw cookie value is sent until an XOR token is received
+  // Raw cookie value is sent until an XOR token is received. This only works locally, where the dev proxy makes
+  // the API same-origin. On a deployed environment the portal cannot read the API's cookie, so nothing is sent
+  // until the first API response arrives. That is fine because the portal makes GET calls before any write.
   withXSRFToken: () => !xorXsrfToken,
 })
 
