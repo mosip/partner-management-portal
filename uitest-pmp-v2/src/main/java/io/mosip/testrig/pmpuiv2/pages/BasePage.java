@@ -396,6 +396,17 @@ public class BasePage {
 		}
 	}
 
+	protected boolean isElementDisplayedQuick(WebElement element, Duration timeout) {
+		LogUtil.verify("Checking is element is displayed: ", element);
+		try {
+			new WebDriverWait(driver, timeout).ignoring(StaleElementReferenceException.class)
+					.until(ExpectedConditions.visibilityOf(element));
+			return true;
+		} catch (TimeoutException | NoSuchElementException | StaleElementReferenceException e) {
+			return false;
+		}
+	}
+
 	protected boolean isElementDisabled(WebElement element) {
 		LogUtil.verify("Checking if element is disabled: ", element);
 		try {
