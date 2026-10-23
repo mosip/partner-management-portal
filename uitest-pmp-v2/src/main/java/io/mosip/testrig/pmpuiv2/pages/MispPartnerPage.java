@@ -137,6 +137,9 @@ public class MispPartnerPage extends BasePage {
 	@FindBy(id = "policy_group_selector_option_button_2")
 	private WebElement firstActivePolicyGroupOption;
 
+	@FindBy(id = "policy_group_selector_dropdown_button_text")
+	private WebElement selectedPolicyGroupText;
+
 	@FindBy(id = "create_partner_organization_name_info")
 	private WebElement oragnizationInfoButton;
 
@@ -751,5 +754,17 @@ public class MispPartnerPage extends BasePage {
 	public String getPolicyGroupText(String partnerId) {
 		By policyGroup = By.xpath("//tr[td[normalize-space()='" + partnerId + "']]/td[4]");
 		return getTextFromLocator(policyGroup);
+	}
+
+	public String getSelectedPolicyGroupText() {
+		return getTextFromLocator(selectedPolicyGroupText).trim();
+	}
+
+	public int getContactNumberMaxLength() {
+		String maxLength = getTextFromAttribute(partnerContactNumberTextBox, "maxlength");
+		if (maxLength == null || maxLength.isBlank()) {
+			return 0;
+		}
+		return Integer.parseInt(maxLength.trim());
 	}
 }
