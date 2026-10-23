@@ -8,10 +8,12 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class MispPartnerPage extends BasePage {
 
@@ -128,6 +130,12 @@ public class MispPartnerPage extends BasePage {
 
 	@FindBy(id = "create_partner_partner_type_option3")
 	private WebElement mispPartner;
+
+	@FindBy(xpath = "//button[contains(@id, 'create_partner_partner_type_option')]")
+	private List<WebElement> partnerTypeOptions;
+
+	@FindBy(id = "policy_group_selector_option_button_2")
+	private WebElement firstActivePolicyGroupOption;
 
 	@FindBy(id = "create_partner_organization_name_info")
 	private WebElement oragnizationInfoButton;
@@ -247,8 +255,15 @@ public class MispPartnerPage extends BasePage {
 	}
 
 	public void clickOnPartnerTypeOption(String partnerTypeLabel) {
-		By option = By.xpath("//button[contains(@id, 'create_partner_partner_type_option') and normalize-space()='"
-				+ partnerTypeLabel + "']");
+		WebElement option = new WebDriverWait(driver, Duration.ofSeconds(30))
+				.ignoring(StaleElementReferenceException.class).until(webDriver -> {
+					for (WebElement partnerTypeOption : partnerTypeOptions) {
+						if (partnerTypeLabel.equals(partnerTypeOption.getText().trim())) {
+							return partnerTypeOption;
+						}
+					}
+					return null;
+				});
 		waitScrollAndClick(option);
 	}
 
@@ -286,9 +301,8 @@ public class MispPartnerPage extends BasePage {
 
 	public void selectFirstActivePolicyGroup() {
 		ensurePolicyGroupDropdownOpen();
-		By firstActiveGroup = By.id("policy_group_selector_option_button_2");
 		try {
-			waitScrollAndClick(firstActiveGroup);
+			waitScrollAndClick(firstActivePolicyGroupOption);
 		} catch (TimeoutException e) {
 			logger.warn("No active policy group option found");
 			throw new NoSuchElementException("No active policy group is available in the Policy Group dropdown", e);
@@ -375,10 +389,6 @@ public class MispPartnerPage extends BasePage {
 
 	public boolean isUploadPartnerCertificateButtonDisplayed() {
 		return isElementDisplayed(uploadPartnerCertificateButton);
-	}
-
-	public String getUploadPartnerCertificateButtonText() {
-		return getTextFromLocator(uploadPartnerCertificateButton).trim();
 	}
 
 	public void clickOnUploadPartnerCertificateButton() {
