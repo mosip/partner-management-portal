@@ -140,7 +140,7 @@ public class CertificateGenerationUtil {
 		return rootName(label);
 	}
 
-	private static GeneratedCert generateChain(X500Name rootDn, X500Name interDn, X500Name leafDn, String rootFile,
+	private static void generateChain(X500Name rootDn, X500Name interDn, X500Name leafDn, String rootFile,
 			String interFile, String leafFile, Instant now) {
 		Date rootNotBefore = Date.from(now.minus(CLOCK_SKEW_ALLOWANCE_MINUTES, ChronoUnit.MINUTES));
 		Date rootNotAfter = Date.from(now.plus(365L * 5, ChronoUnit.DAYS));
@@ -155,7 +155,6 @@ public class CertificateGenerationUtil {
 
 		GeneratedCert leaf = generateSignedCert(leafDn, intermediate, childNotBefore, childNotAfter, false);
 		writePem(leaf.certificate, leafFile);
-		return intermediate;
 	}
 
 	private static void generateRootAndIntermediateOnly(X500Name rootDn, X500Name interDn, String rootFile,

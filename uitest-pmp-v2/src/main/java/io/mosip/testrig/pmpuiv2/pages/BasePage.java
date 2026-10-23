@@ -897,6 +897,24 @@ public class BasePage {
 		}
 	}
 
+	public void waitScrollAndClick(WebElement option) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+		for (int attempt = 1; ; attempt++) {
+			try {
+				WebElement el = wait.until(ExpectedConditions.visibilityOf(option));
+				((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", el);
+				((JavascriptExecutor) driver).executeScript("arguments[0].click();", el);
+				return;
+			} catch (StaleElementReferenceException stale) {
+				if (attempt > STALE_RETRY) {
+					takeScreenshot();
+					throw stale;
+				}
+				LogUtil.step("Option went stale while selecting. Retry " + attempt + "/" + STALE_RETRY);
+			}
+		}
+	}
+
 	protected String getTextFromLocator(By locator) {
 		LogUtil.action("Getting text from element: " + locator);
 		for (int attempt = 0; attempt < STALE_RETRY; attempt++) {
