@@ -193,6 +193,13 @@ public class DeviceProviderPage extends BasePage {
 		enter(sbiVersion, sbiVesionValue);
 	}
 
+	// The form saves its validation message as text when a field changes, so typing before the translations
+	// finish loading after a refresh leaves the raw key (commons.inputError) on screen instead of the message.
+	public void reloadAndWaitForTranslations() {
+		reload();
+		isElementDisplayed(addSbiDetailsSubTitle);
+	}
+
 	public void enterSbiBinaryHash(String sbiBinaryHashValue) {
 		enter(sbiBinaryHash, sbiBinaryHashValue);
 	}

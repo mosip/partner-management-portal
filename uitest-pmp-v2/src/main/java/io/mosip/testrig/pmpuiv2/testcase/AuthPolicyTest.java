@@ -17,6 +17,7 @@ import io.mosip.testrig.pmpuiv2.pages.PoliciesPage;
 import io.mosip.testrig.pmpuiv2.pages.PolicyGroupPage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
+import io.mosip.testrig.pmpuiv2.utility.LogUtil;
 
 @Test(dependsOnGroups = { "PolicyGroupTest" }, groups = { "AuthPolicyTest" })
 public class AuthPolicyTest extends BaseClass {
@@ -327,10 +328,16 @@ public class AuthPolicyTest extends BaseClass {
 		assertTrue(authPolicyPage.isPreviusPageButtonDisplayed(), GlobalConstants.isPreviusPageButtonDisplayed);
 		assertTrue(authPolicyPage.isNextPageButtonDisplayed(), GlobalConstants.isNextPageButtonDisplayed);
 		assertTrue(authPolicyPage.isPage1Displayed(), GlobalConstants.isPage1Displayed);
-		authPolicyPage.clickOnNextPageButton();
-		assertTrue(authPolicyPage.isPage2Displayed(), GlobalConstants.isPage2Displayed);
-		authPolicyPage.clickOnPreviusPageButton();
-		assertTrue(authPolicyPage.isPage1Displayed(), GlobalConstants.isPage1Displayed);
+		// How many active policies exist depends on which other tests have already run, and 8 or fewer fit
+		// on one page, so page navigation can only be checked when a second page exists.
+		if (authPolicyPage.hasSecondPage()) {
+			authPolicyPage.clickOnNextPageButton();
+			assertTrue(authPolicyPage.isPage2Displayed(), GlobalConstants.isPage2Displayed);
+			authPolicyPage.clickOnPreviusPageButton();
+			assertTrue(authPolicyPage.isPage1Displayed(), GlobalConstants.isPage1Displayed);
+		} else {
+			LogUtil.step("Only one page of active policies; skipping next/previous page navigation");
+		}
 
 		assertTrue(authPolicyPage.isPrefixOfPageDisplayed(), GlobalConstants.isPrefixOfPageDisplayed);
 		assertTrue(authPolicyPage.isRecordPerPageDisplayed(), GlobalConstants.isRecordPerPageDisplayed);

@@ -142,7 +142,7 @@ public class SbiCreationTest extends BaseClass {
 		assertTrue(deviceProviderPage.isSbiExistsErrorMessageDisplayed(),
 				GlobalConstants.isSbiExistsErrorMessageDisplayed);
 
-		deviceProviderPage.reload();
+		deviceProviderPage.reloadAndWaitForTranslations();
 
 		deviceProviderPage.enterSbiVersion(GlobalConstants.SPECIAL_CHARACTERS);
 		assertTrue(deviceProviderPage.isSpecialCharacterErrorMessageDisplayed(),

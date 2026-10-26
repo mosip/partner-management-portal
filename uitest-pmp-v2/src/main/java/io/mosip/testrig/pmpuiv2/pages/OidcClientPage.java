@@ -7,6 +7,7 @@ import java.time.Duration;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -15,6 +16,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
 import io.mosip.testrig.pmpuiv2.kernel.util.ConfigManager;
+import io.mosip.testrig.pmpuiv2.utility.LogUtil;
 
 public class OidcClientPage extends BasePage {
 
@@ -861,7 +863,28 @@ public class OidcClientPage extends BasePage {
 	}
 
 	public boolean isOidcSubmittedSuccessfullyDisplayed() {
-		return isElementDisplayed(detailsSubmittedSuccessfully);
+		boolean displayed = isElementDisplayed(detailsSubmittedSuccessfully);
+		if (!displayed) {
+			logSubmitErrorBanner();
+		}
+		return displayed;
+	}
+
+	// A rejected submit leaves the form on screen with the reason in a banner at the top, outside the failure
+	// screenshot taken at the Submit button, so bring the banner into view and capture it in the report too.
+	// The form shows no banner at all when the API answers 401.
+	private void logSubmitErrorBanner() {
+		By errorBanner = By.id("create_oidc_client_error_msg");
+		if (isElementDisplayedQuick(errorBanner, ABSENCE_CHECK_TIMEOUT)) {
+			WebElement banner = driver.findElement(errorBanner);
+			// Centre it: aligning it to the top of the window leaves it hidden behind the fixed page header.
+			((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block:'center'});", banner);
+			LogUtil.error("OIDC client submit was rejected: " + banner.getText());
+		} else {
+			scrollToStartPage();
+			LogUtil.error("OIDC client submit showed no error banner; the API may have returned 401 (session expired)");
+		}
+		takeScreenshot();
 	}
 
 	public String getConfirmationDescriptionText() {
