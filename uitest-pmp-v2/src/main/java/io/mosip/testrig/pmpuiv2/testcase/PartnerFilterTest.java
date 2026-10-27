@@ -5,6 +5,7 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import org.testng.annotations.Test;
@@ -51,18 +52,28 @@ public class PartnerFilterTest extends BaseClass {
 				GlobalConstants.isPartnerListLoaded);
 
 		List<String> ascendingOrder = partnerAdminPage.getPartnerIdColumnValues();
-		List<String> expectedAscendingOrder = new ArrayList<>(ascendingOrder);
-		expectedAscendingOrder.sort(String.CASE_INSENSITIVE_ORDER);
-		assertEquals(ascendingOrder, expectedAscendingOrder, GlobalConstants.isPartnerIdColumnSortedAscending);
+		assertEquals(ascendingOrder, expectedSortOrder(ascendingOrder, false),
+				GlobalConstants.isPartnerIdColumnSortedAscending);
 
 		partnerAdminPage.clickOnPartnerIdDescendingIcon();
 		assertTrue(partnerAdminPage.waitForFirstRowPartnerIdToChangeFrom(ascendingOrder.get(0)),
 				GlobalConstants.isPartnerListLoaded);
 
 		List<String> descendingOrder = partnerAdminPage.getPartnerIdColumnValues();
-		List<String> expectedDescendingOrder = new ArrayList<>(descendingOrder);
-		expectedDescendingOrder.sort(String.CASE_INSENSITIVE_ORDER.reversed());
-		assertEquals(descendingOrder, expectedDescendingOrder, GlobalConstants.isPartnerIdColumnSortedDescending);
+		assertEquals(descendingOrder, expectedSortOrder(descendingOrder, true),
+				GlobalConstants.isPartnerIdColumnSortedDescending);
+	}
+
+	private List<String> expectedSortOrder(List<String> actual, boolean descending) {
+		Comparator<String> caseSensitive = descending ? Comparator.<String>reverseOrder() : Comparator.<String>naturalOrder();
+		List<String> caseSensitiveOrder = new ArrayList<>(actual);
+		caseSensitiveOrder.sort(caseSensitive);
+		if (caseSensitiveOrder.equals(actual)) {
+			return caseSensitiveOrder;
+		}
+		List<String> caseInsensitiveOrder = new ArrayList<>(actual);
+		caseInsensitiveOrder.sort(descending ? String.CASE_INSENSITIVE_ORDER.reversed() : String.CASE_INSENSITIVE_ORDER);
+		return caseInsensitiveOrder;
 	}
 
 	private void verifyDropdownSelectionHasNoEffectBeforeApplyNow() {

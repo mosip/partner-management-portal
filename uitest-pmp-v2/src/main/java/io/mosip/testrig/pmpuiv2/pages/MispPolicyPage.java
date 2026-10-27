@@ -12,7 +12,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class MispPolicyPage extends BasePage {
 
-	@FindBy(id = "create_auth_policy_btn")
+	// Header button when the list has rows, empty-state button (create_policy) when it has none
+	@FindBy(css = "#create_auth_policy_btn, #create_policy")
 	private WebElement createMispPolicyButton;
 
 	@FindBy(id = "policy_group_selector_dropdown_button")
