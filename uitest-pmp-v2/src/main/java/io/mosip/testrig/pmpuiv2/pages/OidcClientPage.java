@@ -871,15 +871,11 @@ public class OidcClientPage extends BasePage {
 		return displayed;
 	}
 
-	// A rejected submit leaves the form on screen with the reason in a banner at the top, outside the failure
-	// screenshot taken at the Submit button, so bring the banner into view and capture it in the report too.
-	// The form shows no banner at all when the API answers 401.
 	private void logSubmitErrorBanner() {
 		By errorBanner = By.id("create_oidc_client_error_msg");
 		try {
 			if (isElementDisplayedQuick(errorBanner, ABSENCE_CHECK_TIMEOUT)) {
 				WebElement banner = driver.findElement(errorBanner);
-				// Centre it: aligning it to the top of the window leaves it hidden behind the fixed page header.
 				((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block:'center'});", banner);
 				LogUtil.error("OIDC client submit was rejected: " + banner.getText());
 			} else {
@@ -887,7 +883,6 @@ public class OidcClientPage extends BasePage {
 				LogUtil.error("OIDC client submit showed no error banner; the API may have returned 401 (session expired)");
 			}
 		} catch (NoSuchElementException | StaleElementReferenceException e) {
-			// The banner can be dismissed or re-rendered between the visibility check and reading it.
 			LogUtil.error("OIDC client submit error banner disappeared before it could be read");
 		} finally {
 			takeScreenshot();

@@ -328,8 +328,6 @@ public class AuthPolicyTest extends BaseClass {
 		assertTrue(authPolicyPage.isPreviusPageButtonDisplayed(), GlobalConstants.isPreviusPageButtonDisplayed);
 		assertTrue(authPolicyPage.isNextPageButtonDisplayed(), GlobalConstants.isNextPageButtonDisplayed);
 		assertTrue(authPolicyPage.isPage1Displayed(), GlobalConstants.isPage1Displayed);
-		// How many active policies exist depends on which other tests have already run, and 8 or fewer fit
-		// on one page, so page navigation can only be checked when a second page exists.
 		if (authPolicyPage.hasSecondPage()) {
 			authPolicyPage.clickOnNextPageButton();
 			assertTrue(authPolicyPage.isPage2Displayed(), GlobalConstants.isPage2Displayed);

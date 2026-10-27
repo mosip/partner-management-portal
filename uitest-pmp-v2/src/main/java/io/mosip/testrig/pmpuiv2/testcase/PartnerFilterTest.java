@@ -64,9 +64,6 @@ public class PartnerFilterTest extends BaseClass {
 				GlobalConstants.isPartnerIdColumnSortedDescending);
 	}
 
-	// The sort happens in the database, whose collation decides whether case matters: a byte-order
-	// collation puts "Automation123" before "abis...", a linguistic one does not. Either is a valid sort,
-	// so return the ordering the actual values already follow, falling back to case-insensitive.
 	private List<String> expectedSortOrder(List<String> actual, boolean descending) {
 		Comparator<String> caseSensitive = descending ? Comparator.<String>reverseOrder() : Comparator.<String>naturalOrder();
 		List<String> caseSensitiveOrder = new ArrayList<>(actual);
