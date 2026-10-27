@@ -1,6 +1,7 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.StaleElementReferenceException;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -875,16 +876,22 @@ public class OidcClientPage extends BasePage {
 	// The form shows no banner at all when the API answers 401.
 	private void logSubmitErrorBanner() {
 		By errorBanner = By.id("create_oidc_client_error_msg");
-		if (isElementDisplayedQuick(errorBanner, ABSENCE_CHECK_TIMEOUT)) {
-			WebElement banner = driver.findElement(errorBanner);
-			// Centre it: aligning it to the top of the window leaves it hidden behind the fixed page header.
-			((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block:'center'});", banner);
-			LogUtil.error("OIDC client submit was rejected: " + banner.getText());
-		} else {
-			scrollToStartPage();
-			LogUtil.error("OIDC client submit showed no error banner; the API may have returned 401 (session expired)");
+		try {
+			if (isElementDisplayedQuick(errorBanner, ABSENCE_CHECK_TIMEOUT)) {
+				WebElement banner = driver.findElement(errorBanner);
+				// Centre it: aligning it to the top of the window leaves it hidden behind the fixed page header.
+				((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block:'center'});", banner);
+				LogUtil.error("OIDC client submit was rejected: " + banner.getText());
+			} else {
+				scrollToStartPage();
+				LogUtil.error("OIDC client submit showed no error banner; the API may have returned 401 (session expired)");
+			}
+		} catch (NoSuchElementException | StaleElementReferenceException e) {
+			// The banner can be dismissed or re-rendered between the visibility check and reading it.
+			LogUtil.error("OIDC client submit error banner disappeared before it could be read");
+		} finally {
+			takeScreenshot();
 		}
-		takeScreenshot();
 	}
 
 	public String getConfirmationDescriptionText() {
