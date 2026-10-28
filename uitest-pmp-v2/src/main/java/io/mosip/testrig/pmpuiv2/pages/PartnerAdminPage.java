@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.StaleElementReferenceException;
@@ -135,7 +134,7 @@ public class PartnerAdminPage extends BasePage {
 	private WebElement applyFiltersBtn;
 
 	@FindBy(xpath = "//tr[@id='partner_list_item1']/td[2]")
-	private WebElement authenticationPartnerCell;
+	private WebElement firstRowPartnerTypeCell;
 
 	@FindBy(xpath = "//input[@placeholder='Search Partner ID']")
 	private WebElement partnersIdPlaceHolder;
@@ -160,6 +159,12 @@ public class PartnerAdminPage extends BasePage {
 
 	@FindBy(id = "status_filter_option1")
 	private WebElement activatedButton;
+
+	@FindBy(xpath = "//button[starts-with(@id,'partner_type_filter_option')]")
+	private List<WebElement> partnerTypeFilterOptions;
+
+	@FindBy(xpath = "//button[starts-with(@id,'status_filter_option')]")
+	private List<WebElement> statusFilterOptions;
 
 	@FindBy(id = "page_title")
 	private WebElement viewPartnersDetailsPage;
@@ -289,6 +294,9 @@ public class PartnerAdminPage extends BasePage {
 	@FindBy(id = "view_partner_type_context")
 	private WebElement deviceProviderInViewPartnerPage;
 
+	@FindBy(id = "view_partner_details_partner_type_context")
+	private WebElement viewPartnerDetailsPartnerType;
+
 	@FindBy(id = "original_certificate_download_partner_cer_btn")
 	private WebElement originalCertificateDropdown;
 
@@ -306,6 +314,84 @@ public class PartnerAdminPage extends BasePage {
 
 	@FindBy(id = "partnerList.certUploadStatus_header")
 	private WebElement certUploadStatusHeader;
+
+	@FindBy(id = "partner_upload_certificate_btn")
+	private WebElement uploadCertificateOption;
+
+	@FindBy(xpath = "//tr[@id='partner_list_item1']/td[1]")
+	private WebElement firstRowPartnerIdCell;
+
+	@FindBy(xpath = "//tr[@id='partner_list_item1']/td[3]")
+	private WebElement firstRowOrganisationCell;
+
+	@FindBy(xpath = "//tr[@id='partner_list_item1']/td[4]")
+	private WebElement firstRowPolicyGroupCell;
+
+	@FindBy(xpath = "//tr[@id='partner_list_item1']/td[5]")
+	private WebElement firstRowEmailCell;
+
+	@FindBy(xpath = "//tr[@id='partner_list_item1']/td[7]/div")
+	private WebElement firstRowStatusBadge;
+
+	@FindBy(xpath = "//tr[starts-with(@id,'partner_list_item')]")
+	private List<WebElement> partnerRows;
+
+	@FindBy(xpath = "//tr[starts-with(@id,'partner_list_item')]/td[1]")
+	private List<WebElement> partnerIdColumnCells;
+
+	@FindBy(xpath = "//tr[starts-with(@id,'partner_list_item')]/td[2]")
+	private List<WebElement> partnerTypeColumnCells;
+
+	@FindBy(xpath = "//tr[starts-with(@id,'partner_list_item')]/td[5]")
+	private List<WebElement> emailColumnCells;
+
+	@FindBy(xpath = "//tr[starts-with(@id,'partner_list_item')]/td[7]/div")
+	private List<WebElement> statusColumnBadges;
+
+	@FindBy(css = "svg[id$='_asc_icon'], svg[id$='_desc_icon']")
+	private List<WebElement> columnSortIcons;
+
+	@FindBy(xpath = "//span[starts-with(normalize-space(text()),'Invalid character.')]")
+	private WebElement invalidCharacterError;
+
+	@FindBy(xpath = "//button[@id='partner_type_filter_dropdown_btn']/parent::div//input")
+	private WebElement partnerTypeDropdownSearchInput;
+
+	@FindBy(css = "input, textarea, select")
+	private List<WebElement> editableInputs;
+
+	@FindBy(xpath = "//button[normalize-space()='Save' or normalize-space()='Edit' or normalize-space()='Update' or normalize-space()='Delete']")
+	private List<WebElement> editActionButtons;
+
+	@FindBy(id = "view_partner_details_org_name_context")
+	private WebElement viewOrganisationName;
+
+	@FindBy(id = "view_partner_details_first_name_context")
+	private WebElement viewFirstName;
+
+	@FindBy(id = "view_partner_details_last_name_context")
+	private WebElement viewLastName;
+
+	@FindBy(id = "view_partner_details_phone_number_context")
+	private WebElement viewPhoneNumber;
+
+	@FindBy(id = "view_partner_details_email_context")
+	private WebElement viewEmail;
+
+	@FindBy(id = "view_partner_details_policy_group_context")
+	private WebElement viewPolicyGroup;
+
+	@FindBy(id = "view_partner_details_partner_created_date_time")
+	private WebElement viewPartnerCreatedTime;
+
+	@FindBy(id = "view_expiry_date_context")
+	private WebElement viewCertificateExpiry;
+
+	@FindBy(id = "view_certificate_upload_date_context")
+	private WebElement viewCertificateUploadTime;
+
+	@FindBy(id = "success_msg_close_icon")
+	private WebElement successMessageCloseIcon;
 
 	public PartnerAdminPage(WebDriver driver) {
 		super(driver);
@@ -504,7 +590,7 @@ public class PartnerAdminPage extends BasePage {
 	}
 
 	public boolean isAuthenticationPartnerCellDisplayed() {
-		return isElementDisplayed(authenticationPartnerCell);
+		return isElementDisplayed(firstRowPartnerTypeCell);
 	}
 
 	public boolean isPartnerIdSearchBarDisplayed() {
@@ -560,7 +646,7 @@ public class PartnerAdminPage extends BasePage {
 	}
 
 	public boolean isUploadCertificateButtonDisplayed() {
-		return isDisplayed(org.openqa.selenium.By.id("partner_upload_certificate_btn"));
+		return isElementDisplayed(uploadCertificateOption);
 	}
 
 	public boolean isViewButtonsDisplayed() {
@@ -585,7 +671,7 @@ public class PartnerAdminPage extends BasePage {
 
 	// Callers must wait for the unfiltered list before opening the filter panel, or it reads empty.
 	public boolean isPartnerListLoaded() {
-		return isElementDisplayedQuick(By.id("partner_list_item1"), LIST_LOAD_TIMEOUT);
+		return isElementDisplayedQuick(firstPartnerRow, LIST_LOAD_TIMEOUT);
 	}
 
 	// Rows are index-keyed in React, so the same DOM node survives a filter re-render -
@@ -593,8 +679,8 @@ public class PartnerAdminPage extends BasePage {
 	// contain the expected partner ID, so a stale pre-filter row can't be mistaken for it.
 	public boolean isPartnerListLoaded(String expectedPartnerId) {
 		try {
-			new WebDriverWait(driver, LIST_LOAD_TIMEOUT).until(ExpectedConditions
-					.textToBePresentInElementLocated(By.xpath("//tr[@id='partner_list_item1']/td[1]"), expectedPartnerId));
+			new WebDriverWait(driver, LIST_LOAD_TIMEOUT)
+					.until(ExpectedConditions.textToBePresentInElement(firstRowPartnerIdCell, expectedPartnerId));
 			return true;
 		} catch (TimeoutException e) {
 			return false;
@@ -603,8 +689,8 @@ public class PartnerAdminPage extends BasePage {
 
 	public boolean isPartnerListLoadedByEmail(String expectedEmail) {
 		try {
-			new WebDriverWait(driver, LIST_LOAD_TIMEOUT).until(ExpectedConditions
-					.textToBePresentInElementLocated(By.xpath("//tr[@id='partner_list_item1']/td[5]"), expectedEmail));
+			new WebDriverWait(driver, LIST_LOAD_TIMEOUT)
+					.until(ExpectedConditions.textToBePresentInElement(firstRowEmailCell, expectedEmail));
 			return true;
 		} catch (TimeoutException e) {
 			return false;
@@ -612,12 +698,11 @@ public class PartnerAdminPage extends BasePage {
 	}
 
 	public String getFirstRowPartnerType() {
-		return getCellTextWithStaleRetry(By.xpath("//tr[@id='partner_list_item1']/td[2]"));
+		return getCellTextWithStaleRetry(firstRowPartnerTypeCell);
 	}
 
 	public String getEmailOfFirstRowWithPartnerTypeOtherThan(String partnerType) {
-		List<String> partnerTypes = getColumnValuesWithStaleRetry(
-				By.xpath("//tr[starts-with(@id,'partner_list_item')]/td[2]"));
+		List<String> partnerTypes = getColumnValuesWithStaleRetry(partnerTypeColumnCells);
 		List<String> emails = getEmailAddressColumnValues();
 		for (int row = 0; row < partnerTypes.size() && row < emails.size(); row++) {
 			if (!partnerType.equalsIgnoreCase(partnerTypes.get(row))) {
@@ -632,18 +717,24 @@ public class PartnerAdminPage extends BasePage {
 	}
 
 	public void selectPartnerTypeFilterOption(String partnerType) {
-		click(By.xpath("//button[starts-with(@id,'partner_type_filter_option') and normalize-space(text())='" + partnerType
-				+ "']"));
+		clickOnElement(waitForFilterOption(partnerTypeFilterOptions, partnerType));
 	}
 
 	public String getStatusFilterOptionText(int optionNumber) {
-		By option = By.id("status_filter_option" + optionNumber);
-		new WebDriverWait(driver, LIST_LOAD_TIMEOUT).until(ExpectedConditions.visibilityOfElementLocated(option));
-		return getCellTextWithStaleRetry(option);
+		String optionId = "status_filter_option" + optionNumber;
+		return new WebDriverWait(driver, LIST_LOAD_TIMEOUT).ignoring(StaleElementReferenceException.class)
+				.until(webDriver -> {
+					for (WebElement option : statusFilterOptions) {
+						if (optionId.equals(option.getAttribute("id")) && option.isDisplayed()) {
+							return option.getText().trim();
+						}
+					}
+					return null;
+				});
 	}
 
 	public List<String> getStatusColumnValues() {
-		return getColumnValuesWithStaleRetry(By.xpath("//tr[starts-with(@id,'partner_list_item')]/td[7]/div"));
+		return getColumnValuesWithStaleRetry(statusColumnBadges);
 	}
 
 	// Row 1 is what the Action menu operates on; isDeactivatedPartnerRowDisplayed is pinned to row 2.
@@ -683,7 +774,7 @@ public class PartnerAdminPage extends BasePage {
 	}
 
 	public boolean isDeactivatePopupHeaderDisplayedQuick() {
-		return isElementDisplayedQuick(By.id("deactivate_popup_header"), SHORT_ABSENCE_TIMEOUT);
+		return isElementDisplayedQuick(deactivatePartnerHeader, SHORT_ABSENCE_TIMEOUT);
 	}
 
 	public boolean isDeactivatePopupDescriptionDisplayed() {
@@ -780,46 +871,45 @@ public class PartnerAdminPage extends BasePage {
 
 	public boolean isFocusContainedWithinDeactivatePopup() {
 		return Boolean.TRUE.equals(((JavascriptExecutor) driver).executeScript(
-				"var header = document.getElementById('deactivate_popup_header');"
-						+ "var boundary = header ? header.closest('.rounded-lg') : null;"
-						+ "return boundary ? boundary.contains(document.activeElement) : false;"));
+				"var boundary = arguments[0].closest('.rounded-lg');"
+						+ "return boundary ? boundary.contains(document.activeElement) : false;",
+				deactivatePartnerHeader));
 	}
 
 	public int getPartnerRowCount() {
-		return getElementCount(By.xpath("//tr[starts-with(@id,'partner_list_item')]"));
+		return partnerRows.size();
 	}
 
 	public String getFirstRowPartnerId() {
-		return getCellTextWithStaleRetry(By.xpath("//tr[@id='partner_list_item1']/td[1]"));
+		return getCellTextWithStaleRetry(firstRowPartnerIdCell);
 	}
 
 	public String getFirstRowEmailAddress() {
-		return getCellTextWithStaleRetry(By.xpath("//tr[@id='partner_list_item1']/td[5]"));
+		return getCellTextWithStaleRetry(firstRowEmailCell);
 	}
 
 	public List<String> getEmailAddressColumnValues() {
-		return getColumnValuesWithStaleRetry(By.xpath("//tr[starts-with(@id,'partner_list_item')]/td[5]"));
+		return getColumnValuesWithStaleRetry(emailColumnCells);
 	}
 
 	// Waits for the cell rather than reading straight away: after a filter is applied or reset
 	// the rows are briefly absent, and consecutive scenarios in one session read across that gap.
-	private String getCellTextWithStaleRetry(By locator) {
+	private String getCellTextWithStaleRetry(WebElement cell) {
 		for (int attempt = 1; attempt <= STALE_READ_RETRY; attempt++) {
 			try {
-				return new WebDriverWait(driver, LIST_LOAD_TIMEOUT)
-						.until(ExpectedConditions.visibilityOfElementLocated(locator)).getText().trim();
+				return new WebDriverWait(driver, LIST_LOAD_TIMEOUT).until(ExpectedConditions.visibilityOf(cell))
+						.getText().trim();
 			} catch (StaleElementReferenceException stale) {
 				LogUtil.step("Cell read went stale. Retry " + attempt + "/" + STALE_READ_RETRY);
 			}
 		}
-		throw new RuntimeException("Cell still stale after " + STALE_READ_RETRY + " retries: " + locator);
+		throw new RuntimeException("Cell still stale after " + STALE_READ_RETRY + " retries: " + cell);
 	}
 
-	private List<String> getColumnValuesWithStaleRetry(By locator) {
+	private List<String> getColumnValuesWithStaleRetry(List<WebElement> cells) {
 		for (int attempt = 1; attempt <= STALE_READ_RETRY; attempt++) {
 			try {
-				List<WebElement> cells = new WebDriverWait(driver, LIST_LOAD_TIMEOUT)
-						.until(ExpectedConditions.numberOfElementsToBeMoreThan(locator, 0));
+				new WebDriverWait(driver, LIST_LOAD_TIMEOUT).until(webDriver -> !cells.isEmpty());
 				List<String> values = new ArrayList<>();
 				for (WebElement cell : cells) {
 					values.add(cell.getText().trim());
@@ -828,19 +918,27 @@ public class PartnerAdminPage extends BasePage {
 			} catch (StaleElementReferenceException stale) {
 				LogUtil.step("Column read went stale. Retry " + attempt + "/" + STALE_READ_RETRY);
 			} catch (TimeoutException noRows) {
-				LogUtil.step("No rows rendered for column: " + locator);
+				LogUtil.step("No rows rendered for column");
 				return new ArrayList<>();
 			}
 		}
-		throw new RuntimeException("Column still stale after " + STALE_READ_RETRY + " retries: " + locator);
+		throw new RuntimeException("Column still stale after " + STALE_READ_RETRY + " retries");
 	}
 
-	private static final By ANY_COLUMN_SORT_ICON = By
-			.cssSelector("svg[id$='_asc_icon'], svg[id$='_desc_icon']");
-
 	public int getSortIconCountForColumn(String columnId) {
-		isElementDisplayedQuick(ANY_COLUMN_SORT_ICON, LIST_LOAD_TIMEOUT);
-		return getElementCount(By.id(columnId + "_asc_icon")) + getElementCount(By.id(columnId + "_desc_icon"));
+		try {
+			new WebDriverWait(driver, LIST_LOAD_TIMEOUT).until(webDriver -> !columnSortIcons.isEmpty());
+		} catch (TimeoutException e) {
+			return 0;
+		}
+		int count = 0;
+		for (WebElement icon : columnSortIcons) {
+			String id = icon.getAttribute("id");
+			if ((columnId + "_asc_icon").equals(id) || (columnId + "_desc_icon").equals(id)) {
+				count++;
+			}
+		}
+		return count;
 	}
 
 	public String getEmailAddressFilterPlaceholder() {
@@ -863,23 +961,20 @@ public class PartnerAdminPage extends BasePage {
 		return getTextFromLocator(emailAddressFilterInfoDescription).trim();
 	}
 
-	private static final By INVALID_CHARACTER_ERROR = By
-			.xpath("//span[starts-with(normalize-space(text()),'Invalid character.')]");
-
 	public boolean isInvalidCharacterErrorDisplayed() {
-		return isElementDisplayedQuick(INVALID_CHARACTER_ERROR, SHORT_ABSENCE_TIMEOUT);
+		return isElementDisplayedQuick(invalidCharacterError, SHORT_ABSENCE_TIMEOUT);
 	}
 
 	public String getInvalidCharacterErrorText() {
-		return getTextFromLocator(INVALID_CHARACTER_ERROR).trim();
+		return getTextFromLocator(invalidCharacterError).trim();
 	}
 
 	public List<String> getPartnerIdColumnValues() {
-		return getColumnValuesWithStaleRetry(By.xpath("//tr[starts-with(@id,'partner_list_item')]/td[1]"));
+		return getColumnValuesWithStaleRetry(partnerIdColumnCells);
 	}
 
 	public List<String> getPartnerTypeColumnValues() {
-		return getColumnValuesWithStaleRetry(By.xpath("//tr[starts-with(@id,'partner_list_item')]/td[2]"));
+		return getColumnValuesWithStaleRetry(partnerTypeColumnCells);
 	}
 
 	public boolean waitForFilteredCountToChangeFrom(int previousCount) {
@@ -912,7 +1007,7 @@ public class PartnerAdminPage extends BasePage {
 	}
 
 	public boolean isNoResultsFoundQuick() {
-		return isElementDisplayedQuick(By.xpath("//p[text()='No Results Found']"), SHORT_ABSENCE_TIMEOUT);
+		return isElementDisplayedQuick(noResultsFoundMessages, SHORT_ABSENCE_TIMEOUT);
 	}
 
 	public String getPartnerStatusInViewPartnerDetails() {
@@ -930,18 +1025,16 @@ public class PartnerAdminPage extends BasePage {
 	}
 
 	public boolean isDownloadCertificateButtonEnabledInViewPartnerPageQuick() {
-		return isElementDisplayedQuick(By.id("download_partner_cer_btn"),
-				SHORT_ABSENCE_TIMEOUT) && downloadCertificateButtonInViewPartnerPage.isEnabled();
+		return isElementDisplayedQuick(downloadCertificateButtonInViewPartnerPage, SHORT_ABSENCE_TIMEOUT)
+				&& downloadCertificateButtonInViewPartnerPage.isEnabled();
 	}
 
 	// Waits on the first badge - the rows exist before the filtered response paints their status text.
 	public boolean areAllPartnerRowStatusesDeactivated() {
-		new WebDriverWait(driver, LIST_LOAD_TIMEOUT).until(ExpectedConditions.visibilityOfElementLocated(FIRST_ROW_STATUS_BADGE));
-		List<WebElement> statusCells = driver
-				.findElements(By.xpath("//tr[starts-with(@id,'partner_list_item')]/td[7]/div"));
+		new WebDriverWait(driver, LIST_LOAD_TIMEOUT).until(ExpectedConditions.visibilityOf(firstRowStatusBadge));
 		StringBuilder observed = new StringBuilder();
-		boolean allDeactivated = !statusCells.isEmpty();
-		for (WebElement cell : statusCells) {
+		boolean allDeactivated = !statusColumnBadges.isEmpty();
+		for (WebElement cell : statusColumnBadges) {
 			String status = cell.getText().trim();
 			observed.append('[').append(status).append(']');
 			if (!GlobalConstants.DEACTIVATED.equals(status)) {
@@ -952,15 +1045,12 @@ public class PartnerAdminPage extends BasePage {
 		return allDeactivated;
 	}
 
-	// By-based, not a long-lived @FindBy proxy: React can replace row 1's badge on a re-render.
-	private static final By FIRST_ROW_STATUS_BADGE = By.xpath("//tr[@id='partner_list_item1']/td[7]/div");
-
 	public String getFirstRowPartnerStatus() {
-		return getTextFromLocator(FIRST_ROW_STATUS_BADGE).trim();
+		return getTextFromLocator(firstRowStatusBadge).trim();
 	}
 
 	public boolean isFirstRowStatusBadgeDeactivated() {
-		return getTextFromAttribute(FIRST_ROW_STATUS_BADGE, GlobalConstants.CLASS)
+		return getTextFromAttribute(firstRowStatusBadge, GlobalConstants.CLASS)
 				.contains(GlobalConstants.DEACTIVATED_BACKGROUND);
 	}
 
@@ -1182,6 +1272,226 @@ public class PartnerAdminPage extends BasePage {
 
 	public void clickOnCertificateUploadascIcon() {
 		clickOnElement(certificateUploadStatusAscIcon);
+	}
+
+	public boolean isPartnerListLoadedByPartnerType(String partnerType) {
+		try {
+			new WebDriverWait(driver, LIST_LOAD_TIMEOUT)
+					.until(ExpectedConditions.textToBePresentInElement(firstRowPartnerTypeCell, partnerType));
+			return true;
+		} catch (TimeoutException e) {
+			return false;
+		}
+	}
+
+	public boolean isFirstRowStatus(String status) {
+		try {
+			new WebDriverWait(driver, LIST_LOAD_TIMEOUT)
+					.until(ExpectedConditions.textToBePresentInElement(firstRowStatusBadge, status));
+			return true;
+		} catch (TimeoutException e) {
+			return false;
+		}
+	}
+
+	public boolean areAllVisiblePartnerTypes(String partnerType) {
+		List<String> partnerTypes = getPartnerTypeColumnValues();
+		if (partnerTypes.isEmpty()) {
+			return false;
+		}
+		for (String visibleType : partnerTypes) {
+			if (!partnerType.equals(visibleType)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public boolean areAllVisiblePartnerStatuses(String status) {
+		List<String> statuses = getStatusColumnValues();
+		if (statuses.isEmpty()) {
+			return false;
+		}
+		for (String visibleStatus : statuses) {
+			if (!status.equals(visibleStatus)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public void selectStatusFilterOption(String statusLabel) {
+		clickOnElement(waitForFilterOption(statusFilterOptions, statusLabel));
+	}
+
+	private WebElement waitForFilterOption(List<WebElement> options, String label) {
+		return new WebDriverWait(driver, LIST_LOAD_TIMEOUT).ignoring(StaleElementReferenceException.class)
+				.until(webDriver -> {
+					for (WebElement option : options) {
+						if (label.equals(option.getText().trim())) {
+							return option;
+						}
+					}
+					return null;
+				});
+	}
+
+	public String getPartnerTypeFilterButtonText() {
+		return getTextFromLocator(partnerTypeDropdown).trim();
+	}
+
+	public boolean isPartnerTypeFilterOptionDisplayed() {
+		try {
+			new WebDriverWait(driver, LIST_LOAD_TIMEOUT).ignoring(StaleElementReferenceException.class)
+					.until(webDriver -> !partnerTypeFilterOptions.isEmpty() && partnerTypeFilterOptions.get(0).isDisplayed());
+			return true;
+		} catch (TimeoutException e) {
+			return false;
+		}
+	}
+
+	public boolean isPartnerTypeDropdownSearchInputDisplayed() {
+		return isElementDisplayedQuick(partnerTypeDropdownSearchInput, SHORT_ABSENCE_TIMEOUT);
+	}
+
+	public String getPageTitleText() {
+		return getTextFromLocator(titlePartner).trim();
+	}
+
+	public String getViewPartnerDetailsPartnerType() {
+		return getTextFromLocator(viewPartnerDetailsPartnerType).trim();
+	}
+
+	public boolean isViewPartnerEditControlDisplayed() {
+		return isAnyElementDisplayed(editableInputs, SHORT_ABSENCE_TIMEOUT)
+				|| isAnyElementDisplayed(editActionButtons, SHORT_ABSENCE_TIMEOUT);
+	}
+
+	private boolean isAnyElementDisplayed(List<WebElement> elements, Duration timeout) {
+		try {
+			return new WebDriverWait(driver, timeout).ignoring(StaleElementReferenceException.class)
+					.until(webDriver -> {
+						for (WebElement element : elements) {
+							if (element.isDisplayed()) {
+								return true;
+							}
+						}
+						return null;
+					});
+		} catch (TimeoutException e) {
+			return false;
+		}
+	}
+
+	public boolean areViewPartnerValueFieldsReadOnly() {
+		WebElement[] valueFields = { viewPartnerDetailsPartnerType, viewOrganisationName, viewFirstName, viewLastName,
+				viewPhoneNumber, viewEmail, viewPolicyGroup };
+		try {
+			for (WebElement valueField : valueFields) {
+				WebElement field = new WebDriverWait(driver, LIST_LOAD_TIMEOUT)
+						.until(ExpectedConditions.visibilityOf(valueField));
+				String tag = field.getTagName();
+				if ("input".equalsIgnoreCase(tag) || "textarea".equalsIgnoreCase(tag) || "select".equalsIgnoreCase(tag)) {
+					return false;
+				}
+			}
+			return true;
+		} catch (TimeoutException e) {
+			return false;
+		}
+	}
+
+	public String getViewPartnerIdText() {
+		return getTextFromLocator(partnerIdInViewPartnerDetailsPage).trim();
+	}
+
+	public String getViewOrganisationName() {
+		return getTextFromLocator(viewOrganisationName).trim();
+	}
+
+	public String getViewPolicyGroup() {
+		return getTextFromLocator(viewPolicyGroup).trim();
+	}
+
+	public String getViewEmail() {
+		return getTextFromLocator(viewEmail).trim();
+	}
+
+	public String getViewFirstName() {
+		return getTextFromLocator(viewFirstName).trim();
+	}
+
+	public String getViewLastName() {
+		return getTextFromLocator(viewLastName).trim();
+	}
+
+	public String getViewCertificateExpiry() {
+		return getTextFromLocator(viewCertificateExpiry).trim();
+	}
+
+	public String getViewCertificateUploadTime() {
+		return getTextFromLocator(viewCertificateUploadTime).trim();
+	}
+
+	public String getViewPartnerSuccessMessage() {
+		return getTextFromLocator(successMassageInOriginalCertificate).trim();
+	}
+
+	public String getFirstRowOrganisationName() {
+		return getCellTextWithStaleRetry(firstRowOrganisationCell);
+	}
+
+	public String getFirstRowPolicyGroup() {
+		return getCellTextWithStaleRetry(firstRowPolicyGroupCell);
+	}
+
+	public String getViewPhoneNumber() {
+		return getTextFromLocator(viewPhoneNumber).trim();
+	}
+
+	public String getViewPartnerCreatedOnText() {
+		return getTextFromLocator(partnerCreatedDateInViewPartnerPage).trim();
+	}
+
+	public String getViewPartnerCreatedTimeText() {
+		return getTextFromLocator(viewPartnerCreatedTime).trim();
+	}
+
+	public String getGoBackButtonText() {
+		return getTextFromLocator(gobackButtonInPartnerDetailsPage).trim();
+	}
+
+	public void dismissViewPartnerSuccessMessage() {
+		clickOnElement(successMessageCloseIcon);
+	}
+
+	public boolean isOriginalCertificateOptionEnabled() {
+		return isElementEnabled(originalCertificateDropdown);
+	}
+
+	public boolean isViewOrganisationNameFullyVisible() {
+		return isFullyVisible(viewOrganisationName);
+	}
+
+	public boolean isViewPolicyGroupFullyVisible() {
+		return isFullyVisible(viewPolicyGroup);
+	}
+
+	public boolean isViewEmailFullyVisible() {
+		return isFullyVisible(viewEmail);
+	}
+
+	public boolean isViewPhoneNumberFullyVisible() {
+		return isFullyVisible(viewPhoneNumber);
+	}
+
+	private boolean isFullyVisible(WebElement element) {
+		new WebDriverWait(driver, LIST_LOAD_TIMEOUT).until(ExpectedConditions.visibilityOf(element));
+		Object result = ((JavascriptExecutor) driver).executeScript(
+				"var el = arguments[0];"
+						+ "return el.scrollWidth <= el.clientWidth + 1 && el.scrollHeight <= el.clientHeight + 1;",
+				element);
+		return Boolean.TRUE.equals(result);
 	}
 
 }

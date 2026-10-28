@@ -8,10 +8,12 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class MispPartnerPage extends BasePage {
 
@@ -128,6 +130,15 @@ public class MispPartnerPage extends BasePage {
 
 	@FindBy(id = "create_partner_partner_type_option3")
 	private WebElement mispPartner;
+
+	@FindBy(xpath = "//button[contains(@id, 'create_partner_partner_type_option')]")
+	private List<WebElement> partnerTypeOptions;
+
+	@FindBy(id = "policy_group_selector_option_button_2")
+	private WebElement firstActivePolicyGroupOption;
+
+	@FindBy(id = "policy_group_selector_dropdown_button_text")
+	private WebElement selectedPolicyGroupText;
 
 	@FindBy(id = "create_partner_organization_name_info")
 	private WebElement oragnizationInfoButton;
@@ -246,6 +257,19 @@ public class MispPartnerPage extends BasePage {
 		clickOnElement(mispPartner);
 	}
 
+	public void clickOnPartnerTypeOption(String partnerTypeLabel) {
+		WebElement option = new WebDriverWait(driver, Duration.ofSeconds(30))
+				.ignoring(StaleElementReferenceException.class).until(webDriver -> {
+					for (WebElement partnerTypeOption : partnerTypeOptions) {
+						if (partnerTypeLabel.equals(partnerTypeOption.getText().trim())) {
+							return partnerTypeOption;
+						}
+					}
+					return null;
+				});
+		waitScrollAndClick(option);
+	}
+
 	public String getSelectedPartnerTypeText() {
 		return getTextFromLocator(partnerTypeDropdown);
 	}
@@ -276,6 +300,16 @@ public class MispPartnerPage extends BasePage {
 
 	public boolean isOrganizationNameInfoDisplayed() {
 		return isElementDisplayed(organizationNameInfo);
+	}
+
+	public void selectFirstActivePolicyGroup() {
+		ensurePolicyGroupDropdownOpen();
+		try {
+			waitScrollAndClick(firstActivePolicyGroupOption);
+		} catch (TimeoutException e) {
+			logger.warn("No active policy group option found");
+			throw new NoSuchElementException("No active policy group is available in the Policy Group dropdown", e);
+		}
 	}
 
 	public void selectPolicyGroupDropdown(String value) {
@@ -405,6 +439,10 @@ public class MispPartnerPage extends BasePage {
 		clickOnElement(createPartnerClearButton);
 	}
 
+	public boolean isCreatePartnerClearButtonEnabled() {
+		return isElementEnabled(createPartnerClearButton);
+	}
+
 	public void clickOnCreatePartnerCancelButton() {
 		clickOnElement(createPartnerCancelButton);
 	}
@@ -427,6 +465,18 @@ public class MispPartnerPage extends BasePage {
 
 	public void clickOnCancelConfirmationPopupProceedButton() {
 		clickOnElement(cancelConfirmationPopupProceedButton);
+	}
+
+	public void clickOnCancelConfirmationPopupCancelButton() {
+		clickOnElement(cancelConfirmationPopupCancelButton);
+	}
+
+	public void clickOnCreatePartnerHomeButton() {
+		clickOnElement(homeButton);
+	}
+
+	public String getOrganizationNameValidationErrorText() {
+		return getTextFromLocator(partnerOrgNameSpecialChNotAllowError);
 	}
 
 	public void clickOnCreatePartnerSubmitButton() {
@@ -704,5 +754,17 @@ public class MispPartnerPage extends BasePage {
 	public String getPolicyGroupText(String partnerId) {
 		By policyGroup = By.xpath("//tr[td[normalize-space()='" + partnerId + "']]/td[4]");
 		return getTextFromLocator(policyGroup);
+	}
+
+	public String getSelectedPolicyGroupText() {
+		return getTextFromLocator(selectedPolicyGroupText).trim();
+	}
+
+	public int getContactNumberMaxLength() {
+		String maxLength = getTextFromAttribute(partnerContactNumberTextBox, "maxlength");
+		if (maxLength == null || maxLength.isBlank()) {
+			return 0;
+		}
+		return Integer.parseInt(maxLength.trim());
 	}
 }
