@@ -9,13 +9,6 @@ import io.mosip.testrig.pmpuiv2.pages.DashboardPage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
-/**
- * MOSIP-44598 — Partner Admin: Delete Biometric Extractor Provider Configuration.
- * Env: https://pmp.qajava21.mosip.net — credentials 21admin / admin123.
- *
- * AC coverage: Delete from listing action menu; confirmation popup Confirm / Cancel;
- * config removed from list after Confirm; unchanged after Cancel.
- */
 @Test(alwaysRun = true, groups = { "BiometricConfigurationDeleteTest" })
 public class BiometricConfigurationDeleteTest extends BaseClass {
 

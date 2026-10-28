@@ -9,13 +9,6 @@ import io.mosip.testrig.pmpuiv2.pages.DashboardPage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
-/**
- * MOSIP-44596 — Partner Admin: Display Biometric Extractor Provider Configuration Listing.
- * Env: https://pmp.qajava21.mosip.net — credentials 21admin / admin123.
- *
- * Covers: dashboard navigation, tabular listing, columns, sort, filter, view action.
- * Create flow remains in BiometricConfigurationTest (MOSIP-44595).
- */
 @Test(alwaysRun = true, groups = { "BiometricConfigurationListingTest" })
 public class BiometricConfigurationListingTest extends BaseClass {
 

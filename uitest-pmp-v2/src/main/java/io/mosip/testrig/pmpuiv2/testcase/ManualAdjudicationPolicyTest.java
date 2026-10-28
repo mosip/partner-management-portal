@@ -13,10 +13,6 @@ import io.mosip.testrig.pmpuiv2.pages.PoliciesPage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
-/**
- * MOSIP-44350 — Policy Linking Management for Manual Adjudication Partner.
- * Env: https://pmp.131ga.mosip.net
- */
 @Test(dependsOnGroups = { "ManualAdjudicationPartnerTest" }, groups = { "ManualAdjudicationPolicyTest" })
 public class ManualAdjudicationPolicyTest extends BaseClass {
 

@@ -10,10 +10,6 @@ import io.mosip.testrig.pmpuiv2.pages.DashboardPage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
-/**
- * Biometric Extractor Provider Configuration (MOSIP-44595) — same structure as
- * PartnerAdminCreation (BaseClass login per method + dependsOnGroups PartnerAdminCreation).
- */
 @Test(alwaysRun = true, groups = { "BiometricConfigurationTest" })
 public class BiometricConfigurationTest extends BaseClass {
 

@@ -11,13 +11,6 @@ import io.mosip.testrig.pmpuiv2.pages.DashboardPage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
-/**
- * MOSIP-44597 — Partner Admin: View Biometric Extractor Provider Configuration Details.
- * Env: https://pmp.qajava21.mosip.net — credentials 21admin / admin123.
- *
- * AC coverage: Navigation; Page Title + Header; Configuration Details; Read-only;
- * Back button; UI layout; Responsiveness. Browser = Chrome (suite default).
- */
 @Test(alwaysRun = true, groups = { "BiometricConfigurationViewTest" })
 public class BiometricConfigurationViewTest extends BaseClass {
 

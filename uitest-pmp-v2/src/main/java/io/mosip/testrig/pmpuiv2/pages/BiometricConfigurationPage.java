@@ -9,11 +9,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-/**
- * Page object for Partner Admin Biometric Extractor Provider Configuration —
- * create (MOSIP-44595), listing (MOSIP-44596), and view details (MOSIP-44597).
- * Structure mirrors {@link ManualAdjudicationPartnerPage} (@FindBy locators).
- */
 public class BiometricConfigurationPage extends BasePage {
 
 	private static final Logger logger = Logger.getLogger(BiometricConfigurationPage.class);
@@ -244,10 +239,6 @@ public class BiometricConfigurationPage extends BasePage {
 		click(By.id("credential_data_format_option_templateData"));
 	}
 
-	/**
-	 * Selects the first available attribute option after modality + format are set.
-	 * For rawData the UI usually auto-fills; this ensures selection if still empty.
-	 */
 	public void selectFirstAttributeNameIfNeeded() {
 		if (!isElementDisplayedQuick(By.id("attribute_name_dropdown_btn"), Duration.ofSeconds(3))) {
 			return;
@@ -283,7 +274,7 @@ public class BiometricConfigurationPage extends BasePage {
 	public boolean isBiometricConfigurationCreatedSuccessfully() {
 		return isElementDisplayedQuick(By.id("create_bio_extractor_config_confirmation_header"), Duration.ofSeconds(15))
 				|| isDisplayed(By.xpath(
-						"//*[contains(normalize-space(),'Biometric Extractor Provider Configuration is added successfully')]"));
+						"//h1[contains(normalize-space(),'Biometric Extractor Provider Configuration is added successfully')]"));
 	}
 
 	public void clickOnSuccessGoBackButton() {
@@ -296,7 +287,7 @@ public class BiometricConfigurationPage extends BasePage {
 
 	public boolean isConfigurationNamePresentInList(String configName) {
 		return isElementDisplayedQuick(
-				By.xpath("//*[contains(normalize-space(),'" + configName + "')]"), Duration.ofSeconds(10));
+				By.xpath("//td[contains(normalize-space(),'" + configName + "')]"), Duration.ofSeconds(10));
 	}
 
 	public boolean isListingTableDisplayed() {
@@ -375,7 +366,7 @@ public class BiometricConfigurationPage extends BasePage {
 	public boolean isEmptyFilterResultDisplayed() {
 		boolean noRows = !isElementDisplayedQuick(By.id("bio_extractor_config_list_item_1"), Duration.ofSeconds(3));
 		boolean emptyMsg = isDisplayed(By.xpath(
-				"//*[contains(normalize-space(),'No Data Available') or contains(normalize-space(),'No Items Found') or contains(normalize-space(),'There are no') or contains(normalize-space(),'no matching')]"));
+				"//p[contains(normalize-space(),'No Data Available') or contains(normalize-space(),'No Items Found') or contains(normalize-space(),'There are no') or contains(normalize-space(),'no matching')]"));
 		return noRows || emptyMsg;
 	}
 
@@ -528,7 +519,7 @@ public class BiometricConfigurationPage extends BasePage {
 
 	public boolean isViewStatusDisplayed() {
 		return isElementDisplayed(viewStatus) || isElementDisplayedQuick(
-				By.xpath("//*[normalize-space()='Active' or normalize-space()='Deactivated' or normalize-space()='Inactive']"),
+				By.xpath("//span[normalize-space()='Active' or normalize-space()='Deactivated' or normalize-space()='Inactive']"),
 				Duration.ofSeconds(2));
 	}
 
@@ -545,13 +536,9 @@ public class BiometricConfigurationPage extends BasePage {
 
 	public boolean isViewCommentDisplayed() {
 		return isElementDisplayed(viewComment) || isElementDisplayedQuick(
-				By.xpath("//*[contains(normalize-space(),'Comment')]/following::*[1]"), Duration.ofSeconds(2));
+				By.xpath("//p[contains(normalize-space(),'Comment')]/following::p[1]"), Duration.ofSeconds(2));
 	}
 
-	/**
-	 * Values on the view page are rendered as read-only &lt;p&gt; labels — there must be
-	 * no editable input/textarea/select for the configuration attributes.
-	 */
 	public boolean isViewPageReadOnly() {
 		if (!isViewConfigurationDetailsPageDisplayed()) {
 			return false;
@@ -619,7 +606,7 @@ public class BiometricConfigurationPage extends BasePage {
 
 	public boolean isConfigurationNameAbsentFromList(String configName) {
 		return !isElementDisplayedQuick(
-				By.xpath("//tr[contains(@id,'bio_extractor_config_list_item_')]//*[contains(normalize-space(),'"
+				By.xpath("//tr[contains(@id,'bio_extractor_config_list_item_')]//td[contains(normalize-space(),'"
 						+ configName + "')]"),
 				Duration.ofSeconds(5));
 	}

@@ -13,10 +13,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-/**
- * Page object for Partner Admin: Create Manual Adjudication Partner (MOSIP-44348).
- * Structure mirrors {@link MispPartnerPage}.
- */
 public class ManualAdjudicationPartnerPage extends BasePage {
 
 	private static final Logger logger = Logger.getLogger(ManualAdjudicationPartnerPage.class);
@@ -139,7 +135,7 @@ public class ManualAdjudicationPartnerPage extends BasePage {
 	@FindBy(id = "create_partner_organization_name_info")
 	private WebElement oragnizationInfoButton;
 
-	@FindBy(xpath = "(//*[@id='policy_group_selector_search_input'])[1]")
+	@FindBy(xpath = "(//input[@id='policy_group_selector_search_input'])[1]")
 	private WebElement policyGroupDropdownSearchInput;
 
 	@FindBy(id = "partner_upload_certificate_btn")
@@ -276,13 +272,13 @@ public class ManualAdjudicationPartnerPage extends BasePage {
 
 	public int getPartnerTypeDropdownOptionCount() {
 		List<WebElement> options = driver
-				.findElements(By.xpath("//*[contains(@id, 'create_partner_partner_type_option')]"));
+				.findElements(By.xpath("//button[contains(@id, 'create_partner_partner_type_option')]"));
 		return options.size();
 	}
 
 	public List<String> getPartnerTypeDropdownOptionTexts() {
 		List<WebElement> options = driver
-				.findElements(By.xpath("//*[contains(@id, 'create_partner_partner_type_option')]"));
+				.findElements(By.xpath("//button[contains(@id, 'create_partner_partner_type_option')]"));
 		List<String> texts = new ArrayList<>();
 		for (WebElement option : options) {
 			texts.add(option.getText().trim());
@@ -318,7 +314,7 @@ public class ManualAdjudicationPartnerPage extends BasePage {
 	}
 
 	private void ensurePolicyGroupDropdownOpen() {
-		if (!isElementDisplayedQuick(By.xpath("(//*[@id='policy_group_selector_search_input'])[1]"),
+		if (!isElementDisplayedQuick(By.xpath("(//input[@id='policy_group_selector_search_input'])[1]"),
 				INLINE_VALIDATION_TIMEOUT)) {
 			clickOnElement(policyGroupDropdown);
 		}
@@ -341,7 +337,7 @@ public class ManualAdjudicationPartnerPage extends BasePage {
 				clickOnElement(notificationLanguageOption1);
 				return;
 			}
-			click(By.xpath("//*[contains(@id,'create_partner_lang_code_option')][normalize-space()='" + value + "']"));
+			click(By.xpath("//button[contains(@id,'create_partner_lang_code_option')][normalize-space()='" + value + "']"));
 		} catch (RuntimeException e) {
 			logger.info(e.getMessage());
 			throw e;
@@ -603,23 +599,23 @@ public class ManualAdjudicationPartnerPage extends BasePage {
 	}
 
 	public boolean isPolicyGroupSearchBarDisplayed() {
-		return isElementDisplayedQuick(By.xpath("(//*[@id='policy_group_selector_search_input'])[1]"),
+		return isElementDisplayedQuick(By.xpath("(//input[@id='policy_group_selector_search_input'])[1]"),
 				INLINE_VALIDATION_TIMEOUT);
 	}
 
 	public boolean isPolicyGroupOptionVisible(String value) {
 		return isElementDisplayedQuick(
-				By.xpath("//*[contains(@id,'policy_group_selector_option')]//span[normalize-space()='" + value + "']"),
+				By.xpath("//div[contains(@id,'policy_group_selector_option')]//span[normalize-space()='" + value + "']"),
 				INLINE_VALIDATION_TIMEOUT);
 	}
 
 	public void clickUploadCertActionForPartner(String partnerId) {
-		By directButton = By.xpath("//tr[./td[normalize-space()='" + partnerId + "']]//*[contains(@id,'upload_cert')]");
+		By directButton = By.xpath("//tr[./td[normalize-space()='" + partnerId + "']]//p[contains(@id,'upload_cert')]");
 		if (isDisplayed(directButton)) {
 			click(directButton);
 		} else {
 			click(By.xpath(
-					"//tr[./td[normalize-space()='" + partnerId + "']]//*[contains(text(),'Upload Certificate')]"));
+					"//tr[./td[normalize-space()='" + partnerId + "']]//p[contains(text(),'Upload Certificate')]"));
 		}
 	}
 
@@ -721,8 +717,6 @@ public class ManualAdjudicationPartnerPage extends BasePage {
 		By policyGroup = By.xpath("//tr[td[normalize-space()='" + partnerId + "']]/td[4]");
 		return getTextFromLocator(policyGroup);
 	}
-
-	// --- View Partner Details (MOSIP-44410) ---
 
 	public void clickOnViewButton() {
 		click(By.id("partner_details_view_btn"));

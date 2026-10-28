@@ -14,13 +14,6 @@ import io.mosip.testrig.pmpuiv2.pages.PartnerCertificatePage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
-/**
- * MOSIP-44348 — Create Manual Adjudication Partner.
- * MOSIP-44349 — Upload / Re-Upload Certificate for Manual Adjudication Partner.
- * MOSIP-44410 — View Manual Adjudication Partner Details.
- * MOSIP-44411 — Deactivate Manual Adjudication Partner.
- * Env: https://pmp.131ga.mosip.net
- */
 @Test(dependsOnGroups = { "PartnerAdminCreation" }, groups = { "ManualAdjudicationPartnerTest" })
 public class ManualAdjudicationPartnerTest extends BaseClass {
 
@@ -95,7 +88,6 @@ public class ManualAdjudicationPartnerTest extends BaseClass {
 		assertTrue(maPartnerPage.isManualAdjudicationPartnerRowStatusDisplayed(GlobalConstants.MA_PARTNER_USER,
 				GlobalConstants.UPLOADED_STATUS, GlobalConstants.ACTIVE_STATUS), GlobalConstants.isStatusDisplayed);
 
-		// MOSIP-44349 — Re-upload popup from Partners list (Uploaded / Active)
 		maPartnerPage.clickActionButtonByPartnerId(GlobalConstants.MA_PARTNER_USER);
 		maPartnerPage.clickOnUploadOrReuploadCertificateButton();
 		assertTrue(partnerCertificatePage.isMispPartnerCertificatePopupDisplayed(),
