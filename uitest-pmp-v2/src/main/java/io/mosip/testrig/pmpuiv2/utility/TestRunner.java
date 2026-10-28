@@ -161,6 +161,8 @@ public class TestRunner {
 					"io.mosip.testrig.pmpuiv2.testcase.BiometricConfigurationListingTest");
 			XmlClass biometricConfigurationViewTest = new XmlClass(
 					"io.mosip.testrig.pmpuiv2.testcase.BiometricConfigurationViewTest");
+			XmlClass biometricConfigurationDeleteTest = new XmlClass(
+					"io.mosip.testrig.pmpuiv2.testcase.BiometricConfigurationDeleteTest");
 
 			List<XmlClass> classes = new ArrayList<>();
 			String[] scenarioNames = ConfigManager.gettestcases().split(",");
@@ -316,6 +318,9 @@ public class TestRunner {
 					break;
 				case "BiometricConfigurationViewTest":
 					addClassIfAbsent(classes, biometricConfigurationViewTest);
+					break;
+				case "BiometricConfigurationDeleteTest":
+					addClassIfAbsent(classes, biometricConfigurationDeleteTest);
 					break;
 
 				// Unknown test name

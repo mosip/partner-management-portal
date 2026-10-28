@@ -1552,7 +1552,7 @@ public class GlobalConstants {
 	public static final String QAJAVA21_ADMIN_USER = "21admin";
 	public static final String QAJAVA21_ADMIN_PASSWORD = "admin123";
 
-	// Biometric Extractor Provider Configuration (MOSIP-44595 / MOSIP-44596 / MOSIP-44597)
+	// Biometric Extractor Provider Configuration (MOSIP-44595 / MOSIP-44596 / MOSIP-44597 / MOSIP-44598)
 	public static final String BIOMETRIC_CONFIGURATION_PROVIDER_NAME = "MosipBioExtractor";
 	public static final String BIOMETRIC_CONFIGURATION_PROVIDER_VERSION = "1.0.0";
 	public static final String BIOMETRIC_CONFIGURATION_MODALITY_FACE = "face";
@@ -1578,6 +1578,8 @@ public class GlobalConstants {
 	public static final String isBiometricConfigurationViewLayoutStructured = "Verify that View page layout shows title, metadata, attributes and Back button in a structured format.";
 	public static final String isBiometricConfigurationViewResponsive = "Verify that View page remains usable at desktop and tablet viewport sizes.";
 	public static final String isBiometricConfigurationDeletePopupDisplayed = "Verify that delete confirmation popup is displayed.";
+	public static final String isBiometricConfigurationDeleteCancelKeepsConfig = "Verify that Cancel on delete popup keeps the configuration in the listing.";
+	public static final String isBiometricConfigurationDeletedFromList = "Verify that confirmed delete removes the configuration from the listing.";
 
 	public static final String CANCEL_CONFIRMATION_POPUP_TEXT = "Your changes will be lost, are you sure you want to proceed?";
 	public static final String CERT_UPLOAD_STATUS_UPLOADED = "Uploaded";
