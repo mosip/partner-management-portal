@@ -44,6 +44,17 @@
 			<class name="io.mosip.testrig.pmpuiv2.testcase.MispServicesTest" />
 			<!--ABIS PARTNER FLOW-->
 			<class name="io.mosip.testrig.pmpuiv2.testcase.AbisPartnerTest" />
+			<!--MANUAL ADJUDICATION PARTNER FLOW (MOSIP-44348 / MOSIP-44410)-->
+			<class name="io.mosip.testrig.pmpuiv2.testcase.ManualAdjudicationPartnerTest" />
+			<!--MANUAL ADJUDICATION POLICY LINKING (MOSIP-44350)-->
+			<class name="io.mosip.testrig.pmpuiv2.testcase.ManualAdjudicationPolicyTest" />
+			<!--BIOMETRIC EXTRACTOR PROVIDER CONFIGURATION (MOSIP-44595 / MOSIP-44596 / MOSIP-44597 / MOSIP-44598)-->
+			<class name="io.mosip.testrig.pmpuiv2.testcase.BiometricConfigurationTest" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.BiometricConfigurationListingTest" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.BiometricConfigurationViewTest" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.BiometricConfigurationDeleteTest" />
+			<!--MAP BIOMETRIC EXTRACTOR PROVIDER (MOSIP-44659)-->
+			<class name="io.mosip.testrig.pmpuiv2.testcase.MapBiometricExtractorProviderTest" />
 			<!--PARTNER VALIDATION & MANAGEMENT -->
 			<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerDetailsTest" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerFilterTest" />

@@ -1,0 +1,819 @@
+package io.mosip.testrig.pmpuiv2.pages;
+
+import java.io.IOException;
+import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.log4j.Logger;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+
+public class ManualAdjudicationPartnerPage extends BasePage {
+
+	private static final Logger logger = Logger.getLogger(ManualAdjudicationPartnerPage.class);
+	private static final Duration INLINE_VALIDATION_TIMEOUT = Duration.ofSeconds(2);
+
+	@FindBy(id = "create_partner_btn")
+	private WebElement createPartnerButton;
+
+	@FindBy(id = "page_title")
+	private WebElement createPrtnerPageTitle;
+
+	@FindBy(id = "sub_title_home_btn")
+	private WebElement homeButton;
+
+	@FindBy(id = "sub_title_btn")
+	private WebElement listOfPartnerButton;
+
+	@FindBy(id = "create_partner_mandatory_msg")
+	private WebElement createPartnerMandatoryMsg;
+
+	@FindBy(id = "create_partner_partner_type_dropdown_btn")
+	private WebElement partnerTypeDropdown;
+
+	@FindBy(id = "create_partner_address")
+	private WebElement partnerAddressTextbox;
+
+	@FindBy(id = "create_partner_organization_name")
+	private WebElement partnerOrganisationNameTextBox;
+
+	@FindBy(id = "create_partner_contact_number")
+	private WebElement partnerContactNumberTextBox;
+
+	@FindBy(id = "create_partner_email_id")
+	private WebElement partnerEmailIdTextBox;
+
+	@FindBy(id = "create_partner_partner_id")
+	private WebElement userNameTextBox;
+
+	@FindBy(id = "create_partner_lang_code_dropdown_btn")
+	private WebElement notificationDropdown;
+
+	@FindBy(id = "create_partner_lang_code_option1")
+	private WebElement notificationLanguageOption1;
+
+	@FindBy(id = "create_partner_organization_name_info_info_description")
+	private WebElement organizationNameInfo;
+
+	@FindBy(id = "policy_group_selector_dropdown_button")
+	private WebElement policyGroupDropdown;
+
+	@FindBy(id = "create_partner_form_submit_btn")
+	private WebElement createPartnerSubmitButton;
+
+	@FindBy(id = "create_partner_form_cancel_btn")
+	private WebElement createPartnerCancelButton;
+
+	@FindBy(id = "create_partner_form_clear_btn")
+	private WebElement createPartnerClearButton;
+
+	@FindBy(id = "create_partner_confirmation_header")
+	private WebElement createPartnerSuccessMsg;
+
+	@FindBy(id = "confirmation_custom_btn")
+	private WebElement uploadPartnerCertificateButton;
+
+	@FindBy(id = "confirmation_home_btn")
+	private WebElement createPartnerSuccessMsgHomeButton;
+
+	@FindBy(id = "create_partner_address_input_error")
+	private WebElement partnerAddressSpecialChNotAllowError;
+
+	@FindBy(id = "create_partner_organization_name_input_error")
+	private WebElement partnerOrgNameSpecialChNotAllowError;
+
+	@FindBy(id = "create_partner_contact_number_input_error")
+	private WebElement partnerContactNumberNotAllowError;
+
+	@FindBy(id = "create_partner_email_id_input_error")
+	private WebElement partnerEmailIdSpecialChNotAllowError;
+
+	@FindBy(id = "create_partner_partner_id_input_error")
+	private WebElement partnerUserNameNotAllowError;
+
+	@FindBy(xpath = "//input[@placeholder='Enter Partner Organization Name']")
+	private WebElement partnerOrganizationPlaceholder;
+
+	@FindBy(xpath = "//span[text()='Select Policy Group']")
+	private WebElement noPolicyGroup;
+
+	@FindBy(id = "undefined_title")
+	private WebElement listOfPartners;
+
+	@FindBy(id = "blocker_prompt_description")
+	private WebElement cancelConfirmationPopup;
+
+	@FindBy(id = "block_messsage_proceed")
+	private WebElement cancelConfirmationPopupProceedButton;
+
+	@FindBy(id = "block_message_cancel")
+	private WebElement cancelConfirmationPopupCancelButton;
+
+	@FindBy(id = "create_partner_error_msg")
+	private WebElement createPartnerErrorMessage;
+
+	@FindBy(id = "error_close_btn")
+	private WebElement errorMessageCloseButton;
+
+	@FindBy(id = "create_partner_email_id_cancel_btn")
+	private WebElement partnerEmailIdCancelBtn;
+
+	@FindBy(id = "create_partner_partner_type_option1")
+	private WebElement manualAdjudicationPartnerOption;
+
+	@FindBy(id = "create_partner_partner_type_option2")
+	private WebElement mispPartner;
+
+	@FindBy(id = "create_partner_partner_type_option3")
+	private WebElement abisPartnerOption;
+
+	@FindBy(id = "create_partner_partner_type_option4")
+	private WebElement onlineVerificationPartnerOption;
+
+	@FindBy(id = "create_partner_organization_name_info")
+	private WebElement oragnizationInfoButton;
+
+	@FindBy(xpath = "(//input[@id='policy_group_selector_search_input'])[1]")
+	private WebElement policyGroupDropdownSearchInput;
+
+	@FindBy(id = "partner_upload_certificate_btn")
+	private WebElement uploadOrReuploadCertificateButton;
+
+	@FindBy(id = "partner_select_policy_group_btn")
+	private WebElement selectPolicyGroupButton;
+
+	@FindBy(id = "select_policy_group_popup_title")
+	private WebElement policyGroupPopupTitle;
+
+	@FindBy(id = "select_policy_group_popup_subtitle")
+	private WebElement policyGroupPopupSubTitle;
+
+	@FindBy(id = "select_policy_group_popup_description")
+	private WebElement policyGroupPopupDescription;
+
+	@FindBy(id = "select_policyPopup_partner_type")
+	private WebElement policyGroupPopupPartnerType;
+
+	@FindBy(id = "policy_group_selector_dropdown_button")
+	private WebElement policyGroupPopupPolicyGroupDropdown;
+
+	@FindBy(id = "select_policy_group_view_text")
+	private WebElement viewMoreOption;
+
+	@FindBy(id = "policy_group_selector_search_input")
+	private WebElement policyGroupPopupSearchInput;
+
+	@FindBy(id = "policy_group_selector_option_name_1")
+	private WebElement policyGroupPopupPolicyGroupName;
+
+	@FindBy(id = "policy_group_selector_option_desc_1")
+	private WebElement policyGroupPopupPolicyGroupDescription;
+
+	@FindBy(id = "select_policy_group_cancel")
+	private WebElement policyGroupPopupCancelButton;
+
+	@FindBy(id = "select_policy_group_submit_btn")
+	private WebElement policyGroupPopupSubmitButton;
+
+	@FindBy(id = "partners_list_success_msg")
+	private WebElement policyGroupPopupSuccessMessage;
+
+	public ManualAdjudicationPartnerPage(WebDriver driver) {
+		super(driver);
+	}
+
+	public void clickOnCreatePartnerButton() {
+		clickOnElement(createPartnerButton);
+	}
+
+	public boolean isCreatePartnerButtonDisplayed() {
+		return isElementDisplayed(createPartnerButton);
+	}
+
+	public boolean isCreatePartnerButtonEnabled() {
+		return isElementEnabled(createPartnerButton);
+	}
+
+	public boolean isCreatePrtnerPageTitleDisplayed() {
+		return isElementDisplayed(createPrtnerPageTitle);
+	}
+
+	public String getCreatePartnerPageTitleText() {
+		return getTextFromLocator(createPrtnerPageTitle);
+	}
+
+	public String getBreadcrumbTextOfCreatePartnerPage() {
+		return getTextFromLocator(homeButton) + getTextFromLocator(listOfPartnerButton);
+	}
+
+	public boolean isHomeButtonDisplayed() {
+		return isElementDisplayed(homeButton);
+	}
+
+	public boolean isListOfPartnerButtonDisplayed() {
+		return isElementDisplayed(listOfPartnerButton);
+	}
+
+	public boolean isCreatePartnerMandatoryFieldInfoDisplayed() {
+		return isElementDisplayed(createPartnerMandatoryMsg);
+	}
+
+	public String getCreatePartnerMandatoryFieldInfoText() {
+		return getTextFromLocator(createPartnerMandatoryMsg);
+	}
+
+	public boolean isPartnerTypeDropdownDisplayed() {
+		return isElementDisplayed(partnerTypeDropdown);
+	}
+
+	public boolean isDefaultMispPartnerDisplayed() {
+		clickOnElement(partnerTypeDropdown);
+		return isElementDisplayed(mispPartner);
+	}
+
+	public boolean isAbisPartnerOptionDisplayed() {
+		return isElementDisplayed(abisPartnerOption);
+	}
+
+	public void clickOnAbisPartnerOption() {
+		clickOnElement(abisPartnerOption);
+	}
+
+	public boolean isMispPartnerOptionDisplayed() {
+		return isElementDisplayed(mispPartner);
+	}
+
+	public void clickOnMispPartnerOption() {
+		clickOnElement(mispPartner);
+	}
+
+	public boolean isDefaultManualAdjudicationPartnerDisplayed() {
+		String selected = getSelectedPartnerTypeText();
+		return selected != null && selected.toLowerCase().contains("manual adjudication");
+	}
+
+	public boolean isManualAdjudicationPartnerOptionDisplayed() {
+		return isElementDisplayed(manualAdjudicationPartnerOption);
+	}
+
+	public void clickOnManualAdjudicationPartnerOption() {
+		clickOnElement(manualAdjudicationPartnerOption);
+	}
+
+	public boolean isOnlineVerificationPartnerOptionDisplayed() {
+		return isElementDisplayed(onlineVerificationPartnerOption)
+				|| isElementDisplayedQuick(
+						By.xpath("//*[contains(@id,'create_partner_partner_type_option') and contains(normalize-space(),'Online Verification')]"),
+						INLINE_VALIDATION_TIMEOUT);
+	}
+
+	public void clickOnOnlineVerificationPartnerOption() {
+		if (isElementDisplayed(onlineVerificationPartnerOption)) {
+			clickOnElement(onlineVerificationPartnerOption);
+		} else {
+			By option = By.xpath(
+					"//*[contains(@id,'create_partner_partner_type_option') and contains(normalize-space(),'Online Verification')]");
+			click(option);
+		}
+	}
+
+	public String getSelectedPartnerTypeText() {
+		return getTextFromLocator(partnerTypeDropdown);
+	}
+
+	public String getOrganizationNameInfoText() {
+		return getTextFromLocator(organizationNameInfo);
+	}
+
+	public int getPartnerTypeDropdownOptionCount() {
+		List<WebElement> options = driver
+				.findElements(By.xpath("//button[contains(@id, 'create_partner_partner_type_option')]"));
+		return options.size();
+	}
+
+	public List<String> getPartnerTypeDropdownOptionTexts() {
+		List<WebElement> options = driver
+				.findElements(By.xpath("//button[contains(@id, 'create_partner_partner_type_option')]"));
+		List<String> texts = new ArrayList<>();
+		for (WebElement option : options) {
+			texts.add(option.getText().trim());
+		}
+		return texts;
+	}
+
+	public void clickOnPartnerTypeDropdown() {
+		clickOnElement(partnerTypeDropdown);
+	}
+
+	public boolean isOrganizationNameInfoDisplayed() {
+		return isElementDisplayed(organizationNameInfo);
+	}
+
+	public void selectPolicyGroupDropdown(String value) {
+		ensurePolicyGroupDropdownOpen();
+		clearTextBox(policyGroupDropdownSearchInput);
+		enter(policyGroupDropdownSearchInput, value);
+		By policyGroupOption = By.xpath("//span[normalize-space()='" + value + "']");
+		try {
+			waitScrollAndClick(policyGroupOption);
+		} catch (TimeoutException | NoSuchElementException e) {
+			logger.warn("Policy group not found: " + value);
+			throw new NoSuchElementException("Failed to select policy group: " + value, e);
+		}
+	}
+
+	public void enterInvalidPolicyGroup(String value) {
+		ensurePolicyGroupDropdownOpen();
+		clearTextBox(policyGroupDropdownSearchInput);
+		enter(policyGroupDropdownSearchInput, value);
+	}
+
+	private void ensurePolicyGroupDropdownOpen() {
+		if (!isElementDisplayedQuick(By.xpath("(//input[@id='policy_group_selector_search_input'])[1]"),
+				INLINE_VALIDATION_TIMEOUT)) {
+			clickOnElement(policyGroupDropdown);
+		}
+	}
+
+	public void selectPartnerType(String value) {
+		try {
+			dropdown(partnerTypeDropdown, value);
+		} catch (IOException e) {
+			logger.info(e.getMessage());
+		}
+	}
+
+	public void selectNotificationLanguage(String value) {
+		if (!isElementDisplayedQuick(By.id("create_partner_lang_code_option1"), INLINE_VALIDATION_TIMEOUT)) {
+			clickOnNotificationLanguageDropdown();
+		}
+		try {
+			if (getTextFromLocator(notificationLanguageOption1).trim().equalsIgnoreCase(value)) {
+				clickOnElement(notificationLanguageOption1);
+				return;
+			}
+			click(By.xpath("//button[contains(@id,'create_partner_lang_code_option')][normalize-space()='" + value + "']"));
+		} catch (RuntimeException e) {
+			logger.info(e.getMessage());
+			throw e;
+		}
+	}
+
+	public void enterPartnerAddress(String address) {
+		enter(partnerAddressTextbox, address);
+	}
+
+	public void enterPartnerOrganisation(String organisation) {
+		enter(partnerOrganisationNameTextBox, organisation);
+	}
+
+	public void enterPartnerContactNumber(String number) {
+		enter(partnerContactNumberTextBox, number);
+	}
+
+	public void enterEmailId(String emailid) {
+		enter(partnerEmailIdTextBox, emailid);
+	}
+
+	public void enterUserName(String username) {
+		enter(userNameTextBox, username);
+	}
+
+	public boolean isCreatePartnerSubmitButtonEnabled() {
+		return isElementEnabled(createPartnerSubmitButton);
+	}
+
+	public boolean isCreatePartnerSuccessMsgDisplayed() {
+		return isElementDisplayed(createPartnerSuccessMsg);
+	}
+
+	public boolean isUploadPartnerCertificateButtonDisplayed() {
+		return isElementDisplayed(uploadPartnerCertificateButton);
+	}
+
+	public void clickOnUploadPartnerCertificateButton() {
+		clickOnElement(uploadPartnerCertificateButton);
+	}
+
+	public boolean isPartnerAddressSpecialChNotAllowErrorDisplayed() {
+		return isElementDisplayedQuick(By.id("create_partner_address_input_error"), INLINE_VALIDATION_TIMEOUT);
+	}
+
+	public boolean isPartnerOrgNameSpecialChNotAllowErrorDisplayed() {
+		return isElementDisplayedQuick(By.id("create_partner_organization_name_input_error"),
+				INLINE_VALIDATION_TIMEOUT);
+	}
+
+	public boolean isPartnerContactSpecialChNotAllowErrorDisplayed() {
+		return isElementDisplayedQuick(By.id("create_partner_contact_number_input_error"), INLINE_VALIDATION_TIMEOUT);
+	}
+
+	public boolean isPartnerEmailIdSpecialChNotAllowErrorDisplayed() {
+		return isElementDisplayedQuick(By.id("create_partner_email_id_input_error"), INLINE_VALIDATION_TIMEOUT);
+	}
+
+	public boolean isPartnerUserNameSpecialChNotAllowErrorDisplayed() {
+		return isElementDisplayedQuick(By.id("create_partner_partner_id_input_error"), INLINE_VALIDATION_TIMEOUT);
+	}
+
+	public boolean isCreatePartnerSubmitButtonDisabled() {
+		return isElementDisabled(createPartnerSubmitButton);
+	}
+
+	public boolean isCreatePartnerSuccessMsgHomeButtonDisplayed() {
+		return isElementDisplayed(createPartnerSuccessMsgHomeButton);
+	}
+
+	public boolean isPartnerOrganizationPlaceholderDisplayed() {
+		return isElementDisplayed(partnerOrganizationPlaceholder);
+	}
+
+	public boolean isNoPolicyGroupDisplayed() {
+		return isElementDisplayed(noPolicyGroup);
+	}
+
+	public void clickOnCreatePartnerClearButton() {
+		clickOnElement(createPartnerClearButton);
+	}
+
+	public void clickOnCreatePartnerCancelButton() {
+		clickOnElement(createPartnerCancelButton);
+	}
+
+	public boolean isListOfPartnersDisplayed() {
+		return isElementDisplayed(listOfPartners);
+	}
+
+	public boolean isCancelConfirmationPopupDisplayed() {
+		return isElementDisplayed(cancelConfirmationPopup);
+	}
+
+	public boolean iscancelConfirmationPopupProceedButtonDisplayed() {
+		return isElementDisplayed(cancelConfirmationPopupProceedButton);
+	}
+
+	public boolean isCancelConfirmationPopupCancelButtonDisplayed() {
+		return isElementDisplayed(cancelConfirmationPopupCancelButton);
+	}
+
+	public void clickOnCancelConfirmationPopupProceedButton() {
+		clickOnElement(cancelConfirmationPopupProceedButton);
+	}
+
+	public void clickOnCreatePartnerSubmitButton() {
+		clickOnElement(createPartnerSubmitButton);
+	}
+
+	public void clickOnSuccessMsgHomeButton() {
+		clickOnElement(createPartnerSuccessMsgHomeButton);
+	}
+
+	public boolean isPartnerContactNumberNotAllowErrorDisplayed() {
+		return isElementDisplayedQuick(By.id("create_partner_contact_number_input_error"), INLINE_VALIDATION_TIMEOUT);
+	}
+
+	public void clickOnPartnerEmailIdTextBox() {
+		clickOnElement(partnerEmailIdTextBox);
+	}
+
+	public boolean isUsernameMustStartWithLetterErrorDisplayed() {
+		return isElementDisplayedQuick(By.id("create_partner_partner_id_input_error"), INLINE_VALIDATION_TIMEOUT);
+	}
+
+	public boolean isEmailAddressIsAlreadyRegisteredErrorDisplayed() {
+		return isElementDisplayed(createPartnerErrorMessage);
+	}
+
+	public void clickOnErrorMessageCloseButton() {
+		clickOnElement(errorMessageCloseButton);
+	}
+
+	public void clickOnPartnerEmailIdCancelBtn() {
+		clickOnElement(partnerEmailIdCancelBtn);
+	}
+
+	public boolean isUsernameAlreadyExistErrorDisplayed() {
+		return isElementDisplayed(createPartnerErrorMessage);
+	}
+
+	public void clickOnPartnerOragnizationInfoButton() {
+		clickOnElement(oragnizationInfoButton);
+	}
+
+	public void clickOnUserNameTextBox() {
+		clickOnElement(userNameTextBox);
+	}
+
+	public String getCancelConfirmationPopupText() {
+		return getTextFromLocator(cancelConfirmationPopup);
+	}
+
+	public String getPartnerOrganisationFieldValue() {
+		return getTextFromAttribute(partnerOrganisationNameTextBox, "value");
+	}
+
+	public String getFirstPartnerIdText() {
+		return waitAndFindElement(By.xpath("//tr[@id='partner_list_item1']/td[1]")).getText().trim();
+	}
+
+	public boolean isPartnerInList(String partnerId) {
+		return isDisplayed(By.xpath("//tr[./td[normalize-space()='" + partnerId + "']]"));
+	}
+
+	public String getCertUploadStatusForPartner(String partnerId) {
+		WebElement row = waitAndFindElement(By.xpath("//tr[./td[normalize-space()='" + partnerId + "']]"));
+		return row.findElement(By.xpath("./td[6]")).getText().trim();
+	}
+
+	public String getPartnerStatusForPartner(String partnerId) {
+		WebElement row = waitAndFindElement(By.xpath("//tr[./td[normalize-space()='" + partnerId + "']]"));
+		return row.findElement(By.xpath("./td[7]")).getText().trim();
+	}
+
+	public String getEmailAlreadyRegisteredErrorText() {
+		return getTextFromLocator(createPartnerErrorMessage);
+	}
+
+	public String getUsernameAlreadyExistErrorText() {
+		return getTextFromLocator(createPartnerErrorMessage);
+	}
+
+	public String getOrganizationNamePlaceholderText() {
+		return getTextFromAttribute(partnerOrganisationNameTextBox, "placeholder");
+	}
+
+	public String getPartnerAddressFieldValue() {
+		return getTextFromAttribute(partnerAddressTextbox, "value");
+	}
+
+	public String getPartnerAddressPlaceholderText() {
+		return getTextFromAttribute(partnerAddressTextbox, "placeholder");
+	}
+
+	public void clickOnPartnerAddressTextBox() {
+		clickOnElement(partnerAddressTextbox);
+	}
+
+	public String getEmailPlaceholderText() {
+		return getTextFromAttribute(partnerEmailIdTextBox, "placeholder");
+	}
+
+	public String getEmailFieldValue() {
+		return getTextFromAttribute(partnerEmailIdTextBox, "value");
+	}
+
+	public String getEmailValidationErrorText() {
+		return getTextFromLocator(partnerEmailIdSpecialChNotAllowError);
+	}
+
+	public String getContactNumberPlaceholderText() {
+		return getTextFromAttribute(partnerContactNumberTextBox, "placeholder");
+	}
+
+	public String getContactNumberFieldValue() {
+		return getTextFromAttribute(partnerContactNumberTextBox, "value");
+	}
+
+	public String getContactNumberValidationErrorText() {
+		return getTextFromLocator(partnerContactNumberNotAllowError);
+	}
+
+	public String getUserNameFieldValue() {
+		return getTextFromAttribute(userNameTextBox, "value");
+	}
+
+	public String getUserNamePlaceholderText() {
+		return getTextFromAttribute(userNameTextBox, "placeholder");
+	}
+
+	public String getUserNameValidationErrorText() {
+		return getTextFromLocator(partnerUserNameNotAllowError);
+	}
+
+	public boolean isNotificationLanguageDropdownDisplayed() {
+		return isElementDisplayed(notificationDropdown);
+	}
+
+	public void clickOnNotificationLanguageDropdown() {
+		clickOnElement(notificationDropdown);
+	}
+
+	public boolean isNotificationLanguageOptionVisible(String language) {
+		if (isElementDisplayedQuick(By.id("create_partner_lang_code_option1"), INLINE_VALIDATION_TIMEOUT)) {
+			return getTextFromLocator(notificationLanguageOption1).trim().equalsIgnoreCase(language);
+		}
+		return false;
+	}
+
+	public String getSelectedNotificationLanguageText() {
+		return getTextFromLocator(notificationDropdown);
+	}
+
+	public void openPolicyGroupDropdown() {
+		ensurePolicyGroupDropdownOpen();
+	}
+
+	public boolean isPolicyGroupSearchBarDisplayed() {
+		return isElementDisplayedQuick(By.xpath("(//input[@id='policy_group_selector_search_input'])[1]"),
+				INLINE_VALIDATION_TIMEOUT);
+	}
+
+	public boolean isPolicyGroupOptionVisible(String value) {
+		return isElementDisplayedQuick(
+				By.xpath("//div[contains(@id,'policy_group_selector_option')]//span[normalize-space()='" + value + "']"),
+				INLINE_VALIDATION_TIMEOUT);
+	}
+
+	public void clickUploadCertActionForPartner(String partnerId) {
+		By directButton = By.xpath("//tr[./td[normalize-space()='" + partnerId + "']]//p[contains(@id,'upload_cert')]");
+		if (isDisplayed(directButton)) {
+			click(directButton);
+		} else {
+			click(By.xpath(
+					"//tr[./td[normalize-space()='" + partnerId + "']]//p[contains(text(),'Upload Certificate')]"));
+		}
+	}
+
+	public void clickOnListOfPartnerButton() {
+		clickOnElement(listOfPartnerButton);
+	}
+
+	public boolean isManualAdjudicationPartnerRowStatusDisplayed(String partnerId, String certStatus, String status) {
+		By rowLocator = By.xpath("//td[normalize-space()='" + partnerId + "']/parent::tr" + "[.//td[normalize-space()='"
+				+ certStatus + "']" + " and .//td[normalize-space()='" + status + "']]");
+		return isDisplayed(rowLocator);
+	}
+
+	public void clickActionButtonByPartnerId(String partnerId) {
+		By actionBtn = By.xpath("//td[normalize-space()='" + partnerId + "']" + "/parent::tr//td//button");
+		click(actionBtn);
+	}
+
+	public void clickOnUploadOrReuploadCertificateButton() {
+		clickOnElement(uploadOrReuploadCertificateButton);
+	}
+
+	public boolean isSelectPolicyGroupButtonEnabled() {
+		return isElementEnabled(selectPolicyGroupButton);
+	}
+
+	public boolean isPolicyGroupPopupTitleDisplayed() {
+		return isElementDisplayed(policyGroupPopupTitle);
+	}
+
+	public boolean isPolicyGroupPopupSubTitleDisplayed() {
+		return isElementDisplayed(policyGroupPopupSubTitle);
+	}
+
+	public boolean isPolicyGroupPopupDescriptionDisplayed() {
+		return isElementDisplayed(policyGroupPopupDescription);
+	}
+
+	public boolean isPolicyGroupPopupPartnerTypeDisplayed() {
+		return isElementDisplayed(policyGroupPopupPartnerType);
+	}
+
+	public boolean isPolicyGroupPopupPolicyGroupDropdownDisplayed() {
+		return isElementDisplayed(policyGroupPopupPolicyGroupDropdown);
+	}
+
+	public boolean isPolicyGroupPopupSearchInputDisplayed() {
+		return isElementDisplayed(policyGroupPopupSearchInput);
+	}
+
+	public boolean isPolicyGroupPopupPolicyGroupNameDisplayed() {
+		return isElementDisplayed(policyGroupPopupPolicyGroupName);
+	}
+
+	public boolean isPolicyGroupPopupPolicyGroupDescriptionDisplayed() {
+		return isElementDisplayed(policyGroupPopupPolicyGroupDescription);
+	}
+
+	public boolean isPolicyGroupPopupSubmitButtonDisabled() {
+		return isElementDisabled(policyGroupPopupSubmitButton);
+	}
+
+	public boolean isPolicyGroupPopupSubmitButtonEnabled() {
+		return isElementEnabled(policyGroupPopupSubmitButton);
+	}
+
+	public void clickOnPolicyGroupPopupPolicyGroupDropdown() {
+		clickOnElement(policyGroupPopupPolicyGroupDropdown);
+	}
+
+	public void enterPolicyGroup(String value) {
+		enter(policyGroupPopupSearchInput, value);
+	}
+
+	public void selectPolicyGroup(String value) {
+		clickOnElement(policyGroupDropdown);
+		enter(policyGroupPopupSearchInput, value);
+		By policyGroupOption = By.xpath("//span[normalize-space()='" + value + "']");
+		click(policyGroupOption);
+	}
+
+	public void clickOnPolicyGroupPopupCancelButton() {
+		clickOnElement(policyGroupPopupCancelButton);
+	}
+
+	public void clickOnSelectPolicyGroupButton() {
+		clickOnElement(selectPolicyGroupButton);
+	}
+
+	public boolean isPolicyGroupPopupSuccessMessageDisplayed() {
+		return isElementDisplayed(policyGroupPopupSuccessMessage);
+	}
+
+	public void clickOnPolicyGroupPopupSubmitButton() {
+		clickOnElement(policyGroupPopupSubmitButton);
+	}
+
+	public String getPolicyGroupText(String partnerId) {
+		By policyGroup = By.xpath("//tr[td[normalize-space()='" + partnerId + "']]/td[4]");
+		return getTextFromLocator(policyGroup);
+	}
+
+	public void clickOnViewButton() {
+		click(By.id("partner_details_view_btn"));
+	}
+
+	public boolean isViewPartnerDetailsPageDisplayed() {
+		return isElementDisplayedQuick(By.xpath("//h1[normalize-space()='View Partner Details']"),
+				Duration.ofSeconds(10))
+				|| isElementDisplayedQuick(By.id("view_partner_details_partner_id"), Duration.ofSeconds(5));
+	}
+
+	public boolean isViewPartnerIdDisplayed() {
+		return isElementDisplayedQuick(By.id("view_partner_details_partner_id"), Duration.ofSeconds(5));
+	}
+
+	public String getViewPartnerIdText() {
+		String text = getTextFromLocator(By.id("view_partner_details_partner_id")).trim();
+		String prefix = "Partner ID:";
+		if (text.regionMatches(true, 0, prefix, 0, prefix.length())) {
+			return text.substring(prefix.length()).trim();
+		}
+		return text;
+	}
+
+	public boolean isViewPartnerStatusDisplayed() {
+		return isElementDisplayedQuick(By.id("view_partner_details_partner_status"), Duration.ofSeconds(5));
+	}
+
+	public boolean isViewPartnerCreatedOnDisplayed() {
+		return isElementDisplayedQuick(By.id("view_partner_details_partner_created_on"), Duration.ofSeconds(5));
+	}
+
+	public boolean isViewPartnerTypeDisplayed() {
+		return isElementDisplayedQuick(By.id("view_partner_type_context"), Duration.ofSeconds(5));
+	}
+
+	public String getViewPartnerTypeText() {
+		return getTextFromLocator(By.id("view_partner_type_context"));
+	}
+
+	public boolean isViewOrganisationNameDisplayed() {
+		return isElementDisplayedQuick(By.id("view_partner_details_org_name_label"), Duration.ofSeconds(5))
+				|| isElementDisplayedQuick(By.id("view_partner_details_org_name_context"), Duration.ofSeconds(3));
+	}
+
+	public boolean isViewPartnerCertificateSectionDisplayed() {
+		return isElementDisplayedQuick(By.id("view_partner_details_partner_certificate_title"), Duration.ofSeconds(5));
+	}
+
+	public boolean isViewPageReadOnly() {
+		int editable = driver.findElements(By.cssSelector(
+				"input:not([type='hidden']):not([disabled]), textarea:not([disabled]), select:not([disabled])"))
+				.size();
+		return editable == 0 && isViewPartnerDetailsPageDisplayed();
+	}
+
+	public boolean isViewTitleBackIconDisplayed() {
+		return isElementDisplayedQuick(By.id("title_back_icon"), Duration.ofSeconds(5));
+	}
+
+	public void clickOnViewTitleBackIcon() {
+		click(By.id("title_back_icon"));
+	}
+
+	public boolean isViewGoBackButtonDisplayed() {
+		return isElementDisplayedQuick(By.id("view_partner_details_back_btn"), Duration.ofSeconds(5))
+				|| isElementDisplayedQuick(By.id("subtitle_back_icon"), Duration.ofSeconds(3))
+				|| isElementDisplayedQuick(By.id("title_back_icon"), Duration.ofSeconds(3));
+	}
+
+	public void clickOnViewGoBackButton() {
+		if (isElementDisplayedQuick(By.id("view_partner_details_back_btn"), Duration.ofSeconds(3))) {
+			click(By.id("view_partner_details_back_btn"));
+		} else if (isElementDisplayedQuick(By.id("subtitle_back_icon"), Duration.ofSeconds(2))) {
+			click(By.id("subtitle_back_icon"));
+		} else {
+			click(By.id("title_back_icon"));
+		}
+	}
+}
