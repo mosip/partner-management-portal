@@ -132,6 +132,9 @@ public class ManualAdjudicationPartnerPage extends BasePage {
 	@FindBy(id = "create_partner_partner_type_option3")
 	private WebElement abisPartnerOption;
 
+	@FindBy(id = "create_partner_partner_type_option4")
+	private WebElement onlineVerificationPartnerOption;
+
 	@FindBy(id = "create_partner_organization_name_info")
 	private WebElement oragnizationInfoButton;
 
@@ -260,6 +263,23 @@ public class ManualAdjudicationPartnerPage extends BasePage {
 
 	public void clickOnManualAdjudicationPartnerOption() {
 		clickOnElement(manualAdjudicationPartnerOption);
+	}
+
+	public boolean isOnlineVerificationPartnerOptionDisplayed() {
+		return isElementDisplayed(onlineVerificationPartnerOption)
+				|| isElementDisplayedQuick(
+						By.xpath("//*[contains(@id,'create_partner_partner_type_option') and contains(normalize-space(),'Online Verification')]"),
+						INLINE_VALIDATION_TIMEOUT);
+	}
+
+	public void clickOnOnlineVerificationPartnerOption() {
+		if (isElementDisplayed(onlineVerificationPartnerOption)) {
+			clickOnElement(onlineVerificationPartnerOption);
+		} else {
+			By option = By.xpath(
+					"//*[contains(@id,'create_partner_partner_type_option') and contains(normalize-space(),'Online Verification')]");
+			click(option);
+		}
 	}
 
 	public String getSelectedPartnerTypeText() {
