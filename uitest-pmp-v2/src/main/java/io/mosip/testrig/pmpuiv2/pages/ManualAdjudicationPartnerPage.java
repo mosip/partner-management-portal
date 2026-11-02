@@ -268,7 +268,7 @@ public class ManualAdjudicationPartnerPage extends BasePage {
 	public boolean isOnlineVerificationPartnerOptionDisplayed() {
 		return isElementDisplayed(onlineVerificationPartnerOption)
 				|| isElementDisplayedQuick(
-						By.xpath("//*[contains(@id,'create_partner_partner_type_option') and contains(normalize-space(),'Online Verification')]"),
+						By.xpath("//button[contains(@id,'create_partner_partner_type_option') and contains(normalize-space(),'Online Verification')]"),
 						INLINE_VALIDATION_TIMEOUT);
 	}
 
@@ -277,7 +277,7 @@ public class ManualAdjudicationPartnerPage extends BasePage {
 			clickOnElement(onlineVerificationPartnerOption);
 		} else {
 			By option = By.xpath(
-					"//*[contains(@id,'create_partner_partner_type_option') and contains(normalize-space(),'Online Verification')]");
+					"//button[contains(@id,'create_partner_partner_type_option') and contains(normalize-space(),'Online Verification')]");
 			click(option);
 		}
 	}
