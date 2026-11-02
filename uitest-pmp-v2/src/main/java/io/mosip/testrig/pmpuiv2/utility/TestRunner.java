@@ -380,10 +380,6 @@ public class TestRunner {
 				"PMPUI-" + BaseTestCaseFunc.environment + "-run-" + BaseClass.Date() + langSuffix + "-report.html");
 
 		runner.run();
-
-		// DB cleanup
-		DBManager.cleanUpPartnerUiV2Data();
-		System.exit(0);
 	}
 
 	private static void addClassIfAbsent(List<XmlClass> classes, XmlClass... xmlClasses) {

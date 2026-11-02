@@ -43,5 +43,15 @@ public class LocaleTextAra {
 	public static final String API_KEY_ACTION_VIEW_OPTION_TEXT = "منظر";
 	public static final String API_KEY_ACTION_EDIT_EXPIRY_OPTION_TEXT = "تعديل تاريخ انتهاء الصلاحية";
 	public static final String API_KEY_ACTION_DEACTIVATE_OPTION_TEXT = "إلغاء التنشيط";
+	public static final String BIO_CREATE_CONFIGURATION_TEXT = "إنشاء التكوين";
+	public static final String BIO_CREATE_SUCCESS_TEXT = "تمت إضافة تكوين مزود مستخرج القياسات الحيوية بنجاح";
+	public static final String BIO_VIEW_TITLE_TEXT = "مستخرج القياسات الحيوية";
+	public static final String BIO_STATUS_ACTIVE_TEXT = "نشط";
+	public static final String BIO_STATUS_DEACTIVATED_TEXT = "معطل";
+	public static final String BIO_STATUS_INACTIVE_TEXT = "غير نشط";
+	public static final String BIO_COMMENT_LABEL_TEXT = "تعليق";
+	public static final String BIO_SELECT_PROMPT_TEXT = "اختر";
+	public static final String BIO_EMPTY_LIST_TEXT = "لا تتوافر بيانات";
+	public static final String MAP_BIO_TITLE_TEXT = "القياسات الحيوية";
 
 }

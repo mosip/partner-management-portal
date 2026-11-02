@@ -1550,6 +1550,8 @@ public class GlobalConstants {
 	public static final String MA_ADDRESS = "maaddress";
 	public static final String MA_CONTACT_NUMBER = "9898989898";
 	public static final String MA_NOTIFICATION_LANGUAGE = "English";
+	public static final String FRENCH_NOTIFICATION_LANGUAGE = "Français";
+	public static final String ARABIC_NOTIFICATION_LANGUAGE = "العربية";
 	public static final String MA_POLICY_01 = "mapolicy01";
 	public static final String MA_POLICY_01_DESCRIPTION = "ma policy 01";
 	public static final String MA_POLICY_03 = "mapolicy03";
@@ -1728,6 +1730,10 @@ public class GlobalConstants {
 
 	public static final String isNotificationLanguageDropdownHasOptions = "Verify that the Notification Language dropdown contains at least one selectable language option.";
 	public static final String isNotificationLanguageSelectable = "Verify that the user can successfully select a notification language from the Notification Language dropdown.";
+	public static final String isFrenchNotificationLanguageDisplayed = "Verify that French is displayed in the Notification Language dropdown.";
+	public static final String isArabicNotificationLanguageDisplayed = "Verify that Arabic is displayed in the Notification Language dropdown.";
+	public static final String isFrenchNotificationLanguageSelectable = "Verify that French can be selected in the Notification Language dropdown.";
+	public static final String isArabicNotificationLanguageSelectable = "Verify that Arabic can be selected in the Notification Language dropdown.";
 	public static final String isPartnersPageNavigableViaDashboard = "Verify that clicking the Partners card on the dashboard navigates to the Partners list page.";
 	public static final String isDuplicateRegistrationBlockedAcrossBrowsers = "Verify that attempting simultaneous partner registration with the same identifier from multiple browsers is properly handled.";
 	public static final String isArabicLocalizationSupported = "Verify that the Create Partner form is displayed correctly when the application locale is set to Arabic.";

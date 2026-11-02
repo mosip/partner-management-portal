@@ -95,6 +95,21 @@ public class MapBiometricExtractorProviderTest extends BaseClass {
 		partnerPage.clickOnPartnerTypeDropdown();
 		partnerPage.clickOnOnlineVerificationPartnerOption();
 		partnerPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULT_POLICYGROUP);
+		assertTrue(partnerPage.isNotificationLanguageDropdownDisplayed(),
+				GlobalConstants.isNotificationLanguageDropdownDisplayed);
+		partnerPage.clickOnNotificationLanguageDropdown();
+		assertTrue(partnerPage.isNotificationLanguageOptionVisible(GlobalConstants.FRENCH_NOTIFICATION_LANGUAGE),
+				GlobalConstants.isFrenchNotificationLanguageDisplayed);
+		assertTrue(partnerPage.isNotificationLanguageOptionVisible(GlobalConstants.ARABIC_NOTIFICATION_LANGUAGE),
+				GlobalConstants.isArabicNotificationLanguageDisplayed);
+		partnerPage.selectNotificationLanguage(GlobalConstants.FRENCH_NOTIFICATION_LANGUAGE);
+		assertTrue(partnerPage.getSelectedNotificationLanguageText()
+				.contains(GlobalConstants.FRENCH_NOTIFICATION_LANGUAGE),
+				GlobalConstants.isFrenchNotificationLanguageSelectable);
+		partnerPage.selectNotificationLanguage(GlobalConstants.ARABIC_NOTIFICATION_LANGUAGE);
+		assertTrue(partnerPage.getSelectedNotificationLanguageText()
+				.contains(GlobalConstants.ARABIC_NOTIFICATION_LANGUAGE),
+				GlobalConstants.isArabicNotificationLanguageSelectable);
 		partnerPage.selectNotificationLanguage(GlobalConstants.ABIS_NOTIFICATION_LANGUAGE);
 		partnerPage.enterPartnerOrganisation(GlobalConstants.ORGANISATION_NAME);
 		partnerPage.enterPartnerAddress(GlobalConstants.ABIS_ADDRESS);
@@ -150,7 +165,7 @@ public class MapBiometricExtractorProviderTest extends BaseClass {
 
 		assertTrue(mapBioPage.isMapBiometricExtractorProviderPageDisplayed(),
 				GlobalConstants.isMapBiometricExtractorProviderPageDisplayed);
-		assertTrue(mapBioPage.getPageTitleText().toLowerCase().contains("biometric"),
+		assertTrue(mapBioPage.containsTitle(mapBioPage.getPageTitleText()),
 				GlobalConstants.isMapBiometricExtractorProviderPageTitleDisplayed);
 		assertTrue(mapBioPage.isMandatoryMappingBannerDisplayed(),
 				GlobalConstants.isMapBiometricMandatoryBannerDisplayed);

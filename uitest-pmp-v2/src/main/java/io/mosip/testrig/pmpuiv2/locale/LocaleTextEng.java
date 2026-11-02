@@ -43,5 +43,15 @@ public class LocaleTextEng {
 	public static final String API_KEY_ACTION_VIEW_OPTION_TEXT = "View";
 	public static final String API_KEY_ACTION_EDIT_EXPIRY_OPTION_TEXT = "Edit Expiry Date";
 	public static final String API_KEY_ACTION_DEACTIVATE_OPTION_TEXT = "Deactivate";
+	public static final String BIO_CREATE_CONFIGURATION_TEXT = "Create Configuration";
+	public static final String BIO_CREATE_SUCCESS_TEXT = "Biometric Extractor Provider Configuration is added successfully";
+	public static final String BIO_VIEW_TITLE_TEXT = "View Biometric Extractor";
+	public static final String BIO_STATUS_ACTIVE_TEXT = "Active";
+	public static final String BIO_STATUS_DEACTIVATED_TEXT = "Deactivated";
+	public static final String BIO_STATUS_INACTIVE_TEXT = "Inactive";
+	public static final String BIO_COMMENT_LABEL_TEXT = "Comment";
+	public static final String BIO_SELECT_PROMPT_TEXT = "select";
+	public static final String BIO_EMPTY_LIST_TEXT = "No Data Available";
+	public static final String MAP_BIO_TITLE_TEXT = "biometric";
 
 }

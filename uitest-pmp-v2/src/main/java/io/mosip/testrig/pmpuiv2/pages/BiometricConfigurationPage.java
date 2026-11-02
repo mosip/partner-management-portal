@@ -9,7 +9,23 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import io.mosip.testrig.pmpuiv2.kernel.util.ConfigManager;
+
 public class BiometricConfigurationPage extends BasePage {
+
+	public static String BIO_CREATE_CONFIGURATION_TEXT = "Create Configuration";
+	public static String BIO_CREATE_SUCCESS_TEXT = "Biometric Extractor Provider Configuration is added successfully";
+	public static String BIO_VIEW_TITLE_TEXT = "View Biometric Extractor";
+	public static String BIO_STATUS_ACTIVE_TEXT = "Active";
+	public static String BIO_STATUS_DEACTIVATED_TEXT = "Deactivated";
+	public static String BIO_STATUS_INACTIVE_TEXT = "Inactive";
+	public static String BIO_COMMENT_LABEL_TEXT = "Comment";
+	public static String BIO_SELECT_PROMPT_TEXT = "select";
+	public static String BIO_EMPTY_LIST_TEXT = "No Data Available";
+
+	public static void init(String loginLanguage) {
+		copyLocaleFields(BiometricConfigurationPage.class, loginLanguage);
+	}
 
 	private static final Logger logger = Logger.getLogger(BiometricConfigurationPage.class);
 
@@ -159,6 +175,7 @@ public class BiometricConfigurationPage extends BasePage {
 
 	public BiometricConfigurationPage(WebDriver driver) {
 		super(driver);
+		init(ConfigManager.getloginlang());
 	}
 
 	public boolean isBiometricConfigurationDashboardCardDisplayed() {
@@ -191,7 +208,7 @@ public class BiometricConfigurationPage extends BasePage {
 			createBtn = createBtnCenter;
 		} else {
 			createBtn = driver.findElement(By.xpath(
-					"//button[contains(normalize-space(),'Create Configuration') or contains(normalize-space(),'Create')]"));
+					"//button[contains(normalize-space(),'" + BIO_CREATE_CONFIGURATION_TEXT + "')]"));
 		}
 		((JavascriptExecutor) driver).executeScript("arguments[0].click();", createBtn);
 		isElementDisplayedQuick(By.id("config_name_input"), Duration.ofSeconds(20));
@@ -244,7 +261,7 @@ public class BiometricConfigurationPage extends BasePage {
 			return;
 		}
 		String current = attributeNameDropdown.getText() == null ? "" : attributeNameDropdown.getText().trim();
-		if (!current.isEmpty() && !current.toLowerCase().contains("select")) {
+		if (!current.isEmpty() && !containsText(current, BIO_SELECT_PROMPT_TEXT)) {
 			return;
 		}
 		clickOnElement(attributeNameDropdown);
@@ -274,7 +291,7 @@ public class BiometricConfigurationPage extends BasePage {
 	public boolean isBiometricConfigurationCreatedSuccessfully() {
 		return isElementDisplayedQuick(By.id("create_bio_extractor_config_confirmation_header"), Duration.ofSeconds(15))
 				|| isDisplayed(By.xpath(
-						"//h1[contains(normalize-space(),'Biometric Extractor Provider Configuration is added successfully')]"));
+						"//h1[contains(normalize-space(),'" + BIO_CREATE_SUCCESS_TEXT + "')]"));
 	}
 
 	public void clickOnSuccessGoBackButton() {
@@ -366,7 +383,7 @@ public class BiometricConfigurationPage extends BasePage {
 	public boolean isEmptyFilterResultDisplayed() {
 		boolean noRows = !isElementDisplayedQuick(By.id("bio_extractor_config_list_item_1"), Duration.ofSeconds(3));
 		boolean emptyMsg = isDisplayed(By.xpath(
-				"//p[contains(normalize-space(),'No Data Available') or contains(normalize-space(),'No Items Found') or contains(normalize-space(),'There are no') or contains(normalize-space(),'no matching')]"));
+				"//p[contains(normalize-space(),'" + BIO_EMPTY_LIST_TEXT + "')]"));
 		return noRows || emptyMsg;
 	}
 
@@ -491,10 +508,10 @@ public class BiometricConfigurationPage extends BasePage {
 
 	public boolean isViewPageTitleDisplayed() {
 		if (!isElementDisplayedQuick(By.id("page_title"), Duration.ofSeconds(8))) {
-			return isDisplayed(By.xpath("//h1[contains(normalize-space(),'View Biometric Extractor')]"));
+			return isDisplayed(By.xpath("//h1[contains(normalize-space(),'" + BIO_VIEW_TITLE_TEXT + "')]"));
 		}
 		String title = pageTitle.getText();
-		return title != null && title.toLowerCase().contains("view biometric extractor");
+		return containsText(title, BIO_VIEW_TITLE_TEXT);
 	}
 
 	public boolean isViewConfigurationNameDisplayed() {
@@ -519,7 +536,8 @@ public class BiometricConfigurationPage extends BasePage {
 
 	public boolean isViewStatusDisplayed() {
 		return isElementDisplayed(viewStatus) || isElementDisplayedQuick(
-				By.xpath("//span[normalize-space()='Active' or normalize-space()='Deactivated' or normalize-space()='Inactive']"),
+				By.xpath("//span[normalize-space()='" + BIO_STATUS_ACTIVE_TEXT + "' or normalize-space()='"
+						+ BIO_STATUS_DEACTIVATED_TEXT + "' or normalize-space()='" + BIO_STATUS_INACTIVE_TEXT + "']"),
 				Duration.ofSeconds(2));
 	}
 
@@ -536,7 +554,8 @@ public class BiometricConfigurationPage extends BasePage {
 
 	public boolean isViewCommentDisplayed() {
 		return isElementDisplayed(viewComment) || isElementDisplayedQuick(
-				By.xpath("//p[contains(normalize-space(),'Comment')]/following::p[1]"), Duration.ofSeconds(2));
+				By.xpath("//p[contains(normalize-space(),'" + BIO_COMMENT_LABEL_TEXT + "')]/following::p[1]"),
+				Duration.ofSeconds(2));
 	}
 
 	public boolean isViewPageReadOnly() {
@@ -609,6 +628,13 @@ public class BiometricConfigurationPage extends BasePage {
 				By.xpath("//tr[contains(@id,'bio_extractor_config_list_item_')]//td[contains(normalize-space(),'"
 						+ configName + "')]"),
 				Duration.ofSeconds(5));
+	}
+
+	private static boolean containsText(String actual, String expected) {
+		if (actual == null || expected == null) {
+			return false;
+		}
+		return actual.toLowerCase().contains(expected.toLowerCase());
 	}
 
 	private void jsClickElement(WebElement element) {

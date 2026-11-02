@@ -43,5 +43,15 @@ public class LocaleTextFra {
 	public static final String API_KEY_ACTION_VIEW_OPTION_TEXT = "Voir";
 	public static final String API_KEY_ACTION_EDIT_EXPIRY_OPTION_TEXT = "Modifier la date d'expiration";
 	public static final String API_KEY_ACTION_DEACTIVATE_OPTION_TEXT = "Désactiver";
+	public static final String BIO_CREATE_CONFIGURATION_TEXT = "Créer la configuration";
+	public static final String BIO_CREATE_SUCCESS_TEXT = "ajoutée avec succès";
+	public static final String BIO_VIEW_TITLE_TEXT = "extracteur biométrique";
+	public static final String BIO_STATUS_ACTIVE_TEXT = "Actif";
+	public static final String BIO_STATUS_DEACTIVATED_TEXT = "Désactivé";
+	public static final String BIO_STATUS_INACTIVE_TEXT = "Inactif";
+	public static final String BIO_COMMENT_LABEL_TEXT = "Commentaire";
+	public static final String BIO_SELECT_PROMPT_TEXT = "sélection";
+	public static final String BIO_EMPTY_LIST_TEXT = "Pas de données disponibles";
+	public static final String MAP_BIO_TITLE_TEXT = "biométr";
 
 }

@@ -604,10 +604,9 @@ public class ManualAdjudicationPartnerPage extends BasePage {
 	}
 
 	public boolean isNotificationLanguageOptionVisible(String language) {
-		if (isElementDisplayedQuick(By.id("create_partner_lang_code_option1"), INLINE_VALIDATION_TIMEOUT)) {
-			return getTextFromLocator(notificationLanguageOption1).trim().equalsIgnoreCase(language);
-		}
-		return false;
+		By option = By.xpath("//button[contains(@id,'create_partner_lang_code_option')][normalize-space()='" + language
+				+ "']");
+		return isElementDisplayedQuick(option, INLINE_VALIDATION_TIMEOUT);
 	}
 
 	public String getSelectedNotificationLanguageText() {

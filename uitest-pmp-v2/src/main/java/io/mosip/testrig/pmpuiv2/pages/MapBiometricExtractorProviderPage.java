@@ -10,7 +10,15 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import io.mosip.testrig.pmpuiv2.kernel.util.ConfigManager;
+
 public class MapBiometricExtractorProviderPage extends BasePage {
+
+	public static String MAP_BIO_TITLE_TEXT = "biometric";
+
+	public static void init(String loginLanguage) {
+		copyLocaleFields(MapBiometricExtractorProviderPage.class, loginLanguage);
+	}
 
 	@FindBy(id = "page_title")
 	private WebElement pageTitle;
@@ -59,11 +67,19 @@ public class MapBiometricExtractorProviderPage extends BasePage {
 
 	public MapBiometricExtractorProviderPage(WebDriver driver) {
 		super(driver);
+		init(ConfigManager.getloginlang());
 	}
 
 	public boolean isMapBiometricExtractorProviderPageDisplayed() {
 		return isElementDisplayedQuick(By.id("map_bio_extractor_provider_mandatory_mapping_msg"), Duration.ofSeconds(15))
-				|| (isElementDisplayed(pageTitle) && getPageTitleText().toLowerCase().contains("biometric"));
+				|| (isElementDisplayed(pageTitle) && containsTitle(getPageTitleText()));
+	}
+
+	public boolean containsTitle(String title) {
+		if (title == null || MAP_BIO_TITLE_TEXT == null) {
+			return false;
+		}
+		return title.toLowerCase().contains(MAP_BIO_TITLE_TEXT.toLowerCase());
 	}
 
 	public String getPageTitleText() {

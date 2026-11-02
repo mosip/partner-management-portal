@@ -131,7 +131,7 @@ public class ManualAdjudicationPartnerTest extends BaseClass {
 
 		maPartnerPage.clickOnCreatePartnerButton();
 		createMaPartner(GlobalConstants.MA_PARTNER_USER, GlobalConstants.MANUAL_ADJUDICATION_PARTNER,
-				GlobalConstants.DEFAULT_POLICYGROUP, GlobalConstants.MA_NOTIFICATION_LANGUAGE,
+				GlobalConstants.DEFAULT_POLICYGROUP, GlobalConstants.FRENCH_NOTIFICATION_LANGUAGE,
 				GlobalConstants.MA_ADDRESS, GlobalConstants.ORGANISATION_NAME, GlobalConstants.MA_CONTACT_NUMBER,
 				GlobalConstants.MA_EMAIL_ID);
 		assertTrue(maPartnerPage.isEmailAddressIsAlreadyRegisteredErrorDisplayed()
@@ -140,7 +140,7 @@ public class ManualAdjudicationPartnerTest extends BaseClass {
 
 		maPartnerPage.clickOnCreatePartnerClearButton();
 		createMaPartner(GlobalConstants.MA_PARTNER_USER_2, GlobalConstants.MANUAL_ADJUDICATION_PARTNER,
-				GlobalConstants.DEFAULT_POLICYGROUP, GlobalConstants.MA_NOTIFICATION_LANGUAGE,
+				GlobalConstants.DEFAULT_POLICYGROUP, GlobalConstants.ARABIC_NOTIFICATION_LANGUAGE,
 				GlobalConstants.MA_ADDRESS, GlobalConstants.ORGANISATION_NAME, GlobalConstants.MA_CONTACT_NUMBER,
 				GlobalConstants.MA_EMAIL_ID_2);
 		assertTrue(maPartnerPage.isCreatePartnerSuccessMsgDisplayed(),
@@ -165,6 +165,25 @@ public class ManualAdjudicationPartnerTest extends BaseClass {
 		maPartnerPage.clickOnPartnerTypeDropdown();
 		assertTrue(maPartnerPage.isManualAdjudicationPartnerOptionDisplayed(),
 				GlobalConstants.isManualAdjudicationPartnerOptionDisplayed);
+		maPartnerPage.clickOnPartnerTypeDropdown();
+
+		assertTrue(maPartnerPage.isNotificationLanguageDropdownDisplayed(),
+				GlobalConstants.isNotificationLanguageDropdownDisplayed);
+		maPartnerPage.clickOnNotificationLanguageDropdown();
+		assertTrue(maPartnerPage.isNotificationLanguageOptionVisible(GlobalConstants.MA_NOTIFICATION_LANGUAGE),
+				GlobalConstants.isNotificationLanguageDropdownHasOptions);
+		assertTrue(maPartnerPage.isNotificationLanguageOptionVisible(GlobalConstants.FRENCH_NOTIFICATION_LANGUAGE),
+				GlobalConstants.isFrenchNotificationLanguageDisplayed);
+		assertTrue(maPartnerPage.isNotificationLanguageOptionVisible(GlobalConstants.ARABIC_NOTIFICATION_LANGUAGE),
+				GlobalConstants.isArabicNotificationLanguageDisplayed);
+		maPartnerPage.selectNotificationLanguage(GlobalConstants.FRENCH_NOTIFICATION_LANGUAGE);
+		assertTrue(maPartnerPage.getSelectedNotificationLanguageText()
+				.contains(GlobalConstants.FRENCH_NOTIFICATION_LANGUAGE),
+				GlobalConstants.isFrenchNotificationLanguageSelectable);
+		maPartnerPage.selectNotificationLanguage(GlobalConstants.ARABIC_NOTIFICATION_LANGUAGE);
+		assertTrue(maPartnerPage.getSelectedNotificationLanguageText()
+				.contains(GlobalConstants.ARABIC_NOTIFICATION_LANGUAGE),
+				GlobalConstants.isArabicNotificationLanguageSelectable);
 	}
 
 	@Test(priority = 4, description = "MOSIP-44410 View Manual Adjudication Partner details (read-only)",
@@ -341,6 +360,8 @@ public class ManualAdjudicationPartnerTest extends BaseClass {
 		}
 		maPartnerPage.selectPolicyGroupDropdown(policyGroup);
 		maPartnerPage.selectNotificationLanguage(notification);
+		assertTrue(maPartnerPage.getSelectedNotificationLanguageText().contains(notification),
+				GlobalConstants.isNotificationLanguageSelectable);
 		maPartnerPage.enterPartnerAddress(address);
 		maPartnerPage.enterPartnerOrganisation(organisation);
 		maPartnerPage.enterPartnerContactNumber(contactNumber);
