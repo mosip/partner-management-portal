@@ -1545,10 +1545,81 @@ public class GlobalConstants {
 	public static final String isMultipleAbisPartnersCreatable = "Verify that multiple ABIS Partners can be created using the same Organization Certificate.";
 	public static final String isCreatePartnerPageNavigationDisplayed = "Verify that when the user clicks Create Partner in the tabular view, the system navigates to the Create Partner page.";
 	public static final String MANUAL_ADJUDICATION_PARTNER = "Manual Adjudication Partner";
+	public static final String MA_PARTNER_USER = "pmpui-ma";
+	public static final String MA_PARTNER_USER_2 = "pmpui-ma2";
+	public static final String MA_EMAIL_ID = "mapmpui@gmail.com";
+	public static final String MA_EMAIL_ID_2 = "mapmpui2@gmail.com";
+	public static final String MA_ADDRESS = "maaddress";
+	public static final String MA_CONTACT_NUMBER = "9898989898";
+	public static final String MA_NOTIFICATION_LANGUAGE = "English";
+	public static final String MA_POLICY_01 = "mapolicy01";
+	public static final String MA_POLICY_01_DESCRIPTION = "ma policy 01";
+	public static final String MA_POLICY_03 = "mapolicy03";
+	public static final String MA_POLICY_03_DESCRIPTION = "ma policy 03";
+	public static final String AUTH_DOMAIN_TYPE = "AUTH";
+	public static final String isDefaultManualAdjudicationPartnerDisplayed = "Verify that Manual Adjudication Partner is the default Partner Type on Create Partner page.";
+	public static final String isManualAdjudicationPartnerSelectedSuccessfully = "Verify that Manual Adjudication Partner is successfully selected from the Partner Type dropdown.";
+	public static final String isManualAdjudicationPartnerCreatedSuccessfully = "Verify that Manual Adjudication Partner is created successfully.";
+	public static final String isMultipleManualAdjudicationPartnersCreatable = "Verify that multiple Manual Adjudication Partners can be created using the same Organization Certificate.";
 	public static final String isAbisPartnerOptionDisplayed = "Verify that ABIS Partner option is displayed in the Partner Type dropdown.";
 	public static final String isMispPartnerOptionDisplayed = "Verify that MISP Partner option is displayed in the Partner Type dropdown.";
 	public static final String isPartnerTypeDropdownOptionCountCorrect = "Verify that the Partner Type dropdown displays the expected partner options, even if the total count changes dynamically.";
 	public static final String isManualAdjudicationPartnerOptionDisplayed = "Verify that Manual Adjudication Partner option is displayed in the Partner Type dropdown.";
+	public static final String isManualAdjudicationPartnerTypeInViewDisplayed = "Verify that View Partner Details shows Partner Type as Manual Adjudication Partner.";
+	public static final String isViewPartnerDetailsReadOnly = "Verify that View Partner Details page is read-only with no edit controls.";
+	public static final String isViewPartnerBackNavigationDisplayed = "Verify that Back / Go Back navigation is available on View Partner Details page.";
+
+	// qajava21 Partner Admin credentials
+	public static final String QAJAVA21_ADMIN_USER = "21admin";
+	public static final String QAJAVA21_ADMIN_PASSWORD = "admin123";
+
+	// Biometric Extractor Provider Configuration (MOSIP-44595 / MOSIP-44596 / MOSIP-44597 / MOSIP-44598)
+	public static final String BIOMETRIC_CONFIGURATION_PROVIDER_NAME = "MosipBioExtractor";
+	public static final String BIOMETRIC_CONFIGURATION_PROVIDER_VERSION = "1.0.0";
+	public static final String BIOMETRIC_CONFIGURATION_MODALITY_FACE = "face";
+	public static final String isBiometricConfigurationDashboardCardDisplayed = "Verify that Biometric Provider Configuration card is displayed on the dashboard.";
+	public static final String isBiometricConfigurationListPageDisplayed = "Verify that Biometric Extractor Provider Configuration listing page is displayed.";
+	public static final String isCreateBiometricConfigurationFormDisplayed = "Verify that Create Biometric Extractor Provider Configuration form is displayed.";
+	public static final String isBiometricConfigurationCreatedSuccessfully = "Verify that Biometric Extractor Provider Configuration is added successfully.";
+	public static final String isBiometricConfigurationListingTableDisplayed = "Verify that Biometric Extractor Provider Configuration listing table is displayed.";
+	public static final String isBiometricConfigurationListingColumnsDisplayed = "Verify that listing table shows Configuration Name, Provider Name, Version, Modality, Creation Date and Action columns.";
+	public static final String isBiometricConfigurationFilterButtonDisplayed = "Verify that Filter button is displayed on the listing page.";
+	public static final String isBiometricConfigurationFilterPanelDisplayed = "Verify that filter panel shows Configuration Name, Provider Name, Version and Modality filters.";
+	public static final String isBiometricConfigurationEmptyFilterResultDisplayed = "Verify that empty state is shown when filter returns no matching configurations.";
+	public static final String isBiometricConfigurationViewActionDisplayed = "Verify that View action is displayed in the listing action menu.";
+	public static final String isBiometricConfigurationDeleteActionDisplayed = "Verify that Delete action is displayed in the listing action menu.";
+	public static final String isBiometricConfigurationViewPageDisplayed = "Verify that View Biometric Extractor Provider Configuration details page is displayed.";
+	public static final String isBiometricConfigurationViewPageTitleDisplayed = "Verify that View page title is displayed.";
+	public static final String isBiometricConfigurationViewCreatedOnDisplayed = "Verify that Created On metadata is displayed on the View page.";
+	public static final String isBiometricConfigurationViewStatusDisplayed = "Verify that Status metadata is displayed on the View page when available.";
+	public static final String isBiometricConfigurationViewDetailsDisplayed = "Verify that configuration name, provider name, version, modality, credential data format and attribute name are displayed.";
+	public static final String isBiometricConfigurationViewReadOnly = "Verify that View page configuration attributes are read-only.";
+	public static final String isBiometricConfigurationViewBackButtonDisplayed = "Verify that Back button is displayed on the View page.";
+	public static final String isBiometricConfigurationViewBackNavigatesToList = "Verify that Back button returns to the Biometric Extractor Provider Configuration listing page.";
+	public static final String isBiometricConfigurationViewLayoutStructured = "Verify that View page layout shows title, metadata, attributes and Back button in a structured format.";
+	public static final String isBiometricConfigurationViewResponsive = "Verify that View page remains usable at desktop and tablet viewport sizes.";
+	public static final String isBiometricConfigurationDeletePopupDisplayed = "Verify that delete confirmation popup is displayed.";
+	public static final String isBiometricConfigurationDeleteCancelKeepsConfig = "Verify that Cancel on delete popup keeps the configuration in the listing.";
+	public static final String isBiometricConfigurationDeletedFromList = "Verify that confirmed delete removes the configuration from the listing.";
+
+	// Map Biometric Extractor Provider (MOSIP-44659) — admin OVP policy-request path
+	public static final String ONLINE_VERIFICATION_PARTNER = "Online Verification Partner";
+	public static final String isMapBiometricExtractorProviderPageDisplayed = "Verify that Map Biometric Extractor Provider page is displayed.";
+	public static final String isMapBiometricExtractorProviderPageTitleDisplayed = "Verify that Map Biometric Extractor Provider page title is displayed.";
+	public static final String isMapBiometricMandatoryBannerDisplayed = "Verify that the mandatory biometric/credential mapping banner is displayed.";
+	public static final String isMapBiometricReadOnlyPartnerDetailsDisplayed = "Verify that partner ID and related fields are auto-populated and read-only.";
+	public static final String isMapBiometricModalityDropdownDisplayed = "Verify that Biometric Modality dropdown is displayed.";
+	public static final String isMapBiometricConfigDropdownDisplayed = "Verify that Biometric Provider Configuration dropdown is displayed.";
+	public static final String isMapBiometricClearFormDisplayed = "Verify that Clear Form button is displayed.";
+	public static final String isMapBiometricCancelDisplayed = "Verify that Cancel button is displayed.";
+	public static final String isMapBiometricSaveAndProceedDisplayed = "Verify that Save & Proceed button is displayed.";
+	public static final String isMapBiometricAddMoreDisplayed = "Verify that Add More option is displayed after first modality mapping.";
+	public static final String isMapBiometricUsedModalityExcludedFromDropdown = "Verify that a modality already mapped is excluded from subsequent modality dropdowns.";
+	public static final String isMapBiometricCancelReturnsToList = "Verify that Cancel returns to the policy request list with Pending For Approval status.";
+	public static final String isMapBiometricActionDisplayedAfterCancel = "Verify that Map Biometric Extractor action is displayed in the policy request list after Cancel.";
+	public static final String isMapBiometricSaveConfirmPopupDisplayed = "Verify that Save & Proceed confirmation popup is displayed.";
+	public static final String isMapCredentialTypePageDisplayedAfterSave = "Verify that Save & Proceed navigates to Map Credential Type step.";
+
 	public static final String CANCEL_CONFIRMATION_POPUP_TEXT = "Your changes will be lost, are you sure you want to proceed?";
 	public static final String CERT_UPLOAD_STATUS_UPLOADED = "Uploaded";
 	public static final String CERT_UPLOAD_STATUS_NOT_UPLOADED = "Not Uploaded";

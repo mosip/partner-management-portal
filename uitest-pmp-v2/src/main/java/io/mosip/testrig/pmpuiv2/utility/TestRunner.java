@@ -159,6 +159,20 @@ public class TestRunner {
 			XmlClass mispPolicyTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.MispPolicyTest");
 			XmlClass abisPartnerTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.AbisPartnerTest");
 			XmlClass mispServicesTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.MispServicesTest");
+			XmlClass manualAdjudicationPartnerTest = new XmlClass(
+					"io.mosip.testrig.pmpuiv2.testcase.ManualAdjudicationPartnerTest");
+			XmlClass manualAdjudicationPolicyTest = new XmlClass(
+					"io.mosip.testrig.pmpuiv2.testcase.ManualAdjudicationPolicyTest");
+			XmlClass biometricConfigurationTest = new XmlClass(
+					"io.mosip.testrig.pmpuiv2.testcase.BiometricConfigurationTest");
+			XmlClass biometricConfigurationListingTest = new XmlClass(
+					"io.mosip.testrig.pmpuiv2.testcase.BiometricConfigurationListingTest");
+			XmlClass biometricConfigurationViewTest = new XmlClass(
+					"io.mosip.testrig.pmpuiv2.testcase.BiometricConfigurationViewTest");
+			XmlClass biometricConfigurationDeleteTest = new XmlClass(
+					"io.mosip.testrig.pmpuiv2.testcase.BiometricConfigurationDeleteTest");
+			XmlClass mapBiometricExtractorProviderTest = new XmlClass(
+					"io.mosip.testrig.pmpuiv2.testcase.MapBiometricExtractorProviderTest");
 
 			List<XmlClass> classes = new ArrayList<>();
 			String[] scenarioNames = ConfigManager.gettestcases().split(",");
@@ -314,8 +328,30 @@ public class TestRunner {
 				case "AbisPartnerTest":
 					addClassIfAbsent(classes, partnerAdminCreation, abisPartnerTest);
 					break;
+				case "ManualAdjudicationPartnerTest":
+					addClassIfAbsent(classes, partnerAdminCreation, manualAdjudicationPartnerTest);
+					break;
+				case "ManualAdjudicationPolicyTest":
+					addClassIfAbsent(classes, partnerAdminCreation, manualAdjudicationPartnerTest,
+							manualAdjudicationPolicyTest);
+					break;
 				case "MispServicesTest":
 					addClassIfAbsent(classes, partnerAdminCreation, mispPartnerTest, mispPolicyTest, mispServicesTest);
+					break;
+				case "BiometricConfigurationTest":
+					addClassIfAbsent(classes, biometricConfigurationTest);
+					break;
+				case "BiometricConfigurationListingTest":
+					addClassIfAbsent(classes, biometricConfigurationListingTest);
+					break;
+				case "BiometricConfigurationViewTest":
+					addClassIfAbsent(classes, biometricConfigurationViewTest);
+					break;
+				case "BiometricConfigurationDeleteTest":
+					addClassIfAbsent(classes, biometricConfigurationDeleteTest);
+					break;
+				case "MapBiometricExtractorProviderTest":
+					addClassIfAbsent(classes, partnerAdminCreation, mapBiometricExtractorProviderTest);
 					break;
 
 				// Unknown test name
