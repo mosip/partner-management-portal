@@ -378,6 +378,7 @@ public class GlobalConstants {
 	public static final String isFutureDateErrorMessageDisplayed = "Verify if error message is displayed for future date in created";
 	public static final String isSbiExistsErrorMessageDisplayed = "Verify if error message is displayed for SBI already exists";
 	public static final String isSpecialCharacterErrorMessageDisplayed = "Verify if error message is displayed for Special characters";
+	public static final String isAddSbiPageLoadedAfterReload = "Verify if Add SBI page text is loaded after reload";
 	public static final String isNavigationAlertMessageDisplayed = "Verify if alert message for browser navigation is displayed";
 	public static final String isPastDateErrorMessageDisplayed = "Verify if error message is displayed for past date in expiry date";
 	public static final String isCreateOIDCClientDisplayed = "Verify if create OIDC client is displayed";

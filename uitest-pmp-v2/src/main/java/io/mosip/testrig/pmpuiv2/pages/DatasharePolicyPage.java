@@ -12,7 +12,8 @@ import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
 
 public class DatasharePolicyPage extends BasePage {
 
-	@FindBy(id = "create_auth_policy_btn")
+	// Header button when the list has rows, empty-state button (create_policy) when it has none
+	@FindBy(css = "#create_auth_policy_btn, #create_policy")
 	private WebElement createDatasharePolicyButton;
 
 	@FindBy(id = "sub_title_home_btn")
