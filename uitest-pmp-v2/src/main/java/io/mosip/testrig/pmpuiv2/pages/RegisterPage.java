@@ -54,6 +54,13 @@ public class RegisterPage extends BasePage {
 	@FindBy(xpath = "//span[text()='Please specify phoneNumber']")
 	private WebElement enterPhoneNumberWarningMessage;
 
+	// The MOSIP theme shows "Please specify valid email" as a page-level error; the others are stock Keycloak
+	@FindBy(xpath = "//*[@id='input-error-email' or contains(text(),'valid email') or contains(text(),'Invalid email')]")
+	private WebElement emailErrorMessage;
+
+	@FindBy(xpath = "//*[contains(text(),'Please specify')]")
+	private WebElement requiredFieldErrorMessage;
+
 	public RegisterPage(WebDriver driver) {
 		super(driver);
 	}
@@ -208,9 +215,14 @@ public class RegisterPage extends BasePage {
 		return isElementDisplayed(enterPhoneNumberWarningMessage);
 	}
 
-	public boolean isEmailFieldValid() {
-		return Boolean.TRUE.equals(
-				((JavascriptExecutor) driver).executeScript("return arguments[0].checkValidity();", emailTextbox));
+	// Keycloak validates the email format server-side, so this is only meaningful after submit
+	public boolean isEmailFieldFlaggedInvalid() {
+		return "true".equals(getTextFromAttribute(emailTextbox, "aria-invalid"))
+				|| isElementDisplayed(emailErrorMessage);
+	}
+
+	public boolean isRequiredFieldErrorDisplayed() {
+		return isElementDisplayed(requiredFieldErrorMessage);
 	}
 
 	public boolean isSubmitButtonEnabled() {

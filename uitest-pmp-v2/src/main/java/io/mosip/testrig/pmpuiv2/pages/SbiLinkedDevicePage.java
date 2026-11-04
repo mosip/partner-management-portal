@@ -3,6 +3,9 @@ package io.mosip.testrig.pmpuiv2.pages;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -339,11 +342,18 @@ public class SbiLinkedDevicePage extends BasePage {
 		return isElementDisplayed(deviceTypePlaceHolder);
 	}
 
-	public void clickOnDeviceThreeDots(String deviceType, String deviceSubType, String make, String model) {
-		WebElement addedDeviceThreeDots = driver.findElement(By
-				.xpath("//td[text()='" + deviceType + "']/..//td[text()='" + deviceSubType + "']/..//td[text()='" + make
-						+ "']/..//td[text()='" + model + "']/..//button[contains(@id, 'device_list_action_menu1')]"));
-		clickOnElement(addedDeviceThreeDots);
+	// The action button id carries the row number, and several runs leave devices with the same type/make/model,
+	// so pick the row by its cells and status rather than assuming it is row 1
+	public void clickOnDeviceThreeDots(String deviceType, String deviceSubType, String make, String model,
+			String status) {
+		click(By.xpath(linkedDeviceRowXpath(deviceType, deviceSubType, make, model, status)
+				+ "//button[contains(@id, 'device_list_action_menu')])[1]"));
+	}
+
+	private static String linkedDeviceRowXpath(String deviceType, String deviceSubType, String make, String model,
+			String status) {
+		return "(//tr[td[text()='" + deviceType + "'] and td[text()='" + deviceSubType + "'] and td[text()='" + make
+				+ "'] and td[text()='" + model + "'] and .//div[normalize-space()='" + status + "']]";
 	}
 
 //	public boolean isApproveRejectOptionDisplayed() {
@@ -375,9 +385,8 @@ public class SbiLinkedDevicePage extends BasePage {
 	}
 
 	public void clickOnLinkedDevice(String deviceType, String deviceSubType, String make, String model, String status) {
-		WebElement addedDevice = driver.findElement(By.xpath("//td[text()='" + deviceType + "']/..//td[text()='"
-				+ deviceSubType + "']/..//td[text()='" + make + "']/..//td[text()='" + model + "']"));
-		clickOnElement(addedDevice);
+		click(By.xpath(linkedDeviceRowXpath(deviceType, deviceSubType, make, model, status) + "/td[text()='" + model
+				+ "'])[1]"));
 	}
 
 	public boolean isFilterResetButtonDisplayed() {
@@ -429,10 +438,33 @@ public class SbiLinkedDevicePage extends BasePage {
 		clickOnElement(filterResetButton);
 	}
 
+	public String getListOfLinkedDevicesTitle() {
+		return getTextFromLocator(listOfLinkedDevicesText);
+	}
+
+	// The title reads "List of Linked Devices (n)"; returns n, or -1 when no count is shown
+	public int getListOfLinkedDevicesCount() {
+		Matcher count = Pattern.compile("\\((\\d+)\\)").matcher(getListOfLinkedDevicesTitle());
+		return count.find() ? Integer.parseInt(count.group(1)) : -1;
+	}
+
+	public boolean areAllLinkedDeviceRowsInStatus(String status) {
+		List<WebElement> rows = driver.findElements(By.xpath("//tr[starts-with(@id,'device_list_item')]"));
+		if (rows.isEmpty()) {
+			return false;
+		}
+		for (WebElement row : rows) {
+			if (row.findElements(By.xpath(".//div[normalize-space()='" + status + "']")).isEmpty()) {
+				return false;
+			}
+		}
+		return true;
+	}
+
 	public boolean isLinkedDeviceCreationDateSameAsBrowserDateFormat() {
 
-		WebElement dateCell = driver.findElement(By.xpath("//tr[@id='device_list_item1']/td[8]"));
-		String browserTime = dateCell.getText().trim();
+		// Applying a filter reloads the list, so wait for the first row instead of looking it up immediately
+		String browserTime = getTextFromLocator(By.xpath("//tr[@id='device_list_item1']/td[8]")).trim();
 
 		DateTimeFormatter dateFormatter = PmpTestUtil.nonZeroPadderDateFormatter;
 		try {

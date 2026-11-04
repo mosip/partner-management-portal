@@ -934,7 +934,25 @@ public class AuthPolicyPage extends BasePage {
 	}
 
 	public void clickOnNextPageButton() {
+		By currentPage = By.xpath("//a[contains(@aria-label,'is your current page')]");
+		String pageBefore = driver.findElements(currentPage).isEmpty() ? null
+				: driver.findElement(currentPage).getAttribute("aria-label");
 		clickOnElement(nextPage);
+		// A click landing while the list re-renders after a filter is lost, so retry once if the page did not move
+		if (pageBefore != null && !hasCurrentPageChanged(currentPage, pageBefore)) {
+			clickOnElement(nextPage);
+		}
+	}
+
+	private boolean hasCurrentPageChanged(By currentPage, String pageBefore) {
+		try {
+			return new WebDriverWait(driver, Duration.ofSeconds(10)).until(d -> {
+				java.util.List<WebElement> current = d.findElements(currentPage);
+				return !current.isEmpty() && !pageBefore.equals(current.get(0).getAttribute("aria-label"));
+			});
+		} catch (TimeoutException e) {
+			return false;
+		}
 	}
 
 	public void clickOnPreviusPageButton() {

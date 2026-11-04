@@ -812,6 +812,19 @@ public class ListOfSbiPage extends BasePage {
 		return isDisplayed(linkedDeviceElement);
 	}
 
+	public String getLinkedDeviceCountForSbi(String sbiVersion, String statusText) {
+		return getTextFromLocator(linkedDeviceCountOfSbi(sbiVersion, statusText)).trim();
+	}
+
+	public void clickOnLinkedDevicesOfSbi(String sbiVersion, String statusText) {
+		click(linkedDeviceCountOfSbi(sbiVersion, statusText));
+	}
+
+	private By linkedDeviceCountOfSbi(String sbiVersion, String statusText) {
+		return By.xpath("(//tr[td[text()='" + sbiVersion + "'] and .//div[text()='" + statusText
+				+ "']]//button//p)[1]");
+	}
+
 	public void clickOnLinkedDevicesInSbiList(String statusText, String count) {
 		By linkedDeviceElement = By
 				.xpath("//tr[.//div[text()='" + statusText + "']]//button//p[text()='" + count + "']");

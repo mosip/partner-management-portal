@@ -50,6 +50,7 @@ public class PmpTestUtil extends BaseTestCaseFunc {
 	public static DateTimeFormatter yyyyMmmDdFormatter = DateTimeFormatter.ofPattern("yyyy-MMM-dd");
 	public static DateTimeFormatter yyyyMmDdFormatter2 = DateTimeFormatter.ofPattern("yyyy.MM.dd");	
 	public static String todayDate = LocalDate.now().format(dateFormatter);
+	public static String tomorrowDate = LocalDate.now().plusDays(1).format(dateFormatter);
 	public static String todayDateWithoutZeroPadder = LocalDate.now().format(nonZeroPadderDateFormatter);
 	public static String expiryDate = LocalDate.now().plusWeeks(2).format(dateFormatter);
 	public static String todayDay = LocalDate.parse(todayDate, dateFormatter).format(DateTimeFormatter.ofPattern("dd"));

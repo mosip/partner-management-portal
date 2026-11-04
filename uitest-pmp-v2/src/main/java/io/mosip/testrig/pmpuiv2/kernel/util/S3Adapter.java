@@ -43,7 +43,9 @@ public class S3Adapter {
 		logger.info("ConfigManager.getS3UserKey() :: " + ConfigManager.getS3UserKey());
 		logger.info("ConfigManager.getS3Host() :: " + ConfigManager.getS3Host());
 		logger.info("ConfigManager.getS3Region() :: " + ConfigManager.getS3Region());
-		logger.info("ConfigManager.getS3SecretKey() :: " + ConfigManager.getS3SecretKey());
+		String s3SecretKey = ConfigManager.getS3SecretKey();
+		logger.info("ConfigManager.getS3SecretKey() :: "
+				+ (s3SecretKey == null || s3SecretKey.isEmpty() ? "<not set>" : "********"));
 		try {
 			AWSCredentials awsCredentials = new BasicAWSCredentials(ConfigManager.getS3UserKey(),
 					ConfigManager.getS3SecretKey());

@@ -633,7 +633,7 @@ public class BasePage {
 		}
 	}
 
-	private void focus(WebElement element) {
+	protected void focus(WebElement element) {
 		WaitUtil.waitForVisibility(driver, element);
 		((JavascriptExecutor) driver).executeScript("arguments[0].focus();", element);
 	}
@@ -659,7 +659,10 @@ public class BasePage {
 	}
 
 	public boolean isPageDirectionRtl() {
-		String dir = driver.findElement(By.tagName("body")).getAttribute("dir");
+		// Called right after login, when <body> can still be swapped out by the redirect
+		String dir = new WebDriverWait(driver, Duration.ofSeconds(ConfigManager.getTimeout()))
+				.ignoring(StaleElementReferenceException.class)
+				.until(d -> String.valueOf(d.findElement(By.tagName("body")).getAttribute("dir")));
 		return "rtl".equalsIgnoreCase(dir);
 	}
 
@@ -830,6 +833,13 @@ public class BasePage {
 					return el.isDisplayed() && el.getSize().getHeight() > 0;
 				} catch (StaleElementReferenceException | NoSuchElementException e) {
 					return false;
+				} catch (WebDriverException e) {
+					// Chrome reports a node swapped out by a React re-render as "does not belong to the document"
+					// rather than as a stale element, so retry it the same way
+					if (e.getMessage() != null && e.getMessage().contains("does not belong to the document")) {
+						return false;
+					}
+					throw e;
 				}
 			});
 

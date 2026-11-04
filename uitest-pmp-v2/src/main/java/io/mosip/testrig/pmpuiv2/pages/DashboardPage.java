@@ -6,6 +6,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import io.mosip.testrig.pmpuiv2.kernel.util.ConfigManager;
 
 public class DashboardPage extends BasePage {
 
@@ -92,8 +95,20 @@ public class DashboardPage extends BasePage {
 	@FindBy(xpath = "//h5[text()='Partner - Policy Linking']")
 	private WebElement PartnerPolicyMappingTab;
 
+	@FindBy(xpath = "//div[@id='dashboard_partner_policy_linking_card']//div[@id='hover_count_label']")
+	private WebElement partnerPolicyLinkingCountLabel;
+
+	@FindBy(xpath = "//div[@id='dashboard_partner_policy_linking_card']//div[@id='hover_count_description']")
+	private WebElement partnerPolicyLinkingCountDescription;
+
 	@FindBy(xpath = "//h5[text()='SBI - Device']")
 	private WebElement sbiDeviceHeader;
+
+	@FindBy(xpath = "//div[@id='dashboard_sbi_device_card']//div[@id='hover_count_label']")
+	private WebElement sbiDeviceCountLabel;
+
+	@FindBy(xpath = "//div[@id='dashboard_sbi_device_card']//div[@id='hover_count_description']")
+	private WebElement sbiDeviceCountDescription;
 
 	@FindBy(id = "dashboard_partner_certificate_list_header")
 	private WebElement dashboardPartnerCertificateListHeader;
@@ -137,6 +152,9 @@ public class DashboardPage extends BasePage {
 	@FindBy(xpath = "//h5[text()='Authentication Services']")
 	private WebElement authenticationServices;
 
+	@FindBy(id = "dashboard_admin_authentication_services_card")
+	private WebElement adminAuthenticationServices;
+
 	@FindBy(id = "dashboard_partner_card_header")
 	private WebElement partners;
 
@@ -151,7 +169,7 @@ public class DashboardPage extends BasePage {
 
 	@FindBy(id = "policy_group_selector_option_button_1")
 	private WebElement policyGroupOption;
-	
+
 	@FindBy(id = "admin_misp_partner_services_card_header")
 	private WebElement mispServices;
 
@@ -299,6 +317,38 @@ public class DashboardPage extends BasePage {
 		clickOnElement(PartnerPolicyMappingTab);
 	}
 
+	public boolean isPartnerPolicyLinkingCountDisplayed() {
+		return isElementDisplayed(partnerPolicyLinkingCountLabel);
+	}
+
+	public String getPartnerPolicyLinkingCountText() {
+		return getLoadedCountText(partnerPolicyLinkingCountLabel, "\\d+");
+	}
+
+	// The count badge shows a loading indicator until the dashboard API responds, so wait for the real value
+	private String getLoadedCountText(WebElement countLabel, String expectedPattern) {
+		try {
+			return new WebDriverWait(driver, Duration.ofSeconds(ConfigManager.getTimeout())).until(d -> {
+				String text = getTextFromLocator(countLabel).trim();
+				return text.matches(expectedPattern) ? text : null;
+			});
+		} catch (org.openqa.selenium.TimeoutException e) {
+			return getTextFromLocator(countLabel).trim();
+		}
+	}
+
+	public void hoverOverPartnerPolicyLinkingCount() {
+		hoverOverElement(partnerPolicyLinkingCountLabel);
+	}
+
+	public boolean isPartnerPolicyLinkingCountDescriptionDisplayed() {
+		return isElementDisplayed(partnerPolicyLinkingCountDescription);
+	}
+
+	public String getPartnerPolicyLinkingCountDescriptionText() {
+		return getTextFromLocator(partnerPolicyLinkingCountDescription).trim();
+	}
+
 	public void clickOnDashboardPartnerCertificateListHeader() {
 		clickOnElement(dashboardPartnerCertificateListHeader);
 	}
@@ -330,6 +380,26 @@ public class DashboardPage extends BasePage {
 
 	public void clickOnSbiDevices() {
 		clickOnElement(sbiDeviceHeader);
+	}
+
+	public boolean isSbiDeviceCountDisplayed() {
+		return isElementDisplayed(sbiDeviceCountLabel);
+	}
+
+	public String getSbiDeviceCountText() {
+		return getLoadedCountText(sbiDeviceCountLabel, "\\d+\\s*\\|\\s*\\d+");
+	}
+
+	public void hoverOverSbiDeviceCount() {
+		hoverOverElement(sbiDeviceCountLabel);
+	}
+
+	public boolean isSbiDeviceCountDescriptionDisplayed() {
+		return isElementDisplayed(sbiDeviceCountDescription);
+	}
+
+	public String getSbiDeviceCountDescriptionText() {
+		return getTextFromLocator(sbiDeviceCountDescription).trim();
 	}
 
 	public void clickOnCertificateTrustStore() {
@@ -398,6 +468,15 @@ public class DashboardPage extends BasePage {
 		return new OidcClientPage(driver);
 	}
 
+	public boolean isAdminAuthenticationServicesDisplayed() {
+		return isElementDisplayed(adminAuthenticationServices);
+	}
+
+	public OidcClientPage clickOnAdminAuthenticationServices() {
+		clickOnElement(adminAuthenticationServices);
+		return new OidcClientPage(driver);
+	}
+
 	public boolean isCertificateTrustStoreDisplayed() {
 		return isElementDisplayed(certificateTrustStore);
 	}
@@ -426,7 +505,7 @@ public class DashboardPage extends BasePage {
 	public boolean isFooterDocumentationLinkDisplayed() {
 		return isElementDisplayed(footerDocumentationLink);
 	}
-	
+
 	public MispServicesPage clickOnMispServices() {
 		clickOnElement(mispServices);
 		return new MispServicesPage(driver);

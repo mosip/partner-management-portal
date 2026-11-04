@@ -38,7 +38,9 @@ public class DBManager {
 			LOGGER.info("Hibernate Config: hibernate.connection.pool_size = 1");
 			LOGGER.info("Hibernate Config: hibernate.show_sql = true");
 			LOGGER.info("Hibernate Config: hibernate.connection.username = {}", dbUser);
-			LOGGER.info("Hibernate Config: hibernate.connection.password = {}", dbPass);
+			// Never log the real password: logs end up in consoles, CI output and shared reports
+			LOGGER.info("Hibernate Config: hibernate.connection.password = {}",
+					dbPass == null || dbPass.isEmpty() ? "<not set>" : "********");
 			LOGGER.info("Hibernate Config: hibernate.default_schema = {}", dbSchema);
 
 			Configuration config = new Configuration();

@@ -58,10 +58,21 @@ public class LoginPage extends BasePage {
 	}
 
 	public void selectLanguage(String kcLocale) {
-		if (kcLocale == null || kcLocale.isBlank() || kcLocale.equalsIgnoreCase("eng")) {
+		if (kcLocale == null || kcLocale.isBlank()) {
 			return;
 		}
 		isLoginPageDisplayed();
+		if (kcLocale.equalsIgnoreCase("eng")) {
+			// Keycloak remembers the last language picked for a user, so English has to be chosen explicitly
+			// or a user left in Arabic by an earlier test keeps logging in to an Arabic UI
+			java.util.List<WebElement> englishOptions = driver.findElements(
+					By.cssSelector("a[href*='kc_locale=eng'], a[href*='kc_locale=en&'], a[href$='kc_locale=en']"));
+			if (!englishOptions.isEmpty()) {
+				driver.get(englishOptions.get(0).getAttribute("href"));
+				isLoginPageDisplayed();
+			}
+			return;
+		}
 		try {
 			WebElement languageOption = driver
 					.findElement(By.cssSelector("a[href*='kc_locale=" + kcLocale + "']"));

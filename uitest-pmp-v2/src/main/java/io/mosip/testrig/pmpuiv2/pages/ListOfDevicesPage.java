@@ -17,6 +17,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
+import io.mosip.testrig.pmpuiv2.kernel.util.ConfigManager;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 import io.mosip.testrig.pmpuiv2.utility.LogUtil;
 
@@ -448,6 +449,11 @@ public class ListOfDevicesPage extends BasePage {
 		return getTextFromLocator(listOfDevicesText);
 	}
 
+	// The admin device list titles itself with its own id, not the partner list's list_of_devices container
+	public String getListOfDevicesTitleInAdmin() {
+		return getTextFromLocator(listOfDeviceInAdmin).trim();
+	}
+
 	public boolean areAllListedDevicesMatching(String columnHeaderId, String expectedValue) {
 		int columnIndex = getColumnIndex(columnHeaderId);
 		if (columnIndex < 0) {
@@ -497,8 +503,9 @@ public class ListOfDevicesPage extends BasePage {
 	}
 
 	public void clickOnDevice(String deviceType, String deviceSubType, String make, String model, String status) {
-		By addedDevice = By.xpath("//td[text()='" + deviceType + "']/..//td[text()='" + deviceSubType
-				+ "']/..//td[text()='" + make + "']/..//td[text()='" + model + "']");
+		By addedDevice = By.xpath("(//tr[td[text()='" + deviceType + "'] and td[text()='" + deviceSubType
+				+ "'] and td[text()='" + make + "'] and td[text()='" + model + "'] and .//div[normalize-space()='"
+				+ status + "']]/td[text()='" + model + "'])[1]");
 		click(addedDevice);
 	}
 
@@ -1028,14 +1035,23 @@ public class ListOfDevicesPage extends BasePage {
 	}
 
 	public boolean isDeactivateDevicePopupTitleInAdminDisplayed(String device) {
-		By title = By.xpath(
-				"//p[@id='deactivate_popup_header' and contains(normalize-space(text()), \"Do you want to deactivate Device  - '"
-						+ device + "'\")]");
+		// normalize-space collapses runs of spaces, so the expected text must not contain any
+		By title = By.xpath("//p[@id='deactivate_popup_header' and contains(normalize-space(.), \"- '" + device
+				+ "'\")]");
 		return isDisplayed(title);
 	}
 
 	public boolean isDeactivateDevicePopupDescInAdminDisplayed() {
 		return isElementDisplayed(deactivateDevicePopupDescInAdmin);
+	}
+
+	// Several runs leave devices with the same type/make/model, so the status is needed to pick the intended row
+	public void clickOnDeviceThreeDotsInAdmin(String deviceType, String deviceSubType, String make, String model,
+			String status) {
+		By deviceThreeDots = By.xpath("(//tr[td[text()='" + deviceType + "'] and td[text()='" + deviceSubType
+				+ "'] and td[text()='" + make + "'] and td[text()='" + model + "'] and .//div[normalize-space()='"
+				+ status + "']]//button[contains(@id, 'device_list_action_menu')])[1]");
+		click(deviceThreeDots);
 	}
 
 	public boolean isDeactivateDeviceEnabledInAdmin() {
@@ -1328,7 +1344,44 @@ public class ListOfDevicesPage extends BasePage {
 		clickOnElement(rejectOnlyPopupCloseIcon);
 	}
 
+	/**
+	 * Looks through the list page by page (up to maxPages) for a pending device with no linked SBI. Leaves the list on
+	 * the page where it was found and returns its row number, or -1 when none was found.
+	 */
+	public int findOrphanPendingDeviceRowOnAnyPage(int maxPages) {
+		for (int page = 1; page <= maxPages; page++) {
+			int row = findOrphanPendingDeviceRow();
+			if (row > 0) {
+				return row;
+			}
+			By enabledNextPage = By.xpath("//a[@aria-label='Next page' and not(@aria-disabled='true')]");
+			if (driver.findElements(enabledNextPage).isEmpty()) {
+				return -1;
+			}
+			LogUtil.step("No orphan pending device on page " + page + ", moving to the next page");
+			click(enabledNextPage);
+			By nextPageCurrent = By.xpath("//a[@aria-label='Page " + (page + 1) + " is your current page']");
+			new WebDriverWait(driver, Duration.ofSeconds(ConfigManager.getTimeout()))
+					.until(d -> !d.findElements(nextPageCurrent).isEmpty());
+		}
+		return -1;
+	}
+
 	public int findOrphanPendingDeviceRow() {
+		// Right after a filter is applied the list is reloading and neither the table headers nor the empty state
+		// are on the page yet, so wait for one of them before reading the columns
+		try {
+			new WebDriverWait(driver, Duration.ofSeconds(ConfigManager.getTimeout()))
+					.until(d -> !d.findElements(By.id("devicesList.status_header")).isEmpty()
+							|| !d.findElements(By.id("no_results_found")).isEmpty());
+		} catch (TimeoutException e) {
+			LogUtil.step("Device list did not finish loading before scanning for an orphan device");
+		}
+		if (!driver.findElements(By.id("no_results_found")).isEmpty()) {
+			LogUtil.step("The filtered device list is empty");
+			return -1;
+		}
+
 		int linkedSbiColumn = getColumnIndex("sbiList.sbiId_header");
 		int statusColumn = getColumnIndex("devicesList.status_header");
 
