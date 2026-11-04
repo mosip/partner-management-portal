@@ -559,8 +559,6 @@ public class ApiKeyExpirationDateTest extends BaseClass {
 		loginPage.clickOnLoginButton();
 	}
 
-	// Arabic diacritics such as shadda and kasra can be stored in either order and still render identically,
-	// so compare canonically normalized text rather than raw code points
 	private static void assertLocalizedTextEquals(String actual, String expected, String message) {
 		assertEquals(actual == null ? null : Normalizer.normalize(actual, Normalizer.Form.NFC),
 				expected == null ? null : Normalizer.normalize(expected, Normalizer.Form.NFC), message);

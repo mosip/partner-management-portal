@@ -449,7 +449,6 @@ public class ListOfDevicesPage extends BasePage {
 		return getTextFromLocator(listOfDevicesText);
 	}
 
-	// The admin device list titles itself with its own id, not the partner list's list_of_devices container
 	public String getListOfDevicesTitleInAdmin() {
 		return getTextFromLocator(listOfDeviceInAdmin).trim();
 	}
@@ -1035,7 +1034,6 @@ public class ListOfDevicesPage extends BasePage {
 	}
 
 	public boolean isDeactivateDevicePopupTitleInAdminDisplayed(String device) {
-		// normalize-space collapses runs of spaces, so the expected text must not contain any
 		By title = By.xpath("//p[@id='deactivate_popup_header' and contains(normalize-space(.), \"- '" + device
 				+ "'\")]");
 		return isDisplayed(title);
@@ -1045,7 +1043,6 @@ public class ListOfDevicesPage extends BasePage {
 		return isElementDisplayed(deactivateDevicePopupDescInAdmin);
 	}
 
-	// Several runs leave devices with the same type/make/model, so the status is needed to pick the intended row
 	public void clickOnDeviceThreeDotsInAdmin(String deviceType, String deviceSubType, String make, String model,
 			String status) {
 		By deviceThreeDots = By.xpath("(//tr[td[text()='" + deviceType + "'] and td[text()='" + deviceSubType
@@ -1344,10 +1341,6 @@ public class ListOfDevicesPage extends BasePage {
 		clickOnElement(rejectOnlyPopupCloseIcon);
 	}
 
-	/**
-	 * Looks through the list page by page (up to maxPages) for a pending device with no linked SBI. Leaves the list on
-	 * the page where it was found and returns its row number, or -1 when none was found.
-	 */
 	public int findOrphanPendingDeviceRowOnAnyPage(int maxPages) {
 		for (int page = 1; page <= maxPages; page++) {
 			int row = findOrphanPendingDeviceRow();
@@ -1368,8 +1361,6 @@ public class ListOfDevicesPage extends BasePage {
 	}
 
 	public int findOrphanPendingDeviceRow() {
-		// Right after a filter is applied the list is reloading and neither the table headers nor the empty state
-		// are on the page yet, so wait for one of them before reading the columns
 		try {
 			new WebDriverWait(driver, Duration.ofSeconds(ConfigManager.getTimeout()))
 					.until(d -> !d.findElements(By.id("devicesList.status_header")).isEmpty()

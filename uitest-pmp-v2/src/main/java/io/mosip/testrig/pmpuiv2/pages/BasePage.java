@@ -659,7 +659,6 @@ public class BasePage {
 	}
 
 	public boolean isPageDirectionRtl() {
-		// Called right after login, when <body> can still be swapped out by the redirect
 		String dir = new WebDriverWait(driver, Duration.ofSeconds(ConfigManager.getTimeout()))
 				.ignoring(StaleElementReferenceException.class)
 				.until(d -> String.valueOf(d.findElement(By.tagName("body")).getAttribute("dir")));
@@ -834,8 +833,6 @@ public class BasePage {
 				} catch (StaleElementReferenceException | NoSuchElementException e) {
 					return false;
 				} catch (WebDriverException e) {
-					// Chrome reports a node swapped out by a React re-render as "does not belong to the document"
-					// rather than as a stale element, so retry it the same way
 					if (e.getMessage() != null && e.getMessage().contains("does not belong to the document")) {
 						return false;
 					}

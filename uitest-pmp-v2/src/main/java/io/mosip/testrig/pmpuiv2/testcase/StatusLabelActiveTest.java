@@ -27,8 +27,6 @@ public class StatusLabelActiveTest extends BaseClass {
 	public void partnerAdminStatusLabelReadsActive() {
 		navigateToPartnerListPage();
 
-		// The list is newest first and other tests keep adding pending (Inactive) partners, so filter to active ones
-		// rather than hoping one is on the first page; row 1 is then an active partner for the details check below
 		partnerAdminPage.clickOnFilterButton();
 		partnerAdminPage.clickOnStatusFilter();
 		partnerAdminPage.clickActivatedButton();

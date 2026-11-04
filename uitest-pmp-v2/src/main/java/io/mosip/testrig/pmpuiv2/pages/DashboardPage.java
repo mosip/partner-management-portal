@@ -7,7 +7,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import io.mosip.testrig.pmpuiv2.kernel.util.ConfigManager;
 
 public class DashboardPage extends BasePage {
@@ -169,7 +168,7 @@ public class DashboardPage extends BasePage {
 
 	@FindBy(id = "policy_group_selector_option_button_1")
 	private WebElement policyGroupOption;
-
+	
 	@FindBy(id = "admin_misp_partner_services_card_header")
 	private WebElement mispServices;
 
@@ -325,7 +324,6 @@ public class DashboardPage extends BasePage {
 		return getLoadedCountText(partnerPolicyLinkingCountLabel, "\\d+");
 	}
 
-	// The count badge shows a loading indicator until the dashboard API responds, so wait for the real value
 	private String getLoadedCountText(WebElement countLabel, String expectedPattern) {
 		try {
 			return new WebDriverWait(driver, Duration.ofSeconds(ConfigManager.getTimeout())).until(d -> {
@@ -505,7 +503,7 @@ public class DashboardPage extends BasePage {
 	public boolean isFooterDocumentationLinkDisplayed() {
 		return isElementDisplayed(footerDocumentationLink);
 	}
-
+	
 	public MispServicesPage clickOnMispServices() {
 		clickOnElement(mispServices);
 		return new MispServicesPage(driver);

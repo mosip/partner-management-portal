@@ -60,9 +60,6 @@ public class OidcClientAuthPartnerTest extends BaseClass {
 		oidcClientPage.enterPublicKeyTextBox(publicKeytemp);
 		oidcClientPage.enterLogoUrTextBox(ConfigManager.getLogouri());
 		oidcClientPage.enterRedirectUriTextBox(ConfigManager.getRedirectUri());
-		// OIDC Client Name is now mandatory via the multilingual language-map UI, not the plain
-		// text box above alone - without at least one language row, Submit silently fails to
-		// produce the confirmation screen.
 		oidcClientPage.clickOnAddClientNameLanguageButton();
 		oidcClientPage.enterClientNameForLanguageRow1(GlobalConstants.DEFAULT_POLICY);
 		oidcClientPage.clickOnSubmitButton();

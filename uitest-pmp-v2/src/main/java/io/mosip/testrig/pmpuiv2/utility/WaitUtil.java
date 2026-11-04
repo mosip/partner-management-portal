@@ -23,9 +23,7 @@ public class WaitUtil {
 	            try {
 	                return element.isDisplayed() ? element : null;
 	            } catch (WebDriverException e) {
-	                // Chrome reports a node swapped out by a React re-render as "does not belong to the document"
-	                // rather than as a stale element, so keep waiting for the re-rendered one
-	                if (e.getMessage() != null && e.getMessage().contains("does not belong to the document")) {
+	               if (e.getMessage() != null && e.getMessage().contains("does not belong to the document")) {
 	                    return null;
 	                }
 	                throw e;

@@ -443,8 +443,6 @@ public class MispPartnerPage extends BasePage {
 
 	public void clickOnPartnerEmailIdTextBox() {
 		clickOnElement(partnerEmailIdTextBox);
-		// If the click was intercepted, the JS fallback does not move focus, so the previous field's onBlur
-		// validation never runs; focusing explicitly makes it fire either way
 		focus(partnerEmailIdTextBox);
 	}
 

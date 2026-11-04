@@ -405,13 +405,10 @@ public class SbiDeviceProviderTest extends BaseClass {
 		listOfSbiPage.clickOnDeviceTab();
 		assertTrue(listOfDevicesPage.isListOfDevicesTitleDisplayed(), GlobalConstants.isListOfDevicesTitleDisplayed);
 
-		// The unfiltered list is newest first and every run adds linked devices on top, which pushes any orphan
-		// device off the first page; filtering to pending devices brings them back onto it
 		listOfDevicesPage.clickOnFilterButton();
 		listOfDevicesPage.selectDeviceStatusFilterInAdmin(GlobalConstants.PENDING_FOR_APPROVAL);
 		listOfDevicesPage.clickOnApplyFilterButton();
 
-		// This run's own pending devices are newest and fill the first page, so the orphans can be further back
 		int orphanRow = listOfDevicesPage.findOrphanPendingDeviceRowOnAnyPage(10);
 		if (orphanRow < 0) {
 			throw new SkipException("No Pending for Approval device without a linked SBI exists in this "
@@ -437,8 +434,6 @@ public class SbiDeviceProviderTest extends BaseClass {
 		listOfDevicesPage.clickOnRejectOnlyPopupCloseIcon();
 	}
 
-	// Depends on the devices view, not on the orphan-device check: that check only reads data and is skipped
-	// when the environment has no orphan device, which must not block the deactivation flow
 	@Test(priority = 10, description = "Deativate SBI As Admin", dependsOnMethods = "verifyViewOfDevicesPageAsAdmin")
 	public void deactivateSbiAsAdmin() {
 		dashboardpage = new DashboardPage(driver);
@@ -473,7 +468,6 @@ public class SbiDeviceProviderTest extends BaseClass {
 		listOfSbiPage.clickOnDeactivatedSbiItem();
 		assertFalse(listOfSbiPage.isSbiDetailsPageDisplayed(), GlobalConstants.isSbiDetailsPageDisplayed);
 		sbiFilterWithStatus(GlobalConstants.DEACTIVATED);
-		// The deactivated count covers every partner on the environment, so only check it includes the SBI just deactivated
 		String deactivatedSbisTitle = listOfSbiPage.getListOfSbisTitle();
 		assertTrue(deactivatedSbisTitle.matches("List of SBIs \\([1-9]\\d*\\)"),
 				GlobalConstants.isDeactivatedSbiCountShown + ", found '" + deactivatedSbisTitle + "'");
@@ -482,7 +476,6 @@ public class SbiDeviceProviderTest extends BaseClass {
 		verifyApproveOrRejectSbiIsEnabled(GlobalConstants.DEACTIVATE_SBI_ASADMIN, false);
 		verifyDeactivateSbiIsEnabledInAdmin(GlobalConstants.DEACTIVATE_SBI_ASADMIN, false);
 
-		// Try to create Deactivated SBI again
 		loginAsDeviceProvider();
 
 		deviceProviderPage = dashboardpage.clickOnDeviceProviderServicesTitle();
@@ -508,7 +501,6 @@ public class SbiDeviceProviderTest extends BaseClass {
 		listOfDevicesPage.clickOnFilterButton();
 		listOfDevicesPage.applyMakeFilter(GlobalConstants.AUTOMATION_9);
 
-		// Only approved devices can be deactivated, and DeviceCreationTest leaves Automation9 pending, so approve it first
 		listOfDevicesPage.clickOnDeviceThreeDotsAsAdmin(GlobalConstants.FACE, GlobalConstants.FULL_FACE,
 				GlobalConstants.AUTOMATION_9, GlobalConstants.AUTOMATION_9);
 		listOfDevicesPage.clickOnApproveOrReject();
@@ -524,7 +516,6 @@ public class SbiDeviceProviderTest extends BaseClass {
 		assertTrue(listOfDevicesPage.isDeactivateDevicePopupInAdminDisplayed(),
 				GlobalConstants.isDeactivateDevicePopupDisplayed);
 
-		// The popup names the device as "make - model"
 		assertTrue(listOfDevicesPage.isDeactivateDevicePopupTitleInAdminDisplayed(
 				GlobalConstants.AUTOMATION_9 + " - " + GlobalConstants.AUTOMATION_9));
 		assertTrue(listOfDevicesPage.isDeactivateDevicePopupDescInAdminDisplayed(),
@@ -534,7 +525,6 @@ public class SbiDeviceProviderTest extends BaseClass {
 		assertTrue(listOfDevicesPage.isDeactivateCancelButtonDisplayed(),
 				GlobalConstants.isDeactivateCancelButtonDisplayed);
 		listOfDevicesPage.clickOnDeactivateCancel();
-		// This is the admin device list, whose Deactivate option is device_list_deactivate_option
 		listOfDevicesPage.clickOnDeviceThreeDotsAsAdmin(GlobalConstants.FACE, GlobalConstants.FULL_FACE,
 				GlobalConstants.AUTOMATION_9, GlobalConstants.AUTOMATION_9);
 		listOfDevicesPage.clickOnDeactivateButton();
@@ -542,7 +532,6 @@ public class SbiDeviceProviderTest extends BaseClass {
 
 		basePage.navigateBack();
 		basePage.navigateForward();
-		// Back/Forward reloads the list unfiltered and newest first, where Automation9 is no longer on the first page
 		listOfDevicesPage.clickOnFilterButton();
 		listOfDevicesPage.applyMakeFilter(GlobalConstants.AUTOMATION_9);
 		assertTrue(
@@ -583,8 +572,6 @@ public class SbiDeviceProviderTest extends BaseClass {
 		basePage = new BasePage(driver);
 
 		dashboardpage.clickOnSbiDevices();
-		// Open the linked devices list and stay on it: verifyLinkedDevicesOfApprovededSbiInList clicks Back at the end,
-		// which left this test checking linked-device elements on the SBI list
 		listOfSbiPage.clickOnLinkedDevicesOfSbi(GlobalConstants.AUTOMATION, GlobalConstants.APPROVED);
 		assertTrue(sbiLinkedDevicePage.isLinkedDeviceListTitleDisplayed(),
 				GlobalConstants.isLinkedDeviceListTitleDisplayed);
@@ -633,8 +620,6 @@ public class SbiDeviceProviderTest extends BaseClass {
 		sbiLinkedDevicePage.clickOnLinkedDevice(GlobalConstants.IRIS, GlobalConstants.SINGLE,
 				GlobalConstants.AUTOMATION_LOWERCASE, GlobalConstants.AUTOMATION_LOWERCASE,
 				GlobalConstants.DEACTIVATED);
-		// A deactivated row ignores clicks, so the list stays open; page_title is shared with the details page,
-		// so check a list-only column header instead
 		assertTrue(sbiLinkedDevicePage.isActiondHeaderDisplayed(), GlobalConstants.isListOfDevicesHeadersDisplayed);
 
 		assertTrue(sbiLinkedDevicePage.isFilterButtonDisplayed(), GlobalConstants.isFilterButtonDisplayed);
@@ -659,8 +644,6 @@ public class SbiDeviceProviderTest extends BaseClass {
 		sbiLinkedDevicePage.clickOnApplyFilterButton();
 
 		assertTrue(sbiLinkedDevicePage.isLinkedDeviceCreationDateSameAsBrowserDateFormat(),GlobalConstants.isCreationDateSameAsBrowserDateFormat);
-		// How many approved devices this SBI has depends on the environment's data, so check the filter result
-		// rather than a fixed count
 		assertTrue(sbiLinkedDevicePage.getListOfLinkedDevicesCount() > 0, GlobalConstants.isFilteredLinkedDevicesCountShown);
 		assertTrue(sbiLinkedDevicePage.areAllLinkedDeviceRowsInStatus(GlobalConstants.APPROVED),
 				GlobalConstants.isFilteredLinkedDevicesStatusApproved);
@@ -1035,7 +1018,6 @@ public class SbiDeviceProviderTest extends BaseClass {
 		sbiLinkedDevicePage.clickOnDeviceThreeDots(deviceType, deviceSubType, make, model, status);
 		assertEquals(sbiLinkedDevicePage.isViewOptionDisplayed(), viewDisplayed);
 		assertEquals(sbiLinkedDevicePage.isDeactivateDeviceEnabledInAdmin(), deactivateEnabled);
-		// The UI greys out Approve/Reject for every status except Pending For Approval
 		assertEquals(!sbiLinkedDevicePage.isApproceRejectDeviceDisabled(), approveRejectEnabled);
 		sbiLinkedDevicePage.clickOnDeviceThreeDots(deviceType, deviceSubType, make, model, status);
 	}

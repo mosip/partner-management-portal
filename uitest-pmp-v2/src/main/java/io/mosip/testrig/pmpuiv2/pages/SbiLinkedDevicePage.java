@@ -342,8 +342,6 @@ public class SbiLinkedDevicePage extends BasePage {
 		return isElementDisplayed(deviceTypePlaceHolder);
 	}
 
-	// The action button id carries the row number, and several runs leave devices with the same type/make/model,
-	// so pick the row by its cells and status rather than assuming it is row 1
 	public void clickOnDeviceThreeDots(String deviceType, String deviceSubType, String make, String model,
 			String status) {
 		click(By.xpath(linkedDeviceRowXpath(deviceType, deviceSubType, make, model, status)
@@ -442,7 +440,6 @@ public class SbiLinkedDevicePage extends BasePage {
 		return getTextFromLocator(listOfLinkedDevicesText);
 	}
 
-	// The title reads "List of Linked Devices (n)"; returns n, or -1 when no count is shown
 	public int getListOfLinkedDevicesCount() {
 		Matcher count = Pattern.compile("\\((\\d+)\\)").matcher(getListOfLinkedDevicesTitle());
 		return count.find() ? Integer.parseInt(count.group(1)) : -1;
@@ -462,10 +459,7 @@ public class SbiLinkedDevicePage extends BasePage {
 	}
 
 	public boolean isLinkedDeviceCreationDateSameAsBrowserDateFormat() {
-
-		// Applying a filter reloads the list, so wait for the first row instead of looking it up immediately
 		String browserTime = getTextFromLocator(By.xpath("//tr[@id='device_list_item1']/td[8]")).trim();
-
 		DateTimeFormatter dateFormatter = PmpTestUtil.nonZeroPadderDateFormatter;
 		try {
 			LocalDate.parse(browserTime, dateFormatter);

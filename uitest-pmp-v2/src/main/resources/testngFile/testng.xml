@@ -15,7 +15,7 @@
 		
 		<classes> 
 		 <!-- PARTNER ADMIN SETUP -->
-			<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerAdminCreation" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerAdminCreation" /> 
 			 <!--AUTH PARTNER FLOW-->
 			<class name="io.mosip.testrig.pmpuiv2.testcase.AuthPartnerCreation" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.PolicyCreationForAuthPartner" />
