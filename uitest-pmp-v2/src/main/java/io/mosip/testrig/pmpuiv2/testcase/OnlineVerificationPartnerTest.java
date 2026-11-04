@@ -41,10 +41,10 @@ public class OnlineVerificationPartnerTest extends BaseClass {
         Assert.assertTrue(options.contains(GlobalConstants.MANUAL_ADJUDICATION_PARTNER),
                 GlobalConstants.isManualAdjudicationPartnerOptionDisplayed);
         Assert.assertTrue(options.contains(GlobalConstants.ONLINE_VERIFICATION_PARTNER),
-                GlobalConstants.isOnlineVerificationPartnerOptionDisplayed);
+                GlobalConstants.ONLINE_VERIFICATION_PARTNER_OPTION_DISPLAYED);
         mispPartnerPage.clickOnPartnerTypeOption(GlobalConstants.ONLINE_VERIFICATION_PARTNER);
         Assert.assertEquals(mispPartnerPage.getSelectedPartnerTypeText(), GlobalConstants.ONLINE_VERIFICATION_PARTNER,
-                GlobalConstants.isOnlineVerificationPartnerSelectedSuccessfully);
+                GlobalConstants.ONLINE_VERIFICATION_PARTNER_SELECTED_SUCCESSFULLY);
     }
 
     @Test(priority = 3, description = "Verify hamburger, Home, and List of Partners navigation")
@@ -56,31 +56,31 @@ public class OnlineVerificationPartnerTest extends BaseClass {
         mispPartnerPage.clickOnCreatePartnerButton();
         selectOnlineVerificationPartner(mispPartnerPage);
         Assert.assertTrue(mispPartnerPage.isCreatePrtnerPageTitleDisplayed(),
-                GlobalConstants.isCreatePartnerNavigableFromHamburger);
+                GlobalConstants.CREATE_PARTNER_NAVIGABLE_FROM_HAMBURGER);
         Assert.assertEquals(mispPartnerPage.getCreatePartnerPageTitleText(), GlobalConstants.CREATE_PARTNER_PAGE_TITLE,
-                GlobalConstants.isCreatePartnerNavigableFromHamburger);
+                GlobalConstants.CREATE_PARTNER_NAVIGABLE_FROM_HAMBURGER);
         Assert.assertEquals(mispPartnerPage.getSelectedPartnerTypeText(), GlobalConstants.ONLINE_VERIFICATION_PARTNER,
-                GlobalConstants.isOnlineVerificationPartnerSelectedSuccessfully);
+                GlobalConstants.ONLINE_VERIFICATION_PARTNER_SELECTED_SUCCESSFULLY);
 
         mispPartnerPage.clickOnListOfPartnerButton();
         Assert.assertTrue(mispPartnerPage.isListOfPartnersDisplayed(),
-                GlobalConstants.isListOfPartnersButtonReturnsToPartnerList);
+                GlobalConstants.LIST_OF_PARTNERS_BUTTON_RETURNS_TO_PARTNER_LIST);
 
         mispPartnerPage = navigateToCreatePartnerPage();
         mispPartnerPage.clickOnCreatePartnerHomeButton();
         Assert.assertTrue(dashboardPage.isPartnersDisplayed(),
-                GlobalConstants.isCreatePartnerHomeReturnsToDashboard);
+                GlobalConstants.CREATE_PARTNER_HOME_RETURNS_TO_DASHBOARD);
     }
 
     @Test(priority = 4, description = "Verify Submit stays disabled when a mandatory field is empty")
     public void mandatoryFieldsKeepSubmitDisabled() {
-        assertSubmitDisabledWhenSkipped("policyGroup", GlobalConstants.isPolicyGroupMandatoryForOnlineVerificationPartner);
-        assertSubmitDisabledWhenSkipped("address", GlobalConstants.isAddressMandatoryForOnlineVerificationPartner);
-        assertSubmitDisabledWhenSkipped("organisation", GlobalConstants.isOrganisationNameMandatoryForOnlineVerificationPartner);
-        assertSubmitDisabledWhenSkipped("phone", GlobalConstants.isPhoneNumberMandatoryForOnlineVerificationPartner);
-        assertSubmitDisabledWhenSkipped("email", GlobalConstants.isEmailMandatoryForOnlineVerificationPartner);
-        assertSubmitDisabledWhenSkipped("username", GlobalConstants.isUsernameMandatoryForOnlineVerificationPartner);
-        assertSubmitDisabledWhenSkipped("notificationLanguage", GlobalConstants.isNotificationLanguageMandatoryForOnlineVerificationPartner);
+        assertSubmitDisabledWhenSkipped("policyGroup", GlobalConstants.POLICY_GROUP_MANDATORY_FOR_ONLINE_VERIFICATION_PARTNER);
+        assertSubmitDisabledWhenSkipped("address", GlobalConstants.ADDRESS_MANDATORY_FOR_ONLINE_VERIFICATION_PARTNER);
+        assertSubmitDisabledWhenSkipped("organisation", GlobalConstants.ORGANISATION_NAME_MANDATORY_FOR_ONLINE_VERIFICATION_PARTNER);
+        assertSubmitDisabledWhenSkipped("phone", GlobalConstants.PHONE_NUMBER_MANDATORY_FOR_ONLINE_VERIFICATION_PARTNER);
+        assertSubmitDisabledWhenSkipped("email", GlobalConstants.EMAIL_MANDATORY_FOR_ONLINE_VERIFICATION_PARTNER);
+        assertSubmitDisabledWhenSkipped("username", GlobalConstants.USERNAME_MANDATORY_FOR_ONLINE_VERIFICATION_PARTNER);
+        assertSubmitDisabledWhenSkipped("notificationLanguage", GlobalConstants.NOTIFICATION_LANGUAGE_MANDATORY_FOR_ONLINE_VERIFICATION_PARTNER);
     }
 
     @Test(priority = 5, description = "Verify username characters and maximum length")
@@ -89,52 +89,52 @@ public class OnlineVerificationPartnerTest extends BaseClass {
         selectOnlineVerificationPartner(mispPartnerPage);
         mispPartnerPage.enterUserName("###");
         Assert.assertTrue(mispPartnerPage.isUsernameMustStartWithLetterErrorDisplayed(),
-                GlobalConstants.isUsernameMustStartWithLetterForOnlineVerificationPartner);
+                GlobalConstants.USERNAME_MUST_START_WITH_LETTER_FOR_ONLINE_VERIFICATION_PARTNER);
         Assert.assertEquals(mispPartnerPage.getUserNameValidationErrorText(), GlobalConstants.USERNAME_MUST_START_WITH_LETTER,
-                GlobalConstants.isUsernameMustStartWithLetterForOnlineVerificationPartner);
+                GlobalConstants.USERNAME_MUST_START_WITH_LETTER_FOR_ONLINE_VERIFICATION_PARTNER);
 
         mispPartnerPage = navigateToCreatePartnerPage();
         selectOnlineVerificationPartner(mispPartnerPage);
         mispPartnerPage.enterUserName("swe#$$$%%^^^");
         Assert.assertEquals(mispPartnerPage.getUserNameValidationErrorText(), GlobalConstants.USERNAME_ALLOWED_CHARACTERS_ERROR,
-                GlobalConstants.isUsernameInvalidCharacterForOnlineVerificationPartner);
+                GlobalConstants.USERNAME_INVALID_CHARACTER_FOR_ONLINE_VERIFICATION_PARTNER);
 
         mispPartnerPage = navigateToCreatePartnerPage();
         selectOnlineVerificationPartner(mispPartnerPage);
         mispPartnerPage.enterUserName("12344swe");
         Assert.assertTrue(mispPartnerPage.isUsernameMustStartWithLetterErrorDisplayed(),
-                GlobalConstants.isUsernameMustStartWithLetterForOnlineVerificationPartner);
+                GlobalConstants.USERNAME_MUST_START_WITH_LETTER_FOR_ONLINE_VERIFICATION_PARTNER);
         Assert.assertEquals(mispPartnerPage.getUserNameValidationErrorText(), GlobalConstants.USERNAME_MUST_START_WITH_LETTER,
-                GlobalConstants.isUsernameMustStartWithLetterForOnlineVerificationPartner);
+                GlobalConstants.USERNAME_MUST_START_WITH_LETTER_FOR_ONLINE_VERIFICATION_PARTNER);
 
         mispPartnerPage = navigateToCreatePartnerPage();
         selectOnlineVerificationPartner(mispPartnerPage);
         mispPartnerPage.enterUserName("a".repeat(37));
         Assert.assertTrue(mispPartnerPage.getUserNameFieldValue().length() <= GlobalConstants.USERNAME_MAX_LENGTH,
-                GlobalConstants.isUsernameMaxLengthEnforcedForOnlineVerificationPartner);
+                GlobalConstants.USERNAME_MAX_LENGTH_ENFORCED_FOR_ONLINE_VERIFICATION_PARTNER);
     }
 
     @Test(priority = 6, description = "Verify organisation info, maximum length, and special characters")
     public void organisationValidation() {
         MispPartnerPage mispPartnerPage = navigateToCreatePartnerPage();
         mispPartnerPage.clickOnPartnerOragnizationInfoButton();
-        Assert.assertTrue(mispPartnerPage.isOrganizationNameInfoDisplayed(), GlobalConstants.isOrganizationInfoMessageCorrect);
+        Assert.assertTrue(mispPartnerPage.isOrganizationNameInfoDisplayed(), GlobalConstants.ORGANIZATION_INFO_MESSAGE_CORRECT);
         Assert.assertEquals(mispPartnerPage.getOrganizationNameInfoText(), GlobalConstants.ORG_NAME_INFO_TEXT,
-                GlobalConstants.isOrganizationInfoMessageCorrect);
+                GlobalConstants.ORGANIZATION_INFO_MESSAGE_CORRECT);
 
         mispPartnerPage = navigateToCreatePartnerPage();
         selectOnlineVerificationPartner(mispPartnerPage);
         mispPartnerPage.enterPartnerOrganisation("A".repeat(130));
         Assert.assertTrue(mispPartnerPage.getPartnerOrganisationFieldValue().length() <= GlobalConstants.ORG_NAME_MAX_LENGTH,
-                GlobalConstants.isOrgNameMaxLengthEnforcedForOnlineVerificationPartner);
+                GlobalConstants.ORG_NAME_MAX_LENGTH_ENFORCED_FOR_ONLINE_VERIFICATION_PARTNER);
 
         mispPartnerPage = navigateToCreatePartnerPage();
         selectOnlineVerificationPartner(mispPartnerPage);
         mispPartnerPage.enterPartnerOrganisation(GlobalConstants.DISALLOWED_SPECIAL_CHARS_ORG);
         Assert.assertTrue(mispPartnerPage.isPartnerOrgNameSpecialChNotAllowErrorDisplayed(),
-                GlobalConstants.isOrgInvalidCharactersRejectedForOnlineVerificationPartner);
+                GlobalConstants.ORG_INVALID_CHARACTERS_REJECTED_FOR_ONLINE_VERIFICATION_PARTNER);
         Assert.assertEquals(mispPartnerPage.getOrganizationNameValidationErrorText(), GlobalConstants.ORG_INVALID_CHARACTER_ERROR,
-                GlobalConstants.isOrgInvalidCharactersRejectedForOnlineVerificationPartner);
+                GlobalConstants.ORG_INVALID_CHARACTERS_REJECTED_FOR_ONLINE_VERIFICATION_PARTNER);
     }
 
     @Test(priority = 7, description = "Verify address and email maximum length")
@@ -143,20 +143,20 @@ public class OnlineVerificationPartnerTest extends BaseClass {
         selectOnlineVerificationPartner(mispPartnerPage);
         mispPartnerPage.enterPartnerAddress("A".repeat(2001));
         Assert.assertTrue(mispPartnerPage.getPartnerAddressFieldValue().length() <= GlobalConstants.ADDRESS_MAX_LENGTH,
-                GlobalConstants.isAddressMaxLengthEnforcedForOnlineVerificationPartner);
+                GlobalConstants.ADDRESS_MAX_LENGTH_ENFORCED_FOR_ONLINE_VERIFICATION_PARTNER);
 
         mispPartnerPage = navigateToCreatePartnerPage();
         selectOnlineVerificationPartner(mispPartnerPage);
         mispPartnerPage.enterEmailId("a".repeat(255));
         Assert.assertTrue(mispPartnerPage.getEmailFieldValue().length() <= GlobalConstants.EMAIL_MAX_LENGTH,
-                GlobalConstants.isEmailMaxLengthEnforcedForOnlineVerificationPartner);
+                GlobalConstants.EMAIL_MAX_LENGTH_ENFORCED_FOR_ONLINE_VERIFICATION_PARTNER);
     }
 
     @Test(priority = 8, description = "Verify Clear Form and Cancel")
     public void clearFormAndCancel() {
         MispPartnerPage mispPartnerPage = navigateToCreatePartnerPage();
         selectOnlineVerificationPartner(mispPartnerPage);
-        Assert.assertTrue(mispPartnerPage.isCreatePartnerClearButtonEnabled(), GlobalConstants.isClearFormButtonClickable);
+        Assert.assertTrue(mispPartnerPage.isCreatePartnerClearButtonEnabled(), GlobalConstants.CLEAR_FORM_BUTTON_CLICKABLE);
         mispPartnerPage.clickOnCreatePartnerClearButton();
 
         mispPartnerPage.enterPartnerOrganisation(GlobalConstants.ORGANISATION_NAME);
@@ -169,26 +169,26 @@ public class OnlineVerificationPartnerTest extends BaseClass {
 
         mispPartnerPage.clickOnCreatePartnerCancelButton();
         Assert.assertTrue(mispPartnerPage.isListOfPartnersDisplayed(),
-                GlobalConstants.isCancelWithoutDataReturnsToPartnerList);
+                GlobalConstants.CANCEL_WITHOUT_DATA_RETURNS_TO_PARTNER_LIST);
 
         mispPartnerPage = navigateToCreatePartnerPage();
         selectOnlineVerificationPartner(mispPartnerPage);
         mispPartnerPage.enterPartnerOrganisation(GlobalConstants.ORGANISATION_NAME);
         mispPartnerPage.clickOnCreatePartnerCancelButton();
         Assert.assertTrue(mispPartnerPage.isCancelConfirmationPopupDisplayed(),
-                GlobalConstants.isCancelAfterDataShowsConfirmation);
+                GlobalConstants.CANCEL_AFTER_DATA_SHOWS_CONFIRMATION);
         Assert.assertEquals(mispPartnerPage.getCancelConfirmationPopupText(), GlobalConstants.CANCEL_CONFIRMATION_POPUP_TEXT,
                 GlobalConstants.isCancelPopupTextCorrect);
         mispPartnerPage.clickOnCancelConfirmationPopupCancelButton();
         Assert.assertTrue(mispPartnerPage.isCreatePrtnerPageTitleDisplayed(),
-                GlobalConstants.isCancelPopupCancelKeepsCreatePartnerPage);
+                GlobalConstants.CANCEL_POPUP_CANCEL_KEEPS_CREATE_PARTNER_PAGE);
         Assert.assertEquals(mispPartnerPage.getPartnerOrganisationFieldValue(), GlobalConstants.ORGANISATION_NAME,
-                GlobalConstants.isCancelPopupCancelKeepsCreatePartnerPage);
+                GlobalConstants.CANCEL_POPUP_CANCEL_KEEPS_CREATE_PARTNER_PAGE);
 
         mispPartnerPage.clickOnCreatePartnerCancelButton();
         mispPartnerPage.clickOnCancelConfirmationPopupProceedButton();
         Assert.assertTrue(mispPartnerPage.isListOfPartnersDisplayed(),
-                GlobalConstants.isCancelPopupProceedReturnsToPartnerList);
+                GlobalConstants.CANCEL_POPUP_PROCEED_RETURNS_TO_PARTNER_LIST);
     }
 
     @Test(priority = 9, description = "Verify adding existing email ID")
