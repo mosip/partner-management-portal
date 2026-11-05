@@ -4,6 +4,7 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
+import org.testng.SkipException;
 import org.testng.annotations.Test;
 
 import io.mosip.testrig.pmpuiv2.pages.AddDevicePage;
@@ -14,6 +15,7 @@ import io.mosip.testrig.pmpuiv2.pages.DeviceProviderPage;
 import io.mosip.testrig.pmpuiv2.pages.ListOfDevicesPage;
 import io.mosip.testrig.pmpuiv2.pages.ListOfSbiPage;
 import io.mosip.testrig.pmpuiv2.pages.LoginPage;
+import io.mosip.testrig.pmpuiv2.pages.SbiLinkedDevicePage;
 import io.mosip.testrig.pmpuiv2.pages.ViewDeviceDetailsPage;
 import io.mosip.testrig.pmpuiv2.pages.ViewSbiDetailsPage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
@@ -30,6 +32,7 @@ public class SbiDeviceProviderTest extends BaseClass {
 	private ViewSbiDetailsPage viewSbiDetailsPage;
 	private BasePage basePage;
 	private AuthPolicyPage authPolicyPage;
+	private SbiLinkedDevicePage sbiLinkedDevicePage;
 
 	@Test(priority = 1, description = "Verify List Of SBI Page and Deactivate Sbi")
 	public void verifySbiPage() {
@@ -158,6 +161,7 @@ public class SbiDeviceProviderTest extends BaseClass {
 		dashboardpage = new DashboardPage(driver);
 		listOfSbiPage = new ListOfSbiPage(driver);
 		listOfDevicesPage = new ListOfDevicesPage(driver);
+		addDevicePage = new AddDevicePage(driver);
 		loginAsDeviceProvider();
 
 		deviceProviderPage = dashboardpage.clickOnDeviceProviderServicesTitle();
@@ -192,15 +196,14 @@ public class SbiDeviceProviderTest extends BaseClass {
 		assertEquals(listOfSbiPage.getListOfSbiMessage(), GlobalConstants.LIST_OF_SBI_PAGE_MESSAGE);
 		assertTrue(listOfDevicesPage.isAddDeviceButtonDisabled(), GlobalConstants.isAddDeviceButtonDisabled);
 
-		// Adding same rejected device again, these code required
-//		listOfDevicesPage.clickOnListOfSbiButton();
-//		listOfSbiPage.clickOnViewDeviceButton(GlobalConstants.AUTOMATION);
-//		listOfDevicesPage.clickOnAddDeviceButtonFromDeviceList();
-//		fillDeviceDetailsForRejectVerification(GlobalConstants.FACE, GlobalConstants.FULL_FACE, GlobalConstants.AUTOMATION_DEACTIVATING_3,
-//				GlobalConstants.AUTOMATION_DEACTIVATING_3);
-//		addDevicePage.clickOnSubmit();
-//		assertTrue(addDevicePage.isSuccessMessageDisplayed(), GlobalConstants.isSuccessMessageDisplayed);
-//		addDevicePage.closeSuccessMessage();
+		listOfDevicesPage.clickOnListOfSbiButton();
+		listOfSbiPage.clickOnViewDeviceButton(GlobalConstants.AUTOMATION);
+		listOfDevicesPage.clickOnAddDeviceButtonFromDeviceList();
+		fillDeviceDetails(GlobalConstants.FACE, GlobalConstants.FULL_FACE, GlobalConstants.AUTOMATION_DEACTIVATING_3,
+				GlobalConstants.AUTOMATION_DEACTIVATING_3);
+		addDevicePage.clickOnSubmit();
+		assertTrue(addDevicePage.isSuccessMessageDisplayed(), GlobalConstants.isSuccessMessageDisplayed);
+		addDevicePage.closeSuccessMessage();
 
 	}
 
@@ -392,7 +395,277 @@ public class SbiDeviceProviderTest extends BaseClass {
 
 	}
 
+	@Test(priority = 9, description = "Only Reject is offered for a device that is not linked to an SBI", dependsOnMethods = "verifyViewOfDevicesPageAsAdmin")
+	public void verifyRejectOnlyOptionForOrphanDevice() {
+		dashboardpage = new DashboardPage(driver);
+		listOfSbiPage = new ListOfSbiPage(driver);
+		listOfDevicesPage = new ListOfDevicesPage(driver);
 
+		dashboardpage.clickOnSbiDevices();
+		listOfSbiPage.clickOnDeviceTab();
+		assertTrue(listOfDevicesPage.isListOfDevicesTitleDisplayed(), GlobalConstants.isListOfDevicesTitleDisplayed);
+
+		listOfDevicesPage.clickOnFilterButton();
+		listOfDevicesPage.selectDeviceStatusFilterInAdmin(GlobalConstants.PENDING_FOR_APPROVAL);
+		listOfDevicesPage.clickOnApplyFilterButton();
+
+		int orphanRow = listOfDevicesPage.findOrphanPendingDeviceRowOnAnyPage(10);
+		if (orphanRow < 0) {
+			throw new SkipException("No Pending for Approval device without a linked SBI exists in this "
+					+ "environment, so the reject-only popup of TC_38189_23 cannot be exercised. Seed an "
+					+ "orphaned device to enable this check.");
+		}
+
+		assertTrue(listOfDevicesPage.isLinkedSbiColumnEmpty(orphanRow), GlobalConstants.isLinkedSbiColumnEmpty);
+
+		listOfDevicesPage.clickOnDeviceListActionMenu(orphanRow);
+		listOfDevicesPage.clickOnApproveOrReject();
+
+		assertTrue(listOfDevicesPage.isRejectOnlyPopupDisplayed(), GlobalConstants.isRejectOnlyPopupDisplayed);
+		assertTrue(listOfDevicesPage.isRejectOnlyPopupHeaderDisplayed(), GlobalConstants.isRejectOnlyPopupDisplayed);
+		assertTrue(listOfDevicesPage.isRejectOnlyPopupDescriptionDisplayed(),
+				GlobalConstants.isRejectOnlyPopupDescriptionDisplayed);
+		assertTrue(listOfDevicesPage.isRejectOnlyPopupRejectButtonDisplayed(),
+				GlobalConstants.isRejectOnlyPopupRejectButtonDisplayed);
+
+		assertTrue(listOfDevicesPage.isApproveButtonAbsentInRejectOnlyPopup(),
+				GlobalConstants.isApproveButtonNotDisplayedForOrphanDevice);
+
+		listOfDevicesPage.clickOnRejectOnlyPopupCloseIcon();
+	}
+
+	@Test(priority = 10, description = "Deativate SBI As Admin", dependsOnMethods = "verifyViewOfDevicesPageAsAdmin")
+	public void deactivateSbiAsAdmin() {
+		dashboardpage = new DashboardPage(driver);
+		listOfSbiPage = new ListOfSbiPage(driver);
+		listOfDevicesPage = new ListOfDevicesPage(driver);
+
+		dashboardpage.clickOnSbiDevices();
+		assertTrue(listOfSbiPage.isSbiAdminListPageTitleDisplayed(), GlobalConstants.isSbiAdminListPageTitleDisplayed);
+		verifyDeactivateSbiIsEnabledInAdmin(GlobalConstants.DEACTIVATE_SBI_ASADMIN, true);
+
+		listOfSbiPage.clickOnFilterButton();
+		listOfSbiPage.enterPartnerIdInFilter(GlobalConstants.DEVICE_PARTNER_ID);
+		listOfSbiPage.clickOnApplyFilterButton();
+
+		listOfSbiPage.clickOnThreeDotsOfSbiListAsAdmin(GlobalConstants.DEACTIVATE_SBI_ASADMIN);
+		listOfSbiPage.clickOnDeactivateSbiButtonAsAdmin();
+		assertTrue(listOfSbiPage.isDeactivatePopupInAdminDisplayed(), GlobalConstants.isStatusDisplayed);
+		assertTrue(listOfSbiPage.isDeactivateSbiPopupTitleInAdminDisplayed(), GlobalConstants.isStatusDisplayed);
+		assertTrue(listOfSbiPage.isDeactivatePopupDescriptionInAdminDisplayed(), GlobalConstants.isStatusDisplayed);
+		assertTrue(listOfSbiPage.isDeactivatePopupSbiConfMsgInAdminDisplayed(), GlobalConstants.isStatusDisplayed);
+		assertTrue(listOfSbiPage.isDeactivateCancelDisplayed(), GlobalConstants.isDeactivateCancelButtonDisplayed);
+		assertTrue(listOfSbiPage.isDeactivateSubmitButtonDisplayed(),
+				GlobalConstants.isDeactivateSubmitButtonDisplayed);
+		listOfSbiPage.clickOnDeactivateSbiCancel();
+		assertTrue(listOfSbiPage.isSbiAdminListPageTitleDisplayed(), GlobalConstants.isSbiAdminListPageTitleDisplayed);
+		listOfSbiPage.clickOnThreeDotsOfSbiListAsAdmin(GlobalConstants.DEACTIVATE_SBI_ASADMIN);
+		listOfSbiPage.clickOnDeactivateSbiButtonAsAdmin();
+		listOfSbiPage.clickOnDeactivateSubmit();
+		listOfSbiPage.clickOnFilterResetButton();
+
+		assertTrue(listOfSbiPage.isDeactivatedStatusDisplayedInAdminPage(GlobalConstants.DEACTIVATE_SBI_ASADMIN));
+		listOfSbiPage.clickOnDeactivatedSbiItem();
+		assertFalse(listOfSbiPage.isSbiDetailsPageDisplayed(), GlobalConstants.isSbiDetailsPageDisplayed);
+		sbiFilterWithStatus(GlobalConstants.DEACTIVATED);
+		String deactivatedSbisTitle = listOfSbiPage.getListOfSbisTitle();
+		assertTrue(deactivatedSbisTitle.matches("List of SBIs \\([1-9]\\d*\\)"),
+				GlobalConstants.isDeactivatedSbiCountShown + ", found '" + deactivatedSbisTitle + "'");
+		listOfSbiPage.clickOnFilterResetButton();
+		verifyViewOptionIsEnabled(GlobalConstants.DEACTIVATE_SBI_ASADMIN, true);
+		verifyApproveOrRejectSbiIsEnabled(GlobalConstants.DEACTIVATE_SBI_ASADMIN, false);
+		verifyDeactivateSbiIsEnabledInAdmin(GlobalConstants.DEACTIVATE_SBI_ASADMIN, false);
+
+		loginAsDeviceProvider();
+
+		deviceProviderPage = dashboardpage.clickOnDeviceProviderServicesTitle();
+		addSbi(GlobalConstants.DEACTIVATE_SBI_ASADMIN, GlobalConstants.DEACTIVATE_SBI_ASADMIN);
+		assertTrue(deviceProviderPage.isSbiExistsErrorMessageDisplayed(),
+				GlobalConstants.isSbiExistsErrorMessageDisplayed);
+		deviceProviderPage.clickOnListOfSbiTitleButton();
+		deviceProviderPage.clickOnAlertProceed();
+	}
+
+	@Test(priority = 11, description = "Deativate Device As Admin", dependsOnMethods = "deactivateSbiAsAdmin")
+	public void deactivateDeviceAsAdmin() {
+
+		dashboardpage = new DashboardPage(driver);
+		listOfSbiPage = new ListOfSbiPage(driver);
+		listOfDevicesPage = new ListOfDevicesPage(driver);
+		addDevicePage = new AddDevicePage(driver);
+		basePage = new BasePage(driver);
+
+		dashboardpage.clickOnSbiDevices();
+
+		listOfSbiPage.clickOnDeviceTab();
+		listOfDevicesPage.clickOnFilterButton();
+		listOfDevicesPage.applyMakeFilter(GlobalConstants.AUTOMATION_9);
+
+		listOfDevicesPage.clickOnDeviceThreeDotsAsAdmin(GlobalConstants.FACE, GlobalConstants.FULL_FACE,
+				GlobalConstants.AUTOMATION_9, GlobalConstants.AUTOMATION_9);
+		listOfDevicesPage.clickOnApproveOrReject();
+		listOfDevicesPage.clickOnApprove();
+		assertTrue(listOfDevicesPage.isDeviceStatusDisplayed(GlobalConstants.FACE, GlobalConstants.FULL_FACE,
+				GlobalConstants.AUTOMATION_9, GlobalConstants.AUTOMATION_9, GlobalConstants.APPROVED),
+				GlobalConstants.isStatusDisplayed);
+
+		listOfDevicesPage.clickOnDeviceThreeDotsAsAdmin(GlobalConstants.FACE, GlobalConstants.FULL_FACE,
+				GlobalConstants.AUTOMATION_9, GlobalConstants.AUTOMATION_9);
+		listOfDevicesPage.clickOnDeactivateButton();
+
+		assertTrue(listOfDevicesPage.isDeactivateDevicePopupInAdminDisplayed(),
+				GlobalConstants.isDeactivateDevicePopupDisplayed);
+
+		assertTrue(listOfDevicesPage.isDeactivateDevicePopupTitleInAdminDisplayed(
+				GlobalConstants.AUTOMATION_9 + " - " + GlobalConstants.AUTOMATION_9));
+		assertTrue(listOfDevicesPage.isDeactivateDevicePopupDescInAdminDisplayed(),
+				GlobalConstants.isDeactivateDeviceSubtitleDisplayed);
+		assertTrue(listOfDevicesPage.isDeactivateSubmitButtonDisplayed(),
+				GlobalConstants.isDeactivateSubmitButtonDisplayed);
+		assertTrue(listOfDevicesPage.isDeactivateCancelButtonDisplayed(),
+				GlobalConstants.isDeactivateCancelButtonDisplayed);
+		listOfDevicesPage.clickOnDeactivateCancel();
+		listOfDevicesPage.clickOnDeviceThreeDotsAsAdmin(GlobalConstants.FACE, GlobalConstants.FULL_FACE,
+				GlobalConstants.AUTOMATION_9, GlobalConstants.AUTOMATION_9);
+		listOfDevicesPage.clickOnDeactivateButton();
+		listOfDevicesPage.clickOnDeactivateSubmit();
+
+		basePage.navigateBack();
+		basePage.navigateForward();
+		listOfDevicesPage.clickOnFilterButton();
+		listOfDevicesPage.applyMakeFilter(GlobalConstants.AUTOMATION_9);
+		assertTrue(
+				listOfDevicesPage.isDeviceStatusDisplayed(GlobalConstants.FACE, GlobalConstants.FULL_FACE,
+						GlobalConstants.AUTOMATION_9, GlobalConstants.AUTOMATION_9, GlobalConstants.DEACTIVATED),
+				GlobalConstants.isStatusDisplayed);
+		listOfDevicesPage.clickOnResetFilter();
+		deviceFilterWithStatus(GlobalConstants.DEACTIVATED);
+		// The deactivated count covers every partner on the environment, so only check it includes the device just
+		// deactivated
+		String deactivatedDevicesTitle = listOfDevicesPage.getListOfDevicesTitleInAdmin();
+		assertTrue(deactivatedDevicesTitle.matches("List of Devices \\([1-9]\\d*\\)"),
+				GlobalConstants.isDeactivatedDeviceCountShown + ", found '" + deactivatedDevicesTitle + "'");
+		listOfDevicesPage.clickOnResetFilter();
+
+		// Try to create Deactivated Device again
+		loginAsDeviceProvider();
+
+		deviceProviderPage = dashboardpage.clickOnDeviceProviderServicesTitle();
+		// The SBI's Add Devices button opens the Add Device form directly, not the device list
+		listOfSbiPage.clickOnAddDeviceButton(GlobalConstants.AUTOMATION);
+		assertTrue(addDevicePage.isAddDeviceTitleDisplayed(), "Add Device page did not load");
+		fillDeviceDetails(GlobalConstants.FACE, GlobalConstants.FULL_FACE, GlobalConstants.AUTOMATION_9,
+				GlobalConstants.AUTOMATION_9);
+		addDevicePage.clickOnSubmit();
+		assertTrue(addDevicePage.isSuccessMessageDisplayed(), GlobalConstants.isSuccessMessageDisplayed);
+		addDevicePage.closeSuccessMessage();
+
+	}
+
+	@Test(priority = 12, description = "Verify Tabular View Of Linked Devices page as admin", dependsOnMethods = "deactivateDeviceAsAdmin")
+	public void verifyLinkedDevicesTableForSbiAsAdmin() {
+		dashboardpage = new DashboardPage(driver);
+		listOfSbiPage = new ListOfSbiPage(driver);
+		listOfDevicesPage = new ListOfDevicesPage(driver);
+		sbiLinkedDevicePage = new SbiLinkedDevicePage(driver);
+		authPolicyPage = new AuthPolicyPage(driver);
+		basePage = new BasePage(driver);
+
+		dashboardpage.clickOnSbiDevices();
+		listOfSbiPage.clickOnLinkedDevicesOfSbi(GlobalConstants.AUTOMATION, GlobalConstants.APPROVED);
+		assertTrue(sbiLinkedDevicePage.isLinkedDeviceListTitleDisplayed(),
+				GlobalConstants.isLinkedDeviceListTitleDisplayed);
+		assertTrue(sbiLinkedDevicePage.isHomeBreadcumbDisplayed(), GlobalConstants.isHomeBreadcumbDisplayed);
+		assertTrue(sbiLinkedDevicePage.isSbiIdAndSbiVersionDisplayed(), GlobalConstants.isSbiIdAndSbiVersionDisplayed);
+
+		verifyLinkedDeviceHeaderInAdmin();
+
+		verifyActionMenuOfLinkedDevicesInAdmin(GlobalConstants.FACE, GlobalConstants.FULL_FACE,
+				GlobalConstants.AUTOMATION, GlobalConstants.AUTOMATION, GlobalConstants.APPROVED, true, true, false);
+
+		verifyActionMenuOfLinkedDevicesInAdmin(GlobalConstants.FINGER, GlobalConstants.TOUCHLESS,
+				GlobalConstants.AUTOMATION, GlobalConstants.ALPHANUMERIC, GlobalConstants.PENDING_FOR_APPROVAL, true,
+				false, true);
+
+		verifyActionMenuOfLinkedDevicesInAdmin(GlobalConstants.FINGER, GlobalConstants.SLAP,
+				GlobalConstants.AUTOMATION_REJECTING, GlobalConstants.AUTOMATION_REJECTING, GlobalConstants.REJECTED,
+				true, false, false);
+
+		verifyActionMenuOfLinkedDevicesInAdmin(GlobalConstants.IRIS, GlobalConstants.SINGLE,
+				GlobalConstants.AUTOMATION_LOWERCASE, GlobalConstants.AUTOMATION_LOWERCASE, GlobalConstants.DEACTIVATED,
+				true, false, false);
+
+		sbiLinkedDevicePage.clickOnLinkedDevice(GlobalConstants.FACE, GlobalConstants.FULL_FACE,
+				GlobalConstants.AUTOMATION, GlobalConstants.AUTOMATION, GlobalConstants.APPROVED);
+		assertTrue(sbiLinkedDevicePage.isLinkedDeviceDetailsPageTitleDisplayed(),
+				GlobalConstants.isDeviceDetailsTitleDisplayed);
+		sbiLinkedDevicePage.clickOnListOfDevices();
+		assertTrue(sbiLinkedDevicePage.isLinkedDeviceListTitleDisplayed(),
+				GlobalConstants.isLinkedDeviceListTitleDisplayed);
+
+		sbiLinkedDevicePage.clickOnLinkedDevice(GlobalConstants.FINGER, GlobalConstants.TOUCHLESS,
+				GlobalConstants.AUTOMATION, GlobalConstants.ALPHANUMERIC, GlobalConstants.PENDING_FOR_APPROVAL);
+		assertTrue(sbiLinkedDevicePage.isLinkedDeviceListTitleDisplayed(),
+				GlobalConstants.isLinkedDeviceListTitleDisplayed);
+		basePage.navigateBack();
+
+		sbiLinkedDevicePage.clickOnLinkedDevice(GlobalConstants.FINGER, GlobalConstants.SLAP,
+				GlobalConstants.AUTOMATION_REJECTING, GlobalConstants.AUTOMATION_REJECTING, GlobalConstants.REJECTED);
+		assertTrue(sbiLinkedDevicePage.isLinkedDeviceListTitleDisplayed(),
+				GlobalConstants.isLinkedDeviceListTitleDisplayed);
+		basePage.back();
+		assertTrue(sbiLinkedDevicePage.isLinkedDeviceListTitleDisplayed(),
+				GlobalConstants.isListOfDevicesHeadingDisplayed);
+
+		sbiLinkedDevicePage.clickOnLinkedDevice(GlobalConstants.IRIS, GlobalConstants.SINGLE,
+				GlobalConstants.AUTOMATION_LOWERCASE, GlobalConstants.AUTOMATION_LOWERCASE,
+				GlobalConstants.DEACTIVATED);
+		assertTrue(sbiLinkedDevicePage.isActiondHeaderDisplayed(), GlobalConstants.isListOfDevicesHeadersDisplayed);
+
+		assertTrue(sbiLinkedDevicePage.isFilterButtonDisplayed(), GlobalConstants.isFilterButtonDisplayed);
+		sbiLinkedDevicePage.clickOnFilterButton();
+
+		assertTrue(sbiLinkedDevicePage.isFilterButtonDisabled(), GlobalConstants.isFilterButtonDisabled);
+		assertTrue(sbiLinkedDevicePage.isFilterResetButtonDisplayed(), GlobalConstants.isFilterResetButtonDisplayed);
+
+		verifyLinkedDeviceFiltersLabelInAdmin();
+
+		verifyLinkedDeviceFiltersPlaceHolderInAdmin();
+
+		verifyLinkedDeviceFiltersInAdmin();
+
+		sbiLinkedDevicePage.enterPartnerIdInFilter(GlobalConstants.INVALID_DATA);
+		sbiLinkedDevicePage.clickOnApplyFilterButton();
+		assertTrue(sbiLinkedDevicePage.isNoResultFoundDisplayed(),GlobalConstants.isNoResultFoundDisplayed);
+
+		sbiLinkedDevicePage.clickOnFilterCancelButton();
+		sbiLinkedDevicePage.enterPartnerIdInFilter(GlobalConstants.DEVICE_PARTNER_ID);
+		sbiLinkedDevicePage.clickOnApprovedStatusInFilter();
+		sbiLinkedDevicePage.clickOnApplyFilterButton();
+
+		assertTrue(sbiLinkedDevicePage.isLinkedDeviceCreationDateSameAsBrowserDateFormat(),GlobalConstants.isCreationDateSameAsBrowserDateFormat);
+		assertTrue(sbiLinkedDevicePage.getListOfLinkedDevicesCount() > 0, GlobalConstants.isFilteredLinkedDevicesCountShown);
+		assertTrue(sbiLinkedDevicePage.areAllLinkedDeviceRowsInStatus(GlobalConstants.APPROVED),
+				GlobalConstants.isFilteredLinkedDevicesStatusApproved);
+		sbiLinkedDevicePage.clickOnFilterResetButton();
+
+		assertTrue(authPolicyPage.isPaginationDisplayed(), GlobalConstants.isPaginationDisplayed);
+		assertTrue(authPolicyPage.isPreviusPageButtonDisplayed(), GlobalConstants.isPreviusPageButtonDisplayed);
+		assertTrue(authPolicyPage.isNextPageButtonDisplayed(), GlobalConstants.isNextPageButtonDisplayed);
+		assertTrue(authPolicyPage.isPage1Displayed(), GlobalConstants.isPage1Displayed);
+		authPolicyPage.clickOnNextPageButton();
+		assertTrue(authPolicyPage.isPage2Displayed(), GlobalConstants.isPage2Displayed);
+		authPolicyPage.clickOnPreviusPageButton();
+		assertTrue(authPolicyPage.isPage1Displayed(), GlobalConstants.isPage1Displayed);
+		assertTrue(authPolicyPage.isPrefixOfPageDisplayed(), GlobalConstants.isPrefixOfPageDisplayed);
+		assertTrue(authPolicyPage.isRecordPerPageDisplayed(), GlobalConstants.isRecordPerPageDisplayed);
+		assertTrue(authPolicyPage.isItemPerPage8Displayed(), GlobalConstants.isItemPerPage8Displayed);
+		assertTrue(authPolicyPage.isexpandIconDisplayed(), GlobalConstants.isexpandIconDisplayed);
+		authPolicyPage.selectItemPerPageNumber();
+		assertTrue(authPolicyPage.isItemPerPage16Displayed(), GlobalConstants.isItemPerPage16Displayed);
+
+
+	}
 	private void loginAsDeviceProvider() {
 		dashboardpage.clickOnProfileDropdown();
 		LoginPage loginpage = dashboardpage.clickOnLogoutButton();
@@ -526,7 +799,8 @@ public class SbiDeviceProviderTest extends BaseClass {
 		assertEquals(viewSbiDetailsPage.getPartnerIdText(), GlobalConstants.DEVICE_PARTNER_ID);
 		assertEquals(viewSbiDetailsPage.getPartnerTypeText(), GlobalConstants.DEVICE_PROVIDER);
 		assertEquals(viewSbiDetailsPage.getOrganisationText(), GlobalConstants.ORGANISATION_NAME);
-		assertEquals(viewSbiDetailsPage.getLinkedDeviceText(), GlobalConstants.Linked_Device38);
+		assertTrue(viewSbiDetailsPage.getLinkedDeviceText().trim().matches("\\d+"),
+				GlobalConstants.isLinkedDeviceCountNumeric);
 		assertEquals(viewSbiDetailsPage.getSbiVersionText(), sbiVersion);
 		assertTrue(viewSbiDetailsPage.isSbiCreationDateSameAsBrowserDateFormat(),
 				GlobalConstants.isSbiCreationDateSameAsBrowserDateFormat);
@@ -567,15 +841,19 @@ public class SbiDeviceProviderTest extends BaseClass {
 	}
 
 	private void verifyLinkedDevicesOfApprovededSbiInList(String sbiVersion, String status) {
-		assertTrue(listOfSbiPage.isLinkedDevicePresentForStatus("Approved", "38"), GlobalConstants.Linked_Device38);
-		listOfSbiPage.clickOnLinkedDevicesInSbiList("Approved", "38");
+		String linkedDeviceCount = listOfSbiPage.getLinkedDeviceCountForSbi(sbiVersion, "Approved");
+		assertTrue(linkedDeviceCount.matches("[1-9]\\d*"),
+				GlobalConstants.isLinkedDeviceCountNonZero + " for SBI " + sbiVersion + ", found '" + linkedDeviceCount + "'");
+		listOfSbiPage.clickOnLinkedDevicesOfSbi(sbiVersion, "Approved");
 		assertTrue(listOfSbiPage.isLinkedDevicesListDisplayed(), GlobalConstants.isLinkedDevicesListDisplayed);
 		listOfSbiPage.clickOnBackIconOfLinkedDevices();
 	}
 
 	private void verifyLinkedDevicesOfDeactivatedSbiInList(String sbiVersion, String status) {
-		assertTrue(listOfSbiPage.isLinkedDevicePresentForStatus("Deactivated", "6"), GlobalConstants.Linked_Device6);
-		listOfSbiPage.clickOnLinkedDevicesInSbiList("Deactivated", "6");
+		String linkedDeviceCount = listOfSbiPage.getLinkedDeviceCountForSbi(sbiVersion, "Deactivated");
+		assertTrue(linkedDeviceCount.matches("[1-9]\\d*"),
+				GlobalConstants.isLinkedDeviceCountNonZero + " for SBI " + sbiVersion + ", found '" + linkedDeviceCount + "'");
+		listOfSbiPage.clickOnLinkedDevicesOfSbi(sbiVersion, "Deactivated");
 		assertTrue(listOfSbiPage.isLinkedDevicesListDisplayed(), GlobalConstants.isLinkedDevicesListDisplayed);
 		listOfSbiPage.clickOnBackIconOfLinkedDevices();
 	}
@@ -584,13 +862,13 @@ public class SbiDeviceProviderTest extends BaseClass {
 		assertTrue(listOfSbiPage.isLinkedDevicePresentForStatus("Pending For Approval", "0"),
 				GlobalConstants.Linked_Device0);
 		listOfSbiPage.clickOnLinkedDevicesInSbiList("Pending For Approval", "0");
-		assertFalse(listOfSbiPage.isLinkedDevicesListDisplayedQuick(), GlobalConstants.isLinkedDevicesListDisplayed);
+		assertFalse(listOfSbiPage.isLinkedDevicesListDisplayed(), GlobalConstants.isLinkedDevicesListDisplayed);
 	}
 
 	private void verifyLinkedDevicesOfRejectedSbiInList(String sbiVersion, String status) {
 		assertTrue(listOfSbiPage.isLinkedDevicePresentForStatus("Rejected", "0"), GlobalConstants.Linked_Device0);
 		listOfSbiPage.clickOnLinkedDevicesInSbiList("Rejected", "0");
-		assertFalse(listOfSbiPage.isLinkedDevicesListDisplayedQuick(), GlobalConstants.isLinkedDevicesListDisplayed);
+		assertFalse(listOfSbiPage.isLinkedDevicesListDisplayed(), GlobalConstants.isLinkedDevicesListDisplayed);
 	}
 
 	private void verifyDeviceDetailsAsAdmin(String deviceType, String deviceSubType, String make, String model,
@@ -636,11 +914,11 @@ public class SbiDeviceProviderTest extends BaseClass {
 
 	private void verifyActionMenuOfDevicesInAdmin(String deviceType, String deviceSubType, String make, String model,
 			String status, boolean status1, boolean status2, boolean status3) {
-		listOfDevicesPage.clickOnDeviceThreeDots(deviceType, deviceSubType, make, model);
+		listOfDevicesPage.clickOnDeviceThreeDotsInAdmin(deviceType, deviceSubType, make, model, status);
 		assertEquals(listOfDevicesPage.isViewOptionDisplayed(), status1);
 		assertEquals(listOfDevicesPage.isDeactivateDeviceEnabledInAdmin(), status2);
 		assertEquals(listOfDevicesPage.isApproceRejectDeviceDisabled(), status3);
-		listOfDevicesPage.clickOnDeviceThreeDots(deviceType, deviceSubType, make, model);
+		listOfDevicesPage.clickOnDeviceThreeDotsInAdmin(deviceType, deviceSubType, make, model, status);
 	}
 
 	private void verifyDeviceFilterHeadersInAdmin() {
@@ -691,6 +969,103 @@ public class SbiDeviceProviderTest extends BaseClass {
 		listOfDevicesPage.enterInvalidValueInDeviceModelFilterInAdmin(GlobalConstants.INVALID_DATA);
 		listOfDevicesPage.clickOnApplyFilterButton();
 		assertTrue(listOfDevicesPage.isNoResultsFoundInAdminDisplayed(), GlobalConstants.isNoResultsFoundDisplayed);
+	}
+
+	private void verifyDeactivateSbiIsEnabledInAdmin(String sbiVersion, boolean status) {
+		listOfSbiPage.clickOnThreeDotsOfSbiListAsAdmin(sbiVersion);
+		assertEquals(listOfSbiPage.isDeactivateOptionEnabledInAdmin(), status);
+		listOfSbiPage.clickOnThreeDotsOfSbiListAsAdmin(sbiVersion);
+	}
+
+	private void sbiFilterWithStatus(String status) {
+		listOfSbiPage.clickOnFilterButton();
+		listOfSbiPage.selectSbiStatusFilterInAdmin(status);
+		listOfSbiPage.clickOnApplyFilterButton();
+	}
+
+	private void deviceFilterWithStatus(String status) {
+		listOfDevicesPage.clickOnFilterButton();
+		listOfDevicesPage.selectDeviceStatusFilterInAdmin(status);
+		listOfDevicesPage.clickOnApplyFilterButton();
+	}
+
+	private void fillDeviceDetails(String deviceType, String deviceSubType, String make, String model) {
+		addDevicePage.selectAddDeviceType(deviceType);
+		addDevicePage.selectDeviceSubType(deviceSubType);
+		addDevicePage.enterMakeName(make);
+		addDevicePage.enterModelName(model);
+		assertTrue(addDevicePage.isSubmitEnabled(), GlobalConstants.isSubmitButtonEnabled);
+	}
+
+	private void verifyLinkedDeviceHeaderInAdmin() {
+		assertTrue(sbiLinkedDevicePage.isPartnerIdHeaderDisplayed(), GlobalConstants.isListOfDevicesHeadersDisplayed);
+		assertTrue(sbiLinkedDevicePage.isOrganisationHeaderDisplayed(),
+				GlobalConstants.isListOfDevicesHeadersDisplayed);
+		assertTrue(sbiLinkedDevicePage.isDeviceIdHeaderDisplayed(), GlobalConstants.isListOfDevicesHeadersDisplayed);
+		assertTrue(sbiLinkedDevicePage.isDeviceTypeHeaderDisplayed(), GlobalConstants.isListOfDevicesHeadersDisplayed);
+		assertTrue(sbiLinkedDevicePage.isDeviceSubtypeHeaderDisplayed(),
+				GlobalConstants.isListOfDevicesHeadersDisplayed);
+		assertTrue(sbiLinkedDevicePage.isMakeHeaderDisplayed(), GlobalConstants.isListOfDevicesHeadersDisplayed);
+		assertTrue(sbiLinkedDevicePage.isModelHeaderDisplayed(), GlobalConstants.isListOfDevicesHeadersDisplayed);
+		assertTrue(sbiLinkedDevicePage.isCreationDateHeaderDisplayed(),
+				GlobalConstants.isListOfDevicesHeadersDisplayed);
+		assertTrue(sbiLinkedDevicePage.isStatusHeaderDisplayed(), GlobalConstants.isListOfDevicesHeadersDisplayed);
+		assertTrue(sbiLinkedDevicePage.isActiondHeaderDisplayed(), GlobalConstants.isListOfDevicesHeadersDisplayed);
+	}
+
+	private void verifyActionMenuOfLinkedDevicesInAdmin(String deviceType, String deviceSubType, String make,
+			String model, String status, boolean viewDisplayed, boolean deactivateEnabled, boolean approveRejectEnabled) {
+		sbiLinkedDevicePage.clickOnDeviceThreeDots(deviceType, deviceSubType, make, model, status);
+		assertEquals(sbiLinkedDevicePage.isViewOptionDisplayed(), viewDisplayed);
+		assertEquals(sbiLinkedDevicePage.isDeactivateDeviceEnabledInAdmin(), deactivateEnabled);
+		assertEquals(!sbiLinkedDevicePage.isApproceRejectDeviceDisabled(), approveRejectEnabled);
+		sbiLinkedDevicePage.clickOnDeviceThreeDots(deviceType, deviceSubType, make, model, status);
+	}
+
+	private void verifyLinkedDeviceFiltersLabelInAdmin() {
+		assertTrue(sbiLinkedDevicePage.isPartnerIdFilterLabelDisplayed(), GlobalConstants.isFilterDevicesHeaderDisplayed);
+		assertTrue(sbiLinkedDevicePage.isOrganisationFilterLabelDisplayed(),
+				GlobalConstants.isFilterDevicesHeaderDisplayed);
+		assertTrue(sbiLinkedDevicePage.isDeviceIdFilterLabelDisplayed(),
+				GlobalConstants.isFilterDevicesHeaderDisplayed);
+		assertTrue(sbiLinkedDevicePage.isDeviceTypeFilterLabelDisplayed(),
+				GlobalConstants.isFilterDevicesHeaderDisplayed);
+		assertTrue(sbiLinkedDevicePage.isDeviceSubTypeFilterLabelDisplayed(),
+				GlobalConstants.isFilterDevicesHeaderDisplayed);
+		assertTrue(sbiLinkedDevicePage.isMakeFilterLabelDisplayed(), GlobalConstants.isFilterDevicesHeaderDisplayed);
+		assertTrue(sbiLinkedDevicePage.isModelFilterLabelDisplayed(), GlobalConstants.isFilterDevicesHeaderDisplayed);
+		assertTrue(sbiLinkedDevicePage.isStatusFilterLabelDisplayed(), GlobalConstants.isFilterDevicesHeaderDisplayed);
+	}
+
+	private void verifyLinkedDeviceFiltersPlaceHolderInAdmin() {
+		assertTrue(sbiLinkedDevicePage.isPartnerIdPlaceHolderDisplayed(),
+				GlobalConstants.isPartnerIdPlaceHolderDisplayed);
+		assertTrue(sbiLinkedDevicePage.isOrganisationPlaceHolderDisplayed(),
+				GlobalConstants.isOrganisationPlaceHolderDisplayed);
+		assertTrue(sbiLinkedDevicePage.isDeviceIdPlaceHolderDisplayed(),
+				GlobalConstants.isDeviceIdPlaceHolderDisplayed);
+		assertTrue(sbiLinkedDevicePage.isDeviceTypePlaceHolderDisplayed(),
+				GlobalConstants.isDeviceTypePlaceHolderDisplayed);
+		assertTrue(sbiLinkedDevicePage.isDeviceSubTypePlaceHolderDisplayed(),
+				GlobalConstants.isDeviceSubTypePlaceHolderDisplayed);
+		assertTrue(sbiLinkedDevicePage.isMakePlaceHolderDisplayed(), GlobalConstants.isMakePlaceHolderDisplayed);
+		assertTrue(sbiLinkedDevicePage.isModelPlaceHolderDisplayed(), GlobalConstants.isModelPlaceHolderDisplayed);
+		assertTrue(sbiLinkedDevicePage.isStatusPlaceHolderDisplayed(), GlobalConstants.isStatusPlaceHolderDisplayed);
+	}
+
+	private void verifyLinkedDeviceFiltersInAdmin() {
+		assertTrue(sbiLinkedDevicePage.isPartnerIdFilterDisplayed(), GlobalConstants.isFilterDevicesHeaderDisplayed);
+		assertTrue(sbiLinkedDevicePage.isOrganisationFilterDisplayed(),
+				GlobalConstants.isFilterDevicesHeaderDisplayed);
+		assertTrue(sbiLinkedDevicePage.isDeviceIdFilterDisplayed(), GlobalConstants.isFilterDevicesHeaderDisplayed);
+		assertTrue(sbiLinkedDevicePage.isDeviceTypeFilterDropdownDisplayed(),
+				GlobalConstants.isFilterDevicesHeaderDisplayed);
+		assertTrue(sbiLinkedDevicePage.isDeviceSubTypeFilterDropdownDisplayed(),
+				GlobalConstants.isFilterDevicesHeaderDisplayed);
+		assertTrue(sbiLinkedDevicePage.isMakeFilterDisplayed(), GlobalConstants.isFilterDevicesHeaderDisplayed);
+		assertTrue(sbiLinkedDevicePage.isModelFilterDisplayed(), GlobalConstants.isFilterDevicesHeaderDisplayed);
+		assertTrue(sbiLinkedDevicePage.isStatusFilterDropdownDisplayed(),
+				GlobalConstants.isFilterDevicesHeaderDisplayed);
 	}
 
 }

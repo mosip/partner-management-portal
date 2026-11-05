@@ -2,6 +2,8 @@ package io.mosip.testrig.pmpuiv2.pages;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -1383,5 +1385,66 @@ public class PartnerCertificatePage extends BasePage {
 	public boolean isCertificateFormatTextNotEditable() {
 		return isElementNotEditable(partnerCertificateFormatText);
 	}
+
+	public boolean areValidFromAndValidToColumnsInBrowserDateFormat() {
+		return isColumnInBrowserDateFormat(getValidFromColumnValues())
+				&& isColumnInBrowserDateFormat(getValidToColumnValues());
+	}
+
+	public List<String> getValidFromColumnValues() {
+		return getColumnValues(VALID_FROM_COLUMN_CELLS);
+	}
+
+	public List<String> getValidToColumnValues() {
+		return getColumnValues(VALID_TO_COLUMN_CELLS);
+	}
+
+	private List<String> getColumnValues(By locator) {
+		List<String> values = new ArrayList<>();
+		for (WebElement cell : driver.findElements(locator)) {
+			values.add(cell.getText().trim());
+		}
+		return values;
+	}
+
+	private boolean isColumnInBrowserDateFormat(List<String> columnValues) {
+		if (columnValues.isEmpty()) {
+			return false;
+		}
+		for (String value : columnValues) {
+			if (!isBrowserDateTimeFormatValid(value)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public boolean isUploadedTimeColumnInBrowserDateFormat() {
+		return isColumnInBrowserDateFormat(getUploadedTimeColumnValues());
+	}
+
+	public List<String> getUploadedTimeColumnValues() {
+		return getColumnValues(UPLOADED_TIME_COLUMN_CELLS);
+	}
+
+	private static final By UPLOADED_TIME_COLUMN_CELLS = By
+			.xpath("//tr[starts-with(@id,'certificate_list_item')]/td[7]");
+
+	private boolean isBrowserDateTimeFormatValid(String uiDateTime) {
+		String normalized = uiDateTime.replaceAll("\\s+", " ").trim();
+
+		try {
+			LocalDateTime parsed = LocalDateTime.parse(normalized, PmpTestUtil.browserFormatter);
+			return normalized.equals(parsed.format(PmpTestUtil.browserFormatter));
+		} catch (DateTimeParseException e) {
+			return false;
+		}
+	}
+
+	private static final By VALID_FROM_COLUMN_CELLS = By
+			.xpath("//tr[starts-with(@id,'certificate_list_item')]/td[5]");
+
+	private static final By VALID_TO_COLUMN_CELLS = By.xpath("//tr[starts-with(@id,'certificate_list_item')]/td[6]");
+
 
 }

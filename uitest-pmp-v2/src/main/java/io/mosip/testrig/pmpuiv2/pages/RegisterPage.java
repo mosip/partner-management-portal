@@ -54,6 +54,12 @@ public class RegisterPage extends BasePage {
 	@FindBy(xpath = "//span[text()='Please specify phoneNumber']")
 	private WebElement enterPhoneNumberWarningMessage;
 
+	@FindBy(id = "input-error-email")
+	private WebElement emailErrorMessage;
+
+	@FindBy(xpath = "//span[starts-with(@id,'input-error-') and contains(text(),'Please specify')]")
+	private WebElement requiredFieldErrorMessage;
+
 	public RegisterPage(WebDriver driver) {
 		super(driver);
 	}
@@ -208,9 +214,14 @@ public class RegisterPage extends BasePage {
 		return isElementDisplayed(enterPhoneNumberWarningMessage);
 	}
 
-	public boolean isEmailFieldValid() {
-		return Boolean.TRUE.equals(
-				((JavascriptExecutor) driver).executeScript("return arguments[0].checkValidity();", emailTextbox));
+	// Keycloak validates the email format server-side, so this is only meaningful after submit
+	public boolean isEmailFieldFlaggedInvalid() {
+		return "true".equals(getTextFromAttribute(emailTextbox, "aria-invalid"))
+				|| isElementDisplayed(emailErrorMessage);
+	}
+
+	public boolean isRequiredFieldErrorDisplayed() {
+		return isElementDisplayed(requiredFieldErrorMessage);
 	}
 
 	public boolean isSubmitButtonEnabled() {

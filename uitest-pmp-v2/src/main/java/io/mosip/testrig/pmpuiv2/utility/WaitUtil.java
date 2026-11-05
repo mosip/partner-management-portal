@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -18,7 +19,16 @@ public class WaitUtil {
 	public static void waitForVisibility(WebDriver driver, WebElement element) {
 	    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(TIMEOUT));
 	    wait.ignoring(StaleElementReferenceException.class)
-	        .until(ExpectedConditions.visibilityOf(element));
+	        .until(d -> {
+	            try {
+	                return element.isDisplayed() ? element : null;
+	            } catch (WebDriverException e) {
+	               if (e.getMessage() != null && e.getMessage().contains("does not belong to the document")) {
+	                    return null;
+	                }
+	                throw e;
+	            }
+	        });
 	}
 
 	public static void waitForClickability(WebDriver driver, WebElement element) {

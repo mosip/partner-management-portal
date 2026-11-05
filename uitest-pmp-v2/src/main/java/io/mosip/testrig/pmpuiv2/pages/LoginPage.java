@@ -58,10 +58,19 @@ public class LoginPage extends BasePage {
 	}
 
 	public void selectLanguage(String kcLocale) {
-		if (kcLocale == null || kcLocale.isBlank() || kcLocale.equalsIgnoreCase("eng")) {
+		if (kcLocale == null || kcLocale.isBlank()) {
 			return;
 		}
 		isLoginPageDisplayed();
+		if (kcLocale.equalsIgnoreCase("eng")) {
+			java.util.List<WebElement> englishOptions = driver.findElements(
+					By.cssSelector("a[href*='kc_locale=eng'], a[href*='kc_locale=en&'], a[href$='kc_locale=en']"));
+			if (!englishOptions.isEmpty()) {
+				driver.get(englishOptions.get(0).getAttribute("href"));
+				isLoginPageDisplayed();
+			}
+			return;
+		}
 		try {
 			WebElement languageOption = driver
 					.findElement(By.cssSelector("a[href*='kc_locale=" + kcLocale + "']"));

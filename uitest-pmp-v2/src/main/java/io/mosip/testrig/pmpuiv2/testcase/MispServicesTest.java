@@ -574,6 +574,8 @@ public class MispServicesTest extends BaseClass {
         mispServicesPage.waitUntilMispLicenseListRowCountSatisfies(count -> count > 0);
 
         String partnerIdBeforeRegenerate = mispServicesPage.getLatestLicenseRowPartnerId();
+        // Earlier runs leave other licenses on dev1, so read the name of the row actually being regenerated
+        String licenseKeyNameBeforeRegenerate = mispServicesPage.getLicenseRowLicenseKeyName(1);
 
         mispServicesPage.clickOnMispLicenseListActionButton();
         mispServicesPage.clickOnMispLicenseListRegenerateButton();
@@ -608,7 +610,7 @@ public class MispServicesTest extends BaseClass {
                 GlobalConstants.isRegenerateErrorMessageDisplayedForTodayExpiryDate);
         mispServicesPage.clickOnRegenerateClearFormButton();
 
-        regenerateMispLicenseKey(GlobalConstants.MISP_LICENSEKEY_01);
+        regenerateMispLicenseKey(licenseKeyNameBeforeRegenerate);
         assertEquals(mispServicesPage.getRegenerateErrorMessageText(),
                 GlobalConstants.DUPLICATE_LICENSE_KEY_NAME_ERROR_MSG,
                 GlobalConstants.isRegenerateDuplicateLicenseKeyNameErrorDisplayed);
@@ -656,7 +658,7 @@ public class MispServicesTest extends BaseClass {
         mispServicesPage.waitUntilMispLicenseListRowCountSatisfies(count -> count > 0);
         assertEquals(mispServicesPage.getLatestLicenseRowStatus(), GlobalConstants.ACTIVE_STATUS_LABEL);
 
-        assertEquals(mispServicesPage.getLicenseRowLicenseKeyName(2), GlobalConstants.MISP_LICENSEKEY_01,
+        assertEquals(mispServicesPage.getLicenseRowLicenseKeyName(2), licenseKeyNameBeforeRegenerate,
                 "Verify the row below the newly regenerated license is the original license record it was regenerated from");
         assertEquals(mispServicesPage.getLicenseRowStatus(2), GlobalConstants.MISP_LICENSE_INACTIVE_STATUS_LABEL,
                 GlobalConstants.isPreviousLicenseAutoDeactivatedOnRegenerate);
