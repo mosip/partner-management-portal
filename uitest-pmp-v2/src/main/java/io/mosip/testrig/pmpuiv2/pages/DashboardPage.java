@@ -406,14 +406,6 @@ public class DashboardPage extends BasePage {
 		return isElementDisplayed(partners);
 	}
 
-	public boolean isPartnerAdminCardDisplayed() {
-		return isElementDisplayedQuick(partners, TERMS_AND_CONDITIONS_TIMEOUT);
-	}
-
-	public boolean isPartnerAdminSideNavDisplayed() {
-		return isElementDisplayedQuick(partnerOfHamburger, TERMS_AND_CONDITIONS_TIMEOUT);
-	}
-
 	public void clickOnPartners() {
 		clickOnElement(partners);
 	}
