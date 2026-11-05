@@ -54,7 +54,7 @@ public class RegisterPage extends BasePage {
 	@FindBy(xpath = "//span[text()='Please specify phoneNumber']")
 	private WebElement enterPhoneNumberWarningMessage;
 
-		@FindBy(id = "input-error-email")
+	@FindBy(id = "input-error-email")
 	private WebElement emailErrorMessage;
 
 	@FindBy(xpath = "//span[starts-with(@id,'input-error-') and contains(text(),'Please specify')]")
