@@ -2036,6 +2036,10 @@ public class OidcClientPage extends BasePage {
 		return isElementDisplayed(frenchLanguageOptionRow2);
 	}
 
+	public boolean isAdditionalInfoSupported() {
+		return !isElementDisplayedQuick(By.id("oidc_client_list_compatibility_msg"), ABSENCE_CHECK_TIMEOUT);
+	}
+
 	public boolean isForgotPasswordBannerToggleOn() {
 		return isElementSelected(forgotPasswordBannerToggle);
 	}
