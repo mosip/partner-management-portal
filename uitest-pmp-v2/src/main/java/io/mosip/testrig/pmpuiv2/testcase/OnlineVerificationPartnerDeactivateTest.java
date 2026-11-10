@@ -26,7 +26,6 @@ public class OnlineVerificationPartnerDeactivateTest extends BaseClass {
 	private static String phoneNumber;
 	private static String deactivateEmail;
 	private static String deactivatePolicyGroup;
-	private static final String NON_ADMIN_USER_ID = "pmpui-ovpnoadmin";
 
 	@Test(priority = 1, description = "Create active Online Verification Partners used by the deactivate cases")
 	public void createOnlineVerificationPartnersForDeactivate() {
@@ -246,10 +245,11 @@ public class OnlineVerificationPartnerDeactivateTest extends BaseClass {
 	@Test(priority = 10, description = "A user without PARTNER_ADMIN cannot deactivate a partner", dependsOnMethods = "createOnlineVerificationPartnersForDeactivate")
 	public void partnerWithoutAdminRoleHasNoDeactivateAccess() {
 		DashboardPage dashboardPage = new DashboardPage(driver);
-		KeycloakUserManager.createUsers(NON_ADMIN_USER_ID, GlobalConstants.PARTNER_PASSWORD, "roles.auth", null);
+		KeycloakUserManager.createUsers(GlobalConstants.NON_ADMIN_USER_ID, GlobalConstants.PARTNER_PASSWORD,
+				"roles.auth", null);
 		dashboardPage.clickOnProfileDropdown();
 		LoginPage loginPage = dashboardPage.clickOnLogoutButton();
-		loginPage.login(NON_ADMIN_USER_ID, GlobalConstants.PARTNER_PASSWORD);
+		loginPage.login(GlobalConstants.NON_ADMIN_USER_ID, GlobalConstants.PARTNER_PASSWORD);
 		if (dashboardPage.isTermsAndConditionsPopupDisplayedQuick()) {
 			dashboardPage.clickOnCheckbox();
 			dashboardPage.clickOnProceedButton();

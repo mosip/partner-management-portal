@@ -25,6 +25,7 @@ public class GlobalConstants {
 	public static final String PARTNER_ADMIN = "pmpui-v2";
 	public static final String PARTNER_PASSWORD = "mosip123";
 	public static final String AUTH_PARTNER_ID = "pmpui-auth";
+	public static final String NON_ADMIN_USER_ID = "pmpui-ovpnoadmin";
 	public static final String FTM_PARTNER_ID = "pmpui-ftm";
 	public static final String MISP_PARTNER = "MISP Partner";
 	public static final String MISP_PARTNER_USER = "pmpui-misp";
