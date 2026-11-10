@@ -24,8 +24,6 @@ import io.mosip.testrig.pmpuiv2.utility.WaitUtil;
 
 public class PartnerAdminPage extends BasePage {
 
-	private static final String PARTNER_ID_FILTER_ID = "partner_id_filter";
-
 	private static final Duration SHORT_ABSENCE_TIMEOUT = Duration.ofSeconds(3);
 	private static final Duration LIST_LOAD_TIMEOUT = Duration.ofSeconds(20);
 	private static final int POPUP_CENTRING_TOLERANCE_PX = 2;
@@ -97,7 +95,7 @@ public class PartnerAdminPage extends BasePage {
 	@FindBy(id = "ftm_view_back_btn")
 	private WebElement gobackButtonInPartnerDetailsPage;
 
-	@FindBy(id = PARTNER_ID_FILTER_ID)
+	@FindBy(id = "partner_id_filter")
 	private WebElement partnersIdFilter;
 
 	@FindBy(id = "partner_type_filter_label")
@@ -541,7 +539,7 @@ public class PartnerAdminPage extends BasePage {
 	}
 
 	public boolean isPartnerIdFilterPresent() {
-		return !driver.findElements(By.id(PARTNER_ID_FILTER_ID)).isEmpty();
+		return isElementPresent(By.id("partner_id_filter"));
 	}
 
 	public void waitForFilterButtonClickable() {

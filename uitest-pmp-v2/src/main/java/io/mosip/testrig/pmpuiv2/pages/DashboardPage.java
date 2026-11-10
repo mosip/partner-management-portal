@@ -13,7 +13,6 @@ import io.mosip.testrig.pmpuiv2.kernel.util.ConfigManager;
 public class DashboardPage extends BasePage {
 
 	private static final Duration TERMS_AND_CONDITIONS_TIMEOUT = Duration.ofSeconds(3);
-	private static final String PARTNER_CARD_HEADER_ID = "dashboard_partner_card_header";
 
 	@FindBy(id = "header_user_profile_title")
 	private WebElement profileDropdown;
@@ -156,7 +155,7 @@ public class DashboardPage extends BasePage {
 	@FindBy(id = "dashboard_admin_authentication_services_card")
 	private WebElement adminAuthenticationServices;
 
-	@FindBy(id = PARTNER_CARD_HEADER_ID)
+	@FindBy(id = "dashboard_partner_card_header")
 	private WebElement partners;
 
 	@FindBy(xpath = "//button[contains(@class, 'bg-blue-50') and contains(@class, 'cursor-pointer')]")
@@ -487,22 +486,6 @@ public class DashboardPage extends BasePage {
 
 	public boolean isPartnerAdminCardDisplayed() {
 		return isElementDisplayedQuick(partners, TERMS_AND_CONDITIONS_TIMEOUT);
-	}
-
-	public boolean isPartnerCardPresent() {
-		return !driver.findElements(By.id(PARTNER_CARD_HEADER_ID)).isEmpty();
-	}
-
-	public boolean waitUntilDashboardInsteadOfPartnerList(MispPartnerPage mispPartnerPage) {
-		return Boolean.TRUE.equals(new WebDriverWait(driver, Duration.ofSeconds(20)).until(webDriver -> {
-			if (mispPartnerPage.isCreatePartnerButtonPresent()) {
-				return Boolean.FALSE;
-			}
-			if (isPartnerCardPresent()) {
-				return Boolean.TRUE;
-			}
-			return null;
-		}));
 	}
 
 	public boolean isPartnerAdminSideNavDisplayed() {

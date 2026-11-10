@@ -53,7 +53,7 @@ public class OnlineVerificationPartnerDeactivateTest extends BaseClass {
 		uploadPartnerCertificate(mispPartnerPage);
 	}
 
-	@Test(priority = 2, description = "TC_1855_01: Deactivate is available for an ACTIVE Online Verification Partner", dependsOnMethods = "createOnlineVerificationPartnersForDeactivate")
+	@Test(priority = 2, description = "Deactivate is available for an ACTIVE Online Verification Partner", dependsOnMethods = "createOnlineVerificationPartnersForDeactivate")
 	public void deactivateOptionDisplayedForActivePartner() {
 		PartnerAdminPage partnerAdminPage = openActionMenu(activePartnerId);
 
@@ -67,7 +67,7 @@ public class OnlineVerificationPartnerDeactivateTest extends BaseClass {
 		assertTrue(partnerAdminPage.isDeactivateOptionEnabled(), GlobalConstants.ONLINE_VERIFICATION_PARTNER_DEACTIVATE_OPTION_DISPLAYED);
 	}
 
-	@Test(priority = 3, description = "TC_1855_03 to TC_1855_06: confirmation popup shows Confirm, Cancel, Partner ID, and Organisation", dependsOnMethods = "createOnlineVerificationPartnersForDeactivate")
+	@Test(priority = 3, description = "Confirmation popup shows Confirm, Cancel, Partner ID, and Organisation", dependsOnMethods = "createOnlineVerificationPartnersForDeactivate")
 	public void confirmationPopupShowsPartnerAndOrganisation() {
 		PartnerAdminPage partnerAdminPage = openActionMenu(activePartnerId);
 		partnerAdminPage.clickOnDeactivateOptionInActionMenu();
@@ -99,7 +99,7 @@ public class OnlineVerificationPartnerDeactivateTest extends BaseClass {
 		partnerAdminPage.clickOnDeactivatePopupCancelButton();
 	}
 
-	@Test(priority = 4, description = "TC_1855_12, TC_1855_13: Cancel closes the popup and leaves the partner Active", dependsOnMethods = "createOnlineVerificationPartnersForDeactivate")
+	@Test(priority = 4, description = "Cancel closes the popup and leaves the partner Active", dependsOnMethods = "createOnlineVerificationPartnersForDeactivate")
 	public void cancelClosesPopupAndKeepsActiveStatus() {
 		PartnerAdminPage partnerAdminPage = openActionMenu(activePartnerId);
 		String statusBeforeCancel = partnerAdminPage.getFirstRowPartnerStatus();
@@ -121,7 +121,7 @@ public class OnlineVerificationPartnerDeactivateTest extends BaseClass {
 				GlobalConstants.ONLINE_VERIFICATION_PARTNER_DEACTIVATE_CANCEL_KEEPS_ACTIVE);
 	}
 
-	@Test(priority = 5, description = "TC_1855_17: Active Online Verification Partners remain eligible for deactivation", dependsOnMethods = "createOnlineVerificationPartnersForDeactivate")
+	@Test(priority = 5, description = "Active Online Verification Partners remain eligible for deactivation", dependsOnMethods = "createOnlineVerificationPartnersForDeactivate")
 	public void activeFilterListsPartnersEligibleForDeactivation() {
 		PartnerAdminPage partnerAdminPage = openPartnerList();
 		partnerAdminPage.clickOnFilterButton();
@@ -144,7 +144,7 @@ public class OnlineVerificationPartnerDeactivateTest extends BaseClass {
 		assertTrue(partnerAdminPage.isDeactivateOptionEnabled(), GlobalConstants.ONLINE_VERIFICATION_PARTNER_ACTIVE_FILTER_ELIGIBLE);
 	}
 
-	@Test(priority = 6, description = "TC_1855_02, TC_1855_07, TC_1855_08, TC_1855_09, TC_1855_24: confirm deactivation, stay on the list, and keep sort order", dependsOnMethods = "createOnlineVerificationPartnersForDeactivate")
+	@Test(priority = 6, description = "Confirm deactivation, stay on the list, and keep sort order", dependsOnMethods = "createOnlineVerificationPartnersForDeactivate")
 	public void confirmDeactivationKeepsListOrderAndStatus() {
 		PartnerAdminPage partnerAdminPage = openPartnerList();
 		partnerAdminPage.clickOnFilterButton();
@@ -184,7 +184,7 @@ public class OnlineVerificationPartnerDeactivateTest extends BaseClass {
 				GlobalConstants.ONLINE_VERIFICATION_PARTNER_DEACTIVATED);
 	}
 
-	@Test(priority = 7, description = "TC_1855_10, TC_1855_11: deactivated partner stays available in search and the partner-type filter", dependsOnMethods = "confirmDeactivationKeepsListOrderAndStatus")
+	@Test(priority = 7, description = "Deactivated partner stays available in search and the partner-type filter", dependsOnMethods = "confirmDeactivationKeepsListOrderAndStatus")
 	public void deactivatedPartnerIsFoundBySearchAndFilter() {
 		PartnerAdminPage partnerAdminPage = openPartnerList();
 		filterByPartnerId(partnerAdminPage, deactivatePartnerId);
@@ -210,7 +210,7 @@ public class OnlineVerificationPartnerDeactivateTest extends BaseClass {
 				GlobalConstants.ONLINE_VERIFICATION_PARTNER_FILTER_AFTER_DEACTIVATION);
 	}
 
-	@Test(priority = 8, description = "TC_1855_14, TC_1855_15: View stays available and only the status changes", dependsOnMethods = "confirmDeactivationKeepsListOrderAndStatus")
+	@Test(priority = 8, description = "View stays available and only the status changes", dependsOnMethods = "confirmDeactivationKeepsListOrderAndStatus")
 	public void viewKeepsDetailsAndShowsDeactivatedStatus() {
 		PartnerAdminPage partnerAdminPage = openPartnerList();
 		filterByPartnerId(partnerAdminPage, deactivatePartnerId);
@@ -236,7 +236,7 @@ public class OnlineVerificationPartnerDeactivateTest extends BaseClass {
 				GlobalConstants.ONLINE_VERIFICATION_PARTNER_ONLY_STATUS_CHANGES);
 	}
 
-	@Test(priority = 9, description = "TC_1855_21: Deactivate is disabled when the partner is already deactivated", dependsOnMethods = "confirmDeactivationKeepsListOrderAndStatus")
+	@Test(priority = 9, description = "Deactivate is disabled when the partner is already deactivated", dependsOnMethods = "confirmDeactivationKeepsListOrderAndStatus")
 	public void deactivateOptionDisabledAfterDeactivation() {
 		PartnerAdminPage partnerAdminPage = openActionMenu(deactivatePartnerId);
 
@@ -252,7 +252,7 @@ public class OnlineVerificationPartnerDeactivateTest extends BaseClass {
 				GlobalConstants.ONLINE_VERIFICATION_PARTNER_DEACTIVATE_DISABLED);
 	}
 
-	@Test(priority = 10, description = "TC_1855_20: a user without PARTNER_ADMIN cannot deactivate a partner", dependsOnMethods = "createOnlineVerificationPartnersForDeactivate")
+	@Test(priority = 10, description = "A user without PARTNER_ADMIN cannot deactivate a partner", dependsOnMethods = "createOnlineVerificationPartnersForDeactivate")
 	public void partnerWithoutAdminRoleHasNoDeactivateAccess() {
 		DashboardPage dashboardPage = new DashboardPage(driver);
 		KeycloakUserManager.createUsers(GlobalConstants.AUTH_PARTNER_ID, GlobalConstants.PARTNER_PASSWORD,
@@ -279,9 +279,8 @@ public class OnlineVerificationPartnerDeactivateTest extends BaseClass {
 
 	private PartnerAdminPage openPartnerList() {
 		DashboardPage dashboardPage = new DashboardPage(driver);
-		MispPartnerPage mispPartnerPage = new MispPartnerPage(driver);
 		PartnerAdminPage partnerAdminPage = new PartnerAdminPage(driver);
-		if (dashboardPage.waitUntilDashboardInsteadOfPartnerList(mispPartnerPage)) {
+		if (dashboardPage.waitUntilDashboardInsteadOfPartnerList()) {
 			dashboardPage.clickOnPartners();
 		}
 		assertTrue(partnerAdminPage.isPartnerListLoaded(), GlobalConstants.isPartnerListLoaded);

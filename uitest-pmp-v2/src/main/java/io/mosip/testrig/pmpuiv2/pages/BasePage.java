@@ -407,6 +407,22 @@ public class BasePage {
 		}
 	}
 
+	protected boolean isElementPresent(By locator) {
+		return !driver.findElements(locator).isEmpty();
+	}
+
+	public boolean waitUntilDashboardInsteadOfPartnerList() {
+		return Boolean.TRUE.equals(new WebDriverWait(driver, Duration.ofSeconds(20)).until(webDriver -> {
+			if (isElementPresent(By.id("create_partner_btn"))) {
+				return Boolean.FALSE;
+			}
+			if (isElementPresent(By.id("dashboard_partner_card_header"))) {
+				return Boolean.TRUE;
+			}
+			return null;
+		}));
+	}
+
 	protected boolean isElementDisabled(WebElement element) {
 		LogUtil.verify("Checking if element is disabled: ", element);
 		try {
