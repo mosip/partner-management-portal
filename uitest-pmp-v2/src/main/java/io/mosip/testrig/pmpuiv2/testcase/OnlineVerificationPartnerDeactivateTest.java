@@ -4,12 +4,8 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
-import java.time.Duration;
 import java.util.List;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
 
 import io.mosip.testrig.pmpuiv2.kernel.util.KeycloakUserManager;
@@ -62,13 +58,13 @@ public class OnlineVerificationPartnerDeactivateTest extends BaseClass {
 		PartnerAdminPage partnerAdminPage = openActionMenu(activePartnerId);
 
 		assertEquals(partnerAdminPage.getFirstRowPartnerStatus(), GlobalConstants.PARTNER_STATUS_ACTIVE,
-				GlobalConstants.OVP_DEACTIVATE_OPTION_FOR_ACTIVE);
+				GlobalConstants.ONLINE_VERIFICATION_PARTNER_DEACTIVATE_OPTION_DISPLAYED);
 		assertEquals(partnerAdminPage.getFirstRowPartnerType(), GlobalConstants.ONLINE_VERIFICATION_PARTNER,
-				GlobalConstants.OVP_DEACTIVATE_OPTION_FOR_ACTIVE);
-		assertTrue(partnerAdminPage.isViewButtonsDisplayed(), GlobalConstants.OVP_DEACTIVATE_OPTION_FOR_ACTIVE);
-		assertTrue(partnerAdminPage.isViewOptionEnabled(), GlobalConstants.OVP_DEACTIVATE_OPTION_FOR_ACTIVE);
-		assertTrue(partnerAdminPage.isDeactivateButtonsDisplayed(), GlobalConstants.OVP_DEACTIVATE_OPTION_FOR_ACTIVE);
-		assertTrue(partnerAdminPage.isDeactivateOptionEnabled(), GlobalConstants.OVP_DEACTIVATE_OPTION_FOR_ACTIVE);
+				GlobalConstants.ONLINE_VERIFICATION_PARTNER_DEACTIVATE_OPTION_DISPLAYED);
+		assertTrue(partnerAdminPage.isViewButtonsDisplayed(), GlobalConstants.ONLINE_VERIFICATION_PARTNER_DEACTIVATE_OPTION_DISPLAYED);
+		assertTrue(partnerAdminPage.isViewOptionEnabled(), GlobalConstants.ONLINE_VERIFICATION_PARTNER_DEACTIVATE_OPTION_DISPLAYED);
+		assertTrue(partnerAdminPage.isDeactivateButtonsDisplayed(), GlobalConstants.ONLINE_VERIFICATION_PARTNER_DEACTIVATE_OPTION_DISPLAYED);
+		assertTrue(partnerAdminPage.isDeactivateOptionEnabled(), GlobalConstants.ONLINE_VERIFICATION_PARTNER_DEACTIVATE_OPTION_DISPLAYED);
 	}
 
 	@Test(priority = 3, description = "TC_1855_03 to TC_1855_06: confirmation popup shows Confirm, Cancel, Partner ID, and Organisation", dependsOnMethods = "createOnlineVerificationPartnersForDeactivate")
@@ -77,28 +73,28 @@ public class OnlineVerificationPartnerDeactivateTest extends BaseClass {
 		partnerAdminPage.clickOnDeactivateOptionInActionMenu();
 
 		assertTrue(partnerAdminPage.isDeactivatePopupHeaderDisplayed(),
-				GlobalConstants.OVP_DEACTIVATE_POPUP_DISPLAYED);
+				GlobalConstants.ONLINE_VERIFICATION_PARTNER_DEACTIVATE_POPUP_DISPLAYED);
 		assertTrue(partnerAdminPage.isDeactivatePopupDescriptionDisplayed(),
-				GlobalConstants.OVP_DEACTIVATE_POPUP_DISPLAYED);
+				GlobalConstants.ONLINE_VERIFICATION_PARTNER_DEACTIVATE_POPUP_DISPLAYED);
 		assertTrue(partnerAdminPage.isDeactivatePopupConfirmButtonDisplayed(),
-				GlobalConstants.OVP_DEACTIVATE_POPUP_BUTTONS);
+				GlobalConstants.ONLINE_VERIFICATION_PARTNER_DEACTIVATE_POPUP_BUTTONS_DISPLAYED);
 		assertTrue(partnerAdminPage.isDeactivatePopupCancelButtonDisplayed(),
-				GlobalConstants.OVP_DEACTIVATE_POPUP_BUTTONS);
+				GlobalConstants.ONLINE_VERIFICATION_PARTNER_DEACTIVATE_POPUP_BUTTONS_DISPLAYED);
 		assertTrue(partnerAdminPage.isDeactivatePopupConfirmButtonEnabled(),
-				GlobalConstants.OVP_DEACTIVATE_POPUP_BUTTONS);
+				GlobalConstants.ONLINE_VERIFICATION_PARTNER_DEACTIVATE_POPUP_BUTTONS_DISPLAYED);
 		assertTrue(partnerAdminPage.isDeactivatePopupCancelButtonEnabled(),
-				GlobalConstants.OVP_DEACTIVATE_POPUP_BUTTONS);
+				GlobalConstants.ONLINE_VERIFICATION_PARTNER_DEACTIVATE_POPUP_BUTTONS_DISPLAYED);
 
 		String expectedTitle = String.format(GlobalConstants.DEACTIVATE_PARTNER_POPUP_TITLE, activePartnerId,
 				organisationName);
 		assertEquals(partnerAdminPage.getDeactivatePopupTitle(), expectedTitle,
-				GlobalConstants.OVP_DEACTIVATE_POPUP_PARTNER_ID);
+				GlobalConstants.ONLINE_VERIFICATION_PARTNER_DEACTIVATE_POPUP_PARTNER_ID);
 		assertTrue(partnerAdminPage.getDeactivatePopupTitle().contains(activePartnerId),
-				GlobalConstants.OVP_DEACTIVATE_POPUP_PARTNER_ID);
+				GlobalConstants.ONLINE_VERIFICATION_PARTNER_DEACTIVATE_POPUP_PARTNER_ID);
 		assertTrue(partnerAdminPage.getDeactivatePopupTitle().contains(organisationName),
-				GlobalConstants.OVP_DEACTIVATE_POPUP_ORGANISATION);
+				GlobalConstants.ONLINE_VERIFICATION_PARTNER_DEACTIVATE_POPUP_ORGANISATION);
 		assertEquals(partnerAdminPage.getDeactivatePopupSubTitle(),
-				GlobalConstants.DEACTIVATE_PARTNER_POPUP_DESCRIPTION, GlobalConstants.OVP_DEACTIVATE_POPUP_DISPLAYED);
+				GlobalConstants.DEACTIVATE_PARTNER_POPUP_DESCRIPTION, GlobalConstants.ONLINE_VERIFICATION_PARTNER_DEACTIVATE_POPUP_DISPLAYED);
 
 		partnerAdminPage.clickOnDeactivatePopupCancelButton();
 	}
@@ -110,19 +106,19 @@ public class OnlineVerificationPartnerDeactivateTest extends BaseClass {
 
 		partnerAdminPage.clickOnDeactivateOptionInActionMenu();
 		assertTrue(partnerAdminPage.isDeactivatePopupHeaderDisplayed(),
-				GlobalConstants.OVP_DEACTIVATE_POPUP_DISPLAYED);
+				GlobalConstants.ONLINE_VERIFICATION_PARTNER_DEACTIVATE_POPUP_DISPLAYED);
 		partnerAdminPage.clickOnDeactivatePopupCancelButton();
 
 		assertFalse(partnerAdminPage.isDeactivatePopupHeaderDisplayedQuick(),
-				GlobalConstants.OVP_DEACTIVATE_CANCEL_CLOSES_POPUP);
+				GlobalConstants.ONLINE_VERIFICATION_PARTNER_DEACTIVATE_CANCEL_CLOSES_POPUP);
 		assertEquals(partnerAdminPage.getPageTitleText(), GlobalConstants.PARTNERS_PAGE_TITLE,
-				GlobalConstants.OVP_DEACTIVATE_CANCEL_CLOSES_POPUP);
+				GlobalConstants.ONLINE_VERIFICATION_PARTNER_DEACTIVATE_CANCEL_CLOSES_POPUP);
 		assertEquals(partnerAdminPage.getFirstRowPartnerStatus(), GlobalConstants.PARTNER_STATUS_ACTIVE,
-				GlobalConstants.OVP_DEACTIVATE_CANCEL_KEEPS_ACTIVE);
+				GlobalConstants.ONLINE_VERIFICATION_PARTNER_DEACTIVATE_CANCEL_KEEPS_ACTIVE);
 		assertEquals(partnerAdminPage.getFirstRowPartnerStatus(), statusBeforeCancel,
-				GlobalConstants.OVP_DEACTIVATE_CANCEL_KEEPS_ACTIVE);
+				GlobalConstants.ONLINE_VERIFICATION_PARTNER_DEACTIVATE_CANCEL_KEEPS_ACTIVE);
 		assertEquals(partnerAdminPage.getFirstRowPartnerId(), activePartnerId,
-				GlobalConstants.OVP_DEACTIVATE_CANCEL_KEEPS_ACTIVE);
+				GlobalConstants.ONLINE_VERIFICATION_PARTNER_DEACTIVATE_CANCEL_KEEPS_ACTIVE);
 	}
 
 	@Test(priority = 5, description = "TC_1855_17: Active Online Verification Partners remain eligible for deactivation", dependsOnMethods = "createOnlineVerificationPartnersForDeactivate")
@@ -136,16 +132,16 @@ public class OnlineVerificationPartnerDeactivateTest extends BaseClass {
 		partnerAdminPage.clickOnApplyFiltersBtn();
 
 		assertTrue(partnerAdminPage.isPartnerListLoadedByPartnerType(GlobalConstants.ONLINE_VERIFICATION_PARTNER),
-				GlobalConstants.OVP_ACTIVE_FILTER_ELIGIBLE);
+				GlobalConstants.ONLINE_VERIFICATION_PARTNER_ACTIVE_FILTER_ELIGIBLE);
 		assertTrue(partnerAdminPage.areAllVisiblePartnerTypes(GlobalConstants.ONLINE_VERIFICATION_PARTNER),
-				GlobalConstants.OVP_ACTIVE_FILTER_ELIGIBLE);
+				GlobalConstants.ONLINE_VERIFICATION_PARTNER_ACTIVE_FILTER_ELIGIBLE);
 		assertTrue(partnerAdminPage.areAllVisiblePartnerStatuses(GlobalConstants.PARTNER_STATUS_ACTIVE),
-				GlobalConstants.OVP_ACTIVE_FILTER_ELIGIBLE);
+				GlobalConstants.ONLINE_VERIFICATION_PARTNER_ACTIVE_FILTER_ELIGIBLE);
 		assertTrue(partnerAdminPage.getPartnerIdColumnValues().contains(activePartnerId),
-				GlobalConstants.OVP_ACTIVE_FILTER_ELIGIBLE);
+				GlobalConstants.ONLINE_VERIFICATION_PARTNER_ACTIVE_FILTER_ELIGIBLE);
 
 		partnerAdminPage.clickOnActionsButton();
-		assertTrue(partnerAdminPage.isDeactivateOptionEnabled(), GlobalConstants.OVP_ACTIVE_FILTER_ELIGIBLE);
+		assertTrue(partnerAdminPage.isDeactivateOptionEnabled(), GlobalConstants.ONLINE_VERIFICATION_PARTNER_ACTIVE_FILTER_ELIGIBLE);
 	}
 
 	@Test(priority = 6, description = "TC_1855_02, TC_1855_07, TC_1855_08, TC_1855_09, TC_1855_24: confirm deactivation, stay on the list, and keep sort order", dependsOnMethods = "createOnlineVerificationPartnersForDeactivate")
@@ -156,36 +152,36 @@ public class OnlineVerificationPartnerDeactivateTest extends BaseClass {
 		partnerAdminPage.selectPartnerTypeFilterOption(GlobalConstants.ONLINE_VERIFICATION_PARTNER);
 		partnerAdminPage.clickOnApplyFiltersBtn();
 		assertTrue(partnerAdminPage.isPartnerListLoaded(deactivatePartnerId),
-				GlobalConstants.OVP_SORT_ORDER_UNCHANGED);
+				GlobalConstants.ONLINE_VERIFICATION_PARTNER_SORT_ORDER_UNCHANGED);
 
 		List<String> partnerIdsBefore = partnerAdminPage.getPartnerIdColumnValues();
 		assertEquals(partnerAdminPage.getFirstRowPartnerId(), deactivatePartnerId,
-				GlobalConstants.OVP_SORT_ORDER_UNCHANGED);
+				GlobalConstants.ONLINE_VERIFICATION_PARTNER_SORT_ORDER_UNCHANGED);
 		assertEquals(partnerAdminPage.getFirstRowPartnerType(), GlobalConstants.ONLINE_VERIFICATION_PARTNER,
-				GlobalConstants.OVP_DEACTIVATE_SUCCESS);
+				GlobalConstants.ONLINE_VERIFICATION_PARTNER_DEACTIVATED);
 		assertEquals(partnerAdminPage.getFirstRowPartnerStatus(), GlobalConstants.PARTNER_STATUS_ACTIVE,
-				GlobalConstants.OVP_DEACTIVATE_SUCCESS);
+				GlobalConstants.ONLINE_VERIFICATION_PARTNER_DEACTIVATED);
 
 		partnerAdminPage.clickOnActionsButton();
-		assertTrue(partnerAdminPage.isDeactivateOptionEnabled(), GlobalConstants.OVP_DEACTIVATE_SUCCESS);
+		assertTrue(partnerAdminPage.isDeactivateOptionEnabled(), GlobalConstants.ONLINE_VERIFICATION_PARTNER_DEACTIVATED);
 		partnerAdminPage.clickOnDeactivateOptionInActionMenu();
 		assertTrue(partnerAdminPage.isDeactivatePopupHeaderDisplayed(),
-				GlobalConstants.OVP_DEACTIVATE_POPUP_DISPLAYED);
+				GlobalConstants.ONLINE_VERIFICATION_PARTNER_DEACTIVATE_POPUP_DISPLAYED);
 		partnerAdminPage.clickOnDeactivatePopupConfirmButton();
 
 		assertEquals(partnerAdminPage.getPageTitleText(), GlobalConstants.PARTNERS_PAGE_TITLE,
-				GlobalConstants.OVP_REMAINS_ON_PARTNER_LIST);
-		assertTrue(partnerAdminPage.isSubTitleListDisplayed(), GlobalConstants.OVP_REMAINS_ON_PARTNER_LIST);
+				GlobalConstants.ONLINE_VERIFICATION_PARTNER_REMAINS_ON_PARTNER_LIST);
+		assertTrue(partnerAdminPage.isSubTitleListDisplayed(), GlobalConstants.ONLINE_VERIFICATION_PARTNER_REMAINS_ON_PARTNER_LIST);
 		assertTrue(partnerAdminPage.isFirstRowStatus(GlobalConstants.DEACTIVATED),
-				GlobalConstants.OVP_STATUS_WITHOUT_REFRESH);
+				GlobalConstants.ONLINE_VERIFICATION_PARTNER_STATUS_UPDATES_WITHOUT_REFRESH);
 		assertEquals(partnerAdminPage.getFirstRowPartnerStatus(), GlobalConstants.DEACTIVATED,
-				GlobalConstants.OVP_DEACTIVATE_SUCCESS);
+				GlobalConstants.ONLINE_VERIFICATION_PARTNER_DEACTIVATED);
 		assertEquals(partnerAdminPage.getFirstRowPartnerId(), deactivatePartnerId,
-				GlobalConstants.OVP_SORT_ORDER_UNCHANGED);
+				GlobalConstants.ONLINE_VERIFICATION_PARTNER_SORT_ORDER_UNCHANGED);
 		assertEquals(partnerAdminPage.getPartnerIdColumnValues(), partnerIdsBefore,
-				GlobalConstants.OVP_SORT_ORDER_UNCHANGED);
+				GlobalConstants.ONLINE_VERIFICATION_PARTNER_SORT_ORDER_UNCHANGED);
 		assertEquals(partnerAdminPage.getFirstRowPartnerType(), GlobalConstants.ONLINE_VERIFICATION_PARTNER,
-				GlobalConstants.OVP_DEACTIVATE_SUCCESS);
+				GlobalConstants.ONLINE_VERIFICATION_PARTNER_DEACTIVATED);
 	}
 
 	@Test(priority = 7, description = "TC_1855_10, TC_1855_11: deactivated partner stays available in search and the partner-type filter", dependsOnMethods = "confirmDeactivationKeepsListOrderAndStatus")
@@ -193,26 +189,25 @@ public class OnlineVerificationPartnerDeactivateTest extends BaseClass {
 		PartnerAdminPage partnerAdminPage = openPartnerList();
 		filterByPartnerId(partnerAdminPage, deactivatePartnerId);
 		assertEquals(partnerAdminPage.getFirstRowPartnerStatus(), GlobalConstants.DEACTIVATED,
-				GlobalConstants.OVP_DEACTIVATED_IN_SEARCH);
+				GlobalConstants.ONLINE_VERIFICATION_PARTNER_DEACTIVATED_IN_SEARCH);
 		assertEquals(partnerAdminPage.getFirstRowPartnerType(), GlobalConstants.ONLINE_VERIFICATION_PARTNER,
-				GlobalConstants.OVP_DEACTIVATED_IN_SEARCH);
+				GlobalConstants.ONLINE_VERIFICATION_PARTNER_DEACTIVATED_IN_SEARCH);
 
 		partnerAdminPage.clickOnFilterResetButton();
-		new WebDriverWait(driver, Duration.ofSeconds(20))
-				.until(ExpectedConditions.elementToBeClickable(By.id("filter_btn")));
+		partnerAdminPage.waitForFilterButtonClickable();
 		partnerAdminPage.clickOnFilterButton();
 		partnerAdminPage.clickOnPartnerTypeDropdown();
 		partnerAdminPage.selectPartnerTypeFilterOption(GlobalConstants.ONLINE_VERIFICATION_PARTNER);
 		partnerAdminPage.clickOnApplyFiltersBtn();
 
 		assertTrue(partnerAdminPage.isPartnerListLoadedByPartnerType(GlobalConstants.ONLINE_VERIFICATION_PARTNER),
-				GlobalConstants.OVP_FILTER_AFTER_DEACTIVATION);
+				GlobalConstants.ONLINE_VERIFICATION_PARTNER_FILTER_AFTER_DEACTIVATION);
 		assertTrue(partnerAdminPage.areAllVisiblePartnerTypes(GlobalConstants.ONLINE_VERIFICATION_PARTNER),
-				GlobalConstants.OVP_FILTER_AFTER_DEACTIVATION);
+				GlobalConstants.ONLINE_VERIFICATION_PARTNER_FILTER_AFTER_DEACTIVATION);
 		assertTrue(partnerAdminPage.getPartnerIdColumnValues().contains(deactivatePartnerId),
-				GlobalConstants.OVP_FILTER_AFTER_DEACTIVATION);
+				GlobalConstants.ONLINE_VERIFICATION_PARTNER_FILTER_AFTER_DEACTIVATION);
 		assertEquals(partnerAdminPage.getFirstRowPartnerStatus(), GlobalConstants.DEACTIVATED,
-				GlobalConstants.OVP_FILTER_AFTER_DEACTIVATION);
+				GlobalConstants.ONLINE_VERIFICATION_PARTNER_FILTER_AFTER_DEACTIVATION);
 	}
 
 	@Test(priority = 8, description = "TC_1855_14, TC_1855_15: View stays available and only the status changes", dependsOnMethods = "confirmDeactivationKeepsListOrderAndStatus")
@@ -220,25 +215,25 @@ public class OnlineVerificationPartnerDeactivateTest extends BaseClass {
 		PartnerAdminPage partnerAdminPage = openPartnerList();
 		filterByPartnerId(partnerAdminPage, deactivatePartnerId);
 		partnerAdminPage.clickOnActionsButton();
-		assertTrue(partnerAdminPage.isViewOptionEnabled(), GlobalConstants.OVP_VIEW_AFTER_DEACTIVATION);
+		assertTrue(partnerAdminPage.isViewOptionEnabled(), GlobalConstants.ONLINE_VERIFICATION_PARTNER_VIEW_AFTER_DEACTIVATION);
 		partnerAdminPage.clickOnViewButtonInListOfPartnerDetailsScreen();
 
 		assertTrue(partnerAdminPage.isViewPartnersDetailsPageDisplayed(),
-				GlobalConstants.OVP_VIEW_AFTER_DEACTIVATION);
+				GlobalConstants.ONLINE_VERIFICATION_PARTNER_VIEW_AFTER_DEACTIVATION);
 		assertEquals(partnerAdminPage.getPageTitleText(), GlobalConstants.VIEW_PARTNER_DETAILS_TITLE,
-				GlobalConstants.OVP_VIEW_AFTER_DEACTIVATION);
+				GlobalConstants.ONLINE_VERIFICATION_PARTNER_VIEW_AFTER_DEACTIVATION);
 		assertTrue(partnerAdminPage.getViewPartnerIdText().contains(deactivatePartnerId),
-				GlobalConstants.OVP_ONLY_STATUS_CHANGES);
+				GlobalConstants.ONLINE_VERIFICATION_PARTNER_ONLY_STATUS_CHANGES);
 		assertEquals(partnerAdminPage.getPartnerStatusInViewPartnerDetails(), GlobalConstants.DEACTIVATED,
-				GlobalConstants.OVP_ONLY_STATUS_CHANGES);
+				GlobalConstants.ONLINE_VERIFICATION_PARTNER_ONLY_STATUS_CHANGES);
 		assertEquals(partnerAdminPage.getViewPartnerDetailsPartnerType(),
-				GlobalConstants.ONLINE_VERIFICATION_PARTNER, GlobalConstants.OVP_ONLY_STATUS_CHANGES);
+				GlobalConstants.ONLINE_VERIFICATION_PARTNER, GlobalConstants.ONLINE_VERIFICATION_PARTNER_ONLY_STATUS_CHANGES);
 		assertEquals(partnerAdminPage.getViewOrganisationName(), organisationName,
-				GlobalConstants.OVP_ONLY_STATUS_CHANGES);
-		assertEquals(partnerAdminPage.getViewPhoneNumber(), phoneNumber, GlobalConstants.OVP_ONLY_STATUS_CHANGES);
-		assertEquals(partnerAdminPage.getViewEmail(), deactivateEmail, GlobalConstants.OVP_ONLY_STATUS_CHANGES);
+				GlobalConstants.ONLINE_VERIFICATION_PARTNER_ONLY_STATUS_CHANGES);
+		assertEquals(partnerAdminPage.getViewPhoneNumber(), phoneNumber, GlobalConstants.ONLINE_VERIFICATION_PARTNER_ONLY_STATUS_CHANGES);
+		assertEquals(partnerAdminPage.getViewEmail(), deactivateEmail, GlobalConstants.ONLINE_VERIFICATION_PARTNER_ONLY_STATUS_CHANGES);
 		assertEquals(partnerAdminPage.getViewPolicyGroup(), deactivatePolicyGroup,
-				GlobalConstants.OVP_ONLY_STATUS_CHANGES);
+				GlobalConstants.ONLINE_VERIFICATION_PARTNER_ONLY_STATUS_CHANGES);
 	}
 
 	@Test(priority = 9, description = "TC_1855_21: Deactivate is disabled when the partner is already deactivated", dependsOnMethods = "confirmDeactivationKeepsListOrderAndStatus")
@@ -246,15 +241,15 @@ public class OnlineVerificationPartnerDeactivateTest extends BaseClass {
 		PartnerAdminPage partnerAdminPage = openActionMenu(deactivatePartnerId);
 
 		assertEquals(partnerAdminPage.getFirstRowPartnerStatus(), GlobalConstants.DEACTIVATED,
-				GlobalConstants.OVP_DEACTIVATE_DISABLED);
-		assertTrue(partnerAdminPage.isViewOptionEnabled(), GlobalConstants.OVP_VIEW_AFTER_DEACTIVATION);
-		assertTrue(partnerAdminPage.isDeactivateButtonsDisplayed(), GlobalConstants.OVP_DEACTIVATE_DISABLED);
-		assertTrue(partnerAdminPage.isDeactivateOptionDisabled(), GlobalConstants.OVP_DEACTIVATE_DISABLED);
-		assertFalse(partnerAdminPage.isDeactivateOptionEnabled(), GlobalConstants.OVP_DEACTIVATE_DISABLED);
+				GlobalConstants.ONLINE_VERIFICATION_PARTNER_DEACTIVATE_DISABLED);
+		assertTrue(partnerAdminPage.isViewOptionEnabled(), GlobalConstants.ONLINE_VERIFICATION_PARTNER_VIEW_AFTER_DEACTIVATION);
+		assertTrue(partnerAdminPage.isDeactivateButtonsDisplayed(), GlobalConstants.ONLINE_VERIFICATION_PARTNER_DEACTIVATE_DISABLED);
+		assertTrue(partnerAdminPage.isDeactivateOptionDisabled(), GlobalConstants.ONLINE_VERIFICATION_PARTNER_DEACTIVATE_DISABLED);
+		assertFalse(partnerAdminPage.isDeactivateOptionEnabled(), GlobalConstants.ONLINE_VERIFICATION_PARTNER_DEACTIVATE_DISABLED);
 
 		partnerAdminPage.clickOnDeactivateOptionInActionMenu();
 		assertFalse(partnerAdminPage.isDeactivatePopupHeaderDisplayedQuick(),
-				GlobalConstants.OVP_DEACTIVATE_DISABLED);
+				GlobalConstants.ONLINE_VERIFICATION_PARTNER_DEACTIVATE_DISABLED);
 	}
 
 	@Test(priority = 10, description = "TC_1855_20: a user without PARTNER_ADMIN cannot deactivate a partner", dependsOnMethods = "createOnlineVerificationPartnersForDeactivate")
@@ -270,9 +265,9 @@ public class OnlineVerificationPartnerDeactivateTest extends BaseClass {
 			dashboardPage.clickOnProceedButton();
 		}
 
-		assertTrue(dashboardPage.isAuthenticationServicesDisplayed(), GlobalConstants.OVP_NON_ADMIN_NO_DEACTIVATE);
-		assertFalse(dashboardPage.isPartnerAdminCardDisplayed(), GlobalConstants.OVP_NON_ADMIN_NO_DEACTIVATE);
-		assertFalse(dashboardPage.isPartnerAdminSideNavDisplayed(), GlobalConstants.OVP_NON_ADMIN_NO_DEACTIVATE);
+		assertTrue(dashboardPage.isAuthenticationServicesDisplayed(), GlobalConstants.ONLINE_VERIFICATION_PARTNER_NON_ADMIN_CANNOT_DEACTIVATE);
+		assertFalse(dashboardPage.isPartnerAdminCardDisplayed(), GlobalConstants.ONLINE_VERIFICATION_PARTNER_NON_ADMIN_CANNOT_DEACTIVATE);
+		assertFalse(dashboardPage.isPartnerAdminSideNavDisplayed(), GlobalConstants.ONLINE_VERIFICATION_PARTNER_NON_ADMIN_CANNOT_DEACTIVATE);
 	}
 
 	private PartnerAdminPage openActionMenu(String partnerId) {
@@ -284,17 +279,9 @@ public class OnlineVerificationPartnerDeactivateTest extends BaseClass {
 
 	private PartnerAdminPage openPartnerList() {
 		DashboardPage dashboardPage = new DashboardPage(driver);
+		MispPartnerPage mispPartnerPage = new MispPartnerPage(driver);
 		PartnerAdminPage partnerAdminPage = new PartnerAdminPage(driver);
-		String page = new WebDriverWait(driver, Duration.ofSeconds(20)).until(webDriver -> {
-			if (!webDriver.findElements(By.id("create_partner_btn")).isEmpty()) {
-				return "list";
-			}
-			if (!webDriver.findElements(By.id("dashboard_partner_card_header")).isEmpty()) {
-				return "dashboard";
-			}
-			return null;
-		});
-		if ("dashboard".equals(page)) {
+		if (dashboardPage.waitUntilDashboardInsteadOfPartnerList(mispPartnerPage)) {
 			dashboardPage.clickOnPartners();
 		}
 		assertTrue(partnerAdminPage.isPartnerListLoaded(), GlobalConstants.isPartnerListLoaded);
@@ -302,7 +289,7 @@ public class OnlineVerificationPartnerDeactivateTest extends BaseClass {
 	}
 
 	private void filterByPartnerId(PartnerAdminPage partnerAdminPage, String partnerId) {
-		if (driver.findElements(By.id("partner_id_filter")).isEmpty()) {
+		if (!partnerAdminPage.isPartnerIdFilterPresent()) {
 			partnerAdminPage.clickOnFilterButton();
 		}
 		partnerAdminPage.enterPartnerIdInFilter(partnerId);
@@ -313,11 +300,9 @@ public class OnlineVerificationPartnerDeactivateTest extends BaseClass {
 	private MispPartnerPage navigateToCreatePartnerPage() {
 		DashboardPage dashboardPage = new DashboardPage(driver);
 		MispPartnerPage mispPartnerPage = new MispPartnerPage(driver);
-		if (!driver.findElements(By.id("create_partner_btn")).isEmpty()) {
-			mispPartnerPage.clickOnCreatePartnerButton();
-			return mispPartnerPage;
+		if (!mispPartnerPage.isCreatePartnerButtonPresent()) {
+			dashboardPage.clickOnPartners();
 		}
-		dashboardPage.clickOnPartners();
 		mispPartnerPage.clickOnCreatePartnerButton();
 		return mispPartnerPage;
 	}

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.StaleElementReferenceException;
@@ -22,6 +23,8 @@ import io.mosip.testrig.pmpuiv2.utility.LogUtil;
 import io.mosip.testrig.pmpuiv2.utility.WaitUtil;
 
 public class PartnerAdminPage extends BasePage {
+
+	private static final String PARTNER_ID_FILTER_ID = "partner_id_filter";
 
 	private static final Duration SHORT_ABSENCE_TIMEOUT = Duration.ofSeconds(3);
 	private static final Duration LIST_LOAD_TIMEOUT = Duration.ofSeconds(20);
@@ -94,7 +97,7 @@ public class PartnerAdminPage extends BasePage {
 	@FindBy(id = "ftm_view_back_btn")
 	private WebElement gobackButtonInPartnerDetailsPage;
 
-	@FindBy(id = "partner_id_filter")
+	@FindBy(id = PARTNER_ID_FILTER_ID)
 	private WebElement partnersIdFilter;
 
 	@FindBy(id = "partner_type_filter_label")
@@ -535,6 +538,14 @@ public class PartnerAdminPage extends BasePage {
 
 	public boolean isPartnersIdFilterDisplayed() {
 		return isElementDisplayed(partnersIdFilter);
+	}
+
+	public boolean isPartnerIdFilterPresent() {
+		return !driver.findElements(By.id(PARTNER_ID_FILTER_ID)).isEmpty();
+	}
+
+	public void waitForFilterButtonClickable() {
+		new WebDriverWait(driver, LIST_LOAD_TIMEOUT).until(ExpectedConditions.elementToBeClickable(filterbtnTrigger));
 	}
 
 	public boolean isPartnersTypeFilterDisplayed() {

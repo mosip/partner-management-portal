@@ -19,8 +19,9 @@ public class MispPartnerPage extends BasePage {
 
 	private static final Logger logger = Logger.getLogger(MispPartnerPage.class);
 	private static final Duration INLINE_VALIDATION_TIMEOUT = Duration.ofSeconds(2);
+	private static final String CREATE_PARTNER_BUTTON_ID = "create_partner_btn";
 
-	@FindBy(id = "create_partner_btn")
+	@FindBy(id = CREATE_PARTNER_BUTTON_ID)
 	private WebElement createPartnerButton;
 
 	@FindBy(id = "page_title")
@@ -198,6 +199,10 @@ public class MispPartnerPage extends BasePage {
 
 	public boolean isCreatePartnerButtonDisplayed() {
 		return isElementDisplayed(createPartnerButton);
+	}
+
+	public boolean isCreatePartnerButtonPresent() {
+		return !driver.findElements(By.id(CREATE_PARTNER_BUTTON_ID)).isEmpty();
 	}
 
 	public boolean isCreatePartnerButtonEnabled() {

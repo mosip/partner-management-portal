@@ -6,10 +6,12 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class DashboardPage extends BasePage {
 
 	private static final Duration TERMS_AND_CONDITIONS_TIMEOUT = Duration.ofSeconds(3);
+	private static final String PARTNER_CARD_HEADER_ID = "dashboard_partner_card_header";
 
 	@FindBy(id = "header_user_profile_title")
 	private WebElement profileDropdown;
@@ -137,7 +139,7 @@ public class DashboardPage extends BasePage {
 	@FindBy(xpath = "//h5[text()='Authentication Services']")
 	private WebElement authenticationServices;
 
-	@FindBy(id = "dashboard_partner_card_header")
+	@FindBy(id = PARTNER_CARD_HEADER_ID)
 	private WebElement partners;
 
 	@FindBy(xpath = "//button[contains(@class, 'bg-blue-50') and contains(@class, 'cursor-pointer')]")
@@ -408,6 +410,22 @@ public class DashboardPage extends BasePage {
 
 	public boolean isPartnerAdminCardDisplayed() {
 		return isElementDisplayedQuick(partners, TERMS_AND_CONDITIONS_TIMEOUT);
+	}
+
+	public boolean isPartnerCardPresent() {
+		return !driver.findElements(By.id(PARTNER_CARD_HEADER_ID)).isEmpty();
+	}
+
+	public boolean waitUntilDashboardInsteadOfPartnerList(MispPartnerPage mispPartnerPage) {
+		return Boolean.TRUE.equals(new WebDriverWait(driver, Duration.ofSeconds(20)).until(webDriver -> {
+			if (mispPartnerPage.isCreatePartnerButtonPresent()) {
+				return Boolean.FALSE;
+			}
+			if (isPartnerCardPresent()) {
+				return Boolean.TRUE;
+			}
+			return null;
+		}));
 	}
 
 	public boolean isPartnerAdminSideNavDisplayed() {
