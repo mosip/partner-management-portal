@@ -498,6 +498,7 @@ public class MispPartnerPage extends BasePage {
 
 	public void clickOnPartnerEmailIdTextBox() {
 		clickOnElement(partnerEmailIdTextBox);
+		focus(partnerEmailIdTextBox);
 	}
 
 	public boolean isUsernameMustStartWithLetterErrorDisplayed() {

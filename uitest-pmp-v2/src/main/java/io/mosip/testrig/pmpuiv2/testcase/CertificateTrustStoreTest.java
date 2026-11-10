@@ -387,6 +387,11 @@ public class CertificateTrustStoreTest extends BaseClass {
 		assertTrue(partnerCertificatePage.isIssuedToDetailsDisplayed(), GlobalConstants.isIssuedToDetailsDisplayed);
 		assertTrue(partnerCertificatePage.isIssuedByDetailsDisplayed(), GlobalConstants.isIssuedByDetailsDisplayed);
 
+		assertTrue(partnerCertificatePage.areValidFromAndValidToColumnsInBrowserDateFormat(),
+				GlobalConstants.isIntermediateCAValidFromAndValidToDateFormatValid);
+		assertTrue(partnerCertificatePage.isUploadedTimeColumnInBrowserDateFormat(),
+				GlobalConstants.isIntermediateCAUploadedTimeDateFormatValid);
+
 		partnerCertificatePage.clickOnCertificateList1();
 		assertTrue(partnerCertificatePage.isViewIntermediateCADetailsPageDisplayed(),
 				GlobalConstants.isViewIntermediateCADetailsPageDisplayed);

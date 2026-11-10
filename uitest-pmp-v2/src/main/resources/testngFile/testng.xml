@@ -29,6 +29,7 @@
 			<class name="io.mosip.testrig.pmpuiv2.testcase.SbiCreationTest" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.DeviceCreationTest" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.SbiDeviceProviderTest" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.SbiDeviceDashboardCountTest" />
 			<!--FTM PARTNER FLOW-->
 			<class name="io.mosip.testrig.pmpuiv2.testcase.FtmPartnerCreation" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.FtmDeviceTest" />
@@ -63,6 +64,7 @@
 			<class name="io.mosip.testrig.pmpuiv2.testcase.DeactivatedFtmProviderTest" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.CertificateTrustStoreTest" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerPolicyMappingTest" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerPolicyLinkingDashboardCountTest" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.IndividualViewApproveRejectTest" />
 
 			 <!--Deactivate PARTNER FLOW -->

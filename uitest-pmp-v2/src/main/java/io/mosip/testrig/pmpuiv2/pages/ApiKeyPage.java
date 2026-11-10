@@ -1423,6 +1423,8 @@ public class ApiKeyPage extends BasePage {
 	}
 
 	public void enterEditApiKeyExpiryDate(String date) {
+		// clear() does not reach React's onChange on the date picker, so the typed date would be appended
+		clearTextBox(editApiKeyExpiryDateInput);
 		enter(editApiKeyExpiryDateInput, date);
 	}
 
@@ -1804,6 +1806,19 @@ public class ApiKeyPage extends BasePage {
 				.until(ExpectedConditions.visibilityOf(expirationDateCell)).getText().trim();
 	}
 
+	// After Go Back the list can render before its refetch lands, so give it time to show the updated date
+	public String getExpirationDateFromListWhenUpdated(boolean isAdminView, String expectedDate) {
+		WebElement expirationDateCell = isAdminView ? adminExpirationDateCell : partnerExpirationDateCell;
+		try {
+			return new WebDriverWait(driver, Duration.ofSeconds(ConfigManager.getTimeout())).until(d -> {
+				String text = expirationDateCell.getText().trim();
+				return text.equals(expectedDate) ? text : null;
+			});
+		} catch (TimeoutException e) {
+			return getExpirationDateFromList(isAdminView);
+		}
+	}
+
 	public String getExpirationDateFromIndividualView() {
 		if (isElementDisplayedQuick(By.id("api_key_details_expiration_date_context"), Duration.ofSeconds(5))) {
 			return getTextFromLocator(apiKeyDetailsExpirationDateContext).trim();
@@ -1909,5 +1924,12 @@ public class ApiKeyPage extends BasePage {
 			takeScreenshot();
 			return false;
 		}
+	}
+
+	public void filterApiKeysByPartnerIdAndName(String partnerId, String apiKeyName) {
+		clickOnFilterButton();
+		enterPartnerIdInFilter(partnerId);
+		enterValidApiKeyNameInAdminFilter(apiKeyName);
+		clickOnApplyFilterButton();
 	}
 }

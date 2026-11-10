@@ -27,6 +27,12 @@ public class StatusLabelActiveTest extends BaseClass {
 	public void partnerAdminStatusLabelReadsActive() {
 		navigateToPartnerListPage();
 
+		partnerAdminPage.clickOnFilterButton();
+		partnerAdminPage.clickOnStatusFilter();
+		partnerAdminPage.clickActivatedButton();
+		partnerAdminPage.clickOnApplyFiltersBtn();
+		assertTrue(partnerAdminPage.isFirstPartnerRowDisplayed(), GlobalConstants.isActiveStatusLabelDisplayed);
+
 		List<String> statuses = partnerAdminPage.getStatusColumnValues();
 		LogUtil.step("Partner list statuses: " + statuses);
 		assertTrue(statuses.contains(GlobalConstants.PARTNER_STATUS_ACTIVE),
