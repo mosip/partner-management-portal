@@ -431,6 +431,7 @@ public class GlobalConstants {
 	public static final String DEACTIVATE_SBI_POPUP_DEVICE_DETAILS = "2 approved devices associated to this SBI will be deactivated | 2 devices pending for approval will be auto-rejected";
 	public static final String FEATURE_NOT_SUPPORTED = "feature not supported";
 	public static final String SERVICE_NOT_DEPLOYED = "Service not deployed";
+	public static final String OIDC_ADDITIONAL_INFO_FEATURE_NOT_SUPPORTED = "OIDC client additional information feature not supported for eSignet versions below 1.6.2. Hence skipping the testcase";
 	public static final String SERVICE_NOT_DEPLOYED_MESSAGE = "Service not deployed. Hence skipping the testcase";
 	public static final String KNOWN_ISSUES = "known issue. Hence skipping the testcase";
 	public static final String isResetFilterButtonDisplayed = "Verify if reset filter button displayed";

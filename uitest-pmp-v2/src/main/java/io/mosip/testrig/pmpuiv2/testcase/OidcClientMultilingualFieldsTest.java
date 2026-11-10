@@ -3,6 +3,7 @@ package io.mosip.testrig.pmpuiv2.testcase;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
+import org.testng.SkipException;
 import org.testng.annotations.Test;
 
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
@@ -99,7 +100,7 @@ public class OidcClientMultilingualFieldsTest extends BaseClass {
 
 	@Test(priority = 4, description = "Verify Forgot Password / SignUp Banner toggle defaults and info tooltip text", dependsOnMethods = "multilingualSectionChecks")
 	public void additionalInfoChecks() {
-		OidcClientPage oidcClientPage = openCreateOidcClientForm();
+		OidcClientPage oidcClientPage = openCreateOidcClientFormWithAdditionalInfo();
 
 		oidcClientPage.clickOnAdditionalInformationSectionHeader();
 
@@ -159,9 +160,9 @@ public class OidcClientMultilingualFieldsTest extends BaseClass {
 		oidcClientPage.clickOnPurposeTypeDropdown();
 	}
 
-	@Test(priority = 5, description = "Verify Purpose Title/Subtitle fields only appear after selecting Purpose Type, and their multilingual row/language dropdown behavior", dependsOnMethods = "additionalInfoChecks")
+	@Test(priority = 5, description = "Verify Purpose Title/Subtitle fields only appear after selecting Purpose Type, and their multilingual row/language dropdown behavior", dependsOnMethods = "multilingualSectionChecks")
 	public void purposeTitleSubtitleChecks() {
-		OidcClientPage oidcClientPage = openCreateOidcClientForm();
+		OidcClientPage oidcClientPage = openCreateOidcClientFormWithAdditionalInfo();
 		oidcClientPage.clickOnAdditionalInformationSectionHeader();
 
 		assertFalse(oidcClientPage.isPurposeTitleLabelDisplayedQuick(),
@@ -226,9 +227,9 @@ public class OidcClientMultilingualFieldsTest extends BaseClass {
 		oidcClientPage.clickOnPurposeTitleRow2LanguageDropdown();
 	}
 
-	@Test(priority = 6, description = "Verify Purpose Title and Purpose Subtitle are independently optional, and a blank multilingual row text blocks submit", dependsOnMethods = "purposeTitleSubtitleChecks")
+	@Test(priority = 6, description = "Verify Purpose Title and Purpose Subtitle are independently optional, and a blank multilingual row text blocks submit", dependsOnMethods = "multilingualSectionChecks")
 	public void purposeTitleSubtitleOptionalityChecks() {
-		OidcClientPage titleOnlyForm = openCreateOidcClientForm();
+		OidcClientPage titleOnlyForm = openCreateOidcClientFormWithAdditionalInfo();
 		fillMandatoryFieldsAndSelectLoginPurposeType(titleOnlyForm);
 		titleOnlyForm.clickOnAddPurposeTitleLanguageButton();
 		titleOnlyForm.enterPurposeTitleText(GlobalConstants.DEFAULT_POLICY + BaseClass.data);
@@ -260,7 +261,7 @@ public class OidcClientMultilingualFieldsTest extends BaseClass {
 		oidcClientPage.clickOnLoginPurposeOption();
 	}
 
-	@Test(priority = 7, description = "Verify Submit button stays disabled until every mandatory field is filled", dependsOnMethods = "purposeTitleSubtitleOptionalityChecks")
+	@Test(priority = 7, description = "Verify Submit button stays disabled until every mandatory field is filled", dependsOnMethods = "multilingualSectionChecks")
 	public void submitValidationChecks() {
 		OidcClientPage oidcClientPage = openCreateOidcClientForm();
 
@@ -301,7 +302,7 @@ public class OidcClientMultilingualFieldsTest extends BaseClass {
 
 	@Test(priority = 8, description = "Verify partner can create an OIDC Client with required and optional details", dependsOnMethods = "submitValidationChecks")
 	public void fillAndSubmitFlow() {
-		OidcClientPage oidcClientPage = openCreateOidcClientForm();
+		OidcClientPage oidcClientPage = openCreateOidcClientFormWithAdditionalInfo();
 
 		String oidcClientName = GlobalConstants.DEFAULT_POLICY + "fill" + BaseClass.data;
 		oidcClientPage.selectPartnerIdDropdown();
@@ -347,9 +348,9 @@ public class OidcClientMultilingualFieldsTest extends BaseClass {
 				GlobalConstants.isNewOidcClientStatusActive);
 	}
 
-	@Test(priority = 9, description = "Verify Partner creates an OIDC Client with multilingual Client Name, Purpose Title, and Purpose Subtitle", dependsOnMethods = "fillAndSubmitFlow")
+	@Test(priority = 9, description = "Verify Partner creates an OIDC Client with multilingual Client Name, Purpose Title, and Purpose Subtitle", dependsOnMethods = "submitValidationChecks")
 	public void multilingualWithPurposeFieldsSubmitFlow() {
-		OidcClientPage oidcClientPage = openCreateOidcClientForm();
+		OidcClientPage oidcClientPage = openCreateOidcClientFormWithAdditionalInfo();
 
 		String oidcClientName = GlobalConstants.DEFAULT_POLICY + "purpose" + BaseClass.data;
 		oidcClientPage.selectPartnerIdDropdown();
@@ -388,7 +389,7 @@ public class OidcClientMultilingualFieldsTest extends BaseClass {
 				GlobalConstants.isMultilingualWithPurposeFieldsSubmitSuccessful);
 	}
 
-	@Test(priority = 10, description = "Verify existing backend integrations and validations remain unchanged when only standard mandatory fields are used", dependsOnMethods = "multilingualWithPurposeFieldsSubmitFlow")
+	@Test(priority = 10, description = "Verify existing backend integrations and validations remain unchanged when only standard mandatory fields are used", dependsOnMethods = "submitValidationChecks")
 	public void legacyOnlySubmitFlow() {
 		OidcClientPage oidcClientPage = openCreateOidcClientForm();
 
@@ -412,7 +413,7 @@ public class OidcClientMultilingualFieldsTest extends BaseClass {
 				GlobalConstants.isLegacyOnlySubmitSuccessfulWithoutRegression);
 	}
 
-	@Test(priority = 11, description = "Verify no language validation for multilingual text fields - non-matching language text is accepted", dependsOnMethods = "legacyOnlySubmitFlow")
+	@Test(priority = 11, description = "Verify no language validation for multilingual text fields - non-matching language text is accepted", dependsOnMethods = "submitValidationChecks")
 	public void noLanguageValidationChecks() {
 		OidcClientPage oidcClientPage = openCreateOidcClientForm();
 
@@ -437,6 +438,14 @@ public class OidcClientMultilingualFieldsTest extends BaseClass {
 		OidcClientPage oidcClientPage = dashboardPage.clickOnAuthenticationServicesTitle();
 		assertTrue(oidcClientPage.isOidcClientTabDisplayed(), GlobalConstants.isOidcClientTabDisplayed);
 		oidcClientPage.clickOnCreateOidcClientButton();
+		return oidcClientPage;
+	}
+
+	private OidcClientPage openCreateOidcClientFormWithAdditionalInfo() {
+		OidcClientPage oidcClientPage = openCreateOidcClientForm();
+		if (!oidcClientPage.isAdditionalInfoSupported()) {
+			throw new SkipException(GlobalConstants.OIDC_ADDITIONAL_INFO_FEATURE_NOT_SUPPORTED);
+		}
 		return oidcClientPage;
 	}
 
