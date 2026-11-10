@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.StaleElementReferenceException;
@@ -539,7 +538,7 @@ public class PartnerAdminPage extends BasePage {
 	}
 
 	public boolean isPartnerIdFilterPresent() {
-		return isElementPresent(By.id("partner_id_filter"));
+		return isElementPresent(partnersIdFilter);
 	}
 
 	public void waitForFilterButtonClickable() {

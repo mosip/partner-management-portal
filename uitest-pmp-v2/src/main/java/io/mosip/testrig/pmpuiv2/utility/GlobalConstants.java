@@ -1552,6 +1552,9 @@ public class GlobalConstants {
 	public static final String isPartnerTypeDropdownOptionCountCorrect = "Verify that the Partner Type dropdown displays the expected partner options, even if the total count changes dynamically.";
 	public static final String isManualAdjudicationPartnerOptionDisplayed = "Verify that Manual Adjudication Partner option is displayed in the Partner Type dropdown.";
 	public static final String ONLINE_VERIFICATION_PARTNER = "Online Verification Partner";
+	public static final String ONLINE_VERIFICATION_PARTNER_ADDRESS = "ovpaddress";
+	public static final String ONLINE_VERIFICATION_PARTNER_CONTACT_NUMBER = "9898989898";
+	public static final String ONLINE_VERIFICATION_PARTNER_NOTIFICATION_LANGUAGE = "English";
 	public static final String OVP_PARTNER_USER = "pmpui-ovp";
 	public static final String OVP_PARTNER_USER_2 = "pmpui-ovp2";
 	public static final String OVP_PARTNER_EMAIL = "pmpui-ovp@test.com";
@@ -1636,6 +1639,8 @@ public class GlobalConstants {
 	public static final String ONLINE_VERIFICATION_PARTNER_ONLY_STATUS_CHANGES = "Only the status changes after deactivation";
 	public static final String ONLINE_VERIFICATION_PARTNER_DEACTIVATE_DISABLED = "Deactivate is disabled for a deactivated Online Verification Partner";
 	public static final String ONLINE_VERIFICATION_PARTNER_NON_ADMIN_CANNOT_DEACTIVATE = "A user without PARTNER_ADMIN cannot open partner deactivation";
+	public static final String NO_ACCESS_PAGE_TITLE = "You do not have privilege to access this page";
+	public static final String NO_ACCESS_PAGE_DESCRIPTION = "Please contact your administrator";
 
 	public static final String CANCEL_CONFIRMATION_POPUP_TEXT = "Your changes will be lost, are you sure you want to proceed?";
 	public static final String PARTNER_STATUS_ACTIVE = "Active";

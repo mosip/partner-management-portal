@@ -201,7 +201,7 @@ public class MispPartnerPage extends BasePage {
 	}
 
 	public boolean isCreatePartnerButtonPresent() {
-		return isElementPresent(By.id("create_partner_btn"));
+		return isElementPresent(createPartnerButton);
 	}
 
 	public boolean isCreatePartnerButtonEnabled() {

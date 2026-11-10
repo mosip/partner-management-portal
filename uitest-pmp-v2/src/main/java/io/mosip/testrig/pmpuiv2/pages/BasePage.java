@@ -2,6 +2,8 @@ package io.mosip.testrig.pmpuiv2.pages;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Proxy;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -407,20 +409,31 @@ public class BasePage {
 		}
 	}
 
-	protected boolean isElementPresent(By locator) {
-		return !driver.findElements(locator).isEmpty();
+	protected boolean isElementPresent(WebElement element) {
+		By locator = locatorOf(element);
+		return locator != null && !driver.findElements(locator).isEmpty();
 	}
 
-	public boolean waitUntilDashboardInsteadOfPartnerList() {
-		return Boolean.TRUE.equals(new WebDriverWait(driver, Duration.ofSeconds(20)).until(webDriver -> {
-			if (isElementPresent(By.id("create_partner_btn"))) {
-				return Boolean.FALSE;
+	private By locatorOf(WebElement element) {
+		try {
+			InvocationHandler handler = Proxy.getInvocationHandler(element);
+			Field locatorField = handler.getClass().getDeclaredField("locator");
+			locatorField.setAccessible(true);
+			Object locator = locatorField.get(handler);
+			Class<?> type = locator.getClass();
+			while (type != null) {
+				try {
+					Field byField = type.getDeclaredField("by");
+					byField.setAccessible(true);
+					return (By) byField.get(locator);
+				} catch (NoSuchFieldException ignored) {
+					type = type.getSuperclass();
+				}
 			}
-			if (isElementPresent(By.id("dashboard_partner_card_header"))) {
-				return Boolean.TRUE;
-			}
-			return null;
-		}));
+		} catch (ReflectiveOperationException e) {
+			LogUtil.error("isElementPresent failed: " + e.getClass().getSimpleName());
+		}
+		return null;
 	}
 
 	protected boolean isElementDisabled(WebElement element) {
