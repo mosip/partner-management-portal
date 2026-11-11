@@ -42,6 +42,12 @@ public class BiometricConfigurationTest extends BaseClass {
 
 		assertTrue(biometricConfigurationPage.isCreateBiometricConfigurationFormDisplayed(),
 				GlobalConstants.isCreateBiometricConfigurationFormDisplayed);
+		assertTrue(biometricConfigurationPage.isProviderNameFieldDisplayed(),
+				GlobalConstants.isCreateBiometricConfigurationFormDisplayed);
+		assertTrue(biometricConfigurationPage.isProviderVersionFieldDisplayed(),
+				GlobalConstants.isCreateBiometricConfigurationFormDisplayed);
+		assertTrue(biometricConfigurationPage.isModalityDropdownDisplayed(),
+				GlobalConstants.isCreateBiometricConfigurationFormDisplayed);
 		assertFalse(biometricConfigurationPage.isSubmitButtonEnabled(),
 				"Submit should be disabled before mandatory fields are filled");
 

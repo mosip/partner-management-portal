@@ -128,7 +128,7 @@ public class BiometricConfigurationDeleteTest extends BaseClass {
 		assertTrue(biometricConfigurationPage.isFilterButtonDisplayed(),
 				GlobalConstants.isBiometricConfigurationFilterButtonDisplayed);
 		biometricConfigurationPage.clickOnFilterButton();
-		assertTrue(biometricConfigurationPage.isFilterPanelDisplayed(),
+		assertTrue(biometricConfigurationPage.isFilterConfigNameDisplayed(),
 				GlobalConstants.isBiometricConfigurationFilterPanelDisplayed);
 		biometricConfigurationPage.enterConfigurationNameInFilter(configName);
 		biometricConfigurationPage.clickOnApplyFilterButton();

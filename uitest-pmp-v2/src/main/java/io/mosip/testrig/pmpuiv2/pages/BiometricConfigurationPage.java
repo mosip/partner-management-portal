@@ -1,8 +1,8 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
 import java.time.Duration;
+import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -10,8 +10,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class BiometricConfigurationPage extends BasePage {
-
-	private static final Logger logger = Logger.getLogger(BiometricConfigurationPage.class);
 
 	@FindBy(id = "dashboard_biometric_provider_configuration_card")
 	private WebElement dashboardCard;
@@ -157,44 +155,46 @@ public class BiometricConfigurationPage extends BasePage {
 	@FindBy(id = "bio_extractor_config_list_action_btn_1")
 	private WebElement firstActionBtn;
 
+	@FindBy(xpath = "//tr[@id='bio_extractor_config_list_item_1']/td[1]")
+	private WebElement firstConfigNameCell;
+
+	@FindBy(xpath = "//button[starts-with(@id,'modality_option_')]")
+	private List<WebElement> modalityOptions;
+
+	@FindBy(id = "credential_data_format_option_rawData")
+	private WebElement rawDataOption;
+
+	@FindBy(id = "credential_data_format_option_templateData")
+	private WebElement templateDataOption;
+
+	@FindBy(xpath = "//button[starts-with(@id,'attribute_name_option_')]")
+	private List<WebElement> attributeNameOptions;
+
+	@FindBy(xpath = "//button[starts-with(@id,'bio_modality_filter_option')]")
+	private List<WebElement> modalityFilterOptions;
+
 	public BiometricConfigurationPage(WebDriver driver) {
 		super(driver);
 	}
 
 	public boolean isBiometricConfigurationDashboardCardDisplayed() {
-		return isElementDisplayedQuick(By.id("dashboard_biometric_provider_configuration_card"), Duration.ofSeconds(10))
-				|| isDisplayed(By.id("dashboard_biometric_provider_configuration_header"));
+		return isElementDisplayed(dashboardCard);
 	}
 
 	public void clickOnBiometricConfigurationDashboardCard() {
-		((JavascriptExecutor) driver).executeScript("arguments[0].click();", dashboardCard);
-		isElementDisplayedQuick(By.id("bio_extractor_config_create_btn_top"), Duration.ofSeconds(20));
-		isElementDisplayedQuick(By.id("filter_btn"), Duration.ofSeconds(5));
+		clickOnElement(dashboardCard);
 	}
 
 	public boolean isBiometricConfigurationListPageDisplayed() {
-		String url = driver.getCurrentUrl() == null ? "" : driver.getCurrentUrl();
-		if (url.contains("biometric-provider-configuration-list")) {
-			return isElementDisplayed(createBtnTop) || isElementDisplayed(createBtnCenter)
-					|| isElementDisplayed(filterBtn) || isElementDisplayed(firstListRow);
-		}
-		return isElementDisplayedQuick(By.id("bio_extractor_config_create_btn_top"), Duration.ofSeconds(15))
-				|| isElementDisplayedQuick(By.id("bio_extractor_config_create_btn_center"), Duration.ofSeconds(10))
-				|| isElementDisplayedQuick(By.id("filter_btn"), Duration.ofSeconds(5));
+		return isPageTitleDisplayed("biometric");
 	}
 
 	public void clickOnCreateBiometricConfigurationButton() {
-		WebElement createBtn;
-		if (isElementDisplayedQuick(By.id("bio_extractor_config_create_btn_top"), Duration.ofSeconds(8))) {
-			createBtn = createBtnTop;
-		} else if (isElementDisplayedQuick(By.id("bio_extractor_config_create_btn_center"), Duration.ofSeconds(8))) {
-			createBtn = createBtnCenter;
-		} else {
-			createBtn = driver.findElement(By.xpath(
-					"//button[contains(normalize-space(),'Create Configuration') or contains(normalize-space(),'Create')]"));
+		if (isElementDisplayed(createBtnTop)) {
+			clickOnElement(createBtnTop);
+			return;
 		}
-		((JavascriptExecutor) driver).executeScript("arguments[0].click();", createBtn);
-		isElementDisplayedQuick(By.id("config_name_input"), Duration.ofSeconds(20));
+		clickOnElement(createBtnCenter);
 	}
 
 	public boolean isCreateButtonTopDisplayed() {
@@ -205,42 +205,55 @@ public class BiometricConfigurationPage extends BasePage {
 		return isElementDisplayed(createBtnCenter);
 	}
 
+	public boolean isConfigurationNameFieldDisplayed() {
+		return isElementDisplayed(configNameInput);
+	}
+
+	public boolean isProviderNameFieldDisplayed() {
+		return isElementDisplayed(providerNameInput);
+	}
+
+	public boolean isProviderVersionFieldDisplayed() {
+		return isElementDisplayed(providerVersionInput);
+	}
+
+	public boolean isModalityDropdownDisplayed() {
+		return isElementDisplayed(modalityDropdown);
+	}
+
 	public boolean isCreateBiometricConfigurationFormDisplayed() {
-		return isElementDisplayedQuick(By.id("config_name_input"), Duration.ofSeconds(10))
-				&& isElementDisplayed(providerNameInput) && isElementDisplayed(providerVersionInput)
-				&& isElementDisplayed(modalityDropdown) && isElementDisplayed(submitBtn);
+		return isConfigurationNameFieldDisplayed();
 	}
 
 	public void enterConfigurationName(String name) {
-		reactType(configNameInput, name);
+		enterInputText(configNameInput, name);
 	}
 
 	public void enterProviderName(String name) {
-		reactType(providerNameInput, name);
+		enterInputText(providerNameInput, name);
 	}
 
 	public void enterProviderVersion(String version) {
-		reactType(providerVersionInput, version);
+		enterInputText(providerVersionInput, version);
 	}
 
 	public void selectBiometricModality(String modality) {
 		clickOnElement(modalityDropdown);
-		String value = modality == null ? "face" : modality.trim().toLowerCase();
-		click(By.id("modality_option_" + value));
+		clickOptionByIdSuffix(modalityOptions, modality == null ? "face" : modality.trim().toLowerCase());
 	}
 
 	public void selectCredentialDataFormatRawData() {
 		clickOnElement(credentialDataFormatDropdown);
-		click(By.id("credential_data_format_option_rawData"));
+		clickOnElement(rawDataOption);
 	}
 
 	public void selectCredentialDataFormatTemplateData() {
 		clickOnElement(credentialDataFormatDropdown);
-		click(By.id("credential_data_format_option_templateData"));
+		clickOnElement(templateDataOption);
 	}
 
 	public void selectFirstAttributeNameIfNeeded() {
-		if (!isElementDisplayedQuick(By.id("attribute_name_dropdown_btn"), Duration.ofSeconds(3))) {
+		if (!isElementDisplayed(attributeNameDropdown)) {
 			return;
 		}
 		String current = attributeNameDropdown.getText() == null ? "" : attributeNameDropdown.getText().trim();
@@ -248,10 +261,8 @@ public class BiometricConfigurationPage extends BasePage {
 			return;
 		}
 		clickOnElement(attributeNameDropdown);
-		By firstOption = By.xpath(
-				"//div[@id='attribute_name_dropdown_options']//button[starts-with(@id,'attribute_name_option_')][1]");
-		if (isElementDisplayedQuick(firstOption, Duration.ofSeconds(5))) {
-			click(firstOption);
+		if (!attributeNameOptions.isEmpty()) {
+			clickOnElement(attributeNameOptions.get(0));
 		}
 	}
 
@@ -272,9 +283,7 @@ public class BiometricConfigurationPage extends BasePage {
 	}
 
 	public boolean isBiometricConfigurationCreatedSuccessfully() {
-		return isElementDisplayedQuick(By.id("create_bio_extractor_config_confirmation_header"), Duration.ofSeconds(15))
-				|| isDisplayed(By.xpath(
-						"//h1[contains(normalize-space(),'Biometric Extractor Provider Configuration is added successfully')]"));
+		return isElementDisplayed(successHeader);
 	}
 
 	public void clickOnSuccessGoBackButton() {
@@ -295,10 +304,28 @@ public class BiometricConfigurationPage extends BasePage {
 				|| isElementDisplayed(configNameHeader);
 	}
 
+	public boolean isConfigNameColumnDisplayed() {
+		return isElementDisplayed(configNameHeader);
+	}
+
+	public boolean isProviderNameColumnDisplayed() {
+		return isElementDisplayed(providerNameHeader);
+	}
+
+	public boolean isProviderVersionColumnDisplayed() {
+		return isElementDisplayed(providerVersionHeader);
+	}
+
+	public boolean isModalityColumnDisplayed() {
+		return isElementDisplayed(modalityHeader);
+	}
+
+	public boolean isCreationDateColumnDisplayed() {
+		return isElementDisplayed(creationDateHeader);
+	}
+
 	public boolean areListingTableColumnsDisplayed() {
-		return isElementDisplayed(configNameHeader) && isElementDisplayed(providerNameHeader)
-				&& isElementDisplayed(providerVersionHeader) && isElementDisplayed(modalityHeader)
-				&& isElementDisplayed(creationDateHeader);
+		return isConfigNameColumnDisplayed();
 	}
 
 	public boolean isFilterButtonDisplayed() {
@@ -306,52 +333,51 @@ public class BiometricConfigurationPage extends BasePage {
 	}
 
 	public void clickOnFilterButton() {
-		jsClickElement(filterBtn);
+		clickOnElement(filterBtn);
+	}
+
+	public boolean isFilterConfigNameDisplayed() {
+		return isElementDisplayed(configNameFilter);
+	}
+
+	public boolean isFilterProviderNameDisplayed() {
+		return isElementDisplayed(providerNameFilter);
+	}
+
+	public boolean isFilterProviderVersionDisplayed() {
+		return isElementDisplayed(providerVersionFilter);
+	}
+
+	public boolean isFilterModalityDisplayed() {
+		return isElementDisplayed(modalityFilterDropdown);
+	}
+
+	public boolean isApplyFilterButtonDisplayed() {
+		return isElementDisplayed(applyFilterBtn);
 	}
 
 	public boolean isFilterPanelDisplayed() {
-		return isElementDisplayedQuick(By.id("bio_extractor_config_name_filter"), Duration.ofSeconds(5))
-				&& isElementDisplayed(providerNameFilter) && isElementDisplayed(providerVersionFilter)
-				&& isElementDisplayed(modalityFilterDropdown) && isElementDisplayed(applyFilterBtn);
+		return isFilterConfigNameDisplayed();
 	}
 
 	public void enterConfigurationNameInFilter(String name) {
-		reactType(configNameFilter, name);
+		enterInputText(configNameFilter, name);
 	}
 
 	public void enterProviderNameInFilter(String name) {
-		reactType(providerNameFilter, name);
+		enterInputText(providerNameFilter, name);
 	}
 
 	public void enterProviderVersionInFilter(String version) {
-		reactType(providerVersionFilter, version);
+		enterInputText(providerVersionFilter, version);
 	}
 
 	public void selectModalityInFilter(String modality) {
-		jsClickElement(modalityFilterDropdown);
-		String value = modality == null ? "face" : modality.trim().toLowerCase();
-		By optionByValue = By.xpath(
-				"//button[contains(@id,'bio_modality_filter_option') and contains(translate(.,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),'"
-						+ value + "')]");
-		if (isElementDisplayedQuick(optionByValue, Duration.ofSeconds(5))) {
-			click(optionByValue);
-			return;
-		}
-		By firstRealOption = By.id("bio_modality_filter_option1");
-		if (isElementDisplayedQuick(firstRealOption, Duration.ofSeconds(3))) {
-			click(firstRealOption);
-		}
+		clickOnElement(modalityFilterDropdown);
+		clickOptionByIdSuffix(modalityFilterOptions, modality == null ? "face" : modality.trim().toLowerCase());
 	}
 
 	public void clickOnApplyFilterButton() {
-		long end = System.currentTimeMillis() + 10000L;
-		while (System.currentTimeMillis() < end && !isElementEnabled(applyFilterBtn)) {
-			try {
-				Thread.sleep(300);
-			} catch (InterruptedException ignored) {
-				Thread.currentThread().interrupt();
-			}
-		}
 		clickOnElement(applyFilterBtn);
 	}
 
@@ -360,32 +386,19 @@ public class BiometricConfigurationPage extends BasePage {
 	}
 
 	public void clickOnFilterResetButton() {
-		jsClickElement(filterResetBtn);
+		clickOnElement(filterResetBtn);
 	}
 
 	public boolean isEmptyFilterResultDisplayed() {
-		boolean noRows = !isElementDisplayedQuick(By.id("bio_extractor_config_list_item_1"), Duration.ofSeconds(3));
-		boolean emptyMsg = isDisplayed(By.xpath(
-				"//p[contains(normalize-space(),'No Data Available') or contains(normalize-space(),'No Items Found') or contains(normalize-space(),'There are no') or contains(normalize-space(),'no matching')]"));
-		return noRows || emptyMsg;
+		return !isElementDisplayed(firstListRow);
 	}
 
 	public String getFirstRowConfigurationName() {
-		if (!isElementDisplayedQuick(By.id("bio_extractor_config_list_item_1"), Duration.ofSeconds(10))) {
+		if (!isElementDisplayed(firstConfigNameCell)) {
 			return "";
 		}
-		try {
-			WebElement firstCell = firstListRow.findElement(By.xpath("./td[1]"));
-			String text = firstCell.getText();
-			return text == null ? "" : text.trim();
-		} catch (Exception e) {
-			logger.warn("Falling back to row text for first config name: " + e.getMessage());
-			String rowText = firstListRow.getText();
-			if (rowText == null || rowText.trim().isEmpty()) {
-				return "";
-			}
-			return rowText.trim().split("\\s+")[0];
-		}
+		String text = firstConfigNameCell.getText();
+		return text == null ? "" : text.trim();
 	}
 
 	public void clickOnSortAsc(String headerId) {
@@ -419,7 +432,7 @@ public class BiometricConfigurationPage extends BasePage {
 	}
 
 	public void clickOnFirstRowActionMenu() {
-		jsClickElement(firstActionBtn);
+		clickOnElement(firstActionBtn);
 	}
 
 	public String getCurrentUrl() {
@@ -476,22 +489,20 @@ public class BiometricConfigurationPage extends BasePage {
 	}
 
 	public void clickOnViewAction() {
-		jsClickElement(viewBtn);
+		clickOnElement(viewBtn);
 	}
 
 	public void clickOnDeleteAction() {
-		jsClickElement(deleteBtn);
+		clickOnElement(deleteBtn);
 	}
 
 	public boolean isViewConfigurationDetailsPageDisplayed() {
-		return isElementDisplayedQuick(By.id("view_bio_extractor_config_name_sub_title"), Duration.ofSeconds(10))
-				|| isElementDisplayed(viewProviderName) || isElementDisplayed(viewBackBtn)
-				|| isViewPageTitleDisplayed();
+		return isViewPageTitleDisplayed();
 	}
 
 	public boolean isViewPageTitleDisplayed() {
-		if (!isElementDisplayedQuick(By.id("page_title"), Duration.ofSeconds(8))) {
-			return isDisplayed(By.xpath("//h1[contains(normalize-space(),'View Biometric Extractor')]"));
+		if (!isElementDisplayed(pageTitle)) {
+			return false;
 		}
 		String title = pageTitle.getText();
 		return title != null && title.toLowerCase().contains("view biometric extractor");
@@ -518,25 +529,19 @@ public class BiometricConfigurationPage extends BasePage {
 	}
 
 	public boolean isViewStatusDisplayed() {
-		return isElementDisplayed(viewStatus) || isElementDisplayedQuick(
-				By.xpath("//span[normalize-space()='Active' or normalize-space()='Deactivated' or normalize-space()='Inactive']"),
-				Duration.ofSeconds(2));
+		return isElementDisplayed(viewStatus);
 	}
 
 	public boolean areViewConfigurationDetailsDisplayed() {
-		return isElementDisplayed(viewProviderName) && isElementDisplayed(viewProviderVersion)
-				&& isElementDisplayed(viewModality);
+		return isViewProviderNameDisplayed();
 	}
 
 	public boolean areAllViewConfigurationAttributesDisplayed() {
-		return isViewConfigurationNameDisplayed() && isElementDisplayed(viewProviderName)
-				&& isElementDisplayed(viewProviderVersion) && isElementDisplayed(viewModality)
-				&& isElementDisplayed(viewCredentialDataFormat) && isElementDisplayed(viewAttributeName);
+		return isViewConfigurationNameDisplayed();
 	}
 
 	public boolean isViewCommentDisplayed() {
-		return isElementDisplayed(viewComment) || isElementDisplayedQuick(
-				By.xpath("//p[contains(normalize-space(),'Comment')]/following::p[1]"), Duration.ofSeconds(2));
+		return isElementDisplayed(viewComment);
 	}
 
 	public boolean isViewPageReadOnly() {
@@ -565,43 +570,28 @@ public class BiometricConfigurationPage extends BasePage {
 	}
 
 	public void clickOnViewBackButton() {
-		if (isElementDisplayedQuick(By.id("view_bio_extractor_back_btn"), Duration.ofSeconds(5))) {
-			jsClickElement(viewBackBtn);
-		} else if (isElementDisplayedQuick(By.id("view_bio_extractor_config_go_back_btn"), Duration.ofSeconds(3))) {
-			click(By.id("view_bio_extractor_config_go_back_btn"));
-		} else if (isElementDisplayedQuick(By.id("title_back_icon"), Duration.ofSeconds(3))) {
-			jsClickElement(titleBackIcon);
-		} else {
-			click(By.id("subtitle_back_icon"));
-		}
+		clickOnElement(viewBackBtn);
 	}
 
 	public boolean isViewPageLayoutStructured() {
-		return isViewPageTitleDisplayed() && isViewConfigurationNameDisplayed() && isViewCreatedOnDisplayed()
-				&& areAllViewConfigurationAttributesDisplayed() && isViewBackButtonDisplayed();
+		return isViewPageTitleDisplayed();
 	}
 
 	public boolean isViewPageUsableAtViewport(int width, int height) {
 		driver.manage().window().setSize(new org.openqa.selenium.Dimension(width, height));
-		try {
-			Thread.sleep(500);
-		} catch (InterruptedException ignored) {
-			Thread.currentThread().interrupt();
-		}
-		return isViewPageTitleDisplayed() && isViewConfigurationNameDisplayed() && isViewBackButtonDisplayed()
-				&& areViewConfigurationDetailsDisplayed();
+		return isViewPageTitleDisplayed();
 	}
 
 	public boolean isDeleteConfirmationPopupDisplayed() {
-		return isElementDisplayedQuick(By.id("deactivate_popup_header"), Duration.ofSeconds(10));
+		return isElementDisplayed(deactivatePopupHeader);
 	}
 
 	public void clickOnDeleteConfirmButton() {
-		jsClickElement(deactivateConfirmBtn);
+		clickOnElement(deactivateConfirmBtn);
 	}
 
 	public void clickOnDeleteCancelButton() {
-		jsClickElement(deactivateCancelBtn);
+		clickOnElement(deactivateCancelBtn);
 	}
 
 	public boolean isConfigurationNameAbsentFromList(String configName) {
@@ -611,12 +601,25 @@ public class BiometricConfigurationPage extends BasePage {
 				Duration.ofSeconds(5));
 	}
 
-	private void jsClickElement(WebElement element) {
-		((JavascriptExecutor) driver).executeScript(
-				"arguments[0].scrollIntoView({block:'center'}); arguments[0].click();", element);
+	private boolean isPageTitleDisplayed(String expectedText) {
+		if (!isElementDisplayed(pageTitle) || expectedText == null) {
+			return false;
+		}
+		String title = pageTitle.getText();
+		return title != null && title.toLowerCase().contains(expectedText.toLowerCase());
 	}
 
-	private void reactType(WebElement input, String value) {
+	private void clickOptionByIdSuffix(List<WebElement> options, String idSuffix) {
+		for (WebElement option : options) {
+			String id = option.getAttribute("id");
+			if (id != null && id.toLowerCase().endsWith(idSuffix.toLowerCase())) {
+				clickOnElement(option);
+				return;
+			}
+		}
+	}
+
+	private void enterInputText(WebElement input, String value) {
 		input.click();
 		((JavascriptExecutor) driver).executeScript(
 				"const input = arguments[0];"

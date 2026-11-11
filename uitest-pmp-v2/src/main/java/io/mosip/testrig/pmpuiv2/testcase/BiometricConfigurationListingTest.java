@@ -32,7 +32,15 @@ public class BiometricConfigurationListingTest extends BaseClass {
 
 		assertTrue(biometricConfigurationPage.isListingTableDisplayed(),
 				GlobalConstants.isBiometricConfigurationListingTableDisplayed);
-		assertTrue(biometricConfigurationPage.areListingTableColumnsDisplayed(),
+		assertTrue(biometricConfigurationPage.isConfigNameColumnDisplayed(),
+				GlobalConstants.isBiometricConfigurationListingColumnsDisplayed);
+		assertTrue(biometricConfigurationPage.isProviderNameColumnDisplayed(),
+				GlobalConstants.isBiometricConfigurationListingColumnsDisplayed);
+		assertTrue(biometricConfigurationPage.isProviderVersionColumnDisplayed(),
+				GlobalConstants.isBiometricConfigurationListingColumnsDisplayed);
+		assertTrue(biometricConfigurationPage.isModalityColumnDisplayed(),
+				GlobalConstants.isBiometricConfigurationListingColumnsDisplayed);
+		assertTrue(biometricConfigurationPage.isCreationDateColumnDisplayed(),
 				GlobalConstants.isBiometricConfigurationListingColumnsDisplayed);
 		assertTrue(biometricConfigurationPage.isCreateButtonTopDisplayed(),
 				"Create Configuration button should be at top-right when configurations exist");
@@ -64,7 +72,15 @@ public class BiometricConfigurationListingTest extends BaseClass {
 		assertTrue(biometricConfigurationPage.isFilterButtonDisplayed(),
 				GlobalConstants.isBiometricConfigurationFilterButtonDisplayed);
 		biometricConfigurationPage.clickOnFilterButton();
-		assertTrue(biometricConfigurationPage.isFilterPanelDisplayed(),
+		assertTrue(biometricConfigurationPage.isFilterConfigNameDisplayed(),
+				GlobalConstants.isBiometricConfigurationFilterPanelDisplayed);
+		assertTrue(biometricConfigurationPage.isFilterProviderNameDisplayed(),
+				GlobalConstants.isBiometricConfigurationFilterPanelDisplayed);
+		assertTrue(biometricConfigurationPage.isFilterProviderVersionDisplayed(),
+				GlobalConstants.isBiometricConfigurationFilterPanelDisplayed);
+		assertTrue(biometricConfigurationPage.isFilterModalityDisplayed(),
+				GlobalConstants.isBiometricConfigurationFilterPanelDisplayed);
+		assertTrue(biometricConfigurationPage.isApplyFilterButtonDisplayed(),
 				GlobalConstants.isBiometricConfigurationFilterPanelDisplayed);
 
 		biometricConfigurationPage.enterConfigurationNameInFilter(existingConfigName);
@@ -106,8 +122,12 @@ public class BiometricConfigurationListingTest extends BaseClass {
 
 		assertTrue(biometricConfigurationPage.isViewConfigurationDetailsPageDisplayed(),
 				GlobalConstants.isBiometricConfigurationViewPageDisplayed);
-		assertTrue(biometricConfigurationPage.areViewConfigurationDetailsDisplayed(),
-				"View page should show provider name, version and modality");
+		assertTrue(biometricConfigurationPage.isViewProviderNameDisplayed(),
+				"View page should show provider name");
+		assertTrue(biometricConfigurationPage.isViewProviderVersionDisplayed(),
+				"View page should show provider version");
+		assertTrue(biometricConfigurationPage.isViewModalityDisplayed(),
+				"View page should show modality");
 		biometricConfigurationPage.clickOnViewBackButton();
 		assertTrue(biometricConfigurationPage.isBiometricConfigurationListPageDisplayed(),
 				GlobalConstants.isBiometricConfigurationListPageDisplayed);
