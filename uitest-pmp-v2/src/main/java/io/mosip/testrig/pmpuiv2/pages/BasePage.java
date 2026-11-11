@@ -2,8 +2,6 @@ package io.mosip.testrig.pmpuiv2.pages;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Proxy;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -407,33 +405,6 @@ public class BasePage {
 		} catch (TimeoutException | NoSuchElementException | StaleElementReferenceException e) {
 			return false;
 		}
-	}
-
-	protected boolean isElementPresent(WebElement element) {
-		By locator = locatorOf(element);
-		return locator != null && !driver.findElements(locator).isEmpty();
-	}
-
-	private By locatorOf(WebElement element) {
-		try {
-			InvocationHandler handler = Proxy.getInvocationHandler(element);
-			Field locatorField = handler.getClass().getDeclaredField("locator");
-			locatorField.setAccessible(true);
-			Object locator = locatorField.get(handler);
-			Class<?> type = locator.getClass();
-			while (type != null) {
-				try {
-					Field byField = type.getDeclaredField("by");
-					byField.setAccessible(true);
-					return (By) byField.get(locator);
-				} catch (NoSuchFieldException ignored) {
-					type = type.getSuperclass();
-				}
-			}
-		} catch (ReflectiveOperationException e) {
-			LogUtil.error("isElementPresent failed: " + e.getClass().getSimpleName());
-		}
-		return null;
 	}
 
 	protected boolean isElementDisabled(WebElement element) {

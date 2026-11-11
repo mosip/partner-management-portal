@@ -201,7 +201,7 @@ public class MispPartnerPage extends BasePage {
 	}
 
 	public boolean isCreatePartnerButtonPresent() {
-		return isElementPresent(createPartnerButton);
+		return isElementDisplayedQuick(createPartnerButton, ABSENCE_CHECK_TIMEOUT);
 	}
 
 	public boolean isCreatePartnerButtonEnabled() {

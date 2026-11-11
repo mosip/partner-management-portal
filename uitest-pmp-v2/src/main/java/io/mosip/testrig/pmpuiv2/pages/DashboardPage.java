@@ -504,7 +504,7 @@ public class DashboardPage extends BasePage {
 			if (mispPartnerPage.isCreatePartnerButtonPresent()) {
 				return "list";
 			}
-			if (isElementPresent(partners)) {
+			if (isElementDisplayedQuick(partners, ABSENCE_CHECK_TIMEOUT)) {
 				return "dashboard";
 			}
 			return null;
@@ -517,7 +517,7 @@ public class DashboardPage extends BasePage {
 		if (!baseUrl.endsWith("/")) {
 			baseUrl = baseUrl + "/";
 		}
-		driver.get(baseUrl + "#/partnermanagement/admin/partners/partners-list");
+		driver.get(baseUrl + ConfigManager.getAdminPartnersListEndpoint());
 	}
 
 	public String getRuntimeErrorTitle() {

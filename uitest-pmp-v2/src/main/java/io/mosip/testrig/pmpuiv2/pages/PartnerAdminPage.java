@@ -538,7 +538,7 @@ public class PartnerAdminPage extends BasePage {
 	}
 
 	public boolean isPartnerIdFilterPresent() {
-		return isElementPresent(partnersIdFilter);
+		return isElementDisplayedQuick(partnersIdFilter, ABSENCE_CHECK_TIMEOUT);
 	}
 
 	public void waitForFilterButtonClickable() {
