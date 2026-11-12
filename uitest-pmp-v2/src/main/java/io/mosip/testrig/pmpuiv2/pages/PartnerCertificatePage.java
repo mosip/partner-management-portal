@@ -1,5 +1,6 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 
@@ -614,6 +615,17 @@ public class PartnerCertificatePage extends BasePage {
 
 	public void clickOnGoBackButton() {
 		clickOnElement(GoBackButton);
+	}
+
+	public void continueAfterTrustCertificateSubmit() {
+		if (isElementDisplayedQuick(By.id("confirmation_go_back_btn"), Duration.ofSeconds(8))) {
+			clickOnElement(GoBackButton);
+			return;
+		}
+		if (isElementDisplayedQuick(By.id("error_close_btn"), Duration.ofSeconds(2))) {
+			throw new IllegalStateException("Trust certificate submit failed");
+		}
+		throw new IllegalStateException("Trust certificate confirmation was not displayed");
 	}
 
 	public void clickOnSuccessMsgCloseButton() {

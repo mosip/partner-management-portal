@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
-<!-- Suite: preserve order; tests decide their own parallelism -->
+<!-- preserve-order on the suite orders <test> blocks. This file has one test. -->
 <suite name="PMP uiv2 UI TestRig" preserve-order="true" parallel="false">
 
-<!-- Note: 
-- Class dependencies are implemented within the test classes. 
-- This suite is organized based on flow for easier understanding. 
-- Classes are executed in parallel using 4 threads. 
+<!-- Note:
+- preserve-order="false" on the test is intentional: classes run in parallel on 4 threads.
+- Do not add dependsOnGroups between these classes. Each class creates its own data or fails on its own assertion.
+- The class list below is grouped by flow for reading, not as an execution order.
 -->
 
-	<!-- Runs test classes in parallel with 4 threads -->
+	<!-- Parallel classes. Order in this list is not an execution guarantee. -->
 	<test name="PartnerManagementService" preserve-order="false" parallel="classes" thread-count="4">
 		
 		<classes> 
@@ -44,6 +44,17 @@
 			<class name="io.mosip.testrig.pmpuiv2.testcase.MispServicesTest" />
 			<!--ABIS PARTNER FLOW-->
 			<class name="io.mosip.testrig.pmpuiv2.testcase.AbisPartnerTest" />
+			<!--MANUAL ADJUDICATION PARTNER FLOW (MOSIP-44348 / MOSIP-44410)-->
+			<class name="io.mosip.testrig.pmpuiv2.testcase.ManualAdjudicationPartnerTest" />
+			<!--MANUAL ADJUDICATION POLICY LINKING (MOSIP-44350)-->
+			<class name="io.mosip.testrig.pmpuiv2.testcase.ManualAdjudicationPolicyTest" />
+			<!--BIOMETRIC EXTRACTOR PROVIDER CONFIGURATION (MOSIP-44595 / MOSIP-44596 / MOSIP-44597 / MOSIP-44598)-->
+			<class name="io.mosip.testrig.pmpuiv2.testcase.BiometricConfigurationTest" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.BiometricConfigurationListingTest" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.BiometricConfigurationViewTest" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.BiometricConfigurationDeleteTest" />
+			<!--MAP BIOMETRIC EXTRACTOR PROVIDER (MOSIP-44659)-->
+			<class name="io.mosip.testrig.pmpuiv2.testcase.MapBiometricExtractorProviderTest" />
 			<!--PARTNER VALIDATION & MANAGEMENT -->
 			<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerDetailsTest" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerFilterTest" />
