@@ -157,6 +157,9 @@ public class DashboardPage extends BasePage {
 	@FindBy(id = "dashboard_partner_card_header")
 	private WebElement partners;
 
+	@FindBy(id = "run_time_error_title")
+	private WebElement runtimeErrorTitle;
+
 	@FindBy(xpath = "//button[contains(@class, 'bg-blue-50') and contains(@class, 'cursor-pointer')]")
 	private WebElement notificationIcon;
 
@@ -485,6 +488,10 @@ public class DashboardPage extends BasePage {
 
 	public void clickOnPartners() {
 		clickOnElement(partners);
+	}
+
+	public String getRuntimeErrorTitle() {
+		return getTextFromLocator(runtimeErrorTitle);
 	}
 
 	public boolean isNotificationIconDisplayed() {
