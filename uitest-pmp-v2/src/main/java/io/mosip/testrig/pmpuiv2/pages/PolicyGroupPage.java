@@ -1,8 +1,13 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class PolicyGroupPage extends BasePage {
 
@@ -320,6 +325,32 @@ public class PolicyGroupPage extends BasePage {
 
 	public void clickOnSuccessHomeButton() {
 		clickOnElement(successHomeButton);
+	}
+
+	public boolean isPolicyGroupCreatedOrAlreadyExists() {
+		By success = By.xpath("//h1[text()='Policy Group created successfully!']");
+		By exists = By.xpath("//p[text()='Policy group already exists with this name']");
+		try {
+			new WebDriverWait(driver, Duration.ofSeconds(15)).until(d ->
+					!d.findElements(success).isEmpty() || !d.findElements(exists).isEmpty());
+			return true;
+		} catch (TimeoutException e) {
+			return false;
+		}
+	}
+
+	public void leaveCreatePolicyGroup() {
+		if (isElementDisplayedQuick(By.id("confirmation_home_btn"), Duration.ofSeconds(2))) {
+			clickOnElement(successHomeButton);
+			return;
+		}
+		if (isElementDisplayedQuick(By.id("error_close_btn"), Duration.ofSeconds(2))) {
+			clickOnElement(errorCloseButton);
+		}
+		clickOnCancelButton();
+		if (isElementDisplayedQuick(By.id("block_messsage_proceed"), Duration.ofSeconds(5))) {
+			driver.findElement(By.id("block_messsage_proceed")).click();
+		}
 	}
 
 	public boolean isSubmitButtonEnabled() {

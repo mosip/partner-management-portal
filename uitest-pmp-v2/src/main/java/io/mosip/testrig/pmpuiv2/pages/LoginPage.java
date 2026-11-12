@@ -1,11 +1,16 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
+import java.time.Duration;
+
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class LoginPage extends BasePage {
 
@@ -48,13 +53,32 @@ public class LoginPage extends BasePage {
 	}
 
 	public void clickOnLoginButton() {
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block:'center'});", LoginButton);
 		clickOnElement(LoginButton);
 	}
 
 	public void login(String userName, String password) {
+		submitCredentials(userName, password);
+		if (isCredentialErrorDisplayed()) {
+			submitCredentials(userName, password);
+		}
+	}
+
+	private void submitCredentials(String userName, String password) {
 		enterUserName(userName);
 		enterPassword(password);
 		clickOnLoginButton();
+		try {
+			new WebDriverWait(driver, Duration.ofSeconds(20)).until(d -> {
+				String url = d.getCurrentUrl() == null ? "" : d.getCurrentUrl();
+				return !url.contains("openid-connect") || !d.findElements(By.cssSelector("#input-error, .alert-error")).isEmpty();
+			});
+		} catch (TimeoutException ignored) {
+		}
+	}
+
+	private boolean isCredentialErrorDisplayed() {
+		return isElementDisplayedQuick(By.cssSelector("#input-error, .alert-error"), Duration.ofSeconds(2));
 	}
 
 	public void selectLanguage(String kcLocale) {

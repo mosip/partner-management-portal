@@ -20,7 +20,7 @@ import io.mosip.testrig.pmpuiv2.pages.PolicyGroupPage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
-@Test(alwaysRun = true, groups = { "MapBiometricExtractorProviderTest" })
+@Test(dependsOnGroups = { "PartnerAdminCreation" }, groups = { "MapBiometricExtractorProviderTest" })
 public class MapBiometricExtractorProviderTest extends BaseClass {
 
 	private DashboardPage dashboardPage;
@@ -37,11 +37,6 @@ public class MapBiometricExtractorProviderTest extends BaseClass {
 	private static String partnerId;
 	private static String policyName;
 	private static String bioConfigName;
-
-	public MapBiometricExtractorProviderTest() {
-		this.userid = GlobalConstants.QAJAVA21_ADMIN_USER;
-		this.password = GlobalConstants.QAJAVA21_ADMIN_PASSWORD;
-	}
 
 	@Test(priority = 1, description = "Creating biometric config, OVP partner and datashare policy for mapping")
 	public void CreatingPrerequisitesForMapBiometricExtractor() throws InterruptedException {
@@ -81,13 +76,14 @@ public class MapBiometricExtractorProviderTest extends BaseClass {
 		partnerCertificatePage.clickOnPartnerDomainSelectorDropdownOptionAuth();
 		partnerCertificatePage.uploadCertificateRootCa();
 		partnerCertificatePage.clickonSubmitButtonForAdmin();
-		partnerCertificatePage.clickOnGoBackButton();
+		partnerCertificatePage.continueAfterTrustCertificateSubmit();
 		partnerCertificatePage.clickOnIntermediateCACertTab();
 		partnerCertificatePage.clickOnIntermediateUploadTrustCertificateButtonInAdmin();
 		partnerCertificatePage.clickOnpartnerDomainSelectorDropdown();
 		partnerCertificatePage.clickOnPartnerDomainSelectorDropdownOptionAuth();
 		partnerCertificatePage.uploadCertificateSubCa();
 		partnerCertificatePage.clickonSubmitButtonForAdmin();
+		partnerCertificatePage.continueAfterTrustCertificateSubmit();
 		partnerCertificatePage.clickOnHomeButton();
 
 		dashboardPage.clickOnPartners();
@@ -111,6 +107,7 @@ public class MapBiometricExtractorProviderTest extends BaseClass {
 		partnerCertificatePage.clickOnCloseButton();
 		basePage.scrollToStartPage();
 
+		dashboardPage.clickOnHomeOptionOfHamburger();
 		dashboardPage.clickOnPolicyButton();
 		policygroupPage.clickOnDatasharePolicyTab();
 		datasharePolicyPage.clickOnDatasharePolicyCreateButton();
@@ -277,7 +274,7 @@ public class MapBiometricExtractorProviderTest extends BaseClass {
 	}
 
 	private void handleTermsAndCondition() {
-		if (dashboardPage.isTermsAndConditionsPopupDisplayed()) {
+		if (dashboardPage.isTermsAndConditionsPopupDisplayedQuick()) {
 			dashboardPage.clickOnCheckbox();
 			assertTrue(dashboardPage.isProceedButtonDisplayed(), GlobalConstants.isProceedButtonDisplayed);
 			dashboardPage.clickOnProceedButton();

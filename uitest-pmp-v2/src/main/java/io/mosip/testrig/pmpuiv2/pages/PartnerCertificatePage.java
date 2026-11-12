@@ -1,5 +1,6 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 
@@ -614,6 +615,22 @@ public class PartnerCertificatePage extends BasePage {
 
 	public void clickOnGoBackButton() {
 		clickOnElement(GoBackButton);
+	}
+
+	public void continueAfterTrustCertificateSubmit() {
+		if (isElementDisplayedQuick(By.id("confirmation_go_back_btn"), Duration.ofSeconds(8))) {
+			clickOnElement(GoBackButton);
+			return;
+		}
+		if (isElementDisplayedQuick(By.id("error_close_btn"), Duration.ofSeconds(2))) {
+			clickOnElement(errorCloseButton);
+		}
+		if (isElementDisplayedQuick(By.id("upload_trust_certificate_cancel_btn"), Duration.ofSeconds(3))) {
+			clickOnElement(adminCertUploadCancelButton);
+		}
+		if (isElementDisplayedQuick(By.id("block_messsage_proceed"), Duration.ofSeconds(5))) {
+			driver.findElement(By.id("block_messsage_proceed")).click();
+		}
 	}
 
 	public void clickOnSuccessMsgCloseButton() {

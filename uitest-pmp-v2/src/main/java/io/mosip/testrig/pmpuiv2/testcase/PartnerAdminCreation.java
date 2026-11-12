@@ -125,9 +125,9 @@ public class PartnerAdminCreation extends BaseClass {
 				GlobalConstants.isPolicyGroupNameDescriptionTextboxDisplayed);
 		policygroupPage.enterPolicyGroupNameDescription(GlobalConstants.DEFAULT_POLICYGROUP_DESC);
 		policygroupPage.clickOnSubmitButton();
-		assertTrue(policygroupPage.isPolicyGroupSuccessMessageDisplayed(),
+		assertTrue(policygroupPage.isPolicyGroupCreatedOrAlreadyExists(),
 				GlobalConstants.isPolicyGroupSuccessMessageDisplayed);
-		policygroupPage.clickOnSuccessHomeButton();
+		policygroupPage.leaveCreatePolicyGroup();
 
 	}
 

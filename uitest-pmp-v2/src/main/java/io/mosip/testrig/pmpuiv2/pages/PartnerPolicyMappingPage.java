@@ -1,8 +1,12 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
+import java.time.Duration;
+
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
 
@@ -494,6 +498,14 @@ public class PartnerPolicyMappingPage extends BasePage {
 
 	public void clickOnRejectButton() {
 		clickOnElement(rejectButton);
+	}
+
+	public void waitForApproveRejectPopupToClose() {
+		try {
+			new WebDriverWait(driver, Duration.ofSeconds(20))
+					.until(ExpectedConditions.invisibilityOfElementLocated(By.id("reject_btn")));
+		} catch (TimeoutException ignored) {
+		}
 	}
 
 	public void clickOnApproveSubmitButton() {

@@ -209,15 +209,19 @@ public class MapBiometricExtractorProviderPage extends BasePage {
 	}
 
 	public void clickOnMapBiometricActionFromPolicyRequestsList() {
-		if (isElementDisplayedQuick(By.id("policy_requests_ovp_map_biometric_extractor_1"), Duration.ofSeconds(3))) {
-			jsClickElement(mapBiometricActionFromList);
-		} else if (isElementDisplayedQuick(By.id("policy_list_map_biometric_extractor"), Duration.ofSeconds(3))) {
+		By enabled = By.xpath(
+				"//div[starts-with(@id,'policy_requests_ovp_map_biometric_extractor_') and not(contains(@class,'pointer-events-none'))]");
+		if (isElementDisplayedQuick(enabled, Duration.ofSeconds(20))) {
+			click(enabled);
+			return;
+		}
+		if (isElementDisplayedQuick(By.id("policy_list_map_biometric_extractor"), Duration.ofSeconds(3))) {
 			jsClickElement(mapBiometricActionFromPartnerPoliciesList);
-		} else {
-			By any = By.xpath("//div[contains(@id,'map_biometric_extractor')]");
-			if (isElementDisplayedQuick(any, Duration.ofSeconds(3))) {
-				click(any);
-			}
+			return;
+		}
+		By any = By.xpath("//div[contains(@id,'map_biometric_extractor') and not(contains(@class,'pointer-events-none'))]");
+		if (isElementDisplayedQuick(any, Duration.ofSeconds(3))) {
+			click(any);
 		}
 	}
 

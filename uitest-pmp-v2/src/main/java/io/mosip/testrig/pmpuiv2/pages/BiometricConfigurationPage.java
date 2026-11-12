@@ -8,6 +8,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.Select;
 
 public class BiometricConfigurationPage extends BasePage {
 
@@ -178,6 +179,10 @@ public class BiometricConfigurationPage extends BasePage {
 	}
 
 	public boolean isBiometricConfigurationDashboardCardDisplayed() {
+		try {
+			((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block:'center'});", dashboardCard);
+		} catch (Exception ignored) {
+		}
 		return isElementDisplayed(dashboardCard);
 	}
 
@@ -238,16 +243,26 @@ public class BiometricConfigurationPage extends BasePage {
 	}
 
 	public void selectBiometricModality(String modality) {
+		String value = modality == null ? "face" : modality.trim().toLowerCase();
+		if (selectByValueIfNativeDropdown(modalityDropdown, value)) {
+			return;
+		}
 		clickOnElement(modalityDropdown);
-		clickOptionByIdSuffix(modalityOptions, modality == null ? "face" : modality.trim().toLowerCase());
+		clickOptionByIdSuffix(modalityOptions, value);
 	}
 
 	public void selectCredentialDataFormatRawData() {
+		if (selectByValueIfNativeDropdown(credentialDataFormatDropdown, "rawData")) {
+			return;
+		}
 		clickOnElement(credentialDataFormatDropdown);
 		clickOnElement(rawDataOption);
 	}
 
 	public void selectCredentialDataFormatTemplateData() {
+		if (selectByValueIfNativeDropdown(credentialDataFormatDropdown, "templateData")) {
+			return;
+		}
 		clickOnElement(credentialDataFormatDropdown);
 		clickOnElement(templateDataOption);
 	}
@@ -258,6 +273,9 @@ public class BiometricConfigurationPage extends BasePage {
 		}
 		String current = attributeNameDropdown.getText() == null ? "" : attributeNameDropdown.getText().trim();
 		if (!current.isEmpty() && !current.toLowerCase().contains("select")) {
+			return;
+		}
+		if (selectByIndexIfNativeDropdown(attributeNameDropdown, 1)) {
 			return;
 		}
 		clickOnElement(attributeNameDropdown);
@@ -373,8 +391,12 @@ public class BiometricConfigurationPage extends BasePage {
 	}
 
 	public void selectModalityInFilter(String modality) {
+		String value = modality == null ? "face" : modality.trim().toLowerCase();
+		if (selectByValueIfNativeDropdown(modalityFilterDropdown, value)) {
+			return;
+		}
 		clickOnElement(modalityFilterDropdown);
-		clickOptionByIdSuffix(modalityFilterOptions, modality == null ? "face" : modality.trim().toLowerCase());
+		clickOptionByIdSuffix(modalityFilterOptions, value);
 	}
 
 	public void clickOnApplyFilterButton() {
@@ -402,29 +424,11 @@ public class BiometricConfigurationPage extends BasePage {
 	}
 
 	public void clickOnSortAsc(String headerId) {
-		By asc = By.id(headerId + "_asc_icon");
-		if (isElementDisplayedQuick(asc, Duration.ofSeconds(3))) {
-			try {
-				click(asc);
-			} catch (Exception e) {
-				((JavascriptExecutor) driver).executeScript(
-						"document.getElementById(arguments[0])?.dispatchEvent(new MouseEvent('click',{bubbles:true}));",
-						headerId + "_asc_icon");
-			}
-		}
+		click(By.id(headerId + "_asc_icon"));
 	}
 
 	public void clickOnSortDesc(String headerId) {
-		By desc = By.id(headerId + "_desc_icon");
-		if (isElementDisplayedQuick(desc, Duration.ofSeconds(3))) {
-			try {
-				click(desc);
-			} catch (Exception e) {
-				((JavascriptExecutor) driver).executeScript(
-						"document.getElementById(arguments[0])?.dispatchEvent(new MouseEvent('click',{bubbles:true}));",
-						headerId + "_desc_icon");
-			}
-		}
+		click(By.id(headerId + "_desc_icon"));
 	}
 
 	public boolean isFirstRowActionMenuDisplayed() {
@@ -607,6 +611,22 @@ public class BiometricConfigurationPage extends BasePage {
 		}
 		String title = pageTitle.getText();
 		return title != null && title.toLowerCase().contains(expectedText.toLowerCase());
+	}
+
+	private boolean selectByValueIfNativeDropdown(WebElement dropdown, String value) {
+		if (dropdown == null || !"select".equalsIgnoreCase(dropdown.getTagName())) {
+			return false;
+		}
+		new Select(dropdown).selectByValue(value);
+		return true;
+	}
+
+	private boolean selectByIndexIfNativeDropdown(WebElement dropdown, int index) {
+		if (dropdown == null || !"select".equalsIgnoreCase(dropdown.getTagName())) {
+			return false;
+		}
+		new Select(dropdown).selectByIndex(index);
+		return true;
 	}
 
 	private void clickOptionByIdSuffix(List<WebElement> options, String idSuffix) {

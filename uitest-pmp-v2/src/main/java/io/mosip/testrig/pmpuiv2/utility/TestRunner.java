@@ -98,6 +98,7 @@ public class TestRunner {
 
 			XmlSuite suite = new XmlSuite();
 			suite.setName("MySuite");
+			suite.setPreserveOrder(true);
 			suite.addListener("io.mosip.testrig.pmpuiv2.utility.EmailableReport");
 
 			// Define all available XmlClasses
@@ -324,16 +325,16 @@ public class TestRunner {
 					addClassIfAbsent(classes, partnerAdminCreation, mispPartnerTest, mispPolicyTest, mispServicesTest);
 					break;
 				case "BiometricConfigurationTest":
-					addClassIfAbsent(classes, biometricConfigurationTest);
+					addClassIfAbsent(classes, partnerAdminCreation, biometricConfigurationTest);
 					break;
 				case "BiometricConfigurationListingTest":
-					addClassIfAbsent(classes, biometricConfigurationListingTest);
+					addClassIfAbsent(classes, partnerAdminCreation, biometricConfigurationListingTest);
 					break;
 				case "BiometricConfigurationViewTest":
-					addClassIfAbsent(classes, biometricConfigurationViewTest);
+					addClassIfAbsent(classes, partnerAdminCreation, biometricConfigurationViewTest);
 					break;
 				case "BiometricConfigurationDeleteTest":
-					addClassIfAbsent(classes, biometricConfigurationDeleteTest);
+					addClassIfAbsent(classes, partnerAdminCreation, biometricConfigurationDeleteTest);
 					break;
 				case "MapBiometricExtractorProviderTest":
 					addClassIfAbsent(classes, partnerAdminCreation, mapBiometricExtractorProviderTest);
@@ -347,6 +348,7 @@ public class TestRunner {
 
 			XmlTest test = new XmlTest(suite);
 			test.setName("MyTest");
+			test.setPreserveOrder(true);
 			test.setXmlClasses(classes);
 
 			List<XmlSuite> suites = new ArrayList<>();

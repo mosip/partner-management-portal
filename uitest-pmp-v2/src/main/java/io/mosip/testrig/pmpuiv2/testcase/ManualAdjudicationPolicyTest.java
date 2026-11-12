@@ -86,8 +86,9 @@ public class ManualAdjudicationPolicyTest extends BaseClass {
 		assertTrue(partnerPolicyMappingPage.isApproveOrRejectConfirmationPopupDisplayed(),
 				GlobalConstants.isApproveOrRejectConfirmationPopupDisplayed);
 		partnerPolicyMappingPage.clickOnRejectButton();
-		partnerPolicyMappingPage.clickOnFilterResetButton();
+		partnerPolicyMappingPage.waitForApproveRejectPopupToClose();
 		verifyStatus(GlobalConstants.MA_POLICY_03, GlobalConstants.REJECTED);
+		partnerPolicyMappingPage.clickOnFilterResetButton();
 
 		requestPolicy(GlobalConstants.MA_POLICY_03, GlobalConstants.MA_POLICY_03_DESCRIPTION);
 		partnerPolicyMappingPage.clickOnConfirmationCustomButton();

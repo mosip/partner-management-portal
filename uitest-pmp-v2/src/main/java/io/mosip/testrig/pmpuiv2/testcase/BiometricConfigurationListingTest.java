@@ -9,18 +9,13 @@ import io.mosip.testrig.pmpuiv2.pages.DashboardPage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
-@Test(alwaysRun = true, groups = { "BiometricConfigurationListingTest" })
+@Test(dependsOnGroups = { "PartnerAdminCreation" }, groups = { "BiometricConfigurationListingTest" })
 public class BiometricConfigurationListingTest extends BaseClass {
 
 	private DashboardPage dashboardPage;
 	private BiometricConfigurationPage biometricConfigurationPage;
 
 	private static String existingConfigName;
-
-	public BiometricConfigurationListingTest() {
-		this.userid = GlobalConstants.QAJAVA21_ADMIN_USER;
-		this.password = GlobalConstants.QAJAVA21_ADMIN_PASSWORD;
-	}
 
 	@Test(priority = 1, description = "Verifying Biometric Configuration Listing Table")
 	public void VerifyingBiometricConfigurationListingTable() {
@@ -142,7 +137,7 @@ public class BiometricConfigurationListingTest extends BaseClass {
 	}
 
 	private void handleTermsAndCondition() {
-		if (dashboardPage.isTermsAndConditionsPopupDisplayed()) {
+		if (dashboardPage.isTermsAndConditionsPopupDisplayedQuick()) {
 			dashboardPage.clickOnCheckbox();
 			assertTrue(dashboardPage.isProceedButtonDisplayed(), GlobalConstants.isProceedButtonDisplayed);
 			dashboardPage.clickOnProceedButton();
