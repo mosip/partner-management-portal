@@ -1,11 +1,17 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
+import java.time.Duration;
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class LoginPage extends BasePage {
 
@@ -48,6 +54,7 @@ public class LoginPage extends BasePage {
 	}
 
 	public void clickOnLoginButton() {
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block:'center'});", LoginButton);
 		clickOnElement(LoginButton);
 	}
 
@@ -55,6 +62,30 @@ public class LoginPage extends BasePage {
 		enterUserName(userName);
 		enterPassword(password);
 		clickOnLoginButton();
+		assertLoginSucceeded(userName);
+	}
+
+	public void assertLoginSucceeded(String userName) {
+		try {
+			new WebDriverWait(driver, Duration.ofSeconds(20)).until(d -> credentialErrorShown(d) || loginPageLeft(d));
+		} catch (TimeoutException e) {
+			throw new IllegalStateException("Login did not finish for user " + userName, e);
+		}
+		if (credentialErrorShown(driver)) {
+			String message = driver.findElement(By.cssSelector("#input-error, .alert-error")).getText();
+			throw new IllegalStateException("Login failed for user " + userName
+					+ (message == null || message.isBlank() ? "" : ": " + message.trim()));
+		}
+	}
+
+	private boolean credentialErrorShown(WebDriver currentDriver) {
+		List<WebElement> errors = currentDriver.findElements(By.cssSelector("#input-error, .alert-error"));
+		return !errors.isEmpty() && errors.get(0).isDisplayed();
+	}
+
+	private boolean loginPageLeft(WebDriver currentDriver) {
+		String url = currentDriver.getCurrentUrl();
+		return url != null && !url.contains("openid-connect");
 	}
 
 	public void selectLanguage(String kcLocale) {
