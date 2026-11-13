@@ -128,9 +128,10 @@ public class OnlineVerificationPartnerMapBiometricExtractorTest extends BaseClas
 		assertEquals(mapPage.waitUntilPageTitle(GlobalConstants.PARTNER_POLICY_LINKING_TITLE),
 				GlobalConstants.PARTNER_POLICY_LINKING_TITLE,
 				GlobalConstants.CANCEL_RETURNS_TO_POLICY_REQUEST_LIST);
-		assertTrue(mapPage.getPolicyRequestRowText(policyName).contains(GlobalConstants.PENDING_FOR_APPROVAL),
+		String policyRequestRow = mapPage.getFirstPolicyRequestRowText();
+		assertTrue(policyRequestRow.contains(policyName) && policyRequestRow.contains(GlobalConstants.PENDING_FOR_APPROVAL),
 				GlobalConstants.POLICY_REQUEST_REMAINS_PENDING_FOR_APPROVAL);
-		mapPage.openPolicyRequestAction(policyName);
+		mapPage.openFirstPolicyRequestAction();
 		assertTrue(mapPage.isMapBiometricExtractorActionDisplayed(),
 				GlobalConstants.MAP_BIOMETRIC_EXTRACTOR_ACTION_AVAILABLE);
 	}
@@ -138,7 +139,7 @@ public class OnlineVerificationPartnerMapBiometricExtractorTest extends BaseClas
 	@Test(priority = 8, description = "Save and Proceed opens credential type mapping", dependsOnMethods = "cancelReturnsToPolicyRequestList")
 	public void saveBiometricExtractorMappingOpensCredentialType() {
 		MapBiometricExtractorProviderPage mapPage = openPolicyRequestList();
-		mapPage.openPolicyRequestAction(policyName);
+		mapPage.openFirstPolicyRequestAction();
 		mapPage.openMapBiometricExtractorAction();
 		mapPage.waitUntilPageTitle(GlobalConstants.MAP_BIOMETRIC_EXTRACTOR_PROVIDER_TITLE);
 		mapPage.selectModality(1, GlobalConstants.BIOMETRIC_MODALITY_FACE);
@@ -152,8 +153,8 @@ public class OnlineVerificationPartnerMapBiometricExtractorTest extends BaseClas
 		mapPage.clickTitleBack();
 		assertEquals(mapPage.waitUntilPageTitle(GlobalConstants.PARTNER_POLICY_LINKING_TITLE),
 				GlobalConstants.PARTNER_POLICY_LINKING_TITLE, GlobalConstants.TITLE_BACK_RETURNS_TO_POLICY_REQUEST_LIST);
-		mapPage.openPolicyRequestAction(policyName);
-		assertTrue(mapPage.waitForMapBiometricExtractorActionClass().contains("pointer-events-none"),
+		mapPage.openFirstPolicyRequestAction();
+		assertTrue(mapPage.isMapBiometricExtractorActionDisabled(),
 				GlobalConstants.SAVED_MAPPING_DISABLES_MAP_ACTION);
 	}
 
@@ -175,8 +176,9 @@ public class OnlineVerificationPartnerMapBiometricExtractorTest extends BaseClas
 
 		MapBiometricExtractorProviderPage mapPage = new MapBiometricExtractorProviderPage(driver);
 		mapPage.waitUntilPageTitle(GlobalConstants.PARTNER_POLICY_LINKING_TITLE);
-		mapPage.openPolicyRequestActionForPartner(authPartnerId);
-		assertFalse(mapPage.isMapBiometricExtractorActionDisplayed(),
+		String policyRequestRow = mapPage.getFirstPolicyRequestRowText();
+		mapPage.openFirstPolicyRequestAction();
+		assertTrue(policyRequestRow.contains(authPartnerId) && !mapPage.isMapBiometricExtractorActionDisplayed(),
 				GlobalConstants.AUTHENTICATION_PARTNER_HAS_NO_MAP_BIOMETRIC_ACTION);
 	}
 
@@ -204,7 +206,7 @@ public class OnlineVerificationPartnerMapBiometricExtractorTest extends BaseClas
 
 	private MapBiometricExtractorProviderPage openSavedPolicyRequestMapPage() {
 		MapBiometricExtractorProviderPage mapPage = openPolicyRequestList();
-		mapPage.openPolicyRequestAction(policyName);
+		mapPage.openFirstPolicyRequestAction();
 		mapPage.openMapBiometricExtractorAction();
 		mapPage.waitUntilPageTitle(GlobalConstants.MAP_BIOMETRIC_EXTRACTOR_PROVIDER_TITLE);
 		return mapPage;

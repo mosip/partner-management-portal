@@ -2,7 +2,6 @@ package io.mosip.testrig.pmpuiv2.pages;
 
 import java.time.Duration;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -21,6 +20,27 @@ public class MapBiometricExtractorProviderPage extends BasePage {
 
 	@FindBy(id = "map_bio_extractor_provider_modality_1_dropdown_btn")
 	private WebElement firstModalityDropdown;
+
+	@FindBy(id = "map_bio_extractor_provider_modality_1_option1")
+	private WebElement firstModalityOption1;
+
+	@FindBy(id = "map_bio_extractor_provider_modality_1_option2")
+	private WebElement firstModalityOption2;
+
+	@FindBy(id = "map_bio_extractor_provider_modality_1_option3")
+	private WebElement firstModalityOption3;
+
+	@FindBy(id = "map_bio_extractor_provider_modality_2_dropdown_btn")
+	private WebElement secondModalityDropdown;
+
+	@FindBy(id = "map_bio_extractor_provider_modality_2_option1")
+	private WebElement secondModalityOption1;
+
+	@FindBy(id = "map_bio_extractor_provider_modality_2_option2")
+	private WebElement secondModalityOption2;
+
+	@FindBy(id = "map_bio_extractor_provider_modality_2_option3")
+	private WebElement secondModalityOption3;
 
 	@FindBy(id = "map_bio_extractor_provider_config_1_dropdown_btn")
 	private WebElement firstProviderDropdown;
@@ -51,6 +71,12 @@ public class MapBiometricExtractorProviderPage extends BasePage {
 
 	@FindBy(css = "[id^='policy_requests_ovp_map_biometric_extractor_']")
 	private WebElement mapBiometricExtractorAction;
+
+	@FindBy(id = "partner_list_item1")
+	private WebElement firstPolicyRequestRow;
+
+	@FindBy(id = "partner_list_view1")
+	private WebElement firstPolicyRequestAction;
 
 	@FindBy(xpath = "//label[normalize-space(.)='Partner ID*']/following-sibling::button[1]")
 	private WebElement partnerIdValue;
@@ -107,20 +133,26 @@ public class MapBiometricExtractorProviderPage extends BasePage {
 	}
 
 	public boolean isModalityOptionDisplayed(int row, String modality) {
-		return isElementDisplayedQuick(modalityOption(row, modality), ABSENCE_CHECK_TIMEOUT);
+		for (WebElement option : modalityOptions(row)) {
+			if (optionShowsModality(option, modality)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public void openModalityDropdown(int row) {
-		if (row == 1) {
-			clickOnElement(firstModalityDropdown);
-			return;
-		}
-		click(By.id("map_bio_extractor_provider_modality_" + row + "_dropdown_btn"));
+		clickOnElement(row == 1 ? firstModalityDropdown : secondModalityDropdown);
 	}
 
 	public void selectModality(int row, String modality) {
 		openModalityDropdown(row);
-		click(modalityOption(row, modality));
+		for (WebElement option : modalityOptions(row)) {
+			if (optionShowsModality(option, modality)) {
+				clickOnElement(option);
+				return;
+			}
+		}
 	}
 
 	public String getFirstModalityText() {
@@ -179,37 +211,42 @@ public class MapBiometricExtractorProviderPage extends BasePage {
 		clickOnElement(titleBackIcon);
 	}
 
-	public void openPolicyRequestAction(String policyName) {
-		click(By.xpath("//td[normalize-space()='" + policyName
-				+ "']/parent::tr//button[contains(@id,'partner_list_view')]"));
-	}
-
-	public void openPolicyRequestActionForPartner(String partnerId) {
-		click(By.xpath("//td[normalize-space()='" + partnerId
-				+ "']/parent::tr//button[contains(@id,'partner_list_view')]"));
+	public void openFirstPolicyRequestAction() {
+		clickOnElement(firstPolicyRequestAction);
 	}
 
 	public boolean isMapBiometricExtractorActionDisplayed() {
 		return isElementDisplayedQuick(mapBiometricExtractorAction, ABSENCE_CHECK_TIMEOUT);
 	}
 
-	public String waitForMapBiometricExtractorActionClass() {
-		return new WebDriverWait(driver, Duration.ofSeconds(20)).until(webDriver -> {
-			String className = mapBiometricExtractorAction.getAttribute("class");
-			return className != null && className.contains("pointer-events-none") ? className : null;
+	public boolean isMapBiometricExtractorActionDisabled() {
+		String className = new WebDriverWait(driver, Duration.ofSeconds(20)).until(webDriver -> {
+			if (!isElementDisplayedQuick(mapBiometricExtractorAction, ABSENCE_CHECK_TIMEOUT)) {
+				return null;
+			}
+			String value = mapBiometricExtractorAction.getAttribute("class");
+			return value != null && value.contains("pointer-events-none") ? value : null;
 		});
+		return className.contains("pointer-events-none");
 	}
 
 	public void openMapBiometricExtractorAction() {
 		clickOnElement(mapBiometricExtractorAction);
 	}
 
-	public String getPolicyRequestRowText(String policyName) {
-		return getTextFromLocator(By.xpath("//td[normalize-space()='" + policyName + "']/parent::tr")).trim();
+	public String getFirstPolicyRequestRowText() {
+		return getTextFromLocator(firstPolicyRequestRow).trim();
 	}
 
-	private By modalityOption(int row, String modality) {
-		return By.xpath("//button[starts-with(@id,'map_bio_extractor_provider_modality_" + row
-				+ "_option') and normalize-space()='" + modality + "']");
+	private WebElement[] modalityOptions(int row) {
+		if (row == 1) {
+			return new WebElement[] { firstModalityOption1, firstModalityOption2, firstModalityOption3 };
+		}
+		return new WebElement[] { secondModalityOption1, secondModalityOption2, secondModalityOption3 };
+	}
+
+	private boolean optionShowsModality(WebElement option, String modality) {
+		return isElementDisplayedQuick(option, ABSENCE_CHECK_TIMEOUT)
+				&& modality.equalsIgnoreCase(getTextFromLocator(option).trim());
 	}
 }
