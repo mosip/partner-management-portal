@@ -9,18 +9,13 @@ import io.mosip.testrig.pmpuiv2.pages.DashboardPage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
-@Test(groups = { "BiometricConfigurationListingTest" })
+@Test(dependsOnGroups = { "BiometricConfigurationTest" }, groups = { "BiometricConfigurationListingTest" })
 public class BiometricConfigurationListingTest extends BaseClass {
 
 	private DashboardPage dashboardPage;
 	private BiometricConfigurationPage biometricConfigurationPage;
 
 	private static String existingConfigName;
-
-	public BiometricConfigurationListingTest() {
-		this.userid = GlobalConstants.QAJAVA21_ADMIN_USER;
-		this.password = GlobalConstants.QAJAVA21_ADMIN_PASSWORD;
-	}
 
 	@Test(priority = 1, description = "Verifying Biometric Configuration Listing Table")
 	public void VerifyingBiometricConfigurationListingTable() {

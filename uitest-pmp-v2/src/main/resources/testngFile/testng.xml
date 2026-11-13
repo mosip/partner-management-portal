@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
-<!-- preserve-order on the suite orders <test> blocks. This file has one test. -->
+<!-- Suite: preserve order; tests decide their own parallelism -->
 <suite name="PMP uiv2 UI TestRig" preserve-order="true" parallel="false">
 
 <!-- Note: 

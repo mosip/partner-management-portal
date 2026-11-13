@@ -535,9 +535,7 @@ public class BiometricConfigurationPage extends BasePage {
 		int editableFields = driver.findElements(By.cssSelector(
 				"input:not([type='hidden']):not([disabled]), textarea:not([disabled]), select:not([disabled])"))
 				.size();
-		boolean valuesAsText = isElementDisplayed(viewProviderName)
-				&& "p".equalsIgnoreCase(viewProviderName.getTagName());
-		return editableFields == 0 && valuesAsText;
+		return editableFields == 0 && isViewProviderNameDisplayed() && isViewConfigurationNameDisplayed();
 	}
 
 	public boolean isViewBackButtonDisplayed() {
@@ -558,12 +556,14 @@ public class BiometricConfigurationPage extends BasePage {
 	}
 
 	public boolean isViewPageLayoutStructured() {
-		return isViewPageTitleDisplayed();
+		return isViewPageTitleDisplayed() && isViewConfigurationNameDisplayed() && isViewProviderNameDisplayed()
+				&& isViewModalityDisplayed() && isViewCreatedOnDisplayed() && isViewBackButtonDisplayed();
 	}
 
 	public boolean isViewPageUsableAtViewport(int width, int height) {
 		driver.manage().window().setSize(new org.openqa.selenium.Dimension(width, height));
-		return isViewPageTitleDisplayed();
+		return isViewPageLayoutStructured() && isViewProviderVersionDisplayed()
+				&& isViewCredentialDataFormatDisplayed();
 	}
 
 	public boolean isDeleteConfirmationPopupDisplayed() {

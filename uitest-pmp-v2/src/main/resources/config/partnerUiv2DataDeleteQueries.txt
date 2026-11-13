@@ -88,11 +88,23 @@ delete FROM pms.user_details where user_id='pmpui-devicenocert';
 #These are delete queries for ONLINE VERIFICATION PARTNER - pmpui-ovp
 #Only one Online Verification Partner is allowed. Remove the partner created by the UI test
 #after the run so the DSL report can create one.
+#Manual adjudication partners pmpui-ma / pmpui-ma2, policies mapolicy01 / mapolicy03 / ovppolicy,
+#and biometric extractor configs from these tests. Bioextract rows go first.
+delete from pms.partner_policy_bioextract_request where part_id in ('pmpui-ma', 'pmpui-ma2', 'pmpui-ovp', 'pmpui-ovp2');
+delete from pms.partner_policy_bioextract where part_id in ('pmpui-ma', 'pmpui-ma2', 'pmpui-ovp', 'pmpui-ovp2');
+delete from pms.bioextractor_configuration where config_name like 'bioconfig%' or config_name like 'biodelete%' or config_name like 'ovpbio%';
+delete from pms.partner_policy_credential_type where part_id in ('pmpui-ma', 'pmpui-ma2', 'pmpui-ovp', 'pmpui-ovp2') or policy_id in (select id from pms.auth_policy where name in ('mapolicy01', 'mapolicy03', 'ovppolicy'));
+delete from pms.partner_policy_request where part_id in ('pmpui-ma', 'pmpui-ma2', 'pmpui-ovp', 'pmpui-ovp2') or policy_id in (select id from pms.auth_policy where name in ('mapolicy01', 'mapolicy03', 'ovppolicy'));
+delete from pms.partner_policy where part_id in ('pmpui-ma', 'pmpui-ma2', 'pmpui-ovp', 'pmpui-ovp2') or policy_id in (select id from pms.auth_policy where name in ('mapolicy01', 'mapolicy03', 'ovppolicy'));
+delete from pms.auth_policy where name in ('mapolicy01', 'mapolicy03', 'ovppolicy');
 delete from pms.partner_h where cr_by='pmpui-ovp';
 delete from pms.partner_h where cr_by='pmpui-ovp2';
+delete from pms.partner_h where cr_by in ('pmpui-ma', 'pmpui-ma2') or id in ('pmpui-ma', 'pmpui-ma2');
 delete from pms.partner where user_id='pmpui-ovp';
 delete from pms.partner where cr_by='pmpui-ovp';
 delete from pms.partner where user_id='pmpui-ovp2';
 delete from pms.partner where cr_by='pmpui-ovp2';
+delete from pms.partner where user_id in ('pmpui-ma', 'pmpui-ma2') or cr_by in ('pmpui-ma', 'pmpui-ma2') or id in ('pmpui-ma', 'pmpui-ma2');
 delete FROM pms.user_details where user_id='pmpui-ovp';
 delete FROM pms.user_details where user_id='pmpui-ovp2';
+delete FROM pms.user_details where user_id in ('pmpui-ma', 'pmpui-ma2');
