@@ -18,6 +18,11 @@ public class BiometricConfigurationTest extends BaseClass {
 
 	private static String biometricConfigName;
 
+	public BiometricConfigurationTest() {
+		this.userid = GlobalConstants.PARTNER_ADMIN;
+		this.password = GlobalConstants.PARTNER_PASSWORD;
+	}
+
 	@Test(priority = 1, description = "Creating Biometric Configuration")
 	public void CreatingBiometricConfiguration() {
 		biometricConfigName = "bioconfig" + data;

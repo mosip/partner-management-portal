@@ -38,6 +38,11 @@ public class MapBiometricExtractorProviderTest extends BaseClass {
 	private static String policyName;
 	private static String bioConfigName;
 
+	public MapBiometricExtractorProviderTest() {
+		this.userid = GlobalConstants.PARTNER_ADMIN;
+		this.password = GlobalConstants.PARTNER_PASSWORD;
+	}
+
 	@Test(priority = 1, description = "Creating biometric config, OVP partner and datashare policy for mapping")
 	public void CreatingPrerequisitesForMapBiometricExtractor() {
 		partnerId = GlobalConstants.OVP_PARTNER_USER;

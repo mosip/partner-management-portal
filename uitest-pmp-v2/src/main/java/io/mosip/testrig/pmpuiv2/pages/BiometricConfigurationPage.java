@@ -521,7 +521,8 @@ public class BiometricConfigurationPage extends BasePage {
 	}
 
 	public boolean areAllViewConfigurationAttributesDisplayed() {
-		return isViewConfigurationNameDisplayed();
+		return isViewConfigurationNameDisplayed() && isViewProviderNameDisplayed() && isViewProviderVersionDisplayed()
+				&& isViewModalityDisplayed() && isViewCredentialDataFormatDisplayed() && isViewAttributeNameDisplayed();
 	}
 
 	public boolean isViewCommentDisplayed() {

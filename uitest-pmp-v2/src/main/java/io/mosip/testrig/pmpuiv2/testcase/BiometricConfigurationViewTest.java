@@ -17,6 +17,11 @@ public class BiometricConfigurationViewTest extends BaseClass {
 	private DashboardPage dashboardPage;
 	private BiometricConfigurationPage biometricConfigurationPage;
 
+	public BiometricConfigurationViewTest() {
+		this.userid = GlobalConstants.PARTNER_ADMIN;
+		this.password = GlobalConstants.PARTNER_PASSWORD;
+	}
+
 	@Test(priority = 1, description = "Navigating to View Biometric Configuration Details")
 	public void NavigatingToViewBiometricConfigurationDetails() {
 		dashboardPage = new DashboardPage(driver);

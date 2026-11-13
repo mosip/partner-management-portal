@@ -22,7 +22,7 @@ public class ManualAdjudicationPartnerTest extends BaseClass {
 	private PartnerCertificatePage partnerCertificatePage;
 	private BasePage basePage;
 
-	@Test(priority = 1, description = "Create Manual Adjudication Partner with AUTH trust and certificate upload")
+	@Test(priority = 1, description = "Verify that a Manual Adjudication Partner is created after the AUTH trust certificates are uploaded")
 	public void createManualAdjudicationPartner() throws InterruptedException {
 		maPartnerPage = new ManualAdjudicationPartnerPage(driver);
 		dashboardPage = new DashboardPage(driver);
@@ -110,7 +110,7 @@ public class ManualAdjudicationPartnerTest extends BaseClass {
 		partnerCertificatePage.clickOnCertificateUploadCancelButton();
 	}
 
-	@Test(priority = 2, description = "Negative validations, cancel, duplicate email/username for MA partner",
+	@Test(priority = 2, description = "Verify that invalid data, cancel, and a duplicate email or username are rejected for a Manual Adjudication Partner",
 			dependsOnMethods = "createManualAdjudicationPartner")
 	public void createMultipleManualAdjudicationPartner() throws InterruptedException {
 		maPartnerPage = new ManualAdjudicationPartnerPage(driver);
@@ -268,7 +268,7 @@ public class ManualAdjudicationPartnerTest extends BaseClass {
 				GlobalConstants.UPLOADED_STATUS, GlobalConstants.ACTIVE_STATUS), GlobalConstants.isStatusDisplayed);
 	}
 
-	@Test(priority = 6, description = "MOSIP-44411 Deactivate Manual Adjudication Partner (cancel + confirm)",
+	@Test(priority = 6, description = "Verify that deactivating a Manual Adjudication Partner can be cancelled and then confirmed",
 			dependsOnMethods = "uploadCertificateFromPartnersListForMaPartner")
 	public void deactivateManualAdjudicationPartner() {
 		maPartnerPage = new ManualAdjudicationPartnerPage(driver);
