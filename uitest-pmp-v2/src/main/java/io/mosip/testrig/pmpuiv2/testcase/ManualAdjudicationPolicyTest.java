@@ -22,7 +22,7 @@ public class ManualAdjudicationPolicyTest extends BaseClass {
 	private PartnerPolicyMappingPage partnerPolicyMappingPage;
 	private BasePage basePage;
 
-	@Test(priority = 1, description = "Create and publish auth policies for MA partner policy linking")
+	@Test(priority = 1, description = "Verify that auth policies are created and published for Manual Adjudication Partner policy linking")
 	public void createAuthPoliciesForManualAdjudication() {
 		dashboardPage = new DashboardPage(driver);
 		policiesPage = new PoliciesPage(driver);
@@ -36,7 +36,7 @@ public class ManualAdjudicationPolicyTest extends BaseClass {
 		createAndPublishAuthPolicy(GlobalConstants.MA_POLICY_03, GlobalConstants.MA_POLICY_03_DESCRIPTION);
 	}
 
-	@Test(priority = 2, description = "Request / approve / reject / view policy linking for Manual Adjudication Partner",
+	@Test(priority = 2, description = "Verify that a Manual Adjudication Partner policy request can be approved, rejected, and viewed",
 			dependsOnMethods = "createAuthPoliciesForManualAdjudication")
 	public void partnerPolicyLinkingForManualAdjudication() {
 		dashboardPage = new DashboardPage(driver);

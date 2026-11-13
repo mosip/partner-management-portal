@@ -17,6 +17,11 @@ public class BiometricConfigurationListingTest extends BaseClass {
 
 	private static String existingConfigName;
 
+	public BiometricConfigurationListingTest() {
+		this.userid = GlobalConstants.PARTNER_ADMIN;
+		this.password = GlobalConstants.PARTNER_PASSWORD;
+	}
+
 	@Test(priority = 1, description = "Verifying Biometric Configuration Listing Table")
 	public void VerifyingBiometricConfigurationListingTable() {
 		dashboardPage = new DashboardPage(driver);

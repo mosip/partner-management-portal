@@ -17,6 +17,11 @@ public class BiometricConfigurationDeleteTest extends BaseClass {
 
 	private static String configNameToDelete;
 
+	public BiometricConfigurationDeleteTest() {
+		this.userid = GlobalConstants.PARTNER_ADMIN;
+		this.password = GlobalConstants.PARTNER_PASSWORD;
+	}
+
 	@Test(priority = 1, description = "Creating Biometric Configuration for delete")
 	public void CreatingBiometricConfigurationForDelete() {
 		configNameToDelete = "biodelete" + data;
