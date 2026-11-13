@@ -16,7 +16,6 @@ public class ConfigManager {
 	private static String IAM_ADMINPORTAL_PATH = "PmpPortalPath";
 
 	private static String IAM_PMPUIV2_PATH = "pmpUiv2Url";
-	private static String ADMIN_POLICY_REQUESTS_LIST_ENDPOINT = "adminPolicyRequestsListEndpoint";
 	private static String IAM_PMPUIV2 = "pmpuiv2";
 	private static String IAM_APIENVUSER = "apiEnvUser";
 	private static String IAM_APIINTERNALENDPOINT = "apiInternalEndPoint";
@@ -452,10 +451,6 @@ public class ConfigManager {
 
 	public static String getiam_pmpuiv2_path() {
 		return iam_pmpuiv2_path;
-	}
-
-	public static String getAdminPolicyRequestsListEndpoint() {
-		return getValueForKey(ADMIN_POLICY_REQUESTS_LIST_ENDPOINT);
 	}
 
 	public static String getiam_pmpuiv2() {

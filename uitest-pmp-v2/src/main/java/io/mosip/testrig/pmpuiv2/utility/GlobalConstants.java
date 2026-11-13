@@ -1568,7 +1568,9 @@ public class GlobalConstants {
 	public static final String ONLINE_VERIFICATION_PARTNER_ADDRESS = "ovpaddress";
 	public static final String ONLINE_VERIFICATION_PARTNER_CONTACT_NUMBER = "9898989898";
 	public static final String ONLINE_VERIFICATION_PARTNER_NOTIFICATION_LANGUAGE = "English";
-	public static final String NO_ACCESS_PAGE_TITLE = "You do not have privilege to access this page";
+	public static final String AUTHENTICATION_PARTNER_ADDRESS = "authaddress";
+	public static final String AUTHENTICATION_PARTNER_CONTACT_NUMBER = "9797979797";
+	public static final String AUTHENTICATION_PARTNER_NOTIFICATION_LANGUAGE = "English";
 	public static final String MAP_BIOMETRIC_EXTRACTOR_PROVIDER_TITLE = "Map Biometric Extractor Provider";
 	public static final String MAP_BIOMETRIC_EXTRACTOR_PROVIDER_BANNER = "Note: For Online Verification Partners, mapping the policy to a Biometric Extractor Configuration and Credential Type is mandatory. If this mapping is not completed, the policy request cannot be approved. Please follow the steps on this page to complete the required mapping";
 	public static final String ONLINE_VERIFICATION_PARTNER_TYPE_CODE = "Online_Verification_Partner";
@@ -1597,10 +1599,12 @@ public class GlobalConstants {
 	public static final String CANCEL_RETURNS_TO_POLICY_REQUEST_LIST = "Cancel returns to the policy request list";
 	public static final String POLICY_REQUEST_REMAINS_PENDING_FOR_APPROVAL = "The policy request remains pending for approval";
 	public static final String MAP_BIOMETRIC_EXTRACTOR_ACTION_AVAILABLE = "Map Biometric Extractor remains available before save";
+	public static final String SAVE_CONFIRMATION_DISPLAYED = "Save asks for confirmation before mapping";
 	public static final String SAVE_OPENS_MAP_CREDENTIAL_TYPE = "Save and Proceed opens Map Credential Type";
+	public static final String TITLE_BACK_RETURNS_TO_POLICY_REQUEST_LIST = "Back returns to the policy request list";
 	public static final String SAVED_MAPPING_DISABLES_MAP_ACTION = "A saved mapping disables Map Biometric Extractor";
 	public static final String AUTHENTICATION_PARTNER_HAS_NO_MAP_BIOMETRIC_ACTION = "Authentication Partner has no Map Biometric Extractor action";
-	public static final String USER_WITHOUT_ADMIN_ROLE_CANNOT_OPEN_POLICY_REQUESTS = "A user without PARTNER_ADMIN cannot open policy requests";
+	public static final String USER_WITHOUT_ADMIN_ROLE_STAYS_ON_MAIN_PAGE = "A user without PARTNER_ADMIN stays on the main page";
 	public static final String CREATE_PARTNER_NAVIGABLE_FROM_HAMBURGER = "Create Partner opens from the hamburger menu";
 	public static final String LIST_OF_PARTNERS_BUTTON_RETURNS_TO_PARTNER_LIST = "List of Partners opens the partner list";
 	public static final String CREATE_PARTNER_HOME_RETURNS_TO_DASHBOARD = "Home returns to the dashboard";

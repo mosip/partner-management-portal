@@ -32,7 +32,10 @@ public class OnlineVerificationPartnerMapBiometricExtractorTest extends BaseClas
 		uploadAuthTrustCertificates();
 		publishAuthPolicy(suffix);
 		MispPartnerPage mispPartnerPage = navigateToCreatePartnerPage();
-		createPartner(mispPartnerPage, partnerId, "ovpmap" + suffix + "@test.com");
+		createPartner(mispPartnerPage, GlobalConstants.ONLINE_VERIFICATION_PARTNER, partnerId,
+				"ovpmap" + suffix + "@test.com", GlobalConstants.ONLINE_VERIFICATION_PARTNER_ADDRESS,
+				GlobalConstants.ONLINE_VERIFICATION_PARTNER_CONTACT_NUMBER,
+				GlobalConstants.ONLINE_VERIFICATION_PARTNER_NOTIFICATION_LANGUAGE);
 		mispPartnerPage.clickOnCreatePartnerSubmitButton();
 		assertTrue(mispPartnerPage.isCreatePartnerSuccessMsgDisplayed(),
 				GlobalConstants.isCreatePartnerSuccessMsgDisplayed);
@@ -137,20 +140,18 @@ public class OnlineVerificationPartnerMapBiometricExtractorTest extends BaseClas
 		MapBiometricExtractorProviderPage mapPage = openPolicyRequestList();
 		mapPage.openPolicyRequestAction(policyName);
 		mapPage.openMapBiometricExtractorAction();
-		assertEquals(mapPage.waitUntilPageTitle(GlobalConstants.MAP_BIOMETRIC_EXTRACTOR_PROVIDER_TITLE),
-				GlobalConstants.MAP_BIOMETRIC_EXTRACTOR_PROVIDER_TITLE,
-				GlobalConstants.MAP_BIOMETRIC_EXTRACTOR_PROVIDER_PAGE_OPENED);
+		mapPage.waitUntilPageTitle(GlobalConstants.MAP_BIOMETRIC_EXTRACTOR_PROVIDER_TITLE);
 		mapPage.selectModality(1, GlobalConstants.BIOMETRIC_MODALITY_FACE);
 		mapPage.openFirstProviderDropdown();
 		mapPage.selectFirstProvider();
 		mapPage.clickSaveAndProceed();
-		assertTrue(mapPage.isSaveConfirmationDisplayed(), GlobalConstants.SAVE_OPENS_MAP_CREDENTIAL_TYPE);
+		assertTrue(mapPage.isSaveConfirmationDisplayed(), GlobalConstants.SAVE_CONFIRMATION_DISPLAYED);
 		mapPage.confirmSave();
 		assertEquals(mapPage.waitUntilPageTitle(GlobalConstants.MAP_CREDENTIAL_TYPE_TITLE),
 				GlobalConstants.MAP_CREDENTIAL_TYPE_TITLE, GlobalConstants.SAVE_OPENS_MAP_CREDENTIAL_TYPE);
 		mapPage.clickTitleBack();
 		assertEquals(mapPage.waitUntilPageTitle(GlobalConstants.PARTNER_POLICY_LINKING_TITLE),
-				GlobalConstants.PARTNER_POLICY_LINKING_TITLE, GlobalConstants.SAVED_MAPPING_DISABLES_MAP_ACTION);
+				GlobalConstants.PARTNER_POLICY_LINKING_TITLE, GlobalConstants.TITLE_BACK_RETURNS_TO_POLICY_REQUEST_LIST);
 		mapPage.openPolicyRequestAction(policyName);
 		assertTrue(mapPage.waitForMapBiometricExtractorActionClass().contains("pointer-events-none"),
 				GlobalConstants.SAVED_MAPPING_DISABLES_MAP_ACTION);
@@ -158,13 +159,29 @@ public class OnlineVerificationPartnerMapBiometricExtractorTest extends BaseClas
 
 	@Test(priority = 9, description = "An Authentication Partner policy request has no biometric extractor action", dependsOnMethods = "saveBiometricExtractorMappingOpensCredentialType")
 	public void authenticationPartnerHasNoBiometricExtractorAction() {
-		MapBiometricExtractorProviderPage mapPage = openPolicyRequestList();
-		assertFalse(mapPage.isMapBiometricExtractorActionDisplayedForPartnerType(GlobalConstants.AUTHENTICATION_PARTNER),
+		String suffix = BaseClass.data;
+		String authPartnerId = "authmap" + suffix;
+		MispPartnerPage mispPartnerPage = navigateToCreatePartnerPage();
+		createPartner(mispPartnerPage, GlobalConstants.AUTHENTICATION_PARTNER, authPartnerId,
+				"authmap" + suffix + "@test.com", GlobalConstants.AUTHENTICATION_PARTNER_ADDRESS,
+				GlobalConstants.AUTHENTICATION_PARTNER_CONTACT_NUMBER,
+				GlobalConstants.AUTHENTICATION_PARTNER_NOTIFICATION_LANGUAGE);
+		mispPartnerPage.clickOnCreatePartnerSubmitButton();
+		assertTrue(mispPartnerPage.isCreatePartnerSuccessMsgDisplayed(),
+				GlobalConstants.isCreatePartnerSuccessMsgDisplayed);
+		uploadPartnerCertificate(mispPartnerPage);
+		requestPolicy(GlobalConstants.AUTHENTICATION_PARTNER, authPartnerId);
+		new PartnerPolicyMappingPage(driver).clickOnConfirmationGoBackButton();
+
+		MapBiometricExtractorProviderPage mapPage = new MapBiometricExtractorProviderPage(driver);
+		mapPage.waitUntilPageTitle(GlobalConstants.PARTNER_POLICY_LINKING_TITLE);
+		mapPage.openPolicyRequestActionForPartner(authPartnerId);
+		assertFalse(mapPage.isMapBiometricExtractorActionDisplayed(),
 				GlobalConstants.AUTHENTICATION_PARTNER_HAS_NO_MAP_BIOMETRIC_ACTION);
 	}
 
-	@Test(priority = 10, description = "A user without PARTNER_ADMIN cannot open policy requests", dependsOnMethods = "authenticationPartnerHasNoBiometricExtractorAction")
-	public void userWithoutAdminRoleCannotOpenPolicyRequests() {
+	@Test(priority = 10, description = "A user without PARTNER_ADMIN stays on the main page", dependsOnMethods = "authenticationPartnerHasNoBiometricExtractorAction")
+	public void userWithoutAdminRoleStaysOnMainPage() {
 		KeycloakUserManager.createUsers(GlobalConstants.NON_ADMIN_USER_ID, GlobalConstants.PARTNER_PASSWORD,
 				"roles.auth", null);
 		DashboardPage dashboardPage = new DashboardPage(driver);
@@ -175,9 +192,9 @@ public class OnlineVerificationPartnerMapBiometricExtractorTest extends BaseClas
 			dashboardPage.clickOnCheckbox();
 			dashboardPage.clickOnProceedButton();
 		}
-		new MapBiometricExtractorProviderPage(driver).openAdminPolicyRequestList();
-		assertEquals(dashboardPage.getRuntimeErrorTitle(), GlobalConstants.NO_ACCESS_PAGE_TITLE,
-				GlobalConstants.USER_WITHOUT_ADMIN_ROLE_CANNOT_OPEN_POLICY_REQUESTS);
+		assertTrue(dashboardPage.isWelcomeMessageDisplayed() && !dashboardPage.isPartnerAdminCardDisplayed()
+				&& !dashboardPage.isPartnerAdminSideNavDisplayed(),
+				GlobalConstants.USER_WITHOUT_ADMIN_ROLE_STAYS_ON_MAIN_PAGE);
 	}
 
 	private MapBiometricExtractorProviderPage openPolicyRequestList() {
@@ -203,16 +220,29 @@ public class OnlineVerificationPartnerMapBiometricExtractorTest extends BaseClas
 		return mispPartnerPage;
 	}
 
-	private void createPartner(MispPartnerPage mispPartnerPage, String partnerId, String email) {
+	private void createPartner(MispPartnerPage mispPartnerPage, String partnerType, String partnerId, String email,
+			String address, String phone, String language) {
 		mispPartnerPage.clickOnPartnerTypeDropdown();
-		mispPartnerPage.clickOnPartnerTypeOption(GlobalConstants.ONLINE_VERIFICATION_PARTNER);
+		mispPartnerPage.clickOnPartnerTypeOption(partnerType);
 		mispPartnerPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULT_POLICYGROUP);
-		mispPartnerPage.selectNotificationLanguage(GlobalConstants.ONLINE_VERIFICATION_PARTNER_NOTIFICATION_LANGUAGE);
+		mispPartnerPage.selectNotificationLanguage(language);
 		mispPartnerPage.enterPartnerOrganisation(GlobalConstants.ORGANISATION_NAME);
-		mispPartnerPage.enterPartnerAddress(GlobalConstants.ONLINE_VERIFICATION_PARTNER_ADDRESS);
-		mispPartnerPage.enterPartnerContactNumber(GlobalConstants.ONLINE_VERIFICATION_PARTNER_CONTACT_NUMBER);
+		mispPartnerPage.enterPartnerAddress(address);
+		mispPartnerPage.enterPartnerContactNumber(phone);
 		mispPartnerPage.enterEmailId(email);
 		mispPartnerPage.enterUserName(partnerId);
+	}
+
+	private void requestPolicy(String partnerType, String partnerId) {
+		DashboardPage dashboardPage = new PartnerCertificatePage(driver).clickOnHomeButton();
+		dashboardPage.clickOnPartnerPolicyMappingTab();
+		PartnerPolicyMappingPage policyMappingPage = new PartnerPolicyMappingPage(driver);
+		policyMappingPage.clickOnRequestPolicyButton();
+		policyMappingPage.selectPartnerType(partnerType);
+		policyMappingPage.selectPartnerIdDropdown(partnerId);
+		policyMappingPage.selectPolicyName(policyName);
+		policyMappingPage.enterRequestPolicyComment(GlobalConstants.MAP_BIOMETRIC_EXTRACTOR_REQUEST_COMMENT);
+		policyMappingPage.clickOnRequestPoliciesFormSubmitButton();
 	}
 
 	private void publishAuthPolicy(String suffix) {

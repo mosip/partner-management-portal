@@ -1,15 +1,12 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
 import java.time.Duration;
-import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
-import io.mosip.testrig.pmpuiv2.kernel.util.ConfigManager;
 
 public class MapBiometricExtractorProviderPage extends BasePage {
 
@@ -51,6 +48,9 @@ public class MapBiometricExtractorProviderPage extends BasePage {
 
 	@FindBy(id = "map_bio_extractor_save_confirm_submit")
 	private WebElement saveConfirmButton;
+
+	@FindBy(css = "[id^='policy_requests_ovp_map_biometric_extractor_']")
+	private WebElement mapBiometricExtractorAction;
 
 	@FindBy(xpath = "//label[normalize-space(.)='Partner ID*']/following-sibling::button[1]")
 	private WebElement partnerIdValue;
@@ -111,6 +111,10 @@ public class MapBiometricExtractorProviderPage extends BasePage {
 	}
 
 	public void openModalityDropdown(int row) {
+		if (row == 1) {
+			clickOnElement(firstModalityDropdown);
+			return;
+		}
 		click(By.id("map_bio_extractor_provider_modality_" + row + "_dropdown_btn"));
 	}
 
@@ -180,44 +184,28 @@ public class MapBiometricExtractorProviderPage extends BasePage {
 				+ "']/parent::tr//button[contains(@id,'partner_list_view')]"));
 	}
 
+	public void openPolicyRequestActionForPartner(String partnerId) {
+		click(By.xpath("//td[normalize-space()='" + partnerId
+				+ "']/parent::tr//button[contains(@id,'partner_list_view')]"));
+	}
+
 	public boolean isMapBiometricExtractorActionDisplayed() {
-		return isElementDisplayedQuick(By.cssSelector("[id^='policy_requests_ovp_map_biometric_extractor_']"),
-				ABSENCE_CHECK_TIMEOUT);
+		return isElementDisplayedQuick(mapBiometricExtractorAction, ABSENCE_CHECK_TIMEOUT);
 	}
 
 	public String waitForMapBiometricExtractorActionClass() {
 		return new WebDriverWait(driver, Duration.ofSeconds(20)).until(webDriver -> {
-			List<WebElement> items = webDriver
-					.findElements(By.cssSelector("[id^='policy_requests_ovp_map_biometric_extractor_']"));
-			if (items.isEmpty()) {
-				return null;
-			}
-			String className = items.get(0).getAttribute("class");
+			String className = mapBiometricExtractorAction.getAttribute("class");
 			return className != null && className.contains("pointer-events-none") ? className : null;
 		});
 	}
 
 	public void openMapBiometricExtractorAction() {
-		click(By.cssSelector("[id^='policy_requests_ovp_map_biometric_extractor_']"));
+		clickOnElement(mapBiometricExtractorAction);
 	}
 
 	public String getPolicyRequestRowText(String policyName) {
 		return getTextFromLocator(By.xpath("//td[normalize-space()='" + policyName + "']/parent::tr")).trim();
-	}
-
-	public boolean isMapBiometricExtractorActionDisplayedForPartnerType(String partnerType) {
-		clickOnElement(pageTitle);
-		click(By.xpath("(//tr[td[normalize-space()='" + partnerType
-				+ "']]//button[contains(@id,'partner_list_view')])[1]"));
-		return isMapBiometricExtractorActionDisplayed();
-	}
-
-	public void openAdminPolicyRequestList() {
-		String baseUrl = ConfigManager.getiam_pmpuiv2_path();
-		if (!baseUrl.endsWith("/")) {
-			baseUrl = baseUrl + "/";
-		}
-		driver.get(baseUrl + ConfigManager.getAdminPolicyRequestsListEndpoint());
 	}
 
 	private By modalityOption(int row, String modality) {
