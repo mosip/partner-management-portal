@@ -7,6 +7,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
 import io.mosip.testrig.pmpuiv2.kernel.util.ConfigManager;
 
 public class DashboardPage extends BasePage {
@@ -481,6 +482,28 @@ public class DashboardPage extends BasePage {
 
 	public boolean isPartnersDisplayed() {
 		return isElementDisplayed(partners);
+	}
+
+	public boolean isPartnerAdminCardDisplayed() {
+		return isElementDisplayedQuick(partners, TERMS_AND_CONDITIONS_TIMEOUT);
+	}
+
+	public boolean isPartnerAdminSideNavDisplayed() {
+		return isElementDisplayedQuick(partnerOfHamburger, TERMS_AND_CONDITIONS_TIMEOUT);
+	}
+
+	public boolean waitUntilDashboardInsteadOfPartnerList() {
+		MispPartnerPage mispPartnerPage = new MispPartnerPage(driver);
+		String page = new WebDriverWait(driver, Duration.ofSeconds(20)).until(webDriver -> {
+			if (mispPartnerPage.isCreatePartnerButtonPresent()) {
+				return "list";
+			}
+			if (isElementDisplayedQuick(partners, ABSENCE_CHECK_TIMEOUT)) {
+				return "dashboard";
+			}
+			return null;
+		});
+		return "dashboard".equals(page);
 	}
 
 	public void clickOnPartners() {
