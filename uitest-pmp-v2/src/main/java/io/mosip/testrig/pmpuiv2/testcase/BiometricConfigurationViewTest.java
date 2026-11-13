@@ -11,16 +11,11 @@ import io.mosip.testrig.pmpuiv2.pages.DashboardPage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
-@Test(groups = { "BiometricConfigurationViewTest" })
+@Test(dependsOnGroups = { "BiometricConfigurationTest" }, groups = { "BiometricConfigurationViewTest" })
 public class BiometricConfigurationViewTest extends BaseClass {
 
 	private DashboardPage dashboardPage;
 	private BiometricConfigurationPage biometricConfigurationPage;
-
-	public BiometricConfigurationViewTest() {
-		this.userid = GlobalConstants.QAJAVA21_ADMIN_USER;
-		this.password = GlobalConstants.QAJAVA21_ADMIN_PASSWORD;
-	}
 
 	@Test(priority = 1, description = "Navigating to View Biometric Configuration Details")
 	public void NavigatingToViewBiometricConfigurationDetails() {
@@ -59,8 +54,7 @@ public class BiometricConfigurationViewTest extends BaseClass {
 				"Created time should be displayed alongside Created On");
 
 		if (biometricConfigurationPage.isViewStatusDisplayed()) {
-			assertTrue(biometricConfigurationPage.getViewStatusText().length() > 0
-					|| biometricConfigurationPage.isViewStatusDisplayed(),
+			assertTrue(!biometricConfigurationPage.getViewStatusText().isEmpty(),
 					GlobalConstants.isBiometricConfigurationViewStatusDisplayed);
 		}
 	}
@@ -87,8 +81,8 @@ public class BiometricConfigurationViewTest extends BaseClass {
 				GlobalConstants.isBiometricConfigurationViewDetailsDisplayed);
 
 		if (biometricConfigurationPage.isViewCommentDisplayed()) {
-			assertTrue(biometricConfigurationPage.getViewCommentText().length() >= 0,
-					"Comment should be readable when present on the View page");
+			assertTrue(!biometricConfigurationPage.getViewCommentText().isEmpty(),
+					"Comment text should be shown when the comment is present on the View page");
 		}
 	}
 

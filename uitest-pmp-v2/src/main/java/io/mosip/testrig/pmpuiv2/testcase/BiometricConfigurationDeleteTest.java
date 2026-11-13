@@ -9,18 +9,13 @@ import io.mosip.testrig.pmpuiv2.pages.DashboardPage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
-@Test(groups = { "BiometricConfigurationDeleteTest" })
+@Test(dependsOnGroups = { "PartnerAdminCreation" }, groups = { "BiometricConfigurationDeleteTest" })
 public class BiometricConfigurationDeleteTest extends BaseClass {
 
 	private DashboardPage dashboardPage;
 	private BiometricConfigurationPage biometricConfigurationPage;
 
 	private static String configNameToDelete;
-
-	public BiometricConfigurationDeleteTest() {
-		this.userid = GlobalConstants.QAJAVA21_ADMIN_USER;
-		this.password = GlobalConstants.QAJAVA21_ADMIN_PASSWORD;
-	}
 
 	@Test(priority = 1, description = "Creating Biometric Configuration for delete")
 	public void CreatingBiometricConfigurationForDelete() {

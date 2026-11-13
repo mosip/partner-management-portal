@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
-<!-- preserve-order on the suite orders <test> blocks. This file has one test. -->
+<!-- Suite: preserve order; tests decide their own parallelism -->
 <suite name="PMP uiv2 UI TestRig" preserve-order="true" parallel="false">
 
-<!-- Note:
-- preserve-order="false" on the test is intentional: classes run in parallel on 4 threads.
-- Do not add dependsOnGroups between these classes. Each class creates its own data or fails on its own assertion.
-- The class list below is grouped by flow for reading, not as an execution order.
+<!-- Note: 
+- Class dependencies are implemented within the test classes. 
+- This suite is organized based on flow for easier understanding. 
+- Classes are executed in parallel using 4 threads. 
 -->
 
-	<!-- Parallel classes. Order in this list is not an execution guarantee. -->
+	<!-- Runs test classes in parallel with 4 threads -->
 	<test name="PartnerManagementService" preserve-order="false" parallel="classes" thread-count="4">
 		
 		<classes> 

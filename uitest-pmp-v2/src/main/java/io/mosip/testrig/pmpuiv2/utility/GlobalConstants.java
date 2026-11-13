@@ -1554,6 +1554,8 @@ public class GlobalConstants {
 	public static final String MA_POLICY_01_DESCRIPTION = "ma policy 01";
 	public static final String MA_POLICY_03 = "mapolicy03";
 	public static final String MA_POLICY_03_DESCRIPTION = "ma policy 03";
+	public static final String OVP_PARTNER_USER = "pmpui-ovp";
+	public static final String OVP_POLICY_NAME = "ovppolicy";
 	public static final String AUTH_DOMAIN_TYPE = "AUTH";
 	public static final String isDefaultManualAdjudicationPartnerDisplayed = "Verify that Manual Adjudication Partner is the default Partner Type on Create Partner page.";
 	public static final String isManualAdjudicationPartnerSelectedSuccessfully = "Verify that Manual Adjudication Partner is successfully selected from the Partner Type dropdown.";
@@ -1566,10 +1568,6 @@ public class GlobalConstants {
 	public static final String isManualAdjudicationPartnerTypeInViewDisplayed = "Verify that View Partner Details shows Partner Type as Manual Adjudication Partner.";
 	public static final String isViewPartnerDetailsReadOnly = "Verify that View Partner Details page is read-only with no edit controls.";
 	public static final String isViewPartnerBackNavigationDisplayed = "Verify that Back / Go Back navigation is available on View Partner Details page.";
-
-	// qajava21 Partner Admin credentials
-	public static final String QAJAVA21_ADMIN_USER = "21admin";
-	public static final String QAJAVA21_ADMIN_PASSWORD = "admin123";
 
 	// Biometric Extractor Provider Configuration (MOSIP-44595 / MOSIP-44596 / MOSIP-44597 / MOSIP-44598)
 	public static final String BIOMETRIC_CONFIGURATION_PROVIDER_NAME = "MosipBioExtractor";

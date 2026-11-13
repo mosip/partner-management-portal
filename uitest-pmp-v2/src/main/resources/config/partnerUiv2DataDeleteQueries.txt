@@ -84,3 +84,17 @@ delete FROM pms.user_details where user_id='pmpui-ftm';
 #These are delete queries for pmpui-devicenocert
 delete from pms.partner where user_id='pmpui-devicenocert';
 delete FROM pms.user_details where user_id='pmpui-devicenocert';
+
+#Manual adjudication partners pmpui-ma / pmpui-ma2, online verification partner pmpui-ovp,
+#policies mapolicy01 / mapolicy03 / ovppolicy, and biometric extractor configs from these tests.
+#Bioextract rows reference the partner and policy, so they go first.
+delete from pms.partner_policy_bioextract_request where part_id in ('pmpui-ma', 'pmpui-ma2', 'pmpui-ovp');
+delete from pms.partner_policy_bioextract where part_id in ('pmpui-ma', 'pmpui-ma2', 'pmpui-ovp');
+delete from pms.bioextractor_configuration where config_name like 'bioconfig%' or config_name like 'biodelete%' or config_name like 'ovpbio%';
+delete from pms.partner_policy_credential_type where part_id in ('pmpui-ma', 'pmpui-ma2', 'pmpui-ovp') or policy_id in (select id from pms.auth_policy where name in ('mapolicy01', 'mapolicy03', 'ovppolicy'));
+delete from pms.partner_policy_request where part_id in ('pmpui-ma', 'pmpui-ma2', 'pmpui-ovp') or policy_id in (select id from pms.auth_policy where name in ('mapolicy01', 'mapolicy03', 'ovppolicy'));
+delete from pms.partner_policy where part_id in ('pmpui-ma', 'pmpui-ma2', 'pmpui-ovp') or policy_id in (select id from pms.auth_policy where name in ('mapolicy01', 'mapolicy03', 'ovppolicy'));
+delete from pms.auth_policy where name in ('mapolicy01', 'mapolicy03', 'ovppolicy');
+delete from pms.partner_h where cr_by in ('pmpui-ma', 'pmpui-ma2', 'pmpui-ovp') or id in ('pmpui-ma', 'pmpui-ma2', 'pmpui-ovp');
+delete from pms.partner where user_id in ('pmpui-ma', 'pmpui-ma2', 'pmpui-ovp') or cr_by in ('pmpui-ma', 'pmpui-ma2', 'pmpui-ovp') or id in ('pmpui-ma', 'pmpui-ma2', 'pmpui-ovp');
+delete FROM pms.user_details where user_id in ('pmpui-ma', 'pmpui-ma2', 'pmpui-ovp');

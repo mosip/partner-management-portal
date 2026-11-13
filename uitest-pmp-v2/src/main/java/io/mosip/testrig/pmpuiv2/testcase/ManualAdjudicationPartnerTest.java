@@ -14,7 +14,7 @@ import io.mosip.testrig.pmpuiv2.pages.PartnerCertificatePage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
-@Test(groups = { "ManualAdjudicationPartnerTest" })
+@Test(dependsOnGroups = { "PartnerAdminCreation" }, groups = { "ManualAdjudicationPartnerTest" })
 public class ManualAdjudicationPartnerTest extends BaseClass {
 
 	private DashboardPage dashboardPage;
@@ -168,7 +168,7 @@ public class ManualAdjudicationPartnerTest extends BaseClass {
 				GlobalConstants.isManualAdjudicationPartnerOptionDisplayed);
 	}
 
-	@Test(priority = 4, description = "MOSIP-44410 View Manual Adjudication Partner details (read-only)",
+	@Test(priority = 4, description = "Verify that Manual Adjudication Partner details are shown as read-only on the View Partner page",
 			dependsOnMethods = "createManualAdjudicationPartner")
 	public void viewManualAdjudicationPartnerDetails() {
 		maPartnerPage = new ManualAdjudicationPartnerPage(driver);
@@ -215,7 +215,7 @@ public class ManualAdjudicationPartnerTest extends BaseClass {
 		assertTrue(maPartnerPage.isListOfPartnersDisplayed(), GlobalConstants.isListOfPartnersDisplayed);
 	}
 
-	@Test(priority = 5, description = "MOSIP-44349 Later upload cert from list + invalid/expired negatives",
+	@Test(priority = 5, description = "Verify that a certificate can be uploaded later from the partners list and that invalid or expired certificates are rejected",
 			dependsOnMethods = "createMultipleManualAdjudicationPartner")
 	public void uploadCertificateFromPartnersListForMaPartner() throws InterruptedException {
 		maPartnerPage = new ManualAdjudicationPartnerPage(driver);

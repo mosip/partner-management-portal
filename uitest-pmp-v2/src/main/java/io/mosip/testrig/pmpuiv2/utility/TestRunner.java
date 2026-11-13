@@ -326,19 +326,21 @@ public class TestRunner {
 					addClassIfAbsent(classes, partnerAdminCreation, mispPartnerTest, mispPolicyTest, mispServicesTest);
 					break;
 				case "BiometricConfigurationTest":
-					addClassIfAbsent(classes, biometricConfigurationTest);
+					addClassIfAbsent(classes, partnerAdminCreation, biometricConfigurationTest);
 					break;
 				case "BiometricConfigurationListingTest":
-					addClassIfAbsent(classes, biometricConfigurationListingTest);
+					addClassIfAbsent(classes, partnerAdminCreation, biometricConfigurationTest,
+							biometricConfigurationListingTest);
 					break;
 				case "BiometricConfigurationViewTest":
-					addClassIfAbsent(classes, biometricConfigurationViewTest);
+					addClassIfAbsent(classes, partnerAdminCreation, biometricConfigurationTest,
+							biometricConfigurationViewTest);
 					break;
 				case "BiometricConfigurationDeleteTest":
-					addClassIfAbsent(classes, biometricConfigurationDeleteTest);
+					addClassIfAbsent(classes, partnerAdminCreation, biometricConfigurationDeleteTest);
 					break;
 				case "MapBiometricExtractorProviderTest":
-					addClassIfAbsent(classes, mapBiometricExtractorProviderTest);
+					addClassIfAbsent(classes, partnerAdminCreation, mapBiometricExtractorProviderTest);
 					break;
 
 				// Unknown test name

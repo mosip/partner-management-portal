@@ -13,7 +13,7 @@ import io.mosip.testrig.pmpuiv2.pages.PoliciesPage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
-@Test(groups = { "ManualAdjudicationPolicyTest" })
+@Test(dependsOnGroups = { "ManualAdjudicationPartnerTest" }, groups = { "ManualAdjudicationPolicyTest" })
 public class ManualAdjudicationPolicyTest extends BaseClass {
 
 	private DashboardPage dashboardPage;
