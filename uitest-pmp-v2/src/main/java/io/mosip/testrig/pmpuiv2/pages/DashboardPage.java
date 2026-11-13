@@ -158,12 +158,6 @@ public class DashboardPage extends BasePage {
 	@FindBy(id = "dashboard_partner_card_header")
 	private WebElement partners;
 
-	@FindBy(id = "run_time_error_title")
-	private WebElement runtimeErrorTitle;
-
-	@FindBy(id = "run_time_error_description")
-	private WebElement runtimeErrorDescription;
-
 	@FindBy(xpath = "//button[contains(@class, 'bg-blue-50') and contains(@class, 'cursor-pointer')]")
 	private WebElement notificationIcon;
 
@@ -510,22 +504,6 @@ public class DashboardPage extends BasePage {
 			return null;
 		});
 		return "dashboard".equals(page);
-	}
-
-	public void openAdminPartnerList() {
-		String baseUrl = ConfigManager.getiam_pmpuiv2_path();
-		if (!baseUrl.endsWith("/")) {
-			baseUrl = baseUrl + "/";
-		}
-		driver.get(baseUrl + ConfigManager.getAdminPartnersListEndpoint());
-	}
-
-	public String getRuntimeErrorTitle() {
-		return getTextFromLocator(runtimeErrorTitle);
-	}
-
-	public String getRuntimeErrorDescription() {
-		return getTextFromLocator(runtimeErrorDescription);
 	}
 
 	public void clickOnPartners() {

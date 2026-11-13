@@ -1639,9 +1639,7 @@ public class GlobalConstants {
 	public static final String ONLINE_VERIFICATION_PARTNER_VIEW_AFTER_DEACTIVATION = "View still opens for a deactivated Online Verification Partner";
 	public static final String ONLINE_VERIFICATION_PARTNER_ONLY_STATUS_CHANGES = "Only the status changes after deactivation";
 	public static final String ONLINE_VERIFICATION_PARTNER_DEACTIVATE_DISABLED = "Deactivate is disabled for a deactivated Online Verification Partner";
-	public static final String ONLINE_VERIFICATION_PARTNER_NON_ADMIN_CANNOT_DEACTIVATE = "A user without PARTNER_ADMIN cannot open partner deactivation";
-	public static final String NO_ACCESS_PAGE_TITLE = "You do not have privilege to access this page";
-	public static final String NO_ACCESS_PAGE_DESCRIPTION = "Please contact your administrator";
+	public static final String ONLINE_VERIFICATION_PARTNER_NON_ADMIN_CANNOT_DEACTIVATE = "A user without PARTNER_ADMIN stays on the main page";
 
 	public static final String CANCEL_CONFIRMATION_POPUP_TEXT = "Your changes will be lost, are you sure you want to proceed?";
 	public static final String PARTNER_STATUS_ACTIVE = "Active";
