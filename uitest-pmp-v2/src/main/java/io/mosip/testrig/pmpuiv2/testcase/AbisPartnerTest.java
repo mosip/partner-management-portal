@@ -397,8 +397,12 @@ public class AbisPartnerTest extends BaseClass {
         page.clickOnPartnerTypeDropdown();
         page.clickOnAbisPartnerOption();
 
+        // The dropdown only lists the 5 newest active groups until you scroll or search, so
+        // the default group may not be on the first page once other suites create groups.
         page.openPolicyGroupDropdown();
-        Assert.assertTrue(page.isPolicyGroupOptionVisible(GlobalConstants.DEFAULT_POLICYGROUP),
+        Assert.assertTrue(page.isAnyPolicyGroupOptionDisplayed(), GlobalConstants.isActivePolicyGroupInDropdown);
+        page.enterInvalidPolicyGroup(GlobalConstants.DEFAULT_POLICYGROUP);
+        Assert.assertTrue(page.waitForPolicyGroupOption(GlobalConstants.DEFAULT_POLICYGROUP),
                 GlobalConstants.isActivePolicyGroupInDropdown);
 
         page.enterInvalidPolicyGroup(GlobalConstants.DEACTIVATE_POLICYGROUP);
@@ -408,7 +412,7 @@ public class AbisPartnerTest extends BaseClass {
         page.openPolicyGroupDropdown();
         Assert.assertTrue(page.isPolicyGroupSearchBarDisplayed(), GlobalConstants.isPolicyGroupSearchBarVisible);
         page.enterInvalidPolicyGroup(GlobalConstants.DEFAULT_POLICYGROUP);
-        Assert.assertTrue(page.isPolicyGroupOptionVisible(GlobalConstants.DEFAULT_POLICYGROUP),
+        Assert.assertTrue(page.waitForPolicyGroupOption(GlobalConstants.DEFAULT_POLICYGROUP),
                 GlobalConstants.isPolicyGroupSearchFiltersResults);
 
         Assert.assertTrue(page.isPolicyGroupOptionVisible(GlobalConstants.DEFAULT_POLICYGROUP),

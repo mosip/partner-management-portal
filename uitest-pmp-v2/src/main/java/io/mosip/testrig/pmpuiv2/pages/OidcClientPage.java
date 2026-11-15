@@ -1,12 +1,14 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.StaleElementReferenceException;
 
 import java.io.IOException;
 import java.time.Duration;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -15,6 +17,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
 import io.mosip.testrig.pmpuiv2.kernel.util.ConfigManager;
+import io.mosip.testrig.pmpuiv2.utility.LogUtil;
 
 public class OidcClientPage extends BasePage {
 
@@ -861,7 +864,29 @@ public class OidcClientPage extends BasePage {
 	}
 
 	public boolean isOidcSubmittedSuccessfullyDisplayed() {
-		return isElementDisplayed(detailsSubmittedSuccessfully);
+		boolean displayed = isElementDisplayed(detailsSubmittedSuccessfully);
+		if (!displayed) {
+			logSubmitErrorBanner();
+		}
+		return displayed;
+	}
+
+	private void logSubmitErrorBanner() {
+		By errorBanner = By.id("create_oidc_client_error_msg");
+		try {
+			if (isElementDisplayedQuick(errorBanner, ABSENCE_CHECK_TIMEOUT)) {
+				WebElement banner = driver.findElement(errorBanner);
+				((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block:'center'});", banner);
+				LogUtil.error("OIDC client submit was rejected: " + banner.getText());
+			} else {
+				scrollToStartPage();
+				LogUtil.error("OIDC client submit showed no error banner; the API may have returned 401 (session expired)");
+			}
+		} catch (NoSuchElementException | StaleElementReferenceException e) {
+			LogUtil.error("OIDC client submit error banner disappeared before it could be read");
+		} finally {
+			takeScreenshot();
+		}
 	}
 
 	public String getConfirmationDescriptionText() {

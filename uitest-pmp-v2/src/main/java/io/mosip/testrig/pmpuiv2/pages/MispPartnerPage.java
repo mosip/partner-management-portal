@@ -597,6 +597,22 @@ public class MispPartnerPage extends BasePage {
 				INLINE_VALIDATION_TIMEOUT);
 	}
 
+	// The selector loads active groups 5 at a time, newest first, and debounces search
+	// by 500ms before calling the API, so lookups need more time than inline validation.
+	private static final Duration POLICY_GROUP_FETCH_TIMEOUT = Duration.ofSeconds(10);
+
+	public boolean isAnyPolicyGroupOptionDisplayed() {
+		return isElementDisplayedQuick(By.xpath("//div[starts-with(@id,'policy_group_selector_option_')"
+				+ " and not(starts-with(@id,'policy_group_selector_option_separator_'))]"),
+				POLICY_GROUP_FETCH_TIMEOUT);
+	}
+
+	public boolean waitForPolicyGroupOption(String value) {
+		return isElementDisplayedQuick(
+				By.xpath("//*[contains(@id,'policy_group_selector_option')]//span[normalize-space()='" + value + "']"),
+				POLICY_GROUP_FETCH_TIMEOUT);
+	}
+
 	public void clickUploadCertActionForPartner(String partnerId) {
 		By directButton = By.xpath("//tr[./td[normalize-space()='" + partnerId + "']]//*[contains(@id,'upload_cert')]");
 		if (isDisplayed(directButton)) {

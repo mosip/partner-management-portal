@@ -17,7 +17,8 @@ public class AuthPolicyPage extends BasePage {
 
 	private static final Duration SAVE_AS_DRAFT_ENABLE_TIMEOUT = Duration.ofSeconds(20);
 
-	@FindBy(id = "create_auth_policy_btn")
+	// Header button when the list has rows, empty-state button (create_policy) when it has none
+	@FindBy(css = "#create_auth_policy_btn, #create_policy")
 	private WebElement createAuthPolicyButton;
 
 	@FindBy(id = "policy_group_selector_dropdown_button")
@@ -946,6 +947,11 @@ public class AuthPolicyPage extends BasePage {
 
 	public boolean isPage2Displayed() {
 		return isElementDisplayed(page2);
+	}
+
+	// react-paginate labels the link "Page 2", or "Page 2 is your current page" once selected.
+	public boolean hasSecondPage() {
+		return isElementDisplayedQuick(By.xpath("//a[starts-with(@aria-label,'Page 2')]"), ABSENCE_CHECK_TIMEOUT);
 	}
 
 	public boolean isItemPerPage8Displayed() {

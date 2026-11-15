@@ -193,6 +193,11 @@ public class DeviceProviderPage extends BasePage {
 		enter(sbiVersion, sbiVesionValue);
 	}
 
+	public boolean reloadAndWaitForTranslations() {
+		reload();
+		return isElementDisplayed(addSbiDetailsSubTitle);
+	}
+
 	public void enterSbiBinaryHash(String sbiBinaryHashValue) {
 		enter(sbiBinaryHash, sbiBinaryHashValue);
 	}
