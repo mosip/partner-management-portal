@@ -1263,12 +1263,6 @@ public class MispServicesPage extends BasePage{
 		throw new RuntimeException("Column still stale after " + STALE_RETRY + " retries: " + locator);
 	}
 
-	/*
-	 * The MISP license list is sorted server-side (ORDER BY in Postgres), so the order follows
-	 * the DB collation rather than Java's String ordering. An en_US collation ignores
-	 * punctuation such as '-' and '_' and case at the primary level, while a "C" collation
-	 * is plain code-point order. Accept the column as sorted if it is in order under any of these.
-	 */
 	private static final List<Comparator<String>> ACCEPTED_SORT_ORDERS = List.of(
 			String.CASE_INSENSITIVE_ORDER,
 			Comparator.<String>naturalOrder(),

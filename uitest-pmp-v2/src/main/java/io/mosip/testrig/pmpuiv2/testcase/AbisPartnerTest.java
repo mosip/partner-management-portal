@@ -397,8 +397,6 @@ public class AbisPartnerTest extends BaseClass {
         page.clickOnPartnerTypeDropdown();
         page.clickOnAbisPartnerOption();
 
-        // The dropdown only lists the 5 newest active groups until you scroll or search, so
-        // the default group may not be on the first page once other suites create groups.
         page.openPolicyGroupDropdown();
         Assert.assertTrue(page.isAnyPolicyGroupOptionDisplayed(), GlobalConstants.isActivePolicyGroupInDropdown);
         page.enterInvalidPolicyGroup(GlobalConstants.DEFAULT_POLICYGROUP);
