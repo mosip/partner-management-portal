@@ -158,6 +158,8 @@ public class TestRunner {
 			XmlClass mispPartnerTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.MispPartnerTest");
 			XmlClass mispPolicyTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.MispPolicyTest");
 			XmlClass abisPartnerTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.AbisPartnerTest");
+			XmlClass abisPartnerPolicyLinkingTest = new XmlClass(
+					"io.mosip.testrig.pmpuiv2.testcase.AbisPartnerPolicyLinkingTest");
 			XmlClass onlineVerificationPartnerTest = new XmlClass(
 					"io.mosip.testrig.pmpuiv2.testcase.OnlineVerificationPartnerTest");
 			XmlClass onlineVerificationPartnerViewTest = new XmlClass(
@@ -317,6 +319,9 @@ public class TestRunner {
 					break;
 				case "AbisPartnerTest":
 					addClassIfAbsent(classes, partnerAdminCreation, abisPartnerTest);
+					break;
+				case "AbisPartnerPolicyLinkingTest":
+					addClassIfAbsent(classes, partnerAdminCreation, abisPartnerPolicyLinkingTest);
 					break;
 				case "OnlineVerificationPartnerTest":
 					addClassIfAbsent(classes, partnerAdminCreation, onlineVerificationPartnerTest);
