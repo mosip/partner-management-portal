@@ -96,3 +96,13 @@ delete from pms.partner where user_id='pmpui-ovp2';
 delete from pms.partner where cr_by='pmpui-ovp2';
 delete FROM pms.user_details where user_id='pmpui-ovp';
 delete FROM pms.user_details where user_id='pmpui-ovp2';
+
+#ABIS partner pmpui-abis and data share policies abisdspolicy01 / abisdspolicy03.
+delete from pms.partner_policy_bioextract_request where part_id = 'pmpui-abis' or partner_policy_request_id in (select id from pms.partner_policy_request where part_id = 'pmpui-abis' or policy_id in (select id from pms.auth_policy where name in ('abisdspolicy01', 'abisdspolicy03')));
+delete from pms.partner_policy_credential_type_request where part_id = 'pmpui-abis' or partner_policy_request_id in (select id from pms.partner_policy_request where part_id = 'pmpui-abis' or policy_id in (select id from pms.auth_policy where name in ('abisdspolicy01', 'abisdspolicy03')));
+delete from pms.partner_policy_request where part_id = 'pmpui-abis' or policy_id in (select id from pms.auth_policy where name in ('abisdspolicy01', 'abisdspolicy03'));
+delete from pms.partner_policy where part_id = 'pmpui-abis' or policy_id in (select id from pms.auth_policy where name in ('abisdspolicy01', 'abisdspolicy03'));
+delete from pms.auth_policy where name in ('abisdspolicy01', 'abisdspolicy03');
+delete from pms.partner_h where cr_by = 'pmpui-abis' or id = 'pmpui-abis';
+delete from pms.partner where user_id = 'pmpui-abis' or cr_by = 'pmpui-abis' or id = 'pmpui-abis';
+delete FROM pms.user_details where user_id = 'pmpui-abis';
