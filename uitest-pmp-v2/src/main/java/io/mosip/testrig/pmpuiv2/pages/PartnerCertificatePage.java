@@ -476,8 +476,20 @@ public class PartnerCertificatePage extends BasePage {
 		uploadImage(uploadFile, CertificateGenerationUtil.getCertFilePath("RootCA.cer"));
 	}
 
+	public void uploadAuthRootCa() {
+		uploadImage(uploadFile, CertificateGenerationUtil.getCertFilePath("AuthRootCA.cer"));
+	}
+
 	public void uploadCertificateSubCa() {
 		uploadImage(uploadFile, CertificateGenerationUtil.getCertFilePath("IntermediateCA.cer"));
+	}
+
+	public void uploadAuthSubCa() {
+		uploadImage(uploadFile, CertificateGenerationUtil.getCertFilePath("AuthIntermediateCA.cer"));
+	}
+
+	public void uploadAuthPartnerCertificate() {
+		uploadImage(uploadFile, CertificateGenerationUtil.getCertFilePath("AuthClient.cer"));
 	}
 
 	public void uploadCertificate() {

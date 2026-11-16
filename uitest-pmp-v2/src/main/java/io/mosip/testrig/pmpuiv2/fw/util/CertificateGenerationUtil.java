@@ -88,9 +88,13 @@ public class CertificateGenerationUtil {
 	public static void generateAllCertificates() {
 		Instant now = Instant.now();
 
-		// Auth / Device / FTM / PartnerAdmin share one Root -> Intermediate -> Leaf chain
+		// Device / FTM / PartnerAdmin share one Root -> Intermediate -> Leaf chain
 		generateChain(rootName("CA"), intermediateName("SUBCA"), leafName("AABBCC"), "RootCA.cer",
 				"IntermediateCA.cer", "Client.cer", now);
+
+		// AUTH trust store cannot accept the same certificate already uploaded for DEVICE
+		generateChain(rootName("AUTHCA"), intermediateName("AUTHSUB"), leafName("AABBCC"), "AuthRootCA.cer",
+				"AuthIntermediateCA.cer", "AuthClient.cer", now);
 
 		// MISP domain
 		generateChain(rootName("CA"), intermediateName("SUBCA"), leafName("AABBCC"), "MispRootCA.cer",

@@ -135,7 +135,7 @@ public class AdminTestUtil extends BaseTestCaseFunc {
 					ConfigManager.getMasterDbPass(), ConfigManager.getIDADBSchema(),
 					TestRunner.getResourcePath() + "/" + "config/partnerUiv2DataDeleteQueriesForIDA.txt");
 			KeycloakUserManager.removeUser();
-//  	    KeycloakUserManager.createUsers();
+			KeycloakUserManager.createUsers();
 //    		BaseTestCaseFunc.DefinePolicyGroup();
 //			BaseTestCaseFunc.DefinePolicy();
 //			BaseTestCaseFunc.CreateAdminPartner();
