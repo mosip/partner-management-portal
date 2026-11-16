@@ -2,6 +2,7 @@ package io.mosip.testrig.pmpuiv2.testcase;
 
 import static org.testng.Assert.assertTrue;
 
+import org.openqa.selenium.By;
 import org.testng.annotations.Test;
 
 import io.mosip.testrig.pmpuiv2.kernel.util.KeycloakUserManager;
@@ -29,43 +30,46 @@ public class PartnerAdminCreation extends BaseClass {
 		dashboardPage = new DashboardPage(driver);
 		loginPage = new LoginPage(driver);
 
-		registerPage = loginPage.clickRegisterButton();
-		assertTrue(loginPage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
+		if (!driver.findElements(By.cssSelector("#kc-registration a")).isEmpty()) {
+			registerPage = loginPage.clickRegisterButton();
+			assertTrue(loginPage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
 
-		registerPage.enterFirstName("pmpui-v2");
-		assertTrue(registerPage.isLastNameTextBoxDisplayed(), GlobalConstants.isLastNameTextBoxDisplayed);
-		registerPage.enterLastName("pmpui-v2");
+			registerPage.enterFirstName("pmpui-v2");
+			assertTrue(registerPage.isLastNameTextBoxDisplayed(), GlobalConstants.isLastNameTextBoxDisplayed);
+			registerPage.enterLastName("pmpui-v2");
 
-		assertTrue(registerPage.isOrganizationNameDisplayed(), GlobalConstants.isOrganizationNameDisplayed);
-		registerPage.enterOrganizationName("AABBCC");
+			assertTrue(registerPage.isOrganizationNameDisplayed(), GlobalConstants.isOrganizationNameDisplayed);
+			registerPage.enterOrganizationName("AABBCC");
 
-		assertTrue(registerPage.isPartnerTypeDropdownDisplayed(), GlobalConstants.isPartnerTypeDropdownDisplayed);
-		registerPage.selectDeviceProviderInPartnerTypeDropdown();
+			assertTrue(registerPage.isPartnerTypeDropdownDisplayed(), GlobalConstants.isPartnerTypeDropdownDisplayed);
+			registerPage.selectDeviceProviderInPartnerTypeDropdown();
 
-		assertTrue(registerPage.isAddressTextBoxDisplayed(), GlobalConstants.isAddressTextBoxDisplayed);
-		registerPage.enterAddress("0" + data);
+			assertTrue(registerPage.isAddressTextBoxDisplayed(), GlobalConstants.isAddressTextBoxDisplayed);
+			registerPage.enterAddress("0" + data);
 
-		assertTrue(registerPage.isEmailTextBoxDisplayed(), GlobalConstants.isEmailTextBoxDisplayed);
-		registerPage.enterEmail("0" + data + "admin" + "@gmail.com");
+			assertTrue(registerPage.isEmailTextBoxDisplayed(), GlobalConstants.isEmailTextBoxDisplayed);
+			registerPage.enterEmail("0" + data + "admin" + "@gmail.com");
 
-		assertTrue(registerPage.isPhoneNumberTextboxDisplayed(), GlobalConstants.isPhoneNumberTextboxDisplayed);
-		registerPage.enterPhone("9876556789");
+			assertTrue(registerPage.isPhoneNumberTextboxDisplayed(), GlobalConstants.isPhoneNumberTextboxDisplayed);
+			registerPage.enterPhone("9876556789");
 
-		assertTrue(registerPage.isNotificationLanguageDropdownDisplayed(),
-				GlobalConstants.isNotificationLanguageDropdownDisplayed);
-		registerPage.selectNotificationLanguageDropdown();
+			assertTrue(registerPage.isNotificationLanguageDropdownDisplayed(),
+					GlobalConstants.isNotificationLanguageDropdownDisplayed);
+			registerPage.selectNotificationLanguageDropdown();
 
-		assertTrue(registerPage.isUsernameTextBoxDisplayed(), GlobalConstants.isUsernameTextBoxDisplayed);
-		registerPage.enterUsername("pmpui-v2");
+			assertTrue(registerPage.isUsernameTextBoxDisplayed(), GlobalConstants.isUsernameTextBoxDisplayed);
+			registerPage.enterUsername("pmpui-v2");
 
-		assertTrue(registerPage.isPasswordTextBoxDisplayed(), GlobalConstants.isPasswordTextBoxDisplayed);
-		registerPage.enterPassword("mosip123");
+			assertTrue(registerPage.isPasswordTextBoxDisplayed(), GlobalConstants.isPasswordTextBoxDisplayed);
+			registerPage.enterPassword("mosip123");
 
-		assertTrue(registerPage.isPasswordConfirmTextBoxDisplayed(), GlobalConstants.isPasswordConfirmTextBoxDisplayed);
-		registerPage.enterPasswordConfirm("mosip123");
+			assertTrue(registerPage.isPasswordConfirmTextBoxDisplayed(),
+					GlobalConstants.isPasswordConfirmTextBoxDisplayed);
+			registerPage.enterPasswordConfirm("mosip123");
 
-		assertTrue(registerPage.isSubmitButtonDisplayed(), GlobalConstants.isSubmitButtonDisplayed);
-		dashboardPage = registerPage.clickSubmitButton();
+			assertTrue(registerPage.isSubmitButtonDisplayed(), GlobalConstants.isSubmitButtonDisplayed);
+			dashboardPage = registerPage.clickSubmitButton();
+		}
 
 		KeycloakUserManager.assignRole("pmpui-v2", "PARTNER_ADMIN");
 

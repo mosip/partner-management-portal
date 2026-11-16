@@ -23,6 +23,11 @@ delete from pms.partner where cr_by='pmpui-deactivateftm';
 delete FROM pms.user_details where user_id='pmpui-deactivateftm';
 
 #These are delete queries for AUTH PARTNER - pmpui-v2 , pmpui-policyadmin
+#Bio-extract and credential-type requests reference partner_policy_request (fk_ppber_request).
+#They must go before that parent delete or the whole cleanup batch aborts.
+delete from pms.partner_policy_bioextract_request where partner_policy_request_id in (select id from pms.partner_policy_request where cr_by in ('pmpui-v2', 'pmpui-policyadmin', 'pmpui-auth', 'pmpui-policies'));
+delete from pms.partner_policy_credential_type_request where partner_policy_request_id in (select id from pms.partner_policy_request where cr_by in ('pmpui-v2', 'pmpui-policyadmin', 'pmpui-auth', 'pmpui-policies'));
+delete from pms.partner_policy_bioextract where policy_id in (select id from pms.auth_policy where cr_by in ('pmpui-v2', 'pmpui-policyadmin', 'pmpui-auth', 'pmpui-policies'));
 delete from pms.partner_policy where cr_by in ('pmpui-auth', 'pmpui-policies', 'pmpui-v2', 'pmpui-policyadmin');
 delete from pms.partner_policy_request where cr_by in ('pmpui-v2', 'pmpui-policyadmin');
 delete from pms.auth_policy where cr_by in ('pmpui-v2', 'pmpui-policyadmin');
@@ -36,6 +41,8 @@ delete from pms.user_details where cr_by in ('pmpui-v2', 'pmpui-policyadmin');
 #These are delete queries for AUTH PARTNER - pmpui-auth
 delete from pms.partner_policy where cr_by='pmpui-auth';
 delete from pms.oidc_client where cr_by='pmpui-auth';
+delete from pms.partner_policy_bioextract_request where partner_policy_request_id in (select id from pms.partner_policy_request where cr_by='pmpui-auth');
+delete from pms.partner_policy_credential_type_request where partner_policy_request_id in (select id from pms.partner_policy_request where cr_by='pmpui-auth');
 delete from pms.partner_policy_request where cr_by='pmpui-auth';
 delete from pms.auth_policy where cr_by='pmpui-auth';
 delete from pms.policy_group where cr_by='pmpui-auth';
@@ -46,6 +53,8 @@ delete FROM pms.user_details where user_id='pmpui-auth';
 #These are delete queries for AUTH PARTNER - pmpui-policies
 delete from pms.partner_policy where cr_by='pmpui-policies';
 delete from pms.oidc_client where cr_by='pmpui-policies';
+delete from pms.partner_policy_bioextract_request where partner_policy_request_id in (select id from pms.partner_policy_request where cr_by='pmpui-policies');
+delete from pms.partner_policy_credential_type_request where partner_policy_request_id in (select id from pms.partner_policy_request where cr_by='pmpui-policies');
 delete from pms.partner_policy_request where cr_by='pmpui-policies';
 delete from pms.auth_policy where cr_by='pmpui-policies';
 delete from pms.policy_group where cr_by='pmpui-policies';
@@ -88,7 +97,8 @@ delete FROM pms.user_details where user_id='pmpui-devicenocert';
 #Manual adjudication partners pmpui-ma / pmpui-ma2, online verification partner pmpui-ovp,
 #policies mapolicy01 / mapolicy03 / ovppolicy, and biometric extractor configs from these tests.
 #Bioextract rows reference the partner and policy, so they go first.
-delete from pms.partner_policy_bioextract_request where part_id in ('pmpui-ma', 'pmpui-ma2', 'pmpui-ovp');
+delete from pms.partner_policy_bioextract_request where part_id in ('pmpui-ma', 'pmpui-ma2', 'pmpui-ovp') or partner_policy_request_id in (select id from pms.partner_policy_request where part_id in ('pmpui-ma', 'pmpui-ma2', 'pmpui-ovp') or policy_id in (select id from pms.auth_policy where name in ('mapolicy01', 'mapolicy03', 'ovppolicy')));
+delete from pms.partner_policy_credential_type_request where part_id in ('pmpui-ma', 'pmpui-ma2', 'pmpui-ovp') or partner_policy_request_id in (select id from pms.partner_policy_request where part_id in ('pmpui-ma', 'pmpui-ma2', 'pmpui-ovp') or policy_id in (select id from pms.auth_policy where name in ('mapolicy01', 'mapolicy03', 'ovppolicy')));
 delete from pms.partner_policy_bioextract where part_id in ('pmpui-ma', 'pmpui-ma2', 'pmpui-ovp');
 delete from pms.bioextractor_configuration where config_name like 'bioconfig%' or config_name like 'biodelete%' or config_name like 'ovpbio%';
 delete from pms.partner_policy_credential_type where part_id in ('pmpui-ma', 'pmpui-ma2', 'pmpui-ovp') or policy_id in (select id from pms.auth_policy where name in ('mapolicy01', 'mapolicy03', 'ovppolicy'));

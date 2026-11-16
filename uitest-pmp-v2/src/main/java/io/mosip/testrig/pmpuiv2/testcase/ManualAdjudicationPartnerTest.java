@@ -35,7 +35,7 @@ public class ManualAdjudicationPartnerTest extends BaseClass {
 		partnerCertificatePage.clickOnRootUploadTrustCertificateButtonInAdmin();
 		partnerCertificatePage.clickOnpartnerDomainSelectorDropdown();
 		partnerCertificatePage.clickOnPartnerDomainSelectorDropdownOptionAuth();
-		partnerCertificatePage.uploadCertificateRootCa();
+		partnerCertificatePage.uploadAuthRootCa();
 		partnerCertificatePage.clickonSubmitButtonForAdmin();
 		partnerCertificatePage.continueAfterTrustCertificateSubmit();
 
@@ -45,7 +45,7 @@ public class ManualAdjudicationPartnerTest extends BaseClass {
 		partnerCertificatePage.clickOnIntermediateUploadTrustCertificateButtonInAdmin();
 		partnerCertificatePage.clickOnpartnerDomainSelectorDropdown();
 		partnerCertificatePage.clickOnPartnerDomainSelectorDropdownOptionAuth();
-		partnerCertificatePage.uploadCertificateSubCa();
+		partnerCertificatePage.uploadAuthSubCa();
 		partnerCertificatePage.clickonSubmitButtonForAdmin();
 		partnerCertificatePage.continueAfterTrustCertificateSubmit();
 		partnerCertificatePage.clickOnHomeButton();
@@ -79,7 +79,7 @@ public class ManualAdjudicationPartnerTest extends BaseClass {
 		maPartnerPage.clickOnUploadPartnerCertificateButton();
 		assertTrue(partnerCertificatePage.isMispPartnerCertificatePopupDisplayed(),
 				GlobalConstants.isPartnerCertificatePageDisplayed);
-		partnerCertificatePage.uploadCertificate();
+		partnerCertificatePage.uploadAuthPartnerCertificate();
 		partnerCertificatePage.clickOnSubmitButton();
 		assertTrue(partnerCertificatePage.isCertificateUploadSuccessMessageDisplayed(),
 				GlobalConstants.isCertificateUploadSuccessMessageDisplayed);
@@ -257,7 +257,7 @@ public class ManualAdjudicationPartnerTest extends BaseClass {
 		maPartnerPage.clickOnUploadOrReuploadCertificateButton();
 		assertTrue(partnerCertificatePage.isMispPartnerCertificatePopupDisplayed(),
 				GlobalConstants.isPartnerCertificatePageDisplayed);
-		partnerCertificatePage.uploadCertificate();
+		partnerCertificatePage.uploadAuthPartnerCertificate();
 		partnerCertificatePage.clickOnSubmitButton();
 		assertTrue(partnerCertificatePage.isCertificateUploadSuccessMessageDisplayed(),
 				GlobalConstants.isCertificateUploadSuccessMessageDisplayed);
