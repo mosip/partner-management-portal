@@ -119,6 +119,8 @@ public class TestRunner {
 					"io.mosip.testrig.pmpuiv2.testcase.OidcClientMultilingualFieldsTest");
 			XmlClass deviceCreationTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.DeviceCreationTest");
 			XmlClass policyGroupTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.PolicyGroupTest");
+			XmlClass policyGroupInfiniteScrollTest = new XmlClass(
+					"io.mosip.testrig.pmpuiv2.testcase.PolicyGroupInfiniteScrollTest");
 			XmlClass certificateTrustStoreTest = new XmlClass(
 					"io.mosip.testrig.pmpuiv2.testcase.CertificateTrustStoreTest");
 			XmlClass apiKeyAuthPartnerTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.ApiKeyAuthPartnerTest");
@@ -220,6 +222,9 @@ public class TestRunner {
 					break;
 				case "PolicyGroupTest":
 					addClassIfAbsent(classes, partnerAdminCreation, policyAdminAndPartnerCreation, policyGroupTest);
+					break;
+				case "PolicyGroupInfiniteScrollTest":
+					addClassIfAbsent(classes, partnerAdminCreation, policyGroupInfiniteScrollTest);
 					break;
 
 				// STEP 4

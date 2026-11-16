@@ -851,6 +851,9 @@ public class GlobalConstants {
 	public static final String isPolicyDataContentDisplayed = "Verify if policy data content displayed";
 	public static final String isPolicyFormSubTitleDisplayed = "Verify if auth policy form subtitle displayed";
 	public static final String isPolicyGroupDropdownDisplayed = "Verify if policy group dropdown displayed";
+	public static final String isPolicyGroupDropdownFirstPageLoaded = "Verify if the policy group dropdown loads the first page";
+	public static final String isPolicyGroupDropdownNextPageLoaded = "Verify if the policy group dropdown loads the next page on scroll";
+	public static final String isPolicyGroupSelectedFromSearch = "Verify if the searched policy group stays selected";
 	public static final String isAuthPolicyPlaceHolderDisplayed = "Verify if auth policy placeholder displayed";
 	public static final String isPolicyDataEdited = "Verify if policy data edited";
 	public static final String isFilterResetButtonAvailableOrEnabled = "Verify if filter reset button available or enabled";

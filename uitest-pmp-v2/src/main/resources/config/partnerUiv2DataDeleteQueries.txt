@@ -96,3 +96,6 @@ delete from pms.partner where user_id='pmpui-ovp2';
 delete from pms.partner where cr_by='pmpui-ovp2';
 delete FROM pms.user_details where user_id='pmpui-ovp';
 delete FROM pms.user_details where user_id='pmpui-ovp2';
+
+#Policy groups created for the MOSIP-41028 dropdown scroll test.
+delete from pms.policy_group where name in ('scrollpg01', 'scrollpg02', 'scrollpg03', 'scrollpg04', 'scrollpg05', 'scrollpg06');

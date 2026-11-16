@@ -36,6 +36,8 @@
 			<!--POLICY ADMINISTRATION FLOW-->
 			<class name="io.mosip.testrig.pmpuiv2.testcase.PolicyAdminAndPartnerCreation" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.PolicyGroupTest" />
+			<!--POLICY GROUP DROPDOWN INFINITE SCROLL (MOSIP-41028)-->
+			<class name="io.mosip.testrig.pmpuiv2.testcase.PolicyGroupInfiniteScrollTest" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.DatasharePolicyTest" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.AuthPolicyTest" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.DraftConfirmationScreenTest" />

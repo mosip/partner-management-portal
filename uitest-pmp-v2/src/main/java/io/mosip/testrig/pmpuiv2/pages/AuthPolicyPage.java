@@ -660,6 +660,36 @@ public class AuthPolicyPage extends BasePage {
 		return isElementDisplayed(policyGroupDropdownSearchInput);
 	}
 
+	public int getPolicyGroupOptionCount() {
+		return policyGroupOptionButtons().size();
+	}
+
+	public int waitForPolicyGroupOptionCount(int expectedCount) {
+		new WebDriverWait(driver, Duration.ofSeconds(20))
+				.until(d -> policyGroupOptionButtons().size() >= expectedCount);
+		return policyGroupOptionButtons().size();
+	}
+
+	public int scrollPolicyGroupListAndWaitForMore(int currentCount) {
+		WebElement list = driver.findElement(By.id("policy_group_selector_dropdown_listbox"));
+		((JavascriptExecutor) driver).executeScript(
+				"arguments[0].scrollTop = arguments[0].scrollHeight;"
+						+ "arguments[0].dispatchEvent(new Event('scroll', { bubbles: true }));",
+				list);
+		new WebDriverWait(driver, Duration.ofSeconds(20))
+				.until(d -> policyGroupOptionButtons().size() > currentCount);
+		return policyGroupOptionButtons().size();
+	}
+
+	public String getSelectedPolicyGroupText() {
+		return driver.findElement(By.id("policy_group_selector_dropdown_button_text")).getText().trim();
+	}
+
+	private java.util.List<WebElement> policyGroupOptionButtons() {
+		return driver.findElements(By.cssSelector(
+				"#policy_group_selector_dropdown_listbox button[id^='policy_group_selector_option_button_']"));
+	}
+
 	public boolean isPolicyGroupPlaceHolderDisplayed() {
 		return isElementDisplayed(policyGroupPlaceholder);
 	}
