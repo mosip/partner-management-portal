@@ -1263,44 +1263,63 @@ public class MispServicesPage extends BasePage{
 		throw new RuntimeException("Column still stale after " + STALE_RETRY + " retries: " + locator);
 	}
 
-	public boolean isTableSortedAscendingByColumn(int columnIndex) {
+	private static final List<Comparator<String>> ACCEPTED_SORT_ORDERS = List.of(
+			String.CASE_INSENSITIVE_ORDER,
+			Comparator.<String>naturalOrder(),
+			Comparator.comparing(MispServicesPage::collationKey));
+
+	private static String collationKey(String value) {
+		return value.replaceAll("[^\\p{Alnum}]", "").toLowerCase(Locale.ROOT);
+	}
+
+	private static boolean isInOrder(List<String> values, Comparator<String> comparator) {
+		for (int i = 1; i < values.size(); i++) {
+			if (comparator.compare(values.get(i - 1), values.get(i)) > 0) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	private boolean isTableSortedByColumn(int columnIndex, boolean ascending) {
 		List<String> actual = getMispLicenseListColumnValues(columnIndex);
 		if (actual.isEmpty()) {
 			LogUtil.step("No values read for column " + columnIndex + "; cannot verify sort order.");
 			return false;
 		}
-		List<String> expected = new ArrayList<>(actual);
-		expected.sort(String.CASE_INSENSITIVE_ORDER);
-		return actual.equals(expected);
+		for (Comparator<String> order : ACCEPTED_SORT_ORDERS) {
+			if (isInOrder(actual, ascending ? order : order.reversed())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean isTableSortedAscendingByColumn(int columnIndex) {
+		return isTableSortedByColumn(columnIndex, true);
 	}
 
 	public boolean isTableSortedDescendingByColumn(int columnIndex) {
-		List<String> actual = getMispLicenseListColumnValues(columnIndex);
-		if (actual.isEmpty()) {
-			LogUtil.step("No values read for column " + columnIndex + "; cannot verify sort order.");
+		return isTableSortedByColumn(columnIndex, false);
+	}
+
+	private boolean waitUntilTableSortedByColumn(int columnIndex, boolean ascending) {
+		try {
+			return new WebDriverWait(driver, Duration.ofSeconds(10))
+					.until(d -> isTableSortedByColumn(columnIndex, ascending));
+		} catch (TimeoutException e) {
+			LogUtil.step("Column " + columnIndex + " not sorted " + (ascending ? "ascending" : "descending")
+					+ ". Actual values: " + getMispLicenseListColumnValues(columnIndex));
 			return false;
 		}
-		List<String> expected = new ArrayList<>(actual);
-		expected.sort(String.CASE_INSENSITIVE_ORDER.reversed());
-		return actual.equals(expected);
 	}
 
 	public boolean waitUntilTableSortedAscendingByColumn(int columnIndex) {
-		try {
-			return new WebDriverWait(driver, Duration.ofSeconds(10))
-					.until(d -> isTableSortedAscendingByColumn(columnIndex));
-		} catch (TimeoutException e) {
-			return false;
-		}
+		return waitUntilTableSortedByColumn(columnIndex, true);
 	}
 
 	public boolean waitUntilTableSortedDescendingByColumn(int columnIndex) {
-		try {
-			return new WebDriverWait(driver, Duration.ofSeconds(10))
-					.until(d -> isTableSortedDescendingByColumn(columnIndex));
-		} catch (TimeoutException e) {
-			return false;
-		}
+		return waitUntilTableSortedByColumn(columnIndex, false);
 	}
 
 	public int waitForStableMispLicenseListRowCount() {

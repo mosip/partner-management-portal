@@ -593,8 +593,24 @@ public class MispPartnerPage extends BasePage {
 
 	public boolean isPolicyGroupOptionVisible(String value) {
 		return isElementDisplayedQuick(
-				By.xpath("//*[contains(@id,'policy_group_selector_option')]//span[normalize-space()='" + value + "']"),
+				By.xpath("//button[starts-with(@id,'policy_group_selector_option_button_')]/span[normalize-space()='"
+						+ value + "']"),
 				INLINE_VALIDATION_TIMEOUT);
+	}
+
+	private static final Duration POLICY_GROUP_FETCH_TIMEOUT = Duration.ofSeconds(10);
+
+	public boolean isAnyPolicyGroupOptionDisplayed() {
+		return isElementDisplayedQuick(By.xpath("//div[starts-with(@id,'policy_group_selector_option_')"
+				+ " and not(starts-with(@id,'policy_group_selector_option_separator_'))]"),
+				POLICY_GROUP_FETCH_TIMEOUT);
+	}
+
+	public boolean waitForPolicyGroupOption(String value) {
+		return isElementDisplayedQuick(
+				By.xpath("//button[starts-with(@id,'policy_group_selector_option_button_')]/span[normalize-space()='"
+						+ value + "']"),
+				POLICY_GROUP_FETCH_TIMEOUT);
 	}
 
 	public void clickUploadCertActionForPartner(String partnerId) {

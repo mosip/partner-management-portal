@@ -398,7 +398,9 @@ public class AbisPartnerTest extends BaseClass {
         page.clickOnAbisPartnerOption();
 
         page.openPolicyGroupDropdown();
-        Assert.assertTrue(page.isPolicyGroupOptionVisible(GlobalConstants.DEFAULT_POLICYGROUP),
+        Assert.assertTrue(page.isAnyPolicyGroupOptionDisplayed(), GlobalConstants.isActivePolicyGroupInDropdown);
+        page.enterInvalidPolicyGroup(GlobalConstants.DEFAULT_POLICYGROUP);
+        Assert.assertTrue(page.waitForPolicyGroupOption(GlobalConstants.DEFAULT_POLICYGROUP),
                 GlobalConstants.isActivePolicyGroupInDropdown);
 
         page.enterInvalidPolicyGroup(GlobalConstants.DEACTIVATE_POLICYGROUP);
@@ -408,7 +410,7 @@ public class AbisPartnerTest extends BaseClass {
         page.openPolicyGroupDropdown();
         Assert.assertTrue(page.isPolicyGroupSearchBarDisplayed(), GlobalConstants.isPolicyGroupSearchBarVisible);
         page.enterInvalidPolicyGroup(GlobalConstants.DEFAULT_POLICYGROUP);
-        Assert.assertTrue(page.isPolicyGroupOptionVisible(GlobalConstants.DEFAULT_POLICYGROUP),
+        Assert.assertTrue(page.waitForPolicyGroupOption(GlobalConstants.DEFAULT_POLICYGROUP),
                 GlobalConstants.isPolicyGroupSearchFiltersResults);
 
         Assert.assertTrue(page.isPolicyGroupOptionVisible(GlobalConstants.DEFAULT_POLICYGROUP),

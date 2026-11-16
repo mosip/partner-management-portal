@@ -27,6 +27,12 @@ public class StatusLabelActiveTest extends BaseClass {
 	public void partnerAdminStatusLabelReadsActive() {
 		navigateToPartnerListPage();
 
+		// Filter to Active so the check does not depend on an Active partner being among the newest rows.
+		partnerAdminPage.clickOnFilterButton();
+		partnerAdminPage.clickOnStatusFilter();
+		partnerAdminPage.clickActivatedButton();
+		partnerAdminPage.clickOnApplyFiltersBtn();
+
 		List<String> statuses = partnerAdminPage.getStatusColumnValues();
 		LogUtil.step("Partner list statuses: " + statuses);
 		assertTrue(statuses.contains(GlobalConstants.PARTNER_STATUS_ACTIVE),
