@@ -135,18 +135,15 @@ public class MapBiometricExtractorProviderPage extends BasePage {
 		click(option);
 	}
 
-	public void selectFirstConfigForRow(int rowNumber) {
+	public void selectConfigForRow(int rowNumber, String configName) {
 		By dropdown = By.id("map_bio_extractor_provider_config_" + rowNumber + "_dropdown_btn");
 		click(dropdown);
-		By firstOption = By.id("map_bio_extractor_provider_config_" + rowNumber + "_option1");
-		if (!isElementDisplayedQuick(firstOption, Duration.ofSeconds(5))) {
-			firstOption = By.xpath(
-					"//button[starts-with(@id,'map_bio_extractor_provider_config_" + rowNumber + "_option')][1]");
+		By option = By.xpath("//button[starts-with(@id,'map_bio_extractor_provider_config_" + rowNumber
+				+ "_option') and contains(normalize-space()," + xpathLiteral(configName) + ")]");
+		if (!isElementDisplayedQuick(option, Duration.ofSeconds(10))) {
+			throw new IllegalStateException("Configuration option was not displayed: " + configName);
 		}
-		if (!isElementDisplayedQuick(firstOption, Duration.ofSeconds(5))) {
-			throw new IllegalStateException("Configuration option was not displayed for row " + rowNumber);
-		}
-		click(firstOption);
+		click(option);
 	}
 
 	public boolean isAddMoreButtonDisplayed() {
@@ -174,8 +171,12 @@ public class MapBiometricExtractorProviderPage extends BasePage {
 	public List<String> getModalityOptionsForRow(int rowNumber) {
 		By dropdown = By.id("map_bio_extractor_provider_modality_" + rowNumber + "_dropdown_btn");
 		click(dropdown);
-		List<WebElement> options = driver.findElements(
-				By.xpath("//button[contains(@id,'map_bio_extractor_provider_modality_" + rowNumber + "_option')]"));
+		By optionLocator = By.xpath(
+				"//button[contains(@id,'map_bio_extractor_provider_modality_" + rowNumber + "_option')]");
+		if (!isElementDisplayedQuick(optionLocator, Duration.ofSeconds(10))) {
+			throw new IllegalStateException("Modality options were not displayed for row " + rowNumber);
+		}
+		List<WebElement> options = driver.findElements(optionLocator);
 		List<String> texts = new ArrayList<>();
 		for (WebElement option : options) {
 			String text = option.getText();

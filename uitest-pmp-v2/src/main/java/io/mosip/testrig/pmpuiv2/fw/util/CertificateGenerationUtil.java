@@ -92,7 +92,8 @@ public class CertificateGenerationUtil {
 		generateChain(rootName("CA"), intermediateName("SUBCA"), leafName("AABBCC"), "RootCA.cer",
 				"IntermediateCA.cer", "Client.cer", now);
 
-		// AUTH trust store cannot accept the same certificate already uploaded for DEVICE
+		// AUTH rejects a second upload of the same certificate. This chain is separate so
+		// a later AUTH upload does not collide with the RootCA already stored for DEVICE.
 		generateChain(rootName("AUTHCA"), intermediateName("AUTHSUB"), leafName("AABBCC"), "AuthRootCA.cer",
 				"AuthIntermediateCA.cer", "AuthClient.cer", now);
 

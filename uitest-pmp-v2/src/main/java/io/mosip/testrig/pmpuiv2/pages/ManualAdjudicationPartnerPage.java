@@ -788,7 +788,7 @@ public class ManualAdjudicationPartnerPage extends BasePage {
 
 	public boolean isViewPageReadOnly() {
 		int editable = driver.findElements(By.cssSelector(
-				"input:not([type='hidden']):not([disabled]), textarea:not([disabled]), select:not([disabled])"))
+				"[id^='view_partner'] input:not([type='hidden']):not([disabled]), [id^='view_partner'] textarea:not([disabled]), [id^='view_partner'] select:not([disabled])"))
 				.size();
 		return editable == 0 && isViewPartnerDetailsPageDisplayed();
 	}

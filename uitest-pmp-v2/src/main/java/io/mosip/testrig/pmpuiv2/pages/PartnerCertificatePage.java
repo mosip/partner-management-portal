@@ -640,6 +640,22 @@ public class PartnerCertificatePage extends BasePage {
 		throw new IllegalStateException("Trust certificate confirmation was not displayed");
 	}
 
+	public void continueAfterTrustCertificateSubmitAllowingExisting() {
+		if (isElementDisplayedQuick(By.id("confirmation_go_back_btn"), Duration.ofSeconds(8))) {
+			clickOnElement(GoBackButton);
+			return;
+		}
+		if (isElementDisplayedQuick(By.id("error_close_btn"), Duration.ofSeconds(2))) {
+			String pageText = driver.findElement(By.tagName("body")).getText();
+			click(By.id("error_close_btn"));
+			if (pageText != null && pageText.toLowerCase().contains("already")) {
+				return;
+			}
+			throw new IllegalStateException("Trust certificate submit failed");
+		}
+		throw new IllegalStateException("Trust certificate confirmation was not displayed");
+	}
+
 	public void clickOnSuccessMsgCloseButton() {
 		clickOnElement(successMsgCloseButton);
 	}

@@ -25,6 +25,7 @@ import com.nimbusds.jose.jwk.KeyUse;
 import com.nimbusds.jose.jwk.RSAKey;
 import io.mosip.testrig.pmpuiv2.authentication.fw.util.RestClient;
 import io.mosip.testrig.pmpuiv2.kernel.util.ConfigManager;
+import io.mosip.testrig.pmpuiv2.kernel.util.KeycloakUserManager;
 import io.mosip.testrig.pmpuiv2.utility.BaseTestCaseFunc;
 import io.mosip.testrig.pmpuiv2.utility.TestRunner;
 import io.restassured.http.ContentType;
@@ -147,6 +148,7 @@ public class PmpTestUtil extends BaseTestCaseFunc {
 			String val = "11000000";
 			list.add(val);
 			attrmap.put("individualId", list);
+			KeycloakUserManager.createUsers();
 			BaseTestCaseFunc.mapUserToZone(
 					BaseTestCaseFunc.currentModule + "-" + propsKernel.getProperty(admin_userName), zone);
 			BaseTestCaseFunc.mapZone(BaseTestCaseFunc.currentModule + "-" + propsKernel.getProperty(admin_userName));

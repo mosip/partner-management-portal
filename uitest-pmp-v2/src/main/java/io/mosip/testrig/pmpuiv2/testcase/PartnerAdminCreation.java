@@ -14,6 +14,7 @@ import io.mosip.testrig.pmpuiv2.pages.PolicyGroupPage;
 import io.mosip.testrig.pmpuiv2.pages.RegisterPage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
+import io.mosip.testrig.pmpuiv2.utility.LogUtil;
 
 @Test(groups = "PartnerAdminCreation")
 public class PartnerAdminCreation extends BaseClass {
@@ -30,7 +31,9 @@ public class PartnerAdminCreation extends BaseClass {
 		dashboardPage = new DashboardPage(driver);
 		loginPage = new LoginPage(driver);
 
-		if (!driver.findElements(By.cssSelector("#kc-registration a")).isEmpty()) {
+		if (driver.findElements(By.cssSelector("#kc-registration a")).isEmpty()) {
+			LogUtil.step("Keycloak registration link was not shown. Partner admin registration was skipped.");
+		} else {
 			registerPage = loginPage.clickRegisterButton();
 			assertTrue(loginPage.isLoginPageDisplayed(), GlobalConstants.isLoginPageDisplayed);
 

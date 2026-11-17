@@ -18,6 +18,10 @@ public class BiometricConfigurationTest extends BaseClass {
 
 	private static String biometricConfigName;
 
+	public static String getCreatedConfigurationName() {
+		return biometricConfigName;
+	}
+
 	public BiometricConfigurationTest() {
 		this.userid = GlobalConstants.PARTNER_ADMIN;
 		this.password = GlobalConstants.PARTNER_PASSWORD;

@@ -399,6 +399,28 @@ public class BiometricConfigurationPage extends BasePage {
 		return !isElementDisplayed(firstListRow);
 	}
 
+	public java.util.List<String> getVisibleConfigurationNames() {
+		java.util.List<WebElement> cells = driver.findElements(
+				By.cssSelector("tr[id^='bio_extractor_config_list_item_'] td:nth-child(1)"));
+		java.util.List<String> names = new java.util.ArrayList<>();
+		for (WebElement cell : cells) {
+			String text = cell.getText();
+			if (text != null && !text.trim().isEmpty()) {
+				names.add(text.trim());
+			}
+		}
+		return names;
+	}
+
+	public void filterByConfigurationName(String name) {
+		clickOnFilterButton();
+		enterConfigurationNameInFilter(name);
+		clickOnApplyFilterButton();
+		if (!isConfigurationNamePresentInList(name)) {
+			throw new IllegalStateException("Created configuration was not listed: " + name);
+		}
+	}
+
 	public String getFirstRowConfigurationName() {
 		if (!isElementDisplayed(firstConfigNameCell)) {
 			return "";
@@ -534,7 +556,7 @@ public class BiometricConfigurationPage extends BasePage {
 			return false;
 		}
 		int editableFields = driver.findElements(By.cssSelector(
-				"input:not([type='hidden']):not([disabled]), textarea:not([disabled]), select:not([disabled])"))
+				"[id^='view_bio_extractor'] input:not([type='hidden']):not([disabled]), [id^='view_bio_extractor'] textarea:not([disabled]), [id^='view_bio_extractor'] select:not([disabled])"))
 				.size();
 		return editableFields == 0 && isViewProviderNameDisplayed() && isViewConfigurationNameDisplayed();
 	}
@@ -544,12 +566,10 @@ public class BiometricConfigurationPage extends BasePage {
 	}
 
 	public boolean isViewBackButtonAlignedEnd() {
-		if (!isViewBackButtonDisplayed()) {
+		if (!isViewBackButtonDisplayed() || !isElementDisplayed(pageTitle)) {
 			return false;
 		}
-		WebElement parent = viewBackBtn.findElement(By.xpath("./.."));
-		String parentClass = parent.getAttribute("class");
-		return parentClass != null && parentClass.contains("justify-end");
+		return viewBackBtn.getLocation().getX() > pageTitle.getLocation().getX();
 	}
 
 	public void clickOnViewBackButton() {
@@ -563,8 +583,12 @@ public class BiometricConfigurationPage extends BasePage {
 
 	public boolean isViewPageUsableAtViewport(int width, int height) {
 		driver.manage().window().setSize(new org.openqa.selenium.Dimension(width, height));
-		return isViewPageLayoutStructured() && isViewProviderVersionDisplayed()
-				&& isViewCredentialDataFormatDisplayed();
+		if (!isViewPageLayoutStructured() || !isViewProviderVersionDisplayed()
+				|| !isViewCredentialDataFormatDisplayed() || !isElementDisplayed(pageTitle)) {
+			return false;
+		}
+		int titleRightEdge = pageTitle.getLocation().getX() + pageTitle.getSize().getWidth();
+		return titleRightEdge <= width;
 	}
 
 	public boolean isDeleteConfirmationPopupDisplayed() {

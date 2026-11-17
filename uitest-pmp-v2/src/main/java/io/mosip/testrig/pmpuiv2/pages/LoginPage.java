@@ -65,6 +65,8 @@ public class LoginPage extends BasePage {
 		assertLoginSucceeded(userName);
 	}
 
+	// Every suite login uses this. Leaving the Keycloak URL counts as success, and a
+	// credential error fails here instead of timing out on the next page.
 	public void assertLoginSucceeded(String userName) {
 		try {
 			new WebDriverWait(driver, Duration.ofSeconds(20)).until(d -> credentialErrorShown(d) || loginPageLeft(d));
