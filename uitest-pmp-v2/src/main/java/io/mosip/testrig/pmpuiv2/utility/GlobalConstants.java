@@ -1570,7 +1570,6 @@ public class GlobalConstants {
 	public static final String ONLINE_VERIFICATION_PARTNER_NOTIFICATION_LANGUAGE = "English";
 	public static final String AUTHENTICATION_PARTNER_ADDRESS = "authaddress";
 	public static final String AUTHENTICATION_PARTNER_CONTACT_NUMBER = "9797979797";
-	public static final String AUTHENTICATION_PARTNER_NOTIFICATION_LANGUAGE = "English";
 	public static final String MAP_BIOMETRIC_EXTRACTOR_PROVIDER_TITLE = "Map Biometric Extractor Provider";
 	public static final String MAP_BIOMETRIC_EXTRACTOR_PROVIDER_BANNER = "Note: For Online Verification Partners, mapping the policy to a Biometric Extractor Configuration and Credential Type is mandatory. If this mapping is not completed, the policy request cannot be approved. Please follow the steps on this page to complete the required mapping";
 	public static final String ONLINE_VERIFICATION_PARTNER_TYPE_CODE = "Online_Verification_Partner";
@@ -1586,6 +1585,8 @@ public class GlobalConstants {
 	public static final String MAP_BIOMETRIC_EXTRACTOR_REQUEST_COMMENT = "Map biometric extractor provider";
 	public static final String MAP_BIOMETRIC_EXTRACTOR_PROVIDER_PAGE_OPENED = "Map Biometric Extractor Provider page is displayed";
 	public static final String MAP_BIOMETRIC_EXTRACTOR_PROVIDER_BANNER_DISPLAYED = "Online Verification Partner mapping banner is displayed";
+	public static final String POLICY_REQUEST_BELONGS_TO_CREATED_PARTNER = "The policy request row is the partner created for this run";
+	public static final String BIOMETRIC_EXTRACTOR_CONFIGURATION_CREATED = "A Face biometric extractor configuration is created";
 	public static final String MAP_BIOMETRIC_EXTRACTOR_PROVIDER_PARTNER_ID_DISPLAYED = "Partner ID is shown on the mapping page";
 	public static final String MAP_BIOMETRIC_EXTRACTOR_PROVIDER_PARTNER_TYPE_DISPLAYED = "Partner Type is shown on the mapping page";
 	public static final String MAP_BIOMETRIC_EXTRACTOR_SAVE_DISABLED_WITHOUT_PROVIDER = "Save and Proceed stays disabled until a provider is selected";
@@ -1594,13 +1595,14 @@ public class GlobalConstants {
 	public static final String FACE_PROVIDER_NAME_POPULATED = "Provider name is filled from the selected configuration";
 	public static final String FACE_PROVIDER_VERSION_POPULATED = "Provider version is filled from the selected configuration";
 	public static final String IRIS_MODALITY_HAS_NO_PROVIDER_CONFIGURATION = "Iris has no active provider configuration";
-	public static final String SELECTED_MODALITY_IS_NOT_REPEATED = "A selected modality is not offered again";
+	public static final String SELECTED_MODALITY_IS_NOT_REPEATED = "A selected modality is not offered again and the remaining modalities are offered";
 	public static final String CLEAR_FORM_RESETS_MODALITY = "Clear Form resets the unsaved modality";
 	public static final String CANCEL_RETURNS_TO_POLICY_REQUEST_LIST = "Cancel returns to the policy request list";
 	public static final String POLICY_REQUEST_REMAINS_PENDING_FOR_APPROVAL = "The policy request remains pending for approval";
 	public static final String MAP_BIOMETRIC_EXTRACTOR_ACTION_AVAILABLE = "Map Biometric Extractor remains available before save";
 	public static final String SAVE_CONFIRMATION_DISPLAYED = "Save asks for confirmation before mapping";
 	public static final String SAVE_OPENS_MAP_CREDENTIAL_TYPE = "Save and Proceed opens Map Credential Type";
+	public static final String SELECT_BIOMETRIC_PROVIDER = "Select a Biometric Provider";
 	public static final String TITLE_BACK_RETURNS_TO_POLICY_REQUEST_LIST = "Back returns to the policy request list";
 	public static final String SAVED_MAPPING_DISABLES_MAP_ACTION = "A saved mapping disables Map Biometric Extractor";
 	public static final String AUTHENTICATION_PARTNER_HAS_NO_MAP_BIOMETRIC_ACTION = "Authentication Partner has no Map Biometric Extractor action";

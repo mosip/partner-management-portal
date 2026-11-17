@@ -32,3 +32,5 @@ DELETE FROM keymgr.key_alias where app_id = 'PARTNER' AND ref_id = 'pmpui-deacti
 DELETE FROM keymgr.key_alias where app_id = 'PARTNER' AND ref_id = 'pmpui-deactivateftm';
 DELETE FROM keymgr.key_alias where app_id = 'PARTNER' AND ref_id = 'pmpui-ovp';
 DELETE FROM keymgr.key_alias where app_id = 'PARTNER' AND ref_id = 'pmpui-ovp2';
+DELETE FROM keymgr.key_alias where app_id = 'PARTNER' AND ref_id like 'ovpmap%';
+DELETE FROM keymgr.key_alias where app_id = 'PARTNER' AND ref_id like 'authmap%';

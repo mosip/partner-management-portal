@@ -118,6 +118,9 @@ public class DashboardPage extends BasePage {
 	@FindBy(id = "admin_partner_certificate_list_icon")
 	private WebElement certificateTrustStore;
 
+	@FindBy(id = "dashboard_biometric_provider_configuration_card")
+	private WebElement biometricProviderConfigurationCard;
+
 	@FindBy(id = "dashboard_ftm_chip_provider_card_header")
 	private WebElement dashboardFtmChipproviderCardHeader;
 
@@ -402,6 +405,10 @@ public class DashboardPage extends BasePage {
 
 	public void clickOnCertificateTrustStore() {
 		clickOnElement(certificateTrustStore);
+	}
+
+	public void clickOnBiometricProviderConfiguration() {
+		clickOnElement(biometricProviderConfigurationCard);
 	}
 
 	public boolean isAuthenticationServiceInfoTextDisplayed() {

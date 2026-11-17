@@ -1,11 +1,16 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
 import java.time.Duration;
+import java.util.List;
+import java.util.NoSuchElementException;
 
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
 public class MapBiometricExtractorProviderPage extends BasePage {
 
@@ -21,32 +26,26 @@ public class MapBiometricExtractorProviderPage extends BasePage {
 	@FindBy(id = "map_bio_extractor_provider_modality_1_dropdown_btn")
 	private WebElement firstModalityDropdown;
 
-	@FindBy(id = "map_bio_extractor_provider_modality_1_option1")
-	private WebElement firstModalityOption1;
-
-	@FindBy(id = "map_bio_extractor_provider_modality_1_option2")
-	private WebElement firstModalityOption2;
-
-	@FindBy(id = "map_bio_extractor_provider_modality_1_option3")
-	private WebElement firstModalityOption3;
+	@FindBy(css = "[id^='map_bio_extractor_provider_modality_1_option']")
+	private List<WebElement> firstModalityOptions;
 
 	@FindBy(id = "map_bio_extractor_provider_modality_2_dropdown_btn")
 	private WebElement secondModalityDropdown;
 
-	@FindBy(id = "map_bio_extractor_provider_modality_2_option1")
-	private WebElement secondModalityOption1;
-
-	@FindBy(id = "map_bio_extractor_provider_modality_2_option2")
-	private WebElement secondModalityOption2;
-
-	@FindBy(id = "map_bio_extractor_provider_modality_2_option3")
-	private WebElement secondModalityOption3;
+	@FindBy(css = "[id^='map_bio_extractor_provider_modality_2_option']")
+	private List<WebElement> secondModalityOptions;
 
 	@FindBy(id = "map_bio_extractor_provider_config_1_dropdown_btn")
 	private WebElement firstProviderDropdown;
 
-	@FindBy(id = "map_bio_extractor_provider_config_1_option1")
-	private WebElement firstProviderOption;
+	@FindBy(id = "map_bio_extractor_provider_config_1_search_input")
+	private WebElement firstProviderSearchInput;
+
+	@FindBy(css = "[id^='map_bio_extractor_provider_config_1_option']")
+	private List<WebElement> firstProviderOptions;
+
+	@FindBy(css = "button[disabled] span")
+	private List<WebElement> readOnlyFieldValues;
 
 	@FindBy(id = "map_bio_extractor_provider_config_1_no_data_available")
 	private WebElement firstProviderNoData;
@@ -112,6 +111,20 @@ public class MapBiometricExtractorProviderPage extends BasePage {
 		return getTextFromLocator(mandatoryMappingBanner).trim();
 	}
 
+	public boolean isMandatoryMappingBannerDisplayed() {
+		return isElementDisplayed(mandatoryMappingBanner);
+	}
+
+	public boolean isReadOnlyValueDisplayed(String value) {
+		for (WebElement fieldValue : readOnlyFieldValues) {
+			String text = getTextFromLocator(fieldValue);
+			if (text != null && value.equals(text.trim())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public String getPartnerId() {
 		return getTextFromLocator(partnerIdValue).trim();
 	}
@@ -153,6 +166,7 @@ public class MapBiometricExtractorProviderPage extends BasePage {
 				return;
 			}
 		}
+		throw new NoSuchElementException("Biometric modality was not offered: " + modality);
 	}
 
 	public String getFirstModalityText() {
@@ -163,12 +177,33 @@ public class MapBiometricExtractorProviderPage extends BasePage {
 		clickOnElement(firstProviderDropdown);
 	}
 
-	public boolean isFirstProviderOptionDisplayed() {
-		return isElementDisplayedQuick(firstProviderOption, ABSENCE_CHECK_TIMEOUT);
+	public void selectFirstProvider() {
+		clickOnElement(firstProviderOptions.get(0));
 	}
 
-	public void selectFirstProvider() {
-		clickOnElement(firstProviderOption);
+	public void selectProviderConfiguration(String configurationName) {
+		clickOnElement(firstProviderDropdown);
+		enter(firstProviderSearchInput, configurationName);
+		for (WebElement option : firstProviderOptions) {
+			String optionText = getTextFromLocator(option);
+			if (optionText != null && configurationName.equalsIgnoreCase(optionText.trim())) {
+				clickOnElement(option);
+				return;
+			}
+		}
+		throw new NoSuchElementException("Biometric extractor configuration was not offered: " + configurationName);
+	}
+
+	public String waitUntilFirstProviderConfigurationSelected() {
+		return new WebDriverWait(driver, Duration.ofSeconds(20)).until(webDriver -> {
+			String configuration = getTextFromLocator(firstProviderDropdown);
+			if (configuration == null) {
+				return null;
+			}
+			configuration = configuration.trim();
+			return configuration.isEmpty()
+					|| GlobalConstants.SELECT_BIOMETRIC_PROVIDER.equals(configuration) ? null : configuration;
+		});
 	}
 
 	public boolean isFirstProviderListEmpty() {
@@ -220,14 +255,18 @@ public class MapBiometricExtractorProviderPage extends BasePage {
 	}
 
 	public boolean isMapBiometricExtractorActionDisabled() {
-		String className = new WebDriverWait(driver, Duration.ofSeconds(20)).until(webDriver -> {
-			if (!isElementDisplayedQuick(mapBiometricExtractorAction, ABSENCE_CHECK_TIMEOUT)) {
-				return null;
-			}
-			String value = mapBiometricExtractorAction.getAttribute("class");
-			return value != null && value.contains("pointer-events-none") ? value : null;
-		});
-		return className.contains("pointer-events-none");
+		try {
+			new WebDriverWait(driver, Duration.ofSeconds(20)).until(webDriver -> {
+				if (!isElementDisplayedQuick(mapBiometricExtractorAction, ABSENCE_CHECK_TIMEOUT)) {
+					return null;
+				}
+				String value = mapBiometricExtractorAction.getAttribute("class");
+				return value != null && value.contains("pointer-events-none") ? value : null;
+			});
+			return true;
+		} catch (TimeoutException timeout) {
+			return false;
+		}
 	}
 
 	public void openMapBiometricExtractorAction() {
@@ -238,11 +277,8 @@ public class MapBiometricExtractorProviderPage extends BasePage {
 		return getTextFromLocator(firstPolicyRequestRow).trim();
 	}
 
-	private WebElement[] modalityOptions(int row) {
-		if (row == 1) {
-			return new WebElement[] { firstModalityOption1, firstModalityOption2, firstModalityOption3 };
-		}
-		return new WebElement[] { secondModalityOption1, secondModalityOption2, secondModalityOption3 };
+	private List<WebElement> modalityOptions(int row) {
+		return row == 1 ? firstModalityOptions : secondModalityOptions;
 	}
 
 	private boolean optionShowsModality(WebElement option, String modality) {

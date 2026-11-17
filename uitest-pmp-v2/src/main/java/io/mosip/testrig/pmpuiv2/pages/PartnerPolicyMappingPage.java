@@ -1075,6 +1075,24 @@ public class PartnerPolicyMappingPage extends BasePage {
 		enter(requestPoliciesPolicyNameSearchInput, value);
 	}
 
+	public void selectRequestPolicyByName(String policyName) {
+		searchPolicyNameInDropdown(policyName);
+		new org.openqa.selenium.support.ui.WebDriverWait(driver, java.time.Duration.ofSeconds(20)).until(webDriver -> {
+			if (!isElementDisplayedQuick(requestPoliciesPolicyNameOption1, ABSENCE_CHECK_TIMEOUT)) {
+				return null;
+			}
+			String option = getTextFromLocator(requestPoliciesPolicyNameOption1);
+			if (option == null) {
+				return null;
+			}
+			String policyLabel = option.split("\\R", 2)[0].trim();
+			String normalized = option.replaceAll("\\s+", " ").trim();
+			return policyName.equals(policyLabel) || normalized.equals(policyName)
+					|| normalized.startsWith(policyName + " ") ? policyName : null;
+		});
+		clickOnElement(requestPoliciesPolicyNameOption1);
+	}
+
 	public boolean isRequestPoliciesFormClearButtonDisplayed() {
 		return isElementDisplayed(requestPoliciesFormClearButton);
 	}
