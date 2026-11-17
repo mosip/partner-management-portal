@@ -18,6 +18,7 @@ import org.json.JSONObject;
 import io.mosip.testrig.pmpuiv2.authentication.fw.util.RestClient;
 import io.mosip.testrig.pmpuiv2.dbaccess.DBManager;
 import io.mosip.testrig.pmpuiv2.kernel.util.ConfigManager;
+import io.mosip.testrig.pmpuiv2.kernel.util.KeycloakUserManager;
 import io.mosip.testrig.pmpuiv2.utility.BaseTestCaseFunc;
 import io.mosip.testrig.pmpuiv2.utility.TestRunner;
 import io.restassured.http.ContentType;
@@ -133,6 +134,8 @@ public class AdminTestUtil extends BaseTestCaseFunc {
 			DBManager.executeDBQueries(ConfigManager.getIdaDbUrl(), ConfigManager.getMasterDbUser(),
 					ConfigManager.getMasterDbPass(), ConfigManager.getIDADBSchema(),
 					TestRunner.getResourcePath() + "/" + "config/partnerUiv2DataDeleteQueriesForIDA.txt");
+			KeycloakUserManager.removeUser();
+//  	    KeycloakUserManager.createUsers();
 //    		BaseTestCaseFunc.DefinePolicyGroup();
 //			BaseTestCaseFunc.DefinePolicy();
 //			BaseTestCaseFunc.CreateAdminPartner();
