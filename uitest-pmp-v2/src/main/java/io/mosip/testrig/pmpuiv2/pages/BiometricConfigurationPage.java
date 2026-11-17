@@ -612,7 +612,14 @@ public class BiometricConfigurationPage extends BasePage {
 		if (!isElementDisplayedQuick(icon, Duration.ofSeconds(10))) {
 			throw new IllegalStateException("Sort icon was not displayed: " + iconId);
 		}
-		click(icon);
+		// The icon is an svg. A covered native click falls back to element.click(),
+		// and Chrome reports that an svg has no click function. Dispatch the event
+		// on the node looked up by id so the React handler still runs.
+		((JavascriptExecutor) driver).executeScript(
+				"const icon = document.getElementById(arguments[0]);"
+						+ "if (!icon) { throw new Error('Sort icon was not found: ' + arguments[0]); }"
+						+ "icon.dispatchEvent(new MouseEvent('click', {bubbles: true, cancelable: true, view: window}));",
+				iconId);
 	}
 
 	private static String xpathLiteral(String value) {
