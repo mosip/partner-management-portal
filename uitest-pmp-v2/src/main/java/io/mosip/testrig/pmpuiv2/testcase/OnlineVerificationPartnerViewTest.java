@@ -21,7 +21,6 @@ import org.testng.annotations.Test;
 import io.mosip.testrig.pmpuiv2.pages.DashboardPage;
 import io.mosip.testrig.pmpuiv2.pages.MispPartnerPage;
 import io.mosip.testrig.pmpuiv2.pages.PartnerAdminPage;
-import io.mosip.testrig.pmpuiv2.pages.PartnerCertificatePage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
@@ -54,7 +53,7 @@ public class OnlineVerificationPartnerViewTest extends BaseClass {
 		emailAddress = "ovpnc" + suffix + "@test.com";
 		lengthyEmailAddress = "ovpln" + suffix + "@" + "a".repeat(30) + ".example.com";
 
-		uploadAuthTrustCertificates();
+		OnlineVerificationPartnerCertificateSteps.uploadAuthTrustCertificates(driver);
 		MispPartnerPage mispPartnerPage = navigateToCreatePartnerPage();
 		lengthyPhoneNumber = phoneOfMaxLength(mispPartnerPage);
 		createPartner(mispPartnerPage, partnerWithoutCertificateId, organisationName, phoneNumber, emailAddress);
@@ -381,35 +380,8 @@ public class OnlineVerificationPartnerViewTest extends BaseClass {
 		return "9".repeat(maxLength);
 	}
 
-	private void uploadAuthTrustCertificates() {
-		DashboardPage dashboardPage = new DashboardPage(driver);
-		PartnerCertificatePage partnerCertificatePage = new PartnerCertificatePage(driver);
-		dashboardPage.clickOnCertificateTrustStore();
-		partnerCertificatePage.clickOnRootUploadTrustCertificateButtonInAdmin();
-		partnerCertificatePage.clickOnpartnerDomainSelectorDropdown();
-		partnerCertificatePage.clickOnPartnerDomainSelectorDropdownOptionAuth();
-		partnerCertificatePage.uploadCertificateRootCa();
-		partnerCertificatePage.clickonSubmitButtonForAdmin();
-		partnerCertificatePage.clickOnGoBackButton();
-		partnerCertificatePage.clickOnIntermediateCACertTab();
-		partnerCertificatePage.clickOnIntermediateUploadTrustCertificateButtonInAdmin();
-		partnerCertificatePage.clickOnpartnerDomainSelectorDropdown();
-		partnerCertificatePage.clickOnPartnerDomainSelectorDropdownOptionAuth();
-		partnerCertificatePage.uploadCertificateSubCa();
-		partnerCertificatePage.clickonSubmitButtonForAdmin();
-		partnerCertificatePage.clickOnHomeButton();
-	}
-
 	private void uploadPartnerCertificate(MispPartnerPage mispPartnerPage) {
-		PartnerCertificatePage partnerCertificatePage = new PartnerCertificatePage(driver);
-		mispPartnerPage.clickOnUploadPartnerCertificateButton();
-		assertTrue(partnerCertificatePage.isMispPartnerCertificatePopupDisplayed(),
-				GlobalConstants.isPartnerCertificatePageDisplayed);
-		partnerCertificatePage.uploadCertificate();
-		partnerCertificatePage.clickOnSubmitButton();
-		assertTrue(partnerCertificatePage.isCertificateUploadSuccessMessageDisplayed(),
-				GlobalConstants.isCertificateUploadSuccessMessageDisplayed);
-		partnerCertificatePage.clickOnCloseButton();
+		OnlineVerificationPartnerCertificateSteps.uploadPartnerCertificate(driver, mispPartnerPage);
 		assertTrue(new PartnerAdminPage(driver).isPartnerListLoaded(), GlobalConstants.isPartnerListLoaded);
 	}
 
