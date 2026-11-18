@@ -118,6 +118,9 @@ public class DashboardPage extends BasePage {
 	@FindBy(id = "admin_partner_certificate_list_icon")
 	private WebElement certificateTrustStore;
 
+	@FindBy(id = "dashboard_biometric_provider_configuration_card")
+	private WebElement biometricProviderConfigurationCard;
+
 	@FindBy(id = "dashboard_ftm_chip_provider_card_header")
 	private WebElement dashboardFtmChipproviderCardHeader;
 
@@ -404,6 +407,10 @@ public class DashboardPage extends BasePage {
 		clickOnElement(certificateTrustStore);
 	}
 
+	public void clickOnBiometricProviderConfiguration() {
+		clickOnElement(biometricProviderConfigurationCard);
+	}
+
 	public boolean isAuthenticationServiceInfoTextDisplayed() {
 		return isElementEnabled(authenticationServiceInfoText);
 	}
@@ -481,6 +488,14 @@ public class DashboardPage extends BasePage {
 
 	public boolean isPartnersDisplayed() {
 		return isElementDisplayed(partners);
+	}
+
+	public boolean isPartnerAdminCardDisplayed() {
+		return isElementDisplayedQuick(partners, TERMS_AND_CONDITIONS_TIMEOUT);
+	}
+
+	public boolean isPartnerAdminSideNavDisplayed() {
+		return isElementDisplayedQuick(partnerOfHamburger, TERMS_AND_CONDITIONS_TIMEOUT);
 	}
 
 	public void clickOnPartners() {

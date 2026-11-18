@@ -54,7 +54,7 @@ public class OnlineVerificationPartnerViewTest extends BaseClass {
 		emailAddress = "ovpnc" + suffix + "@test.com";
 		lengthyEmailAddress = "ovpln" + suffix + "@" + "a".repeat(30) + ".example.com";
 
-		uploadAuthTrustCertificates();
+		new PartnerCertificatePage(driver).uploadAuthTrustCertificates();
 		MispPartnerPage mispPartnerPage = navigateToCreatePartnerPage();
 		lengthyPhoneNumber = phoneOfMaxLength(mispPartnerPage);
 		createPartner(mispPartnerPage, partnerWithoutCertificateId, organisationName, phoneNumber, emailAddress);
@@ -381,35 +381,8 @@ public class OnlineVerificationPartnerViewTest extends BaseClass {
 		return "9".repeat(maxLength);
 	}
 
-	private void uploadAuthTrustCertificates() {
-		DashboardPage dashboardPage = new DashboardPage(driver);
-		PartnerCertificatePage partnerCertificatePage = new PartnerCertificatePage(driver);
-		dashboardPage.clickOnCertificateTrustStore();
-		partnerCertificatePage.clickOnRootUploadTrustCertificateButtonInAdmin();
-		partnerCertificatePage.clickOnpartnerDomainSelectorDropdown();
-		partnerCertificatePage.clickOnPartnerDomainSelectorDropdownOptionAuth();
-		partnerCertificatePage.uploadCertificateRootCa();
-		partnerCertificatePage.clickonSubmitButtonForAdmin();
-		partnerCertificatePage.clickOnGoBackButton();
-		partnerCertificatePage.clickOnIntermediateCACertTab();
-		partnerCertificatePage.clickOnIntermediateUploadTrustCertificateButtonInAdmin();
-		partnerCertificatePage.clickOnpartnerDomainSelectorDropdown();
-		partnerCertificatePage.clickOnPartnerDomainSelectorDropdownOptionAuth();
-		partnerCertificatePage.uploadCertificateSubCa();
-		partnerCertificatePage.clickonSubmitButtonForAdmin();
-		partnerCertificatePage.clickOnHomeButton();
-	}
-
 	private void uploadPartnerCertificate(MispPartnerPage mispPartnerPage) {
-		PartnerCertificatePage partnerCertificatePage = new PartnerCertificatePage(driver);
-		mispPartnerPage.clickOnUploadPartnerCertificateButton();
-		assertTrue(partnerCertificatePage.isMispPartnerCertificatePopupDisplayed(),
-				GlobalConstants.isPartnerCertificatePageDisplayed);
-		partnerCertificatePage.uploadCertificate();
-		partnerCertificatePage.clickOnSubmitButton();
-		assertTrue(partnerCertificatePage.isCertificateUploadSuccessMessageDisplayed(),
-				GlobalConstants.isCertificateUploadSuccessMessageDisplayed);
-		partnerCertificatePage.clickOnCloseButton();
+		new PartnerCertificatePage(driver).uploadPartnerCertificate(mispPartnerPage);
 		assertTrue(new PartnerAdminPage(driver).isPartnerListLoaded(), GlobalConstants.isPartnerListLoaded);
 	}
 

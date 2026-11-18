@@ -142,34 +142,51 @@ public class KeycloakUserManager extends BaseTestCaseFunc {
 		user.setUsername(userid);
 		user.setFirstName(userid);
 		user.setLastName(userid);
-		user.setEmail("automation" + moduleSpecificUser + "@automationlabs.com");
+		user.setEmail("automation" + userid + "@automationlabs.com");
 		if (map != null)
 			user.setAttributes(map);
 		RealmResource realmResource = null;
 		realmResource = keycloakInstance.realm(ConfigManager.getIAMRealmId());
 		UsersResource usersRessource = realmResource.users();
+		String userId;
 		try (Response response = usersRessource.create(user)) {
-			String userId = CreatedResponseUtil.getCreatedId(response);
-			CredentialRepresentation passwordCred = new CredentialRepresentation();
-			passwordCred.setTemporary(false);
-			passwordCred.setType(CredentialRepresentation.PASSWORD);
-			passwordCred.setValue(pwd);
-			UserResource userResource = usersRessource.get(userId);
-			userResource.resetPassword(passwordCred);
-			List<RoleRepresentation> allRoles = realmResource.roles().list();
-			List<RoleRepresentation> availableRoles = new ArrayList<>();
-			List<String> toBeAssignedRoles = List.of(propsKernel.getProperty(rolenum).split(","));
-			for (String role : toBeAssignedRoles) {
-				if (allRoles.stream().anyMatch((r -> r.getName().equalsIgnoreCase(role)))) {
-					if (allRoles.stream().filter(r -> r.getName().equals(role)).findFirst().isPresent())
-						availableRoles.add(allRoles.stream().filter(r -> r.getName().equals(role)).findFirst().get());
+			if (response.getStatus() == 409) {
+				List<UserRepresentation> existing = usersRessource.search(userid, true);
+				if (existing.isEmpty()) {
+					throw new IllegalStateException("User already exists but was not found: " + userid);
 				}
-				userResource.roles().realmLevel() //
-						.add((availableRoles.isEmpty() ? allRoles : availableRoles));
+				userId = existing.get(0).getId();
+			} else {
+				userId = CreatedResponseUtil.getCreatedId(response);
+				logger.info("User created with userId: " + userId);
 			}
-		} catch (Exception e) {
-			logger.error(e.getMessage());
 		}
+		CredentialRepresentation passwordCred = new CredentialRepresentation();
+		passwordCred.setTemporary(false);
+		passwordCred.setType(CredentialRepresentation.PASSWORD);
+		passwordCred.setValue(pwd);
+		UserResource userResource = usersRessource.get(userId);
+		userResource.resetPassword(passwordCred);
+		String rolesProperty = propsKernel.getProperty(rolenum);
+		if (rolesProperty == null) {
+			throw new IllegalStateException("Roles are not configured for " + rolenum);
+		}
+		List<RoleRepresentation> allRoles = realmResource.roles().list();
+		List<RoleRepresentation> availableRoles = new ArrayList<>();
+		for (String role : rolesProperty.split(",")) {
+			String roleName = role.trim();
+			RoleRepresentation match = allRoles.stream().filter(r -> r.getName().equalsIgnoreCase(roleName))
+					.findFirst().orElse(null);
+			if (match == null) {
+				throw new IllegalStateException("Role not found: " + roleName);
+			}
+			availableRoles.add(match);
+		}
+		List<RoleRepresentation> currentRoles = userResource.roles().realmLevel().listAll();
+		if (!currentRoles.isEmpty()) {
+			userResource.roles().realmLevel().remove(currentRoles);
+		}
+		userResource.roles().realmLevel().add(availableRoles);
 	}
 
 	public static void removeUser() {

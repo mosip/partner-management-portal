@@ -1,8 +1,11 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
+import java.time.Duration;
+
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
 
@@ -58,6 +61,9 @@ public class PartnerPolicyMappingPage extends BasePage {
 
 	@FindBy(id = "partner_list_view1")
 	private WebElement partnerListViewElipsisButton;
+
+	@FindBy(css = "[id^='policy_requests_ovp_map_biometric_extractor_']")
+	private WebElement mapBiometricExtractorAction;
 
 	@FindBy(xpath = "//p[contains(text(), 'Do you want to Approve/Reject the Policy')]")
 	private WebElement confirmationPopup;
@@ -388,6 +394,13 @@ public class PartnerPolicyMappingPage extends BasePage {
 		return isElementDisplayed(partnerPolicyLinkingTitle);
 	}
 
+	public String waitUntilPageTitle(String expectedTitle) {
+		return new WebDriverWait(driver, Duration.ofSeconds(20)).until(webDriver -> {
+			String title = getTextFromLocator(partnerPolicyLinkingTitle);
+			return expectedTitle.equals(title == null ? "" : title.trim()) ? title.trim() : null;
+		});
+	}
+
 	public boolean isPartnerPolicyLinkingSubTitleDisplayed() {
 		return isElementDisplayed(partnerPolicyLinkingSubTitle);
 	}
@@ -466,6 +479,49 @@ public class PartnerPolicyMappingPage extends BasePage {
 
 	public void clickOnPartnerListViewElipsisButton() {
 		clickOnElement(partnerListViewElipsisButton);
+	}
+
+	public void filterPolicyRequestsByPartnerId(String partnerId) {
+		clickOnFilterButton();
+		enterPartnerIdInFilter(partnerId);
+		clickOnApplyFilterButton();
+	}
+
+	public String waitUntilFirstPolicyRequestRowContains(String partnerId) {
+		return new WebDriverWait(driver, Duration.ofSeconds(20)).until(webDriver -> {
+			String row = getTextFromLocator(approvedPolicy);
+			if (row == null || !row.contains(partnerId)) {
+				return null;
+			}
+			return row.trim();
+		});
+	}
+
+	public void openFirstPolicyRequestAction() {
+		clickOnElement(partnerListViewElipsisButton);
+	}
+
+	public boolean isMapBiometricExtractorActionDisplayed() {
+		return isElementDisplayedQuick(mapBiometricExtractorAction, ABSENCE_CHECK_TIMEOUT);
+	}
+
+	public boolean isMapBiometricExtractorActionDisabled() {
+		try {
+			new WebDriverWait(driver, Duration.ofSeconds(20)).until(webDriver -> {
+				if (!isElementDisplayedQuick(mapBiometricExtractorAction, ABSENCE_CHECK_TIMEOUT)) {
+					return null;
+				}
+				String value = mapBiometricExtractorAction.getAttribute("class");
+				return value != null && value.contains("pointer-events-none") ? value : null;
+			});
+			return true;
+		} catch (TimeoutException timeout) {
+			return false;
+		}
+	}
+
+	public void openMapBiometricExtractorAction() {
+		clickOnElement(mapBiometricExtractorAction);
 	}
 
 	public void clickOnApproveOrRejectButton() {
@@ -1073,6 +1129,24 @@ public class PartnerPolicyMappingPage extends BasePage {
 		clickOnElement(requestPoliciesPolicyNameDropdown);
 		clearTextBox(requestPoliciesPolicyNameSearchInput);
 		enter(requestPoliciesPolicyNameSearchInput, value);
+	}
+
+	public void selectRequestPolicyByName(String policyName) {
+		searchPolicyNameInDropdown(policyName);
+		new WebDriverWait(driver, Duration.ofSeconds(20)).until(webDriver -> {
+			if (!isElementDisplayedQuick(requestPoliciesPolicyNameOption1, ABSENCE_CHECK_TIMEOUT)) {
+				return null;
+			}
+			String option = getTextFromLocator(requestPoliciesPolicyNameOption1);
+			if (option == null) {
+				return null;
+			}
+			String policyLabel = option.split("\\R", 2)[0].trim();
+			String normalized = option.replaceAll("\\s+", " ").trim();
+			return policyName.equals(policyLabel) || normalized.equals(policyName)
+					|| normalized.startsWith(policyName + " ") ? policyName : null;
+		});
+		clickOnElement(requestPoliciesPolicyNameOption1);
 	}
 
 	public boolean isRequestPoliciesFormClearButtonDisplayed() {
