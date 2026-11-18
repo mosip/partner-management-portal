@@ -35,7 +35,7 @@ public class OnlineVerificationPartnerMapBiometricExtractorTest extends BaseClas
 		providerName = GlobalConstants.MAP_BIOMETRIC_EXTRACTOR_PROVIDER_NAME;
 
 		createFaceConfiguration(configurationName, providerName);
-		OnlineVerificationPartnerCertificateSteps.uploadAuthTrustCertificates(driver);
+		new PartnerCertificatePage(driver).uploadAuthTrustCertificates();
 		publishAuthPolicy();
 		MispPartnerPage mispPartnerPage = navigateToCreatePartnerPage();
 		createPartner(mispPartnerPage, GlobalConstants.ONLINE_VERIFICATION_PARTNER, partnerId,
@@ -45,7 +45,7 @@ public class OnlineVerificationPartnerMapBiometricExtractorTest extends BaseClas
 		mispPartnerPage.clickOnCreatePartnerSubmitButton();
 		assertTrue(mispPartnerPage.isCreatePartnerSuccessMsgDisplayed(),
 				GlobalConstants.isCreatePartnerSuccessMsgDisplayed);
-		OnlineVerificationPartnerCertificateSteps.uploadPartnerCertificate(driver, mispPartnerPage);
+		new PartnerCertificatePage(driver).uploadPartnerCertificate(mispPartnerPage);
 
 		DashboardPage dashboardPage = new PartnerCertificatePage(driver).clickOnHomeButton();
 		dashboardPage.clickOnPartnerPolicyMappingTab();
@@ -81,7 +81,7 @@ public class OnlineVerificationPartnerMapBiometricExtractorTest extends BaseClas
 				GlobalConstants.BIOMETRIC_MODALITY_OPTIONS_DISPLAYED);
 	}
 
-	@Test(priority = 3, description = "Face lists an active biometric extractor provider configuration", dependsOnMethods = "openBiometricExtractorMappingForOnlineVerificationPartner")
+	@Test(priority = 3, description = "Face lists an active biometric extractor provider configuration", dependsOnMethods = "biometricModalityListsFaceIrisAndFinger")
 	public void faceModalityListsActiveProviderConfiguration() {
 		MapBiometricExtractorProviderPage mapPage = openSavedPolicyRequestMapPage();
 		mapPage.selectModality(1, GlobalConstants.BIOMETRIC_MODALITY_FACE);
@@ -93,7 +93,7 @@ public class OnlineVerificationPartnerMapBiometricExtractorTest extends BaseClas
 				GlobalConstants.FACE_PROVIDER_VERSION_POPULATED);
 	}
 
-	@Test(priority = 4, description = "Clear Form resets an unsaved modality", dependsOnMethods = "openBiometricExtractorMappingForOnlineVerificationPartner")
+	@Test(priority = 4, description = "Clear Form resets an unsaved modality", dependsOnMethods = "faceModalityListsActiveProviderConfiguration")
 	public void clearFormResetsUnsavedModality() {
 		MapBiometricExtractorProviderPage mapPage = openSavedPolicyRequestMapPage();
 		mapPage.selectModality(1, GlobalConstants.BIOMETRIC_MODALITY_FACE);
@@ -102,7 +102,7 @@ public class OnlineVerificationPartnerMapBiometricExtractorTest extends BaseClas
 				GlobalConstants.CLEAR_FORM_RESETS_MODALITY);
 	}
 
-	@Test(priority = 5, description = "A selected modality is not offered on the next row", dependsOnMethods = "openBiometricExtractorMappingForOnlineVerificationPartner")
+	@Test(priority = 5, description = "A selected modality is not offered on the next row", dependsOnMethods = "clearFormResetsUnsavedModality")
 	public void selectedModalityIsNotOfferedAgain() {
 		MapBiometricExtractorProviderPage mapPage = openSavedPolicyRequestMapPage();
 		mapPage.clickClearForm();
@@ -115,7 +115,7 @@ public class OnlineVerificationPartnerMapBiometricExtractorTest extends BaseClas
 				GlobalConstants.SELECTED_MODALITY_IS_NOT_REPEATED);
 	}
 
-	@Test(priority = 6, description = "Cancel returns to the policy request list", dependsOnMethods = "openBiometricExtractorMappingForOnlineVerificationPartner")
+	@Test(priority = 6, description = "Cancel returns to the policy request list", dependsOnMethods = "selectedModalityIsNotOfferedAgain")
 	public void cancelReturnsToPolicyRequestList() {
 		MapBiometricExtractorProviderPage mapPage = openSavedPolicyRequestMapPage();
 		mapPage.clickClearForm();
@@ -133,7 +133,7 @@ public class OnlineVerificationPartnerMapBiometricExtractorTest extends BaseClas
 				GlobalConstants.MAP_BIOMETRIC_EXTRACTOR_ACTION_AVAILABLE);
 	}
 
-	@Test(priority = 7, description = "Save and Proceed opens credential type mapping", dependsOnMethods = "openBiometricExtractorMappingForOnlineVerificationPartner")
+	@Test(priority = 7, description = "Save and Proceed opens credential type mapping", dependsOnMethods = "cancelReturnsToPolicyRequestList")
 	public void saveBiometricExtractorMappingOpensCredentialType() {
 		MapBiometricExtractorProviderPage mapPage = openSavedPolicyRequestMapPage();
 		mapPage.selectModality(1, GlobalConstants.BIOMETRIC_MODALITY_FACE);
@@ -153,7 +153,7 @@ public class OnlineVerificationPartnerMapBiometricExtractorTest extends BaseClas
 				GlobalConstants.SAVED_MAPPING_DISABLES_MAP_ACTION);
 	}
 
-	@Test(priority = 8, description = "An Authentication Partner policy request has no biometric extractor action", dependsOnMethods = "openBiometricExtractorMappingForOnlineVerificationPartner")
+	@Test(priority = 8, description = "An Authentication Partner policy request has no biometric extractor action", dependsOnMethods = "saveBiometricExtractorMappingOpensCredentialType")
 	public void authenticationPartnerHasNoBiometricExtractorAction() {
 		String authPartnerId = GlobalConstants.MAP_BIOMETRIC_EXTRACTOR_AUTH_PARTNER_ID;
 		DashboardPage dashboardPage = new DashboardPage(driver);

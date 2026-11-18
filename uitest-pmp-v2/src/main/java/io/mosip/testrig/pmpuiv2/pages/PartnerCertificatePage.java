@@ -1,5 +1,7 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
+import static org.testng.Assert.assertTrue;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
@@ -1446,5 +1448,32 @@ public class PartnerCertificatePage extends BasePage {
 
 	private static final By VALID_TO_COLUMN_CELLS = By.xpath("//tr[starts-with(@id,'certificate_list_item')]/td[6]");
 
+	public void uploadAuthTrustCertificates() {
+		DashboardPage dashboardPage = new DashboardPage(driver);
+		dashboardPage.clickOnCertificateTrustStore();
+		clickOnRootUploadTrustCertificateButtonInAdmin();
+		clickOnpartnerDomainSelectorDropdown();
+		clickOnPartnerDomainSelectorDropdownOptionAuth();
+		uploadCertificateRootCa();
+		clickonSubmitButtonForAdmin();
+		clickOnGoBackButton();
+		clickOnIntermediateCACertTab();
+		clickOnIntermediateUploadTrustCertificateButtonInAdmin();
+		clickOnpartnerDomainSelectorDropdown();
+		clickOnPartnerDomainSelectorDropdownOptionAuth();
+		uploadCertificateSubCa();
+		clickonSubmitButtonForAdmin();
+		clickOnHomeButton();
+	}
+
+	public void uploadPartnerCertificate(MispPartnerPage mispPartnerPage) {
+		mispPartnerPage.clickOnUploadPartnerCertificateButton();
+		assertTrue(isMispPartnerCertificatePopupDisplayed(), GlobalConstants.isPartnerCertificatePageDisplayed);
+		uploadCertificate();
+		clickOnSubmitButton();
+		assertTrue(isCertificateUploadSuccessMessageDisplayed(),
+				GlobalConstants.isCertificateUploadSuccessMessageDisplayed);
+		clickOnCloseButton();
+	}
 
 }
