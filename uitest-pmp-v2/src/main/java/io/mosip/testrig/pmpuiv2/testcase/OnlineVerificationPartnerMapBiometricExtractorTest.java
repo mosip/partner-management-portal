@@ -29,18 +29,17 @@ public class OnlineVerificationPartnerMapBiometricExtractorTest extends BaseClas
 
 	@Test(priority = 1, description = "Open Map Biometric Extractor Provider for an Online Verification Partner policy request")
 	public void openBiometricExtractorMappingForOnlineVerificationPartner() {
-		String suffix = BaseClass.data;
-		partnerId = "ovpmap" + suffix;
-		policyName = "ovppolicy" + suffix;
-		configurationName = "facecfg" + suffix;
-		providerName = "faceprov" + suffix;
+		partnerId = GlobalConstants.MAP_BIOMETRIC_EXTRACTOR_PARTNER_ID;
+		policyName = GlobalConstants.MAP_BIOMETRIC_EXTRACTOR_POLICY_NAME;
+		configurationName = GlobalConstants.MAP_BIOMETRIC_EXTRACTOR_CONFIG_NAME;
+		providerName = GlobalConstants.MAP_BIOMETRIC_EXTRACTOR_PROVIDER_NAME;
 
 		createFaceConfiguration(configurationName, providerName);
 		OnlineVerificationPartnerCertificateSteps.uploadAuthTrustCertificates(driver);
-		publishAuthPolicy(suffix);
+		publishAuthPolicy();
 		MispPartnerPage mispPartnerPage = navigateToCreatePartnerPage();
 		createPartner(mispPartnerPage, GlobalConstants.ONLINE_VERIFICATION_PARTNER, partnerId,
-				"ovpmap" + suffix + "@test.com", GlobalConstants.ONLINE_VERIFICATION_PARTNER_ADDRESS,
+				GlobalConstants.MAP_BIOMETRIC_EXTRACTOR_PARTNER_EMAIL, GlobalConstants.ONLINE_VERIFICATION_PARTNER_ADDRESS,
 				GlobalConstants.ONLINE_VERIFICATION_PARTNER_CONTACT_NUMBER,
 				GlobalConstants.ONLINE_VERIFICATION_PARTNER_NOTIFICATION_LANGUAGE);
 		mispPartnerPage.clickOnCreatePartnerSubmitButton();
@@ -156,7 +155,7 @@ public class OnlineVerificationPartnerMapBiometricExtractorTest extends BaseClas
 
 	@Test(priority = 8, description = "An Authentication Partner policy request has no biometric extractor action", dependsOnMethods = "openBiometricExtractorMappingForOnlineVerificationPartner")
 	public void authenticationPartnerHasNoBiometricExtractorAction() {
-		String authPartnerId = "authmap" + BaseClass.data;
+		String authPartnerId = GlobalConstants.MAP_BIOMETRIC_EXTRACTOR_AUTH_PARTNER_ID;
 		DashboardPage dashboardPage = new DashboardPage(driver);
 		dashboardPage.clickOnProfileDropdown();
 		LoginPage loginPage = dashboardPage.clickOnLogoutButton();
@@ -166,7 +165,7 @@ public class OnlineVerificationPartnerMapBiometricExtractorTest extends BaseClas
 		registerPage.enterOrganizationName(GlobalConstants.ORGANISATION_NAME);
 		registerPage.selectAuthenticationPartner();
 		registerPage.enterAddress(GlobalConstants.AUTHENTICATION_PARTNER_ADDRESS);
-		registerPage.enterEmail(authPartnerId + "@test.com");
+		registerPage.enterEmail(GlobalConstants.MAP_BIOMETRIC_EXTRACTOR_AUTH_PARTNER_EMAIL);
 		registerPage.enterPhone(GlobalConstants.AUTHENTICATION_PARTNER_CONTACT_NUMBER);
 		registerPage.selectNotificationLanguageDropdown();
 		registerPage.enterUsername(authPartnerId);
@@ -291,7 +290,7 @@ public class OnlineVerificationPartnerMapBiometricExtractorTest extends BaseClas
 		mispPartnerPage.enterUserName(partnerId);
 	}
 
-	private void publishAuthPolicy(String suffix) {
+	private void publishAuthPolicy() {
 		DashboardPage dashboardPage = new DashboardPage(driver);
 		PoliciesPage policiesPage = new PoliciesPage(driver);
 		AuthPolicyPage authPolicyPage = new AuthPolicyPage(driver);
@@ -299,15 +298,15 @@ public class OnlineVerificationPartnerMapBiometricExtractorTest extends BaseClas
 		policiesPage.clickOnAuthPolicyTab();
 		authPolicyPage.clickOnCreateAuthPolicyButton();
 		authPolicyPage.selectPolicyGroupDropdown(GlobalConstants.DEFAULT_POLICYGROUP);
-		authPolicyPage.enterPolicyName("ovppolicy" + suffix);
-		authPolicyPage.enterpolicyDescription("ovppolicy" + suffix);
+		authPolicyPage.enterPolicyName(GlobalConstants.MAP_BIOMETRIC_EXTRACTOR_POLICY_NAME);
+		authPolicyPage.enterpolicyDescription(GlobalConstants.MAP_BIOMETRIC_EXTRACTOR_POLICY_DESCRIPTION);
 		authPolicyPage.uploadPolicyData();
 		authPolicyPage.clickOnSaveAsDraftButton();
 		assertTrue(authPolicyPage.isPolicySavedAsDraftMessageDisplayed(),
 				GlobalConstants.isPolicySavedAsDraftMessageDisplayed);
 		authPolicyPage.clickOnGoBackButton();
 		authPolicyPage.clickOnFilterButton();
-		authPolicyPage.enterPolicyNameInFilter("ovppolicy" + suffix);
+		authPolicyPage.enterPolicyNameInFilter(GlobalConstants.MAP_BIOMETRIC_EXTRACTOR_POLICY_NAME);
 		authPolicyPage.clickOnApplyFilterButton();
 		authPolicyPage.clickOnActionButton();
 		authPolicyPage.clickOnPolicyPublishButton();

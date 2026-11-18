@@ -1570,6 +1570,14 @@ public class GlobalConstants {
 	public static final String ONLINE_VERIFICATION_PARTNER_NOTIFICATION_LANGUAGE = "English";
 	public static final String AUTHENTICATION_PARTNER_ADDRESS = "authaddress";
 	public static final String AUTHENTICATION_PARTNER_CONTACT_NUMBER = "9797979797";
+	public static final String MAP_BIOMETRIC_EXTRACTOR_PARTNER_ID = "pmpui-ovpmap";
+	public static final String MAP_BIOMETRIC_EXTRACTOR_PARTNER_EMAIL = "pmpui-ovpmap@test.com";
+	public static final String MAP_BIOMETRIC_EXTRACTOR_POLICY_NAME = "pmpui-ovppolicy";
+	public static final String MAP_BIOMETRIC_EXTRACTOR_POLICY_DESCRIPTION = "Online Verification Partner policy";
+	public static final String MAP_BIOMETRIC_EXTRACTOR_CONFIG_NAME = "pmpui-facecfg";
+	public static final String MAP_BIOMETRIC_EXTRACTOR_PROVIDER_NAME = "pmpui-faceprov";
+	public static final String MAP_BIOMETRIC_EXTRACTOR_AUTH_PARTNER_ID = "pmpui-authmap";
+	public static final String MAP_BIOMETRIC_EXTRACTOR_AUTH_PARTNER_EMAIL = "pmpui-authmap@test.com";
 	public static final String MAP_BIOMETRIC_EXTRACTOR_PROVIDER_TITLE = "Map Biometric Extractor Provider";
 	public static final String ONLINE_VERIFICATION_PARTNER_TYPE_CODE = "Online_Verification_Partner";
 	public static final String BIOMETRIC_MODALITY_FACE = "face";
