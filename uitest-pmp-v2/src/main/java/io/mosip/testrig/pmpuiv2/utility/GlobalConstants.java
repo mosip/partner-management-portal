@@ -1571,7 +1571,6 @@ public class GlobalConstants {
 	public static final String AUTHENTICATION_PARTNER_ADDRESS = "authaddress";
 	public static final String AUTHENTICATION_PARTNER_CONTACT_NUMBER = "9797979797";
 	public static final String MAP_BIOMETRIC_EXTRACTOR_PROVIDER_TITLE = "Map Biometric Extractor Provider";
-	public static final String MAP_BIOMETRIC_EXTRACTOR_PROVIDER_BANNER = "Note: For Online Verification Partners, mapping the policy to a Biometric Extractor Configuration and Credential Type is mandatory. If this mapping is not completed, the policy request cannot be approved. Please follow the steps on this page to complete the required mapping";
 	public static final String ONLINE_VERIFICATION_PARTNER_TYPE_CODE = "Online_Verification_Partner";
 	public static final String BIOMETRIC_MODALITY_FACE = "face";
 	public static final String BIOMETRIC_MODALITY_IRIS = "iris";

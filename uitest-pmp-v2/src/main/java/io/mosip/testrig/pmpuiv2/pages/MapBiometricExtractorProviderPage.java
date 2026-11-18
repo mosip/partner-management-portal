@@ -91,10 +91,6 @@ public class MapBiometricExtractorProviderPage extends BasePage {
 		return getTextFromLocator(pageTitle).trim();
 	}
 
-	public String getMandatoryMappingBanner() {
-		return getTextFromLocator(mandatoryMappingBanner).trim();
-	}
-
 	public boolean isMandatoryMappingBannerDisplayed() {
 		return isElementDisplayed(mandatoryMappingBanner);
 	}
