@@ -9,6 +9,7 @@ import org.testng.annotations.Test;
 
 import io.mosip.testrig.pmpuiv2.kernel.util.KeycloakUserManager;
 import io.mosip.testrig.pmpuiv2.pages.AuthPolicyPage;
+import io.mosip.testrig.pmpuiv2.pages.BioExtractorConfigurationPage;
 import io.mosip.testrig.pmpuiv2.pages.DashboardPage;
 import io.mosip.testrig.pmpuiv2.pages.LoginPage;
 import io.mosip.testrig.pmpuiv2.pages.MapBiometricExtractorProviderPage;
@@ -26,24 +27,27 @@ public class OnlineVerificationPartnerMapCredentialTypeTest extends BaseClass {
 	private static String partnerId;
 	private static String policyName;
 	private static String secondPolicyName;
-	private static String providerConfiguration;
+	private static String configurationName;
 
 	@Test(priority = 1, description = "Open Map Credential Type for an Online Verification Partner policy request")
 	public void openMapCredentialTypeForOnlineVerificationPartner() {
 		String suffix = BaseClass.data;
 		partnerId = "ovpcred" + suffix;
+		configurationName = "facecfg" + suffix;
 
-		uploadAuthTrustCertificates();
+		createFaceConfiguration(configurationName, "faceprov" + suffix);
+		OnlineVerificationPartnerCertificateSteps.uploadAuthTrustCertificates(driver);
 		publishAuthPolicy("ovpcredpol" + suffix);
 		MispPartnerPage mispPartnerPage = navigateToCreatePartnerPage();
 		createPartner(mispPartnerPage, partnerId, "ovpcred" + suffix + "@test.com");
 		mispPartnerPage.clickOnCreatePartnerSubmitButton();
 		assertTrue(mispPartnerPage.isCreatePartnerSuccessMsgDisplayed(),
 				GlobalConstants.isCreatePartnerSuccessMsgDisplayed);
-		uploadPartnerCertificate(mispPartnerPage);
+		OnlineVerificationPartnerCertificateSteps.uploadPartnerCertificate(driver, mispPartnerPage);
+		new PartnerCertificatePage(driver).clickOnHomeButton();
 
 		requestPolicy(partnerId, "ovpcredpol" + suffix);
-		providerConfiguration = saveFaceMapping();
+		saveFaceMapping();
 		MapCredentialTypePage mapPage = new MapCredentialTypePage(driver);
 		assertEquals(mapPage.waitUntilPageTitle(GlobalConstants.MAP_CREDENTIAL_TYPE_TITLE),
 				GlobalConstants.MAP_CREDENTIAL_TYPE_TITLE, GlobalConstants.MAP_CREDENTIAL_TYPE_PAGE_OPENED);
@@ -58,7 +62,7 @@ public class OnlineVerificationPartnerMapCredentialTypeTest extends BaseClass {
 		assertEquals(policyName, "ovpcredpol" + suffix, GlobalConstants.MAP_CREDENTIAL_TYPE_POLICY_NAME_DISPLAYED);
 		assertEquals(mapPage.waitUntilBiometricModalityPopulated(), GlobalConstants.BIOMETRIC_MODALITY_FACE,
 				GlobalConstants.MAP_CREDENTIAL_TYPE_MODALITY_DISPLAYED);
-		assertEquals(mapPage.waitUntilProviderConfigurationPopulated(), providerConfiguration,
+		assertEquals(mapPage.waitUntilProviderConfigurationPopulated(), configurationName,
 				GlobalConstants.MAP_CREDENTIAL_TYPE_PROVIDER_CONFIGURATION_DISPLAYED);
 		assertTrue(mapPage.areAutoPopulatedFieldsReadOnly(), GlobalConstants.MAP_CREDENTIAL_TYPE_FIELDS_READ_ONLY);
 		assertEquals(mapPage.getCredentialTypeText(), GlobalConstants.SELECT_CREDENTIAL_TYPE,
@@ -205,7 +209,7 @@ public class OnlineVerificationPartnerMapCredentialTypeTest extends BaseClass {
 	@Test(priority = 11, description = "A user without PARTNER_ADMIN stays on the main page", dependsOnMethods = "rejectSubmittedPolicyRequestShowsRejectedStatus")
 	public void userWithoutAdminRoleStaysOnMainPage() {
 		KeycloakUserManager.createUsers(GlobalConstants.MAP_CREDENTIAL_TYPE_NON_ADMIN_USER_ID,
-				GlobalConstants.PARTNER_PASSWORD, "roles.auth", null);
+				GlobalConstants.PARTNER_PASSWORD, "roles.ovpnoadmin", null);
 		DashboardPage dashboardPage = new DashboardPage(driver);
 		dashboardPage.clickOnProfileDropdown();
 		LoginPage loginPage = dashboardPage.clickOnLogoutButton();
@@ -257,17 +261,32 @@ public class OnlineVerificationPartnerMapCredentialTypeTest extends BaseClass {
 		policyMappingPage.clickOnRequestPoliciesFormSubmitButton();
 	}
 
-	private String saveFaceMapping() {
+	private void saveFaceMapping() {
 		MapBiometricExtractorProviderPage mapPage = new MapBiometricExtractorProviderPage(driver);
 		mapPage.waitUntilPageTitle(GlobalConstants.MAP_BIOMETRIC_EXTRACTOR_PROVIDER_TITLE);
 		mapPage.selectModality(1, GlobalConstants.BIOMETRIC_MODALITY_FACE);
-		mapPage.openFirstProviderDropdown();
-		mapPage.selectFirstProvider();
-		String configuration = mapPage.waitUntilFirstProviderConfigurationSelected();
+		mapPage.selectProviderConfiguration(configurationName);
+		assertEquals(mapPage.waitUntilFirstProviderConfigurationSelected(), configurationName,
+				GlobalConstants.FACE_PROVIDER_CONFIGURATION_DISPLAYED);
 		mapPage.clickSaveAndProceed();
 		assertTrue(mapPage.isSaveConfirmationDisplayed(), GlobalConstants.SAVE_CONFIRMATION_DISPLAYED);
 		mapPage.confirmSave();
-		return configuration;
+	}
+
+	private void createFaceConfiguration(String selectedConfigurationName, String providerName) {
+		new DashboardPage(driver).clickOnBiometricProviderConfiguration();
+		BioExtractorConfigurationPage configurationPage = new BioExtractorConfigurationPage(driver);
+		configurationPage.clickCreate();
+		configurationPage.enterConfigurationName(selectedConfigurationName);
+		configurationPage.enterProviderName(providerName);
+		configurationPage.enterProviderVersion(GlobalConstants.MOSIP_BIO_EXTRACTOR_PROVIDER_VERSION);
+		configurationPage.selectFaceModality();
+		configurationPage.selectRawDataFormat();
+		configurationPage.selectAttributeName();
+		configurationPage.clickSubmit();
+		assertTrue(configurationPage.isConfirmationDisplayed(),
+				GlobalConstants.BIOMETRIC_EXTRACTOR_CONFIGURATION_CREATED);
+		configurationPage.clickConfirmationHome();
 	}
 
 	private MispPartnerPage navigateToCreatePartnerPage() {
@@ -318,33 +337,4 @@ public class OnlineVerificationPartnerMapCredentialTypeTest extends BaseClass {
 		authPolicyPage.clickOnHomeButton();
 	}
 
-	private void uploadAuthTrustCertificates() {
-		DashboardPage dashboardPage = new DashboardPage(driver);
-		PartnerCertificatePage partnerCertificatePage = new PartnerCertificatePage(driver);
-		dashboardPage.clickOnCertificateTrustStore();
-		partnerCertificatePage.clickOnRootUploadTrustCertificateButtonInAdmin();
-		partnerCertificatePage.clickOnpartnerDomainSelectorDropdown();
-		partnerCertificatePage.clickOnPartnerDomainSelectorDropdownOptionAuth();
-		partnerCertificatePage.uploadCertificateRootCa();
-		partnerCertificatePage.clickonSubmitButtonForAdmin();
-		partnerCertificatePage.clickOnGoBackButton();
-		partnerCertificatePage.clickOnIntermediateCACertTab();
-		partnerCertificatePage.clickOnIntermediateUploadTrustCertificateButtonInAdmin();
-		partnerCertificatePage.clickOnpartnerDomainSelectorDropdown();
-		partnerCertificatePage.clickOnPartnerDomainSelectorDropdownOptionAuth();
-		partnerCertificatePage.uploadCertificateSubCa();
-		partnerCertificatePage.clickonSubmitButtonForAdmin();
-		partnerCertificatePage.clickOnHomeButton();
-	}
-
-	private void uploadPartnerCertificate(MispPartnerPage mispPartnerPage) {
-		PartnerCertificatePage partnerCertificatePage = new PartnerCertificatePage(driver);
-		mispPartnerPage.clickOnUploadPartnerCertificateButton();
-		partnerCertificatePage.uploadCertificate();
-		partnerCertificatePage.clickOnSubmitButton();
-		assertTrue(partnerCertificatePage.isCertificateUploadSuccessMessageDisplayed(),
-				GlobalConstants.isCertificateUploadSuccessMessageDisplayed);
-		partnerCertificatePage.clickOnCloseButton();
-		partnerCertificatePage.clickOnHomeButton();
-	}
 }
