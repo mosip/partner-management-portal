@@ -189,6 +189,23 @@ public class KeycloakUserManager extends BaseTestCaseFunc {
 		userResource.roles().realmLevel().add(availableRoles);
 	}
 
+	public static void removeUsersWithUsernamePrefix(String usernamePrefix) {
+		Keycloak keycloakInstance = getKeycloakInstance();
+		UsersResource users = keycloakInstance.realm(ConfigManager.getIAMRealmId()).users();
+		int first = 0;
+		List<UserRepresentation> matches;
+		do {
+			matches = users.search(usernamePrefix, first, 100);
+			for (UserRepresentation match : matches) {
+				if (match.getUsername() != null && match.getUsername().startsWith(usernamePrefix)) {
+					users.get(match.getId()).remove();
+					logger.info("User removed with name: %s%n" + match.getUsername());
+				}
+			}
+			first += matches.size();
+		} while (matches.size() == 100);
+	}
+
 	public static void removeUser() {
 		List<String> needsToBeRemovedUsers = List.of(ConfigManager.getIAMUsersToCreate().split(","));
 		Keycloak keycloakInstance = getKeycloakInstance();

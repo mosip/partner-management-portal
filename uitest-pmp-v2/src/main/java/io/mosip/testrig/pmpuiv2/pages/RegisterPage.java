@@ -9,6 +9,8 @@ import org.openqa.selenium.support.FindBy;
 
 public class RegisterPage extends BasePage {
 
+	private static final int AUTHENTICATION_PARTNER_OPTION = 2;
+
 	@FindBy(id = "kc-page-title")
 	private WebElement registerPageTitle;
 
@@ -86,6 +88,10 @@ public class RegisterPage extends BasePage {
 
 	public void selectPartnerTypeDropdown(int val) {
 		dropdownByIndex(partnerTypeDropdown, val);
+	}
+
+	public void selectAuthenticationPartner() {
+		dropdownByIndex(partnerTypeDropdown, AUTHENTICATION_PARTNER_OPTION);
 	}
 
 	public void selectDeviceProviderInPartnerTypeDropdown() {

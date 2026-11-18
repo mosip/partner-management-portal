@@ -28,6 +28,10 @@ delete from pms.partner_policy where cr_by in ('pmpui-auth', 'pmpui-policies', '
 delete from pms.partner_policy_bioextract_request where partner_policy_request_id in (select id from pms.partner_policy_request where cr_by in ('pmpui-v2', 'pmpui-policyadmin', 'pmpui-policies', 'pmpui-auth'));
 delete from pms.partner_policy_credential_type_request where partner_policy_request_id in (select id from pms.partner_policy_request where cr_by in ('pmpui-v2', 'pmpui-policyadmin', 'pmpui-policies', 'pmpui-auth'));
 delete from pms.partner_policy_request where cr_by in ('pmpui-v2', 'pmpui-policyadmin', 'pmpui-policies', 'pmpui-auth');
+delete from pms.partner_policy_bioextract_request where partner_policy_request_id in (select id from pms.partner_policy_request where cr_by like 'authmap%');
+delete from pms.partner_policy_credential_type_request where partner_policy_request_id in (select id from pms.partner_policy_request where cr_by like 'authmap%');
+delete from pms.partner_policy_request where cr_by like 'authmap%';
+delete from pms.bioextractor_configuration where config_name like 'facecfg%';
 delete from pms.misp_license where cr_by in ('pmpui-v2', 'pmpui-policyadmin') or policy_id in (select id from pms.auth_policy where cr_by in ('pmpui-v2', 'pmpui-policyadmin'));
 delete from pms.auth_policy where cr_by in ('pmpui-v2', 'pmpui-policyadmin');
 delete from pms.policy_group where cr_by in ('pmpui-v2', 'pmpui-policyadmin');
@@ -48,9 +52,8 @@ delete from pms.partner where cr_by='pmpui-auth';
 delete FROM pms.user_details where user_id='pmpui-auth';
 
 #Authentication Partner registered by the biometric extractor mapping suite
-delete from pms.partner_policy_bioextract_request where partner_policy_request_id in (select id from pms.partner_policy_request where cr_by like 'authmap%');
-delete from pms.partner_policy_credential_type_request where partner_policy_request_id in (select id from pms.partner_policy_request where cr_by like 'authmap%');
-delete from pms.partner_policy_request where cr_by like 'authmap%';
+delete from pms.partner_policy_bioextract where part_id in (select id from pms.partner where cr_by like 'authmap%' or user_id like 'authmap%');
+delete from pms.partner_policy_credential_type where part_id in (select id from pms.partner where cr_by like 'authmap%' or user_id like 'authmap%');
 delete from pms.partner_h where cr_by like 'authmap%';
 delete from pms.partner where cr_by like 'authmap%' or user_id like 'authmap%';
 delete from pms.user_details where user_id like 'authmap%';

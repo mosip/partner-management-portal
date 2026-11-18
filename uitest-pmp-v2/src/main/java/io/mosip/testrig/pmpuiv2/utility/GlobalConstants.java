@@ -1577,9 +1577,7 @@ public class GlobalConstants {
 	public static final String BIOMETRIC_MODALITY_IRIS = "iris";
 	public static final String BIOMETRIC_MODALITY_FINGER = "finger";
 	public static final String SELECT_BIOMETRIC_MODALITY = "Select Biometric Modality";
-	public static final String MOSIP_BIO_EXTRACTOR_PROVIDER_NAME = "MosipBioExtractor";
 	public static final String MOSIP_BIO_EXTRACTOR_PROVIDER_VERSION = "1.0.0";
-	public static final String NO_BIOMETRIC_PROVIDER_DATA = "No Data Available.";
 	public static final String MAP_CREDENTIAL_TYPE_TITLE = "Map Credential Type";
 	public static final String PARTNER_POLICY_LINKING_TITLE = "Partner - Policy Linking";
 	public static final String MAP_BIOMETRIC_EXTRACTOR_REQUEST_COMMENT = "Map biometric extractor provider";
@@ -1588,13 +1586,12 @@ public class GlobalConstants {
 	public static final String POLICY_REQUEST_BELONGS_TO_CREATED_PARTNER = "The policy request row is the partner created for this run";
 	public static final String BIOMETRIC_EXTRACTOR_CONFIGURATION_CREATED = "A Face biometric extractor configuration is created";
 	public static final String MAP_BIOMETRIC_EXTRACTOR_PROVIDER_PARTNER_ID_DISPLAYED = "Partner ID is shown on the mapping page";
-	public static final String MAP_BIOMETRIC_EXTRACTOR_PROVIDER_PARTNER_TYPE_DISPLAYED = "Partner Type is shown on the mapping page";
+	public static final String MAP_BIOMETRIC_EXTRACTOR_PROVIDER_POLICY_NAME_DISPLAYED = "Policy Name is shown on the mapping page";
 	public static final String MAP_BIOMETRIC_EXTRACTOR_SAVE_DISABLED_WITHOUT_PROVIDER = "Save and Proceed stays disabled until a provider is selected";
 	public static final String BIOMETRIC_MODALITY_OPTIONS_DISPLAYED = "Face, Iris, and Finger are the modality options";
 	public static final String FACE_PROVIDER_CONFIGURATION_DISPLAYED = "An active Face provider configuration is listed";
 	public static final String FACE_PROVIDER_NAME_POPULATED = "Provider name is filled from the selected configuration";
 	public static final String FACE_PROVIDER_VERSION_POPULATED = "Provider version is filled from the selected configuration";
-	public static final String IRIS_MODALITY_HAS_NO_PROVIDER_CONFIGURATION = "Iris has no active provider configuration";
 	public static final String SELECTED_MODALITY_IS_NOT_REPEATED = "A selected modality is not offered again and the remaining modalities are offered";
 	public static final String CLEAR_FORM_RESETS_MODALITY = "Clear Form resets the unsaved modality";
 	public static final String CANCEL_RETURNS_TO_POLICY_REQUEST_LIST = "Cancel returns to the policy request list";
