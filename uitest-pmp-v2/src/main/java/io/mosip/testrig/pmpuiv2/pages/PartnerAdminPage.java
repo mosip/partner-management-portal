@@ -537,6 +537,14 @@ public class PartnerAdminPage extends BasePage {
 		return isElementDisplayed(partnersIdFilter);
 	}
 
+	public boolean isPartnerIdFilterPresent() {
+		return isElementDisplayedQuick(partnersIdFilter, ABSENCE_CHECK_TIMEOUT);
+	}
+
+	public void waitForFilterButtonClickable() {
+		new WebDriverWait(driver, LIST_LOAD_TIMEOUT).until(ExpectedConditions.elementToBeClickable(filterbtnTrigger));
+	}
+
 	public boolean isPartnersTypeFilterDisplayed() {
 		return isElementDisplayed(partnersTypeFilter);
 	}
