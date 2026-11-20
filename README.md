@@ -1,4 +1,4 @@
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=mosip_partner-management-portal&branch=release-1.3.x&metric=alert_status)](https://sonarcloud.io/dashboard?id=mosip_partner-management-portal&branch=release-1.3.x)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=mosip_partner-management-portal&branch=master&metric=alert_status)](https://sonarcloud.io/dashboard?id=mosip_partner-management-portal&branch=master)
 # Partner-management-portal
 
 ## Deployment in K8 cluster with other MOSIP services:
