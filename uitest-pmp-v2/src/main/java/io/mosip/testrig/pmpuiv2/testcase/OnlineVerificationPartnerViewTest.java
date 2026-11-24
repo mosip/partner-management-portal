@@ -21,6 +21,7 @@ import org.testng.annotations.Test;
 import io.mosip.testrig.pmpuiv2.pages.DashboardPage;
 import io.mosip.testrig.pmpuiv2.pages.MispPartnerPage;
 import io.mosip.testrig.pmpuiv2.pages.PartnerAdminPage;
+import io.mosip.testrig.pmpuiv2.pages.PartnerCertificatePage;
 import io.mosip.testrig.pmpuiv2.utility.BaseClass;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 
@@ -53,7 +54,7 @@ public class OnlineVerificationPartnerViewTest extends BaseClass {
 		emailAddress = "ovpnc" + suffix + "@test.com";
 		lengthyEmailAddress = "ovpln" + suffix + "@" + "a".repeat(30) + ".example.com";
 
-		OnlineVerificationPartnerCertificateSteps.uploadAuthTrustCertificates(driver);
+		new PartnerCertificatePage(driver).uploadAuthTrustCertificates();
 		MispPartnerPage mispPartnerPage = navigateToCreatePartnerPage();
 		lengthyPhoneNumber = phoneOfMaxLength(mispPartnerPage);
 		createPartner(mispPartnerPage, partnerWithoutCertificateId, organisationName, phoneNumber, emailAddress);
@@ -381,7 +382,7 @@ public class OnlineVerificationPartnerViewTest extends BaseClass {
 	}
 
 	private void uploadPartnerCertificate(MispPartnerPage mispPartnerPage) {
-		OnlineVerificationPartnerCertificateSteps.uploadPartnerCertificate(driver, mispPartnerPage);
+		new PartnerCertificatePage(driver).uploadPartnerCertificate(mispPartnerPage);
 		assertTrue(new PartnerAdminPage(driver).isPartnerListLoaded(), GlobalConstants.isPartnerListLoaded);
 	}
 

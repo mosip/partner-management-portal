@@ -20,6 +20,7 @@ import io.mosip.testrig.pmpuiv2.dbaccess.DBManager;
 import io.mosip.testrig.pmpuiv2.kernel.util.ConfigManager;
 import io.mosip.testrig.pmpuiv2.kernel.util.KeycloakUserManager;
 import io.mosip.testrig.pmpuiv2.utility.BaseTestCaseFunc;
+import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 import io.mosip.testrig.pmpuiv2.utility.TestRunner;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
@@ -135,6 +136,8 @@ public class AdminTestUtil extends BaseTestCaseFunc {
 					ConfigManager.getMasterDbPass(), ConfigManager.getIDADBSchema(),
 					TestRunner.getResourcePath() + "/" + "config/partnerUiv2DataDeleteQueriesForIDA.txt");
 			KeycloakUserManager.removeUser();
+			KeycloakUserManager.createUsers(GlobalConstants.NON_ADMIN_USER_ID, GlobalConstants.PARTNER_PASSWORD,
+					"roles.ovpnoadmin", null);
 //  	    KeycloakUserManager.createUsers();
 //    		BaseTestCaseFunc.DefinePolicyGroup();
 //			BaseTestCaseFunc.DefinePolicy();

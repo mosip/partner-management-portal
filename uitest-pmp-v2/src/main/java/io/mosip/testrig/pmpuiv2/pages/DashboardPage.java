@@ -320,6 +320,10 @@ public class DashboardPage extends BasePage {
 		clickOnElement(PartnerPolicyMappingTab);
 	}
 
+	public boolean isPartnerPolicyMappingTabDisplayed() {
+		return isElementDisplayedQuick(PartnerPolicyMappingTab, TERMS_AND_CONDITIONS_TIMEOUT);
+	}
+
 	public boolean isPartnerPolicyLinkingCountDisplayed() {
 		return isElementDisplayed(partnerPolicyLinkingCountLabel);
 	}

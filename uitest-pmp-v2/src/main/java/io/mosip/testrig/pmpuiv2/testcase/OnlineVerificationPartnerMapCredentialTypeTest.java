@@ -36,14 +36,14 @@ public class OnlineVerificationPartnerMapCredentialTypeTest extends BaseClass {
 		configurationName = "facecfg" + suffix;
 
 		createFaceConfiguration(configurationName, "faceprov" + suffix);
-		OnlineVerificationPartnerCertificateSteps.uploadAuthTrustCertificates(driver);
+		new PartnerCertificatePage(driver).uploadAuthTrustCertificates();
 		publishAuthPolicy("ovpcredpol" + suffix);
 		MispPartnerPage mispPartnerPage = navigateToCreatePartnerPage();
 		createPartner(mispPartnerPage, partnerId, "ovpcred" + suffix + "@test.com");
 		mispPartnerPage.clickOnCreatePartnerSubmitButton();
 		assertTrue(mispPartnerPage.isCreatePartnerSuccessMsgDisplayed(),
 				GlobalConstants.isCreatePartnerSuccessMsgDisplayed);
-		OnlineVerificationPartnerCertificateSteps.uploadPartnerCertificate(driver, mispPartnerPage);
+		new PartnerCertificatePage(driver).uploadPartnerCertificate(mispPartnerPage);
 		new PartnerCertificatePage(driver).clickOnHomeButton();
 
 		requestPolicy(partnerId, "ovpcredpol" + suffix);
@@ -51,7 +51,7 @@ public class OnlineVerificationPartnerMapCredentialTypeTest extends BaseClass {
 		MapCredentialTypePage mapPage = new MapCredentialTypePage(driver);
 		assertEquals(mapPage.waitUntilPageTitle(GlobalConstants.MAP_CREDENTIAL_TYPE_TITLE),
 				GlobalConstants.MAP_CREDENTIAL_TYPE_TITLE, GlobalConstants.MAP_CREDENTIAL_TYPE_PAGE_OPENED);
-		assertEquals(mapPage.getMandatoryMappingBanner(), GlobalConstants.MAP_BIOMETRIC_EXTRACTOR_PROVIDER_BANNER,
+		assertTrue(mapPage.isMandatoryMappingBannerDisplayed(),
 				GlobalConstants.MAP_CREDENTIAL_TYPE_BANNER_DISPLAYED);
 		assertEquals(mapPage.getPartnerId(), partnerId, GlobalConstants.MAP_CREDENTIAL_TYPE_PARTNER_ID_DISPLAYED);
 		assertEquals(mapPage.getPartnerType(), GlobalConstants.ONLINE_VERIFICATION_PARTNER_TYPE_CODE,

@@ -4,7 +4,6 @@ import java.time.Duration;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -44,12 +43,6 @@ public class MapBiometricExtractorProviderPage extends BasePage {
 	@FindBy(css = "[id^='map_bio_extractor_provider_config_1_option']")
 	private List<WebElement> firstProviderOptions;
 
-	@FindBy(css = "button[disabled] span")
-	private List<WebElement> readOnlyFieldValues;
-
-	@FindBy(id = "map_bio_extractor_provider_config_1_no_data_available")
-	private WebElement firstProviderNoData;
-
 	@FindBy(id = "map_bio_extractor_provider_add_more_btn_0")
 	private WebElement addMoreButton;
 
@@ -67,15 +60,6 @@ public class MapBiometricExtractorProviderPage extends BasePage {
 
 	@FindBy(id = "map_bio_extractor_save_confirm_submit")
 	private WebElement saveConfirmButton;
-
-	@FindBy(css = "[id^='policy_requests_ovp_map_biometric_extractor_']")
-	private WebElement mapBiometricExtractorAction;
-
-	@FindBy(id = "partner_list_item1")
-	private WebElement firstPolicyRequestRow;
-
-	@FindBy(id = "partner_list_view1")
-	private WebElement firstPolicyRequestAction;
 
 	@FindBy(xpath = "//label[normalize-space(.)='Partner ID*']/following-sibling::button[1]")
 	private WebElement partnerIdValue;
@@ -107,22 +91,8 @@ public class MapBiometricExtractorProviderPage extends BasePage {
 		return getTextFromLocator(pageTitle).trim();
 	}
 
-	public String getMandatoryMappingBanner() {
-		return getTextFromLocator(mandatoryMappingBanner).trim();
-	}
-
 	public boolean isMandatoryMappingBannerDisplayed() {
 		return isElementDisplayed(mandatoryMappingBanner);
-	}
-
-	public boolean isReadOnlyValueDisplayed(String value) {
-		for (WebElement fieldValue : readOnlyFieldValues) {
-			String text = getTextFromLocator(fieldValue);
-			if (text != null && value.equals(text.trim())) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 	public String getPartnerId() {
@@ -173,14 +143,6 @@ public class MapBiometricExtractorProviderPage extends BasePage {
 		return getTextFromLocator(firstModalityDropdown).trim();
 	}
 
-	public void openFirstProviderDropdown() {
-		clickOnElement(firstProviderDropdown);
-	}
-
-	public void selectFirstProvider() {
-		clickOnElement(firstProviderOptions.get(0));
-	}
-
 	public void selectProviderConfiguration(String configurationName) {
 		clickOnElement(firstProviderDropdown);
 		enter(firstProviderSearchInput, configurationName);
@@ -204,10 +166,6 @@ public class MapBiometricExtractorProviderPage extends BasePage {
 			return configuration.isEmpty()
 					|| GlobalConstants.SELECT_BIOMETRIC_PROVIDER.equals(configuration) ? null : configuration;
 		});
-	}
-
-	public boolean isFirstProviderListEmpty() {
-		return isElementDisplayedQuick(firstProviderNoData, ABSENCE_CHECK_TIMEOUT);
 	}
 
 	public String getProviderName() {
@@ -235,7 +193,7 @@ public class MapBiometricExtractorProviderPage extends BasePage {
 	}
 
 	public boolean isSaveConfirmationDisplayed() {
-		return isElementDisplayedQuick(saveConfirmTitle, ABSENCE_CHECK_TIMEOUT);
+		return isElementDisplayed(saveConfirmTitle);
 	}
 
 	public void confirmSave() {
@@ -244,37 +202,6 @@ public class MapBiometricExtractorProviderPage extends BasePage {
 
 	public void clickTitleBack() {
 		clickOnElement(titleBackIcon);
-	}
-
-	public void openFirstPolicyRequestAction() {
-		clickOnElement(firstPolicyRequestAction);
-	}
-
-	public boolean isMapBiometricExtractorActionDisplayed() {
-		return isElementDisplayedQuick(mapBiometricExtractorAction, ABSENCE_CHECK_TIMEOUT);
-	}
-
-	public boolean isMapBiometricExtractorActionDisabled() {
-		try {
-			new WebDriverWait(driver, Duration.ofSeconds(20)).until(webDriver -> {
-				if (!isElementDisplayedQuick(mapBiometricExtractorAction, ABSENCE_CHECK_TIMEOUT)) {
-					return null;
-				}
-				String value = mapBiometricExtractorAction.getAttribute("class");
-				return value != null && value.contains("pointer-events-none") ? value : null;
-			});
-			return true;
-		} catch (TimeoutException timeout) {
-			return false;
-		}
-	}
-
-	public void openMapBiometricExtractorAction() {
-		clickOnElement(mapBiometricExtractorAction);
-	}
-
-	public String getFirstPolicyRequestRowText() {
-		return getTextFromLocator(firstPolicyRequestRow).trim();
 	}
 
 	private List<WebElement> modalityOptions(int row) {

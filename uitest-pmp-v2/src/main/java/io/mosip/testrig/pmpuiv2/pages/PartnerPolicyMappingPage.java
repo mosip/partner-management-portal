@@ -1,8 +1,12 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
+import java.time.Duration;
+import java.util.List;
+
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
 
@@ -58,6 +62,9 @@ public class PartnerPolicyMappingPage extends BasePage {
 
 	@FindBy(id = "partner_list_view1")
 	private WebElement partnerListViewElipsisButton;
+
+	@FindBy(css = "[id^='policy_requests_ovp_map_biometric_extractor_']")
+	private WebElement mapBiometricExtractorAction;
 
 	@FindBy(xpath = "//p[contains(text(), 'Do you want to Approve/Reject the Policy')]")
 	private WebElement confirmationPopup;
@@ -380,12 +387,79 @@ public class PartnerPolicyMappingPage extends BasePage {
 	@FindBy(id = "approve-reject_popup_sub_title")
 	private WebElement approveRejectPopupSubTitle;
 
+	@FindBy(id = "view_partner_policy_sub_title_id")
+	private WebElement viewPartnerIdSubtitle;
+
+	@FindBy(id = "view_partner_policy_request_created_on")
+	private WebElement viewCreatedOnDate;
+
+	@FindBy(id = "view_partner_policy_request_created_date_time")
+	private WebElement viewCreatedOnTime;
+
+	@FindBy(id = "view_partner_policy_request_organisation_context")
+	private WebElement viewOrganisationContext;
+
+	@FindBy(id = "view_partner_policy_request_policy_id_context")
+	private WebElement viewPolicyIdContext;
+
+	@FindBy(id = "view_partner_policy_request_policy_name_context")
+	private WebElement viewPolicyNameContext;
+
+	@FindBy(id = "view_partner_policy_request_policy_group_context")
+	private WebElement viewPolicyGroupContext;
+
+	@FindBy(id = "view_partner_policy_request_partner_status_context")
+	private WebElement viewPartnerStatusContext;
+
+	@FindBy(id = "view_partner_policy_request_comments_label")
+	private WebElement viewCommentsLabel;
+
+	@FindBy(id = "view_partner_policy_request_admin_comments_label")
+	private WebElement viewAdminCommentsLabel;
+
+	@FindBy(id = "partner_policy_request_partner_comment_label")
+	private WebElement viewPartnerCommentsLabel;
+
+	@FindBy(id = "partner_policy_request_status")
+	private WebElement viewAdminCommentStatus;
+
+	@FindBy(id = "view_approve_reject_btn")
+	private WebElement viewApproveRejectButton;
+
+	@FindBy(xpath = "//p[text()='Biometric Extractor Provider Mapping']")
+	private WebElement biometricExtractorProviderMappingLabel;
+
+	@FindBy(xpath = "//td[normalize-space()='No Biometric Extractor Provider Configuration has been mapped to this policy.']")
+	private WebElement noBiometricExtractorMappedMessage;
+
+	@FindBy(xpath = "//table//td[normalize-space()='face']")
+	private WebElement faceModalityMappedCell;
+
+	@FindBy(xpath = "//p[text()='Credential Type']")
+	private WebElement credentialTypeLabel;
+
+	@FindBy(xpath = "//p[text()='Credential Type']/following-sibling::p[1]")
+	private WebElement credentialTypeValue;
+
+	@FindBy(css = "input, textarea, select")
+	private List<WebElement> editableInputs;
+
+	@FindBy(xpath = "//button[normalize-space()='Save' or normalize-space()='Edit' or normalize-space()='Update' or normalize-space()='Delete']")
+	private List<WebElement> editActionButtons;
+
 	public PartnerPolicyMappingPage(WebDriver driver) {
 		super(driver);
 	}
 
 	public boolean isPartnerPolicyLinkingTitleDisplayed() {
 		return isElementDisplayed(partnerPolicyLinkingTitle);
+	}
+
+	public String waitUntilPageTitle(String expectedTitle) {
+		return new WebDriverWait(driver, Duration.ofSeconds(20)).until(webDriver -> {
+			String title = getTextFromLocator(partnerPolicyLinkingTitle);
+			return expectedTitle.equals(title == null ? "" : title.trim()) ? title.trim() : null;
+		});
 	}
 
 	public boolean isPartnerPolicyLinkingSubTitleDisplayed() {
@@ -466,6 +540,49 @@ public class PartnerPolicyMappingPage extends BasePage {
 
 	public void clickOnPartnerListViewElipsisButton() {
 		clickOnElement(partnerListViewElipsisButton);
+	}
+
+	public void filterPolicyRequestsByPartnerId(String partnerId) {
+		clickOnFilterButton();
+		enterPartnerIdInFilter(partnerId);
+		clickOnApplyFilterButton();
+	}
+
+	public String waitUntilFirstPolicyRequestRowContains(String partnerId) {
+		return new WebDriverWait(driver, Duration.ofSeconds(20)).until(webDriver -> {
+			String row = getTextFromLocator(approvedPolicy);
+			if (row == null || !row.contains(partnerId)) {
+				return null;
+			}
+			return row.trim();
+		});
+	}
+
+	public void openFirstPolicyRequestAction() {
+		clickOnElement(partnerListViewElipsisButton);
+	}
+
+	public boolean isMapBiometricExtractorActionDisplayed() {
+		return isElementDisplayedQuick(mapBiometricExtractorAction, ABSENCE_CHECK_TIMEOUT);
+	}
+
+	public boolean isMapBiometricExtractorActionDisabled() {
+		try {
+			new WebDriverWait(driver, Duration.ofSeconds(20)).until(webDriver -> {
+				if (!isElementDisplayedQuick(mapBiometricExtractorAction, ABSENCE_CHECK_TIMEOUT)) {
+					return null;
+				}
+				String value = mapBiometricExtractorAction.getAttribute("class");
+				return value != null && value.contains("pointer-events-none") ? value : null;
+			});
+			return true;
+		} catch (TimeoutException timeout) {
+			return false;
+		}
+	}
+
+	public void openMapBiometricExtractorAction() {
+		clickOnElement(mapBiometricExtractorAction);
 	}
 
 	public void clickOnApproveOrRejectButton() {
@@ -1077,7 +1194,7 @@ public class PartnerPolicyMappingPage extends BasePage {
 
 	public void selectRequestPolicyByName(String policyName) {
 		searchPolicyNameInDropdown(policyName);
-		new org.openqa.selenium.support.ui.WebDriverWait(driver, java.time.Duration.ofSeconds(20)).until(webDriver -> {
+		new WebDriverWait(driver, Duration.ofSeconds(20)).until(webDriver -> {
 			if (!isElementDisplayedQuick(requestPoliciesPolicyNameOption1, ABSENCE_CHECK_TIMEOUT)) {
 				return null;
 			}
@@ -1212,6 +1329,177 @@ public class PartnerPolicyMappingPage extends BasePage {
 
 	public boolean isApproveRejectPopupSubTitleDisplayed() {
 		return isElementDisplayed(approveRejectPopupSubTitle);
+	}
+
+	public void filterPolicyRequestsByPartnerIdAndPolicyName(String partnerId, String policyName) {
+		clickOnFilterButton();
+		enterPartnerIdInFilter(partnerId);
+		enterPendingPolicyNameInFilter(policyName);
+		clickOnApplyFilterButton();
+	}
+
+	public String getPartnerIdFilterValue() {
+		return partnerIdFilter.getAttribute("value") == null ? "" : partnerIdFilter.getAttribute("value").trim();
+	}
+
+	public String waitUntilFirstPolicyRequestRowContains(String partnerId, String expectedText) {
+		return new WebDriverWait(driver, Duration.ofSeconds(20)).until(webDriver -> {
+			String row = getTextFromLocator(approvedPolicy);
+			if (row == null || !row.contains(partnerId)) {
+				return null;
+			}
+			row = row.trim();
+			return expectedText == null || row.contains(expectedText) ? row : null;
+		});
+	}
+
+	public void clickOnFirstPolicyRequestRow() {
+		clickOnElement(approvedPolicy);
+	}
+
+	public String getViewPartnerIdSubtitleText() {
+		return getTextFromLocator(viewPartnerIdSubtitle).trim();
+	}
+
+	public String getViewPolicyRequestStatusText() {
+		return getTextFromLocator(partnerPolicyRequestStatus).trim();
+	}
+
+	public String getViewCreatedOnDateText() {
+		return getTextFromLocator(viewCreatedOnDate).trim();
+	}
+
+	public String getViewCreatedOnTimeText() {
+		return getTextFromLocator(viewCreatedOnTime).trim();
+	}
+
+	public String getViewPartnerTypeText() {
+		return getTextFromLocator(partnerTypeContext).trim();
+	}
+
+	public String getViewOrganisationText() {
+		return getTextFromLocator(viewOrganisationContext).trim();
+	}
+
+	public String getViewPolicyIdText() {
+		return getTextFromLocator(viewPolicyIdContext).trim();
+	}
+
+	public String getViewPolicyNameText() {
+		return getTextFromLocator(viewPolicyNameContext).trim();
+	}
+
+	public String getViewPolicyGroupText() {
+		return getTextFromLocator(viewPolicyGroupContext).trim();
+	}
+
+	public String getViewPartnerStatusText() {
+		return getTextFromLocator(viewPartnerStatusContext).trim();
+	}
+
+	public boolean isViewCommentsSectionDisplayed() {
+		return isElementDisplayed(viewCommentsLabel) && isElementDisplayed(viewAdminCommentsLabel)
+				&& isElementDisplayed(viewPartnerCommentsLabel);
+	}
+
+	public String getViewPartnerCommentText() {
+		return getTextFromLocator(partnerCommentsContext).trim();
+	}
+
+	public String getViewAdminCommentStatusText() {
+		return getTextFromLocator(viewAdminCommentStatus).trim();
+	}
+
+	public boolean isBiometricExtractorProviderMappingDisplayed() {
+		return isElementDisplayed(biometricExtractorProviderMappingLabel);
+	}
+
+	public boolean isCredentialTypeSectionDisplayed() {
+		return isElementDisplayed(credentialTypeLabel);
+	}
+
+	public String waitUntilBiometricMappingState() {
+		return new WebDriverWait(driver, Duration.ofSeconds(20)).until(webDriver -> {
+			if (isElementDisplayedQuick(noBiometricExtractorMappedMessage, ABSENCE_CHECK_TIMEOUT)) {
+				return "unmapped";
+			}
+			if (isElementDisplayedQuick(faceModalityMappedCell, ABSENCE_CHECK_TIMEOUT)) {
+				return "mapped";
+			}
+			return null;
+		});
+	}
+
+	public boolean isFaceBiometricModalityMapped() {
+		return isElementDisplayedQuick(faceModalityMappedCell, ABSENCE_CHECK_TIMEOUT);
+	}
+
+	public boolean isProviderConfigurationMapped(String configurationName) {
+		By configurationCell = By.xpath("//table//td[normalize-space()='" + configurationName + "']");
+		return isElementDisplayedQuick(configurationCell, ABSENCE_CHECK_TIMEOUT);
+	}
+
+	public String waitUntilCredentialTypeValue() {
+		return new WebDriverWait(driver, Duration.ofSeconds(20)).until(webDriver -> {
+			if (!isElementDisplayedQuick(credentialTypeValue, ABSENCE_CHECK_TIMEOUT)) {
+				return null;
+			}
+			String value = getTextFromLocator(credentialTypeValue);
+			if (value == null) {
+				return null;
+			}
+			value = value.trim();
+			if (value.isEmpty() || value.toLowerCase().startsWith("loading")) {
+				return null;
+			}
+			return value;
+		});
+	}
+
+	public boolean areViewPolicyRequestFieldsReadOnly() {
+		WebElement[] valueFields = { partnerTypeContext, viewOrganisationContext, viewPolicyIdContext,
+				viewPolicyNameContext, viewPolicyGroupContext };
+		for (WebElement valueField : valueFields) {
+			String tag = valueField.getTagName();
+			if ("input".equalsIgnoreCase(tag) || "textarea".equalsIgnoreCase(tag) || "select".equalsIgnoreCase(tag)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public boolean isViewPolicyRequestEditControlDisplayed() {
+		try {
+			return new WebDriverWait(driver, ABSENCE_CHECK_TIMEOUT).ignoring(StaleElementReferenceException.class)
+					.until(webDriver -> {
+						for (WebElement element : editableInputs) {
+							if (element.isDisplayed()) {
+								return true;
+							}
+						}
+						for (WebElement element : editActionButtons) {
+							if (element.isDisplayed()) {
+								return true;
+							}
+						}
+						return null;
+					});
+		} catch (TimeoutException e) {
+			return false;
+		}
+	}
+
+	public String waitUntilApproveButtonEnabled() {
+		return new WebDriverWait(driver, Duration.ofSeconds(30)).until(webDriver -> {
+			if (!isElementDisplayedQuick(approveButton, ABSENCE_CHECK_TIMEOUT)) {
+				return null;
+			}
+			return approveButton.isEnabled() ? "enabled" : null;
+		});
+	}
+
+	public boolean isViewApproveRejectButtonDisplayed() {
+		return isElementDisplayedQuick(viewApproveRejectButton, ABSENCE_CHECK_TIMEOUT);
 	}
 
 }

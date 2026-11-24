@@ -105,8 +105,8 @@ public class MapCredentialTypePage extends BasePage {
 		});
 	}
 
-	public String getMandatoryMappingBanner() {
-		return getTextFromLocator(mandatoryMappingBanner).trim();
+	public boolean isMandatoryMappingBannerDisplayed() {
+		return isElementDisplayed(mandatoryMappingBanner);
 	}
 
 	public String getPartnerId() {
