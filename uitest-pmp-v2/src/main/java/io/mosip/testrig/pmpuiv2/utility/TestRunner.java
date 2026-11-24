@@ -166,6 +166,8 @@ public class TestRunner {
 					"io.mosip.testrig.pmpuiv2.testcase.OnlineVerificationPartnerMapBiometricExtractorTest");
 			XmlClass onlineVerificationPartnerMapCredentialTypeTest = new XmlClass(
 					"io.mosip.testrig.pmpuiv2.testcase.OnlineVerificationPartnerMapCredentialTypeTest");
+			XmlClass onlineVerificationPartnerDeactivateTest = new XmlClass(
+					"io.mosip.testrig.pmpuiv2.testcase.OnlineVerificationPartnerDeactivateTest");
 			XmlClass mispServicesTest = new XmlClass("io.mosip.testrig.pmpuiv2.testcase.MispServicesTest");
 
 			List<XmlClass> classes = new ArrayList<>();
@@ -334,6 +336,9 @@ public class TestRunner {
 					break;
 				case "OnlineVerificationPartnerMapCredentialTypeTest":
 					addClassIfAbsent(classes, partnerAdminCreation, onlineVerificationPartnerMapCredentialTypeTest);
+					break;
+				case "OnlineVerificationPartnerDeactivateTest":
+					addClassIfAbsent(classes, partnerAdminCreation, onlineVerificationPartnerDeactivateTest);
 					break;
 				case "MispServicesTest":
 					addClassIfAbsent(classes, partnerAdminCreation, mispPartnerTest, mispPolicyTest, mispServicesTest);

@@ -50,6 +50,7 @@
 			<class name="io.mosip.testrig.pmpuiv2.testcase.OnlineVerificationPartnerViewTest" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.OnlineVerificationPartnerMapBiometricExtractorTest" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.OnlineVerificationPartnerMapCredentialTypeTest" />
+			<class name="io.mosip.testrig.pmpuiv2.testcase.OnlineVerificationPartnerDeactivateTest" />
 			<!--PARTNER VALIDATION & MANAGEMENT -->
 			<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerDetailsTest" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.PartnerFilterTest" />
