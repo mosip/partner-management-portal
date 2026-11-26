@@ -130,14 +130,22 @@ public class ManualAdjudicationPartnerTest extends BaseClass {
 		assertTrue(maPartnerPage.isListOfPartnersDisplayed(), GlobalConstants.isListOfPartnersDisplayed);
 
 		maPartnerPage.clickOnCreatePartnerButton();
-		createMaPartner(GlobalConstants.MA_PARTNER_USER, GlobalConstants.MANUAL_ADJUDICATION_PARTNER,
+		createMaPartner("pmpui-madupmail", GlobalConstants.MANUAL_ADJUDICATION_PARTNER,
 				GlobalConstants.DEFAULT_POLICYGROUP, GlobalConstants.MA_NOTIFICATION_LANGUAGE,
 				GlobalConstants.MA_ADDRESS, GlobalConstants.ORGANISATION_NAME, GlobalConstants.MA_CONTACT_NUMBER,
 				GlobalConstants.MA_EMAIL_ID);
-		assertTrue(maPartnerPage.isEmailAddressIsAlreadyRegisteredErrorDisplayed()
-				|| maPartnerPage.isUsernameAlreadyExistErrorDisplayed(),
+		assertTrue(maPartnerPage.isEmailAddressIsAlreadyRegisteredErrorDisplayed(),
 				GlobalConstants.isEmailAddressIsAlreadyRegisteredErrorDisplayed);
+		maPartnerPage.clickOnErrorMessageCloseButton();
+		maPartnerPage.clickOnCreatePartnerClearButton();
 
+		createMaPartner(GlobalConstants.MA_PARTNER_USER, GlobalConstants.MANUAL_ADJUDICATION_PARTNER,
+				GlobalConstants.DEFAULT_POLICYGROUP, GlobalConstants.MA_NOTIFICATION_LANGUAGE,
+				GlobalConstants.MA_ADDRESS, GlobalConstants.ORGANISATION_NAME, GlobalConstants.MA_CONTACT_NUMBER,
+				"madupuser@gmail.com");
+		assertTrue(maPartnerPage.isUsernameAlreadyExistErrorDisplayed(),
+				GlobalConstants.isUsernameAlreadyExistErrorDisplayed);
+		maPartnerPage.clickOnErrorMessageCloseButton();
 		maPartnerPage.clickOnCreatePartnerClearButton();
 		createMaPartner(GlobalConstants.MA_PARTNER_USER_2, GlobalConstants.MANUAL_ADJUDICATION_PARTNER,
 				GlobalConstants.DEFAULT_POLICYGROUP, GlobalConstants.MA_NOTIFICATION_LANGUAGE,
@@ -196,9 +204,7 @@ public class ManualAdjudicationPartnerTest extends BaseClass {
 				GlobalConstants.isPartnerCreatedDateInViewPartnerPageDisplayed);
 		assertTrue(maPartnerPage.isViewPartnerTypeDisplayed(),
 				GlobalConstants.isPartnerTypeInViewPartnerPageDisplayed);
-		String viewPartnerType = maPartnerPage.getViewPartnerTypeText();
-		String normalizedPartnerType = viewPartnerType == null ? "" : viewPartnerType.replace('_', ' ').toLowerCase();
-		assertTrue(normalizedPartnerType.contains("manual adjudication"),
+		assertTrue(maPartnerPage.isViewPartnerTypeManualAdjudication(),
 				GlobalConstants.isManualAdjudicationPartnerTypeInViewDisplayed);
 		assertTrue(maPartnerPage.isViewOrganisationNameDisplayed(),
 				GlobalConstants.isOrganisationNameInViewPartnerPageDisplayed);

@@ -1538,10 +1538,6 @@ public class GlobalConstants {
 	public static final String ABIS_ADDRESS = "abisaddress";
 	public static final String ABIS_CONTACT_NUMBER = "9898989898";
 	public static final String ABIS_NOTIFICATION_LANGUAGE = "English";
-	public static final String ABIS_POLICY_01 = "abisdspolicy01";
-	public static final String ABIS_POLICY_01_DESCRIPTION = "abis data share policy 01";
-	public static final String ABIS_POLICY_02 = "abisdspolicy02";
-	public static final String ABIS_POLICY_02_DESCRIPTION = "abis data share policy 02";
 	public static final String isRequestPolicyGroupDisabled = "Verify if request policy group is disabled";
 	public static final String ORG_NAME_INFO_TEXT = "Enter the organization name as mentioned in the ORGANIZATION attribute of CERTIFICATE subject in the CA Signed Certificate.";
 	public static final String ORG_NAME_WITH_ALLOWED_SPECIAL_CHARS = "TestOrg@#&()-'?!:;=_";
@@ -1569,6 +1565,8 @@ public class GlobalConstants {
 	public static final String MA_POLICY_03_DESCRIPTION = "ma policy 03";
 	public static final String OVP_PARTNER_USER = "pmpui-ovp";
 	public static final String OVP_POLICY_NAME = "ovppolicy";
+	public static final String MAP_BIO_PARTNER_USER = "pmpui-mapbio";
+	public static final String MAP_BIO_POLICY_NAME = "mapbiopolicy";
 	public static final String AUTH_DOMAIN_TYPE = "AUTH";
 	public static final String isDefaultManualAdjudicationPartnerDisplayed = "Verify that Manual Adjudication Partner is the default Partner Type on Create Partner page.";
 	public static final String isManualAdjudicationPartnerSelectedSuccessfully = "Verify that Manual Adjudication Partner is successfully selected from the Partner Type dropdown.";

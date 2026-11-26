@@ -790,14 +790,30 @@ public class BasePage {
 		return getElementCount(By.xpath("//*[normalize-space(text())=" + toXpathLiteral(text) + "]"));
 	}
 
-	private static String toXpathLiteral(String value) {
+	protected static String xpathLiteral(String value) {
+		if (value == null) {
+			return "''";
+		}
 		if (!value.contains("'")) {
 			return "'" + value + "'";
 		}
 		if (!value.contains("\"")) {
 			return "\"" + value + "\"";
 		}
-		return "concat('" + value.replace("'", "',\"'\",'") + "')";
+		StringBuilder literal = new StringBuilder("concat(");
+		String[] parts = value.split("'", -1);
+		for (int i = 0; i < parts.length; i++) {
+			if (i > 0) {
+				literal.append(", \"'\", ");
+			}
+			literal.append("'").append(parts[i]).append("'");
+		}
+		literal.append(")");
+		return literal.toString();
+	}
+
+	private static String toXpathLiteral(String value) {
+		return xpathLiteral(value);
 	}
 
 	public boolean isTextPresentOnPage(String text) {

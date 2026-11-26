@@ -17,6 +17,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import io.mosip.testrig.pmpuiv2.fw.util.CertificateGenerationUtil;
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
+import io.mosip.testrig.pmpuiv2.utility.LocalizedText;
 
 public class PartnerCertificatePage extends BasePage {
 
@@ -365,7 +366,7 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(id = "root_of_trust_certificates_tab")
 	private WebElement rootCACertTab;
 
-	@FindBy(xpath = "//h6[text()='Intermediate CA']")
+	@FindBy(id = "intermediate_root_of_trust_certificates_tab")
 	private WebElement intermediateCACertTab;
 
 	@FindBy(xpath = "//p[contains(text(), 'List of Intermediate CA Certificates')]")
@@ -643,20 +644,10 @@ public class PartnerCertificatePage extends BasePage {
 		clickOnElement(GoBackButton);
 	}
 
-	public void continueAfterTrustCertificateSubmit() {
-		if (isElementDisplayedQuick(By.id("confirmation_go_back_btn"), Duration.ofSeconds(8))) {
-			clickOnElement(GoBackButton);
-			return;
-		}
-		if (isElementDisplayedQuick(By.id("error_close_btn"), Duration.ofSeconds(2))) {
-			throw new IllegalStateException("Trust certificate submit failed");
-		}
-		throw new IllegalStateException("Trust certificate confirmation was not displayed");
-	}
-
 	public void continueAfterTrustCertificateSubmitAllowingExisting() {
 		By success = By.id("confirmation_go_back_btn");
 		By error = By.id("error_close_btn");
+		By errorMessage = By.id("upload_trust_certificate_error_msg");
 		new WebDriverWait(driver, Duration.ofSeconds(20)).until(ExpectedConditions.or(
 				ExpectedConditions.visibilityOfElementLocated(success),
 				ExpectedConditions.visibilityOfElementLocated(error)));
@@ -664,41 +655,43 @@ public class PartnerCertificatePage extends BasePage {
 			click(success);
 			return;
 		}
-		String pageText = driver.findElement(By.tagName("body")).getText();
+		String errorText = driver.findElements(errorMessage).isEmpty() ? "" : driver.findElement(errorMessage).getText();
 		click(error);
-		By leavePage = By.id("block_messsage_proceed");
-		try {
-			new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.elementToBeClickable(leavePage));
-			click(leavePage);
-		} catch (TimeoutException leavePromptNotShown) {
-			// Cancel is not required when the error popup already returned to the list.
+		confirmLeaveUploadPageIfShown();
+		if (!isTrustCertificateListVisible()) {
+			if (isElementDisplayedQuick(By.id("upload_trust_certificate_cancel_btn"), Duration.ofSeconds(3))) {
+				click(By.id("upload_trust_certificate_cancel_btn"));
+				confirmLeaveUploadPageIfShown();
+			}
 		}
-		if (pageText == null || !pageText.toLowerCase().contains("already")) {
+		new WebDriverWait(driver, Duration.ofSeconds(15)).until(ExpectedConditions.or(
+				ExpectedConditions.visibilityOfElementLocated(By.id("root_of_trust_certificates_tab")),
+				ExpectedConditions.visibilityOfElementLocated(By.id("intermediate_root_of_trust_certificates_tab"))));
+		if (!isExistingTrustCertificateMessage(errorText)) {
 			throw new IllegalStateException("Trust certificate submit failed");
 		}
 	}
 
-	public boolean submitTrustCertificateAcceptingExisting() {
-		clickonSubmitButtonForAdmin();
-		By success = By.id("confirmation_go_back_btn");
-		By error = By.id("error_close_btn");
-		new WebDriverWait(driver, Duration.ofSeconds(20)).until(ExpectedConditions.or(
-				ExpectedConditions.visibilityOfElementLocated(success),
-				ExpectedConditions.visibilityOfElementLocated(error)));
-		if (!driver.findElements(success).isEmpty() && driver.findElement(success).isDisplayed()) {
-			click(success);
-			return true;
-		}
-		click(error);
-		clickOnElement(adminCertUploadCancelButton);
+	private boolean isExistingTrustCertificateMessage(String errorText) {
+		return LocalizedText.matches(errorText,
+				"The certificate already exists. Please upload another certificate",
+				"Le certificat existe déjà. Veuillez télécharger un autre certificat.",
+				"الشهادة موجودة بالفعل. يرجى تحميل شهادة أخرى");
+	}
+
+	private void confirmLeaveUploadPageIfShown() {
 		By leavePage = By.id("block_messsage_proceed");
 		try {
 			new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.elementToBeClickable(leavePage));
 			click(leavePage);
 		} catch (TimeoutException leavePromptNotShown) {
-			// Cancel already returned to the certificate list.
+			// The upload form stays open when closing the error does not ask to leave.
 		}
-		return true;
+	}
+
+	private boolean isTrustCertificateListVisible() {
+		return isElementDisplayedQuick(By.id("root_of_trust_certificates_tab"), Duration.ofSeconds(2))
+				|| isElementDisplayedQuick(By.id("intermediate_root_of_trust_certificates_tab"), Duration.ofSeconds(2));
 	}
 
 	public void clickOnSuccessMsgCloseButton() {
@@ -1253,7 +1246,7 @@ public class PartnerCertificatePage extends BasePage {
 	}
 
 	public void clickOnIntermediateCACertTab() {
-		clickOnElement(intermediateCACertTab);
+		click(By.cssSelector("#intermediate_root_of_trust_certificates_tab button"));
 	}
 
 	public boolean isSubtitleOfIntermediateCADisplayed() {

@@ -10,6 +10,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import io.mosip.testrig.pmpuiv2.utility.LocalizedText;
+
 public class MapBiometricExtractorProviderPage extends BasePage {
 
 	@FindBy(id = "page_title")
@@ -62,8 +64,14 @@ public class MapBiometricExtractorProviderPage extends BasePage {
 	}
 
 	public boolean isMapBiometricExtractorProviderPageDisplayed() {
-		return isElementDisplayedQuick(By.id("map_bio_extractor_provider_mandatory_mapping_msg"), Duration.ofSeconds(15))
-				|| (isElementDisplayed(pageTitle) && getPageTitleText().toLowerCase().contains("biometric"));
+		return isElementDisplayedQuick(By.id("map_bio_extractor_provider_mandatory_mapping_msg"), Duration.ofSeconds(15));
+	}
+
+	public boolean isMapBiometricPageTitleDisplayed() {
+		return isElementDisplayed(pageTitle) && LocalizedText.matches(getPageTitleText(),
+				"Map Biometric Extractor Provider",
+				"Associer le fournisseur d'extracteur biométrique",
+				"ربط مزود مستخرج القياسات الحيوية");
 	}
 
 	public String getPageTitleText() {
@@ -260,25 +268,4 @@ public class MapBiometricExtractorProviderPage extends BasePage {
 				"arguments[0].scrollIntoView({block:'center'}); arguments[0].click();", element);
 	}
 
-	private static String xpathLiteral(String value) {
-		if (value == null) {
-			return "''";
-		}
-		if (!value.contains("'")) {
-			return "'" + value + "'";
-		}
-		if (!value.contains("\"")) {
-			return "\"" + value + "\"";
-		}
-		StringBuilder literal = new StringBuilder("concat(");
-		String[] parts = value.split("'", -1);
-		for (int i = 0; i < parts.length; i++) {
-			if (i > 0) {
-				literal.append(", \"'\", ");
-			}
-			literal.append("'").append(parts[i]).append("'");
-		}
-		literal.append(")");
-		return literal.toString();
-	}
 }

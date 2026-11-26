@@ -65,6 +65,17 @@ public class LoginPage extends BasePage {
 		assertLoginSucceeded(userName);
 	}
 
+	public void loginAllowingMissingAccount(String userName, String password) {
+		enterUserName(userName);
+		enterPassword(password);
+		clickOnLoginButton();
+		try {
+			new WebDriverWait(driver, Duration.ofSeconds(20)).until(d -> credentialErrorShown(d) || loginPageLeft(d));
+		} catch (TimeoutException e) {
+			logger.info("Login did not finish for a user that may still need to be registered: " + userName);
+		}
+	}
+
 	public void assertLoginSucceeded(String userName) {
 		try {
 			new WebDriverWait(driver, Duration.ofSeconds(20)).until(d -> credentialErrorShown(d) || loginPageLeft(d));

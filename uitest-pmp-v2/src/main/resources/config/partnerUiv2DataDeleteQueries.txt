@@ -22,18 +22,6 @@ delete from pms.partner_h where cr_by='pmpui-deactivateftm';
 delete from pms.partner where cr_by='pmpui-deactivateftm';
 delete FROM pms.user_details where user_id='pmpui-deactivateftm';
 
-#ABIS partner pmpui-abis and data share policies abisdspolicy01 / abisdspolicy02.
-#Must run before the pmpui-v2 block: that block deletes these policies and the partner,
-#and a leftover link request makes the partner delete fail and skips every statement after it.
-delete from pms.partner_policy_bioextract_request where part_id = 'pmpui-abis' or partner_policy_request_id in (select id from pms.partner_policy_request where part_id = 'pmpui-abis' or policy_id in (select id from pms.auth_policy where name in ('abisdspolicy01', 'abisdspolicy02', 'abisdspolicy03')));
-delete from pms.partner_policy_credential_type_request where part_id = 'pmpui-abis' or partner_policy_request_id in (select id from pms.partner_policy_request where part_id = 'pmpui-abis' or policy_id in (select id from pms.auth_policy where name in ('abisdspolicy01', 'abisdspolicy02', 'abisdspolicy03')));
-delete from pms.partner_policy_request where part_id = 'pmpui-abis' or policy_id in (select id from pms.auth_policy where name in ('abisdspolicy01', 'abisdspolicy02', 'abisdspolicy03'));
-delete from pms.partner_policy where part_id = 'pmpui-abis' or policy_id in (select id from pms.auth_policy where name in ('abisdspolicy01', 'abisdspolicy02', 'abisdspolicy03'));
-delete from pms.auth_policy where name in ('abisdspolicy01', 'abisdspolicy02', 'abisdspolicy03');
-delete from pms.partner_h where cr_by = 'pmpui-abis' or id = 'pmpui-abis';
-delete from pms.partner where user_id = 'pmpui-abis' or cr_by = 'pmpui-abis' or id = 'pmpui-abis';
-delete FROM pms.user_details where user_id = 'pmpui-abis';
-
 #These are delete queries for AUTH PARTNER - pmpui-v2 , pmpui-policyadmin
 #Bio-extract and credential-type requests reference partner_policy_request.
 #They must go before that parent delete or the whole cleanup batch aborts.
@@ -111,25 +99,22 @@ delete FROM pms.user_details where user_id='pmpui-devicenocert';
 #after the run so the DSL report can create one.
 #Manual adjudication partners pmpui-ma / pmpui-ma2, policies mapolicy01 / mapolicy03 / ovppolicy,
 #and biometric extractor configs from these tests. Bioextract rows go first.
-delete from pms.partner_policy_bioextract_request where part_id in ('pmpui-ma', 'pmpui-ma2', 'pmpui-ovp', 'pmpui-ovp2') or partner_policy_request_id in (select id from pms.partner_policy_request where part_id in ('pmpui-ma', 'pmpui-ma2', 'pmpui-ovp', 'pmpui-ovp2') or policy_id in (select id from pms.auth_policy where name in ('mapolicy01', 'mapolicy03', 'ovppolicy')));
-delete from pms.partner_policy_credential_type_request where part_id in ('pmpui-ma', 'pmpui-ma2', 'pmpui-ovp', 'pmpui-ovp2') or partner_policy_request_id in (select id from pms.partner_policy_request where part_id in ('pmpui-ma', 'pmpui-ma2', 'pmpui-ovp', 'pmpui-ovp2') or policy_id in (select id from pms.auth_policy where name in ('mapolicy01', 'mapolicy03', 'ovppolicy')));
-delete from pms.partner_policy_bioextract where part_id in ('pmpui-ma', 'pmpui-ma2', 'pmpui-ovp', 'pmpui-ovp2');
-delete from pms.bioextractor_configuration where config_name like 'bioconfig%' or config_name like 'biodelete%' or config_name like 'ovpbio%';
-delete from pms.partner_policy_credential_type where part_id in ('pmpui-ma', 'pmpui-ma2', 'pmpui-ovp', 'pmpui-ovp2') or policy_id in (select id from pms.auth_policy where name in ('mapolicy01', 'mapolicy03', 'ovppolicy'));
-delete from pms.partner_policy_request where part_id in ('pmpui-ma', 'pmpui-ma2', 'pmpui-ovp', 'pmpui-ovp2') or policy_id in (select id from pms.auth_policy where name in ('mapolicy01', 'mapolicy03', 'ovppolicy'));
-delete from pms.partner_policy where part_id in ('pmpui-ma', 'pmpui-ma2', 'pmpui-ovp', 'pmpui-ovp2') or policy_id in (select id from pms.auth_policy where name in ('mapolicy01', 'mapolicy03', 'ovppolicy'));
-delete from pms.auth_policy where name in ('mapolicy01', 'mapolicy03', 'ovppolicy');
+delete from pms.partner_policy_bioextract_request where part_id in ('pmpui-ma', 'pmpui-ma2', 'pmpui-ovp', 'pmpui-ovp2', 'pmpui-mapbio') or partner_policy_request_id in (select id from pms.partner_policy_request where part_id in ('pmpui-ma', 'pmpui-ma2', 'pmpui-ovp', 'pmpui-ovp2', 'pmpui-mapbio') or policy_id in (select id from pms.auth_policy where name in ('mapolicy01', 'mapolicy03', 'ovppolicy', 'mapbiopolicy')));
+delete from pms.partner_policy_credential_type_request where part_id in ('pmpui-ma', 'pmpui-ma2', 'pmpui-ovp', 'pmpui-ovp2', 'pmpui-mapbio') or partner_policy_request_id in (select id from pms.partner_policy_request where part_id in ('pmpui-ma', 'pmpui-ma2', 'pmpui-ovp', 'pmpui-ovp2', 'pmpui-mapbio') or policy_id in (select id from pms.auth_policy where name in ('mapolicy01', 'mapolicy03', 'ovppolicy', 'mapbiopolicy')));
+delete from pms.partner_policy_bioextract where part_id in ('pmpui-ma', 'pmpui-ma2', 'pmpui-ovp', 'pmpui-ovp2', 'pmpui-mapbio');
+delete from pms.bioextractor_configuration where cr_by = 'pmpui-v2' and (config_name like 'bioconfig%' or config_name like 'biodelete%' or config_name like 'ovpbio%' or config_name like 'mapbio%');
+delete from pms.partner_policy_credential_type where part_id in ('pmpui-ma', 'pmpui-ma2', 'pmpui-ovp', 'pmpui-ovp2', 'pmpui-mapbio') or policy_id in (select id from pms.auth_policy where name in ('mapolicy01', 'mapolicy03', 'ovppolicy', 'mapbiopolicy'));
+delete from pms.partner_policy_request where part_id in ('pmpui-ma', 'pmpui-ma2', 'pmpui-ovp', 'pmpui-ovp2', 'pmpui-mapbio') or policy_id in (select id from pms.auth_policy where name in ('mapolicy01', 'mapolicy03', 'ovppolicy', 'mapbiopolicy'));
+delete from pms.partner_policy where part_id in ('pmpui-ma', 'pmpui-ma2', 'pmpui-ovp', 'pmpui-ovp2', 'pmpui-mapbio') or policy_id in (select id from pms.auth_policy where name in ('mapolicy01', 'mapolicy03', 'ovppolicy', 'mapbiopolicy'));
+delete from pms.auth_policy where name in ('mapolicy01', 'mapolicy03', 'ovppolicy', 'mapbiopolicy');
 delete from pms.partner_h where cr_by='pmpui-ovp';
 delete from pms.partner_h where cr_by='pmpui-ovp2';
-delete from pms.partner_h where cr_by in ('pmpui-ma', 'pmpui-ma2') or id in ('pmpui-ma', 'pmpui-ma2');
+delete from pms.partner_h where cr_by in ('pmpui-ma', 'pmpui-ma2', 'pmpui-mapbio') or id in ('pmpui-ma', 'pmpui-ma2', 'pmpui-mapbio');
 delete from pms.partner where user_id='pmpui-ovp';
 delete from pms.partner where cr_by='pmpui-ovp';
 delete from pms.partner where user_id='pmpui-ovp2';
 delete from pms.partner where cr_by='pmpui-ovp2';
-delete from pms.partner where user_id in ('pmpui-ma', 'pmpui-ma2') or cr_by in ('pmpui-ma', 'pmpui-ma2') or id in ('pmpui-ma', 'pmpui-ma2');
+delete from pms.partner where user_id in ('pmpui-ma', 'pmpui-ma2', 'pmpui-mapbio') or cr_by in ('pmpui-ma', 'pmpui-ma2', 'pmpui-mapbio') or id in ('pmpui-ma', 'pmpui-ma2', 'pmpui-mapbio');
 delete FROM pms.user_details where user_id='pmpui-ovp';
 delete FROM pms.user_details where user_id='pmpui-ovp2';
-delete FROM pms.user_details where user_id in ('pmpui-ma', 'pmpui-ma2');
-
-#Policy groups created for the MOSIP-41028 dropdown scroll test.
-delete from pms.policy_group where name in ('scrollpg01', 'scrollpg02', 'scrollpg03', 'scrollpg04', 'scrollpg05', 'scrollpg06');
+delete FROM pms.user_details where user_id in ('pmpui-ma', 'pmpui-ma2', 'pmpui-mapbio');

@@ -45,9 +45,9 @@ public class MapBiometricExtractorProviderTest extends BaseClass {
 
 	@Test(priority = 1, description = "Creating biometric config, OVP partner and datashare policy for mapping")
 	public void CreatingPrerequisitesForMapBiometricExtractor() {
-		partnerId = GlobalConstants.OVP_PARTNER_USER;
-		policyName = GlobalConstants.OVP_POLICY_NAME;
-		bioConfigName = "ovpbio" + data;
+		partnerId = GlobalConstants.MAP_BIO_PARTNER_USER;
+		policyName = GlobalConstants.MAP_BIO_POLICY_NAME;
+		bioConfigName = "mapbio" + data;
 
 		dashboardPage = new DashboardPage(driver);
 		biometricConfigurationPage = new BiometricConfigurationPage(driver);
@@ -152,7 +152,7 @@ public class MapBiometricExtractorProviderTest extends BaseClass {
 
 		assertTrue(mapBioPage.isMapBiometricExtractorProviderPageDisplayed(),
 				GlobalConstants.isMapBiometricExtractorProviderPageDisplayed);
-		assertTrue(mapBioPage.getPageTitleText().toLowerCase().contains("biometric"),
+		assertTrue(mapBioPage.isMapBiometricPageTitleDisplayed(),
 				GlobalConstants.isMapBiometricExtractorProviderPageTitleDisplayed);
 		assertTrue(mapBioPage.isMandatoryMappingBannerDisplayed(),
 				GlobalConstants.isMapBiometricMandatoryBannerDisplayed);

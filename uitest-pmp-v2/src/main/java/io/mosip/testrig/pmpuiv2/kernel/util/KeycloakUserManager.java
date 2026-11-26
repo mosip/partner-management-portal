@@ -70,30 +70,11 @@ public class KeycloakUserManager extends BaseTestCaseFunc {
 		List<String> needsToBeCreatedUsers = List.of(ConfigManager.getIAMUsersToCreate().split(","));
 		Keycloak keycloakInstance = getKeycloakInstance();
 		for (String needsToBeCreatedUser : needsToBeCreatedUsers) {
-			UserRepresentation user = new UserRepresentation();
-			if (needsToBeCreatedUser.equals("globaladmin")) {
-				moduleSpecificUser = needsToBeCreatedUser;
-			} else if (needsToBeCreatedUser.equals("masterdata-220005")) {
-				moduleSpecificUser = needsToBeCreatedUser;
-			} else if (needsToBeCreatedUser.equals("auth")) {
-				moduleSpecificUser = needsToBeCreatedUser;
-			} else if (needsToBeCreatedUser.equals("nocert")) {
-				moduleSpecificUser = needsToBeCreatedUser;
-			} else if (needsToBeCreatedUser.equals("device")) {
-				moduleSpecificUser = needsToBeCreatedUser;
-			} else if (needsToBeCreatedUser.equals("ftm")) {
-				moduleSpecificUser = needsToBeCreatedUser;
-			} else if (needsToBeCreatedUser.equals("ftmnocert")) {
-				moduleSpecificUser = needsToBeCreatedUser;
-			} else if (needsToBeCreatedUser.equals("policyadmin")) {
-				moduleSpecificUser = needsToBeCreatedUser;
-			} else if (needsToBeCreatedUser.equals("policies")) {
-				moduleSpecificUser = needsToBeCreatedUser;
-			} else if (needsToBeCreatedUser.equals("deactivate")) {
-				moduleSpecificUser = needsToBeCreatedUser;
-			} else {
-				moduleSpecificUser = BaseTestCaseFunc.currentModule + "-" + needsToBeCreatedUser;
+			if (registeredThroughSignUp(needsToBeCreatedUser)) {
+				continue;
 			}
+			UserRepresentation user = new UserRepresentation();
+			moduleSpecificUser = keycloakUsername(needsToBeCreatedUser);
 			logger.info(moduleSpecificUser);
 			user.setEnabled(true);
 			user.setUsername(moduleSpecificUser);
@@ -174,20 +155,43 @@ public class KeycloakUserManager extends BaseTestCaseFunc {
 
 	public static void removeUser() {
 		List<String> needsToBeRemovedUsers = List.of(ConfigManager.getIAMUsersToCreate().split(","));
-		Keycloak keycloakInstance = getKeycloakInstance();
 		for (String needsToBeRemovedUser : needsToBeRemovedUsers) {
-			String moduleSpecificUserToBeRemoved = BaseTestCaseFunc.currentModule + "-" + needsToBeRemovedUser;
-			RealmResource realmResource = keycloakInstance.realm(ConfigManager.getIAMRealmId());
-			UsersResource usersRessource = realmResource.users();
-			List<UserRepresentation> usersFromDB = usersRessource.search(moduleSpecificUserToBeRemoved);
-			if (!usersFromDB.isEmpty()) {
-				UserResource userResource = usersRessource.get(usersFromDB.get(0).getId());
-				userResource.remove();
-				logger.info("User removed with name: %s%n" + moduleSpecificUserToBeRemoved);
-			} else {
-				logger.info("User not found with name: %s%n" + moduleSpecificUserToBeRemoved);
+			removeKeycloakUser(keycloakUsername(needsToBeRemovedUser));
+			String prefixedUser = BaseTestCaseFunc.currentModule + "-" + needsToBeRemovedUser;
+			if (!prefixedUser.equals(keycloakUsername(needsToBeRemovedUser))) {
+				removeKeycloakUser(prefixedUser);
 			}
 		}
+	}
+
+	private static boolean registeredThroughSignUp(String shortName) {
+		return "v2".equals(shortName) || "deactivate2".equals(shortName) || "deactivatedevice".equals(shortName)
+				|| "deactivateftm".equals(shortName);
+	}
+
+	private static String keycloakUsername(String shortName) {
+		if (shortName.equals("globaladmin") || shortName.equals("masterdata-220005") || shortName.equals("auth")
+				|| shortName.equals("nocert") || shortName.equals("device") || shortName.equals("ftm")
+				|| shortName.equals("ftmnocert") || shortName.equals("policyadmin") || shortName.equals("policies")
+				|| shortName.equals("deactivate")) {
+			return shortName;
+		}
+		return BaseTestCaseFunc.currentModule + "-" + shortName;
+	}
+
+	private static void removeKeycloakUser(String username) {
+		Keycloak keycloakInstance = getKeycloakInstance();
+		RealmResource realmResource = keycloakInstance.realm(ConfigManager.getIAMRealmId());
+		UsersResource usersRessource = realmResource.users();
+		List<UserRepresentation> usersFromDB = usersRessource.search(username);
+		for (UserRepresentation found : usersFromDB) {
+			if (username.equals(found.getUsername())) {
+				usersRessource.get(found.getId()).remove();
+				logger.info("User removed with name: %s%n" + username);
+				return;
+			}
+		}
+		logger.info("User not found with name: %s%n" + username);
 	}
 
 	public static String readJsonData(String path) {

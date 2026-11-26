@@ -13,6 +13,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import io.mosip.testrig.pmpuiv2.utility.LocalizedText;
+
 public class ManualAdjudicationPartnerPage extends BasePage {
 
 	private static final Logger logger = Logger.getLogger(ManualAdjudicationPartnerPage.class);
@@ -253,8 +255,15 @@ public class ManualAdjudicationPartnerPage extends BasePage {
 	}
 
 	public boolean isDefaultManualAdjudicationPartnerDisplayed() {
-		String selected = getSelectedPartnerTypeText();
-		return selected != null && selected.toLowerCase().contains("manual adjudication");
+		clickOnPartnerTypeDropdown();
+		By option = By.id("create_partner_partner_type_option1");
+		if (!isElementDisplayedQuick(option, Duration.ofSeconds(5))) {
+			return false;
+		}
+		String cssClass = driver.findElement(option).getAttribute("class");
+		boolean selected = cssClass != null && java.util.Arrays.asList(cssClass.split("\\s+")).contains("bg-gray-100");
+		clickOnPartnerTypeDropdown();
+		return selected;
 	}
 
 	public boolean isManualAdjudicationPartnerOptionDisplayed() {
@@ -486,7 +495,10 @@ public class ManualAdjudicationPartnerPage extends BasePage {
 	}
 
 	public boolean isEmailAddressIsAlreadyRegisteredErrorDisplayed() {
-		return isElementDisplayed(createPartnerErrorMessage);
+		return isElementDisplayed(createPartnerErrorMessage) && LocalizedText.matches(getEmailAlreadyRegisteredErrorText(),
+				"The provided email address is already registered. Please provide a different email address.",
+				"L’adresse e-mail fournie est déjà enregistrée. Veuillez fournir une autre adresse e-mail.",
+				"عنوان البريد الإلكتروني المقدم مسجل بالفعل. يرجى تقديم عنوان بريد إلكتروني آخر.");
 	}
 
 	public void clickOnErrorMessageCloseButton() {
@@ -498,7 +510,10 @@ public class ManualAdjudicationPartnerPage extends BasePage {
 	}
 
 	public boolean isUsernameAlreadyExistErrorDisplayed() {
-		return isElementDisplayed(createPartnerErrorMessage);
+		return isElementDisplayed(createPartnerErrorMessage) && LocalizedText.matches(getUsernameAlreadyExistErrorText(),
+				"Username already exists. Enter a different username",
+				"Le nom d’utilisateur existe déjà. Entrez un autre nom d’utilisateur",
+				"اسم المستخدم موجود بالفعل. أدخل اسم مستخدم مختلفًا");
 	}
 
 	public void clickOnPartnerOragnizationInfoButton() {
@@ -777,6 +792,16 @@ public class ManualAdjudicationPartnerPage extends BasePage {
 		return getTextFromLocator(By.id("view_partner_type_context"));
 	}
 
+	public boolean isViewPartnerTypeManualAdjudication() {
+		String partnerType = getViewPartnerTypeText();
+		if (partnerType == null) {
+			return false;
+		}
+		String compact = partnerType.replace("_", "").replace(" ", "").toLowerCase();
+		return "manualadjudication".equals(compact) || LocalizedText.matches(partnerType,
+				"Manual Adjudication Partner", "Partenaire d'arbitrage manuel", "شريك التحكيم اليدوي");
+	}
+
 	public boolean isViewOrganisationNameDisplayed() {
 		return isElementDisplayedQuick(By.id("view_partner_details_org_name_label"), Duration.ofSeconds(5))
 				|| isElementDisplayedQuick(By.id("view_partner_details_org_name_context"), Duration.ofSeconds(3));
@@ -817,25 +842,4 @@ public class ManualAdjudicationPartnerPage extends BasePage {
 		}
 	}
 
-	private static String xpathLiteral(String value) {
-		if (value == null) {
-			return "''";
-		}
-		if (!value.contains("'")) {
-			return "'" + value + "'";
-		}
-		if (!value.contains("\"")) {
-			return "\"" + value + "\"";
-		}
-		StringBuilder literal = new StringBuilder("concat(");
-		String[] parts = value.split("'", -1);
-		for (int i = 0; i < parts.length; i++) {
-			if (i > 0) {
-				literal.append(", \"'\", ");
-			}
-			literal.append("'").append(parts[i]).append("'");
-		}
-		literal.append(")");
-		return literal.toString();
-	}
 }

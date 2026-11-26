@@ -10,6 +10,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import io.mosip.testrig.pmpuiv2.utility.LocalizedText;
+
 public class BiometricConfigurationPage extends BasePage {
 
 	@FindBy(id = "dashboard_biometric_provider_configuration_card")
@@ -182,7 +184,10 @@ public class BiometricConfigurationPage extends BasePage {
 	}
 
 	public boolean isBiometricConfigurationListPageDisplayed() {
-		return isPageTitleDisplayed("biometric");
+		return isElementDisplayed(pageTitle) && LocalizedText.matches(pageTitle.getText(),
+				"Biometric Extractor Provider Configurations",
+				"Configurations du fournisseur d'extraction biométrique",
+				"تكوينات مزود مستخرج القياسات الحيوية");
 	}
 
 	public void clickOnCreateBiometricConfigurationButton() {
@@ -510,8 +515,10 @@ public class BiometricConfigurationPage extends BasePage {
 		if (!isElementDisplayed(pageTitle)) {
 			return false;
 		}
-		String title = pageTitle.getText();
-		return title != null && title.toLowerCase().contains("view biometric extractor");
+		return LocalizedText.matches(pageTitle.getText(),
+				"View Biometric Extractor Provider Configuration",
+				"Afficher la configuration du fournisseur d'extracteur biométrique",
+				"عرض تكوين مزود مستخرج القياسات الحيوية");
 	}
 
 	public boolean isViewConfigurationNameDisplayed() {
@@ -612,14 +619,6 @@ public class BiometricConfigurationPage extends BasePage {
 		}
 	}
 
-	private boolean isPageTitleDisplayed(String expectedText) {
-		if (!isElementDisplayed(pageTitle) || expectedText == null) {
-			return false;
-		}
-		String title = pageTitle.getText();
-		return title != null && title.toLowerCase().contains(expectedText.toLowerCase());
-	}
-
 	private void clickButtonOption(String idPrefix, String idSuffix) {
 		By option = By.xpath("//button[starts-with(@id," + xpathLiteral(idPrefix) + ") and substring(@id, string-length(@id) - string-length("
 				+ xpathLiteral(idSuffix) + ") + 1) = " + xpathLiteral(idSuffix) + "]");
@@ -634,33 +633,7 @@ public class BiometricConfigurationPage extends BasePage {
 		if (!isElementDisplayedQuick(icon, Duration.ofSeconds(10))) {
 			throw new IllegalStateException("Sort icon was not displayed: " + iconId);
 		}
-		((JavascriptExecutor) driver).executeScript(
-				"const icon = document.getElementById(arguments[0]);"
-						+ "if (!icon) { throw new Error('Sort icon was not found: ' + arguments[0]); }"
-						+ "icon.dispatchEvent(new MouseEvent('click', {bubbles: true, cancelable: true, view: window}));",
-				iconId);
-	}
-
-	private static String xpathLiteral(String value) {
-		if (value == null) {
-			return "''";
-		}
-		if (!value.contains("'")) {
-			return "'" + value + "'";
-		}
-		if (!value.contains("\"")) {
-			return "\"" + value + "\"";
-		}
-		StringBuilder literal = new StringBuilder("concat(");
-		String[] parts = value.split("'", -1);
-		for (int i = 0; i < parts.length; i++) {
-			if (i > 0) {
-				literal.append(", \"'\", ");
-			}
-			literal.append("'").append(parts[i]).append("'");
-		}
-		literal.append(")");
-		return literal.toString();
+		click(icon);
 	}
 
 	private void enterInputText(WebElement input, String value) {
