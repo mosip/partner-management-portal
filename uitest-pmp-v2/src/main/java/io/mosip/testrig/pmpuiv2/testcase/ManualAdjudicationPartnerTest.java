@@ -36,7 +36,7 @@ public class ManualAdjudicationPartnerTest extends BaseClass {
 		partnerCertificatePage.clickOnPartnerDomainSelectorDropdownOptionAuth();
 		partnerCertificatePage.uploadAuthRootCa();
 		partnerCertificatePage.clickonSubmitButtonForAdmin();
-		partnerCertificatePage.continueAfterTrustCertificateSubmit();
+		partnerCertificatePage.continueAfterTrustCertificateSubmitAllowingExisting();
 
 		partnerCertificatePage.clickOnIntermediateCACertTab();
 		assertTrue(partnerCertificatePage.isIntermediateUploadTrustCertificateButtonDisplayed(),
@@ -46,7 +46,7 @@ public class ManualAdjudicationPartnerTest extends BaseClass {
 		partnerCertificatePage.clickOnPartnerDomainSelectorDropdownOptionAuth();
 		partnerCertificatePage.uploadAuthSubCa();
 		partnerCertificatePage.clickonSubmitButtonForAdmin();
-		partnerCertificatePage.continueAfterTrustCertificateSubmit();
+		partnerCertificatePage.continueAfterTrustCertificateSubmitAllowingExisting();
 		partnerCertificatePage.clickOnHomeButton();
 
 		dashboardPage.clickOnPartners();
