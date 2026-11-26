@@ -70,8 +70,8 @@ public class PolicyGroupInfiniteScrollTest extends BaseClass {
 
 		String policyGroupName = policyGroupName(1);
 		openPolicyGroupDropdown();
-		int firstPageCount = authPolicyPage.waitForPolicyGroupOptionCount(FIRST_PAGE_SIZE);
-		authPolicyPage.scrollPolicyGroupListAndWaitForMore(firstPageCount);
+		authPolicyPage.waitForPolicyGroupOptionCount(FIRST_PAGE_SIZE);
+		authPolicyPage.scrollPolicyGroupList(FIRST_PAGE_SIZE);
 		int matches = authPolicyPage.searchOpenPolicyGroupDropdown(policyGroupName);
 		assertTrue(matches <= FIRST_PAGE_SIZE, GlobalConstants.isPolicyGroupSelectedFromSearch);
 		authPolicyPage.clickPolicyGroupOption(policyGroupName);

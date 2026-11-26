@@ -9,6 +9,7 @@ import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
@@ -653,7 +654,10 @@ public class AuthPolicyPage extends BasePage {
 	}
 
 	public void clickOnPolicyGroupDropdown() {
-		clickOnElement(policyGroupDropdown);
+		WebElement button = driver.findElement(By.id("policy_group_selector_dropdown_button"));
+		if (!"true".equals(button.getAttribute("aria-expanded"))) {
+			clickOnElement(button);
+		}
 	}
 
 	public boolean isPolicyGroupDropdownSearchInputDisplayed() {
@@ -687,18 +691,38 @@ public class AuthPolicyPage extends BasePage {
 	}
 
 	public int searchOpenPolicyGroupDropdown(String value) {
-		clearTextBox(policyGroupDropdownSearchInput);
-		enter(policyGroupDropdownSearchInput, value);
-		new WebDriverWait(driver, Duration.ofSeconds(20)).until(d -> {
-			java.util.List<WebElement> buttons = policyGroupOptionButtons();
-			return !buttons.isEmpty() && buttons.size() <= 5 && buttons.stream()
-					.allMatch(button -> button.getText() != null && button.getText().contains(value));
-		});
-		return policyGroupOptionButtons().size();
+		WebElement search = driver.findElement(By.id("policy_group_selector_search_input"));
+		setReactInputValue(search, value);
+		By optionName = policyGroupOptionName(value);
+		new WebDriverWait(driver, Duration.ofSeconds(20))
+				.until(ExpectedConditions.visibilityOfElementLocated(optionName));
+		return driver.findElements(optionName).size();
 	}
 
 	public void clickPolicyGroupOption(String value) {
-		waitScrollAndClick(By.xpath("//span[normalize-space()='" + value + "']"));
+		waitScrollAndClick(policyGroupOptionName(value));
+	}
+
+	private static String xpathLiteral(String value) {
+		if (value == null || !value.contains("'")) {
+			return "'" + (value == null ? "" : value) + "'";
+		}
+		return "concat('" + value.replace("'", "',\"'\",'") + "')";
+	}
+
+	private By policyGroupOptionName(String value) {
+		return By.xpath(
+				"//*[@id='policy_group_selector_dropdown_listbox']//span[starts-with(@id,'policy_group_selector_option_name_') and normalize-space()="
+						+ xpathLiteral(value) + "]");
+	}
+
+	private void setReactInputValue(WebElement input, String value) {
+		((JavascriptExecutor) driver).executeScript(
+				"const input = arguments[0]; const next = arguments[1];"
+						+ "const setter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;"
+						+ "setter.call(input, next);"
+						+ "input.dispatchEvent(new Event('input', { bubbles: true }));",
+				input, value);
 	}
 
 	public String getSelectedPolicyGroupText() {
