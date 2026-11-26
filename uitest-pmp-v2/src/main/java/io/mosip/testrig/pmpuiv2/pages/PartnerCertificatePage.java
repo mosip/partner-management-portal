@@ -642,6 +642,11 @@ public class PartnerCertificatePage extends BasePage {
 			click(success);
 			return true;
 		}
+		String errorText = "";
+		java.util.List<WebElement> messages = driver.findElements(By.id("upload_trust_certificate_error_msg"));
+		if (!messages.isEmpty() && messages.get(0).getText() != null) {
+			errorText = messages.get(0).getText().replaceAll("\\s+", " ").trim();
+		}
 		click(error);
 		clickOnElement(adminCertUploadCancelButton);
 		By leavePage = By.id("block_messsage_proceed");
@@ -651,7 +656,9 @@ public class PartnerCertificatePage extends BasePage {
 		} catch (TimeoutException leavePromptNotShown) {
 			// Cancel already returned to the certificate list.
 		}
-		return true;
+		return "The certificate already exists. Please upload another certificate".equals(errorText)
+				|| "Le certificat existe déjà. Veuillez télécharger un autre certificat.".equals(errorText)
+				|| "الشهادة موجودة بالفعل. يرجى تحميل شهادة أخرى".equals(errorText);
 	}
 
 	public void clickOnSuccessMsgCloseButton() {

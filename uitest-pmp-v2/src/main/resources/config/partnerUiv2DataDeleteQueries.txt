@@ -23,11 +23,13 @@ delete from pms.partner where cr_by='pmpui-deactivateftm';
 delete FROM pms.user_details where user_id='pmpui-deactivateftm';
 
 #ABIS partner pmpui-abis and data share policies abisdspolicy01 / abisdspolicy02.
-delete from pms.partner_policy_bioextract_request where part_id = 'pmpui-abis' or partner_policy_request_id in (select id from pms.partner_policy_request where part_id = 'pmpui-abis' or policy_id in (select id from pms.auth_policy where name in ('abisdspolicy01', 'abisdspolicy02', 'abisdspolicy03')));
-delete from pms.partner_policy_credential_type_request where part_id = 'pmpui-abis' or partner_policy_request_id in (select id from pms.partner_policy_request where part_id = 'pmpui-abis' or policy_id in (select id from pms.auth_policy where name in ('abisdspolicy01', 'abisdspolicy02', 'abisdspolicy03')));
-delete from pms.partner_policy_request where part_id = 'pmpui-abis' or policy_id in (select id from pms.auth_policy where name in ('abisdspolicy01', 'abisdspolicy02', 'abisdspolicy03'));
-delete from pms.partner_policy where part_id = 'pmpui-abis' or policy_id in (select id from pms.auth_policy where name in ('abisdspolicy01', 'abisdspolicy02', 'abisdspolicy03'));
-delete from pms.auth_policy where name in ('abisdspolicy01', 'abisdspolicy02', 'abisdspolicy03');
+#Must run before the pmpui-v2 block. That block deletes policies and the partner row,
+#and a leftover link request makes the partner delete fail and skips every statement after it.
+delete from pms.partner_policy_bioextract_request where part_id = 'pmpui-abis' or partner_policy_request_id in (select id from pms.partner_policy_request where part_id = 'pmpui-abis' or policy_id in (select id from pms.auth_policy where name in ('abisdspolicy01', 'abisdspolicy02')));
+delete from pms.partner_policy_credential_type_request where part_id = 'pmpui-abis' or partner_policy_request_id in (select id from pms.partner_policy_request where part_id = 'pmpui-abis' or policy_id in (select id from pms.auth_policy where name in ('abisdspolicy01', 'abisdspolicy02')));
+delete from pms.partner_policy_request where part_id = 'pmpui-abis' or policy_id in (select id from pms.auth_policy where name in ('abisdspolicy01', 'abisdspolicy02'));
+delete from pms.partner_policy where part_id = 'pmpui-abis' or policy_id in (select id from pms.auth_policy where name in ('abisdspolicy01', 'abisdspolicy02'));
+delete from pms.auth_policy where name in ('abisdspolicy01', 'abisdspolicy02');
 delete from pms.partner_h where cr_by = 'pmpui-abis' or id = 'pmpui-abis';
 delete from pms.partner where user_id = 'pmpui-abis' or cr_by = 'pmpui-abis' or id = 'pmpui-abis';
 delete FROM pms.user_details where user_id = 'pmpui-abis';
