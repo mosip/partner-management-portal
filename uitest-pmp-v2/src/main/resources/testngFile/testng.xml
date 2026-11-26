@@ -45,6 +45,8 @@
 			<class name="io.mosip.testrig.pmpuiv2.testcase.MispServicesTest" />
 			<!--ABIS PARTNER FLOW-->
 			<class name="io.mosip.testrig.pmpuiv2.testcase.AbisPartnerTest" />
+			<!--ABIS PARTNER POLICY LINKING (MOSIP-43610)-->
+			<class name="io.mosip.testrig.pmpuiv2.testcase.AbisPartnerPolicyLinkingTest" />
 			<!--ONLINE VERIFICATION PARTNER FLOW-->
 			<class name="io.mosip.testrig.pmpuiv2.testcase.OnlineVerificationPartnerTest" />
 			<class name="io.mosip.testrig.pmpuiv2.testcase.OnlineVerificationPartnerViewTest" />

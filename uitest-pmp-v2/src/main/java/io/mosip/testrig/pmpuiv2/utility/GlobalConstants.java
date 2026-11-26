@@ -1535,6 +1535,11 @@ public class GlobalConstants {
 	public static final String ABIS_ADDRESS = "abisaddress";
 	public static final String ABIS_CONTACT_NUMBER = "9898989898";
 	public static final String ABIS_NOTIFICATION_LANGUAGE = "English";
+	public static final String ABIS_POLICY_01 = "abisdspolicy01";
+	public static final String ABIS_POLICY_01_DESCRIPTION = "abis data share policy 01";
+	public static final String ABIS_POLICY_02 = "abisdspolicy02";
+	public static final String ABIS_POLICY_02_DESCRIPTION = "abis data share policy 02";
+	public static final String isRequestPolicyGroupDisabled = "Verify if request policy group is disabled";
 	public static final String ORG_NAME_INFO_TEXT = "Enter the organization name as mentioned in the ORGANIZATION attribute of CERTIFICATE subject in the CA Signed Certificate.";
 	public static final String ORG_NAME_WITH_ALLOWED_SPECIAL_CHARS = "TestOrg@#&()-'?!:;=_";
 	public static final String DISALLOWED_SPECIAL_CHARS_ORG = "$%^*";

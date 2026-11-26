@@ -468,6 +468,11 @@ public class PartnerPolicyMappingPage extends BasePage {
 		clickOnElement(partnerListViewElipsisButton);
 	}
 
+	public void clickOnActionForPolicyStatus(String policyName, String status) {
+		click(By.xpath("//tr[.//td[normalize-space()='" + policyName + "'] and .//div[normalize-space()='" + status
+				+ "']]//*[starts-with(@id,'partner_list_view')]"));
+	}
+
 	public void clickOnApproveOrRejectButton() {
 		clickOnElement(approveRejectButton);
 	}

@@ -370,6 +370,9 @@ public class DatasharePolicyPage extends BasePage {
 	@FindBy(xpath = "//textarea[@id='policy_data_box' and contains(text(), '\"shareableAttributes\"')]")
 	private WebElement policyDataBoxWithAttributes;
 
+	@FindBy(id = "publish_policy_popup_success_msg_with_param")
+	private WebElement publishPolicyPopupSuccessMessage;
+
 	@FindBy(id = "publish_policy_close_button")
 	private WebElement publishPolicyCloseButton;
 
@@ -1182,6 +1185,10 @@ public class DatasharePolicyPage extends BasePage {
 
 	public boolean isPolicyDataContentDisplayed() {
 		return isElementDisplayed(policyDataBoxWithAttributes);
+	}
+
+	public boolean isPublishPolicyPopupSuccessMessageDisplayed() {
+		return isElementDisplayed(publishPolicyPopupSuccessMessage);
 	}
 
 	public void clickOnPublishPolicyCloseButton() {
