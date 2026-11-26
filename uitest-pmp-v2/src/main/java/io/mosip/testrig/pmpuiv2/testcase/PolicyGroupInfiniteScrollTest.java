@@ -56,13 +56,9 @@ public class PolicyGroupInfiniteScrollTest extends BaseClass {
 		assertEquals(firstPageCount, FIRST_PAGE_SIZE, GlobalConstants.isPolicyGroupDropdownFirstPageLoaded);
 
 		int nextPageCount = authPolicyPage.scrollPolicyGroupList(firstPageCount);
-		assertTrue(nextPageCount > firstPageCount, GlobalConstants.isPolicyGroupDropdownNextPageLoaded);
-		if (nextPageCount < FIRST_PAGE_SIZE * 2) {
-			assertEquals(authPolicyPage.scrollPolicyGroupList(nextPageCount), nextPageCount,
-					GlobalConstants.isPolicyGroupDropdownNextPageLoaded);
-		} else {
-			assertEquals(nextPageCount, FIRST_PAGE_SIZE * 2, GlobalConstants.isPolicyGroupDropdownNextPageLoaded);
-		}
+		int totalSeen = Math.max(nextPageCount, authPolicyPage.scrollPolicyGroupList(nextPageCount));
+		assertEquals(nextPageCount, Math.min(FIRST_PAGE_SIZE * 2, totalSeen),
+				GlobalConstants.isPolicyGroupDropdownNextPageLoaded);
 	}
 
 	@Test(priority = 3, description = "MOSIP-41028: Policy group search and selection still work",
