@@ -7,12 +7,14 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class MispPartnerPage extends BasePage {
@@ -318,14 +320,62 @@ public class MispPartnerPage extends BasePage {
 
 	public void selectPolicyGroupDropdown(String value) {
 		ensurePolicyGroupDropdownOpen();
-		clearTextBox(policyGroupDropdownSearchInput);
-		enter(policyGroupDropdownSearchInput, value);
-		By policyGroupOption = By.xpath("//span[normalize-space()='" + value + "']");
+		WebElement search = driver.findElement(By.xpath("(//*[@id='policy_group_selector_search_input'])[1]"));
+		setReactInputValue(search, value);
+		By policyGroupOption = By.xpath(
+				"//*[@id='policy_group_selector_dropdown_listbox']//span[starts-with(@id,'policy_group_selector_option_name_') and normalize-space()="
+						+ xpathLiteral(value) + "]");
+		try {
+			new WebDriverWait(driver, Duration.ofSeconds(12))
+					.until(ExpectedConditions.visibilityOfElementLocated(policyGroupOption));
+		} catch (TimeoutException notFoundBySearch) {
+			setReactInputValue(search, "");
+			scrollPolicyGroupListUntil(policyGroupOption);
+		}
 		try {
 			waitScrollAndClick(policyGroupOption);
 		} catch (TimeoutException | NoSuchElementException e) {
 			logger.warn("Policy group not found: " + value);
 			throw new NoSuchElementException("Failed to select policy group: " + value, e);
+		}
+	}
+
+	private static String xpathLiteral(String value) {
+		if (value == null || !value.contains("'")) {
+			return "'" + (value == null ? "" : value) + "'";
+		}
+		return "concat('" + value.replace("'", "',\"'\",'") + "')";
+	}
+
+	private void setReactInputValue(WebElement input, String value) {
+		((JavascriptExecutor) driver).executeScript(
+				"const input = arguments[0]; const next = arguments[1];"
+						+ "const setter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;"
+						+ "setter.call(input, next);"
+						+ "input.dispatchEvent(new Event('input', { bubbles: true }));",
+				input, value);
+	}
+
+	private void scrollPolicyGroupListUntil(By policyGroupOption) {
+		int previousCount = -1;
+		for (int attempt = 0; attempt < 12; attempt++) {
+			if (!driver.findElements(policyGroupOption).isEmpty()) {
+				return;
+			}
+			List<WebElement> options = driver.findElements(By.cssSelector(
+					"#policy_group_selector_dropdown_listbox button[id^='policy_group_selector_option_button_']"));
+			if (options.size() == previousCount) {
+				return;
+			}
+			previousCount = options.size();
+			WebElement list = driver.findElement(By.id("policy_group_selector_dropdown_listbox"));
+			((JavascriptExecutor) driver).executeScript("arguments[0].scrollTop = arguments[0].scrollHeight;", list);
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException interrupted) {
+				Thread.currentThread().interrupt();
+				return;
+			}
 		}
 	}
 
