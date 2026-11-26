@@ -21,8 +21,6 @@ import io.mosip.testrig.pmpuiv2.kernel.util.ConfigManager;
 import io.mosip.testrig.pmpuiv2.kernel.util.KeycloakUserManager;
 import io.mosip.testrig.pmpuiv2.utility.BaseTestCaseFunc;
 import io.mosip.testrig.pmpuiv2.utility.TestRunner;
-import io.restassured.RestAssured;
-import io.restassured.config.HttpClientConfig;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.apache.log4j.Logger;
@@ -97,17 +95,7 @@ public class AdminTestUtil extends BaseTestCaseFunc {
 	public static String getCommitDetails(String path) {
 
 		Response response = null;
-		try {
-			response = given()
-					.config(RestAssured.config().httpClient(HttpClientConfig.httpClientConfig()
-							.setParam("http.connection.timeout", 20000)
-							.setParam("http.socket.timeout", 20000)
-							.setParam("http.conn-manager.timeout", 20000L)))
-					.contentType(ContentType.JSON).get(path);
-		} catch (Exception e) {
-			logger.error(e.getMessage());
-			return path + "- No Response";
-		}
+		response = given().contentType(ContentType.JSON).get(path);
 		if (response != null && response.getStatusCode() == 200) {
 			logger.info(response.getBody().asString());
 			JSONObject jsonResponse = new JSONObject(response.getBody().asString());
