@@ -45,9 +45,14 @@ function PolicyGroupSelector({ onPolicyGroupSelect, selectedPolicyGroup, contain
     // Debounce search input
     useEffect(() => {
         const timer = setTimeout(() => {
-            setDebouncedSearchTerm(searchTerm);
-            setPageNo(0);
-            setFetchData(true);
+            setDebouncedSearchTerm((currentTerm) => {
+                if (currentTerm === searchTerm) {
+                    return currentTerm;
+                }
+                setPageNo(0);
+                setFetchData(true);
+                return searchTerm;
+            });
         }, 500);
         return () => clearTimeout(timer);
     }, [searchTerm]);
@@ -78,6 +83,7 @@ function PolicyGroupSelector({ onPolicyGroupSelect, selectedPolicyGroup, contain
 
         try {
             setTableDataLoaded(false);
+            setFetchData(true);
             const response = await HttpService({
                 url: getPolicyManagerUrl('/policies/group/search', process.env.NODE_ENV),
                 method: 'post',

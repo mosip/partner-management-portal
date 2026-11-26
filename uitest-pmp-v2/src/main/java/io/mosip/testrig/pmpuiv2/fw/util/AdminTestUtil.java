@@ -21,6 +21,8 @@ import io.mosip.testrig.pmpuiv2.kernel.util.ConfigManager;
 import io.mosip.testrig.pmpuiv2.kernel.util.KeycloakUserManager;
 import io.mosip.testrig.pmpuiv2.utility.BaseTestCaseFunc;
 import io.mosip.testrig.pmpuiv2.utility.TestRunner;
+import io.restassured.RestAssured;
+import io.restassured.config.HttpClientConfig;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.apache.log4j.Logger;
@@ -97,12 +99,11 @@ public class AdminTestUtil extends BaseTestCaseFunc {
 		Response response = null;
 		try {
 			response = given()
-					.config(io.restassured.RestAssured.config().httpClient(
-							io.restassured.config.HttpClientConfig.httpClientConfig()
-									.setParam("http.connection.timeout", 20000)
-									.setParam("http.socket.timeout", 20000)
-									.setParam("http.connection-manager.timeout", 20000)))
-					.relaxedHTTPSValidation().contentType(ContentType.JSON).get(path);
+					.config(RestAssured.config().httpClient(HttpClientConfig.httpClientConfig()
+							.setParam("http.connection.timeout", 20000)
+							.setParam("http.socket.timeout", 20000)
+							.setParam("http.conn-manager.timeout", 20000L)))
+					.contentType(ContentType.JSON).get(path);
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 			return path + "- No Response";

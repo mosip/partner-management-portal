@@ -674,6 +674,33 @@ public class AuthPolicyPage extends BasePage {
 		return policyGroupOptionButtons().size();
 	}
 
+	public int scrollPolicyGroupList(int currentCount) {
+		WebElement list = driver.findElement(By.id("policy_group_selector_dropdown_listbox"));
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollTop = arguments[0].scrollHeight;", list);
+		try {
+			new WebDriverWait(driver, Duration.ofSeconds(8))
+					.until(d -> policyGroupOptionButtons().size() > currentCount);
+		} catch (TimeoutException endOfList) {
+			// Fewer groups remain than a full next page.
+		}
+		return policyGroupOptionButtons().size();
+	}
+
+	public int searchOpenPolicyGroupDropdown(String value) {
+		clearTextBox(policyGroupDropdownSearchInput);
+		enter(policyGroupDropdownSearchInput, value);
+		new WebDriverWait(driver, Duration.ofSeconds(20)).until(d -> {
+			java.util.List<WebElement> buttons = policyGroupOptionButtons();
+			return !buttons.isEmpty() && buttons.size() <= 5 && buttons.stream()
+					.allMatch(button -> button.getText() != null && button.getText().contains(value));
+		});
+		return policyGroupOptionButtons().size();
+	}
+
+	public void clickPolicyGroupOption(String value) {
+		waitScrollAndClick(By.xpath("//span[normalize-space()='" + value + "']"));
+	}
+
 	public String getSelectedPolicyGroupText() {
 		return driver.findElement(By.id("policy_group_selector_dropdown_button_text")).getText().trim();
 	}

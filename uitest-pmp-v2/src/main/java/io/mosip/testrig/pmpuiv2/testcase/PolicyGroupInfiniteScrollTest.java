@@ -55,8 +55,14 @@ public class PolicyGroupInfiniteScrollTest extends BaseClass {
 		int firstPageCount = authPolicyPage.waitForPolicyGroupOptionCount(FIRST_PAGE_SIZE);
 		assertEquals(firstPageCount, FIRST_PAGE_SIZE, GlobalConstants.isPolicyGroupDropdownFirstPageLoaded);
 
-		int nextPageCount = authPolicyPage.scrollPolicyGroupListAndWaitForMore(firstPageCount);
+		int nextPageCount = authPolicyPage.scrollPolicyGroupList(firstPageCount);
 		assertTrue(nextPageCount > firstPageCount, GlobalConstants.isPolicyGroupDropdownNextPageLoaded);
+		if (nextPageCount < FIRST_PAGE_SIZE * 2) {
+			assertEquals(authPolicyPage.scrollPolicyGroupList(nextPageCount), nextPageCount,
+					GlobalConstants.isPolicyGroupDropdownNextPageLoaded);
+		} else {
+			assertEquals(nextPageCount, FIRST_PAGE_SIZE * 2, GlobalConstants.isPolicyGroupDropdownNextPageLoaded);
+		}
 	}
 
 	@Test(priority = 3, description = "MOSIP-41028: Policy group search and selection still work",
@@ -67,8 +73,12 @@ public class PolicyGroupInfiniteScrollTest extends BaseClass {
 		authPolicyPage = new AuthPolicyPage(driver);
 
 		String policyGroupName = policyGroupName(1);
-		openCreateAuthPolicy();
-		authPolicyPage.selectPolicyGroupDropdown(policyGroupName);
+		openPolicyGroupDropdown();
+		int firstPageCount = authPolicyPage.waitForPolicyGroupOptionCount(FIRST_PAGE_SIZE);
+		authPolicyPage.scrollPolicyGroupListAndWaitForMore(firstPageCount);
+		int matches = authPolicyPage.searchOpenPolicyGroupDropdown(policyGroupName);
+		assertTrue(matches <= FIRST_PAGE_SIZE, GlobalConstants.isPolicyGroupSelectedFromSearch);
+		authPolicyPage.clickPolicyGroupOption(policyGroupName);
 		assertEquals(authPolicyPage.getSelectedPolicyGroupText(), policyGroupName,
 				GlobalConstants.isPolicyGroupSelectedFromSearch);
 	}
