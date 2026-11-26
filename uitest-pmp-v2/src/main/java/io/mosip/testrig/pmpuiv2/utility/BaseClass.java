@@ -17,6 +17,7 @@ import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WindowType;
@@ -175,12 +176,16 @@ public class BaseClass {
 			logger.info("Docker start");
 			String configFilePath = "/usr/bin/chromedriver";
 			System.setProperty("webdriver.chrome.driver", configFilePath);
+		} else if (System.getProperty("webdriver.chrome.driver") != null
+				&& !System.getProperty("webdriver.chrome.driver").isBlank()) {
+			logger.info("Using configured chrome driver " + System.getProperty("webdriver.chrome.driver"));
 		} else {
 			WebDriverManager.chromedriver().setup();
 			logger.info("window chrome driver start");
 		}
 
 		ChromeOptions options = new ChromeOptions();
+		options.setPageLoadStrategy(PageLoadStrategy.EAGER);
 
 	    if (isHeadless) {
 	        logger.info("Running in HEADLESS mode");
@@ -203,7 +208,7 @@ public class BaseClass {
 	    DriverManager.setDriver(driver);
 	    this.driver = driver;
 
-	    driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
+	    driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(90));
 
 	    if (!isHeadless) {
 	        driver.manage().window().maximize();

@@ -95,7 +95,18 @@ public class AdminTestUtil extends BaseTestCaseFunc {
 	public static String getCommitDetails(String path) {
 
 		Response response = null;
-		response = given().contentType(ContentType.JSON).get(path);
+		try {
+			response = given()
+					.config(io.restassured.RestAssured.config().httpClient(
+							io.restassured.config.HttpClientConfig.httpClientConfig()
+									.setParam("http.connection.timeout", 20000)
+									.setParam("http.socket.timeout", 20000)
+									.setParam("http.connection-manager.timeout", 20000)))
+					.relaxedHTTPSValidation().contentType(ContentType.JSON).get(path);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			return path + "- No Response";
+		}
 		if (response != null && response.getStatusCode() == 200) {
 			logger.info(response.getBody().asString());
 			JSONObject jsonResponse = new JSONObject(response.getBody().asString());
