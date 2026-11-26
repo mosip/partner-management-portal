@@ -787,6 +787,9 @@ public class GlobalConstants {
 	public static final String isCreateDatashareTitleDisplayed = "Verify if create data share title displayed";
 	public static final String isDatashareFormSubTitleDisplayed = "Verify if data share form title displayed";
 	public static final String isPolicyGroupDropdownSearchInputDisplayed = "Verify if policy group dropdown search input displayed";
+	public static final String isPolicyGroupDropdownFirstPageLoaded = "Verify if the policy group dropdown loads the first page";
+	public static final String isPolicyGroupDropdownNextPageLoaded = "Verify if the policy group dropdown loads the next page on scroll";
+	public static final String isPolicyGroupSelectedFromSearch = "Verify if the searched policy group stays selected";
 	public static final String isPolicyGroupPlaceHolderDisplayed = "Verify if policy group placeholder displayed";
 	public static final String isPolicyGroupNameDisplayed = "Verify if policy group name displayed";
 	public static final String isPolicyGroupDescriptionDisplayed = "Verify if policy group description displayed";
@@ -1535,6 +1538,11 @@ public class GlobalConstants {
 	public static final String ABIS_ADDRESS = "abisaddress";
 	public static final String ABIS_CONTACT_NUMBER = "9898989898";
 	public static final String ABIS_NOTIFICATION_LANGUAGE = "English";
+	public static final String ABIS_POLICY_01 = "abisdspolicy01";
+	public static final String ABIS_POLICY_01_DESCRIPTION = "abis data share policy 01";
+	public static final String ABIS_POLICY_02 = "abisdspolicy02";
+	public static final String ABIS_POLICY_02_DESCRIPTION = "abis data share policy 02";
+	public static final String isRequestPolicyGroupDisabled = "Verify if request policy group is disabled";
 	public static final String ORG_NAME_INFO_TEXT = "Enter the organization name as mentioned in the ORGANIZATION attribute of CERTIFICATE subject in the CA Signed Certificate.";
 	public static final String ORG_NAME_WITH_ALLOWED_SPECIAL_CHARS = "TestOrg@#&()-'?!:;=_";
 	public static final String DISALLOWED_SPECIAL_CHARS_ORG = "$%^*";
@@ -1574,7 +1582,6 @@ public class GlobalConstants {
 	public static final String ONLINE_VERIFICATION_PARTNER_ADDRESS = "ovpaddress";
 	public static final String ONLINE_VERIFICATION_PARTNER_CONTACT_NUMBER = "9898989898";
 	public static final String ONLINE_VERIFICATION_PARTNER_NOTIFICATION_LANGUAGE = "English";
-	public static final String OVP_PARTNER_USER = "pmpui-ovp";
 	public static final String OVP_PARTNER_USER_2 = "pmpui-ovp2";
 	public static final String OVP_PARTNER_EMAIL = "pmpui-ovp@test.com";
 	public static final String ONLINE_VERIFICATION_PARTNER_OPTION_DISPLAYED = "Online Verification Partner option is displayed";

@@ -135,6 +135,17 @@ public class MapBiometricExtractorProviderPage extends BasePage {
 		click(option);
 	}
 
+	public void selectConfigForRow(int rowNumber, String configName) {
+		By dropdown = By.id("map_bio_extractor_provider_config_" + rowNumber + "_dropdown_btn");
+		click(dropdown);
+		By option = By.xpath("//button[starts-with(@id,'map_bio_extractor_provider_config_" + rowNumber
+				+ "_option') and contains(normalize-space()," + xpathLiteral(configName) + ")]");
+		if (!isElementDisplayedQuick(option, Duration.ofSeconds(10))) {
+			throw new IllegalStateException("Configuration option was not displayed: " + configName);
+		}
+		click(option);
+	}
+
 	public void selectFirstConfigForRow(int rowNumber) {
 		By dropdown = By.id("map_bio_extractor_provider_config_" + rowNumber + "_dropdown_btn");
 		click(dropdown);

@@ -79,16 +79,16 @@ public class MapBiometricExtractorProviderTest extends BaseClass {
 		partnerCertificatePage.clickOnRootUploadTrustCertificateButtonInAdmin();
 		partnerCertificatePage.clickOnpartnerDomainSelectorDropdown();
 		partnerCertificatePage.clickOnPartnerDomainSelectorDropdownOptionAuth();
-		partnerCertificatePage.uploadCertificateRootCa();
+		partnerCertificatePage.uploadAuthRootCa();
 		partnerCertificatePage.clickonSubmitButtonForAdmin();
-		partnerCertificatePage.continueAfterTrustCertificateSubmit();
+		partnerCertificatePage.continueAfterTrustCertificateSubmitAllowingExisting();
 		partnerCertificatePage.clickOnIntermediateCACertTab();
 		partnerCertificatePage.clickOnIntermediateUploadTrustCertificateButtonInAdmin();
 		partnerCertificatePage.clickOnpartnerDomainSelectorDropdown();
 		partnerCertificatePage.clickOnPartnerDomainSelectorDropdownOptionAuth();
-		partnerCertificatePage.uploadCertificateSubCa();
+		partnerCertificatePage.uploadAuthSubCa();
 		partnerCertificatePage.clickonSubmitButtonForAdmin();
-		partnerCertificatePage.continueAfterTrustCertificateSubmit();
+		partnerCertificatePage.continueAfterTrustCertificateSubmitAllowingExisting();
 		partnerCertificatePage.clickOnHomeButton();
 
 		dashboardPage.clickOnPartners();
@@ -107,7 +107,7 @@ public class MapBiometricExtractorProviderTest extends BaseClass {
 		assertTrue(partnerPage.isCreatePartnerSuccessMsgDisplayed(),
 				GlobalConstants.isCreatePartnerSuccessMsgDisplayed);
 		partnerPage.clickOnUploadPartnerCertificateButton();
-		partnerCertificatePage.uploadCertificate();
+		partnerCertificatePage.uploadAuthPartnerCertificate();
 		partnerCertificatePage.clickOnSubmitButton();
 		partnerCertificatePage.clickOnCloseButton();
 		basePage.scrollToStartPage();
@@ -175,12 +175,10 @@ public class MapBiometricExtractorProviderTest extends BaseClass {
 	public void MappingBiometricModalityAndAddMore() {
 		mapBioPage = new MapBiometricExtractorProviderPage(driver);
 
-		if (!mapBioPage.isMapBiometricExtractorProviderPageDisplayed()) {
-			openMapPageViaPolicyRequestAction();
-		}
+		openMapPageViaPolicyRequestAction();
 
 		mapBioPage.selectModalityForRow(1, GlobalConstants.BIOMETRIC_CONFIGURATION_MODALITY_FACE);
-		mapBioPage.selectFirstConfigForRow(1);
+		mapBioPage.selectConfigForRow(1, bioConfigName);
 
 		assertTrue(mapBioPage.isSaveAndProceedButtonEnabled(),
 				"Save & Proceed should enable after modality and configuration are selected");
@@ -190,6 +188,8 @@ public class MapBiometricExtractorProviderTest extends BaseClass {
 
 		mapBioPage.clickOnAddMoreButton();
 		List<String> secondRowModalities = mapBioPage.getModalityOptionsForRow(2);
+		assertFalse(secondRowModalities.isEmpty(),
+				"Modality options should be listed before checking that the used modality is excluded");
 		boolean faceStillAvailable = secondRowModalities.stream()
 				.anyMatch(text -> text.toLowerCase().contains("face"));
 		assertFalse(faceStillAvailable, GlobalConstants.isMapBiometricUsedModalityExcludedFromDropdown);
@@ -202,11 +202,9 @@ public class MapBiometricExtractorProviderTest extends BaseClass {
 		partnerPolicyMappingPage = new PartnerPolicyMappingPage(driver);
 		mapBioPage = new MapBiometricExtractorProviderPage(driver);
 
-		if (!mapBioPage.isMapBiometricExtractorProviderPageDisplayed()) {
-			openMapPageViaPolicyRequestAction();
-			mapBioPage.selectModalityForRow(1, GlobalConstants.BIOMETRIC_CONFIGURATION_MODALITY_FACE);
-			mapBioPage.selectFirstConfigForRow(1);
-		}
+		openMapPageViaPolicyRequestAction();
+		mapBioPage.selectModalityForRow(1, GlobalConstants.BIOMETRIC_CONFIGURATION_MODALITY_FACE);
+		mapBioPage.selectConfigForRow(1, bioConfigName);
 
 		mapBioPage.clickOnCancelButton();
 		if (mapBioPage.isBlockerPromptDisplayed()) {
@@ -231,12 +229,10 @@ public class MapBiometricExtractorProviderTest extends BaseClass {
 		mapBioPage = new MapBiometricExtractorProviderPage(driver);
 		partnerPolicyMappingPage = new PartnerPolicyMappingPage(driver);
 
-		if (!mapBioPage.isMapBiometricExtractorProviderPageDisplayed()) {
-			openMapPageViaPolicyRequestAction();
-		}
+		openMapPageViaPolicyRequestAction();
 
 		mapBioPage.selectModalityForRow(1, GlobalConstants.BIOMETRIC_CONFIGURATION_MODALITY_FACE);
-		mapBioPage.selectFirstConfigForRow(1);
+		mapBioPage.selectConfigForRow(1, bioConfigName);
 		assertTrue(mapBioPage.isSaveAndProceedButtonEnabled(),
 				"Save & Proceed should be enabled before confirm");
 		mapBioPage.clickOnSaveAndProceedButton();

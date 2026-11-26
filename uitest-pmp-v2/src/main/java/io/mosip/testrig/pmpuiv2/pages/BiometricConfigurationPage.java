@@ -399,6 +399,28 @@ public class BiometricConfigurationPage extends BasePage {
 		return !isElementDisplayed(firstListRow);
 	}
 
+	public java.util.List<String> getVisibleConfigurationNames() {
+		java.util.List<WebElement> cells = driver.findElements(
+				By.cssSelector("tr[id^='bio_extractor_config_list_item_'] td:nth-child(1)"));
+		java.util.List<String> names = new java.util.ArrayList<>();
+		for (WebElement cell : cells) {
+			String text = cell.getText();
+			if (text != null && !text.trim().isEmpty()) {
+				names.add(text.trim());
+			}
+		}
+		return names;
+	}
+
+	public void filterByConfigurationName(String name) {
+		clickOnFilterButton();
+		enterConfigurationNameInFilter(name);
+		clickOnApplyFilterButton();
+		if (!isConfigurationNamePresentInList(name)) {
+			throw new IllegalStateException("Created configuration was not listed: " + name);
+		}
+	}
+
 	public String getFirstRowConfigurationName() {
 		if (!isElementDisplayed(firstConfigNameCell)) {
 			return "";
@@ -612,7 +634,11 @@ public class BiometricConfigurationPage extends BasePage {
 		if (!isElementDisplayedQuick(icon, Duration.ofSeconds(10))) {
 			throw new IllegalStateException("Sort icon was not displayed: " + iconId);
 		}
-		click(icon);
+		((JavascriptExecutor) driver).executeScript(
+				"const icon = document.getElementById(arguments[0]);"
+						+ "if (!icon) { throw new Error('Sort icon was not found: ' + arguments[0]); }"
+						+ "icon.dispatchEvent(new MouseEvent('click', {bubbles: true, cancelable: true, view: window}));",
+				iconId);
 	}
 
 	private static String xpathLiteral(String value) {

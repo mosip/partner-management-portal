@@ -1,5 +1,6 @@
 package io.mosip.testrig.pmpuiv2.testcase;
 
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
@@ -29,6 +30,7 @@ public class BiometricConfigurationViewTest extends BaseClass {
 
 		handleTermsAndCondition();
 		openBiometricConfigurationList();
+		biometricConfigurationPage.filterByConfigurationName(BiometricConfigurationTest.getCreatedConfigurationName());
 
 		assertTrue(biometricConfigurationPage.isFirstRowActionMenuDisplayed(),
 				"Action menu should be available for an existing configuration row");
@@ -39,6 +41,9 @@ public class BiometricConfigurationViewTest extends BaseClass {
 		biometricConfigurationPage.clickOnViewAction();
 		assertTrue(biometricConfigurationPage.isViewConfigurationDetailsPageDisplayed(),
 				GlobalConstants.isBiometricConfigurationViewPageDisplayed);
+		assertEquals(biometricConfigurationPage.getViewConfigurationName(),
+				BiometricConfigurationTest.getCreatedConfigurationName(),
+				"View page should show the configuration created by this suite");
 	}
 
 	@Test(priority = 2, description = "Verifying View page title and header information",
@@ -175,6 +180,7 @@ public class BiometricConfigurationViewTest extends BaseClass {
 	}
 
 	private void openFirstConfigurationView() {
+		biometricConfigurationPage.filterByConfigurationName(BiometricConfigurationTest.getCreatedConfigurationName());
 		assertTrue(biometricConfigurationPage.isFirstRowActionMenuDisplayed(),
 				"Action menu should be available for an existing configuration row");
 		biometricConfigurationPage.clickOnFirstRowActionMenu();
@@ -183,12 +189,12 @@ public class BiometricConfigurationViewTest extends BaseClass {
 		biometricConfigurationPage.clickOnViewAction();
 		assertTrue(biometricConfigurationPage.isViewConfigurationDetailsPageDisplayed(),
 				GlobalConstants.isBiometricConfigurationViewPageDisplayed);
+		assertEquals(biometricConfigurationPage.getViewConfigurationName(),
+				BiometricConfigurationTest.getCreatedConfigurationName(),
+				"View page should show the configuration created by this suite");
 	}
 
 	private void openViewPageIfNeeded() {
-		if (biometricConfigurationPage.isViewConfigurationDetailsPageDisplayed()) {
-			return;
-		}
 		handleTermsAndCondition();
 		openBiometricConfigurationList();
 		openFirstConfigurationView();

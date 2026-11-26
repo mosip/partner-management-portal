@@ -1,7 +1,6 @@
 package io.mosip.testrig.pmpuiv2.testcase;
 
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import org.testng.annotations.Test;
@@ -35,7 +34,7 @@ public class ManualAdjudicationPartnerTest extends BaseClass {
 		partnerCertificatePage.clickOnRootUploadTrustCertificateButtonInAdmin();
 		partnerCertificatePage.clickOnpartnerDomainSelectorDropdown();
 		partnerCertificatePage.clickOnPartnerDomainSelectorDropdownOptionAuth();
-		partnerCertificatePage.uploadCertificateRootCa();
+		partnerCertificatePage.uploadAuthRootCa();
 		partnerCertificatePage.clickonSubmitButtonForAdmin();
 		partnerCertificatePage.continueAfterTrustCertificateSubmit();
 
@@ -45,7 +44,7 @@ public class ManualAdjudicationPartnerTest extends BaseClass {
 		partnerCertificatePage.clickOnIntermediateUploadTrustCertificateButtonInAdmin();
 		partnerCertificatePage.clickOnpartnerDomainSelectorDropdown();
 		partnerCertificatePage.clickOnPartnerDomainSelectorDropdownOptionAuth();
-		partnerCertificatePage.uploadCertificateSubCa();
+		partnerCertificatePage.uploadAuthSubCa();
 		partnerCertificatePage.clickonSubmitButtonForAdmin();
 		partnerCertificatePage.continueAfterTrustCertificateSubmit();
 		partnerCertificatePage.clickOnHomeButton();
@@ -79,7 +78,7 @@ public class ManualAdjudicationPartnerTest extends BaseClass {
 		maPartnerPage.clickOnUploadPartnerCertificateButton();
 		assertTrue(partnerCertificatePage.isMispPartnerCertificatePopupDisplayed(),
 				GlobalConstants.isPartnerCertificatePageDisplayed);
-		partnerCertificatePage.uploadCertificate();
+		partnerCertificatePage.uploadAuthPartnerCertificate();
 		partnerCertificatePage.clickOnSubmitButton();
 		assertTrue(partnerCertificatePage.isCertificateUploadSuccessMessageDisplayed(),
 				GlobalConstants.isCertificateUploadSuccessMessageDisplayed);
@@ -198,10 +197,8 @@ public class ManualAdjudicationPartnerTest extends BaseClass {
 		assertTrue(maPartnerPage.isViewPartnerTypeDisplayed(),
 				GlobalConstants.isPartnerTypeInViewPartnerPageDisplayed);
 		String viewPartnerType = maPartnerPage.getViewPartnerTypeText();
-		assertTrue(viewPartnerType.contains(GlobalConstants.MANUAL_ADJUDICATION_PARTNER)
-				|| viewPartnerType.toLowerCase().contains("manual adjudication")
-				|| viewPartnerType.toLowerCase().contains("manual_adjudication")
-				|| viewPartnerType.toUpperCase().contains("MANUAL_ADJUDICATION"),
+		String normalizedPartnerType = viewPartnerType == null ? "" : viewPartnerType.replace('_', ' ').toLowerCase();
+		assertTrue(normalizedPartnerType.contains("manual adjudication"),
 				GlobalConstants.isManualAdjudicationPartnerTypeInViewDisplayed);
 		assertTrue(maPartnerPage.isViewOrganisationNameDisplayed(),
 				GlobalConstants.isOrganisationNameInViewPartnerPageDisplayed);
@@ -257,7 +254,7 @@ public class ManualAdjudicationPartnerTest extends BaseClass {
 		maPartnerPage.clickOnUploadOrReuploadCertificateButton();
 		assertTrue(partnerCertificatePage.isMispPartnerCertificatePopupDisplayed(),
 				GlobalConstants.isPartnerCertificatePageDisplayed);
-		partnerCertificatePage.uploadCertificate();
+		partnerCertificatePage.uploadAuthPartnerCertificate();
 		partnerCertificatePage.clickOnSubmitButton();
 		assertTrue(partnerCertificatePage.isCertificateUploadSuccessMessageDisplayed(),
 				GlobalConstants.isCertificateUploadSuccessMessageDisplayed);
@@ -322,7 +319,6 @@ public class ManualAdjudicationPartnerTest extends BaseClass {
 		maPartnerPage.clickActionButtonByPartnerId(GlobalConstants.MA_PARTNER_USER_2);
 		assertTrue(partnerAdminPage.isDeactivateOptionDisabled(),
 				GlobalConstants.isDeactivateOptionDisabledForDeactivatedPartner);
-		assertFalse(partnerAdminPage.isDeactivateOptionEnabled(), GlobalConstants.isDeactivateOptionEnabled);
 
 		assertTrue(partnerAdminPage.isViewButtonsDisplayed(), GlobalConstants.isViewButtonsDisplayed);
 		maPartnerPage.clickOnViewButton();

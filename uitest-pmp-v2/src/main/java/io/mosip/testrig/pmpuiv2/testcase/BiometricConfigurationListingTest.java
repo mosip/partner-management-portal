@@ -1,6 +1,10 @@
 package io.mosip.testrig.pmpuiv2.testcase;
 
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.testng.annotations.Test;
 
@@ -47,14 +51,20 @@ public class BiometricConfigurationListingTest extends BaseClass {
 		assertTrue(biometricConfigurationPage.isFilterButtonDisplayed(),
 				GlobalConstants.isBiometricConfigurationFilterButtonDisplayed);
 
-		existingConfigName = biometricConfigurationPage.getFirstRowConfigurationName();
-		assertTrue(existingConfigName != null && !existingConfigName.isEmpty(),
-				"At least one configuration row should be present for listing verification");
-
 		biometricConfigurationPage.clickOnSortAsc("configName");
+		List<String> sortedNames = biometricConfigurationPage.getVisibleConfigurationNames();
+		List<String> expectedOrder = new ArrayList<>(sortedNames);
+		expectedOrder.sort(String.CASE_INSENSITIVE_ORDER);
+		assertEquals(sortedNames, expectedOrder,
+				"Configuration names should be ascending after sorting by name");
 		biometricConfigurationPage.clickOnSortDesc("createdDateTime");
 		assertTrue(biometricConfigurationPage.isListingTableDisplayed(),
 				"Listing table should remain available after sort interaction");
+
+		existingConfigName = BiometricConfigurationTest.getCreatedConfigurationName();
+		biometricConfigurationPage.filterByConfigurationName(existingConfigName);
+		assertEquals(biometricConfigurationPage.getFirstRowConfigurationName(), existingConfigName,
+				"Listing should show the configuration created by this suite");
 	}
 
 	@Test(priority = 2, description = "Filtering Biometric Configuration List",

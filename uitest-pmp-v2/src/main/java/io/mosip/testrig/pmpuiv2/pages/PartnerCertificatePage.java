@@ -7,9 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.mosip.testrig.pmpuiv2.fw.util.CertificateGenerationUtil;
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
@@ -649,6 +652,53 @@ public class PartnerCertificatePage extends BasePage {
 			throw new IllegalStateException("Trust certificate submit failed");
 		}
 		throw new IllegalStateException("Trust certificate confirmation was not displayed");
+	}
+
+	public void continueAfterTrustCertificateSubmitAllowingExisting() {
+		By success = By.id("confirmation_go_back_btn");
+		By error = By.id("error_close_btn");
+		new WebDriverWait(driver, Duration.ofSeconds(20)).until(ExpectedConditions.or(
+				ExpectedConditions.visibilityOfElementLocated(success),
+				ExpectedConditions.visibilityOfElementLocated(error)));
+		if (!driver.findElements(success).isEmpty() && driver.findElement(success).isDisplayed()) {
+			click(success);
+			return;
+		}
+		String pageText = driver.findElement(By.tagName("body")).getText();
+		click(error);
+		By leavePage = By.id("block_messsage_proceed");
+		try {
+			new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.elementToBeClickable(leavePage));
+			click(leavePage);
+		} catch (TimeoutException leavePromptNotShown) {
+			// Cancel is not required when the error popup already returned to the list.
+		}
+		if (pageText == null || !pageText.toLowerCase().contains("already")) {
+			throw new IllegalStateException("Trust certificate submit failed");
+		}
+	}
+
+	public boolean submitTrustCertificateAcceptingExisting() {
+		clickonSubmitButtonForAdmin();
+		By success = By.id("confirmation_go_back_btn");
+		By error = By.id("error_close_btn");
+		new WebDriverWait(driver, Duration.ofSeconds(20)).until(ExpectedConditions.or(
+				ExpectedConditions.visibilityOfElementLocated(success),
+				ExpectedConditions.visibilityOfElementLocated(error)));
+		if (!driver.findElements(success).isEmpty() && driver.findElement(success).isDisplayed()) {
+			click(success);
+			return true;
+		}
+		click(error);
+		clickOnElement(adminCertUploadCancelButton);
+		By leavePage = By.id("block_messsage_proceed");
+		try {
+			new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.elementToBeClickable(leavePage));
+			click(leavePage);
+		} catch (TimeoutException leavePromptNotShown) {
+			// Cancel already returned to the certificate list.
+		}
+		return true;
 	}
 
 	public void clickOnSuccessMsgCloseButton() {

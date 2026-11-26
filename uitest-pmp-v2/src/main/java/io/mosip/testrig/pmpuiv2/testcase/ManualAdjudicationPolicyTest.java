@@ -93,6 +93,7 @@ public class ManualAdjudicationPolicyTest extends BaseClass {
 		requestPolicy(GlobalConstants.MA_POLICY_03, GlobalConstants.MA_POLICY_03_DESCRIPTION);
 		partnerPolicyMappingPage.clickOnConfirmationCustomButton();
 		partnerPolicyMappingPage.clickOnApprovePopupSubmitButton();
+		verifyStatus(GlobalConstants.MA_POLICY_03, GlobalConstants.APPROVED);
 
 		clickOnActionButton(GlobalConstants.MA_POLICY_03);
 		partnerPolicyMappingPage.clickOnViewButton();
