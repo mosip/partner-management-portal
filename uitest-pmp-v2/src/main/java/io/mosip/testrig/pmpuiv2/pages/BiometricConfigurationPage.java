@@ -636,7 +636,10 @@ public class BiometricConfigurationPage extends BasePage {
 		if (!isElementDisplayedQuick(icon, Duration.ofSeconds(10))) {
 			throw new IllegalStateException("Sort icon was not displayed: " + iconId);
 		}
-		click(icon);
+		WebElement element = driver.findElement(icon);
+		((JavascriptExecutor) driver).executeScript(
+				"arguments[0].dispatchEvent(new MouseEvent('click', {bubbles:true, cancelable:true, view:window}));",
+				element);
 	}
 
 	private void enterInputText(WebElement input, String value) {
