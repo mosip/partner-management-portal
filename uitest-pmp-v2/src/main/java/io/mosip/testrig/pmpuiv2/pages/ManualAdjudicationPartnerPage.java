@@ -12,6 +12,7 @@ import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.mosip.testrig.pmpuiv2.utility.LocalizedText;
 
@@ -255,15 +256,17 @@ public class ManualAdjudicationPartnerPage extends BasePage {
 	}
 
 	public boolean isDefaultManualAdjudicationPartnerDisplayed() {
-		clickOnPartnerTypeDropdown();
-		By option = By.id("create_partner_partner_type_option1");
-		if (!isElementDisplayedQuick(option, Duration.ofSeconds(5))) {
+		By partnerTypeButton = By.id("create_partner_partner_type_dropdown_btn");
+		try {
+			new WebDriverWait(driver, Duration.ofSeconds(15)).until(d -> LocalizedText.matches(
+					d.findElement(partnerTypeButton).getText(),
+					"Manual Adjudication Partner",
+					"Partenaire d'arbitrage manuel",
+					"شريك التحكيم اليدوي"));
+			return true;
+		} catch (TimeoutException notDefault) {
 			return false;
 		}
-		String cssClass = driver.findElement(option).getAttribute("class");
-		boolean selected = cssClass != null && java.util.Arrays.asList(cssClass.split("\\s+")).contains("bg-gray-100");
-		clickOnPartnerTypeDropdown();
-		return selected;
 	}
 
 	public boolean isManualAdjudicationPartnerOptionDisplayed() {

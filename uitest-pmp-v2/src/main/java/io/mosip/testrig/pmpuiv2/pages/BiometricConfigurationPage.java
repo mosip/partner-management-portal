@@ -185,6 +185,9 @@ public class BiometricConfigurationPage extends BasePage {
 
 	public boolean isBiometricConfigurationListPageDisplayed() {
 		return isElementDisplayed(pageTitle) && LocalizedText.matches(pageTitle.getText(),
+				"Biometric Provider Configuration",
+				"Configuration du fournisseur biométrique",
+				"تهيئة مزود القياسات الحيوية",
 				"Biometric Extractor Provider Configurations",
 				"Configurations du fournisseur d'extraction biométrique",
 				"تكوينات مزود مستخرج القياسات الحيوية");
