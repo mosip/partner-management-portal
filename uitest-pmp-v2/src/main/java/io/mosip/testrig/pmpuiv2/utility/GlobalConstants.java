@@ -787,6 +787,9 @@ public class GlobalConstants {
 	public static final String isCreateDatashareTitleDisplayed = "Verify if create data share title displayed";
 	public static final String isDatashareFormSubTitleDisplayed = "Verify if data share form title displayed";
 	public static final String isPolicyGroupDropdownSearchInputDisplayed = "Verify if policy group dropdown search input displayed";
+	public static final String isPolicyGroupDropdownFirstPageLoaded = "Verify if the policy group dropdown loads the first page";
+	public static final String isPolicyGroupDropdownNextPageLoaded = "Verify if the policy group dropdown loads the next page on scroll";
+	public static final String isPolicyGroupSelectedFromSearch = "Verify if the searched policy group stays selected";
 	public static final String isPolicyGroupPlaceHolderDisplayed = "Verify if policy group placeholder displayed";
 	public static final String isPolicyGroupNameDisplayed = "Verify if policy group name displayed";
 	public static final String isPolicyGroupDescriptionDisplayed = "Verify if policy group description displayed";
