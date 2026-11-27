@@ -656,9 +656,9 @@ public class PartnerCertificatePage extends BasePage {
 		} catch (TimeoutException leavePromptNotShown) {
 			// Cancel already returned to the certificate list.
 		}
-		return "The certificate already exists. Please upload another certificate".equals(errorText)
-				|| "Le certificat existe déjà. Veuillez télécharger un autre certificat.".equals(errorText)
-				|| "الشهادة موجودة بالفعل. يرجى تحميل شهادة أخرى".equals(errorText);
+		return GlobalConstants.CERTIFICATE_ALREADY_EXISTS_ENG.equals(errorText)
+				|| GlobalConstants.CERTIFICATE_ALREADY_EXISTS_FRA.equals(errorText)
+				|| GlobalConstants.CERTIFICATE_ALREADY_EXISTS_ARA.equals(errorText);
 	}
 
 	public void clickOnSuccessMsgCloseButton() {

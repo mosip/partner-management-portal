@@ -515,8 +515,18 @@ public class PartnerPolicyMappingPage extends BasePage {
 	}
 
 	public void waitForApproveRejectPopupToClose() {
-		new WebDriverWait(driver, Duration.ofSeconds(20))
-				.until(ExpectedConditions.invisibilityOfElementLocated(By.id("reject_btn")));
+		By error = By.id("approve_reject_popup_error_msg");
+		By popupTitle = By.id("approve-reject_popup_title");
+		By spinner = By.id("loading_text");
+		new WebDriverWait(driver, Duration.ofSeconds(30)).until(d -> {
+			java.util.List<WebElement> errors = d.findElements(error);
+			if (!errors.isEmpty() && errors.get(0).isDisplayed()) {
+				throw new IllegalStateException("Approve or reject failed: " + errors.get(0).getText());
+			}
+			boolean spinning = d.findElements(spinner).stream().anyMatch(WebElement::isDisplayed);
+			boolean popupOpen = d.findElements(popupTitle).stream().anyMatch(WebElement::isDisplayed);
+			return !spinning && !popupOpen;
+		});
 	}
 
 	public void clickOnApproveSubmitButton() {

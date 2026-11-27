@@ -320,7 +320,7 @@ public class MispPartnerPage extends BasePage {
 
 	public void selectPolicyGroupDropdown(String value) {
 		ensurePolicyGroupDropdownOpen();
-		WebElement search = driver.findElement(By.xpath("(//*[@id='policy_group_selector_search_input'])[1]"));
+		WebElement search = policyGroupDropdownSearchInput;
 		setReactInputValue(search, value);
 		By policyGroupOption = By.xpath(
 				"//*[@id='policy_group_selector_dropdown_listbox']//span[starts-with(@id,'policy_group_selector_option_name_') and normalize-space()="
@@ -367,13 +367,16 @@ public class MispPartnerPage extends BasePage {
 			if (options.size() == previousCount) {
 				return;
 			}
-			previousCount = options.size();
+			int countBeforeScroll = options.size();
+			previousCount = countBeforeScroll;
 			WebElement list = driver.findElement(By.id("policy_group_selector_dropdown_listbox"));
 			((JavascriptExecutor) driver).executeScript("arguments[0].scrollTop = arguments[0].scrollHeight;", list);
 			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException interrupted) {
-				Thread.currentThread().interrupt();
+				new WebDriverWait(driver, Duration.ofSeconds(2)).until(d -> !d.findElements(policyGroupOption).isEmpty()
+						|| d.findElements(By.cssSelector(
+								"#policy_group_selector_dropdown_listbox button[id^='policy_group_selector_option_button_']"))
+								.size() != countBeforeScroll);
+			} catch (TimeoutException stillSamePage) {
 				return;
 			}
 		}
