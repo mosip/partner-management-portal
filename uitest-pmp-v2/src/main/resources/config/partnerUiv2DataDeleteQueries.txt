@@ -96,3 +96,6 @@ delete from pms.partner where user_id='pmpui-ovp2';
 delete from pms.partner where cr_by='pmpui-ovp2';
 delete FROM pms.user_details where user_id='pmpui-ovp';
 delete FROM pms.user_details where user_id='pmpui-ovp2';
+
+#scrollpg01-scrollpg06 are created by pmpui-v2 and are already removed by the
+#policy_group delete above (cr_by in ('pmpui-v2', 'pmpui-policyadmin')).

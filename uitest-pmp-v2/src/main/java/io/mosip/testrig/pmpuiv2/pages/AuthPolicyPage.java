@@ -656,8 +656,64 @@ public class AuthPolicyPage extends BasePage {
 		clickOnElement(policyGroupDropdown);
 	}
 
+	public void openPolicyGroupDropdown() {
+		WebElement button = driver.findElement(By.id("policy_group_selector_dropdown_button"));
+		if (!"true".equals(button.getAttribute("aria-expanded"))) {
+			clickOnElement(button);
+		}
+	}
+
 	public boolean isPolicyGroupDropdownSearchInputDisplayed() {
 		return isElementDisplayed(policyGroupDropdownSearchInput);
+	}
+
+	public int waitForPolicyGroupOptionCount(int expectedCount) {
+		new WebDriverWait(driver, Duration.ofSeconds(20))
+				.until(d -> policyGroupOptionButtons().size() >= expectedCount);
+		return policyGroupOptionButtons().size();
+	}
+
+	public int scrollPolicyGroupList(int currentCount) {
+		WebElement list = driver.findElement(By.id("policy_group_selector_dropdown_listbox"));
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollTop = arguments[0].scrollHeight;", list);
+		new WebDriverWait(driver, Duration.ofSeconds(20))
+				.until(d -> policyGroupOptionButtons().size() > currentCount);
+		return policyGroupOptionButtons().size();
+	}
+
+	public int searchOpenPolicyGroupDropdown(String value) {
+		clearTextBox(policyGroupDropdownSearchInput);
+		enter(policyGroupDropdownSearchInput, value);
+		By optionName = policyGroupOptionName(value);
+		new WebDriverWait(driver, Duration.ofSeconds(20)).until(d -> policyGroupOptionButtons().size() == 1
+				&& !d.findElements(optionName).isEmpty());
+		return policyGroupOptionButtons().size();
+	}
+
+	public void clickPolicyGroupOption(String value) {
+		waitScrollAndClick(policyGroupOptionName(value));
+	}
+
+	private static String xpathLiteral(String value) {
+		if (value == null || !value.contains("'")) {
+			return "'" + (value == null ? "" : value) + "'";
+		}
+		return "concat('" + value.replace("'", "',\"'\",'") + "')";
+	}
+
+	private By policyGroupOptionName(String value) {
+		return By.xpath(
+				"//*[@id='policy_group_selector_dropdown_listbox']//span[starts-with(@id,'policy_group_selector_option_name_') and normalize-space()="
+						+ xpathLiteral(value) + "]");
+	}
+
+	public String getSelectedPolicyGroupText() {
+		return driver.findElement(By.id("policy_group_selector_dropdown_button_text")).getText().trim();
+	}
+
+	private java.util.List<WebElement> policyGroupOptionButtons() {
+		return driver.findElements(By.cssSelector(
+				"#policy_group_selector_dropdown_listbox button[id^='policy_group_selector_option_button_']"));
 	}
 
 	public boolean isPolicyGroupPlaceHolderDisplayed() {
