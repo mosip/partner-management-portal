@@ -3,6 +3,7 @@ package io.mosip.testrig.pmpuiv2.pages;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -48,12 +49,6 @@ public class MapCredentialTypePage extends BasePage {
 
 	@FindBy(id = "confirmation_home_btn")
 	private WebElement homeButton;
-
-	@FindBy(id = "run_time_error_title")
-	private WebElement runtimeErrorTitle;
-
-	@FindBy(id = "something_went_wrong_home_btn")
-	private WebElement runtimeErrorHomeButton;
 
 	@FindBy(id = "filter_btn")
 	private WebElement filterButton;
@@ -165,9 +160,7 @@ public class MapCredentialTypePage extends BasePage {
 	}
 
 	public List<String> getCredentialTypeOptions() {
-		clickOnElement(credentialTypeDropdown);
-		new WebDriverWait(driver, Duration.ofSeconds(20)).until(webDriver -> credentialTypeOptions.isEmpty() ? null
-				: Integer.valueOf(credentialTypeOptions.size()));
+		openCredentialTypeOptions();
 		List<String> options = new ArrayList<>();
 		for (WebElement option : credentialTypeOptions) {
 			scrollIntoView(option);
@@ -177,16 +170,21 @@ public class MapCredentialTypePage extends BasePage {
 	}
 
 	public void selectCredentialType(String credentialType) {
-		clickOnElement(credentialTypeDropdown);
-		new WebDriverWait(driver, Duration.ofSeconds(20)).until(webDriver -> credentialTypeOptions.isEmpty() ? null
-				: Integer.valueOf(credentialTypeOptions.size()));
+		List<String> options = getCredentialTypeOptions();
 		for (WebElement option : credentialTypeOptions) {
-			scrollIntoView(option);
 			if (credentialType.equals(getTextFromLocator(option).trim())) {
 				clickOnElement(option);
 				return;
 			}
 		}
+		throw new NoSuchElementException(
+				"Credential type was not offered: " + credentialType + ". Options found: " + options);
+	}
+
+	private void openCredentialTypeOptions() {
+		clickOnElement(credentialTypeDropdown);
+		new WebDriverWait(driver, Duration.ofSeconds(20)).until(webDriver -> credentialTypeOptions.isEmpty() ? null
+				: Integer.valueOf(credentialTypeOptions.size()));
 	}
 
 	public void clickClearForm() {
@@ -219,41 +217,6 @@ public class MapCredentialTypePage extends BasePage {
 
 	public void clickTitleBack() {
 		clickOnElement(titleBackIcon);
-	}
-
-	public String waitUntilRefreshSettles() {
-		return new WebDriverWait(driver, Duration.ofSeconds(20)).until(webDriver -> {
-			String url = driver.getCurrentUrl() == null ? "" : driver.getCurrentUrl();
-			if (url.contains("runtimeError")) {
-				return "error";
-			}
-			if (isElementDisplayedQuick(pageTitle, Duration.ofSeconds(1))) {
-				String title = getTextFromLocator(pageTitle);
-				title = title == null ? "" : title.trim();
-				if (GlobalConstants.MAP_CREDENTIAL_TYPE_TITLE.equals(title)) {
-					return "credential";
-				}
-				if (GlobalConstants.PARTNER_POLICY_LINKING_TITLE.equals(title)) {
-					return "list";
-				}
-				return title.isEmpty() ? null : "page:" + title;
-			}
-			return isElementDisplayedQuick(runtimeErrorTitle, Duration.ofSeconds(1)) ? "error" : null;
-		});
-	}
-
-	public String waitUntilRuntimeErrorTitle(String expectedTitle) {
-		return new WebDriverWait(driver, Duration.ofSeconds(20)).until(webDriver -> {
-			if (!isElementDisplayedQuick(runtimeErrorTitle, ABSENCE_CHECK_TIMEOUT)) {
-				return null;
-			}
-			String title = getTextFromLocator(runtimeErrorTitle);
-			return expectedTitle.equals(title == null ? "" : title.trim()) ? title.trim() : null;
-		});
-	}
-
-	public void clickRuntimeErrorHome() {
-		clickOnElement(runtimeErrorHomeButton);
 	}
 
 	public void filterByPartnerId(String partnerId) {
@@ -296,7 +259,7 @@ public class MapCredentialTypePage extends BasePage {
 			if (!isElementDisplayedQuick(mapCredentialTypeAction, ABSENCE_CHECK_TIMEOUT)) {
 				return null;
 			}
-			String className = mapCredentialTypeAction.getAttribute("class");
+			String className = getTextFromAttribute(mapCredentialTypeAction, GlobalConstants.CLASS);
 			return className != null && !className.contains("pointer-events-none") ? "enabled" : null;
 		});
 	}
@@ -306,7 +269,7 @@ public class MapCredentialTypePage extends BasePage {
 			if (!isElementDisplayedQuick(mapCredentialTypeAction, ABSENCE_CHECK_TIMEOUT)) {
 				return null;
 			}
-			String className = mapCredentialTypeAction.getAttribute("class");
+			String className = getTextFromAttribute(mapCredentialTypeAction, GlobalConstants.CLASS);
 			return className != null && className.contains("pointer-events-none") ? "disabled" : null;
 		});
 	}
