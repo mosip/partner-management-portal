@@ -1,18 +1,23 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.mosip.testrig.pmpuiv2.fw.util.CertificateGenerationUtil;
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
+import io.mosip.testrig.pmpuiv2.utility.LocalizedText;
 
 public class PartnerCertificatePage extends BasePage {
 
@@ -361,7 +366,7 @@ public class PartnerCertificatePage extends BasePage {
 	@FindBy(id = "root_of_trust_certificates_tab")
 	private WebElement rootCACertTab;
 
-	@FindBy(xpath = "//h6[text()='Intermediate CA']")
+	@FindBy(id = "intermediate_root_of_trust_certificates_tab")
 	private WebElement intermediateCACertTab;
 
 	@FindBy(xpath = "//p[contains(text(), 'List of Intermediate CA Certificates')]")
@@ -475,8 +480,20 @@ public class PartnerCertificatePage extends BasePage {
 		uploadImage(uploadFile, CertificateGenerationUtil.getCertFilePath("RootCA.cer"));
 	}
 
+	public void uploadAuthRootCa() {
+		uploadImage(uploadFile, CertificateGenerationUtil.getCertFilePath("AuthRootCA.cer"));
+	}
+
 	public void uploadCertificateSubCa() {
 		uploadImage(uploadFile, CertificateGenerationUtil.getCertFilePath("IntermediateCA.cer"));
+	}
+
+	public void uploadAuthSubCa() {
+		uploadImage(uploadFile, CertificateGenerationUtil.getCertFilePath("AuthIntermediateCA.cer"));
+	}
+
+	public void uploadAuthPartnerCertificate() {
+		uploadImage(uploadFile, CertificateGenerationUtil.getCertFilePath("AuthClient.cer"));
 	}
 
 	public void uploadCertificate() {
@@ -625,6 +642,56 @@ public class PartnerCertificatePage extends BasePage {
 
 	public void clickOnGoBackButton() {
 		clickOnElement(GoBackButton);
+	}
+
+	public void continueAfterTrustCertificateSubmitAllowingExisting() {
+		By success = By.id("confirmation_go_back_btn");
+		By error = By.id("error_close_btn");
+		By errorMessage = By.id("upload_trust_certificate_error_msg");
+		new WebDriverWait(driver, Duration.ofSeconds(20)).until(ExpectedConditions.or(
+				ExpectedConditions.visibilityOfElementLocated(success),
+				ExpectedConditions.visibilityOfElementLocated(error)));
+		if (!driver.findElements(success).isEmpty() && driver.findElement(success).isDisplayed()) {
+			click(success);
+			return;
+		}
+		String errorText = driver.findElements(errorMessage).isEmpty() ? "" : driver.findElement(errorMessage).getText();
+		click(error);
+		confirmLeaveUploadPageIfShown();
+		if (!isTrustCertificateListVisible()) {
+			if (isElementDisplayedQuick(By.id("upload_trust_certificate_cancel_btn"), Duration.ofSeconds(3))) {
+				click(By.id("upload_trust_certificate_cancel_btn"));
+				confirmLeaveUploadPageIfShown();
+			}
+		}
+		new WebDriverWait(driver, Duration.ofSeconds(15)).until(ExpectedConditions.or(
+				ExpectedConditions.visibilityOfElementLocated(By.id("root_of_trust_certificates_tab")),
+				ExpectedConditions.visibilityOfElementLocated(By.id("intermediate_root_of_trust_certificates_tab"))));
+		if (!isExistingTrustCertificateMessage(errorText)) {
+			throw new IllegalStateException("Trust certificate submit failed");
+		}
+	}
+
+	private boolean isExistingTrustCertificateMessage(String errorText) {
+		return LocalizedText.matches(errorText,
+				"The certificate already exists. Please upload another certificate",
+				"Le certificat existe déjà. Veuillez télécharger un autre certificat.",
+				"الشهادة موجودة بالفعل. يرجى تحميل شهادة أخرى");
+	}
+
+	private void confirmLeaveUploadPageIfShown() {
+		By leavePage = By.id("block_messsage_proceed");
+		try {
+			new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.elementToBeClickable(leavePage));
+			click(leavePage);
+		} catch (TimeoutException leavePromptNotShown) {
+			// The upload form stays open when closing the error does not ask to leave.
+		}
+	}
+
+	private boolean isTrustCertificateListVisible() {
+		return isElementDisplayedQuick(By.id("root_of_trust_certificates_tab"), Duration.ofSeconds(2))
+				|| isElementDisplayedQuick(By.id("intermediate_root_of_trust_certificates_tab"), Duration.ofSeconds(2));
 	}
 
 	public void clickOnSuccessMsgCloseButton() {
@@ -1179,7 +1246,7 @@ public class PartnerCertificatePage extends BasePage {
 	}
 
 	public void clickOnIntermediateCACertTab() {
-		clickOnElement(intermediateCACertTab);
+		click(By.cssSelector("#intermediate_root_of_trust_certificates_tab button"));
 	}
 
 	public boolean isSubtitleOfIntermediateCADisplayed() {

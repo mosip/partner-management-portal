@@ -21,6 +21,8 @@ import io.mosip.testrig.pmpuiv2.kernel.util.ConfigManager;
 import io.mosip.testrig.pmpuiv2.kernel.util.KeycloakUserManager;
 import io.mosip.testrig.pmpuiv2.utility.BaseTestCaseFunc;
 import io.mosip.testrig.pmpuiv2.utility.TestRunner;
+import io.restassured.RestAssured;
+import io.restassured.config.HttpClientConfig;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.apache.log4j.Logger;
@@ -95,7 +97,17 @@ public class AdminTestUtil extends BaseTestCaseFunc {
 	public static String getCommitDetails(String path) {
 
 		Response response = null;
-		response = given().contentType(ContentType.JSON).get(path);
+		try {
+			response = given()
+					.config(RestAssured.config().httpClient(HttpClientConfig.httpClientConfig()
+							.setParam("http.connection.timeout", 20000)
+							.setParam("http.socket.timeout", 20000)
+							.setParam("http.conn-manager.timeout", 20000L)))
+					.contentType(ContentType.JSON).get(path);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			return path + "- No Response";
+		}
 		if (response != null && response.getStatusCode() == 200) {
 			logger.info(response.getBody().asString());
 			JSONObject jsonResponse = new JSONObject(response.getBody().asString());
@@ -135,7 +147,9 @@ public class AdminTestUtil extends BaseTestCaseFunc {
 					ConfigManager.getMasterDbPass(), ConfigManager.getIDADBSchema(),
 					TestRunner.getResourcePath() + "/" + "config/partnerUiv2DataDeleteQueriesForIDA.txt");
 			KeycloakUserManager.removeUser();
-//  	    KeycloakUserManager.createUsers();
+			// Sign-up tests create the accounts they use. Creating this list also
+			// removes unprefixed names from a shared Keycloak realm.
+			// KeycloakUserManager.createUsers();
 //    		BaseTestCaseFunc.DefinePolicyGroup();
 //			BaseTestCaseFunc.DefinePolicy();
 //			BaseTestCaseFunc.CreateAdminPartner();

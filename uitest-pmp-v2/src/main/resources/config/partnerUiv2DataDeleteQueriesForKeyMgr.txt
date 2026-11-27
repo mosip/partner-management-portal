@@ -7,6 +7,8 @@ delete FROM keymgr.partner_cert_store where cert_subject ='CN=AABBCC,OU=AABBCC,O
 
 delete FROM keymgr.ca_cert_store where cert_subject ='CN=SUBCA,OU=SUBCA,O=SUBCA,L=aa,ST=aa,C=aa' and partner_domain='AUTH';
 delete FROM keymgr.ca_cert_store where cert_subject ='CN=CA,OU=CA,O=CA,L=aa,ST=aa,C=aa' and partner_domain='AUTH';
+delete FROM keymgr.ca_cert_store where cert_subject ='CN=AUTHSUB,OU=AUTHSUB,O=AUTHSUB,L=aa,ST=aa,C=aa' and partner_domain='AUTH';
+delete FROM keymgr.ca_cert_store where cert_subject ='CN=AUTHCA,OU=AUTHCA,O=AUTHCA,L=aa,ST=aa,C=aa' and partner_domain='AUTH';
 delete FROM keymgr.ca_cert_store where cert_subject ='CN=AABBCC,OU=AABBCC,O=AABBCC,L=aa,ST=aa,C=aa' and partner_domain='AUTH';
 delete FROM keymgr.partner_cert_store where cert_subject ='CN=AABBCC,OU=AABBCC,O=AABBCC,L=aa,ST=aa,C=aa' and partner_domain='AUTH';
 
@@ -32,3 +34,5 @@ DELETE FROM keymgr.key_alias where app_id = 'PARTNER' AND ref_id = 'pmpui-deacti
 DELETE FROM keymgr.key_alias where app_id = 'PARTNER' AND ref_id = 'pmpui-deactivateftm';
 DELETE FROM keymgr.key_alias where app_id = 'PARTNER' AND ref_id = 'pmpui-ovp';
 DELETE FROM keymgr.key_alias where app_id = 'PARTNER' AND ref_id = 'pmpui-ovp2';
+DELETE FROM keymgr.key_alias where app_id = 'PARTNER' AND ref_id = 'pmpui-ma';
+DELETE FROM keymgr.key_alias where app_id = 'PARTNER' AND ref_id = 'pmpui-ma2';
