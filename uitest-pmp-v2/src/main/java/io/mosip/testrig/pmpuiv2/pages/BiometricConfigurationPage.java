@@ -7,7 +7,9 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.mosip.testrig.pmpuiv2.utility.LocalizedText;
@@ -633,13 +635,9 @@ public class BiometricConfigurationPage extends BasePage {
 
 	private void clickSortIcon(String iconId) {
 		By icon = By.id(iconId);
-		if (!isElementDisplayedQuick(icon, Duration.ofSeconds(10))) {
-			throw new IllegalStateException("Sort icon was not displayed: " + iconId);
-		}
-		WebElement element = driver.findElement(icon);
-		((JavascriptExecutor) driver).executeScript(
-				"arguments[0].dispatchEvent(new MouseEvent('click', {bubbles:true, cancelable:true, view:window}));",
-				element);
+		WebElement element = new WebDriverWait(driver, Duration.ofSeconds(10))
+				.until(ExpectedConditions.elementToBeClickable(icon));
+		new Actions(driver).moveToElement(element).click().perform();
 	}
 
 	private void enterInputText(WebElement input, String value) {

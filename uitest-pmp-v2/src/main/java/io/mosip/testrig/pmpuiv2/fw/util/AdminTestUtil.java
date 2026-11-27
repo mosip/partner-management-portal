@@ -147,7 +147,9 @@ public class AdminTestUtil extends BaseTestCaseFunc {
 					ConfigManager.getMasterDbPass(), ConfigManager.getIDADBSchema(),
 					TestRunner.getResourcePath() + "/" + "config/partnerUiv2DataDeleteQueriesForIDA.txt");
 			KeycloakUserManager.removeUser();
-			KeycloakUserManager.createUsers();
+			// Sign-up tests create the accounts they use. Creating this list also
+			// removes unprefixed names from a shared Keycloak realm.
+			// KeycloakUserManager.createUsers();
 //    		BaseTestCaseFunc.DefinePolicyGroup();
 //			BaseTestCaseFunc.DefinePolicy();
 //			BaseTestCaseFunc.CreateAdminPartner();

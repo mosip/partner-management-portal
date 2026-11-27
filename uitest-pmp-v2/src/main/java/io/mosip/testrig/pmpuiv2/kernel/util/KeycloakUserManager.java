@@ -156,11 +156,7 @@ public class KeycloakUserManager extends BaseTestCaseFunc {
 	public static void removeUser() {
 		List<String> needsToBeRemovedUsers = List.of(ConfigManager.getIAMUsersToCreate().split(","));
 		for (String needsToBeRemovedUser : needsToBeRemovedUsers) {
-			removeKeycloakUser(keycloakUsername(needsToBeRemovedUser));
-			String prefixedUser = BaseTestCaseFunc.currentModule + "-" + needsToBeRemovedUser;
-			if (!prefixedUser.equals(keycloakUsername(needsToBeRemovedUser))) {
-				removeKeycloakUser(prefixedUser);
-			}
+			removeKeycloakUser(BaseTestCaseFunc.currentModule + "-" + needsToBeRemovedUser);
 		}
 	}
 
