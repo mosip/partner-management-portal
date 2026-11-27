@@ -25,6 +25,7 @@ function PolicyGroupSelector({ onPolicyGroupSelect, selectedPolicyGroup, contain
     const dropdownButtonRef = useRef(null);
     const dropdownPanelRef = useRef(null);
     const dropdownListRef = useRef(null);
+    const lastSearchTermRef = useRef(searchTerm);
     const isLoginLanguageRTL = isLangRTL(getUserProfile().locale);
 
     // placeholder
@@ -45,14 +46,13 @@ function PolicyGroupSelector({ onPolicyGroupSelect, selectedPolicyGroup, contain
     // Debounce search input
     useEffect(() => {
         const timer = setTimeout(() => {
-            setDebouncedSearchTerm((currentTerm) => {
-                if (currentTerm === searchTerm) {
-                    return currentTerm;
-                }
-                setPageNo(0);
-                setFetchData(true);
-                return searchTerm;
-            });
+            if (lastSearchTermRef.current === searchTerm) {
+                return;
+            }
+            lastSearchTermRef.current = searchTerm;
+            setDebouncedSearchTerm(searchTerm);
+            setPageNo(0);
+            setFetchData(true);
         }, 500);
         return () => clearTimeout(timer);
     }, [searchTerm]);

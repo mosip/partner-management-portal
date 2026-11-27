@@ -9,7 +9,6 @@ import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
@@ -654,6 +653,10 @@ public class AuthPolicyPage extends BasePage {
 	}
 
 	public void clickOnPolicyGroupDropdown() {
+		clickOnElement(policyGroupDropdown);
+	}
+
+	public void openPolicyGroupDropdown() {
 		WebElement button = driver.findElement(By.id("policy_group_selector_dropdown_button"));
 		if (!"true".equals(button.getAttribute("aria-expanded"))) {
 			clickOnElement(button);
@@ -670,7 +673,7 @@ public class AuthPolicyPage extends BasePage {
 		return policyGroupOptionButtons().size();
 	}
 
-	public int scrollPolicyGroupListAndWaitForMore(int currentCount) {
+	public int scrollPolicyGroupList(int currentCount) {
 		WebElement list = driver.findElement(By.id("policy_group_selector_dropdown_listbox"));
 		((JavascriptExecutor) driver).executeScript("arguments[0].scrollTop = arguments[0].scrollHeight;", list);
 		new WebDriverWait(driver, Duration.ofSeconds(20))
@@ -678,25 +681,13 @@ public class AuthPolicyPage extends BasePage {
 		return policyGroupOptionButtons().size();
 	}
 
-	public int scrollPolicyGroupList(int currentCount) {
-		WebElement list = driver.findElement(By.id("policy_group_selector_dropdown_listbox"));
-		((JavascriptExecutor) driver).executeScript("arguments[0].scrollTop = arguments[0].scrollHeight;", list);
-		try {
-			new WebDriverWait(driver, Duration.ofSeconds(8))
-					.until(d -> policyGroupOptionButtons().size() > currentCount);
-		} catch (TimeoutException endOfList) {
-			// Fewer groups remain than a full next page.
-		}
-		return policyGroupOptionButtons().size();
-	}
-
 	public int searchOpenPolicyGroupDropdown(String value) {
-		WebElement search = driver.findElement(By.id("policy_group_selector_search_input"));
-		setReactInputValue(search, value);
+		clearTextBox(policyGroupDropdownSearchInput);
+		enter(policyGroupDropdownSearchInput, value);
 		By optionName = policyGroupOptionName(value);
-		new WebDriverWait(driver, Duration.ofSeconds(20))
-				.until(ExpectedConditions.visibilityOfElementLocated(optionName));
-		return driver.findElements(optionName).size();
+		new WebDriverWait(driver, Duration.ofSeconds(20)).until(d -> policyGroupOptionButtons().size() == 1
+				&& !d.findElements(optionName).isEmpty());
+		return policyGroupOptionButtons().size();
 	}
 
 	public void clickPolicyGroupOption(String value) {
@@ -714,15 +705,6 @@ public class AuthPolicyPage extends BasePage {
 		return By.xpath(
 				"//*[@id='policy_group_selector_dropdown_listbox']//span[starts-with(@id,'policy_group_selector_option_name_') and normalize-space()="
 						+ xpathLiteral(value) + "]");
-	}
-
-	private void setReactInputValue(WebElement input, String value) {
-		((JavascriptExecutor) driver).executeScript(
-				"const input = arguments[0]; const next = arguments[1];"
-						+ "const setter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;"
-						+ "setter.call(input, next);"
-						+ "input.dispatchEvent(new Event('input', { bubbles: true }));",
-				input, value);
 	}
 
 	public String getSelectedPolicyGroupText() {
