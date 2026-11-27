@@ -1,8 +1,12 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
+import java.time.Duration;
+
 import io.mosip.testrig.pmpuiv2.utility.GlobalConstants;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
 
@@ -468,6 +472,11 @@ public class PartnerPolicyMappingPage extends BasePage {
 		clickOnElement(partnerListViewElipsisButton);
 	}
 
+	public void clickOnActionForPolicyStatus(String policyName, String status) {
+		click(By.xpath("//tr[.//td[normalize-space()='" + policyName + "'] and .//div[normalize-space()='" + status
+				+ "']]//*[starts-with(@id,'partner_list_view')]"));
+	}
+
 	public void clickOnApproveOrRejectButton() {
 		clickOnElement(approveRejectButton);
 	}
@@ -503,6 +512,21 @@ public class PartnerPolicyMappingPage extends BasePage {
 
 	public void clickOnRejectButton() {
 		clickOnElement(rejectButton);
+	}
+
+	public void waitForApproveRejectPopupToClose() {
+		By error = By.id("approve_reject_popup_error_msg");
+		By popupTitle = By.id("approve-reject_popup_title");
+		By spinner = By.id("loading_text");
+		new WebDriverWait(driver, Duration.ofSeconds(30)).until(d -> {
+			java.util.List<WebElement> errors = d.findElements(error);
+			if (!errors.isEmpty() && errors.get(0).isDisplayed()) {
+				throw new IllegalStateException("Approve or reject failed: " + errors.get(0).getText());
+			}
+			boolean spinning = d.findElements(spinner).stream().anyMatch(WebElement::isDisplayed);
+			boolean popupOpen = d.findElements(popupTitle).stream().anyMatch(WebElement::isDisplayed);
+			return !spinning && !popupOpen;
+		});
 	}
 
 	public void clickOnApproveSubmitButton() {

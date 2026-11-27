@@ -1,14 +1,18 @@
 package io.mosip.testrig.pmpuiv2.pages;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.mosip.testrig.pmpuiv2.fw.util.CertificateGenerationUtil;
 import io.mosip.testrig.pmpuiv2.fw.util.PmpTestUtil;
@@ -625,6 +629,36 @@ public class PartnerCertificatePage extends BasePage {
 
 	public void clickOnGoBackButton() {
 		clickOnElement(GoBackButton);
+	}
+
+	public boolean submitTrustCertificateAcceptingExisting() {
+		clickonSubmitButtonForAdmin();
+		By success = By.id("confirmation_go_back_btn");
+		By error = By.id("error_close_btn");
+		new WebDriverWait(driver, Duration.ofSeconds(20)).until(ExpectedConditions.or(
+				ExpectedConditions.visibilityOfElementLocated(success),
+				ExpectedConditions.visibilityOfElementLocated(error)));
+		if (!driver.findElements(success).isEmpty() && driver.findElement(success).isDisplayed()) {
+			click(success);
+			return true;
+		}
+		String errorText = "";
+		java.util.List<WebElement> messages = driver.findElements(By.id("upload_trust_certificate_error_msg"));
+		if (!messages.isEmpty() && messages.get(0).getText() != null) {
+			errorText = messages.get(0).getText().replaceAll("\\s+", " ").trim();
+		}
+		click(error);
+		clickOnElement(adminCertUploadCancelButton);
+		By leavePage = By.id("block_messsage_proceed");
+		try {
+			new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.elementToBeClickable(leavePage));
+			click(leavePage);
+		} catch (TimeoutException leavePromptNotShown) {
+			// Cancel already returned to the certificate list.
+		}
+		return GlobalConstants.CERTIFICATE_ALREADY_EXISTS_ENG.equals(errorText)
+				|| GlobalConstants.CERTIFICATE_ALREADY_EXISTS_FRA.equals(errorText)
+				|| GlobalConstants.CERTIFICATE_ALREADY_EXISTS_ARA.equals(errorText);
 	}
 
 	public void clickOnSuccessMsgCloseButton() {
