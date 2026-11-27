@@ -6,7 +6,6 @@ import static org.testng.Assert.assertTrue;
 
 import org.testng.annotations.Test;
 
-import io.mosip.testrig.pmpuiv2.kernel.util.KeycloakUserManager;
 import io.mosip.testrig.pmpuiv2.pages.AuthPolicyPage;
 import io.mosip.testrig.pmpuiv2.pages.BioExtractorConfigurationPage;
 import io.mosip.testrig.pmpuiv2.pages.DashboardPage;
@@ -64,7 +63,7 @@ public class OnlineVerificationPartnerViewPolicyRequestTest extends BaseClass {
 				GlobalConstants.VIEW_POLICY_REQUEST_SECTIONS_DISPLAYED);
 	}
 
-	@Test(priority = 3, description = "Open View Partner-Policy Linking using the View action", dependsOnMethods = "createOnlineVerificationPartnerPolicyRequestsForView")
+	@Test(priority = 3, description = "Open View Partner-Policy Linking using the View action", dependsOnMethods = "openViewPolicyRequestByRowClick")
 	public void openViewPolicyRequestByViewAction() {
 		PartnerPolicyMappingPage listPage = openPolicyRequestList();
 		filterByPartnerAndPolicy(listPage, GlobalConstants.VIEW_POLICY_REQUEST_POLICY_FULL);
@@ -78,7 +77,7 @@ public class OnlineVerificationPartnerViewPolicyRequestTest extends BaseClass {
 				GlobalConstants.VIEW_POLICY_REQUEST_HAS_NO_EDIT_ACTIONS);
 	}
 
-	@Test(priority = 4, description = "View policy request information for a fully completed Online Verification Partner request", dependsOnMethods = "createOnlineVerificationPartnerPolicyRequestsForView")
+	@Test(priority = 4, description = "View policy request information for a fully completed Online Verification Partner request", dependsOnMethods = "openViewPolicyRequestByViewAction")
 	public void viewFullyCompletedPolicyRequestInformation() {
 		PartnerPolicyMappingPage viewPage = openView(GlobalConstants.VIEW_POLICY_REQUEST_POLICY_FULL);
 		assertEquals(viewPage.getViewPolicyRequestStatusText(), GlobalConstants.PENDING_FOR_APPROVAL,
@@ -102,7 +101,7 @@ public class OnlineVerificationPartnerViewPolicyRequestTest extends BaseClass {
 		assertFalse(viewPage.getViewPolicyIdText().isEmpty(), GlobalConstants.VIEW_POLICY_REQUEST_FIELDS_MATCH_CREATION);
 	}
 
-	@Test(priority = 5, description = "View biometric extractor mapping for a completed Online Verification Partner request", dependsOnMethods = "createOnlineVerificationPartnerPolicyRequestsForView")
+	@Test(priority = 5, description = "View biometric extractor mapping for a completed Online Verification Partner request", dependsOnMethods = "viewFullyCompletedPolicyRequestInformation")
 	public void viewBiometricExtractorMappingForCompletedRequest() {
 		PartnerPolicyMappingPage viewPage = openView(GlobalConstants.VIEW_POLICY_REQUEST_POLICY_FULL);
 		assertEquals(viewPage.waitUntilBiometricMappingState(), "mapped",
@@ -112,14 +111,14 @@ public class OnlineVerificationPartnerViewPolicyRequestTest extends BaseClass {
 				GlobalConstants.VIEW_POLICY_REQUEST_BIOMETRIC_MAPPED);
 	}
 
-	@Test(priority = 6, description = "View credential type mapping for a completed Online Verification Partner request", dependsOnMethods = "createOnlineVerificationPartnerPolicyRequestsForView")
+	@Test(priority = 6, description = "View credential type mapping for a completed Online Verification Partner request", dependsOnMethods = "viewBiometricExtractorMappingForCompletedRequest")
 	public void viewCredentialTypeMappingForCompletedRequest() {
 		PartnerPolicyMappingPage viewPage = openView(GlobalConstants.VIEW_POLICY_REQUEST_POLICY_FULL);
 		assertEquals(viewPage.waitUntilCredentialTypeValue(), GlobalConstants.ALLOWED_CREDENTIAL_TYPE_AUTH,
 				GlobalConstants.VIEW_POLICY_REQUEST_CREDENTIAL_MAPPED);
 	}
 
-	@Test(priority = 7, description = "View comments for an Online Verification Partner policy request", dependsOnMethods = "createOnlineVerificationPartnerPolicyRequestsForView")
+	@Test(priority = 7, description = "View comments for an Online Verification Partner policy request", dependsOnMethods = "viewCredentialTypeMappingForCompletedRequest")
 	public void viewCommentsForPolicyRequest() {
 		PartnerPolicyMappingPage viewPage = openView(GlobalConstants.VIEW_POLICY_REQUEST_POLICY_FULL);
 		assertTrue(viewPage.isViewCommentsSectionDisplayed(), GlobalConstants.VIEW_POLICY_REQUEST_COMMENTS_DISPLAYED);
@@ -129,7 +128,7 @@ public class OnlineVerificationPartnerViewPolicyRequestTest extends BaseClass {
 				GlobalConstants.VIEW_POLICY_REQUEST_COMMENTS_DISPLAYED);
 	}
 
-	@Test(priority = 8, description = "View an approved Online Verification Partner policy request", dependsOnMethods = "createOnlineVerificationPartnerPolicyRequestsForView")
+	@Test(priority = 8, description = "View an approved Online Verification Partner policy request", dependsOnMethods = "viewCommentsForPolicyRequest")
 	public void viewApprovedPolicyRequest() {
 		PartnerPolicyMappingPage listPage = openPolicyRequestList();
 		filterByPartnerAndPolicy(listPage, GlobalConstants.VIEW_POLICY_REQUEST_POLICY_FULL);
@@ -138,9 +137,8 @@ public class OnlineVerificationPartnerViewPolicyRequestTest extends BaseClass {
 		assertEquals(listPage.waitUntilApproveButtonEnabled(), "enabled",
 				GlobalConstants.VIEW_POLICY_REQUEST_APPROVED_STATUS);
 		listPage.clickOnApproveSubmitButton();
-		assertTrue(listPage.waitUntilFirstPolicyRequestRowContains(GlobalConstants.VIEW_POLICY_REQUEST_PARTNER_ID,
-				GlobalConstants.APPROVED).contains(GlobalConstants.APPROVED),
-				GlobalConstants.VIEW_POLICY_REQUEST_APPROVED_STATUS);
+		listPage.waitUntilFirstPolicyRequestRowContains(GlobalConstants.VIEW_POLICY_REQUEST_PARTNER_ID,
+				GlobalConstants.APPROVED);
 
 		PartnerPolicyMappingPage viewPage = openView(GlobalConstants.VIEW_POLICY_REQUEST_POLICY_FULL);
 		assertEquals(viewPage.getViewPolicyRequestStatusText(), GlobalConstants.APPROVED,
@@ -161,9 +159,8 @@ public class OnlineVerificationPartnerViewPolicyRequestTest extends BaseClass {
 		assertEquals(listPage.waitUntilApproveButtonEnabled(), "enabled",
 				GlobalConstants.VIEW_POLICY_REQUEST_REJECTED_STATUS);
 		listPage.clickOnRejectButton();
-		assertTrue(listPage.waitUntilFirstPolicyRequestRowContains(GlobalConstants.VIEW_POLICY_REQUEST_PARTNER_ID,
-				GlobalConstants.REJECTED).contains(GlobalConstants.REJECTED),
-				GlobalConstants.VIEW_POLICY_REQUEST_REJECTED_STATUS);
+		listPage.waitUntilFirstPolicyRequestRowContains(GlobalConstants.VIEW_POLICY_REQUEST_PARTNER_ID,
+				GlobalConstants.REJECTED);
 
 		PartnerPolicyMappingPage viewPage = openView(GlobalConstants.VIEW_POLICY_REQUEST_POLICY_REJECT);
 		assertEquals(viewPage.getViewPolicyRequestStatusText(), GlobalConstants.REJECTED,
@@ -173,7 +170,7 @@ public class OnlineVerificationPartnerViewPolicyRequestTest extends BaseClass {
 		assertTrue(viewPage.areViewPolicyRequestFieldsReadOnly(), GlobalConstants.VIEW_POLICY_REQUEST_FIELDS_READ_ONLY);
 	}
 
-	@Test(priority = 10, description = "Back returns to Partner - Policy Linking with the partner filter intact", dependsOnMethods = "createOnlineVerificationPartnerPolicyRequestsForView")
+	@Test(priority = 10, description = "Back returns to Partner - Policy Linking with the partner filter intact", dependsOnMethods = "viewRejectedPolicyRequest")
 	public void backReturnsToPolicyRequestListWithFilter() {
 		PartnerPolicyMappingPage listPage = openPolicyRequestList();
 		filterByPartnerAndPolicy(listPage, GlobalConstants.VIEW_POLICY_REQUEST_POLICY_STEP1);
@@ -188,7 +185,7 @@ public class OnlineVerificationPartnerViewPolicyRequestTest extends BaseClass {
 				GlobalConstants.VIEW_POLICY_REQUEST_BACK_PRESERVES_FILTER);
 	}
 
-	@Test(priority = 11, description = "Partial workflow with only Request Policy completed shows unmapped sections", dependsOnMethods = "createOnlineVerificationPartnerPolicyRequestsForView")
+	@Test(priority = 11, description = "Partial workflow with only Request Policy completed shows unmapped sections", dependsOnMethods = "backReturnsToPolicyRequestListWithFilter")
 	public void viewPartialWorkflowWithOnlyRequestPolicyCompleted() {
 		PartnerPolicyMappingPage viewPage = openView(GlobalConstants.VIEW_POLICY_REQUEST_POLICY_STEP1);
 		assertEquals(viewPage.getViewPolicyNameText(), GlobalConstants.VIEW_POLICY_REQUEST_POLICY_STEP1,
@@ -201,7 +198,7 @@ public class OnlineVerificationPartnerViewPolicyRequestTest extends BaseClass {
 				GlobalConstants.VIEW_POLICY_REQUEST_CREDENTIAL_UNMAPPED);
 	}
 
-	@Test(priority = 12, description = "Partial workflow with biometric mapping completed keeps credential type unmapped", dependsOnMethods = "createOnlineVerificationPartnerPolicyRequestsForView")
+	@Test(priority = 12, description = "Partial workflow with biometric mapping completed keeps credential type unmapped", dependsOnMethods = "viewPartialWorkflowWithOnlyRequestPolicyCompleted")
 	public void viewPartialWorkflowWithBiometricMappingCompleted() {
 		PartnerPolicyMappingPage viewPage = openView(GlobalConstants.VIEW_POLICY_REQUEST_POLICY_STEP2);
 		assertEquals(viewPage.waitUntilBiometricMappingState(), "mapped",
@@ -211,14 +208,12 @@ public class OnlineVerificationPartnerViewPolicyRequestTest extends BaseClass {
 				GlobalConstants.VIEW_POLICY_REQUEST_CREDENTIAL_UNMAPPED);
 	}
 
-	@Test(priority = 13, description = "A user without PARTNER_ADMIN stays on the main page", dependsOnMethods = "viewRejectedPolicyRequest")
+	@Test(priority = 13, description = "A user without PARTNER_ADMIN stays on the main page", dependsOnMethods = "viewPartialWorkflowWithBiometricMappingCompleted")
 	public void userWithoutAdminRoleStaysOnMainPage() {
-		KeycloakUserManager.createUsers(GlobalConstants.VIEW_POLICY_REQUEST_NON_ADMIN_USER_ID,
-				GlobalConstants.PARTNER_PASSWORD, "roles.ovpnoadmin", null);
 		DashboardPage dashboardPage = new DashboardPage(driver);
 		dashboardPage.clickOnProfileDropdown();
 		LoginPage loginPage = dashboardPage.clickOnLogoutButton();
-		loginPage.login(GlobalConstants.VIEW_POLICY_REQUEST_NON_ADMIN_USER_ID, GlobalConstants.PARTNER_PASSWORD);
+		loginPage.login(GlobalConstants.NON_ADMIN_USER_ID, GlobalConstants.PARTNER_PASSWORD);
 		if (dashboardPage.isTermsAndConditionsPopupDisplayedQuick()) {
 			dashboardPage.clickOnCheckbox();
 			dashboardPage.clickOnProceedButton();

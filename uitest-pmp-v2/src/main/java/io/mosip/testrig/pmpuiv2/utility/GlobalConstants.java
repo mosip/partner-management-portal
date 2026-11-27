@@ -1736,7 +1736,6 @@ public class GlobalConstants {
 	public static final String VIEW_POLICY_REQUEST_POLICY_FULL = "pmpui-ovpviewpol3";
 	public static final String VIEW_POLICY_REQUEST_POLICY_REJECT = "pmpui-ovpviewpol4";
 	public static final String VIEW_POLICY_REQUEST_COMMENT = "View OVP policy request";
-	public static final String VIEW_POLICY_REQUEST_NON_ADMIN_USER_ID = "pmpui-ovpviewnoadmin";
 	public static final String VIEW_POLICY_REQUEST_OPENED_BY_ROW_CLICK = "Partner admin opens View Partner-Policy Linking by row click";
 	public static final String VIEW_POLICY_REQUEST_OPENED_BY_VIEW_ACTION = "Partner admin opens View Partner-Policy Linking from the View action";
 	public static final String VIEW_POLICY_REQUEST_TITLE_DISPLAYED = "View Partner-Policy Linking title is displayed";

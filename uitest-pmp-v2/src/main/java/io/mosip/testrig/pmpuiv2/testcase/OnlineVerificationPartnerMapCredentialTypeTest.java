@@ -209,7 +209,7 @@ public class OnlineVerificationPartnerMapCredentialTypeTest extends BaseClass {
 	@Test(priority = 11, description = "A user without PARTNER_ADMIN stays on the main page", dependsOnMethods = "rejectSubmittedPolicyRequestShowsRejectedStatus")
 	public void userWithoutAdminRoleStaysOnMainPage() {
 		KeycloakUserManager.createUsers(GlobalConstants.MAP_CREDENTIAL_TYPE_NON_ADMIN_USER_ID,
-				GlobalConstants.PARTNER_PASSWORD, "roles.ovpnoadmin", null);
+				GlobalConstants.PARTNER_PASSWORD, "roles.auth", null);
 		DashboardPage dashboardPage = new DashboardPage(driver);
 		dashboardPage.clickOnProfileDropdown();
 		LoginPage loginPage = dashboardPage.clickOnLogoutButton();

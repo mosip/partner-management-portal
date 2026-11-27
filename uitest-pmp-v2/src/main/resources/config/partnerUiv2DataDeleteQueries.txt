@@ -151,4 +151,3 @@ delete from pms.partner_h where cr_by='pmpui-ovpview';
 delete from pms.partner where user_id='pmpui-ovpview';
 delete from pms.partner where cr_by='pmpui-ovpview';
 delete FROM pms.user_details where user_id='pmpui-ovpview';
-delete FROM pms.user_details where user_id='pmpui-ovpviewnoadmin';

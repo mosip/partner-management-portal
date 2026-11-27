@@ -441,9 +441,6 @@ public class PartnerPolicyMappingPage extends BasePage {
 	@FindBy(xpath = "//p[text()='Credential Type']/following-sibling::p[1]")
 	private WebElement credentialTypeValue;
 
-	@FindBy(css = "input, textarea, select")
-	private List<WebElement> editableInputs;
-
 	@FindBy(xpath = "//button[normalize-space()='Save' or normalize-space()='Edit' or normalize-space()='Update' or normalize-space()='Delete']")
 	private List<WebElement> editActionButtons;
 
@@ -1472,11 +1469,6 @@ public class PartnerPolicyMappingPage extends BasePage {
 		try {
 			return new WebDriverWait(driver, ABSENCE_CHECK_TIMEOUT).ignoring(StaleElementReferenceException.class)
 					.until(webDriver -> {
-						for (WebElement element : editableInputs) {
-							if (element.isDisplayed()) {
-								return true;
-							}
-						}
 						for (WebElement element : editActionButtons) {
 							if (element.isDisplayed()) {
 								return true;

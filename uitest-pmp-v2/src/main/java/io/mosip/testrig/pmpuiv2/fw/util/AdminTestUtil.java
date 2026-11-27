@@ -137,7 +137,7 @@ public class AdminTestUtil extends BaseTestCaseFunc {
 					TestRunner.getResourcePath() + "/" + "config/partnerUiv2DataDeleteQueriesForIDA.txt");
 			KeycloakUserManager.removeUser();
 			KeycloakUserManager.createUsers(GlobalConstants.NON_ADMIN_USER_ID, GlobalConstants.PARTNER_PASSWORD,
-					"roles.ovpnoadmin", null);
+					"roles.auth", null);
 //  	    KeycloakUserManager.createUsers();
 //    		BaseTestCaseFunc.DefinePolicyGroup();
 //			BaseTestCaseFunc.DefinePolicy();
